@@ -1,0 +1,3 @@
+Instalación del proyecto - 6h
+Routing - 4h
+Footer - 4h
