@@ -1,0 +1,14 @@
+<div class="web-cover">
+  <p *ngIf="tagline" class="tagline">{{ tagline }}</p>
+  <img *ngIf="coverImage" class="cover-image" [src]="coverImage" />
+  <owl-carousel-o *ngIf="slides.length > 0" [options]="customOptions" class="cover-carousel">
+    <ng-template carouselSlide *ngFor="let slide of slides">
+      <picture>
+        <source [srcset]="slide.images.desktop" media="(min-width: 1024px) and (orientation: landscape)" />
+        <source [srcset]="slide.images.desktop" media="(min-width: 767px) and (orientation: portrait)" />
+        <source [srcset]="slide.images.desktop" media="(min-width: 320px) and (orientation: landscape)" />
+        <img [src]="slide.images.movil" />
+      </picture>
+    </ng-template>
+  </owl-carousel-o>
+</div>

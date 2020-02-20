@@ -34,6 +34,7 @@
     "bootstrap.native": "^2.0.27",
     "eva-icons": "^1.1.2",
     "express": "^4.15.2",
+    "ngx-owl-carousel-o": "^2.0.3",
     "rxjs": "~6.4.0",
     "slideout": "^1.0.1",
     "tslib": "^1.10.0",

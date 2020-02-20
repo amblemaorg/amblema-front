@@ -1,0 +1,15 @@
+@import 'scss/responsive';
+@import 'scss/elements/headings';
+@import 'scss/elements/lists';
+
+web-bg-heading {
+  display: block;
+  margin: auto;
+  width: 40%;
+}
+
+.steps {
+  @include columns(10);
+  column-count: 2;
+  margin: auto;
+}
