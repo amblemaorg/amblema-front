@@ -15,7 +15,7 @@ export class CoverComponent implements OnInit {
   customOptions: OwlOptions = {
     autoplay: true,
     items: 1,
-    loop: true,
+    loop: false,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,

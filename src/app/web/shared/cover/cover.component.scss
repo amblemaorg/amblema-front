@@ -3,12 +3,6 @@
 .web-cover {
   position: relative;
 
-  owl-carousel-o.cover-carousel {
-    .owl-nav {
-      display: none !important;
-    }
-  }
-
   .tagline {
     color: white;
     font-size: 8vw;
@@ -52,6 +46,12 @@
     @include breakpoint(medium) {
       right: 0;
       width: 45%;
+    }
+  }
+
+  .bg-image {
+    img {
+      width: 100%;
     }
   }
 }

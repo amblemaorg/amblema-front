@@ -32,3 +32,23 @@ body {
 .slideout-open .slideout-menu {
   display: block !important;
 }
+
+owl-carousel-o {
+  .owl-theme {
+    .owl-dots {
+      .owl-dot {
+        span {
+          background: transparent;
+          border: 1px solid $blue;
+        }
+
+        &.active,
+        &:hover {
+          span {
+            background: $blue;
+          }
+        }
+      }
+    }
+  }
+}

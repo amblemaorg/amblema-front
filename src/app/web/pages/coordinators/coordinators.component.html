@@ -1,5 +1,13 @@
 <web-cover [slides]="coverData.slides"></web-cover>
 <h1>Coordinadores</h1>
+<owl-carousel-o *ngIf="coordinatorsData.length > 0" [options]="customOptions" class="coordinators-carousel">
+  <ng-template carouselSlide *ngFor="let coordinator of coordinatorsData">
+
+    <web-person-card [person]="coordinator"></web-person-card>
+
+  </ng-template>
+</owl-carousel-o>
+
 <web-bg-heading>¿Cómo ser un coordinador?</web-bg-heading>
 <div class="steps">
   <ol>
