@@ -1,0 +1,57 @@
+@import 'scss/responsive';
+
+.web-cover {
+  position: relative;
+
+  .tagline {
+    color: white;
+    font-size: 8vw;
+    line-height: 1.2;
+    margin: 0 5vw;
+    position: absolute;
+    text-align: center;
+    top: 80vw;
+    z-index: 15;
+
+    @include breakpoint(small, landscape){
+      font-size: 3.4vw;
+      margin: 0 5vw;
+      right: 0;
+      text-align: right;
+      top: 26.5vw;
+      width: 40%;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 3.4vw;
+      margin: 0 5vw;
+      right: 0;
+      text-align: right;
+      top: 26.5vw;
+      width: 40%;
+    }
+  }
+
+  .cover-image {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+
+    @include breakpoint(small, landscape) {
+      right: 0;
+      width: 45%;
+    }
+
+    @include breakpoint(medium) {
+      right: 0;
+      width: 45%;
+    }
+  }
+
+  .bg-image {
+    img {
+      width: 100%;
+    }
+  }
+}

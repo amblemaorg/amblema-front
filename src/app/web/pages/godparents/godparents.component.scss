@@ -1,0 +1,58 @@
+@import 'scss/responsive';
+@import 'scss/elements/headings';
+@import 'scss/elements/lists';
+
+h1 {
+  color: $white;
+  font-size: 9vw;
+  position: absolute;
+  left: 8vw;
+  top: 60vw;
+  z-index: 20;
+
+  @include breakpoint(small, landscape) {
+    font-size: 4.5vw;
+    left: 8vw;
+    top: 16vw;
+  }
+
+  @include breakpoint(medium) {
+    font-size: 4.5vw;
+    left: 8vw;
+    top: 16vw;
+  }
+}
+
+owl-carousel-o {
+
+  &.godparents-carousel {
+    position: absolute;
+    top: 80vw;
+    margin: 0 8vw;
+    z-index: 20;
+
+    @include breakpoint(medium) {
+      top: 25vw;
+      width: 26%;
+    }
+  }
+
+  &.bg-carousel,
+  &.godparents-carousel {
+    .owl-nav {
+      display: none !important;
+    }
+  }
+}
+
+web-bg-heading {
+  display: block;
+  margin: 4vw auto;
+  width: 35%;
+}
+
+.steps {
+  @include columns(10);
+  column-count: 2;
+  margin: 8vw auto;
+}
