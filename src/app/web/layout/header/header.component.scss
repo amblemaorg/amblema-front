@@ -1,0 +1,29 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+header {
+  @include columns(9);
+  background-color: $white;
+  margin: auto;
+  padding: .5vw;
+
+  @include breakpoint(medium) {
+    position: relative;
+    top: 5vw;
+  }
+
+}
+
+.menu-toggle {
+  @include breakpoint(small) {
+    display: block;
+  }
+
+  @include breakpoint(small, landscape) {
+    display: none;
+  }
+
+  @include breakpoint(medium) {
+    display: none;
+  }
+}
