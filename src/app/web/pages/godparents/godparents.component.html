@@ -1,5 +1,19 @@
+<!-- Cover section -->
 <web-cover [slides]="coverData.slides"></web-cover>
+
 <h1>Padrinos</h1>
+
+<owl-carousel-o *ngIf="godparentsData.length > 0" [options]="customOptions" class="godparents-carousel">
+  <ng-template carouselSlide *ngFor="let godparent of godparentsData">
+
+    <web-person-card [person]="godparent"></web-person-card>
+
+  </ng-template>
+</owl-carousel-o>
+
+<!-- End cover section -->
+
+<!-- Steps section -->
 <web-bg-heading>¿Cómo ser un padrino?</web-bg-heading>
 <div class="steps">
   <ol>
@@ -12,3 +26,4 @@
     <li>Tengan la disposición de aumentar su grado de satisfacción personal, familiar y/o empresarial, al ver resultados positivos en la mejora de la calidad educativa de muchos docentes y niños en escuelas con escasos recursos económicos.</li>
   </ol>
 </div>
+<!-- End steps section -->

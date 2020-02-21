@@ -1,1 +1,17 @@
-<p>person-card works!</p>
+<div class="person-card">
+  <a class="person-link" [href]="person.pageUrl" target="_blank" rel="noopener noreferrer">
+    <div class="person-data">
+      <div class="person-image">
+        <img [src]="person.image" [alt]="person.name + ' image'" />
+      </div>
+      <div class="person-identity">
+        <p class="person-name">{{ person.name }}</p>
+        <p class="person-role">{{ person.role }}</p>
+        <p class="person-something">Fundación Amblema</p>
+      </div>
+    </div>
+    <div class="person-content">
+      <p class="person-text">{{ person.text }}</p>
+    </div>
+  </a>
+</div>
