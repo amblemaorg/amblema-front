@@ -1,0 +1,56 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+%web-button {
+
+  background: transparent;
+  border: 0.6vw solid #FFF;
+  border-radius: 6px;
+  color: $white;
+  font-family: 'Montserrat';
+  padding: 3vw 6vw;
+
+  @include breakpoint(small, landscape) {
+    border: .4vw solid $white;
+    border-radius: 6px;
+    padding: 1vw;
+  }
+
+  @include breakpoint(medium) {
+    border: .4vw solid $white;
+    border-radius: 10px;
+    padding: 1vw;
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $blue;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+%lg-button {
+  font-size: 4.5vw;
+
+  @include breakpoint(small, landscape) {
+    font-size: 1.5vw;
+  }
+
+  @include breakpoint(medium) {
+    font-size: 1.5vw;
+  }
+}
+
+button {
+  @extend %web-button;
+
+  &.lg {
+    @extend %lg-button;
+  }
+}
+
+
