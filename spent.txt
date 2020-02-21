@@ -1,0 +1,9 @@
+Instalación del proyecto - 6h
+Routing - 4h
+Footer - 4h
+Header - 6h
+
+Home, Nosotros, Padrinos, Coordinadores, Blog
+  Cover - 5h
+Padrinos y coordinadores
+  Sección pasos - 2h
