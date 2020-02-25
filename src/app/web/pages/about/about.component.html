@@ -1,0 +1,106 @@
+<!-- Cover section -->
+<web-cover [tagline]="coverData.tagline"
+           [coverImage]="coverData.coverImage"
+           [slides]="coverData.slides">
+</web-cover>
+<!-- End cover section -->
+<section class="about-us">
+  <h1 class="heading">Nosotros</h1>
+  <div class="about-text">
+    <p *ngFor="let p of about">{{ p }}</p>
+  </div>
+</section>
+<section class="pillars">
+  <h2 class="heading">Tenemos tres pilares fundamentales</h2>
+  <div class="hide-lg">
+      <owl-carousel-o *ngIf="pillars" [options]="pillarsOptions" class="pillars-carousel">
+        <ng-template carouselSlide>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Amb</span>iente
+            </h3>
+            <p class="pillar-text">{{ pillars.ambiente }}</p>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Le</span>ctura
+            </h3>
+            <p class="pillar-text">{{ pillars.lectura }}</p>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Ma</span>temática
+            </h3>
+            <p class="pillar-text">{{ pillars.matematica }}</p>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+  </div>
+  <div class="pillars-list show-lg">
+      <div class="pillar-wrapper">
+          <div class="pillar invisible">
+            <h3 class="pillar-title">
+              <span class="bold">Amb</span>iente
+            </h3>
+            <p class="pillar-text">{{ pillars.ambiente }}</p>
+          </div>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Amb</span>iente
+            </h3>
+            <p class="pillar-text">{{ pillars.ambiente }}</p>
+          </div>
+      </div>
+      <div class="pillar-wrapper">
+          <div class="pillar invisible">
+            <h3 class="pillar-title">
+              <span class="bold">Le</span>ctura
+            </h3>
+            <p class="pillar-text">{{ pillars.lectura }}</p>
+          </div>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Le</span>ctura
+            </h3>
+            <p class="pillar-text">{{ pillars.lectura }}</p>
+          </div>
+      </div>
+      <div class="pillar-wrapper">
+          <div class="pillar invisible">
+            <h3 class="pillar-title">
+              <span class="bold">Ma</span>temática
+            </h3>
+            <p class="pillar-text">{{ pillars.matematica }}</p>
+          </div>
+          <div class="pillar">
+            <h3 class="pillar-title">
+              <span class="bold">Ma</span>temática
+            </h3>
+            <p class="pillar-text">{{ pillars.matematica }}</p>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- Awards section -->
+<section class="awards">
+  <h2 class="heading">Premios y reconocimientos</h2>
+  <div class="awards-list">
+    <owl-carousel-o *ngIf="awardsList.length > 0" [options]="carouselOptions" class="awards-carousel">
+      <ng-template carouselSlide [width]="250" *ngFor="let award of awardsList">
+        <div class="award">
+          <div class="image-wrapper">
+            <img *ngIf="award.image" class="image" [src]="award.image" [alt]="award.name + ' logo'" />
+          </div>
+          <p *ngIf="award.name" class="title">{{ award.name }}</p>
+          <p *ngIf="award.description" class="description">{{ award.description }}</p>
+          <a *ngIf="award.pageUrl" [href]="award.pageUrl" class="button sm blue show-more">Ver más</a>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</section>
+<!-- End awards section -->

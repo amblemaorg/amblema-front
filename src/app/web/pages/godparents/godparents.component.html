@@ -1,0 +1,56 @@
+<!-- Cover section -->
+<web-cover [slides]="coverData.slides"></web-cover>
+<h1>Padrinos</h1>
+<owl-carousel-o *ngIf="testimonialsData.length > 0" [options]="coverCarouselOptions" class="testimonials-carousel">
+  <ng-template carouselSlide *ngFor="let item of testimonialsData">
+
+    <web-person-card [person]="item"></web-person-card>
+
+  </ng-template>
+</owl-carousel-o>
+<!-- End cover section -->
+
+<!-- Steps section -->
+<web-bg-heading>¿Cómo ser un padrino?</web-bg-heading>
+<section class="steps">
+  <ol>
+    <li>Tener interés por aportar recursos a la formación de nuestros niños venezolanos.</li>
+    <li>Estén dispuestos a seguir los lineamientos de aplicación de Amb-Le-Ma.</li>
+    <li>Requieran poner en práctica la responsabilidad social de la empresa que representan.</li>
+    <li>Estén dispuestos a ubicar escuelas en su rango de alcance en la que pueda aplicarse la herramienta Amb-Le-Ma.</li>
+    <li>Estén dispuestos a invertir mínimo tiempo en hacer enlace con las autoridades educativas y directivos de las escuelas que deseen intervenir.</li>
+    <li>Dispongan los recursos y tiempo necesarios.</li>
+    <li>Tengan la disposición de aumentar su grado de satisfacción personal, familiar y/o empresarial, al ver resultados positivos en la mejora de la calidad educativa de muchos docentes y niños en escuelas con escasos recursos económicos.</li>
+  </ol>
+</section>
+<!-- End steps section -->
+
+<!-- Godparents section -->
+<section class="godparents">
+  <h2 class="heading">Nuestros padrinos</h2>
+  <div class="godparents-list">
+    <owl-carousel-o *ngIf="godparentsData.length > 0" [options]="godparentsOptions" class="godparents-carousel">
+      <ng-container *ngFor="let item of godparentsData; let i = index">
+        <ng-template carouselSlide *ngIf="(i+1) % 2 !== 1">
+          <div class="inner-wrap">
+              <ng-container *ngTemplateOutlet="godparentTemplate; context: { godparent: godparentsData[i-1] }"></ng-container>
+
+              <ng-container *ngTemplateOutlet="godparentTemplate; context: { godparent: item }"></ng-container>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</section>
+
+<!-- Angular Template for godparents -->
+<ng-template #godparentTemplate let-godparent="godparent">
+  <div class="godparent">
+    <div class="image-wrapper">
+      <img *ngIf="godparent.image" class="image" [src]="godparent.image" [alt]="godparent.name + ' logo'" />
+    </div>
+    <p *ngIf="godparent.name" class="title">{{ godparent.name }}</p>
+    <p *ngIf="godparent.description" class="description">{{ godparent.description }}</p>
+    <a *ngIf="godparent.pageUrl" [href]="godparent.pageUrl" class="button sm blue show-more">Ver más</a>
+  </div>
+</ng-template>
