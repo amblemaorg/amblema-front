@@ -137,9 +137,9 @@ section.pillars {
 
     @include breakpoint(large) {
       bottom: -81%;
-      // TODO: Change to stretch
       height: -webkit-fill-available;
-      height: fill-available;
+      height: -moz-available;
+      height: stretch;
       margin: 0;
       position: absolute;
       transition: 1s bottom ease, .5s background-color ease;
@@ -199,8 +199,6 @@ section.awards {
   //display: flex;
   margin: 12vw auto;
 
-
-
   .award {
     //@include columns(3);
     color: $blue;
@@ -211,16 +209,23 @@ section.awards {
     text-align: center;
 
     .image-wrapper {
+      display: flex;
+      align-items: center;
+      height: 30vw;
+      width: 30vw;
+
+      @include breakpoint(small, landscape) {
+        height: 10vw;
+        width: 10vw;
+      }
+
+      @include breakpoint(medium) {
+        height: 10vw;
+        width: 10vw;
+      }
+
       img {
-        width: 30vw;
-
-        @include breakpoint(small, landscape) {
-          width: 10vw;
-        }
-
-        @include breakpoint(medium) {
-          width: 10vw;
-        }
+        width: 100%;
       }
     }
     .title {

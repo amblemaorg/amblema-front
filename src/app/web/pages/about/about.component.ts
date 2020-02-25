@@ -65,25 +65,25 @@ export class AboutComponent implements OnInit {
     {
       name: 'Carora',
       pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/bd8a86_0d11bb27542e4b7480734ee0d259b318_mv2.webp',
+      image: './assets/images/padrinos/carora.webp',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
     },
     {
       name: 'Tarikan',
       pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/bd8a86_2e32eaffa876445090d70f05d5921974_mv2.webp',
+      image: './assets/images/padrinos/tarikan.webp',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
     },
     {
       name: 'Familia Gonzalez Bergoderi',
       pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/bd8a86_9e08cbafd98341a8afaf4e1c8857fa63_mv2.webp',
+      image: './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
     },
     {
       name: 'Fundación la Pastora',
       pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/bd8a86_77aa04b1ff8f44479d77266c8bd0a9ae_mv2.webp',
+      image: './assets/images/padrinos/fundacion-pastora.webp',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
     }
   ]

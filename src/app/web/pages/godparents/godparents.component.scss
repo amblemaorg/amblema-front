@@ -108,6 +108,12 @@ web-bg-heading {
   //display: flex;
   margin: auto;
 
+  .inner-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .godparent {
     //@include columns(3);
     color: $blue;
@@ -116,8 +122,10 @@ web-bg-heading {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    padding: 0 4vw;
+    padding: 0 3vw;
+    height: 45%;
 
+/*
     &:first-child {
       margin-bottom: 10vw;
 
@@ -129,7 +137,7 @@ web-bg-heading {
         margin-bottom: 4vw;
       }
     }
-
+*/
     .image-wrapper {
       display: flex;
       align-items: center;

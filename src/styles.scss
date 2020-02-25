@@ -132,6 +132,15 @@ owl-carousel-o {
     .owl-carousel {
       width: 80%;
       margin: auto;
+
+      .owl-stage {
+        display: flex;
+
+        .owl-item {
+          display: flex;
+          justify-content: center;
+        }
+      }
     }
 
     .owl-prev {
@@ -158,7 +167,7 @@ owl-carousel-o {
   .owl-theme {
     .owl-nav {
       position: absolute;
-      top: 50%;
+      top: 45%;
 
       .owl-prev,
       .owl-next {
