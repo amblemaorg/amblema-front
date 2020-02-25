@@ -2,19 +2,97 @@
 @import 'scss/variables';
 
 header {
-  @include columns(9);
   background-color: $white;
-  margin: auto;
-  padding: .5vw;
+  display: flex;
+  justify-content: space-between;
+  padding: 5vw;
+  width: auto;
+  z-index: 50;
 
-  @include breakpoint(medium) {
-    position: relative;
+  @include breakpoint(small, landscape) {
+    @include columns(10);
+    margin: 0 calc((100% / 12) * 1);
+    padding: .5vw;
+    position: absolute;
     top: 5vw;
   }
 
+  @include breakpoint(medium) {
+    @include columns(10);
+    margin: 0 calc((100% / 12) * 1);
+    padding: .5vw;
+    position: absolute;
+    top: 5vw;
+  }
+
+  img.logo {
+    width: 45%;
+
+    @include breakpoint(small, landscape) {
+      width: 15%;
+    }
+
+    @include breakpoint(medium) {
+      width: 15%;
+    }
+  }
+
+  web-menu {
+    width: 70%;
+
+    &.desktop-menu {
+      li a[href='login'] {
+        display: none;
+      }
+    }
+  }
+
+  .user-access {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    width: 8%;
+
+    img.profile {
+      height: 8vw;
+      width: 8vw;
+
+      @include breakpoint(small, landscape) {
+        height: 2vw;
+        width: 2vw;
+      }
+
+      @include breakpoint(medium) {
+        height: 2vw;
+        width: 2vw;
+      }
+    }
+
+    a {
+      display: none;
+      color: $blue;
+      text-decoration: none;
+
+      @include breakpoint(small, landscape) {
+        display: inherit;
+      }
+
+      @include breakpoint(medium) {
+        display: inherit;
+      }
+    }
+  }
 }
 
 .menu-toggle {
+  background: transparent;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
   @include breakpoint(small) {
     display: block;
   }

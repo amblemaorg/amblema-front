@@ -13,10 +13,11 @@ export class HeaderComponent implements OnInit {
   constructor(
     private iconReg: SvgIconRegistryService
   ) {
-    this.iconReg.loadSvg('icons/menu.svg', 'menu-icon');
+    this.iconReg.loadSvg('./assets/icons/menu.svg', 'menu-icon');
   }
 
   ngOnInit() {
+    //console.log(document.querySelector('web-menu.mobile-menu'));
     this.slideoutMenu = new Slideout({
       panel: document.getElementById('web-main'),
       menu: document.querySelector('web-menu.mobile-menu'),
