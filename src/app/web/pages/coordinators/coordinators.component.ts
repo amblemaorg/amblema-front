@@ -52,7 +52,7 @@ export class CoordinatorsComponent implements OnInit {
     pullDrag: false,
     dots: true,
     nav: false,
-    navSpeed: 1000,
+    navSpeed: 3000,
   }
 
   constructor() { }

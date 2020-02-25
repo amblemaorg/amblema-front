@@ -33,6 +33,31 @@
   }
 }
 
+%white-button {
+  color: $white;
+  border-color: $white;
+  &:hover {
+    background-color: $white;
+    color: $blue;
+  }
+}
+
+%blue-button {
+  color: $white;
+  background-color: $blue;
+  border-color: $blue;
+
+  @include breakpoint(large) {
+    color: $blue;
+    background-color: transparent;
+    border-color: $blue;
+    &:hover {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+}
+
 %lg-button {
   font-size: 4.5vw;
 
@@ -45,12 +70,31 @@
   }
 }
 
-button {
+%sm-button {
+  font-size: 3.5vw;
+
+  @include breakpoint(small, landscape) {
+    font-size: .9vw;
+  }
+
+  @include breakpoint(medium) {
+    font-size: .9vw;
+  }
+}
+
+button,
+.button {
   @extend %web-button;
 
   &.lg {
     @extend %lg-button;
   }
+
+  &.sm {
+    @extend %sm-button;
+  }
+
+  &.blue {
+    @extend %blue-button;
+  }
 }
-
-
