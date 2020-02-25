@@ -1,7 +1,8 @@
 stages:
-  - test
-  - qa
-  - staging
+  - qa-update
+  - qa-deploy
+  - staging-update
+  - staging-deploy
 
 variables:
   QA_CONTAINER_NAME: "amblema_front_qa"
@@ -9,16 +10,16 @@ variables:
 
   # Path to QA
   PATH_FOLDER_QA: /home/amblema/amblema-front/qa
-  PATH_PROJECT_QA: $PATH_FOLDER_QA
+  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema-front
 
   # Path to staging
   PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
-  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema-front
 
 # Jobs for QA environment
 
 qa-update:
-  stage: qa
+  stage: qa-update
   script:
     - if ! [ -d $PATH_PROJECT_QA ]; then
     - mkdir -p $PATH_PROJECT_QA
@@ -36,8 +37,8 @@ qa-update:
   only:
     - qaestable
 
-run-tests-qa:
-  stage: qa
+qa-run-tests:
+  stage: qa-deploy
   image: devbinaural/angular:8.0.0
   script:
     - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
@@ -48,7 +49,7 @@ run-tests-qa:
   when: manual
 
 qa-deploy:
-  stage: qa
+  stage: qa-deploy
   script:
     - cd $PATH_PROJECT_QA
     # - if ! docker ps --format '{{.Names}}' | grep -w $QA_CONTAINER_NAME &> /dev/null; then
@@ -60,7 +61,7 @@ qa-deploy:
     - qaestable
 
 qa-turn-off:
-  stage: qa
+  stage: qa-deploy
   script:
     - cd $PATH_PROJECT_QA
     - rm -rf dist/
@@ -73,7 +74,7 @@ qa-turn-off:
 # Jobs for Staging environment
 
 staging-update:
-  stage: staging
+  stage: staging-update
   script:
     - if ! [ -d $PATH_PROJECT_STAGING ]; then
     - mkdir -p $PATH_PROJECT_STAGING
@@ -92,7 +93,7 @@ staging-update:
     - staging
 
 staging-deploy:
-  stage: staging
+  stage: staging-deploy
   script:
     - cd $PATH_PROJECT_STAGING
     # - if ! docker ps --format '{{.Names}}' | grep -w $STAGING_CONTAINER_NAME &> /dev/null; then
@@ -104,7 +105,7 @@ staging-deploy:
     - staging
 
 staging-turn-off:
-  stage: staging
+  stage: staging-deploy
   script:
     - cd $PATH_PROJECT_STAGING
     - rm -rf dist/
