@@ -6,10 +6,10 @@
   color: $blue;
   margin: 0;
   padding: 3vw;
-  -webkit-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-  -moz-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-  box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-  width: calc(100% - (3vw * 2.4));
+  -webkit-box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
+  -moz-box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
+  box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
+  width: calc(100% - (4vw * 2));
 
   @include breakpoint(small, landscape) {
     padding: 1.5vw;
