@@ -9,11 +9,11 @@ variables:
 
   # Path to QA
   PATH_FOLDER_QA: /home/amblema/amblema-front/qa
-  PATH_PROJECT_QA: $PATH_FOLDER_QA
+  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema-front
 
   # Path to staging
   PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
-  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema-front
 
 # Jobs for QA environment
 
