@@ -53,7 +53,7 @@ export class GodparentsComponent implements OnInit {
     pullDrag: false,
     dots: true,
     nav: false,
-    navSpeed: 3000,
+    navSpeed: 1000,
   }
 
   godparentsData = [
