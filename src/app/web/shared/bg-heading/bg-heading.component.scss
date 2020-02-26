@@ -7,6 +7,32 @@ web-bg-heading {
   margin: auto;
 }
 
+section.pillars {
+  .bg-heading {
+    h2 {
+      font-size: 7vw;
+      font-weight: normal;
+      margin: 0;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .line {
+    &.blue {
+      height: 10vw;
+      right: -18vw;
+      width: 60%;
+    }
+    &.green {
+      height: 10vw;
+      left: 2vw;
+      top: -1vw;
+      width: 95%;
+    }
+  }
+}
+
 .bg-heading {
   position: relative;
   width: 100%;

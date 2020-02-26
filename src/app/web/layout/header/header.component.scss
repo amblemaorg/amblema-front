@@ -27,13 +27,16 @@ header {
 
   img.logo {
     width: 45%;
+    height: 100%;
 
     @include breakpoint(small, landscape) {
       width: 15%;
+      height: 100%;
     }
 
     @include breakpoint(medium) {
       width: 15%;
+      height: 100%;
     }
   }
 
