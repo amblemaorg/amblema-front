@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,78 @@ export class HomeComponent implements OnInit {
         }
       }
     ]
+  }
+
+  pillarsOptions: OwlOptions = {
+    autoplay: false,
+    items: 1,
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    nav: true,
+    navText: ['', ''],
+    navSpeed: 1000
+  }
+
+  foundersData = [
+    {
+      name: 'Oscar A. Pietri Pacheco',
+      //pageUrl: 'https://google.com',
+      image: './assets/images/profile-oscar.jpg',
+      role: 'Presidente',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
+    },
+    {
+      name: 'Oscar A. Pietri Pacheco',
+      //pageUrl: 'https://google.com',
+      image: './assets/images/profile-oscar.jpg',
+      role: 'Presidente',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
+    },
+    {
+      name: 'Oscar A. Pietri Pacheco',
+      //pageUrl: 'https://google.com',
+      image: './assets/images/profile-oscar.jpg',
+      role: 'Presidente',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
+    },
+    {
+      name: 'Oscar A. Pietri Pacheco',
+      //pageUrl: 'https://google.com',
+      image: './assets/images/profile-oscar.jpg',
+      role: 'Presidente',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
+    },
+    {
+      name: 'Oscar A. Pietri Pacheco',
+      //pageUrl: 'https://google.com',
+      image: './assets/images/profile-oscar.jpg',
+      role: 'Presidente',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
+    }
+  ]
+
+  carouselOptions: OwlOptions = {
+    autoplay: false,
+    items: 3,
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    nav: true,
+    navText: ['', ''],
+    navSpeed: 1000,
+    responsive: {
+      0: {
+        items: 2
+      },
+      [767 * 0.8]: {
+        items: 3
+      }
+    }
   }
 
   constructor() { }
