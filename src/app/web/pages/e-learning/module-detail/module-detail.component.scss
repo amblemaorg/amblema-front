@@ -20,11 +20,8 @@ h1{
 h3, h4 {
     @extend %h34;
 }
-p, button, a {
+p, button, a, li {
     @extend %p;
-}
-li {
-    @extend %li;
 }
 
 .module-detail-container {
@@ -406,9 +403,16 @@ li {
 
 
 #completed-message {
+    .modal-dialog {
+        @mixin modal-dialog-redo { margin-left: 2rem; margin-right: 2rem; max-width: 100%; }        
+        @include mediabreak(small,portrait) { @include modal-dialog-redo; }
+        @include mediabreak(small,landscape,true,640px) { @include modal-dialog-redo; }
+    }
+
     .modal-content {
         border: none;
         background: rgba(60, 129, 154,0.5);
+        height: 100%;
 
         .modal-header {
             border: none;    
@@ -427,17 +431,57 @@ li {
             color: #fff;
             background: url('~src/assets/images/banner-movil-2.jpg') no-repeat center;
             background-size: cover;
+            justify-content: flex-start !important;
 
-            button {
-                width: 100%;
-                color: map-get($color_map, blue);
-                background: #fff;
-                border: none;
+            @media screen and (orientation: landscape) {
+                background: url('~src/assets/images/banner-2.jpg') no-repeat center;
+                background-size: cover;
+            }
+            @media screen and (min-height:700px) and (orientation:portrait) { justify-content: center !important; }
+            @media screen and (min-height:500px) and (orientation:landscape) { justify-content: center !important; }
+            @include mediabreak(small,portrait) {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
 
-                &:focus {
-                    box-shadow: none;
+            h2 {
+                @include mediabreak(small,portrait) { font-size: 2.5rem; }
+                @include mediabreak(large,portrait) { font-size: 3rem; }
+            }
+            p {
+                @include mediabreak(medium,landscape,true,960px) {
+                    width: 85%;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
-            }        
+            }
+
+            .btns-modal {
+                @include mediabreak(small,landscape,true,640px) { 
+                    display: flex;
+                    justify-content: space-around;
+                }
+                @include mediabreak(medium,landscape,true,800px) {
+                    display: grid;
+                    grid-template-columns: 32% 32%;
+                    justify-content: center;
+                    column-gap: 3rem;
+                }
+
+                button {
+                    width: 100%;
+                    color: map-get($color_map, blue);
+                    background: #fff;
+                    border: none;
+
+                    @include mediabreak(small,landscape,true,640px) { width: 40%; }
+                    @include mediabreak(medium,landscape,true,800px) { width: 100%; }
+    
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }  
+            }      
         }
     }    
 }
