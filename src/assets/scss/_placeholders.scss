@@ -27,29 +27,22 @@ $z-index-higher: 2;
   // Generals
   %h1 {
     font-size: x-large !important;  
-    @include mediabreak(small,portrait) {
-      font-size: xx-large !important;
-    }
+    @include mediabreak(small,portrait) { font-size: xx-large !important; }
   }
   %h34 {
     font-size: large !important;
-    @include mediabreak(small,portrait) {
-      font-size: x-large !important;
-    }
-    @include mediabreak(large,portrait) {
-      font-size: xx-large !important;
-    }
+    @include mediabreak(small,portrait) { font-size: x-large !important; }
+    @include mediabreak(large,portrait) { font-size: xx-large !important; }
+    @include mediabreak(large,landscape) { font-size: x-large !important; }
   }
   %p {  
-    @include mediabreak(small,portrait) {
-      font-size: larger !important;
-    }
-    @include mediabreak(large,portrait) {
-      font-size: 1.35rem !important;
-    }
+    @include mediabreak(small,portrait) { font-size: larger !important; }
+    @include mediabreak(large,portrait) { font-size: 1.35rem !important; }
+    @include mediabreak(large,landscape) { font-size: 0.9rem !important; }
   }
-  %li {
-    @include mediabreak(small,portrait) {
-      font-size: larger !important;
+  @mixin button-pad {
+    @include mediabreak(large,landscape) {
+      padding: 0.45rem 0.5rem !important;
+      width: 10rem !important;
     }
   }

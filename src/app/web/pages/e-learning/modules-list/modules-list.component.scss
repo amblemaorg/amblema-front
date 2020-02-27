@@ -11,11 +11,8 @@ h1{
 h3, h4 {
     @extend %h34;
 }
-p, button, a {
+p, button, a, li {
     @extend %p;
-}
-li {
-    @extend %li;
 }
 
 .modules-list-container {
@@ -26,6 +23,15 @@ li {
             color: map-get($color_map, blue);
         }
 
+        // desktop 
+        h1 {            
+            @include mediabreak(large,landscape) { margin-bottom: 1.25rem !important; }
+        }
+        p {            
+            @include mediabreak(large,landscape) { width: 80%; }
+        }
+        //
+
         button {
             background: map-get($color_map, blue);
             border: 0;
@@ -33,6 +39,11 @@ li {
             
             @include mediabreak(small,landscape,true,640px) { width: auto; }
             @include mediabreak(large,portrait) { width: auto; }
+            @include mediabreak(large,landscape) {
+                @include button-pad; 
+                border: 2px solid map-get($color_map, blue);
+                margin-bottom: 2rem !important;                 
+            }            
 
             &:focus {
                 box-shadow: none;
@@ -59,15 +70,27 @@ li {
                 color: map-get($color_map, blue);
                 
                 @include mediabreak(small,portrait) { font-size: 1.75rem; }
+                // desktop
+                @include mediabreak(large,landscape) { font-size: 1.4rem; }
             }
-            button {
-                font-size: x-large !important;
+            button {                
                 border: 0;
                 padding: 0;
-                color: map-get($color_map, blue);                
+                color: map-get($color_map, blue);    
+                
+                @include mediabreak(large,landscape) { 
+                    @include button-pad; 
+                    border: 2px solid;
+                }
 
                 .no-icon {
+                    @extend %p;
                     display: none;
+                    @include mediabreak(large,landscape) { display: inline; }
+                }
+                .icon {
+                    font-size: x-large !important;
+                    @include mediabreak(large,landscape) { display: none; }
                 }
 
                 &:active, &:hover {

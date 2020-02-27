@@ -49,7 +49,6 @@ networks:
 #     command: bash -c "npm install && ng serve --host 0.0.0.0"
 #     ports:
 #       - '22222:4200'
-#       - '22223:4000'
 
 # networks:
 #   db_network:

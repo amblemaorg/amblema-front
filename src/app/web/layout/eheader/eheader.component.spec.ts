@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { EheaderComponent } from './eheader.component';
 
 describe('EheaderComponent', () => {
@@ -8,8 +7,7 @@ describe('EheaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EheaderComponent ],
-      imports: [HttpClientModule]
+      declarations: [ EheaderComponent ]
     })
     .compileComponents();
   }));
