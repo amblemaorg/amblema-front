@@ -1,0 +1,121 @@
+<div class="module-detail-container">
+    <section class="main-info d-flex flex-wrap">
+        <div class="col-lg-12 px-0 mb-3 module-title">
+            <h1 class="text-uppercase">Modulo 1</h1> <div class="bar mx-3 d-inline"></div> <h3>Fundamentos del coordinador</h3>
+        </div>
+        <section class="col-lg-5 px-0 estimate">
+            <h4 class="mb-4">
+                Estimación de tiempo: 5 min
+            </h4>
+    
+            <h4>Objetivos del módulo</h4>
+            <ul class="pl-4 mb-4">
+                <li>Objetivo 1</li>
+                <li>Objetivo 2</li>
+                <li>Objetivo 3</li>
+                <li>Objetivo 4</li>
+                <li>Objetivo 5</li>
+            </ul>
+        </section>
+        <section class="col-lg-7 px-0 mt-2 mb-4 initial-learning">
+            <h4 class="mb-3">Aprendizaje inicial</h4>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+            </p>
+        </section>
+    </section>
+    
+    <div class="gallery d-flex flex-wrap mb-4">
+        <div class="carousel col-sm-9 px-0">
+            <owl-carousel #owlElement
+                [options]="carouselOps"
+                [items]="imgs"
+                [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
+                <div *ngFor="let img of imgs">
+                    <img [src]="img.img" [alt]="img.info">  
+                    <h6 class="my-4">{{ img.info }}</h6>     
+                </div>
+            </owl-carousel>
+        </div>
+    
+        <div class="images col-sm-3 px-0">
+            <div [class.hidden-img]="shown==i" class="image-item mb-3" *ngFor="let img of imgs; index as i" (click)="goToImg(i)">
+                <img [src]="img.img" [alt]="img.info" class="mr-3">
+                <p><small>{{ img.info }}</small></p>
+            </div>
+        </div>
+    </div>
+    <div class="image-desc-container d-flex">
+        <h6 class="mb-4 image-desc" *ngFor="let img of imgs; index as i" [class.hidden]="i!=shown">{{ img.info }}</h6>
+    </div>    
+    
+    <section class="description">
+        <h4 class="mb-4">Lorem ipsum dolor sit amet consectetur</h4>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.            
+        </p>
+    </section>
+</div>
+
+<div class="images-stack">    
+    <owl-carousel #stackElement
+        [options]="stackOps"
+        [items]="img_strip"
+        [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
+        <img [src]="img.img" [alt]="img.info" *ngFor="let img of img_strip">
+    </owl-carousel>
+</div>
+
+<section class="quizz mt-5">
+    <div class="top-title d-flex flex-wrap mb-2">
+        <h2 class="mr-3">QUIZZ</h2>
+        <h4>Selecciona la respuesta correcta</h4>
+    </div>
+
+    <div class="questions">        
+        <div class="d-flex flex-wrap q-item" *ngFor="let question of questions; index as i">
+            <h3 class="col-sm-6 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.desc }}</h3><span class="gapper col-sm-6"></span>
+            <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of question.options; index as j">
+                <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="selectedQuestions[i]===j" (click)="selectAnswer(i,j)">
+                    <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
+                    <div class="col-10 text-left">{{ option }}</div>
+                </a>                
+            </div>
+        </div>
+    </div>
+
+    <div class="validate-btn text-center">
+        <button type="button" class="btn btn-outline-primary text-decoration-none mb-4" (click)="showModal(modalOpener)">Validar</button>
+        <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
+    </div>
+</section>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="completed-message">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close ml-0 px-0" data-dismiss="modal"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h2 class="font-weight-bold text-center mt-4 mb-4">MODULO COMPLETADO</h2>
+                <p class="text-center mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3">Siguiente módulo</button>
+                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3">Volver al listado</button>
+                </div>
+            </div>    
+        
+        </div>
+    </div>
+</div>
