@@ -6,6 +6,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./web/web.module').then(m => m.WebModule),
   },
+  {
+    path: 'e-learning',
+    loadChildren: () => import('./web/pages/e-learning/e-learning.module').then( m => m.ELearningModule)
+  }
 ];
 
 @NgModule({

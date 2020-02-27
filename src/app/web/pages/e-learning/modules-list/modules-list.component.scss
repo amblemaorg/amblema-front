@@ -1,0 +1,82 @@
+@import 'scss/placeholders';
+
+::ng-deep body {
+    background: map-get($color_map, gray);
+}
+
+//
+h1{
+    @extend %h1;
+}
+h3, h4 {
+    @extend %h34;
+}
+p, button, a {
+    @extend %p;
+}
+li {
+    @extend %li;
+}
+
+.modules-list-container {
+    @extend %padding-conts;
+
+    .welcome-message {
+        h1, p {
+            color: map-get($color_map, blue);
+        }
+
+        button {
+            background: map-get($color_map, blue);
+            border: 0;
+            width: 100%;
+            
+            @include mediabreak(small,landscape,true,640px) { width: auto; }
+            @include mediabreak(large,portrait) { width: auto; }
+
+            &:focus {
+                box-shadow: none;
+            }
+        }        
+    }
+
+    .modules-list {
+        .module-item {
+            background: #fff;
+            margin-bottom: 0.75rem;
+            padding-inline-start: 2rem;
+            padding-inline-end: 1.5rem;
+
+            @include mediabreak(small,portrait) { 
+                margin-bottom: 1.25rem;
+                padding-inline-start: 3.25rem;
+                padding-inline-end: 2.5rem;
+                padding-block-start: 1.25rem !important;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+                color: map-get($color_map, blue);
+                
+                @include mediabreak(small,portrait) { font-size: 1.75rem; }
+            }
+            button {
+                font-size: x-large !important;
+                border: 0;
+                padding: 0;
+                color: map-get($color_map, blue);                
+
+                .no-icon {
+                    display: none;
+                }
+
+                &:active, &:hover {
+                    background: transparent;
+                }
+                &:focus {
+                    box-shadow: none;
+                }
+            }            
+        }
+    }
+}
