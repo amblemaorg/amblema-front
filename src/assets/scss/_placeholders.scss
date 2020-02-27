@@ -1,0 +1,55 @@
+@import './responsive';
+
+$color_map: (
+    blue: #00809a,
+    soft-green-old: #9ad644,
+    soft-green: #81b03e,
+    dark-green: #00722e,
+    gray: #ebeff5,
+    dark-gray: #909090,
+    darkest-gray: #626262,
+);
+
+// z-index
+$z-index-higher: 2;
+
+%padding-conts {
+    padding: 1.5rem 1rem 1rem;
+  
+    @media screen and (min-width: 480px) and (orientation: portrait) {
+        padding: 2rem;
+    }  
+    @include mediabreak(medium,landscape,true,800px) {
+      padding: 2rem;
+    }
+  }
+  
+  // Generals
+  %h1 {
+    font-size: x-large !important;  
+    @include mediabreak(small,portrait) {
+      font-size: xx-large !important;
+    }
+  }
+  %h34 {
+    font-size: large !important;
+    @include mediabreak(small,portrait) {
+      font-size: x-large !important;
+    }
+    @include mediabreak(large,portrait) {
+      font-size: xx-large !important;
+    }
+  }
+  %p {  
+    @include mediabreak(small,portrait) {
+      font-size: larger !important;
+    }
+    @include mediabreak(large,portrait) {
+      font-size: 1.35rem !important;
+    }
+  }
+  %li {
+    @include mediabreak(small,portrait) {
+      font-size: larger !important;
+    }
+  }
