@@ -38,6 +38,9 @@
             "scripts": [
               //"node_modules/bootstrap.native/dist/polyfill.min.js",
               //"node_modules/bootstrap.native/dist/bootstrap-native-v4.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/owl.carousel/dist/owl.carousel.min.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -108,7 +111,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/owl.carousel/dist/owl.carousel.min.js"
+            ]
           }
         },
         "lint": {
