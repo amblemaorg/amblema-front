@@ -32,3 +32,25 @@ networks:
   default:
     driver: bridge
     name: amblema_web_network
+
+
+#YANIOR-USO-LOCAL
+# version: '3.3'
+
+# services:
+#   angular8local: 
+#     image: devbinaural/angular:8.0.0
+#     container_name: angular_amblema
+#     networks:
+#       - db_network      
+#     volumes:
+#       - '.:/app'
+#       - '/app/node_modules'
+#     command: bash -c "npm install && ng serve --host 0.0.0.0"
+#     ports:
+#       - '22222:4200'
+
+# networks:
+#   db_network:
+#     external:
+#       name: amblered
