@@ -1,0 +1,342 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+@import 'scss/elements/headings';
+
+h1 {
+  display: none;
+}
+
+section.about-us {
+  background-color: $blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20vw 15vw;
+  position: relative;
+
+  @include breakpoint(small, landscape) {
+    flex-direction: row;
+    padding: 6vw 0;
+  }
+
+  @include breakpoint(medium) {
+    flex-direction: row;
+    padding: 6vw 0;
+  }
+
+  .background-leaf {
+    display: none;
+
+    @include breakpoint(small, landscape) {
+      background-image: url('../../../../assets/images/leaf.png');
+      background-repeat: no-repeat;
+      background-size: 24vw 29vw;
+      bottom: 0;
+      display: block;
+      height: 29vw;
+      left: 25vw;
+      position: absolute;
+      width: 24vw;
+      z-index: 20;
+    }
+
+    @include breakpoint(medium) {
+      background-image: url('../../../../assets/images/leaf.png');
+      background-repeat: no-repeat;
+      background-size: 24vw 29vw;
+      bottom: 0;
+      display: block;
+      height: 29vw;
+      left: 25vw;
+      position: absolute;
+      width: 24vw;
+      z-index: 20;
+    }
+  }
+
+  .heading {
+    color: $white;
+    font-size: 9vw;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 10vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 4vw;
+      margin-bottom: 0;
+      padding: 0 18% 0 9%;
+      text-align: left;
+      width: 25%;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 4vw;
+      margin-bottom: 0;
+      padding: 0 18% 0 9%;
+      text-align: left;
+      width: 25%;
+    }
+  }
+
+  .text {
+    color: $white;
+    font-size: 4vw;
+    text-align: center;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.2vw;
+      padding: 0 8% 0 0;
+      text-align: left;
+      width: 40%;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.2vw;
+      padding: 0 8% 0 0;
+      text-align: left;
+      width: 40%;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+section.pillars {
+  padding: 8vw 5vw 25vw;
+
+  @include breakpoint(small, landscape) {
+    padding: 3vw 5vw 8vw;
+  }
+  @include breakpoint(medium) {
+    padding: 3vw 5vw 8vw;
+  }
+
+  web-bg-heading {
+    display: block;
+    margin: auto;
+    width: 100%;
+
+
+    @include breakpoint(small, landscape) {
+      width: 70%
+    }
+
+    @include breakpoint(medium) {
+      width: 70%
+    }
+
+    .bg-heading {
+      background-color: black;
+
+      h2 {
+        font-size: 7vw;
+        font-weight: normal;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .line {
+      &.blue {
+        height: 10vw;
+        right: -18vw;
+        width: 60%;
+      }
+      &.green {
+        height: 10vw;
+        left: 2vw;
+        top: -1vw;
+        width: 95%;
+      }
+    }
+  }
+
+  .pillars-list {
+    display: none;
+
+    @include breakpoint(small, landscape) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @include breakpoint(medium) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .pillars-carousel-home {
+    @include breakpoint(small, landscape) {
+      display: none;
+    }
+
+    @include breakpoint(medium) {
+      display: none;
+    }
+  }
+
+  .pillar {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 35vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 80vw;
+
+    @include breakpoint(small, landscape) {
+      background-size: 11vw;
+      width: 25vw;
+      height: 25vw;
+    }
+
+    @include breakpoint(medium) {
+      background-size: 11vw;
+      width: 25vw;
+      height: 25vw;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      h3 {
+        color: $green;
+      }
+    }
+
+    h3 {
+      font-size: 10vw;
+      font-weight: normal;
+
+      @include breakpoint(small, landscape) {
+        font-size: 3.2vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 3.2vw;
+      }
+    }
+
+    &.ambiente {
+      background-image: url('../../../../assets/images/icon-ambiente-blue.png');
+      &:hover {
+        background-image: url('../../../../assets/images/icon-ambiente-green.png');
+      }
+    }
+
+    &.lectura {
+      background-image: url('../../../../assets/images/icon-lectura-blue.png');
+      &:hover {
+        background-image: url('../../../../assets/images/icon-lectura-green.png');
+      }
+    }
+
+    &.matematica {
+      background-image: url('../../../../assets/images/icon-matematica-blue.png');
+      &:hover {
+        background-image: url('../../../../assets/images/icon-matematica-green.png');
+      }
+    }
+
+  }
+}
+
+section.founders {
+  background-color: $blue;
+  background-image: url('../../../../assets/images/background-trees-movil.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: $white;
+  min-height: 152vw;
+  overflow-x: hidden;
+  position: relative;
+
+  @include breakpoint(small, landscape) {
+    background-image: url('../../../../assets/images/background-trees.png');
+    min-height: 56vw;
+
+  }
+
+  @include breakpoint(medium) {
+    background-image: url('../../../../assets/images/background-trees.png');
+    min-height: 56vw;
+  }
+
+  .heading {
+    color: $white;
+    position: absolute;
+    top: 40vw;
+    width: 60%;
+    left: 15vw;
+
+    @include breakpoint(small, landscape) {
+      bottom: 13vw;
+      left: 6vw;
+      top: unset;
+      width: 25vw;
+    }
+
+    @include breakpoint(medium) {
+      bottom: 13vw;
+      left: 6vw;
+      top: unset;
+      width: 25vw;
+    }
+
+    h2 {
+      font-size: 8vw;
+
+      @include breakpoint(small, landscape) {
+        font-size: 3.3vw;
+
+      }
+
+      @include breakpoint(medium) {
+        font-size: 3.3vw;
+      }
+    }
+
+    p {
+      font-size: 4.5vw;
+      margin: 1.5vw 0;
+
+      @include breakpoint(small, landscape) {
+        font-size: 1.8vw;
+        margin: 1vw 0;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 1.8vw;
+        margin: 1vw 0;
+      }
+    }
+  }
+
+  owl-carousel-o {
+    &.founders-carousel {
+      position: absolute;
+      bottom: 20vw;
+      display: block;
+      left: 12vw;
+      width: 130%;
+
+      @include breakpoint(small, landscape) {
+        bottom: 10vw;
+        left: 35vw;
+        width: 80%;
+      }
+
+      @include breakpoint(medium) {
+        bottom: 10vw;
+        left: 35vw;
+        width: 80%;
+      }
+    }
+  }
+}

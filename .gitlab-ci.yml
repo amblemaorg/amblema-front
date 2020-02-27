@@ -1,0 +1,116 @@
+stages:
+  - qa-update
+  - qa-deploy
+  - staging-update
+  - staging-deploy
+
+variables:
+  QA_CONTAINER_NAME: "amblema_front_qa"
+  STAGING_CONTAINER_NAME: "amblema_front_staging"
+
+  # Path to QA
+  PATH_FOLDER_QA: /home/amblema/amblema-front/qa
+  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema-front
+
+  # Path to staging
+  PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema-front
+
+# Jobs for QA environment
+
+qa-update:
+  stage: qa-update
+  script:
+    - if ! [ -d $PATH_PROJECT_QA ]; then
+    - mkdir -p $PATH_PROJECT_QA
+    - cd $PATH_PROJECT_QA
+    - git clone -b qaestable --single-branch $CI_REPOSITORY_URL
+    - else
+    - cd $PATH_PROJECT_QA
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "joseaguerrero"
+    - git stash
+    - git pull $CI_REPOSITORY_URL qaestable
+    - fi
+  tags:
+    - amblema
+  only:
+    - qaestable
+
+qa-run-tests:
+  stage: qa-deploy
+  image: devbinaural/angular:8.0.0
+  script:
+    - npm install && ng test --browsers ChromeHeadlessNoSandbox --watch=false
+  tags:
+    - amblema-angular
+  only:
+    - qaestable
+  when: manual
+
+qa-deploy:
+  stage: qa-deploy
+  script:
+    - cd $PATH_PROJECT_QA
+    # - if ! docker ps --format '{{.Names}}' | grep -w $QA_CONTAINER_NAME &> /dev/null; then
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME up -d
+    - docker exec -it $QA_CONTAINER_NAME bash -c "cd /home/amblema && npm install && npm run build"
+  tags:
+    - amblema
+  only:
+    - qaestable
+
+qa-turn-off:
+  stage: qa-deploy
+  script:
+    - cd $PATH_PROJECT_QA
+    - rm -rf dist/
+  tags:
+    - amblema
+  only:
+    - qaestable
+  when: manual
+
+# Jobs for Staging environment
+
+staging-update:
+  stage: staging-update
+  script:
+    - if ! [ -d $PATH_PROJECT_STAGING ]; then
+    - mkdir -p $PATH_PROJECT_STAGING
+    - cd $PATH_PROJECT_STAGING
+    - git clone -b staging --single-branch $CI_REPOSITORY_URL
+    - else
+    - cd $PATH_PROJECT_STAGING
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "joseaguerrero"
+    - git stash
+    - git pull $CI_REPOSITORY_URL staging
+    - fi
+  tags:
+    - amblema
+  only:
+    - staging
+
+staging-deploy:
+  stage: staging-deploy
+  script:
+    - cd $PATH_PROJECT_STAGING
+    # - if ! docker ps --format '{{.Names}}' | grep -w $STAGING_CONTAINER_NAME &> /dev/null; then
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME up -d
+    - docker exec -it $STAGING_CONTAINER_NAME bash -c "cd /home/amblema && npm install && npm run build"
+  tags:
+    - amblema
+  only:
+    - staging
+
+staging-turn-off:
+  stage: staging-deploy
+  script:
+    - cd $PATH_PROJECT_STAGING
+    - rm -rf dist/
+  tags:
+    - amblema
+  only:
+    - staging
+  when: manual

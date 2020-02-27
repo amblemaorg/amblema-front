@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
