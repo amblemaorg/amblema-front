@@ -106,8 +106,115 @@ p {
   display: block;
 }
 
-owl-carousel-o {
+section.pillars {
+  web-bg-heading {
+    .bg-heading {
+      h2 {
+        font-size: 7vw !important;
+        font-weight: normal !important;
+        margin: 0 !important;
+        text-align: center !important;
+        width: 100% !important;
 
+        @include breakpoint(small, landscape) {
+          font-size: 3vw !important;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 3vw !important;
+        }
+      }
+    }
+
+    .line {
+      &.blue {
+        height: 10vw !important;
+        right: -18vw !important;
+        width: 60% !important;
+
+        @include breakpoint(small, landscape) {
+          height: 5vw !important;
+          right: -30% !important;
+          width: 40% !important;
+        }
+
+        @include breakpoint(medium) {
+          height: 5vw !important;
+          right: -30% !important;
+          width: 40% !important;
+        }
+      }
+      &.green {
+        height: 10vw !important;
+        left: 2vw !important;
+        top: -1vw !important;
+        width: 95% !important;
+
+        @include breakpoint(small, landscape) {
+          height: 4vw !important;
+          left: 20% !important;
+          width: 60% !important;
+        }
+
+        @include breakpoint(medium) {
+          height: 4vw !important;
+          left: 20% !important;
+          width: 60% !important;
+        }
+      }
+    }
+  }
+}
+
+// Styles for Owl Carousels
+owl-carousel-o {
+  // Founders owl carousel in Home page
+  &.founders-carousel {
+    .owl-nav {
+      top: -40% !important;
+
+      @include breakpoint(small, landscape) {
+        top: 80% !important;
+        left: -37% !important;
+      }
+
+      @include breakpoint(medium) {
+        top: 80% !important;
+        left: -37% !important;
+      }
+
+      .owl-prev,
+      .owl-next {
+        &:before {
+          color: $white !important;
+        }
+      }
+
+      .owl-prev {
+        left: 0 !important;
+      }
+      .owl-next {
+        right: -20vw !important;
+
+        @include breakpoint(small, landscape) {
+          right: -8vw !important;
+        }
+
+        @include breakpoint(medium) {
+          right: -8vw !important;
+        }
+      }
+    }
+  }
+
+  // Three pillars owl carousel in home page
+  &.pillars-carousel-home {
+    .owl-next {
+      right: -92vw !important;
+    }
+  }
+
+  // Three pillars owl carousel in about us page
   &.pillars-carousel {
     .owl-carousel {
       width: 80%;
@@ -121,6 +228,7 @@ owl-carousel-o {
     }
   }
 
+  // Awards owl carousel in about us page
   &.awards-carousel {
     .owl-stage {
       display: flex;
@@ -130,12 +238,20 @@ owl-carousel-o {
       }
     }
 
+    .owl-prev {
+      @include breakpoint(large) {
+        left: 1vw !important;
+      }
+    }
+
     .owl-next {
       @include breakpoint(large) {
-        right: -99vw !important;
+        right: -98vw !important;
       }
     }
   }
+
+  // Godparents owl carousel in godparents page
   &.godparents-carousel {
     .owl-carousel {
       width: 80%;
@@ -168,6 +284,7 @@ owl-carousel-o {
     }
   }
 
+  // General styles for owl carousels
   .owl-carousel {
     position: relative;
   }
@@ -183,6 +300,7 @@ owl-carousel-o {
         margin: 0;
         padding: 0;
         position: absolute;
+        transform: scaleY(1.5);
 
         &:hover {
           background: transparent;
@@ -191,13 +309,13 @@ owl-carousel-o {
         &:before {
           color: $blue;
           font-family: 'arrows';
-          font-size: 8vw;
+          font-size: 6vw;
           @include breakpoint(small, landscape) {
-            font-size: 3vw;
+            font-size: 2vw;
           }
 
           @include breakpoint(medium) {
-            font-size: 3vw;
+            font-size: 2vw;
           }
         }
       }
