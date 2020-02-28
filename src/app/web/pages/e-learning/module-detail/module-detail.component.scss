@@ -26,6 +26,8 @@ p, button, a, li {
 
 .module-detail-container {
     @extend %padding-conts;
+    @include mediabreak(large,landscape) { padding: 4rem 4rem 2rem 4rem; }
+    @include mediabreak(larger,landscape,true,1366px) { padding: 5rem 6rem 2rem 6rem; }
 
     .main-info {
         .module-title {            
@@ -38,14 +40,27 @@ p, button, a, li {
             @include mediabreak(large,portrait) {
                 order: 1;
             }
+            @include mediabreak(large,landscape) { margin-bottom: 2.4rem !important; }
+            @include mediabreak(larger,landscape,true,1600px) {
+                margin-bottom: 4rem !important;
+                margin-top: 1rem;
+            }
         }        
 
         h1 {
             font-weight: bold;
             color: map-get($color_map, soft-green);
+
+            @include mediabreak(large,landscape) { font-size: 2.25rem !important; }
+            @include mediabreak(larger,landscape,true,1600px) { font-size: 3rem !important; }
+            @include mediabreak(larger,landscape,true,1900px) { font-size: 3.25rem !important; }
         }
         h3{
             color: map-get($color_map, soft-green);
+
+            @include mediabreak(large,landscape) { font-size: x-large !important; }
+            @include mediabreak(larger,landscape,true,1600px) { font-size: 1.65rem !important; }
+            @include mediabreak(larger,landscape,true,1900px) { font-size: 1.85rem !important; }
         }
 
         .bar {
@@ -57,6 +72,17 @@ p, button, a, li {
             @include mediabreak(small,landscape,true,640px) {
                 display: inline-block !important;
             }
+            @include mediabreak(large,landscape) {
+                height: 4rem;
+                margin-left: 1.5rem !important;
+                margin-right: 1.5rem !important;
+            }
+            @include mediabreak(larger,landscape,true,1600px) {     
+                height: 5rem;
+                margin-left: 2rem !important;
+                margin-right: 2rem !important;
+            }
+            @include mediabreak(larger,landscape,true,1900px) { height: 5.5rem; }
         }
 
         //
@@ -65,8 +91,14 @@ p, button, a, li {
             @extend %bold-blue;
         }
         ul {
+            @include mediabreak(large,landscape) { line-height: 1.6; }
+
             li {
                 color: map-get($color_map, blue);
+
+                @include mediabreak(large,landscape) { font-size: 110% !important; }
+                @include mediabreak(larger,landscape,true,1600px) { font-size: 115% !important; }
+                @include mediabreak(larger,landscape,true,1900px) { font-size: 122% !important; }
             }
         }
 
@@ -77,6 +109,10 @@ p, button, a, li {
             @include mediabreak(large,portrait) {
                 order: 3;
                 margin-top: 2rem;
+            }
+
+            h4:first-child {
+                @include mediabreak(larger,landscape,true,1600px) { margin-bottom: 2rem !important; }
             }
         }
         .initial-learning {
@@ -89,6 +125,13 @@ p, button, a, li {
             @include mediabreak(large,portrait) {
                 order: 2;
             }
+            @include mediabreak(large,landscape) { padding-inline-end: 4rem !important; }
+            @include mediabreak(larger,landscape,true,1366px) { padding-inline-end: 8rem !important; }
+            @include mediabreak(larger,landscape,true,1600px) { padding-inline-end: 12rem !important; }
+
+            h4 {
+                @include mediabreak(larger,landscape,true,1600px) { margin-bottom: 1.75rem !important; }
+            }
 
             p {                
                 color: map-get($color_map, blue);
@@ -100,8 +143,20 @@ p, button, a, li {
     }
     
     .gallery {
-        @include mediabreak(small,landscape,true,640px) {
-            margin-top: 2rem;
+        @include mediabreak(small,landscape,true,640px) { margin-top: 2rem; }
+        @include mediabreak(larger,landscape,true,1366px) { margin-top: 4rem; }
+
+        .col-sm-9 {
+            @include mediabreak(larger,landscape,true,1600px) {
+                flex: 0 0 80%;
+                max-width: 80%   
+            }            
+        }
+        .col-sm-3 {
+            @include mediabreak(larger,landscape,true,1600px) {
+                flex: 0 0 20%;
+                max-width: 20%   
+            }            
         }
 
         .carousel {
@@ -122,6 +177,11 @@ p, button, a, li {
                 @include mediabreak(large,portrait) {
                     width: 69.5vw;
                 }
+                @include mediabreak(large,landscape) {
+                    width: 100%;
+                    height: 41.5vw;
+                }
+                @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
             }
 
             h6 {                
@@ -146,6 +206,7 @@ p, button, a, li {
             }
             .image-item {
                 display: flex; align-items: center;
+                cursor: pointer;
                                 
                 @include mediabreak(small,landscape,true,640px) {
                     margin-bottom: 0 !important;
@@ -168,6 +229,18 @@ p, button, a, li {
                         @include img-redo;
                         min-height: 13vw;max-height: 13vw;                        
                     }
+                    @include mediabreak(large,landscape) {
+                        min-width: unset;
+                        max-width: unset;
+                        width: 87%;
+                        min-height: 12vw;
+                        max-height: 12vw;
+                    }
+                    @include mediabreak(larger,landscape,true,1366px) { min-height: 10vw; max-height: 10vw; }
+                    @include mediabreak(larger,landscape,true,1600px) { 
+                        min-height: 10.3vw;
+                        max-height: 10.3vw;
+                    }
                 }
                 p {                    
                     color: map-get($color_map, blue);
@@ -186,40 +259,56 @@ p, button, a, li {
                 }
             }            
         }
-    }
-    .image-desc {
-        display: none;
-        @extend %bold-blue;
-        opacity: 1;
-        -webkit-transition: opacity .75s;transition: opacity .75s;
-        -webkit-transition-delay: .25s;transition-delay: .25s;
-
-        @mixin image-desc-redo { display: inline-block; width: 73.25%; }
-        @include mediabreak(small,portrait) {
-            @include image-desc-redo;
-            font-size: larger;
-            margin-top: -1rem;
-            margin-bottom: 3rem !important;
-        }
-        @include mediabreak(small,landscape,true,640px) {
-            @include image-desc-redo;
-        }
-        @include mediabreak(large,portrait) {
-            font-size: x-large;
-            margin-top: 0;
-        }
-
-        &.hidden {
-            height: 0; width: 0;
-            overflow: hidden;
-            margin: 0 !important;
-            opacity: 0;
-        }
     }    
+    .image-desc-container {
+        @include mediabreak(large, landscape) { margin-bottom: 6rem; }
+
+        .image-desc {
+            display: none;
+            @extend %bold-blue;
+            opacity: 1;
+            -webkit-transition: opacity .75s;transition: opacity .75s;
+            -webkit-transition-delay: .25s;transition-delay: .25s;
+    
+            @mixin image-desc-redo { display: inline-block; width: 73.25%; }
+            @include mediabreak(small,portrait) {
+                @include image-desc-redo;
+                font-size: larger;
+                margin-top: -1rem;
+                margin-bottom: 3rem !important;
+            }
+            @include mediabreak(small,landscape,true,640px) {
+                @include image-desc-redo;
+            }
+            @include mediabreak(large,portrait) {
+                font-size: x-large;
+                margin-top: 0;
+            }
+            @include mediabreak(large,landscape) { font-size: 1.25rem !important; width: 75.25%; }
+            @include mediabreak(larger,landscape,true,1600px) { width: 80%; }
+            @include mediabreak(larger,landscape,true,1900px) { font-size: 1.75rem !important; }
+    
+            &.hidden {
+                height: 0; width: 0;
+                overflow: hidden;
+                margin: 0 !important;
+                opacity: 0;
+            }
+        }  
+    }      
 
     .description {
         @include mediabreak(small,landscape,true,640px) {
             margin-top: 2rem;
+        }
+        @include mediabreak(large,landscape) {
+            width: 82%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @include mediabreak(larger,landscape,true,1900px) {
+            margin-top: 10rem;
+            margin-bottom: 4rem;
         }
 
         h4 {
@@ -237,7 +326,10 @@ p, button, a, li {
     @include mediabreak(small,landscape,true,640px) {
         margin-top: 2rem;
     }
-
+    owl-carousel ::ng-deep .owl-carousel .owl-stage {
+        cursor: pointer;
+        cursor: ew-resize;
+    }
     owl-carousel ::ng-deep .owl-carousel .owl-item img {
         min-width: 70vw; max-width: 70vw;
         min-height: 70vw; max-height: 70vw;
@@ -247,6 +339,13 @@ p, button, a, li {
         @include mediabreak(small,landscape,true,640px) {
             min-width: 25vw;max-width: 25vw;min-height: 25vw;max-height: 25vw;
             margin: unset;
+        }
+        @include mediabreak(large,landscape) {
+            min-width: unset;
+            max-width: unset;
+            width: calc((100% / 6) * 6);
+            min-height: 16.65vw;
+            max-height: 16.65vw;
         }
     }
     owl-carousel ::ng-deep .owl-theme .owl-nav {
@@ -291,6 +390,11 @@ p, button, a, li {
         @include mediabreak(small,landscape,true,640px) {
             @include top-title-redo;
         }
+        @include mediabreak(large,landscape) { margin-top: 5rem; margin-bottom: 2rem !important; }
+        @include mediabreak(larger,landscape,true,1900px) {
+            margin-top: 8rem;
+            margin-bottom: 4rem !important;
+        }
 
         h2 {
             background: map-get($color_map, soft-green);
@@ -301,6 +405,16 @@ p, button, a, li {
             @include mediabreak(small,landscape,true,640px) {
                 padding: 1rem 2rem;
                 padding-left: 5.5rem;
+            }
+            @include mediabreak(large,landscape) { font-size: 2.25rem; }
+            @include mediabreak(larger,landscape,true,1366px) {
+                font-size: 2.5rem;
+                padding-left: 8rem;
+            }
+            @include mediabreak(larger,landscape,true,1900px) {
+                font-size: 3rem;
+                padding: 1.5rem 2rem;
+                padding-left: 10rem;
             }
         }
         h4 {
@@ -327,19 +441,21 @@ p, button, a, li {
             margin-left: auto;
             margin-right: auto;  
                       
-            @include mediabreak(small,landscape,true,640px) {
-                width: 80%;
-            }
+            @include mediabreak(small,landscape,true,640px) { width: 80%; }
+            @include mediabreak(large,landscape) { width: 70%; }
+            @include mediabreak(larger,landscape,true,1366px) { width: 62%; }
+            @include mediabreak(larger,landscape,true,1900px) { margin-bottom: 1.5rem; }
         }
 
         h3 {
             font-weight: bold;
 
-            @include mediabreak(small,landscape,true,640px) {
-                margin-top: 1.5rem !important;
-            }
-            @include mediabreak(medium,landscape,true,800px) {
-                margin-left: -1.5rem;
+            @include mediabreak(small,landscape,true,640px) { margin-top: 1.5rem !important; }
+            @include mediabreak(medium,landscape,true,800px) { margin-left: -1.5rem; }
+            @include mediabreak(large,landscape) {
+                text-align: left;
+                margin-left: 0;
+                padding-inline-start: 3rem !important;
             }
         }
 
@@ -386,9 +502,18 @@ p, button, a, li {
                 padding-inline-start: 3rem;
                 padding-inline-end: 3rem;
             }
+            @include mediabreak(large,landscape) {
+                @include button-pad;
+                margin-top: 1.25rem;
+                margin-bottom: 2.5rem !important;
+            }
 
-            &:active, &:hover {
+            &:active {
                 background: transparent;
+            }
+            &:hover {
+                background: map-get($color_map, blue);
+                color: #fff;
             }
             &:focus {
                 box-shadow: none;
@@ -422,6 +547,10 @@ p, button, a, li {
                 color: #fff;
                 opacity: 1;                
 
+                @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
+                @include mediabreak(larger,landscape,true,1400px) { font-size: 1.5rem !important; }
+                @include mediabreak(larger,landscape,true,1900px) { font-size: 1.75rem !important; }
+
                 &:focus {
                     outline: none;
                 }
@@ -447,12 +576,23 @@ p, button, a, li {
             h2 {
                 @include mediabreak(small,portrait) { font-size: 2.5rem; }
                 @include mediabreak(large,portrait) { font-size: 3rem; }
+                @include mediabreak(larger,landscape) { font-size: 2.5rem; }
+                @include mediabreak(larger,landscape,true,1400px) { font-size: 3rem; }
+                @include mediabreak(larger,landscape,true,1900px) {
+                    font-size: 3.5rem;
+                    margin-bottom: 2rem !important;
+                }
             }
             p {
                 @include mediabreak(medium,landscape,true,960px) {
                     width: 85%;
                     margin-left: auto;
                     margin-right: auto;
+                }
+                @include mediabreak(larger,landscape,true,1600px) { width: 70%; }
+                @include mediabreak(larger,landscape,true,1900px) { 
+                    width: 60%; 
+                    margin-bottom: 2.5rem !important;
                 }
             }
 
@@ -467,6 +607,7 @@ p, button, a, li {
                     justify-content: center;
                     column-gap: 3rem;
                 }
+                @include mediabreak(large,landscape) { grid-template-columns: auto auto; }
 
                 button {
                     width: 100%;
@@ -476,9 +617,18 @@ p, button, a, li {
 
                     @include mediabreak(small,landscape,true,640px) { width: 40%; }
                     @include mediabreak(medium,landscape,true,800px) { width: 100%; }
+                    @include mediabreak(large,landscape) { 
+                        @include button-pad; 
+                        border: 1px solid #fff;
+                    }
     
                     &:focus {
                         box-shadow: none;
+                    }
+                    &:hover {
+                        background: map-get($color_map, blue);
+                        color: #fff;
+                        border-color: map-get($color_map, blue);
                     }
                 }  
             }      

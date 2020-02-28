@@ -29,6 +29,8 @@ p, button, a, li {
         }
         p {            
             @include mediabreak(large,landscape) { width: 80%; }
+            @include mediabreak(larger,landscape,true,1600px) { width: 70%; }
+            @include mediabreak(larger,landscape,true,1900px) { width: 62%; }
         }
         //
 
@@ -48,6 +50,10 @@ p, button, a, li {
             &:focus {
                 box-shadow: none;
             }
+            &:hover {
+                background: transparent;
+                color: map-get($color_map, blue);
+            }
         }        
     }
 
@@ -64,6 +70,16 @@ p, button, a, li {
                 padding-inline-end: 2.5rem;
                 padding-block-start: 1.25rem !important;
             }
+            @include mediabreak(larger,landscape,true,1600px) { 
+                padding-bottom: 1.2rem !important;
+                padding-top: 1.2rem !important;
+                margin-bottom: 1rem;
+            }
+            @include mediabreak(larger,landscape,true,1900px) { 
+                padding-bottom: 1.4rem !important;
+                padding-top: 1.4rem !important;
+                padding-left: 2.5rem;
+            }
 
             h2 {
                 font-size: 1.25rem;
@@ -72,6 +88,8 @@ p, button, a, li {
                 @include mediabreak(small,portrait) { font-size: 1.75rem; }
                 // desktop
                 @include mediabreak(large,landscape) { font-size: 1.4rem; }
+                @include mediabreak(larger,landscape,true,1600px) { font-size: x-large; }
+                @include mediabreak(larger,landscape,true,1900px) { font-size: xx-large; }
             }
             button {                
                 border: 0;
@@ -93,8 +111,12 @@ p, button, a, li {
                     @include mediabreak(large,landscape) { display: none; }
                 }
 
-                &:active, &:hover {
+                &:active {
                     background: transparent;
+                }
+                &:hover {
+                    background: map-get($color_map, blue);
+                    color: #fff;
                 }
                 &:focus {
                     box-shadow: none;

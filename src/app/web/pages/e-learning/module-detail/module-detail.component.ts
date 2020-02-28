@@ -98,6 +98,10 @@ export class ModuleDetailComponent implements OnInit {
           640 : {
             items : this.isPortrait? 1:4,
             nav: this.isPortrait? true:false
+          },
+          992 : {
+            items : this.isPortrait? 1:6,
+            nav: this.isPortrait? true:false
           }
       }
     };
