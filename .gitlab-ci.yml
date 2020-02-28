@@ -35,7 +35,7 @@ qa-run-tests:
   stage: qa-testing
   image: devbinaural/angular:8.0.0
   tags:
-    - amblema-angular
+    - amblema-front
   <<: *test
   only:
     refs:
@@ -69,9 +69,9 @@ qa-deploy:
     # - if ! docker ps --format '{{.Names}}' | grep -w $QA_CONTAINER_NAME &> /dev/null; then
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME up -d
     # - docker exec -i $QA_CONTAINER_NAME bash -c "cd /home/amblema && npm install && npm run build"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm install"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm run build"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm run build:ssr && npm run serve:ssr"
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr && npm run serve:ssr"
   tags:
     - amblema
   only:
@@ -105,7 +105,7 @@ staging-run-tests:
   stage: staging-testing
   image: devbinaural/angular:8.0.0
   tags:
-    - amblema-angular
+    - amblema-front
   <<: *test
   only:
     refs:
@@ -139,9 +139,9 @@ staging-deploy:
     # - if ! docker ps --format '{{.Names}}' | grep -w $STAGING_CONTAINER_NAME &> /dev/null; then
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME up -d
     # - docker exec -i $STAGING_CONTAINER_NAME bash -c "cd /home/amblema && npm install && npm run build"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm install"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm run build"
-    - docker-compose exec -T web /bin/bash -c "cd /home/amblema/ && npm run build:ssr && npm run serve:ssr"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr && npm run serve:ssr"
   tags:
     - amblema
   only:
