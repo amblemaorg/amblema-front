@@ -2,10 +2,6 @@
 @import 'scss/variables';
 @import 'scss/elements/headings';
 
-h1 {
-  display: none;
-}
-
 section.about-us {
   background-color: $blue;
   display: flex;
@@ -66,7 +62,7 @@ section.about-us {
       margin-bottom: 0;
       padding: 0 18% 0 9%;
       text-align: left;
-      width: 25%;
+      width: 50%;
     }
 
     @include breakpoint(medium) {
@@ -74,7 +70,7 @@ section.about-us {
       margin-bottom: 0;
       padding: 0 18% 0 9%;
       text-align: left;
-      width: 25%;
+      width: 50%;
     }
   }
 
@@ -244,6 +240,15 @@ section.pillars {
       }
     }
 
+  }
+}
+
+section.social-impact {
+  background-color: $blue;
+  color: $white;
+
+  .heading {
+    color: $white;
   }
 }
 
