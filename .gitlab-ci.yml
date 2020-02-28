@@ -36,7 +36,6 @@ qa-run-tests:
   image: devbinaural/angular:8.0.0
   tags:
     - amblema-angular
-    - testing
   <<: *test
   only:
     refs:
@@ -107,7 +106,6 @@ staging-run-tests:
   image: devbinaural/angular:8.0.0
   tags:
     - amblema-angular
-    - testing
   <<: *test
   only:
     refs:
