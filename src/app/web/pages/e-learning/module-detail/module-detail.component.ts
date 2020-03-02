@@ -51,7 +51,7 @@ export class ModuleDetailComponent implements OnInit {
   isLandscapeCurrent = false;
 
   constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document) { 
-    this.isBrowser = globals.isBrowser;
+    this.isBrowser = globals.isBrowser;    
   }
 
   ngOnInit() {

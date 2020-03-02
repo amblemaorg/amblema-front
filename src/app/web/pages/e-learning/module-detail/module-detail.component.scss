@@ -167,6 +167,11 @@ p, button, a, li {
             }            
         }
 
+        ::ng-deep .owl-carousel {
+            -webkit-transition: opacity .25s;
+            transition: opacity .25s;
+        }
+
         .carousel {           
             owl-carousel ::ng-deep .owl-carousel .owl-item {
                 .owl-video-wrapper{
@@ -675,4 +680,12 @@ p, button, a, li {
             }      
         }
     }    
+}
+
+
+::ng-deep .owl-refresh {
+    opacity: 0 !important;
+}
+::ng-deep .owl-loaded {
+    opacity: 1 !important;
 }

@@ -53,4 +53,5 @@ $z-index-higher: 3;
       width: auto !important;
       padding: 0.45rem 0.85rem !important;
     }
+    @include mediabreak(larger,landscape,true,1900px) { min-width: 12rem !important; }
   }
