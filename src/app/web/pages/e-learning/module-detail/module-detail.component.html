@@ -30,25 +30,33 @@
         <div class="carousel col-sm-9 px-0">
             <owl-carousel #owlElement
                 [options]="carouselOps"
-                [items]="imgs"
+                [items]="imgvid"
                 [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-                <div *ngFor="let img of imgs">
-                    <img [src]="img.img" [alt]="img.info">  
+                <div *ngFor="let img of imgvid; index as i">
+                    <img *ngIf="i<2" [src]="img.img" [alt]="img.info">  
+                    <a *ngIf="i>1" class="owl-video" [href]="img.img"></a>
                     <h6 class="my-4">{{ img.info }}</h6>     
                 </div>
             </owl-carousel>
         </div>
     
         <div class="images col-sm-3 px-0">
-            <div [class.hidden-img]="shown==i" class="image-item mb-3" *ngFor="let img of imgs; index as i" (click)="goToImg(i)">
-                <img [src]="img.img" [alt]="img.info" class="mr-3">
-                <p><small>{{ img.info }}</small></p>
-            </div>
+            <owl-carousel #imgsElement
+                [options]="carouselOpsImgs"
+                [items]="imgvid"
+                [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
+                <div class="image-item mb-3" *ngFor="let img of imgvid; index as i" (click)="goToImg(i)">
+                    <img *ngIf="i<2" [src]="img.img" [alt]="img.info">
+                    <div class="over-video" *ngIf="i>1"></div> 
+                    <a *ngIf="i>1" class="owl-video" [href]="img.img"></a>
+                    <p class="ml-3"><small>{{ img.info }}</small></p>    
+                </div>
+            </owl-carousel>           
         </div>
     </div>
     <div class="image-desc-container d-flex">
-        <h6 class="mb-4 image-desc" *ngFor="let img of imgs; index as i" [class.hidden]="i!=shown">{{ img.info }}</h6>
-    </div>    
+        <h6 class="mb-4 image-desc" *ngFor="let img of imgvid; index as i" [class.hidden]="i!=shown">{{ img.info }}</h6>
+    </div>
     
     <section class="description">
         <h4 class="mb-4">Lorem ipsum dolor sit amet consectetur</h4>
