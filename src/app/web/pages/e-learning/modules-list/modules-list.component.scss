@@ -37,15 +37,16 @@ p, button, a, li {
         button {
             background: map-get($color_map, blue);
             border: 0;
-            width: 100%;
-            
+            width: 100%;         
+                    
             @include mediabreak(small,landscape,true,640px) { width: auto; }
             @include mediabreak(large,portrait) { width: auto; }
             @include mediabreak(large,landscape) {
                 @include button-pad; 
                 border: 2px solid map-get($color_map, blue);
-                margin-bottom: 2rem !important;                 
-            }            
+                margin-bottom: 2rem !important;
+                margin-right: 1.5rem;                 
+            }       
 
             &:focus {
                 box-shadow: none;
@@ -111,12 +112,14 @@ p, button, a, li {
                     @include mediabreak(large,landscape) { display: none; }
                 }
 
-                &:active {
+                &:active, &:hover {
                     background: transparent;
                 }
                 &:hover {
-                    background: map-get($color_map, blue);
-                    color: #fff;
+                    @include mediabreak(large,landscape) {
+                        background: map-get($color_map, blue);
+                        color: #fff;
+                    }
                 }
                 &:focus {
                     box-shadow: none;
