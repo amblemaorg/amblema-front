@@ -24,12 +24,15 @@ export class ModulesService {
   getTrashData () : Observable<any> {
     return this.http.get<any>('https://reqres.in/api/users?per_page=12')
   }
-  getMods (): Observable<any> {
-    return of<any>(MODULES)
+  getMod (id): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'learningmodules/' + id)
   }
   // getMods (): Observable<any> {
-  //   return this.http.get<any>(this.baseUrl + 'learningmodules')
+  //   return of<any>(MODULES)
   // }
+  getMods (): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'learningmodules')
+  }
   
 }
 

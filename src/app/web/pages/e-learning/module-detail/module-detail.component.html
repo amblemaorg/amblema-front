@@ -87,11 +87,17 @@
 
     <div class="questions">        
         <div class="d-flex flex-wrap q-item" *ngFor="let question of questions; index as i">
-            <h3 class="col-sm-6 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.desc }}</h3><span class="gapper col-sm-6"></span>
-            <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of question.options; index as j">
+            <h3 class="col-sm-6 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.question }}</h3><span class="gapper col-sm-6"></span>
+            <!-- <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of question.options; index as j">
                 <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? questions[i].answer===j:selectedQuestions[i]===j" [class.incorrect]="incorrectOnes[i]===j" (click)="selectAnswer(i,j)">
                     <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
                     <div class="col-10 text-left">{{ option }}</div>
+                </a>                
+            </div> -->
+            <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
+                <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? question.correctOption===option:selectedQuestions[i]===option" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
+                    <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
+                    <div class="col-10 text-left">{{ getOption(j,question) }}</div>
                 </a>                
             </div>
         </div>
@@ -103,6 +109,7 @@
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>
+    <br *ngIf="completedModule" /><br *ngIf="completedModule" />
 </section>
 
 
