@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-module-detail',
@@ -20,13 +21,22 @@ export class ModuleDetailComponent implements OnInit {
   imgs = [
     {info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://images.theconversation.com/files/69621/original/image-20150121-29731-vsw2b1.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip'},
     {info: 'Rorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.livehappy.com/sites/default/files/styles/article_featured/public/main/articles/Happy-Schools-main-2.jpg?itok=kr6_ASwb'},
-    {info: 'Morem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.irishtimes.com/polopoly_fs/1.3581905.1533031796!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'},
-    {info: 'Sorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.cdc.gov/features/vfcprogram/vfcprogram_456px.jpg'},
+    // {info: 'Morem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.irishtimes.com/polopoly_fs/1.3581905.1533031796!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'},
+    // {info: 'Sorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.cdc.gov/features/vfcprogram/vfcprogram_456px.jpg'},
   ];
+  imgvid = this.imgs.concat([
+    {info: 'Gorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=2i4CbCINjWA'},
+    {info: 'Dorem ipsum dolor sit amet', img: 'https://youtu.be/okpg-lVWLbE'},
+  ]);
+  // imgvid = [
+  //   {info: 'Gorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=HndV87XpkWg'},
+  //   {info: 'Dorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=okpg-lVWLbE'},
+  // ];
 
   img_strip = this.imgs.concat(this.imgs.concat(this.imgs));
 
-  carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut'};
+  carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
+  carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true};
   stackOps:any;
 
   // PREGUNTAS DEL QUIZZ
@@ -43,7 +53,7 @@ export class ModuleDetailComponent implements OnInit {
   isPortrait = true;
   isLandscapeCurrent = false;
 
-  constructor(private moduleService: ModulesService) { 
+  constructor(private moduleService: ModulesService, private sanitizer: DomSanitizer) { 
     this.isBrowser = moduleService.isBrowser;
   }
 
@@ -105,6 +115,10 @@ export class ModuleDetailComponent implements OnInit {
           }
       }
     };
+  }
+
+  videoId(i) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl((this.imgvid[i].img.includes('/watch?'))? (this.imgvid[i].img.split('=').reverse()[0]):(this.imgvid[i].img.split('/').reverse()[0]))
   }
 
 }

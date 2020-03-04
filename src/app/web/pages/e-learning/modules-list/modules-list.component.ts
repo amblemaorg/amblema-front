@@ -25,6 +25,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.moduleService.getMods().subscribe( res => {
       this.modules = res;
+      // console.log(res);
     });  
   }
   ngDoCheck() {    
