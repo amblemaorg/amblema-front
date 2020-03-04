@@ -617,7 +617,7 @@ p, button, a, li {
             @include mediabreak(small,portrait) { top: -0.5rem; }
             
             img {
-                height: 1.5rem;
+                height: 2.25rem;
                 @media screen and (orientation:portrait) and (min-width:360px) { margin-bottom: 0.25rem; }
                 @media screen and (orientation:landscape) and (min-width:640px) { margin-bottom: 0.25rem; }   
             }
@@ -734,6 +734,12 @@ p, button, a, li {
     }    
 }
 #warning-message {
+    .close {
+        @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
+    }
+    .modal-content {
+        width: auto;
+    }
     .modal-header {
         padding: 0.75rem 1rem 0 0;
         border: none;

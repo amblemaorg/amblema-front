@@ -5,6 +5,7 @@ import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
 import { GlobalService } from '../../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
+import { Module, Image, ImaVideo } from '../../../../services/estructure-classes';
 
 @Component({
   selector: 'app-module-detail',
@@ -14,6 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 export class ModuleDetailComponent implements OnInit {
   @ViewChild('owlElement', {static: false}) owlEl:OwlCarousel;
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
+
+  moduleInfo: Module;
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
@@ -26,18 +29,9 @@ export class ModuleDetailComponent implements OnInit {
 
   shown = 0;
 
-  imgs = [
-    {info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://images.theconversation.com/files/69621/original/image-20150121-29731-vsw2b1.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip'},
-    {info: 'Rorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.livehappy.com/sites/default/files/styles/article_featured/public/main/articles/Happy-Schools-main-2.jpg?itok=kr6_ASwb'},
-    // {info: 'Morem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.irishtimes.com/polopoly_fs/1.3581905.1533031796!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'},
-    // {info: 'Sorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://www.cdc.gov/features/vfcprogram/vfcprogram_456px.jpg'},
-  ];
-  imgvid = this.imgs.concat([
-    {info: 'Gorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=2i4CbCINjWA'},
-    {info: 'Dorem ipsum dolor sit amet', img: 'https://youtu.be/okpg-lVWLbE'},
-  ]);
+  imgvid:ImaVideo[];
 
-  img_strip = this.imgs.concat(this.imgs.concat(this.imgs));
+  img_strip:Image[];
 
   carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
   carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true, lazyLoad: true};
@@ -45,12 +39,6 @@ export class ModuleDetailComponent implements OnInit {
 
   // PREGUNTAS DEL QUIZZ
   questions:any;
-  // questions = [
-  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 0, },
-  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 1, },
-  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 2, },
-  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 3, },
-  // ];
 
   selectedQuestions = [];
   incorrectOnes = [];
@@ -63,15 +51,30 @@ export class ModuleDetailComponent implements OnInit {
   constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
               private route: ActivatedRoute) { 
     this.isBrowser = globals.isBrowser;    
+    this.moduleInfo = {
+      id: "",
+      title: "",
+      description: "",
+      secondaryTitle: "",
+      secondaryDescription: "",
+      objectives: [],
+      slider: [],
+      images: [],
+      duration: "",
+      quizzes: [],
+      createdAt: "",
+      updatedAt: ""
+    };
   }
 
   ngOnInit() {
     let modId = this.route.snapshot.params.id;
     this.moduleService.getMod(modId).subscribe(res=>{
-      console.log(res);
-      this.questions = res.quizzes;
-      this.selectedQuestions = this.questions.map(i => {return 'option0'});
-      this.incorrectOnes = this.selectedQuestions.slice();
+      this.moduleInfo = res;
+      this.imgvid = this.moduleInfo.slider;
+      this.img_strip = this.moduleInfo.images;
+      this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
+      this.incorrectOnes = this.selectedQuestions.slice();      
     });
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
@@ -111,7 +114,7 @@ export class ModuleDetailComponent implements OnInit {
   showModal(el,wm) {
     let success = true; // there are not unselected questions
     let wrong = false; // there are not wrong answers
-    this.incorrectOnes = this.questions.map(i => {return 'option0'}); // re-initializing incorrect answers array
+    this.incorrectOnes = this.moduleInfo.quizzes.map(i => {return 'option0'}); // re-initializing incorrect answers array
     let wrongOnes = this.incorrectOnes.slice(); // temporary incorrect array
 
     for (let i = 0; i < this.selectedQuestions.length; i++) {      
@@ -122,7 +125,7 @@ export class ModuleDetailComponent implements OnInit {
         break;
       }
       else {
-        if ( this.selectedQuestions[i]!=this.questions[i].correctOption ) {
+        if ( this.selectedQuestions[i]!=this.moduleInfo.quizzes[i].correctOption ) {
           wrong = true; // there is at least a wrong answer
           wrongOnes[i] = this.selectedQuestions[i]; // setting wrong answer in the temporary array 
         }
@@ -183,6 +186,19 @@ export class ModuleDetailComponent implements OnInit {
           }
       }
     };
+  }
+
+  // estimate converser
+  getEstimate(timing:string) {
+    let time_type = timing.charAt(0)=='0' && timing.charAt(1)=='0' ? 'min': timing.charAt(2)=='0' && timing.charAt(2)=='0' ? 'hr' : 'hrmin';
+    switch (time_type) {
+      case 'min':
+        return ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
+      case 'hr':
+        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' hr';
+      default:
+        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' hr ' + ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
+    }
   }
 
 }
