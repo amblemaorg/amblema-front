@@ -14,10 +14,10 @@
     </div>
     
     <div class="modules-list">    
-        <div class="d-flex module-item py-3 rounded-sm" *ngFor="let module of pageOfItems">
-            <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">{{ module.name }}<i *ngIf="module.done"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
-            <button type="button" class="btn btn-outline-primary text-decoration-none" [routerLink]="['/e-learning/module-detail']">
-                <span class="no-icon">{{ module.done ? 'Ver':'Iniciar'}}</span><span class="icon"><fa-icon *ngIf="!module.done" [icon]="faPlay"></fa-icon><fa-icon *ngIf="module.done" [icon]="faEye"></fa-icon></span>
+        <div class="d-flex module-item py-3 rounded-sm" *ngFor="let module of pageOfItems; index as i">
+            <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">Módulo {{i+1}}<i *ngIf="false"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
+            <button type="button" class="btn btn-outline-primary text-decoration-none" [routerLink]="['/e-learning/module-detail/'+module.id]">
+                <span class="no-icon">{{ false ? 'Ver':'Iniciar'}}</span><span class="icon"><fa-icon *ngIf="true" [icon]="faPlay"></fa-icon><fa-icon *ngIf="false" [icon]="faEye"></fa-icon></span>
             </button>
         </div>        
     </div>
