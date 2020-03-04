@@ -2,6 +2,7 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -14,6 +15,7 @@ const httpOptions = {
 })
 export class ModulesService {
   isBrowser;
+  baseUrl = environment.baseUrl;  
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) { 
     this.isBrowser = isPlatformBrowser(platformId);
@@ -25,6 +27,9 @@ export class ModulesService {
   getMods (): Observable<any> {
     return of<any>(MODULES)
   }
+  // getMods (): Observable<any> {
+  //   return this.http.get<any>(this.baseUrl + 'learningmodules')
+  // }
   
 }
 
