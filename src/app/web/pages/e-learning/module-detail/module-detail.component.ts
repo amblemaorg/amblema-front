@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Inject } from '@angular/core';
+import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { GlobalService } from '../../../../services/global.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-module-detail',
@@ -13,10 +15,16 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('owlElement', {static: false}) owlEl:OwlCarousel;
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
 
+  //? quizz area ------------------------------------------------
+  moduleCoins = 4;
+  completedModule = false;
+  optionsLetters = ['optionA','optionB','optionC','optionD']
+  //? -----------------------------------------------------------
+
   faArrowLeft = faArrowLeft;
   faTimes = faTimes;
 
-  shown = 0;  
+  shown = 0;
 
   imgs = [
     {info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', img: 'https://images.theconversation.com/files/69621/original/image-20150121-29731-vsw2b1.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip'},
@@ -28,52 +36,112 @@ export class ModuleDetailComponent implements OnInit {
     {info: 'Gorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=2i4CbCINjWA'},
     {info: 'Dorem ipsum dolor sit amet', img: 'https://youtu.be/okpg-lVWLbE'},
   ]);
-  // imgvid = [
-  //   {info: 'Gorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=HndV87XpkWg'},
-  //   {info: 'Dorem ipsum dolor sit amet', img: 'https://www.youtube.com/watch?v=okpg-lVWLbE'},
-  // ];
 
   img_strip = this.imgs.concat(this.imgs.concat(this.imgs));
 
   carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
-  carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true};
+  carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true, lazyLoad: true};
   stackOps:any;
 
   // PREGUNTAS DEL QUIZZ
-  questions = [
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-  ];
+  questions:any;
+  // questions = [
+  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 0, },
+  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 1, },
+  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 2, },
+  //   { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 3, },
+  // ];
 
   selectedQuestions = [];
+  incorrectOnes = [];
+  showFillAll = true;
 
   isBrowser;
   isPortrait = true;
   isLandscapeCurrent = false;
 
-  constructor(private moduleService: ModulesService, private sanitizer: DomSanitizer) { 
-    this.isBrowser = moduleService.isBrowser;
+  constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
+              private route: ActivatedRoute) { 
+    this.isBrowser = globals.isBrowser;    
   }
 
   ngOnInit() {
-    this.selectedQuestions = this.questions.map(i => {return -1});
-
+    let modId = this.route.snapshot.params.id;
+    this.moduleService.getMod(modId).subscribe(res=>{
+      console.log(res);
+      this.questions = res.quizzes;
+      this.selectedQuestions = this.questions.map(i => {return 'option0'});
+      this.incorrectOnes = this.selectedQuestions.slice();
+    });
+    
+    this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
+    setTimeout(()=>{
+      this.document.getElementById('completed-message').setAttribute('style','display:none; opacity:1');
+    },1000);    
     this.initOps();
   }
 
   goToImg(i) {
     this.owlEl.to([i]);
+    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(this.shown).setAttribute('style','display:block');
+    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(i).setAttribute('style','display:none');
     this.shown = i;    
+    // to stop playing video
+    this.owlEl.reInit();
   }
 
   letterSequence(i) {
     return i==0? 'A': i==1? 'B': i==2? 'C':'D'
   }
 
-  showModal(el) {
-    el.click();    
+  getOption(j,q) {
+    switch (j) {
+      case 0:
+        return q.optionA;
+      case 1:
+        return q.optionB;
+      case 2:
+        return q.optionC;
+      default:
+        return q.optionD;
+    }
+  }
+
+  //? Function called when validate button is pressed
+  showModal(el,wm) {
+    let success = true; // there are not unselected questions
+    let wrong = false; // there are not wrong answers
+    this.incorrectOnes = this.questions.map(i => {return 'option0'}); // re-initializing incorrect answers array
+    let wrongOnes = this.incorrectOnes.slice(); // temporary incorrect array
+
+    for (let i = 0; i < this.selectedQuestions.length; i++) {      
+      if (this.selectedQuestions[i]=='option0') {
+        success = false; // there is at least an unanswered question
+        this.showFillAll = true;
+        wm.click(); //opening warning modal
+        break;
+      }
+      else {
+        if ( this.selectedQuestions[i]!=this.questions[i].correctOption ) {
+          wrong = true; // there is at least a wrong answer
+          wrongOnes[i] = this.selectedQuestions[i]; // setting wrong answer in the temporary array 
+        }
+      }      
+    }
+    
+    if(success) { // when all questions are answered
+      if (wrong) { // if some of them are wrong
+        this.incorrectOnes = wrongOnes; // setting the incorrect answers
+        if (this.moduleCoins>1) { // decreasing AmbleCoins
+          this.moduleCoins--;
+        }
+        this.showFillAll = false;
+        wm.click(); // opening warning modal
+      } else {
+        this.completedModule = true;
+        el.click(); // opening success modal
+      }      
+    }
   }
 
   selectAnswer(i,j) {
@@ -115,10 +183,6 @@ export class ModuleDetailComponent implements OnInit {
           }
       }
     };
-  }
-
-  videoId(i) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl((this.imgvid[i].img.includes('/watch?'))? (this.imgvid[i].img.split('=').reverse()[0]):(this.imgvid[i].img.split('/').reverse()[0]))
   }
 
 }

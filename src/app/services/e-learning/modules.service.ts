@@ -24,8 +24,14 @@ export class ModulesService {
   getTrashData () : Observable<any> {
     return this.http.get<any>('https://reqres.in/api/users?per_page=12')
   }
+  getMod (id): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'learningmodules/' + id)
+  }
+  // getMods (): Observable<any> {
+  //   return of<any>(MODULES)
+  // }
   getMods (): Observable<any> {
-    return of<any>(MODULES)
+    return this.http.get<any>(this.baseUrl + 'learningmodules')
   }
   // getMods (): Observable<any> {
   //   return this.http.get<any>(this.baseUrl + 'learningmodules')
@@ -35,33 +41,43 @@ export class ModulesService {
 
 const MODULES = [
   {
-    name: 'Module 1',
+    name: 'Módulo 1',
+    done: true,
   },
   {
-    name: 'Module 2',
+    name: 'Módulo 2',
+    done: false,
   },
   {
-    name: 'Module 3',
+    name: 'Módulo 3',
+    done: false,
   },
   {
-    name: 'Module 4',
+    name: 'Módulo 4',
+    done: false,
   },
   {
-    name: 'Module 5',
+    name: 'Módulo 5',
+    done: false,
   },
   {
-    name: 'Module 6',
+    name: 'Módulo 6',
+    done: false,
   },
   {
-    name: 'Module 7',
+    name: 'Módulo 7',
+    done: false,
   },
   {
-    name: 'Module 8',
+    name: 'Módulo 8',
+    done: false,
   },
   {
-    name: 'Module 9',
+    name: 'Módulo 9',
+    done: false,
   },
   {
-    name: 'Module 10',
+    name: 'Módulo 10',
+    done: false,
   },
 ];

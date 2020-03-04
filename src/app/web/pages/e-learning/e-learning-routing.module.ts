@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       // MODULE DETAIL
       {
-        path: 'module-detail',
+        path: 'module-detail/:id',
         // loadChildren: './pages/module-detail/module-detail.module#ModuleDetailModule'  // for angular <=7
         loadChildren: () => import('./module-detail/module-detail.module').then(m => m.ModuleDetailModule), // for angular 8+
       },
