@@ -8,10 +8,11 @@ $color_map: (
     gray: #ebeff5,
     dark-gray: #909090,
     darkest-gray: #626262,
+    red: #f53030,
 );
 
 // z-index
-$z-index-higher: 3;
+$z-index-higher: 4;
 
 %padding-conts {
     padding: 1.5rem 1rem 1rem;

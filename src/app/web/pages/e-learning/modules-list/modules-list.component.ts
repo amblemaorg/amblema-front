@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck, Inject } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
-import { faAngleLeft, faAngleRight, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
 
@@ -14,6 +14,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
   faAngleRight = faAngleRight;
   faPlay = faPlay;
   faEye = faEye;
+  faCheck = faCheck;
 
   modules = []; //! PARA PAGINADOR
   pageOfItems: Array<any>; //! PARA PAGINADOR
