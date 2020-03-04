@@ -14,6 +14,11 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('owlElement', {static: false}) owlEl:OwlCarousel;
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
 
+  //? quizz area ------------------------------------------------
+  moduleCoins = 4;
+  completedModule = false;
+  //? -----------------------------------------------------------
+
   faArrowLeft = faArrowLeft;
   faTimes = faTimes;
 
@@ -38,13 +43,15 @@ export class ModuleDetailComponent implements OnInit {
 
   // PREGUNTAS DEL QUIZZ
   questions = [
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
-    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], },
+    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 0, },
+    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 1, },
+    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 2, },
+    { desc: 'Lorem ipsum', options: ['Respuesta','Respuesta','Respuesta','Respuesta',], answer: 3, },
   ];
 
   selectedQuestions = [];
+  incorrectOnes = [];
+  showFillAll = true;
 
   isBrowser;
   isPortrait = true;
@@ -56,7 +63,11 @@ export class ModuleDetailComponent implements OnInit {
 
   ngOnInit() {
     this.selectedQuestions = this.questions.map(i => {return -1});
-
+    this.incorrectOnes = this.selectedQuestions.slice();
+    this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
+    setTimeout(()=>{
+      this.document.getElementById('completed-message').setAttribute('style','display:none; opacity:1');
+    },1000);    
     this.initOps();
   }
 
@@ -73,8 +84,41 @@ export class ModuleDetailComponent implements OnInit {
     return i==0? 'A': i==1? 'B': i==2? 'C':'D'
   }
 
-  showModal(el) {
-    el.click();    
+  //? Function called when validate button is pressed
+  showModal(el,wm) {
+    let success = true; // there are not unselected questions
+    let wrong = false; // there are not wrong answers
+    this.incorrectOnes = this.questions.map(i => {return -1}); // re-initializing incorrect answers array
+    let wrongOnes = this.incorrectOnes.slice(); // temporary incorrect array
+
+    for (let i = 0; i < this.selectedQuestions.length; i++) {      
+      if (this.selectedQuestions[i]==-1) {
+        success = false; // there is at least an unanswered question
+        this.showFillAll = true;
+        wm.click(); //opening warning modal
+        break;
+      }
+      else {
+        if ( this.selectedQuestions[i]!=this.questions[i].answer ) {
+          wrong = true; // there is at least a wrong answer
+          wrongOnes[i] = this.selectedQuestions[i]; // setting wrong answer in the temporary array 
+        }
+      }      
+    }
+    
+    if(success) { // when all questions are answered
+      if (wrong) { // if some of them are wrong
+        this.incorrectOnes = wrongOnes; // setting the incorrect answers
+        if (this.moduleCoins>1) { // decreasing AmbleCoins
+          this.moduleCoins--;
+        }
+        this.showFillAll = false;
+        wm.click(); // opening warning modal
+      } else {
+        this.completedModule = true;
+        el.click(); // opening success modal
+      }      
+    }
   }
 
   selectAnswer(i,j) {

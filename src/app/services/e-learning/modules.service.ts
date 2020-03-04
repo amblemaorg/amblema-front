@@ -36,32 +36,42 @@ export class ModulesService {
 const MODULES = [
   {
     name: 'Módulo 1',
+    done: true,
   },
   {
     name: 'Módulo 2',
+    done: false,
   },
   {
     name: 'Módulo 3',
+    done: false,
   },
   {
     name: 'Módulo 4',
+    done: false,
   },
   {
     name: 'Módulo 5',
+    done: false,
   },
   {
     name: 'Módulo 6',
+    done: false,
   },
   {
     name: 'Módulo 7',
+    done: false,
   },
   {
     name: 'Módulo 8',
+    done: false,
   },
   {
     name: 'Módulo 9',
+    done: false,
   },
   {
     name: 'Módulo 10',
+    done: false,
   },
 ];
