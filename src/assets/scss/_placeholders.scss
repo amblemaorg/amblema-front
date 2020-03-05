@@ -8,10 +8,11 @@ $color_map: (
     gray: #ebeff5,
     dark-gray: #909090,
     darkest-gray: #626262,
+    red: #f53030,
 );
 
 // z-index
-$z-index-higher: 2;
+$z-index-higher: 4;
 
 %padding-conts {
     padding: 1.5rem 1rem 1rem;
@@ -53,4 +54,5 @@ $z-index-higher: 2;
       width: auto !important;
       padding: 0.45rem 0.85rem !important;
     }
+    @include mediabreak(larger,landscape,true,1900px) { min-width: 12rem !important; }
   }

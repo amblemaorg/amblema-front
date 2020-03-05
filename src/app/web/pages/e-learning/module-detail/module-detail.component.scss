@@ -24,10 +24,48 @@ p, button, a, li {
     @extend %p;
 }
 
+@mixin gallery-height {
+    height: 65vw;
+    @include mediabreak(small,portrait) { height: 46.35vw; }
+    @include mediabreak(small,landscape,true,640px) { height: 46vw; }
+    @include mediabreak(large,landscape) { height: 41.5vw; }
+    @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
+}
+
 .module-detail-container {
     @extend %padding-conts;
     @include mediabreak(large,landscape) { padding: 4rem 4rem 2rem 4rem; }
     @include mediabreak(larger,landscape,true,1366px) { padding: 5rem 6rem 2rem 6rem; }
+
+    .go-back-btn {
+        text-align: right;
+        margin-bottom: 0.75rem;
+
+        @include mediabreak(large,landscape) {
+            margin-bottom: 0;
+            margin-top: -1.75rem;
+        }
+
+        button {
+            background: map-get($color_map, blue);
+            border-color: map-get($color_map, blue);
+            width: auto;         
+                    
+            @include mediabreak(large,landscape) {
+                padding: 0.45rem 0.75rem !important;
+                border: 2px solid map-get($color_map, blue);
+            }             
+            @include mediabreak(larger,landscape,true,1600px) { padding: 0.45rem 0.85rem !important; }
+
+            &:focus {
+                box-shadow: none;
+            }
+            &:hover {
+                background: transparent;
+                color: map-get($color_map, blue);
+            }
+        } 
+    }
 
     .main-info {
         .module-title {            
@@ -159,30 +197,40 @@ p, button, a, li {
             }            
         }
 
-        .carousel {
-            owl-carousel ::ng-deep .owl-carousel .owl-item img {                
-                @include mediabreak(small,portrait) {
-                    width: 67vw;
-                    height: 46.35vw;
-                    object-fit: cover;
+        ::ng-deep .owl-carousel {
+            -webkit-transition: opacity .25s;
+            transition: opacity .25s;
+        }
+
+        .carousel {           
+            owl-carousel ::ng-deep .owl-carousel .owl-item {
+                .owl-video-wrapper{
+                    .owl-video-play-icon {
+                        background-size: 50%;
+                        background-position: center;
+                    }
+                    .owl-video-wrapper .owl-video-play-icon { display: none; }
                 }
-                @include mediabreak(small,landscape,true,640px) {
-                    width: 69.5vw;
-                    height: 46vw;
-                    object-fit: cover;
+                .owl-video-wrapper, img {  
+                    @include gallery-height;    
+                    object-fit: cover;          
+                    @include mediabreak(small,portrait) {
+                        width: 67vw;
+                    }
+                    @include mediabreak(small,landscape,true,640px) {
+                        width: 69.5vw;
+                    }
+                    @include mediabreak(medium,landscape,true,800px) {
+                        width: 67vw;
+                    }
+                    @include mediabreak(large,portrait) {
+                        width: 69.5vw;
+                    }
+                    @include mediabreak(large,landscape) {
+                        width: 100%;
+                    }
                 }
-                @include mediabreak(medium,landscape,true,800px) {
-                    width: 67vw;
-                }
-                @include mediabreak(large,portrait) {
-                    width: 69.5vw;
-                }
-                @include mediabreak(large,landscape) {
-                    width: 100%;
-                    height: 41.5vw;
-                }
-                @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
-            }
+            }                    
 
             h6 {                
                 @extend %bold-blue;
@@ -204,9 +252,34 @@ p, button, a, li {
             @include mediabreak(large,portrait) {
                 @include images-redo;
             }
+
+            owl-carousel ::ng-deep .owl-carousel .owl-stage {
+                @media screen and (orientation:landscape) and (min-width:640px) {
+                    @include gallery-height;    
+                }
+                
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                &::after {
+                    display: none;
+                }
+                
+                .owl-item:first-child { display: none; }
+                .owl-item { width: 100% !important; }
+
+                .owl-video-wrapper{
+                    .owl-video-play-icon {
+                        background-size: 50%;
+                        background-position: center;
+                    }
+                    .owl-video-wrapper .owl-video-play-icon { display: none; }
+                }
+            }
             .image-item {
                 display: flex; align-items: center;
                 cursor: pointer;
+                position: relative;
                                 
                 @include mediabreak(small,landscape,true,640px) {
                     margin-bottom: 0 !important;
@@ -214,8 +287,8 @@ p, button, a, li {
                 @include mediabreak(large,portrait) {
                     margin-bottom: 0 !important;
                 }
-
-                img {
+                
+                img, ::ng-deep .owl-video-wrapper, .over-video {
                     min-width: 33vw;max-width: 33vw;
                     min-height: 22vw;max-height: 22vw;
                     object-fit: cover;
@@ -241,6 +314,14 @@ p, button, a, li {
                         min-height: 10.3vw;
                         max-height: 10.3vw;
                     }
+                }
+                .over-video {
+                    background: transparent;
+                    z-index: 2;
+                    position: absolute;
+                    height: 100% !important;
+                    top: 0;
+                    left: 0;
                 }
                 p {                    
                     color: map-get($color_map, blue);
@@ -482,14 +563,20 @@ p, button, a, li {
         .selected .letter-sequence {
             background: map-get($color_map, soft-green);
             border-color: map-get($color_map, soft-green) !important;
-            color: white;
+            color: #fff;
+            font-weight: bold;
+        }
+        .incorrect .letter-sequence {
+            background: map-get($color_map, red);
+            border-color: map-get($color_map, red) !important;
+            color: #fff;
             font-weight: bold;
         }
     }
 
     .validate-btn {
         button {
-            width: 80%;
+            width: 60%;
             border-color: map-get($color_map, blue);
             color: map-get($color_map, blue);
 
@@ -518,14 +605,25 @@ p, button, a, li {
             &:focus {
                 box-shadow: none;
             }
-        }        
+        } 
+        p {
+            vertical-align: super;
+            top: -0.25rem;
+            position: relative;
+            margin-left: 0.75rem;
+            color: map-get($color_map, blue);
+            font-weight: bold;
+
+            @include mediabreak(small,portrait) { top: -0.5rem; }
+            
+            img {
+                height: 2.25rem;
+                @media screen and (orientation:portrait) and (min-width:360px) { margin-bottom: 0.25rem; }
+                @media screen and (orientation:landscape) and (min-width:640px) { margin-bottom: 0.25rem; }   
+            }
+        }       
     }
 }
-
-.hidden-img {
-    display: none !important;
-}
-
 
 #completed-message {
     .modal-dialog {
@@ -634,4 +732,30 @@ p, button, a, li {
             }      
         }
     }    
+}
+#warning-message {
+    .close {
+        @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
+    }
+    .modal-content {
+        width: auto;
+    }
+    .modal-header {
+        padding: 0.75rem 1rem 0 0;
+        border: none;
+    }
+    .modal-body { 
+        color: map-get($color_map, blue);
+        p{
+            text-align: center;
+        } 
+    }
+}
+
+
+::ng-deep .owl-refresh {
+    opacity: 0 !important;
+}
+::ng-deep .owl-loaded {
+    opacity: 1 !important;
 }
