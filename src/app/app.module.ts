@@ -6,6 +6,11 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from './store/learning-modules.state';
+import { environment } from 'src/environments/environment.prod';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,6 +20,17 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule,
+    // -- NGXS --
+    NgxsModule.forRoot( [
+      ModulesState
+    ],
+    {
+      compatibility: {
+        strictContentSecurityPolicy: true
+      },
+      developmentMode: !environment.production
+    }),
+    NgxsStoragePluginModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent]
