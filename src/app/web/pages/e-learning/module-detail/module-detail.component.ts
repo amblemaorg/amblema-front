@@ -53,6 +53,7 @@ export class ModuleDetailComponent implements OnInit {
     this.isBrowser = globals.isBrowser;    
     this.moduleInfo = {
       id: "",
+      name: "",
       title: "",
       description: "",
       secondaryTitle: "",

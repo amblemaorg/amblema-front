@@ -11,6 +11,6 @@
     </div>
 
     <p class="user-info px-3">
-        <span title="4 AmbleMonedas de 80" class="coins">4 AmbleMonedas</span> | <span class="aproved-modules">40 módulos aprobados de 80</span>
+        <span title="4 AmbleMonedas de 80" class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' AmbleMoneda') : ((coins$ | async) + ' AmbleMonedas') }}</span> | <span class="aproved-modules">{{ (approved_modules$ | async) == 1 ? ((approved_modules$ | async) + ' módulo aprobado') : ((approved_modules$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
     </p>
 </div>

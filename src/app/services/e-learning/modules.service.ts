@@ -36,6 +36,10 @@ export class ModulesService {
   // getMods (): Observable<any> {
   //   return this.http.get<any>(this.baseUrl + 'learningmodules')
   // }
+
+  getCoordinator(id): Observable<any> {
+    return this.http.get<any>(this.baseUrl + `users/${id}?userType=2`)
+  }
   
 }
 

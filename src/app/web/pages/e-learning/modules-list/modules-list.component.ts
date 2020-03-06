@@ -3,6 +3,10 @@ import { DOCUMENT } from "@angular/common";
 import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Module } from '../../../../services/estructure-classes';
+import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
 
 @Component({
   selector: 'app-modules-list',
@@ -21,12 +25,17 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   canCheck = true;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
+  @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
+
+  constructor(@Inject(DOCUMENT) private document: Document, /* private moduleService: ModulesService */) { }
 
   ngOnInit() {
-    this.moduleService.getMods().subscribe( res => {
-      this.modules = res.records;
-    });  
+    // this.moduleService.getMods().subscribe( res => {
+    //   this.modules = res.records;
+    // });  
+    this.modules$.subscribe(res => {
+      this.modules = res;
+    });
   }
   ngDoCheck() {    
     if (this.document.querySelectorAll('jw-pagination .page-item.next-item .page-link').length>0 && this.canCheck) {      
