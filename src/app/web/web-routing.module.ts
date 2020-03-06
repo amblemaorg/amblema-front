@@ -23,6 +23,10 @@ const routes: Routes = [
         path: 'coordinadores',
         loadChildren: () => import('./pages/coordinators/coordinators.module').then( m => m.CoordinatorsModule)
       },
+      {
+        path: 'escuelas',
+        loadChildren: () => import('./pages/school/school.module').then( m => m.SchoolModule)
+      },
     ]
   }
 ];
