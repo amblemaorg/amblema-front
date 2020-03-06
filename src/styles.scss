@@ -378,11 +378,20 @@ owl-carousel-o {
   }
 }
 
+.margin-both-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 //? PARA ESTILIZAR EL PAGINADOR------------------
 jw-pagination {
   .pagination {
       justify-content: center;
       margin-block-start: 1.75rem;
+
+      li {
+        cursor: pointer;
+      }
   }
 
   .page-item.first-item, .page-item.last-item {
@@ -399,6 +408,11 @@ jw-pagination {
       padding: 0.9rem 1.2rem;
 
       @include mediabreak(small,portrait) { font-size: medium; }
+      @include mediabreak(large,landscape) { padding: 0.8rem 1.1rem; font-size: 0.75rem; }
+      @include mediabreak(larger,landscape,true,1900px) {
+        padding: 0.95rem 1.4rem;
+        font-size: 1rem;
+      }
   }
   .page-item.disabled .page-link {
       border-color: $dark-gray;
