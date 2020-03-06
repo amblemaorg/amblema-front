@@ -13,8 +13,14 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-spec-reporter')
     ],
+    files: [
+      "https://maps.googleapis.com/maps/api/js?sensor=false",
+      "src/assets/tests/mocks/maps.googleapis.com-maps-api.js",
+      "src/assets/tests/activated-route-stub.ts",
+    ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      captureConsole: false
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, './coverage/amblema-web'),
