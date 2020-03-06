@@ -36,6 +36,7 @@
     "@nguniversal/module-map-ngfactory-loader": "v8.2.6",
     "@ngxs/storage-plugin": "^3.6.2",
     "@ngxs/store": "^3.6.2",
+    "@types/googlemaps": "^3.39.3",
     "angular-svg-icon": "^8.0.0",
     "bootstrap": "^4.4.1",
     "bootstrap.native": "^2.0.27",

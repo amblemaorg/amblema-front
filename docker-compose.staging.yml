@@ -8,17 +8,20 @@ services:
       - 10512:80
       - 10513:4200
     env_file:
-      - .env
+      - .env.staging
     # environment:
-      # Set enviroment values in .env file or here
+      # Set enviroment values in .env.staging file or here
       # - NGINX_HOST=
       # - NGINX_PORT=
       # - NGINX_ROOT=
       # - SSR_PORT=
+      # - G_MAPS_ID=
+      # - G_ANALYTICS_ID=
     volumes:
       - amblema_front_staging:/home/amblema
     command: >
       /bin/bash -c "envsubst '$$NGINX_HOST$$NGINX_PORT$$NGINX_ROOT$$SSR_PORT' < /home/amblema/vhost-template.conf > /etc/nginx/conf.d/default.conf
+      && envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html
       && exec nginx -g 'daemon off;'"
     networks:
       - default
