@@ -1,9 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { CoordinatorsComponent } from './coordinators.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CoordinatorService } from 'src/app/services/web/coordinator.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CoordinatorsComponent', () => {
     let component: CoordinatorsComponent;
@@ -16,17 +18,19 @@ describe('CoordinatorsComponent', () => {
             imports: [
               BrowserAnimationsModule,
               SharedModule,
-              CarouselModule
-            ]
+              CarouselModule,
+              HttpClientModule
+            ],
+            providers: [CoordinatorService]
         })
         .compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(inject([CoordinatorService], (coordinatorService: CoordinatorService) => {
         fixture = TestBed.createComponent(CoordinatorsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
     it('should create coordinators page', () => {
         expect(component).toBeTruthy();
@@ -37,7 +41,7 @@ describe('CoordinatorsComponent', () => {
       expect(h1Count).toBe(1);
     })
 
-    it('should have a h1 tag in about us section', () => {
+    it('should have a h1 tag in cover section', () => {
       el = fixture.nativeElement.querySelector('section.cover');
       const h1Tag = el.children[1].tagName;
       expect(h1Tag).toBe('H1');

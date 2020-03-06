@@ -1,0 +1,13 @@
+<div class="post-card">
+  <div class="image-wrapper">
+    <img class="post-image" [src]="post.mainImage" [alt]="post.title + ' imagen'"/>
+    <span class="post-date">{{ post.date }}</span>
+  </div>
+  <div class="post-content">
+    <h2 class="post-title" #title>{{ post.title }}</h2>
+    <p class="post-excerpt" #excerpt>{{ post.content }}</p>
+    <a class="read-more d-flex align-items-center" [routerLink]="['post', post.slug]">
+      Leer Más
+    </a>
+  </div>
+</div>

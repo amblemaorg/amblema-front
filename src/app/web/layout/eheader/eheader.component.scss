@@ -116,5 +116,14 @@ p {
             text-align: right;
             margin-bottom: 1rem;
         }
+
+        .coins {
+            img {
+                height: 1.2rem;
+                vertical-align: sub;
+                @include mediabreak(small,portrait) { margin-bottom: 0.1rem; }
+                @include mediabreak(larger,landscape,true,1900px) { margin-bottom: 0.1rem; }
+            }
+        }
     }
 }

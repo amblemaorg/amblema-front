@@ -1,0 +1,20 @@
+<section class="cover">
+  <web-cover [slides]="coverData.slides"></web-cover>
+</section>
+<section class="blog-post d-flex">
+  <section class="post-detail">
+    <div>
+      <div class="image-wrapper">
+        <img class="post-image" [src]="post.mainImage" />
+        <span class="post-date">{{ post.date }}</span>
+      </div>
+      <div class="post">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-content">{{ post.content }}</p>
+      </div>
+    </div>
+  </section>
+  <aside class="sidebar">
+    Plugins
+  </aside>
+</section>
