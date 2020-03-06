@@ -1,0 +1,107 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+section.blog-post {
+  flex-direction: column;
+  padding: 14vw 10vw;
+
+  @include breakpoint(small, landscape) {
+    flex-direction: row;
+    padding: 7vw 8vw;
+  }
+
+  @include breakpoint(medium) {
+    flex-direction: row;
+    padding: 7vw 8vw;
+  }
+
+  section.post-detail {
+    width: 100%;
+
+    @include breakpoint(small, landscape) {
+      width: 65%;
+    }
+
+    @include breakpoint(medium) {
+      width: 65%;
+    }
+
+    .image-wrapper {
+      position: relative;
+
+      img {
+        width: 100%;
+      }
+
+      .post-date {
+        background-color: $blue;
+        bottom: 0;
+        color: $white;
+        font-size: 4vw;
+        left: 0;
+        padding: 2vw;
+        position: absolute;
+        z-index: 10;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2vw;
+          padding: 1vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2vw;
+          padding: 1vw;
+        }
+      }
+    }
+
+    .post {
+      padding: 4vw 0;
+
+      .post-title {
+        color: darkslategray;
+        font-size: 6vw;
+        margin-bottom: 4vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2vw;
+          margin-bottom: 2vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2vw;
+          margin-bottom: 2vw;
+        }
+      }
+
+      .post-content {
+        color: gray;
+        font-size: 4vw;
+        font-weight: normal;
+        margin-bottom: 4vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 1.2vw;
+          margin-bottom: 2vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 1.2vw;
+          margin-bottom: 2vw;
+        }
+      }
+    }
+  }
+
+  aside {
+    width: 100%;
+
+    @include breakpoint(small, landscape) {
+      width: 35%;
+    }
+
+    @include breakpoint(medium) {
+      width: 35%;
+    }
+  }
+}
