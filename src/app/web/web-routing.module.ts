@@ -17,12 +17,12 @@ const routes: Routes = [
       },
       {
         path: 'padrinos',
-        loadChildren: () => import('./pages/godparents/godparents.module').then( m => m.GodparentsModule)
+        loadChildren: () => import('./pages/sponsors/sponsors.module').then( m => m.SponsorsModule)
       },
       {
         path: 'coordinadores',
         loadChildren: () => import('./pages/coordinators/coordinators.module').then( m => m.CoordinatorsModule)
-      }
+      },
     ]
   }
 ];

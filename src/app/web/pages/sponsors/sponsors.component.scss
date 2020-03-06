@@ -45,7 +45,7 @@ owl-carousel-o {
     }
   }
 
-  &.godparents-carousel {
+  &.sponsors-carousel {
     display: block;
     margin-bottom: 20vw;
 
@@ -88,7 +88,9 @@ web-bg-heading {
   }
 }
 
-.godparents {
+.sponsors {
+  min-height: 40vw;
+
   .heading {
     text-align: center;
     margin: 10vw 0;
@@ -103,7 +105,7 @@ web-bg-heading {
   }
 }
 
-.godparents-list {
+.sponsors-list {
   //@include columns(10);
   //display: flex;
   margin: auto;
@@ -114,8 +116,7 @@ web-bg-heading {
     justify-content: space-between;
   }
 
-  .godparent {
-    //@include columns(3);
+  .sponsor {
     color: $blue;
     display: flex;
     flex-direction: column;
@@ -125,19 +126,6 @@ web-bg-heading {
     padding: 0 3vw;
     height: 45%;
 
-/*
-    &:first-child {
-      margin-bottom: 10vw;
-
-      @include breakpoint(small, landscape) {
-        margin-bottom: 4vw;
-      }
-
-      @include breakpoint(medium) {
-        margin-bottom: 4vw;
-      }
-    }
-*/
     .image-wrapper {
       display: flex;
       align-items: center;

@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
-import { GodparentsRoutingModule } from './godparents-routing.module';
-import { GodparentsComponent } from './godparents.component';
+import { SponsorsRoutingModule } from './sponsors-routing.module';
+import { SponsorsComponent } from './sponsors.component';
 
 @NgModule({
   declarations: [
-    GodparentsComponent,
+    SponsorsComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     CarouselModule,
-    GodparentsRoutingModule
+    SponsorsRoutingModule
   ]
 })
-export class GodparentsModule { }
+export class SponsorsModule { }
