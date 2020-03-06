@@ -27,14 +27,14 @@ section.about-us {
 
   @include breakpoint(small, landscape) {
     padding: 6vw 0 12vw;
-    min-height: 40vw;
+    min-height: 55vw;
     background-image: url('../../../../assets/images/leaves-background-desktop.png');
     background-position-y: 0;
   }
 
   @include breakpoint(medium) {
     padding: 6vw 0 12vw;
-    min-height: 40vw;
+    min-height: 55vw;
     background-image: url('../../../../assets/images/leaves-background-desktop.png');
   }
 
@@ -80,6 +80,24 @@ section.about-us {
   }
 }
 
+::ng-deep {
+  owl-carousel-o {
+    &.pillars-carousel {
+      display: flex;
+      .owl-stage {
+        display: flex;
+        .owl-item {
+          display: flex;
+          .pillar {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+}
+
 section.pillars {
   .heading {
     background-color: $blue;
@@ -108,8 +126,24 @@ section.pillars {
       @include breakpoint(large) {
         @include columns(4);
         background-color: gray;
+        background-repeat: no-repeat;
+        background-size: cover;
         display: flex;
         position: relative;
+
+        &.environment {
+          background-image: url('../../../../assets/images/background-pillar-ambiente.jpg');
+        }
+
+        &.reading {
+          background-image: url('../../../../assets/images/background-pillar-lectura.jpg');
+
+        }
+
+        &.math {
+          background-image: url('../../../../assets/images/background-pillar-matematica.jpg');
+
+        }
       }
     }
   }
@@ -191,6 +225,14 @@ section.pillars {
 section.awards {
   .heading {
     text-align: center;
+
+    @include breakpoint(small, landscape) {
+      width: 40%;
+    }
+
+    @include breakpoint(medium) {
+      width: 40%;
+    }
   }
 }
 

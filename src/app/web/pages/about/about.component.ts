@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AboutUsService } from 'src/app/services/web/about-us.service';
+import { AboutUsPage } from 'src/app/models/web/web-about-us.model';
 
 @Component({
   selector: 'app-about',
@@ -8,35 +10,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class AboutComponent implements OnInit {
   coverData = {
-    tagline: 'La misión de facilitar la calidad de vida',
-    coverImage: './assets/images/cover-simbolos.png',
-    slides: [
-      {
-        images: {
-          desktop: './assets/images/banner-1.jpg',
-          tablet: './assets/images/banner-movil-1.jpg',
-          movil: './assets/images/banner-movil-1.jpg',
-        }
-      },
-      {
-        images: {
-          desktop: './assets/images/banner-2.jpg',
-          tablet: './assets/images/banner-movil-2.jpg',
-          movil: './assets/images/banner-movil-2.jpg',
-        }
-      }
-    ]
-  }
-
-  about = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus. Sed rhoncus tempus nunc, ut mollis nunc vestibulum nec. Duis sit amet turpis pulvinar erat dictum luctus quis eu leo. Etiam pellentesque elementum laoreet. Aenean neque quam, sodales id mattis quis, venenatis ut orci.",
-    "Vivamus facilisis, nulla vitae mollis dignissim, urna metus mollis lorem, quis ullamcorper elit metus ac lectus. Cras non neque ullamcorper, euismod nisl vel, pellentesque leo. Proin non ante pharetra, efficitur tellus eget, aliquet orci. Praesent tincidunt arcu ac lacus gravida sodales. Nulla nec augue ac ex semper vulputate in et metus. Morbi aliquet pellentesque auctor. Nulla facilisi. Nam tellus augue, rutrum quis luctus at, laoreet non massa. Praesent a justo id libero laoreet volutpat. Curabitur dictum imperdiet vehicula."
-  ]
-
-  pillars = {
-    ambiente: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
-    lectura: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
-    matematica: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus."
+    coverImage: './assets/images/cover-simbolos.png'
   }
 
   pillarsOptions: OwlOptions = {
@@ -61,33 +35,6 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  awardsList = [
-    {
-      name: 'Carora',
-      pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/carora.webp',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    },
-    {
-      name: 'Tarikan',
-      pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/tarikan.webp',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    },
-    {
-      name: 'Familia Gonzalez Bergoderi',
-      pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    },
-    {
-      name: 'Fundación la Pastora',
-      pageUrl: 'https://google.com',
-      image: './assets/images/padrinos/fundacion-pastora.webp',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    }
-  ]
-
   carouselOptions: OwlOptions = {
     autoplay: false,
     loop: true,
@@ -111,9 +58,25 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  aboutUsPageData: AboutUsPage;
+
+  constructor(private aboutUsService: AboutUsService) { }
 
   ngOnInit() {
+    this.getAboutUsData();
+  }
+
+  getAboutUsData() {
+    //this.aboutUsService.getAboutUsData()
+    this.aboutUsService.getAboutUsJSON()
+        .subscribe(data => {
+          // console.log(data)
+          this.aboutUsPageData = data.aboutUsPage;
+        });
+  }
+
+  onAwardClick(award) {
+    console.log(award)
   }
 
 }
