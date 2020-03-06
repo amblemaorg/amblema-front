@@ -4,7 +4,7 @@
     </div>
     <section class="main-info d-flex flex-wrap">
         <div class="col-lg-12 px-0 mb-3 module-title">
-            <h1 class="text-uppercase">Modulo 1</h1> <div class="bar mx-3 d-inline"></div> <h3>Fundamentos del coordinador</h3>
+            <h1 class="text-uppercase">Modulo 1</h1> <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div> <h3 *ngIf="moduleInfo.name">{{moduleInfo.name}}</h3>
         </div>
         <section class="col-lg-5 px-0 estimate">
             <h4 class="mb-4">

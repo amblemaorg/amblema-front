@@ -8,8 +8,9 @@ import { AppComponent } from './app.component';
 
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { ModulesState } from './store/learning-modules.state';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../environments/environment.prod';
+import { ModulesState } from './store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from './store/states/e-learning/coordinator-user.state';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { environment } from 'src/environments/environment.prod';
     AngularSvgIconModule,
     // -- NGXS --
     NgxsModule.forRoot( [
-      ModulesState
+      ModulesState,
+      CoordinatorState
     ],
     {
       compatibility: {
