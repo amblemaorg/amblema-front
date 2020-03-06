@@ -3,6 +3,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
+import { Select } from '@ngxs/store';
+import { CoordinatorModule } from '../../models/e-learning/learning-modules.model';
+import { CoordinatorState } from '../../store/states/e-learning/coordinator-user.state';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -17,71 +20,36 @@ export class ModulesService {
   isBrowser;
   baseUrl = environment.baseUrl;  
 
+  approved_modules:CoordinatorModule[] = [];
+  @Select(CoordinatorState.coordinator_modules) approved_modules$: Observable<CoordinatorModule[]>;
+
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) { 
     this.isBrowser = isPlatformBrowser(platformId);
+    this.approved_modules$.subscribe(res=> {
+      this.approved_modules = res;
+    });
   }
 
-  getTrashData () : Observable<any> {
-    return this.http.get<any>('https://reqres.in/api/users?per_page=12')
-  }
   getMod (id): Observable<any> {
     return this.http.get<any>(this.baseUrl + 'learningmodules/' + id)
   }
-  // getMods (): Observable<any> {
-  //   return of<any>(MODULES)
-  // }
+
   getMods (): Observable<any> {
     return this.http.get<any>(this.baseUrl + 'learningmodules')
   }
-  // getMods (): Observable<any> {
-  //   return this.http.get<any>(this.baseUrl + 'learningmodules')
-  // }
 
   getCoordinator(id): Observable<any> {
     return this.http.get<any>(this.baseUrl + `users/${id}?userType=2`)
   }
-  
-}
 
-const MODULES = [
-  {
-    name: 'Módulo 1',
-    done: true,
-  },
-  {
-    name: 'Módulo 2',
-    done: false,
-  },
-  {
-    name: 'Módulo 3',
-    done: false,
-  },
-  {
-    name: 'Módulo 4',
-    done: false,
-  },
-  {
-    name: 'Módulo 5',
-    done: false,
-  },
-  {
-    name: 'Módulo 6',
-    done: false,
-  },
-  {
-    name: 'Módulo 7',
-    done: false,
-  },
-  {
-    name: 'Módulo 8',
-    done: false,
-  },
-  {
-    name: 'Módulo 9',
-    done: false,
-  },
-  {
-    name: 'Módulo 10',
-    done: false,
-  },
-];
+  answerModule(module_id, dataJson): Observable<any> {
+    console.log(module_id, dataJson);
+    return this.http.post<any>(this.baseUrl + `answerlearningmodule/${module_id}`, dataJson)
+  }
+  
+
+  checkApprove(id){
+    let isApproved = this.approved_modules.find(m => { return m.moduleId == id });
+    return isApproved? true:false
+  }
+}

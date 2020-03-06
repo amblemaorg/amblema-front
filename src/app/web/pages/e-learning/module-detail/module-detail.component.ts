@@ -5,7 +5,7 @@ import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
 import { GlobalService } from '../../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
-import { Module, Image, ImaVideo } from '../../../../services/estructure-classes';
+import { Module, Image, ImaVideo, AnswerModule } from '../../../../models/e-learning/learning-modules.model';
 
 @Component({
   selector: 'app-module-detail',
@@ -17,6 +17,7 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
 
   moduleInfo: Module;
+  module_id = "";
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
@@ -69,8 +70,9 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let modId = this.route.snapshot.params.id;
-    this.moduleService.getMod(modId).subscribe(res=>{
+    this.module_id = this.route.snapshot.params.id;
+    this.checkApprove(this.module_id);
+    this.moduleService.getMod(this.module_id).subscribe(res=>{
       this.moduleInfo = res;
       this.imgvid = this.moduleInfo.slider;
       this.img_strip = this.moduleInfo.images;
@@ -113,12 +115,17 @@ export class ModuleDetailComponent implements OnInit {
 
   //? Function called when validate button is pressed
   showModal(el,wm) {
+    let coorAnswers: AnswerModule = {
+      coordinator: '5e60009d945835d1a73bb2f9',
+      answers: []
+    };
     let success = true; // there are not unselected questions
     let wrong = false; // there are not wrong answers
     this.incorrectOnes = this.moduleInfo.quizzes.map(i => {return 'option0'}); // re-initializing incorrect answers array
     let wrongOnes = this.incorrectOnes.slice(); // temporary incorrect array
 
-    for (let i = 0; i < this.selectedQuestions.length; i++) {      
+    for (let i = 0; i < this.selectedQuestions.length; i++) {    
+      coorAnswers.answers.push({quizId:this.moduleInfo.quizzes[i].id, option:this.selectedQuestions[i]}); // adding coordinator answer structure
       if (this.selectedQuestions[i]=='option0') {
         success = false; // there is at least an unanswered question
         this.showFillAll = true;
@@ -134,17 +141,23 @@ export class ModuleDetailComponent implements OnInit {
     }
     
     if(success) { // when all questions are answered
-      if (wrong) { // if some of them are wrong
-        this.incorrectOnes = wrongOnes; // setting the incorrect answers
-        if (this.moduleCoins>1) { // decreasing AmbleCoins
-          this.moduleCoins--;
-        }
-        this.showFillAll = false;
-        wm.click(); // opening warning modal
-      } else {
-        this.completedModule = true;
-        el.click(); // opening success modal
-      }      
+      this.moduleService.answerModule(this.module_id,coorAnswers).subscribe(res=> {
+        if (!res.approved) {
+          if (wrong) { // if some of them are wrong
+            this.incorrectOnes = wrongOnes; // setting the incorrect answers
+            if (this.moduleCoins>1) { // decreasing AmbleCoins
+              this.moduleCoins--;
+            }
+            this.showFillAll = false;
+            wm.click(); // opening warning modal
+          } 
+        } else {
+          if (!wrong) {
+            this.completedModule = true;
+            el.click(); // opening success modal
+          }
+        }        
+      });      
     }
   }
 
@@ -200,6 +213,10 @@ export class ModuleDetailComponent implements OnInit {
       default:
         return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' hr ' + ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
     }
+  }
+
+  checkApprove(id){
+    this.completedModule = this.moduleService.checkApprove(id);
   }
 
 }

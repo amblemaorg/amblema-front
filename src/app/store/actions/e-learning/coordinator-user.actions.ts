@@ -1,4 +1,4 @@
-import { CoordinatorModule } from '../../../services/estructure-classes';
+import { CoordinatorModule } from '../../../models/e-learning/learning-modules.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 export class IncreaseCoins {

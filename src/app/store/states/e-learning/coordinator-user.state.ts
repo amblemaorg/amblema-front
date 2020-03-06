@@ -17,8 +17,12 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
       return state.coins;
     }
     @Selector()
-    static coordinator_modules(state: CoordinatorStateModel) {
+    static coordinator_modules_total(state: CoordinatorStateModel) {
       return state.coordinator_modules.length;
+    }
+    @Selector()
+    static coordinator_modules(state: CoordinatorStateModel) {
+      return state.coordinator_modules;
     }
   
     constructor(private modulesService: ModulesService) {}
@@ -41,7 +45,7 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
           ctx.setState({
             ...state,
             coins: coor.nCoins,
-            coordinator_modules: coor.learning
+            coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
           });
         })
       );
