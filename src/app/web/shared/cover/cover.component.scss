@@ -10,7 +10,7 @@
     margin: 0 5vw;
     position: absolute;
     text-align: center;
-    top: 80vw;
+    bottom: 80vw;
     z-index: 15;
 
     @include breakpoint(small, landscape){
@@ -18,7 +18,7 @@
       margin: 0 5vw;
       right: 0;
       text-align: right;
-      top: 26.5vw;
+      bottom: 20vw;
       width: 40%;
     }
 
@@ -27,7 +27,7 @@
       margin: 0 5vw;
       right: 0;
       text-align: right;
-      top: 26.5vw;
+      bottom: 20vw;
       width: 40%;
     }
   }

@@ -75,14 +75,17 @@ header {
     a {
       display: none;
       color: $blue;
+      font-size: 6vw;
       text-decoration: none;
 
       @include breakpoint(small, landscape) {
         display: inherit;
+        font-size: 1.2vw;
       }
 
       @include breakpoint(medium) {
         display: inherit;
+        font-size: 1.2vw;
       }
     }
   }

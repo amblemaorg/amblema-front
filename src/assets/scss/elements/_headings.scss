@@ -21,7 +21,7 @@ h1 {
 }
 
 h2 {
-  font-size: 7vw;
+  font-size: 8vw;
 
   @include breakpoint(small, landscape) {
     font-size: 3.3vw;
@@ -32,3 +32,14 @@ h2 {
   }
 }
 
+h3 {
+  font-size: 7vw;
+
+  @include breakpoint(small, landscape) {
+    font-size: 2vw;
+  }
+
+  @include breakpoint(medium) {
+    font-size: 2vw;
+  }
+}

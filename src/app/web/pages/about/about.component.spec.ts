@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { AboutComponent } from './about.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { AboutUsService } from 'src/app/services/web/about-us.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AboutComponent', () => {
     let component: AboutComponent;
@@ -16,17 +17,21 @@ describe('AboutComponent', () => {
             imports: [
               BrowserAnimationsModule,
               SharedModule,
-              CarouselModule
+              CarouselModule,
+              HttpClientModule
             ],
+            providers: [
+              AboutUsService
+            ]
         })
         .compileComponents();
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AboutComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+    beforeEach(inject([AboutUsService], (aboutUsService: AboutUsService) => {
+      fixture = TestBed.createComponent(AboutComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    }));
 
     it('should create about us page', () => {
         expect(component).toBeTruthy();
