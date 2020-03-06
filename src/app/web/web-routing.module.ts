@@ -17,12 +17,20 @@ const routes: Routes = [
       },
       {
         path: 'padrinos',
-        loadChildren: () => import('./pages/godparents/godparents.module').then( m => m.GodparentsModule)
+        loadChildren: () => import('./pages/sponsors/sponsors.module').then( m => m.SponsorsModule)
       },
       {
         path: 'coordinadores',
         loadChildren: () => import('./pages/coordinators/coordinators.module').then( m => m.CoordinatorsModule)
-      }
+      },
+      {
+        path: 'escuelas',
+        loadChildren: () => import('./pages/school/school.module').then( m => m.SchoolModule)
+      },
+      {
+        path: 'blog',
+        loadChildren: () => import('./pages/blog/blog.module').then( m => m.BlogModule)
+      },
     ]
   }
 ];

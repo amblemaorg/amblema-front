@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CoordinatorService } from '../../../services/web/coordinator.service';
+import { CoordinatorPage } from '../../../models/web/web-coordinator.model';
 
 @Component({
   selector: 'app-coordinators',
@@ -10,7 +12,7 @@ export class CoordinatorsComponent implements OnInit {
   coverData = {
     slides: [
       {
-        images: {
+        image: {
           desktop: './assets/images/banner-2.jpg',
           tablet: './assets/images/banner-movil-2.jpg',
           movil: './assets/images/banner-movil-2.jpg',
@@ -18,30 +20,6 @@ export class CoordinatorsComponent implements OnInit {
       }
     ]
   }
-
-  coordinatorsData = [
-    {
-      name: 'Fernanda A. Pietri Perez',
-      pageUrl: 'https://google.com',
-      image: './assets/images/profile-leena.jpg',
-      role: 'Coordinador',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    },
-    {
-      name: 'Fernanda A. Pietri Perez',
-      pageUrl: 'https://google.com',
-      image: './assets/images/profile-leena.jpg',
-      role: 'Coordinador',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    },
-    {
-      name: 'Fernanda A. Pietri Perez',
-      pageUrl: 'https://google.com',
-      image: './assets/images/profile-leena.jpg',
-      role: 'Coordinador',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
-    }
-  ]
 
   customOptions: OwlOptions = {
     autoplay: true,
@@ -55,9 +33,18 @@ export class CoordinatorsComponent implements OnInit {
     navSpeed: 3000,
   }
 
-  constructor() { }
+  coordinatorsPageData: CoordinatorPage;
+  constructor(private coordinatorService: CoordinatorService) { }
 
   ngOnInit() {
+    this.getCoordinatorsData();
   }
 
+  getCoordinatorsData() {
+    this.coordinatorService.getCoordinatorsJSON()
+        .subscribe(data => {
+          // console.log(data)
+          this.coordinatorsPageData = data.coordinatorPage;
+        });
+  }
 }
