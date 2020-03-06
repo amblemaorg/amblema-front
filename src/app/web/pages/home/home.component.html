@@ -1,0 +1,58 @@
+<web-cover [coverImage]="coverData.coverImage"
+           [slides]="homePageData.slider">
+</web-cover>
+<section class="about-us">
+    <div class="background-leaf"></div>
+    <h1 class="heading">Acerca de nosotros</h1>
+    <div class="text">
+      <p *ngIf="homePageData.aboutUsText">{{ homePageData.aboutUsText }}</p>
+    </div>
+</section>
+<section class="pillars">
+    <web-bg-heading>Tenemos tres<br/> pilares fundamentales</web-bg-heading>
+    <div class="pillars-list">
+      <div class="pillar ambiente">
+        <h3><span class="bold">Amb</span>iente</h3>
+      </div>
+      <div class="pillar lectura">
+        <h3><span class="bold">Le</span>ctura</h3>
+      </div>
+      <div class="pillar matematica">
+        <h3><span class="bold">Ma</span>temática</h3>
+      </div>
+    </div>
+
+    <owl-carousel-o [options]="pillarsOptions" class="pillars-carousel-home">
+        <ng-template carouselSlide>
+          <div class="pillar ambiente">
+            <h3><span class="bold">Amb</span>iente</h3>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="pillar lectura">
+            <h3><span class="bold">Le</span>ctura</h3>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <div class="pillar matematica">
+            <h3><span class="bold">Ma</span>temática</h3>
+          </div>
+        </ng-template>
+    </owl-carousel-o>
+</section>
+<section class="social-impact">
+  <h2 class="heading">Impacto social</h2>
+</section>
+<section class="founders">
+    <div class="heading">
+      <h2>Fundadores</h2>
+      <p>Lorem ipsum dolor sit amet, consectetuer</p>
+    </div>
+    <div class="founders-list">
+      <owl-carousel-o *ngIf="homePageData.testimonials.length > 0" [options]="carouselOptions" class="founders-carousel">
+        <ng-template carouselSlide *ngFor="let item of homePageData.testimonials">
+          <web-testimonial-card [testimonial]="item"></web-testimonial-card>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+</section>

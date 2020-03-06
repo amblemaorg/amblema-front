@@ -1,0 +1,824 @@
+
+
+Tue Feb 18 22:04:40 2020
+Command line: TestDisk
+
+TestDisk 7.0, Data Recovery Utility, April 2015
+Christophe GRENIER <grenier@cgsecurity.org>
+http://www.cgsecurity.org
+OS: Linux, kernel 4.9.0-8-amd64 (#1 SMP Debian 4.9.144-3 (2019-02-02)) x86_64
+Compiler: GCC 8.2
+ext2fs lib: 1.44.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.1
+/dev/sda: LBA, HPA, LBA48, DCO support
+/dev/sda: size       234441648 sectors
+/dev/sda: user_max   234441648 sectors
+/dev/sda: native_max 234441648 sectors
+/dev/sda: dco        234441648 sectors
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+Hard disk list
+Disk /dev/sda - 120 GB / 111 GiB - CHS 14593 255 63, sector size=512 - KINGSTON SA400S37120G, S/N:50026B7682476E7C, FW:SBFKB1D1
+
+Partition table type (auto): Intel
+Disk /dev/sda - 120 GB / 111 GiB - KINGSTON SA400S37120G
+Partition table type: Intel
+
+Interface Advanced
+Geometry from i386 MBR: head=255 sector=63
+get_geometry_from_list_part_aux head=255 nbr=1
+get_geometry_from_list_part_aux head=255 nbr=1
+ 1 E extended                 0  32 31 14593  66  1  234438658
+ 5 L Linux                    0  32 33   652 213  9   10485760 [root]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 5368 MB / 5120 MiB
+   X extended               652 213 10  2616 242 58   31553536
+ 6 L Linux                  652 245 42  2616 242 58   31551488 [Estaticos]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 16 GB / 15 GiB
+   X extended              2617   0  1  5461 215  2   45702407
+ 7 L Linux                 2617  20 28  5461 215  2   45701120 [Variables]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 23 GB / 21 GiB
+   X extended              5461 215  3  5592 130 42    2099200
+ 8 L Linux                 5461 247 35  5592 130 42    2097152 [Temporales]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 1073 MB / 1024 MiB
+   X extended              5592 130 43 14102 212 62  136718336
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+   X extended             14102 212 63 14593  66  1    7878656
+10 L Linux Swap           14102 245 32 14593  66  1    7876608
+     SWAP2 version 1, pagesize=4096, 4032 MB / 3846 MiB
+
+
+dir_partition inode=2
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /
+       2 drwxr-xr-x     0      0      4096  4-Mar-2019 19:10 .
+       2 drwxr-xr-x     0      0      4096  4-Mar-2019 19:10 ..
+      11 drwx------     0      0     16384  4-Mar-2019 19:02 lost+found
+ 3276801 drwxr-xr-x  1000   1000      4096 17-Feb-2020 22:12 joseaguerrero
+
+dir_partition inode=3276801
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero
+ 3276801 drwxr-xr-x  1000   1000      4096 17-Feb-2020 22:12 .
+       2 drwxr-xr-x     0      0      4096  4-Mar-2019 19:10 ..
+ 3276802 -rw-r--r--  1000   1000       220  4-Mar-2019 19:10 .bash_logout
+ 3276803 -rw-r--r--  1000   1000       675  4-Mar-2019 19:10 .profile
+ 3276804 -rw-r--r--  1000   1000      3800 25-Jun-2019 23:54 .bashrc
+ 3276809 drwx------  1000   1000      4096 18-Feb-2020 16:07 .config
+ 3276806 drwxr-xr-x  1000   1000      4096 27-Dec-2019 10:43 .local
+ 3276810 drwxr-xr-x  1000   1000      4096 12-Apr-2019 19:55 Escritorio
+ 3276811 drwxr-xr-x  1000   1000     16384 18-Feb-2020 19:34 Descargas
+ 3276812 drwxr-xr-x  1000   1000      4096  4-Mar-2019 19:53 Plantillas
+ 3276813 drwxr-xr-x  1000   1000      4096  4-Mar-2019 19:53 Público
+ 3276814 drwxr-xr-x  1000   1000      4096 17-Feb-2020 21:45 Documentos
+ 3276815 drwxr-xr-x  1000   1000      4096 11-Feb-2020 11:32 Música
+ 3276816 drwxr-xr-x  1000   1000     20480 18-Feb-2020 13:24 Imágenes
+ 3276817 drwxr-xr-x  1000   1000      4096 27-Jan-2020 12:05 Vídeos
+ 3276881 drwxr-xr-x  1000   1000      4096 18-Feb-2020 19:35 .cache
+ 3276821 drwx------  1000   1000      4096  1-Apr-2019 16:16 .gnupg
+ 3276988 drwx------  1000   1000      4096 18-May-2019 07:45 .mozilla
+ 3277163 drwx------  1000   1000      4096 26-Nov-2019 15:50 .ssh
+ 3277170 drwxr-xr-x  1000   1000      4096 10-Nov-2019 11:47 .nano
+ 3276830 -rw-------  1000   1000     38448 12-Feb-2020 14:11 .ICEauthority
+ 3325713 -rw-------  1000   1000     53621 17-Feb-2020 22:12 .bash_history
+ 3277167 -rw-r--r--  1000   1000       257 23-Mar-2019 23:26 .disk-manager.conf
+ 3278534 drwx------  1000   1000      4096 24-Mar-2019 19:58 .pki
+ 3279645 -rw-r--r--  1000   1000       294 22-Jul-2019 16:32 .wget-hsts
+ 3408247 drwxr-xr-x  1000   1000      4096 24-Mar-2019 20:10 .nvm
+ 3541728 drwxr-xr-x  1000   1000      4096 14-Feb-2020 00:23 workspace
+ 3276825 drwxr-xr-x  1000   1000      4096 18-Feb-2020 18:20 designs
+ 3419703 drwxr-xr-x  1000   1000      4096 14-Feb-2020 16:41 .npm
+ 3420346 drwxr-xr-x  1000   1000      4096  1-Apr-2019 20:28 .node-gyp
+ 3287499 drwxr-xr-x  1000   1000      4096  1-Apr-2019 22:00 .vscode
+ 3589127 drwxr-xr-x  1000   1000      4096 24-Oct-2019 08:06 .gem
+ 3328101 -rw-------  1000   1000      8299 11-Feb-2020 17:29 .mysql_history
+ 3287827 -rw-r--r--  1000   1000      4397  1-Apr-2019 22:03 .v8flags.6.8.275.32-node.51.fef51a1dc76a01e9546d1cb24ec12dd6.json
+ 3421446 drwxr-xr-x  1000   1000      4096  1-Apr-2019 22:16 .drush
+ 3303345 -rw-------  1000   1000        48  9-Apr-2019 09:35 .python_history
+ 3306898 -rw-r--r--  1000   1000        68  3-Apr-2019 08:58 .gitconfig
+ 3947106 drwxr-xr-x  1000   1000      4096  8-Sep-2019 16:51 .wine
+ 3589301 drwxr-xr-x  1000   1000      4096 24-Oct-2019 08:19 .wpscan
+ 1457071 drwxr-xr-x  1000   1000      4096  7-Feb-2020 12:48 MEGAsync Downloads
+ 3276896 -rw-------  1000   1000         0 27-Oct-2019 21:17 .Xauthority
+ 3276944 drwx------  1000   1000      4096 27-Oct-2019 21:13 .gconf
+  806826 drwxr-xr-x  1000   1000      4096 25-Jun-2019 23:54 .java
+  396921 drwxr-xr-x  1000   1000      4096 26-Dec-2019 21:19 .gimp-2.8
+ 3276877 -rw-------  1000   1000     18411 27-Oct-2019 21:13 .xsession-errors
+ 3950186 drwxr-xr-x  1000   1000      4096  1-Nov-2019 14:49 .bundle
+ 3302957 -rw-r--r--  1000   1000   1051209 21-Nov-2019 16:03 jmeter.log
+ 3304923 drwx------  1000   1000      4096 14-Aug-2019 22:19 .docker
+ 3279388 -rw-r--r--  1000   1000    109821 30-Sep-2019 17:28 .babel.json
+ 3674213 drwxr-xr-x  1000   1000      4096 12-Sep-2019 09:40 .gphoto
+ 3343743 -rw-r--r--  1000   1000        65  3-Oct-2019 15:54 .httrack.ini
+ 3597237 drwxr-x---  1000   1000      4096 15-Nov-2019 14:39 .siege
+ 3375134 drwx------  1000   1000      4096 19-Oct-2019 19:35 .mlterm
+ 3588602 drwx------  1000   1000      4096 22-Oct-2019 15:08 .putty
+ 3287540 -rw-r--r--  1000   1000      3349 24-Nov-2019 02:59 Denovedad-home-page-content.txt
+ 3612755 drwx------  1000   1000      4096 26-Nov-2019 14:45 .thumbnails
+ 3612894 drwxr-xr-x  1000   1000      4096  3-Dec-2019 10:21 .mono
+ 3299222 -rw-r--r--  1000   1000       252  3-Dec-2019 08:30 .recently-used
+ 3283555 -rw-r--r--  1000   1000         0 11-Dec-2019 09:15 .bash_profile
+ 3647598 drwxr-xr-x  1000   1000      4096  4-Feb-2020 15:01 .pylint.d
+ 3655783 drwxr-xr-x  1000   1000      4096 18-Feb-2020 16:07 .zoom
+X3325713 -rw-------  1000   1000     53621 17-Feb-2020 22:12 .bash_history-16029.tmp
+ 3631238 drwxr-xr-x  1000   1000      4096 27-Dec-2019 10:51 .ipython
+ 3844262 drwxr-xr-x  1000   1000      4096  5-Jan-2020 09:07 .oracle_jre_usage
+ 3844263 drwxr-xr-x  1000   1000      4096  5-Jan-2020 22:21 jd2
+ 3280595 -rw-rw-r--  1000   1000        88  5-Jan-2020 09:07 .install4j
+ 3655982 drwxr-xr-x  1000   1000      4096 14-Jan-2020 10:13 Downloads
+ 3301959 -rw-r--r--  1000   1000  30353623 17-Jan-2020 14:38 ultralub_prod.sql
+ 3302677 -rw-r--r--  1000   1000  35159071 17-Jan-2020 16:23 ultralub_prod_2.sql
+X3276826 -rw-------  1000   1000    131072 12-Feb-2020 14:12 .ICEauthority-l
+
+dir_partition inode=3541728
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace
+ 3541728 drwxr-xr-x  1000   1000      4096 14-Feb-2020 00:23 .
+ 3276801 drwxr-xr-x  1000   1000      4096 17-Feb-2020 22:12 ..
+    2784 drwxr-xr-x  1000   1000      4096  6-Jun-2019 15:29 binaural
+ 3563788 drwxr-xr-x  1000   1000      4096  2-Oct-2019 07:56 lmdt
+ 3541751 drwxr-xr-x  1000   1000      4096 12-Feb-2020 15:12 docker
+ 3571714 drwxr-xr-x  1000   1000      4096 18-Jan-2020 15:35 runrunes
+ 3375137 drwxr-xr-x  1000   1000      4096 11-Dec-2019 09:10 denovedad.com
+ 4063904 drwxr-xr-x  1000   1000      4096  1-Nov-2019 15:03 magento.devdocs
+  806849 drwxr-xr-x  1000   1000      4096  5-Nov-2019 09:32 tests
+ 3579970 drwxr-xr-x  1000   1000      4096  4-Nov-2019 11:20 talcual
+ 3801937 drwxr-xr-x  1000   1000      4096  2-Oct-2019 07:53 scripts
+ 3563635 drwxr-xr-x  1000   1000      4096 10-Feb-2020 14:08 sirena
+ 3410966 drwxr-xr-x  1000   1000      4096  7-Feb-2020 20:45 ultra
+ 3563751 drwxr-xr-x  1000   1000      4096 14-May-2019 18:15 .vscode
+  149783 drwxr-xr-x  1000   1000      4096 27-Dec-2019 10:20 python-workspace
+ 3563767 drwxr-xr-x  1000   1000      4096 12-Nov-2019 11:38 soportes
+  524355 drwxr-xr-x  1000   1000      4096  6-Jun-2019 13:29 CTA Backups
+ 3294357 drwxr-xr-x  1000   1000      4096 24-Oct-2019 17:06 sirenasystem-landing
+ 3663988 drwxr-xr-x  1000   1000      4096 17-Dec-2019 00:49 tesla-landing
+ 3727532 drwxr-xr-x  1000   1000      4096 23-Dec-2019 14:48 testing-general
+ 3639430 drwxr-xr-x  1000   1000      4096 27-Jan-2020 12:05 webpack-boilerplate
+ 3563677 drwxr-xr-x  1000   1000      4096 30-Sep-2019 15:15 wordpress
+ 3639443 drwxr-xr-x  1000   1000      4096 13-Jan-2020 10:02 react-boilerplate
+ 3631323 drwxr-xr-x  1000   1000      4096  3-Jan-2020 15:50 react-project
+ 3639686 drwxr-xr-x  1000   1000      4096  9-Feb-2020 21:33 gatsby-boilerplate
+ 3737061 drwxr-xr-x  1000   1000      4096 13-Feb-2020 15:57 amblema
+ 3737639 drwxr-xr-x  1000   1000      4096 14-Feb-2020 00:24 yuri
+ 3626957 -rw-r--r--  1000   1000      3755  3-Jan-2020 18:18 package-lock.json
+ 3647990 drwx------  1000   1000      4096 12-Nov-2015 12:07 Search-Replace-DB-master
+ 3737080 drwxr-xr-x  1000   1000      4096  3-Feb-2020 11:17 fixer-friend
+ 3606054 -rw-r--r--  1000   1000        84  4-Feb-2020 14:34 microservice.code-workspace
+X3541460 -rwxr-xr-x  1000   1000  33689027 26-Oct-2019 00:15 denoveda_dbprod_data_nopr.sql
+X3541461 -rwxr-xr-x  1000   1000 1134082603 26-Oct-2019 00:39 denoveda_dbprod_data_r_x.sql
+X4063366 drwxr-xr-x  1000   1000         0  3-Feb-2020 11:08 mg2.denovedad.com
+ 3604625 drwxr-xr-x  1000   1000      4096 27-Nov-2019 23:30 frameworks-libraries-tools
+ 3612864 drwxr-xr-x  1000   1000      4096 18-Feb-2020 11:00 talcualdigital
+ 3598414 -rw-------  1000   1000      1766 28-Nov-2019 23:25 talcual-binaural
+ 3593938 -rw-r--r--  1000   1000       381 28-Nov-2019 23:23 talcual-binaural.pub
+
+dir_partition inode=3737061
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema
+ 3737061 drwxr-xr-x  1000   1000      4096 13-Feb-2020 15:57 .
+ 3541728 drwxr-xr-x  1000   1000      4096 14-Feb-2020 00:23 ..
+ 3737062 drwxr-xr-x  1000   1000      4096 12-Feb-2020 14:33 backend
+ 4014255 drwxr-xr-x  1000   1000      4096 11-Feb-2020 20:21 backoffice
+ 3718389 -rw-r--r--  1000   1000        60 11-Feb-2020 20:20 amblema-workspace.code-workspace
+ 3737230 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:04 web
+ 3737427 drwxr-xr-x  1000   1000      4096 14-Feb-2020 00:24 sudo
+
+dir_partition inode=3737230
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web
+ 3737230 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:04 .
+ 3737061 drwxr-xr-x  1000   1000      4096 13-Feb-2020 15:57 ..
+ 3687576 -rw-r--r--  1000   1000       739 12-Feb-2020 11:51 docker-compose.yml
+ 3687538 -rw-r--r--  1000   1000        64 12-Feb-2020 11:28 .env
+ 3687266 -rw-r--r--  1000   1000       603 12-Feb-2020 11:26 vhost-template.conf
+ 3689321 -rw-r--r--  1000   1000      1980 12-Feb-2020 14:30 server.ts
+ 3689353 -rw-r--r--  1000   1000      1028 12-Feb-2020 11:39 README.md
+ 3689371 -rw-r--r--  1000   1000       246 12-Feb-2020 11:39 .editorconfig
+ 3689372 -rw-r--r--  1000   1000       631 12-Feb-2020 11:39 .gitignore
+ 3689373 -rw-r--r--  1000   1000      4887 18-Feb-2020 21:12 angular.json
+ 3689441 -rw-r--r--  1000   1000      2267 18-Feb-2020 19:40 package.json
+ 3689375 -rw-r--r--  1000   1000       543 12-Feb-2020 11:39 tsconfig.json
+ 3689376 -rw-r--r--  1000   1000      1953 12-Feb-2020 11:39 tslint.json
+ 3689386 -rw-r--r--  1000   1000       429 12-Feb-2020 11:39 browserslist
+ 3689388 -rw-r--r--  1000   1000      1221 12-Feb-2020 14:55 karma.conf.js
+ 3689389 -rw-r--r--  1000   1000       270 12-Feb-2020 11:39 tsconfig.app.json
+ 3689390 -rw-r--r--  1000   1000       270 12-Feb-2020 11:39 tsconfig.spec.json
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 src
+ 4014726 drwxr-xr-x  1000   1000      4096 12-Feb-2020 11:39 e2e
+ 4014728 drwxr-xr-x  1000   1000     32768 18-Feb-2020 19:40 node_modules
+ 3737558 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .git
+ 3737322 drwxr-xr-x  1000   1000      4096 12-Feb-2020 14:31 dist
+ 3673818 -rw-------  1000   1000  87556096 13-Feb-2020 15:30 core
+ 3673850 -rw-r--r--  1000   1000    514283 18-Feb-2020 19:40 package-lock.json
+ 3689319 -rw-r--r--  1000   1000       273 12-Feb-2020 13:56 tsconfig.server.json
+ 3689320 -rw-r--r--  1000   1000      1466 12-Feb-2020 13:56 webpack.server.config.js
+ 3689307 -rw-r--r--  1000   1000        56 14-Feb-2020 21:12 spent.txt
+ 3737554 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:53 amblema-web
+ 3689881 -rw-r--r--  1000   1000       366 18-Feb-2020 22:04 testdisk.log
+
+dir_partition inode=3737379
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737230 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:04 ..
+ 3689391 -rw-r--r--  1000   1000       948 12-Feb-2020 11:39 favicon.ico
+ 3689392 -rw-r--r--  1000   1000       296 12-Feb-2020 11:39 index.html
+ 3689393 -rw-r--r--  1000   1000       432 12-Feb-2020 13:56 main.ts
+ 3689394 -rw-r--r--  1000   1000      2838 12-Feb-2020 11:39 polyfills.ts
+ 3689933 -rw-r--r--  1000   1000        80 18-Feb-2020 21:52 styles.sass
+ 3689396 -rw-r--r--  1000   1000       642 12-Feb-2020 11:39 test.ts
+ 3737380 drwxr-xr-x  1000   1000      4096 18-Feb-2020 19:47 assets
+ 4014724 drwxr-xr-x  1000   1000      4096 12-Feb-2020 11:39 environments
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 app
+ 3689301 -rw-r--r--  1000   1000       361 17-Feb-2020 10:28 main.server.ts
+ 3689395 -rw-r--r--  1000   1000       678 18-Feb-2020 21:54 styles.scss
+
+dir_partition inode=4014725
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055492
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 joseaguerrero
+X4055515 drwxr-xr-x  1000   1000         0 18-Feb-2020 21:49 godparents
+
+dir_partition inode=4055498
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/web
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 .
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 ..
+X3932198 -rw-r--r--  1000   1000       538 18-Feb-2020 21:54 web.component.scss
+X3932221 -rw-r--r--  1000   1000      1830 18-Feb-2020 21:54 web.component.html
+X3932243 -rw-r--r--  1000   1000       607 13-Feb-2020 12:32 web.component.spec.ts
+X3932244 -rw-r--r--  1000   1000       420 18-Feb-2020 21:54 web.component.ts
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 joseaguerrero
+X4055515 drwxr-xr-x  1000   1000         0 18-Feb-2020 21:49 godparents
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055492
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 joseaguerrero
+X4055515 drwxr-xr-x  1000   1000         0 18-Feb-2020 21:49 godparents
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x  1000   1000         0 18-Feb-2020 22:02 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4056466
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/src
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 app
+X4010399 -rw-------  1000   1000     15846 18-Feb-2020 18:53 index.js
+X4012255 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011917 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+X4012255 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json.2197211625
+
+dir_partition inode=4056468
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 web
+X4010393 -rw-------  1000   1000      2631 18-Feb-2020 18:53 index.js
+X4011240 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011944 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+
+dir_partition inode=4056471
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app/web
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056472 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 layout
+X4010394 -rw-------  1000   1000       322 18-Feb-2020 18:53 index.js
+X4011230 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011934 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+
+dir_partition inode=4056472
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app/web/layout
+ 4056472 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056473 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 header
+X4010378 -rw-------  1000   1000        24 18-Feb-2020 18:53 index.js
+X4011040 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-base.js
+X4011044 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-group.js
+X4011047 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-stream.js
+X4011049 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker.js
+X4011287 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011535 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 CHANGES.md
+X4011914 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+X4011287 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json.2415108414
+
+dir_partition inode=4056473
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app/web/layout/header
+ 4056473 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056472 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4009553 -rw-r--r--  1000   1000         0 17-Feb-2020 09:40 header.component.scss
+ 4009554 -rw-r--r--  1000   1000        21 17-Feb-2020 09:40 header.component.html
+ 4009555 -rw-r--r--  1000   1000       270 17-Feb-2020 09:40 header.component.ts
+X4011073 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker.js
+X4011226 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011870 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 CHANGES.md
+X4011921 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app/web/layout
+ 4056472 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056473 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 header
+X4010378 -rw-------  1000   1000        24 18-Feb-2020 18:53 index.js
+X4011040 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-base.js
+X4011044 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-group.js
+X4011047 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker-stream.js
+X4011049 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 tracker.js
+X4011287 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011535 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 CHANGES.md
+X4011914 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+X4011287 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json.2415108414
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app/web
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056472 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 layout
+X4010394 -rw-------  1000   1000       322 18-Feb-2020 18:53 index.js
+X4011230 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011934 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+Directory /joseaguerrero/workspace/amblema/web/src/app/src/app
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 ..
+ 4056471 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 web
+X4010393 -rw-------  1000   1000      2631 18-Feb-2020 18:53 index.js
+X4011240 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011944 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+Directory /joseaguerrero/workspace/amblema/web/src/app/src
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4056468 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 app
+X4010399 -rw-------  1000   1000     15846 18-Feb-2020 18:53 index.js
+X4012255 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json
+X4011917 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 README.md
+X4012255 -rw-r--r--  1000   1000         0 26-Oct-1985 04:15 package.json.2197211625
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055492
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 joseaguerrero
+X4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 godparents
+
+dir_partition inode=4055515
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 amblema
+
+dir_partition inode=4056312
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+
+dir_partition inode=4056313
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 src
+
+dir_partition inode=4056314
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web/src
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 app
+
+dir_partition inode=4056315
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web/src/app
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 web
+
+dir_partition inode=4056474
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web/src/app/web
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 .
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web/src/app
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 web
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web/src
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 app
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema/web
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 src
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents/amblema
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/godparents
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 amblema
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 joseaguerrero
+X4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 godparents
+
+dir_partition inode=4055493
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/layout
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 ..
+ 4055494 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 header
+ 4055497 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 footer
+ 4055513 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 menu
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 joseaguerrero
+X4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 godparents
+
+dir_partition inode=4055493
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/layout
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 .
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 ..
+ 4055494 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 header
+ 4055497 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 footer
+ 4055513 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 menu
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4055498 drwxr-xr-x  1000   1000      4096 13-Feb-2020 12:32 web
+ 4055493 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:54 layout
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 joseaguerrero
+X4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 godparents
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055290
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/peca
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 .
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 3932167 -rw-r--r--  1000   1000       248 12-Feb-2020 16:08 peca-routing.module.ts
+ 3932176 -rw-r--r--  1000   1000       272 12-Feb-2020 16:08 peca.module.ts
+Directory /joseaguerrero/workspace/amblema/web/src/app
+ 4014725 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 .
+ 3737379 drwxr-xr-x  1000   1000      4096 18-Feb-2020 21:52 ..
+ 4012504 -rw-r--r--  1000   1000       344 13-Feb-2020 15:37 app-routing.module.ts
+ 4012505 -rw-r--r--  1000   1000       600 18-Feb-2020 19:48 app.module.ts
+ 3933599 -rw-r--r--  1000   1000        68 18-Feb-2020 18:26 app.component.scss
+ 4056466 drwxr-xr-x  1000   1000      4096 17-Feb-2020 09:40 src
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 web
+ 3932162 -rw-r--r--  1000   1000      1113 18-Feb-2020 21:51 app.component.spec.ts
+ 4012509 -rw-r--r--  1000   1000       285 18-Feb-2020 13:33 app.component.ts
+ 4021098 -rw-r--r--  1000   1000       427 12-Feb-2020 13:56 app.server.module.ts
+X4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+ 4055290 drwxr-xr-x  1000   1000      4096 12-Feb-2020 16:08 peca
+ 3932165 -rw-r--r--  1000   1000         0 18-Feb-2020 21:51 app.component.sass
+ 3932177 -rw-r--r--  1000   1000     25530 18-Feb-2020 21:52 app.component.html
+
+dir_partition inode=4055064
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 ..
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 workspace
+
+dir_partition inode=4055515
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 amblema
+
+dir_partition inode=4056312
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+
+dir_partition inode=4056313
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 src
+
+dir_partition inode=4056314
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web/src
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 app
+
+dir_partition inode=4056315
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web/src/app
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 web
+
+dir_partition inode=4056474
+ 9 L Linux                 5592 163 12 14102 212 62  136716288 [Usuario]
+     ext4 blocksize=4096 Large_file Sparse_SB Recover, 69 GB / 65 GiB
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web/src/app/web
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 .
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web/src/app
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056474 drwxr-xr-x     0      0      4096 18-Feb-2020 22:02 web
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web/src
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056315 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 app
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema/web
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056314 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 src
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace/amblema
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056313 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 web
+Directory /joseaguerrero/workspace/amblema/web/src/app/web/workspace
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 ..
+ 4056312 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 amblema
+Directory /joseaguerrero/workspace/amblema/web/src/app/web
+ 4055064 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 .
+ 4055492 drwxr-xr-x  1000   1000      4096 18-Feb-2020 22:09 ..
+ 4055515 drwxr-xr-x     0      0      4096 18-Feb-2020 22:09 workspace
+SIGHUP detected! TestDisk has been killed.
