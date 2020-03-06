@@ -1,0 +1,129 @@
+@import 'scss/placeholders';
+
+h4 {
+    @extend %h34;
+}
+p {
+    @extend %p;
+}
+
+.header-elearning {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: map-get($color_map, blue);
+    box-shadow:0 2px 6px 2px rgba(0,0,0,0.15);
+    z-index: $z-index-higher; 
+    -webkit-transition: all .5s; transition: all .5s;
+        
+    @include mediabreak(small,portrait) { padding: 1.25rem 1rem 0.5rem; }
+    @include mediabreak(medium,landscape,true,800px) { padding: 0 2rem; }
+    // desktop
+    @include mediabreak(large,landscape) { padding: 0 1rem 0 1.5rem; }
+    @include mediabreak(larger,landscape,true,1600px) { padding: 0 1.5rem 0 2rem; }
+
+    .header-first-row {
+        align-items: center;
+
+        @include media-breakpoint-up(md) {
+            @media screen and (min-width: 800px) and (orientation: landscape) {
+                align-items: flex-end;
+            }
+        }
+        @include mediabreak(medium,landscape,true,800px) { align-items: flex-end; }
+
+        .main-name {
+            color: map-get($color_map, soft-green);
+            font-size: 1.75rem;
+            margin-inline-start: auto;
+
+            @include mediabreak(small,portrait) { font-size: 2.25rem; }
+            @include mediabreak(medium,landscape,true,800px) { padding-bottom: 0.25rem; }
+            @include mediabreak(large,portrait) { font-size: 2.75rem; }
+            // desktop 
+            @include mediabreak(large,landscape) { padding-bottom: 0.5rem; }
+            @include mediabreak(larger,landscape) { 
+                font-size: xx-large;
+                padding-bottom: 0.25rem !important;
+            }
+            @include mediabreak(larger,landscape,true,1600px) {
+                font-size: 2.25rem;
+                padding-bottom: 0 !important;
+            }
+            @include mediabreak(larger,landscape,true,1900px) { font-size: 2.5rem; }
+        }
+    
+        .avatar-container {
+            .rounded-circle {
+                width: 3rem;
+                height: 3rem;
+                object-fit: cover;
+
+                @include mediabreak(small,portrait) { 
+                    width: 4rem;
+                    height: 4rem;
+                    margin-top: -0.5rem;
+                    margin-right: 1rem !important;
+                }
+                @include mediabreak(small,landscape,true,640px) { 
+                    width: 2.75rem;
+                    height: 2.75rem;
+                    margin-top: -0.25rem;
+                }
+                @include mediabreak(large,portrait) { 
+                    width: 5rem;
+                    height: 5rem;
+                    margin-right: 1.25rem !important;
+                }
+                @include mediabreak(larger,landscape) { 
+                    width: 3.3rem;
+                    height: 3.3rem;
+                    margin-right: 0.85rem !important;
+                    margin-top: -0.5rem;
+                }
+                @include mediabreak(larger,landscape,true,1900px) { 
+                    width: 4rem;
+                    height: 4rem;
+                }
+            }
+    
+            .name {
+                word-spacing: 100vw;
+                width: min-content;
+                color: map-get($color_map, soft-green);
+                display: none;
+
+                @include mediabreak(small,portrait) { display: inline-block; }
+                @include mediabreak(small,landscape,true,640px) { display: inline-block; }
+                // Desktop
+                @include mediabreak(large,landscape) { line-height: 1.25rem; }
+                @include mediabreak(larger,landscape,true,1600px) { line-height: 1; }
+                @include mediabreak(larger,landscape,true,1900px) {
+                    font-size: 1.75rem !important;
+                    line-height: 1 !important;
+                }
+            }
+        }
+    }       
+    
+    .user-info {
+        color: #fff;
+        margin-bottom: 0.5rem;
+        text-align: center;
+
+        @include mediabreak(small,portrait) { text-align: right; }
+        @include mediabreak(small,landscape,true,640px) { 
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        .coins {
+            img {
+                height: 1.2rem;
+                vertical-align: sub;
+                @include mediabreak(small,portrait) { margin-bottom: 0.1rem; }
+                @include mediabreak(larger,landscape,true,1900px) { margin-bottom: 0.1rem; }
+            }
+        }
+    }
+}

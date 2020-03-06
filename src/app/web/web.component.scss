@@ -1,0 +1,17 @@
+
+::ng-deep {
+  owl-carousel-o {
+    &.testimonials-carousel {
+      display: flex;
+      .owl-stage {
+        display: flex;
+        .owl-item {
+          display: flex;
+          web-testimonial-card {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}
