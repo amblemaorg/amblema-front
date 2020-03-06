@@ -2,10 +2,10 @@
 <section class="cover">
   <web-cover [slides]="coverData.slides"></web-cover>
   <h1>Coordinadores</h1>
-  <owl-carousel-o *ngIf="coordinatorsData.length > 0" [options]="customOptions" class="coordinators-carousel">
-    <ng-template carouselSlide *ngFor="let coordinator of coordinatorsData">
+  <owl-carousel-o *ngIf="coordinatorsPageData.testimonials.length > 0" [options]="customOptions" class="testimonials-carousel">
+    <ng-template carouselSlide *ngFor="let testimonial of coordinatorsPageData.testimonials">
 
-      <web-person-card [person]="coordinator"></web-person-card>
+      <web-testimonial-card [testimonial]="testimonial"></web-testimonial-card>
 
     </ng-template>
   </owl-carousel-o>
@@ -15,13 +15,7 @@
   <web-bg-heading>¿Cómo ser un coordinador?</web-bg-heading>
   <div class="steps-list">
     <ol>
-      <li>Tener interés por aportar recursos a la formación de nuestros niños venezolanos.</li>
-      <li>Estén dispuestos a seguir los lineamientos de aplicación de Amb-Le-Ma.</li>
-      <li>Requieran poner en práctica la responsabilidad social de la empresa que representan.</li>
-      <li>Estén dispuestos a ubicar escuelas en su rango de alcance en la que pueda aplicarse la herramienta Amb-Le-Ma.</li>
-      <li>Estén dispuestos a invertir mínimo tiempo en hacer enlace con las autoridades educativas y directivos de las escuelas que deseen intervenir.</li>
-      <li>Dispongan los recursos y tiempo necesarios.</li>
-      <li>Tengan la disposición de aumentar su grado de satisfacción personal, familiar y/o empresarial, al ver resultados positivos en la mejora de la calidad educativa de muchos docentes y niños en escuelas con escasos recursos económicos.</li>
+      <li *ngFor="let step of coordinatorsPageData.steps">{{ step }}</li>
     </ol>
   </div>
 </section>

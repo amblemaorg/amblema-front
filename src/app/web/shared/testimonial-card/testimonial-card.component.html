@@ -1,0 +1,23 @@
+<div class="testimonial-card">
+  <ng-container *ngTemplateOutlet="testimonialTemplate; context: { testimonial: testimonial }">
+  </ng-container>
+</div>
+
+<ng-template #testimonialTemplate let-testimonial="testimonial">
+  <div class="testimonial-data">
+    <div class="testimonial-image">
+      <img *ngIf="testimonial.image" [src]="testimonial.image" [alt]="testimonial.firstName + ' ' + testimonial.lastName + ' image'" />
+    </div>
+    <div class="testimonial-identity">
+      <p *ngIf="testimonial.firstName && testimonial.lastName" class="testimonial-fullname">
+        {{ testimonial.firstName + ' ' + testimonial.lastName }}
+      </p>
+      <p *ngIf="testimonial.function" class="testimonial-role">
+        {{ testimonial.function }}
+      </p>
+    </div>
+  </div>
+  <div class="testimonial-content">
+    <p *ngIf="testimonial.description" class="testimonial-description">{{ testimonial.description }}</p>
+  </div>
+</ng-template>

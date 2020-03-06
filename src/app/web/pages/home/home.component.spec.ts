@@ -1,8 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { HomeService } from 'src/app/services/web/home.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -15,17 +17,19 @@ describe('HomeComponent', () => {
             imports: [
               BrowserAnimationsModule,
               SharedModule,
-              CarouselModule
+              CarouselModule,
+              HttpClientModule
             ],
+            providers: [HomeService]
         })
         .compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(inject([HomeService], (homeService: HomeService) => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
     it('should create home page', () => {
         expect(component).toBeTruthy();

@@ -2,7 +2,7 @@
 @import 'scss/variables';
 
 :host.mobile-menu {
-  background-color: black;
+  background-color: $white;
 
   @include breakpoint(small) {
     display: block;

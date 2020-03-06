@@ -1,7 +1,7 @@
 @import 'scss/variables';
 @import 'scss/responsive';
 
-@import 
+@import
   '~bootstrap/dist/css/bootstrap.css',
   '~bootstrap/scss/print',
   '~bootstrap/scss/reboot',
@@ -35,6 +35,10 @@
 }
 
 /* You can add global styles to this file, and also import other style files */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Montserrat';
   margin: 0;
@@ -45,6 +49,12 @@ body {
 
 p {
   line-height: 1.3;
+}
+
+a {
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .show-lg {
@@ -65,6 +75,12 @@ p {
 
 .bold {
   font-weight: bold;
+}
+
+.image-wrapper {
+  img {
+    width: 100%;
+  }
 }
 
 // Slideout menu styles
@@ -251,8 +267,8 @@ owl-carousel-o {
     }
   }
 
-  // Godparents owl carousel in godparents page
-  &.godparents-carousel {
+  // Sponsors owl carousel in sponsors page
+  &.sponsors-carousel {
     .owl-carousel {
       width: 80%;
       margin: auto;
@@ -380,33 +396,33 @@ jw-pagination {
 
   .page-item.first-item, .page-item.last-item {
       display: none;
-  }    
-  
+  }
+
   .page-item .page-link, .page-item.disabled .page-link {
-      background: none;            
+      background: none;
   }
   .page-item .page-link {
-      border-color: $blue;                        
+      border-color: $blue;
       color: $blue;
       font-size: small;
       padding: 0.9rem 1.2rem;
-      
+
       @include mediabreak(small,portrait) { font-size: medium; }
       @include mediabreak(large,landscape) { padding: 0.8rem 1.1rem; font-size: 0.75rem; }
       @include mediabreak(larger,landscape,true,1900px) {
         padding: 0.95rem 1.4rem;
         font-size: 1rem;
       }
-  }    
+  }
   .page-item.disabled .page-link {
-      border-color: $dark-gray;                        
+      border-color: $dark-gray;
       color: $dark-gray;
-  }    
+  }
   .page-item.active .page-link {
       color: #fff;
-      background: $blue;      
-      border-color: $blue;                     
-  }      
+      background: $blue;
+      border-color: $blue;
+  }
   .page-item.previous-item .page-link {
       border-bottom-left-radius: 0.2rem;
       border-top-left-radius: 0.2rem;
@@ -414,8 +430,8 @@ jw-pagination {
   .page-item.next-item .page-link{
       border-bottom-right-radius: 0.2rem;
       border-top-right-radius: 0.2rem;
-  }        
-}    
+  }
+}
 span[class*="icon-"].icon-awesum {
   display: none;
 }

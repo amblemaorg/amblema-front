@@ -322,7 +322,9 @@ section.founders {
       }
     }
   }
+}
 
+::ng-deep {
   owl-carousel-o {
     &.founders-carousel {
       position: absolute;
@@ -341,6 +343,12 @@ section.founders {
         bottom: 10vw;
         left: 35vw;
         width: 80%;
+      }
+
+      web-testimonial-card {
+        .testimonial-card {
+          width: 90%;
+        }
       }
     }
   }

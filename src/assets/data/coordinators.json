@@ -1,0 +1,44 @@
+{
+  "coordinatorPage": {
+    "backgroundImage": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb343.jpg",
+    "steps": [
+      "Tener interes genuino por aportar recursos a la formacion de ninos venezolanos",
+      "Estar dispuesto a seguir los lineamientos de la aplicacion amb-le-ma",
+      "Requieran poner en practica la Responsabilidad Social de la Empresa que representa",
+      "Esten dispuestos a ubicar escuelas en su rango de alcance en la que pueda aplicarse amblema",
+      "Esten dispuestos a invertir minimo tiempo en enlace",
+      "Disponga de recursosy tiempo necesario",
+      "Disposicion de aumentar su grado de satisfaccion personal"
+    ],
+    "testimonials": [
+      {
+        "description": "amblema is so good",
+        "firstName": "Greudys",
+        "function": "developer",
+        "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cb.png",
+        "lastName": "Godoy"
+      },
+      {
+        "description": "amblema is really good",
+        "firstName": "Juan",
+        "function": "teacher",
+        "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cc.png",
+        "lastName": "Maria"
+      },
+      {
+        "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+        "firstName": "Padrino",
+        "function": "Padrino principal",
+        "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb341.jpg",
+        "lastName": "Padrino"
+      },
+      {
+        "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+        "firstName": "Coordinador",
+        "function": "Coordinador Principal",
+        "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb342.jpg",
+        "lastName": "Coordinador"
+      }
+    ]
+  }
+}
