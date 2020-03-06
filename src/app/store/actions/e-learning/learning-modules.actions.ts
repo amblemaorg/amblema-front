@@ -1,4 +1,4 @@
-import { Module } from '../../../services/estructure-classes';
+import { Module } from '../../../models/e-learning/learning-modules.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 export class UpdateModulesTotal {

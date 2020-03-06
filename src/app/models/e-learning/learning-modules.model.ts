@@ -36,6 +36,17 @@ export interface Module {
     updatedAt: string;
 }
 
+// ANSWER MODULE
+export interface Answer {
+    quizId: string;
+    option: string;
+}
+
+export interface AnswerModule {
+    coordinator: string;
+    answers: Answer[];
+}
+
 // USERS COORDINATOR
 export interface Role {
     name: string;

@@ -5,7 +5,7 @@ import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Module } from '../../../../services/estructure-classes';
+import { Module } from '../../../../models/e-learning/learning-modules.model';
 import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
 
 @Component({
@@ -27,7 +27,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
 
-  constructor(@Inject(DOCUMENT) private document: Document, /* private moduleService: ModulesService */) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
 
   ngOnInit() {
     // this.moduleService.getMods().subscribe( res => {
@@ -48,6 +48,10 @@ export class ModulesListComponent implements OnInit, DoCheck {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;      
+  }
+
+  checkApprove(id){
+    return this.moduleService.checkApprove(id)
   }
 
 }
