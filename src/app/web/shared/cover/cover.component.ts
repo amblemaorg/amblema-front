@@ -8,20 +8,19 @@ import { Input } from '@angular/core';
   styleUrls: ['./cover.component.scss']
 })
 export class CoverComponent implements OnInit {
-  @Input() tagline;
   @Input() coverImage;
   @Input() slides;
 
   customOptions: OwlOptions = {
     autoplay: true,
     items: 1,
-    loop: false,
+    loop: true,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
     dots: false,
     nav: false,
-    navSpeed: 700,
+    navSpeed: 3000,
   }
 
   constructor() { }
