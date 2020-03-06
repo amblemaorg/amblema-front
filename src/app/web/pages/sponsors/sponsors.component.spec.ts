@@ -1,34 +1,43 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
-import { GodparentsComponent } from './godparents.component';
+import { SponsorsComponent } from './sponsors.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { SponsorService } from '../../../services/web/sponsors.service';
+import { SponsorPage } from '../../../models/web/web-sponsor.model';
+import { HttpClientModule } from '@angular/common/http';
 
-describe('GodparentsComponent', () => {
-    let component: GodparentsComponent;
-    let fixture: ComponentFixture<GodparentsComponent>;
+describe('SponsorsComponent', () => {
+    let component: SponsorsComponent;
+    let fixture: ComponentFixture<SponsorsComponent>;
     let el: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [GodparentsComponent],
+            declarations: [
+              SponsorsComponent,
+            ],
             imports: [
               BrowserAnimationsModule,
               SharedModule,
-              CarouselModule
+              CarouselModule,
+              HttpClientModule
+            ],
+            providers: [
+              SponsorService
             ]
         })
         .compileComponents();
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(GodparentsComponent);
+    beforeEach(inject([SponsorService], (sponsorService: SponsorService) => {
+        fixture = TestBed.createComponent(SponsorsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
-    it('should create godparents page', () => {
+    it('should create sponsors page', () => {
         expect(component).toBeTruthy();
     });
 
@@ -37,7 +46,7 @@ describe('GodparentsComponent', () => {
       expect(h1Count).toBe(1);
     })
 
-    it('should have a h1 tag in about us section', () => {
+    it('should have a h1 tag in cover section', () => {
       el = fixture.nativeElement.querySelector('section.cover');
       const h1Tag = el.children[1].tagName;
       expect(h1Tag).toBe('H1');
@@ -60,13 +69,13 @@ describe('GodparentsComponent', () => {
       expect(h2Text).toBe('¿Cómo ser un padrino?');
     })
 
-    it('should have a h2 tag in godparents section', () => {
-      let h2Count = fixture.nativeElement.querySelectorAll('section.godparents h2').length;
+    it('should have a h2 tag in sponsors section', () => {
+      let h2Count = fixture.nativeElement.querySelectorAll('section.sponsors h2').length;
       expect(h2Count).toBe(1);
     })
 
-    it('should have a h2 tag in godparents section with content "Nuestros padrinos"', () => {
-      el = fixture.nativeElement.querySelector('section.godparents h2');
+    it('should have a h2 tag in sponsors section with content "Nuestros padrinos"', () => {
+      el = fixture.nativeElement.querySelector('section.sponsors h2');
       const h2Text = el.textContent;
       expect(h2Text).toBe('Nuestros padrinos');
     })
