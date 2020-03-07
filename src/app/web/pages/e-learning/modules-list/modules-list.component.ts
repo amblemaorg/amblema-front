@@ -7,6 +7,7 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Module } from '../../../../models/e-learning/learning-modules.model';
 import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
 
 @Component({
   selector: 'app-modules-list',
@@ -26,6 +27,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
   canCheck = true;
 
   @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
+  @Select(CoordinatorState.coordinator_brief) coorBrf$: Observable<any>;
 
   constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
 
@@ -51,7 +53,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
   }
 
   checkApprove(id){
-    return this.moduleService.checkApprove(id)
+    return this.moduleService.checkApprove(id).status=="2"? true:false
   }
 
 }

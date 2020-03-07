@@ -31,7 +31,7 @@ export class ModuleDetailComponent implements OnInit {
   shown = 0;
 
   imgvid:ImaVideo[];
-
+  current:Image = {image:'',description:''};  
   img_strip:Image[];
 
   carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
@@ -76,15 +76,17 @@ export class ModuleDetailComponent implements OnInit {
       this.moduleInfo = res;
       this.imgvid = this.moduleInfo.slider;
       this.img_strip = this.moduleInfo.images;
+      this.current = {image:this.img_strip[0].image,description:this.img_strip[0].description};
       this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
       this.incorrectOnes = this.selectedQuestions.slice();      
+      this.initOps();
+      this.moduleCoins = this.moduleService.checkApprove(this.module_id).score;
     });
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
     setTimeout(()=>{
       this.document.getElementById('completed-message').setAttribute('style','display:none; opacity:1');
     },1000);    
-    this.initOps();
   }
 
   goToImg(i) {
@@ -216,7 +218,11 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   checkApprove(id){
-    this.completedModule = this.moduleService.checkApprove(id);
+    this.completedModule = this.moduleService.checkApprove(id).status=="2"? true:false;
+  }
+
+  fillImage(img) {   
+    this.current = {image:img.image,description:img.description};
   }
 
 }

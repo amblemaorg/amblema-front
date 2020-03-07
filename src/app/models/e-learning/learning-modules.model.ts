@@ -103,7 +103,7 @@ export interface Attempt {
 
 export interface CoordinatorModule {
     moduleId: string;
-    score: string;
+    score: number;
     status: string;
     attempts: Attempt[];
 }

@@ -5,7 +5,7 @@
         <div class="avatar-container media p-3 d-flex align-items-center">
             <img src="https://earth.yale.edu/sites/default/files/fielddrupal.jpg" alt="John Doe" class="mr-2 rounded-circle">
             <div class="media-body">
-                <h4 class="mb-0 name font-weight-bold">Carlos Camacaro</h4>
+                <h4 class="mb-0 name font-weight-bold">{{ (coorBrief$ | async).name }}</h4>
             </div>
         </div>
     </div>

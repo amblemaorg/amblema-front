@@ -21,13 +21,9 @@ export class ModulesService {
   baseUrl = environment.baseUrl;  
 
   approved_modules:CoordinatorModule[] = [];
-  @Select(CoordinatorState.coordinator_modules) approved_modules$: Observable<CoordinatorModule[]>;
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) { 
     this.isBrowser = isPlatformBrowser(platformId);
-    this.approved_modules$.subscribe(res=> {
-      this.approved_modules = res;
-    });
   }
 
   getMod (id): Observable<any> {
@@ -50,6 +46,6 @@ export class ModulesService {
 
   checkApprove(id){
     let isApproved = this.approved_modules.find(m => { return m.moduleId == id });
-    return isApproved? true:false
+    return isApproved
   }
 }
