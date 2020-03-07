@@ -261,6 +261,7 @@ p, button, a, li {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                width: 100% !important;
                 &::after {
                     display: none;
                 }
@@ -614,6 +615,10 @@ p, button, a, li {
             color: map-get($color_map, blue);
             font-weight: bold;
 
+            // &.green {
+            //     color: map-get($color_map, soft-green);
+            // }
+
             @include mediabreak(small,portrait) { top: -0.5rem; }
             
             img {
@@ -733,7 +738,7 @@ p, button, a, li {
         }
     }    
 }
-#warning-message {
+#warning-message, #image-modal {
     .close {
         @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
     }
@@ -751,7 +756,29 @@ p, button, a, li {
         } 
     }
 }
+#image-modal {
+    .modal-dialog {
+        @include mediabreak(small,portrait) { max-width: 90%; }
+    }
+    .close {
+        text-shadow: 0 0 0 !important;
+        color: map-get($color_map, soft-green);
+        opacity: 1;
+    }
+    .modal-content {
+        background: transparent;
+        border: none;
+        @include mediabreak(small,portrait) { width: 100%; }
+    }    
+    .modal-body { 
+        color: map-get($color_map, soft-green);
 
+        img {
+            max-width: 100%;
+            @include mediabreak(small,portrait) { width: 100%; }
+        }
+    }
+}
 
 ::ng-deep .owl-refresh {
     opacity: 0 !important;

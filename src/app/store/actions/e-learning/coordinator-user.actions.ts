@@ -15,5 +15,7 @@ export class UpdateCoins {
 export interface CoordinatorStateModel {
   coins: number;
   coordinator_modules: CoordinatorModule[];
+  name: string;
+  gender: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //

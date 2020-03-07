@@ -70,7 +70,7 @@
         [options]="stackOps"
         [items]="img_strip"
         [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-        <img [src]="img.image" [alt]="img.description" *ngFor="let img of img_strip">
+        <img [src]="img.image" [alt]="img.description" *ngFor="let img of img_strip" (click)="fillImage(img)" data-toggle="modal" data-target="#image-modal">
     </owl-carousel>
 </div>
 
@@ -92,13 +92,14 @@
         </div>
     </div>
 
-    <div *ngIf="!completedModule" class="validate-btn text-center">
-        <button type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener,warningOpener)">Validar</button>
-        <p class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
+    <div class="validate-btn text-center">
+        <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener,warningOpener)">Validar</button>
+        <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
+        <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins}}&nbsp;<img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt=""></p>
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>
-    <br *ngIf="completedModule" /><br *ngIf="completedModule" />
+    <!-- <br *ngIf="completedModule" /><br *ngIf="completedModule" /> -->
 </section>
 
 
@@ -144,17 +145,16 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="image-modal">
+<div class="modal fade" id="image-modal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <p>
-                {{ showFillAll ? '¡Debes responder todas las preguntas del Quizz!':'¡Tienes respuestas incorrectas!' }}                                        
-                </p>
+                <img [src]="current.image" [alt]="current.description">
+                <h5 class="font-weight-bold text-left mt-3">{{current.description}}</h5>
             </div>    
         </div>
     </div>
-</div> -->
+</div>

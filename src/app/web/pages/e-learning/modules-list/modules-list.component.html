@@ -1,6 +1,6 @@
 <div class="modules-list-container">
     <div class="welcome-message d-flex flex-column align-items-center">
-        <h1 class="font-weight-bold mb-4">¡Bienvenido Carlos Camacaro, que comience el aprendizaje!</h1>
+        <h1 class="font-weight-bold mb-4">¡{{((coorBrf$ | async).gender && (coorBrf$ | async).gender=="2") ? 'Bienvenido':'Bienvenida'}} {{(coorBrf$ | async).name}}, que comience el aprendizaje!</h1>
         <div class="below-welcome">
             <p class="text-center">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
         </div>        

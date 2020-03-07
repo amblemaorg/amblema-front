@@ -8,6 +8,8 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     defaults: {
       coins: 0,
       coordinator_modules: [],
+      name: '',
+      gender: ''
     }
   })
   export class CoordinatorState {
@@ -23,6 +25,10 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     @Selector()
     static coordinator_modules(state: CoordinatorStateModel) {
       return state.coordinator_modules;
+    }
+    @Selector()
+    static coordinator_brief(state: CoordinatorStateModel) {
+      return {name:state.name,gender:state.gender};
     }
   
     constructor(private modulesService: ModulesService) {}
@@ -45,7 +51,10 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
           ctx.setState({
             ...state,
             coins: coor.nCoins,
-            coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
+            name: coor.name,
+            gender: coor.gender,
+            // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
+            coordinator_modules: coor.learning
           });
         })
       );
