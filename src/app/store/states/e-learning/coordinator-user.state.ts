@@ -9,7 +9,8 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
       coins: 0,
       coordinator_modules: [],
       name: '',
-      gender: ''
+      gender: '',
+      coor_id: '',
     }
   })
   export class CoordinatorState {
@@ -29,6 +30,10 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     @Selector()
     static coordinator_brief(state: CoordinatorStateModel) {
       return {name:state.name,gender:state.gender};
+    }
+    @Selector()
+    static coordinator_id(state: CoordinatorStateModel) {
+      return state.coor_id;
     }
   
     constructor(private modulesService: ModulesService) {}
@@ -53,6 +58,7 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
             coins: coor.nCoins,
             name: coor.name,
             gender: coor.gender,
+            coor_id: coor.id,
             // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
             coordinator_modules: coor.learning
           });
