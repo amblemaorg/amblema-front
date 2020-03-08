@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Inject, ElementRef } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +6,9 @@ import { ModulesService } from '../../../../services/e-learning/modules.service'
 import { GlobalService } from '../../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
 import { Module, Image, ImaVideo, AnswerModule } from '../../../../models/e-learning/learning-modules.model';
+import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-module-detail',
@@ -15,6 +18,10 @@ import { Module, Image, ImaVideo, AnswerModule } from '../../../../models/e-lear
 export class ModuleDetailComponent implements OnInit {
   @ViewChild('owlElement', {static: false}) owlEl:OwlCarousel;
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
+  @ViewChild('warningOpener', {static: false}) warningBtn:any;
+
+  @Select(CoordinatorState.coordinator_id) coorId$: Observable<string>;
+  current_coor_id:string = '';
 
   moduleInfo: Module;
   module_id = "";
@@ -43,11 +50,12 @@ export class ModuleDetailComponent implements OnInit {
 
   selectedQuestions = [];
   incorrectOnes = [];
-  showFillAll = true;
+  showFillAll = 0; //todo: 0: Must answer all questions, 1: all correct, 2: error happened
 
   isBrowser;
   isPortrait = true;
   isLandscapeCurrent = false;
+  isValidating:boolean;
 
   constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
               private route: ActivatedRoute) { 
@@ -65,23 +73,17 @@ export class ModuleDetailComponent implements OnInit {
       duration: "",
       quizzes: [],
       createdAt: "",
-      updatedAt: ""
+      updatedAt: "",
     };
   }
 
   ngOnInit() {
     this.module_id = this.route.snapshot.params.id;
     this.checkApprove(this.module_id);
-    this.moduleService.getMod(this.module_id).subscribe(res=>{
-      this.moduleInfo = res;
-      this.imgvid = this.moduleInfo.slider;
-      this.img_strip = this.moduleInfo.images;
-      this.current = {image:this.img_strip[0].image,description:this.img_strip[0].description};
-      this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
-      this.incorrectOnes = this.selectedQuestions.slice();      
-      this.initOps();
-      this.moduleCoins = this.moduleService.checkApprove(this.module_id).score;
-    });
+
+    this.coorId$.subscribe(id_ => {
+      this.current_coor_id = id_;
+    })
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
     setTimeout(()=>{
@@ -116,9 +118,10 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   //? Function called when validate button is pressed
-  showModal(el,wm) {
+  showModal(el) {
+    this.isValidating = true;
     let coorAnswers: AnswerModule = {
-      coordinator: '5e60009d945835d1a73bb2f9',
+      coordinator: this.current_coor_id,
       answers: []
     };
     let success = true; // there are not unselected questions
@@ -130,8 +133,9 @@ export class ModuleDetailComponent implements OnInit {
       coorAnswers.answers.push({quizId:this.moduleInfo.quizzes[i].id, option:this.selectedQuestions[i]}); // adding coordinator answer structure
       if (this.selectedQuestions[i]=='option0') {
         success = false; // there is at least an unanswered question
-        this.showFillAll = true;
-        wm.click(); //opening warning modal
+        this.showFillAll = 0;
+        this.isValidating = false;
+        this.warningBtn.nativeElement.click(); //opening warning modal
         break;
       }
       else {
@@ -144,14 +148,15 @@ export class ModuleDetailComponent implements OnInit {
     
     if(success) { // when all questions are answered
       this.moduleService.answerModule(this.module_id,coorAnswers).subscribe(res=> {
+        this.isValidating = false;
         if (!res.approved) {
           if (wrong) { // if some of them are wrong
             this.incorrectOnes = wrongOnes; // setting the incorrect answers
             if (this.moduleCoins>1) { // decreasing AmbleCoins
               this.moduleCoins--;
             }
-            this.showFillAll = false;
-            wm.click(); // opening warning modal
+            this.showFillAll = 1;
+            this.warningBtn.nativeElement.click(); // opening warning modal
           } 
         } else {
           if (!wrong) {
@@ -159,6 +164,10 @@ export class ModuleDetailComponent implements OnInit {
             el.click(); // opening success modal
           }
         }        
+      },(error)=>{
+        this.isValidating = false;
+        this.showFillAll = 2;
+        this.warningBtn.nativeElement.click();
       });      
     }
   }
@@ -219,6 +228,26 @@ export class ModuleDetailComponent implements OnInit {
 
   checkApprove(id){
     this.completedModule = this.moduleService.checkApprove(id).status=="2"? true:false;
+    let currentMod = this.moduleService.getSelectedModule(id);
+    if (currentMod) this.fillModuleInfo(currentMod);
+    else {
+     this.moduleService.getMod(this.module_id).subscribe(res=>{
+      this.fillModuleInfo(res);
+     },(error)=>{
+      this.showFillAll = 2;
+      this.warningBtn.nativeElement.click();
+     }); 
+    }    
+  }
+  fillModuleInfo(mod) {
+    this.moduleInfo = mod;
+    this.imgvid = this.moduleInfo.slider;
+    this.img_strip = this.moduleInfo.images;
+    this.current = {image:this.img_strip[0].image,description:this.img_strip[0].description};
+    this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
+    this.incorrectOnes = this.selectedQuestions.slice();      
+    this.initOps();
+    this.moduleCoins = this.moduleService.checkApprove(this.module_id).score;
   }
 
   fillImage(img) {   

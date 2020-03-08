@@ -92,14 +92,17 @@
         </div>
     </div>
 
+    <br *ngIf="completedModule" />
     <div class="validate-btn text-center">
-        <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener,warningOpener)">Validar</button>
+        <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener,warningOpener)" [disabled]="isValidating">
+                <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : 'Validar' }}
+        </button>
         <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
         <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins}}&nbsp;<img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt=""></p>
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>
-    <!-- <br *ngIf="completedModule" /><br *ngIf="completedModule" /> -->
+    <br *ngIf="completedModule" />
 </section>
 
 
@@ -138,7 +141,7 @@
             </div>
             <div class="modal-body">
                 <p>
-                {{ showFillAll ? '¡Debes responder todas las preguntas del Quizz!':'¡Tienes respuestas incorrectas!' }}                                        
+                {{ showFillAll==0 ? '¡Debes responder todas las preguntas del Quizz!': showFillAll==1 ? '¡Tienes respuestas incorrectas!':'¡Ocurrieron problemas al conectar con el servidor!' }}                                        
                 </p>
             </div>    
         </div>

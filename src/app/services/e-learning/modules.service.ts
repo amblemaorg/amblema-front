@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 import { Select } from '@ngxs/store';
-import { CoordinatorModule } from '../../models/e-learning/learning-modules.model';
+import { CoordinatorModule, Module } from '../../models/e-learning/learning-modules.model';
 import { CoordinatorState } from '../../store/states/e-learning/coordinator-user.state';
 
 const httpOptions = {
@@ -21,6 +21,7 @@ export class ModulesService {
   baseUrl = environment.baseUrl;  
 
   approved_modules:CoordinatorModule[] = [];
+  all_modules:Module[] = [];
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) { 
     this.isBrowser = isPlatformBrowser(platformId);
@@ -39,7 +40,6 @@ export class ModulesService {
   }
 
   answerModule(module_id, dataJson): Observable<any> {
-    console.log(module_id, dataJson);
     return this.http.post<any>(this.baseUrl + `answerlearningmodule/${module_id}`, dataJson)
   }
   
@@ -47,5 +47,9 @@ export class ModulesService {
   checkApprove(id){
     let isApproved = this.approved_modules.find(m => { return m.moduleId == id });
     return isApproved
+  }
+  getSelectedModule(id){
+    let gotResult = this.all_modules.find(m => { return m.id == id });
+    return gotResult
   }
 }

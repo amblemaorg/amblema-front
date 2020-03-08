@@ -17,5 +17,6 @@ export interface CoordinatorStateModel {
   coordinator_modules: CoordinatorModule[];
   name: string;
   gender: string;
+  coor_id: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //
