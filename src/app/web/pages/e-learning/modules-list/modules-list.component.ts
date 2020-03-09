@@ -22,6 +22,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
   faCheck = faCheck;
 
   modules = []; //! PARA PAGINADOR
+  isLoading = [];
   pageOfItems: Array<any>; //! PARA PAGINADOR
 
   canCheck = true;
@@ -36,7 +37,8 @@ export class ModulesListComponent implements OnInit, DoCheck {
     //   this.modules = res.records;
     // });  
     this.modules$.subscribe(res => {
-      this.modules = res;
+      this.modules = res;    
+      this.isLoading = this.modules.map(m => { return false }); 
     });
   }
   ngDoCheck() {    
@@ -53,7 +55,16 @@ export class ModulesListComponent implements OnInit, DoCheck {
   }
 
   checkApprove(id){
-    return this.moduleService.checkApprove(id).status=="2"? true:false
+    let thereIsMod = this.moduleService.checkApprove(id);
+    return thereIsMod ? (thereIsMod.status=="2"? true:false) : false
+  }
+
+  canEnable(mod:Module) {
+    return this.moduleService.isPrevModuleDone(mod.id)
+  }
+
+  loadMod(i) {
+    this.isLoading[i] = true;
   }
 
 }

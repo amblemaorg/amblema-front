@@ -4,7 +4,7 @@ import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
 import { GlobalService } from '../../../../services/global.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Module, Image, ImaVideo, AnswerModule } from '../../../../models/e-learning/learning-modules.model';
 import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
 import { Select } from '@ngxs/store';
@@ -25,6 +25,11 @@ export class ModuleDetailComponent implements OnInit {
 
   moduleInfo: Module;
   module_id = "";
+  moduleNum:number;
+  nextModuleId = null;
+
+  isTesting = false;
+  testingModule:Module;
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
@@ -58,7 +63,7 @@ export class ModuleDetailComponent implements OnInit {
   isValidating:boolean;
 
   constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
-              private route: ActivatedRoute) { 
+              private route: ActivatedRoute, private router: Router) { 
     this.isBrowser = globals.isBrowser;    
     this.moduleInfo = {
       id: "",
@@ -79,6 +84,8 @@ export class ModuleDetailComponent implements OnInit {
 
   ngOnInit() {
     this.module_id = this.route.snapshot.params.id;
+
+    this.moduleNum = this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(this.module_id) + 1;
     this.checkApprove(this.module_id);
 
     this.coorId$.subscribe(id_ => {
@@ -120,6 +127,9 @@ export class ModuleDetailComponent implements OnInit {
   //? Function called when validate button is pressed
   showModal(el) {
     this.isValidating = true;
+    let thereIsNext = this.moduleService.getNextModule(this.module_id);
+    this.nextModuleId = thereIsNext ? thereIsNext.id : null;
+
     let coorAnswers: AnswerModule = {
       coordinator: this.current_coor_id,
       answers: []
@@ -161,6 +171,7 @@ export class ModuleDetailComponent implements OnInit {
         } else {
           if (!wrong) {
             this.completedModule = true;
+            this.moduleService.emitValsUpdate();
             el.click(); // opening success modal
           }
         }        
@@ -173,8 +184,8 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   selectAnswer(i,j) {
-    this.selectedQuestions[i] = j;
-  }  
+    this.selectedQuestions[i] = j;    
+  }    
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {    
@@ -227,8 +238,15 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   checkApprove(id){
-    this.completedModule = this.moduleService.checkApprove(id).status=="2"? true:false;
-    let currentMod = this.moduleService.getSelectedModule(id);
+    let currentMod:Module;
+    if (!this.isTesting) {
+      let thereIsMod = this.moduleService.checkApprove(id);
+      this.completedModule = thereIsMod ? (thereIsMod.status=="2"? true:false) : false;
+      currentMod = this.moduleService.getSelectedModule(id);
+    } else {
+      currentMod = this.testingModule;
+    }
+    
     if (currentMod) this.fillModuleInfo(currentMod);
     else {
      this.moduleService.getMod(this.module_id).subscribe(res=>{
@@ -247,11 +265,19 @@ export class ModuleDetailComponent implements OnInit {
     this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
     this.incorrectOnes = this.selectedQuestions.slice();      
     this.initOps();
-    this.moduleCoins = this.moduleService.checkApprove(this.module_id).score;
+    let thereIsModu = this.moduleService.checkApprove(this.module_id);
+    this.moduleCoins = this.isTesting? 3 : (thereIsModu ? thereIsModu.score : 4);
   }
 
   fillImage(img) {   
     this.current = {image:img.image,description:img.description};
+  }
+
+  refreshComp(){     
+    this.router.navigateByUrl('/e-learning', { skipLocationChange: false }).then(() => {
+      let nvpth = '/e-learning/module-detail/'+this.nextModuleId;
+      this.router.navigate([nvpth]);
+    });
   }
 
 }
