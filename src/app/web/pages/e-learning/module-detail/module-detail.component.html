@@ -4,7 +4,7 @@
     </div>
     <section class="main-info d-flex flex-wrap">
         <div class="col-lg-12 px-0 mb-3 module-title">
-            <h1 class="text-uppercase">Modulo 1</h1> <div class="bar mx-3 d-inline"></div> <h3>Fundamentos del coordinador</h3>
+            <h1 class="text-uppercase">Modulo {{moduleNum}}</h1> <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div> <h3 *ngIf="moduleInfo.name">{{moduleInfo.name}}</h3>
         </div>
         <section class="col-lg-5 px-0 estimate">
             <h4 class="mb-4">
@@ -70,7 +70,7 @@
         [options]="stackOps"
         [items]="img_strip"
         [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-        <img [src]="img.image" [alt]="img.description" *ngFor="let img of img_strip">
+        <img [src]="img.image" [alt]="img.description" *ngFor="let img of img_strip" (click)="fillImage(img)" data-toggle="modal" data-target="#image-modal">
     </owl-carousel>
 </div>
 
@@ -82,7 +82,7 @@
 
     <div class="questions">        
         <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
-            <h3 class="col-sm-6 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.question }}</h3><span class="gapper col-sm-6"></span>           
+            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.question }}</h3>           
             <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
                 <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? question.correctOption===option:selectedQuestions[i]===option" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
                     <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
@@ -92,13 +92,17 @@
         </div>
     </div>
 
-    <div *ngIf="!completedModule" class="validate-btn text-center">
-        <button type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener,warningOpener)">Validar</button>
-        <p class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
+    <br *ngIf="completedModule" />
+    <div class="validate-btn text-center">
+        <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener)" [disabled]="isValidating">
+                <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : 'Validar' }}
+        </button>
+        <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
+        <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins}}&nbsp;<img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt=""></p>
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>
-    <br *ngIf="completedModule" /><br *ngIf="completedModule" />
+    <br *ngIf="completedModule" />
 </section>
 
 
@@ -119,15 +123,16 @@
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
 
-                <div class="text-center btns-modal">
-                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/e-learning/module-detail']" data-dismiss="modal">Siguiente módulo</button>
-                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/e-learning/']" data-dismiss="modal">Volver al listado</button>
+                <div class="text-center btns-modal" [class.onlyone]="!nextModuleId">
+                    <button *ngIf="nextModuleId" type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" (click)="refreshComp()" data-dismiss="modal">Siguiente módulo</button>
+                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/e-learning']" data-dismiss="modal">Volver al listado</button>
                 </div>
             </div>    
         
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="warning-message">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
@@ -136,8 +141,22 @@
             </div>
             <div class="modal-body">
                 <p>
-                {{ showFillAll ? '¡Debes responder todas las preguntas del Quizz!':'¡Tienes respuestas incorrectas!' }}                                        
+                {{ showFillAll==0 ? '¡Debes responder todas las preguntas del Quizz!': showFillAll==1 ? '¡Tienes respuestas incorrectas!':'¡Ocurrieron problemas al conectar con el servidor!' }}                                        
                 </p>
+            </div>    
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="image-modal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img [src]="current.image" [alt]="current.description">
+                <h5 class="font-weight-bold text-left mt-3">{{current.description}}</h5>
             </div>    
         </div>
     </div>
