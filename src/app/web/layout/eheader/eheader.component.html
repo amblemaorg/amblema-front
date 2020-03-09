@@ -5,12 +5,12 @@
         <div class="avatar-container media p-3 d-flex align-items-center">
             <img src="https://earth.yale.edu/sites/default/files/fielddrupal.jpg" alt="John Doe" class="mr-2 rounded-circle">
             <div class="media-body">
-                <h4 class="mb-0 name font-weight-bold">Carlos Camacaro</h4>
+                <h4 class="mb-0 name font-weight-bold">{{ (coorBrief$ | async).name }}</h4>
             </div>
         </div>
     </div>
 
     <p class="user-info px-3">
-        <span title="4 AmbleMonedas de 80" class="coins">4 AmbleMonedas</span> | <span class="aproved-modules">40 módulos aprobados de 80</span>
+        <span title="4 AmbleMonedas de 80" class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' AmbleMoneda') : ((coins$ | async) + ' AmbleMonedas') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
     </p>
 </div>

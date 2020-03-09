@@ -3,6 +3,11 @@ import { DOCUMENT } from "@angular/common";
 import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../services/e-learning/modules.service';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Module } from '../../../../models/e-learning/learning-modules.model';
+import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
 
 @Component({
   selector: 'app-modules-list',
@@ -17,16 +22,24 @@ export class ModulesListComponent implements OnInit, DoCheck {
   faCheck = faCheck;
 
   modules = []; //! PARA PAGINADOR
+  isLoading = [];
   pageOfItems: Array<any>; //! PARA PAGINADOR
 
   canCheck = true;
 
+  @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
+  @Select(CoordinatorState.coordinator_brief) coorBrf$: Observable<any>;
+
   constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
 
   ngOnInit() {
-    this.moduleService.getMods().subscribe( res => {
-      this.modules = res.records;
-    });  
+    // this.moduleService.getMods().subscribe( res => {
+    //   this.modules = res.records;
+    // });  
+    this.modules$.subscribe(res => {
+      this.modules = res;    
+      this.isLoading = this.modules.map(m => { return false }); 
+    });
   }
   ngDoCheck() {    
     if (this.document.querySelectorAll('jw-pagination .page-item.next-item .page-link').length>0 && this.canCheck) {      
@@ -39,6 +52,19 @@ export class ModulesListComponent implements OnInit, DoCheck {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;      
+  }
+
+  checkApprove(id){
+    let thereIsMod = this.moduleService.checkApprove(id);
+    return thereIsMod ? (thereIsMod.status=="2"? true:false) : false
+  }
+
+  canEnable(mod:Module) {
+    return this.moduleService.isPrevModuleDone(mod.id)
+  }
+
+  loadMod(i) {
+    this.isLoading[i] = true;
   }
 
 }
