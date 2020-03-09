@@ -261,6 +261,7 @@ p, button, a, li {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                width: 100% !important;
                 &::after {
                     display: none;
                 }
@@ -531,13 +532,15 @@ p, button, a, li {
         h3 {
             font-weight: bold;
 
-            @include mediabreak(small,landscape,true,640px) { margin-top: 1.5rem !important; }
-            @include mediabreak(medium,landscape,true,800px) { margin-left: -1.5rem; }
-            @include mediabreak(large,landscape) {
+            @media screen and (orientation:landscape) and (min-width:640px) {
                 text-align: left;
-                margin-left: 0;
-                padding-inline-start: 3rem !important;
+                padding: 0 2.75rem !important;
             }
+            @include mediabreak(small,landscape,true,640px) { margin-top: 1.5rem !important; }
+            // @include mediabreak(medium,landscape,true,800px) { margin-left: -1.5rem; }
+            @include mediabreak(large,landscape) { padding: 0 3rem !important; }
+            @include mediabreak(larger,landscape,true,1600px) { padding: 0 3.2rem !important; }
+            @include mediabreak(larger,landscape,true,1900px) { padding: 0 3.75rem !important; }
         }
 
         h3, .letter-sequence, .option-answer {
@@ -613,6 +616,10 @@ p, button, a, li {
             margin-left: 0.75rem;
             color: map-get($color_map, blue);
             font-weight: bold;
+
+            // &.green {
+            //     color: map-get($color_map, soft-green);
+            // }
 
             @include mediabreak(small,portrait) { top: -0.5rem; }
             
@@ -703,9 +710,17 @@ p, button, a, li {
                     display: grid;
                     grid-template-columns: 32% 32%;
                     justify-content: center;
-                    column-gap: 3rem;
+                    column-gap: 3rem;                    
                 }
+                
                 @include mediabreak(large,landscape) { grid-template-columns: auto auto; }
+
+                &.onlyone {
+                    @include mediabreak(medium,landscape,true,800px) {
+                        grid-template-columns: 32%;
+                    }  
+                    @include mediabreak(large,landscape) { grid-template-columns: auto; }
+                }
 
                 button {
                     width: 100%;
@@ -733,7 +748,7 @@ p, button, a, li {
         }
     }    
 }
-#warning-message {
+#warning-message, #image-modal {
     .close {
         @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
     }
@@ -751,7 +766,29 @@ p, button, a, li {
         } 
     }
 }
+#image-modal {
+    .modal-dialog {
+        @include mediabreak(small,portrait) { max-width: 90%; }
+    }
+    .close {
+        text-shadow: 0 0 0 !important;
+        color: map-get($color_map, soft-green);
+        opacity: 1;
+    }
+    .modal-content {
+        background: transparent;
+        border: none;
+        @include mediabreak(small,portrait) { width: 100%; }
+    }    
+    .modal-body { 
+        color: map-get($color_map, soft-green);
 
+        img {
+            max-width: 100%;
+            @include mediabreak(small,portrait) { width: 100%; }
+        }
+    }
+}
 
 ::ng-deep .owl-refresh {
     opacity: 0 !important;

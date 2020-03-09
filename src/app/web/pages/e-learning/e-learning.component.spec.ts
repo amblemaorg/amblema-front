@@ -3,6 +3,9 @@ import { ELearningComponent } from './e-learning.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { EheaderComponent } from '../../layout/eheader/eheader.component';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from '../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../store/states/e-learning/coordinator-user.state';
 
 describe('ELearningComponent', () => {
   let component: ELearningComponent;
@@ -13,6 +16,16 @@ describe('ELearningComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
+        NgxsModule.forRoot( [
+          ModulesState,
+          CoordinatorState
+        ],
+        {
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        })
       ],
       declarations: [
         ELearningComponent,
