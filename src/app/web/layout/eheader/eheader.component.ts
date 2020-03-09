@@ -27,15 +27,22 @@ export class EheaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new UpdateModulesTotal);
-    // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
-    this.store.dispatch(new UpdateCoins('5e60009d945835d1a73bb2f9'));
+    this.modulesService.updateCoorMod.subscribe(res=>{
+      this.setCoordinatorModulesValues();
+    });
+    this.setCoordinatorModulesValues();
     this.approved_modules$.subscribe(res=> {
       this.modulesService.approved_modules = res;
     });
     this.modules_$.subscribe(res=> {
       this.modulesService.all_modules = res;
     });
+  }
+
+  setCoordinatorModulesValues(){
+    this.store.dispatch(new UpdateModulesTotal);
+    // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
+    this.store.dispatch(new UpdateCoins('5e60009d945835d1a73bb2f9'));
   }
 
 }
