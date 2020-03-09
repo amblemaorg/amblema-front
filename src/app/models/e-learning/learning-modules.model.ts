@@ -82,6 +82,7 @@ export interface CoordinatorUser {
     cardType: string;
     cardId: string;
     gender?: any;
+    image: string;
     birthdate: string;
     projects: any[];
     homePhone: string;

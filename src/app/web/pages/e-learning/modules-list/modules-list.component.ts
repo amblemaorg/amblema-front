@@ -56,7 +56,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   checkApprove(id){
     let thereIsMod = this.moduleService.checkApprove(id);
-    return thereIsMod ? (thereIsMod.status=="2"? true:false) : false
+    return thereIsMod ? (thereIsMod.status=="3"? true:false) : false
   }
 
   canEnable(mod:Module) {
