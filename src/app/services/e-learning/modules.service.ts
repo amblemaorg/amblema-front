@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 import { Select } from '@ngxs/store';
-import { CoordinatorModule, Module } from '../../models/e-learning/learning-modules.model';
+import { CoordinatorModule, Module, CoordinatorUser } from '../../models/e-learning/learning-modules.model';
 import { CoordinatorState } from '../../store/states/e-learning/coordinator-user.state';
 
 const httpOptions = {
@@ -32,8 +32,8 @@ export class ModulesService {
     this.updateCoorMod.emit(null);
   }
 
-  getMod (id): Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'learningmodules/' + id)
+  getMod (id): Observable<Module> {
+    return this.http.get<Module>(this.baseUrl + 'learningmodules/' + id)
   }
 
   getMods (): Observable<any> {
@@ -43,8 +43,8 @@ export class ModulesService {
     return of(MODULES)
   } */
 
-  getCoordinator(id): Observable<any> {
-    return this.http.get<any>(this.baseUrl + `users/${id}?userType=2`)
+  getCoordinator(id): Observable<CoordinatorUser> {
+    return this.http.get<CoordinatorUser>(this.baseUrl + `users/${id}?userType=2`)
   }
 
   answerModule(module_id, dataJson): Observable<any> {
@@ -71,7 +71,7 @@ export class ModulesService {
     let gotResult = this.all_modules[inx-1];
     if (gotResult) {
       let prevMod = this.checkApprove(gotResult.id);
-      return prevMod ? (prevMod.status=="2" ? false:true) : true;
+      return prevMod ? (prevMod.status=="3" ? false:true) : true;
     } 
     else return false;
   }
