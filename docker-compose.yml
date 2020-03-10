@@ -50,7 +50,7 @@ networks:
 #     volumes:
 #       - '.:/app'
 #       - '/app/node_modules'
-#     command: bash -c "ng serve --host 0.0.0.0"
+#     command: bash -c "npm install && ng serve --host 0.0.0.0"
 #     ports:
 #       - '22222:4200'
 #       - '22223:4000'
