@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { CoordinatorStateModel, IncreaseCoins, UpdateCoins } from '../../actions/e-learning/coordinator-user.actions';
+import { CoordinatorStateModel, UpdateCoins } from '../../actions/e-learning/coordinator-user.actions';
 import { ModulesService } from '../../../services/e-learning/modules.service';
 
 @State<CoordinatorStateModel>({
@@ -11,6 +11,7 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
       name: '',
       gender: '',
       coor_id: '',
+      image: '',
     }
   })
   export class CoordinatorState {
@@ -29,7 +30,7 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     }
     @Selector()
     static coordinator_brief(state: CoordinatorStateModel) {
-      return {name:state.name,gender:state.gender};
+      return {name:state.name, gender:state.gender, image:state.image};
     }
     @Selector()
     static coordinator_id(state: CoordinatorStateModel) {
@@ -39,14 +40,14 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     constructor(private modulesService: ModulesService) {}
   
     // ACTIONS
-    @Action(IncreaseCoins)
+    /* @Action(IncreaseCoins)
     IncreaseCoins(ctx: StateContext<CoordinatorStateModel>, action: IncreaseCoins) {
       const state = ctx.getState();
       ctx.setState({
           ...state,
           coins: state.coins + action.coinsCount
       });
-    }
+    } */
   
     @Action(UpdateCoins)
     UpdateCoins(ctx: StateContext<CoordinatorStateModel>, action: UpdateCoins) {
@@ -59,6 +60,7 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
             name: coor.name,
             gender: coor.gender,
             coor_id: coor.id,
+            image: coor.image,
             // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
             coordinator_modules: coor.learning
           });
