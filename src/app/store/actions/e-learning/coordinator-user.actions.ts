@@ -1,10 +1,10 @@
 import { CoordinatorModule } from '../../../models/e-learning/learning-modules.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
-export class IncreaseCoins {
+/* export class IncreaseCoins {
     static readonly type = '[ELearning] IncreaseCoins';
     constructor(public coinsCount: number) {}
-}
+} */
 export class UpdateCoins {
   static readonly type = '[ELearning] UpdateCoins';
   constructor(public coor_id: string) {}
@@ -18,5 +18,6 @@ export interface CoordinatorStateModel {
   name: string;
   gender: string;
   coor_id: string;
+  image: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //
