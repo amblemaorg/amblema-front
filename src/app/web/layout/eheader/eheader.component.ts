@@ -28,9 +28,9 @@ export class EheaderComponent implements OnInit {
 
   ngOnInit() {
     this.modulesService.updateCoorMod.subscribe(res=>{
-      this.setCoordinatorModulesValues();
+      this.setCoordinatorModulesValues(res); //! THIS IS TEMPORARY
     });
-    this.setCoordinatorModulesValues();
+    this.setCoordinatorModulesValues({type:0,usu:null}); //! THIS IS TEMPORARY
     this.approved_modules$.subscribe(res=> {
       this.modulesService.approved_modules = res;
     });
@@ -39,10 +39,15 @@ export class EheaderComponent implements OnInit {
     });
   }
 
-  setCoordinatorModulesValues(){
-    this.store.dispatch(new UpdateModulesTotal);
+  setCoordinatorModulesValues(coord){ //! THIS IS TEMPORARY
+    if (coord.type==0) this.store.dispatch(new UpdateModulesTotal);
+    else if (coord.type==1) this.store.dispatch(new UpdateCoins(coord.usu));
+    else {
+      this.store.dispatch(new UpdateModulesTotal);
+      this.store.dispatch(new UpdateCoins(coord.usu));
+    }
     // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
-    this.store.dispatch(new UpdateCoins('5e60009d945835d1a73bb2f9'));
+    
   }
 
 }
