@@ -241,7 +241,7 @@ export class ModuleDetailComponent implements OnInit {
     let currentMod:Module;
     if (!this.isTesting) {
       let thereIsMod = this.moduleService.checkApprove(id);
-      this.completedModule = thereIsMod ? (thereIsMod.status=="2"? true:false) : false;
+      this.completedModule = thereIsMod ? (thereIsMod.status=="3"? true:false) : false;
       currentMod = this.moduleService.getSelectedModule(id);
     } else {
       currentMod = this.testingModule;
