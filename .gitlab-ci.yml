@@ -33,9 +33,9 @@ variables:
 
 qa-auto-tests:
   stage: qa-testing
-  image: devbinaural/angular:8.0.0
+  image: devbinaural/nginx-angular:latest
   tags:
-    - amblema-front
+    - amblema-test
   <<: *test
   only:
     refs:
@@ -118,9 +118,9 @@ qa-turn-off:
 
 staging-auto-tests:
   stage: staging-testing
-  image: devbinaural/angular:8.0.0
+  image: devbinaural/nginx-angular:latest
   tags:
-    - amblema-front
+    - amblema-test
   <<: *test
   only:
     refs:
