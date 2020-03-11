@@ -171,7 +171,7 @@ export class ModuleDetailComponent implements OnInit {
         } else {
           if (!wrong) {
             this.completedModule = true;
-            this.moduleService.emitValsUpdate();
+            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
             el.click(); // opening success modal
           }
         }        
