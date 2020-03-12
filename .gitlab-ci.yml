@@ -33,9 +33,9 @@ variables:
 
 qa-auto-tests:
   stage: qa-testing
-  image: devbinaural/angular:8.0.0
+  image: devbinaural/nginx-angular:latest
   tags:
-    - amblema-front
+    - amblema-test
   <<: *test
   only:
     refs:
@@ -54,6 +54,8 @@ qa-update:
     - cd $PATH_PROJECT_QA
     - git config user.email "jose.guerrero@binauraldev.com"
     - git config user.name "joseaguerrero"
+    - git stash drop
+    - git add .
     - git stash
     - git pull $CI_REPOSITORY_URL qaestable
     - fi
@@ -79,6 +81,7 @@ qa-deploy:
     - cd $PATH_PROJECT_QA
     # - if ! docker ps --format '{{.Names}}' | grep -w $QA_CONTAINER_NAME &> /dev/null; then
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME up -d
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME restart
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
@@ -115,9 +118,9 @@ qa-turn-off:
 
 staging-auto-tests:
   stage: staging-testing
-  image: devbinaural/angular:8.0.0
+  image: devbinaural/nginx-angular:latest
   tags:
-    - amblema-front
+    - amblema-test
   <<: *test
   only:
     refs:
@@ -136,6 +139,8 @@ staging-update:
     - cd $PATH_PROJECT_STAGING
     - git config user.email "jose.guerrero@binauraldev.com"
     - git config user.name "joseaguerrero"
+    - git stash drop
+    - git add .
     - git stash
     - git pull $CI_REPOSITORY_URL staging
     - fi
@@ -161,7 +166,7 @@ staging-deploy:
     - cd $PATH_PROJECT_STAGING
     # - if ! docker ps --format '{{.Names}}' | grep -w $STAGING_CONTAINER_NAME &> /dev/null; then
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME up -d
-    # - docker exec -i $STAGING_CONTAINER_NAME bash -c "cd /home/amblema && npm install && npm run build"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME restart
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
