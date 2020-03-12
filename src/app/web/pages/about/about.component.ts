@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AboutUsService } from 'src/app/services/web/about-us.service';
 import { AboutUsPage } from 'src/app/models/web/web-about-us.model';
+import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
   selector: 'app-about',
@@ -9,6 +10,9 @@ import { AboutUsPage } from 'src/app/models/web/web-about-us.model';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
+  @ViewChild('awardsCarousel', { static: true }) awardsCarousel: OwlCarousel;
+  landscape = window.innerWidth > window.innerHeight;
+
   coverData = {
     coverImage: './assets/images/cover-simbolos.png'
   }
@@ -17,7 +21,7 @@ export class AboutComponent implements OnInit {
     autoplay: false,
     loop: true,
     mouseDrag: false,
-    //touchDrag: false,
+    touchDrag: false,
     pullDrag: false,
     dots: false,
     nav: true,
@@ -35,7 +39,7 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  carouselOptions: OwlOptions = {
+  carouselOptions = {
     autoplay: false,
     loop: true,
     mouseDrag: false,
@@ -47,10 +51,10 @@ export class AboutComponent implements OnInit {
     navSpeed: 1000,
     responsive: {
       0: {
-        items: 1
+        items: this.landscape ? 3 : 1
       },
       767: {
-        items: 2,
+        items: this.landscape ? 3 : 1
       },
       1279: {
         items: 3
@@ -75,8 +79,23 @@ export class AboutComponent implements OnInit {
         });
   }
 
+  @HostListener('window:resize', [''])
+  onResize() {
+    this.landscape = window.innerWidth > window.innerHeight;
+    if (this.landscape) {
+      this.awardsCarousel.options.responsive[0].items = 3;
+      this.awardsCarousel.options.responsive[767].items = 3;
+      this.awardsCarousel.refresh();
+    }
+    else {
+      this.awardsCarousel.options.responsive[0].items = 1;
+      this.awardsCarousel.options.responsive[767].items = 1;
+      this.awardsCarousel.refresh();
+    }
+  }
+
   onAwardClick(award) {
-    console.log(award)
+    console.log(award);
   }
 
 }

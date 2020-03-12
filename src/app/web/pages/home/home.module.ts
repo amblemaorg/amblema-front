@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { OwlModule } from 'ngx-owl-carousel';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { HomeComponent } from './home.component';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    CarouselModule
+    CarouselModule,
+    OwlModule
   ]
 })
 export class HomeModule { }
