@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { SchoolService } from 'src/app/services/web/school.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
   selector: 'app-school-detail',
@@ -9,6 +10,11 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrls: ['./school-detail.component.scss']
 })
 export class SchoolDetailComponent implements OnInit, AfterViewInit {
+  @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
+  @ViewChild('activitiesCarousel', { static: true }) activitiesCarousel: OwlCarousel;
+  @ViewChild('otherSchoolsCarousel', { static: true }) otherSchoolsCarousel: OwlCarousel;
+
+  landscape = window.innerWidth > window.innerHeight;
 
   carouselOptions: OwlOptions = {
     autoplay: false,
@@ -38,7 +44,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     ...this.carouselOptions,
     responsive: {
       0: {
-        items: 1
+        items: this.landscape ? 3 : 1
       },
       [767 * 0.84]: {
         items: 3
@@ -57,7 +63,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     nav: false,
     responsive: {
       0: {
-        items: 1
+        items: this.landscape ? 3 : 1
       },
       [768 * 0.8]: {
         items: 3
@@ -66,7 +72,6 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   }
 
   school;
-  @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
 
   constructor(
     private router: Router,
@@ -76,7 +81,6 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      //console.log(params.schoolSlug)
       this.getSchoolBySlug(params.get('schoolSlug'));
 
     })
@@ -105,4 +109,22 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     })
   }
 
+  @HostListener('window:resize', [''])
+  onResize() {
+    this.landscape = window.innerWidth > window.innerHeight;
+    if (this.landscape) {
+      this.activitiesCarousel.options.responsive[0].items = 3;
+      this.otherSchoolsCarousel.options.responsive[0].items = 3;
+
+      this.activitiesCarousel.refresh();
+      this.otherSchoolsCarousel.refresh();
+    }
+    else {
+      this.activitiesCarousel.options.responsive[0].items = 1;
+      this.otherSchoolsCarousel.options.responsive[0].items = 1;
+
+      this.activitiesCarousel.refresh();
+      this.otherSchoolsCarousel.refresh();
+    }
+  }
 }

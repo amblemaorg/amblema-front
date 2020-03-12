@@ -1,22 +1,22 @@
 <nav class="web-menu">
   <ul>
     <li>
-      <a [routerLink]="['/']" routerLinkActive="router-link-active">Home</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/']" routerLinkActive="router-link-active">Home</a>
     </li>
     <li>
-      <a [routerLink]="['/nosotros']">Nosotros</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/nosotros']">Nosotros</a>
     </li>
     <li>
-      <a [routerLink]="['/padrinos']">Padrinos</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/padrinos']">Padrinos</a>
     </li>
     <li>
-      <a [routerLink]="['/coordinadores']">Coordinadores</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/coordinadores']">Coordinadores</a>
     </li>
     <li>
-      <a [routerLink]="['/escuelas']">Escuelas</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/escuelas']">Escuelas</a>
     </li>
     <li>
-      <a [routerLink]="['/blog']">Blog</a>
+      <a (click)="triggerNavigate()" [routerLink]="['/blog']">Blog</a>
     </li>
     <!--
       <li>
