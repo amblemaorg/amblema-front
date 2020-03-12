@@ -5,6 +5,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
+import { OwlModule } from 'ngx-owl-carousel';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { AboutComponent } from './about.component';
     CommonModule,
     SharedModule,
     CarouselModule,
+    OwlModule,
     AboutRoutingModule
   ]
 })

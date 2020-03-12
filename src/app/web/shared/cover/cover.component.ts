@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Input } from '@angular/core';
 
@@ -13,7 +13,6 @@ export class CoverComponent implements OnInit {
 
   customOptions: OwlOptions = {
     autoplay: true,
-    items: 1,
     loop: true,
     mouseDrag: false,
     touchDrag: false,
@@ -21,11 +20,15 @@ export class CoverComponent implements OnInit {
     dots: false,
     nav: false,
     navSpeed: 3000,
+    responsive: {
+      0: {
+        items: 1
+      }
+    }
   }
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }

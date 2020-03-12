@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SponsorService } from '../../../services/web/sponsors.service';
 import { SponsorPage } from '../../../models/web/web-sponsor.model';
+import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
   selector: 'app-sponsors',
@@ -11,6 +12,8 @@ import { SponsorPage } from '../../../models/web/web-sponsor.model';
 })
 
 export class SponsorsComponent implements OnInit {
+  @ViewChild('sponsorsCarousel', { static: true }) sponsorsCarousel: OwlCarousel;
+  landscape = window.innerWidth > window.innerHeight;
   coverData = {
     slides: [
       {
@@ -25,7 +28,6 @@ export class SponsorsComponent implements OnInit {
 
   coverCarouselOptions: OwlOptions = {
     autoplay: true,
-    items: 1,
     loop: true,
     mouseDrag: false,
     touchDrag: false,
@@ -33,6 +35,11 @@ export class SponsorsComponent implements OnInit {
     dots: true,
     nav: false,
     navSpeed: 1000,
+    responsive: {
+      0: {
+        items: 1
+      }
+    }
   }
 
   sponsorsOptions: OwlOptions = {
@@ -80,8 +87,18 @@ export class SponsorsComponent implements OnInit {
 
   onSponsorClick(url) {
     window.open(url);
-    // const pop = window.open(url); // opens in new tab on most browsers
-    // window.opener.focus(); // no longer works in most modern browsers
-    // pop.focus();
+  }
+
+  @HostListener('window:resize', [''])
+  onResize() {
+    this.landscape = window.innerWidth > window.innerHeight;
+    if (this.landscape) {
+      this.sponsorsCarousel.options.responsive[0].items = 3;
+      this.sponsorsCarousel.refresh();
+    }
+    else {
+      this.sponsorsCarousel.options.responsive[0].items = 2;
+      this.sponsorsCarousel.refresh();
+    }
   }
 }

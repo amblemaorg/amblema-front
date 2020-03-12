@@ -7,6 +7,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SponsorService } from '../../../services/web/sponsors.service';
 import { SponsorPage } from '../../../models/web/web-sponsor.model';
 import { HttpClientModule } from '@angular/common/http';
+import { OwlModule } from 'ngx-owl-carousel';
 
 describe('SponsorsComponent', () => {
     let component: SponsorsComponent;
@@ -22,6 +23,7 @@ describe('SponsorsComponent', () => {
               BrowserAnimationsModule,
               SharedModule,
               CarouselModule,
+              OwlModule,
               HttpClientModule
             ],
             providers: [

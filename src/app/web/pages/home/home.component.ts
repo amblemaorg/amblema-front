@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HomeService } from '../../../services/web/home.service';
 import { HomePage } from 'src/app/models/web/web-home.model';
+import { OwlCarousel } from 'ngx-owl-carousel';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,14 @@ import { HomePage } from 'src/app/models/web/web-home.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('pillarsCarousel', { static: true }) pillarsCarousel: OwlCarousel;
+  landscape = window.innerWidth > window.innerHeight;
+
   coverData = {
     coverImage: './assets/images/cover-simbolos.png'
   }
 
-  pillarsOptions: OwlOptions = {
+  pillarsOptions = {
     autoplay: false,
     items: 1,
     loop: true,
@@ -61,6 +65,12 @@ export class HomeComponent implements OnInit {
           // console.log(data);
           this.homePageData = data.homePage;
         });
+  }
+
+  @HostListener('window:resize', [''])
+  onResize() {
+    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
+      this.pillarsCarousel.refresh();
   }
 
 }

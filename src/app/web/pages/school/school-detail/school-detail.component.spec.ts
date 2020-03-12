@@ -8,6 +8,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SchoolService } from 'src/app/services/web/school.service';
 import { ActivatedRouteStub } from 'src/assets/tests/activated-route-stub';
+import { OwlModule } from 'ngx-owl-carousel';
 
 
 describe('SchoolDetailComponent', () => {
@@ -121,6 +122,7 @@ describe('SchoolDetailComponent', () => {
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
         SharedModule,
+        OwlModule,
         CarouselModule
       ],
       providers: [

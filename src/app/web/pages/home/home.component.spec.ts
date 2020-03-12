@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HomeService } from 'src/app/services/web/home.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { OwlModule } from 'ngx-owl-carousel';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -18,6 +19,7 @@ describe('HomeComponent', () => {
               BrowserAnimationsModule,
               SharedModule,
               CarouselModule,
+              OwlModule,
               HttpClientModule
             ],
             providers: [HomeService]
