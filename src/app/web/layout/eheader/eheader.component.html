@@ -11,6 +11,6 @@
     </div>
 
     <p class="user-info px-3">
-        <span title="4 AmbleMonedas de 80" class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' AmbleMoneda') : ((coins$ | async) + ' AmbleMonedas') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
+        <span title="4 AmbleMonedas de 80" class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' punto') : ((coins$ | async) + ' puntos') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
     </p>
 </div>

@@ -130,6 +130,8 @@ p, button, a, li {
         }
         ul {
             @include mediabreak(large,landscape) { line-height: 1.6; }
+            word-break: break-all;
+            word-break: break-word;
 
             li {
                 color: map-get($color_map, blue);
@@ -172,6 +174,7 @@ p, button, a, li {
             }
 
             p {                
+                text-align: justify;
                 color: map-get($color_map, blue);
                 @include mediabreak(large,portrait) {
                     padding-right: 2rem;
@@ -399,7 +402,7 @@ p, button, a, li {
         }
         p {
             color: map-get($color_map, blue);
-            text-align: center;
+            text-align: justify;
         }
     }        
 }
@@ -769,6 +772,7 @@ p, button, a, li {
 #image-modal {
     .modal-dialog {
         @include mediabreak(small,portrait) { max-width: 90%; }
+        @include mediabreak(large,landscape) { max-width: 100%; }
     }
     .close {
         text-shadow: 0 0 0 !important;
@@ -779,6 +783,7 @@ p, button, a, li {
         background: transparent;
         border: none;
         @include mediabreak(small,portrait) { width: 100%; }
+        @include mediabreak(large,landscape) { width: 55%; }
     }    
     .modal-body { 
         color: map-get($color_map, soft-green);
@@ -786,6 +791,7 @@ p, button, a, li {
         img {
             max-width: 100%;
             @include mediabreak(small,portrait) { width: 100%; }
+            @include mediabreak(large,landscape) { width: 100%; }
         }
     }
 }
