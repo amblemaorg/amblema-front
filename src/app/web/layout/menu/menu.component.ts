@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'web-menu',
@@ -6,9 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  @Output() navigate = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() { }
-
+  triggerNavigate() {
+    this.navigate.emit('complete');
+  }
 }

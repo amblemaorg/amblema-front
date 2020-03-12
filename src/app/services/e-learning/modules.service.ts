@@ -28,8 +28,8 @@ export class ModulesService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  emitValsUpdate(){
-    this.updateCoorMod.emit(null);
+  emitValsUpdate(coord){ //! THIS IS TEMPORARY
+    this.updateCoorMod.emit(coord);
   }
 
   getMod (id): Observable<Module> {

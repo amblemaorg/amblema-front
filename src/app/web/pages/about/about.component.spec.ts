@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutUsService } from 'src/app/services/web/about-us.service';
 import { HttpClientModule } from '@angular/common/http';
+import { OwlModule } from 'ngx-owl-carousel';
 
 describe('AboutComponent', () => {
     let component: AboutComponent;
@@ -17,6 +18,7 @@ describe('AboutComponent', () => {
             imports: [
               BrowserAnimationsModule,
               SharedModule,
+              OwlModule,
               CarouselModule,
               HttpClientModule
             ],

@@ -38,4 +38,15 @@ describe('EheaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it("'AmbLeMa' word must be well-written", () => { 
+    let organization_name = fixture.nativeElement.querySelectorAll('.main-name').item(0).textContent;
+    expect(organization_name).toBe('AmbLeMa');
+  });
+
+  it("'Módulos aprobados' sentence must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.user-info').item(0).textContent.toLowerCase();
+    expect(word).toContain('módulos aprobado');
+  });  
+
 });

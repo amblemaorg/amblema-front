@@ -23,7 +23,6 @@ export class CoordinatorsComponent implements OnInit {
 
   customOptions: OwlOptions = {
     autoplay: true,
-    items: 1,
     loop: true,
     mouseDrag: false,
     touchDrag: false,
@@ -31,6 +30,11 @@ export class CoordinatorsComponent implements OnInit {
     dots: true,
     nav: false,
     navSpeed: 3000,
+    responsive: {
+      0: {
+        items: 1
+      }
+    }
   }
 
   coordinatorsPageData: CoordinatorPage;

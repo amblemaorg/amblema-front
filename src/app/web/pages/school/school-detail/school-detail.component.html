@@ -25,7 +25,7 @@
 <section class="teachers">
     <div class="heading">
       <h2>Los Docentes dicen</h2>
-      <p>Lorem ipsum dolor sit amet, consectetuer</p>
+      <!-- <p>Lorem ipsum dolor sit amet, consectetuer</p> -->
     </div>
     <div class="teachers-list">
       <owl-carousel-o *ngIf="school.testimonials.length > 0" [options]="teachersOptions" class="teachers-carousel">
@@ -40,11 +40,14 @@
       <h2>Próximas actividades</h2>
     </div>
     <div class="activities-list">
-      <owl-carousel-o *ngIf="school.activities.length > 0" [options]="activitiesOptions" class="activities-carousel">
-        <ng-template carouselSlide *ngFor="let item of school.activities">
+      <owl-carousel #activitiesCarousel
+                    [options]="activitiesOptions"
+                    class="activities-carousel"
+                    [carouselClasses]="['']">
+        <ng-container *ngFor="let item of school.activities">
           <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
-        </ng-template>
-      </owl-carousel-o>
+        </ng-container>
+      </owl-carousel>
     </div>
 </section>
 
@@ -53,11 +56,14 @@
     <h2>Descubre otras escuelas</h2>
   </div>
   <div class="other-schools-list">
-    <owl-carousel-o *ngIf="school.otherSchools.length > 0" [options]="otherSchoolsOptions" class="other-schools-carousel">
-      <ng-template carouselSlide *ngFor="let item of school.otherSchools">
+    <owl-carousel #otherSchoolsCarousel
+                  [options]="otherSchoolsOptions"
+                  class="other-schools-carousel"
+                  [carouselClasses]="['']">
+      <ng-container *ngFor="let item of school.otherSchools">
         <ng-container *ngTemplateOutlet="otherSchool; context: { school: item }"></ng-container>
-      </ng-template>
-    </owl-carousel-o>
+      </ng-container>
+    </owl-carousel>
   </div>
 </section>
 

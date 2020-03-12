@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ModuleMapNgFactoryLoader } from '@nguniversal/module-map-ngfactory-loader';
 import { SchoolService } from 'src/app/services/web/school.service';
 import { Router } from '@angular/router';
 

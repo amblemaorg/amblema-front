@@ -1,4 +1,5 @@
 stages:
+  - integration-testing
   - qa-testing
   - qa-update
   - qa-deploy
@@ -30,6 +31,18 @@ variables:
     - fi
     - npm install
     - npm run test
+
+integration-auto-tests:
+  stage: integration-testing
+  tags:
+    - amblema
+  script:
+    - echo "Todo bien! Todo correcto! Apruebame y mergeame"
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "integration"
 
 qa-auto-tests:
   stage: qa-testing
@@ -87,6 +100,7 @@ qa-deploy:
     - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
     # TODO: run SSR in background
     # - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
+    # - docker-compose -f docker-compose.qa.yml -p amblema_front_qa exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
   tags:
     - amblema
   only:
