@@ -210,15 +210,17 @@ export class ModuleDetailComponent implements OnInit {
       }
     } 
     
-    this.stackOps = {items: 1, dots: false, loop: true, nav: true,
+    this.stackOps = {items: 1, dots: false, loop: (this.img_strip.length < 2)? false:true, nav: true,
       responsive : {
           640 : {
             items : this.isPortrait? 1:4,
-            nav: this.isPortrait? true:false
+            nav: this.isPortrait? true:false,
+            loop: this.isPortrait? ( (this.img_strip.length < 2)? false:true ):true
           },
           992 : {
             items : this.isPortrait? 1:6,
-            nav: this.isPortrait? true:false
+            nav: this.isPortrait? true:false,
+            loop: this.isPortrait? ( (this.img_strip.length < 2)? false:true ):true
           }
       }
     };

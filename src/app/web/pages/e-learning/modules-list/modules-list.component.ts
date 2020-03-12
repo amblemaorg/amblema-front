@@ -64,7 +64,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
     return thereIsMod ? (thereIsMod.status=="3"? true:false) : false
   }
 
-  canEnable(mod:Module) {
+  canEnable(mod:Module) { // temporarly unused
     return this.moduleService.isPrevModuleDone(mod.id)
   }
 
