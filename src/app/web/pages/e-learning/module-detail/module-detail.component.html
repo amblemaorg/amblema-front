@@ -77,7 +77,7 @@
 <section class="quizz mt-5">
     <div class="top-title d-flex flex-wrap mb-2">
         <h2 class="mr-3">QUIZZ</h2>
-        <h4>Selecciona la respuesta correcta</h4>
+        <h4>Seleccione la respuesta correcta</h4>
     </div>
 
     <div class="questions">        
@@ -95,10 +95,10 @@
     <br *ngIf="completedModule" />
     <div class="validate-btn text-center">
         <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener)" [disabled]="isValidating">
-                <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : 'Validar' }}
+                <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : ('Validar &times; '+(moduleCoins>1? (moduleCoins+' puntos'):(moduleCoins+' punto') ) ) }}
         </button>
-        <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p>
-        <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins}}&nbsp;<img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt=""></p>
+        <!-- <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p> -->
+        <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins > 1 ? (moduleCoins+' puntos.') : (moduleCoins+' punto.')}}</p>
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>

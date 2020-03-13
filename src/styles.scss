@@ -55,6 +55,22 @@ a {
   &:hover {
     text-decoration: none;
   }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.b-show {
+  display: block;
+}
+
+.f-show {
+  display: flex;
+}
+
+.hide {
+  display: none;
 }
 
 .show-lg {
@@ -183,6 +199,86 @@ section.pillars {
 }
 
 // Styles for Owl Carousels
+.owl-carousel {
+  position: relative;
+
+  .owl-nav {
+    position: absolute;
+    top: 45%;
+
+    button {
+      &:focus {
+        outline: none;
+      }
+
+      &.owl-prev,
+      &.owl-next {
+        background: transparent;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        transform: scaleY(1.5);
+
+        &:hover {
+          background: transparent;
+        }
+
+        &:before {
+          color: $blue;
+          font-family: 'arrows';
+          font-size: 6vw;
+          @include breakpoint(small, landscape) {
+            font-size: 2vw;
+          }
+
+          @include breakpoint(medium) {
+            font-size: 2vw;
+          }
+        }
+      }
+
+      &.owl-prev {
+        left: 0;
+        &:before {
+          content: "\2190";
+        }
+      }
+
+      &.owl-next {
+        right: -100vw;
+        &:before {
+          content: "\2192";
+        }
+      }
+    }
+  }
+  .owl-dots {
+    text-align: left;
+
+    @include breakpoint(small, landscape) {
+      text-align: center;
+    }
+
+    @include breakpoint(medium) {
+      text-align: center;
+    }
+
+    .owl-dot {
+      span {
+        background: transparent;
+        border: 1px solid $blue;
+      }
+
+      &.active,
+      &:hover {
+        span {
+          background: $blue;
+        }
+      }
+    }
+  }
+}
+
 owl-carousel-o {
   // Founders owl carousel in Home page
   &.founders-carousel {

@@ -129,6 +129,7 @@ section.pillars {
         background-repeat: no-repeat;
         background-size: cover;
         display: flex;
+        flex-direction: column;
         position: relative;
 
         &.environment {
@@ -154,11 +155,6 @@ section.pillars {
     padding: 6vw 10vw;
     text-align: center;
 
-    &.invisible {
-      opacity: 0;
-      position: relative;
-    }
-
     @include breakpoint(small, landscape) {
       padding: 3vw 5vw;
       margin: 0 .5vw;
@@ -171,11 +167,9 @@ section.pillars {
 
     @include breakpoint(large) {
       bottom: -81%;
-      height: -webkit-fill-available;
-      height: -moz-available;
-      height: stretch;
+      flex-grow: 1;
       margin: 0;
-      position: absolute;
+      position: relative;
       transition: 1s bottom ease, .5s background-color ease;
 
       &:hover {

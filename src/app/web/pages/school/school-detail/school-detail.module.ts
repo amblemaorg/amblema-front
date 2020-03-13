@@ -5,6 +5,7 @@ import { SchoolDetailRoutingModule } from './school-detail-routing.module';
 import { SchoolDetailComponent } from './school-detail.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedModule } from 'src/app/web/shared/shared.module';
+import { OwlModule } from 'ngx-owl-carousel';
 
 @NgModule({
   declarations: [SchoolDetailComponent],
@@ -12,6 +13,7 @@ import { SharedModule } from 'src/app/web/shared/shared.module';
     CommonModule,
     SchoolDetailRoutingModule,
     CarouselModule,
+    OwlModule,
     SharedModule
   ]
 })

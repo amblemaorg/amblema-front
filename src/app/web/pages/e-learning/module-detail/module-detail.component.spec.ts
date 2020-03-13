@@ -67,6 +67,26 @@ describe('ModuleDetailComponent', () => {
     expect(allQselected).toBeTruthy();
   });
 
+  it("'Estimación de tiempo' sentence must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.estimate h4').item(0).textContent.toLowerCase();
+    expect(word).toContain('estimación de tiempo');
+  });
+
+  it("'Quizz' sentence must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.quizz .top-title h2').item(0).textContent.toLowerCase();
+    expect(word).toBe('quizz');
+  });
+
+  it("'Seleccione la respuesta correcta' sentence must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.quizz .top-title h4').item(0).textContent.toLowerCase();
+    expect(word).toBe('seleccione la respuesta correcta');
+  });
+
+  it("'Validar' sentence must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.validate-btn button').item(0).textContent.toLowerCase();
+    expect(word).toContain('validar');
+  });
+
 });
 
 
