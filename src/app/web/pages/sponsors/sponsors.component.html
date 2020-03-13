@@ -27,17 +27,20 @@
 <section class="sponsors">
   <h2 class="heading">Nuestros padrinos</h2>
   <div class="sponsors-list">
-    <owl-carousel-o *ngIf="sponsorsPageData.sponsors.length > 0" [options]="sponsorsOptions" class="sponsors-carousel">
+    <owl-carousel #sponsorsCarousel
+                  [options]="sponsorsOptions"
+                  class="sponsors-carousel"
+                  [carouselClasses]="['']">
       <ng-container *ngFor="let sponsor of sponsorsPageData.sponsors as sponsors; let i = index">
-        <ng-template carouselSlide *ngIf="(i+1) % 2 !== 1">
+        <ng-container *ngIf="(i+1) % 2 !== 1">
           <div class="inner-wrap">
               <ng-container *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsors[i-1] }"></ng-container>
 
               <ng-container *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsor }"></ng-container>
           </div>
-        </ng-template>
+        </ng-container>
       </ng-container>
-    </owl-carousel-o>
+    </owl-carousel>
   </div>
 </section>
 
