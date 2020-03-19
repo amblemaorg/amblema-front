@@ -10,13 +10,13 @@
             <span class="icon-back icon-awesum"><fa-icon [icon]="faAngleLeft"></fa-icon></span><span class="icon-forward icon-awesum"><fa-icon [icon]="faAngleRight"></fa-icon></span>
         </div>
         <!-- end paginator -->
-        <button type="button" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1">Volver a los pasos</button>
+        <button type="button" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps']">Volver a los pasos</button>
     </div>
     
     <div class="modules-list">    
         <div class="d-flex module-item py-3 rounded-sm" *ngFor="let module of pageOfItems; index as i">
             <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">Módulo {{i+1}}<i *ngIf="checkApprove(module.id)"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
-            <button type="button" class="btn btn-outline-primary text-decoration-none" (click)="loadMod(i)" [routerLink]="['/e-learning/module-detail/'+module.id]"> <!-- [disabled]="canEnable(module)" -->
+            <button type="button" class="btn btn-outline-primary text-decoration-none" (click)="loadMod(i)" [routerLink]="['/previous-steps/module-detail/'+module.id]"> <!-- [disabled]="canEnable(module)" -->
                 <span *ngIf="isLoading[i]" class="spinner-grow spinner-grow-sm"></span><span class="no-icon">{{ checkApprove(module.id) ? 'Ver': (isLoading[i]?'Iniciando..':'Iniciar')}}</span><span *ngIf="!isLoading[i]" class="icon"><fa-icon *ngIf="!checkApprove(module.id)" [icon]="faPlay"></fa-icon><fa-icon *ngIf="checkApprove(module.id)" [icon]="faEye"></fa-icon></span>
             </button>            
         </div>        

@@ -3,12 +3,12 @@ import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from '@angular/router';
 import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { ModulesService } from '../../../../services/e-learning/modules.service';
+import { ModulesService } from '../../../../../services/e-learning/modules.service';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Module } from '../../../../models/e-learning/learning-modules.model';
-import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { Module } from '../../../../../models/e-learning/learning-modules.model';
+import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
 
 @Component({
   selector: 'app-modules-list',

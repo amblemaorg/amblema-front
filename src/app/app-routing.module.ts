@@ -7,8 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./web/web.module').then(m => m.WebModule),
   },
   {
-    path: 'e-learning',
-    loadChildren: () => import('./web/pages/e-learning/e-learning.module').then( m => m.ELearningModule)
+    path: 'previous-steps',
+    loadChildren: () => import('./web/pages/previous-steps/previous-steps.module').then( m => m.PreviousStepsModule)
   }
 ];
 

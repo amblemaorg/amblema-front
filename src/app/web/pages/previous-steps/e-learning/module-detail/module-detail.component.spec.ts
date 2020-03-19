@@ -4,11 +4,11 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EheaderComponent } from '../../../layout/eheader/eheader.component';
-import { Module } from '../../../../models/e-learning/learning-modules.model';
+import { EheaderComponent } from '../../../../layout/eheader/eheader.component';
+import { Module } from '../../../../../models/e-learning/learning-modules.model';
 import { NgxsModule } from '@ngxs/store';
-import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
 
 describe('ModuleDetailComponent', () => {
   let component: ModuleDetailComponent;
@@ -104,14 +104,14 @@ export const MODULETEST: Module = {
   ],
   slider: [
     {
-      url: "../../../../../assets/images/icn-amblemoneda-blue.png",
+      url: "../../../../../../assets/images/icn-amblemoneda-blue.png",
       description: "some image description",
       type: "1"
     }
   ],
   images: [
     {
-      image: "../../../../../assets/images/icn-amblemoneda-blue.png",
+      image: "../../../../../../assets/images/icn-amblemoneda-blue.png",
       description: "some description"
     }
   ],
