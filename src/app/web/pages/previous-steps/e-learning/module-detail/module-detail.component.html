@@ -1,6 +1,6 @@
 <div class="module-detail-container">
     <div class="go-back-btn">
-        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" [routerLink]="['/e-learning']"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
+        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" [routerLink]="['/previous-steps/modules']"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
     </div>
     <section class="main-info d-flex flex-wrap">
         <div class="col-lg-12 px-0 mb-3 module-title">
@@ -125,7 +125,7 @@
 
                 <div class="text-center btns-modal" [class.onlyone]="!nextModuleId">
                     <button *ngIf="nextModuleId" type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" (click)="refreshComp()" data-dismiss="modal">Siguiente módulo</button>
-                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/e-learning']" data-dismiss="modal">Volver al listado</button>
+                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/previous-steps/modules']" data-dismiss="modal">Volver al listado</button>
                 </div>
             </div>    
         

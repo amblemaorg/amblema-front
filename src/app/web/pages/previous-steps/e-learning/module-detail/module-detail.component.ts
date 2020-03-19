@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, HostListener, Inject, ElementRef } from '
 import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ModulesService } from '../../../../services/e-learning/modules.service';
-import { GlobalService } from '../../../../services/global.service';
+import { ModulesService } from '../../../../../services/e-learning/modules.service';
+import { GlobalService } from '../../../../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Module, Image, ImaVideo, AnswerModule } from '../../../../models/e-learning/learning-modules.model';
-import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/e-learning/learning-modules.model';
+import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -276,8 +276,8 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   refreshComp(){     
-    this.router.navigateByUrl('/e-learning', { skipLocationChange: false }).then(() => {
-      let nvpth = '/e-learning/module-detail/'+this.nextModuleId;
+    this.router.navigateByUrl('/previous-steps/modules', { skipLocationChange: false }).then(() => {
+      let nvpth = '/previous-steps/module-detail/'+this.nextModuleId;
       this.router.navigate([nvpth]);
     });
   }
