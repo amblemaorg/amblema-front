@@ -1,0 +1,6 @@
+<div [class]="'offcanvas ' + status">
+  <div class="aria-close"><span (click)="onClose()">&times;</span></div>
+  <div class="offcanvas-content">
+    <ng-content></ng-content>
+  </div>
+</div>

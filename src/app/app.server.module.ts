@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader'
     ServerModule,
     NoopAnimationsModule,
     ModuleMapLoaderModule,
+    ToastrModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })
