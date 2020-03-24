@@ -1,0 +1,62 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+
+.offcanvas {
+  background-color: $blue;
+  top: 0;
+  bottom: 0;
+  color: white;
+  filter: opacity(.9);
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  transition: 1s left ease;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 50;
+
+  @include breakpoint(medium) {
+    overflow: hidden;
+  }
+
+  &.closed {
+    left: -100vw;
+  }
+
+  &.opened {
+    left: 0;
+  }
+
+  .aria-close {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5vw;
+
+    @include breakpoint(medium) {
+      padding: 2vw;
+    }
+
+    span {
+      font-family: lato;
+      font-size: 10vw;
+      line-height: 0.5;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 4.5vw;
+      }
+    }
+  }
+
+  .offcanvas-content {
+    padding: 4vw 9vw 12vw;
+
+    @include breakpoint(medium) {
+      padding: 4vw 12vw;
+    }
+  }
+}

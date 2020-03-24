@@ -88,6 +88,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.scrollToPage();
+        this.reinitCarousels();
       }
     });
   }
@@ -115,16 +116,23 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     if (this.landscape) {
       this.activitiesCarousel.options.responsive[0].items = 3;
       this.otherSchoolsCarousel.options.responsive[0].items = 3;
-
-      this.activitiesCarousel.refresh();
-      this.otherSchoolsCarousel.refresh();
+      this.refreshCarousels();
     }
     else {
       this.activitiesCarousel.options.responsive[0].items = 1;
       this.otherSchoolsCarousel.options.responsive[0].items = 1;
-
-      this.activitiesCarousel.refresh();
-      this.otherSchoolsCarousel.refresh();
+      this.refreshCarousels();
     }
   }
+
+  reinitCarousels() {
+    this.activitiesCarousel.reInit();
+    this.otherSchoolsCarousel.reInit();
+  }
+
+  refreshCarousels() {
+    this.activitiesCarousel.refresh();
+    this.otherSchoolsCarousel.refresh();
+  }
 }
+
