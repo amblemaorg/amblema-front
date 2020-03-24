@@ -1,0 +1,53 @@
+@import '../previous-steps.component.scss';
+
+.main-steps-view {
+    @extend %padding-conts;
+
+    .description-info {
+        @include on-message;
+
+        h1, p {
+            color: map-get($color_map, blue);
+        }
+
+        // desktop 
+        h1 {            
+            text-align: center; width: 100%;
+            @include mediabreak(large,landscape) { margin-bottom: 1.25rem !important; }
+        }
+        .below-desc-info {
+            width: 100%;
+
+            p {           
+                margin-left: auto; margin-right: auto; 
+                @include mediabreak(large,landscape) { width: 80%; }
+                @include mediabreak(larger,landscape,true,1600px) { width: 70%; }
+                @include mediabreak(larger,landscape,true,1900px) { width: 62%; }
+            }
+        }        
+
+        button {
+            @include btn-righted;      
+
+            &:focus {
+                box-shadow: none;
+            }
+            &:hover {
+                background: transparent;
+                color: map-get($color_map, blue);
+            }
+        }        
+    }
+
+    .tabs-container {
+        ul {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+
+            @media screen and (orientation: landscape) {
+                flex-wrap: wrap;
+                overflow-x: initial;
+            }
+        }
+    }
+}

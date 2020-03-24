@@ -12,6 +12,8 @@ import { environment } from '../environments/environment.prod';
 import { ModulesState } from './store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from './store/states/e-learning/coordinator-user.state';
 
+import { EmbedVideo } from 'ngx-embed-video';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -33,6 +35,7 @@ import { CoordinatorState } from './store/states/e-learning/coordinator-user.sta
       developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({}),
+    EmbedVideo.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

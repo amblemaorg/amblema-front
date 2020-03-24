@@ -15,7 +15,7 @@
     
     <div class="modules-list">    
         <div class="d-flex module-item py-3 rounded-sm" *ngFor="let module of pageOfItems; index as i">
-            <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">Módulo {{i+1}}<i *ngIf="checkApprove(module.id)"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
+            <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">Módulo {{getModuleNum(module.id)}}<i *ngIf="checkApprove(module.id)"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
             <button type="button" class="btn btn-outline-primary text-decoration-none" (click)="loadMod(i)" [routerLink]="['/previous-steps/module-detail/'+module.id]"> <!-- [disabled]="canEnable(module)" -->
                 <span *ngIf="isLoading[i]" class="spinner-grow spinner-grow-sm"></span><span class="no-icon">{{ checkApprove(module.id) ? 'Ver': (isLoading[i]?'Iniciando..':'Iniciar')}}</span><span *ngIf="!isLoading[i]" class="icon"><fa-icon *ngIf="!checkApprove(module.id)" [icon]="faPlay"></fa-icon><fa-icon *ngIf="checkApprove(module.id)" [icon]="faEye"></fa-icon></span>
             </button>            

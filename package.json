@@ -45,6 +45,7 @@
     "express": "^4.15.2",
     "jw-paginate": "^1.0.4",
     "localstorage-polyfill": "^1.0.1",
+    "ngx-embed-video": "^1.0.4",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^2.0.3",
     "rxjs": "~6.4.0",

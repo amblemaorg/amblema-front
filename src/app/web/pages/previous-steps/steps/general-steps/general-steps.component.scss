@@ -1,0 +1,20 @@
+.steps-accordion {
+     .card-link {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .bar {
+            display: block !important;            
+            border-left: 2px solid;         
+            height: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+     }
+
+     .card-body {
+         .hide-upload-btn {
+             display: none;
+         }
+     }
+}

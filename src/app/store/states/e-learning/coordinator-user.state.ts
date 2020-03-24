@@ -22,7 +22,8 @@ import { ModulesService } from '../../../services/e-learning/modules.service';
     }
     @Selector()
     static coordinator_modules_total(state: CoordinatorStateModel) {
-      return state.coordinator_modules.length;
+      let only_approved = state.coordinator_modules.filter(m=>{ return m.status=="3"});
+      return only_approved.length;
     }
     @Selector()
     static coordinator_modules(state: CoordinatorStateModel) {
