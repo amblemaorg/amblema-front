@@ -1,0 +1,12 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+.error-message {
+  color: $red;
+  font-size: 3.5vw;
+  text-align: right;
+
+  @include breakpoint(medium) {
+    font-size: .9vw;
+  }
+}

@@ -44,17 +44,52 @@ owl-carousel-o {
       width: 26%;
     }
   }
+}
 
-  &.sponsors-carousel {
-    display: block;
-    margin-bottom: 20vw;
+::ng-deep {
+  owl-carousel {
+    // Sponsors owl carousel in sponsors page
+    &.sponsors-carousel {
+      display: block;
+      margin-bottom: 20vw;
 
-    @include breakpoint(small, landscape) {
-      margin-bottom: 5vw;
-    }
+      @include breakpoint(small, landscape) {
+        margin-bottom: 5vw;
+      }
 
-    @include breakpoint(medium) {
-      margin-bottom: 5vw;
+      @include breakpoint(medium) {
+        margin-bottom: 5vw;
+      }
+
+      .owl-carousel {
+        width: 80%;
+        margin: auto;
+
+        .owl-stage {
+          display: flex;
+
+          .owl-item {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+
+      .owl-prev {
+        left: -8vw !important;
+
+        @include breakpoint(large) {
+          left: 0 !important;
+        }
+      }
+
+      .owl-next {
+        right: -88vw !important;
+
+        @include breakpoint(large) {
+          right: -79vw !important;
+        }
+      }
     }
   }
 }
