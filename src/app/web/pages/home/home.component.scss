@@ -98,7 +98,16 @@ section.about-us {
     }
   }
 }
-
+::ng-deep {
+  owl-carousel {
+    // Three pillars owl carousel in home page
+    &.pillars-carousel-home {
+      .owl-next {
+        right: -90vw !important;
+      }
+    }
+  }
+}
 section.pillars {
   padding: 8vw 5vw 25vw;
 

@@ -1,0 +1,50 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+.form-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-label {
+    font-size: 4.5vw;
+
+    @include breakpoint(medium) {
+      font-size: 1.5vw;
+    }
+  }
+
+  .form-options {
+
+    input.form-confirmation {
+      display: none;
+    }
+
+    .form-button {
+      background: transparent;
+      border-radius: 0;
+      border: 1px solid $white;
+      color: $white;
+      font-size: 4.5vw;
+      margin: 0 2vw;
+      padding: 1vw 4vw !important;
+      position: relative;
+      transform: unset;
+
+      @include breakpoint(medium) {
+        font-size: 1.25vw;
+        margin: 0 1vw;
+        padding: .4vw 2vw !important;
+      }
+
+      &.active {
+        background: white;
+        color: $blue;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
