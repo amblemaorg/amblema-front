@@ -1,0 +1,60 @@
+<!-- Cover section -->
+<section class="cover">
+  <web-cover [slides]="coverData.slides"></web-cover>
+  <h1>Padrinos</h1>
+  <owl-carousel-o *ngIf="sponsorsPageData.testimonials.length > 0" [options]="coverCarouselOptions" class="testimonials-carousel">
+    <ng-template carouselSlide *ngFor="let testimonial of sponsorsPageData.testimonials">
+
+      <web-testimonial-card [testimonial]="testimonial"></web-testimonial-card>
+
+    </ng-template>
+  </owl-carousel-o>
+</section>
+<!-- End cover section -->
+
+<!-- Steps section -->
+<section class="steps">
+  <web-bg-heading>¿Cómo ser un padrino?</web-bg-heading>
+  <div class="steps-list">
+    <ol>
+      <ng-container *ngFor="let step of sponsorsPageData.steps as steps; index as i">
+        <div *ngIf="i <= (steps.length / 2) ">
+          <li *ngFor="let step of sponsorsPageData.steps as steps">{{ step }}</li>
+        </div>
+      </ng-container>
+    </ol>
+  </div>
+</section>
+<!-- End steps section -->
+
+<!-- Sponsors section -->
+<section class="sponsors">
+  <h2 class="heading">Nuestros padrinos</h2>
+  <div class="sponsors-list">
+    <owl-carousel #sponsorsCarousel
+                  [options]="sponsorsOptions"
+                  class="sponsors-carousel"
+                  [carouselClasses]="['']">
+      <ng-container *ngFor="let sponsor of sponsorsPageData.sponsors as sponsors; let i = index">
+        <ng-container *ngIf="(i+1) % 2 !== 1">
+          <div class="inner-wrap">
+              <ng-container *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsors[i-1] }"></ng-container>
+
+              <ng-container *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsor }"></ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </owl-carousel>
+  </div>
+</section>
+
+<!-- Angular Template for sponsors -->
+<ng-template #sponsorTemplate let-sponsor="sponsor">
+  <div class="sponsor" (click)="onSponsorClick(sponsor.pageUrl)">
+    <div class="image-wrapper">
+      <img *ngIf="sponsor.image" class="image" [src]="sponsor.image" [alt]="sponsor.fullName + ' logo'" />
+    </div>
+    <p *ngIf="sponsor.fullName" class="title">{{ sponsor.fullName }}</p>
+    <p *ngIf="sponsor.description" class="description">{{ sponsor.description }}</p>
+  </div>
+</ng-template>

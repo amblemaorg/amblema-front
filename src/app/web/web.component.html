@@ -1,0 +1,12 @@
+<web-header #header>
+  <router-outlet></router-outlet>
+  <web-footer #footer
+              (schoolForm)="openOffcanvas('schoolForm')"
+              (sponsorForm)="openOffcanvas('sponsorForm')"
+              (coordinatorForm)="openOffcanvas('coordinatorForm')">
+  </web-footer>
+</web-header>
+<web-offcanvas #offcanvas [status]="offcanvasClass" (close)="closeOffcanvas()">
+  <web-implemented-forms [form]="formSelected">
+  </web-implemented-forms>
+</web-offcanvas>

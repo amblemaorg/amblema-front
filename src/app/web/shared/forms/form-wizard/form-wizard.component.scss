@@ -1,0 +1,326 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+.form-heading {
+  font-size: 6vw;
+  font-weight: bold;
+  line-height: 1.2;
+
+  @include breakpoint(medium) {
+    font-size: 2vw;
+  }
+}
+
+.fields-container {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 6vw;
+  position: relative;
+
+  .form-field {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 3vw 0;
+    position: relative;
+    width: 100%;
+
+    @include breakpoint(medium) {
+      margin: 1.5vw 0;
+      width: 45%;
+    }
+
+    .field-label {
+      flex: 0 0 auto;
+      //flex: 1 0 auto;
+      font-size: 4vw;
+      font-weight: bold;
+      margin: 0;
+      margin-right: 2vw;
+      max-width: 40%;
+      position: relative;
+      top: 1vw;
+      display: inline-block;
+
+      @include breakpoint(medium) {
+        font-size: 1vw;
+        margin-right: 1vw;
+        top: .5vw;
+      }
+    }
+
+    .field-control {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid white;
+      color: white;
+      flex: 1 0 auto;
+      font-size: 4.5vw;
+      height: 6vw;
+      width: 50%;
+
+      @include breakpoint(medium) {
+        font-size: 1.2vw;
+        height: 2vw;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &[disabled] {
+        border-bottom: 2px solid $dark-gray;
+      }
+
+      &.ng-touched {
+        &.ng-invalid {
+          border-bottom: 2px solid $red;
+        }
+
+        &.ng-valid {
+          border-bottom: 2px solid $green;
+        }
+
+        & ~ web-form-validation {
+          display: block;
+        }
+      }
+
+      &.ng-untouched {
+        & ~ web-form-validation {
+          display: none;
+        }
+      }
+    }
+
+    web-form-validation {
+      position: absolute;
+      top: 6vw;
+
+      @include breakpoint(large) {
+        position: relative;
+        top: unset;
+      }
+    }
+
+    &.list {
+      ul, ol {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+
+        li {
+          font-size: 4.5vw;
+          line-height: 1.2;
+          margin-bottom: 3vw;
+          display: inline-block;
+
+          @include breakpoint(medium) {
+            font-size: 1.5vw;
+            margin-bottom: 1.5vw;
+          }
+        }
+      }
+    }
+
+    &.select {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      .field-control {
+        flex: 1 0 auto;
+        width: 50%;
+      }
+    }
+
+    &.identification {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      ng-select {
+        flex: 0 1 15%;
+      }
+
+      input.field-control,
+      web-form-input {
+        flex: 1 0 auto;
+        width: 40%;
+      }
+    }
+  }
+
+  input,
+  web-form-input,
+  ng-select {
+    &.ng-touched {
+      & ~ web-form-validation {
+        display: block;
+      }
+    }
+
+    &.ng-untouched {
+      & ~ web-form-validation {
+        display: none;
+      }
+    }
+  }
+
+  web-form-input.ng-touched {
+    & ~ web-form-validation {
+      display: block;
+    }
+  }
+
+  web-form-input.ng-untouched {
+    & ~ web-form-validation {
+      display: none;
+    }
+  }
+
+  web-form-validation {
+    width: 100%;
+  }
+}
+
+.button-container {
+  text-align: center;
+}
+
+.form-button {
+  background: transparent;
+  border-radius: 0;
+  border: 1px solid $white;
+  color: $white;
+  font-size: 4.5vw;
+  margin: 0 2vw;
+  padding: 1vw 4vw !important;
+  position: relative;
+  transform: unset;
+
+  @include breakpoint(medium) {
+    font-size: 1.25vw;
+    margin: 0 1vw;
+    padding: .4vw 2vw !important;
+  }
+
+  &:hover {
+    background: white;
+    color: $blue;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &[disabled] {
+    color: $dark-gray;
+    border-color: $dark-gray;
+
+    &:hover {
+      background: transparent;
+      color: $dark-gray;
+    }
+  }
+}
+
+::ng-deep {
+  ng-select {
+    border-bottom: 2px solid $white;
+    color: $white;
+
+    .ng-select-container {
+      .ng-value {
+        font-size: 4.5vw;
+
+        @include breakpoint(large) {
+          font-size: 1.2vw;
+        }
+      }
+      .ng-input {
+        input {
+          color: $white;
+          font-size: 4.5vw;
+
+          @include breakpoint(large) {
+            font-size: 1.2vw;
+          }
+        }
+      }
+
+      .ng-clear-wrapper {
+        width: auto;
+
+        .ng-clear {
+          font-size: 5vw;
+
+          @include breakpoint(large) {
+            font-size: 1.5vw;
+          }
+        }
+      }
+    }
+
+    &.ng-touched.ng-valid {
+      .ng-select-container {
+        border-bottom-color: $green;
+      }
+    }
+
+    &.ng-touched.ng-invalid {
+      .ng-select-container {
+        border-bottom-color: $red;
+      }
+    }
+
+    &.ng-select-opened {
+      & > .ng-select-container {
+        .ng-arrow {
+          top: -1vw;
+          border-color: transparent transparent $white;
+          border-width: 1.5vw 1.5vw 1.5vw;
+
+          @include breakpoint(large) {
+            top: -.25vw;
+            border-width: 0 .5vw .5vw;
+          }
+        }
+
+      }
+    }
+
+    ng-dropdown-panel {
+      .ng-dropdown-panel-items {
+        .ng-option {
+          background-color: $white;
+          color: $blue;
+          padding: .5vw 2vw;
+
+          @include breakpoint(large) {
+            padding: .25vw 1vw;
+          }
+        }
+      }
+    }
+
+    .ng-arrow-wrapper {
+      width: 6vw;
+
+      @include breakpoint(large) {
+        width: 2vw;
+      }
+
+      .ng-arrow {
+        border-color: $white transparent transparent;
+        border-style: solid;
+        border-width: 1.5vw 1.5vw 1vw;
+
+        @include breakpoint(large) {
+          border-width: .5vw .5vw .25vw;
+        }
+      }
+    }
+  }
+}
