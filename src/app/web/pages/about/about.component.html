@@ -77,7 +77,10 @@
 <section class="awards">
   <h2 class="heading">Premios y reconocimientos</h2>
   <div class="awards-list">
-    <owl-carousel #awardsCarousel [options]="carouselOptions" [carouselClasses]="['awards-carousel']">
+    <owl-carousel #awardsCarousel
+                  [options]="carouselOptions"
+                  class="awards-carousel"
+                  [carouselClasses]="['']">
       <div class="award" *ngFor="let award of aboutUsPageData.awards">
         <div class="image-wrapper">
           <img *ngIf="award.image" class="image" [src]="award.image" [alt]="award.name + ' logo'" />

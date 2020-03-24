@@ -2,6 +2,7 @@
 @import 'scss/responsive';
 
 @import
+  '~ngx-toastr/toastr',
   '~bootstrap/dist/css/bootstrap.css',
   '~bootstrap/scss/print',
   '~bootstrap/scss/reboot',
@@ -319,13 +320,6 @@ owl-carousel-o {
     }
   }
 
-  // Three pillars owl carousel in home page
-  &.pillars-carousel-home {
-    .owl-next {
-      right: -92vw !important;
-    }
-  }
-
   // Three pillars owl carousel in about us page
   &.pillars-carousel {
     .owl-carousel {
@@ -337,62 +331,6 @@ owl-carousel-o {
     }
     .owl-next {
       right: -90vw !important;
-    }
-  }
-
-  // Awards owl carousel in about us page
-  &.awards-carousel {
-    .owl-stage {
-      display: flex;
-      .owl-item {
-        display: flex;
-        justify-content: center;
-      }
-    }
-
-    .owl-prev {
-      @include breakpoint(large) {
-        left: 1vw !important;
-      }
-    }
-
-    .owl-next {
-      @include breakpoint(large) {
-        right: -98vw !important;
-      }
-    }
-  }
-
-  // Sponsors owl carousel in sponsors page
-  &.sponsors-carousel {
-    .owl-carousel {
-      width: 80%;
-      margin: auto;
-
-      .owl-stage {
-        display: flex;
-
-        .owl-item {
-          display: flex;
-          justify-content: center;
-        }
-      }
-    }
-
-    .owl-prev {
-      left: -8vw !important;
-
-      @include breakpoint(large) {
-        left: 0 !important;
-      }
-    }
-
-    .owl-next {
-      right: -88vw !important;
-
-      @include breakpoint(large) {
-        right: -79vw !important;
-      }
     }
   }
 

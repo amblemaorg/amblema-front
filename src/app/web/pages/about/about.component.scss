@@ -96,6 +96,31 @@ section.about-us {
       }
     }
   }
+
+  owl-carousel {
+    // Awards owl carousel in about us page
+    &.awards-carousel {
+      .owl-stage {
+        display: flex;
+        .owl-item {
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      .owl-prev {
+        @include breakpoint(large) {
+          left: 1vw !important;
+        }
+      }
+
+      .owl-next {
+        @include breakpoint(large) {
+          right: -98vw !important;
+        }
+      }
+    }
+  }
 }
 
 section.pillars {

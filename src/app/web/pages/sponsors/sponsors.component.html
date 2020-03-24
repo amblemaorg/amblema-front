@@ -17,7 +17,11 @@
   <web-bg-heading>¿Cómo ser un padrino?</web-bg-heading>
   <div class="steps-list">
     <ol>
-        <li *ngFor="let step of sponsorsPageData.steps">{{ step }}</li>
+      <ng-container *ngFor="let step of sponsorsPageData.steps as steps; index as i">
+        <div *ngIf="i <= (steps.length / 2) ">
+          <li *ngFor="let step of sponsorsPageData.steps as steps">{{ step }}</li>
+        </div>
+      </ng-container>
     </ol>
   </div>
 </section>
