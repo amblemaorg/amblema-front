@@ -12,14 +12,14 @@ import cloneDeep from 'lodash/cloneDeep';
 export class FormWizardComponent implements OnInit {
   @Input()  readonly formsContent: any;
   @Output() readonly submit: EventEmitter<any> = new EventEmitter<any>();
-  private stepItems: Array<any>;
-  private activeStepIndex: number;
-  private lastStepIndex: number;
-  private stepsContent: Array<any>;
-  private dataToSubmit: any = null;
-  private fields: Array<Array<string>>;
-  private formWizard: Array<FormGroup>;
-  private isSubmitting: boolean = false;
+  stepItems: Array<any>;
+  activeStepIndex: number;
+  lastStepIndex: number;
+  stepsContent: Array<any>;
+  dataToSubmit: any = null;
+  fields: Array<Array<string>>;
+  formWizard: Array<FormGroup>;
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -118,7 +118,7 @@ export class FormWizardComponent implements OnInit {
     return validationError;
   }
 
-  private onSubmit(): void {
+  public onSubmit(): void {
     this.updateDataToSubmit();
     if (this.isValid()) {
       this.isSubmitting = true;
@@ -133,7 +133,7 @@ export class FormWizardComponent implements OnInit {
     }
   }
 
-  private updateDataToSubmit(): void {
+  public updateDataToSubmit(): void {
     this.dataToSubmit = this.formWizard.reduce(
       (dataGathered, currentForm: FormGroup, i) => {
         let currentFormValues = {};
