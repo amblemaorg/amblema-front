@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { WebRoutingModule } from './web-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 // Components
 import { WebComponent } from './web.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -20,8 +22,11 @@ import { FooterComponent } from './layout/footer/footer.component';
   imports: [
     CommonModule,
     WebRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    CarouselModule,
   ],
   exports: [
   ]

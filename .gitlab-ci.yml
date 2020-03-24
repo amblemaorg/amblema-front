@@ -17,7 +17,7 @@ variables:
 
   # Path to staging
   PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
-  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING/amblema-front
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING
 
 # Jobs for QA environment
 .testscript: &test
@@ -140,7 +140,7 @@ staging-auto-tests:
     refs:
       - merge_requests
     variables:
-      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging"
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
 
 staging-update:
   stage: staging-update
@@ -148,7 +148,7 @@ staging-update:
     - if ! [ -d $PATH_PROJECT_STAGING ]; then
     - mkdir -p $PATH_PROJECT_STAGING
     - cd $PATH_PROJECT_STAGING
-    - git clone -b staging --single-branch $CI_REPOSITORY_URL
+    - git clone -b master --single-branch $CI_REPOSITORY_URL .
     - else
     - cd $PATH_PROJECT_STAGING
     - git config user.email "jose.guerrero@binauraldev.com"
@@ -156,12 +156,12 @@ staging-update:
     - git stash drop
     - git add .
     - git stash
-    - git pull $CI_REPOSITORY_URL staging
+    - git pull $CI_REPOSITORY_URL master
     - fi
   tags:
     - amblema
   only:
-    - staging
+    - master
 
 staging-run-tests:
   stage: staging-deploy
@@ -171,7 +171,7 @@ staging-run-tests:
     - cd $PATH_PROJECT_STAGING
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run test"
   only:
-    - staging
+    - master
   when: manual
 
 staging-deploy:
@@ -189,7 +189,7 @@ staging-deploy:
   tags:
     - amblema
   only:
-    - staging
+    - master
 
 staging-turn-off:
   stage: staging-deploy
@@ -199,5 +199,5 @@ staging-turn-off:
   tags:
     - amblema
   only:
-    - staging
+    - master
   when: manual

@@ -1,0 +1,133 @@
+@import 'scss/variables';
+@import 'scss/responsive';
+
+::ng-deep {
+  web-form-wizard {
+    &.school-form-wizard {
+      .form-step-3 {
+        .form-heading {
+          font-size: 4.5vw;
+          display: block;
+          text-align: center;
+          font-weight: normal;
+          padding: 0 5%;
+
+          @include breakpoint(small, landscape) {
+            font-size: 1.5vw;
+            padding: 0 15%;
+          }
+
+          @include breakpoint(medium) {
+            font-size: 1.5vw;
+            padding: 0 15%;
+          }
+        }
+      }
+
+      .form-step-3,
+      .form-step-6 {
+        .form-heading {
+          text-align: center;
+          display: block;
+        }
+
+        .fields-container {
+          margin: 4vw 0;
+
+          .form-field {
+            width: 100% !important;
+
+            &.confirmation {
+              web-form-confirmation {
+                width: 100%;
+              }
+
+              web-form-confirmation.ng-touched {
+                & ~ web-form-validation {
+                  display: block;
+
+                  .error-message {
+                    text-align: center;
+                  }
+                }
+              }
+
+              web-form-confirmation.ng-untouched {
+                & ~ web-form-validation {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.sponsor-form-wizard {
+      .form-step-2 {
+        .form-heading {
+          font-size: 1.5vw;
+          display: block;
+          font-weight: normal;
+          padding: 0 5%;
+
+          @include breakpoint(small, landscape) {
+            font-size: 1.5vw;
+            padding: 0 15%;
+          }
+
+          @include breakpoint(medium) {
+            font-size: 1.5vw;
+            padding: 0 15%;
+          }
+        }
+      }
+
+      .form-step-2,
+      .form-step-6 {
+        .form-heading {
+          text-align: center;
+          display: block;
+        }
+
+        .fields-container {
+          margin: 8vw 0;
+
+          @include breakpoint(small, landscape) {
+            margin: 4vw 0;
+          }
+
+          @include breakpoint(medium) {
+            margin: 4vw 0;
+          }
+
+          .form-field {
+            width: 100% !important;
+
+            &.confirmation {
+              web-form-confirmation {
+                width: 100%;
+              }
+
+              web-form-confirmation.ng-touched {
+                & ~ web-form-validation {
+                  display: block;
+
+                  .error-message {
+                    text-align: center;
+                  }
+                }
+              }
+
+              web-form-confirmation.ng-untouched {
+                & ~ web-form-validation {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
