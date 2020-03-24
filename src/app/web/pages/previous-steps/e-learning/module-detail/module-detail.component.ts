@@ -233,9 +233,9 @@ export class ModuleDetailComponent implements OnInit {
       case 'min':
         return ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
       case 'hr':
-        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' hr';
+        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' h';
       default:
-        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' hr ' + ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
+        return ( timing.charAt(0)=='0'?timing.charAt(1):(timing.charAt(0)+timing.charAt(1)) ) + ' h ' + ( timing.charAt(2)=='0'?timing.charAt(3):(timing.charAt(2)+timing.charAt(3)) ) + ' min';
     }
   }
 
@@ -268,7 +268,7 @@ export class ModuleDetailComponent implements OnInit {
     this.incorrectOnes = this.selectedQuestions.slice();      
     this.initOps();
     let thereIsModu = this.moduleService.checkApprove(this.module_id);
-    this.moduleCoins = this.isTesting? 3 : (thereIsModu ? thereIsModu.score : 4);
+    this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4);
   }
 
   fillImage(img) {   

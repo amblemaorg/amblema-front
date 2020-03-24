@@ -1,27 +1,12 @@
-@import 'scss/placeholders';
+@import '../../previous-steps.component.scss';
 
 %bold-blue {
     color: map-get($color_map, blue);
     font-weight: bold;
 }
 
-::ng-deep body {
-    background: map-get($color_map, gray);
-}
-
 .modal-backdrop.show {
     opacity: 0.25;
-}
-
-//
-h1{
-    @extend %h1;
-}
-h3, h4 {
-    @extend %h34;
-}
-p, button, a, li {
-    @extend %p;
 }
 
 @mixin gallery-height {

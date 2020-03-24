@@ -44,7 +44,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
     this.modules$.subscribe(res => {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
-    });
+    });    
   }
   ngDoCheck() {    
     if (this.document.querySelectorAll('jw-pagination .page-item.next-item .page-link').length>0 && this.canCheck) {      
@@ -70,6 +70,10 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   loadMod(i) {
     this.isLoading[i] = true;
+  }
+
+  getModuleNum(module_id) {
+    return this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(module_id) + 1;
   }
 
 }
