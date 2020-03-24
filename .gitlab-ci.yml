@@ -1,0 +1,203 @@
+stages:
+  - integration-testing
+  - qa-testing
+  - qa-update
+  - qa-deploy
+  - staging-testing
+  - staging-update
+  - staging-deploy
+
+variables:
+  QA_CONTAINER_NAME: "amblema_front_qa"
+  STAGING_CONTAINER_NAME: "amblema_front_staging"
+
+  # Path to QA
+  PATH_FOLDER_QA: /home/amblema/amblema-front/qa
+  PATH_PROJECT_QA: $PATH_FOLDER_QA/amblema-front
+
+  # Path to staging
+  PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
+  PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING
+
+# Jobs for QA environment
+.testscript: &test
+  script:
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "Jose Guerrero"
+    - if [ -z "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
+    -  git pull $CI_REPOSITORY_URL $CI_COMMIT_REF_NAME
+    - else
+    -  git pull $CI_REPOSITORY_URL $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    - fi
+    - npm install
+    - npm run test
+
+integration-auto-tests:
+  stage: integration-testing
+  tags:
+    - amblema
+  script:
+    - echo "Todo bien! Todo correcto! Apruebame y mergeame"
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "integration"
+
+qa-auto-tests:
+  stage: qa-testing
+  image: devbinaural/nginx-angular:latest
+  tags:
+    - amblema-test
+  <<: *test
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "qaestable"
+
+qa-update:
+  stage: qa-update
+  script:
+    - if ! [ -d $PATH_PROJECT_QA ]; then
+    - mkdir -p $PATH_PROJECT_QA
+    - cd $PATH_PROJECT_QA
+    - git clone -b qaestable --single-branch $CI_REPOSITORY_URL
+    - else
+    - cd $PATH_PROJECT_QA
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "joseaguerrero"
+    - git stash drop
+    - git add .
+    - git stash
+    - git pull $CI_REPOSITORY_URL qaestable
+    - fi
+  tags:
+    - amblema
+  only:
+    - qaestable
+
+qa-run-tests:
+  stage: qa-deploy
+  tags:
+    - amblema-front
+  script:
+    - cd $PATH_PROJECT_QA
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run test"
+  only:
+    - qaestable
+  when: manual
+
+qa-deploy:
+  stage: qa-deploy
+  script:
+    - cd $PATH_PROJECT_QA
+    # - if ! docker ps --format '{{.Names}}' | grep -w $QA_CONTAINER_NAME &> /dev/null; then
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME up -d
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME restart
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
+    - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
+    # TODO: run SSR in background
+    # - docker-compose -f docker-compose.qa.yml -p $QA_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
+    # - docker-compose -f docker-compose.qa.yml -p amblema_front_qa exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
+  tags:
+    - amblema
+  only:
+    - qaestable
+
+qa-turn-off:
+  stage: qa-deploy
+  script:
+    - cd $PATH_PROJECT_QA
+    - rm -rf dist/
+  tags:
+    - amblema
+  only:
+    - qaestable
+  when: manual
+
+# Jobs for Staging environment
+.teststagingscript: &teststaging
+  script:
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "Jose Guerrero"
+    - if [ -z "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
+    -  git pull $CI_REPOSITORY_URL $CI_COMMIT_REF_NAME
+    - else
+    -  git pull $CI_REPOSITORY_URL $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    - fi
+    - npm install
+    - npm run test
+
+staging-auto-tests:
+  stage: staging-testing
+  image: devbinaural/nginx-angular:latest
+  tags:
+    - amblema-test
+  <<: *test
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+
+staging-update:
+  stage: staging-update
+  script:
+    - if ! [ -d $PATH_PROJECT_STAGING ]; then
+    - mkdir -p $PATH_PROJECT_STAGING
+    - cd $PATH_PROJECT_STAGING
+    - git clone -b master --single-branch $CI_REPOSITORY_URL .
+    - else
+    - cd $PATH_PROJECT_STAGING
+    - git config user.email "jose.guerrero@binauraldev.com"
+    - git config user.name "joseaguerrero"
+    - git stash drop
+    - git add .
+    - git stash
+    - git pull $CI_REPOSITORY_URL master
+    - fi
+  tags:
+    - amblema
+  only:
+    - master
+
+staging-run-tests:
+  stage: staging-deploy
+  tags:
+    - amblema-front
+  script:
+    - cd $PATH_PROJECT_STAGING
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run test"
+  only:
+    - master
+  when: manual
+
+staging-deploy:
+  stage: staging-deploy
+  script:
+    - cd $PATH_PROJECT_STAGING
+    # - if ! docker ps --format '{{.Names}}' | grep -w $STAGING_CONTAINER_NAME &> /dev/null; then
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME up -d
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME restart
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
+    # TODO: run server SSR in background
+    # - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
+  tags:
+    - amblema
+  only:
+    - master
+
+staging-turn-off:
+  stage: staging-deploy
+  script:
+    - cd $PATH_PROJECT_STAGING
+    - rm -rf dist/
+  tags:
+    - amblema
+  only:
+    - master
+  when: manual

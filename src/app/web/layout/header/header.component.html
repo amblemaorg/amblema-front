@@ -1,0 +1,15 @@
+<web-menu class="mobile-menu" (navigate)="onMenuClick()"></web-menu>
+<main id="web-main">
+  <header>
+    <button class="menu-toggle" (click)="onMenuClick()">
+      <svg-icon name="menu-icon" [svgStyle]="{ 'fill': '#00809A', 'height.vw': 9, 'width.vw': 9 }"></svg-icon>
+    </button>
+    <img class="logo" src="../../../../assets/images/amblema-logo.png" alt="amblema logo" />
+    <web-menu class="desktop-menu"></web-menu>
+    <div class="user-access">
+      <img class="profile" src="../../../../assets/images/profile.png" alt="profile image" />
+      <a [routerLink]="['/login']">Login</a>
+    </div>
+  </header>
+  <ng-content></ng-content>
+</main>

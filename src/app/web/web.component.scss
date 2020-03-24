@@ -1,0 +1,28 @@
+
+@import 'scss/responsive';
+@import 'scss/variables';
+
+::ng-deep {
+  owl-carousel-o {
+    &.testimonials-carousel {
+      display: flex;
+      .owl-stage {
+        display: flex;
+        .owl-item {
+          display: flex;
+          web-testimonial-card {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+
+  .toast-success {
+    background-color: $green !important;
+  }
+
+  .toast-error {
+    background-color: $red !important;
+  }
+}

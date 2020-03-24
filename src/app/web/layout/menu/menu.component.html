@@ -1,0 +1,27 @@
+<nav class="web-menu">
+  <ul>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/']" routerLinkActive="router-link-active">Home</a>
+    </li>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/nosotros']">Nosotros</a>
+    </li>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/padrinos']">Padrinos</a>
+    </li>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/coordinadores']">Coordinadores</a>
+    </li>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/escuelas']">Escuelas</a>
+    </li>
+    <li>
+      <a (click)="triggerNavigate()" [routerLink]="['/blog']">Blog</a>
+    </li>
+    <!--
+      <li>
+        <a [routerLink]="['/login']">Login</a>
+      </li>
+    -->
+  </ul>
+</nav>

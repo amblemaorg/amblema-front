@@ -1,0 +1,61 @@
+version: '3.5'
+services:
+  web:
+    container_name: amblema_web
+    image: devbinaural/nginx-angular:latest
+    tty: true
+    ports:
+      - 9014:80
+      - 4200:4200
+    env_file:
+      - .env
+    # environment:
+      # Set enviroment values in .env file or here
+      # - NGINX_HOST=
+      # - NGINX_PORT=
+      # - NGINX_ROOT=
+      # - SSR_PORT=
+      # - G_MAPS_ID=
+      # - G_ANALYTICS_ID=
+    volumes:
+      - amblema_web:/home/amblema
+    command: >
+      /bin/bash -c "envsubst '$$NGINX_HOST$$NGINX_PORT$$NGINX_ROOT$$SSR_PORT' < /home/amblema/vhost-template.conf > /etc/nginx/conf.d/default.conf
+      && envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html
+      && exec nginx -g 'daemon off;'"
+    networks:
+      - default
+volumes:
+  amblema_web:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}
+      o: bind
+networks:
+  default:
+    driver: bridge
+    name: amblema_web_network
+
+
+#YANIOR-USO-LOCAL
+# version: '3.3'
+
+# services:
+#   angular8local:
+#     image: devbinaural/angular:8.0.0
+#     container_name: angular_amblema
+#     networks:
+#       - db_network
+#     volumes:
+#       - '.:/app'
+#       - '/app/node_modules'
+#     command: bash -c "npm install && ng serve --host 0.0.0.0"
+#     ports:
+#       - '22222:4200'
+#       - '22223:4000'
+
+# networks:
+#   db_network:
+#     external:
+#       name: amblered

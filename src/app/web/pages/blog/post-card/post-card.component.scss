@@ -1,0 +1,110 @@
+@import 'scss/responsive';
+@import 'scss/variables';
+
+.image-wrapper {
+  position: relative;
+
+  img {
+    width: 100%;
+  }
+
+  .post-date {
+    background-color: $blue;
+    bottom: 0;
+    color: $white;
+    font-size: 4vw;
+    left: 0;
+    padding: 2vw;
+    position: absolute;
+    z-index: 10;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1vw;
+      padding: 1vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1vw;
+      padding: 1vw;
+    }
+  }
+}
+
+.post-content {
+  padding: 2vw 0;
+
+  .post-title {
+    color: darkslategray;
+    font-weight: bold;
+    font-size: 5vw;
+    margin-bottom: 4vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.15vw;
+      margin-bottom: 1vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.15vw;
+      margin-bottom: 1vw;
+    }
+  }
+
+  .post-excerpt {
+    color: gray;
+    font-size: 4vw;
+    font-weight: normal;
+    margin-bottom: 4vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1vw;
+      margin-bottom: 1vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1vw;
+      margin-bottom: 1vw;
+    }
+  }
+
+  .read-more {
+    color: gray;
+    font-size: 4vw;
+    text-transform: uppercase;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1vw;
+    }
+
+    &:hover {
+      text-decoration: none;
+
+      &::before {
+        left: 1vw;
+        transition: 1s left ease;
+      }
+    }
+
+    &::before {
+      content: '→';
+      font-family: helvetica;
+      font-size: 8vw;
+      margin-right: 1vw;
+      position: relative;
+      left: 0;
+      transition: .5s left ease;
+
+      @include breakpoint(small, landscape) {
+        font-size: 2vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 2vw;
+      }
+    }
+  }
+}

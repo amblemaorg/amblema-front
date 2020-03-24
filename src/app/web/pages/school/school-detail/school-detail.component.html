@@ -1,0 +1,94 @@
+<section #schoolDetails class="school-details">
+  <div class="school-data">
+    <h1 class="school-name">{{ school.name }}</h1>
+    <p class="school-sponsor">
+      {{ school.sponsor }}
+    </p>
+    <p class="school-direction">
+      {{ school.direction }}
+    </p>
+    <p class="school-staff">
+      {{ school.staff }}
+    </p>
+    <p class="school-coordinator">
+      {{ school.coordinator }}
+    </p>
+    <p class="school-enrollment">
+      {{ school.enrollment }}
+    </p>
+  </div>
+  <div class="school-images">
+
+
+  </div>
+</section>
+<section class="teachers">
+    <div class="heading">
+      <h2>Los Docentes dicen</h2>
+      <!-- <p>Lorem ipsum dolor sit amet, consectetuer</p> -->
+    </div>
+    <div class="teachers-list">
+      <owl-carousel-o *ngIf="school.testimonials.length > 0" [options]="teachersOptions" class="teachers-carousel">
+        <ng-template carouselSlide *ngFor="let item of school.testimonials">
+          <web-testimonial-card [testimonial]="item"></web-testimonial-card>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+</section>
+<section class="activities">
+    <div class="heading">
+      <h2>Próximas actividades</h2>
+    </div>
+    <div class="activities-list">
+      <owl-carousel #activitiesCarousel
+                    [options]="activitiesOptions"
+                    class="activities-carousel"
+                    [carouselClasses]="['']">
+        <ng-container *ngFor="let item of school.activities">
+          <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
+        </ng-container>
+      </owl-carousel>
+    </div>
+</section>
+
+<section class="other-schools">
+  <div class="heading">
+    <h2>Descubre otras escuelas</h2>
+  </div>
+  <div class="other-schools-list">
+    <owl-carousel #otherSchoolsCarousel
+                  [options]="otherSchoolsOptions"
+                  class="other-schools-carousel"
+                  [carouselClasses]="['']">
+      <ng-container *ngFor="let item of school.otherSchools">
+        <ng-container *ngTemplateOutlet="otherSchool; context: { school: item }"></ng-container>
+      </ng-container>
+    </owl-carousel>
+  </div>
+</section>
+
+<!-- Templates -->
+<!-- Other School Template -->
+<ng-template #otherSchool let-school="school">
+  <div class="school">
+    <div class="image-wrapper">
+      <img [src]="school.image" [alt]="school.name + ' image'" />
+    </div>
+    <a *ngIf="school.slug" class="school-link" [routerLink]="['/escuelas/' + school.slug]">
+      <h3 *ngIf="school.name" class="school-name">{{ school.name }}</h3>
+    </a>
+  </div>
+</ng-template>
+<!-- Activity Template -->
+<ng-template #activity let-activity="activity">
+  <div class="activity">
+    <h3 class="title">{{ activity.title }}</h3>
+    <div class="white-box">
+      <span class="date">{{ activity.date }}</span>
+      <span class="place">{{ activity.place }}</span>
+    </div>
+    <p class="description">
+      {{ activity.description }}
+    </p>
+  </div>
+</ng-template>

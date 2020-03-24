@@ -1,0 +1,157 @@
+<div [class]="'form-step-' + activeStepIndex">
+  <span class="form-heading">{{ stepItems[activeStepIndex].title }}</span>
+
+  <ng-container
+    *ngFor="let form of formWizard; let i = index; trackBy: trackByFn"
+  >
+    <form
+      action=""
+      [formGroup]="formWizard[i]"
+      *ngIf="i === activeStepIndex || formWizard.length === 1"
+    >
+      <div class="fields-container">
+        <div
+          [class]="'form-field field ' + stepsContent[i][field].type"
+          *ngFor="let field of fields[i]; trackBy: trackByFn"
+          [ngSwitch]="stepsContent[i][field].type"
+        >
+          <ng-container *ngSwitchCase="'textarea'">
+            <textarea
+              [id]="field"
+              [formControlName]="field"
+              (change)="updateDataToSubmit()"
+              [placeholder]="stepsContent[i][field].placeholder"></textarea>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'select'">
+            <label class="field-label text-bold" [for]="field">{{ stepsContent[i][field].label }}</label>
+            <ng-select
+              class="field-control"
+              notFoundText="Elementos no encontrados"
+              [items]="stepsContent[i][field].options"
+              bindValue="id"
+              bindLabel="name"
+              [labelForId]="field"
+              [formControlName]="field"
+              [virtualScroll]="true"
+              (change)="updateDataToSubmit()"
+              [id]="field">
+              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                <small>{{item.name}}</small>
+              </ng-template>
+            </ng-select>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'list'">
+            <ol class="field-list">
+              <li *ngFor="let option of stepsContent[i][field].options; index as i; trackBy: trackByFn">
+                {{ i+1 }}. {{ option }}
+              </li>
+            </ol>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'confirmation'">
+            <web-form-confirmation
+              [label]="stepsContent[i][field].label"
+              [options]="stepsContent[i][field].options"
+              [formGroup]="formWizard[i]"
+              [name]="field"
+              [id]="field"
+            >
+            </web-form-confirmation>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'identification'">
+            <label class="field-label text-bold">{{ stepsContent[i][field].label }}</label>
+            <ng-select
+              class="field-control"
+              notFoundText="Elementos no encontrados"
+              [searchable]="false"
+              [items]="stepsContent[i][field].subfields.type.options"
+              bindValue="id"
+              bindLabel="name"
+              [formControlName]="stepsContent[i][field].subfields.type.name"
+              [virtualScroll]="true"
+              [id]="stepsContent[i][field].subfields.type.name">
+              <ng-template ng-option-tmp let-item="item">
+                <small>{{item.name}}</small>
+              </ng-template>
+            </ng-select>
+            <input
+              class="field-control"
+              autocomplete='off'
+              [type]="stepsContent[i][field].subfields.id.type"
+              [formControlName]="stepsContent[i][field].subfields.id.name"
+              [id]="stepsContent[i][field].subfields.id.name"
+              (change)="updateDataToSubmit()"
+            />
+            <web-form-validation
+              [patternMessage]="stepsContent[i][field].subfields.id.messages && stepsContent[i][field].subfields.id.messages.pattern"
+              [validationErrors]="formWizard[i].get(stepsContent[i][field].subfields.id.name).errors"
+            >
+            </web-form-validation>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'number'">
+            <label class="field-label" [for]="field">{{ stepsContent[i][field].label }}</label>
+            <input
+              class="field-control"
+              autocomplete='off'
+              type="number"
+              [formControlName]="field"
+              (change)="updateDataToSubmit()"
+              [id]="field"
+            />
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            <label class="field-label" [for]="field">{{ stepsContent[i][field].label }}</label>
+            <input
+              class="field-control"
+              autocomplete='off'
+              [type]="stepsContent[i][field].type"
+              [formControlName]="field"
+              [id]="field"
+              (change)="updateDataToSubmit()"
+            />
+          </ng-container>
+
+          <web-form-validation
+            *ngIf="stepsContent[i][field].type !== 'identification'"
+            [patternMessage]="stepsContent[i][field].messages && stepsContent[i][field].messages.pattern"
+            [validationErrors]="formWizard[i].get(field).errors"
+          >
+          </web-form-validation>
+        </div>
+      </div>
+      <div class="button-container">
+        <button
+          class="form-button"
+          type="button"
+          [disabled]="activeStepIndex == 0"
+          (click)="goToStep(activeStepIndex - 1)"
+        >
+          Anterior
+        </button>
+        <button
+          class="form-button"
+          type="button"
+          *ngIf="activeStepIndex === lastStepIndex"
+          [disabled]="isSubmitting || formWizard[i].invalid"
+          (click)="onSubmit()"
+          >
+          Enviar Solicitud
+        </button>
+        <button
+          class="form-button"
+          type="button"
+          *ngIf="activeStepIndex < lastStepIndex"
+          (click)="goToStep(activeStepIndex + 1)"
+          [disabled]="activeStepIndex === lastStepIndex || formWizard[i].invalid"
+        >
+          Siguiente
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</div>
