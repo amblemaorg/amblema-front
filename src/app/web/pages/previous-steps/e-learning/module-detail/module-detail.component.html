@@ -82,7 +82,7 @@
 
     <div class="questions">        
         <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
-            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.question }}</h3>           
+            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span></h3>           
             <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
                 <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? question.correctOption===option:selectedQuestions[i]===option" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
                     <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
