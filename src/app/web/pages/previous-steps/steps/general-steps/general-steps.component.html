@@ -11,35 +11,40 @@
           <h6 class="mobile-only"><b>Estatus:</b> {{ step.status }}</h6>
           
           <ng-container *ngIf="!step.isForm; else formOpt">
-            <p *ngIf="step.text">{{ step.text }}</p>       
+            <p *ngIf="step.text" class="first-p">{{ step.text }}</p>       
             
-            <div *ngIf="step.video" class="video-conatiner">
+            <div *ngIf="step.video" class="video-container">
               <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
               <p class="font-weight-bold">{{ step.video.name }}</p>
             </div>   
             
-            <a *ngIf="step.file" [href]="step.file.url" target="_blank" [download]="step.file.name" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1">
+            <a *ngIf="step.file" [href]="step.file.url" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1">
               Descargar archivo
             </a>
             <div *ngIf="step.upload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
               <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="imageMngr($event)" type="file">
-              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1">
+              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+              [class.has-several]="step.file">
                 Adjuntar archivo
               </button>
             </div>
-            <button *ngIf="step.send" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1">
+            <button *ngIf="step.send" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+            [class.has-several]="step.file || step.upload">
               Enviar curriculum
             </button>
-            <button *ngIf="step.goMods" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']">
+            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']">
               Ir a los modulos
             </button>
 
-            <form *ngIf="step.checks && step.checks.length>0">
-              <div class="checkbox" *ngFor="let check of step.checks; index as i">
-                <label><input type="checkbox">{{ check.text }}</label>
+            <form *ngIf="step.checks && step.checks.length>0" class="checks-form">
+              <div class="checkbox" *ngFor="let check of step.checks; index as j">
+                <label class="check-container">{{ check.text }}
+                  <input type="checkbox" [checked]="check.checked" (change)="checkChange($event,i,j)">
+                  <span class="checkmark"></span>
+                </label>
               </div>
 
-              <button *ngIf="step.save" (click)="$event.preventDefault()" class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1">
+              <button *ngIf="step.save" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1">
                 Guardar
               </button>
             </form>            

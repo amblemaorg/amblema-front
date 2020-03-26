@@ -26,4 +26,9 @@ export class GeneralStepsComponent implements OnInit {
     
   }
 
+  checkChange(e,item,pos) {
+    this.steps[item].checks[pos].checked = e.target.checked;
+    // console.log(this.steps[item].checks); 
+  }
+
 }
