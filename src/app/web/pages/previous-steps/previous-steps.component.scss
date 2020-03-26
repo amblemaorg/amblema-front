@@ -11,7 +11,7 @@ h1{
 h3, h4 {
     @extend %h34;
 }
-p, button, a, li {
+p, button, a, li, label {
     @extend %p;
 }
 

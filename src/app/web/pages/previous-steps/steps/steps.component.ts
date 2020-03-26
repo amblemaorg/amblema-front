@@ -213,7 +213,7 @@ export class StepsComponent implements OnInit {
       isForm: false,
       goMods: false,
       checks: [
-        {text: 'Lorem ipsum dolor', checked: false}, {text: 'Lorem ipsum dolor', checked: false},
+        {text: 'Lorem ipsum dolor', checked: true}, {text: 'Lorem ipsum dolor', checked: false},
         {text: 'Lorem ipsum dolor', checked: false}, {text: 'Lorem ipsum dolor', checked: false},
         {text: 'Lorem ipsum dolor', checked: false}, {text: 'Lorem ipsum dolor', checked: false},
         {text: 'Lorem ipsum dolor', checked: false}, {text: 'Lorem ipsum dolor', checked: false},
