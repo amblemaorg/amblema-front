@@ -1,10 +1,10 @@
 <div class="module-detail-container">
     <div class="go-back-btn">
-        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" [routerLink]="['/e-learning']"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
+        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" [routerLink]="['/previous-steps/modules']"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
     </div>
     <section class="main-info d-flex flex-wrap">
         <div class="col-lg-12 px-0 mb-3 module-title">
-            <h1 class="text-uppercase">Modulo {{moduleNum}}</h1> <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div> <h3 *ngIf="moduleInfo.name">{{moduleInfo.name}}</h3>
+            <h1 class="text-uppercase">Módulo {{moduleNum}}</h1> <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div> <h3 *ngIf="moduleInfo.name">{{moduleInfo.name}}</h3>
         </div>
         <section class="col-lg-5 px-0 estimate">
             <h4 class="mb-4">
@@ -82,7 +82,7 @@
 
     <div class="questions">        
         <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
-            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> {{ question.question }}</h3>           
+            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span></h3>           
             <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
                 <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? question.correctOption===option:selectedQuestions[i]===option" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
                     <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
@@ -125,7 +125,7 @@
 
                 <div class="text-center btns-modal" [class.onlyone]="!nextModuleId">
                     <button *ngIf="nextModuleId" type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" (click)="refreshComp()" data-dismiss="modal">Siguiente módulo</button>
-                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/e-learning']" data-dismiss="modal">Volver al listado</button>
+                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/previous-steps/modules']" data-dismiss="modal">Volver al listado</button>
                 </div>
             </div>    
         

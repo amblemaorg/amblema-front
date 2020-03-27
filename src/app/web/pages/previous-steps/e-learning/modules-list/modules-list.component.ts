@@ -3,12 +3,12 @@ import { DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from '@angular/router';
 import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { ModulesService } from '../../../../services/e-learning/modules.service';
+import { ModulesService } from '../../../../../services/e-learning/modules.service';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Module } from '../../../../models/e-learning/learning-modules.model';
-import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { Module } from '../../../../../models/e-learning/learning-modules.model';
+import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
 
 @Component({
   selector: 'app-modules-list',
@@ -44,7 +44,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
     this.modules$.subscribe(res => {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
-    });
+    });    
   }
   ngDoCheck() {    
     if (this.document.querySelectorAll('jw-pagination .page-item.next-item .page-link').length>0 && this.canCheck) {      
@@ -70,6 +70,10 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   loadMod(i) {
     this.isLoading[i] = true;
+  }
+
+  getModuleNum(module_id) {
+    return this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(module_id) + 1;
   }
 
 }
