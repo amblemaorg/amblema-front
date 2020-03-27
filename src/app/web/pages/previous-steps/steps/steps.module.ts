@@ -7,6 +7,8 @@ import { StepsRoutingModule } from './steps-routing.module';
 import { StepsComponent } from './steps.component';
 import { GeneralStepsComponent } from './general-steps/general-steps.component';
 import { StepsFormsComponent } from './steps-forms/steps-forms.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +21,9 @@ import { StepsFormsComponent } from './steps-forms/steps-forms.component';
     CommonModule,
     StepsRoutingModule,
     FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
   ]
 })
 export class StepsModule { }

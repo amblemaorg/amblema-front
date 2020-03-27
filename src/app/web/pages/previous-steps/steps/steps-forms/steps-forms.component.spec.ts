@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { StepsFormsComponent } from './steps-forms.component';
 
 describe('StepsFormsComponent', () => {
@@ -8,7 +9,8 @@ describe('StepsFormsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StepsFormsComponent ]
+      declarations: [ StepsFormsComponent ],
+      imports: [FormsModule,ReactiveFormsModule,NgSelectModule]
     })
     .compileComponents();
   }));

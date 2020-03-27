@@ -31,4 +31,8 @@ export class GeneralStepsComponent implements OnInit {
     // console.log(this.steps[item].checks); 
   }
 
+  imageMngr(e) {
+
+  }
+
 }
