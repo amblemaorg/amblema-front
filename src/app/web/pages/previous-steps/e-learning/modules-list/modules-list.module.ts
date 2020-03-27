@@ -5,7 +5,7 @@ import { ModulesListRoutingModule } from './modules-list-routing.module';
 import { ModulesListComponent } from './modules-list.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { JwPaginationComponent } from '../../../shared/jw-angular-pagination'; //! SOLVENTANDO PROBLEMA DE COMPILADO AOT
+import { JwPaginationComponent } from '../../../../shared/jw-angular-pagination'; //! SOLVENTANDO PROBLEMA DE COMPILADO AOT
 
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 import {TransferHttpCacheModule} from '@nguniversal/common';

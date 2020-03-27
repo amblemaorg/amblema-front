@@ -1,27 +1,12 @@
-@import 'scss/placeholders';
+@import '../../previous-steps.component.scss';
 
 %bold-blue {
     color: map-get($color_map, blue);
     font-weight: bold;
 }
 
-::ng-deep body {
-    background: map-get($color_map, gray);
-}
-
 .modal-backdrop.show {
     opacity: 0.25;
-}
-
-//
-h1{
-    @extend %h1;
-}
-h3, h4 {
-    @extend %h34;
-}
-p, button, a, li {
-    @extend %p;
 }
 
 @mixin gallery-height {
@@ -435,9 +420,9 @@ p, button, a, li {
     }
     owl-carousel ::ng-deep .owl-theme .owl-nav {
         position: absolute;
-        top: 0;
+        top: 50%;
         width: 100%;
-        height: 100%;
+        height: 0%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -448,9 +433,13 @@ p, button, a, li {
             height: fit-content;
             padding: 0 1% 0 1% !important;            
             color: map-get($color_map, blue);
+            span {
+                display: none;
+            }
         }
         .owl-next {
             margin-right: 5%;
+            right: 0;
         }
         .owl-prev {
             margin-left: 5%;
@@ -534,6 +523,7 @@ p, button, a, li {
 
         h3 {
             font-weight: bold;
+            display: flex;
 
             @media screen and (orientation:landscape) and (min-width:640px) {
                 text-align: left;

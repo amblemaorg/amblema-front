@@ -1,27 +1,10 @@
-@import 'scss/placeholders';
-
-::ng-deep body {
-    background: map-get($color_map, gray);
-}
-
-//
-h1{
-    @extend %h1;
-}
-h3, h4 {
-    @extend %h34;
-}
-p, button, a, li {
-    @extend %p;
-}
+@import '../../previous-steps.component.scss';
 
 .modules-list-container {
     @extend %padding-conts;
 
-    .welcome-message {
-        @mixin welcome-message { flex-direction: row !important; flex-wrap: wrap; }
-        @media screen and (orientation:landscape) and (min-width:640px) { @include welcome-message; }
-        @include mediabreak(large,portrait) { @include welcome-message; }
+    .welcome-message {        
+        @include on-message;
 
         h1, p {
             color: map-get($color_map, blue);
@@ -60,18 +43,7 @@ p, button, a, li {
         //
 
         button {
-            background: map-get($color_map, blue);
-            border-color: map-get($color_map, blue);
-            width: 100%;         
-                    
-            @include mediabreak(small,landscape,true,640px) { width: auto; }
-            @include mediabreak(large,portrait) { width: auto; }
-            @include mediabreak(large,landscape) {
-                @include button-pad; 
-                border: 2px solid map-get($color_map, blue);
-                margin-bottom: 2rem !important;
-                margin-right: 1.5rem;                 
-            }       
+            @include btn-righted;       
 
             &:focus {
                 box-shadow: none;

@@ -1,0 +1,75 @@
+<div [id]="'steps-accordion'+mode" class="steps-accordion">
+    <div class="card" *ngFor="let step of steps; index as i">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" [href]="'#step'+i+'-'+mode">
+          <div class="texts"><h6 class="font-weight-bold">{{ step.name }}</h6> <div class="bar mx-3"></div> <h6 class="desktop-only">Estatus: {{ step.status }}</h6></div>
+          <div class="arrow"><fa-icon [icon]="arrow"></fa-icon></div>
+        </a>
+      </div>
+      <div [id]="'step'+i+'-'+mode" class="collapse" [class.show]="i==0" [attr.data-parent]="'#steps-accordion'+mode">
+        <div class="card-body">
+          <h6 class="mobile-only"><b>Estatus:</b> {{ step.status }}</h6>
+          
+          <ng-container *ngIf="!step.isForm; else formOpt">
+            <p *ngIf="step.text" class="first-p">{{ step.text }}</p>       
+            
+            <div *ngIf="step.video" class="video-container">
+              <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
+              <p class="font-weight-bold">{{ step.video.name }}</p>
+            </div>   
+            
+            <a *ngIf="step.file" [href]="step.file.url" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1">
+              Descargar archivo
+            </a>
+            <div *ngIf="step.upload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
+              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="imageMngr($event)" type="file">
+              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+              [class.has-several]="step.file">
+                Adjuntar archivo
+              </button>
+            </div>
+            <button *ngIf="step.send" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+            [class.has-several]="step.file || step.upload">
+              Enviar curriculum
+            </button>
+            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']">
+              Ir a los modulos
+            </button>
+
+            <form *ngIf="step.checks && step.checks.length>0" class="checks-form">
+              <div class="checkbox" *ngFor="let check of step.checks; index as j">
+                <label class="check-container">{{ check.text }}
+                  <input type="checkbox" [checked]="check.checked" (change)="checkChange($event,i,j)">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+              <button *ngIf="step.save" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1">
+                Guardar
+              </button>
+            </form>            
+          </ng-container>
+          <ng-template #formOpt>
+            <div *ngIf="step.type==1">
+              <app-steps-forms [who]="'school'"></app-steps-forms>
+            </div>
+            <div *ngIf="step.type==2">
+              <app-steps-forms [who]="'coordinator'"></app-steps-forms>
+            </div>
+            <div *ngIf="step.type==3">
+              <app-steps-forms [who]="'school'"></app-steps-forms>
+            </div>
+            <div *ngIf="step.type==4">
+              <app-steps-forms [who]="'sponsor'"></app-steps-forms>
+            </div>
+            <div *ngIf="step.type==5">
+              <app-steps-forms [who]="'sponsor'"></app-steps-forms>
+            </div>
+            <div *ngIf="step.type==6">
+              <app-steps-forms [who]="'coordinator'"></app-steps-forms>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+</div>

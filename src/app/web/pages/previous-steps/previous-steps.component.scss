@@ -1,0 +1,36 @@
+@import 'scss/placeholders';
+
+::ng-deep body {
+    background: map-get($color_map, gray);
+}
+
+//
+h1{
+    @extend %h1;
+}
+h3, h4 {
+    @extend %h34;
+}
+p, button, a, li, label {
+    @extend %p;
+}
+
+@mixin on-message { 
+    @media screen and (orientation:landscape) and (min-width:640px) { flex-direction: row !important; flex-wrap: wrap; }
+    @include mediabreak(large,portrait) { flex-direction: row !important; flex-wrap: wrap; }
+}
+
+@mixin btn-righted {
+    background: map-get($color_map, blue);
+    border-color: map-get($color_map, blue);
+    width: 100%;         
+            
+    @include mediabreak(small,landscape,true,640px) { width: auto; }
+    @include mediabreak(large,portrait) { width: auto; }
+    @include mediabreak(large,landscape) {
+        @include button-pad; 
+        border: 2px solid map-get($color_map, blue);
+        margin-bottom: 2rem !important;
+        margin-right: 1.5rem;                 
+    } 
+}
