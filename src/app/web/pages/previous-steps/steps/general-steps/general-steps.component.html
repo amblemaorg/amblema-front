@@ -50,22 +50,22 @@
             </form>            
           </ng-container>
           <ng-template #formOpt>
-            <div *ngIf="step.type==1">
+            <div *ngIf="step.type==1" class="has-form">
               <app-steps-forms [who]="'school'"></app-steps-forms>
             </div>
-            <div *ngIf="step.type==2">
+            <div *ngIf="step.type==2" class="has-form">
               <app-steps-forms [who]="'coordinator'"></app-steps-forms>
             </div>
-            <div *ngIf="step.type==3">
+            <div *ngIf="step.type==3" class="has-form">
               <app-steps-forms [who]="'school'"></app-steps-forms>
             </div>
-            <div *ngIf="step.type==4">
+            <div *ngIf="step.type==4" class="has-form">
               <app-steps-forms [who]="'sponsor'"></app-steps-forms>
             </div>
-            <div *ngIf="step.type==5">
+            <div *ngIf="step.type==5" class="has-form">
               <app-steps-forms [who]="'sponsor'"></app-steps-forms>
             </div>
-            <div *ngIf="step.type==6">
+            <div *ngIf="step.type==6" class="has-form">
               <app-steps-forms [who]="'coordinator'"></app-steps-forms>
             </div>
           </ng-template>
