@@ -1,13 +1,28 @@
 <!-- SPONSOR -->
 <form *ngIf="who=='sponsor'" [formGroup]="sponsorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitSponsor(sponsorForm)">
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la empresa">
+      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la empresa">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div>      
     </div>
-    <div class="form-group">
+    <div class="form-group input-group">
+      <div class="input-group-prepend">
+        <ng-select
+        class="form-control"
+        [items]="doc_type"
+        bindValue="name"
+        bindLabel="name"
+        formControlName="selectedDoc"
+        [virtualScroll]="true"
+        [clearable]="false"
+        [searchable]="false">
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <small>{{item.name}}</small>
+        </ng-template>
+      </ng-select>
+      </div>
       <input type="text" class="form-control" [class.not-valid]="validate('rif')" [class.not-empty]="isEmpty('rif')" formControlName="rif" placeholder="RIF de la empresa">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
@@ -28,8 +43,8 @@
         class="form-control"
         notFoundText="Elementos no encontrados"
         [items]="statesExample"
-        bindValue="id"
         bindLabel="name"
+        bindValue="id"
         labelForId="addressState"
         formControlName="addressState"
         [virtualScroll]="true"
@@ -44,28 +59,84 @@
       </div> 
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Municipio">
+      <ng-select
+        class="form-control"
+        notFoundText="Elementos no encontrados"
+        [items]="municipalitiesExample"
+        bindValue="id"
+        bindLabel="name"
+        labelForId="addressMunicipality"
+        formControlName="addressMunicipality"
+        [virtualScroll]="true"
+        id="addressMunicipality"
+        placeholder="Municipio">
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <small>{{item.name}}</small>
+        </ng-template>
+      </ng-select>
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe Seleccionar un municipio!</div>
+      </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Calles / Carrera">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+      </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Ciudad">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+      </div>
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" placeholder="Numero de telefono">
+      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+        <div class="field-invalid">¡Solo numeros permitidos!</div>
+      </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Tipo de empresa">
+      <ng-select
+        class="form-control"
+        notFoundText="Elementos no encontrados"
+        [items]="companyTypes"
+        bindValue="id"
+        bindLabel="name"
+        labelForId="companyType"
+        formControlName="companyType"
+        [virtualScroll]="true"
+        id="companyType"
+        placeholder="Tipo de empresa">
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <small>{{item.name}}</small>
+        </ng-template>
+      </ng-select>
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe Seleccionar un tipo de empresa!</div>
+      </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Nombre de la persona de contacto">
+      <input type="text" class="form-control" [class.not-valid]="validate('contactFirstName')" [class.not-empty]="isEmpty('contactFirstName')" formControlName="contactFirstName" placeholder="Nombre de la persona de contacto">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+        <div class="field-invalid">¡Solo letras permitidas!</div>
+      </div>   
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Apellido de la persona de contacto">
+      <input type="text" class="form-control" [class.not-valid]="validate('contactLastName')" [class.not-empty]="isEmpty('contactLastName')" formControlName="contactLastName" placeholder="Apellido de la persona de contacto">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+        <div class="field-invalid">¡Solo letras permitidas!</div>
+      </div> 
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Telefono de la persona de contacto">
+      <input type="tel" class="form-control" [class.not-valid]="validate('contactPhone')" [class.not-empty]="isEmpty('contactPhone')" formControlName="contactPhone" placeholder="Telefono de la persona de contacto">
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+        <div class="field-invalid">¡Solo numeros permitidos!</div>
+      </div>
     </div>
 
     <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
