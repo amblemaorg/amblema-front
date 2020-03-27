@@ -1,0 +1,88 @@
+@import '../../previous-steps.component.scss';
+
+form {
+    .form-group {
+        .field-empty,.field-invalid{
+            font-size: smaller;
+            margin-block-start: 0.45rem;
+            color: map-get($color_map, red);
+            display: none;
+
+            @include mediabreak(small,portrait) { font-size: medium; }
+            @include mediabreak(large,portrait) { font-size: larger; }            
+        }
+
+        .form-control:focus{
+            box-shadow: none;
+            border-color: map-get($color_map, blue);
+        }
+
+        .ng-touched.ng-invalid.not-empty, .ng-touched.ng-invalid {
+            border-color: map-get($color_map, red);
+            color: map-get($color_map, red);
+        }
+
+        .ng-touched.ng-invalid.not-empty + .field-alerts .field-invalid,
+        .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty {
+            display: inline-block;
+        }
+
+        ::ng-deep .ng-dropdown-panel {
+            z-index: 3;
+
+            .scroll-host {
+                left: -0.75rem;
+                top: 0.35rem;
+                background: #fff;
+                border: solid map-get($color_map, form-gray);
+                border-width: 0 1px 1px;
+    
+                .scrollable-content{
+                    padding: 0 1rem;
+                }
+            }
+        }
+        ::ng-deep .ng-select {
+            &.ng-select-opened .ng-select-container {
+                z-index: 3;           
+            }
+            .ng-select-container .ng-placeholder {
+                color: #6c757d;
+            }
+            .ng-select-container {
+                &.ng-has-value .ng-placeholder {
+                    display: none;
+                }
+            }
+            &.ng-untouched .ng-placeholder {
+                display: block !important;
+            }
+            .ng-clear-wrapper .ng-clear {
+                color: map-get($color_map, form-gray);
+            }
+            .ng-arrow-wrapper {
+                width: 1rem;
+    
+                .ng-arrow {
+                    height: 0.5rem;
+                    width: 0.5rem;
+                    border-color: map-get($color_map, form-gray);
+                    border-style: solid;
+                    border-width: 0 2px 2px 0;
+                    -webkit-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    top: -0.15rem;
+                }
+            } 
+        }
+    }
+
+    button {
+        &.disabled{
+            cursor: not-allowed;
+        }
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}

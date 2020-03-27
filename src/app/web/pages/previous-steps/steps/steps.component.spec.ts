@@ -6,6 +6,8 @@ import { GeneralStepsComponent } from './general-steps/general-steps.component';
 import { StepsFormsComponent } from './steps-forms/steps-forms.component';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('StepsComponent', () => {
   let component: StepsComponent;
@@ -14,7 +16,8 @@ describe('StepsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StepsComponent,GeneralStepsComponent,StepsFormsComponent ],
-      imports: [FontAwesomeModule,RouterTestingModule,HttpClientModule],
+      imports: [FontAwesomeModule,RouterTestingModule,HttpClientModule,FormsModule,ReactiveFormsModule,
+        NgSelectModule],
       providers: [EmbedVideoService]
     })
     .compileComponents();
