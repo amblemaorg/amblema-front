@@ -48,6 +48,17 @@ export class StepsFormsComponent implements OnInit {
     {id:'3',name:'E'},
   ];
 
+  schoolTypes = [
+    {id:'1',name:'Nacional'},
+    {id:'2',name:'Estadal'},
+    {id:'3',name:'Municipal'},
+  ];
+  schoolShifts = [
+    {id:'1',name:'Mañana'},
+    {id:'2',name:'Tarde'},
+    {id:'3',name:'Ambos'},
+  ];
+
   sponsorForm = this.fb.group({
     selectedDoc: ['J'],
     name: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
@@ -79,9 +90,38 @@ export class StepsFormsComponent implements OnInit {
     addressHome: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]], //str,
     phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str solo numeros, 
-    profession: ['', [Validators.required]], //str,
-    // isReferred: [false, [Validators.required]], //bool,
-    // referredName: ['', [Validators.required]], //str,    
+    profession: ['', [Validators.required]], //str,  
+  });
+
+  schoolForm = this.fb.group({
+    name: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str(nombre de la escuela),
+    email: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
+    code: ['', [Validators.required, Validators.pattern(LETTERS_NUMBERS_PTTRN)]],//str(codigo de la escuela),
+    address: ['', [Validators.required]],//str,
+    addressState: ['', [Validators.required]],//str addressID,
+    addressMunicipality: ['', [Validators.required]],//str municipalityID,
+    addressStreet: ['', [Validators.required]],//str (calle/carreras),
+    addressCity: ['', [Validators.required]],//str,
+    phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
+    schoolType: ['', [Validators.required]],//str '1'=nacional, '2'=estadal, '3'=municipal,
+    //
+    principalFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
+    principalLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
+    principalEmail: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
+    principalPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numero,
+    //
+    subPrincipalFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
+    subPrincipalLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
+    subPrincipalEmail: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
+    subPrincipalPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
+    //
+    nTeachers: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    nAdministrativeStaff: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    nLaborStaff: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    nStudents: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    nGrades: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    nSections: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
+    schoolShift: ['', [Validators.required]],//str turno de la escuela ('1'=mañana, '2'=tarde, '3'=ambos),
   });
 
   constructor(private fb: FormBuilder) { }
@@ -93,6 +133,9 @@ export class StepsFormsComponent implements OnInit {
     fo.reset(); 
   }
   onSubmitCoordinator(fo) { //fo: form object
+    fo.reset(); 
+  }
+  onSubmitschool(fo) { //fo: form object
     fo.reset(); 
   }
 
@@ -108,6 +151,8 @@ export class StepsFormsComponent implements OnInit {
         return this.sponsorForm.controls[op].status === 'INVALID' && this.sponsorForm.controls[op].dirty ? true:false;   
       case 'coordinator':
         return this.coordinatorForm.controls[op].status === 'INVALID' && this.coordinatorForm.controls[op].dirty ? true:false;   
+      case 'school':
+        return this.schoolForm.controls[op].status === 'INVALID' && this.schoolForm.controls[op].dirty ? true:false;   
     }
   }
   
@@ -117,6 +162,8 @@ export class StepsFormsComponent implements OnInit {
         return !this.sponsorForm.controls[op].value || this.sponsorForm.controls[op].value === "" ? false:true;
       case 'coordinator':
         return !this.coordinatorForm.controls[op].value || this.coordinatorForm.controls[op].value === "" ? false:true;
+      case 'school':
+        return !this.schoolForm.controls[op].value || this.schoolForm.controls[op].value === "" ? false:true;
     }
   }
 

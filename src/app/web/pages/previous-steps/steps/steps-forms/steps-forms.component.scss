@@ -9,14 +9,37 @@ form {
         @include mediabreak(large,landscape) { justify-content: space-between; }
     }
     @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
-    @include mediabreak(large,portrait) { @include form-mix; }
+    @include mediabreak(large,portrait) { @include form-mix; }    
 
-    .form-group {
+    h6 {
+        font-weight: bold;  
+        margin-right: auto;     
+        @include mediabreak(large,landscape) { width: 100%; margin-bottom: 1rem; } 
+    }
+    h6:not(:first-child) {
+        margin-top: 2rem;
+        @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 1rem; }
+        @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 1rem; }
+    }
+
+    @mixin form-flexings {
         @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
         @include mediabreak(large,portrait) { flex: 0 0 100%; }
         @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
         @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
         @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+    }
+
+    .two-wrapper {
+        @include form-mix;
+        @include form-flexings;
+
+        .form-group {
+            width: 100%;
+        }
+    }
+    .form-group {
+        @include form-flexings;
 
         .field-empty,.field-invalid{
             font-size: smaller;
