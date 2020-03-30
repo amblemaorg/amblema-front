@@ -90,6 +90,7 @@ export class ModuleDetailComponent implements OnInit {
 
     this.coorId$.subscribe(id_ => {
       this.current_coor_id = id_;
+      this.moduleService.actualUser = id_//!remove
     })
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
@@ -166,6 +167,7 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
+            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
             this.warningBtn.nativeElement.click(); // opening warning modal
           } 
         } else {

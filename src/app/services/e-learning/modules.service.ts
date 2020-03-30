@@ -20,6 +20,7 @@ export class ModulesService {
   @Output() updateCoorMod:EventEmitter<any> = new EventEmitter();
   isBrowser;
   baseUrl = environment.baseUrl;  
+  actualUser:string = ""; //!REMOVE
 
   approved_modules:CoordinatorModule[] = [];
   all_modules:Module[] = [];

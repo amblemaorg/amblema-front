@@ -29,6 +29,7 @@ export class EheaderComponent implements OnInit {
   ngOnInit() {
     this.modulesService.updateCoorMod.subscribe(res=>{
       this.setCoordinatorModulesValues(res); //! THIS IS TEMPORARY
+      if (res.type!=0) this.modulesService.actualUser = res.usu;
     });
     this.setCoordinatorModulesValues({type:0,usu:null}); //! THIS IS TEMPORARY
     this.approved_modules$.subscribe(res=> {
