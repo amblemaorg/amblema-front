@@ -36,7 +36,10 @@ export class ModulesListComponent implements OnInit, DoCheck {
   ngOnInit() {
     //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
     if (this.route.snapshot.params && this.route.snapshot.params.coord) this.moduleService.emitValsUpdate({type:1,usu:this.route.snapshot.params.coord});
-    else this.moduleService.emitValsUpdate({type:1,usu:'5e60009d945835d1a73bb2f9'});
+    else {
+      if (this.moduleService.actualUser.length==0) this.moduleService.emitValsUpdate({type:1,usu:'5e60009d945835d1a73bb2f9'});
+      else this.moduleService.emitValsUpdate({type:1,usu:this.moduleService.actualUser});
+    }
     //! -------------------------------------------------------------------------------------------------------------------------------------------------
     // this.moduleService.getMods().subscribe( res => {
     //   this.modules = res.records;
