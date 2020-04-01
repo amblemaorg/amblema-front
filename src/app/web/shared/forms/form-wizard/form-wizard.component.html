@@ -146,8 +146,8 @@
           class="form-button"
           type="button"
           *ngIf="activeStepIndex < lastStepIndex"
-          (click)="goToStep(activeStepIndex + 1)"
           [disabled]="activeStepIndex === lastStepIndex || formWizard[i].invalid"
+          (click)="goToStep(activeStepIndex + 1)"
         >
           Siguiente
         </button>

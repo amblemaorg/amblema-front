@@ -20,32 +20,32 @@ const coordinatorPage = {
         "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
         "firstName": "Stephanie",
         "function": "Coordinador Principal",
-        "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cb.png",
-        // "image": "./assets/images/profile-leena.jpg",
+        //"image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cb.png",
+        "image": "./assets/images/profile-leena.jpg",
         "lastName": "Soteldo"
       },
       {
         "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
         "firstName": "Greudys",
         "function": "Coordinador Principal",
-        "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cc.png",
-        // "image": "./assets/images/profile-leena.jpg",
+        //"image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cc.png",
+        "image": "./assets/images/profile-oscar.jpg",
         "lastName": "Godoy"
       },
       {
         "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
         "firstName": "Franklin",
         "function": "Coordinador principal",
-        "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb341.jpg",
-        // "image": "./assets/images/profile-leena.jpg",
+        //"image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb341.jpg",
+        "image": "./assets/images/profile-oscar.jpg",
         "lastName": "Perdomo"
       },
       {
         "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
         "firstName": "José Alberto",
         "function": "Coordinador Principal",
-        "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb342.jpg",
-        // "image": "./assets/images/profile-leena.jpg",
+        //"image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb342.jpg",
+        "image": "./assets/images/profile-oscar.jpg",
         "lastName": "Guerrero"
       }
     ]

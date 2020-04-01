@@ -80,17 +80,21 @@ section.about-us {
     text-align: center;
 
     @include breakpoint(small, landscape) {
-      font-size: 1.2vw;
+      font-size: 1.8vw;
       padding: 0 8% 0 0;
       text-align: left;
       width: 40%;
     }
 
     @include breakpoint(medium) {
-      font-size: 1.2vw;
+      font-size: 1.8vw;
       padding: 0 8% 0 0;
       text-align: left;
       width: 40%;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1.2vw;
     }
 
     p {
@@ -255,9 +259,98 @@ section.pillars {
 section.social-impact {
   background-color: $blue;
   color: $white;
+  padding: 18vw 9vw 0;
 
-  .heading {
+  @include breakpoint(small, landscape) {
+    padding: 6vw 9vw 0;
+  }
+
+  @include breakpoint(medium) {
+    padding: 6vw 9vw 0;
+  }
+
+  .heading-wrapper {
     color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include breakpoint(small, landscape) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    @include breakpoint(medium) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .heading {
+      color: inherit;
+      text-align: center;
+      width: 100%;
+
+      @include breakpoint(small, landscape) {
+        text-align: left;
+        width: 30%;
+      }
+
+      @include breakpoint(medium) {
+        text-align: left;
+        width: 30%;
+      }
+    }
+
+    .statistics {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 10vw 0;
+
+      @include breakpoint(small, landscape) {
+        margin: 0;
+        width: 70%;
+      }
+
+      @include breakpoint(medium) {
+        margin: 0;
+        width: 70%;
+      }
+
+      .statistic {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        .statistic-count {
+          font-size: 10vw;
+          font-weight: bold;
+          line-height: 1;
+
+          @include breakpoint(small, landscape) {
+            font-size: 7vw;
+          }
+
+          @include breakpoint(medium) {
+            font-size: 7vw;
+          }
+        }
+
+        .statistic-label {
+          font-size: 4vw;
+
+          @include breakpoint(small, landscape) {
+            font-size: 3vw;
+          }
+
+          @include breakpoint(medium) {
+            font-size: 3vw;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -290,14 +383,14 @@ section.founders {
     left: 15vw;
 
     @include breakpoint(small, landscape) {
-      bottom: 13vw;
+      bottom: 20vw;
       left: 6vw;
       top: unset;
       width: 25vw;
     }
 
     @include breakpoint(medium) {
-      bottom: 13vw;
+      bottom: 20vw;
       left: 6vw;
       top: unset;
       width: 25vw;
