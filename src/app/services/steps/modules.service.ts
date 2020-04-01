@@ -3,9 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
-import { Select } from '@ngxs/store';
-import { CoordinatorModule, Module, CoordinatorUser } from '../../models/e-learning/learning-modules.model';
-import { CoordinatorState } from '../../store/states/e-learning/coordinator-user.state';
+import { CoordinatorModule, Module, CoordinatorUser } from '../../models/steps/learning-modules.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 

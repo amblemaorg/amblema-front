@@ -1,4 +1,4 @@
-import { Module } from '../../../models/e-learning/learning-modules.model';
+import { Module } from '../../../models/steps/learning-modules.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 export class UpdateModulesTotal {
