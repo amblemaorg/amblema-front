@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EheaderComponent } from '../../../../layout/eheader/eheader.component';
-import { Module } from '../../../../../models/e-learning/learning-modules.model';
+import { Module } from '../../../../../models/steps/learning-modules.model';
 import { NgxsModule } from '@ngxs/store';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';

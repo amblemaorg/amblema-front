@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, HostListener, Inject, ElementRef } from '
 import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ModulesService } from '../../../../../services/e-learning/modules.service';
+import { ModulesService } from '../../../../../services/steps/modules.service';
 import { GlobalService } from '../../../../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/e-learning/learning-modules.model';
+import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/steps/learning-modules.model';
 import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';

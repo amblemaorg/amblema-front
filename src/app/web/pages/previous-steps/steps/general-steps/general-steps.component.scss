@@ -164,6 +164,7 @@
             }
 
             .checks-form {
+                width: 100%;
                 @mixin checks-form {
                     display: flex;
                     flex-wrap: wrap;

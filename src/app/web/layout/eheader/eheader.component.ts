@@ -5,8 +5,8 @@ import { ModulesState } from '../../../store/states/e-learning/learning-modules.
 import { CoordinatorState } from '../../../store/states/e-learning/coordinator-user.state';
 import { UpdateModulesTotal } from '../../../store/actions/e-learning/learning-modules.actions';
 import { UpdateCoins } from '../../../store/actions/e-learning/coordinator-user.actions';
-import { CoordinatorModule, Module } from '../../../models/e-learning/learning-modules.model';
-import { ModulesService } from '../../../services/e-learning/modules.service';
+import { CoordinatorModule, Module } from '../../../models/steps/learning-modules.model';
+import { ModulesService } from '../../../services/steps/modules.service';
 
 @Component({
   selector: 'app-eheader',

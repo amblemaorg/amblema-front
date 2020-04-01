@@ -1,4 +1,4 @@
-import { CoordinatorModule } from '../../../models/e-learning/learning-modules.model';
+import { CoordinatorModule } from '../../../models/steps/learning-modules.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 /* export class IncreaseCoins {
