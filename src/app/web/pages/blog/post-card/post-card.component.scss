@@ -19,13 +19,17 @@
     z-index: 10;
 
     @include breakpoint(small, landscape) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       padding: 1vw;
     }
 
     @include breakpoint(medium) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       padding: 1vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1vw;
     }
   }
 }
@@ -40,13 +44,17 @@
     margin-bottom: 4vw;
 
     @include breakpoint(small, landscape) {
-      font-size: 1.15vw;
+      font-size: 1.8vw;
       margin-bottom: 1vw;
     }
 
     @include breakpoint(medium) {
-      font-size: 1.15vw;
+      font-size: 1.8vw;
       margin-bottom: 1vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1.15vw;
     }
   }
 
@@ -57,13 +65,17 @@
     margin-bottom: 4vw;
 
     @include breakpoint(small, landscape) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       margin-bottom: 1vw;
     }
 
     @include breakpoint(medium) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       margin-bottom: 1vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1vw;
     }
   }
 
@@ -73,10 +85,14 @@
     text-transform: uppercase;
 
     @include breakpoint(small, landscape) {
-      font-size: 1vw;
+      font-size: 1.5vw;
     }
 
     @include breakpoint(medium) {
+      font-size: 1.5vw;
+    }
+
+    @include breakpoint(large) {
       font-size: 1vw;
     }
 
@@ -99,10 +115,14 @@
       transition: .5s left ease;
 
       @include breakpoint(small, landscape) {
-        font-size: 2vw;
+        font-size: 2.5vw;
       }
 
       @include breakpoint(medium) {
+        font-size: 2.5vw;
+      }
+
+      @include breakpoint(large) {
         font-size: 2vw;
       }
     }

@@ -13,6 +13,108 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
+      charts: [
+        {
+          title: 'Diagnóstico de lectura',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
+        },
+        {
+          title: 'Palabras por minuto',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 100 },
+            { label: 'Lapso 3 (2017-2018)', value: 90  },
+            { label: 'Lapso 1 (2018-2019)', value: 120 },
+            { label: 'Lapso 2 (2018-2019)', value: 120 },
+            { label: 'Lapso 3 (2018-2019)', value: 110 },
+            { label: 'Lapso 1 (2019-2020)', value: 130 },
+            { label: 'Lapso 2 (2019-2020)', value: 150 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 160', value: 160 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
+        },
+        {
+          title: 'Diagnóstico de matemática',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 20 },
+            { label: 'Lapso 3 (2017-2018)', value: 30 },
+            { label: 'Lapso 1 (2018-2019)', value: 15 },
+            { label: 'Lapso 2 (2018-2019)', value: 20 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 40 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
+        },
+      ],
+      testimonials: [
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Lectura",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Ambiente",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      ],
       activities: [
         {
           title: "Título de la actividad",
@@ -45,29 +147,6 @@ const schoolsList = {
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
         }
       ],
-      "testimonials": [
-        {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Matemática",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
-        },
-        {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Lectura",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
-        },
-        {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Ambiente",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
-        },
-      ],
       otherSchools: [
         {
           name: 'U.E.E Arturo Michelena',
@@ -96,29 +175,139 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
-      activities: [],
-      "testimonials":[
+      charts: [
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Matemática",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de lectura',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Lectura",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Palabras por minuto',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 100 },
+            { label: 'Lapso 3 (2017-2018)', value: 90  },
+            { label: 'Lapso 1 (2018-2019)', value: 120 },
+            { label: 'Lapso 2 (2018-2019)', value: 120 },
+            { label: 'Lapso 3 (2018-2019)', value: 110 },
+            { label: 'Lapso 1 (2019-2020)', value: 130 },
+            { label: 'Lapso 2 (2019-2020)', value: 150 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 160', value: 160 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Ambiente",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de matemática',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 20 },
+            { label: 'Lapso 3 (2017-2018)', value: 30 },
+            { label: 'Lapso 1 (2018-2019)', value: 15 },
+            { label: 'Lapso 2 (2018-2019)', value: 20 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 40 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
+      ],
+      testimonials: [
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Lectura",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Ambiente",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      ],
+      activities: [
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        }
       ],
       otherSchools: [
         {
@@ -148,29 +337,139 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
-      activities: [],
-      "testimonials":[
+      charts: [
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Matemática",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de lectura',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Lectura",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Palabras por minuto',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 100 },
+            { label: 'Lapso 3 (2017-2018)', value: 90  },
+            { label: 'Lapso 1 (2018-2019)', value: 120 },
+            { label: 'Lapso 2 (2018-2019)', value: 120 },
+            { label: 'Lapso 3 (2018-2019)', value: 110 },
+            { label: 'Lapso 1 (2019-2020)', value: 130 },
+            { label: 'Lapso 2 (2019-2020)', value: 150 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 160', value: 160 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Ambiente",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de matemática',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 20 },
+            { label: 'Lapso 3 (2017-2018)', value: 30 },
+            { label: 'Lapso 1 (2018-2019)', value: 15 },
+            { label: 'Lapso 2 (2018-2019)', value: 20 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 40 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
+      ],
+      testimonials: [
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Lectura",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Ambiente",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      ],
+      activities: [
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        }
       ],
       otherSchools: [
         {
@@ -200,29 +499,139 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
-      activities: [],
-      "testimonials":[
+      charts: [
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Matemática",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de lectura',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Lectura",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Palabras por minuto',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 100 },
+            { label: 'Lapso 3 (2017-2018)', value: 90  },
+            { label: 'Lapso 1 (2018-2019)', value: 120 },
+            { label: 'Lapso 2 (2018-2019)', value: 120 },
+            { label: 'Lapso 3 (2018-2019)', value: 110 },
+            { label: 'Lapso 1 (2019-2020)', value: 130 },
+            { label: 'Lapso 2 (2019-2020)', value: 150 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 160', value: 160 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
         {
-          "firstName": "Oscar A.",
-          "lastName": "Pietri Pacheco",
-          "image": "./assets/images/profile-oscar.jpg",
-          "function": "Docente de Ambiente",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          title: 'Diagnóstico de matemática',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 20 },
+            { label: 'Lapso 3 (2017-2018)', value: 30 },
+            { label: 'Lapso 1 (2018-2019)', value: 15 },
+            { label: 'Lapso 2 (2018-2019)', value: 20 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 40 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+          testimonial: {
+            firstName: "Oscar A.",
+            lastName: "Pietri Pacheco",
+            image: "./assets/images/profile-oscar.jpg",
+            function: "Docente de Matemática",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+          },
         },
+      ],
+      testimonials: [
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Lectura",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Ambiente",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      ],
+      activities: [
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+        {
+          title: "Título de la actividad",
+          date: "20/03/2020",
+          place: "Barquisimeto",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        }
       ],
       otherSchools: [
         {
