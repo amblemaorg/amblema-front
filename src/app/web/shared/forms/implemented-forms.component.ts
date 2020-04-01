@@ -151,7 +151,7 @@ export class ImplementedFormsComponent implements OnInit {
         "Visita comercios, empresas o negocios cercanos a tu escuela.",
         "Consulta entre padres y representantes si alguno conoce o trabaja en empresas cercanas a la escuela",
         "Recauda información de los posibles padrinos y completa la planilla",
-        "Llena el formulario de contacto y solicitanos un padrino"
+        "Escríbenos a través de info@amblema.org y solicítanos un padrino"
       ],
       validations: {}
     }
@@ -192,6 +192,11 @@ export class ImplementedFormsComponent implements OnInit {
         { id: '4', name: 'Otro'             }
       ]
     },
+    companyOtherType: {
+      label: "Otro tipo de empresa",
+      ...this.controlProps.onlyLetters,
+      condition: { formControlName: 'companyType', value: '4' }
+    },
     contactFirstName: { label: "Nombre de la persona de contacto",        ...this.controlProps.onlyLetters },
     contactLastName:  { label: "Apellido de la persona de contacto",      ...this.controlProps.onlyLetters },
     contactPhone:     { label: "Número de teléfono de la persona de contacto", ...this.controlProps.phone  },
@@ -206,8 +211,8 @@ export class ImplementedFormsComponent implements OnInit {
       label: "",
       type: "list",
       options: [
-        "Debe seleccionar una escuela cercana a tu empresa, comercio o negocio, en base a los siguientes criterios: Escuela pública, que tenga preescolar y primaria, con un número de estudiantes entre 150 y 300, que presente necesidades de ayuda y apoyo de un tercero, y que el personal docente, manifieste la disposición de mejorar la calidad educativa de la escuela.",
-        "Visite la escuela de su preferencia y al recaudar los datos suministrelos llenando el formulario",
+        "Debe seleccionar una escuela cercana a tu empresa, comercio o negocio, en base a los siguientes criterios: Escuela pública, que tenga preescolar y primaria, con un número de estudiantes entre 150 y 300, que presente necesidades de ayuda y apoyo de un tercero, y que el personal docente manifieste la disposición de mejorar la calidad educativa de la escuela.",
+        "Visite la escuela de su preferencia y recaude todos los datos",
       ],
       validations: {}
     }
@@ -234,7 +239,7 @@ export class ImplementedFormsComponent implements OnInit {
         type: {
           name: 'cardType',
           ...this.controlProps.select,
-          options: [{ id: '1', name: 'V' }, { id: '2', name: 'J' }, { id: '3', name: 'E' }]
+          options: [{ id: '1', name: 'V' }, { id: '3', name: 'E' }]
         }
       }
     },

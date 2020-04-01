@@ -7,6 +7,10 @@
   text-align: right;
 
   @include breakpoint(medium) {
+    font-size: 2vw;
+  }
+
+  @include breakpoint(large) {
     font-size: .9vw;
   }
 }

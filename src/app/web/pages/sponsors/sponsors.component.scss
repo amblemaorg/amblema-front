@@ -36,11 +36,15 @@ owl-carousel-o {
 
     @include breakpoint(small, landscape) {
       top: 25vw;
-      width: 26%;
+      width: 35%;
     }
 
     @include breakpoint(medium) {
       top: 25vw;
+      width: 35%;
+    }
+
+    @include breakpoint(large) {
       width: 26%;
     }
   }
@@ -185,10 +189,14 @@ web-bg-heading {
       font-size: 4vw;
 
       @include breakpoint(small, landscape) {
-        font-size: 1.5vw;
+        font-size: 2vw;
       }
 
       @include breakpoint(medium) {
+        font-size: 2vw;
+      }
+
+      @include breakpoint(large) {
         font-size: 1.5vw;
       }
     }

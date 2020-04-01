@@ -13,11 +13,16 @@
           padding: 0 5%;
 
           @include breakpoint(small, landscape) {
-            font-size: 1.5vw;
+            font-size: 2.5vw;
             padding: 0 15%;
           }
 
           @include breakpoint(medium) {
+            font-size: 2.5vw;
+            padding: 0 15%;
+          }
+
+          @include breakpoint(large) {
             font-size: 1.5vw;
             padding: 0 15%;
           }
@@ -72,11 +77,16 @@
           padding: 0 5%;
 
           @include breakpoint(small, landscape) {
-            font-size: 1.5vw;
+            font-size: 2.5vw;
             padding: 0 15%;
           }
 
           @include breakpoint(medium) {
+            font-size: 2.5vw;
+            padding: 0 15%;
+          }
+
+          @include breakpoint(large) {
             font-size: 1.5vw;
             padding: 0 15%;
           }
