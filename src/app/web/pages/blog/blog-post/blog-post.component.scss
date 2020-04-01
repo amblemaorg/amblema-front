@@ -44,11 +44,16 @@ section.blog-post {
         z-index: 10;
 
         @include breakpoint(small, landscape) {
-          font-size: 2vw;
+          font-size: 3vw;
           padding: 1vw;
         }
 
         @include breakpoint(medium) {
+          font-size: 3vw;
+          padding: 1vw;
+        }
+
+        @include breakpoint(large) {
           font-size: 2vw;
           padding: 1vw;
         }
@@ -64,13 +69,17 @@ section.blog-post {
         margin-bottom: 4vw;
 
         @include breakpoint(small, landscape) {
-          font-size: 2vw;
+          font-size: 3vw;
           margin-bottom: 2vw;
         }
 
         @include breakpoint(medium) {
-          font-size: 2vw;
+          font-size: 3vw;
           margin-bottom: 2vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: 2vw;
         }
       }
 
@@ -81,13 +90,17 @@ section.blog-post {
         margin-bottom: 4vw;
 
         @include breakpoint(small, landscape) {
-          font-size: 1.2vw;
+          font-size: 1.8vw;
           margin-bottom: 2vw;
         }
 
         @include breakpoint(medium) {
-          font-size: 1.2vw;
+          font-size: 1.8vw;
           margin-bottom: 2vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: 1.2vw;
         }
       }
     }

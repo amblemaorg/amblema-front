@@ -105,7 +105,7 @@ a {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 256px;
+  width: 70vw;
   min-height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -133,6 +133,10 @@ a {
 .slideout-open body,
 .slideout-open .slideout-panel {
   overflow: hidden;
+}
+
+.slideout-open .slideout-panel {
+  transform: translateX(70vw) !important;
 }
 
 .slideout-open .slideout-menu {
@@ -229,10 +233,14 @@ section.pillars {
           font-family: 'arrows';
           font-size: 6vw;
           @include breakpoint(small, landscape) {
-            font-size: 2vw;
+            font-size: 3vw;
           }
 
           @include breakpoint(medium) {
+            font-size: 3vw;
+          }
+
+          @include breakpoint(large) {
             font-size: 2vw;
           }
         }
@@ -360,11 +368,16 @@ owl-carousel-o {
           color: $blue;
           font-family: 'arrows';
           font-size: 6vw;
+
           @include breakpoint(small, landscape) {
-            font-size: 2vw;
+            font-size: 3vw;
           }
 
           @include breakpoint(medium) {
+            font-size: 3vw;
+          }
+
+          @include breakpoint(large) {
             font-size: 2vw;
           }
         }

@@ -1,21 +1,23 @@
-<section #schoolDetails class="school-details">
+<section  #schoolDetails class="school-details">
   <div class="school-data">
     <h1 class="school-name">{{ school.name }}</h1>
-    <p class="school-sponsor">
-      {{ school.sponsor }}
-    </p>
-    <p class="school-direction">
-      {{ school.direction }}
-    </p>
-    <p class="school-staff">
-      {{ school.staff }}
-    </p>
-    <p class="school-coordinator">
-      {{ school.coordinator }}
-    </p>
-    <p class="school-enrollment">
-      {{ school.enrollment }}
-    </p>
+    <div *ngIf="false">
+      <p class="school-sponsor">
+        {{ school.sponsor }}
+      </p>
+      <p class="school-direction">
+        {{ school.direction }}
+      </p>
+      <p class="school-staff">
+        {{ school.staff }}
+      </p>
+      <p class="school-coordinator">
+        {{ school.coordinator }}
+      </p>
+      <p class="school-enrollment">
+        {{ school.enrollment }}
+      </p>
+    </div>
   </div>
   <div class="school-images">
 
@@ -85,7 +87,7 @@
     <h3 class="title">{{ activity.title }}</h3>
     <div class="white-box">
       <span class="date">{{ activity.date }}</span>
-      <span class="place">{{ activity.place }}</span>
+      <span *ngIf="false" class="place">{{ activity.place }}</span>
     </div>
     <p class="description">
       {{ activity.description }}

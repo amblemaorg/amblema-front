@@ -20,32 +20,32 @@ const sponsorPage = {
           "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
           "firstName": "Stephanie",
           "function": "Padrino Principal",
-          "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cb.png",
-          // "image": "./assets/images/profile-leena.jpg",
+          // "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cb.png",
+          "image": "./assets/images/profile-leena.jpg",
           "lastName": "Soteldo"
         },
         {
           "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
           "firstName": "Greudys",
           "function": "Padrino Principal",
-          "image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cc.png",
-          // "image": "./assets/images/profile-leena.jpg",
+          //"image": "http://localhost:10505/resources/images/5e30fad45d82a93ec2cf34cc.png",
+          "image": "./assets/images/profile-oscar.jpg",
           "lastName": "Godoy"
         },
         {
           "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
           "firstName": "Franklin",
           "function": "Padrino principal",
-          "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb341.jpg",
-          // "image": "./assets/images/profile-leena.jpg",
+          // "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb341.jpg",
+          "image": "./assets/images/profile-oscar.jpg",
           "lastName": "Perdomo"
         },
         {
           "description": "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
           "firstName": "José Alberto",
           "function": "Padrino Principal",
-          "image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb342.jpg",
-          // "image": "./assets/images/profile-leena.jpg",
+          //"image": "http://157.245.131.248:10506//resources/images/webcontent/5e591b0d9d2b5c3b662bb342.jpg",
+          "image": "./assets/images/profile-oscar.jpg",
           "lastName": "Guerrero"
         }
       ],
@@ -53,62 +53,62 @@ const sponsorPage = {
         {
           fullName: 'Guaquira',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/guaquira.webp',
+          image: './assets/images/padrinos/guaquira.png',
         },
         {
           fullName: 'Hacienda Sicarigua',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/hacienda-sicarigua.webp',
+          image: './assets/images/padrinos/hacienda-sicarigua.png',
         },
         {
           fullName: 'LAPL',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/lapl.webp',
+          image: './assets/images/padrinos/lapl.png',
         },
         {
           fullName: 'Global CyD',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/global-cyd.webp',
+          image: './assets/images/padrinos/global-cyd.png',
         },
         {
           fullName: 'Fundación la Pastora',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/fundacion-pastora.webp',
+          image: './assets/images/padrinos/fundacion-pastora.png',
         },
         {
           fullName: 'Tarikan',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/tarikan.webp',
+          image: './assets/images/padrinos/tarikan.png',
         },
         {
           fullName: 'Vagos',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/vagos.webp',
+          image: './assets/images/padrinos/vagos.png',
         },
         {
           fullName: 'Carora',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/carora.webp',
+          image: './assets/images/padrinos/carora.png',
         },
         {
           fullName: 'Familia Gonzalez Bergoderi',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
+          image: './assets/images/padrinos/familia-gonzalez-bergoderi.png',
         },
         {
           fullName: 'Familia Malela',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/familia-malela.webp',
+          image: './assets/images/padrinos/familia-malela.png',
         },
         {
           fullName: 'Granja Boraure',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/granja-boraure.webp',
+          image: './assets/images/padrinos/granja-boraure.png',
         },
         {
           fullName: 'Pinturas',
           pageUrl: 'https://google.com',
-          image: './assets/images/padrinos/pinturas.webp',
+          image: './assets/images/padrinos/pinturas.png',
         }
       ]
   }
