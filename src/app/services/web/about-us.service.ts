@@ -30,33 +30,33 @@ const aboutUsPage = {
     "awards": [
       {
         "title": 'Carora',
-        "image": './assets/images/padrinos/carora.webp',
-        "image2": './assets/images/padrinos/carora.webp',
-        "image3": './assets/images/padrinos/carora.webp',
-        "description": 'Epaleee Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
+        "image": './assets/images/padrinos/carora.png',
+        "image2": './assets/images/padrinos/carora.png',
+        "image3": './assets/images/padrinos/carora.png',
+        "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
         "description2": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
       },
       {
         "title": 'Tarikan',
-        "image": './assets/images/padrinos/tarikan.webp',
-        "image2": './assets/images/padrinos/tarikan.webp',
-        "image3": './assets/images/padrinos/tarikan.webp',
+        "image": './assets/images/padrinos/tarikan.png',
+        "image2": './assets/images/padrinos/tarikan.png',
+        "image3": './assets/images/padrinos/tarikan.png',
         "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
         "description2": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
       },
       {
         "title": 'Familia Gonzalez Bergoderi',
-        "image": './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
-        "image2": './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
-        "image3": './assets/images/padrinos/familia-gonzalez-bergoderi.webp',
+        "image": './assets/images/padrinos/familia-gonzalez-bergoderi.png',
+        "image2": './assets/images/padrinos/familia-gonzalez-bergoderi.png',
+        "image3": './assets/images/padrinos/familia-gonzalez-bergoderi.png',
         "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
         "description2": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
       },
       {
         "title": 'Fundación la Pastora',
-        "image": './assets/images/padrinos/fundacion-pastora.webp',
-        "image2": './assets/images/padrinos/fundacion-pastora.webp',
-        "image3": './assets/images/padrinos/fundacion-pastora.webp',
+        "image": './assets/images/padrinos/fundacion-pastora.png',
+        "image2": './assets/images/padrinos/fundacion-pastora.png',
+        "image3": './assets/images/padrinos/fundacion-pastora.png',
         "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
         "description2": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.'
       }
