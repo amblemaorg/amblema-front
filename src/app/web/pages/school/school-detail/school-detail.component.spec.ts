@@ -1,14 +1,15 @@
-import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/web/shared/shared.module';
 import { SchoolDetailComponent } from './school-detail.component';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SchoolService } from 'src/app/services/web/school.service';
 import { ActivatedRouteStub } from 'src/assets/tests/activated-route-stub';
 import { OwlModule } from 'ngx-owl-carousel';
+import { ChartsSwitcherModule } from 'src/app/web/shared/charts-switcher/charts-switcher.module';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 describe('SchoolDetailComponent', () => {
@@ -27,6 +28,85 @@ describe('SchoolDetailComponent', () => {
     staff: "Información del personal docente, obrero y administrativo",
     coordinator: "Información del coordinador general",
     enrollment: "Matrícula estudiantil",
+    charts: [
+      {
+        title: 'Diagnóstico de lectura',
+        type: 'line',
+        data: [
+          { label: 'Lapso 2 (2017-2018)', value: 10 },
+          { label: 'Lapso 3 (2017-2018)', value: 20 },
+          { label: 'Lapso 1 (2018-2019)', value: 40 },
+          { label: 'Lapso 2 (2018-2019)', value: 30 },
+          { label: 'Lapso 3 (2018-2019)', value: 20 },
+          { label: 'Lapso 1 (2019-2020)', value: 30 },
+          { label: 'Lapso 2 (2019-2020)', value: 50 },
+          { label: 'Lapso 2 (2017-2018)', value: 10 },
+          { label: 'Lapso 3 (2017-2018)', value: 20 },
+          { label: 'Lapso 1 (2018-2019)', value: 40 },
+          { label: 'Lapso 2 (2018-2019)', value: 30 },
+          { label: 'Lapso 3 (2018-2019)', value: 20 },
+          { label: 'Lapso 1 (2019-2020)', value: 30 },
+          { label: 'Lapso 2 (2019-2020)', value: 50 },
+          { label: 'Lapso 2 (2017-2018)', value: 10 },
+        ],
+        goals: [
+          { label: 'Valor esperado: 50', value: 50 }
+        ],
+        testimonial: {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      },
+      {
+        title: 'Palabras por minuto',
+        type: 'line',
+        data: [
+          { label: 'Lapso 2 (2017-2018)', value: 100 },
+          { label: 'Lapso 3 (2017-2018)', value: 90  },
+          { label: 'Lapso 1 (2018-2019)', value: 120 },
+          { label: 'Lapso 2 (2018-2019)', value: 120 },
+          { label: 'Lapso 3 (2018-2019)', value: 110 },
+          { label: 'Lapso 1 (2019-2020)', value: 130 },
+          { label: 'Lapso 2 (2019-2020)', value: 150 },
+        ],
+        goals: [
+          { label: 'Valor esperado: 160', value: 160 }
+        ],
+        testimonial: {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      },
+      {
+        title: 'Diagnóstico de matemática',
+        type: 'line',
+        data: [
+          { label: 'Lapso 2 (2017-2018)', value: 20 },
+          { label: 'Lapso 3 (2017-2018)', value: 30 },
+          { label: 'Lapso 1 (2018-2019)', value: 15 },
+          { label: 'Lapso 2 (2018-2019)', value: 20 },
+          { label: 'Lapso 3 (2018-2019)', value: 20 },
+          { label: 'Lapso 1 (2019-2020)', value: 30 },
+          { label: 'Lapso 2 (2019-2020)', value: 40 },
+        ],
+        goals: [
+          { label: 'Valor esperado: 50', value: 50 }
+        ],
+        testimonial: {
+          firstName: "Oscar A.",
+          lastName: "Pietri Pacheco",
+          image: "./assets/images/profile-oscar.jpg",
+          function: "Docente de Matemática",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
+        },
+      },
+    ],
     activities: [
       {
         title: "Título de la actividad",
@@ -106,16 +186,6 @@ describe('SchoolDetailComponent', () => {
     const schoolService = jasmine.createSpyObj('SchoolService', ['getSchoolBySlugJSON'])
     getSchoolSpy = schoolService.getSchoolBySlugJSON.and.returnValue( of(school) );
 
-    const fakeRouter = {
-      provide: Router,
-      useValue: {
-        url: 'escuelas/escuela-santo-angel',
-        events: of(new NavigationEnd(0, 'escuelas/escuela-santo-angel', 'escuelas/escuela-santo-angel')),
-        createUrlTree: (commands, navExtras = {}) => {},
-        serializeUrl: () => {}
-      }
-    };
-
     TestBed.configureTestingModule({
       declarations: [ SchoolDetailComponent ],
       imports: [
@@ -123,18 +193,18 @@ describe('SchoolDetailComponent', () => {
         BrowserAnimationsModule,
         SharedModule,
         OwlModule,
-        CarouselModule
+        CarouselModule,
+        ChartsSwitcherModule
       ],
       providers: [
         { provide: SchoolService, useValue: schoolService },
-        // fakeRouter
+        GlobalService
       ]
     })
-    //.compileComponents();
     activatedRoute.setParamMap({ schoolSlug: 'escuela-santo-angel' });
     fixture = TestBed.createComponent(SchoolDetailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // onInit()
+    fixture.detectChanges();
   });
 
   it('should create component and call getSchoolBySlugJSON() service function', () => {
@@ -153,7 +223,7 @@ describe('SchoolDetailComponent', () => {
     el = fixture.nativeElement.querySelector('section.teachers h2');
     const h2Count = fixture.nativeElement.querySelectorAll('section.teachers h2').length;
     expect(h2Count).toBe(1);
-    expect(el.textContent).toBe("Los Docentes dicen");
+    expect(el.textContent).toBe("Los docentes dicen");
   });
 
   it('should have a h2 tag in activities section with content "Próximas actividades"', () => {

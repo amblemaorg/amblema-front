@@ -6,6 +6,7 @@ import { SchoolDetailComponent } from './school-detail.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { SharedModule } from 'src/app/web/shared/shared.module';
 import { OwlModule } from 'ngx-owl-carousel';
+import { ChartsSwitcherModule } from 'src/app/web/shared/charts-switcher/charts-switcher.module';
 
 @NgModule({
   declarations: [SchoolDetailComponent],
@@ -14,7 +15,8 @@ import { OwlModule } from 'ngx-owl-carousel';
     SchoolDetailRoutingModule,
     CarouselModule,
     OwlModule,
-    SharedModule
+    SharedModule,
+    ChartsSwitcherModule
   ]
 })
 export class SchoolDetailModule { }
