@@ -29,10 +29,73 @@ const homePage = {
         "description": "La misión de facilitar la calidad de vida"
       }
     ],
-     "aboutUsText": "Amblema es una herramienta socio-educativa, que busca motivar a muchos docentes para alcanzar una educación de calidad. Con aportes de empresas y particulares que asumen una eficaz inversión social.",
-     "environmentText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
-     "readingText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
-     "mathText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus",
+    aboutUsText: "Amblema es una herramienta socio-educativa, que busca motivar a muchos docentes para alcanzar una educación de calidad. Con aportes de empresas y particulares que asumen una eficaz inversión social.",
+    environmentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
+    readingText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus.",
+    mathText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vestibulum vehicula commodo. Etiam sed efficitur lacus. Vivamus sit amet maximus ipsum. Vivamus eget dolor ut lectus faucibus tempus a sit amet lectus. Nam vel felis et nisi suscipit varius. Ut hendrerit ligula ac tristique faucibus",
+    statistics: {
+      totalSchools: 28,
+      totalChildren: 4800,
+      totalTeachers: 300,
+      charts: [
+        {
+          title: 'Diagnóstico de lectura',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+            { label: 'Lapso 3 (2017-2018)', value: 20 },
+            { label: 'Lapso 1 (2018-2019)', value: 40 },
+            { label: 'Lapso 2 (2018-2019)', value: 30 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 50 },
+            { label: 'Lapso 2 (2017-2018)', value: 10 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ],
+        },
+        {
+          title: 'Palabras por minuto',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 100 },
+            { label: 'Lapso 3 (2017-2018)', value: 90  },
+            { label: 'Lapso 1 (2018-2019)', value: 120 },
+            { label: 'Lapso 2 (2018-2019)', value: 120 },
+            { label: 'Lapso 3 (2018-2019)', value: 110 },
+            { label: 'Lapso 1 (2019-2020)', value: 130 },
+            { label: 'Lapso 2 (2019-2020)', value: 150 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 160', value: 160 }
+          ],
+        },
+        {
+          title: 'Diagnóstico de matemática',
+          type: 'line',
+          data: [
+            { label: 'Lapso 2 (2017-2018)', value: 20 },
+            { label: 'Lapso 3 (2017-2018)', value: 30 },
+            { label: 'Lapso 1 (2018-2019)', value: 15 },
+            { label: 'Lapso 2 (2018-2019)', value: 20 },
+            { label: 'Lapso 3 (2018-2019)', value: 20 },
+            { label: 'Lapso 1 (2019-2020)', value: 30 },
+            { label: 'Lapso 2 (2019-2020)', value: 40 },
+          ],
+          goals: [
+            { label: 'Valor esperado: 50', value: 50 }
+          ]
+        },
+      ]
+    },
      "testimonials":[
         {
           "firstName": "Oscar A.",
