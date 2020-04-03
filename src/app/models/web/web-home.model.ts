@@ -7,6 +7,7 @@ export interface HomePage {
     environmentText: string;
     readingText: string;
     mathText: string;
+    statistics: any;
     testimonials: Testimonial[];
 }
 

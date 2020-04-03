@@ -3,6 +3,8 @@ import { SchoolService } from 'src/app/services/web/school.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { OwlCarousel } from 'ngx-owl-carousel';
+import { ChartService } from 'src/app/services/web/chart.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-school-detail',
@@ -13,8 +15,14 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
   @ViewChild('activitiesCarousel', { static: true }) activitiesCarousel: OwlCarousel;
   @ViewChild('otherSchoolsCarousel', { static: true }) otherSchoolsCarousel: OwlCarousel;
+  lineChartOptions: object;
 
   landscape = window.innerWidth > window.innerHeight;
+
+  chartSwitcherOptions = {
+    direction: 'column',
+    charts: []
+  }
 
   carouselOptions: OwlOptions = {
     autoplay: false,
@@ -72,14 +80,19 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   }
 
   school;
+  activeChartIndex: number = 0;
+  isBrowser: boolean;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private schoolService: SchoolService
+    private globalService: GlobalService,
+    private schoolService: SchoolService,
+    private chartService: ChartService
   ) { }
 
   ngOnInit() {
+    this.isBrowser = this.globalService.isBrowser;
     this.route.paramMap.subscribe(params => {
       this.getSchoolBySlug(params.get('schoolSlug'));
 
@@ -105,9 +118,14 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   getSchoolBySlug(slug) {
     this.schoolService.getSchoolBySlugJSON(slug)
     .subscribe(data => {
-      //console.log(data)
+      // console.log(data)
       this.school = data;
+      this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(data.charts);
     })
+  }
+
+  setActiveChart(index: number) {
+    this.activeChartIndex = index;
   }
 
   @HostListener('window:resize', [''])
@@ -135,4 +153,3 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     this.otherSchoolsCarousel.refresh();
   }
 }
-

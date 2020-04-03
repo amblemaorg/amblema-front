@@ -3,6 +3,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HomeService } from '../../../services/web/home.service';
 import { HomePage } from 'src/app/models/web/web-home.model';
 import { OwlCarousel } from 'ngx-owl-carousel';
+import { ChartService } from 'src/app/services/web/chart.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +14,15 @@ import { OwlCarousel } from 'ngx-owl-carousel';
 export class HomeComponent implements OnInit {
   @ViewChild('pillarsCarousel', { static: true }) pillarsCarousel: OwlCarousel;
   landscape = window.innerWidth > window.innerHeight;
+  isBrowser: boolean;
 
   coverData = {
     coverImage: './assets/images/cover-simbolos.png'
+  }
+
+  chartSwitcherOptions = {
+    direction: 'row',
+    charts: []
   }
 
   pillarsOptions = {
@@ -52,9 +60,14 @@ export class HomeComponent implements OnInit {
   }
 
   homePageData: HomePage;
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private globalService: GlobalService,
+    private homeService: HomeService,
+    private chartService: ChartService
+  ) {}
 
   ngOnInit() {
+    this.isBrowser = this.globalService.isBrowser;
     this.getHomePageData();
   }
 
@@ -64,6 +77,8 @@ export class HomeComponent implements OnInit {
         .subscribe(data => {
           // console.log(data);
           this.homePageData = data.homePage;
+          const chartsData = data.homePage.statistics.charts;
+          this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(chartsData);
         });
   }
 

@@ -1,0 +1,23 @@
+<div
+  class="charts-switcher"
+  [ngClass]="{
+    'd-row': direction == 'row',
+    'd-column': direction != 'row'
+  }">
+  <div class="switchers-wrapper">
+    <button
+      class="switcher-button"
+      [ngClass]="{
+        'active': activeChartIndex == i
+      }"
+      type="button"
+      *ngFor="let chart of charts; index as i"
+      (click)="switchChart(i)"
+    >
+      {{ chart.title }}
+    </button>
+  </div>
+  <div class="chart-wrapper">
+    <ng-template #chartHost></ng-template>
+  </div>
+</div>
