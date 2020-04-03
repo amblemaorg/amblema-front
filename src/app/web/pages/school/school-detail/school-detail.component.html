@@ -24,10 +24,27 @@
 
   </div>
 </section>
+<section class="charts">
+  <div class="charts-switcher">
+    <charts-switcher
+      [options]="chartSwitcherOptions"
+      (switch)="setActiveChart($event)"
+      *ngIf="isBrowser"
+    >
+    </charts-switcher>
+  </div>
+  <div class="chart-testimonial">
+    <web-testimonial-card
+      [testimonial]="school.charts[activeChartIndex].testimonial"
+      *ngIf="school.charts[activeChartIndex].testimonial"
+    >
+    </web-testimonial-card>
+  </div>
+</section>
 <section class="teachers">
     <div class="heading">
-      <h2>Los Docentes dicen</h2>
-      <!-- <p>Lorem ipsum dolor sit amet, consectetuer</p> -->
+      <h2>Los docentes dicen</h2>
+      <!-- <p></p> -->
     </div>
     <div class="teachers-list">
       <owl-carousel-o *ngIf="school.testimonials.length > 0" [options]="teachersOptions" class="teachers-carousel">

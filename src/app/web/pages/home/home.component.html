@@ -37,7 +37,43 @@
     </owl-carousel>
 </section>
 <section class="social-impact">
-  <h2 class="heading">Impacto social</h2>
+  <div class="heading-wrapper">
+    <h2 class="heading">Impacto social</h2>
+    <div class="statistics">
+      <div
+        class="statistic statistic-schools"
+        *ngIf="homePageData.statistics.totalSchools"
+      >
+        <span class="statistic-count">
+          {{ homePageData.statistics.totalSchools }}
+        </span>
+        <span class="statistic-label">Escuelas</span>
+      </div>
+      <div
+        class="statistic statistic-children"
+        *ngIf="homePageData.statistics.totalChildren"
+      >
+        <span class="statistic-count">
+          {{ homePageData.statistics.totalChildren }}
+        </span>
+        <span class="statistic-label">Niños</span>
+      </div>
+      <div
+        class="statistic statistic-teachers"
+        *ngIf="homePageData.statistics.totalTeachers"
+      >
+        <span class="statistic-count">
+          {{ homePageData.statistics.totalTeachers}}
+        </span>
+        <span class="statistic-label">Docentes</span>
+      </div>
+    </div>
+  </div>
+  <charts-switcher
+    [options]="chartSwitcherOptions"
+    *ngIf="isBrowser"
+  >
+  </charts-switcher>
 </section>
 <section class="founders">
     <div class="heading">
