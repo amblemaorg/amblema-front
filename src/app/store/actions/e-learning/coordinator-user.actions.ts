@@ -1,4 +1,5 @@
 import { CoordinatorModule } from '../../../models/steps/learning-modules.model';
+import { Project } from '../../../models/steps/previous-steps.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 /* export class IncreaseCoins {
@@ -19,5 +20,7 @@ export interface CoordinatorStateModel {
   gender: string;
   coor_id: string;
   image: string;
+  coordinator_projects: Project[];
+  userType: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //

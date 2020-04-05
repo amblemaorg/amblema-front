@@ -72,6 +72,11 @@
                         transform: rotate(0deg);
                     }
                 }
+
+                &.not-enabled {
+                    opacity: 0.75;
+                    // cursor: not-allowed;
+                }
              }
         }
 
@@ -104,6 +109,10 @@
 
                 @media screen and (orientation:landscape) and (min-width:640px) { display: none; }
                 @include mediabreak(large,portrait) { margin-right: auto; }
+            }
+
+            .inactive {
+                opacity: 0.65;
             }
 
             .first-p {

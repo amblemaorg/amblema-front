@@ -9,6 +9,7 @@ import { Module } from '../../../../../models/steps/learning-modules.model';
 import { NgxsModule } from '@ngxs/store';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
+import { StepsState } from '../../../../../store/states/steps/project.state';
 
 describe('ModuleDetailComponent', () => {
   let component: ModuleDetailComponent;
@@ -20,7 +21,8 @@ describe('ModuleDetailComponent', () => {
       imports: [OwlModule, FontAwesomeModule,HttpClientModule,RouterTestingModule,
         NgxsModule.forRoot( [
           ModulesState,
-          CoordinatorState
+          CoordinatorState,
+          StepsState,
         ],
         {
           compatibility: {

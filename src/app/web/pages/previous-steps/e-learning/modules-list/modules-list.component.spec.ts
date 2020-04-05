@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
+import { StepsState } from '../../../../../store/states/steps/project.state';
 
 describe('ModulesListComponent', () => {
   let component: ModulesListComponent;
@@ -21,7 +22,8 @@ describe('ModulesListComponent', () => {
         HttpClientModule, 
         NgxsModule.forRoot( [
           ModulesState,
-          CoordinatorState
+          CoordinatorState,
+          StepsState,
         ],
         {
           compatibility: {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
+import { Project } from 'src/app/models/steps/previous-steps.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -17,7 +18,11 @@ export class StepsService {
 
   constructor(private http: HttpClient) { }
 
-  getSteps (): Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'steps')
+  getSteps (proj_id): Observable<Project> {
+    return this.http.get<Project>(this.baseUrl + `projects/${proj_id}`)
+  }
+
+  requestApproval (fd): Observable<any> {
+    return this.http.get<any>(this.baseUrl)
   }
 }

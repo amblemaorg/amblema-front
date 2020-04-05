@@ -22,6 +22,12 @@ p {
     @include mediabreak(large,landscape) { padding: 0 1rem 0 1.5rem; }
     @include mediabreak(larger,landscape,true,1600px) { padding: 0 1.5rem 0 2rem; }
 
+    .no-under {
+        margin-bottom: 0.5rem;
+        @include mediabreak(medium,landscape,true,800px) { margin-bottom: 0.75rem; }
+        @include mediabreak(large,landscape) { margin-bottom: 0.95rem; }
+        @include mediabreak(larger,landscape,true,1680px) { margin-bottom: 1.65rem; }
+    }
     .header-first-row {
         align-items: center;
 

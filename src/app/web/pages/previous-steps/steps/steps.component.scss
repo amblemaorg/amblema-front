@@ -44,6 +44,11 @@
         }        
     }
 
+    .mt-add {
+        @include mediabreak(large,landscape) { margin-top: 1.5rem; }
+        @include mediabreak(larger,landscape,true,1680px) { margin-top: 2rem; }
+        @include mediabreak(larger,landscape,true,1920px) { margin-top: 2.25rem; }
+    }
     .tabs-container {
         @mixin tabs-container {
             border-top-left-radius: 0.25rem;
@@ -165,6 +170,8 @@
 
                 .progress-bar {
                     background-color: map-get($color_map, progress-green);
+                    -webkit-transition: width .75s;
+                    transition: width .75s;
                 }
             }
         }
