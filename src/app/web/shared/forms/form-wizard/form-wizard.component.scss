@@ -7,6 +7,10 @@
   line-height: 1.2;
 
   @include breakpoint(medium) {
+    font-size: 3vw;
+  }
+
+  @include breakpoint(large) {
     font-size: 2vw;
   }
 }
@@ -26,7 +30,7 @@
     position: relative;
     width: 100%;
 
-    @include breakpoint(medium) {
+    @include breakpoint(large) {
       margin: 1.5vw 0;
       width: 45%;
     }
@@ -44,6 +48,11 @@
       display: inline-block;
 
       @include breakpoint(medium) {
+        font-size: 2vw;
+        top: 2vw;
+      }
+
+      @include breakpoint(large) {
         font-size: 1vw;
         margin-right: 1vw;
         top: .5vw;
@@ -61,6 +70,10 @@
       width: 50%;
 
       @include breakpoint(medium) {
+        font-size: 2.5vw;
+      }
+
+      @include breakpoint(large) {
         font-size: 1.2vw;
         height: 2vw;
       }
@@ -117,6 +130,10 @@
           display: inline-block;
 
           @include breakpoint(medium) {
+            font-size: 2.5vw;
+          }
+
+          @include breakpoint(large) {
             font-size: 1.5vw;
             margin-bottom: 1.5vw;
           }
@@ -201,6 +218,10 @@
   transform: unset;
 
   @include breakpoint(medium) {
+    font-size: 2.5vw;
+  }
+
+  @include breakpoint(large) {
     font-size: 1.25vw;
     margin: 0 1vw;
     padding: .4vw 2vw !important;
@@ -235,6 +256,10 @@
       .ng-value {
         font-size: 4.5vw;
 
+        @include breakpoint(medium) {
+          font-size: 2.5vw;
+        }
+
         @include breakpoint(large) {
           font-size: 1.2vw;
         }
@@ -243,6 +268,10 @@
         input {
           color: $white;
           font-size: 4.5vw;
+
+          @include breakpoint(medium) {
+            font-size: 2.5vw;
+          }
 
           @include breakpoint(large) {
             font-size: 1.2vw;
@@ -255,6 +284,10 @@
 
         .ng-clear {
           font-size: 5vw;
+
+          @include breakpoint(medium) {
+            font-size: 4vw;
+          }
 
           @include breakpoint(large) {
             font-size: 1.5vw;
@@ -281,6 +314,11 @@
           top: -1vw;
           border-color: transparent transparent $white;
           border-width: 1.5vw 1.5vw 1.5vw;
+
+          @include breakpoint(medium) {
+            top: 0;
+            border-width: 1vw 1vw 1vw;
+          }
 
           @include breakpoint(large) {
             top: -.25vw;
@@ -317,7 +355,13 @@
         border-style: solid;
         border-width: 1.5vw 1.5vw 1vw;
 
+        @include breakpoint(medium) {
+          top: 1vw;
+          border-width: 1vw 1vw 1vw;
+        }
+
         @include breakpoint(large) {
+          top: 0;
           border-width: .5vw .5vw .25vw;
         }
       }

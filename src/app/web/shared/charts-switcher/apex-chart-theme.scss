@@ -1,0 +1,33 @@
+::ng-deep {
+  .apexcharts-canvas {
+    & > .apexcharts-svg {
+      overflow: visible;
+    }
+
+    .apexcharts-yaxis-annotations {
+      rect {
+        fill: transparent;
+      }
+    }
+
+    .apexcharts-tooltip {
+      color: $blue;
+    }
+
+    .apexcharts-toolbar {
+      color: $blue;
+
+      * > svg {
+        fill: $white;
+      }
+
+      .apexcharts-menu-icon {
+        &:hover {
+          svg {
+            fill: $green;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import "scss/responsive";
+
+:host {
+  display: block;
+  position: relative;
+  height: 80vw;
+  width: 100%;
+
+  @include breakpoint(small, landscape) {
+    height: 50vw;
+  }
+
+  @include breakpoint(medium) {
+    height: 30vw;
+  }
+}
