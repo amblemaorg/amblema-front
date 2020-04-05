@@ -21,26 +21,26 @@
             </div>   
             
             <a *ngIf="step.hasFile" [href]="sanitizeFile(step.file.url)" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-            (click)="mode!=user_type? $event.preventDefault():null" [class.inactive]="mode!=user_type">
+            (click)="compareMode()? $event.preventDefault():null" [class.inactive]="compareMode()">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
               <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file">
               <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-              [class.has-several]="step.hasFile" [disabled]="mode!=user_type">
+              [class.has-several]="step.hasFile" [disabled]="compareMode()">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
               <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 ? true:false" [id]="uploadFile.id+'2'" (click)="sendAttached(i); $event.preventDefault()" 
-                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="mode!=user_type">
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="compareMode()">
                 Enviar
               </button>
             </div>
             <button *ngIf="step.send" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="mode!=user_type">
+            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="compareMode()">
               Enviar curriculum
             </button>
             <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
-            [disabled]="mode!=user_type || curriculumPending" [title]="curriculumPending? 'Aún no has aprobado el paso de curriculo':''">
+            [disabled]="compareMode() || curriculumPending" [title]="curriculumPending? 'Aún no has aprobado el paso de curriculo':''">
               Ir a los modulos
             </button>
 
@@ -53,20 +53,20 @@
               </div>
 
               <button *ngIf="step.hasChecklist && step.checklist.length>0" (click)="saveChecks(i); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                [disabled]="mode!=user_type">
+                [disabled]="compareMode()">
                 Guardar
               </button>
             </form>            
           </ng-container>
           <ng-template #formOpt>
             <div *ngIf="step.type==2" class="has-form">
-              <app-steps-forms [who]="'coordinator'" [disable]="mode!=user_type"></app-steps-forms>
+              <app-steps-forms [who]="'coordinator'" [disable]="compareMode()"></app-steps-forms>
             </div>
             <div *ngIf="step.type==3" class="has-form">
-              <app-steps-forms [who]="'sponsor'" [disable]="mode!=user_type"></app-steps-forms>
+              <app-steps-forms [who]="'sponsor'" [disable]="compareMode()"></app-steps-forms>
             </div>
             <div *ngIf="step.type==4" class="has-form">
-              <app-steps-forms [who]="'school'" [disable]="mode!=user_type"></app-steps-forms>
+              <app-steps-forms [who]="'school'" [disable]="compareMode()"></app-steps-forms>
             </div>      
           </ng-template>
         </div>

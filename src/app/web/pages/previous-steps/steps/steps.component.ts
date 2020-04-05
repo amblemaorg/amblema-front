@@ -14,6 +14,7 @@ import { StepsState } from '../../../../store/states/steps/project.state';
 })
 export class StepsComponent implements OnInit {
   doGet:boolean = true;
+  isTest:boolean = false;
   activeStep = 0;
   curriculumPending = false;
   @Select(CoordinatorState.coordinator_projects) coordProjects$: Observable<Project[]>; //! TEMPORARY
@@ -31,7 +32,7 @@ export class StepsComponent implements OnInit {
 
   ngOnInit() {
     this.coordProjects$.subscribe(projs => {
-      if (this.doGet) {        
+      if (this.doGet && !this.isTest) {        
         this.project_steps$.subscribe(res => {  
           if (res.steps.length>0) {
             res.steps.forEach(record => {   

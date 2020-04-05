@@ -8,6 +8,10 @@ import { EmbedVideoService } from 'ngx-embed-video';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
+import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { StepsState } from '../../../../store/states/steps/project.state';
 
 describe('StepsComponent', () => {
   let component: StepsComponent;
@@ -16,8 +20,21 @@ describe('StepsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StepsComponent,GeneralStepsComponent,StepsFormsComponent ],
-      imports: [FontAwesomeModule,RouterTestingModule,HttpClientModule,FormsModule,ReactiveFormsModule,
-        NgSelectModule],
+      imports: [
+        FontAwesomeModule,RouterTestingModule,HttpClientModule,FormsModule,ReactiveFormsModule,
+        NgSelectModule,
+        NgxsModule.forRoot( [
+          ModulesState,
+          CoordinatorState,
+          StepsState,
+        ],
+        {
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        })
+      ],
       providers: [EmbedVideoService]
     })
     .compileComponents();
@@ -26,6 +43,7 @@ describe('StepsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StepsComponent);
     component = fixture.componentInstance;
+    component.isTest = true;
     fixture.nativeElement.querySelectorAll('.description-info h1').item(0).style.fontFamily='Montserrat';
     fixture.detectChanges();
   });
