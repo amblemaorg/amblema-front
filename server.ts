@@ -14,7 +14,7 @@
  * from your application's main.server.ts file, as seen below with the
  * import for `ngExpressEngine`.
  */
-
+"use strict";
 import 'zone.js/dist/zone-node';
 
 import * as express from 'express';
@@ -30,6 +30,11 @@ const DIST_FOLDER = join(process.cwd(), 'dist/browser');
 const {AppServerModuleNgFactory, LAZY_MODULE_MAP, ngExpressEngine, provideModuleMap} = require('./dist/server/main');
 const domino = require('domino');
 const fs = require('fs');
+//import * as svgdom from 'svgdom';
+//import * as SVG from 'svg.js';
+//var svgdom = require('svgdom');
+//let SVG = require('svg.js');
+//let svg = SVG(svgdom.document.documentElement);
 import "localstorage-polyfill";
 
 const template = fs.readFileSync(join(DIST_FOLDER, "index.html")).toString();
@@ -44,6 +49,7 @@ global["HTMLElement"] = win.HTMLElement;
 global["navigator"] = win.navigator;
 global["localStorage"] = localStorage;
 global["sessionStorage"] = localStorage;
+//global["SVG"] = SVG;
 global["getComputedStyle"] = () => {
   return {
     getPropertyValue() {

@@ -61,13 +61,17 @@
     margin-left: 3vw;
 
     @include breakpoint(small, landscape) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       margin-left: 1.5vw;
     }
 
     @include breakpoint(medium) {
-      font-size: 1vw;
+      font-size: 1.5vw;
       margin-left: 1.5vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1vw;
     }
 
     .testimonial-fullname {
@@ -84,13 +88,17 @@
     text-align: center;
 
     @include breakpoint(small, landscape) {
-      font-size: .9vw;
+      font-size: 1.5vw;
       padding: 1vw;
     }
 
     @include breakpoint(medium) {
-      font-size: .9vw;
+      font-size: 1.5vw;
       padding: 1vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: .9vw;
     }
   }
 }

@@ -64,14 +64,17 @@
       margin: 2vw 0;
 
       @include breakpoint(small, landscape) {
-        font-size: 1.2vw;
+        font-size: 1.8vw;
         margin: 0;
-
       }
 
       @include breakpoint(medium) {
-        font-size: 1.2vw;
+        font-size: 1.8vw;
         margin: 0;
+      }
+
+      @include breakpoint(large) {
+        font-size: 1.2vw;
       }
 
       a {

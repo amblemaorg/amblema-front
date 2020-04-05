@@ -6,6 +6,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { HomeService } from 'src/app/services/web/home.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { OwlModule } from 'ngx-owl-carousel';
+import { ChartsSwitcherModule } from '../../shared/charts-switcher/charts-switcher.module';
+import { GlobalService } from 'src/app/services/global.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -16,22 +19,30 @@ describe('HomeComponent', () => {
         TestBed.configureTestingModule({
             declarations: [HomeComponent],
             imports: [
+              RouterTestingModule.withRoutes([]),
               BrowserAnimationsModule,
               SharedModule,
               CarouselModule,
               OwlModule,
+              ChartsSwitcherModule,
               HttpClientModule
             ],
-            providers: [HomeService]
+            providers: [
+              HomeService,
+              GlobalService
+            ]
         })
         .compileComponents();
     }));
 
-    beforeEach(inject([HomeService], (homeService: HomeService) => {
+    beforeEach(inject(
+      [HomeService, GlobalService],
+      (homeService: HomeService, globalService: GlobalService) => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    }));
+      }
+    ));
 
     it('should create home page', () => {
         expect(component).toBeTruthy();

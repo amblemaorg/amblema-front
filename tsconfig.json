@@ -22,5 +22,8 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
-  }
+  },
+  "exclude": [
+    "./src/app/web/shared/charts-switcher/apex-chart-adapters.ts"
+  ]
 }

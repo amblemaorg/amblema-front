@@ -2,6 +2,55 @@
 @import 'scss/variables';
 @import 'scss/elements/headings';
 
+section.charts {
+  background-color: $blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8vw 6vw;
+  position: relative;
+
+  @include breakpoint(small, landscape) {
+    flex-direction: row;
+  }
+
+  @include breakpoint(medium) {
+    flex-direction: row;
+  }
+
+  .charts-switcher {
+    width: 100%;
+
+    @include breakpoint(small, landscape) {
+      width: 60%;
+    }
+
+    @include breakpoint(medium) {
+      width: 60%;
+    }
+  }
+
+  .chart-testimonial {
+    position: relative;
+    margin: 5vw 0;
+    width: 90%;
+
+    @include breakpoint(small, landscape) {
+      position: absolute;
+      right: 0;
+      margin: 0;
+      width: 30%;
+    }
+
+    @include breakpoint(medium) {
+      position: absolute;
+      right: 0;
+      margin: 0;
+      width: 30%;
+    }
+  }
+}
+
 section.teachers {
   background-image: url('../../../../../assets/images/background-trees-movil.png');
   background-size: cover;
@@ -30,14 +79,14 @@ section.teachers {
     left: 15vw;
 
     @include breakpoint(small, landscape) {
-      bottom: 13vw;
+      bottom: 16vw;
       left: 6vw;
       top: unset;
       width: 25vw;
     }
 
     @include breakpoint(medium) {
-      bottom: 13vw;
+      bottom: 16vw;
       left: 6vw;
       top: unset;
       width: 25vw;
@@ -114,32 +163,41 @@ section.activities {
         background-color: $white;
         color: $blue;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between; // Uncomment when the activity place need to be shown
+        justify-content: center;
         align-items: center;
         font-size: 4vw;
         padding: 2vw 4vw;
         margin: 2vw 0 4vw;
 
         @include breakpoint(small, landscape) {
-          font-size: .9vw;
+          font-size: 1.5vw;
           padding: .5vw 1vw;
           margin: .5vw 0 1vw;
         }
 
         @include breakpoint(medium) {
-          font-size: .9vw;
+          font-size: 1.5vw;
           padding: .5vw 1vw;
           margin: .5vw 0 1vw;
         }
 
+        @include breakpoint(large) {
+          font-size: .9vw;
+        }
+
         span {
           width: 50%;
+          text-align: center;
+          // Uncomment when the activity place need to be shown
+          /*
           &:first-child {
             text-align: left;
           }
           &:last-child {
             text-align: right;
           }
+          */
         }
       }
 
@@ -152,13 +210,17 @@ section.activities {
         padding: 0 4vw;
 
         @include breakpoint(small, landscape) {
-          font-size: .9vw;
+          font-size: 1.5vw;
           padding: 0 2vw;
         }
 
         @include breakpoint(medium) {
-          font-size: .9vw;
+          font-size: 1.5vw;
           padding: 0 2vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: .9vw;
         }
       }
 
