@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { ModulesState } from '../../../store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from '../../../store/states/e-learning/coordinator-user.state';
 import { UpdateModulesTotal } from '../../../store/actions/e-learning/learning-modules.actions';
@@ -22,8 +23,9 @@ export class EheaderComponent implements OnInit {
   @Select(CoordinatorState.coordinator_modules_total) approved_modules_total$: Observable<number>;
   @Select(CoordinatorState.coordinator_modules) approved_modules$: Observable<CoordinatorModule[]>;
   @Select(CoordinatorState.coordinator_brief) coorBrief$: Observable<any>;
+  @Select(CoordinatorState.coordinator_type) user_type$: Observable<string>;
 
-  constructor(private store: Store, private modulesService: ModulesService) {
+  constructor(private store: Store, private modulesService: ModulesService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -31,7 +33,16 @@ export class EheaderComponent implements OnInit {
       this.setCoordinatorModulesValues(res); //! THIS IS TEMPORARY
       if (res.type!=0) this.modulesService.actualUser = res.usu;
     });
-    this.setCoordinatorModulesValues({type:0,usu:null}); //! THIS IS TEMPORARY
+
+    //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
+    if (this.route.snapshot.params && this.route.snapshot.params.coord) this.setCoordinatorModulesValues({type:1,usu:this.route.snapshot.params.coord});
+    else {
+      if (this.modulesService.actualUser.length==0) this.setCoordinatorModulesValues({type:1,usu:'5e8256b83640bd4be811444a'});
+      else this.setCoordinatorModulesValues({type:1,usu:this.modulesService.actualUser});
+    }
+    //! -------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // this.setCoordinatorModulesValues({type:0,usu:null}); //! THIS IS TEMPORARY
     this.approved_modules$.subscribe(res=> {
       this.modulesService.approved_modules = res;
     });

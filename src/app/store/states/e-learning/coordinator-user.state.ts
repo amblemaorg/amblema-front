@@ -12,6 +12,8 @@ import { ModulesService } from '../../../services/steps/modules.service';
       gender: '',
       coor_id: '',
       image: '',
+      coordinator_projects: [],
+      userType: '',
     }
   })
   export class CoordinatorState {
@@ -30,12 +32,20 @@ import { ModulesService } from '../../../services/steps/modules.service';
       return state.coordinator_modules;
     }
     @Selector()
+    static coordinator_projects(state: CoordinatorStateModel) {
+      return state.coordinator_projects; //! TEMPORARY
+    }
+    @Selector()
     static coordinator_brief(state: CoordinatorStateModel) {
       return {name:state.name, gender:state.gender, image:state.image};
     }
     @Selector()
     static coordinator_id(state: CoordinatorStateModel) {
       return state.coor_id;
+    }
+    @Selector()
+    static coordinator_type(state: CoordinatorStateModel) {
+      return state.userType;
     }
   
     constructor(private modulesService: ModulesService) {}
@@ -62,8 +72,10 @@ import { ModulesService } from '../../../services/steps/modules.service';
             gender: coor.gender,
             coor_id: coor.id,
             image: coor.image,
+            userType: coor.userType,
             // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
-            coordinator_modules: coor.learning
+            coordinator_modules: coor.learning,
+            coordinator_projects: coor.projects,
           });
         })
       );

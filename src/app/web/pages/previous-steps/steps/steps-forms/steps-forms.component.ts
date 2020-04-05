@@ -15,6 +15,7 @@ export const VIDEO_PTTRN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/
 })
 export class StepsFormsComponent implements OnInit {
   @Input() who:string;
+  @Input() disable:boolean= false;
 
   doc_type = [
     {id:'1',name:'J'},

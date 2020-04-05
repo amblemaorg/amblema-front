@@ -1,6 +1,5 @@
 import { Component, OnInit, DoCheck, Inject } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
-import { ActivatedRoute } from '@angular/router';
 import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../../services/steps/modules.service';
@@ -31,16 +30,9 @@ export class ModulesListComponent implements OnInit, DoCheck {
   @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
   @Select(CoordinatorState.coordinator_brief) coorBrf$: Observable<any>;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService, private route: ActivatedRoute) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
 
   ngOnInit() {
-    //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
-    if (this.route.snapshot.params && this.route.snapshot.params.coord) this.moduleService.emitValsUpdate({type:1,usu:this.route.snapshot.params.coord});
-    else {
-      if (this.moduleService.actualUser.length==0) this.moduleService.emitValsUpdate({type:1,usu:'5e60009d945835d1a73bb2f9'});
-      else this.moduleService.emitValsUpdate({type:1,usu:this.moduleService.actualUser});
-    }
-    //! -------------------------------------------------------------------------------------------------------------------------------------------------
     // this.moduleService.getMods().subscribe( res => {
     //   this.modules = res.records;
     // });  

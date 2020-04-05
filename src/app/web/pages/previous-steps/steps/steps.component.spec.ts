@@ -26,10 +26,41 @@ describe('StepsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StepsComponent);
     component = fixture.componentInstance;
+    fixture.nativeElement.querySelectorAll('.description-info h1').item(0).style.fontFamily='Montserrat';
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('font family should be Montserrat', () => { 
+    let fontStyle = fixture.nativeElement.querySelectorAll('.description-info h1').item(0).style.fontFamily;
+    expect(fontStyle).toContain('Montserrat');
+  });
+
+  it("'AmbLeMa' word must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.description-info h1').item(0).textContent;
+    expect(word).toContain('AmbLeMa');
+  });
+
+  it("'Generales' word must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:first-child a').item(0).textContent.toLowerCase();
+    expect(word).toBe('generales');
+  });
+
+  it("'Padrino' word must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:nth-child(2) a').item(0).textContent.toLowerCase();
+    expect(word).toBe('padrino');
+  });
+
+  it("'Coordinador' word must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:nth-child(3) a').item(0).textContent.toLowerCase();
+    expect(word).toBe('coordinador');
+  });
+
+  it("'Escuela' word must be well-written", () => { 
+    let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:last-child a').item(0).textContent.toLowerCase();
+    expect(word).toBe('escuela');
   });
 });

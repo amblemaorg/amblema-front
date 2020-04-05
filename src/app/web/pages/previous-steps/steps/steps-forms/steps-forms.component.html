@@ -140,7 +140,7 @@
     </div>
 
     <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!sponsorForm.valid" [class.disabled]="!sponsorForm.valid">
+    [disabled]="!sponsorForm.valid || disable" [class.disabled]="!sponsorForm.valid">
       Enviar solicitud
     </button>
 </form>
@@ -296,7 +296,7 @@
       </div>
     </div>  
     <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!coordinatorForm.valid" [class.disabled]="!coordinatorForm.valid">
+    [disabled]="!coordinatorForm.valid || disable" [class.disabled]="!coordinatorForm.valid">
       Enviar solicitud
     </button>
 </form>
@@ -540,7 +540,7 @@
       </div>
     </div>
     <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!schoolForm.valid" [class.disabled]="!schoolForm.valid">
+    [disabled]="!schoolForm.valid || disable" [class.disabled]="!schoolForm.valid">
       Enviar solicitud
     </button>
 </form>
