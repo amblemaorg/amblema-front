@@ -23,6 +23,10 @@ export class GeneralStepsComponent implements OnInit {
     
   }
 
+  compareMode() {
+    return this.mode!=(+this.user_type);
+  }
+
   getVideo(url) {
     return this.embedService.embed(url);
   }
