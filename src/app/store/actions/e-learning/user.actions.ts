@@ -1,4 +1,4 @@
-import { CoordinatorModule } from '../../../models/steps/learning-modules.model';
+import { CoordinatorModule, UProject } from '../../../models/steps/learning-modules.model';
 import { Project } from '../../../models/steps/previous-steps.model';
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
@@ -6,21 +6,21 @@ import { Project } from '../../../models/steps/previous-steps.model';
     static readonly type = '[ELearning] IncreaseCoins';
     constructor(public coinsCount: number) {}
 } */
-export class UpdateCoins {
-  static readonly type = '[ELearning] UpdateCoins';
-  constructor(public coor_id: string) {}
+export class UpdateUserInfo {
+  static readonly type = '[ELearning] UpdateUserInfo';
+  constructor(public user_id: string, public user_type: number) {}
 }
 //todo: ---------- END ACTION CLASSES ----------------------------- //
 
 //? ---------- MODEL CLASSES --------------------------------- //
-export interface CoordinatorStateModel {
+export interface UserStateModel {
   coins: number;
   coordinator_modules: CoordinatorModule[];
   name: string;
   gender: string;
-  coor_id: string;
+  user_id: string;
   image: string;
-  coordinator_projects: Project[];
+  user_projects: UProject[];
   userType: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //

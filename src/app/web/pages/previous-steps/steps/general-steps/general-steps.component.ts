@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Step } from '../../../../../models/steps/previous-steps.model';
+import { StepsService } from '../../../../../services/steps/steps.service';
 
 @Component({
   selector: 'app-general-steps',
@@ -11,16 +13,25 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class GeneralStepsComponent implements OnInit {
   arrow = faChevronDown;
   curriculumDone:boolean;
+  currentA = ''; //to set current and open accordion item
 
   @Input() mode:number = 1;// 1=general, 2=coordinador, 3=padrino, 4=escuela
   @Input() steps = [];
   @Input() curriculumPending:boolean;
   @Input() user_type:string = "1";
+  @Input() project_id:string;
 
-  constructor(private embedService: EmbedVideoService, private sanitizer: DomSanitizer) {}
+  @Output() callUpdate:EventEmitter<string> = new EventEmitter();
+
+  constructor(private embedService: EmbedVideoService, private sanitizer: DomSanitizer,
+    private stepsService: StepsService) {}
 
   ngOnInit() {
-    
+    this.currentA = 0+'-'+this.mode;
+  }
+
+  getCollapsed(i,m){
+    return `${i}-${m}` == this.currentA
   }
 
   compareMode() {
@@ -44,16 +55,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   checkChange(e,item,pos) {
-    // if (this.steps[item].checklist[pos].checked) {
-      this.steps[item].checklist[pos].checked = e.target.checked;
-    // } else {
-    //   // if (this.steps[item].checklist[pos].checked==false) {
-    //     this.steps[item].checklist[pos].checked = e.target.checked;
-    //   // } else {
-    //   //   this.steps[item].checklist[pos]["checked"] = e.target.checked;
-    //   // }
-    // }   
-    // console.log(this.steps[item].checklist); 
+    this.steps[item].checklist[pos].checked = e.target.checked;
   }
 
   saveChecks(i) {
@@ -61,24 +63,11 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   fileMngr(e,i) {
-    // if (this.steps[i].fileAttached) {
-      // this.steps[i].fileAttached = {
-      this.steps[i].uploadedFile = {  
-        name: <File>e.target.files[0].name,
-        file: <File>e.target.files[0]
-      }
-    // } else {
-    //   this.steps[i]["fileAttached"] = {
-    //     name: <File>e.target.files[0].name,
-    //     file: <File>e.target.files[0]
-    //   }
-    // }
+    this.steps[i].uploadedFile = {  
+      name: <File>e.target.files[0].name,
+      file: <File>e.target.files[0]
+    }
   }
-  /* 
-  const formData = new FormData();
-  formData.append('file', this.form.controls.file.value) 
-  */
-
 
   shortenName(name) {
     return name.length>16 ? (name.slice(0, 13)+'..') : name
@@ -88,4 +77,58 @@ export class GeneralStepsComponent implements OnInit {
     return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : "Aprobado";
   }
 
+  //Uploads the user's curriculum
+  uploadCurriculum(step:Step,indd?,modd?) {
+    step.sending = true;
+    const curriculumFormData = new FormData();
+    curriculumFormData.append('stepId', step.id);
+    curriculumFormData.append('project', this.project_id);
+    // curriculumFormData.append( 'date', this.getDateFormat( new Date() ) );    
+
+    let getPosting = () => {
+      curriculumFormData.append('status', '1');
+      curriculumFormData.append('uploadedFile', step.uploadedFile.file); 
+    }
+    let updatingEmitting = () => {
+      step.sending = false;
+      this.callUpdate.emit(this.project_id);
+      this.currentA = `${indd}-${modd}`;
+    }
+
+    if(step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) {
+      getPosting();
+
+      this.stepsService.requestApproval(curriculumFormData).subscribe(res=>{
+        step.status = "2";
+        updatingEmitting();
+
+      },(error)=>{
+        step.sending = false;
+      });
+    } 
+    else {
+      if(step.status=="1") { getPosting(); } 
+      else curriculumFormData.append('status', '4'); // cancels approval request
+
+      let rqstApvId = step.approvalHistory[step.approvalHistory.length-1].id;
+
+      this.stepsService.updateRequestApproval(rqstApvId,curriculumFormData).subscribe(res=>{
+        if(step.status=="1") step.status = "2";
+        else step.status = "1";
+
+        updatingEmitting();
+
+      },(error)=>{
+        step.sending = false;
+      });
+    }    
+  }
+
+  getDateFormat(dateSrc:Date) {
+    let numbers = [1,2,3,4,5,6,7,8,9];
+    let correctMonth = numbers.includes(dateSrc.getMonth()) ? `0${dateSrc.getMonth()}` : dateSrc.getMonth().toString();
+    let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
+
+    return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+  }
 }

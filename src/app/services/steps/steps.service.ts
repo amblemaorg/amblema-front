@@ -23,6 +23,10 @@ export class StepsService {
   }
 
   requestApproval (fd): Observable<any> {
-    return this.http.get<any>(this.baseUrl)
+    return this.http.post<any>(this.baseUrl+'requestsstepapproval',fd)
+  }
+
+  updateRequestApproval (id,fd): Observable<any> {
+    return this.http.put<any>(this.baseUrl+`requestsstepapproval/${id}`,fd)
   }
 }

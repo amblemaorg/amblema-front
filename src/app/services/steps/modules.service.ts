@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
-import { CoordinatorModule, Module, CoordinatorUser } from '../../models/steps/learning-modules.model';
+import { CoordinatorModule, Module, UserData } from '../../models/steps/learning-modules.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -18,7 +18,7 @@ export class ModulesService {
   @Output() updateCoorMod:EventEmitter<any> = new EventEmitter();
   isBrowser;
   baseUrl = environment.baseUrl;  
-  actualUser:string = ""; //!REMOVE
+  actualUser = {user:"",type:null}; //!REMOVE
 
   approved_modules:CoordinatorModule[] = [];
   all_modules:Module[] = [];
@@ -42,8 +42,8 @@ export class ModulesService {
     return of(MODULES)
   } */
 
-  getCoordinator(id): Observable<CoordinatorUser> {
-    return this.http.get<CoordinatorUser>(this.baseUrl + `users/${id}?userType=2`)
+  getUser(id,type): Observable<UserData> {
+    return this.http.get<UserData>(this.baseUrl + `users/${id}?userType=${type}`)
   }
 
   answerModule(module_id, dataJson): Observable<any> {

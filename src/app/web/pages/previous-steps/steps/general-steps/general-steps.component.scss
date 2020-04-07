@@ -62,7 +62,7 @@
                     transition: transform .5s;
                 }
 
-                &[aria-expanded="true"] {
+                &[aria-expanded="true"], &.active-arrow {
                     fa-icon ::ng-deep svg{
                         transform: rotate(180deg);
                     }
@@ -80,11 +80,11 @@
              }
         }
 
-        &:first-child {
+        /* &:first-child {
             .card-link ::ng-deep fa-icon svg{
                 transform: rotate(180deg);
             }
-        }
+        } */
 
         .card-body {
             padding: 1rem 1.75rem;
@@ -149,6 +149,9 @@
             .btn {
                 @include btn-righted;
                 color: #fff;
+                span {
+                    color: #fff;
+                }
 
                 @include mediabreak(large,landscape) { margin-right: 0; }
 
@@ -163,12 +166,20 @@
                     @include mediabreak(large,portrait) { @include has-several; }
                 }
 
+                &.hidebtn {
+                    display: none;
+                }
+
                 &:focus {
                     box-shadow: none;
                 }
                 &:hover {
                     background: #fff;
                     color: map-get($color_map, blue);
+
+                    span {
+                        color: map-get($color_map, blue);
+                    }
                 }
             }
 
