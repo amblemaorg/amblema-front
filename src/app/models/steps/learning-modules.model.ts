@@ -1,4 +1,28 @@
 // MODULES
+
+export interface Coordinator {
+    name: string;
+    id: string;
+}
+
+export interface Sponsor {
+    name: string;
+    id: string;
+}
+
+export interface School {
+    name: string;
+    id: string;
+}
+
+export interface UProject {
+    coordinator: Coordinator;
+    id: string;
+    code: string;
+    sponsor: Sponsor;
+    school: School;
+}
+
 export interface ImaVideo {
     url: string;
     description: string;
@@ -63,7 +87,7 @@ export interface AddressMunicipality {
     id: string;
 }
 
-export interface CoordinatorUser {
+export interface UserData {
     id: string;
     email: string;
     name: string;
@@ -77,18 +101,45 @@ export interface CoordinatorUser {
     status: string;
     createdAt: Date;
     updatedAt: Date;
-    firstName: string;
-    lastName: string;
-    cardType: string;
-    cardId: string;
-    gender?: any;
     image: string;
-    birthdate: string;
-    projects: any[];
-    homePhone: string;
-    addressHome: string;
-    learning: any[];
-    nCoins: number;
+    //
+    firstName?: string;
+    lastName?: string;
+    cardType?: string;
+    cardId?: string;
+    gender?: any;
+    birthdate?: string;
+    homePhone?: string;
+    addressHome?: string;
+    learning?: any[];
+    nCoins?: number;
+    companyRif?: string;
+    companyType?: string;
+    companyOtherType?: string;
+    companyPhone?: string;
+    contactFirstName?: string;
+    contactLastName?: string;
+    contactPhone?: string;
+    webSite?: string;
+    phase?: string;
+    projects?: UProject[];
+    code?: string;
+    schoolType?: any;
+    principalFirstName?: string;
+    principalLastName?: string;
+    principalEmail?: string;
+    principalPhone?: string;
+    subPrincipalFirstName?: any;
+    subPrincipalLastName?: any;
+    subPrincipalEmail?: any;
+    subPrincipalPhone?: any;
+    nTeachers?: any;
+    nAdministrativeStaff?: any;
+    nLaborStaff?: any;
+    nStudents?: any;
+    nGrades?: any;
+    nSections?: any;
+    schoolShift?: any;
 }
 
 export interface Answer {

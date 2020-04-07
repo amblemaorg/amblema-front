@@ -34,16 +34,20 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div id="general" class="container tab-pane active"><br>
-                <app-general-steps [mode]="1" [steps]="generalSteps" [curriculumPending]="curriculumPending" [user_type]="(user_type$ | async)"></app-general-steps>
+                <app-general-steps [mode]="1" [steps]="generalSteps" [curriculumPending]="curriculumPending" [project_id]="project_id" 
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)"></app-general-steps>
             </div>
             <div id="sponsor" class="container tab-pane fade"><br>
-                <app-general-steps [mode]="3" [steps]="sponsorSteps" [curriculumPending]="curriculumPending" [user_type]="(user_type$ | async)"></app-general-steps>
+                <app-general-steps [mode]="3" [steps]="sponsorSteps" [curriculumPending]="curriculumPending" [project_id]="project_id" 
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)"></app-general-steps>
             </div>
             <div id="coordinator" class="container tab-pane fade"><br>
-                <app-general-steps [mode]="2" [steps]="coordinatorSteps" [curriculumPending]="curriculumPending" [user_type]="(user_type$ | async)"></app-general-steps>
+                <app-general-steps [mode]="2" [steps]="coordinatorSteps" [curriculumPending]="curriculumPending" [project_id]="project_id" 
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)"></app-general-steps>
             </div>
             <div id="school" class="container tab-pane fade"><br>
-                <app-general-steps [mode]="4" [steps]="schoolSteps" [curriculumPending]="curriculumPending" [user_type]="(user_type$ | async)"></app-general-steps>
+                <app-general-steps [mode]="4" [steps]="schoolSteps" [curriculumPending]="curriculumPending" [project_id]="project_id" 
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)"></app-general-steps>
             </div>
         </div>
     </div>

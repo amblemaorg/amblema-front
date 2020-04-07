@@ -48,6 +48,7 @@ export interface Step {
     send?: boolean;
     goMods?: boolean;
     fileAttached?: any;
+    sending?: boolean;
 }
 
 export interface StepsProgress {

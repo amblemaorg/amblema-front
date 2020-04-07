@@ -3,12 +3,12 @@
       <div class="card-header">
         <!-- <a class="card-link" data-toggle="collapse" [href]="step.goMods ? (!curriculumPending? ('#step'+i+'-'+mode) : '#') : ('#step'+i+'-'+mode)" 
         [class.not-enabled]="step.goMods ? (!curriculumPending? false : true) : false"> -->
-        <a class="card-link" data-toggle="collapse" [href]="'#step'+i+'-'+mode">
+        <a class="card-link" data-toggle="collapse" [href]="'#step'+i+'-'+mode" [class.active-arrow]="getCollapsed(i,mode)">
           <div class="texts"><h6 class="font-weight-bold">{{ step.name }}</h6> <div class="bar mx-3"></div> <h6 class="desktop-only">Estatus: {{ getStatusName(step.status) }}</h6></div>
           <div class="arrow"><fa-icon [icon]="arrow"></fa-icon></div>
         </a>
       </div>
-      <div [id]="'step'+i+'-'+mode" class="collapse" [class.show]="i==0" [attr.data-parent]="'#steps-accordion'+mode">
+      <div [id]="'step'+i+'-'+mode" class="collapse" [class.show]="getCollapsed(i,mode)" [attr.data-parent]="'#steps-accordion'+mode">
         <div class="card-body">
           <h6 class="mobile-only"><b>Estatus:</b> {{ getStatusName(step.status) }}</h6>
           
@@ -25,22 +25,23 @@
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
-              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file">
+              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
               <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-              [class.has-several]="step.hasFile" [disabled]="compareMode()">
+              [class.has-several]="step.hasFile" [disabled]="compareMode() || step.sending" [class.hidebtn]="step.status=='2'">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
-              <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 ? true:false" [id]="uploadFile.id+'2'" (click)="sendAttached(i); $event.preventDefault()" 
+              <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 && step.status!='3'" [id]="uploadFile.id+'2'" (click)="sendAttached(i); $event.preventDefault()" 
                 class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="compareMode()">
                 Enviar
               </button>
             </div>
-            <button *ngIf="step.send" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="compareMode()">
-              Enviar curriculum
+            <button *ngIf="step.send && step.status!='3'" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="compareMode() || (!step.uploadedFile && step.status=='1') || step.sending"
+            (click)="uploadCurriculum(step,i,mode)">
+              <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar curriculum':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
             </button>
             <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
-            [disabled]="compareMode() || curriculumPending" [title]="curriculumPending? 'Aún no has aprobado el paso de curriculo':''">
+            [disabled]="compareMode() || curriculumPending" [title]="compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de curriculo':'')">
               Ir a los modulos
             </button>
 

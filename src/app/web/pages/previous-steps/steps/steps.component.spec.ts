@@ -10,7 +10,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from '../../../../store/states/e-learning/coordinator-user.state';
+import { UserState } from '../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../store/states/steps/project.state';
 
 describe('StepsComponent', () => {
@@ -25,7 +25,7 @@ describe('StepsComponent', () => {
         NgSelectModule,
         NgxsModule.forRoot( [
           ModulesState,
-          CoordinatorState,
+          UserState,
           StepsState,
         ],
         {

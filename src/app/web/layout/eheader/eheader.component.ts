@@ -3,9 +3,9 @@ import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ModulesState } from '../../../store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from '../../../store/states/e-learning/coordinator-user.state';
+import { UserState } from '../../../store/states/e-learning/user.state';
 import { UpdateModulesTotal } from '../../../store/actions/e-learning/learning-modules.actions';
-import { UpdateCoins } from '../../../store/actions/e-learning/coordinator-user.actions';
+import { UpdateUserInfo } from '../../../store/actions/e-learning/user.actions';
 import { CoordinatorModule, Module } from '../../../models/steps/learning-modules.model';
 import { ModulesService } from '../../../services/steps/modules.service';
 
@@ -19,26 +19,26 @@ export class EheaderComponent implements OnInit {
 
   @Select(ModulesState.modules_total) modules_total$: Observable<number>;
   @Select(ModulesState.modules_array) modules_$: Observable<Module[]>;
-  @Select(CoordinatorState.coins_total) coins$: Observable<number>;
-  @Select(CoordinatorState.coordinator_modules_total) approved_modules_total$: Observable<number>;
-  @Select(CoordinatorState.coordinator_modules) approved_modules$: Observable<CoordinatorModule[]>;
-  @Select(CoordinatorState.coordinator_brief) coorBrief$: Observable<any>;
-  @Select(CoordinatorState.coordinator_type) user_type$: Observable<string>;
+  @Select(UserState.coins_total) coins$: Observable<number>;
+  @Select(UserState.coordinator_modules_total) approved_modules_total$: Observable<number>;
+  @Select(UserState.coordinator_modules) approved_modules$: Observable<CoordinatorModule[]>;
+  @Select(UserState.user_brief) userBrief$: Observable<any>;
+  @Select(UserState.user_type) user_type$: Observable<string>;
 
   constructor(private store: Store, private modulesService: ModulesService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.modulesService.updateCoorMod.subscribe(res=>{
-      this.setCoordinatorModulesValues(res); //! THIS IS TEMPORARY
-      if (res.type!=0) this.modulesService.actualUser = res.usu;
+      this.setUserValues(res); //! THIS IS TEMPORARY
+      if (res.type!=0) this.modulesService.actualUser = {user:res.usu,type:res.usut};
     });
 
     //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
-    if (this.route.snapshot.params && this.route.snapshot.params.coord) this.setCoordinatorModulesValues({type:1,usu:this.route.snapshot.params.coord});
+    if (this.route.snapshot.params && this.route.snapshot.params.user) this.setUserValues({type:1,usu:this.route.snapshot.params.user,usut:(+this.route.snapshot.params.type)});
     else {
-      if (this.modulesService.actualUser.length==0) this.setCoordinatorModulesValues({type:1,usu:'5e8256b83640bd4be811444a'});
-      else this.setCoordinatorModulesValues({type:1,usu:this.modulesService.actualUser});
+      if (this.modulesService.actualUser.user.length==0) this.setUserValues({type:1,usu:'5e8256b83640bd4be811444a',usut:2});
+      else this.setUserValues({type:1,usu:this.modulesService.actualUser.user,usut:this.modulesService.actualUser.type});
     }
     //! -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -51,12 +51,12 @@ export class EheaderComponent implements OnInit {
     });
   }
 
-  setCoordinatorModulesValues(coord){ //! THIS IS TEMPORARY
-    if (coord.type==0) this.store.dispatch(new UpdateModulesTotal);
-    else if (coord.type==1) this.store.dispatch(new UpdateCoins(coord.usu));
+  setUserValues(user){ //! THIS IS TEMPORARY
+    if (user.type==0) this.store.dispatch(new UpdateModulesTotal);
+    else if (user.type==1) this.store.dispatch(new UpdateUserInfo(user.usu,user.usut));
     else {
       this.store.dispatch(new UpdateModulesTotal);
-      this.store.dispatch(new UpdateCoins(coord.usu));
+      this.store.dispatch(new UpdateUserInfo(user.usu,user.usut));
     }
     // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
     

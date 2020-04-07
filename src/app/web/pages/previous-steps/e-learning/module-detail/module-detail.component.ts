@@ -6,7 +6,7 @@ import { ModulesService } from '../../../../../services/steps/modules.service';
 import { GlobalService } from '../../../../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/steps/learning-modules.model';
-import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
+import { UserState } from '../../../../../store/states/e-learning/user.state';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -20,7 +20,7 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
   @ViewChild('warningOpener', {static: false}) warningBtn:any;
 
-  @Select(CoordinatorState.coordinator_id) coorId$: Observable<string>;
+  @Select(UserState.user_id) coorId$: Observable<string>;
   current_coor_id:string = '';
 
   moduleInfo: Module;
@@ -90,7 +90,7 @@ export class ModuleDetailComponent implements OnInit {
 
     this.coorId$.subscribe(id_ => {
       this.current_coor_id = id_;
-      this.moduleService.actualUser = id_//!remove
+      this.moduleService.actualUser = {user:id_,type:2}//!remove
     })
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
@@ -167,13 +167,13 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
-            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
             this.warningBtn.nativeElement.click(); // opening warning modal
           } 
         } else {
           if (!wrong) {
             this.completedModule = true;
-            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
             el.click(); // opening success modal
           }
         }        
