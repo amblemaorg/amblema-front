@@ -13,11 +13,18 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class SchoolDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
+  @ViewChild('activitiesIndexCarousel', { static: true }) activitiesIndexCarousel: OwlCarousel;
+  @ViewChild('activityImageCarousel', { static: false }) activityImageCarousel: OwlCarousel;
   @ViewChild('activitiesCarousel', { static: true }) activitiesCarousel: OwlCarousel;
   @ViewChild('otherSchoolsCarousel', { static: true }) otherSchoolsCarousel: OwlCarousel;
-  lineChartOptions: object;
-
   landscape = window.innerWidth > window.innerHeight;
+
+  ACTIVITIES = {
+    WITH_TEACHERS: 'withTeachers',
+    SPECIALS: 'specials'
+  }
+  selectedActivitiesType = this.ACTIVITIES.SPECIALS;
+  activeActivityIndex = 0;
 
   chartSwitcherOptions = {
     direction: 'column',
@@ -41,6 +48,35 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     responsive: {
       0: {
         items: 1
+      }
+    }
+  }
+
+  activitiesIndexOptions: OwlOptions = {
+    ...this.carouselOptions,
+    loop: false,
+    responsive: {
+      0: {
+        items: 2
+      },
+      [768]: {
+        items: 5
+      }
+    }
+  }
+
+  activityImagesOptions: OwlOptions = {
+    ...this.carouselOptions,
+    center: true,
+    loop: true,
+    nav: false,
+    //autoWidth:true,
+    responsive: {
+      0: {
+        items: 3
+      },
+      [768]: {
+        items: 5
       }
     }
   }
@@ -137,15 +173,32 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     this.activeChartIndex = index;
   }
 
+  setActivitiesType(type: string) {
+    if (this.selectedActivitiesType !== type) {
+      this.selectedActivitiesType = type;
+      this.setActiveActivity(0);
+      this.activitiesIndexCarousel.reInit();
+    }
+  }
+
+  setActiveActivity(index: number) {
+    this.activeActivityIndex = index;
+    this.activityImageCarousel.reInit();
+  }
+
   @HostListener('window:resize', [''])
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
+      this.activitiesIndexCarousel.options.responsive[0].items = 5;
+      this.activityImageCarousel.options.responsive[0].items = 5;
       this.activitiesCarousel.options.responsive[0].items = 3;
       this.otherSchoolsCarousel.options.responsive[0].items = 3;
       this.refreshCarousels();
     }
     else {
+      this.activitiesIndexCarousel.options.responsive[0].items = 2;
+      this.activityImageCarousel.options.responsive[0].items = 3;
       this.activitiesCarousel.options.responsive[0].items = 1;
       this.otherSchoolsCarousel.options.responsive[0].items = 1;
       this.refreshCarousels();
@@ -153,11 +206,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   }
 
   reinitCarousels() {
+    this.activitiesIndexCarousel.reInit();
+    this.activityImageCarousel.reInit();
     this.activitiesCarousel.reInit();
     this.otherSchoolsCarousel.reInit();
   }
 
   refreshCarousels() {
+    this.activitiesIndexCarousel.refresh();
+    this.activityImageCarousel.refresh();
     this.activitiesCarousel.refresh();
     this.otherSchoolsCarousel.refresh();
   }

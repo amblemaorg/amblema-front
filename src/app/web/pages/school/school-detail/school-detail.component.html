@@ -90,6 +90,69 @@
     </div>
   </div>
 </section>
+<section class="activities">
+  <div class="activities-tabs-wrapper">
+    <div
+      class="activities-tab"
+      [ngClass]="{ 'active': selectedActivitiesType == ACTIVITIES.WITH_TEACHERS }"
+      (click)="setActivitiesType(ACTIVITIES.WITH_TEACHERS)"
+    >
+      Actividades con los docentes
+    </div>
+    <div
+      class="activities-tab"
+      [ngClass]="{ 'active': selectedActivitiesType == ACTIVITIES.SPECIALS }"
+      (click)="setActivitiesType(ACTIVITIES.SPECIALS)"
+    >
+      Actividades especiales
+    </div>
+  </div>
+  <div class="activities-details-wrapper">
+    <div class="activities-index-carousel">
+      <owl-carousel
+        #activitiesIndexCarousel
+        [options]="activitiesIndexOptions"
+        class="activities-index-carousel"
+        [carouselClasses]="['']"
+      >
+        <div
+          class="activity-index"
+          [ngClass]="{ 'active': activeActivityIndex == i }"
+          *ngFor="let item of school.activities[selectedActivitiesType]; index as i"
+          (click)="activeActivityIndex !== i && setActiveActivity(i)"
+        >
+          {{ item.name }}
+        </div>
+      </owl-carousel>
+    </div>
+    <div class="activity-details">
+      <div class="activity-info">
+        <span class="activity-name">
+          {{ school.activities[selectedActivitiesType][activeActivityIndex].name }}
+        </span>
+        <p class="activity-description">
+          {{ school.activities[selectedActivitiesType][activeActivityIndex].description }}
+        </p>
+      </div>
+      <div class="activity-images">
+        <owl-carousel
+          #activityImageCarousel
+          [options]="activityImagesOptions"
+          class="activity-image-carousel"
+          [carouselClasses]="['']"
+          *ngIf="school.activities[selectedActivitiesType][activeActivityIndex].images"
+        >
+          <div
+            class="image-wrapper"
+            *ngFor="let image of school.activities[selectedActivitiesType][activeActivityIndex].images; index as i"
+          >
+            <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
+          </div>
+        </owl-carousel>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="teachers">
     <div class="heading">
       <h2>Los docentes dicen</h2>
@@ -103,7 +166,7 @@
       </owl-carousel-o>
     </div>
 </section>
-<section class="activities">
+<section class="next-activities">
     <div class="heading">
       <h2>Próximas actividades</h2>
     </div>
@@ -112,7 +175,7 @@
                     [options]="activitiesOptions"
                     class="activities-carousel"
                     [carouselClasses]="['']">
-        <ng-container *ngFor="let item of school.activities">
+        <ng-container *ngFor="let item of school.nextActivities">
           <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
         </ng-container>
       </owl-carousel>
