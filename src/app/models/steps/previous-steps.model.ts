@@ -85,3 +85,10 @@ export interface StepApprovalRequest {
     uploadedFile: File;
  }
  
+ export interface ProjectStepApproval {
+    id: string;
+    status: string;
+    checklist: string;
+    date: string;
+    uploadedFile: File; 
+ }

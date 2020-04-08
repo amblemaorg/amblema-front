@@ -1,8 +1,6 @@
 <div [id]="'steps-accordion'+mode" class="steps-accordion">
     <div class="card" *ngFor="let step of steps; index as i">
       <div class="card-header">
-        <!-- <a class="card-link" data-toggle="collapse" [href]="step.goMods ? (!curriculumPending? ('#step'+i+'-'+mode) : '#') : ('#step'+i+'-'+mode)" 
-        [class.not-enabled]="step.goMods ? (!curriculumPending? false : true) : false"> -->
         <a class="card-link" data-toggle="collapse" [href]="'#step'+i+'-'+mode" [class.active-arrow]="getCollapsed(i,mode)">
           <div class="texts"><h6 class="font-weight-bold">{{ step.name }}</h6> <div class="bar mx-3"></div> <h6 class="desktop-only">Estatus: {{ getStatusName(step.status) }}</h6></div>
           <div class="arrow"><fa-icon [icon]="arrow"></fa-icon></div>
@@ -21,13 +19,14 @@
             </div>   
             
             <a *ngIf="step.hasFile" [href]="sanitizeFile(step.file.url)" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-            (click)="compareMode()? $event.preventDefault():null" [class.inactive]="compareMode()">
+            (click)="(compareMode() || step.status=='3')? $event.preventDefault():null" [class.inactive]="compareMode() || step.status=='3'">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
-              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-              [class.has-several]="step.hasFile" [disabled]="compareMode() || step.sending" [class.hidebtn]="step.status=='2'">
+              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file" 
+              accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
+              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile" 
+              [class.has-several]="step.hasFile" [disabled]="compareMode() || step.sending || step.status=='3'" [class.hidebtn]="step.status=='2'">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
               <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 && step.status!='3'" [id]="uploadFile.id+'2'" (click)="sendAttached(i); $event.preventDefault()" 
@@ -37,25 +36,29 @@
             </div>
             <button *ngIf="step.send && step.status!='3'" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
             [class.has-several]="step.hasFile || step.hasUpload" [disabled]="compareMode() || (!step.uploadedFile && step.status=='1') || step.sending"
-            (click)="uploadCurriculum(step,i,mode)">
+            (click)="uploadApprovalRequest(step,'curriculum',i,mode)">
               <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar curriculum':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
             </button>
+
+            <!-- ? GO LEARNING MODULES BUTTON -->
             <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
             [disabled]="compareMode() || curriculumPending" [title]="compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de curriculo':'')">
               Ir a los modulos
             </button>
 
-            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form">
+            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form" (ngSubmit)="uploadApprovalRequest(step,'checklist',i,mode)">
               <div class="checkbox" *ngFor="let check of step.checklist; index as j">
                 <label class="check-container">{{ check.name }}
-                  <input type="checkbox" [checked]="check.checked? check.checked: (check.checked==false? check.checked:false)" (change)="checkChange($event,i,j)">
+                  <input type="checkbox" [checked]="check.checked? check.checked: (check.checked==false? check.checked:false)" (change)="checkChange($event,i,j)" 
+                  [disabled]="compareMode() || step.sending || step.status=='3'">
                   <span class="checkmark"></span>
                 </label>
               </div>
 
-              <button *ngIf="step.hasChecklist && step.checklist.length>0" (click)="saveChecks(i); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                [disabled]="compareMode()">
-                Guardar
+
+              <button *ngIf="step.hasChecklist && step.checklist.length>0" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+                [disabled]="compareMode() || step.sending || step.status=='3' || !enableChecksBtn(step)">
+                <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
               </button>
             </form>            
           </ng-container>
