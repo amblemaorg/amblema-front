@@ -9,7 +9,9 @@ import {
 import { MESSAGES } from './validation-messages';
 import { ContactService } from 'src/app/services/web/contact.service';
 import { FormWizardComponent } from './form-wizard/form-wizard.component';
+import { cloneDeep } from 'lodash-es';
 import { ToastrService } from 'ngx-toastr';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'web-implemented-forms',
@@ -372,7 +374,6 @@ export class ImplementedFormsComponent implements OnInit {
   }
 
   submitContactForm(form: string, event: any) {
-    console.log(event);
     this.contactService.sendContactForm(form, event)
         .subscribe({
           next: data => {
@@ -406,13 +407,31 @@ export class ImplementedFormsComponent implements OnInit {
   addPrefixToObjectProperties(prefix: string, obj: Object): Object {
     let newObj = {};
     Object.entries(obj).map(prop => {
-      const { 0: propName, 1: propValue } = { ...prop } // Destructuring array into variables with name
+      const { 0: propName, 1: propValue } = { ...prop }; // Destructuring array into variables with name
+      let newPropValue = propValue;
+      if (newPropValue.type == 'identification') {
+        newPropValue = cloneDeep(propValue);
+        Object.entries(newPropValue.subfields).map(subfield => {
+          const { 0: subfieldName, 1: subfieldValue } = { ...subfield };
+          if (!subfieldValue['name'].startsWith(prefix)) {
+            const subfieldNamePrefixed = prefix + this.toCapitalizedString(subfieldValue['name']);
+            newPropValue.subfields[subfieldName]['name'] = subfieldNamePrefixed;
+          }
+        });
+      }
+      if (!isNullOrUndefined(newPropValue.condition)) {
+        newPropValue = cloneDeep(propValue);
+        if (!newPropValue.condition.formControlName.startsWith(prefix)) {
+          const formControlPrefixed = prefix + this.toCapitalizedString(newPropValue.condition.formControlName);
+          newPropValue.condition.formControlName = formControlPrefixed;
+        }
+      }
       if (!propName.startsWith(prefix)) {
         let propNameCapitalized = this.toCapitalizedString(propName);
-        newObj[prefix + propNameCapitalized] = prop[1];
+        newObj[prefix + propNameCapitalized] = newPropValue;
       }
       else {
-        newObj[propName] = propValue;
+        newObj[propName] = newPropValue;
       }
     });
     return newObj;

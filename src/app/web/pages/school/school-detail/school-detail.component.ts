@@ -36,6 +36,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     navSpeed: 1000,
   }
 
+  schoolImagesOptions: OwlOptions = {
+    ...this.carouselOptions,
+    responsive: {
+      0: {
+        items: 1
+      }
+    }
+  }
+
   teachersOptions: OwlOptions = {
     ...this.carouselOptions,
     responsive: {
