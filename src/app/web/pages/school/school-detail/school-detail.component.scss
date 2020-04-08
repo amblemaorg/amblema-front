@@ -2,6 +2,180 @@
 @import 'scss/variables';
 @import 'scss/elements/headings';
 
+section.school-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 8vw;
+
+  @include breakpoint(small, landscape) {
+    padding: 10vw 3vw 10vw 10vw;
+  }
+
+  @include breakpoint(medium) {
+    padding: 10vw 3vw 10vw 10vw;
+  }
+
+  & > div {
+    flex: 0 0 100%;
+    width: 100%;
+
+    &:first-child {
+      margin-bottom: 5vw;
+    }
+
+    @include breakpoint(small, landscape) {
+      &:first-child {
+        flex: 0 0 40%;
+        width: 40%;
+        margin-bottom: 0;
+      }
+
+      &:last-child {
+        flex: 0 0 55%;
+        width: 55%;
+      }
+    }
+
+    @include breakpoint(medium) {
+      &:first-child {
+        flex: 0 0 40%;
+        width: 40%;
+        margin-bottom: 0;
+      }
+
+      &:last-child {
+        flex: 0 0 55%;
+        width: 55%;
+      }
+    }
+  }
+
+  .school-details-wrapper {
+    color: $blue;
+
+    .school-name {
+      margin-bottom: 7vw;
+
+      @include breakpoint(small, landscape) {
+        margin-bottom: 3.5vw;
+      }
+
+      @include breakpoint(medium) {
+        margin-bottom: 3.5vw;
+      }
+    }
+
+    .school-data-wrapper {
+      .school-data {
+        display: flex;
+        align-items: center;
+        font-size: 4vw;
+        margin-bottom: 1.8vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 1.8vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 1.8vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: 1.2vw;
+        }
+
+        .icon {
+          margin-right: 5vw;
+          flex-basis: 15%;
+
+          @include breakpoint(small, landscape) {
+            margin-right: 2vw;
+            flex-basis: 8%;
+          }
+
+          @include breakpoint(medium) {
+            margin-right: 2vw;
+            flex-basis: 8%;
+          }
+        }
+      }
+    }
+  }
+
+  .school-images {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+::ng-deep {
+  owl-carousel.school-image-carousel {
+    .owl-carousel {
+      .owl-nav {
+        background-color: $blue;
+        height: 10vw;
+        margin: auto;
+        position: relative;
+        top: -5vw;
+        width: 90%;
+
+        @include breakpoint(small, landscape) {
+          height: 4vw;
+          top: -2vw;
+          width: 80%;
+        }
+
+        @include breakpoint(medium) {
+          height: 4vw;
+          top: -2vw;
+          width: 80%;
+        }
+
+        .owl-next,
+        .owl-prev {
+          position: absolute;
+          bottom: 0;
+          top: 0;
+
+          &::before {
+            display: flex;
+            color: white;
+            font-size: 4vw;
+            @include breakpoint(small, landscape) {
+              font-size: 2vw;
+            }
+            @include breakpoint(medium) {
+              font-size: 2vw;
+            }
+          }
+        }
+
+        .owl-prev {
+          left: 6%;
+          @include breakpoint(small, landscape) {
+            left: 2%;
+          }
+          @include breakpoint(medium) {
+            left: 2%;
+          }
+        }
+
+        .owl-next {
+          right: 6%;
+          @include breakpoint(small, landscape) {
+            right: 2%;
+          }
+          @include breakpoint(medium) {
+            right: 2%;
+          }
+        }
+      }
+    }
+  }
+}
+
 section.charts {
   background-color: $blue;
   display: flex;
@@ -47,6 +221,130 @@ section.charts {
       right: 0;
       margin: 0;
       width: 30%;
+    }
+  }
+}
+
+section.math-olympics {
+  padding: 15vw 10vw;
+  background-color: #EEE;
+
+  @include breakpoint(small, landscape) {
+    padding: 5vw 10vw;
+  }
+
+  @include breakpoint(medium) {
+    padding: 5vw 10vw;
+  }
+
+  .heading {
+    text-align: center;
+    color: $blue;
+    margin-bottom: 8vw;
+
+    p {
+      font-size: 3.5vw;
+      margin: 2vw 0 0;
+
+      @include breakpoint(small, landscape) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(large) {
+        font-size: 1vw;
+      }
+    }
+  }
+
+  .result-summary {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+
+      @include breakpoint(medium, portrait, down) {
+        &.gold {
+          width: 100%;
+
+          .result-count,
+          .result-label {
+            width: min-content;
+          }
+        }
+      }
+
+      @include breakpoint(small, landscape) {
+        width: min-content;
+      }
+
+      @include breakpoint(medium) {
+        width: min-content;
+      }
+
+      .result-icon {
+        height: 25vw;
+
+        @include breakpoint(small, landscape) {
+          height: 10vw;
+        }
+
+        @include breakpoint(medium) {
+          height: 10vw;
+        }
+      }
+
+      .result-count {
+        color: $white;
+        font-size: 6vw;
+        font-weight: bold;
+        left: 0.3vw;
+        position: relative;
+        top: -12vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2.5vw;
+          left: 0.1vw;
+          top: -5vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2.5vw;
+          left: 0.1vw;
+          top: -5vw;
+        }
+      }
+
+      .result-label {
+        color: $blue;
+        font-size: 5vw;
+        line-height: 1;
+        text-align: center;
+        position: relative;
+        top: -8vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2vw;
+          top: -2vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2vw;
+          top: -2vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: 1.5vw;
+        }
+      }
     }
   }
 }
