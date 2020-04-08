@@ -28,6 +28,12 @@ describe('SchoolDetailComponent', () => {
     staff: "Información del personal docente, obrero y administrativo",
     coordinator: "Información del coordinador general",
     enrollment: "Matrícula estudiantil",
+    images: [
+      "./assets/images/banner-1.jpg",
+      "./assets/images/banner-2.jpg",
+      "./assets/images/banner-1.jpg",
+      "./assets/images/banner-2.jpg",
+    ],
     charts: [
       {
         title: 'Diagnóstico de lectura',
@@ -107,6 +113,13 @@ describe('SchoolDetailComponent', () => {
         },
       },
     ],
+    mathOlympics: {
+      enrolled: 145,
+      classified: 30,
+      goldMedal: 10,
+      silverMedal: 15,
+      bronzeMedal: 5
+    },
     activities: [
       {
         title: "Título de la actividad",
