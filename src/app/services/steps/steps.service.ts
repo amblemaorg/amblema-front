@@ -22,6 +22,9 @@ export class StepsService {
     return this.http.get<Project>(this.baseUrl + `projects/${proj_id}`)
   }
 
+  stepApproval (proj_id,fd): Observable<any> {
+    return this.http.post<any>(this.baseUrl+`projectsteps/${proj_id}`,fd)
+  }
   requestApproval (fd): Observable<any> {
     return this.http.post<any>(this.baseUrl+'requestsstepapproval',fd)
   }

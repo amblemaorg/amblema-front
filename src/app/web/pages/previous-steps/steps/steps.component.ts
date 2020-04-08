@@ -36,6 +36,7 @@ export class StepsComponent implements OnInit {
   ngOnInit() {
     this.userProjects$.subscribe(projs => {
       if (this.doGet && !this.isTest) { 
+        this.updateSteps(projs[0].id);
         this.project_steps$.subscribe(res => {        
           this.project_id = projs[0].id;
           if (res.steps.length>0) {
@@ -87,7 +88,7 @@ export class StepsComponent implements OnInit {
             this.stepsProgress[1]= +res.sponsor;
             this.stepsProgress[2]= +res.coordinator;
             this.stepsProgress[3]= +res.school;
-          } else this.updateSteps(projs[0].id);          
+          }// else this.updateSteps(projs[0].id);          
         });
 
         this.doGet = false;

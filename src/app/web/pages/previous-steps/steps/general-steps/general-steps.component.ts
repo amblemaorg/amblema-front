@@ -58,8 +58,16 @@ export class GeneralStepsComponent implements OnInit {
     this.steps[item].checklist[pos].checked = e.target.checked;
   }
 
-  saveChecks(i) {
-    console.log(this.steps[i].checklist)
+  enableChecksBtn(step:Step,bool=false) { 
+    let enable = bool;   
+    for (let i = 0; i < step.checklist.length; i++) {
+      if (step.checklist[i].checked==(!bool) ) {
+        enable = !bool;
+        break;
+      }
+    }
+
+    return enable;
   }
 
   fileMngr(e,i) {
@@ -77,52 +85,83 @@ export class GeneralStepsComponent implements OnInit {
     return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : "Aprobado";
   }
 
-  //Uploads the user's curriculum
-  uploadCurriculum(step:Step,indd?,modd?) {
+  //? Sending Approval Request ----------------------------------------------------
+  uploadApprovalRequest(step:Step,action:string,indd?,modd?) {
     step.sending = true;
-    const curriculumFormData = new FormData();
-    curriculumFormData.append('stepId', step.id);
-    curriculumFormData.append('project', this.project_id);
-    // curriculumFormData.append( 'date', this.getDateFormat( new Date() ) );    
+    let formData = new FormData();       
 
     let getPosting = () => {
-      curriculumFormData.append('status', '1');
-      curriculumFormData.append('uploadedFile', step.uploadedFile.file); 
-    }
-    let updatingEmitting = () => {
-      step.sending = false;
-      this.callUpdate.emit(this.project_id);
-      this.currentA = `${indd}-${modd}`;
-    }
+      // let stts = step.approvalType=="3"? '1': step.approvalType=="2"? '2': '1'; // status depending on approval type      
+      if (action=='checklist' && step.approvalType!="3") {        
+        formData.append('status', !this.enableChecksBtn(step,true)?"1":"2");
+      }
+      formData.append(step.approvalType=="3"?'stepId':'id', step.id);
+      if(step.approvalType=="3") formData.append('project', this.project_id);
+      // if(action=='Date') formData.append( step.approvalType=="3"?'stepDate':'date', this.getDateFormat( new Date() ) ); 
+      if(action=='curriculum') formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
+      if(action=='checklist') formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
+    }     
 
     if(step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) {
       getPosting();
 
-      this.stepsService.requestApproval(curriculumFormData).subscribe(res=>{
-        step.status = "2";
-        updatingEmitting();
-
-      },(error)=>{
-        step.sending = false;
-      });
+      if(step.approvalType=="3") this.postAR(formData,step,action,indd,modd); // approval request
+      else this.postSA(formData,step,action,indd,modd,this.project_id); // step approval
     } 
-    else {
-      if(step.status=="1") { getPosting(); } 
-      else curriculumFormData.append('status', '4'); // cancels approval request
-
-      let rqstApvId = step.approvalHistory[step.approvalHistory.length-1].id;
-
-      this.stepsService.updateRequestApproval(rqstApvId,curriculumFormData).subscribe(res=>{
-        if(step.status=="1") step.status = "2";
-        else step.status = "1";
-
-        updatingEmitting();
-
-      },(error)=>{
-        step.sending = false;
-      });
-    }    
+    else { // when a register of this approval request already exists
+      let rqstApv = step.approvalHistory[step.approvalHistory.length-1].status; // approval request Status; located in the last item of the approval history.
+      //posting
+      if( (action=='curriculum' && (rqstApv=="3" || rqstApv=="4") ) || 
+          (action=='checklist' && (rqstApv=="3" || step.approvalType!="3") ) ) { getPosting(); } // updating
+      //putting
+      if(action=='curriculum' && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
+      if(action=='checklist' && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
+            
+      //endpoint callers
+      if ((action=='curriculum' && (rqstApv=="3" || rqstApv=="4") ) ||
+          (action=='checklist' && (rqstApv=="3" || step.approvalType!="3") ) ) {
+            if (step.approvalType=="3") this.postAR(formData,step,action,indd,modd);
+            else this.postSA(formData,step,action,indd,modd,this.project_id);
+          }
+      else this.putAR(formData,step,action,indd,modd,step.approvalHistory[step.approvalHistory.length-1].id);
+    }
   }
+
+  // POSTER AND PUTTER
+  updatingEmitting(step,indd,modd) {
+    step.sending = false;
+    this.callUpdate.emit(this.project_id);
+    this.currentA = `${indd}-${modd}`;
+  }   
+  postAR(formData,step:Step,action,indd,modd) {
+    this.stepsService.requestApproval(formData).subscribe(res=>{
+      step.status = (action=='curriculum')? "2": "1";
+      this.updatingEmitting(step,indd,modd);
+
+    },(error)=>{
+      step.sending = false;
+    });
+  }
+  postSA(formData,step:Step,action,indd,modd,proj_id) {
+    this.stepsService.stepApproval(proj_id,formData).subscribe(res=>{
+      this.updatingEmitting(step,indd,modd);
+
+    },(error)=>{
+      step.sending = false;
+    });
+  }
+  putAR(formData,step:Step,action,indd,modd,id) {
+    this.stepsService.updateRequestApproval(id,formData).subscribe(res=>{
+      if(step.status=="1") step.status = (action=='curriculum')? "2": "1";
+      else step.status = "1"; // this is not reached by checklist btn
+
+      this.updatingEmitting(step,indd,modd);
+
+    },(error)=>{
+      step.sending = false;
+    });
+  }
+  //
 
   getDateFormat(dateSrc:Date) {
     let numbers = [1,2,3,4,5,6,7,8,9];
@@ -131,4 +170,5 @@ export class GeneralStepsComponent implements OnInit {
 
     return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
   }
+  //? -----------------------------------------------------------------------------------------------------------------
 }
