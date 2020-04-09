@@ -72,17 +72,7 @@ export interface AnswerModule {
 }
 
 // USERS COORDINATOR
-export interface Role {
-    name: string;
-    id: string;
-}
-
-export interface AddressState {
-    name: string;
-    id: string;
-}
-
-export interface AddressMunicipality {
+export interface Basics {
     name: string;
     id: string;
 }
@@ -91,18 +81,18 @@ export interface UserData {
     id: string;
     email: string;
     name: string;
-    userType: string;
-    phone: string;
-    role: Role;
-    addressState: AddressState;
-    addressMunicipality: AddressMunicipality;
-    address?: any;
-    addressCity?: any;
+    userType: string;    
+    role: Basics;
+    addressState: Basics;
+    addressMunicipality: Basics;
+    address: string;
+    addressCity: string;
     status: string;
     createdAt: Date;
     updatedAt: Date;
-    image: string;
     //
+    phone?: string;
+    image?: string;
     firstName?: string;
     lastName?: string;
     cardType?: string;

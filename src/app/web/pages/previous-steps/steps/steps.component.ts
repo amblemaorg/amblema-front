@@ -7,6 +7,7 @@ import { Step } from '../../../../models/steps/previous-steps.model';
 import { UpdateStepsProgress } from '../../../../store/actions/steps/project.actions';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { UProject } from '../../../../models/steps/learning-modules.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-steps',
@@ -14,7 +15,7 @@ import { UProject } from '../../../../models/steps/learning-modules.model';
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent implements OnInit {
-  doGet:boolean = true;
+  fillCounter:number = 0;
   isTest:boolean = false;
   activeStep = 0;
   curriculumPending = false;
@@ -31,15 +32,28 @@ export class StepsComponent implements OnInit {
   coordinatorSteps = [];
   schoolSteps = [];
 
-  constructor(private stepsService: StepsService, private store: Store) { }
+  constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.userProjects$.subscribe(projs => {
-      if (this.doGet && !this.isTest) { 
-        this.updateSteps(projs[0].id);
+      if (!this.isTest) { 
+        //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
+        let pjId = (this.route.snapshot.params && (this.route.snapshot.params.project || this.route.snapshot.params.type=='0' || this.route.snapshot.params.type=='1') )? 
+          (this.route.snapshot.params.project? this.route.snapshot.params.project : '5e853175164bc53ac50ff5fe') : (projs? projs[0].id : ''); 
+        //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if(pjId.length>0) this.updateSteps(pjId);
+        else return 0;
+
         this.project_steps$.subscribe(res => {        
-          this.project_id = projs[0].id;
+          this.project_id = pjId;
           if (res.steps.length>0) {
+            this.fillCounter++;
+            if(this.fillCounter==2){ // updating steps to be shown if case one of them got deleted in bds
+              this.generalSteps = [];
+              this.sponsorSteps = [];
+              this.coordinatorSteps = [];
+              this.schoolSteps = [];
+            }
             res.steps.forEach(record => {   
               let step_:Step = {
                 ...record,
@@ -90,8 +104,6 @@ export class StepsComponent implements OnInit {
             this.stepsProgress[3]= +res.school;
           }// else this.updateSteps(projs[0].id);          
         });
-
-        this.doGet = false;
       }
     });
   }
@@ -111,6 +123,16 @@ export class StepsComponent implements OnInit {
     });
 
     return checks;
+  }
+
+  enablingModsBtn() {
+    let enable = false;
+
+    this.user_type$.subscribe(res => {
+      enable = res == '0' || res == '1' || res == '2';
+    });
+
+    return enable;
   }
 
 }

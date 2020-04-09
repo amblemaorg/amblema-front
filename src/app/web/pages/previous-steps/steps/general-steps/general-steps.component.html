@@ -9,55 +9,63 @@
       <div [id]="'step'+i+'-'+mode" class="collapse" [class.show]="getCollapsed(i,mode)" [attr.data-parent]="'#steps-accordion'+mode">
         <div class="card-body">
           <h6 class="mobile-only"><b>Estatus:</b> {{ getStatusName(step.status) }}</h6>
+
+          <p *ngIf="step.hasText" class="first-p">{{ step.text }}</p> 
           
-          <ng-container *ngIf="!step.isForm; else formOpt">
-            <p *ngIf="step.text" class="first-p">{{ step.text }}</p>       
-            
+          <ng-container *ngIf="!step.isForm; else formOpt">           
             <div *ngIf="step.hasVideo" class="video-container">
               <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
               <p class="font-weight-bold">{{ step.video.name }}</p>
             </div>   
             
+            <!-- todo: APPROVE OR REJECT BUTTON FOR ADMIN ------------------------------------------------>
+            <button *ngIf="isAdmin() && step.approvalType=='1'" class="btn btn-primary text-decoration-none py-2 px-4"
+            [disabled]="step.sending" (click)="approvalMethod(step,i,mode)">
+            <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Aprobar':'Rechazar') : (step.status=="1"? 'Aprobando..':'Rechazando..') }}
+            </button>
+            <!-- todo:................................................................................. -->
+
             <a *ngIf="step.hasFile" [href]="sanitizeFile(step.file.url)" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-            (click)="(compareMode() || step.status=='3')? $event.preventDefault():null" [class.inactive]="compareMode() || step.status=='3'">
+            (click)="!isAdmin() && (compareMode() || step.status=='3')? $event.preventDefault():null" [class.inactive]="!isAdmin() && (compareMode() || step.status=='3')"
+            [class.has-several]="isAdmin() && step.approvalType=='1'">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
               <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file" 
               accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
               <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile" 
-              [class.has-several]="step.hasFile" [disabled]="compareMode() || step.sending || step.status=='3'" [class.hidebtn]="step.status=='2'">
+              [class.has-several]="(isAdmin() && step.approvalType=='1') || step.hasFile" [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3'" [class.hidebtn]="step.status=='2'">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
-              <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 && step.status!='3'" [id]="uploadFile.id+'2'" (click)="sendAttached(i); $event.preventDefault()" 
-                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="compareMode()">
-                Enviar
+              <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 && step.status!='3'" [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" 
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending">
+                <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
               </button>
             </div>
             <button *ngIf="step.send && step.status!='3'" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
-            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="compareMode() || (!step.uploadedFile && step.status=='1') || step.sending"
-            (click)="uploadApprovalRequest(step,'curriculum',i,mode)">
+            [class.has-several]="step.hasFile || step.hasUpload" [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending"
+            (click)="approvalMethod(step,i,mode)">
               <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar curriculum':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
             </button>
 
             <!-- ? GO LEARNING MODULES BUTTON -->
             <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
-            [disabled]="compareMode() || curriculumPending" [title]="compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de curriculo':'')">
+            [disabled]="!isAdmin() && (compareMode() || curriculumPending)" [title]="isAdmin()? '' : (compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de curriculo':'') )">
               Ir a los modulos
             </button>
 
-            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form" (ngSubmit)="uploadApprovalRequest(step,'checklist',i,mode)">
+            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form" (ngSubmit)="approvalMethod(step,i,mode)">
               <div class="checkbox" *ngFor="let check of step.checklist; index as j">
                 <label class="check-container">{{ check.name }}
-                  <input type="checkbox" [checked]="check.checked? check.checked: (check.checked==false? check.checked:false)" (change)="checkChange($event,i,j)" 
-                  [disabled]="compareMode() || step.sending || step.status=='3'">
+                  <input type="checkbox" [checked]="check.checked" (change)="checkChange($event,i,j)" 
+                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3'">
                   <span class="checkmark"></span>
                 </label>
               </div>
 
 
               <button *ngIf="step.hasChecklist && step.checklist.length>0" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                [disabled]="compareMode() || step.sending || step.status=='3' || !enableChecksBtn(step)">
+                [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step)">
                 <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
               </button>
             </form>            
