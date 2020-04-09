@@ -13,6 +13,12 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
+      images: [
+        "./assets/images/banner-1.jpg",
+        "./assets/images/banner-2.jpg",
+        "./assets/images/banner-1.jpg",
+        "./assets/images/banner-2.jpg",
+      ],
       charts: [
         {
           title: 'Diagnóstico de lectura',
@@ -92,6 +98,113 @@ const schoolsList = {
           },
         },
       ],
+      mathOlympics: {
+        enrolled: 145,
+        classified: 30,
+        goldMedal: 10,
+        silverMedal: 15,
+        bronzeMedal: 5
+      },
+      activities: {
+        withTeachers: [
+          {
+            name: "Actividad 1",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/background-pillar-lectura.jpg",
+              "./assets/images/background-pillar-ambiente.jpg",
+              "./assets/images/background-pillar-matematica.jpg",
+            ],
+          },
+          {
+            name: "Actividad 2",
+            description: "Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/background-pillar-lectura.jpg",
+              "./assets/images/background-pillar-ambiente.jpg",
+              "./assets/images/background-pillar-matematica.jpg",
+            ],
+          },
+          {
+            name: "Actividad 3",
+            description: "Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+            ],
+          },
+        ],
+        specials: [
+          {
+            name: "Actividad 1",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/background-pillar-lectura.jpg",
+              "./assets/images/background-pillar-ambiente.jpg",
+              "./assets/images/background-pillar-matematica.jpg",
+            ],
+          },
+          {
+            name: "Actividad 2",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/background-pillar-lectura.jpg",
+              "./assets/images/background-pillar-ambiente.jpg",
+              "./assets/images/background-pillar-matematica.jpg",
+            ],
+          },
+          {
+            name: "Actividad 3",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+            ],
+          },
+          {
+            name: "Actividad 4",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+            ],
+          },
+          {
+            name: "Actividad 5",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+            ],
+          },
+          {
+            name: "Actividad 6",
+            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+            images: [
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+              "./assets/images/banner-1.jpg",
+              "./assets/images/banner-2.jpg",
+            ],
+          },
+        ],
+      },
       testimonials: [
         {
           firstName: "Oscar A.",
@@ -115,7 +228,7 @@ const schoolsList = {
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum."
         },
       ],
-      activities: [
+      nextActivities: [
         {
           title: "Título de la actividad",
           date: "20/03/2020",
@@ -254,6 +367,13 @@ const schoolsList = {
           },
         },
       ],
+      mathOlympics: {
+        enrolled: 105,
+        classified: 40,
+        goldMedal: 0,
+        silverMedal: 10,
+        bronzeMedal: 5
+      },
       testimonials: [
         {
           firstName: "Oscar A.",
@@ -337,6 +457,12 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
+      images: [
+        "./assets/images/banner-1.jpg",
+        "./assets/images/banner-2.jpg",
+        "./assets/images/banner-1.jpg",
+        "./assets/images/banner-2.jpg",
+      ],
       charts: [
         {
           title: 'Diagnóstico de lectura',
@@ -416,6 +542,13 @@ const schoolsList = {
           },
         },
       ],
+      mathOlympics: {
+        enrolled: 85,
+        classified: 20,
+        goldMedal: 0,
+        silverMedal: 1,
+        bronzeMedal: 8
+      },
       testimonials: [
         {
           firstName: "Oscar A.",
@@ -499,6 +632,7 @@ const schoolsList = {
       staff: "Información del personal docente, obrero y administrativo",
       coordinator: "Información del coordinador general",
       enrollment: "Matrícula estudiantil",
+      images: [],
       charts: [
         {
           title: 'Diagnóstico de lectura',
@@ -578,6 +712,13 @@ const schoolsList = {
           },
         },
       ],
+      mathOlympics: {
+        enrolled: 145,
+        classified: 30,
+        goldMedal: 0,
+        silverMedal: 0,
+        bronzeMedal: 0
+      },
       testimonials: [
         {
           firstName: "Oscar A.",

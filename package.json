@@ -58,12 +58,12 @@
     "ngx-toastr": "~11.3.3",
     "rxjs": "~6.4.0",
     "slideout": "^1.0.1",
-    "svg.js": "^2.5.3",
-    "svgdom": "0.0.20",
     "tslib": "^1.10.0",
+    "webpack-node-externals": "^1.7.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^8.1.0",
     "@angular-devkit/build-angular": "~0.803.25",
     "@angular/cli": "~8.3.25",
     "@angular/compiler-cli": "~8.2.14",

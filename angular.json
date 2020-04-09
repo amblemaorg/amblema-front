@@ -26,7 +26,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/assets/icons",
+              "src/assets/icons"
             ],
             "styles": [
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
@@ -146,11 +146,15 @@
           }
         },
         "server": {
-          "builder": "@angular-devkit/build-angular:server",
+          "builder": "@angular-builders/custom-webpack:server",
           "options": {
             "outputPath": "dist/server",
             "main": "src/main.server.ts",
             "tsConfig": "tsconfig.server.json",
+            "customWebpackConfig": {
+              "path": "universal-webpack.server.config.js",
+              "mergeStrategies": { "externals": "replace" }
+            },
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/assets/."
