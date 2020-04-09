@@ -20,6 +20,7 @@ export class GeneralStepsComponent implements OnInit {
   @Input() curriculumPending:boolean;
   @Input() user_type:string = "1";
   @Input() project_id:string;
+  @Input() confirmable:boolean;
 
   @Output() callUpdate:EventEmitter<string> = new EventEmitter();
 
@@ -36,6 +37,10 @@ export class GeneralStepsComponent implements OnInit {
 
   compareMode() {
     return this.mode!=(+this.user_type);
+  }
+
+  isNotConfirmable(step:Step) {
+    return !this.confirmable && step.devName=="amblemaConfirmation";
   }
 
   isAdmin() { //usertype 0 or 1 is super and admin
@@ -96,6 +101,8 @@ export class GeneralStepsComponent implements OnInit {
         formData.append('status', !this.enableChecksBtn(step,true)?"1":"2");
       } else if (step.approvalType!="3") {
         formData.append('status', step.status=="1"?"2":"1");
+        
+        console.log('aprobando','estatus: '+(step.status=="1"?"2":"1"),'Id: '+step.id,'Proyecto: '+this.project_id)
       }
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
       if(step.approvalType=="3") formData.append('project', this.project_id);
@@ -133,6 +140,7 @@ export class GeneralStepsComponent implements OnInit {
 
   // POSTER AND PUTTER
   updatingEmitting(step,indd,modd) {
+    console.log('respuesta obtenida',step.status);
     step.sending = false;
     this.callUpdate.emit(this.project_id);
     this.currentA = `${indd}-${modd}`;
@@ -147,7 +155,9 @@ export class GeneralStepsComponent implements OnInit {
     });
   }
   postSA(formData,step:Step,indd,modd,proj_id) {
+    console.log('antes de la llamada',step.status);
     this.stepsService.stepApproval(proj_id,formData).subscribe(res=>{
+      console.log(res);
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
