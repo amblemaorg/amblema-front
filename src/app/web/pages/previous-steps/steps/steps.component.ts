@@ -20,6 +20,9 @@ export class StepsComponent implements OnInit {
   activeStep = 0;
   curriculumPending = false;
   project_id = "";
+
+  canOrganizationConfirm:boolean = true; // approval button which confirms to create PECA
+
   @Select(UserState.user_projects) userProjects$: Observable<UProject[]>; //! TEMPORARY
   @Select(UserState.user_type) user_type$: Observable<string>;
   @Select(StepsState.all_needed) project_steps$: Observable<any>;
@@ -72,6 +75,10 @@ export class StepsComponent implements OnInit {
                 this.curriculumPending = true;
               }
               step_.goMods = step_.devName=="corrdinatorCompleteTrainingModules" ? true:false;
+
+              if (step_.status!="3" && step_.devName!="amblemaConfirmation") {
+                this.canOrganizationConfirm = false;
+              }
        
               switch (step_.tag) {          
                 case "2":

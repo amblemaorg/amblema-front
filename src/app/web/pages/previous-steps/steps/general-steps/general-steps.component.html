@@ -19,9 +19,9 @@
             </div>   
             
             <!-- todo: APPROVE OR REJECT BUTTON FOR ADMIN ------------------------------------------------>
-            <button *ngIf="isAdmin() && step.approvalType=='1'" class="btn btn-primary text-decoration-none py-2 px-4"
-            [disabled]="step.sending" (click)="approvalMethod(step,i,mode)">
-            <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Aprobar':'Rechazar') : (step.status=="1"? 'Aprobando..':'Rechazando..') }}
+            <button *ngIf="isAdmin() && step.approvalType=='1' && step.status=='1'" class="btn btn-primary text-decoration-none py-2 px-4"
+            [disabled]="step.sending || isNotConfirmable(step)" (click)="approvalMethod(step,i,mode)">
+            <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Aprobar' : 'Aprobando..' }}
             </button>
             <!-- todo:................................................................................. -->
 
@@ -37,8 +37,9 @@
               [class.has-several]="(isAdmin() && step.approvalType=='1') || step.hasFile" [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3'" [class.hidebtn]="step.status=='2'">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
-              <button *ngIf="!step.send && step.uploadedFile && step.uploadedFile.name.length>0 && step.status!='3'" [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" 
-                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending">
+              <button [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" 
+              [class.hidebtn]="step.send || (step.status=='1' && !step.uploadedFile) || step.status=='3'"
+              [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending">
                 <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
               </button>
             </div>
