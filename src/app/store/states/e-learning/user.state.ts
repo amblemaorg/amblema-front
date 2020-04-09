@@ -37,7 +37,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
     }
     @Selector()
     static user_brief(state: UserStateModel) {
-      return {name:state.name, gender:state.gender, image:state.image};
+      return {name:state.name, gender:state.gender, image:state.image, userType: state.userType};
     }
     @Selector()
     static user_id(state: UserStateModel) {
@@ -75,7 +75,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
             userType: user.userType,
             // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
             coordinator_modules: user.learning,
-            user_projects: user.projects,
+            user_projects: user.userType=="4"? [user.project] : user.projects,
           });
         })
       );
