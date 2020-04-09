@@ -21,6 +21,8 @@ export class ModulesListComponent implements OnInit, DoCheck {
   faEye = faEye;
   faCheck = faCheck;
 
+  forAdminSetFalse:boolean = false;
+
   modules = []; //! PARA PAGINADOR
   isLoading = [];
   pageOfItems: Array<any>; //! PARA PAGINADOR
@@ -40,6 +42,10 @@ export class ModulesListComponent implements OnInit, DoCheck {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
     });    
+
+    this.coorBrf$.subscribe(res => {
+      this.forAdminSetFalse = (res.userType=="0" || res.userType=="1") ? false : true;
+    });
   }
   ngDoCheck() {    
     if (this.document.querySelectorAll('jw-pagination .page-item.next-item .page-link').length>0 && this.canCheck) {      
@@ -55,8 +61,11 @@ export class ModulesListComponent implements OnInit, DoCheck {
   }
 
   checkApprove(id){
-    let thereIsMod = this.moduleService.checkApprove(id);
-    return thereIsMod ? (thereIsMod.status=="3"? true:false) : false
+    if (!this.forAdminSetFalse) return true;
+    else {
+      let thereIsMod = this.moduleService.checkApprove(id);
+      return thereIsMod ? (thereIsMod.status=="3"? true:false) : false
+    }  
   }
 
   canEnable(mod:Module) { //? temporarly unused

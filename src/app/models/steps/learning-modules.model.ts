@@ -113,6 +113,7 @@ export interface UserData {
     webSite?: string;
     phase?: string;
     projects?: UProject[];
+    project?: UProject;
     code?: string;
     schoolType?: any;
     principalFirstName?: string;

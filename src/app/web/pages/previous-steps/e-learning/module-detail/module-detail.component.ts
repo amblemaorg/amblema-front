@@ -21,6 +21,7 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('warningOpener', {static: false}) warningBtn:any;
 
   @Select(UserState.user_id) coorId$: Observable<string>;
+  @Select(UserState.user_type) userType$: Observable<string>;
   current_coor_id:string = '';
 
   moduleInfo: Module;
@@ -30,6 +31,8 @@ export class ModuleDetailComponent implements OnInit {
 
   isTesting = false;
   testingModule:Module;
+
+  forAdminSetFalse:boolean = false;
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
@@ -92,6 +95,10 @@ export class ModuleDetailComponent implements OnInit {
       this.current_coor_id = id_;
       this.moduleService.actualUser = {user:id_,type:2}//!remove
     })
+
+    this.userType$.subscribe(res => {
+      this.forAdminSetFalse = (res=="0" || res=="1") ? false : true;
+    });
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
     setTimeout(()=>{
@@ -186,7 +193,7 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   selectAnswer(i,j) {
-    this.selectedQuestions[i] = j;    
+    if (this.forAdminSetFalse) this.selectedQuestions[i] = j;    
   }    
 
   @HostListener('window:resize', ['$event'])
@@ -244,8 +251,10 @@ export class ModuleDetailComponent implements OnInit {
   checkApprove(id){
     let currentMod:Module;
     if (!this.isTesting) {
-      let thereIsMod = this.moduleService.checkApprove(id);
-      this.completedModule = thereIsMod ? (thereIsMod.status=="3"? true:false) : false;
+      if (this.forAdminSetFalse) {
+        let thereIsMod = this.moduleService.checkApprove(id);
+        this.completedModule = thereIsMod ? (thereIsMod.status=="3"? true:false) : false;
+      }      
       currentMod = this.moduleService.getSelectedModule(id);
     } else {
       currentMod = this.testingModule;
@@ -269,8 +278,10 @@ export class ModuleDetailComponent implements OnInit {
     this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
     this.incorrectOnes = this.selectedQuestions.slice();      
     this.initOps();
-    let thereIsModu = this.moduleService.checkApprove(this.module_id);
-    this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4);
+    if (this.forAdminSetFalse) {
+      let thereIsModu = this.moduleService.checkApprove(this.module_id);
+      this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4); 
+    }    
   }
 
   fillImage(img) {   
