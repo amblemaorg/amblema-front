@@ -28,7 +28,10 @@ $orientations: (
     }
 
     @if map-has-key($directions, $direction) {
-        $media-query: "#{$media-query} and (#{map-get($directions, $direction)}-width: #{$breakpoint}) ";
+      @if $direction == "down" {
+        $breakpoint: $breakpoint - 1px;
+      }
+      $media-query: "#{$media-query} and (#{map-get($directions, $direction)}-width: #{$breakpoint}) ";
     }
 
     @if map-has-key($orientations, $orientation) {
@@ -73,5 +76,5 @@ $breakpoints-bt: (
         @media #{$media-query} {
             @content;
         }
-    }    
+    }
 }

@@ -1,27 +1,43 @@
 <section  #schoolDetails class="school-details">
-  <div class="school-data">
+  <div class="school-details-wrapper">
     <h1 class="school-name">{{ school.name }}</h1>
-    <div *ngIf="false">
-      <p class="school-sponsor">
+    <div class="school-data-wrapper">
+      <div class="school-data school-sponsor">
+        <div class="icon"><img src="./assets/images/icon-sponsor.png" /></div>
         {{ school.sponsor }}
-      </p>
-      <p class="school-direction">
+      </div>
+      <div class="school-data school-direction">
+        <div class="icon"><img src="./assets/images/icon-school.png" /></div>
         {{ school.direction }}
-      </p>
-      <p class="school-staff">
+      </div>
+      <div class="school-data school-staff">
+        <div class="icon"><img src="./assets/images/icon-staff.png" /></div>
         {{ school.staff }}
-      </p>
-      <p class="school-coordinator">
+      </div>
+      <div class="school-data school-coordinator">
+        <div class="icon"><img src="./assets/images/icon-coodinator.png" /></div>
         {{ school.coordinator }}
-      </p>
-      <p class="school-enrollment">
+      </div>
+      <div class="school-data school-enrollment">
+        <div class="icon"><img src="./assets/images/icon-enrollment.png" /></div>
         {{ school.enrollment }}
-      </p>
+      </div>
     </div>
   </div>
   <div class="school-images">
-
-
+    <owl-carousel
+      #schoolImageCarousel
+      [options]="schoolImagesOptions"
+      class="school-image-carousel"
+      [carouselClasses]="['']"
+      *ngIf="school.images && school.images.length"
+    >
+      <ng-container *ngFor="let image of school.images; index as i">
+        <div class="image-wrapper">
+          <img [src]="image" [alt]="school.name + ' imagen ' + i" />
+        </div>
+      </ng-container>
+    </owl-carousel>
   </div>
 </section>
 <section class="charts">
@@ -41,6 +57,102 @@
     </web-testimonial-card>
   </div>
 </section>
+<section class="math-olympics">
+  <div class="heading">
+    <h2>Olimpiadas de matemática</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.</p>
+  </div>
+  <div class="result-summary">
+    <div class="result enrolled">
+      <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+      <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
+      <span class="result-label">Estudiantes inscritos</span>
+    </div>
+    <div class="result classified">
+      <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+      <span class="result-count">{{ school.mathOlympics.classified }}</span>
+      <span class="result-label">Estudiantes clasificados</span>
+    </div>
+    <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
+      <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+      <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
+      <span class="result-label">Medallas obtenidas (Oro)</span>
+    </div>
+    <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
+      <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+      <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
+      <span class="result-label">Medallas obtenidas (Plata)</span>
+    </div>
+    <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
+      <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+      <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
+      <span class="result-label">Medallas obtenidas (Bronce)</span>
+    </div>
+  </div>
+</section>
+<section class="activities">
+  <div class="activities-tabs-wrapper">
+    <div
+      class="activities-tab"
+      [ngClass]="{ 'active': selectedActivitiesType == ACTIVITIES.WITH_TEACHERS }"
+      (click)="setActivitiesType(ACTIVITIES.WITH_TEACHERS)"
+    >
+      Actividades con los docentes
+    </div>
+    <div
+      class="activities-tab"
+      [ngClass]="{ 'active': selectedActivitiesType == ACTIVITIES.SPECIALS }"
+      (click)="setActivitiesType(ACTIVITIES.SPECIALS)"
+    >
+      Actividades especiales
+    </div>
+  </div>
+  <div class="activities-details-wrapper">
+    <div class="activities-index-carousel">
+      <owl-carousel
+        #activitiesIndexCarousel
+        [options]="activitiesIndexOptions"
+        class="activities-index-carousel"
+        [carouselClasses]="['']"
+      >
+        <div
+          class="activity-index"
+          [ngClass]="{ 'active': activeActivityIndex == i }"
+          *ngFor="let item of school.activities[selectedActivitiesType]; index as i"
+          (click)="activeActivityIndex !== i && setActiveActivity(i)"
+        >
+          {{ item.name }}
+        </div>
+      </owl-carousel>
+    </div>
+    <div class="activity-details">
+      <div class="activity-info">
+        <span class="activity-name">
+          {{ school.activities[selectedActivitiesType][activeActivityIndex].name }}
+        </span>
+        <p class="activity-description">
+          {{ school.activities[selectedActivitiesType][activeActivityIndex].description }}
+        </p>
+      </div>
+      <div class="activity-images">
+        <owl-carousel
+          #activityImageCarousel
+          [options]="activityImagesOptions"
+          class="activity-image-carousel"
+          [carouselClasses]="['']"
+          *ngIf="school.activities[selectedActivitiesType][activeActivityIndex].images"
+        >
+          <div
+            class="image-wrapper"
+            *ngFor="let image of school.activities[selectedActivitiesType][activeActivityIndex].images; index as i"
+          >
+            <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
+          </div>
+        </owl-carousel>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="teachers">
     <div class="heading">
       <h2>Los docentes dicen</h2>
@@ -54,7 +166,7 @@
       </owl-carousel-o>
     </div>
 </section>
-<section class="activities">
+<section class="next-activities">
     <div class="heading">
       <h2>Próximas actividades</h2>
     </div>
@@ -63,7 +175,7 @@
                     [options]="activitiesOptions"
                     class="activities-carousel"
                     [carouselClasses]="['']">
-        <ng-container *ngFor="let item of school.activities">
+        <ng-container *ngFor="let item of school.nextActivities">
           <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
         </ng-container>
       </owl-carousel>

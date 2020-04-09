@@ -28,6 +28,12 @@ describe('SchoolDetailComponent', () => {
     staff: "Información del personal docente, obrero y administrativo",
     coordinator: "Información del coordinador general",
     enrollment: "Matrícula estudiantil",
+    images: [
+      "./assets/images/banner-1.jpg",
+      "./assets/images/banner-2.jpg",
+      "./assets/images/banner-1.jpg",
+      "./assets/images/banner-2.jpg",
+    ],
     charts: [
       {
         title: 'Diagnóstico de lectura',
@@ -107,7 +113,114 @@ describe('SchoolDetailComponent', () => {
         },
       },
     ],
-    activities: [
+    mathOlympics: {
+      enrolled: 145,
+      classified: 30,
+      goldMedal: 10,
+      silverMedal: 15,
+      bronzeMedal: 5
+    },
+    activities: {
+      withTeachers: [
+        {
+          name: "Actividad 1",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/background-pillar-lectura.jpg",
+            "./assets/images/background-pillar-ambiente.jpg",
+            "./assets/images/background-pillar-matematica.jpg",
+          ],
+        },
+        {
+          name: "Actividad 2",
+          description: "Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/background-pillar-lectura.jpg",
+            "./assets/images/background-pillar-ambiente.jpg",
+            "./assets/images/background-pillar-matematica.jpg",
+          ],
+        },
+        {
+          name: "Actividad 3",
+          description: "Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+          ],
+        },
+      ],
+      specials: [
+        {
+          name: "Actividad 1",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/background-pillar-lectura.jpg",
+            "./assets/images/background-pillar-ambiente.jpg",
+            "./assets/images/background-pillar-matematica.jpg",
+          ],
+        },
+        {
+          name: "Actividad 2",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/background-pillar-lectura.jpg",
+            "./assets/images/background-pillar-ambiente.jpg",
+            "./assets/images/background-pillar-matematica.jpg",
+          ],
+        },
+        {
+          name: "Actividad 3",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+          ],
+        },
+        {
+          name: "Actividad 4",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+          ],
+        },
+        {
+          name: "Actividad 5",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+          ],
+        },
+        {
+          name: "Actividad 6",
+          description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam. Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam? Cumque quisquam vel debitis cum.",
+          images: [
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+            "./assets/images/banner-1.jpg",
+            "./assets/images/banner-2.jpg",
+          ],
+        },
+      ],
+    },
+    newActivities: [
       {
         title: "Título de la actividad",
         date: "20/03/2020",
@@ -227,8 +340,8 @@ describe('SchoolDetailComponent', () => {
   });
 
   it('should have a h2 tag in activities section with content "Próximas actividades"', () => {
-    el = fixture.nativeElement.querySelector('section.activities h2');
-    const h2Count = fixture.nativeElement.querySelectorAll('section.activities h2').length;
+    el = fixture.nativeElement.querySelector('section.next-activities h2');
+    const h2Count = fixture.nativeElement.querySelectorAll('section.next-activities h2').length;
     expect(h2Count).toBe(1);
     expect(el.textContent).toBe("Próximas actividades");
   });
