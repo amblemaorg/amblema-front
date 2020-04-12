@@ -55,7 +55,8 @@
               Ir a los modulos
             </button>
 
-            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form" (ngSubmit)="approvalMethod(step,i,mode)">
+            <form *ngIf="step.hasChecklist && step.checklist.length>0" class="checks-form" (ngSubmit)="approvalMethod(step,i,mode)"
+              [class.has-siblings]="step.hasVideo || step.hasUpload || step.hasFile || step.hasDate">
               <div class="checkbox" *ngFor="let check of step.checklist; index as j">
                 <label class="check-container">{{ check.name }}
                   <input type="checkbox" [checked]="check.checked" (change)="checkChange($event,i,j)" 
@@ -64,11 +65,12 @@
                 </label>
               </div>
 
-
-              <button *ngIf="step.hasChecklist && step.checklist.length>0" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step)">
-                <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
-              </button>
+              <div class="checks-btn-container">
+                <button *ngIf="step.hasChecklist && step.checklist.length>0" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step)">
+                  <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
+                </button>
+              </div>              
             </form>            
           </ng-container>
           <ng-template #formOpt>
@@ -82,6 +84,14 @@
               <app-steps-forms [who]="'school'" [disable]="compareMode()"></app-steps-forms>
             </div>      
           </ng-template>
+
+          <!-- FAIL TOAST -->
+          <div [id]="'toast'+i+'-'+mode" class="toast">
+            <div class="toast-body">
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+              <p class="mb-0">Hubo un problema al conectar con el servidor, por favor intente más tarde.</p>              
+            </div>
+          </div>
         </div>
       </div>
     </div>

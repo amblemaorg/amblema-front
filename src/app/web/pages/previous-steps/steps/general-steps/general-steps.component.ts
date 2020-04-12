@@ -1,9 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Step } from '../../../../../models/steps/previous-steps.model';
 import { StepsService } from '../../../../../services/steps/steps.service';
+import * as $ from 'jquery';
+declare var $:any;
 
 @Component({
   selector: 'app-general-steps',
@@ -24,8 +27,12 @@ export class GeneralStepsComponent implements OnInit {
 
   @Output() callUpdate:EventEmitter<string> = new EventEmitter();
 
-  constructor(private embedService: EmbedVideoService, private sanitizer: DomSanitizer,
-    private stepsService: StepsService) {}
+  isBrowser;
+
+  constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService, 
+    private sanitizer: DomSanitizer, private stepsService: StepsService) {
+      this.isBrowser = isPlatformBrowser(platformId);
+    }
 
   ngOnInit() {
     this.currentA = 0+'-'+this.mode;
@@ -78,7 +85,8 @@ export class GeneralStepsComponent implements OnInit {
   fileMngr(e,i) {
     this.steps[i].uploadedFile = {  
       name: <File>e.target.files[0].name,
-      file: <File>e.target.files[0]
+      file: <File>e.target.files[0],
+      url: ''
     }
   }
 
@@ -105,11 +113,11 @@ export class GeneralStepsComponent implements OnInit {
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
       if(step.approvalType=="3") formData.append('project', this.project_id);
       if(step.hasDate) formData.append( step.approvalType=="3"?'stepDate':'date', this.getDateFormat( new Date() ) ); 
-      if(step.hasUpload) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
+      if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
     }     
 
-    if(step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) {
+    if( (step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) || step.approvalType!="3") {
       getPosting();
 
       if(step.approvalType=="3") this.postAR(formData,step,indd,modd); // approval request
@@ -119,19 +127,14 @@ export class GeneralStepsComponent implements OnInit {
       let rqstApv = step.approvalHistory.length>0? step.approvalHistory[step.approvalHistory.length-1].status : "0"; // approval request Status; located in the last item of the approval history.
       //posting
       if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) || 
-          (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) || 
-          step.approvalType=="1" ) { getPosting(); } // updating
+          (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) { getPosting(); } // updating
       //putting
       if(step.hasUpload && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
       if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
             
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
-          (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) || 
-          step.approvalType=="1" ) {
-            if (step.approvalType=="3") this.postAR(formData,step,indd,modd);
-            else this.postSA(formData,step,indd,modd,this.project_id);
-          }
+          (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
       else this.putAR(formData,step,indd,modd,step.approvalHistory[step.approvalHistory.length-1].id);
     }
   }
@@ -144,11 +147,12 @@ export class GeneralStepsComponent implements OnInit {
   }   
   postAR(formData,step:Step,indd,modd) {
     this.stepsService.requestApproval(formData).subscribe(res=>{
-      step.status = (step.hasUpload)? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
+      step.status = (step.hasUpload && step.approvalType=="3")? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
       step.sending = false;
+      this.toasterMeth(indd,modd);
     });
   }
   postSA(formData,step:Step,indd,modd,proj_id) {
@@ -157,6 +161,7 @@ export class GeneralStepsComponent implements OnInit {
 
     },(error)=>{
       step.sending = false;
+      this.toasterMeth(indd,modd);
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
@@ -168,6 +173,7 @@ export class GeneralStepsComponent implements OnInit {
 
     },(error)=>{
       step.sending = false;
+      this.toasterMeth(indd,modd);
     });
   }
   //
@@ -180,4 +186,12 @@ export class GeneralStepsComponent implements OnInit {
     return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
   }
   //? -----------------------------------------------------------------------------------------------------------------
+
+  toasterMeth(i,m) {
+    if (this.isBrowser) {
+      $(`#toast${i}-${m}`).toast({delay: 5000});
+      $(`#toast${i}-${m}`).toast('show');
+    }
+  }
+
 }
