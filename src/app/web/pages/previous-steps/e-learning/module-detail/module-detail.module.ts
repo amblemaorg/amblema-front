@@ -7,6 +7,10 @@ import { ModuleDetailComponent } from './module-detail.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+
+
 @NgModule({
   declarations: [ModuleDetailComponent],
   imports: [
@@ -14,6 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ModuleDetailRoutingModule,
     OwlModule,
     FontAwesomeModule,
+    BrowserTransferStateModule,
+    TransferHttpCacheModule,
   ]
 })
 export class ModuleDetailModule { }

@@ -10,6 +10,8 @@ import { StepsFormsComponent } from './steps-forms/steps-forms.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { TransferHttpCacheModule } from '@nguniversal/common';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
+    BrowserTransferStateModule,
+    TransferHttpCacheModule,
   ]
 })
 export class StepsModule { }
