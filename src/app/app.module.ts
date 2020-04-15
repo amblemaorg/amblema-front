@@ -14,10 +14,12 @@ import { environment } from '../environments/environment.prod';
 import { ModulesState } from './store/states/e-learning/learning-modules.state';
 import { UserState } from './store/states/e-learning/user.state';
 import { StepsState } from './store/states/steps/project.state';
+import { ResidenceInfoState } from './store/states/steps/residence-info.state';
 //
 
 import { EmbedVideo } from 'ngx-embed-video';
-import { ResidenceInfoState } from './store/states/steps/residence-info.state';
+import { AuthGuard } from './guards/auth.guard';
+import { NbAuthModule } from '@nebular/auth';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { ResidenceInfoState } from './store/states/steps/residence-info.state';
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule,
+    NbAuthModule.forRoot(),
     // -- NGXS --
     NgxsModule.forRoot( [
       ModulesState,
@@ -44,7 +47,9 @@ import { ResidenceInfoState } from './store/states/steps/residence-info.state';
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

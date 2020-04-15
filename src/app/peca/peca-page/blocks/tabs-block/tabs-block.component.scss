@@ -1,0 +1,34 @@
+@import "scss/variables";
+
+::ng-deep {
+  .nb-theme-default {
+    nb-tabset {
+      .tab-link {
+        font-family: Montserrat;
+        font-size: 1.6rem;
+        padding: 1rem 6rem;
+        text-transform: none;
+      }
+
+      .tab,
+      .tab:hover,
+      .tab.active {
+        .tab-link {
+          color: $blue;
+          &:hover {
+            color: $blue;
+          }
+        }
+      }
+
+      .tab:hover,
+      .tab.active {
+        .tab-link {
+          &::before {
+            background-color: $blue;
+          }
+        }
+      }
+    }
+  }
+}
