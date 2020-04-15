@@ -25,6 +25,18 @@
 }
 
 @font-face {
+  font-family: 'amblemaicons';
+  src: url('./assets/fonts/amblema-icons/amblemaicons.eot?46373356');
+  src: url('./assets/fonts/amblema-icons/amblemaicons.eot?46373356#iefix') format('embedded-opentype'),
+       url('./assets/fonts/amblema-icons/amblemaicons.woff2?46373356') format('woff2'),
+       url('./assets/fonts/amblema-icons/amblemaicons.woff?46373356') format('woff'),
+       url('./assets/fonts/amblema-icons/amblemaicons.ttf?46373356') format('truetype'),
+       url('./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "arrows";
   src:url("./assets/fonts/arrows.eot");
   src:url("./assets/fonts/arrows.eot?#iefix") format("embedded-opentype"),

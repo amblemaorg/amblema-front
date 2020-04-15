@@ -1,5 +1,7 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
+//const argv = require('minimist')(process.argv.slice(2))
+const tags = (process.env.tags !== 'true') && process.env.tags;
 
 module.exports = function (config) {
   config.set({
@@ -19,6 +21,7 @@ module.exports = function (config) {
       "src/assets/tests/activated-route-stub.ts",
     ],
     client: {
+      args: [tags],
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
       captureConsole: false
     },

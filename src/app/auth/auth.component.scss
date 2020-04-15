@@ -1,0 +1,116 @@
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/prebuilt/default.css';
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/globals';
+@import '~@nebular/auth/components/auth.component';
+@import 'scss/variables';
+
+::ng-deep {
+
+  $nb-enable-css-custom-properties: true;
+
+  $nb-themes: nb-register-theme((
+    text-basic-color: $blue,
+    // General theme variables
+    color-primary-100: #f2f6ff,
+    color-primary-200: #d9e4ff,
+    color-primary-300: #a6c1ff,
+    color-primary-400: #598bff,
+    color-primary-500: #3366ff,
+    color-primary-600: #274bdb,
+    color-primary-700: #1a34b8,
+    color-primary-800: #102694,
+    color-primary-900: #091c7a,
+
+  ), default, default);
+
+
+  @include nb-install() {
+    @include nb-theme-global();
+    @include nb-auth-global();
+  };
+
+  body {
+    font-family: nb-theme(font-family-primary);
+    color: nb-theme(text-basic-color);
+  }
+  .nb-theme-default {
+    nb-card-header {
+      background-color: $blue;
+      color: $white;
+    }
+
+    nb-auth-block {
+      .forgot-password {
+        color: $blue;
+        flex: 0 1 auto;
+        text-align: center;
+      }
+    }
+
+    @mixin nb-auth-theme() {
+      nb-auth .navigation .link .icon {
+        font-weight: nb-theme(font-weight-bold);
+      }
+    }
+
+    [nbButton].appearance-filled:not(.btn-disabled) {
+      &.status-success {
+        background-color: $blue;
+        border-color: $blue;
+
+        &:hover {
+          background-color: $blue;
+          border-color: $blue;
+          opacity: .8;
+        }
+      }
+    }
+
+    a {
+      color: $white;
+
+      &.back-link {
+        &:hover,
+        &:focus {
+          color: $white;
+        }
+      }
+    }
+
+    .label {
+      display: none;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    nb-checkbox.status-basic {
+      .custom-checkbox {
+        margin-right: .5rem;
+
+        &.checked,
+        &.checked:hover {
+          background-color: $blue;
+          border-color: $blue;
+        }
+      }
+
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+      color: $blue;
+    }
+  }
+}

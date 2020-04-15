@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -9,7 +10,16 @@ const routes: Routes = [
   {
     path: 'previous-steps',
     loadChildren: () => import('./web/pages/previous-steps/previous-steps.module').then( m => m.PreviousStepsModule)
-  }
+  },
+  {
+    path: 'peca',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./peca/peca.module').then(m => m.PecaModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+  },
 ];
 
 @NgModule({
