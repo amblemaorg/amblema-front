@@ -13,6 +13,8 @@ import { ModulesState } from './store/states/e-learning/learning-modules.state';
 import { CoordinatorState } from './store/states/e-learning/coordinator-user.state';
 
 import { EmbedVideo } from 'ngx-embed-video';
+import { AuthGuard } from './guards/auth.guard';
+import { NbAuthModule } from '@nebular/auth';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { EmbedVideo } from 'ngx-embed-video';
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule,
+    NbAuthModule.forRoot(),
     // -- NGXS --
     NgxsModule.forRoot( [
       ModulesState,
@@ -37,7 +40,9 @@ import { EmbedVideo } from 'ngx-embed-video';
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
