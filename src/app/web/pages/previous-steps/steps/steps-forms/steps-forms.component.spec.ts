@@ -4,6 +4,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { StepsFormsComponent } from './steps-forms.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
+import { UserState } from '../../../../../store/states/e-learning/user.state';
+import { StepsState } from '../../../../../store/states/steps/project.state';
+import { ResidenceInfoState } from '../../../../../store/states/steps/residence-info.state';
 
 describe('StepsFormsComponent', () => {
   let component: StepsFormsComponent;
@@ -12,7 +17,20 @@ describe('StepsFormsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ StepsFormsComponent ],
-      imports: [FormsModule,ReactiveFormsModule,NgSelectModule,HttpClientModule,RouterTestingModule]
+      imports: [FormsModule,ReactiveFormsModule,NgSelectModule,HttpClientModule,RouterTestingModule,
+        NgxsModule.forRoot( [
+          ModulesState,
+          UserState,
+          StepsState,
+          ResidenceInfoState,
+        ],
+        {
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        })
+      ]
     })
     .compileComponents();
   }));
