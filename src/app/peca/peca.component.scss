@@ -1,0 +1,96 @@
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/prebuilt/default.css';
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/globals';
+@import 'scss/variables';
+@import 'fonts/amblema-icons/amblemaicons';
+
+::ng-deep {
+
+  $nb-enable-css-custom-properties: true;
+
+  $nb-themes: nb-register-theme((
+    header-background-color: $blue,
+    footer-background-color: $blue,
+    sidebar-background-color: $blue,
+    text-basic-color: $green,
+    // Menu theme variables
+    menu-text-color: #ffffff,
+    menu-item-icon-color: #ffffff,
+    menu-item-hover-text-color: $green,
+    menu-item-icon-hover-color: $green,
+    menu-item-active-text-color: $green,
+    menu-item-icon-active-color: $green,
+    menu-item-divider-width: 2px,
+    menu-item-divider-color: #367a92,
+    // General theme variables
+    color-primary-100: #f2f6ff,
+    color-primary-200: #d9e4ff,
+    color-primary-300: #a6c1ff,
+    color-primary-400: #598bff,
+    color-primary-500: #3366ff,
+    color-primary-600: #274bdb,
+    color-primary-700: #1a34b8,
+    color-primary-800: #102694,
+    color-primary-900: #091c7a,
+
+  ), default, default);
+
+
+  @include nb-install() {
+    @include nb-theme-global();
+    @include nb-auth-global();
+  };
+
+  body {
+    font-family: nb-theme(font-family-primary);
+    color: nb-theme(text-basic-color);
+  }
+
+  .nb-theme-default {
+    nb-sidebar {
+      width: 12rem;
+      .main-container {
+        width: inherit;
+      }
+    }
+
+    nb-menu {
+      .menu-item {
+        .menu-icon {
+          width: auto;
+        }
+        a {
+          padding: .5rem .5rem;
+          .menu-title {
+            flex: 1 1 50% !important;
+            font-weight: normal;
+            line-height: 1.2;
+            max-width: 100%;
+          }
+        }
+        // Submenu items
+        & > .menu-items {
+          padding: 0 .5rem;
+
+          & > .menu-item {
+            a {
+              padding: .5rem .5rem;
+            }
+          }
+        }
+      }
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-family: 'Montserrat';
+      margin: 0;
+    }
+
+    nb-card-body {
+      padding: 1.25rem 2.5rem;
+    }
+  }
+}
