@@ -4,10 +4,12 @@ import { StepsService } from '../../../../services/steps/steps.service';
 import { UserState } from '../../../../store/states/e-learning/user.state';
 import { Observable } from 'rxjs';
 import { Step } from '../../../../models/steps/previous-steps.model';
-import { UpdateStepsProgress } from '../../../../store/actions/steps/project.actions';
+import { UpdateStepsProgress, SetUserInfo } from '../../../../store/actions/steps/project.actions';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { UProject } from '../../../../models/steps/learning-modules.model';
 import { ActivatedRoute } from '@angular/router';
+import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
+import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 
 @Component({
   selector: 'app-steps',
@@ -26,8 +28,12 @@ export class StepsComponent implements OnInit {
   @Select(UserState.user_projects) userProjects$: Observable<UProject[]>; //! TEMPORARY
   @Select(UserState.user_type) user_type$: Observable<string>;
   @Select(StepsState.all_needed) project_steps$: Observable<any>;
+  @Select(ResidenceInfoState.get_states) states$: Observable<any>;
+  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
 
   stepsProgress = [0,0,0,0]; // general, sponsor, coordinator, school
+  enabledTabs = false;
+  formsCalled = [{id:'',called:false,hasForm:false},{id:'',called:false,hasForm:false},{id:'',called:false,hasForm:false}]; // sponsor, coordinator, school
   idsAlreadyIterated = [];
 
   generalSteps = [];
@@ -38,16 +44,17 @@ export class StepsComponent implements OnInit {
   constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getResidenceInfo();
     this.userProjects$.subscribe(projs => {
       if (!this.isTest) { 
         //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
         let pjId = (this.route.snapshot.params && (this.route.snapshot.params.project || this.route.snapshot.params.type=='0' || this.route.snapshot.params.type=='1') )? 
-          (this.route.snapshot.params.project? this.route.snapshot.params.project : '5e853175164bc53ac50ff5fe') : (projs? projs[0].id : ''); 
+          (this.route.snapshot.params.project? this.route.snapshot.params.project : '5e853175164bc53ac50ff5fe') : (projs && projs[0]? (projs[0].id? projs[0].id:'') : '5e853175164bc53ac50ff5fe'); 
         //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
         if(pjId.length>0) this.updateSteps(pjId);
         else return 0;
 
-        this.project_steps$.subscribe(res => {        
+        this.project_steps$.subscribe(res => {
           this.project_id = pjId;
           if (res.steps.length>0) {
             this.fillCounter++;
@@ -57,6 +64,7 @@ export class StepsComponent implements OnInit {
               this.coordinatorSteps = [];
               this.schoolSteps = [];
             }
+
             res.steps.forEach(record => {   
               let step_:Step = {
                 ...record,
@@ -79,9 +87,15 @@ export class StepsComponent implements OnInit {
               if (step_.status!="3" && step_.devName!="amblemaConfirmation") {
                 this.canOrganizationConfirm = false;
               }
+
+              if(step_.isForm) {
+                if(step_.type==3 && !this.formsCalled[0].hasForm) this.formsCalled[0].hasForm = true;
+                if(step_.type==2 && !this.formsCalled[1].hasForm) this.formsCalled[1].hasForm = true;
+                if(step_.type==4 && !this.formsCalled[2].hasForm) this.formsCalled[2].hasForm = true;
+              }
        
-              switch (step_.tag) {          
-                case "2":
+              switch (step_.tag) {
+                case "2":                  
                   let ind2 = this.coordinatorSteps.findIndex(st => {return st.id === step_.id});
                   if (ind2>=0) this.coordinatorSteps[ind2] = step_;
                   else this.coordinatorSteps.push(step_);
@@ -104,6 +118,16 @@ export class StepsComponent implements OnInit {
               }                    
             });
 
+            if(this.fillCounter>=2) {
+              this.enabledTabs = true;
+              if(this.formsCalled[0].hasForm) this.formsCalled[0].id = res.sponsor_id.length>0? res.sponsor_id:'';
+              if(this.formsCalled[1].hasForm) this.formsCalled[1].id = res.coordinator_id.length>0? res.coordinator_id:'';
+              if(this.formsCalled[2].hasForm) this.formsCalled[2].id = res.school_id.length>0? res.school_id:'';
+              this.getCoor();
+              this.getSpon();
+              this.getScho();
+            }
+
             //Setting progress bar
             this.stepsProgress[0]= +res.general;
             this.stepsProgress[1]= +res.sponsor;
@@ -118,9 +142,31 @@ export class StepsComponent implements OnInit {
   updateSteps(p_i) {
     this.store.dispatch(new UpdateStepsProgress(p_i));
   }
+  getResidenceInfo() {
+    this.store.dispatch(new UpdateStates);
+    this.store.dispatch(new UpdateMunicipalities);
+  }
 
-  swicthStep(num) {
+  swicthStep(num,e) {
     this.activeStep = num;
+  }
+  getSpon(){
+    if(!this.formsCalled[0].called && this.formsCalled[0].hasForm && this.formsCalled[0].id.length>0) {
+      this.store.dispatch(new SetUserInfo(this.formsCalled[0].id,"3"));
+      this.formsCalled[0].called = true;
+    }
+  }
+  getCoor(){
+    if(!this.formsCalled[1].called && this.formsCalled[1].hasForm && this.formsCalled[1].id.length>0) {
+      this.store.dispatch(new SetUserInfo(this.formsCalled[1].id,"2"));
+      this.formsCalled[1].called = true;
+    }
+  }
+  getScho(){
+    if(!this.formsCalled[2].called && this.formsCalled[2].hasForm && this.formsCalled[2].id.length>0) {
+      this.store.dispatch(new SetUserInfo(this.formsCalled[2].id,"4"));
+      this.formsCalled[2].called = true;
+    }
   }
 
   getChecks(ch) {

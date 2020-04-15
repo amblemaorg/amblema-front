@@ -12,7 +12,16 @@
 
           <p *ngIf="step.hasText" class="first-p">{{ step.text }}</p> 
           
-          <ng-container *ngIf="!step.isForm; else formOpt">           
+          <ng-container *ngIf="!step.isForm; else formOpt">        
+            <div *ngIf="step.hasDate" class="form-group">
+              <label for="datefill"> Fecha: </label>
+              <input type="date" name="datefill" [class.not-enabled]="!isAdmin() && (compareMode() || step.status=='3')" 
+              class="form-control" placeholder="Introduzca una fecha" [value]="getDateFrmt(step)" (change)="controlDate($event,step)" 
+              [disabled]="!isAdmin() && (compareMode() || step.status=='3')">
+              <div class="field-alerts">
+                <div class="field-invalid">¡Debe tener una fecha valida, mayor a la de hoy!</div>
+              </div>
+            </div>   
             <div *ngIf="step.hasVideo" class="video-container">
               <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
               <p class="font-weight-bold">{{ step.video.name }}</p>
@@ -38,12 +47,12 @@
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
               <button [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" 
-              [class.hidebtn]="step.send || (step.status=='1' && !step.uploadedFile) || step.status=='3'"
+              [class.hidebtn]="step.send || (step.status=='1' && !step.uploadedFile) || step.status=='3' || showSeveralsButton(step)"
               [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending">
                 <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
               </button>
             </div>
-            <button *ngIf="step.send && step.status!='3'" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
+            <button *ngIf="step.send && step.status!='3' && !showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" 
             [class.has-several]="step.hasFile || step.hasUpload" [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending"
             (click)="approvalMethod(step,i,mode)">
               <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar curriculum':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
@@ -66,22 +75,36 @@
               </div>
 
               <div class="checks-btn-container">
-                <button *ngIf="step.hasChecklist && step.checklist.length>0" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+                <button *ngIf="step.hasChecklist && step.checklist.length>0 && !showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
                   [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step)">
                   <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
                 </button>
               </div>              
-            </form>            
+            </form>   
+            
+            <div class="severals-btn mt-2">
+              <button *ngIf="showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4" 
+              [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || disableSeveralsButton(step)"
+              (click)="approvalMethod(step,i,mode)">
+                <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
+              </button>
+            </div>
           </ng-container>
           <ng-template #formOpt>
             <div *ngIf="step.type==2" class="has-form">
-              <app-steps-forms [who]="'coordinator'" [disable]="compareMode()"></app-steps-forms>
+              <app-steps-forms [who]="'coordinator'" [project_id]="project_id" [status]="step.status" [disable]="(compareMode() && !isAdmin()) || step.status=='3'" 
+              [has_sponsor]="has_sponsor" [setStates]="setStates" [setMuns]="setMuns" (emitMessage)="callToaster($event)" [index]="i" [mode]="mode" 
+              [approvalHistory]="step.approvalHistory"></app-steps-forms>
             </div>
             <div *ngIf="step.type==3" class="has-form">
-              <app-steps-forms [who]="'sponsor'" [disable]="compareMode()"></app-steps-forms>
+              <app-steps-forms [who]="'sponsor'" [project_id]="project_id" [status]="step.status" [disable]="(compareMode() && !isAdmin()) || step.status=='3'" 
+              [has_sponsor]="has_sponsor" [setStates]="setStates" [setMuns]="setMuns" (emitMessage)="callToaster($event)" [index]="i" [mode]="mode"
+              [approvalHistory]="step.approvalHistory"></app-steps-forms>
             </div>
             <div *ngIf="step.type==4" class="has-form">
-              <app-steps-forms [who]="'school'" [disable]="compareMode()"></app-steps-forms>
+              <app-steps-forms [who]="'school'" [project_id]="project_id" [status]="step.status" [disable]="(compareMode() && !isAdmin()) || step.status=='3'" 
+              [has_sponsor]="has_sponsor" [setStates]="setStates" [setMuns]="setMuns" (emitMessage)="callToaster($event)" [index]="i" [mode]="mode"
+              [approvalHistory]="step.approvalHistory"></app-steps-forms>
             </div>      
           </ng-template>
 

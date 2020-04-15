@@ -6,6 +6,7 @@ import { UserState } from '../../../store/states/e-learning/user.state';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StepsState } from '../../../store/states/steps/project.state';
+import { ResidenceInfoState } from '../../../store/states/steps/residence-info.state';
 
 describe('EheaderComponent', () => {
   let component: EheaderComponent;
@@ -21,6 +22,7 @@ describe('EheaderComponent', () => {
           ModulesState,
           UserState,
           StepsState,
+          ResidenceInfoState,
         ],
         {
           compatibility: {

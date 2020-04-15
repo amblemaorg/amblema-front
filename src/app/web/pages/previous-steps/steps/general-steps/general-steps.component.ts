@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Step } from '../../../../../models/steps/previous-steps.model';
 import { StepsService } from '../../../../../services/steps/steps.service';
 import * as $ from 'jquery';
+import { GlobalService } from '../../../../../services/global.service';
 declare var $:any;
 
 @Component({
@@ -24,18 +25,22 @@ export class GeneralStepsComponent implements OnInit {
   @Input() user_type:string = "1";
   @Input() project_id:string;
   @Input() confirmable:boolean;
+  @Input() setStates = [];
+  @Input() setMuns = [];
+  @Input() has_sponsor:boolean = false;
 
   @Output() callUpdate:EventEmitter<string> = new EventEmitter();
 
   isBrowser;
-
+  glbls:any;
   constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService, 
-    private sanitizer: DomSanitizer, private stepsService: StepsService) {
+    private sanitizer: DomSanitizer, private stepsService: StepsService, private globals: GlobalService) {
       this.isBrowser = isPlatformBrowser(platformId);
     }
 
   ngOnInit() {
     this.currentA = 0+'-'+this.mode;
+    this.glbls = this.globals;
   }
 
   getCollapsed(i,m){
@@ -112,7 +117,7 @@ export class GeneralStepsComponent implements OnInit {
       }
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
       if(step.approvalType=="3") formData.append('project', this.project_id);
-      if(step.hasDate) formData.append( step.approvalType=="3"?'stepDate':'date', this.getDateFormat( new Date() ) ); 
+      if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date); 
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
     }     
@@ -139,11 +144,14 @@ export class GeneralStepsComponent implements OnInit {
     }
   }
 
+  setCurrentAccItem(indd,modd) {
+    this.currentA = `${indd}-${modd}`;
+  }
   // POSTER AND PUTTER
   updatingEmitting(step,indd,modd) {
     step.sending = false;
     this.callUpdate.emit(this.project_id);
-    this.currentA = `${indd}-${modd}`;
+    this.setCurrentAccItem(indd,modd);
   }   
   postAR(formData,step:Step,indd,modd) {
     this.stepsService.requestApproval(formData).subscribe(res=>{
@@ -178,13 +186,13 @@ export class GeneralStepsComponent implements OnInit {
   }
   //
 
-  getDateFormat(dateSrc:Date) {
-    let numbers = [1,2,3,4,5,6,7,8,9];
-    let correctMonth = numbers.includes(dateSrc.getMonth()) ? `0${dateSrc.getMonth()}` : dateSrc.getMonth().toString();
-    let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
+  // getDateFormat(dateSrc:Date) {
+  //   let numbers = [1,2,3,4,5,6,7,8,9];
+  //   let correctMonth = numbers.includes(dateSrc.getMonth()+1) ? `0${dateSrc.getMonth()+1}` : (dateSrc.getMonth()+1).toString();
+  //   let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
 
-    return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-  }
+  //   return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+  // }
   //? -----------------------------------------------------------------------------------------------------------------
 
   toasterMeth(i,m) {
@@ -192,6 +200,34 @@ export class GeneralStepsComponent implements OnInit {
       $(`#toast${i}-${m}`).toast({delay: 5000});
       $(`#toast${i}-${m}`).toast('show');
     }
+  }
+
+  callToaster(e) {
+    this.toasterMeth(e.i,e.m);
+  }
+
+  // if there ares everal steps that send information, this method handles that
+  showSeveralsButton(step:Step) {
+    return (step.hasChecklist && step.hasDate && step.hasUpload) || (step.hasChecklist && step.hasDate) || (step.hasChecklist && step.hasUpload) || (step.hasDate && step.hasUpload) || (!step.hasChecklist && step.hasDate && !step.hasUpload);
+  }
+  disableSeveralsButton(step:Step) {
+    if(step.hasChecklist && step.hasDate && step.hasUpload) return !this.enableChecksBtn(step) || !step.uploadedFile || !step.date;
+    if(step.hasChecklist && step.hasDate) return !this.enableChecksBtn(step) || !step.date;
+    if(step.hasChecklist && step.hasUpload) return !this.enableChecksBtn(step) || !step.uploadedFile;
+    if(step.hasDate && step.hasUpload) return !step.date || !step.uploadedFile;
+    if(!step.hasChecklist && step.hasDate && !step.hasUpload) return !step.date;
+    return false;
+  }
+  //
+
+  getDateFrmt(step:Step) {
+    let date = '';
+    if(step.date) date = this.globals.getDateFormat(new Date(step.date));
+    return date;
+  }
+  controlDate(e, step:Step) {   
+    if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
+    else step.date = null;
   }
 
 }
