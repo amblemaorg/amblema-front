@@ -107,7 +107,7 @@ export class ImplementedFormsComponent implements OnInit {
     phone:               { label: "Número de teléfono",   ...this.controlProps.phone              },
     addressState:        { label: "Estado",               ...this.controlProps.select             },
     addressMunicipality: { label: "Municipio",            ...this.controlProps.select             },
-    addressStreet:       { label: "Calles / Carreras",    ...this.controlProps.normalText         },
+    address:             { label: "Calles / Carreras",    ...this.controlProps.normalText         },
     addressCity:         { label: "Ciudad",               ...this.controlProps.onlyLetters        },
   }
 
@@ -181,7 +181,7 @@ export class ImplementedFormsComponent implements OnInit {
     companyPhone:        { label: "Número de teléfono",   ...this.controlProps.phone              },
     addressState:        { label: "Estado",               ...this.controlProps.select             },
     addressMunicipality: { label: "Municipio",            ...this.controlProps.select             },
-    addressStreet:       { label: "Calles / Carreras",    ...this.controlProps.normalText         },
+    address:             { label: "Calles / Carreras",    ...this.controlProps.normalText         },
     addressCity:         { label: "Ciudad",               ...this.controlProps.onlyLetters        },
   }
 
@@ -254,7 +254,7 @@ export class ImplementedFormsComponent implements OnInit {
   coordinatorStep2 = {
     addressCity: { label: "Ciudad de residencia",     ...this.controlProps.onlyLetters },
     addressHome: { label: "Casa / Edificio",          ...this.controlProps.normalText  },
-    // street:   { label: "Calles / Carreras",        ...this.controlProps.normalText  },
+    address:     { label: "Calles / Carreras",        ...this.controlProps.normalText  },
     email:       { label: "Correo Electrónico",       ...this.controlProps.email       },
     phone:       { label: "Número de teléfono",       ...this.controlProps.phone       },
     profession:  { label: "Profesión",                ...this.controlProps.onlyLetters },
