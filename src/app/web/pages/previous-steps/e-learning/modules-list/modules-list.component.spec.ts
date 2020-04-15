@@ -8,6 +8,7 @@ import { NgxsModule } from '@ngxs/store';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
 import { UserState } from '../../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../../store/states/steps/project.state';
+import { ResidenceInfoState } from '../../../../../store/states/steps/residence-info.state';
 
 describe('ModulesListComponent', () => {
   let component: ModulesListComponent;
@@ -24,6 +25,7 @@ describe('ModulesListComponent', () => {
           ModulesState,
           UserState,
           StepsState,
+          ResidenceInfoState,
         ],
         {
           compatibility: {

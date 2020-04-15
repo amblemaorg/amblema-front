@@ -17,6 +17,7 @@ import { StepsState } from './store/states/steps/project.state';
 //
 
 import { EmbedVideo } from 'ngx-embed-video';
+import { ResidenceInfoState } from './store/states/steps/residence-info.state';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { EmbedVideo } from 'ngx-embed-video';
       ModulesState,
       UserState,
       StepsState,
+      ResidenceInfoState,
     ],
     {
       compatibility: {

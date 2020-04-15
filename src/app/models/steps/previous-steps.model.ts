@@ -1,4 +1,4 @@
-export interface Coordinator {
+export interface Basics {
     id: string;
     name: string;
 }
@@ -8,9 +8,7 @@ export interface Video {
     name: string;
 }
 
-export interface Checklist {
-    name: string;
-    id: string;
+export interface Checklist extends Basics {
     checked: boolean;
 }
 
@@ -19,19 +17,17 @@ export interface FileT {
     name: string;
 }
 
-export interface Step {
+export interface Step extends Basics {
     status: string;
     hasVideo: boolean;
     hasUpload: boolean;
     video: Video;
     uploadedFile?: any;
-    id: string;
     approvalHistory: any[];
     hasChecklist: boolean;
     checklist: Checklist[];
     approvalType: string;
     date?: any;
-    name: string;
     devName: string;
     hasDate: boolean;
     isStandard: boolean;
@@ -62,9 +58,9 @@ export interface StepsProgress {
 export interface Project {
     id: string;
     code: string;
-    school: string;
-    sponsor: string;
-    coordinator: Coordinator;
+    school?: Basics;
+    sponsor?: Basics;
+    coordinator?: Basics;
     schoolYears: any[];
     stepsProgress: StepsProgress;
     phase: string;
@@ -92,3 +88,34 @@ export interface StepApprovalRequest {
     date: string;
     uploadedFile: File; 
  }
+
+
+ // RESIDENCE INFO CLASSES
+ export interface StateInfo {
+    id: string;
+    name: string;
+    polygon?: any[];
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export interface StateInMuninicipality {
+    id: string;
+    name: string;
+}
+
+export interface MunicipalityInfo {
+    id: string;
+    name: string;
+    state?: StateInMuninicipality;
+    polygon?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+export interface StatesRecord {
+    records: StateInfo[];
+}
+export interface MunicipalitiesRecord {
+    records: MunicipalityInfo[];
+}

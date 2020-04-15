@@ -91,6 +91,7 @@ export interface UserData {
     createdAt: Date;
     updatedAt: Date;
     //
+    addressStreet?: string;
     phone?: string;
     image?: string;
     firstName?: string;
@@ -131,6 +132,7 @@ export interface UserData {
     nGrades?: any;
     nSections?: any;
     schoolShift?: any;
+    profession?: string;
 }
 
 export interface Answer {

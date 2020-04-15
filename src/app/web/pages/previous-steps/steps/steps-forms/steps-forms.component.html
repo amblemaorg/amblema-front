@@ -1,7 +1,7 @@
 <!-- SPONSOR -->
-<form *ngIf="who=='sponsor'" [formGroup]="sponsorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitSponsor(sponsorForm)">
+<form *ngIf="who=='sponsor'" [formGroup]="sponsorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitSponsor(sponsorForm)" [class.form-disabled]="disableThis()">
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la empresa">
+      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la empresa" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -17,20 +17,21 @@
         formControlName="selectedDoc"
         [virtualScroll]="true"
         [clearable]="false"
-        [searchable]="false">
+        [searchable]="false"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
       </ng-select>
       </div>
-      <input type="text" class="form-control" [class.not-valid]="validate('rif')" [class.not-empty]="isEmpty('rif')" formControlName="rif" placeholder="RIF de la empresa">
+      <input type="text" class="form-control" [class.not-valid]="validate('rif')" [class.not-empty]="isEmpty('rif')" formControlName="rif" placeholder="RIF de la empresa" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$">
+      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -49,7 +50,9 @@
         formControlName="addressState"
         [virtualScroll]="true"
         id="addressState"
-        placeholder="Estado">
+        placeholder="Estado"
+        (change)="updateMuns()"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -69,7 +72,8 @@
         formControlName="addressMunicipality"
         [virtualScroll]="true"
         id="addressMunicipality"
-        placeholder="Municipio">
+        placeholder="Municipio"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -79,19 +83,19 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono">
+      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
@@ -108,7 +112,8 @@
         formControlName="companyType"
         [virtualScroll]="true"
         id="companyType"
-        placeholder="Tipo de empresa">
+        placeholder="Tipo de empresa"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -118,54 +123,54 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('contactFirstName')" [class.not-empty]="isEmpty('contactFirstName')" formControlName="contactFirstName" placeholder="Nombre de la persona de contacto">
+      <input type="text" class="form-control" [class.not-valid]="validate('contactFirstName')" [class.not-empty]="isEmpty('contactFirstName')" formControlName="contactFirstName" placeholder="Nombre de la persona de contacto" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div>   
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('contactLastName')" [class.not-empty]="isEmpty('contactLastName')" formControlName="contactLastName" placeholder="Apellido de la persona de contacto">
+      <input type="text" class="form-control" [class.not-valid]="validate('contactLastName')" [class.not-empty]="isEmpty('contactLastName')" formControlName="contactLastName" placeholder="Apellido de la persona de contacto" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('contactPhone')" [class.not-empty]="isEmpty('contactPhone')" formControlName="contactPhone" placeholder="Telefono de la persona de contacto">
+      <input type="tel" class="form-control" [class.not-valid]="validate('contactPhone')" [class.not-empty]="isEmpty('contactPhone')" formControlName="contactPhone" placeholder="Telefono de la persona de contacto" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
       </div>
     </div>
 
-    <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!sponsorForm.valid || disable" [class.disabled]="!sponsorForm.valid">
-      Enviar solicitud
+    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    [disabled]="!sponsorForm.valid || disable || sendingForm" [class.disabled]="!sponsorForm.valid">
+    <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>
 </form>
 
 <!-- COORDINATOR -->
-<form *ngIf="who=='coordinator'" [formGroup]="coordinatorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitCoordinator(coordinatorForm)">
+<form *ngIf="who=='coordinator'" [formGroup]="coordinatorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitCoordinator(coordinatorForm)" [class.form-disabled]="disableThis()">
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('firstName')" [class.not-empty]="isEmpty('firstName')" formControlName="firstName" placeholder="Nombre">
+      <input type="text" class="form-control" [class.not-valid]="validate('firstName')" [class.not-empty]="isEmpty('firstName')" formControlName="firstName" placeholder="Nombre" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('lastName')" [class.not-empty]="isEmpty('lastName')" formControlName="lastName" placeholder="Apellido">
+      <input type="text" class="form-control" [class.not-valid]="validate('lastName')" [class.not-empty]="isEmpty('lastName')" formControlName="lastName" placeholder="Apellido" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="date" class="form-control" [class.not-valid]="validate('birthdate')" [class.not-empty]="isEmpty('birthdate')" formControlName="birthdate" placeholder="Fecha de nacimiento">
+      <input type="date" class="form-control" [class.not-enabled]="disableThis()" [class.not-valid]="validate('birthdate')" [class.not-empty]="isEmpty('birthdate')" formControlName="birthdate" placeholder="Fecha de nacimiento" (change)="glbls.validateDate($event,'lower')" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
-        <div class="field-invalid">¡Debe tener un formato valido!</div>
+        <div class="field-invalid">¡Debe tener una fecha valida, menor a la de hoy!</div>
       </div>
     </div>
     <div class="form-group">
@@ -179,7 +184,8 @@
         formControlName="gender"
         [virtualScroll]="true"
         id="gender"
-        placeholder="Sexo">
+        placeholder="Sexo"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -193,25 +199,26 @@
         <ng-select
         class="form-control"
         [items]="cardTypes"
-        bindValue="name"
+        bindValue="id"
         bindLabel="name"
         formControlName="cardType"
         [virtualScroll]="true"
         [clearable]="false"
-        [searchable]="false">
+        [searchable]="false"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
       </ng-select>
       </div>
-      <input type="text" class="form-control" [class.not-valid]="validate('cardId')" [class.not-empty]="isEmpty('cardId')" formControlName="cardId" placeholder="Identificacion">
+      <input type="text" class="form-control" [class.not-valid]="validate('cardId')" [class.not-empty]="isEmpty('cardId')" formControlName="cardId" placeholder="Identificacion" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('homePhone')" [class.not-empty]="isEmpty('homePhone')" formControlName="homePhone" placeholder="Telefono de habitacion">
+      <input type="tel" class="form-control" [class.not-valid]="validate('homePhone')" [class.not-empty]="isEmpty('homePhone')" formControlName="homePhone" placeholder="Telefono de habitacion" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
@@ -228,7 +235,9 @@
         formControlName="addressState"
         [virtualScroll]="true"
         id="addressState"
-        placeholder="Estado">
+        placeholder="Estado"
+        (change)="updateMuns()"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -248,7 +257,8 @@
         formControlName="addressMunicipality"
         [virtualScroll]="true"
         id="addressMunicipality"
-        placeholder="Municipio">
+        placeholder="Municipio"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -258,75 +268,75 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad de residencia">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad de residencia" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressHome')" [class.not-empty]="isEmpty('addressHome')" formControlName="addressHome" placeholder="Casa / Edificio">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressHome')" [class.not-empty]="isEmpty('addressHome')" formControlName="addressHome" placeholder="Casa / Edificio" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$">
+      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono">
+      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('profession')" [class.not-empty]="isEmpty('profession')" formControlName="profession" placeholder="Profesión">
+      <input type="text" class="form-control" [class.not-valid]="validate('profession')" [class.not-empty]="isEmpty('profession')" formControlName="profession" placeholder="Profesión" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>  
-    <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!coordinatorForm.valid || disable" [class.disabled]="!coordinatorForm.valid">
-      Enviar solicitud
+    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    [disabled]="!coordinatorForm.valid || disable || !controlDate() || sendingForm" [class.disabled]="!coordinatorForm.valid || !controlDate()">
+    <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>
 </form>
 
 <!-- SCHOOL -->
-<form *ngIf="who=='school'" [formGroup]="schoolForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitschool(schoolForm)">
+<form *ngIf="who=='school'" [formGroup]="schoolForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitschool(schoolForm)" [class.form-disabled]="disableThis()">
     <h6>Datos de la escuela</h6>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la escuela">
+      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la escuela" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$">
+      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electronico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('code')" [class.not-empty]="isEmpty('code')" formControlName="code" placeholder="Codigo del plantel">
+      <input type="text" class="form-control" [class.not-valid]="validate('code')" [class.not-empty]="isEmpty('code')" formControlName="code" placeholder="Codigo del plantel" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras y numeros permitidos!</div>
       </div> 
-    </div>
+    </div>    
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('address')" [class.not-empty]="isEmpty('address')" formControlName="address" placeholder="Direccion">
+      <input type="text" class="form-control" [class.not-valid]="validate('address')" [class.not-empty]="isEmpty('address')" formControlName="address" placeholder="Direccion" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
@@ -344,7 +354,9 @@
         formControlName="addressState"
         [virtualScroll]="true"
         id="addressState"
-        placeholder="Estado">
+        placeholder="Estado"
+        (change)="updateMuns()"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -364,7 +376,8 @@
         formControlName="addressMunicipality"
         [virtualScroll]="true"
         id="addressMunicipality"
-        placeholder="Municipio">
+        placeholder="Municipio"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -374,19 +387,19 @@
       </div>
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carrera" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
     </div>
     <div class="form-group">      
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad">
+      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono">
+      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Numero de telefono" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
@@ -403,7 +416,8 @@
         formControlName="schoolType"
         [virtualScroll]="true"
         id="schoolType"
-        placeholder="Tipo de escuela">
+        placeholder="Tipo de escuela"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -412,30 +426,31 @@
         <div class="field-empty">¡Debe Seleccionar un tipo de escuela!</div>
       </div>
     </div>
+    
     <h6>Datos del director o directora</h6>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('principalFirstName')" [class.not-empty]="isEmpty('principalFirstName')" formControlName="principalFirstName" placeholder="Nombre de director o directora">
+      <input type="text" class="form-control" [class.not-valid]="validate('principalFirstName')" [class.not-empty]="isEmpty('principalFirstName')" formControlName="principalFirstName" placeholder="Nombre de director o directora" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('principalLastName')" [class.not-empty]="isEmpty('principalLastName')" formControlName="principalLastName" placeholder="Apellido del director">
+      <input type="text" class="form-control" [class.not-valid]="validate('principalLastName')" [class.not-empty]="isEmpty('principalLastName')" formControlName="principalLastName" placeholder="Apellido del director" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" [class.not-valid]="validate('principalEmail')" [class.not-empty]="isEmpty('principalEmail')" formControlName="principalEmail" placeholder="Correo del director" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$">
+      <input type="email" class="form-control" [class.not-valid]="validate('principalEmail')" [class.not-empty]="isEmpty('principalEmail')" formControlName="principalEmail" placeholder="Correo del director" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('principalPhone')" [class.not-empty]="isEmpty('principalPhone')" formControlName="principalPhone" placeholder="Numero de telefono del director">
+      <input type="tel" class="form-control" [class.not-valid]="validate('principalPhone')" [class.not-empty]="isEmpty('principalPhone')" formControlName="principalPhone" placeholder="Numero de telefono del director" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
@@ -443,28 +458,28 @@
     </div>
     <h6>Datos del subdirector o subdirectora</h6>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalFirstName')" [class.not-empty]="isEmpty('subPrincipalFirstName')" formControlName="subPrincipalFirstName" placeholder="Nombre de subdirector o subdirectora">
+      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalFirstName')" [class.not-empty]="isEmpty('subPrincipalFirstName')" formControlName="subPrincipalFirstName" placeholder="Nombre de subdirector o subdirectora" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalLastName')" [class.not-empty]="isEmpty('subPrincipalLastName')" formControlName="subPrincipalLastName" placeholder="Apellido del subdirector">
+      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalLastName')" [class.not-empty]="isEmpty('subPrincipalLastName')" formControlName="subPrincipalLastName" placeholder="Apellido del subdirector" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
     <div class="form-group">
-      <input type="email" class="form-control" [class.not-valid]="validate('subPrincipalEmail')" [class.not-empty]="isEmpty('subPrincipalEmail')" formControlName="subPrincipalEmail" placeholder="Correo del subdirector" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$">
+      <input type="email" class="form-control" [class.not-valid]="validate('subPrincipalEmail')" [class.not-empty]="isEmpty('subPrincipalEmail')" formControlName="subPrincipalEmail" placeholder="Correo del subdirector" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
       </div>
     </div>
     <div class="form-group">
-      <input type="tel" class="form-control" [class.not-valid]="validate('subPrincipalPhone')" [class.not-empty]="isEmpty('subPrincipalPhone')" formControlName="subPrincipalPhone" placeholder="Numero de telefono del director">
+      <input type="tel" class="form-control" [class.not-valid]="validate('subPrincipalPhone')" [class.not-empty]="isEmpty('subPrincipalPhone')" formControlName="subPrincipalPhone" placeholder="Numero de telefono del director" [readonly]="disableThis()">
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo numeros permitidos!</div>
@@ -473,14 +488,14 @@
     <h6>Otros datos de la escuela</h6>
     <div class="two-wrapper">
       <div class="form-group">      
-        <input type="number" class="form-control" [class.not-valid]="validate('nTeachers')" [class.not-empty]="isEmpty('nTeachers')" formControlName="nTeachers" placeholder="Cantidad de docentes">
+        <input type="number" class="form-control" [class.not-valid]="validate('nTeachers')" [class.not-empty]="isEmpty('nTeachers')" formControlName="nTeachers" placeholder="Cantidad de docentes" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
         </div>
       </div>
       <div class="form-group">
-        <input type="number" class="form-control" [class.not-valid]="validate('nAdministrativeStaff')" [class.not-empty]="isEmpty('nAdministrativeStaff')" formControlName="nAdministrativeStaff" placeholder="Cantidad personal administrativo">
+        <input type="number" class="form-control" [class.not-valid]="validate('nAdministrativeStaff')" [class.not-empty]="isEmpty('nAdministrativeStaff')" formControlName="nAdministrativeStaff" placeholder="Cantidad personal administrativo" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
@@ -489,14 +504,14 @@
     </div>
     <div class="two-wrapper">
       <div class="form-group">
-        <input type="number" class="form-control" [class.not-valid]="validate('nLaborStaff')" [class.not-empty]="isEmpty('nLaborStaff')" formControlName="nLaborStaff" placeholder="Cantidad personal obrero">
+        <input type="number" class="form-control" [class.not-valid]="validate('nLaborStaff')" [class.not-empty]="isEmpty('nLaborStaff')" formControlName="nLaborStaff" placeholder="Cantidad personal obrero" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
         </div>
       </div>
       <div class="form-group">      
-        <input type="number" class="form-control" [class.not-valid]="validate('nStudents')" [class.not-empty]="isEmpty('nStudents')" formControlName="nStudents" placeholder="Cantidad de estudiantes">
+        <input type="number" class="form-control" [class.not-valid]="validate('nStudents')" [class.not-empty]="isEmpty('nStudents')" formControlName="nStudents" placeholder="Cantidad de estudiantes" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
@@ -505,14 +520,14 @@
     </div>
     <div class="two-wrapper">
       <div class="form-group">
-        <input type="number" class="form-control" [class.not-valid]="validate('nGrades')" [class.not-empty]="isEmpty('nGrades')" formControlName="nGrades" placeholder="Cantidad de grados">
+        <input type="number" class="form-control" [class.not-valid]="validate('nGrades')" [class.not-empty]="isEmpty('nGrades')" formControlName="nGrades" placeholder="Cantidad de grados" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
         </div>
       </div>
       <div class="form-group">
-        <input type="number" class="form-control" [class.not-valid]="validate('nSections')" [class.not-empty]="isEmpty('nSections')" formControlName="nSections" placeholder="Cantidad de secciones">
+        <input type="number" class="form-control" [class.not-valid]="validate('nSections')" [class.not-empty]="isEmpty('nSections')" formControlName="nSections" placeholder="Cantidad de secciones" [readonly]="disableThis()">
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo numeros positivos permitidos!</div>
@@ -530,7 +545,8 @@
         formControlName="schoolShift"
         [virtualScroll]="true"
         id="schoolShift"
-        placeholder="Turno de clases">
+        placeholder="Turno de clases"
+        [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -539,8 +555,8 @@
         <div class="field-empty">¡Debe Seleccionar un turno!</div>
       </div>
     </div>
-    <button type="submit" (click)="$event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-    [disabled]="!schoolForm.valid || disable" [class.disabled]="!schoolForm.valid">
-      Enviar solicitud
+    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    [disabled]="!schoolForm.valid || disable || sendingForm" [class.disabled]="!schoolForm.valid">
+    <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>
 </form>

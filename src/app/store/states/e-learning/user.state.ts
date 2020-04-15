@@ -69,13 +69,13 @@ import { ModulesService } from '../../../services/steps/modules.service';
             ...state,
             coins: user.nCoins,
             name: user.name,
-            gender: user.gender,
+            gender: user.gender? user.gender:null,
             user_id: user.id,
-            image: user.image,
+            image: user.image? user.image:null,
             userType: user.userType,
             // coordinator_modules: coor.learning.filter(m=>{ return m.status=="2" })
-            coordinator_modules: user.learning,
-            user_projects: user.userType=="4"? [user.project] : user.projects,
+            coordinator_modules: user.learning? user.learning:[],
+            user_projects: (user.userType=="0" || user.userType=="1")? [] : (user.userType=="4"? [user.project] : user.projects),
           });
         })
       );

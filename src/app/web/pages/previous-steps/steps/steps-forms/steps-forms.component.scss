@@ -37,7 +37,8 @@ form {
         .form-group {
             width: 100%;
         }
-    }
+    }    
+
     .form-group {
         @include form-flexings;
 
@@ -50,19 +51,23 @@ form {
             @include mediabreak(small,portrait) { font-size: medium; }
             @include mediabreak(large,portrait) { font-size: larger; }            
         }
+        .not-enabled {
+            color: #6c757d;
+        }
 
         .form-control:focus{
             box-shadow: none;
             border-color: map-get($color_map, blue);
         }
 
-        .ng-touched.ng-invalid.not-empty, .ng-touched.ng-invalid {
+        .ng-touched.ng-invalid.not-empty, .ng-touched.ng-invalid, .date-not-valid {
             border-color: map-get($color_map, red);
             color: map-get($color_map, red);
         }
 
         .ng-touched.ng-invalid.not-empty + .field-alerts .field-invalid,
-        .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty {
+        .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty,
+        .date-not-valid + .field-alerts .field-invalid {
             display: inline-block;
         }
 
@@ -120,6 +125,18 @@ form {
             } 
         }
     }
+
+    &.form-disabled .form-group{
+        .form-control {
+            border-color: #ced4da !important;
+        }
+        .field-alerts{
+            display: none;
+        }
+        ::ng-deep ng-select {
+            background-color: #e9ecef !important;
+        }
+    } 
 
     .input-group {
         select {

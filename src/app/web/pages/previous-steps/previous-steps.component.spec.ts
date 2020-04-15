@@ -7,6 +7,7 @@ import { ModulesState } from '../../../store/states/e-learning/learning-modules.
 import { UserState } from '../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../store/states/steps/project.state';
 import { PreviousStepsComponent } from './previous-steps.component';
+import { ResidenceInfoState } from '../../../store/states/steps/residence-info.state';
 
 describe('PreviousStepsComponent', () => {
   let component: PreviousStepsComponent;
@@ -22,6 +23,7 @@ describe('PreviousStepsComponent', () => {
           ModulesState,
           UserState,
           StepsState,
+          ResidenceInfoState,
         ],
         {
           compatibility: {
