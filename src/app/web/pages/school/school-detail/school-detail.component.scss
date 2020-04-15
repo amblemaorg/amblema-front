@@ -6,14 +6,22 @@ section.school-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 8vw;
+  padding: 8vw 8vw 30vw 8vw;
+  background-image: url('../../../../../assets/images/cover-blue-simbolos.png');
+  background-repeat: no-repeat;
+  background-size: 240vw;
+  background-position-y: 102.5%;
 
   @include breakpoint(small, landscape) {
-    padding: 10vw 3vw 10vw 10vw;
+    padding: 10vw 3vw 13vw 10vw;
+    background-size: 100vw;
+    background-position-y: 105%;
   }
 
   @include breakpoint(medium) {
-    padding: 10vw 3vw 10vw 10vw;
+    padding: 10vw 3vw 13vw 10vw;
+    background-size: 100vw;
+    background-position-y: 105%;
   }
 
   & > div {
