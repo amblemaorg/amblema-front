@@ -84,7 +84,7 @@
         <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
             <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span></h3>           
             <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
-                <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="completedModule? question.correctOption===option:selectedQuestions[i]===option" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
+                <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="!forAdminSetFalse?false:(completedModule? question.correctOption===option:selectedQuestions[i]===option)" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
                     <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
                     <div class="col-10 text-left">{{ getOption(j,question) }}</div>
                 </a>                
@@ -92,8 +92,8 @@
         </div>
     </div>
 
-    <br *ngIf="completedModule" />
-    <div class="validate-btn text-center">
+    <br *ngIf="completedModule || !forAdminSetFalse" />
+    <div *ngIf="forAdminSetFalse" class="validate-btn text-center">
         <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener)" [disabled]="isValidating">
                 <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : ('Validar &times; '+(moduleCoins>1? (moduleCoins+' puntos'):(moduleCoins+' punto') ) ) }}
         </button>
@@ -102,7 +102,7 @@
         <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
         <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
     </div>
-    <br *ngIf="completedModule" />
+    <br *ngIf="completedModule || !forAdminSetFalse" />
 </section>
 
 

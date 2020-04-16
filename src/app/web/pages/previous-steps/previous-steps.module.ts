@@ -6,6 +6,9 @@ import { PreviousStepsRoutingModule } from './previous-steps-routing.module';
 import { PreviousStepsComponent } from './previous-steps.component';
 import { EheaderComponent } from '../../layout/eheader/eheader.component';
 
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { TransferHttpCacheModule } from '@nguniversal/common';
+
 @NgModule({
   declarations: [
     PreviousStepsComponent,
@@ -13,7 +16,9 @@ import { EheaderComponent } from '../../layout/eheader/eheader.component';
   ],
   imports: [
     CommonModule,
-    PreviousStepsRoutingModule
+    PreviousStepsRoutingModule,
+    BrowserTransferStateModule,
+    TransferHttpCacheModule,
   ]
 })
 export class PreviousStepsModule { }

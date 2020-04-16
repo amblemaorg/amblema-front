@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-previous-steps',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./previous-steps.component.scss']
 })
 export class PreviousStepsComponent implements OnInit {
-
-  constructor() { }
+  documentt;
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    this.documentt = document;
+  }
 
   ngOnInit() {
   }

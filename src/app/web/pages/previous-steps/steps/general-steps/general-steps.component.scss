@@ -62,7 +62,7 @@
                     transition: transform .5s;
                 }
 
-                &[aria-expanded="true"] {
+                &[aria-expanded="true"], &.active-arrow {
                     fa-icon ::ng-deep svg{
                         transform: rotate(180deg);
                     }
@@ -72,17 +72,23 @@
                         transform: rotate(0deg);
                     }
                 }
+
+                &.not-enabled {
+                    opacity: 0.75;
+                    // cursor: not-allowed;
+                }
              }
         }
 
-        &:first-child {
+        /* &:first-child {
             .card-link ::ng-deep fa-icon svg{
                 transform: rotate(180deg);
             }
-        }
+        } */
 
         .card-body {
             padding: 1rem 1.75rem;
+            position: relative;
 
             @mixin card-body {
                 padding: 1rem;
@@ -98,20 +104,91 @@
             @include mediabreak(large,landscape) { width: 94%; }
             @include mediabreak(larger,landscape,true,1680px) { width: 96%; }
 
+            .toast {
+                position: absolute;
+                z-index: -1;
+                right: 0;
+                bottom: 5%;
+                -webkit-transition: bottom .5s;
+                transition: bottom .5s;
+
+                @include mediabreak(large,landscape) { max-width: 30rem; }
+
+                button:focus {
+                    outline: none;
+                }
+                p {
+                    padding: 0.25rem 1rem;
+                }
+            }
+            .toast.show {
+                z-index: 1;
+                bottom: 20%;
+            }
+
             .mobile-only {
                 color: map-get($color_map, blue);
                 margin-bottom: 1rem;
 
                 @media screen and (orientation:landscape) and (min-width:640px) { display: none; }
-                @include mediabreak(large,portrait) { margin-right: auto; }
+                @include mediabreak(large,portrait) { margin-right: auto; width: 100%; }
+            }
+
+            .inactive {
+                opacity: 0.65;
             }
 
             .first-p {
                 @media screen and (orientation:landscape) and (min-width:640px) { width: 100%; }
+                @include mediabreak(large,portrait) { width: 100%; }
             }
 
             .hide-upload-btn {
                 display: none;
+            }
+
+            .form-group {
+                width: 100%;
+                
+                input {                    
+                    display: inline-block !important;
+                    width: 100%;
+                    @media screen and (orientation:landscape) {
+                        width: auto;
+                        margin-left: 1rem;   
+                    }
+                    @media screen and (orientation:portrait) and (min-width:480px) {
+                        width: auto;
+                        margin-left: 1rem;  
+                    }              
+                }
+        
+                .field-invalid{
+                    font-size: smaller;
+                    margin-block-start: 0.45rem;
+                    color: map-get($color_map, red);
+                    display: none;
+        
+                    @include mediabreak(small,portrait) { font-size: medium; }
+                    @include mediabreak(large,portrait) { font-size: larger; }            
+                }
+                .not-enabled {
+                    color: #6c757d;
+                }
+        
+                .form-control:focus{
+                    box-shadow: none;
+                    border-color: map-get($color_map, blue);
+                }
+        
+                .date-not-valid {
+                    border-color: map-get($color_map, red);
+                    color: map-get($color_map, red);
+                }
+
+                .date-not-valid + .field-alerts .field-invalid{
+                    display: inline-block;
+                }
             }
 
             .video-container {
@@ -140,6 +217,9 @@
             .btn {
                 @include btn-righted;
                 color: #fff;
+                span {
+                    color: #fff;
+                }
 
                 @include mediabreak(large,landscape) { margin-right: 0; }
 
@@ -154,24 +234,44 @@
                     @include mediabreak(large,portrait) { @include has-several; }
                 }
 
+                &.hidebtn {
+                    display: none;
+                }
+
                 &:focus {
                     box-shadow: none;
                 }
                 &:hover {
                     background: #fff;
                     color: map-get($color_map, blue);
+
+                    span {
+                        color: map-get($color_map, blue);
+                    }
                 }
+            }
+            .attachfile {
+                @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 0 !important; }
+                @include mediabreak(large,landscape) { margin-top: 0 !important; }
             }
 
             .checks-form {
+                width: 100%;
                 @mixin checks-form {
                     display: flex;
                     flex-wrap: wrap;
-                    justify-content: flex-end;
                 }
                 @media screen and (orientation:landscape) and (min-width:640px) { @include checks-form; }
                 @include mediabreak(small,portrait) { @include checks-form; }
-            }
+
+                .checks-btn-container{
+                    width: 100%;
+                    text-align: right;
+                }
+                &.has-siblings {
+                    margin-top: 2rem;
+                }
+            }            
             .checkbox {
                 @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 50%; }
                 @include mediabreak(small,portrait) { flex: 0 0 50%; }

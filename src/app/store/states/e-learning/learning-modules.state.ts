@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { ModuleStateModel, UpdateModulesTotal } from '../../actions/e-learning/learning-modules.actions';
-import { ModulesService } from '../../../services/e-learning/modules.service';
+import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<ModuleStateModel>({
     name: 'moduleinfo',
