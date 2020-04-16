@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, HostListener, Inject, ElementRef } from '
 import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ModulesService } from '../../../../../services/e-learning/modules.service';
+import { ModulesService } from '../../../../../services/steps/modules.service';
 import { GlobalService } from '../../../../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/e-learning/learning-modules.model';
-import { CoordinatorState } from '../../../../../store/states/e-learning/coordinator-user.state';
+import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/steps/learning-modules.model';
+import { UserState } from '../../../../../store/states/e-learning/user.state';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -20,7 +20,8 @@ export class ModuleDetailComponent implements OnInit {
   @ViewChild('stackElement', {static: false}) stackEl:OwlCarousel;
   @ViewChild('warningOpener', {static: false}) warningBtn:any;
 
-  @Select(CoordinatorState.coordinator_id) coorId$: Observable<string>;
+  @Select(UserState.user_id) coorId$: Observable<string>;
+  @Select(UserState.user_type) userType$: Observable<string>;
   current_coor_id:string = '';
 
   moduleInfo: Module;
@@ -30,6 +31,8 @@ export class ModuleDetailComponent implements OnInit {
 
   isTesting = false;
   testingModule:Module;
+
+  forAdminSetFalse:boolean = false;
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
@@ -90,8 +93,12 @@ export class ModuleDetailComponent implements OnInit {
 
     this.coorId$.subscribe(id_ => {
       this.current_coor_id = id_;
-      this.moduleService.actualUser = id_//!remove
+      this.moduleService.actualUser = {user:id_,type:2}//!remove
     })
+
+    this.userType$.subscribe(res => {
+      this.forAdminSetFalse = (res=="0" || res=="1") ? false : true;
+    });
     
     this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
     setTimeout(()=>{
@@ -167,13 +174,13 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
-            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
             this.warningBtn.nativeElement.click(); // opening warning modal
           } 
         } else {
           if (!wrong) {
             this.completedModule = true;
-            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
             el.click(); // opening success modal
           }
         }        
@@ -186,7 +193,7 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   selectAnswer(i,j) {
-    this.selectedQuestions[i] = j;    
+    if (this.forAdminSetFalse) this.selectedQuestions[i] = j;    
   }    
 
   @HostListener('window:resize', ['$event'])
@@ -244,8 +251,10 @@ export class ModuleDetailComponent implements OnInit {
   checkApprove(id){
     let currentMod:Module;
     if (!this.isTesting) {
-      let thereIsMod = this.moduleService.checkApprove(id);
-      this.completedModule = thereIsMod ? (thereIsMod.status=="3"? true:false) : false;
+      if (this.forAdminSetFalse) {
+        let thereIsMod = this.moduleService.checkApprove(id);
+        this.completedModule = thereIsMod ? (thereIsMod.status=="3"? true:false) : false;
+      }      
       currentMod = this.moduleService.getSelectedModule(id);
     } else {
       currentMod = this.testingModule;
@@ -269,8 +278,10 @@ export class ModuleDetailComponent implements OnInit {
     this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
     this.incorrectOnes = this.selectedQuestions.slice();      
     this.initOps();
-    let thereIsModu = this.moduleService.checkApprove(this.module_id);
-    this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4);
+    if (this.forAdminSetFalse) {
+      let thereIsModu = this.moduleService.checkApprove(this.module_id);
+      this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4); 
+    }    
   }
 
   fillImage(img) {   

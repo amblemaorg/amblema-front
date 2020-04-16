@@ -151,4 +151,27 @@ export class GlobalService {
         this.totFrees = vals.frees;
     }
 
+    getDateFormat(dateSrc:Date) {
+        let numbers = [1,2,3,4,5,6,7,8,9];
+        let correctMonth = numbers.includes(dateSrc.getMonth()+1) ? `0${dateSrc.getMonth()+1}` : (dateSrc.getMonth()+1).toString();
+        let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
+
+        return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+    }
+
+    validateDate(e,cond,bool=false){
+        let value = e.target.value;
+        let today = this.getDateFormat(new Date());
+        if(value!=''){
+          if( (cond=='lower' && value>today) || (cond=='greater' && value<=today) ) {            
+            e.target.classList.add('date-not-valid');
+            if(bool) return true;
+          }
+          else {            
+            e.target.classList.remove('date-not-valid');
+            if(bool) return false;
+          }
+        }
+      }
+
 }

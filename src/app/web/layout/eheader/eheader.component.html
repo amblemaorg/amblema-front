@@ -1,16 +1,16 @@
 <div class="header-elearning d-flex flex-column">
-    <div class="d-flex header-first-row flex-wrap pt-2">
+    <div class="d-flex header-first-row flex-wrap pt-2" [class.no-under]="(user_type$ | async) != '2'">
         <h2 class="main-name ml-3 mr-auto mb-0 font-weight-bold">AmbLeMa</h2>
 
         <div class="avatar-container media p-3 d-flex align-items-center">
-            <img [src]="(coorBrief$ | async).image ? (coorBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(coorBrief$ | async).name" class="mr-2 rounded-circle">
+            <img [src]="(userBrief$ | async).image ? (userBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(userBrief$ | async).name" class="mr-2 rounded-circle">
             <div class="media-body">
-                <h4 class="mb-0 name font-weight-bold">{{ (coorBrief$ | async).name }}</h4>
+                <h4 class="mb-0 name font-weight-bold">{{ (userBrief$ | async).name }}</h4>
             </div>
         </div>
     </div>
 
-    <p class="user-info px-3">
-        <span title="4 AmbleMonedas de 80" class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' punto') : ((coins$ | async) + ' puntos') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
+    <p *ngIf="(user_type$ | async) == '2'" class="user-info px-3">
+        <span class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' punto') : ((coins$ | async) + ' puntos') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
     </p>
 </div>

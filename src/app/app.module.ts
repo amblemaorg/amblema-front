@@ -9,8 +9,13 @@ import { AppComponent } from './app.component';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from '../environments/environment.prod';
+
+// states
 import { ModulesState } from './store/states/e-learning/learning-modules.state';
-import { CoordinatorState } from './store/states/e-learning/coordinator-user.state';
+import { UserState } from './store/states/e-learning/user.state';
+import { StepsState } from './store/states/steps/project.state';
+import { ResidenceInfoState } from './store/states/steps/residence-info.state';
+//
 
 import { EmbedVideo } from 'ngx-embed-video';
 import { AuthGuard } from './guards/auth.guard';
@@ -29,7 +34,9 @@ import { NbAuthModule } from '@nebular/auth';
     // -- NGXS --
     NgxsModule.forRoot( [
       ModulesState,
-      CoordinatorState
+      UserState,
+      StepsState,
+      ResidenceInfoState,
     ],
     {
       compatibility: {
