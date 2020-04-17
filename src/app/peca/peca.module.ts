@@ -9,7 +9,8 @@ import {
   NbSidebarModule,
   NbContextMenuModule,
   NbTabsetModule,
-  NbCardModule
+  NbCardModule,
+  NbAccordionModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
@@ -24,6 +25,7 @@ import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
+import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/accordion-block.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
+    AccordionBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -47,12 +50,14 @@ import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.
     NbContextMenuModule,
     NbTabsetModule,
     NbCardModule,
+    NbAccordionModule,
     NbMenuModule.forRoot(),
     Ng2SmartTableModule,
   ],
   entryComponents: [
     TabsBlockComponent,
-    TableBlockComponent
+    TableBlockComponent,
+    AccordionBlockComponent,
   ]
 })
 export class PecaModule { }
