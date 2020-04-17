@@ -60,7 +60,8 @@ export class StepsFormsComponent implements OnInit {
     {id:'1',name:'Fabrica'},
     {id:'2',name:'Tienda'},
     {id:'3',name:'Negocio personal'},
-    {id:'4',name:'Otro'},
+    {id:'4',name:'Hacienda'},
+    {id:'5',name:'Otro'},
   ];
 
   genders = [

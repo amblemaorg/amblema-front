@@ -4,7 +4,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
   },
   blocks: [
     {
-      component: 'tabs',
+      component: 'accordion',
       settings: {
         items: [
           {
