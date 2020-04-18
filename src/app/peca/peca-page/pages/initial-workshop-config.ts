@@ -9,15 +9,19 @@ export const INITIAL_WORKSHOP_CONFIG = {
         items: [
           {
             title: "Carta convenio",
+            // icon: "planificacion",
           },
           {
-            title: "Reunión para Planificación del taller inicial"
+            title: "Reunión para Planificación del taller inicial",
+            icon: "planificacion",
           },
           {
-            title: "Preparación del taller inicial"
+            title: "Preparación del taller inicial",
+            // icon: "planificacion",
           },
           {
-            title: "Registro del taller inicial"
+            title: "Registro del taller inicial",
+            icon: "planificacion",
           }
         ]
       }
