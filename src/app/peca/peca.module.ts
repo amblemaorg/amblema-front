@@ -11,6 +11,7 @@ import {
   NbTabsetModule,
   NbCardModule,
   NbAccordionModule,
+  NbIconModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
@@ -46,6 +47,7 @@ import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/acco
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
+    NbIconModule,
     NbSidebarModule.forRoot(),
     NbContextMenuModule,
     NbTabsetModule,

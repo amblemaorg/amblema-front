@@ -7,7 +7,10 @@ import { PageBlockFactory } from '../page-block-factory';
   template: `
     <nb-accordion>
         <nb-accordion-item *ngFor="let item of settings.items; index as i">
-            <nb-accordion-item-header>{{ item.title }}</nb-accordion-item-header>
+            <nb-accordion-item-header>
+              <nb-icon *ngIf="item.icon" [icon]="item.icon" class="title-icon"></nb-icon>              
+              {{ item.title }}
+            </nb-accordion-item-header>
             <nb-accordion-item-body>
                 <ng-template #accordionItemBodyContainer></ng-template>
             </nb-accordion-item-body>

@@ -11,8 +11,14 @@
             border-bottom-color: $blue;
             color: $blue;
 
+            .title-icon {
+              margin-right: 1.5rem;
+              font-size: 2rem;
+            }            
+
             .expansion-indicator {
                 right: 1.25rem;
+                font-size: 3rem;
             }
         }
     }
