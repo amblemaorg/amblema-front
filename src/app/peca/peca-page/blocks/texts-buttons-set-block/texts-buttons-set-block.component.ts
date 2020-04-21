@@ -10,19 +10,24 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   type: 'presentational';
   component: string;
   settings: {
+    date: {
+      text: string;
+      date: string;
+    };
+    status: string;
     title: {
-      aligning: string;
+      aligning: string; // 'center' for center aligning, 'left' otherwise
       text: string;
     };
     subtitles: {
-      title: string;
-      text: string;
+      title: string; // subtitle
+      text: string; // paragraph
     }[];
     action: {
         type: number; // 1 send, 2 save
-        name: string;
+        name: string; // text in the button
     };
-    upload: any;
+    // upload: any;
     download: any;
   };
 
