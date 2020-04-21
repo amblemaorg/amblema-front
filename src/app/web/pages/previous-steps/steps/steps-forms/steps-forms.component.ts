@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StateInfo, MunicipalityInfo } from '../../../../../models/steps/previous-steps.model';
-import { ModulesService } from '../../../../../services/steps/modules.service';
 import { Select } from '@ngxs/store';
 import { StepsState } from '../../../../../store/states/steps/project.state';
 import { Observable } from 'rxjs';
@@ -44,24 +43,23 @@ export class StepsFormsComponent implements OnInit {
   doc_type = [
     {id:'1',name:'J'},
     // {name:'V'},
-  ];  
+  ]; 
+  
+  addressZoneTypes = [
+    {id:'1',name:'Sector'},
+    {id:'2',name:'Barrio'},
+    {id:'3',name:'Caserío'},
+  ];
 
-  statesExample:StateInfo[] = [
-    // {id:'1',name:'Yaracuy'},
-    // {id:'2',name:'Lara'},
-    // {id:'3',name:'Zulia'},
-  ];
-  municipalitiesExample:MunicipalityInfo[] = [
-    // {id:'1',name:'Iribaren'},
-    // {id:'2',name:'Cocorote'},
-    // {id:'3',name:'Sucre'},
-  ];
+  statesExample:StateInfo[] = [];
+  municipalitiesExample:MunicipalityInfo[] = [];
+
   companyTypes = [
+    {id:'0',name:'Otro'},
     {id:'1',name:'Fabrica'},
     {id:'2',name:'Tienda'},
     {id:'3',name:'Negocio personal'},
-    {id:'4',name:'Hacienda'},
-    {id:'5',name:'Otro'},
+    {id:'4',name:'Hacienda'},    
   ];
 
   genders = [
@@ -99,6 +97,7 @@ export class StepsFormsComponent implements OnInit {
     contactFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
     contactLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
     contactPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],
+    contactEmail: ['', [Validators.required, Validators.email, Validators.pattern(EMAIL_PTTRN)]],
   });
 
   coordinatorForm = this.fb.group({
@@ -123,23 +122,25 @@ export class StepsFormsComponent implements OnInit {
     name: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str(nombre de la escuela),
     email: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
     code: ['', [Validators.required, Validators.pattern(LETTERS_NUMBERS_PTTRN)]],//str(codigo de la escuela),
-    address: ['', [Validators.required]],//str,
+    // address: ['', [Validators.required]],//str,
     addressState: ['', [Validators.required]],//str addressID,
     addressMunicipality: ['', [Validators.required]],//str municipalityID,
     addressStreet: ['', [Validators.required]],//str (calle/carreras),
     addressCity: ['', [Validators.required]],//str,
     phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
     schoolType: ['', [Validators.required]],//str '1'=nacional, '2'=estadal, '3'=municipal,
+    addressZoneType: ['', [Validators.required]],//str '1'=sector, '2'=barrio, '3'=caserio,
+    addressZone: ['', [Validators.required]],
     //
     principalFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
     principalLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
     principalEmail: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
     principalPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numero,
     //
-    subPrincipalFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
-    subPrincipalLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
-    subPrincipalEmail: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
-    subPrincipalPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
+    subPrincipalFirstName: ['', [Validators.pattern(LETTERS_PTTRN)]],//str,
+    subPrincipalLastName: ['', [Validators.pattern(LETTERS_PTTRN)]],//str,
+    subPrincipalEmail: ['', [Validators.pattern(EMAIL_PTTRN)]],//str,
+    subPrincipalPhone: ['', [Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
     //
     nTeachers: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
     nAdministrativeStaff: [null, [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//int,
@@ -241,10 +242,11 @@ export class StepsFormsComponent implements OnInit {
       addressState:this.sponsorForm.controls['addressState'].value,
       addressMunicipality: this.sponsorForm.controls['addressMunicipality'].value,
       addressCity: this.sponsorForm.controls['addressCity'].value,
-      addressStreet: this.sponsorForm.controls['addressStreet'].value,
+      // addressStreet: this.sponsorForm.controls['addressStreet'].value,
       contactFirstName: this.sponsorForm.controls['contactFirstName'].value,
       contactLastName: this.sponsorForm.controls['contactLastName'].value,
       contactPhone: this.sponsorForm.controls['contactPhone'].value,
+      contactEmail: this.sponsorForm.controls['contactEmail'].value,
       // schoolContact: "str (1=director, 2=profesor, 3= padre, 4=vecino)",
       // schoolContactName: "str nombre y apellido"
     }
@@ -286,13 +288,15 @@ export class StepsFormsComponent implements OnInit {
         name: this.schoolForm.controls['name'].value,
         code: this.schoolForm.controls['code'].value,
         email: this.schoolForm.controls['email'].value,
-        address: this.schoolForm.controls['address'].value,
+        address: this.schoolForm.controls['addressStreet'].value,
         addressState: this.schoolForm.controls['addressState'].value,
         addressMunicipality: this.schoolForm.controls['addressMunicipality'].value,
         addressCity: this.schoolForm.controls['addressCity'].value,
-        addressStreet: this.schoolForm.controls['addressStreet'].value,
+        // addressStreet: this.schoolForm.controls['addressStreet'].value,
         phone: this.schoolForm.controls['phone'].value,
         schoolType: this.schoolForm.controls['schoolType'].value,//"str '1'=nacional, '2'=estadal, '3'=municipal",
+        addressZoneType: this.schoolForm.controls['addressZoneType'].value,
+        addressZone: this.schoolForm.controls['addressZone'].value,
         principalFirstName: this.schoolForm.controls['principalFirstName'].value,
         principalLastName: this.schoolForm.controls['principalLastName'].value,
         principalEmail: this.schoolForm.controls['principalEmail'].value,
@@ -434,6 +438,7 @@ export class StepsFormsComponent implements OnInit {
       contactFirstName: res.contactFirstName,
       contactLastName: res.contactLastName,
       contactPhone: res.contactPhone,
+      contactEmail: res.contactEmail? res.contactEmail:'',
     });
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);
   }
@@ -465,13 +470,15 @@ export class StepsFormsComponent implements OnInit {
       name: res.name,
       email: res.email,
       code: res.code,
-      address: res.address? res.address:'',
+      // address: res.address? res.address:'',
       addressState: res.addressState.id,
       addressMunicipality: res.addressMunicipality.id,
-      addressStreet: res.addressStreet? res.addressStreet:'',
+      addressStreet: res.address? res.address:'',
       addressCity: res.addressCity,
       phone: res.phone?res.phone:'',
       schoolType: res.schoolType,
+      addressZoneType: res.addressZoneType,
+      addressZone: res.addressZone,
       //
       principalFirstName: res.principalFirstName,
       principalLastName: res.principalLastName,
