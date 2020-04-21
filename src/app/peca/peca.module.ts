@@ -27,6 +27,7 @@ import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
 import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/accordion-block.component';
+import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/acco
     TabsBlockComponent,
     TableBlockComponent,
     AccordionBlockComponent,
+    TextsButtonsSetBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +62,7 @@ import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/acco
     TabsBlockComponent,
     TableBlockComponent,
     AccordionBlockComponent,
+    TextsButtonsSetBlockComponent,
   ]
 })
 export class PecaModule { }
