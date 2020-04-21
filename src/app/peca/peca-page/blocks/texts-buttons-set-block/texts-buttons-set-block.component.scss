@@ -1,5 +1,17 @@
 @import "scss/variables";
 
+@mixin btn-min-width() {
+    min-width: 8rem;
+}
+@mixin download-btn() {
+    font-size: 1rem;
+    line-height: 1.5;
+    
+    &:hover , &.btn {
+        color: #fff;
+    }
+}
+
 ::ng-deep {
     .nb-theme-default {
         p, h5, h6 {
@@ -7,6 +19,27 @@
         }
     }
     .texts-buttons-wrapper {
+        .texts-wrapper {
+            .date-download-status {
+                .right-side {
+                    a {
+                        background-color: $blue;
+                        @include btn-min-width;
+                        @include download-btn;
+                    }
+
+                    .status {
+                        .rounded-circle {
+                            background: #ffff00;
+                            width: 0.85rem;
+                            height: 0.85rem;
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+                    }
+                }               
+            }
+        }
         .buttons-wrapper {
             width: 100%;
             text-align: right;
@@ -23,12 +56,7 @@
             }
     
             a {
-                font-size: 1rem;
-                line-height: 1.5;
-                
-                &:hover , &.btn {
-                    color: #fff;
-                }
+                @include download-btn;
             }
     
             .btn-in-wrapper {
@@ -39,7 +67,7 @@
                 }
     
                 &.action-btn {
-                    min-width: 8rem;
+                    @include btn-min-width;
                 }
             }
         }

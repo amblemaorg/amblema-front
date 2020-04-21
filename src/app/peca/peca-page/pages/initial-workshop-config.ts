@@ -1,6 +1,15 @@
 const buttonsSet = {
   component: 'buttons',
   settings: {
+    date: {
+      text: 'Fecha actividad',
+      date: '22/12/12',
+    },
+    status: 'pendiente',
+    // download: {
+    //   url: '#',
+    //   name: 'hola.png',
+    // },
     title: {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
@@ -21,15 +30,11 @@ const buttonsSet = {
       type: 1,
       name: 'Enviar',
     },
-    upload: {
-      url: null,
-      name: 'hola.png',
-      file: null,
-    },
-    download: {
-      url: '#',
-      name: 'hola.png',
-    },
+    // upload: {
+    //   url: null,
+    //   name: 'hola.png',
+    //   file: null,
+    // },    
   }
 }
 

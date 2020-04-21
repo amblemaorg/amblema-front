@@ -1,10 +1,30 @@
 <div class="texts-buttons-wrapper">
     <div class="texts-wrapper">
+        <div class="date-download-status d-flex justify-content-between">
+            <div *ngIf="settings.date" class="left-side">
+                <h6>
+                    <span *ngIf="settings.date.text">{{ settings.date.text }}:&nbsp;</span>
+                    <span *ngIf="settings.date.date">{{ settings.date.date }}</span>
+                </h6>
+            </div>
+            <div *ngIf="settings.download || settings.status" class="right-side">
+                <h6 *ngIf="settings.status" class="status">
+                    <span>Estatus:&nbsp;</span><span class="rounded-circle"></span>&nbsp;
+                    <span class="font-weight-normal">{{ settings.status }}</span>
+                </h6>
+
+                <a *ngIf="settings.download" title="Descargar" 
+                [href]="settings.download.url" target="_blank" 
+                [download]="settings.download.name" 
+                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">Descargar</a>
+            </div>
+        </div> <br *ngIf="settings.date || settings.download || settings.status">
+
         <h5 *ngIf="settings.title" class="title" 
         [class.text-left]="settings.title.aligning == 'left'" 
         [class.text-center]="settings.title.aligning == 'center'">
             {{ settings.title.text }}
-        </h5> <br>
+        </h5> <br *ngIf="settings.title">
 
         <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles">
             <h6 class="sub-title">{{ subtitle.title }}</h6>
@@ -12,7 +32,7 @@
         </div>        
     </div>
     <div class="d-inline-block buttons-wrapper">
-        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
+        <!-- <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
             <button id="upload-btn"  title="Subir archivo"
             class="btn btn-primary text-decoration-none p-1">
@@ -25,7 +45,7 @@
         [download]="settings.download.name" 
         class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">
             <nb-icon icon="planificacion"></nb-icon>
-        </a>
+        </a> -->
     
         <button *ngIf="settings.action.name"
         class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
