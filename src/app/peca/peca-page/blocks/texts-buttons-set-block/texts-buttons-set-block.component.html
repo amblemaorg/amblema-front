@@ -1,0 +1,36 @@
+<div class="texts-buttons-wrapper">
+    <div class="texts-wrapper">
+        <h5 *ngIf="settings.title" class="title" 
+        [class.text-left]="settings.title.aligning == 'left'" 
+        [class.text-center]="settings.title.aligning == 'center'">
+            {{ settings.title.text }}
+        </h5> <br>
+
+        <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles">
+            <h6 class="sub-title">{{ subtitle.title }}</h6>
+            <p>{{ subtitle.text }}</p>
+        </div>        
+    </div>
+    <div class="d-inline-block buttons-wrapper">
+        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
+            <input class="d-none" id="upload-btn-input-file" type="file">
+            <button id="upload-btn"  title="Subir archivo"
+            class="btn btn-primary text-decoration-none p-1">
+            <nb-icon icon="planificacion"></nb-icon>
+            </button>
+        </div>
+    
+        <a *ngIf="settings.download" title="Descargar" 
+        [href]="settings.download.url" target="_blank" 
+        [download]="settings.download.name" 
+        class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">
+            <nb-icon icon="planificacion"></nb-icon>
+        </a>
+    
+        <button *ngIf="settings.action.name"
+        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
+            <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
+            {{ settings.action.name }}
+        </button>
+    </div>
+</div>

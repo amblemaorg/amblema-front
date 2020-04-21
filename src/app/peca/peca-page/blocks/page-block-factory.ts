@@ -7,6 +7,7 @@ import { PageBlockComponent } from './page-block.component';
 import { TabsBlockComponent } from './tabs-block/tabs-block.component';
 import { TableBlockComponent } from './table-block/table-block.component';
 import { AccordionBlockComponent } from './accordion-block/accordion-block.component';
+import { TextsButtonsSetBlockComponent } from './texts-buttons-set-block/texts-buttons-set-block.component';
 
 export class PageBlockFactory {
 
@@ -20,6 +21,8 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(TableBlockComponent);
       case 'accordion' :
         return this.componentFactoryResolver.resolveComponentFactory(AccordionBlockComponent);
+      case 'buttons' :
+        return this.componentFactoryResolver.resolveComponentFactory(TextsButtonsSetBlockComponent);
       default :
         throw Error('PageBlockTypeException: invalid page block type');
     }
