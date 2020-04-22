@@ -81,23 +81,33 @@ header {
     }
 
     a {
-      display: none;
       color: $blue;
       font-size: 6vw;
       text-decoration: none;
 
+      span {
+        @include breakpoint(medium, portrait, down) {
+          display: none;
+        }
+      }
+
       @include breakpoint(small, landscape) {
-        display: inherit;
+        align-items: center;
+        display: flex;
         font-size: 1.8vw;
+        justify-content: space-around;
+        width: 100%;
       }
 
       @include breakpoint(medium) {
-        display: inherit;
+        align-items: center;
+        display: flex;
         font-size: 1.8vw;
+        justify-content: space-around;
+        width: 100%;
       }
 
       @include breakpoint(large) {
-        display: inherit;
         font-size: 1.2vw;
       }
     }

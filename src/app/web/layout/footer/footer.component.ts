@@ -6,25 +6,21 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  @Output() schoolForm = new EventEmitter<string>();
-  @Output() sponsorForm = new EventEmitter<string>();
-  @Output() coordinatorForm = new EventEmitter<string>();
+  @Output() openModal = new EventEmitter<string>();
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   triggerSchoolForm() {
-    this.schoolForm.emit('complete');
+    this.openModal.emit('schoolForm');
   }
 
   triggerSponsorForm() {
-    this.sponsorForm.emit('complete');
+    this.openModal.emit('sponsorForm');
   }
 
   triggerCoordinatorForm() {
-    this.coordinatorForm.emit('complete');
+    this.openModal.emit('coordinatorForm');
   }
-
 }
