@@ -1,11 +1,23 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter
+}
+from '@angular/core';
 import {
   requiredAndNormalText,
   requiredAndNaturalNumber,
   requiredAndEmail,
   requiredAndOnlyLetters,
   requiredAndOnlyLettersAndNumbers,
-} from './custom-validators';
+  onlyLetters,
+  naturalNumber,
+  email,
+}
+from './custom-validators';
 import { MESSAGES } from './validation-messages';
 import { ContactService } from 'src/app/services/web/contact.service';
 import { FormWizardComponent } from './form-wizard/form-wizard.component';
@@ -49,12 +61,18 @@ import { isNullOrUndefined } from 'util';
 export class ImplementedFormsComponent implements OnInit {
   @ViewChild('formWizard', { static: false }) formWizard: FormWizardComponent;
   @Input() form: string;
+  @Output() success = new EventEmitter<string>();
 
   // Generic form control props to extend
   controlProps = {
     onlyLetters: {
       type: 'text',
       validations: requiredAndOnlyLetters,
+      messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
+    },
+    onlyLettersNotRequired: {
+      type: 'text',
+      validations: onlyLetters,
       messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
     },
     onlyLettersNumbers: {
@@ -72,6 +90,11 @@ export class ImplementedFormsComponent implements OnInit {
       validations: requiredAndEmail,
       messages: { pattern: MESSAGES.EMAIL_MESSAGE }
     },
+    emailNotRequired: {
+      type: 'email',
+      validations: email,
+      messages: { pattern: MESSAGES.EMAIL_MESSAGE }
+    },
     number: {
       type: 'number',
       validations: requiredAndNaturalNumber,
@@ -80,6 +103,11 @@ export class ImplementedFormsComponent implements OnInit {
     phone: {
       type: "tel",
       validations: requiredAndNaturalNumber,
+      messages: { pattern: MESSAGES.PHONE_MESSAGE }
+    },
+    phoneNotRequired: {
+      type: "tel",
+      validations: naturalNumber,
       messages: { pattern: MESSAGES.PHONE_MESSAGE }
     },
     date: {
@@ -109,6 +137,24 @@ export class ImplementedFormsComponent implements OnInit {
     addressMunicipality: { label: "Municipio",            ...this.controlProps.select             },
     address:             { label: "Calles / Carreras",    ...this.controlProps.normalText         },
     addressCity:         { label: "Ciudad",               ...this.controlProps.onlyLetters        },
+    zone: { label: "Zona", type: 'identification', validations: {},
+      subfields: {
+        id: {
+          name: 'addressZone',
+          ...this.controlProps.normalText,
+          label: '',
+        },
+        type: {
+          name: 'addressZoneType',
+          ...this.controlProps.select,
+          options: [
+            { id: '1', name: 'Sector'  },
+            { id: '2', name: 'Barrio'  },
+            { id: '3', name: 'Cacerío' }
+          ]
+        }
+      }
+    }
   }
 
   schoolStep2 = {
@@ -116,10 +162,10 @@ export class ImplementedFormsComponent implements OnInit {
     principalLastName:     { label: "Apellido del Director",              ...this.controlProps.onlyLetters },
     principalEmail:        { label: "Correo Electrónico del Director",    ...this.controlProps.email       },
     principalPhone:        { label: "Número de teléfono del Director",    ...this.controlProps.phone       },
-    subPrincipalFirstName: { label: "Nombre del Subdirector",             ...this.controlProps.onlyLetters },
-    subPrincipalLastName:  { label: "Apellido del Subdirector",           ...this.controlProps.onlyLetters },
-    subPrincipalEmail:     { label: "Correo electrónico del subdirector", ...this.controlProps.email       },
-    subPrincipalPhone:     { label: "Número de teléfono del subdirector", ...this.controlProps.phone       },
+    subPrincipalFirstName: { label: "Nombre del Subdirector",             ...this.controlProps.onlyLettersNotRequired },
+    subPrincipalLastName:  { label: "Apellido del Subdirector",           ...this.controlProps.onlyLettersNotRequired },
+    subPrincipalEmail:     { label: "Correo electrónico del subdirector", ...this.controlProps.emailNotRequired       },
+    subPrincipalPhone:     { label: "Número de teléfono del subdirector", ...this.controlProps.phoneNotRequired       },
   }
 
   schoolStep3 = {
@@ -151,9 +197,9 @@ export class ImplementedFormsComponent implements OnInit {
       type: "list",
       options: [
         "Visita comercios, empresas o negocios cercanos a tu escuela.",
-        "Consulta entre padres y representantes si alguno conoce o trabaja en empresas cercanas a la escuela",
-        "Recauda información de los posibles padrinos y completa la planilla",
-        "Escríbenos a través de info@amblema.org y solicítanos un padrino"
+        "Consulta entre padres y representantes si alguno conoce o trabaja en empresas cercanas a la escuela.",
+        "Recauda información de los posibles padrinos y completa la planilla.",
+        "Escríbenos a través de info@amblema.org y solicítanos un padrino."
       ],
       validations: {}
     }
@@ -173,16 +219,17 @@ export class ImplementedFormsComponent implements OnInit {
         type: {
           name: 'rifType',
           ...this.controlProps.select,
+          value: '2',
           options: [{ id: '2', name: 'J' }]
         }
       }
     },
-    email:               { label: "Correo Electrónico",   ...this.controlProps.email              },
-    companyPhone:        { label: "Número de teléfono",   ...this.controlProps.phone              },
-    addressState:        { label: "Estado",               ...this.controlProps.select             },
-    addressMunicipality: { label: "Municipio",            ...this.controlProps.select             },
-    address:             { label: "Calles / Carreras",    ...this.controlProps.normalText         },
-    addressCity:         { label: "Ciudad",               ...this.controlProps.onlyLetters        },
+    email:               { label: "Correo Electrónico",   ...this.controlProps.email       },
+    companyPhone:        { label: "Número de teléfono",   ...this.controlProps.phone       },
+    addressState:        { label: "Estado",               ...this.controlProps.select      },
+    addressMunicipality: { label: "Municipio",            ...this.controlProps.select      },
+    address:             { label: "Calles / Carreras",    ...this.controlProps.normalText  },
+    addressCity:         { label: "Ciudad",               ...this.controlProps.onlyLetters },
   }
 
   sponsorStep2 = {
@@ -191,16 +238,18 @@ export class ImplementedFormsComponent implements OnInit {
         { id: '1', name: 'Fábrica'          },
         { id: '2', name: 'Tienda'           },
         { id: '3', name: 'Negocio personal' },
-        { id: '4', name: 'Otro'             }
+        { id: '4', name: 'Hacienda'         },
+        { id: '0', name: 'Otro'             },
       ]
     },
     companyOtherType: {
       label: "Otro tipo de empresa",
       ...this.controlProps.onlyLetters,
-      condition: { formControlName: 'companyType', value: '4' }
+      condition: { formControlName: 'companyType', value: '0' }
     },
     contactFirstName: { label: "Nombre de la persona de contacto",        ...this.controlProps.onlyLetters },
     contactLastName:  { label: "Apellido de la persona de contacto",      ...this.controlProps.onlyLetters },
+    contactEmail:     { label: "Correo electrónico de la persona de contacto", ...this.controlProps.email  },
     contactPhone:     { label: "Número de teléfono de la persona de contacto", ...this.controlProps.phone  },
   }
 
@@ -214,7 +263,7 @@ export class ImplementedFormsComponent implements OnInit {
       type: "list",
       options: [
         "Debe seleccionar una escuela cercana a tu empresa, comercio o negocio, en base a los siguientes criterios: Escuela pública, que tenga preescolar y primaria, con un número de estudiantes entre 150 y 300, que presente necesidades de ayuda y apoyo de un tercero, y que el personal docente manifieste la disposición de mejorar la calidad educativa de la escuela.",
-        "Visite la escuela de su preferencia y recaude todos los datos",
+        "Visite la escuela de su preferencia y recaude todos los datos.",
       ],
       validations: {}
     }
@@ -224,11 +273,10 @@ export class ImplementedFormsComponent implements OnInit {
   coordinatorStep1 = {
     firstName: { label: "Nombre",   ...this.controlProps.onlyLetters },
     lastName:  { label: "Apellido", ...this.controlProps.onlyLetters },
-    // age:       { label: "Edad",     ...this.controlProps.number      },
     gender:    { label: "Sexo",     ...this.controlProps.select,
       options: [
         { id: '1', name: 'Femenino' }, { id: '2', name: 'Masculino' }
-      ]
+      ],
     },
     card: { label: "Identificación", type: 'identification', validations: {},
       subfields: {
@@ -241,6 +289,7 @@ export class ImplementedFormsComponent implements OnInit {
         type: {
           name: 'cardType',
           ...this.controlProps.select,
+          value: '1',
           options: [{ id: '1', name: 'V' }, { id: '3', name: 'E' }]
         }
       }
@@ -373,14 +422,15 @@ export class ImplementedFormsComponent implements OnInit {
         });
   }
 
-  submitContactForm(form: string, event: any) {
-    this.contactService.sendContactForm(form, event)
+  submitContactForm(form: string, data: any) {
+    this.contactService.sendContactForm(form, data)
         .subscribe({
           next: data => {
             console.log(data)
             this.displayMessage('Formulario enviado satisfactoriamente', 'success');
             this.formWizard.clear();
             this.formWizard.setIsSubmitting(false);
+            this.success.emit('complete');
           },
           error: error => {
             console.error(error)

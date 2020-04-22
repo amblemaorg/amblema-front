@@ -1,17 +1,20 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { ToastrService } from 'ngx-toastr';
 import cloneDeep from 'lodash/cloneDeep';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'web-form-wizard',
   templateUrl: './form-wizard.component.html',
   styleUrls: ['./form-wizard.component.scss']
 })
-export class FormWizardComponent implements OnInit {
-  @Input()  readonly formsContent: any;
-  @Output() readonly submit: EventEmitter<any> = new EventEmitter<any>();
+export class FormWizardComponent implements OnInit, OnDestroy {
+  @Input()  formsContent: any;
+  @Input()  recaptchaAction: string = 'form_wizard';
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   stepItems: Array<any>;
   activeStepIndex: number;
   lastStepIndex: number;
@@ -20,10 +23,12 @@ export class FormWizardComponent implements OnInit {
   fields: Array<Array<string>>;
   formWizard: Array<FormGroup>;
   isSubmitting: boolean = false;
+  recaptchaSubscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private recaptchaService: ReCaptchaV3Service
   ) { }
 
   ngOnInit() {
@@ -39,6 +44,12 @@ export class FormWizardComponent implements OnInit {
     });
     this.lastStepIndex = this.getLastStepIndex();
     this.subscribeDependentFields();
+  }
+
+  public ngOnDestroy() {
+    if (this.recaptchaSubscription) {
+      this.recaptchaSubscription.unsubscribe();
+    }
   }
 
   private appendStepContent(content: object): number {
@@ -121,8 +132,13 @@ export class FormWizardComponent implements OnInit {
   public onSubmit(): void {
     this.updateDataToSubmit();
     if (this.isValid()) {
-      this.isSubmitting = true;
-      this.submit.emit(this.dataToSubmit);
+      this.recaptchaSubscription = this.recaptchaService
+        .execute(this.recaptchaAction)
+        .subscribe(token => {
+          console.log(token);
+          this.isSubmitting = true;
+          this.submit.emit(this.dataToSubmit);
+        });
     }
     else {
       this.toastr.error(
@@ -180,7 +196,12 @@ export class FormWizardComponent implements OnInit {
         formDataValues[fieldProp] = this.dateStringToISOString(fieldValue);
       }
       else {
-        formDataValues[fieldProp] = fieldValue;
+        if (fieldProp.includes('subPrincipalEmail') && fieldValue == '') {
+          formDataValues[fieldProp] = null;
+        }
+        else {
+          formDataValues[fieldProp] = fieldValue;
+        }
       }
     });
     return formDataValues;

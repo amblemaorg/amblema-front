@@ -20,15 +20,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 6vw;
+  margin-bottom: 10vw;
   position: relative;
+
+  @include breakpoint(medium) {
+    margin-bottom: 3vw;
+  }
 
   .form-field {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
     margin: 3vw 0;
     position: relative;
     width: 100%;
+
+    @include breakpoint(medium) {
+      margin: 2vw 0;
+    }
 
     @include breakpoint(large) {
       margin: 1.5vw 0;
@@ -37,7 +46,6 @@
 
     .field-label {
       flex: 0 0 auto;
-      //flex: 1 0 auto;
       font-size: 4vw;
       font-weight: bold;
       margin: 0;
@@ -112,8 +120,7 @@
       top: 6vw;
 
       @include breakpoint(large) {
-        position: relative;
-        top: unset;
+        top: 2vw;
       }
     }
 
@@ -159,6 +166,9 @@
 
       ng-select {
         flex: 0 1 15%;
+        &[id$="addressZoneType"] {
+          flex: 0 1 22%;
+        }
       }
 
       input.field-control,
@@ -198,7 +208,7 @@
   }
 
   web-form-validation {
-    width: 100%;
+    width: 70%;
   }
 }
 
