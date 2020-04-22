@@ -7,8 +7,10 @@
     <img class="logo" src="../../../../assets/images/amblema-logo.png" alt="amblema logo" />
     <web-menu class="desktop-menu"></web-menu>
     <div class="user-access">
-      <img class="profile" src="../../../../assets/images/profile.png" alt="profile image" />
-      <a [routerLink]="['/auth/login']">Login</a>
+      <a [routerLink]="['/auth/login']">
+        <img class="profile" src="../../../../assets/images/profile.png" alt="profile image" />
+        <span>Login</span>
+      </a>
     </div>
   </header>
   <ng-content></ng-content>
