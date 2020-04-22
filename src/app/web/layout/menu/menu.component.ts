@@ -8,6 +8,33 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class MenuComponent implements OnInit {
   @Output() navigate = new EventEmitter<string>();
 
+  menuItems = [
+    {
+      path: "/",
+      name: "Inicio"
+    },
+    {
+      path: "/nosotros",
+      name: "Nosotros"
+    },
+    {
+      path: "/padrinos",
+      name: "Padrinos"
+    },
+    {
+      path: "/coordinadores",
+      name: "Coordinadores"
+    },
+    {
+      path: "/escuelas",
+      name: "Escuelas"
+    },
+    {
+      path: "/blog",
+      name: "Blog"
+    }
+  ]
+
   constructor() { }
 
   ngOnInit() { }

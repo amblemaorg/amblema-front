@@ -18,6 +18,25 @@
     }
   }
 
+  // Recaptcha badge styles
+  body {
+    &.active-form-wizard {
+      .grecaptcha-badge {
+        display: fixed !important;
+      }
+    }
+
+    &:not(.active-form-wizard) {
+      .grecaptcha-badge {
+        display: none !important;
+      }
+    }
+  }
+
+  .grecaptcha-badge {
+    z-index: 100;
+  }
+
   .toast-success {
     background-color: $green !important;
   }
