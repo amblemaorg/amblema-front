@@ -1,6 +1,7 @@
 // MODULES
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   NbThemeModule,
   NbLayoutModule,
@@ -28,6 +29,7 @@ import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.com
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
 import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/accordion-block.component';
 import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component';
+import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-
     TableBlockComponent,
     AccordionBlockComponent,
     TextsButtonsSetBlockComponent,
+    FormBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -57,12 +60,15 @@ import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-
     NbAccordionModule,
     NbMenuModule.forRoot(),
     Ng2SmartTableModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   entryComponents: [
     TabsBlockComponent,
     TableBlockComponent,
     AccordionBlockComponent,
     TextsButtonsSetBlockComponent,
+    FormBlockComponent,
   ]
 })
 export class PecaModule { }
