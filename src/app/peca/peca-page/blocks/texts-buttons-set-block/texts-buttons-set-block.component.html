@@ -1,5 +1,5 @@
 <div class="texts-buttons-wrapper">
-    <div class="texts-wrapper">
+    <div class="texts-wrapper" *ngIf="settings.date || settings.download || settings.status">
         <div class="date-download-status d-flex justify-content-between">
             <div *ngIf="settings.date" class="left-side">
                 <h6>
@@ -18,20 +18,23 @@
                 [download]="settings.download.name" 
                 class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">Descargar</a>
             </div>
-        </div> <br *ngIf="settings.date || settings.download || settings.status">
+        </div>
 
-        <h5 *ngIf="settings.title" class="title" 
-        [class.text-left]="settings.title.aligning == 'left'" 
-        [class.text-center]="settings.title.aligning == 'center'">
-            {{ settings.title.text }}
-        </h5> <br *ngIf="settings.title">
-
-        <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles">
-            <h6 class="sub-title">{{ subtitle.title }}</h6>
-            <p>{{ subtitle.text }}</p>
-        </div>        
+        <!-- <ng-container *ngFor="let text of settings.texts"> -->
+            <h5 *ngIf="settings.title" class="title" 
+            [class.mt-4]="settings.date || settings.download || settings.status"
+            [class.text-left]="settings.title.aligning == 'left'" 
+            [class.text-center]="settings.title.aligning == 'center'">
+                {{ settings.title.text }}
+            </h5> <br *ngIf="settings.title">
+    
+            <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles">
+                <h6 class="sub-title">{{ subtitle.title }}</h6>
+                <p>{{ subtitle.text }}</p>
+            </div>
+        <!-- </ng-container> -->
     </div>
-    <div class="d-inline-block buttons-wrapper">
+    <div *ngIf="settings.action" class="d-inline-block buttons-wrapper">
         <!-- <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
             <button id="upload-btn"  title="Subir archivo"
