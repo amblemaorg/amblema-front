@@ -9,20 +9,22 @@ import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.
 export class TextsButtonsSetBlockComponent implements PresentationalBlockComponent, OnInit {
   type: 'presentational';
   component: string;
-  settings: {
+  settings: {    
     date: {
       text: string;
       date: string;
     };
     status: string;
-    title: {
-      aligning: string; // 'center' for center aligning, 'left' otherwise
-      text: string;
-    };
-    subtitles: {
-      title: string; // subtitle
-      text: string; // paragraph
-    }[];
+    // texts: {
+      title: {
+        aligning: string; // 'center' for center aligning, 'left' otherwise
+        text: string;
+      };
+      subtitles: {
+        title: string; // subtitle
+        text: string; // paragraph
+      }[];
+    // }[];    
     action: {
         type: number; // 1 send, 2 save
         name: string; // text in the button
