@@ -18,6 +18,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   componentForm: FormGroup;
   fields: string[];
+  // isTest:boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.type = 'presentational';
@@ -25,11 +26,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   ngOnInit() {
-    this.componentForm = this.buildFormGroup(this.settings.formsContent);
+    // if (!this.isTest) this.setFormBuilding();
   }
+
+  // setFormBuilding() {
+  //   this.componentForm = this.buildFormGroup(this.settings.formsContent);
+  // }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
+    this.componentForm = this.buildFormGroup(settings.formsContent);
   }
 
   private buildFormGroup(formContent: any): FormGroup {

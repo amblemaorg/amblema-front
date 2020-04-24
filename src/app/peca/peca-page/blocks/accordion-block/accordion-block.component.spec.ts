@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccordionBlockComponent } from './accordion-block.component';
-import { NbAccordionModule } from '@nebular/theme';
+import { NbAccordionModule, NbIconModule } from '@nebular/theme';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageBlockFactory } from '../page-block-factory';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AccordionBlockComponent', () => {
   let component: AccordionBlockComponent;
@@ -21,9 +22,9 @@ describe('AccordionBlockComponent', () => {
     component: 'accordion',
     settings: {
       items: [
-        { title: 'Carta convenio',   childBlocks: [] },
+        // { title: 'Carta convenio',   childBlocks: [] },
         { title: 'Reunión para Planificación del taller inicial',    childBlocks: [] },
-        { title: 'Preparación del taller inicial', childBlocks: [] },
+        // { title: 'Preparación del taller inicial', childBlocks: [] },
         { title: 'Registro del taller inicial',   childBlocks: [] },
       ],
     }
@@ -36,7 +37,9 @@ describe('AccordionBlockComponent', () => {
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
-        NbAccordionModule
+        NbAccordionModule,
+        NbIconModule,
+        BrowserAnimationsModule,
       ]
     })
 
@@ -59,10 +62,10 @@ describe('AccordionBlockComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have three (4) accordion items', () => {
+  it('should have three (2) accordion items', () => {
     const accordion_items = fixture.nativeElement.querySelectorAll('nb-accordion-item');
     expect(component).toBeTruthy();
-    expect(accordion_items.length).toBe(3);
+    expect(accordion_items.length).toBe(2);
   });
 
   it('should create accordion items in order', () => {
