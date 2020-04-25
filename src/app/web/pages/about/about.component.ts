@@ -1,21 +1,37 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { AboutUsService } from 'src/app/services/web/about-us.service';
-import { AboutUsPage } from 'src/app/models/web/web-about-us.model';
-import { OwlCarousel } from 'ngx-owl-carousel';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+} from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { OwlCarousel } from "ngx-owl-carousel";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { AboutUsPage } from "src/app/models/web/web-about-us.model";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { StaticWebContentService } from "src/app/services/web/static-web-content.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { environment } from "src/environments/environment";
+import { ABOUT_US_CONTENT } from "./about-us-static-content";
+import { ModalService } from "src/app/services/modal.service";
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  selector: "app-about",
+  templateUrl: "./about.component.html",
+  styleUrls: ["./about.component.scss"],
 })
 export class AboutComponent implements OnInit {
-  @ViewChild('awardsCarousel', { static: true }) awardsCarousel: OwlCarousel;
-  landscape = window.innerWidth > window.innerHeight;
+  @ViewChild("awardsCarousel", { static: false }) awardsCarousel: OwlCarousel;
+  @ViewChildren("awardModal", { read: ElementRef }) awardModal: QueryList<
+    ElementRef
+  >;
 
   coverData = {
-    coverImage: './assets/images/cover-simbolos.png'
-  }
+    coverImage: "./assets/images/cover-simbolos.png",
+  };
 
   pillarsOptions: OwlOptions = {
     autoplay: false,
@@ -25,77 +41,139 @@ export class AboutComponent implements OnInit {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
         items: 1,
         touchDrag: true,
       },
-      [767 * 0.8]: {
+      [768]: {
         items: 2,
         touchDrag: true,
       },
-    }
-  }
+    },
+  };
 
   carouselOptions = {
     autoplay: false,
-    loop: true,
+    loop: false,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
-        items: this.landscape ? 3 : 1
+        items: this.isMobile() && this.isPortrait() ? 1 : 2,
       },
       767: {
-        items: this.landscape ? 3 : 1
+        items: this.isMobile() && this.isPortrait() ? 1 : 2,
       },
       1279: {
-        items: 3
-      }
-    }
+        items: 3,
+      },
+    },
+  };
+
+  awardImagesCarouselOptions: OwlOptions = {
+    autoplay: false,
+    loop: false,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    nav: false,
+    navSpeed: 1000,
+    responsive: {
+      0: {
+        items: 1,
+      },
+    },
+  };
+
+  aboutUsPageData: AboutUsPage = {
+    slider: [],
+    aboutUsText: "",
+    environmentText: "",
+    readingText: "",
+    mathText: "",
+    awards: [],
+  };
+  selectedAward = {};
+  aboutUsService: WebContentService;
+  ABOUT_US_PATH = "webcontent?page=aboutUsPage";
+
+  constructor(private http: HttpClient, private modalService: ModalService) {
+    this.modalService.defaultOptions = {
+      ...this.modalService.defaultOptions,
+      size: "lg",
+    };
   }
 
-  aboutUsPageData: AboutUsPage;
-
-  constructor(private aboutUsService: AboutUsService) { }
-
   ngOnInit() {
+    // this.setStaticService();
+    this.setApiService();
     this.getAboutUsData();
   }
 
-  getAboutUsData() {
-    //this.aboutUsService.getAboutUsData()
-    this.aboutUsService.getAboutUsJSON()
-        .subscribe(data => {
-          // console.log(data)
-          this.aboutUsPageData = data.aboutUsPage;
-        });
+  setStaticService() {
+    this.aboutUsService = new StaticWebContentService();
+    this.aboutUsService.setWebContent(ABOUT_US_CONTENT);
   }
 
-  @HostListener('window:resize', [''])
+  setApiService() {
+    const service: ApiWebContentService = new ApiWebContentService(this.http);
+    service.setBaseUrl(environment.baseUrl);
+    service.setResourcePath(this.ABOUT_US_PATH);
+    this.aboutUsService = service;
+  }
+
+  getAboutUsData() {
+    this.aboutUsService.getWebContent().subscribe((data) => {
+      // console.log(data)
+      this.aboutUsPageData = data.aboutUsPage;
+    });
+  }
+
+  refreshCarousels() {
+    this.awardsCarousel.refresh();
+  }
+
+  @HostListener("window:resize", [""])
   onResize() {
-    this.landscape = window.innerWidth > window.innerHeight;
-    if (this.landscape) {
-      this.awardsCarousel.options.responsive[0].items = 3;
-      this.awardsCarousel.options.responsive[767].items = 3;
-      this.awardsCarousel.refresh();
-    }
-    else {
+    if (this.isMobile() && this.isPortrait()) {
       this.awardsCarousel.options.responsive[0].items = 1;
       this.awardsCarousel.options.responsive[767].items = 1;
       this.awardsCarousel.refresh();
+    } else {
+      this.awardsCarousel.options.responsive[0].items = 2;
+      this.awardsCarousel.options.responsive[767].items = 2;
+      this.awardsCarousel.refresh();
     }
   }
 
-  onAwardClick(award) {
-    console.log(award);
+  isMobile(): boolean {
+    return window.innerWidth < 768;
   }
 
+  isPortrait(): boolean {
+    return window.innerWidth < window.innerHeight;
+  }
+
+  isLandscape(): boolean {
+    return window.innerWidth > window.innerHeight;
+  }
+
+  onAwardClick(index: number) {
+    const awardModalEl = this.awardModal.toArray()[index];
+    this.modalService.openStaticModal(awardModalEl);
+  }
+
+  onCloseAwardModal(index: number) {
+    const awardModalEl = this.awardModal.toArray()[index];
+    this.modalService.closeStaticModal(awardModalEl);
+  }
 }

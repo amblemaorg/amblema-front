@@ -3,24 +3,23 @@
   <!-- If block -->
     <owl-carousel-o #owlElement *ngIf="slides.length > 1" [options]="customOptions" class="bg-carousel">
       <ng-template carouselSlide *ngFor="let slide of slides">
-        <picture>
-          <source [srcset]="slide.image.desktop" media="(min-width: 1024px) and (orientation: landscape)" />
-          <source [srcset]="slide.image.desktop" media="(min-width: 767px) and (orientation: portrait)" />
-          <source [srcset]="slide.image.desktop" media="(min-width: 320px) and (orientation: landscape)" />
-          <img [src]="slide.image.movil" />
+        <picture class="bg-image">
+          <source [srcset]="slide.image || slide.image.desktop" media="(min-width: 1024px) and (orientation: landscape)" />
+          <source [srcset]="slide.image || slide.image.desktop" media="(min-width: 767px) and (orientation: portrait)" />
+          <source [srcset]="slide.image || slide.image.desktop" media="(min-width: 320px) and (orientation: landscape)" />
+          <img  [src]="slide.image || slide.image.movil" />
         </picture>
         <p *ngIf="slide.description" class="tagline">{{ slide.description }}</p>
       </ng-template>
     </owl-carousel-o>
   <!-- End if block -->
-
   <!-- Else block -->
     <div *ngIf="slides.length == 1" class="bg-image">
       <picture>
-          <source [srcset]="slides[0].image.desktop" media="(min-width: 1024px) and (orientation: landscape)" />
-          <source [srcset]="slides[0].image.desktop" media="(min-width: 767px) and (orientation: portrait)" />
-          <source [srcset]="slides[0].image.desktop" media="(min-width: 320px) and (orientation: landscape)" />
-          <img [src]="slides[0].image.movil" />
+          <source [srcset]="slides[0].image || slides[0].image.desktop" media="(min-width: 1024px) and (orientation: landscape)" />
+          <source [srcset]="slides[0].image || slides[0].image.desktop" media="(min-width: 767px) and (orientation: portrait)" />
+          <source [srcset]="slides[0].image || slides[0].image.desktop" media="(min-width: 320px) and (orientation: landscape)" />
+          <img [src]="slides[0].image || slides[0].image.movil" />
           <p *ngIf="slides[0].description" class="tagline">{{ slides[0].description }}</p>
       </picture>
     </div>

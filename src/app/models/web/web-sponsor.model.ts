@@ -2,7 +2,7 @@ import { Testimonial } from './testimonial.model';
 import { Sponsor } from './sponsor.model';
 
 export interface SponsorPage {
-    backgroundImage: string;
+    backgroundImage: string | string[];
     testimonials: Testimonial[];
     steps: string[];
     sponsors: Sponsor[];
