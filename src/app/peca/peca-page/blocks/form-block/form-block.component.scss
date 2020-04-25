@@ -44,27 +44,31 @@ form {
         }
     
         &.ng-touched {
-          &.ng-invalid {
+          &.ng-invalid, &.date-not-valid {
             border: 2px solid $red;
           }
     
-          &.ng-valid {
+          &.ng-valid:not(.date-not-valid) {
             border: 2px solid $green;
           }
-    
-          & ~ .error-message {
+          
+          & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
             display: block;
           }
+
+          &:not(.date-not-valid) ~ .date-error-message {
+            display: none;
+          }          
         }
     
         &.ng-untouched {
-          & ~ .error-message {
+          & ~ .error-message, & ~ .date-error-message {
             display: none;
           }
         }
       }
     
-      .error-message {
+      .error-message, .date-error-message {
         color: $red;
         font-size: 3.5vw;
       

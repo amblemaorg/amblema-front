@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalService } from '../../../../services/global.service';
 
 @Component({
   selector: 'form-block',
@@ -20,13 +21,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   componentForm: FormGroup;
   fields: string[];
   sendingForm:boolean;
+  glbls:any;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private globals: GlobalService,
     ) {
     this.type = 'presentational';
     this.component = 'form';
+    this.glbls = globals;
   }
 
   ngOnInit() {}
@@ -101,13 +105,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   // submitting form
-  onSubmitForm(cf) { //cf: component form
+  onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
     console.log('submitting form');   
     
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
+      cf.reset();
       this.toastr.success(
         'form submitted',
         '',

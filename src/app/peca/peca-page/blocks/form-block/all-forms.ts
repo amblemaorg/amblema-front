@@ -94,5 +94,6 @@ const controlProps = {
 }
 
 export const sampleFormData = {
-    name: { label: "Nombre del campo", placeholder: "Nombre del campo", ...controlProps.normalTextAndRequired},    
+    name: { label: "Input text", placeholder: "Input text", ...controlProps.normalTextAndRequired},
+    date: { label: "Input date", placeholder: "Input date", ...controlProps.dateAndRequired},
 }
