@@ -85,18 +85,29 @@ section.about-us {
 }
 
 ::ng-deep {
-  owl-carousel-o {
+  owl-carousel {
     &.pillars-carousel {
       display: flex;
-      .owl-stage {
-        display: flex;
-        .owl-item {
+
+      .owl-carousel {
+        width: 80%;
+        margin: auto;
+        .owl-stage {
           display: flex;
-          .pillar {
+          .owl-item {
             display: flex;
-            flex-direction: column;
+            .pillar {
+              display: flex;
+              flex-direction: column;
+            }
           }
         }
+      }
+      .owl-prev {
+        left: -10vw !important;
+      }
+      .owl-next {
+        right: -90vw !important;
       }
     }
   }
@@ -104,11 +115,21 @@ section.about-us {
   owl-carousel {
     // Awards owl carousel in about us page
     &.awards-carousel {
-      .owl-stage {
+      .owl-stage-outer {
         display: flex;
-        .owl-item {
+        justify-content: center;
+
+        @include breakpoint(medium, portrait, down) {
+          justify-content: unset;
+        }
+
+        .owl-stage {
           display: flex;
           justify-content: center;
+          .owl-item {
+            display: flex;
+            justify-content: center;
+          }
         }
       }
 
@@ -246,6 +267,7 @@ section.pillars {
 }
 
 section.awards {
+  position: relative;
   .heading {
     text-align: center;
 
@@ -260,18 +282,22 @@ section.awards {
 }
 
 .awards-list {
-  //@include columns(10);
-  //display: flex;
   margin: 12vw auto;
+  @include breakpoint(small, landscape) {
+    margin: 6vw auto;
+  }
+  @include breakpoint(medium) {
+    margin: 6vw auto;
+  }
 
   .award {
-    //@include columns(3);
     color: $blue;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    padding: 1vw 0;
 
     .image-wrapper {
       display: flex;
@@ -352,6 +378,128 @@ section.awards {
 
       @include breakpoint(large) {
         font-size: .9vw;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .static-modal {
+    position: absolute;
+    overflow: visible;
+  }
+  .award-modal {
+    .modal-dialog {
+      width: 90vw;
+      @include breakpoint(small, landscape) {
+        width: 70vw !important;
+      }
+      @include breakpoint(medium) {
+        width: 70vw !important;
+      }
+      @include breakpoint(large) {
+        width: 65vw !important;
+      }
+
+      .modal-header {
+        padding: 5% 5% 0 0;
+        @include breakpoint(small, landscape) {
+          padding: 2% 2% 0 0;
+        }
+        @include breakpoint(medium) {
+          padding: 2% 2% 0 0;
+        }
+        button {
+          background-color: transparent;
+          border: 0;
+        }
+      }
+
+      .modal-body {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        padding: 0 5% 5% !important;
+        width: 100%;
+
+        @include breakpoint(small, landscape) {
+          flex-direction: row;
+          font-size: 1.5vw !important;
+        }
+        @include breakpoint(medium) {
+          flex-direction: row;
+          font-size: 1.5vw !important;
+        }
+        @include breakpoint(large) {
+          flex-direction: row;
+          font-size: 1vw !important;
+        }
+
+        & > *:first-child {
+          width: 35%;
+        }
+        & > *:last-child {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 60%;
+        }
+
+        @include breakpoint(medium, portrait, down) {
+          & > *:first-child {
+            width: 100%;
+          }
+          & > *:last-child {
+            width: 100%;
+          }
+        }
+
+        .image-wrapper {
+          margin: auto;
+          width: 20vw;
+
+          @include breakpoint(medium, portrait, down) {
+            width: 60vw;
+          }
+        }
+
+        p {
+          @include breakpoint(small, landscape) {
+            font-size: 1.5vw !important;
+          }
+          @include breakpoint(medium) {
+            font-size: 1.5vw !important;
+          }
+          @include breakpoint(large) {
+            font-size: 1vw !important;
+          }
+        }
+      }
+    }
+  }
+  owl-carousel-o.award-images-carousel {
+    .owl-carousel {
+      .owl-stage {
+        width: 100%;
+      }
+    }
+
+    .owl-theme {
+      .owl-dots {
+        @include breakpoint(medium, portrait, down) {
+          text-align: center;
+        }
+        .owl-dot {
+          span {
+            border: 1px solid $white;
+          }
+          &.active,
+          &:hover {
+            span {
+              background: $white;
+            }
+          }
+        }
       }
     }
   }

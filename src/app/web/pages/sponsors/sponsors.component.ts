@@ -1,30 +1,23 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { SponsorService } from '../../../services/web/sponsors.service';
-import { SponsorPage } from '../../../models/web/web-sponsor.model';
-import { OwlCarousel } from 'ngx-owl-carousel';
+import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { OwlCarousel } from "ngx-owl-carousel";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { StaticWebContentService } from "src/app/services/web/static-web-content.service";
+import { SponsorPage } from "../../../models/web/web-sponsor.model";
+import { environment } from "src/environments/environment";
+import { SPONSOR_CONTENT } from "./sponsor-static-content";
 
 @Component({
-  selector: 'app-sponsors',
-  templateUrl: './sponsors.component.html',
-  styleUrls: ['./sponsors.component.scss']
+  selector: "app-sponsors",
+  templateUrl: "./sponsors.component.html",
+  styleUrls: ["./sponsors.component.scss"],
 })
-
 export class SponsorsComponent implements OnInit {
-  @ViewChild('sponsorsCarousel', { static: true }) sponsorsCarousel: OwlCarousel;
+  @ViewChild("sponsorsCarousel", { static: true })
+  sponsorsCarousel: OwlCarousel;
   landscape = window.innerWidth > window.innerHeight;
-  coverData = {
-    slides: [
-      {
-        image: {
-          desktop: './assets/images/banner-1.jpg',
-          tablet: './assets/images/banner-movil-1.jpg',
-          movil: './assets/images/banner-movil-1.jpg',
-        }
-      }
-    ]
-  }
 
   coverCarouselOptions: OwlOptions = {
     autoplay: true,
@@ -37,10 +30,10 @@ export class SponsorsComponent implements OnInit {
     navSpeed: 1000,
     responsive: {
       0: {
-        items: 1
-      }
-    }
-  }
+        items: 1,
+      },
+    },
+  };
 
   sponsorsOptions: OwlOptions = {
     autoplay: false,
@@ -50,53 +43,76 @@ export class SponsorsComponent implements OnInit {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
-        items: 2
+        items: 2,
       },
       [767 * 0.8]: {
         items: 3,
       },
       [1279 * 0.8]: {
-        items: 4
-      }
-    }
-  }
+        items: 4,
+      },
+    },
+  };
 
-  sponsorsPageData: SponsorPage;
+  coverData = {
+    slides: [],
+  };
+  sponsorsPageData: SponsorPage = {
+    backgroundImage: "",
+    testimonials: [],
+    steps: [],
+    sponsors: [],
+  };
+  sponsorService: WebContentService;
+  SPONSOR_PATH = "webcontent?page=sponsorPage";
 
-  constructor(
-    private http: HttpClient,
-    private sponsorService: SponsorService
-  ) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    //this.setStaticService();
+    this.setApiService();
     this.getSponsorsData();
   }
 
+  setStaticService() {
+    this.sponsorService = new StaticWebContentService();
+    this.sponsorService.setWebContent(SPONSOR_CONTENT);
+  }
+
+  setApiService() {
+    const service = new ApiWebContentService(this.http);
+    service.setBaseUrl(environment.baseUrl);
+    service.setResourcePath(this.SPONSOR_PATH);
+    this.sponsorService = service;
+  }
+
   getSponsorsData() {
-    //this.sponsorService.getSponsorsData()
-    this.sponsorService.getSponsorsJSON()
-        .subscribe(data => {
-          // console.log(data)
-          this.sponsorsPageData = data.sponsorPage;
-        });
+    console.log(SPONSOR_CONTENT);
+    this.sponsorService.getWebContent().subscribe((data) => {
+      data.sponsorPage.sponsors = SPONSOR_CONTENT.sponsorPage.sponsors;
+      console.log(data);
+      this.sponsorsPageData = data.sponsorPage;
+      this.coverData.slides.push({
+        image: this.sponsorsPageData.backgroundImage,
+      });
+    });
   }
 
   onSponsorClick(url) {
     window.open(url);
   }
 
-  @HostListener('window:resize', [''])
+  @HostListener("window:resize", [""])
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
       this.sponsorsCarousel.options.responsive[0].items = 3;
       this.sponsorsCarousel.refresh();
-    }
-    else {
+    } else {
       this.sponsorsCarousel.options.responsive[0].items = 2;
       this.sponsorsCarousel.refresh();
     }

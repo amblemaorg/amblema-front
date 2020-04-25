@@ -1,10 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Post } from '../../models/web/blog.model';
-import { WebBlog } from '../../models/web/blog.model';
-import { of, Observable } from 'rxjs';
-
-const blogPage = {
-  posts: [
+export const BLOG_CONTENT = {
+  records: [
     {
       mainImage: './assets/images/background-pillar-matematica.jpg',
       secondaryImage: '',
@@ -86,24 +81,4 @@ const blogPage = {
       status: 'published'
     }
   ]
-}
-
-
-@Injectable({
-  providedIn: 'root'
-})
-export class BlogService {
-
-  constructor() { }
-
-
-  getPostsListJSON(): Observable<WebBlog> {
-    return of<WebBlog>(blogPage);
-  }
-
-  getPostBySlugJSON(slug): Observable<Post> {
-    let post: Post;
-    post = blogPage.posts.filter(item => item.slug === slug)[0];
-    return of<Post>(post);
-  }
 }

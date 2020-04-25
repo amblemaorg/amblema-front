@@ -6,10 +6,13 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
 import { OwlModule } from 'ngx-owl-carousel';
+import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [AboutComponent],
+  declarations: [
+    AboutComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,

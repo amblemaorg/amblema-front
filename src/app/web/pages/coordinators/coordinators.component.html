@@ -1,6 +1,9 @@
 
 <section class="cover">
-  <web-cover [slides]="coverData.slides"></web-cover>
+  <web-cover
+    [slides]="coverData.slides"
+    *ngIf="coverData.slides">
+  </web-cover>
   <h1>Coordinadores</h1>
   <owl-carousel-o *ngIf="coordinatorsPageData.testimonials.length > 0" [options]="customOptions" class="testimonials-carousel">
     <ng-template carouselSlide *ngFor="let testimonial of coordinatorsPageData.testimonials">
