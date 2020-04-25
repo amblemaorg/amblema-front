@@ -1,44 +1,44 @@
 <!-- Cover section -->
-<web-cover [coverImage]="coverData.coverImage"
-           [slides]="aboutUsPageData.slider">
+<web-cover
+  [coverImage]="coverData.coverImage"
+  [slides]="aboutUsPageData.slider"
+  *ngIf="aboutUsPageData.slider">
 </web-cover>
 <!-- End cover section -->
 <section class="about-us">
   <h1 class="heading">Nosotros</h1>
   <div class="about-text">
-    <!-- <p *ngFor="let p of aboutUsPageData.aboutUsText">{{ aboutUsPageData.aboutUsText }}</p> -->
     <p *ngIf="aboutUsPageData.aboutUsText">{{ aboutUsPageData.aboutUsText }}</p>
   </div>
 </section>
 <section class="pillars">
   <h2 class="heading">Tenemos tres pilares fundamentales</h2>
   <div class="hide-lg">
-      <owl-carousel-o [options]="pillarsOptions" class="pillars-carousel">
-        <ng-template *ngIf="aboutUsPageData.environmentText" carouselSlide>
+      <owl-carousel
+        [options]="pillarsOptions"
+        class="pillars-carousel"
+        [carouselClasses]="['']"
+        *ngIf="aboutUsPageData.environmentText || aboutUsPageData.readingText || aboutUsPageData.mathText"
+      >
           <div class="pillar">
             <h3 class="pillar-title">
               <span class="bold">Amb</span>iente
             </h3>
             <p class="pillar-text">{{ aboutUsPageData.environmentText }}</p>
           </div>
-        </ng-template>
-        <ng-template *ngIf="aboutUsPageData.readingText" carouselSlide>
           <div class="pillar">
             <h3 class="pillar-title">
               <span class="bold">Le</span>ctura
             </h3>
             <p class="pillar-text">{{ aboutUsPageData.readingText }}</p>
           </div>
-        </ng-template>
-        <ng-template *ngIf="aboutUsPageData.mathText" carouselSlide>
           <div class="pillar">
             <h3 class="pillar-title">
               <span class="bold">Ma</span>temática
             </h3>
             <p class="pillar-text">{{ aboutUsPageData.mathText }}</p>
           </div>
-        </ng-template>
-      </owl-carousel-o>
+      </owl-carousel>
   </div>
   <div class="pillars-list show-lg">
       <div class="pillar-wrapper environment">
@@ -77,19 +77,88 @@
 <section class="awards">
   <h2 class="heading">Premios y reconocimientos</h2>
   <div class="awards-list">
-    <owl-carousel #awardsCarousel
-                  [options]="carouselOptions"
-                  class="awards-carousel"
-                  [carouselClasses]="['']">
-      <div class="award" *ngFor="let award of aboutUsPageData.awards">
+    <owl-carousel
+      #awardsCarousel
+      [options]="carouselOptions"
+      class="awards-carousel"
+      [carouselClasses]="['']"
+      *ngIf="aboutUsPageData.awards.length"
+    >
+      <div class="award" *ngFor="let award of aboutUsPageData.awards; index as i">
         <div class="image-wrapper">
           <img *ngIf="award.image" class="image" [src]="award.image" [alt]="award.name + ' logo'" />
         </div>
-        <p *ngIf="award.title" class="title">{{ award.name }}</p>
+        <p *ngIf="award.title" class="title">{{ award.title }}</p>
         <p *ngIf="award.description" class="description">{{ award.description }}</p>
-        <a class="button sm blue show-more" (click)="onAwardClick(award)">Ver más</a>
+        <a class="button sm blue show-more" (click)="onAwardClick(i)">Ver más</a>
       </div>
     </owl-carousel>
+  </div>
+  <!-- Award modals -->
+  <div #awardModal
+    *ngFor="let award of aboutUsPageData.awards; index as i"
+    role="dialog"
+    class="modal static-modal award-modal amblema-theme z-hidden d-block"
+    aria-modal="true"
+    aria-labelledby="modal-basic-title"
+  >
+    <div role="document" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="onCloseAwardModal(i)"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body d-flex">
+          <div>
+            <owl-carousel-o
+              #awardImagesCarousel
+              [options]="awardImagesCarouselOptions"
+              class="award-images-carousel"
+              *ngIf="award.image || award.image2 || award.image3"
+            >
+                <ng-template carouselSlide>
+                  <div class="image-wrapper">
+                    <img class="image"
+                      *ngIf="award.image"
+                      [src]="award.image"
+                      [alt]="award.title + ' image 1'"
+                    />
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="image-wrapper">
+                    <img class="image"
+                      *ngIf="award.image2"
+                      [src]="award.image2"
+                      [alt]="award.title + ' image 2'"
+                    />
+                  </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                  <div class="image-wrapper">
+                    <img class="image"
+                      *ngIf="award.image3"
+                      [src]="award.image3"
+                      [alt]="award.title + ' image 3'"
+                    />
+                  </div>
+                </ng-template>
+
+            </owl-carousel-o>
+          </div>
+          <div>
+            <h3>{{ award.title }}</h3>
+            <p>{{ award.description2 }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <!-- End awards section -->
