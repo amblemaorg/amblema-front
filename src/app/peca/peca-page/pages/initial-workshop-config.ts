@@ -8,10 +8,10 @@ const buttonsSet = {
       date: '22/12/12',
     },
     status: 'pendiente',
-    // download: {
-    //   url: '#',
-    //   name: 'hola.png',
-    // },
+    download: {
+      url: '#',
+      name: 'hola.png',
+    },
     // texts: [
       /* { */
         title: {

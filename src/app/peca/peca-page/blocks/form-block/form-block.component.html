@@ -1,7 +1,7 @@
-<form [formGroup]="componentForm">
+<form [formGroup]="componentForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitForm(componentForm)">
     <div class="fields-container">
         <div
-          [class]="'form-field field ' + settings.formsContent[field].type"
+          [class]="'form-group ' + settings.formsContent[field].type"
           *ngFor="let field of fields; trackBy: trackByFn"
           [ngSwitch]="settings.formsContent[field].type"
         >
@@ -94,14 +94,15 @@
             />
           </ng-container> -->
 
-          <ng-container *ngSwitchCase="'text'">
+          <ng-container *ngSwitchCase="'text'">            
             <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label>
             <input
-              class="field-control"
+              class="form-control"
               autocomplete='off'
               type="text"
               [formControlName]="field"
               [id]="field"
+              [placeholder]="settings.formsContent[field].placeholder"
             />
           </ng-container>
 
@@ -123,5 +124,12 @@
             </div>
           </ng-container>
         </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+          [disabled]="!componentForm.valid || sendingForm">
+            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar':'Enviando..' }}
+          </button>
+        </div>        
     </div>
 </form>
