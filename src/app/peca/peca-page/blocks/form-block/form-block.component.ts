@@ -3,6 +3,7 @@ import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'form-block',
@@ -18,20 +19,17 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   componentForm: FormGroup;
   fields: string[];
-  // isTest:boolean = false;
+  sendingForm:boolean;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    ) {
     this.type = 'presentational';
     this.component = 'form';
   }
 
-  ngOnInit() {
-    // if (!this.isTest) this.setFormBuilding();
-  }
-
-  // setFormBuilding() {
-  //   this.componentForm = this.buildFormGroup(this.settings.formsContent);
-  // }
+  ngOnInit() {}
 
   setSettings(settings: any) {
     this.settings = { ...settings };
@@ -94,5 +92,27 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     }
 
     return null;
+  }
+
+  prevDef(e){
+    if (e.target.tagName.toLowerCase()!==("textarea") && e.target.tagName.toLowerCase()!==("button")) {
+      e.preventDefault() 
+    }    
+  }
+
+  // submitting form
+  onSubmitForm(cf) { //cf: component form
+    this.sendingForm = true;
+    console.log('submitting form');   
+    
+    setTimeout(() => {
+      this.sendingForm = false;
+      console.log('form submitted'); 
+      this.toastr.success(
+        'form submitted',
+        '',
+        { positionClass: 'toast-bottom-right' }
+      );
+    }, 3000);
   }
 }

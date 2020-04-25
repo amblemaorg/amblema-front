@@ -1,16 +1,4 @@
-@import "scss/variables";
-
-@mixin btn-min-width() {
-    min-width: 8rem;
-}
-@mixin download-btn() {
-    font-size: 1rem;
-    line-height: 1.5;
-    
-    &:hover , &.btn {
-        color: #fff;
-    }
-}
+@import 'scss/placeholders';
 
 ::ng-deep {
     .nb-theme-default {
@@ -22,10 +10,11 @@
         .texts-wrapper {
             .date-download-status {
                 .right-side {
+                    display: flex;
+                    align-items: baseline;
+
                     a {
-                        background-color: $blue;
-                        @include btn-min-width;
-                        @include download-btn;
+                        @include shared-btn-confs;
                     }
 
                     .status {
@@ -51,12 +40,8 @@
                 }
             }    
     
-            .btn {
-                background-color: $blue;
-            }
-    
-            a {
-                @include download-btn;
+            a.btn, button.btn {
+                @include shared-btn-confs;
             }
     
             .btn-in-wrapper {
@@ -64,10 +49,6 @@
     
                 &:first-child {
                     margin-left: 0;
-                }
-    
-                &.action-btn {
-                    @include btn-min-width;
                 }
             }
         }

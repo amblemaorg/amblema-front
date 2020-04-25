@@ -1,4 +1,5 @@
 @import './responsive';
+@import './variables';
 
 $color_map: (
     blue: #00809a,
@@ -24,31 +25,31 @@ $z-index-higher: 4;
     @media screen and (min-width: 480px) and (orientation: portrait) { padding: 2rem; }  
     @include mediabreak(medium,landscape,true,800px) { padding: 2rem; }
     @include mediabreak(larger,landscape,true,1600px) { padding: 2.5rem 3rem; }
-  }
+}
   
-  // Generals
-  %h1 {
+// Generals
+%h1 {
     font-size: x-large !important;  
     @include mediabreak(small,portrait) { font-size: xx-large !important; }
     @include mediabreak(larger,landscape,true,1600px) { font-size: 1.65rem !important; }
     @include mediabreak(larger,landscape,true,1900px) { font-size: xx-large !important; }
-  }
-  %h34 {
+}
+%h34 {
     font-size: large !important;
     @include mediabreak(small,portrait) { font-size: x-large !important; }
     @include mediabreak(large,portrait) { font-size: xx-large !important; }
     @include mediabreak(large,landscape) { font-size: 1.25rem !important; }
     @include mediabreak(larger,landscape,true,1600px) { font-size: 1.5rem !important; }
     @include mediabreak(larger,landscape,true,1900px) { font-size: 1.75rem !important; }
-  }
-  %p {  
+}
+%p {  
     @include mediabreak(small,portrait) { font-size: larger !important; }
     @include mediabreak(large,portrait) { font-size: 1.35rem !important; }
     @include mediabreak(large,landscape) { font-size: 0.9rem !important; }
     @include mediabreak(larger,landscape,true,1600px) { font-size: medium !important; }
     @include mediabreak(larger,landscape,true,1900px) { font-size: large !important; }
-  }
-  @mixin button-pad {
+}
+@mixin button-pad {
     @include mediabreak(large,landscape) {
       padding: 0.45rem 0.5rem !important;
       width: 10rem !important;
@@ -59,4 +60,22 @@ $z-index-higher: 4;
       padding: 0.45rem 0.85rem !important;
     }
     @include mediabreak(larger,landscape,true,1900px) { min-width: 12rem !important; }
-  }
+}
+
+@mixin shared-btn-confs() {
+    min-width: 8rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-color: $blue;
+    background-color: $blue;
+    color: #fff;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:hover {
+        background-color: #fff;
+        color: $blue;
+    }
+}

@@ -1,16 +1,90 @@
-@import 'scss/responsive';
-@import 'scss/variables';
+@import 'scss/placeholders';
 
-.error-message {
-  color: $red;
-  font-size: 3.5vw;
-  text-align: right;
+form {    
+  .fields-container {
+    @mixin form-mix {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+  
+      @include mediabreak(large,landscape) { justify-content: space-between; }
+    }
+    @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
+    @include mediabreak(large,portrait) { @include form-mix; }   
+  
+    @mixin form-flexings {
+      @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
+      @include mediabreak(large,portrait) { flex: 0 0 100%; }
+      @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
+      @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
+      @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+    } 
 
-  @include breakpoint(medium) {
-    font-size: 2vw;
-  }
+    .two-wrapper {
+        @include form-mix;
+        @include form-flexings;
 
-  @include breakpoint(large) {
-    font-size: .9vw;
+        .form-group {
+            width: 100%;
+        }
+    }   
+
+    .form-group {
+      @include form-flexings;
+
+      .field-label {
+        color: $blue
+      }
+    
+      .form-control {
+        color: $blue;
+    
+        &:focus {
+          box-shadow: none;
+        }
+    
+        &.ng-touched {
+          &.ng-invalid {
+            border: 2px solid $red;
+          }
+    
+          &.ng-valid {
+            border: 2px solid $green;
+          }
+    
+          & ~ .error-message {
+            display: block;
+          }
+        }
+    
+        &.ng-untouched {
+          & ~ .error-message {
+            display: none;
+          }
+        }
+      }
+    
+      .error-message {
+        color: $red;
+        font-size: 3.5vw;
+      
+        @include breakpoint(medium) {
+          font-size: 2vw;
+        }
+      
+        @include breakpoint(large) {
+          font-size: .9vw;
+        }
+      }
+    }
+
+    .btn-container {
+      width: 100%;
+      text-align: right;
+      
+      .submit-btn {
+        @include shared-btn-confs;
+      }
+    }    
   }
 }

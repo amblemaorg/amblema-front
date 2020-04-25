@@ -8,7 +8,7 @@
                 </h6>
             </div>
             <div *ngIf="settings.download || settings.status" class="right-side">
-                <h6 *ngIf="settings.status" class="status">
+                <h6 *ngIf="settings.status" class="status ml-4">
                     <span>Estatus:&nbsp;</span><span class="rounded-circle"></span>&nbsp;
                     <span class="font-weight-normal">{{ settings.status }}</span>
                 </h6>
@@ -16,7 +16,7 @@
                 <a *ngIf="settings.download" title="Descargar" 
                 [href]="settings.download.url" target="_blank" 
                 [download]="settings.download.name" 
-                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">Descargar</a>
+                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">Descargar</a>
             </div>
         </div>
 

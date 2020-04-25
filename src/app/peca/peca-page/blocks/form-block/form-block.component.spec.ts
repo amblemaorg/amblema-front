@@ -57,8 +57,6 @@ describe('FormBlockComponent', () => {
     component = fixture.componentInstance;
     factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
     component.setSettings(formSettings.settings);
-    // component.isTest = true;
-    // component.setFormBuilding();
     fixture.detectChanges();
   });
 
