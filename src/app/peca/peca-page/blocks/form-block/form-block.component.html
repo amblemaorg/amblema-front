@@ -92,34 +92,35 @@
               (change)="updateDataToSubmit()"
               [id]="field"
             />
-          </ng-container> -->
+          </ng-container> -->         
+          
+          <ng-container *ngSwitchCase="'date'">
+            <input 
+              type="date" 
+              class="form-control" 
+              [formControlName]="field" 
+              [placeholder]="settings.formsContent[field].placeholder" 
+              (change)="glbls.validateDate($event,'greater')"
+            />
+            <div class="date-error-message">
+              <strong>La fecha debe ser mayor a la de hoy</strong>
+            </div>
+          </ng-container>
 
-          <ng-container *ngSwitchCase="'text'">            
-            <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label>
+          <ng-container *ngSwitchDefault>
+            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
             <input
               class="form-control"
               autocomplete='off'
-              type="text"
+              [type]="settings.formsContent[field].type"
               [formControlName]="field"
               [id]="field"
               [placeholder]="settings.formsContent[field].placeholder"
             />
           </ng-container>
 
-          <ng-container *ngSwitchDefault>
-            <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label>
-            <input
-              class="field-control"
-              autocomplete='off'
-              [type]="settings.formsContent[field].type"
-              [formControlName]="field"
-              [id]="field"
-            />
-          </ng-container>
-
           <ng-container *ngIf="hasErrors(field)">
-            <div *ngIf="settings.formsContent[field].messages && settings.formsContent[field].messages.pattern" 
-            class="error-message">
+            <div class="error-message">
               <strong>{{hasErrors(field)}}</strong>
             </div>
           </ng-container>
