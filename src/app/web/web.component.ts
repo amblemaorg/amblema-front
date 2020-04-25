@@ -1,6 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { DOCUMENT } from '@angular/common';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-web',
@@ -15,6 +17,8 @@ export class WebComponent implements OnInit {
 
   constructor(
     private router: Router,
+    @Inject(DOCUMENT) private _document: any,
+    private globalService: GlobalService
   ) { }
 
   ngOnInit() {
@@ -26,23 +30,37 @@ export class WebComponent implements OnInit {
     });
   }
 
+  displayFooter() {
+    if (this.router.url == '/escuelas') {
+      this.addElementClass(this.footer.nativeElement, 'hide');
+    }
+    else {
+      this.removeElementClass(this.footer.nativeElement, 'hide');
+    }
+  }
+
   openOffcanvas(content: string) {
     disableBodyScroll(this.offcanvas.nativeElement);
     this.offcanvasClass = 'opened';
     this.formSelected = content;
+    this.addElementClass(this._document.body, 'active-form-wizard');
   }
 
   closeOffcanvas() {
     enableBodyScroll(this.offcanvas.nativeElement);
     this.offcanvasClass = 'closed';
+    this.removeElementClass(this._document.body, 'active-form-wizard');
   }
 
-  displayFooter() {
-    if (this.router.url == '/escuelas') {
-      this.footer.nativeElement.classList.add('hide')
+  addElementClass(element: any, className: string) {
+    if (this.globalService.isBrowser) {
+      element.classList.add(className);
     }
-    else {
-      this.footer.nativeElement.classList.remove('hide')
+  }
+
+  removeElementClass(element: any, className: string) {
+    if (this.globalService.isBrowser) {
+      element.classList.remove(className);
     }
   }
 
