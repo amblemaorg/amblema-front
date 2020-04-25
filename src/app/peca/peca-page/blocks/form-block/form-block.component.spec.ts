@@ -8,6 +8,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { requiredAndNormalText } from '../../../../web/shared/forms/custom-validators';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -42,7 +43,11 @@ describe('FormBlockComponent', () => {
         RouterTestingModule.withRoutes([]),
         ReactiveFormsModule,
         FormsModule,
-      ]
+        ToastrModule.forRoot(),
+      ],
+      providers: [
+        { provide: ToastrService, useClass: ToastrService }
+      ],
     })
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
