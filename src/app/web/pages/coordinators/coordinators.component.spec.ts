@@ -4,7 +4,6 @@ import { CoordinatorsComponent } from './coordinators.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { CoordinatorService } from 'src/app/services/web/coordinator.service';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('CoordinatorsComponent', () => {
@@ -21,16 +20,16 @@ describe('CoordinatorsComponent', () => {
               CarouselModule,
               HttpClientModule
             ],
-            providers: [CoordinatorService]
+            providers: []
         })
         .compileComponents();
     }));
 
-    beforeEach(inject([CoordinatorService], (coordinatorService: CoordinatorService) => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(CoordinatorsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    }));
+    });
 
     it('should create coordinators page', () => {
         expect(component).toBeTruthy();

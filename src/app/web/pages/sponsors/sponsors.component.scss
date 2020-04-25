@@ -1,7 +1,7 @@
-@import 'scss/responsive';
-@import 'scss/elements/button';
-@import 'scss/elements/headings';
-@import 'scss/elements/lists';
+@import "scss/responsive";
+@import "scss/elements/button";
+@import "scss/elements/headings";
+@import "scss/elements/lists";
 
 h1 {
   color: $white;
@@ -24,9 +24,7 @@ h1 {
   }
 }
 
-
 owl-carousel-o {
-
   &.testimonials-carousel {
     position: absolute;
     top: 80vw;

@@ -1,5 +1,7 @@
-<web-cover [coverImage]="coverData.coverImage"
-           [slides]="homePageData.slider">
+<web-cover
+  [coverImage]="coverData.coverImage"
+  [slides]="homePageData.slider"
+  *ngIf="homePageData.slider">
 </web-cover>
 <section class="about-us">
     <div class="background-leaf"></div>
@@ -9,15 +11,27 @@
     </div>
 </section>
 <section class="pillars">
+    <ng-template #pillarModal let-modal>
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>{{ selectedPillar.title }}</h3>
+        <p>{{ selectedPillar.description }}</p>
+      </div>
+    </ng-template>
+
     <web-bg-heading>Tenemos tres<br/> pilares fundamentales</web-bg-heading>
     <div class="pillars-list">
-      <div class="pillar ambiente">
+      <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
         <h3><span class="bold">Amb</span>iente</h3>
       </div>
-      <div class="pillar lectura">
+      <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
         <h3><span class="bold">Le</span>ctura</h3>
       </div>
-      <div class="pillar matematica">
+      <div class="pillar matematica" (click)="openModal('math', pillarModal)">
         <h3><span class="bold">Ma</span>temática</h3>
       </div>
     </div>
@@ -25,13 +39,13 @@
     <owl-carousel #pillarsCarousel class="pillars-carousel-home"
                   [options]="pillarsOptions"
                   [carouselClasses]="['']">
-        <div class="pillar ambiente">
+        <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
           <h3><span class="bold">Amb</span>iente</h3>
         </div>
-        <div class="pillar lectura">
+        <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
           <h3><span class="bold">Le</span>ctura</h3>
         </div>
-        <div class="pillar matematica">
+        <div class="pillar matematica" (click)="openModal('math', pillarModal)">
           <h3><span class="bold">Ma</span>temática</h3>
         </div>
     </owl-carousel>
@@ -39,7 +53,7 @@
 <section class="social-impact">
   <div class="heading-wrapper">
     <h2 class="heading">Impacto social</h2>
-    <div class="statistics">
+    <div *ngIf="homePageData.statistics" class="statistics">
       <div
         class="statistic statistic-schools"
         *ngIf="homePageData.statistics.totalSchools"

@@ -7,7 +7,7 @@ import { PostCardComponent } from '../post-card/post-card.component';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('BlogArchiveComponent', () => {
+xdescribe('BlogArchiveComponent', () => {
   let component: BlogArchiveComponent;
   let fixture: ComponentFixture<BlogArchiveComponent>;
 
@@ -34,7 +34,18 @@ describe('BlogArchiveComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create blog page', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should create at less and only one h1 tag', () => {
+    const h1Count = fixture.nativeElement.querySelectorAll('h1').lenght;
+    expect(h1Count).toBe(1);
+  });
+
+  it('should create a h1 tag in cover section with content "Bienvenidos"', () => {
+    const h1Tag = fixture.nativeElement.querySelector('section.cover h1');
+    expect(h1Tag).toBeTruthy();
+    expect(h1Tag.textContent).toBe('Bienvenidos');
   });
 });

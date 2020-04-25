@@ -1,34 +1,45 @@
-import { Component, OnInit, Input, ViewChild, ComponentFactoryResolver, ViewContainerRef, Output, EventEmitter } from '@angular/core';
-import { ChartComponent, ChartsSwitcherOptions } from './chart-components';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  Output,
+  EventEmitter,
+} from "@angular/core";
+import { ChartComponent, ChartsSwitcherOptions } from "./chart-components";
 import { ChartComponentFactory } from "./chart-component-factory";
 
 @Component({
-  selector: 'charts-switcher',
-  templateUrl: './charts-switcher.component.html',
-  styleUrls: ['./charts-switcher.component.scss']
+  selector: "charts-switcher",
+  templateUrl: "./charts-switcher.component.html",
+  styleUrls: ["./charts-switcher.component.scss"],
 })
 export class ChartsSwitcherComponent implements OnInit {
-
   @Input() options: ChartsSwitcherOptions;
   @Output() switch: EventEmitter<number> = new EventEmitter<number>();
-  @ViewChild('chartHost', { read: ViewContainerRef, static: true }) chartHostRef: ViewContainerRef;
+  @ViewChild("chartHost", { read: ViewContainerRef, static: true })
+  chartHostRef: ViewContainerRef;
   direction: string;
   charts: ChartComponent[];
   chartFactory: ChartComponentFactory;
   activeChartIndex: number = 0;
 
-  constructor(private resolver: ComponentFactoryResolver) { }
+  constructor(private resolver: ComponentFactoryResolver) {}
 
   ngOnInit() {
     this.chartFactory = new ChartComponentFactory(this.resolver);
     this.charts = this.options.charts;
-    this.direction = this.options.direction || 'row';
+    this.direction = this.options.direction || "row";
     this.loadChartComponent();
   }
 
   loadChartComponent() {
-    const activeChart = this.charts[this.activeChartIndex];
-    this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
+    if (this.charts.length > 0) {
+      const activeChart = this.charts[this.activeChartIndex];
+      this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
+    }
   }
 
   switchChart(index: number) {
