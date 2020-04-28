@@ -10,7 +10,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   type: 'presentational';
   component: string;
   settings: {    
-    date: {
+    dateOrtext: {
       text: string;
       date: string;
     };

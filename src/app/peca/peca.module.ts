@@ -17,6 +17,7 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgSelectModule } from '@ng-select/ng-select';
 // COMPONENTS
 import { PecaComponent } from './peca.component';
 import { PecaPageComponent } from './peca-page/peca-page.component';
@@ -62,6 +63,7 @@ import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.com
     Ng2SmartTableModule,
     ReactiveFormsModule,
     FormsModule,
+    NgSelectModule,
   ],
   entryComponents: [
     TabsBlockComponent,

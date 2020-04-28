@@ -226,7 +226,8 @@ export class GeneralStepsComponent implements OnInit {
     return date;
   }
   controlDate(e, step:Step) {   
-    if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
+    // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
+    if (!this.globals.validateDate(e,'greater',true)) step.date = this.globals.dateStringToISOString(e.target.value);
     else step.date = null;
   }
 

@@ -5,6 +5,7 @@ import { isNullOrUndefined } from 'util';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
+import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 
 @Component({
   selector: 'form-block',
@@ -22,6 +23,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   fields: string[];
   sendingForm:boolean;
   glbls:any;
+
+  municipalities:MunicipalityInfo[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -113,11 +116,37 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       this.sendingForm = false;
       console.log('form submitted'); 
       cf.reset();
+      this.municipalities = [];
       this.toastr.success(
         'form submitted',
         '',
         { positionClass: 'toast-bottom-right' }
       );
     }, 3000);
+  }
+
+
+  // filling municipalities according to selected state
+  fillMunicipalities(state_id="default",munId='') {
+    // if(this.setMuns && this.setMuns.length>0) {
+      if (state_id=="default") this.municipalities = [];
+      else {
+        this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
+      }   
+      this.componentForm.patchValue({addressMunicipality:munId});
+    // }
+  }
+  updateMuns(bool:boolean = true){
+    if(bool) {
+      let currStateId = "default";
+      currStateId = this.componentForm.controls['addressState'].value && this.componentForm.controls['addressState'].value.length>0? 
+        this.componentForm.controls['addressState'].value:"default";      
+    
+      this.fillMunicipalities(currStateId);
+    }    
+  }
+
+  focusDatePicker(e) {
+    e.focus();
   }
 }

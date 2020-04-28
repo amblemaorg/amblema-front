@@ -18,7 +18,7 @@ describe('TextsButtonsSetBlockComponent', () => {
   let textsAndButtonsSettings = {
     component: 'buttons',
     settings: {
-        date: {
+          dateOrtext: {
             text: 'texto fecha',
             date: '12/12/12',
           },
