@@ -3,12 +3,16 @@
   [ngClass]="{
     'd-row': direction == 'row',
     'd-column': direction != 'row'
-  }">
+  }"
+>
   <div class="switchers-wrapper">
+    <p *ngIf="buttonsDescription">
+      {{ buttonsDescription }}
+    </p>
     <button
       class="switcher-button"
       [ngClass]="{
-        'active': activeChartIndex == i
+        active: activeChartIndex == i
       }"
       type="button"
       *ngFor="let chart of charts; index as i"
@@ -18,6 +22,9 @@
     </button>
   </div>
   <div class="chart-wrapper">
+    <p *ngIf="charts[activeChartIndex].description">
+      {{ charts[activeChartIndex].description }}
+    </p>
     <ng-template #chartHost></ng-template>
   </div>
 </div>

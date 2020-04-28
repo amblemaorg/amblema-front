@@ -3,43 +3,43 @@ import { Component } from "@angular/core";
 export declare interface ChartsSwitcherOptions {
   direction: string;
   theme: string;
+  buttonsDescription: string;
   charts: ChartComponent[];
 }
 
 export abstract class ChartComponent {
-  title: string = '';
-
-  type: string = '';
-
+  title: string = "";
+  description: string = "";
+  type: string = "";
   data: ChartData[] = [];
 
   props: ChartProps = {
-    colors: ['#FFF'],
-    stroke: 'smooth'
+    colors: ["#FFF"],
+    stroke: "smooth",
   };
 
   markers: {
-    show: false,
-    color: '#FFF'
+    show: false;
+    color: "#FFF";
   };
 
   xaxis: XAxis = {
     show: true,
     ticks: false,
     labels: true,
-    color: '#FFF'
+    color: "#FFF",
   };
 
   yaxis: YAxis = {
     show: true,
     ticks: false,
     labels: false,
-    color: '#FFF'
+    color: "#FFF",
   };
 
   grid: Grid = {
     show: false,
-    color: '#FFF'
+    color: "#FFF",
   };
 
   abstract configChart(): void;
@@ -66,7 +66,7 @@ interface ChartProps {
 interface Markers {
   show: boolean;
   color: string;
-};
+}
 
 interface XAxis {
   show: boolean;
@@ -94,9 +94,16 @@ export abstract class LineChartComponent extends ChartComponent {
   asymptotes: Asymptote[] = [];
   abstract configAsymptotes(): void;
 
-  calculateNumericAxisRange(axis: string = 'y', space: number = 5): { min: number, max: number } {
-    const asymtotes = this.asymptotes.filter(asymtote => asymtote.axis == axis);
-    const axisValues = [...this.data, ...asymtotes].map(element => <number>element.value);
+  calculateNumericAxisRange(
+    axis: string = "y",
+    space: number = 5
+  ): { min: number; max: number } {
+    const asymtotes = this.asymptotes.filter(
+      (asymtote) => asymtote.axis == axis
+    );
+    const axisValues = [...this.data, ...asymtotes].map(
+      (element) => <number>element.value
+    );
     const minAndMax = this.findMinMaxInArray(axisValues);
     return { min: minAndMax[0] - space, max: minAndMax[1] + space };
   }
@@ -104,11 +111,10 @@ export abstract class LineChartComponent extends ChartComponent {
   findMinMaxInArray(numericArray: number[]): number[] {
     let max = undefined;
     let min = undefined;
-    numericArray.map(number => {
-      if ( typeof max === 'undefined' && typeof min === 'undefined' ) {
+    numericArray.map((number) => {
+      if (typeof max === "undefined" && typeof min === "undefined") {
         max = min = number;
-      }
-      else {
+      } else {
         max = number > max ? number : max;
         min = number < min ? number : min;
       }
@@ -118,10 +124,50 @@ export abstract class LineChartComponent extends ChartComponent {
 }
 
 interface Asymptote {
-  axis: 'x' | 'y';
+  axis: "x" | "y";
   value: number | string;
   color: string;
   title?: string;
+}
+
+export abstract class BarChartComponent extends ChartComponent {
+  data: BarChartData[] = [];
+  asymptotes: Asymptote[] = [];
+  abstract configAsymptotes(): void;
+
+  calculateNumericAxisRange(
+    axis: string = "y",
+    space: number = 5
+  ): { min: number; max: number } {
+    const asymtotes = this.asymptotes.filter(
+      (asymtote) => asymtote.axis == axis
+    );
+    const axisValues = [...this.data, ...asymtotes].map(
+      (element) => <number>element.value
+    );
+    const minAndMax = this.findMinMaxInArray(axisValues);
+    return { min: minAndMax[0] - space, max: minAndMax[1] + space };
+  }
+
+  findMinMaxInArray(numericArray: number[]): number[] {
+    let max = undefined;
+    let min = undefined;
+    numericArray.map((number) => {
+      if (typeof max === "undefined" && typeof min === "undefined") {
+        max = min = number;
+      } else {
+        max = number > max ? number : max;
+        min = number < min ? number : min;
+      }
+    });
+    return [min, max];
+  }
+}
+
+interface BarChartData {
+  value: number | string;
+  label: number | string;
+  serie?: number | string;
 }
 
 export abstract class PieChartComponent extends ChartComponent {}
