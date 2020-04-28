@@ -1,48 +1,49 @@
-@import 'scss/variables';
-@import 'scss/responsive';
+@import "scss/variables";
+@import "scss/responsive";
 
-@import
-  '~ngx-toastr/toastr',
-  '~bootstrap/dist/css/bootstrap.css',
-  '~bootstrap/scss/print',
-  '~bootstrap/scss/reboot',
-  '~bootstrap/scss/type',
-  '~owl.carousel/dist/assets/owl.carousel.min.css',
-  '~owl.carousel/dist/assets/owl.theme.default.min.css';
+@import "~ngx-toastr/toastr", "~bootstrap/dist/css/bootstrap.css",
+  "~bootstrap/scss/print", "~bootstrap/scss/reboot", "~bootstrap/scss/type",
+  "~owl.carousel/dist/assets/owl.carousel.min.css",
+  "~owl.carousel/dist/assets/owl.theme.default.min.css";
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 300;
   font-style: normal;
-  src: url('./assets/fonts/Montserrat-Medium.ttf') format('truetype');
+  src: url("./assets/fonts/Montserrat-Medium.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 700;
   font-style: normal;
-  src: url('./assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+  src: url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'amblemaicons';
-  src: url('./assets/fonts/amblema-icons/amblemaicons.eot?46373356');
-  src: url('./assets/fonts/amblema-icons/amblemaicons.eot?46373356#iefix') format('embedded-opentype'),
-       url('./assets/fonts/amblema-icons/amblemaicons.woff2?46373356') format('woff2'),
-       url('./assets/fonts/amblema-icons/amblemaicons.woff?46373356') format('woff'),
-       url('./assets/fonts/amblema-icons/amblemaicons.ttf?46373356') format('truetype'),
-       url('./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons') format('svg');
+  font-family: "amblemaicons";
+  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356");
+  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/amblema-icons/amblemaicons.woff2?46373356")
+      format("woff2"),
+    url("./assets/fonts/amblema-icons/amblemaicons.woff?46373356")
+      format("woff"),
+    url("./assets/fonts/amblema-icons/amblemaicons.ttf?46373356")
+      format("truetype"),
+    url("./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons")
+      format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "arrows";
-  src:url("./assets/fonts/arrows.eot");
-  src:url("./assets/fonts/arrows.eot?#iefix") format("embedded-opentype"),
-      url("./assets/fonts/arrows.woff") format("woff"),
-      url("./assets/fonts/arrows.ttf") format("truetype"),
-      url("./assets/fonts/arrows.svg#slick") format("svg");
+  src: url("./assets/fonts/arrows.eot");
+  src: url("./assets/fonts/arrows.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/arrows.woff") format("woff"),
+    url("./assets/fonts/arrows.ttf") format("truetype"),
+    url("./assets/fonts/arrows.svg#slick") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -53,7 +54,7 @@ html {
 }
 
 body {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   margin: 0;
   padding: 0;
   height: 100%;
@@ -137,7 +138,7 @@ a {
   position: relative;
   z-index: 1;
   will-change: transform;
-  background-color: #FFF; /* A background-color is required */
+  background-color: #fff; /* A background-color is required */
   min-height: 100vh;
 }
 
@@ -242,7 +243,7 @@ section.pillars {
 
         &:before {
           color: $blue;
-          font-family: 'arrows';
+          font-family: "arrows";
           font-size: 6vw;
           @include breakpoint(small, landscape) {
             font-size: 3vw;
@@ -340,20 +341,6 @@ owl-carousel-o {
     }
   }
 
-  // Three pillars owl carousel in about us page
-  &.pillars-carousel {
-    .owl-carousel {
-      width: 80%;
-      margin: auto;
-    }
-    .owl-prev {
-      left: -10vw !important;
-    }
-    .owl-next {
-      right: -90vw !important;
-    }
-  }
-
   // General styles for owl carousels
   .owl-carousel {
     position: relative;
@@ -378,7 +365,7 @@ owl-carousel-o {
 
         &:before {
           color: $blue;
-          font-family: 'arrows';
+          font-family: "arrows";
           font-size: 6vw;
 
           @include breakpoint(small, landscape) {
@@ -445,50 +432,57 @@ owl-carousel-o {
 //? PARA ESTILIZAR EL PAGINADOR------------------
 jw-pagination {
   .pagination {
-      justify-content: center;
-      margin-block-start: 1.75rem;
+    justify-content: center;
+    margin-block-start: 1.75rem;
 
-      li {
-        cursor: pointer;
-      }
+    li {
+      cursor: pointer;
+    }
   }
 
-  .page-item.first-item, .page-item.last-item {
-      display: none;
+  .page-item.first-item,
+  .page-item.last-item {
+    display: none;
   }
 
-  .page-item .page-link, .page-item.disabled .page-link {
-      background: none;
+  .page-item .page-link,
+  .page-item.disabled .page-link {
+    background: none;
   }
   .page-item .page-link {
-      border-color: $blue;
-      color: $blue;
-      font-size: small;
-      padding: 0.9rem 1.2rem;
+    border-color: $blue;
+    color: $blue;
+    font-size: small;
+    padding: 0.9rem 1.2rem;
 
-      @include mediabreak(small,portrait) { font-size: medium; }
-      @include mediabreak(large,landscape) { padding: 0.8rem 1.1rem; font-size: 0.75rem; }
-      @include mediabreak(larger,landscape,true,1900px) {
-        padding: 0.95rem 1.4rem;
-        font-size: 1rem;
-      }
+    @include mediabreak(small, portrait) {
+      font-size: medium;
+    }
+    @include mediabreak(large, landscape) {
+      padding: 0.8rem 1.1rem;
+      font-size: 0.75rem;
+    }
+    @include mediabreak(larger, landscape, true, 1900px) {
+      padding: 0.95rem 1.4rem;
+      font-size: 1rem;
+    }
   }
   .page-item.disabled .page-link {
-      border-color: $dark-gray;
-      color: $dark-gray;
+    border-color: $dark-gray;
+    color: $dark-gray;
   }
   .page-item.active .page-link {
-      color: #fff;
-      background: $blue;
-      border-color: $blue;
+    color: #fff;
+    background: $blue;
+    border-color: $blue;
   }
   .page-item.previous-item .page-link {
-      border-bottom-left-radius: 0.2rem;
-      border-top-left-radius: 0.2rem;
+    border-bottom-left-radius: 0.2rem;
+    border-top-left-radius: 0.2rem;
   }
-  .page-item.next-item .page-link{
-      border-bottom-right-radius: 0.2rem;
-      border-top-right-radius: 0.2rem;
+  .page-item.next-item .page-link {
+    border-bottom-right-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
   }
 }
 span[class*="icon-"].icon-awesum {

@@ -1,35 +1,48 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import { SchoolService } from 'src/app/services/web/school.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { OwlCarousel } from 'ngx-owl-carousel';
-import { ChartService } from 'src/app/services/web/chart.service';
-import { GlobalService } from 'src/app/services/global.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  HostListener,
+} from "@angular/core";
+import { SchoolService } from "src/app/services/web/school.service";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { OwlCarousel } from "ngx-owl-carousel";
+import { ChartService } from "src/app/services/web/chart.service";
+import { GlobalService } from "src/app/services/global.service";
 
 @Component({
-  selector: 'app-school-detail',
-  templateUrl: './school-detail.component.html',
-  styleUrls: ['./school-detail.component.scss']
+  selector: "app-school-detail",
+  templateUrl: "./school-detail.component.html",
+  styleUrls: ["./school-detail.component.scss"],
 })
 export class SchoolDetailComponent implements OnInit, AfterViewInit {
-  @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
-  @ViewChild('activitiesIndexCarousel', { static: true }) activitiesIndexCarousel: OwlCarousel;
-  @ViewChild('activityImageCarousel', { static: false }) activityImageCarousel: OwlCarousel;
-  @ViewChild('activitiesCarousel', { static: true }) activitiesCarousel: OwlCarousel;
-  @ViewChild('otherSchoolsCarousel', { static: true }) otherSchoolsCarousel: OwlCarousel;
+  @ViewChild("schoolDetails", { static: false }) schoolSection: ElementRef;
+  @ViewChild("activitiesIndexCarousel", { static: true })
+  activitiesIndexCarousel: OwlCarousel;
+  @ViewChild("activityImageCarousel", { static: false })
+  activityImageCarousel: OwlCarousel;
+  @ViewChild("activitiesCarousel", { static: true })
+  activitiesCarousel: OwlCarousel;
+  @ViewChild("otherSchoolsCarousel", { static: true })
+  otherSchoolsCarousel: OwlCarousel;
   landscape = window.innerWidth > window.innerHeight;
 
   ACTIVITIES = {
-    WITH_TEACHERS: 'withTeachers',
-    SPECIALS: 'specials'
-  }
+    WITH_TEACHERS: "withTeachers",
+    SPECIALS: "specials",
+  };
   selectedActivitiesType = this.ACTIVITIES.SPECIALS;
   activeActivityIndex = 0;
 
   chartSwitcherOptions = {
-    direction: 'column',
-    charts: []
-  }
+    direction: "column",
+    buttonsDescription:
+      "Medimos el impacto de la aplicación de la herramienta educativa en cada escuela",
+    charts: [],
+  };
 
   carouselOptions: OwlOptions = {
     autoplay: false,
@@ -39,31 +52,31 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
-  }
+  };
 
   schoolImagesOptions: OwlOptions = {
     ...this.carouselOptions,
     responsive: {
       0: {
-        items: 1
-      }
-    }
-  }
+        items: 1,
+      },
+    },
+  };
 
   activitiesIndexOptions: OwlOptions = {
     ...this.carouselOptions,
     loop: false,
     responsive: {
       0: {
-        items: 2
+        items: 2,
       },
       [768]: {
-        items: 5
-      }
-    }
-  }
+        items: 5,
+      },
+    },
+  };
 
   activityImagesOptions: OwlOptions = {
     ...this.carouselOptions,
@@ -73,40 +86,40 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     //autoWidth:true,
     responsive: {
       0: {
-        items: 3
+        items: 3,
       },
       [768]: {
-        items: 5
-      }
-    }
-  }
+        items: 5,
+      },
+    },
+  };
 
   teachersOptions: OwlOptions = {
     ...this.carouselOptions,
     responsive: {
       0: {
-        items: 2
+        items: 2,
       },
       [768 * 1.3]: {
-        items: 3
-      }
-    }
-  }
+        items: 3,
+      },
+    },
+  };
 
   activitiesOptions: OwlOptions = {
     ...this.carouselOptions,
     responsive: {
       0: {
-        items: this.landscape ? 3 : 1
+        items: this.landscape ? 3 : 1,
       },
       [767 * 0.84]: {
-        items: 3
+        items: 3,
       },
       [1024 * 0.84]: {
-        items: 4
-      }
-    }
-  }
+        items: 4,
+      },
+    },
+  };
 
   otherSchoolsOptions: OwlOptions = {
     ...this.carouselOptions,
@@ -116,13 +129,13 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     nav: false,
     responsive: {
       0: {
-        items: this.landscape ? 3 : 1
+        items: this.landscape ? 3 : 1,
       },
       [768 * 0.8]: {
-        items: 3
-      }
-    }
-  }
+        items: 3,
+      },
+    },
+  };
 
   school;
   activeChartIndex: number = 0;
@@ -134,16 +147,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     private globalService: GlobalService,
     private schoolService: SchoolService,
     private chartService: ChartService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
-    this.route.paramMap.subscribe(params => {
-      this.getSchoolBySlug(params.get('schoolSlug'));
+    this.route.paramMap.subscribe((params) => {
+      this.getSchoolBySlug(params.get("schoolSlug"));
+    });
 
-    })
-
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.scrollToPage();
         this.reinitCarousels();
@@ -161,12 +173,13 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
   }
 
   getSchoolBySlug(slug) {
-    this.schoolService.getSchoolBySlugJSON(slug)
-    .subscribe(data => {
+    this.schoolService.getSchoolBySlugJSON(slug).subscribe((data) => {
       // console.log(data)
       this.school = data;
-      this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(data.charts);
-    })
+      this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
+        data.charts
+      );
+    });
   }
 
   setActiveChart(index: number) {
@@ -186,7 +199,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     this.activityImageCarousel.reInit();
   }
 
-  @HostListener('window:resize', [''])
+  @HostListener("window:resize", [""])
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
@@ -195,8 +208,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
       this.activitiesCarousel.options.responsive[0].items = 3;
       this.otherSchoolsCarousel.options.responsive[0].items = 3;
       this.refreshCarousels();
-    }
-    else {
+    } else {
       this.activitiesIndexCarousel.options.responsive[0].items = 2;
       this.activityImageCarousel.options.responsive[0].items = 3;
       this.activitiesCarousel.options.responsive[0].items = 1;

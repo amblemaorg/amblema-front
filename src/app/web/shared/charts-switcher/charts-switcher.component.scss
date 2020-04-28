@@ -1,32 +1,34 @@
 @import "scss/responsive";
 @import "scss/variables";
-@import "./apex-chart-theme.scss";
+// @import "./apex-chart/apex-chart-theme.scss";
 
 .charts-switcher {
+  color: $white;
   // Styles when every direction  for movil portrait
   &.d-row,
   &.d-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .switchers-wrapper {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin: 5vw 0;
+      width: 100%;
 
-      .switchers-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin: 5vw 0;
-        width: max-content;
-
-        .switcher-button {
-          margin: 2vw 0 1vw;
-          width: 100%;
-        }
-      }
-
-      .chart-wrapper {
+      .switcher-button {
+        margin: 2vw 0 1vw;
         width: 100%;
       }
+    }
+
+    .chart-wrapper {
+      width: 100%;
+    }
   }
 
   // Styles when direction row for movil landscape, tablet and desktop
@@ -46,29 +48,27 @@
     .switchers-wrapper {
       @include breakpoint(small, landscape) {
         flex-direction: column;
-        margin: 4vw 0 0;
+        margin: 4% 0 0;
+        padding-right: 4%;
         width: 30%;
       }
 
       @include breakpoint(medium) {
         flex-direction: column;
-        margin: 4vw 0 0;
+        margin: 4% 0 0;
+        padding-right: 4%;
         width: 30%;
       }
 
       .switcher-button {
         @include breakpoint(small, landscape) {
-          width: 18vw;
-          margin: 0 0 3vw;
+          width: 100%;
+          margin: 0 0 2vw 0;
         }
 
         @include breakpoint(medium) {
-          width: 18vw;
-          margin: 0 0 3vw;
-        }
-
-        @include breakpoint(large) {
-          width: 21vw;
+          width: 100%;
+          margin: 0 0 2vw 0;
         }
       }
     }
@@ -92,34 +92,29 @@
     .switchers-wrapper {
       @include breakpoint(small, landscape) {
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        margin: 0 0 2vw;
+        margin: 2% 0;
         width: 100%;
       }
 
       @include breakpoint(medium) {
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        margin: 0 0 2vw;
+        margin: 2% 0;
         width: 100%;
       }
 
       .switcher-button {
         @include breakpoint(small, landscape) {
-          margin: 0 0 0 1.5vw;
-          width: 18vw;
+          margin: 0;
+          width: 30%;
         }
 
         @include breakpoint(medium) {
-          margin: 0 0 0 1.5vw;
-          width: 18vw;
-        }
-
-        @include breakpoint(large) {
-          margin: 0 1.5vw;
-          width: 12vw;
+          margin: 0;
+          width: 30%;
         }
       }
     }
@@ -129,7 +124,48 @@
     }
   }
 
+  .chart-wrapper {
+    width: 100%;
+
+    p {
+      font-size: 4vw;
+      margin: 0;
+      text-align: center;
+      width: 100%;
+
+      @include breakpoint(small, landscape) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(large) {
+        font-size: 0.9vw;
+      }
+    }
+  }
+
   .switchers-wrapper {
+    p {
+      text-align: center;
+      font-size: 4vw;
+      width: 100%;
+
+      @include breakpoint(small, landscape) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 1.5vw;
+      }
+
+      @include breakpoint(large) {
+        font-size: 1.2vw;
+      }
+    }
+
     .switcher-button {
       background: transparent;
       border: 1px solid white;
@@ -138,22 +174,21 @@
       padding: 2.5vw 5vw;
       font-size: 4vw;
       line-height: 1.2;
-      margin: 0 1vw;
 
       @include breakpoint(small, landscape) {
-        padding: .6vw 1vw;
-        font-size: 1.8vw;
+        padding: 0.6vw 1vw;
+        font-size: 1.5vw;
         min-height: 4vw;
       }
 
       @include breakpoint(medium) {
-        padding: .6vw 1vw;
-        font-size: 1.8vw;
+        padding: 0.6vw 1vw;
+        font-size: 1.5vw;
         min-height: 4vw;
       }
 
       @include breakpoint(large) {
-        padding: .6vw 1vw;
+        padding: 0.6vw 1vw;
         font-size: 1.2vw;
       }
 
