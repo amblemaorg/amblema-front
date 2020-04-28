@@ -77,7 +77,7 @@ describe("HomeComponent", () => {
     testSelectorHasContent(
       fixture.nativeElement,
       selector + " " + tag,
-      "Impacto social"
+      "Indicadores clave"
     );
   });
 

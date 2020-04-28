@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
 
   chartSwitcherOptions = {
     direction: "row",
+    buttonsDescription:
+      "Medimos el impacto de la aplicación de la herramienta educativa en cada escuela",
     charts: [],
   };
 
@@ -109,9 +111,9 @@ export class HomeComponent implements OnInit {
   getHomePageData() {
     this.homeService.getWebContent().subscribe((data) => {
       //console.log(data);
-      this.homePageData = data.homePage;
-      this.homePageData.statistics = HOME_CONTENT.homePage.statistics;
+      data.homePage.statistics = HOME_CONTENT.homePage.statistics;
       const chartsData = HOME_CONTENT.homePage.statistics.charts;
+      this.homePageData = data.homePage;
       this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
         chartsData
       );
