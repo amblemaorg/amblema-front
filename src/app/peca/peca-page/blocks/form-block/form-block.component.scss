@@ -20,6 +20,10 @@
     .fields-container {
       @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
       @include mediabreak(large,portrait) { @include form-mix; }
+
+      h6 {
+        width: 100%;
+      }
   
       .two-wrapper {
           @include form-mix;

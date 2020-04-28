@@ -32,7 +32,8 @@ describe('FormBlockComponent', () => {
                 validations: requiredAndNormalText,
                 messages:    { pattern: MESSAGES.TEXT_MESSAGE }
             },    
-        }
+        },
+        buttons: ['guardar'],
     }
   }
 

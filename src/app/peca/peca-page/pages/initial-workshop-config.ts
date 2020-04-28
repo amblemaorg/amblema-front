@@ -66,6 +66,7 @@ const formSet = {
   component: 'form',
   settings: {
     formsContent: sampleFormData,
+    buttons: ['guardar'],
   }
 }
 
