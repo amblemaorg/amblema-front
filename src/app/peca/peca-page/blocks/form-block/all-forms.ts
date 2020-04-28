@@ -94,6 +94,18 @@ const controlProps = {
 }
 
 export const sampleFormData = {
-    name: { label: "Input text", placeholder: "Input text", ...controlProps.normalTextAndRequired},
-    date: { label: "Input date", placeholder: "Input date", ...controlProps.dateAndRequired},
+    letter: { label: "Input letter text", placeholder: "Input letter text", fullwidth: false, ...controlProps.onlyLettersAndRequired},
+    letterNumber: { label: "Input letters and numbers text", placeholder: "Input letters and numbers text", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired},  
+    normal: { label: "Input normal text", placeholder: "Input normal text", fullwidth: false, ...controlProps.normalTextAndRequired},
+    date: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired},
+    addressState: { label: "Input select state", placeholder: "Input select state", fullwidth: false, ...controlProps.selectAndRequired,
+              options: [{id: "165146541654hjvjh", name: "Lara"}, {id: "165146wfw254hjvjh", name: "Yaracuy"}]},
+    addressMunicipality: { label: "Input select municipality", placeholder: "Input select municipality", fullwidth: false, ...controlProps.selectAndRequired,
+              options: [{id: "dgisgsd64646464", name: "Iribarren", state: {id: "165146541654hjvjh", name: "Lara"}}, 
+                        {id: "tdjsgshdge8791654", name: "Palavecinos", state: {id: "165146541654hjvjh", name: "Lara"}},
+                        {id: "jgisgsd64646464", name: "Cocorote", state: {id: "165146wfw254hjvjh", name: "Yaracuy"}}, 
+                        {id: "bdjsgshdge8791654", name: "Bruzual", state: {id: "165146wfw254hjvjh", name: "Yaracuy"}}]},
+    email: { label: "Input email text", placeholder: "Input email text", fullwidth: false, ...controlProps.emailAndRequired},
+    number: { label: "Input number text", placeholder: "Input number text", fullwidth: false, ...controlProps.numberAndRequired},
+    phone: { label: "Input phone text", placeholder: "Input phone text", fullwidth: false, ...controlProps.phoneAndRequired},
 }

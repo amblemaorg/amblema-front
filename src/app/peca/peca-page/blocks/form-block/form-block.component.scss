@@ -1,94 +1,174 @@
 @import 'scss/placeholders';
 
-form {    
-  .fields-container {
-    @mixin form-mix {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-  
-      @include mediabreak(large,landscape) { justify-content: space-between; }
-    }
-    @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
-    @include mediabreak(large,portrait) { @include form-mix; }   
-  
-    @mixin form-flexings {
-      @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-      @include mediabreak(large,portrait) { flex: 0 0 100%; }
-      @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
-      @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
-      @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
-    } 
+@mixin form-mix {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 
-    .two-wrapper {
-        @include form-mix;
+  @include mediabreak(large,landscape) { justify-content: space-between; }
+}
+@mixin form-flexings {
+  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
+  @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
+  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+} 
+
+::ng-deep {
+  form {    
+    .fields-container {
+      @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
+      @include mediabreak(large,portrait) { @include form-mix; }
+  
+      .two-wrapper {
+          @include form-mix;
+          @include form-flexings;
+  
+          .form-group {
+              width: 100%;
+          }
+      }   
+  
+      .form-group {
+        position: relative;
         @include form-flexings;
-
-        .form-group {
-            width: 100%;
+  
+        .field-label {
+          color: $blue
         }
-    }   
+      
+        .form-control {
+          color: $blue;
 
-    .form-group {
-      @include form-flexings;
+          &[readonly] {
+            cursor: default;
+            background-color: #fff;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            border: none;
+            width: 80%;
+            padding-bottom: 0 !important;
+            height: auto;
+          }
 
-      .field-label {
-        color: $blue
-      }
-    
-      .form-control {
-        color: $blue;
-    
-        &:focus {
-          box-shadow: none;
+          &[type="date"]:focus + .form-control[readonly] {
+            display: none;
+          }
+      
+          &:focus {
+            box-shadow: none;
+          }
+      
+          &.ng-touched {
+            &.ng-invalid, &.date-not-valid {
+              border: 2px solid $red;
+            }
+      
+            &.ng-valid:not(.date-not-valid) {
+              border: 2px solid $green;
+            }
+            
+            & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
+              display: block;
+            }
+  
+            &:not(.date-not-valid) ~ .date-error-message {
+              display: none;
+            }          
+          }
+      
+          &.ng-untouched {
+            & ~ .error-message, & ~ .date-error-message {
+              display: none;
+            }
+          }
         }
-    
-        &.ng-touched {
-          &.ng-invalid, &.date-not-valid {
-            border: 2px solid $red;
-          }
-    
-          &.ng-valid:not(.date-not-valid) {
-            border: 2px solid $green;
-          }
           
-          & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
-            display: block;
-          }
+        .ng-select {
+            .ng-dropdown-panel {
+              z-index: 3;
+      
+              .scroll-host {
+                  left: -0.75rem;
+                  top: 0.35rem;
+                  background: #fff;
+                  border: solid map-get($color_map, form-gray);
+                  border-width: 0 1px 1px;
+      
+                  .scrollable-content{
+                      padding: 0 1rem;
+                  }
+              }
+            }
 
-          &:not(.date-not-valid) ~ .date-error-message {
-            display: none;
-          }          
+            &.ng-select-opened .ng-select-container {
+                z-index: 3;           
+            }
+            
+            .ng-select-container {
+                .ng-placeholder {
+                    color: #6c757d;
+                }
+
+                &.ng-has-value .ng-placeholder {
+                    display: none;
+                }
+            }
+            &.ng-untouched {
+                &.ng-invalid .ng-select-container .ng-placeholder {
+                    display: block !important;
+                }
+                &.ng-valid .ng-select-container .ng-placeholder {
+                    display: none !important;
+                }
+            }
+            .ng-clear-wrapper .ng-clear {
+                color: map-get($color_map, form-gray);
+            }
+            .ng-arrow-wrapper {
+                width: 1rem;
+  
+                .ng-arrow {
+                    height: 0.5rem;
+                    width: 0.5rem;
+                    border-color: map-get($color_map, form-gray);
+                    border-style: solid;
+                    border-width: 0 2px 2px 0;
+                    -webkit-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    top: -0.15rem;
+                }
+            } 
         }
-    
-        &.ng-untouched {
-          & ~ .error-message, & ~ .date-error-message {
-            display: none;
+      
+        .error-message, .date-error-message {
+          color: $red;
+          font-size: 3.5vw;
+        
+          @include breakpoint(medium) {
+            font-size: 2vw;
+          }
+        
+          @include breakpoint(large) {
+            font-size: .9vw;
           }
         }
       }
-    
-      .error-message, .date-error-message {
-        color: $red;
-        font-size: 3.5vw;
-      
-        @include breakpoint(medium) {
-          font-size: 2vw;
-        }
-      
-        @include breakpoint(large) {
-          font-size: .9vw;
-        }
+  
+      .two-wrapper .form-group.full-width, .form-group.full-width {
+        flex: 0 0 100%;
       }
+  
+      .btn-container {
+        width: 100%;
+        text-align: right;
+        
+        .submit-btn {
+          @include shared-btn-confs;
+        }
+      }    
     }
-
-    .btn-container {
-      width: 100%;
-      text-align: right;
-      
-      .submit-btn {
-        @include shared-btn-confs;
-      }
-    }    
   }
 }

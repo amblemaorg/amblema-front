@@ -9,6 +9,7 @@ import { requiredAndNormalText } from '../../../../web/shared/forms/custom-valid
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -26,6 +27,7 @@ describe('FormBlockComponent', () => {
             name: { 
                 label: "Nombre del campo", 
                 placeholder: "Nombre del campo",
+                fullwidth: false,
                 type:        'text',
                 validations: requiredAndNormalText,
                 messages:    { pattern: MESSAGES.TEXT_MESSAGE }
@@ -43,6 +45,7 @@ describe('FormBlockComponent', () => {
         RouterTestingModule.withRoutes([]),
         ReactiveFormsModule,
         FormsModule,
+        NgSelectModule,
         ToastrModule.forRoot(),
       ],
       providers: [

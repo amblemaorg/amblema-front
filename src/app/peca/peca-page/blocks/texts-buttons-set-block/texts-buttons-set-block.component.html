@@ -1,10 +1,11 @@
 <div class="texts-buttons-wrapper">
-    <div class="texts-wrapper" *ngIf="settings.date || settings.download || settings.status">
+    <div class="texts-wrapper" *ngIf="settings.dateOrtext || settings.download || settings.status">
         <div class="date-download-status d-flex justify-content-between">
-            <div *ngIf="settings.date" class="left-side">
+            <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6>
-                    <span *ngIf="settings.date.text">{{ settings.date.text }}:&nbsp;</span>
-                    <span *ngIf="settings.date.date">{{ settings.date.date }}</span>
+                    <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
+                    <span *ngIf="settings.dateOrtext.text && settings.dateOrtext.date">:&nbsp;</span>
+                    <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
                 </h6>
             </div>
             <div *ngIf="settings.download || settings.status" class="right-side">
@@ -22,7 +23,7 @@
 
         <!-- <ng-container *ngFor="let text of settings.texts"> -->
             <h5 *ngIf="settings.title" class="title" 
-            [class.mt-4]="settings.date || settings.download || settings.status"
+            [class.mt-4]="settings.dateOrtext || settings.download || settings.status"
             [class.text-left]="settings.title.aligning == 'left'" 
             [class.text-center]="settings.title.aligning == 'center'">
                 {{ settings.title.text }}

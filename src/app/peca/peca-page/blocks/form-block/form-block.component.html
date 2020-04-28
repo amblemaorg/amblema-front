@@ -2,105 +2,60 @@
     <div class="fields-container">
         <div
           [class]="'form-group ' + settings.formsContent[field].type"
+          [class.full-width]="settings.formsContent[field].fullwidth"
           *ngFor="let field of fields; trackBy: trackByFn"
           [ngSwitch]="settings.formsContent[field].type"
         >
-          <!-- <ng-container *ngSwitchCase="'textarea'">
-            <textarea
-              [id]="field"
+          <ng-container *ngSwitchCase="'email'">
+            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+            <input
+              class="form-control"
+              autocomplete='off'
+              type="email"
               [formControlName]="field"
-              (change)="updateDataToSubmit()"
-              [placeholder]="stepsContent[i][field].placeholder"></textarea>
-          </ng-container> -->
-
-          <!-- <ng-container *ngSwitchCase="'select'">
-            <label class="field-label text-bold" [for]="field">{{ stepsContent[i][field].label }}</label>
+              [id]="field"
+              [placeholder]="settings.formsContent[field].placeholder"
+              [pattern]="settings.formsContent[field].validations.pattern"
+            />
+          </ng-container>
+          
+          <ng-container *ngSwitchCase="'select'">
+            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
             <ng-select
-              class="field-control"
+              class="form-control"
               notFoundText="Elementos no encontrados"
-              [items]="stepsContent[i][field].options"
+              [items]="field==='addressState'? settings.formsContent[field].options : municipalities"
               bindValue="id"
               bindLabel="name"
               [labelForId]="field"
               [formControlName]="field"
               [virtualScroll]="true"
-              (change)="updateDataToSubmit()"
-              [id]="field">
+              [id]="field"
+              [placeholder]="settings.formsContent[field].placeholder"
+              (change)="updateMuns(field==='addressState'? true:false)">
               <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                 <small>{{item.name}}</small>
               </ng-template>
             </ng-select>
-          </ng-container> -->
-
-          <!-- <ng-container *ngSwitchCase="'list'">
-            <ol class="field-list">
-              <li *ngFor="let option of stepsContent[i][field].options; index as i; trackBy: trackByFn">
-                {{ i+1 }}. {{ option }}
-              </li>
-            </ol>
-          </ng-container> -->
-
-          <!-- <ng-container *ngSwitchCase="'confirmation'">
-            <web-form-confirmation
-              [label]="stepsContent[i][field].label"
-              [options]="stepsContent[i][field].options"
-              [formGroup]="formWizard[i]"
-              [name]="field"
-              [id]="field"
-            >
-            </web-form-confirmation>
-          </ng-container> -->
-
-          <!-- <ng-container *ngSwitchCase="'identification'">
-            <label class="field-label text-bold">{{ stepsContent[i][field].label }}</label>
-            <ng-select
-              class="field-control"
-              notFoundText="Elementos no encontrados"
-              [searchable]="false"
-              [items]="stepsContent[i][field].subfields.type.options"
-              bindValue="id"
-              bindLabel="name"
-              [formControlName]="stepsContent[i][field].subfields.type.name"
-              [virtualScroll]="true"
-              [id]="stepsContent[i][field].subfields.type.name">
-              <ng-template ng-option-tmp let-item="item">
-                <small>{{item.name}}</small>
-              </ng-template>
-            </ng-select>
-            <input
-              class="field-control"
-              autocomplete='off'
-              [type]="stepsContent[i][field].subfields.id.type"
-              [formControlName]="stepsContent[i][field].subfields.id.name"
-              [id]="stepsContent[i][field].subfields.id.name"
-              (change)="updateDataToSubmit()"
-            />
-            <web-form-validation
-              [patternMessage]="stepsContent[i][field].subfields.id.messages && stepsContent[i][field].subfields.id.messages.pattern"
-              [validationErrors]="formWizard[i].get(stepsContent[i][field].subfields.id.name).errors"
-            >
-            </web-form-validation>
-          </ng-container> -->
-
-          <!-- <ng-container *ngSwitchCase="'number'">
-            <label class="field-label" [for]="field">{{ stepsContent[i][field].label }}</label>
-            <input
-              class="field-control"
-              autocomplete='off'
-              type="number"
-              [formControlName]="field"
-              (change)="updateDataToSubmit()"
-              [id]="field"
-            />
-          </ng-container> -->         
+          </ng-container>
           
           <ng-container *ngSwitchCase="'date'">
-            <input 
+            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+            <input
+              #inputDate
               type="date" 
               class="form-control" 
-              [formControlName]="field" 
-              [placeholder]="settings.formsContent[field].placeholder" 
+              [formControlName]="field"
               (change)="glbls.validateDate($event,'greater')"
+            />
+            <input [class.d-none]="inputDate.value.length > 0"
+              class="form-control"
+              autocomplete='off'
+              type="text"              
+              [id]="field"
+              [placeholder]="settings.formsContent[field].placeholder"
+              readonly    
+              (click)="focusDatePicker(inputDate)"
             />
             <div class="date-error-message">
               <strong>La fecha debe ser mayor a la de hoy</strong>

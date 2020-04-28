@@ -3,7 +3,7 @@ import { sampleFormData } from '../blocks/form-block/all-forms'
 const buttonsSet = {
   component: 'buttons',
   settings: {
-    date: {
+    dateOrtext: {
       text: 'Fecha actividad',
       date: '22/12/12',
     },
