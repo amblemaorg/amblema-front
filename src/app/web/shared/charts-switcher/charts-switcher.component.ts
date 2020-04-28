@@ -22,6 +22,7 @@ export class ChartsSwitcherComponent implements OnInit {
   @ViewChild("chartHost", { read: ViewContainerRef, static: true })
   chartHostRef: ViewContainerRef;
   direction: string;
+  buttonsDescription: string;
   charts: ChartComponent[];
   chartFactory: ChartComponentFactory;
   activeChartIndex: number = 0;
@@ -31,6 +32,7 @@ export class ChartsSwitcherComponent implements OnInit {
   ngOnInit() {
     this.chartFactory = new ChartComponentFactory(this.resolver);
     this.charts = this.options.charts;
+    this.buttonsDescription = this.options.buttonsDescription;
     this.direction = this.options.direction || "row";
     this.loadChartComponent();
   }
