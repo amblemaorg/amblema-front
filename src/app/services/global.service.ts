@@ -23,8 +23,13 @@ export class GlobalService {
 
     isBrowser;
 
-    constructor(@Inject(PLATFORM_ID) private platformId, private titleService: Title, private metaService: Meta, private location: Location) {
-        this.isBrowser = isPlatformBrowser(platformId);
+    constructor(
+      @Inject(PLATFORM_ID) private platformId,
+      private titleService: Title,
+      private metaService: Meta,
+      private location: Location
+    ) {
+      this.isBrowser = isPlatformBrowser(platformId);
     }
 
     emitCountryName(countryname: string, code:string){

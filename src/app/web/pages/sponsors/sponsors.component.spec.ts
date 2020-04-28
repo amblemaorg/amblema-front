@@ -1,11 +1,9 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SponsorsComponent } from './sponsors.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { SponsorService } from '../../../services/web/sponsors.service';
-import { SponsorPage } from '../../../models/web/web-sponsor.model';
 import { HttpClientModule } from '@angular/common/http';
 import { OwlModule } from 'ngx-owl-carousel';
 
@@ -26,18 +24,16 @@ describe('SponsorsComponent', () => {
               OwlModule,
               HttpClientModule
             ],
-            providers: [
-              SponsorService
-            ]
+            providers: []
         })
         .compileComponents();
     }));
 
-    beforeEach(inject([SponsorService], (sponsorService: SponsorService) => {
+    beforeEach(() => {
         fixture = TestBed.createComponent(SponsorsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    }));
+    });
 
     it('should create sponsors page', () => {
         expect(component).toBeTruthy();

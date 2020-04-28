@@ -1,18 +1,31 @@
-import { ComponentFactoryResolver, ComponentFactory, ViewContainerRef, ComponentRef } from "@angular/core";
-import { ChartComponent, LineChartComponent, PieChartComponent } from './chart-components';
-import { ChartJSLineChart } from './chartjs-adapters';
+import {
+  ComponentFactoryResolver,
+  ComponentFactory,
+  ViewContainerRef,
+  ComponentRef,
+} from "@angular/core";
+import {
+  ChartComponent,
+  LineChartComponent,
+  PieChartComponent,
+  BarChartComponent,
+} from "./chart-components";
+import { ChartJSLineChart as LineChart } from "./chartjs-adapters/chartjs-line-chart";
+import { ChartJSBarChart as BarChart } from "./chartjs-adapters/chartjs-bar-chart";
 
 export class ChartComponentFactory {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  public createNewChartFactory(chartOptions: any): ComponentFactory<ChartComponent> {
+  public createNewChartFactory(
+    chartOptions: any
+  ): ComponentFactory<ChartComponent> {
     switch (chartOptions.type) {
-      case 'line':
-        return this.componentFactoryResolver.resolveComponentFactory(ChartJSLineChart);
-      case 'pie':
-        return this.componentFactoryResolver.resolveComponentFactory(ChartJSLineChart);
+      case "line":
+        return this.componentFactoryResolver.resolveComponentFactory(LineChart);
+      case "bar":
+        return this.componentFactoryResolver.resolveComponentFactory(BarChart);
       default:
-        return this.componentFactoryResolver.resolveComponentFactory(ChartJSLineChart);
+        return this.componentFactoryResolver.resolveComponentFactory(LineChart);
     }
   }
 
@@ -23,14 +36,23 @@ export class ChartComponentFactory {
     containerRef.clear();
     const concreteChartFactory = this.createNewChartFactory(chartOptions);
     const chartComponent = containerRef.createComponent(concreteChartFactory);
+    this.setChartComponentAttributes(chartComponent, chartOptions);
+
     switch (chartOptions.type) {
-      case 'line':
-        const lineChartComponent = this.setLineChartComponentAttributes(chartComponent, chartOptions);
-        return lineChartComponent.instance;
-      case 'pie':
-        return (<PieChartComponent>chartComponent.instance);
+      case "line":
+        const lineChartInstance = <LineChartComponent>chartComponent.instance;
+        const lineChartOptions = <LineChartComponent>chartOptions;
+        lineChartInstance.asymptotes = lineChartOptions.asymptotes;
+        lineChartInstance.configAsymptotes();
+        return lineChartInstance;
+      case "bar":
+        const barChartInstance = <BarChartComponent>chartComponent.instance;
+        const barChartOptions = <BarChartComponent>chartOptions;
+        barChartInstance.asymptotes = barChartOptions.asymptotes;
+        barChartInstance.configAsymptotes();
+        return barChartInstance;
       default:
-        return (<ChartComponent>chartComponent.instance);
+        return <ChartComponent>chartComponent.instance;
     }
   }
 
@@ -45,24 +67,12 @@ export class ChartComponentFactory {
     chartComponentInstance.markers = chartOptions.markers;
     chartComponentInstance.xaxis = chartOptions.xaxis;
     chartComponentInstance.yaxis = chartOptions.yaxis;
-    chartComponentInstance.grid = chartOptions.grid
+    chartComponentInstance.grid = chartOptions.grid;
     chartComponentInstance.configChart();
     chartComponentInstance.configMarkers();
     chartComponentInstance.configXAxis();
     chartComponentInstance.configYAxis();
     chartComponentInstance.configGrid();
     return chartComponentRef;
-  }
-
-  public setLineChartComponentAttributes(
-    chartComponentRef: ComponentRef<ChartComponent>,
-    chartOptions: ChartComponent
-  ): ComponentRef<LineChartComponent> {
-    const lineChartComponentRef = <ComponentRef<LineChartComponent>>this.setChartComponentAttributes(chartComponentRef, chartOptions);
-    const lineChartOptions = <LineChartComponent>chartOptions;
-    const lineChartComponentInstance = lineChartComponentRef.instance;
-    lineChartComponentInstance.asymptotes = lineChartOptions.asymptotes;
-    lineChartComponentInstance.configAsymptotes();
-    return lineChartComponentRef;
   }
 }

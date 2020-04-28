@@ -1,45 +1,77 @@
-<web-cover [coverImage]="coverData.coverImage"
-           [slides]="homePageData.slider">
+<web-cover
+  [coverImage]="coverData.coverImage"
+  [slides]="homePageData.slider"
+  *ngIf="homePageData.slider"
+>
 </web-cover>
 <section class="about-us">
-    <div class="background-leaf"></div>
-    <h1 class="heading">Acerca de nosotros</h1>
-    <div class="text">
-      <p *ngIf="homePageData.aboutUsText">{{ homePageData.aboutUsText }}</p>
-    </div>
+  <div class="background-leaf"></div>
+  <h1 class="heading">Acerca de nosotros</h1>
+  <div class="text">
+    <p *ngIf="homePageData.aboutUsText">{{ homePageData.aboutUsText }}</p>
+  </div>
 </section>
 <section class="pillars">
-    <web-bg-heading>Tenemos tres<br/> pilares fundamentales</web-bg-heading>
-    <div class="pillars-list">
-      <div class="pillar ambiente">
-        <h3><span class="bold">Amb</span>iente</h3>
-      </div>
-      <div class="pillar lectura">
-        <h3><span class="bold">Le</span>ctura</h3>
-      </div>
-      <div class="pillar matematica">
-        <h3><span class="bold">Ma</span>temática</h3>
-      </div>
+  <ng-template #pillarModal let-modal>
+    <div class="modal-header">
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <h3>{{ selectedPillar.title }}</h3>
+      <p>{{ selectedPillar.description }}</p>
+    </div>
+  </ng-template>
 
-    <owl-carousel #pillarsCarousel class="pillars-carousel-home"
-                  [options]="pillarsOptions"
-                  [carouselClasses]="['']">
-        <div class="pillar ambiente">
-          <h3><span class="bold">Amb</span>iente</h3>
-        </div>
-        <div class="pillar lectura">
-          <h3><span class="bold">Le</span>ctura</h3>
-        </div>
-        <div class="pillar matematica">
-          <h3><span class="bold">Ma</span>temática</h3>
-        </div>
-    </owl-carousel>
+  <web-bg-heading
+    >Tenemos tres<br />
+    pilares fundamentales</web-bg-heading
+  >
+  <div class="pillars-list">
+    <div
+      class="pillar ambiente"
+      (click)="openModal('environment', pillarModal)"
+    >
+      <h3><span class="bold">Amb</span>iente</h3>
+    </div>
+    <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+      <h3><span class="bold">Le</span>ctura</h3>
+    </div>
+    <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+      <h3><span class="bold">Ma</span>temática</h3>
+    </div>
+  </div>
+
+  <owl-carousel
+    #pillarsCarousel
+    class="pillars-carousel-home"
+    [options]="pillarsOptions"
+    [carouselClasses]="['']"
+  >
+    <div
+      class="pillar ambiente"
+      (click)="openModal('environment', pillarModal)"
+    >
+      <h3><span class="bold">Amb</span>iente</h3>
+    </div>
+    <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+      <h3><span class="bold">Le</span>ctura</h3>
+    </div>
+    <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+      <h3><span class="bold">Ma</span>temática</h3>
+    </div>
+  </owl-carousel>
 </section>
 <section class="social-impact">
   <div class="heading-wrapper">
-    <h2 class="heading">Impacto social</h2>
-    <div class="statistics">
+    <h2 class="heading">Indicadores clave</h2>
+    <div *ngIf="homePageData.statistics" class="statistics">
       <div
         class="statistic statistic-schools"
         *ngIf="homePageData.statistics.totalSchools"
@@ -50,41 +82,56 @@
         <span class="statistic-label">Escuelas</span>
       </div>
       <div
-        class="statistic statistic-children"
-        *ngIf="homePageData.statistics.totalChildren"
-      >
-        <span class="statistic-count">
-          {{ homePageData.statistics.totalChildren }}
-        </span>
-        <span class="statistic-label">Niños</span>
-      </div>
-      <div
         class="statistic statistic-teachers"
         *ngIf="homePageData.statistics.totalTeachers"
       >
         <span class="statistic-count">
-          {{ homePageData.statistics.totalTeachers}}
+          {{ homePageData.statistics.totalTeachers }}
         </span>
         <span class="statistic-label">Docentes</span>
+      </div>
+      <div
+        class="statistic statistic-children"
+        *ngIf="homePageData.statistics.totalStudents"
+      >
+        <span class="statistic-count">
+          {{ homePageData.statistics.totalStudents }}
+        </span>
+        <span class="statistic-label">Estudiantes</span>
+      </div>
+      <div
+        class="statistic statistic-sponsors"
+        *ngIf="homePageData.statistics.totalSponsors"
+      >
+        <span class="statistic-count">
+          {{ homePageData.statistics.totalSponsors }}
+        </span>
+        <span class="statistic-label">Padrinos</span>
       </div>
     </div>
   </div>
   <charts-switcher
     [options]="chartSwitcherOptions"
-    *ngIf="isBrowser"
+    *ngIf="
+      isBrowser && chartSwitcherOptions && chartSwitcherOptions.charts.length
+    "
   >
   </charts-switcher>
 </section>
 <section class="founders">
-    <div class="heading">
-      <h2>Fundadores</h2>
-      <!-- <p>Lorem ipsum dolor sit amet, consectetuer</p> -->
-    </div>
-    <div class="founders-list">
-      <owl-carousel-o *ngIf="homePageData.testimonials.length > 0" [options]="carouselOptions" class="founders-carousel">
-        <ng-template carouselSlide *ngFor="let item of homePageData.testimonials">
-          <web-testimonial-card [testimonial]="item"></web-testimonial-card>
-        </ng-template>
-      </owl-carousel-o>
-    </div>
+  <div class="heading">
+    <h2>Fundadores</h2>
+    <!-- <p>Lorem ipsum dolor sit amet, consectetuer</p> -->
+  </div>
+  <div class="founders-list">
+    <owl-carousel-o
+      *ngIf="homePageData.testimonials.length > 0"
+      [options]="carouselOptions"
+      class="founders-carousel"
+    >
+      <ng-template carouselSlide *ngFor="let item of homePageData.testimonials">
+        <web-testimonial-card [testimonial]="item"></web-testimonial-card>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
 </section>

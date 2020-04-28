@@ -1,13 +1,13 @@
-@import 'scss/responsive';
-@import 'scss/variables';
-@import 'scss/elements/headings';
+@import "scss/responsive";
+@import "scss/variables";
+@import "scss/elements/headings";
 
 section.school-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 8vw 8vw 30vw 8vw;
-  background-image: url('../../../../../assets/images/cover-blue-simbolos.png');
+  background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
   background-repeat: no-repeat;
   background-size: 240vw;
   background-position-y: 102.5%;
@@ -204,11 +204,11 @@ section.charts {
     width: 100%;
 
     @include breakpoint(small, landscape) {
-      width: 60%;
+      width: 65%;
     }
 
     @include breakpoint(medium) {
-      width: 60%;
+      width: 65%;
     }
   }
 
@@ -235,7 +235,7 @@ section.charts {
 
 section.math-olympics {
   padding: 15vw 10vw;
-  background-color: #EEE;
+  background-color: #eee;
 
   @include breakpoint(small, landscape) {
     padding: 5vw 10vw;
@@ -470,7 +470,6 @@ section.activities {
           }
         }
       }
-
     }
   }
 }
@@ -563,10 +562,11 @@ section.activities {
             left: 0;
             height: 33vw;
             width: 33vw !important;
-            transition: width 1s ease, height 1s ease, left 1s ease, bottom 1s ease;
+            transition: width 1s ease, height 1s ease, left 1s ease,
+              bottom 1s ease;
 
             @include breakpoint(small, landscape) {
-              height: 20vw ;
+              height: 20vw;
               width: 20vw !important;
             }
 
@@ -590,7 +590,8 @@ section.activities {
               width: 66vw !important;
               left: calc(-33vw / 2);
               bottom: calc(33vw / 2);
-              transition: width 1s ease, height 1s ease, left 1s ease, bottom 1s ease;
+              transition: width 1s ease, height 1s ease, left 1s ease,
+                bottom 1s ease;
 
               @include breakpoint(small, landscape) {
                 height: 25vw !important;
@@ -615,7 +616,7 @@ section.activities {
 }
 
 section.teachers {
-  background-image: url('../../../../../assets/images/background-trees-movil.png');
+  background-image: url("../../../../../assets/images/background-trees-movil.png");
   background-size: cover;
   background-repeat: no-repeat;
   color: $white;
@@ -624,13 +625,12 @@ section.teachers {
   position: relative;
 
   @include breakpoint(small, landscape) {
-    background-image: url('../../../../../assets/images/background-trees.png');
+    background-image: url("../../../../../assets/images/background-trees.png");
     min-height: 56vw;
-
   }
 
   @include breakpoint(medium) {
-    background-image: url('../../../../../assets/images/background-trees.png');
+    background-image: url("../../../../../assets/images/background-trees.png");
     min-height: 56vw;
   }
 
@@ -660,7 +660,6 @@ section.teachers {
 
       @include breakpoint(small, landscape) {
         font-size: 3.3vw;
-
       }
 
       @include breakpoint(medium) {
@@ -735,18 +734,18 @@ section.next-activities {
 
         @include breakpoint(small, landscape) {
           font-size: 1.5vw;
-          padding: .5vw 1vw;
-          margin: .5vw 0 1vw;
+          padding: 0.5vw 1vw;
+          margin: 0.5vw 0 1vw;
         }
 
         @include breakpoint(medium) {
           font-size: 1.5vw;
-          padding: .5vw 1vw;
-          margin: .5vw 0 1vw;
+          padding: 0.5vw 1vw;
+          margin: 0.5vw 0 1vw;
         }
 
         @include breakpoint(large) {
-          font-size: .9vw;
+          font-size: 0.9vw;
         }
 
         span {
@@ -783,10 +782,9 @@ section.next-activities {
         }
 
         @include breakpoint(large) {
-          font-size: .9vw;
+          font-size: 0.9vw;
         }
       }
-
     }
   }
 }

@@ -1,40 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 const chartDefaultProps = {
   props: {
-    colors: ['#81B03E', '#00722E'],
+    colors: ["#81B03E", "#FFF", "#163b47"],
   },
   markers: {
     show: true,
-    color: '#81B03E'
+    color: "#81B03E",
   },
-  xaxis: {
-  },
+  xaxis: {},
   yaxis: {
-    labels: false
+    labels: false,
   },
-  grid: {
-  },
+  grid: {},
   asymptoteDefaultProps: {
-    axis: 'y',
-    color: '#FFF',
-  }
-}
+    axis: "y",
+    color: "#FFF",
+  },
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ChartService {
-
-  constructor() { }
+  constructor() {}
 
   formatChartDataToDrawComponent(chartData) {
-    return chartData.map(chart => {
+    return chartData.map((chart) => {
       const asymptoteProps = chartDefaultProps.asymptoteDefaultProps;
-      const asymptotes = chart.goals.map(goal => {
+      const asymptotes = chart.goals.map((goal) => {
         return { ...asymptoteProps, value: goal.value, title: goal.label };
-      })
-      return  { ...chart, ...chartDefaultProps , asymptotes };
-    })
+      });
+      return { ...chart, ...chartDefaultProps, asymptotes };
+    });
   }
 }
