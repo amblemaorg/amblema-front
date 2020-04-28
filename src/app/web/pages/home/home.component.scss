@@ -1,6 +1,6 @@
-@import 'scss/responsive';
-@import 'scss/variables';
-@import 'scss/elements/headings';
+@import "scss/responsive";
+@import "scss/variables";
+@import "scss/elements/headings";
 
 section.about-us {
   background-color: $blue;
@@ -24,7 +24,7 @@ section.about-us {
     display: none;
 
     @include breakpoint(small, landscape) {
-      background-image: url('../../../../assets/images/leaf.png');
+      background-image: url("../../../../assets/images/leaf.png");
       background-repeat: no-repeat;
       background-size: 24vw 29vw;
       bottom: 0;
@@ -37,7 +37,7 @@ section.about-us {
     }
 
     @include breakpoint(medium) {
-      background-image: url('../../../../assets/images/leaf.png');
+      background-image: url("../../../../assets/images/leaf.png");
       background-repeat: no-repeat;
       background-size: 24vw 29vw;
       bottom: 0;
@@ -127,13 +127,12 @@ section.pillars {
     margin: auto;
     width: 100%;
 
-
     @include breakpoint(small, landscape) {
-      width: 70%
+      width: 70%;
     }
 
     @include breakpoint(medium) {
-      width: 70%
+      width: 70%;
     }
 
     .bg-heading {
@@ -233,26 +232,25 @@ section.pillars {
     }
 
     &.ambiente {
-      background-image: url('../../../../assets/images/icon-ambiente-blue.png');
+      background-image: url("../../../../assets/images/icon-ambiente-blue.png");
       &:hover {
-        background-image: url('../../../../assets/images/icon-ambiente-green.png');
+        background-image: url("../../../../assets/images/icon-ambiente-green.png");
       }
     }
 
     &.lectura {
-      background-image: url('../../../../assets/images/icon-lectura-blue.png');
+      background-image: url("../../../../assets/images/icon-lectura-blue.png");
       &:hover {
-        background-image: url('../../../../assets/images/icon-lectura-green.png');
+        background-image: url("../../../../assets/images/icon-lectura-green.png");
       }
     }
 
     &.matematica {
-      background-image: url('../../../../assets/images/icon-matematica-blue.png');
+      background-image: url("../../../../assets/images/icon-matematica-blue.png");
       &:hover {
-        background-image: url('../../../../assets/images/icon-matematica-green.png');
+        background-image: url("../../../../assets/images/icon-matematica-green.png");
       }
     }
-
   }
 }
 
@@ -279,12 +277,14 @@ section.social-impact {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
+      margin-bottom: 2vw;
     }
 
     @include breakpoint(medium) {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
+      margin-bottom: 2vw;
     }
 
     .heading {
@@ -307,7 +307,7 @@ section.social-impact {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      margin: 10vw 0;
+      margin: 5vw 0;
 
       @include breakpoint(small, landscape) {
         margin: 0;
@@ -325,28 +325,28 @@ section.social-impact {
         text-align: center;
 
         .statistic-count {
-          font-size: 10vw;
+          font-size: 9vw;
           font-weight: bold;
           line-height: 1;
 
           @include breakpoint(small, landscape) {
-            font-size: 7vw;
+            font-size: 6vw;
           }
 
           @include breakpoint(medium) {
-            font-size: 7vw;
+            font-size: 6vw;
           }
         }
 
         .statistic-label {
-          font-size: 4vw;
+          font-size: 3vw;
 
           @include breakpoint(small, landscape) {
-            font-size: 3vw;
+            font-size: 2vw;
           }
 
           @include breakpoint(medium) {
-            font-size: 3vw;
+            font-size: 2vw;
           }
         }
       }
@@ -356,7 +356,7 @@ section.social-impact {
 
 section.founders {
   background-color: $blue;
-  background-image: url('../../../../assets/images/background-trees-movil.png');
+  background-image: url("../../../../assets/images/background-trees-movil.png");
   background-size: cover;
   background-repeat: no-repeat;
   color: $white;
@@ -365,13 +365,12 @@ section.founders {
   position: relative;
 
   @include breakpoint(small, landscape) {
-    background-image: url('../../../../assets/images/background-trees.png');
+    background-image: url("../../../../assets/images/background-trees.png");
     min-height: 56vw;
-
   }
 
   @include breakpoint(medium) {
-    background-image: url('../../../../assets/images/background-trees.png');
+    background-image: url("../../../../assets/images/background-trees.png");
     min-height: 56vw;
   }
 
@@ -401,7 +400,6 @@ section.founders {
 
       @include breakpoint(small, landscape) {
         font-size: 3.3vw;
-
       }
 
       @include breakpoint(medium) {

@@ -6,6 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { ChartsSwitcherModule } from '../../shared/charts-switcher/charts-switcher.module';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { ChartsSwitcherModule } from '../../shared/charts-switcher/charts-switch
     HomeRoutingModule,
     SharedModule,
     CarouselModule,
-    OwlModule, ChartsSwitcherModule
+    OwlModule,
+    ChartsSwitcherModule,
+    // NgbModalModule
   ]
 })
 export class HomeModule { }

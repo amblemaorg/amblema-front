@@ -20,6 +20,7 @@ import { ResidenceInfoState } from './store/states/steps/residence-info.state';
 import { EmbedVideo } from 'ngx-embed-video';
 import { AuthGuard } from './guards/auth.guard';
 import { NbAuthModule } from '@nebular/auth';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NbAuthModule } from '@nebular/auth';
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule,
+    NgbModalModule,
     NbAuthModule.forRoot(),
     // -- NGXS --
     NgxsModule.forRoot( [

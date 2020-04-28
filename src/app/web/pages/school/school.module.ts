@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SchoolRoutingModule } from './school-routing.module';
 import { SchoolComponent } from './school.component';
 import { SchoolsMapComponent } from './schools-map/schools-map.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { SchoolsMapComponent } from './schools-map/schools-map.component';
   imports: [
     CommonModule,
     SchoolRoutingModule,
+    // NgbModule
   ]
 })
 export class SchoolModule { }

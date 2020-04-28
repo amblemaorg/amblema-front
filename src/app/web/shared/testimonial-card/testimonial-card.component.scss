@@ -4,26 +4,20 @@
 .testimonial-card {
   background-color: $white;
   color: $blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0;
   padding: 2vw;
-  //-webkit-box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
-  //-moz-box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
-  //box-shadow: .5vw .5vw 1vw .25vw rgba(0, 0, 0, .2);
   width: 100%;
 
   @include breakpoint(small, landscape) {
     padding: 1.5vw;
-    //-webkit-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-    //-moz-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-    //box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
     width: 100%;
   }
 
   @include breakpoint(medium) {
     padding: 1.5vw;
-    //-webkit-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-    //-moz-box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
-    //box-shadow: .2vw .2vw .4vw .25vw rgba(0, 0, 0, .2);
     width: 100%;
   }
 
