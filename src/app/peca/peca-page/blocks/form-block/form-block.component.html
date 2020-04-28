@@ -1,91 +1,109 @@
 <form [formGroup]="componentForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitForm(componentForm)">
     <div class="fields-container">
-        <div
-          [class]="'form-group ' + settings.formsContent[field].type"
-          [class.full-width]="settings.formsContent[field].fullwidth"
-          *ngFor="let field of fields; trackBy: trackByFn"
-          [ngSwitch]="settings.formsContent[field].type"
-        >
-          <ng-container *ngSwitchCase="'email'">
-            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
-            <input
-              class="form-control"
-              autocomplete='off'
-              type="email"
-              [formControlName]="field"
-              [id]="field"
-              [placeholder]="settings.formsContent[field].placeholder"
-              [pattern]="settings.formsContent[field].validations.pattern"
-            />
-          </ng-container>
-          
-          <ng-container *ngSwitchCase="'select'">
-            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
-            <ng-select
-              class="form-control"
-              notFoundText="Elementos no encontrados"
-              [items]="field==='addressState'? settings.formsContent[field].options : municipalities"
-              bindValue="id"
-              bindLabel="name"
-              [labelForId]="field"
-              [formControlName]="field"
-              [virtualScroll]="true"
-              [id]="field"
-              [placeholder]="settings.formsContent[field].placeholder"
-              (change)="updateMuns(field==='addressState'? true:false)">
-              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                <small>{{item.name}}</small>
-              </ng-template>
-            </ng-select>
-          </ng-container>
-          
-          <ng-container *ngSwitchCase="'date'">
-            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
-            <input
-              #inputDate
-              type="date" 
-              class="form-control" 
-              [formControlName]="field"
-              (change)="glbls.validateDate($event,'greater')"
-            />
-            <input [class.d-none]="inputDate.value.length > 0"
-              class="form-control"
-              autocomplete='off'
-              type="text"              
-              [id]="field"
-              [placeholder]="settings.formsContent[field].placeholder"
-              readonly    
-              (click)="focusDatePicker(inputDate)"
-            />
-            <div class="date-error-message">
-              <strong>La fecha debe ser mayor a la de hoy</strong>
-            </div>
-          </ng-container>
+      <ng-container *ngFor="let field of fields; trackBy: trackByFn">
+        <ng-container *ngIf="!isField(field); else titleLabel">
+          <div
+            [class]="'form-group ' + settings.formsContent[field].type"
+            [class.full-width]="settings.formsContent[field].fullwidth"          
+            [ngSwitch]="settings.formsContent[field].type"
+          >
+            <ng-container *ngSwitchCase="'email'">
+              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+              <input
+                class="form-control"
+                autocomplete='off'
+                type="email"
+                [formControlName]="field"
+                [id]="field"
+                [placeholder]="settings.formsContent[field].placeholder"
+                [pattern]="settings.formsContent[field].validations.pattern"
+              />
+            </ng-container>
+            
+            <ng-container *ngSwitchCase="'select'">
+              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+              <ng-select
+                class="form-control"
+                notFoundText="Elementos no encontrados"
+                [items]="field==='addressState'? settings.formsContent[field].options : municipalities"
+                bindValue="id"
+                bindLabel="name"
+                [labelForId]="field"
+                [formControlName]="field"
+                [virtualScroll]="true"
+                [id]="field"
+                [placeholder]="settings.formsContent[field].placeholder"
+                (change)="updateMuns(field==='addressState'? true:false)">
+                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                  <small>{{item.name}}</small>
+                </ng-template>
+              </ng-select>
+            </ng-container>
+            
+            <ng-container *ngSwitchCase="'date'">
+              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+              <input
+                #inputDate
+                type="date" 
+                class="form-control" 
+                [formControlName]="field"
+                (change)="glbls.validateDate($event,'greater')"
+              />
+              <input [class.d-none]="inputDate.value.length > 0"
+                class="form-control"
+                autocomplete='off'
+                type="text"              
+                [id]="field"
+                [placeholder]="settings.formsContent[field].placeholder"
+                readonly    
+                (click)="focusDatePicker(inputDate)"
+              />
+              <div class="date-error-message">
+                <strong>La fecha debe ser mayor a la de hoy</strong>
+              </div>
+            </ng-container>
 
-          <ng-container *ngSwitchDefault>
-            <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
-            <input
-              class="form-control"
-              autocomplete='off'
-              [type]="settings.formsContent[field].type"
-              [formControlName]="field"
-              [id]="field"
-              [placeholder]="settings.formsContent[field].placeholder"
-            />
-          </ng-container>
+            <ng-container *ngSwitchDefault>
+              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+              <input
+                class="form-control"
+                autocomplete='off'
+                [type]="settings.formsContent[field].type"
+                [formControlName]="field"
+                [id]="field"
+                [placeholder]="settings.formsContent[field].placeholder"
+              />
+            </ng-container>
 
-          <ng-container *ngIf="hasErrors(field)">
-            <div class="error-message">
-              <strong>{{hasErrors(field)}}</strong>
-            </div>
-          </ng-container>
-        </div>
+            <ng-container *ngIf="hasErrors(field)">
+              <div class="error-message">
+                <strong>{{hasErrors(field)}}</strong>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-template #titleLabel>
+          <h6>{{ settings.formsContent[field].label }}</h6>
+        </ng-template>        
+      </ng-container>        
 
         <div class="btn-container">
-          <button type="submit" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-          [disabled]="!componentForm.valid || sendingForm">
-            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar':'Enviando..' }}
-          </button>
+          <ng-container
+          *ngFor="let btn of settings.buttons" 
+          [ngSwitch]="btn">
+            <ng-container *ngSwitchCase="'cargarImagenes'">
+              <button type="button" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm">
+                <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Cargar imagenes':'Cargando..' }}
+              </button>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <button type="submit" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm">
+                <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Guardar':'Guardando..' }}
+              </button>
+            </ng-container>            
+          </ng-container>          
         </div>        
     </div>
 </form>

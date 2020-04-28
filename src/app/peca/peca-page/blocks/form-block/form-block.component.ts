@@ -17,6 +17,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   component: string;
   settings: {    
     formsContent: any;
+    buttons: string[];
   };
 
   componentForm: FormGroup;
@@ -49,8 +50,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   private getFormGroupControls(formContent): object {
-    this.fields = Object.keys(formContent);
-    const formControls = Object.keys(formContent).reduce(
+    this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
+    const formContentNoTitles = this.fields.filter(f => { return !f.includes("title_") }); // just fields to be form-grouped
+    const formControls = formContentNoTitles.reduce(
       (formControlsObj, formControlName) => {
         return {
           ...formControlsObj,
@@ -127,7 +129,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
 
   // filling municipalities according to selected state
-  fillMunicipalities(state_id="default",munId='') {
+  private fillMunicipalities(state_id="default",munId='') {
     // if(this.setMuns && this.setMuns.length>0) {
       if (state_id=="default") this.municipalities = [];
       else {
@@ -148,5 +150,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   focusDatePicker(e) {
     e.focus();
+  }
+
+  isField(field) {
+    return field.includes('title_');
   }
 }
