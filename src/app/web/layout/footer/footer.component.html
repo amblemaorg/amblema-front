@@ -1,8 +1,37 @@
 <footer>
   <div class="footer-links">
-    <button (click)="triggerSchoolForm()" class="footer-btn lg">¿Te gustaría que <strong>Amblema</strong> esté en tu escuela?</button>
-    <button (click)="triggerSponsorForm()" class="footer-btn lg">¿Te gustaría ser <strong>Padrino</strong> de una escuela?</button>
-    <button (click)="triggerCoordinatorForm()" class="footer-btn lg">¿Te gustaría ser <strong>Coordinador</strong> de una escuela?</button>
+    <button (click)="triggerSchoolForm()" class="footer-btn lg">
+      ¿Te gustaría que <strong>Amblema</strong> esté en tu escuela?
+    </button>
+    <button (click)="triggerSponsorForm()" class="footer-btn lg">
+      ¿Te gustaría ser <strong>Padrino</strong> de una escuela?
+    </button>
+    <button (click)="triggerCoordinatorForm()" class="footer-btn lg">
+      ¿Te gustaría ser <strong>Coordinador</strong> de una escuela?
+    </button>
   </div>
   <div class="footer-bg"></div>
+  <div class="footer-contact-info">
+    <div class="contact-info">
+      <div class="item">
+        <fa-icon class="icon" [icon]="emailIcon"></fa-icon>
+        <span class="text">{{ email }}</span>
+      </div>
+      <div class="item">
+        <fa-icon class="icon" [icon]="phoneIcon"></fa-icon>
+        <span class="text">{{ phone }}</span>
+      </div>
+      <div class="item">
+        <fa-icon class="icon" [icon]="instagramIcon"></fa-icon>
+        <span class="text">{{ instagram }}</span>
+      </div>
+      <div class="item">
+        <fa-icon class="icon" [icon]="twitterIcon"></fa-icon>
+        <span class="text">{{ twitter }}</span>
+      </div>
+    </div>
+    <div class="copyright">
+      Todos los derechos reservados | Diseñado y desarrollado por Binaural
+    </div>
+  </div>
 </footer>
