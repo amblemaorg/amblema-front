@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
@@ -42,6 +42,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
+    if(settings.formsContent['imageGroup']) this.componentForm.addControl('imageGroup',this.buildImageGroup());
   }
 
   private buildFormGroup(formContent: any): FormGroup {
@@ -49,9 +50,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return this.fb.group(formControls);
   }
 
+  private buildImageGroup(): FormGroup {
+    const formControls = this.getFormControlProperty('imageGroup')
+    return this.fb.group(formControls);
+  }
+
   private getFormGroupControls(formContent): object {
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
-    const formContentNoTitles = this.fields.filter(f => { return !f.includes("title_") }); // just fields to be form-grouped
+    const formContentNoTitles = this.fields.filter(f => { return formContent[f].type!="title" && formContent[f].type!="image" }); // just fields to be form-grouped
     const formControls = formContentNoTitles.reduce(
       (formControlsObj, formControlName) => {
         return {
@@ -64,15 +70,29 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return formControls
   }
 
-  private getFormControlProperty(name: string, params: { value: any, validations: object }): object {
+  private getFormControlProperty(name: string, params: { value: any, validations: object } = { value: null, validations: null }): object {
     let defaultValue = '';
-    if (!isNullOrUndefined(params.value)) {
-      defaultValue = params.value;
-    }
-    if (Object.keys(params.validations).length===1 && !params.validations['required'])
-        return { [name]: [defaultValue] };
-    else 
-        return { [name]: [defaultValue, this.getValidators(params.validations)] };
+    if (name==="imageGroup") { // adding form control to Image Group, when the form has images to be added
+      let imageGroupContent =  Object.keys(this.settings.formsContent[name].fields);
+      let formControls = imageGroupContent.reduce(
+        (formControlsObj, formControlName) => {
+          return {
+            ...formControlsObj,
+            ...this.getFormControlProperty(formControlName, this.settings.formsContent[name].fields[formControlName])
+          }
+        },
+        {} // This is the initial formControlsObj
+      );
+      return formControls;
+    } else {
+      if (!isNullOrUndefined(params.value)) {
+        defaultValue = params.value;
+      }
+      if (Object.keys(params.validations).length===1 && !params.validations['required'])
+          return { [name]: [defaultValue] };
+      else 
+          return { [name]: [defaultValue, this.getValidators(params.validations)] };
+    }    
   }
 
   private getValidators(validations: object): Validators {
@@ -153,6 +173,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   isField(field) {
-    return field.includes('title_');
+    return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
+  }
+
+  hola() { // for trying purpose only
+    console.log(this.componentForm);
   }
 }
