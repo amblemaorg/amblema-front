@@ -94,11 +94,11 @@ const controlProps = {
 }
 
 export const sampleFormData = {
-    title_1: { label: "Letras", type: "title"},
+    title1: { label: "Letras", type: "title"},
     letter: { label: "Input letter text", placeholder: "Input letter text", fullwidth: false, ...controlProps.onlyLettersAndRequired},
     letterNumber: { label: "Input letters and numbers text", placeholder: "Input letters and numbers text", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired},  
     normal: { label: "Input normal text", placeholder: "Input normal text", fullwidth: false, ...controlProps.normalTextAndRequired},
-    title_2: { label: "Fecha y Direccion", type: "title"},
+    title2: { label: "Fecha y Direccion", type: "title"},
     date: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired},
     addressState: { label: "Input select state", placeholder: "Input select state", fullwidth: false, ...controlProps.selectAndRequired,
               options: [{id: "165146541654hjvjh", name: "Lara"}, {id: "165146wfw254hjvjh", name: "Yaracuy"}]},
@@ -107,8 +107,15 @@ export const sampleFormData = {
                         {id: "tdjsgshdge8791654", name: "Palavecinos", state: {id: "165146541654hjvjh", name: "Lara"}},
                         {id: "jgisgsd64646464", name: "Cocorote", state: {id: "165146wfw254hjvjh", name: "Yaracuy"}}, 
                         {id: "bdjsgshdge8791654", name: "Bruzual", state: {id: "165146wfw254hjvjh", name: "Yaracuy"}}]},
-    title_3: { label: "El resto", type: "title"},
+    title3: { label: "El resto", type: "title"},
     email: { label: "Input email text", placeholder: "Input email text", fullwidth: false, ...controlProps.emailAndRequired},
     number: { label: "Input number text", placeholder: "Input number text", fullwidth: false, ...controlProps.numberAndRequired},
     phone: { label: "Input phone text", placeholder: "Input phone text", fullwidth: false, ...controlProps.phoneAndRequired},
+    imageGroup: { type: "image",
+      fields: {
+        imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
+        imageStatus: { label: "Input image status", placeholder: "Input image status", fullwidth: false, ...controlProps.select,
+                      options: [{id: "1", name: "Visible"}, {id: "2", name: "No visible"}] },  
+      },        
+    }
 }
