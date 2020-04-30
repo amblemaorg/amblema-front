@@ -1,15 +1,14 @@
-@import 'scss/responsive';
-@import 'scss/variables';
-
+@import "scss/responsive";
+@import "scss/variables";
 
 .offcanvas {
   background-color: $blue;
   top: 0;
   bottom: 0;
   color: white;
-  filter: opacity(.9);
+  filter: opacity(0.9);
   position: fixed;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   transition: 1s left ease;
   overflow-y: scroll;
