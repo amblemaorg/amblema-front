@@ -18,6 +18,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   settings: {    
     formsContent: any;
     buttons: string[];
+    images: any[];
   };
 
   componentForm: FormGroup;
@@ -42,7 +43,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
-    if(settings.formsContent['imageGroup']) this.componentForm.addControl('imageGroup',this.buildImageGroup());
+    if(settings.formsContent['imageGroup']) 
+      this.componentForm.addControl('imageGroup',this.buildImageGroup());
   }
 
   private buildFormGroup(formContent: any): FormGroup {
@@ -50,15 +52,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return this.fb.group(formControls);
   }
 
-  private buildImageGroup(): FormGroup {
+  private buildImageGroup(): FormGroup { // for building formgroup for add image container
     const formControls = this.getFormControlProperty('imageGroup')
     return this.fb.group(formControls);
   }
 
   private getFormGroupControls(formContent): object {
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
-    const formContentNoTitles = this.fields.filter(f => { return formContent[f].type!="title" && formContent[f].type!="image" }); // just fields to be form-grouped
-    const formControls = formContentNoTitles.reduce(
+    const formContentNoTitles = this.fields.filter(f => { 
+      return formContent[f].type!="title" && formContent[f].type!="image" 
+    }); // just fields to be form-grouped
+    const formControls = this.reduceFormControls(formContentNoTitles, formContent);
+    
+    return formControls
+  }
+
+  // RETURNS A FORMCONTROL OBJECT TO BE USED IN FORMGROUP
+  private reduceFormControls(formContentFields, formContent): Object {
+    let formReduced = formContentFields.reduce(
       (formControlsObj, formControlName) => {
         return {
           ...formControlsObj,
@@ -67,27 +78,20 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       },
       {} // This is the initial formControlsObj
     );
-    return formControls
+
+    return formReduced;
   }
 
   private getFormControlProperty(name: string, params: { value: any, validations: object } = { value: null, validations: null }): object {
     let defaultValue = '';
     if (name==="imageGroup") { // adding form control to Image Group, when the form has images to be added
       let imageGroupContent =  Object.keys(this.settings.formsContent[name].fields);
-      let formControls = imageGroupContent.reduce(
-        (formControlsObj, formControlName) => {
-          return {
-            ...formControlsObj,
-            ...this.getFormControlProperty(formControlName, this.settings.formsContent[name].fields[formControlName])
-          }
-        },
-        {} // This is the initial formControlsObj
-      );
+      let formControls = this.reduceFormControls(imageGroupContent, this.settings.formsContent[name].fields);     
+      
       return formControls;
-    } else {
-      if (!isNullOrUndefined(params.value)) {
-        defaultValue = params.value;
-      }
+    } 
+    else {
+      if (!isNullOrUndefined(params.value)) defaultValue = params.value;
       if (Object.keys(params.validations).length===1 && !params.validations['required'])
           return { [name]: [defaultValue] };
       else 
@@ -97,13 +101,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   private getValidators(validations: object): Validators {
     const fieldValidators = Object.keys(validations).map(validator => {
-      if (validator === 'required') {
+      if (validator === 'required') 
         return Validators[validator];
-      }
-      else {
-        return Validators[validator](validations[validator]);
-      }
+      else 
+        return Validators[validator](validations[validator]);      
     });
+
     return fieldValidators;
   }
 
@@ -123,7 +126,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return null;
   }
 
-  prevDef(e){
+  prevDef(e){ //PREVENTING SUBMITTING FORM WHEN ENTER KEY PRESSED IN TETAREA OR ONY BUTTON INSIDE FORM
     if (e.target.tagName.toLowerCase()!==("textarea") && e.target.tagName.toLowerCase()!==("button")) {
       e.preventDefault() 
     }    
@@ -150,19 +153,20 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   // filling municipalities according to selected state
   private fillMunicipalities(state_id="default",munId='') {
-    // if(this.setMuns && this.setMuns.length>0) {
-      if (state_id=="default") this.municipalities = [];
-      else {
-        this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
-      }   
-      this.componentForm.patchValue({addressMunicipality:munId});
-    // }
+    if (state_id=="default") this.municipalities = [];
+    else {
+      this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
+    }   
+
+    this.componentForm.patchValue({addressMunicipality:munId});
   }
+  // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
   updateMuns(bool:boolean = true){
     if(bool) {
       let currStateId = "default";
       currStateId = this.componentForm.controls['addressState'].value && this.componentForm.controls['addressState'].value.length>0? 
-        this.componentForm.controls['addressState'].value:"default";      
+        this.componentForm.controls['addressState'].value :
+        "default";      
     
       this.fillMunicipalities(currStateId);
     }    
@@ -172,11 +176,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     e.focus();
   }
 
+  // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE
   isField(field) {
     return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
-  }
-
-  hola() { // for trying purpose only
-    console.log(this.componentForm);
   }
 }

@@ -23,8 +23,7 @@
               </div>
             </div>   
             <div *ngIf="step.hasVideo" class="video-container">
-              <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
-              <p class="font-weight-bold">{{ step.video.name }}</p>
+              <div class="video" [innerHTML]="getVideo(step.video.url)"></div>              
             </div>   
             
             <!-- todo: APPROVE OR REJECT BUTTON FOR ADMIN ------------------------------------------------>
