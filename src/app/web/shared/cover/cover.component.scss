@@ -1,7 +1,9 @@
-@import 'scss/responsive';
+@import "scss/responsive";
 
 .web-cover {
   position: relative;
+  overflow: hidden;
+  width: 100vw;
 
   .tagline {
     color: white;
@@ -11,18 +13,17 @@
     position: absolute;
     text-align: center;
     bottom: 80vw;
-    margin-left: -190%;
-    width: 100%;
+    width: 90vw;
     z-index: 15;
 
-    @include breakpoint(small, landscape){
+    @include breakpoint(small, landscape) {
       font-size: 3.4vw;
       margin: 0 5vw;
       margin-left: 5vw;
       right: 0;
       text-align: right;
       bottom: 20vw;
-      width: 40%;
+      width: 40vw;
     }
 
     @include breakpoint(medium) {
@@ -32,7 +33,7 @@
       right: 0;
       text-align: right;
       bottom: 20vw;
-      width: 40%;
+      width: 40vw;
     }
   }
 
@@ -55,17 +56,34 @@
 
   .bg-image {
     img {
-      margin-left: -190%;
-      overflow: auto;
-      width: 280%;
-      @include breakpoint(small, landscape) {
-        width: 100%;
-        margin-left: 0;
-      }
-      @include breakpoint(medium) {
-        width: 100%;
-        margin-left: 0;
+      width: 100%;
+    }
+  }
+}
+
+::ng-deep {
+  owl-carousel-o.bg-carousel {
+    .owl-carousel {
+      .owl-item {
+        &.active {
+          z-index: 50;
+        }
       }
     }
+  }
+}
+
+.image-extended {
+  width: 300vw;
+  margin-left: -50vw;
+
+  @include breakpoint(small, landscape) {
+    margin-left: initial;
+    width: initial;
+  }
+
+  @include breakpoint(medium) {
+    margin-left: initial;
+    width: initial;
   }
 }
