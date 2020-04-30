@@ -2,19 +2,11 @@ export const HOME_CONTENT = {
   homePage: {
     slider: [
       {
-        image: {
-          desktop: "./assets/images/banner-1.jpg",
-          tablet: "./assets/images/banner-movil-1.jpg",
-          movil: "./assets/images/banner-movil-1.jpg",
-        },
+        image: "./assets/images/banner-1.jpg",
         description: "La misión de facilitar la calidad de vida",
       },
       {
-        image: {
-          desktop: "./assets/images/banner-2.jpg",
-          tablet: "./assets/images/banner-movil-2.jpg",
-          movil: "./assets/images/banner-movil-2.jpg",
-        },
+        image: "./assets/images/banner-2.jpg",
         description: "La misión de facilitar la calidad de vida",
       },
     ],
