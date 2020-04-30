@@ -1,6 +1,11 @@
-<form [formGroup]="componentForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitForm(componentForm)">
+<form 
+  [formGroup]="componentForm" 
+  (keydown.enter)="prevDef($event)" 
+  (ngSubmit)="onSubmitForm(componentForm)"
+>
     <div class="fields-container">
       <ng-container *ngFor="let field of fields; trackBy: trackByFn">
+        
         <ng-container *ngIf="isField(field); else titleLabel">
           <div
             [class]="'form-group ' + settings.formsContent[field].type"
@@ -8,7 +13,6 @@
             [ngSwitch]="settings.formsContent[field].type"
           >
             <ng-container *ngSwitchCase="'email'">
-              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
               <input
                 class="form-control"
                 autocomplete='off'
@@ -21,7 +25,6 @@
             </ng-container>
             
             <ng-container *ngSwitchCase="'select'">
-              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
               <ng-select
                 class="form-control"
                 notFoundText="Elementos no encontrados"
@@ -33,7 +36,8 @@
                 [virtualScroll]="true"
                 [id]="field"
                 [placeholder]="settings.formsContent[field].placeholder"
-                (change)="updateMuns(field==='addressState'? true:false)">
+                (change)="updateMuns(field==='addressState'? true:false)"
+              >
                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                   <small>{{item.name}}</small>
                 </ng-template>
@@ -41,7 +45,6 @@
             </ng-container>
             
             <ng-container *ngSwitchCase="'date'">
-              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
               <input
                 #inputDate
                 type="date" 
@@ -49,7 +52,8 @@
                 [formControlName]="field"
                 (change)="glbls.validateDate($event,'greater')"
               />
-              <input [class.d-none]="inputDate.value.length > 0"
+              <input 
+                [class.d-none]="inputDate.value.length > 0"
                 class="form-control"
                 autocomplete='off'
                 type="text"              
@@ -82,63 +86,102 @@
             </ng-container>
           </div>
         </ng-container>
+        
         <ng-template #titleLabel>          
-          <ng-container *ngIf="settings.formsContent[field].type==='title'; else imageGroup">
-            <h6>{{ settings.formsContent[field].label }}</h6>
-          </ng-container>
+            <ng-container *ngIf="settings.formsContent[field].type==='title'; else imageGroup">
+              <h6>{{ settings.formsContent[field].label }}</h6>
+            </ng-container>
         </ng-template>
+
         <ng-template #imageGroup>
-          <!-- <ng-container *ngIf="showImageGroup(field)"> -->
-            <div [formGroupName]="field" class="image-group">
-              <div class="form-group image-description">
-                <input
-                  class="form-control"
-                  autocomplete='off'
-                  type="text"
-                  formControlName="imageDescription"
-                  id="imageDescription"
-                  [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
-                />
+            <div 
+              [formGroupName]="field" 
+              class="image-group d-flex flex-wrap"
+            >
+              <!-- camera-outline -->
+              <div
+                #imageUploadContainer 
+                class="image-upload-btn-container" 
+                id="image-upload-btn-container"
+              >
+                  <input class="d-none" id="image-upload-btn-input-file" type="file" />
+                  <button 
+                    type="button"
+                    id="image-upload-btn"  
+                    title="Subir archivo"
+                    class="text-decoration-none"
+                  >
+                      <nb-icon icon="planificacion"></nb-icon>
+                  </button>
               </div>
-              <div class="form-group image-status">
-                <ng-select
-                  class="form-control"
-                  notFoundText="Elementos no encontrados"
-                  [items]="settings.formsContent[field].fields['imageStatus'].options"
-                  bindValue="id"
-                  bindLabel="name"
-                  labelForId="imageStatus"
-                  formControlName="imageStatus"
-                  [virtualScroll]="true"
-                  id="imageStatus"
-                  [placeholder]="settings.formsContent[field].fields['imageStatus'].placeholder"
-                  (change)="hola()">
-                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                    <small>{{item.name}}</small>
-                  </ng-template>
-                </ng-select>
-              </div>
+
+              <div class="image-fields d-flex flex-column justify-content-center">
+                  <input
+                    class="form-control image-description"
+                    autocomplete='off'
+                    type="text"
+                    formControlName="imageDescription"
+                    id="imageDescription"
+                    [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
+                  />
+
+                  <ng-select
+                    class="form-control image-status"
+                    notFoundText="Elementos no encontrados"
+                    [items]="settings.formsContent[field].fields['imageStatus'].options"
+                    bindValue="id"
+                    bindLabel="name"
+                    labelForId="imageStatus"
+                    formControlName="imageStatus"
+                    [virtualScroll]="true"
+                    id="imageStatus"
+                    [placeholder]="settings.formsContent[field].fields['imageStatus'].placeholder"
+                  >
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                      <small>{{item.name}}</small>
+                    </ng-template>
+                  </ng-select>
+              </div>  
+
+              <div class="add-img-btn">
+                <button 
+                  type="button" 
+                  class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
+                >Agregar imagen
+                </button>
+
+              </div>            
             </div> 
-          <!-- </ng-container> -->
         </ng-template>
       </ng-container>        
 
       <div class="btn-container">
         <ng-container
-        *ngFor="let btn of settings.buttons" 
-        [ngSwitch]="btn">
+          *ngFor="let btn of settings.buttons" 
+          [ngSwitch]="btn"
+        >
           <ng-container *ngSwitchCase="'cargarImagenes'">
-            <button type="button" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-            [disabled]="!componentForm.valid || sendingForm">
-              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Cargar imagenes':'Cargando..' }}
+            <button 
+              type="button" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
+              [disabled]="!componentForm.valid || sendingForm"
+            >
+              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+              {{ !sendingForm? 'Cargar imagenes':'Cargando..' }}
             </button>
           </ng-container>
+
           <ng-container *ngSwitchDefault>
-            <button type="submit" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-            [disabled]="!componentForm.valid || sendingForm">
-              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Guardar':'Guardando..' }}
+            <button 
+              type="submit" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm"
+            >
+              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+              {{ !sendingForm? 'Guardar':'Guardando..' }}
             </button>
-          </ng-container>            
+          </ng-container>   
+
         </ng-container>          
       </div>        
     </div>
