@@ -18,7 +18,7 @@
         [virtualScroll]="true"
         [clearable]="false"
         [searchable]="false"
-        [readonly]="disableThis()">
+        [readonly]="true">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
@@ -43,7 +43,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="statesExample"
+        [items]="statesData"
         bindLabel="name"
         bindValue="id"
         labelForId="addressState"
@@ -65,7 +65,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="municipalitiesExample"
+        [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
         labelForId="addressMunicipality"
@@ -153,7 +153,7 @@
       </div> 
     </div>
 
-    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    <button *ngIf="showSendBtn()" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
     [disabled]="!sponsorForm.valid || disable || sendingForm" [class.disabled]="!sponsorForm.valid">
     <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>
@@ -175,12 +175,32 @@
         <div class="field-invalid">¡Solo letras permitidas!</div>
       </div> 
     </div>
-    <div class="form-group">
-      <input type="date" class="form-control" [class.not-enabled]="disableThis()" [class.not-valid]="validate('birthdate')" [class.not-empty]="isEmpty('birthdate')" formControlName="birthdate" placeholder="Fecha de nacimiento" (change)="glbls.validateDate($event,'lower')" [readonly]="disableThis()">
+    <div class="form-group">           
+      <input
+        #inputBirthDate
+        type="date" 
+        class="form-control form-date-picker" 
+        [class.not-enabled]="disableThis()" 
+        [class.not-valid]="validate('birthdate')" 
+        [class.not-empty]="isEmpty('birthdate')" 
+        formControlName="birthdate"          
+        (change)="glbls.validateDate($event,'lower')" 
+        [readonly]="disableThis()"
+      />          
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener una fecha valida, menor a la de hoy!</div>
       </div>
+      <input 
+        [class.d-none]="inputBirthDate.value.length > 0"
+        class="form-control form-date-placeholder"
+        autocomplete='off'
+        type="text"              
+        id="form-date-placeholder"
+        placeholder="Fecha de nacimiento"
+        readonly    
+        (click)="focusDatePicker(inputBirthDate)"
+      /> 
     </div>
     <div class="form-group">
       <ng-select
@@ -237,7 +257,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="statesExample"
+        [items]="statesData"
         bindLabel="name"
         bindValue="id"
         labelForId="addressState"
@@ -259,7 +279,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="municipalitiesExample"
+        [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
         labelForId="addressMunicipality"
@@ -314,7 +334,7 @@
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>  
-    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    <button *ngIf="showSendBtn()" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
     [disabled]="!coordinatorForm.valid || disable || !controlDate() || sendingForm" [class.disabled]="!coordinatorForm.valid || !controlDate()">
     <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>
@@ -356,7 +376,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="statesExample"
+        [items]="statesData"
         bindLabel="name"
         bindValue="id"
         labelForId="addressState"
@@ -378,7 +398,7 @@
       <ng-select
         class="form-control"
         notFoundText="Elementos no encontrados"
-        [items]="municipalitiesExample"
+        [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
         labelForId="addressMunicipality"
@@ -592,7 +612,7 @@
       </div>
     </div>    
 
-    <button *ngIf="status!='3'" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+    <button *ngIf="showSendBtn()" type="submit" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
     [disabled]="!schoolForm.valid || disable || sendingForm" [class.disabled]="!schoolForm.valid">
     <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>{{ !sendingForm? 'Enviar solicitud':'Enviando..' }}
     </button>

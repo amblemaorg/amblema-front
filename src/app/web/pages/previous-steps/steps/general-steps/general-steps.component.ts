@@ -23,11 +23,12 @@ export class GeneralStepsComponent implements OnInit {
   @Input() steps = [];
   @Input() curriculumPending:boolean;
   @Input() user_type:string = "1";
+  @Input() user_id:string;
   @Input() project_id:string;
   @Input() confirmable:boolean;
+  @Input() enableActions:boolean;
   @Input() setStates = [];
   @Input() setMuns = [];
-  @Input() has_sponsor:boolean = false;
 
   @Output() callUpdate:EventEmitter<string> = new EventEmitter();
 
@@ -49,6 +50,10 @@ export class GeneralStepsComponent implements OnInit {
 
   compareMode() {
     return this.mode!=(+this.user_type);
+  }
+
+  showConditioned(step:Step) { // show approve btn when is not find school, coordinator or sponsor, nor initial Workshop Planning
+    return step.devName!="initialWorkshopPlanning" && step.devName!="findCoordinator" && step.devName!="findSponsor" && step.devName!="findSchool";
   }
 
   isNotConfirmable(step:Step) {
@@ -109,7 +114,6 @@ export class GeneralStepsComponent implements OnInit {
     let formData = new FormData();       
 
     let getPosting = () => {
-      // let stts = step.approvalType=="3"? '1': step.approvalType=="2"? '2': '1'; // status depending on approval type      
       if (step.hasChecklist && step.approvalType!="3") {        
         formData.append('status', !this.enableChecksBtn(step,true)?"1":"2");
       } else if (step.approvalType!="3") {
@@ -153,6 +157,10 @@ export class GeneralStepsComponent implements OnInit {
     this.callUpdate.emit(this.project_id);
     this.setCurrentAccItem(indd,modd);
   }   
+  updateEmitterFromForm(e) {
+    this.callUpdate.emit(e.project_id);
+    this.setCurrentAccItem(e.indd,e.modd);
+  }
   postAR(formData,step:Step,indd,modd) {
     this.stepsService.requestApproval(formData).subscribe(res=>{
       step.status = (step.hasUpload && step.approvalType=="3")? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
@@ -184,15 +192,6 @@ export class GeneralStepsComponent implements OnInit {
       this.toasterMeth(indd,modd);
     });
   }
-  //
-
-  // getDateFormat(dateSrc:Date) {
-  //   let numbers = [1,2,3,4,5,6,7,8,9];
-  //   let correctMonth = numbers.includes(dateSrc.getMonth()+1) ? `0${dateSrc.getMonth()+1}` : (dateSrc.getMonth()+1).toString();
-  //   let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
-
-  //   return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-  // }
   //? -----------------------------------------------------------------------------------------------------------------
 
   toasterMeth(i,m) {
