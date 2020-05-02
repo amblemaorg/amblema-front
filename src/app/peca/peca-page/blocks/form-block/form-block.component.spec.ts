@@ -10,6 +10,7 @@ import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NbIconModule } from '@nebular/theme';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -47,6 +48,7 @@ describe('FormBlockComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         NgSelectModule,
+        NbIconModule,
         ToastrModule.forRoot(),
       ],
       providers: [

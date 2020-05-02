@@ -158,23 +158,27 @@
               &.ng-has-value .ng-placeholder {
                   display: none;
               }
-          }
+          }         
 
           &.ng-untouched {
               &.ng-invalid .ng-select-container .ng-placeholder,
               &.image-status .ng-select-container .ng-placeholder {
-                  display: block !important;
+                  display: block;
               }
               &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
-                  display: none !important;
+                  display: none;
               }
           }
 
           &.ng-touched.ng-pristine, 
           &.ng-touched.ng-invalid {
             .ng-select-container .ng-placeholder {
-                display: block !important;
+                display: block;
             }
+          }
+
+          &.ng-select-filtered .ng-select-container .ng-placeholder {
+              display: none !important;
           }
 
           .ng-clear-wrapper .ng-clear {

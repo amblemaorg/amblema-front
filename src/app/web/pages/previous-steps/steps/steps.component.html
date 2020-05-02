@@ -35,19 +35,22 @@
         <div class="tab-content">
             <div id="general" class="container tab-pane active"><br>
                 <app-general-steps [mode]="1" [steps]="generalSteps" [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" [project_id]="project_id" 
-                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [confirmable]="canOrganizationConfirm"></app-general-steps>
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [confirmable]="canOrganizationConfirm" [enableActions]="enabledTabs"></app-general-steps>
             </div>
             <div id="sponsor" class="container tab-pane fade"><br>
                 <app-general-steps [mode]="3" [steps]="sponsorSteps" [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" [project_id]="project_id" 
-                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [has_sponsor]="formsCalled[0].id.length>0"></app-general-steps>
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [enableActions]="enabledTabs"
+                [user_id]="(user_id$ | async)"></app-general-steps>
             </div>
             <div id="coordinator" class="container tab-pane fade"><br>
                 <app-general-steps [mode]="2" [steps]="coordinatorSteps" [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" [project_id]="project_id" 
-                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [has_sponsor]="formsCalled[0].id.length>0"></app-general-steps>
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [enableActions]="enabledTabs"
+                [user_id]="(user_id$ | async)"></app-general-steps>
             </div>
             <div id="school" class="container tab-pane fade"><br>
                 <app-general-steps [mode]="4" [steps]="schoolSteps" [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" [project_id]="project_id" 
-                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [has_sponsor]="formsCalled[0].id.length>0"></app-general-steps>
+                [user_type]="(user_type$ | async)" (callUpdate)="updateSteps($event)" [setStates]="(states$ | async)" [setMuns]="(municipalities$ | async)" [enableActions]="enabledTabs"
+                [user_id]="(user_id$ | async)"></app-general-steps>
             </div>
         </div>
     </div>
