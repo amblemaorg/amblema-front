@@ -105,7 +105,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   getStatusName(num) {
-    return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : "Aprobado";
+    return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : num=="8" ? "Procesando" : "Aprobado";
   }
 
   //? Sending Approval Request ----------------------------------------------------
@@ -128,7 +128,7 @@ export class GeneralStepsComponent implements OnInit {
 
     if( (step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) || step.approvalType!="3") {
       getPosting();
-
+         
       if(step.approvalType=="3") this.postAR(formData,step,indd,modd); // approval request
       else this.postSA(formData,step,indd,modd,this.project_id); // step approval
     } 
@@ -140,7 +140,7 @@ export class GeneralStepsComponent implements OnInit {
       //putting
       if(step.hasUpload && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
       if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
-            
+      
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
@@ -173,6 +173,7 @@ export class GeneralStepsComponent implements OnInit {
   }
   postSA(formData,step:Step,indd,modd,proj_id) {
     this.stepsService.stepApproval(proj_id,formData).subscribe(res=>{
+      step.status = "8"; // status 8 --> processing
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{

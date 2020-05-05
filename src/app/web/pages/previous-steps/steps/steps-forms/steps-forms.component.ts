@@ -164,7 +164,7 @@ export class StepsFormsComponent implements OnInit {
           this.fillSponsor(data);
           break; 
         case 'coordinator':
-          // this.fillCoordinator(data);
+          this.fillCoordinator(data);
           break;     
         default:
           this.fillSchool(data);
@@ -250,7 +250,6 @@ export class StepsFormsComponent implements OnInit {
       phone: this.coordinatorForm.controls['phone'].value,
       homePhone: this.coordinatorForm.controls['homePhone'].value,
       profession: this.coordinatorForm.controls['profession'].value,
-      isReferred: true,
     }
 
     this.postForm(solicitudBody,fo,2);
@@ -293,8 +292,7 @@ export class StepsFormsComponent implements OnInit {
   }
 
   private postForm(solicitudBody, fo, type) {
-    this.stepsService.requestsFind(type,solicitudBody).subscribe(res => {  
-      console.log(res);
+    this.stepsService.requestsFind(type,solicitudBody).subscribe(res => {
       this.sendingForm = false; 
       fo.reset();
       this.emitUpdate.emit({
@@ -303,7 +301,6 @@ export class StepsFormsComponent implements OnInit {
         modd:this.mode,
       });
     }, (error) => {
-      console.log(error);
       this.sendingForm = false;
       this.emitMessage.emit({i:this.index,m:this.mode});
     }, ()=>{});  
@@ -376,7 +373,7 @@ export class StepsFormsComponent implements OnInit {
       addressCity: res.addressCity,
       addressHome: res.addressHome,
       email: res.email,
-      phone: res.phone?res.phone:'',
+      phone: res.phone? res.phone:'',
       profession: res.profession,
     });
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);

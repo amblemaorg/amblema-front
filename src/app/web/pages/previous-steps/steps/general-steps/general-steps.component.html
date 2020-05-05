@@ -29,7 +29,7 @@
             <!-- todo: APPROVE BUTTON FOR ADMIN ------------------------------------------------>
             <button *ngIf="isAdmin() && step.approvalType=='1' && step.status=='1' && !showSeveralsButton(step) && showConditioned(step)" 
             class="btn btn-primary text-decoration-none py-2 px-4" (click)="approvalMethod(step,i,mode)"
-            [disabled]="step.sending || isNotConfirmable(step) || !enableActions">
+            [disabled]="step.sending || isNotConfirmable(step) || !enableActions || step.status=='8'">
             <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Aprobar' : 'Aprobando..' }}
             </button>
             <!-- todo:................................................................................. -->
@@ -86,7 +86,7 @@
             
             <div class="severals-btn mt-2">
               <button *ngIf="showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4" 
-              [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || disableSeveralsButton(step) || !enableActions"
+              [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || disableSeveralsButton(step) || !enableActions || step.status=='8'"
               (click)="approvalMethod(step,i,mode)">
                 <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
               </button>
