@@ -22,7 +22,7 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(TableBlockComponent);
       case 'accordion' :
         return this.componentFactoryResolver.resolveComponentFactory(AccordionBlockComponent);
-      case 'buttons' :
+      case 'textsbuttons' :
         return this.componentFactoryResolver.resolveComponentFactory(TextsButtonsSetBlockComponent);
       case 'form' :
         return this.componentFactoryResolver.resolveComponentFactory(FormBlockComponent);
