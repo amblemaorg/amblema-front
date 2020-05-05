@@ -1,7 +1,7 @@
 import { sampleFormData } from '../blocks/form-block/all-forms'
 
-const buttonsSet = {
-  component: 'buttons',
+const textsbuttonsSet = {
+  component: 'textsbuttons',
   settings: {
     dateOrtext: {
       text: 'Fecha actividad',
@@ -83,7 +83,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
             title: "Reunión para Planificación del taller inicial",
             icon: "planificacion",
             childBlocks: [
-              { ...buttonsSet }
+              { ...textsbuttonsSet }
             ]
           },
           {
