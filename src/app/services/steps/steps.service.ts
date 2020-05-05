@@ -38,7 +38,6 @@ export class StepsService {
     let requestType = (type === 1) ? 'requestsfindsponsor' : 
                       (type === 2) ? 'requestsfindcoordinator' : 
                                      'requestsfindschool';
-
     return this.http.post<any>(this.baseUrl+requestType,data);
   }
 

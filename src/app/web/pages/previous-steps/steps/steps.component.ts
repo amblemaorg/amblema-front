@@ -77,8 +77,7 @@ export class StepsComponent implements OnInit {
 
               if (step_.isForm) {                
                 if (step_.devName=="sponsorFillCoordinatorForm" || step_.devName=="schoolFillCoordinatorForm") step_.type = 2;
-                else if (step_.devName=="coordinatorFillSponsorForm" || step_.devName=="schoolFillSponsorForm" || 
-                          step_.devName=="schoolFillSponsorlForm") step_.type = 3;
+                else if (step_.devName=="coordinatorFillSponsorForm" || step_.devName=="schoolFillSponsorForm") step_.type = 3;
                 else step_.type = 4;
               }
               step_.send = step_.devName=="coordinatorSendCurriculum" ? true:false;
