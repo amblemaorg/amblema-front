@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AuthRoutingModule } from './auth-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { AuthRoutingModule } from "./auth-routing.module";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NbEvaIconsModule } from "@nebular/eva-icons";
 import {
   NbAlertModule,
   NbCheckboxModule,
@@ -13,48 +13,50 @@ import {
   NbLayoutModule,
   NbMenuModule,
   NbCardModule,
-  NbIconModule
-}
-from '@nebular/theme';
+  NbIconModule,
+} from "@nebular/theme";
 import {
   NbPasswordAuthStrategy,
   NbAuthModule,
-  NbAuthJWTToken
-}
-from '@nebular/auth';
-import { AuthComponent } from './auth.component';
-import { LoginComponent } from './login/login.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { RequestPasswordComponent } from './request-password/request-password.component';
-import { environment } from 'src/environments/environment.prod';
+  NbAuthJWTToken,
+} from "@nebular/auth";
+import { AuthComponent } from "./auth.component";
+import { LoginComponent } from "./login/login.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { RequestPasswordComponent } from "./request-password/request-password.component";
+import { environment } from "src/environments/environment.prod";
 
 const authStrategies = [
   NbPasswordAuthStrategy.setup({
-    name: 'email',
-    baseEndpoint: `${environment.baseUrl}`,
+    name: "email",
+    baseEndpoint: "http://127.0.0.1:10506/", //`${environment.baseUrl}`,
     token: {
       class: NbAuthJWTToken,
-      key: 'access_token'
+      key: "access_token",
     },
     login: {
-      endpoint: 'auth/login',
-      method: 'post',
+      endpoint: "auth/login",
+      method: "post",
       redirect: {
-        success: 'peca',
-        failure: null
+        success: "peca",
+        failure: null,
       },
-      defaultErrors: ['La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.'],
-      defaultMessages: ['Has ingresado exitosamente. Te estamos redirigiendo al PECA...'],
+      defaultErrors: [
+        "La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.",
+      ],
+      defaultMessages: [
+        "Has ingresado exitosamente. Te estamos redirigiendo al PECA...",
+      ],
     },
   }),
-]
+];
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
     ResetPasswordComponent,
-    RequestPasswordComponent
+    RequestPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,7 @@ const authStrategies = [
     NbInputModule,
     NbButtonModule,
     NbCheckboxModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    NbThemeModule.forRoot({ name: "default" }),
     NbLayoutModule,
     NbCardModule,
     HttpClientModule,
@@ -78,6 +80,6 @@ const authStrategies = [
       strategies: authStrategies,
       forms: {},
     }),
-  ]
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

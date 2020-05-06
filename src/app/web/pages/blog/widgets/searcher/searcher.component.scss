@@ -1,0 +1,59 @@
+@import "scss/responsive";
+@import "scss/variables";
+
+.searcher {
+  border: 1px solid $dark-gray;
+  border-radius: 6px;
+
+  .searcher-input {
+    border: none;
+    color: $black;
+    font-size: 4.5vw;
+    margin: 3% 0 3% 5%;
+    width: 80%;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.5vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.5vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1vw;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .searcher-button {
+    background: transparent;
+    border: none;
+    padding: 3%;
+    width: 15%;
+    font-size: 4vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.8vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.8vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1.2vw;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .searcher-icon {
+    color: $dark-gray;
+  }
+}
