@@ -103,7 +103,6 @@ describe("BlogArchiveComponent", () => {
         BlogArchiveComponent,
         PostCardComponent,
         SearcherComponent,
-        JwPaginationComponent,
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
