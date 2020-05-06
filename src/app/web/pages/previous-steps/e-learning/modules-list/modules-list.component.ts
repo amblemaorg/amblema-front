@@ -34,10 +34,7 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
 
-  ngOnInit() {
-    // this.moduleService.getMods().subscribe( res => {
-    //   this.modules = res.records;
-    // });  
+  ngOnInit() {     
     this.modules$.subscribe(res => {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
