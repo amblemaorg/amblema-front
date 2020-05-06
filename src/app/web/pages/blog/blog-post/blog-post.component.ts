@@ -86,7 +86,7 @@ export class BlogPostComponent implements OnInit {
   }
 
   getRecentPosts() {
-    this.setApiService("/page/1");
+    this.setApiService("/page/1?page_size=4");
     this.blogService.getWebContent().subscribe((data) => {
       this.recentPosts = data.records.map((record) => {
         return this.adaptEndpointResponseToPost(record);

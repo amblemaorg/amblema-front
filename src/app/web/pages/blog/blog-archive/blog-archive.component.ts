@@ -21,7 +21,7 @@ export class BlogArchiveComponent implements OnInit {
   postsList = [];
   postsIndex = [];
   activePage = 1;
-  pageSize = 4;
+  pageSize = 8;
   totalPages = 1;
   queryParams = "";
   queryBreadcrums = "";
@@ -51,7 +51,7 @@ export class BlogArchiveComponent implements OnInit {
       console.log(this.queryParams);
       this.BLOG_PATH = this.BLOG_PATH;
       //this.setStaticService();
-      this.setApiService(this.activePage, this.queryParams);
+      this.setApiService(this.activePage, this.pageSize, this.queryParams);
       this.getBlogPostsJSON();
     });
   }
@@ -93,8 +93,10 @@ export class BlogArchiveComponent implements OnInit {
     this.blogService.setWebContent(BLOG_CONTENT);
   }
 
-  setApiService(page: number, params?: string) {
-    const queryParams = params ? params : "";
+  setApiService(page: number, size: number, params?: string) {
+    const queryParams = params
+      ? `${params}&page_size=${size}`
+      : `?page_size=${size}`;
     const service = new ApiWebContentService(this.http);
     service.setBaseUrl(environment.baseUrl);
     service.setResourcePath(this.BLOG_PATH + page + queryParams);
@@ -150,9 +152,9 @@ export class BlogArchiveComponent implements OnInit {
   }
 
   changePostPage(event) {
-    const firstPostIndex = event[0] + 3;
+    const firstPostIndex = event[0] + this.pageSize - 1;
     this.activePage = firstPostIndex / this.pageSize;
-    this.setApiService(this.activePage, this.queryParams);
+    this.setApiService(this.activePage, this.pageSize, this.queryParams);
     this.getBlogPostsJSON();
   }
 
