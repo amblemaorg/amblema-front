@@ -33,9 +33,9 @@ export class BlogArchiveComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    public location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

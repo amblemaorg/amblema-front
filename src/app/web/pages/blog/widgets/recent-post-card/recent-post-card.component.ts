@@ -30,7 +30,7 @@ export class RecentPostCardComponent implements OnInit {
   @Input() post: {
     title: string;
     slug: string;
-    image: string;
+    mainImage: string;
     date: Date;
   };
   @ViewChild("recentPostTitle", { read: ElementRef, static: true })
