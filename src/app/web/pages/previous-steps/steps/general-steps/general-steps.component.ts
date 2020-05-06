@@ -68,6 +68,15 @@ export class GeneralStepsComponent implements OnInit {
     return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
   }
 
+  canUserSee(step:Step) {
+    if(step.approvalHistory.length>0) {
+      if(step.approvalHistory[step.approvalHistory.length-1].data.user.id)
+        return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
+      else return false;
+    } 
+    else return true;
+  }
+
   getVideo(url) {
     return this.embedService.embed(url);
   }
