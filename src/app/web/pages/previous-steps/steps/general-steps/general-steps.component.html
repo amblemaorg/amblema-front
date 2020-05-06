@@ -25,19 +25,19 @@
             <div *ngIf="step.hasVideo" class="video-container">
               <div class="video" [innerHTML]="getVideo(step.video.url)"></div>              
             </div>   
-            
+                                    
             <!-- todo: APPROVE BUTTON FOR ADMIN ------------------------------------------------>
-            <button *ngIf="isAdmin() && step.approvalType=='1' && step.status=='1' && !showSeveralsButton(step) && showConditioned(step)" 
+            <button *ngIf="(onlyHasFile(step) || (isAdmin() && step.approvalType=='1' && !showSeveralsButton(step) && showConditioned(step) ) ) && step.status=='1'" 
             class="btn btn-primary text-decoration-none py-2 px-4" (click)="approvalMethod(step,i,mode)"
-            [disabled]="step.sending || isNotConfirmable(step) || !enableActions || step.status=='8'">
-            <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Aprobar' : 'Aprobando..' }}
+            [disabled]="( onlyHasFile(step) && compareMode() && !isAdmin() ) || step.sending || isNotConfirmable(step) || !enableActions || step.status=='8'">
+              <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Aprobar' : 'Aprobando..' }}
             </button>
             <!-- todo:................................................................................. -->
 
             <a *ngIf="step.hasFile" [href]="sanitizeFile(step.file.url)" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
             (click)="( (!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions)? $event.preventDefault():null" 
             [class.inactive]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
-            [class.has-several]="isAdmin() && step.approvalType=='1'">
+            [class.has-several]="onlyHasFile(step) || (isAdmin() && step.approvalType=='1')">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>

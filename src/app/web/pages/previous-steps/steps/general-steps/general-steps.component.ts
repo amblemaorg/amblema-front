@@ -64,6 +64,10 @@ export class GeneralStepsComponent implements OnInit {
     return this.user_type=='0' || this.user_type=='1'
   }
 
+  onlyHasFile(step:Step) {
+    return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
+  }
+
   getVideo(url) {
     return this.embedService.embed(url);
   }
@@ -120,7 +124,10 @@ export class GeneralStepsComponent implements OnInit {
         formData.append('status', step.status=="1"?"3":"1");
       }
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
-      if(step.approvalType=="3") formData.append('project', this.project_id);
+      if(step.approvalType=="3") {
+        formData.append('project', this.project_id);
+        formData.append('user', this.user_id);
+      }
       if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date); 
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
