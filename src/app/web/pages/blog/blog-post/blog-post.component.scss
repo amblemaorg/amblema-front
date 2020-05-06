@@ -1,5 +1,5 @@
-@import 'scss/responsive';
-@import 'scss/variables';
+@import "scss/responsive";
+@import "scss/variables";
 
 section.blog-post {
   flex-direction: column;
@@ -17,13 +17,16 @@ section.blog-post {
 
   section.post-detail {
     width: 100%;
+    margin-bottom: 10%;
 
     @include breakpoint(small, landscape) {
       width: 65%;
+      margin-bottom: 0;
     }
 
     @include breakpoint(medium) {
       width: 65%;
+      margin-bottom: 0;
     }
 
     .image-wrapper {
@@ -110,11 +113,22 @@ section.blog-post {
     width: 100%;
 
     @include breakpoint(small, landscape) {
-      width: 35%;
+      width: 40%;
+      padding: 4%;
     }
 
     @include breakpoint(medium) {
+      width: 40%;
+      padding: 4%;
+    }
+
+    @include breakpoint(large) {
       width: 35%;
+    }
+
+    & > * {
+      display: block;
+      margin-bottom: 10%;
     }
   }
 }

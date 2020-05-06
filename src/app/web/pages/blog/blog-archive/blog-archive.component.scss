@@ -1,5 +1,5 @@
-@import 'scss/responsive';
-@import 'scss/variables';
+@import "scss/responsive";
+@import "scss/variables";
 
 .posts-list {
   padding: 14vw 10vw;
@@ -13,12 +13,79 @@
 
   .row {
     padding-bottom: 4vw;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+searcher {
+  margin: auto;
+}
+
+.query {
+  font-size: 6vw;
+  font-weight: bold;
+  color: $black;
+  width: 100%;
+
+  @include breakpoint(small, landscape) {
+    text-align: center;
+    font-size: 2.5vw;
+    margin-bottom: 3%;
   }
 
+  @include breakpoint(medium) {
+    text-align: center;
+    font-size: 2.5vw;
+    margin-bottom: 3%;
+  }
+
+  @include breakpoint(large) {
+    font-size: 1.5vw;
+  }
+}
+
+.empty-data {
+  color: $dark-gray;
+  text-align: center;
+  width: 100%;
+  margin: 10% 0;
+
+  @include breakpoint(small, landscape) {
+    margin: 5% 0;
+  }
+
+  @include breakpoint(medium) {
+    margin: 5% 0;
+  }
+}
+
+.go-back {
+  background: none;
+  border: none;
+  color: $dark-gray;
+  display: block;
+  font-size: 1.25rem;
+  width: 100%;
+
+  @include breakpoint(small, landscape) {
+    text-align: center;
+  }
+
+  @include breakpoint(medium) {
+    text-align: center;
+  }
+
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }
 
 blog-post-card {
-  padding: 5vw 2vw;
+  padding: 5vw 0;
 
   @include breakpoint(small, landscape) {
     flex: 0 0 50%;
@@ -36,5 +103,58 @@ blog-post-card {
     flex: 0 0 25%;
     max-width: 25%;
     padding: 0 2vw;
+  }
+}
+
+.paginator {
+  margin: auto;
+}
+
+::ng-deep {
+  .blog-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: auto;
+
+    jw-pagination {
+      display: block;
+      width: 100%;
+
+      .page-item {
+        &.next-item,
+        &.previous-item {
+          display: none;
+        }
+
+        .page-link {
+          border-radius: 100px;
+          margin: 0 0.4vw;
+        }
+      }
+    }
+
+    .icon-arrow {
+      background: none;
+      border: none;
+      color: $blue;
+      display: block;
+      position: relative;
+      font-size: 2rem;
+      top: -3.75rem;
+      cursor: pointer;
+      &:disabled {
+        color: $dark-gray;
+      }
+      &:focus {
+        outline: none;
+      }
+      &.icon-back {
+        left: -1rem;
+      }
+      &.icon-forward {
+        right: -1rem;
+      }
+    }
   }
 }
