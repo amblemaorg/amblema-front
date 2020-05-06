@@ -27,7 +27,6 @@ import { JwPaginationComponent } from "../../shared/jw-angular-pagination/lib/jw
     RecentPostCardComponent,
     RecentPostsListComponent,
     SocialSharingComponent,
-    JwPaginationComponent,
   ],
   imports: [
     CommonModule,
