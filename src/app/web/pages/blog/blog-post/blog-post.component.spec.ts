@@ -8,6 +8,11 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { SearcherComponent } from "../widgets/searcher/searcher.component";
+import { RecentPostsListComponent } from "../widgets/recent-post-card/recent-posts-list.component";
+import { SocialSharingComponent } from "../widgets/social-sharing/social-sharing.component";
+import { CategoriesListComponent } from "../widgets/categories-list/categories-list.component";
+import { BlogModule } from "../blog.module";
 
 describe("BlogPostComponent", () => {
   let component: BlogPostComponent;
@@ -29,18 +34,24 @@ describe("BlogPostComponent", () => {
     status: "published",
   };
 
+  const response = {
+    ...post,
+    records: [post, post],
+  };
+
   beforeEach(async(() => {
     httpSpy = jasmine.createSpyObj("HttpClient", ["get"]);
-    httpSpy.get.and.returnValue(of(post));
+    httpSpy.get.and.returnValue(of(response));
     blogService = new ApiWebContentService(<any>httpSpy);
     blogService.setBaseUrl(environment.baseUrl);
     blogService.setResourcePath("webcontent/posts");
 
     TestBed.configureTestingModule({
-      declarations: [BlogPostComponent],
+      declarations: [],
       imports: [
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
+        BlogModule,
         SharedModule,
         HttpClientModule,
       ],
@@ -62,7 +73,7 @@ describe("BlogPostComponent", () => {
   });
 
   it("should create and call getWebContentByParam() function in BlogService", () => {
-    expect(httpSpy.get.calls.count()).toBe(1, "getWebContentByParam is called");
+    expect(httpSpy.get.calls.count()).toBe(2, "getWebContentByParam is called");
     expect(component).toBeTruthy();
   });
 });
