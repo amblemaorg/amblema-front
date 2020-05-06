@@ -78,7 +78,7 @@
 
               <div class="checks-btn-container">
                 <button *ngIf="step.hasChecklist && step.checklist.length>0 && !showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step) || !enableActions">
+                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step) || !enableActions || step.status=='8'">
                   <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
                 </button>
               </div>              

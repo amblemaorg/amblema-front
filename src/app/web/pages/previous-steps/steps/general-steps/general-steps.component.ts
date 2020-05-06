@@ -70,8 +70,10 @@ export class GeneralStepsComponent implements OnInit {
 
   canUserSee(step:Step) {
     if(step.approvalHistory.length>0) {
-      if(step.approvalHistory[step.approvalHistory.length-1].data.user.id)
-        return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
+      let bool = step.approvalHistory[step.approvalHistory.length-1].data? 
+                (step.approvalHistory[step.approvalHistory.length-1].data.user? 
+                true : false) : false;      
+      if(bool) return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
       else return false;
     } 
     else return true;
