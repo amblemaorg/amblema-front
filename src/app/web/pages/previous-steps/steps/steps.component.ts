@@ -125,7 +125,6 @@ export class StepsComponent implements OnInit {
   updateSteps(p_i) {    
     this.store.dispatch(new UpdateStepsProgress(p_i)).subscribe(res=>{
       this.enabledTabs = true;
-      console.log('hola de nuevo', res);
     });
   }
   getResidenceInfo() {

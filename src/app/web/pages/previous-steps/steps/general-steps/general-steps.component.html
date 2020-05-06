@@ -48,7 +48,7 @@
               [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableActions">
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
-              <button [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" 
+              <button [class.d-none]="!canUserSee(step)" [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several" 
               [class.hidebtn]="step.send || (step.status=='1' && !step.uploadedFile) || step.status=='3' || showSeveralsButton(step)"
               [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending || !enableActions">
                 <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
