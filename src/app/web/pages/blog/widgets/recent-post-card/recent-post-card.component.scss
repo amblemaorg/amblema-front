@@ -1,0 +1,53 @@
+@import "scss/responsive";
+@import "scss/variables";
+
+.recent-post-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .image-wrapper {
+    width: 25%;
+  }
+
+  .recent-post-title {
+    color: $black;
+    width: 70%;
+    font-size: 4.5vw;
+    line-height: 1.25;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.5vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.5vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1.2vw;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .recent-post-data {
+    padding-left: 30%;
+    width: 100%;
+    font-size: 3.5vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.3vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.3vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 0.8vw;
+    }
+  }
+}

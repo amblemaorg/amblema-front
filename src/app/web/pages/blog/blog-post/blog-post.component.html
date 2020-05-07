@@ -1,20 +1,22 @@
-<section class="cover">
-  <web-cover [slides]="coverData.slides"></web-cover>
-</section>
 <section class="blog-post d-flex">
   <section class="post-detail">
     <div>
       <div class="image-wrapper">
         <img class="post-image" [src]="post.mainImage" />
-        <span class="post-date">{{ post.date }}</span>
+        <span class="post-date">
+          {{ post.date | date: "mediumDate":"+0430":"es" }}
+        </span>
       </div>
       <div class="post">
         <h1 class="post-title">{{ post.title }}</h1>
         <p class="post-content">{{ post.content }}</p>
       </div>
     </div>
+    <social-sharing></social-sharing>
   </section>
   <aside class="sidebar">
-    Plugins
+    <searcher (search)="navigateToArchive($event)"></searcher>
+    <blog-categories-list></blog-categories-list>
+    <recent-posts-list [posts]="recentPosts"></recent-posts-list>
   </aside>
 </section>
