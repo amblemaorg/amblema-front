@@ -9,7 +9,7 @@ import { JwPaginationComponent } from "../../../../shared/jw-angular-pagination"
 
 import { BrowserTransferStateModule } from "@angular/platform-browser";
 import { TransferHttpCacheModule } from "@nguniversal/common";
-import { SharedModule } from "src/app/web/shared/shared.module";
+import { SharedModule } from "../../../../shared/shared.module";
 
 @NgModule({
   declarations: [ModulesListComponent],
