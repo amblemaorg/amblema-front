@@ -8,7 +8,12 @@
       </div>
       <div [id]="'step'+i+'-'+mode" class="collapse" [class.show]="getCollapsed(i,mode)" [attr.data-parent]="'#steps-accordion'+mode">
         <div class="card-body">
-          <h6 class="mobile-only"><b>Estatus:</b> {{ getStatusName(step.status) }}</h6>
+          <h6 class="mobile-only"><b>Estatus:</b> {{ getStatusName(step.status) }}</h6>     
+                    
+          <status-selector 
+            *ngIf="step.approvalType=='4'"
+            [step]="step">
+          </status-selector>
 
           <p *ngIf="step.hasText" class="first-p">{{ step.text }}</p> 
           
@@ -27,9 +32,9 @@
             </div>   
                                     
             <!-- todo: APPROVE BUTTON FOR ADMIN ------------------------------------------------>
-            <button *ngIf="(onlyHasFile(step) || (isAdmin() && step.approvalType=='1' && !showSeveralsButton(step) && showConditioned(step) ) ) && step.status=='1'" 
+            <button *ngIf="isAdmin() && step.approvalType=='1' && !showSeveralsButton(step) && showConditioned(step) && step.status=='1'" 
             class="btn btn-primary text-decoration-none py-2 px-4" (click)="approvalMethod(step,i,mode)"
-            [disabled]="( onlyHasFile(step) && compareMode() && !isAdmin() ) || step.sending || isNotConfirmable(step) || !enableActions || step.status=='8'">
+            [disabled]="(compareMode() && !isAdmin() ) || step.sending || isNotConfirmable(step) || !enableActions || step.status=='8'">
               <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Aprobar' : 'Aprobando..' }}
             </button>
             <!-- todo:................................................................................. -->
@@ -37,7 +42,7 @@
             <a *ngIf="step.hasFile" [href]="sanitizeFile(step.file.url)" target="_blank" [download]="step.file.name" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
             (click)="( (!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions)? $event.preventDefault():null" 
             [class.inactive]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
-            [class.has-several]="onlyHasFile(step) || (isAdmin() && step.approvalType=='1')">
+            [class.has-several]="isAdmin() && step.approvalType=='1'">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>

@@ -188,8 +188,70 @@
 
                 .date-not-valid + .field-alerts .field-invalid{
                     display: inline-block;
-                }
+                }                
             }
+
+            status-selector {
+                width: 100%;
+
+                ::ng-deep .form-group {
+                    @mixin selector-group {
+                        width: 25rem;
+                        margin-left: auto;
+                        display: flex;
+                        align-items: center;
+                    }
+                    @media screen and (min-width:640px) and (orientation:landscape) { @include selector-group; }
+                    @include mediabreak(large,portrait) { @include selector-group; }
+                    @include mediabreak(large,landscape) { @include selector-group; }
+                }
+                ::ng-deep label {
+                    @media screen and (min-width:640px) and (orientation:landscape) { margin-right: 1rem; }
+                    @include mediabreak(large,portrait) { margin-right: 1rem; }
+                    @include mediabreak(large,landscape) { margin-right: 1rem; }
+                }
+
+                ::ng-deep .ng-select {
+                    flex: 1;
+                    border-color: map-get($color_map, blue);
+                    color: map-get($color_map, blue);
+
+                    .ng-dropdown-panel {
+                      z-index: 3;
+              
+                      .scroll-host {
+                          left: -0.75rem;
+                          top: 0.35rem;
+                          background: #fff;
+                          border: solid map-get($color_map, blue);
+                          border-width: 0 1px 1px;
+              
+                          .scrollable-content{
+                              padding: 0 1rem;
+                          }
+                      }
+                    }
+          
+                    &.ng-select-opened .ng-select-container {
+                        z-index: 3;           
+                    }     
+          
+                    .ng-arrow-wrapper {
+                        width: 1rem;
+          
+                        .ng-arrow {
+                            height: 0.5rem;
+                            width: 0.5rem;
+                            border-color: map-get($color_map, blue);
+                            border-style: solid;
+                            border-width: 0 2px 2px 0;
+                            -webkit-transform: rotate(45deg);
+                            transform: rotate(45deg);
+                            top: -0.15rem;
+                        }
+                    } 
+                }
+            }             
 
             .video-container {
                 margin-bottom: 1rem;
