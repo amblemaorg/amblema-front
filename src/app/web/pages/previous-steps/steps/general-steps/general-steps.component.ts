@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { EmbedVideoService } from 'ngx-embed-video';
+import { FormBuilder } from '@angular/forms';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Step } from '../../../../../models/steps/previous-steps.model';
@@ -30,7 +31,7 @@ export class GeneralStepsComponent implements OnInit {
   @Input() setStates = [];
   @Input() setMuns = [];
 
-  @Output() callUpdate:EventEmitter<string> = new EventEmitter();
+  @Output() callUpdate:EventEmitter<string> = new EventEmitter();  
 
   isBrowser;
   glbls:any;
@@ -52,6 +53,10 @@ export class GeneralStepsComponent implements OnInit {
     return this.mode!=(+this.user_type);
   }
 
+  checkStatus(step_status) {
+    return step_status=="3"? "2":"1";
+  }
+
   showConditioned(step:Step) { // show approve btn when is not find school, coordinator or sponsor, nor initial Workshop Planning
     return step.devName!="initialWorkshopPlanning" && step.devName!="findCoordinator" && step.devName!="findSponsor" && step.devName!="findSchool";
   }
@@ -64,9 +69,9 @@ export class GeneralStepsComponent implements OnInit {
     return this.user_type=='0' || this.user_type=='1'
   }
 
-  onlyHasFile(step:Step) {
-    return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
-  }
+  // onlyHasFile(step:Step) {
+  //   return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
+  // }
 
   canUserSee(step:Step) {
     if(step.approvalHistory.length>0) {
@@ -249,4 +254,69 @@ export class GeneralStepsComponent implements OnInit {
     else step.date = null;
   }
 
+}
+
+
+@Component({
+  selector: 'status-selector',
+  template: `
+    <div class="form-group" [formGroup]="statusForm">
+    <label [for]="step.devName">Modificar estatus:</label>
+      <ng-select
+        class="form-control"  
+        [items]="statuses"
+        bindValue="id"
+        bindLabel="name"
+        [labelForId]="step.devName"
+        formControlName="status"
+        [virtualScroll]="true"
+        [id]="step.devName"  
+        [clearable]="false" 
+        [searchable]="false"  
+        [loading]="sending"
+        [readonly]="sending"
+        (change)="changeStatus()"         
+      >
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <small>{{item.name}}</small>
+        </ng-template>
+        
+      </ng-select>
+    </div>
+  `,
+  styleUrls: ['./general-steps.component.scss']
+})
+export class StatusSelectorComponent implements OnInit {
+  @Input() step:Step;
+
+  sending:boolean;
+
+  statuses = [
+    {id:'1',name:'Por completar'},
+    {id:'2',name:'Completado'},
+  ];
+
+  statusForm = this.fb.group({
+    status: ['']
+  });
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.formFiller();
+  }
+
+  formFiller() {
+    this.statusForm.setValue({
+      status: this.step.status=="3"? "2":"1"
+    });
+  }
+
+  changeStatus() {
+    this.sending = true;
+    console.log(this.statusForm.controls['status'].value);
+    setTimeout(() => {
+      this.sending = false;
+    }, 3000);
+  }
 }

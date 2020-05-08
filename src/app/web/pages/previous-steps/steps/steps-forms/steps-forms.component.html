@@ -15,6 +15,7 @@
         bindValue="name"
         bindLabel="name"
         formControlName="selectedDoc"
+        [id]="mode+'-'+index+'-'+1" 
         [virtualScroll]="true"
         [clearable]="false"
         [searchable]="false"
@@ -46,10 +47,10 @@
         [items]="statesData"
         bindLabel="name"
         bindValue="id"
-        labelForId="addressState"
+        [labelForId]="mode+'-'+index+'-'+2"
         formControlName="addressState"
         [virtualScroll]="true"
-        id="addressState"
+        [id]="mode+'-'+index+'-'+2"
         placeholder="Estado"
         (change)="updateMuns()"
         [readonly]="disableThis()">
@@ -68,10 +69,10 @@
         [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
-        labelForId="addressMunicipality"
+        [labelForId]="mode+'-'+index+'-'+3"
         formControlName="addressMunicipality"
         [virtualScroll]="true"
-        id="addressMunicipality"
+        [id]="mode+'-'+index+'-'+3"
         placeholder="Municipio"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -108,10 +109,10 @@
         [items]="companyTypes"
         bindValue="id"
         bindLabel="name"
-        labelForId="companyType"
+        [labelForId]="mode+'-'+index+'-'+4"
         formControlName="companyType"
         [virtualScroll]="true"
-        id="companyType"
+        [id]="mode+'-'+index+'-'+4"
         placeholder="Tipo de empresa"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -196,7 +197,7 @@
         class="form-control form-date-placeholder"
         autocomplete='off'
         type="text"              
-        id="form-date-placeholder"
+        [id]="'form-date-placeholder'+'-'+mode+'-'+index"
         placeholder="Fecha de nacimiento"
         readonly    
         (click)="focusDatePicker(inputBirthDate)"
@@ -209,10 +210,10 @@
         [items]="genders"
         bindValue="id"
         bindLabel="name"
-        labelForId="gender"
+        [labelForId]="mode+'-'+index+'-'+1"
         formControlName="gender"
         [virtualScroll]="true"
-        id="gender"
+        [id]="mode+'-'+index+'-'+1"
         placeholder="Sexo"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -231,6 +232,7 @@
         bindValue="id"
         bindLabel="name"
         formControlName="cardType"
+        [id]="mode+'-'+index+'-'+2"
         [virtualScroll]="true"
         [clearable]="false"
         [searchable]="false"
@@ -260,10 +262,10 @@
         [items]="statesData"
         bindLabel="name"
         bindValue="id"
-        labelForId="addressState"
+        [labelForId]="mode+'-'+index+'-'+3"
         formControlName="addressState"
         [virtualScroll]="true"
-        id="addressState"
+        [id]="mode+'-'+index+'-'+3"
         placeholder="Estado"
         (change)="updateMuns()"
         [readonly]="disableThis()">
@@ -282,10 +284,10 @@
         [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
-        labelForId="addressMunicipality"
+        [labelForId]="mode+'-'+index+'-'+4"
         formControlName="addressMunicipality"
         [virtualScroll]="true"
-        id="addressMunicipality"
+        [id]="mode+'-'+index+'-'+4"
         placeholder="Municipio"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -379,10 +381,10 @@
         [items]="statesData"
         bindLabel="name"
         bindValue="id"
-        labelForId="addressState"
+        [labelForId]="mode+'-'+index+'-'+1"
         formControlName="addressState"
         [virtualScroll]="true"
-        id="addressState"
+        [id]="mode+'-'+index+'-'+1"
         placeholder="Estado"
         (change)="updateMuns()"
         [readonly]="disableThis()">
@@ -401,10 +403,10 @@
         [items]="municipalitiesData"
         bindValue="id"
         bindLabel="name"
-        labelForId="addressMunicipality"
+        [labelForId]="mode+'-'+index+'-'+2"
         formControlName="addressMunicipality"
         [virtualScroll]="true"
-        id="addressMunicipality"
+        [id]="mode+'-'+index+'-'+2"
         placeholder="Municipio"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -441,10 +443,10 @@
         [items]="schoolTypes"
         bindValue="id"
         bindLabel="name"
-        labelForId="schoolType"
+        [labelForId]="mode+'-'+index+'-'+3"
         formControlName="schoolType"
         [virtualScroll]="true"
-        id="schoolType"
+        [id]="mode+'-'+index+'-'+3"
         placeholder="Tipo de escuela"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -463,10 +465,10 @@
         [items]="addressZoneTypes"
         bindValue="id"
         bindLabel="name"
-        labelForId="addressZoneType"
+        [labelForId]="mode+'-'+index+'-'+4"
         formControlName="addressZoneType"
         [virtualScroll]="true"
-        id="addressZoneType"
+        [id]="mode+'-'+index+'-'+4"
         placeholder="Zona"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -597,10 +599,10 @@
         [items]="schoolShifts"
         bindValue="id"
         bindLabel="name"
-        labelForId="schoolShift"
+        [labelForId]="mode+'-'+index+'-'+5"
         formControlName="schoolShift"
         [virtualScroll]="true"
-        id="schoolShift"
+        [id]="mode+'-'+index+'-'+5"
         placeholder="Turno de clases"
         [readonly]="disableThis()">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
