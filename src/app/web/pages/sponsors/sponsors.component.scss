@@ -113,6 +113,7 @@ web-bg-heading {
 }
 
 .steps-list {
+  @import "scss/animations";
   @include columns(10);
   margin: 8vw auto;
 

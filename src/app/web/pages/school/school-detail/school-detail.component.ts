@@ -5,6 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
   HostListener,
+  NgZone,
 } from "@angular/core";
 import { SchoolService } from "src/app/services/web/school.service";
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
@@ -12,6 +13,7 @@ import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { ChartService } from "src/app/services/web/chart.service";
 import { GlobalService } from "src/app/services/global.service";
+import { Subscription, fromEvent } from "rxjs";
 
 @Component({
   selector: "app-school-detail",
@@ -20,14 +22,13 @@ import { GlobalService } from "src/app/services/global.service";
 })
 export class SchoolDetailComponent implements OnInit, AfterViewInit {
   @ViewChild("schoolDetails", { static: false }) schoolSection: ElementRef;
-  @ViewChild("activitiesIndexCarousel", { static: true })
-  activitiesIndexCarousel: OwlCarousel;
-  @ViewChild("activityImageCarousel", { static: false })
-  activityImageCarousel: OwlCarousel;
-  @ViewChild("activitiesCarousel", { static: true })
-  activitiesCarousel: OwlCarousel;
-  @ViewChild("otherSchoolsCarousel", { static: true })
-  otherSchoolsCarousel: OwlCarousel;
+  @ViewChild("activitiesIndexCarousel", { static: true }) activitiesIndexCarousel: OwlCarousel;
+  @ViewChild("activityImageCarousel", { static: false }) activityImageCarousel: OwlCarousel;
+  @ViewChild("activitiesCarousel", { static: true }) activitiesCarousel: OwlCarousel;
+  @ViewChild("otherSchoolsCarousel", { static: true }) otherSchoolsCarousel: OwlCarousel;
+  @ViewChild("charts", { static: false }) charts: ElementRef;
+  @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
+  scrollSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
 
   ACTIVITIES = {
@@ -146,7 +147,8 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private globalService: GlobalService,
     private schoolService: SchoolService,
-    private chartService: ChartService
+    private chartService: ChartService,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -160,6 +162,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
         this.scrollToPage();
         this.reinitCarousels();
       }
+    });
+
+    this.zone.runOutsideAngular(() => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
+        this.onScroll(event);
+      });
     });
   }
 
@@ -180,6 +188,21 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
         data.charts
       );
     });
+  }
+
+  onScroll($event) {
+    let scrollPosition = $event.srcElement.children[0].scrollTop;
+    //let chartsPosition = this.charts.nativeElement.offsetTop;
+    let chartTestimonialPosition = this.chartTestimonial.nativeElement.offsetTop;
+    //let elementPosition = chartsPosition + chartTestimonialPosition;
+
+    if (chartTestimonialPosition / scrollPosition <= 1.5) {
+      if (this.scrollSubscription) {
+        this.scrollSubscription.unsubscribe();
+      }
+      this.chartTestimonial.nativeElement.classList.add("animation-finish");
+      this.chartTestimonial.nativeElement.classList.remove("animation-init");
+    }
   }
 
   setActiveChart(index: number) {

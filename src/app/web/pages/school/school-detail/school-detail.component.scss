@@ -2,28 +2,32 @@
 @import "scss/variables";
 @import "scss/elements/headings";
 
+web-schools-map {
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
 section.school-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 8vw 8vw 30vw 8vw;
-  background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
-  background-repeat: no-repeat;
-  background-size: 240vw;
-  background-position-y: 102.5%;
+  padding: 8vw 8vw 0vw 8vw;
+  width: 100%;
 
   @include breakpoint(small, landscape) {
-    padding: 10vw 3vw 13vw 10vw;
-    background-size: 100vw;
-    background-position-y: 105%;
+    padding: 10vw 3vw 0vw 10vw;
   }
 
   @include breakpoint(medium) {
-    padding: 10vw 3vw 13vw 10vw;
-    background-size: 100vw;
-    background-position-y: 105%;
+    padding: 10vw 3vw 0vw 10vw;
   }
 
+  @include breakpoint(large) {
+    position: fixed;
+    top: 0;
+    z-index: 0;
+  }
   & > div {
     flex: 0 0 100%;
     width: 100%;
@@ -115,6 +119,34 @@ section.school-details {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+}
+
+.fullscreen-space {
+  @include breakpoint(large) {
+    height: 90vh;
+  }
+}
+
+.simbols-container {
+  background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
+  background-repeat: no-repeat;
+  background-size: 240vw;
+  background-position-y: 102.5%;
+  height: 30vw;
+  position: relative;
+  z-index: 10;
+
+  @include breakpoint(small, landscape) {
+    background-size: 100vw;
+    background-position-y: 105%;
+    height: 13vw;
+  }
+
+  @include breakpoint(medium) {
+    background-size: 100vw;
+    background-position-y: 105%;
+    height: 13vw;
   }
 }
 
@@ -212,20 +244,22 @@ section.charts {
     }
   }
 
+  @import "scss/animations";
   .chart-testimonial {
     position: relative;
+    //right: 0;
     margin: 5vw 0;
     width: 90%;
 
     @include breakpoint(small, landscape) {
-      position: absolute;
+      position: absolute !important;
       right: 0;
       margin: 0;
       width: 30%;
     }
 
     @include breakpoint(medium) {
-      position: absolute;
+      position: absolute !important;
       right: 0;
       margin: 0;
       width: 30%;
@@ -234,8 +268,10 @@ section.charts {
 }
 
 section.math-olympics {
-  padding: 15vw 10vw;
   background-color: #eee;
+  padding: 15vw 10vw;
+  position: relative;
+  z-index: 10;
 
   @include breakpoint(small, landscape) {
     padding: 5vw 10vw;
@@ -358,7 +394,10 @@ section.math-olympics {
 }
 
 section.activities {
+  background-color: $white;
   padding: 6vw 0;
+  position: relative;
+  z-index: 10;
 
   .activities-tabs-wrapper {
     display: flex;
@@ -562,8 +601,7 @@ section.activities {
             left: 0;
             height: 33vw;
             width: 33vw !important;
-            transition: width 1s ease, height 1s ease, left 1s ease,
-              bottom 1s ease;
+            transition: width 1s ease, height 1s ease, left 1s ease, bottom 1s ease;
 
             @include breakpoint(small, landscape) {
               height: 20vw;
@@ -590,8 +628,7 @@ section.activities {
               width: 66vw !important;
               left: calc(-33vw / 2);
               bottom: calc(33vw / 2);
-              transition: width 1s ease, height 1s ease, left 1s ease,
-                bottom 1s ease;
+              transition: width 1s ease, height 1s ease, left 1s ease, bottom 1s ease;
 
               @include breakpoint(small, landscape) {
                 height: 25vw !important;
@@ -617,12 +654,14 @@ section.activities {
 
 section.teachers {
   background-image: url("../../../../../assets/images/background-trees-movil.png");
+  background-color: $white;
   background-size: cover;
   background-repeat: no-repeat;
   color: $white;
   min-height: 152vw;
   overflow-x: hidden;
   position: relative;
+  z-index: 10;
 
   @include breakpoint(small, landscape) {
     background-image: url("../../../../../assets/images/background-trees.png");
@@ -688,6 +727,8 @@ section.next-activities {
   background-color: $blue;
   color: $white;
   padding: 10vw;
+  position: relative;
+  z-index: 10;
 
   @include breakpoint(small, landscape) {
     padding: 6vw 8vw;
@@ -790,8 +831,11 @@ section.next-activities {
 }
 
 section.other-schools {
+  background-color: $white;
   padding: 10vw;
   text-align: center;
+  position: relative;
+  z-index: 10;
 
   @include breakpoint(small, landscape) {
     padding: 6vw 8vw;

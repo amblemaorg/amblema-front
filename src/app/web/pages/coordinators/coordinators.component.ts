@@ -1,4 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { WebContentService } from "src/app/services/web/web-content.service";
@@ -7,6 +13,7 @@ import { StaticWebContentService } from "src/app/services/web/static-web-content
 import { CoordinatorPage } from "../../../models/web/web-coordinator.model";
 import { COORDINATOR_CONTENT } from "./coordinators-static-content";
 import { environment } from "src/environments/environment";
+import { Subscription, fromEvent } from "rxjs";
 
 @Component({
   selector: "app-coordinators",
@@ -14,6 +21,9 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./coordinators.component.scss"],
 })
 export class CoordinatorsComponent implements OnInit {
+  @ViewChild("stepsList", { static: true }) stepsList: ElementRef;
+  scrollSubscription: Subscription;
+
   customOptions: OwlOptions = {
     autoplay: true,
     loop: true,
@@ -41,12 +51,19 @@ export class CoordinatorsComponent implements OnInit {
   coordinatorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=coordinatorPage";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
 
   ngOnInit() {
     // this.setStaticService();
     this.setApiService();
     this.getCoordinatorsData();
+    this.zone.runOutsideAngular(() => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe(
+        (event) => {
+          this.onScroll(event);
+        }
+      );
+    });
   }
 
   setStaticService() {
@@ -69,5 +86,18 @@ export class CoordinatorsComponent implements OnInit {
         image: this.coordinatorsPageData.backgroundImage,
       });
     });
+  }
+
+  onScroll($event) {
+    let scrollPosition = $event.srcElement.children[0].scrollTop;
+    let listElementPosition = this.stepsList.nativeElement.offsetTop;
+
+    if (listElementPosition / scrollPosition <= 2) {
+      if (this.scrollSubscription) {
+        this.scrollSubscription.unsubscribe();
+      }
+      this.stepsList.nativeElement.classList.add("animation-finish");
+      this.stepsList.nativeElement.classList.remove("animation-init");
+    }
   }
 }

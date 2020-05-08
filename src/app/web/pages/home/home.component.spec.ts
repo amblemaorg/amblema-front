@@ -8,6 +8,7 @@ import { OwlModule } from "ngx-owl-carousel";
 import { ChartsSwitcherModule } from "../../shared/charts-switcher/charts-switcher.module";
 import { GlobalService } from "src/app/services/global.service";
 import { RouterTestingModule } from "@angular/router/testing";
+import { CountoModule } from "angular2-counto";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
@@ -25,6 +26,7 @@ describe("HomeComponent", () => {
         OwlModule,
         ChartsSwitcherModule,
         HttpClientModule,
+        CountoModule,
       ],
       providers: [GlobalService],
     });
@@ -50,11 +52,7 @@ describe("HomeComponent", () => {
     const tag = "h1";
 
     testIsUniqueTagInSelector(fixture.nativeElement, selector, tag);
-    testSelectorHasContent(
-      fixture.nativeElement,
-      selector + " " + tag,
-      "Acerca de nosotros"
-    );
+    testSelectorHasContent(fixture.nativeElement, selector + " " + tag, "Acerca de nosotros");
   });
 
   it('should have a h2 tag in three pillars section with content "Tenemos tres pilares fundamentales"', () => {
@@ -74,11 +72,7 @@ describe("HomeComponent", () => {
     const tag = "h2";
 
     testIsUniqueTagInSelector(fixture.nativeElement, selector, tag);
-    testSelectorHasContent(
-      fixture.nativeElement,
-      selector + " " + tag,
-      "Indicadores clave"
-    );
+    testSelectorHasContent(fixture.nativeElement, selector + " " + tag, "Indicadores clave");
   });
 
   it('should have a h2 tag in founders section with content "Fundadores"', () => {
@@ -86,36 +80,22 @@ describe("HomeComponent", () => {
     const tag = "h2";
 
     testIsUniqueTagInSelector(fixture.nativeElement, selector, tag);
-    testSelectorHasContent(
-      fixture.nativeElement,
-      selector + " " + tag,
-      "Fundadores"
-    );
+    testSelectorHasContent(fixture.nativeElement, selector + " " + tag, "Fundadores");
   });
 
   const testIsUniqueTag = (nativeElement: any, tag: string) => {
     testIsUniqueTagInSelector(nativeElement, "", tag);
   };
 
-  const testIsUniqueTagInSelector = (
-    nativeElement: any,
-    cssSelector: string,
-    tag: string
-  ) => {
-    const elements: HTMLElement[] = nativeElement.querySelectorAll(
-      cssSelector + " " + tag
-    );
+  const testIsUniqueTagInSelector = (nativeElement: any, cssSelector: string, tag: string) => {
+    const elements: HTMLElement[] = nativeElement.querySelectorAll(cssSelector + " " + tag);
     expect(elements.length).toBe(1);
 
     const el: HTMLElement = elements[0];
     expect(el.tagName).toBe(tag.toUpperCase());
   };
 
-  const testSelectorHasContent = (
-    nativeElement: any,
-    cssSelector: string,
-    content: string
-  ) => {
+  const testSelectorHasContent = (nativeElement: any, cssSelector: string, content: string) => {
     el = nativeElement.querySelector(cssSelector);
     expect(el.textContent).toBe(content);
   };
