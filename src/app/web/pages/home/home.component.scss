@@ -2,6 +2,15 @@
 @import "scss/variables";
 @import "scss/elements/headings";
 
+web-cover.fixed {
+  display: block;
+  @include breakpoint(large) {
+    display: block;
+    position: fixed;
+    z-index: -1;
+  }
+}
+
 section.about-us {
   background-color: $blue;
   display: flex;
@@ -113,6 +122,7 @@ section.about-us {
   }
 }
 section.pillars {
+  background-color: $white;
   padding: 8vw 5vw 25vw;
 
   @include breakpoint(small, landscape) {
@@ -162,6 +172,7 @@ section.pillars {
     }
   }
 
+  @import "scss/animations";
   .pillars-list {
     display: none;
 

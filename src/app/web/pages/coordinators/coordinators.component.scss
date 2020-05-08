@@ -1,6 +1,6 @@
-@import 'scss/responsive';
-@import 'scss/elements/headings';
-@import 'scss/elements/lists';
+@import "scss/responsive";
+@import "scss/elements/headings";
+@import "scss/elements/lists";
 
 h1 {
   color: $white;
@@ -24,7 +24,6 @@ h1 {
 }
 
 owl-carousel-o {
-
   &.testimonials-carousel {
     position: absolute;
     top: 80vw;
@@ -72,6 +71,7 @@ web-bg-heading {
 }
 
 .steps-list {
+  @import "scss/animations";
   @include columns(10);
   margin: 8vw auto;
 

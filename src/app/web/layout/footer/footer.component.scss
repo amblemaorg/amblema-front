@@ -6,7 +6,9 @@ footer {
   background-color: $blue;
   height: auto;
   padding-top: 20vw;
+  position: relative;
   width: 100%;
+  z-index: 10;
 
   @include breakpoint(small, landscape) {
     padding-top: 3vw;
