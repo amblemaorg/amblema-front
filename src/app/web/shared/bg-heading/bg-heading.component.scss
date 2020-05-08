@@ -1,6 +1,6 @@
-@import 'scss/variables';
-@import 'scss/responsive';
-@import 'scss/elements/headings';
+@import "scss/variables";
+@import "scss/responsive";
+@import "scss/elements/headings";
 
 web-bg-heading {
   display: block;
@@ -36,6 +36,7 @@ section.pillars {
 .bg-heading {
   position: relative;
   width: 100%;
+  overflow: hidden;
   margin: auto;
 
   h2 {
@@ -56,6 +57,8 @@ section.pillars {
       font-size: 4vw;
     }
   }
+
+  @import "scss/animations";
   .line {
     position: relative;
 
@@ -84,15 +87,14 @@ section.pillars {
       @include breakpoint(small, landscape) {
         height: 5vw;
         left: 2vw;
-        top: -.5vw;
+        top: -0.5vw;
       }
 
       @include breakpoint(medium) {
         height: 5vw;
         left: 2vw;
-        top: -.5vw;
+        top: -0.5vw;
       }
     }
   }
-
 }

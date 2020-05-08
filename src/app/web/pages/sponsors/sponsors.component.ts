@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
+import { Component, OnInit, HostListener, ViewChild, NgZone, ElementRef } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
@@ -8,6 +8,7 @@ import { StaticWebContentService } from "src/app/services/web/static-web-content
 import { SponsorPage } from "../../../models/web/web-sponsor.model";
 import { environment } from "src/environments/environment";
 import { SPONSOR_CONTENT } from "./sponsor-static-content";
+import { Subscription, fromEvent } from "rxjs";
 
 @Component({
   selector: "app-sponsors",
@@ -15,8 +16,9 @@ import { SPONSOR_CONTENT } from "./sponsor-static-content";
   styleUrls: ["./sponsors.component.scss"],
 })
 export class SponsorsComponent implements OnInit {
-  @ViewChild("sponsorsCarousel", { static: true })
-  sponsorsCarousel: OwlCarousel;
+  @ViewChild("sponsorsCarousel", { static: true }) sponsorsCarousel: OwlCarousel;
+  @ViewChild("listSteps", { static: true }) listSteps: ElementRef;
+  scrollSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
 
   coverCarouselOptions: OwlOptions = {
@@ -70,12 +72,17 @@ export class SponsorsComponent implements OnInit {
   sponsorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=sponsorPage";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
 
   ngOnInit() {
     //this.setStaticService();
     this.setApiService();
     this.getSponsorsData();
+    this.zone.runOutsideAngular(() => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
+        this.onScroll(event);
+      });
+    });
   }
 
   setStaticService() {
@@ -104,6 +111,18 @@ export class SponsorsComponent implements OnInit {
 
   onSponsorClick(url) {
     window.open(url);
+  }
+
+  onScroll($event) {
+    let scrollPosition = $event.srcElement.children[0].scrollTop; // ScrollTop of HTML element
+    let listElementPosition = this.listSteps.nativeElement.offsetTop;
+    if (listElementPosition / scrollPosition <= 1.5) {
+      if (this.scrollSubscription) {
+        this.scrollSubscription.unsubscribe();
+      }
+      this.listSteps.nativeElement.classList.add("animation-finish");
+      this.listSteps.nativeElement.classList.remove("animation-init");
+    }
   }
 
   @HostListener("window:resize", [""])
