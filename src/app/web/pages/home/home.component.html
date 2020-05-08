@@ -1,9 +1,11 @@
 <web-cover
+  class="fixed"
   [coverImage]="coverData.coverImage"
   [slides]="homePageData.slider"
   *ngIf="homePageData.slider"
 >
 </web-cover>
+<div class="fullscreen-space"></div>
 <section class="about-us">
   <div class="background-leaf"></div>
   <h1 class="heading">Acerca de nosotros</h1>
@@ -14,12 +16,7 @@
 <section class="pillars">
   <ng-template #pillarModal let-modal>
     <div class="modal-header">
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="modal.dismiss()"
-      >
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -29,82 +26,95 @@
     </div>
   </ng-template>
 
-  <web-bg-heading
-    >Tenemos tres<br />
-    pilares fundamentales</web-bg-heading
-  >
-  <div class="pillars-list">
-    <div
-      class="pillar ambiente"
-      (click)="openModal('environment', pillarModal)"
-    >
-      <h3><span class="bold">Amb</span>iente</h3>
+  <web-bg-heading>Tenemos tres <br />pilares fundamentales</web-bg-heading>
+  <div #pillarsList class="pillars-wrapper fade-in-animation animation-init">
+    <div class="pillars-list">
+      <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
+        <h3><span class="bold">Amb</span>iente</h3>
+      </div>
+      <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+        <h3><span class="bold">Le</span>ctura</h3>
+      </div>
+      <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+        <h3><span class="bold">Ma</span>temática</h3>
+      </div>
     </div>
-    <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
-      <h3><span class="bold">Le</span>ctura</h3>
-    </div>
-    <div class="pillar matematica" (click)="openModal('math', pillarModal)">
-      <h3><span class="bold">Ma</span>temática</h3>
-    </div>
-  </div>
 
-  <owl-carousel
-    #pillarsCarousel
-    class="pillars-carousel-home"
-    [options]="pillarsOptions"
-    [carouselClasses]="['']"
-  >
-    <div
-      class="pillar ambiente"
-      (click)="openModal('environment', pillarModal)"
+    <owl-carousel
+      #pillarsCarousel
+      class="pillars-carousel-home"
+      [options]="pillarsOptions"
+      [carouselClasses]="['']"
     >
-      <h3><span class="bold">Amb</span>iente</h3>
-    </div>
-    <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
-      <h3><span class="bold">Le</span>ctura</h3>
-    </div>
-    <div class="pillar matematica" (click)="openModal('math', pillarModal)">
-      <h3><span class="bold">Ma</span>temática</h3>
-    </div>
-  </owl-carousel>
+      <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
+        <h3><span class="bold">Amb</span>iente</h3>
+      </div>
+      <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+        <h3><span class="bold">Le</span>ctura</h3>
+      </div>
+      <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+        <h3><span class="bold">Ma</span>temática</h3>
+      </div>
+    </owl-carousel>
+  </div>
 </section>
 <section class="social-impact">
   <div class="heading-wrapper">
     <h2 class="heading">Indicadores clave</h2>
-    <div *ngIf="homePageData.statistics" class="statistics">
-      <div
-        class="statistic statistic-schools"
-        *ngIf="homePageData.statistics.totalSchools"
-      >
-        <span class="statistic-count">
-          {{ homePageData.statistics.totalSchools }}
+    <div #statistics class="statistics">
+      <div class="statistic statistic-schools" *ngIf="homePageData.statistics.totalSchools">
+        <span
+          class="statistic-count"
+          counto
+          [step]="1"
+          [countTo]="homePageData.statistics.totalSchools"
+          [countFrom]="0"
+          [duration]="0.5"
+          (countoChange)="totalSchools = $event"
+        >
+          {{ totalSchools | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Escuelas</span>
       </div>
-      <div
-        class="statistic statistic-teachers"
-        *ngIf="homePageData.statistics.totalTeachers"
-      >
-        <span class="statistic-count">
-          {{ homePageData.statistics.totalTeachers }}
+      <div class="statistic statistic-teachers" *ngIf="homePageData.statistics.totalTeachers">
+        <span
+          class="statistic-count"
+          counto
+          [step]="1"
+          [countTo]="homePageData.statistics.totalTeachers"
+          [countFrom]="0"
+          [duration]="0.5"
+          (countoChange)="totalTeachers = $event"
+        >
+          {{ totalTeachers | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Docentes</span>
       </div>
-      <div
-        class="statistic statistic-children"
-        *ngIf="homePageData.statistics.totalStudents"
-      >
-        <span class="statistic-count">
-          {{ homePageData.statistics.totalStudents }}
+      <div class="statistic statistic-children" *ngIf="homePageData.statistics.totalStudents">
+        <span
+          class="statistic-count"
+          counto
+          [step]="1"
+          [countTo]="homePageData.statistics.totalStudents"
+          [countFrom]="0"
+          [duration]="0.5"
+          (countoChange)="totalStudents = $event"
+        >
+          {{ totalStudents | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Estudiantes</span>
       </div>
-      <div
-        class="statistic statistic-sponsors"
-        *ngIf="homePageData.statistics.totalSponsors"
-      >
-        <span class="statistic-count">
-          {{ homePageData.statistics.totalSponsors }}
+      <div class="statistic statistic-sponsors" *ngIf="homePageData.statistics.totalSponsors">
+        <span
+          class="statistic-count"
+          counto
+          [step]="1"
+          [countTo]="homePageData.statistics.totalSponsors"
+          [countFrom]="0"
+          [duration]="0.5"
+          (countoChange)="totalSponsors = $event"
+        >
+          {{ totalSponsors | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Padrinos</span>
       </div>
@@ -112,9 +122,7 @@
   </div>
   <charts-switcher
     [options]="chartSwitcherOptions"
-    *ngIf="
-      isBrowser && chartSwitcherOptions && chartSwitcherOptions.charts.length
-    "
+    *ngIf="isBrowser && chartSwitcherOptions && chartSwitcherOptions.charts.length"
   >
   </charts-switcher>
 </section>
