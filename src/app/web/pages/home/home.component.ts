@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from "@angular/core";
+import { Component, OnInit, HostListener, ViewChild, ElementRef, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
@@ -11,6 +11,7 @@ import { HomePage } from "src/app/models/web/web-home.model";
 import { HOME_CONTENT } from "./home-static-content";
 import { environment } from "src/environments/environment";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { Subscription, fromEvent } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -19,6 +20,9 @@ import { ApiWebContentService } from "src/app/services/web/api-web-content.servi
 })
 export class HomeComponent implements OnInit {
   @ViewChild("pillarsCarousel", { static: true }) pillarsCarousel: OwlCarousel;
+  @ViewChild("pillarsList", { static: true }) pillarsList: ElementRef;
+  @ViewChild("statistics", { static: true }) statistics: ElementRef;
+  scrollSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
 
   coverData = {
@@ -73,20 +77,27 @@ export class HomeComponent implements OnInit {
     readingText: "",
     mathText: "",
     statistics: {
+      totalSchools: 0,
+      totalTeachers: 0,
+      totalStudents: 0,
+      totalSponsors: 0,
       charts: [],
     },
     testimonials: [],
   };
   isBrowser: boolean;
   selectedPillar: any = {};
+  finalStatistics;
   homeService: WebContentService;
+
   HOME_PATH = "webcontent?page=homePage";
 
   constructor(
     private globalService: GlobalService,
     private chartService: ChartService,
     private modalService: ModalService,
-    private http: HttpClient
+    private http: HttpClient,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -94,6 +105,11 @@ export class HomeComponent implements OnInit {
     //this.setStaticService();
     this.setApiService();
     this.getHomePageData();
+    this.zone.runOutsideAngular(() => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
+        this.onScroll(event);
+      });
+    });
   }
 
   setStaticService() {
@@ -111,7 +127,13 @@ export class HomeComponent implements OnInit {
   getHomePageData() {
     this.homeService.getWebContent().subscribe((data) => {
       //console.log(data);
-      data.homePage.statistics = HOME_CONTENT.homePage.statistics;
+      data.homePage.statistics = {
+        totalSchools: 0,
+        totalTeachers: 0,
+        totalStudents: 0,
+        totalSponsors: 0,
+      };
+      this.finalStatistics = HOME_CONTENT.homePage.statistics;
       const chartsData = HOME_CONTENT.homePage.statistics.charts;
       this.homePageData = data.homePage;
       this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
@@ -120,10 +142,25 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  @HostListener("window:resize", [""])
-  onResize() {
-    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
-      this.pillarsCarousel.refresh();
+  onScroll($event) {
+    let scrollPosition = $event.srcElement.children[0].scrollTop;
+    let listElementPosition = this.pillarsList.nativeElement.offsetTop;
+    let statisticsPosition = this.statistics.nativeElement.offsetTop;
+
+    if (listElementPosition / scrollPosition <= 1.5) {
+      this.pillarsList.nativeElement.classList.add("animation-finish");
+      this.pillarsList.nativeElement.classList.remove("animation-init");
+    }
+
+    if (statisticsPosition / scrollPosition <= 1.5) {
+      if (this.scrollSubscription) {
+        this.scrollSubscription.unsubscribe();
+      }
+      this.homePageData.statistics.totalSchools = this.finalStatistics.totalSchools;
+      this.homePageData.statistics.totalSponsors = this.finalStatistics.totalSponsors;
+      this.homePageData.statistics.totalStudents = this.finalStatistics.totalStudents;
+      this.homePageData.statistics.totalTeachers = this.finalStatistics.totalTeachers;
+    }
   }
 
   openModal(pillar, content) {
@@ -145,5 +182,11 @@ export class HomeComponent implements OnInit {
       default:
         throw Error("Invalid pillar error");
     }
+  }
+
+  @HostListener("window:resize", [""])
+  onResize() {
+    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
+      this.pillarsCarousel.refresh();
   }
 }
