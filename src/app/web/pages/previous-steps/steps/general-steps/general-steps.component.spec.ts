@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GeneralStepsComponent } from './general-steps.component';
+import { GeneralStepsComponent, StatusSelectorComponent } from './general-steps.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StepsFormsComponent } from '../steps-forms/steps-forms.component';
 import { EmbedVideoService } from 'ngx-embed-video';
@@ -14,7 +14,7 @@ describe('GeneralStepsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneralStepsComponent,StepsFormsComponent ],
+      declarations: [ GeneralStepsComponent,StepsFormsComponent, StatusSelectorComponent ],
       imports: [RouterTestingModule, FontAwesomeModule, HttpClientModule, FormsModule, 
         ReactiveFormsModule, NgSelectModule],
       providers: [EmbedVideoService]
