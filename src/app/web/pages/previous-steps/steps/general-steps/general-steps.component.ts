@@ -52,6 +52,9 @@ export class GeneralStepsComponent implements OnInit {
   compareMode() {
     return this.mode!=(+this.user_type);
   }
+  isSelectorReadOnly() {
+    return this.compareMode() && this.mode!=1 && !this.isAdmin();
+  }
 
   checkStatus(step_status) {
     return step_status=="3"? "2":"1";
@@ -269,6 +272,7 @@ export class GeneralStepsComponent implements OnInit {
     <label [for]="step.devName">Modificar estatus:</label>
       <ng-select
         class="form-control"  
+        [class.readonly]="isReadOnly"
         [items]="statuses"
         bindValue="id"
         bindLabel="name"
@@ -295,6 +299,7 @@ export class StatusSelectorComponent implements OnInit {
   @Input() step:Step;
   @Input() index:number;
   @Input() mode:number;
+  @Input() isReadOnly:boolean;
   @Output() approvalMethodCallerEmitter:EventEmitter<any> = new EventEmitter();
 
   statuses = [
@@ -319,7 +324,7 @@ export class StatusSelectorComponent implements OnInit {
   }
 
   shouldReadonly() {
-    return this.step.sending || (this.step.status!="1" && this.step.status!="3");
+    return this.step.sending || (this.step.status!="1" && this.step.status!="3") || this.isReadOnly;
   }
 
   changeStatus() {

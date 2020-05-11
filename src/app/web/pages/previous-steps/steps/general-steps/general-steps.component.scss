@@ -250,6 +250,10 @@
                             top: -0.15rem;
                         }
                     } 
+
+                    &.readonly {
+                        opacity: .65;
+                    }
                 }
             }             
 
