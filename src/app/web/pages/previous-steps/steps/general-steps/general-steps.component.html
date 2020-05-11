@@ -15,6 +15,7 @@
             [step]="step"
             [index]="i"
             [mode]="mode"
+            [isReadOnly]="isSelectorReadOnly()"
             (approvalMethodCallerEmitter)="approvalMethodCaller($event)">
           </status-selector>
 
@@ -49,7 +50,9 @@
               target="_blank" 
               [download]="step.file.name" 
               class="btn btn-primary text-decoration-none py-2 px-4 mt-1"            
-              [class.has-several]="isAdmin() && step.approvalType=='1'">
+              [class.has-several]="isAdmin() && step.approvalType=='1'"
+              (click)="isSelectorReadOnly()? $event.preventDefault():null"
+              [class.inactive]="isSelectorReadOnly()">
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
