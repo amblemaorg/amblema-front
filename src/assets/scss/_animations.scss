@@ -1,0 +1,34 @@
+// Animations
+.slide-right-animation {
+  position: relative !important;
+  transition: 2s ease right, 2s ease left !important;
+  &.animation-init {
+    right: -100vw !important;
+    left: 100vw !important;
+  }
+  &.animation-finish {
+    //right: 0 !important;
+  }
+}
+
+.slide-left-animation {
+  position: relative;
+  transition: 2s ease left, 2s ease right !important;
+  &.animation-init {
+    left: -100vw !important;
+    right: 100vw !important;
+  }
+  &.animation-finish {
+    //left: 0 !important;
+  }
+}
+
+.fade-in-animation {
+  transition: 2s ease opacity !important;
+  &.animation-init {
+    opacity: 0 !important;
+  }
+  &.animation-finish {
+    opacity: 1 !important;
+  }
+}
