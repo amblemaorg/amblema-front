@@ -16,6 +16,8 @@ export interface StructuralItem {
   title: string;
   childBlocks: PageBlockComponent[];
   icon?: string;
+  description?: string;
+  image?: string;
 }
 
 export interface PresentationalBlockComponent extends PageBlockComponent {
