@@ -20,6 +20,7 @@ import { Subscription, fromEvent } from "rxjs";
 })
 export class HomeComponent implements OnInit {
   @ViewChild("pillarsCarousel", { static: true }) pillarsCarousel: OwlCarousel;
+  @ViewChild("leaf", { static: true }) leaf: ElementRef;
   @ViewChild("pillarsList", { static: true }) pillarsList: ElementRef;
   @ViewChild("statistics", { static: true }) statistics: ElementRef;
   scrollSubscription: Subscription;
@@ -144,8 +145,14 @@ export class HomeComponent implements OnInit {
 
   onScroll($event) {
     let scrollPosition = $event.srcElement.children[0].scrollTop;
+    let leafPosition = this.leaf.nativeElement.offsetTop;
     let listElementPosition = this.pillarsList.nativeElement.offsetTop;
     let statisticsPosition = this.statistics.nativeElement.offsetTop;
+
+    if (leafPosition / scrollPosition <= 1.5) {
+      this.leaf.nativeElement.classList.remove("animation-init");
+      this.leaf.nativeElement.classList.add("animation-finish");
+    }
 
     if (listElementPosition / scrollPosition <= 1.5) {
       this.pillarsList.nativeElement.classList.add("animation-finish");
