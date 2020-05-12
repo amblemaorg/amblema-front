@@ -70,9 +70,9 @@
           [countTo]="homePageData.statistics.totalSchools"
           [countFrom]="0"
           [duration]="0.5"
-          (countoChange)="totalSchools = $event"
+          (countoChange)="this.finalStatistics.totalSchools = $event"
         >
-          {{ totalSchools | number: "1.0-0" }}
+          {{ this.finalStatistics.totalSchools | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Escuelas</span>
       </div>
@@ -84,9 +84,9 @@
           [countTo]="homePageData.statistics.totalTeachers"
           [countFrom]="0"
           [duration]="0.5"
-          (countoChange)="totalTeachers = $event"
+          (countoChange)="this.finalStatistics.totalTeachers = $event"
         >
-          {{ totalTeachers | number: "1.0-0" }}
+          {{ this.finalStatistics.totalTeachers | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Docentes</span>
       </div>
@@ -98,9 +98,9 @@
           [countTo]="homePageData.statistics.totalStudents"
           [countFrom]="0"
           [duration]="0.5"
-          (countoChange)="totalStudents = $event"
+          (countoChange)="this.finalStatistics.totalStudents = $event"
         >
-          {{ totalStudents | number: "1.0-0" }}
+          {{ this.finalStatistics.totalStudents | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Estudiantes</span>
       </div>
@@ -112,9 +112,9 @@
           [countTo]="homePageData.statistics.totalSponsors"
           [countFrom]="0"
           [duration]="0.5"
-          (countoChange)="totalSponsors = $event"
+          (countoChange)="this.finalStatistics.totalSponsors = $event"
         >
-          {{ totalSponsors | number: "1.0-0" }}
+          {{ this.finalStatistics.totalSponsors | number: "1.0-0" }}
         </span>
         <span class="statistic-label">Padrinos</span>
       </div>
