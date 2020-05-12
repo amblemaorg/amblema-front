@@ -2,15 +2,6 @@
 @import "scss/variables";
 @import "scss/elements/headings";
 
-web-cover.fixed {
-  display: block;
-  @include breakpoint(large) {
-    display: block;
-    position: fixed;
-    z-index: -1;
-  }
-}
-
 section.about-us {
   background-color: $blue;
   display: flex;
@@ -29,8 +20,11 @@ section.about-us {
     padding: 6vw 0;
   }
 
+  @import "scss/animations";
   .background-leaf {
     display: none;
+    position: absolute;
+    z-index: 10;
 
     @include breakpoint(small, landscape) {
       background-image: url("../../../../assets/images/leaf.png");
@@ -40,9 +34,7 @@ section.about-us {
       display: block;
       height: 29vw;
       left: 25vw;
-      position: absolute;
       width: 24vw;
-      z-index: 20;
     }
 
     @include breakpoint(medium) {
@@ -53,9 +45,7 @@ section.about-us {
       display: block;
       height: 29vw;
       left: 25vw;
-      position: absolute;
       width: 24vw;
-      z-index: 20;
     }
   }
 
@@ -111,6 +101,7 @@ section.about-us {
     }
   }
 }
+
 ::ng-deep {
   owl-carousel {
     // Three pillars owl carousel in home page
@@ -121,6 +112,7 @@ section.about-us {
     }
   }
 }
+
 section.pillars {
   background-color: $white;
   padding: 8vw 5vw 25vw;
