@@ -1,13 +1,11 @@
 <web-cover
-  class="fixed"
   [coverImage]="coverData.coverImage"
   [slides]="homePageData.slider"
   *ngIf="homePageData.slider"
 >
 </web-cover>
-<div class="fullscreen-space"></div>
 <section class="about-us">
-  <div class="background-leaf"></div>
+  <div #leaf class="background-leaf growth-animation animation-init"></div>
   <h1 class="heading">Acerca de nosotros</h1>
   <div class="text">
     <p *ngIf="homePageData.aboutUsText">{{ homePageData.aboutUsText }}</p>
