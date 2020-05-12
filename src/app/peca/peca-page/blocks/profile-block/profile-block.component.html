@@ -1,0 +1,14 @@
+<div fullWidth *ngFor="let item of settings.items; index as i">
+    <div class="bloque">
+        <div class="bloque1">
+            <img src="{{item.image}}" alt="">
+        </div>
+        <div class="bloque2">
+            <h1>{{ item.title }}</h1>
+            <p>{{item.description}}</p>
+        </div>
+    </div>
+    <div class="container-form">
+        <ng-template #profileContainer></ng-template>
+    </div>
+</div>

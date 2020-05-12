@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PECA_MENU_ITEMS } from './peca-menu';
-import { NbIconLibraries } from '@nebular/theme';
+import { NbIconLibraries,NbSidebarService } from '@nebular/theme';
 
 @Component({
   selector: 'app-peca',
@@ -10,10 +10,16 @@ import { NbIconLibraries } from '@nebular/theme';
 export class PecaComponent implements OnInit {
   menu = PECA_MENU_ITEMS;
 
-  constructor(private iconLibraries: NbIconLibraries) {
+  constructor(private iconLibraries: NbIconLibraries,private sidebarService: NbSidebarService) {
     this.iconLibraries.registerFontPack('amblemaicons', { iconClassPrefix: 'icon' });
     this.iconLibraries.setDefaultPack('amblemaicons');
   }
+
+  toggle() {
+    this.sidebarService.toggle(true, "menu-sidebar");
+  }
+
+  image_profile = "../../assets/images/profile-oscar.jpg"
 
   ngOnInit() {
   }

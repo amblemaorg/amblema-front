@@ -4,6 +4,7 @@ import { PecaComponent } from './peca.component';
 import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagnostic-page.component';
 import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
 import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
+import { ProfilePageComponent} from './peca-page/pages/profile-page.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
         path: 'diagnostico-inicial',
         component: InitialDiagnosticPageComponent
       },
+      {
+        path: 'perfil-usuario',
+        component: ProfilePageComponent
+      },
+      
     ]
   }
 ];
