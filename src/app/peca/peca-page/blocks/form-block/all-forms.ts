@@ -1,0 +1,196 @@
+import {
+    requiredAndNormalText,
+    normalText,
+    requiredAndNaturalNumber,
+    naturalNumber,
+    requiredAndEmail,
+    email,
+    requiredAndOnlyLetters,
+    onlyLetters,
+    requiredAndOnlyLettersAndNumbers,
+    onlyLettersAndNumbers
+} from '../../../../web/shared/forms/custom-validators';
+import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
+
+const controlProps = {
+    onlyLettersAndRequired: {
+      type:        'text',
+      validations: requiredAndOnlyLetters,
+      messages:    { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
+    },
+    onlyLetters: {
+        type:        'text',
+        validations: onlyLetters,
+        messages:    { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
+      },
+    onlyLettersNumbersAndRequired: {
+      type:        'text',
+      validations: requiredAndOnlyLettersAndNumbers,
+      messages:    { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE }
+    },
+    onlyLettersNumbers: {
+        type:        'text',
+        validations: onlyLettersAndNumbers,
+        messages:    { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE }
+      },
+    normalTextAndRequired: {
+      type:        'text',
+      validations: requiredAndNormalText,
+      messages:    { pattern: MESSAGES.TEXT_MESSAGE }
+    },
+    normalText: {
+        type:        'text',
+        validations: normalText,
+        messages:    { pattern: MESSAGES.TEXT_MESSAGE }
+      },
+    emailAndRequired: {
+      type:        'email',
+      validations: requiredAndEmail,
+      messages:    { pattern: MESSAGES.EMAIL_MESSAGE }
+    },
+    email: {
+        type:        'email',
+        validations: email,
+        messages:    { pattern: MESSAGES.EMAIL_MESSAGE }
+      },
+    numberAndRequired: {
+      type:        'number',
+      validations: requiredAndNaturalNumber,
+      messages:    { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE }
+    },
+    number: {
+        type:        'number',
+        validations: naturalNumber,
+        messages:    { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE }
+      },
+    phoneAndRequired: {
+      type:        "tel",
+      validations: requiredAndNaturalNumber,
+      messages:    { pattern: MESSAGES.PHONE_MESSAGE }
+    },
+    phone: {
+        type:        "tel",
+        validations: naturalNumber,
+        messages:    { pattern: MESSAGES.PHONE_MESSAGE }
+      },
+    dateAndRequired: {
+      type:        "date",
+      validations: { required: true }
+    },
+    date: {
+        type:        "date",
+        validations: { required: false }
+      },
+    selectAndRequired: {
+      type:        'select',
+      options:     [],
+      validations: { required: true }
+    },    
+    select: {
+        type:        'select',
+        options:     [],
+        validations: { required: false }
+    },    
+}
+
+export const sampleFormData = {
+    title1: { label: "Letras", type: "title"},
+    letter: { label: "Input letter text", placeholder: "Input letter text", fullwidth: false, ...controlProps.onlyLettersAndRequired},
+    letterNumber: { label: "Input letters and numbers text", placeholder: "Input letters and numbers text", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired},  
+    normal: { label: "Input normal text", placeholder: "Input normal text", fullwidth: false, ...controlProps.normalTextAndRequired},
+    title2: { label: "Fecha y Direccion", type: "title"},
+    date: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired},
+    addressState: { 
+      label: "Input select state", 
+      placeholder: "Input select state", 
+      fullwidth: false, 
+      ...controlProps.selectAndRequired,
+      options: [
+        { id: "165146541654hjvjh", name: "Lara" }, 
+        { id: "165146wfw254hjvjh", name: "Yaracuy" },
+      ],
+    },
+    addressMunicipality: { 
+      label: "Input select municipality", 
+      placeholder: "Input select municipality", 
+      fullwidth: false, 
+      ...controlProps.selectAndRequired,
+      options: [
+        { 
+          id: "dgisgsd64646464", 
+          name: "Iribarren", 
+          state: { id: "165146541654hjvjh", name: "Lara"},
+        }, 
+        { 
+          id: "tdjsgshdge8791654", 
+          name: "Palavecinos", 
+          state: { id: "165146541654hjvjh", name: "Lara"},
+        },
+        { 
+          id: "jgisgsd64646464", 
+          name: "Cocorote", 
+          state: { id: "165146wfw254hjvjh", name: "Yaracuy"},
+        }, 
+        { 
+          id: "bdjsgshdge8791654", 
+          name: "Bruzual", 
+          state: { id: "165146wfw254hjvjh", name: "Yaracuy"},
+        },
+      ],
+    },
+    title3: { label: "Otros campos", type: "title"},
+    email: { label: "Input email text", placeholder: "Input email text", fullwidth: false, ...controlProps.emailAndRequired},
+    number: { label: "Input number text", placeholder: "Input number text", fullwidth: false, ...controlProps.numberAndRequired},
+    phone: { label: "Input phone text", placeholder: "Input phone text", fullwidth: false, ...controlProps.phoneAndRequired},
+    title4: { label: "Imagen aca", type: "title"},
+    imageGroup: { 
+      type: "image",
+      fields: {
+        imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
+        imageStatus: { 
+          label: "Input image status", 
+          placeholder: "Input image status", 
+          fullwidth: false, 
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "Visible" }, 
+            { id: "2", name: "No visible" },
+          ],
+        },  
+      },        
+    },
+}
+
+
+/* 
+? INFO:
+  
+  (I) for adding titles to the form data::
+  --> i.e; title_sample: { label: "Title_label", type: "title"},
+
+  (II) for adding an add image container to the form data::
+  --> i.e; 
+  imageGroup: { 
+    type: "image",
+    fields: {
+      imageDescription: { 
+        label: "image_description", 
+        placeholder: "image_description", 
+        fullwidth: boolean_here, // true makes this field 100% view width, false just 50%. 
+        ...controlProps.normalText,
+      },
+      imageStatus: { 
+        label: "image_status", 
+        placeholder: "image_status", 
+        fullwidth: boolean_here, 
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "value_one" }, 
+          { id: "2", name: "value_two" },
+        ], 
+      },  
+    },        
+  }
+
+  todo: for (II) is indispensable field name to be typed as 'imageGroup', in other words, texts typed above with underscore are editable.
+*/

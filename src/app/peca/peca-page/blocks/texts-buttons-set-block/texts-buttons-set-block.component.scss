@@ -1,0 +1,56 @@
+@import 'scss/placeholders';
+
+::ng-deep {
+    .nb-theme-default {
+        p, h5, h6 {
+            color: $blue;
+        }
+    }
+    .texts-buttons-wrapper {
+        .texts-wrapper {
+            .date-download-status {
+                .right-side {
+                    display: flex;
+                    align-items: baseline;
+
+                    a {
+                        @include shared-btn-confs;
+                    }
+
+                    .status {
+                        .rounded-circle {
+                            background: #ffff00;
+                            width: 0.85rem;
+                            height: 0.85rem;
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+                    }
+                }               
+            }
+        }
+        .buttons-wrapper {
+            width: 100%;
+            text-align: right;
+        
+            nb-icon {
+                &::before {
+                    margin: 0;
+                    vertical-align: middle;
+                }
+            }    
+    
+            a.btn, button.btn {
+                @include shared-btn-confs;
+            }
+    
+            .btn-in-wrapper {
+                margin-left: 1rem;
+    
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

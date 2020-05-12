@@ -1,0 +1,26 @@
+@import 'scss/placeholders';
+
+::ng-deep {
+  .nb-theme-default {
+    nb-accordion {
+        box-shadow: none;
+
+        nb-accordion-item-header {
+            font-family: Montserrat;
+            font-size: 1.2rem;
+            border-bottom-color: $blue;
+            color: $blue;
+
+            .title-icon {
+              margin-right: 1.5rem;
+              font-size: 2rem;
+            }            
+
+            .expansion-indicator {
+                right: 1.25rem;
+                font-size: 3rem;
+            }
+        }
+    }
+  }
+}

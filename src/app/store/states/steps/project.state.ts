@@ -1,16 +1,12 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { ModuleStateModel, UpdateModulesTotal } from '../../actions/e-learning/learning-modules.actions';
 import { StepsService } from '../../../services/steps/steps.service';
-import { StepStateModel, UpdateStepsProgress, SetUserInfo } from '../../actions/steps/project.actions';
+import { StepStateModel, UpdateStepsProgress } from '../../actions/steps/project.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<StepStateModel>({
     name: 'stepsinfo',
-    defaults: {
-        sponsorInfo: null,  
-        coordinatorInfo: null,
-        schoolInfo: null,
+    defaults: {  
         sponsor_id: '',
         school_id: '',
         coordinator_id: '',
@@ -35,19 +31,7 @@ export class StepsState {
           coordinator: state.coordinator,
           steps: state.steps,
         };
-    }
-    @Selector()
-    static sponsor_info(state: StepStateModel) {
-      return state.sponsorInfo;
-    }
-    @Selector()
-    static coordinator_info(state: StepStateModel) {
-      return state.coordinatorInfo;
-    }
-    @Selector()
-    static school_info(state: StepStateModel) {
-      return state.schoolInfo;
-    }
+    }   
 
     constructor(private stepsService: StepsService, private modulesService: ModulesService) {}
 
@@ -71,36 +55,4 @@ export class StepsState {
           })
         );
     }
-
-    @Action(SetUserInfo)
-    SetUserInfo(ctx: StateContext<StepStateModel>, action: SetUserInfo) {
-        return this.modulesService.getUser(action.user_id,action.user_type).pipe(
-          tap(user => {
-            this.setCtx(ctx, action.user_type, user);        
-          })
-        );
-    }    
-
-    setCtx(ctx, type, user) {
-      const state = ctx.getState();
-      if (type=="2") {
-        ctx.setState({
-          ...state,
-          coordinatorInfo: user
-        });
-      }
-      else if(type=="3") {
-        ctx.setState({
-          ...state,
-          sponsorInfo: user
-        });
-      }
-      else {
-        ctx.setState({
-          ...state,
-          schoolInfo: user
-        });
-      }      
-    }
-
 }

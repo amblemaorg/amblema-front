@@ -40,6 +40,7 @@ form {
     }    
 
     .form-group {
+        position: relative;
         @include form-flexings;
 
         .field-empty,.field-invalid{
@@ -53,6 +54,24 @@ form {
         }
         .not-enabled {
             color: #6c757d;
+        }
+
+        .form-control {
+            &.form-date-placeholder {
+                cursor: default;
+                background-color: #fff;
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                border: none;
+                width: 80%;
+                padding-bottom: 0 !important;
+                height: auto;
+              }
+      
+              &[type="date"]:focus ~ .form-control.form-date-placeholder {
+                display: none;
+              }
         }
 
         .form-control:focus{
@@ -93,19 +112,28 @@ form {
             .ng-select-container .ng-placeholder {
                 color: #6c757d;
             }
-            .ng-select-container {
-                &.ng-has-value .ng-placeholder {
+            .ng-select-container.ng-has-value .ng-placeholder {
+                display: none;
+            }            
+
+            &.ng-untouched {
+                &.ng-invalid .ng-select-container .ng-placeholder {
+                    display: block;
+                }
+                &.ng-valid .ng-select-container .ng-placeholder {
                     display: none;
                 }
             }
-            &.ng-untouched {
-                &.ng-invalid .ng-select-container .ng-placeholder {
-                    display: block !important;
-                }
-                &.ng-valid .ng-select-container .ng-placeholder {
-                    display: none !important;
+            &.ng-touched.ng-pristine, &.ng-touched.ng-invalid {
+                .ng-select-container .ng-placeholder {
+                    display: block;
                 }
             }
+
+            &.ng-select-filtered .ng-select-container .ng-placeholder {
+                display: none !important;
+            }
+
             .ng-clear-wrapper .ng-clear {
                 color: map-get($color_map, form-gray);
             }
@@ -129,6 +157,13 @@ form {
     &.form-disabled .form-group{
         .form-control {
             border-color: #ced4da !important;
+
+            &.form-date-placeholder {
+                background-color: #e9ecef !important;    
+            }
+            &.form-date-picker {
+                color: #6c757d !important;
+            }
         }
         .field-alerts{
             display: none;

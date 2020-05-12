@@ -33,19 +33,22 @@ export class StepsService {
     return this.http.put<any>(this.baseUrl+`requestsstepapproval/${id}`,fd)
   }
 
-  requestsFindSchool(school): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'requestsfindschool',school)
+
+  requestsFind(type,data): Observable<any> {
+    let requestType = (type === 1) ? 'requestsfindsponsor' : 
+                      (type === 2) ? 'requestsfindcoordinator' : 
+                                     'requestsfindschool';
+    return this.http.post<any>(this.baseUrl+requestType,data);
   }
+
+
   updateFindSchool (id,school): Observable<any> {
     return this.http.put<any>(this.baseUrl+`requestsfindschool/${id}`,school)
   }
   getFindSchool (id): Observable<any> {
     return this.http.get<any>(this.baseUrl+`requestsfindschool/${id}`)
   }
-  
-  requestsFindCoordinator(coordinator): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'requestsfindcoordinator',coordinator)
-  }
+    
   updateFindCoordinator (id,coordinator): Observable<any> {
     return this.http.put<any>(this.baseUrl+`requestsfindcoordinator/${id}`,coordinator)
   }
@@ -53,9 +56,6 @@ export class StepsService {
     return this.http.get<any>(this.baseUrl+`requestsfindcoordinator/${id}`)
   }
 
-  requestsFindSponsor(sponsor): Observable<any> {
-    return this.http.post<any>(this.baseUrl+'requestsfindsponsor',sponsor)
-  }
   updateFindSponsor (id,sponsor): Observable<any> {
     return this.http.put<any>(this.baseUrl+`requestsfindsponsor/${id}`,sponsor)
   }
