@@ -179,4 +179,12 @@ export class GlobalService {
         }
       }
 
+      dateStringToISOString(value: any): string {
+        if (typeof value !== 'string' || value === '') {
+          return '';
+        }
+        const newDate = new Date(value);
+        return newDate.toISOString();
+      }
+
 }

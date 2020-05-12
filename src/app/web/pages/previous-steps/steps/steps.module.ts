@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { StepsRoutingModule } from './steps-routing.module';
 import { StepsComponent } from './steps.component';
-import { GeneralStepsComponent } from './general-steps/general-steps.component';
+import { GeneralStepsComponent, StatusSelectorComponent } from './general-steps/general-steps.component';
 import { StepsFormsComponent } from './steps-forms/steps-forms.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
   declarations: [
     StepsComponent,
     GeneralStepsComponent,
+    StatusSelectorComponent,
     StepsFormsComponent,
   ],
   imports: [

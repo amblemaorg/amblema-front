@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { EmbedVideoService } from 'ngx-embed-video';
+import { FormBuilder } from '@angular/forms';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Step } from '../../../../../models/steps/previous-steps.model';
@@ -23,13 +24,14 @@ export class GeneralStepsComponent implements OnInit {
   @Input() steps = [];
   @Input() curriculumPending:boolean;
   @Input() user_type:string = "1";
+  @Input() user_id:string;
   @Input() project_id:string;
   @Input() confirmable:boolean;
+  @Input() enableActions:boolean;
   @Input() setStates = [];
   @Input() setMuns = [];
-  @Input() has_sponsor:boolean = false;
 
-  @Output() callUpdate:EventEmitter<string> = new EventEmitter();
+  @Output() callUpdate:EventEmitter<string> = new EventEmitter();  
 
   isBrowser;
   glbls:any;
@@ -50,6 +52,17 @@ export class GeneralStepsComponent implements OnInit {
   compareMode() {
     return this.mode!=(+this.user_type);
   }
+  isSelectorReadOnly() {
+    return this.compareMode() && this.mode!=1 && !this.isAdmin();
+  }
+
+  checkStatus(step_status) {
+    return step_status=="3"? "2":"1";
+  }
+
+  showConditioned(step:Step) { // show approve btn when is not find school, coordinator or sponsor
+    return step.devName!="findCoordinator" && step.devName!="findSponsor" && step.devName!="findSchool";
+  }
 
   isNotConfirmable(step:Step) {
     return !this.confirmable && step.devName=="amblemaConfirmation";
@@ -57,6 +70,22 @@ export class GeneralStepsComponent implements OnInit {
 
   isAdmin() { //usertype 0 or 1 is super and admin
     return this.user_type=='0' || this.user_type=='1'
+  }
+
+  // onlyHasFile(step:Step) {
+  //   return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
+  // }
+
+  // METHOD THAT ALLOWS THE SENDER USER TO SEE THE CANCEL BUTTON FROM REQUEST STEP
+  canUserSee(step:Step) {
+    if(step.approvalHistory.length>0) {
+      let bool = step.approvalHistory[step.approvalHistory.length-1].data? 
+                (step.approvalHistory[step.approvalHistory.length-1].data.user? 
+                true : false) : false;      
+      if(bool) return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
+      else return false;
+    } 
+    else return true;
   }
 
   getVideo(url) {
@@ -100,23 +129,29 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   getStatusName(num) {
-    return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : "Aprobado";
+    return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : num=="8" ? "Procesando" : "Aprobado";
   }
 
   //? Sending Approval Request ----------------------------------------------------
-  approvalMethod(step:Step,indd?,modd?) {
+  approvalMethodCaller(e) { // aproval method caller from status selector component
+    this.approvalMethod(e.step,e.index,e.mode,e.status);
+  }
+  approvalMethod(step:Step,indd?,modd?,status?) {
     step.sending = true;
     let formData = new FormData();       
 
     let getPosting = () => {
-      // let stts = step.approvalType=="3"? '1': step.approvalType=="2"? '2': '1'; // status depending on approval type      
       if (step.hasChecklist && step.approvalType!="3") {        
         formData.append('status', !this.enableChecksBtn(step,true)?"1":"2");
-      } else if (step.approvalType!="3") {
+      } else if (step.approvalType!="3" && step.approvalType!="4") {
         formData.append('status', step.status=="1"?"3":"1");
       }
+      if (step.approvalType=="4") formData.append('status', status=="1"?"1":"3");      
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
-      if(step.approvalType=="3") formData.append('project', this.project_id);
+      if(step.approvalType=="3") {
+        formData.append('project', this.project_id);
+        formData.append('user', this.user_id);
+      }
       if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date); 
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
@@ -124,7 +159,7 @@ export class GeneralStepsComponent implements OnInit {
 
     if( (step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) || step.approvalType!="3") {
       getPosting();
-
+         
       if(step.approvalType=="3") this.postAR(formData,step,indd,modd); // approval request
       else this.postSA(formData,step,indd,modd,this.project_id); // step approval
     } 
@@ -136,7 +171,7 @@ export class GeneralStepsComponent implements OnInit {
       //putting
       if(step.hasUpload && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
       if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
-            
+      
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
@@ -153,6 +188,10 @@ export class GeneralStepsComponent implements OnInit {
     this.callUpdate.emit(this.project_id);
     this.setCurrentAccItem(indd,modd);
   }   
+  updateEmitterFromForm(e) {
+    this.callUpdate.emit(e.project_id);
+    this.setCurrentAccItem(e.indd,e.modd);
+  }
   postAR(formData,step:Step,indd,modd) {
     this.stepsService.requestApproval(formData).subscribe(res=>{
       step.status = (step.hasUpload && step.approvalType=="3")? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
@@ -165,6 +204,7 @@ export class GeneralStepsComponent implements OnInit {
   }
   postSA(formData,step:Step,indd,modd,proj_id) {
     this.stepsService.stepApproval(proj_id,formData).subscribe(res=>{
+      step.status = "8"; // status 8 --> processing
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
@@ -184,15 +224,6 @@ export class GeneralStepsComponent implements OnInit {
       this.toasterMeth(indd,modd);
     });
   }
-  //
-
-  // getDateFormat(dateSrc:Date) {
-  //   let numbers = [1,2,3,4,5,6,7,8,9];
-  //   let correctMonth = numbers.includes(dateSrc.getMonth()+1) ? `0${dateSrc.getMonth()+1}` : (dateSrc.getMonth()+1).toString();
-  //   let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
-
-  //   return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-  // }
   //? -----------------------------------------------------------------------------------------------------------------
 
   toasterMeth(i,m) {
@@ -226,8 +257,82 @@ export class GeneralStepsComponent implements OnInit {
     return date;
   }
   controlDate(e, step:Step) {   
-    if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
+    // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
+    if (!this.globals.validateDate(e,'greater',true)) step.date = this.globals.dateStringToISOString(e.target.value);
     else step.date = null;
   }
 
+}
+
+
+@Component({
+  selector: 'status-selector',
+  template: `
+    <div class="form-group" [formGroup]="statusForm">
+    <label [for]="step.devName">Modificar estatus:</label>
+      <ng-select
+        class="form-control"  
+        [class.readonly]="isReadOnly"
+        [items]="statuses"
+        bindValue="id"
+        bindLabel="name"
+        [labelForId]="step.devName"
+        formControlName="status"
+        [virtualScroll]="true"
+        [id]="step.devName"  
+        [clearable]="false" 
+        [searchable]="false"  
+        [loading]="step.sending"
+        [readonly]="shouldReadonly()"
+        (change)="changeStatus()"         
+      >
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <small>{{item.name}}</small>
+        </ng-template>
+        
+      </ng-select>
+    </div>
+  `,
+  styleUrls: ['./general-steps.component.scss']
+})
+export class StatusSelectorComponent implements OnInit {
+  @Input() step:Step;
+  @Input() index:number;
+  @Input() mode:number;
+  @Input() isReadOnly:boolean;
+  @Output() approvalMethodCallerEmitter:EventEmitter<any> = new EventEmitter();
+
+  statuses = [
+    {id:'1',name:'Por completar'},
+    {id:'2',name:'Completado'},
+  ];
+
+  statusForm = this.fb.group({
+    status: ['']
+  });
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.formFiller();
+  }
+
+  formFiller() {
+    this.statusForm.setValue({
+      status: this.step.status=="3"? "2":"1"
+    });
+  }
+
+  shouldReadonly() {
+    return this.step.sending || (this.step.status!="1" && this.step.status!="3") || this.isReadOnly;
+  }
+
+  changeStatus() {
+    this.approvalMethodCallerEmitter.emit({
+      step: this.step,
+      index: this.index,
+      mode: this.mode,
+      status: this.statusForm.controls['status'].value
+    });
+  }
 }

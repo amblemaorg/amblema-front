@@ -89,8 +89,16 @@
       margin: 0;
     }
 
-    nb-card-body {
-      padding: 1.25rem 2.5rem;
-    }
+    nb-layout-column {
+      nb-card {
+        nb-card-body {
+          padding: 1.25rem 2.5rem;          
+        } 
+
+        &:nth-child(2) nb-card-body {
+          padding: 1.25rem 0;
+        }
+      }
+    }    
   }
 }
