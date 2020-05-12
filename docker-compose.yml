@@ -18,20 +18,20 @@ services:
       # - G_MAPS_ID=
       # - G_ANALYTICS_ID=
     volumes:
-      - amblema_web:/home/amblema
+      - .:/home/amblema
     command: >
       /bin/bash -c "envsubst '$$NGINX_HOST$$NGINX_PORT$$NGINX_ROOT$$SSR_PORT' < /home/amblema/vhost-template.conf > /etc/nginx/conf.d/default.conf
       && envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html
       && exec nginx -g 'daemon off;'"
     networks:
       - default
-volumes:
-  amblema_web:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}
-      o: bind
+#volumes:
+#  amblema_web:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      device: ${PWD}
+#      o: bind
 networks:
   default:
     driver: bridge

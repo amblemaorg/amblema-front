@@ -28,7 +28,7 @@
               <ng-select
                 class="form-control"
                 notFoundText="Elementos no encontrados"
-                [items]="field==='addressState'? settings.formsContent[field].options : municipalities"
+                [items]="field!='addressMunicipality'? settings.formsContent[field].options : municipalities"
                 bindValue="id"
                 bindLabel="name"
                 [labelForId]="field"
@@ -180,7 +180,26 @@
               <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
               {{ !sendingForm? 'Guardar':'Guardando..' }}
             </button>
-          </ng-container>   
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <button 
+              type="submit" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm"
+            >
+              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+              {{ !sendingForm? 'Editar':'Editando..' }}
+            </button>
+          </ng-container>  
+          <ng-container *ngSwitchDefault>
+            <button 
+              type="submit" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm"
+            >
+              <span>Cancelar</span>
+            </button>
+          </ng-container>       
 
         </ng-container>          
       </div>        

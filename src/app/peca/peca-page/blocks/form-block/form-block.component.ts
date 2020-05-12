@@ -45,6 +45,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm = this.buildFormGroup(settings.formsContent);
     if(settings.formsContent['imageGroup']) 
       this.componentForm.addControl('imageGroup',this.buildImageGroup());
+    console.log(this.componentForm.value)
   }
 
   private buildFormGroup(formContent: any): FormGroup {
