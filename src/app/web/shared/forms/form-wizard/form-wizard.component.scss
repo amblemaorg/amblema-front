@@ -1,5 +1,5 @@
-@import 'scss/responsive';
-@import 'scss/variables';
+@import "scss/responsive";
+@import "scss/variables";
 
 .form-heading {
   font-size: 6vw;
@@ -10,7 +10,7 @@
     font-size: 3vw;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large, landscape) {
     font-size: 2vw;
   }
 }
@@ -39,7 +39,7 @@
       margin: 2vw 0;
     }
 
-    @include breakpoint(large) {
+    @include breakpoint(large, landscape) {
       margin: 1.5vw 0;
       width: 45%;
     }
@@ -60,10 +60,10 @@
         top: 2vw;
       }
 
-      @include breakpoint(large) {
+      @include breakpoint(large, landscape) {
         font-size: 1vw;
         margin-right: 1vw;
-        top: .5vw;
+        top: 0.5vw;
       }
     }
 
@@ -71,9 +71,13 @@
       background: transparent;
       border: 0;
       border-bottom: 2px solid white;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0;
+      border-radius: 0;
       color: white;
       flex: 1 0 auto;
       font-size: 4.5vw;
+      line-height: 1;
       height: 6vw;
       width: 50%;
 
@@ -81,7 +85,7 @@
         font-size: 2.5vw;
       }
 
-      @include breakpoint(large) {
+      @include breakpoint(large, landscape) {
         font-size: 1.2vw;
         height: 2vw;
       }
@@ -119,13 +123,14 @@
       position: absolute;
       top: 6vw;
 
-      @include breakpoint(large) {
+      @include breakpoint(large, landscape) {
         top: 2vw;
       }
     }
 
     &.list {
-      ul, ol {
+      ul,
+      ol {
         margin: 0;
         padding: 0;
         text-align: center;
@@ -140,7 +145,7 @@
             font-size: 2.5vw;
           }
 
-          @include breakpoint(large) {
+          @include breakpoint(large, landscape) {
             font-size: 1.5vw;
             margin-bottom: 1.5vw;
           }
@@ -231,10 +236,10 @@
     font-size: 2.5vw;
   }
 
-  @include breakpoint(large) {
+  @include breakpoint(large, landscape) {
     font-size: 1.25vw;
     margin: 0 1vw;
-    padding: .4vw 2vw !important;
+    padding: 0.4vw 2vw !important;
   }
 
   &:hover {
@@ -270,7 +275,7 @@
           font-size: 2.5vw;
         }
 
-        @include breakpoint(large) {
+        @include breakpoint(large, landscape) {
           font-size: 1.2vw;
         }
       }
@@ -283,7 +288,7 @@
             font-size: 2.5vw;
           }
 
-          @include breakpoint(large) {
+          @include breakpoint(large, landscape) {
             font-size: 1.2vw;
           }
         }
@@ -299,7 +304,7 @@
             font-size: 4vw;
           }
 
-          @include breakpoint(large) {
+          @include breakpoint(large, landscape) {
             font-size: 1.5vw;
           }
         }
@@ -330,12 +335,11 @@
             border-width: 1vw 1vw 1vw;
           }
 
-          @include breakpoint(large) {
-            top: -.25vw;
-            border-width: 0 .5vw .5vw;
+          @include breakpoint(large, landscape) {
+            top: -0.25vw;
+            border-width: 0 0.5vw 0.5vw;
           }
         }
-
       }
     }
 
@@ -344,10 +348,10 @@
         .ng-option {
           background-color: $white;
           color: $blue;
-          padding: .5vw 2vw;
+          padding: 0.5vw 2vw;
 
-          @include breakpoint(large) {
-            padding: .25vw 1vw;
+          @include breakpoint(large, landscape) {
+            padding: 0.25vw 1vw;
           }
         }
       }
@@ -356,7 +360,7 @@
     .ng-arrow-wrapper {
       width: 6vw;
 
-      @include breakpoint(large) {
+      @include breakpoint(large, landscape) {
         width: 2vw;
       }
 
@@ -370,9 +374,9 @@
           border-width: 1vw 1vw 1vw;
         }
 
-        @include breakpoint(large) {
+        @include breakpoint(large, landscape) {
           top: 0;
-          border-width: .5vw .5vw .25vw;
+          border-width: 0.5vw 0.5vw 0.25vw;
         }
       }
     }
