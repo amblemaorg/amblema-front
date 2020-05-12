@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   HostListener,
   NgZone,
+  OnDestroy,
 } from "@angular/core";
 import { SchoolService } from "src/app/services/web/school.service";
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
@@ -20,8 +21,9 @@ import { Subscription, fromEvent } from "rxjs";
   templateUrl: "./school-detail.component.html",
   styleUrls: ["./school-detail.component.scss"],
 })
-export class SchoolDetailComponent implements OnInit, AfterViewInit {
+export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("schoolDetails", { static: false }) schoolSection: ElementRef;
+  @ViewChild("symbols", { static: true }) symbols: ElementRef;
   @ViewChild("activitiesIndexCarousel", { static: true }) activitiesIndexCarousel: OwlCarousel;
   @ViewChild("activityImageCarousel", { static: false }) activityImageCarousel: OwlCarousel;
   @ViewChild("activitiesCarousel", { static: true }) activitiesCarousel: OwlCarousel;
@@ -113,10 +115,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
       0: {
         items: this.landscape ? 3 : 1,
       },
-      [767 * 0.84]: {
+      [768]: {
         items: 3,
       },
-      [1024 * 0.84]: {
+      [1024]: {
         items: 4,
       },
     },
@@ -130,9 +132,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     nav: false,
     responsive: {
       0: {
+        nav: !this.landscape,
         items: this.landscape ? 3 : 1,
       },
-      [768 * 0.8]: {
+      [768]: {
         items: 3,
       },
     },
@@ -159,25 +162,21 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.scrollToPage();
+        this.renavigateToTop();
         this.reinitCarousels();
       }
-    });
-
-    this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
-        this.onScroll(event);
-      });
     });
   }
 
   ngAfterViewInit() {
     this.scrollToPage();
+    this.subscribeScrollEvent();
   }
 
-  scrollToPage() {
-    const schoolTopPos = this.schoolSection.nativeElement.offsetTop;
-    window.scrollTo(0, schoolTopPos);
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
   }
 
   getSchoolBySlug(slug) {
@@ -190,13 +189,41 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onScroll($event) {
-    let scrollPosition = $event.srcElement.children[0].scrollTop;
-    //let chartsPosition = this.charts.nativeElement.offsetTop;
-    let chartTestimonialPosition = this.chartTestimonial.nativeElement.offsetTop;
-    //let elementPosition = chartsPosition + chartTestimonialPosition;
+  scrollToPage() {
+    const schoolTopPos = this.schoolSection.nativeElement.offsetTop;
+    window.scrollTo(0, schoolTopPos);
+  }
 
-    if (chartTestimonialPosition / scrollPosition <= 1.5) {
+  renavigateToTop() {
+    this.symbols.nativeElement.classList.remove("animation-finish");
+    this.chartTestimonial.nativeElement.classList.remove("animation-finish");
+    this.symbols.nativeElement.classList.add("animation-init");
+    this.chartTestimonial.nativeElement.classList.add("animation-init");
+    this.scrollToPage();
+    setTimeout(() => {
+      this.subscribeScrollEvent();
+    }, 2100);
+  }
+
+  subscribeScrollEvent() {
+    this.zone.runOutsideAngular(() => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
+        this.onScroll(event);
+      });
+    });
+  }
+
+  onScroll($event) {
+    let scrollPosition = $event.srcElement.children[0].scrollTop + window.innerHeight;
+    let symbolsPosition = this.symbols.nativeElement.offsetTop;
+    let chartsPosition = this.charts.nativeElement.offsetTop;
+
+    if (symbolsPosition / scrollPosition <= 1) {
+      this.symbols.nativeElement.classList.add("animation-finish");
+      this.symbols.nativeElement.classList.remove("animation-init");
+    }
+
+    if (chartsPosition / scrollPosition <= 0.8) {
       if (this.scrollSubscription) {
         this.scrollSubscription.unsubscribe();
       }
