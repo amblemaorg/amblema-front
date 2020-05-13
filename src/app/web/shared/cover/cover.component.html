@@ -1,56 +1,75 @@
 <div class="web-cover">
-  <img *ngIf="coverImage" class="cover-image" [src]="coverImage" />
-  <!-- If block -->
+  <img class="web-cover__overlay-image" *ngIf="overlayImage" [src]="overlayImage" />
+  <!-- Carousel element if more than 1 slide -->
   <owl-carousel-o
     #owlElement
+    class="web-cover__carousel"
     *ngIf="slides.length > 1"
     [options]="customOptions"
-    class="bg-carousel"
   >
     <ng-template carouselSlide *ngFor="let slide of slides">
-      <div class="image-extended">
-        <picture class="bg-image">
-          <source
-            [srcset]="slide.image || slide.image.desktop"
-            media="(min-width: 1024px) and (orientation: landscape)"
-          />
-          <source
-            [srcset]="slide.image || slide.image.desktop"
-            media="(min-width: 767px) and (orientation: portrait)"
-          />
-          <source
-            [srcset]="slide.image || slide.image.desktop"
-            media="(min-width: 320px) and (orientation: landscape)"
-          />
-          <img [src]="slide.image || slide.image.movil" />
+      <div class="web-cover__mobile-image-extended-wrapper">
+        <picture class="web-cover__image">
+          <source [srcset]="slide.image" media="(min-width: 1024px) and (orientation: landscape)" />
+          <source [srcset]="slide.image" media="(min-width: 767px) and (orientation: portrait)" />
+          <source [srcset]="slide.image" media="(min-width: 320px) and (orientation: landscape)" />
+          <img [src]="slide.image" />
         </picture>
       </div>
-      <p *ngIf="slide.description" class="tagline">{{ slide.description }}</p>
+      <ng-container
+        *ngTemplateOutlet="
+          contentTemplate;
+          context: { title: slide.title, description: slide.description }
+        "
+      >
+      </ng-container>
     </ng-template>
   </owl-carousel-o>
-  <!-- End if block -->
-  <!-- Else block -->
-  <div *ngIf="slides.length == 1" class="bg-image">
-    <div class="image-extended">
-      <picture>
+  <!-- Image element if only 1 slide -->
+  <div *ngIf="slides.length == 1">
+    <div class="web-cover__mobile-image-extended-wrapper">
+      <picture class="web-cover__image">
         <source
-          [srcset]="slides[0].image || slides[0].image.desktop"
+          [srcset]="slides[0].image"
           media="(min-width: 1024px) and (orientation: landscape)"
         />
+        <source [srcset]="slides[0].image" media="(min-width: 767px) and (orientation: portrait)" />
         <source
-          [srcset]="slides[0].image || slides[0].image.desktop"
-          media="(min-width: 767px) and (orientation: portrait)"
-        />
-        <source
-          [srcset]="slides[0].image || slides[0].image.desktop"
+          [srcset]="slides[0].image"
           media="(min-width: 320px) and (orientation: landscape)"
         />
-        <img [src]="slides[0].image || slides[0].image.movil" />
+        <img [src]="slides[0].image" />
       </picture>
     </div>
-    <p *ngIf="slides[0].description" class="tagline">
-      {{ slides[0].description }}
-    </p>
+    <ng-container
+      *ngTemplateOutlet="
+        contentTemplate;
+        context: { title: slides[0].title, description: slides[0].description }
+      "
+    >
+    </ng-container>
   </div>
   <!-- End else block -->
 </div>
+<!-- Slide content template -->
+<ng-template #contentTemplate let-title="title" let-description="description">
+  <div
+    class="web-cover__content-wrapper"
+    [ngClass]="{
+      'web-cover__content-wrapper--sponsor-page': sponsorPage,
+      'web-cover__content-wrapper--coordinator-page': coordinatorPage
+    }"
+    *ngIf="title || description"
+  >
+    <p
+      class="web-cover__content-title"
+      [ngClass]="{ 'web-cover__content-title--bold': titleBold }"
+      *ngIf="title"
+    >
+      {{ title }}
+    </p>
+    <p class="web-cover__content-description" *ngIf="description">
+      {{ description }}
+    </p>
+  </div>
+</ng-template>

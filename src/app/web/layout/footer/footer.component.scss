@@ -167,3 +167,11 @@ footer {
     }
   }
 }
+
+.binaural-link {
+  color: white;
+  font-weight: bold;
+  &:hover {
+    color: $green;
+  }
+}

@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  NgZone,
-} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, NgZone } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { WebContentService } from "src/app/services/web/web-content.service";
@@ -41,7 +35,14 @@ export class CoordinatorsComponent implements OnInit {
   };
 
   coverData = {
+    options: {
+      titleBold: true,
+      coordinatorPage: true,
+    },
     slides: [],
+    title: "¿Quién es el Coordinador AmbLeMa?",
+    description:
+      "El coordinador AmbLeMa es la persona encargada de colaborar para la aplicación del método AmbLeMa en una escuela de su comunidad. Es el puente entre la fundación AmbLeMa, el padrino y la escuela. Su función es Hacer Que Suceda (HQS)",
   };
   coordinatorsPageData: CoordinatorPage = {
     backgroundImage: "",
@@ -58,11 +59,9 @@ export class CoordinatorsComponent implements OnInit {
     this.setApiService();
     this.getCoordinatorsData();
     this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, "scroll").subscribe(
-        (event) => {
-          this.onScroll(event);
-        }
-      );
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
+        this.onScroll(event);
+      });
     });
   }
 
@@ -84,6 +83,8 @@ export class CoordinatorsComponent implements OnInit {
       this.coordinatorsPageData = data.coordinatorPage;
       this.coverData.slides.push({
         image: this.coordinatorsPageData.backgroundImage,
+        title: this.coverData.title,
+        description: this.coverData.description,
       });
     });
   }
