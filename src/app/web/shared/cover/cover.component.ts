@@ -1,15 +1,29 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { Input } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { Input } from "@angular/core";
 
+interface Slide {
+  image: string;
+  title: string;
+  description: string;
+}
 @Component({
-  selector: 'web-cover',
-  templateUrl: './cover.component.html',
-  styleUrls: ['./cover.component.scss']
+  selector: "web-cover",
+  templateUrl: "./cover.component.html",
+  styleUrls: ["./cover.component.scss"],
 })
 export class CoverComponent implements OnInit {
-  @Input() coverImage;
-  @Input() slides;
+  @Input() overlayImage;
+  @Input() slides: Slide[];
+  @Input() options: {
+    titleBold: boolean;
+    sponsorPage: boolean;
+    coordinatorPage: boolean;
+  };
+
+  sponsorPage: boolean = false;
+  coordinatorPage: boolean = false;
+  titleBold: boolean = false;
 
   customOptions: OwlOptions = {
     autoplay: true,
@@ -22,13 +36,16 @@ export class CoverComponent implements OnInit {
     navSpeed: 3000,
     responsive: {
       0: {
-        items: 1
-      }
-    }
-  }
+        items: 1,
+      },
+    },
+  };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    Object.keys(this.options).map((option) => {
+      this[option] = this.options[option];
+    });
   }
 }
