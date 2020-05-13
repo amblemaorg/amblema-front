@@ -25,12 +25,11 @@ import { ModalService } from "src/app/services/modal.service";
 })
 export class AboutComponent implements OnInit {
   @ViewChild("awardsCarousel", { static: false }) awardsCarousel: OwlCarousel;
-  @ViewChildren("awardModal", { read: ElementRef }) awardModal: QueryList<
-    ElementRef
-  >;
+  @ViewChildren("awardModal", { read: ElementRef }) awardModal: QueryList<ElementRef>;
 
   coverData = {
-    coverImage: "./assets/images/cover-simbolos.png",
+    overlayImage: "./assets/images/cover-simbolos.png",
+    slider: [],
   };
 
   pillarsOptions: OwlOptions = {
@@ -134,6 +133,12 @@ export class AboutComponent implements OnInit {
   getAboutUsData() {
     this.aboutUsService.getWebContent().subscribe((data) => {
       // console.log(data)
+      this.coverData.slider = data.aboutUsPage.slider.map((slide) => {
+        return {
+          image: slide.image,
+          title: slide.description,
+        };
+      });
       this.aboutUsPageData = data.aboutUsPage;
     });
   }

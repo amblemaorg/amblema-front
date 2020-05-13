@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
   landscape = window.innerWidth > window.innerHeight;
 
   coverData = {
-    coverImage: "./assets/images/cover-simbolos.png",
+    overlayImage: "./assets/images/cover-simbolos.png",
+    slider: [],
   };
 
   chartSwitcherOptions = {
@@ -134,6 +135,12 @@ export class HomeComponent implements OnInit {
         totalStudents: 0,
         totalSponsors: 0,
       };
+      this.coverData.slider = data.homePage.slider.map((slide) => {
+        return {
+          image: slide.image,
+          title: slide.description,
+        };
+      });
       this.finalStatistics = HOME_CONTENT.homePage.statistics;
       const chartsData = HOME_CONTENT.homePage.statistics.charts;
       this.homePageData = data.homePage;
