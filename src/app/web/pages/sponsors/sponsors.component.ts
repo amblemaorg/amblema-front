@@ -61,7 +61,14 @@ export class SponsorsComponent implements OnInit {
   };
 
   coverData = {
+    options: {
+      titleBold: true,
+      sponsorPage: true,
+    },
     slides: [],
+    title: "¿Quién es un Padrino AmbLeMa?",
+    description:
+      "El padrino AmbLeMa, es un grupo empresarial y/o familiar que apoya económicamente la aplicación del método AmbLeMa en una o más escuelas de sus comunidades vecinas a lo largo de cada año escolar.",
   };
   sponsorsPageData: SponsorPage = {
     backgroundImage: "",
@@ -75,8 +82,8 @@ export class SponsorsComponent implements OnInit {
   constructor(private http: HttpClient, private zone: NgZone) {}
 
   ngOnInit() {
-    //this.setStaticService();
-    this.setApiService();
+    this.setStaticService();
+    // this.setApiService();
     this.getSponsorsData();
     this.zone.runOutsideAngular(() => {
       this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
@@ -98,13 +105,15 @@ export class SponsorsComponent implements OnInit {
   }
 
   getSponsorsData() {
-    console.log(SPONSOR_CONTENT);
+    // console.log(SPONSOR_CONTENT);
     this.sponsorService.getWebContent().subscribe((data) => {
       data.sponsorPage.sponsors = SPONSOR_CONTENT.sponsorPage.sponsors;
-      console.log(data);
+      // console.log(data);
       this.sponsorsPageData = data.sponsorPage;
       this.coverData.slides.push({
         image: this.sponsorsPageData.backgroundImage,
+        title: this.coverData.title,
+        description: this.coverData.description,
       });
     });
   }

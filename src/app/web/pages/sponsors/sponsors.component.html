@@ -1,16 +1,17 @@
 <!-- Cover section -->
 <section class="cover">
-  <web-cover [slides]="coverData.slides" *ngIf="coverData.slides"> </web-cover>
+  <web-cover
+    [slides]="coverData.slides"
+    [options]="coverData.options"
+    *ngIf="coverData.slides"
+  ></web-cover>
   <h1>Padrinos</h1>
   <owl-carousel-o
     *ngIf="sponsorsPageData.testimonials.length > 0"
     [options]="coverCarouselOptions"
     class="testimonials-carousel"
   >
-    <ng-template
-      carouselSlide
-      *ngFor="let testimonial of sponsorsPageData.testimonials"
-    >
+    <ng-template carouselSlide *ngFor="let testimonial of sponsorsPageData.testimonials">
       <web-testimonial-card [testimonial]="testimonial"></web-testimonial-card>
     </ng-template>
   </owl-carousel-o>
@@ -45,19 +46,11 @@
       [carouselClasses]="['']"
       *ngIf="sponsorsPageData.sponsors.length"
     >
-      <ng-container
-        *ngFor="
-          let sponsor of sponsorsPageData.sponsors as sponsors;
-          let i = index
-        "
-      >
+      <ng-container *ngFor="let sponsor of sponsorsPageData.sponsors as sponsors; let i = index">
         <ng-container *ngIf="(i + 1) % 2 !== 1">
           <div class="inner-wrap">
             <ng-container
-              *ngTemplateOutlet="
-                sponsorTemplate;
-                context: { sponsor: sponsors[i - 1] }
-              "
+              *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsors[i - 1] }"
             ></ng-container>
 
             <ng-container
