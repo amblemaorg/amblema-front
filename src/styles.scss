@@ -132,7 +132,7 @@ a {
 }
 
 .slideout-menu-left {
-  left: 0;
+  left: -70vw;
 }
 
 .slideout-menu-right {
@@ -145,6 +145,7 @@ a {
   will-change: transform;
   background-color: #fff; /* A background-color is required */
   min-height: 100vh;
+  transition: 0.25s ease transform;
 }
 
 .slideout-open,
@@ -159,6 +160,7 @@ a {
 
 .slideout-open .slideout-menu {
   display: block;
+  left: 0;
 }
 
 section.pillars {
