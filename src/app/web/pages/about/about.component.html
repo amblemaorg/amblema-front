@@ -1,8 +1,9 @@
 <!-- Cover section -->
 <web-cover
-  [coverImage]="coverData.coverImage"
-  [slides]="aboutUsPageData.slider"
-  *ngIf="aboutUsPageData.slider">
+  [overlayImage]="coverData.overlayImage"
+  [slides]="coverData.slider"
+  *ngIf="coverData.slider"
+>
 </web-cover>
 <!-- End cover section -->
 <section class="about-us">
@@ -14,63 +15,53 @@
 <section class="pillars">
   <h2 class="heading">Tenemos tres pilares fundamentales</h2>
   <div class="hide-lg">
-      <owl-carousel
-        [options]="pillarsOptions"
-        class="pillars-carousel"
-        [carouselClasses]="['']"
-        *ngIf="aboutUsPageData.environmentText || aboutUsPageData.readingText || aboutUsPageData.mathText"
-      >
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Amb</span>iente
-            </h3>
-            <p class="pillar-text">{{ aboutUsPageData.environmentText }}</p>
-          </div>
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Le</span>ctura
-            </h3>
-            <p class="pillar-text">{{ aboutUsPageData.readingText }}</p>
-          </div>
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Ma</span>temática
-            </h3>
-            <p class="pillar-text">{{ aboutUsPageData.mathText }}</p>
-          </div>
-      </owl-carousel>
+    <owl-carousel
+      [options]="pillarsOptions"
+      class="pillars-carousel"
+      [carouselClasses]="['']"
+      *ngIf="
+        aboutUsPageData.environmentText || aboutUsPageData.readingText || aboutUsPageData.mathText
+      "
+    >
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Amb</span>iente</h3>
+        <p class="pillar-text">{{ aboutUsPageData.environmentText }}</p>
+      </div>
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Le</span>ctura</h3>
+        <p class="pillar-text">{{ aboutUsPageData.readingText }}</p>
+      </div>
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Ma</span>temática</h3>
+        <p class="pillar-text">{{ aboutUsPageData.mathText }}</p>
+      </div>
+    </owl-carousel>
   </div>
   <div class="pillars-list show-lg">
-      <div class="pillar-wrapper environment">
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Amb</span>iente
-            </h3>
-            <p *ngIf="aboutUsPageData.environmentText" class="pillar-text">
-              {{ aboutUsPageData.environmentText }}
-            </p>
-          </div>
+    <div class="pillar-wrapper environment">
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Amb</span>iente</h3>
+        <p *ngIf="aboutUsPageData.environmentText" class="pillar-text">
+          {{ aboutUsPageData.environmentText }}
+        </p>
       </div>
-      <div class="pillar-wrapper reading">
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Le</span>ctura
-            </h3>
-            <p *ngIf="aboutUsPageData.readingText" class="pillar-text">
-              {{ aboutUsPageData.readingText }}
-            </p>
-          </div>
+    </div>
+    <div class="pillar-wrapper reading">
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Le</span>ctura</h3>
+        <p *ngIf="aboutUsPageData.readingText" class="pillar-text">
+          {{ aboutUsPageData.readingText }}
+        </p>
       </div>
-      <div class="pillar-wrapper math">
-          <div class="pillar">
-            <h3 class="pillar-title">
-              <span class="bold">Ma</span>temática
-            </h3>
-            <p *ngIf="aboutUsPageData.mathText" class="pillar-text">
-              {{ aboutUsPageData.mathText }}
-            </p>
-          </div>
+    </div>
+    <div class="pillar-wrapper math">
+      <div class="pillar">
+        <h3 class="pillar-title"><span class="bold">Ma</span>temática</h3>
+        <p *ngIf="aboutUsPageData.mathText" class="pillar-text">
+          {{ aboutUsPageData.mathText }}
+        </p>
       </div>
+    </div>
   </div>
 </section>
 <!-- Awards section -->
@@ -95,7 +86,8 @@
     </owl-carousel>
   </div>
   <!-- Award modals -->
-  <div #awardModal
+  <div
+    #awardModal
     *ngFor="let award of aboutUsPageData.awards; index as i"
     role="dialog"
     class="modal static-modal award-modal amblema-theme z-hidden d-block"
@@ -105,12 +97,7 @@
     <div role="document" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button
-            type="button"
-            class="close"
-            aria-label="Close"
-            (click)="onCloseAwardModal(i)"
-          >
+          <button type="button" class="close" aria-label="Close" (click)="onCloseAwardModal(i)">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -122,34 +109,36 @@
               class="award-images-carousel"
               *ngIf="award.image || award.image2 || award.image3"
             >
-                <ng-template carouselSlide>
-                  <div class="image-wrapper">
-                    <img class="image"
-                      *ngIf="award.image"
-                      [src]="award.image"
-                      [alt]="award.title + ' image 1'"
-                    />
-                  </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                  <div class="image-wrapper">
-                    <img class="image"
-                      *ngIf="award.image2"
-                      [src]="award.image2"
-                      [alt]="award.title + ' image 2'"
-                    />
-                  </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                  <div class="image-wrapper">
-                    <img class="image"
-                      *ngIf="award.image3"
-                      [src]="award.image3"
-                      [alt]="award.title + ' image 3'"
-                    />
-                  </div>
-                </ng-template>
-
+              <ng-template carouselSlide>
+                <div class="image-wrapper">
+                  <img
+                    class="image"
+                    *ngIf="award.image"
+                    [src]="award.image"
+                    [alt]="award.title + ' image 1'"
+                  />
+                </div>
+              </ng-template>
+              <ng-template carouselSlide>
+                <div class="image-wrapper">
+                  <img
+                    class="image"
+                    *ngIf="award.image2"
+                    [src]="award.image2"
+                    [alt]="award.title + ' image 2'"
+                  />
+                </div>
+              </ng-template>
+              <ng-template carouselSlide>
+                <div class="image-wrapper">
+                  <img
+                    class="image"
+                    *ngIf="award.image3"
+                    [src]="award.image3"
+                    [alt]="award.title + ' image 3'"
+                  />
+                </div>
+              </ng-template>
             </owl-carousel-o>
           </div>
           <div>
