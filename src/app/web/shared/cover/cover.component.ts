@@ -44,8 +44,10 @@ export class CoverComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    Object.keys(this.options).map((option) => {
-      this[option] = this.options[option];
-    });
+    if (this.options) {
+      Object.keys(this.options).map((option) => {
+        this[option] = this.options[option];
+      });
+    }
   }
 }
