@@ -73,8 +73,7 @@ export class BlogArchiveComponent implements OnInit {
       let paramValue = "";
       if (currentParam == "tag") {
         this.categories.map((category) => {
-          if (params.get(currentParam) == category.id)
-            paramValue = category.name;
+          if (params.get(currentParam) == category.id) paramValue = category.name;
         });
       } else {
         paramValue = params.get(currentParam);
@@ -94,9 +93,7 @@ export class BlogArchiveComponent implements OnInit {
   }
 
   setApiService(page: number, size: number, params?: string) {
-    const queryParams = params
-      ? `${params}&page_size=${size}`
-      : `?page_size=${size}`;
+    const queryParams = params ? `${params}&page_size=${size}` : `?page_size=${size}`;
     const service = new ApiWebContentService(this.http);
     service.setBaseUrl(environment.baseUrl);
     service.setResourcePath(this.BLOG_PATH + page + queryParams);
@@ -133,11 +130,7 @@ export class BlogArchiveComponent implements OnInit {
       const postDiff = totalNewPosts - totalCurrentPosts;
       const factor = postDiff / Math.abs(postDiff);
       // If factor is positive add posts indexes, if it's negative remove posts indexes
-      for (
-        let i = totalCurrentPosts * factor;
-        i < totalNewPosts * factor;
-        i++
-      ) {
+      for (let i = totalCurrentPosts * factor; i < totalNewPosts * factor; i++) {
         if (factor > 0) {
           this.postsIndex.push(i + 1);
         } else {
