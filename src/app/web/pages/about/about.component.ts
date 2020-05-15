@@ -18,6 +18,8 @@ import { environment } from "src/environments/environment";
 import { ABOUT_US_CONTENT } from "./about-us-static-content";
 import { ModalService } from "src/app/services/modal.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
+import { GlobalService } from "src/app/services/global.service";
+import { METADATA } from "../../web-pages-metadata";
 
 @Component({
   selector: "app-about",
@@ -108,9 +110,12 @@ export class AboutComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    private globalService: GlobalService,
     private modalService: ModalService,
     private iconService: SvgIconRegistryService
   ) {
+    this.globalService.setTitle(METADATA.aboutUsPage.title);
+    this.globalService.setMetaTags(METADATA.aboutUsPage.metatags);
     this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
     this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
     this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");

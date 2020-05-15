@@ -11,6 +11,8 @@ import { BLOG_CONTENT } from "../blog-static-content";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { JwPaginationComponent } from "src/app/web/shared/jw-angular-pagination/lib/jw-pagination.component";
 import { BLOG_CATEGORIES } from "../categories";
+import { METADATA } from "src/app/web/web-pages-metadata";
+import { GlobalService } from "src/app/services/global.service";
 @Component({
   selector: "app-blog-archive",
   templateUrl: "./blog-archive.component.html",
@@ -35,8 +37,11 @@ export class BlogArchiveComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
+    private globalService: GlobalService,
     public location: Location
   ) {
+    this.globalService.setTitle(METADATA.blogPage.title);
+    this.globalService.setMetaTags(METADATA.blogPage.metatags);
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
