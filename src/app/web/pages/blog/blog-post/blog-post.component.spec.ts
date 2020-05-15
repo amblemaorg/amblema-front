@@ -23,13 +23,13 @@ describe("BlogPostComponent", () => {
   let blogService;
 
   const post = {
-    mainImage: "./assets/images/background-pillar-matematica.jpg",
-    secondaryImage: "",
-    slug: "la-capacitacion-en-matematicas-induce-al-docente-en-el-razonamiento",
+    image: "./assets/images/background-pillar-matematica.jpg",
+    image2: "",
+    id: "la-capacitacion-en-matematicas-induce-al-docente-en-el-razonamiento",
     title: "La capacitación en matemáticas induce al docente en el razonamiento",
-    content:
+    text:
       "Lorem ipsum dolor sit amet consectetur adipiscing elit, nascetur vivamus congue dictum risus molestie urna, suspendisse ac sapien magna habitasse natoque. Eget mauris placerat erat nec curae non litora lobortis, mus sem primis accumsan velit cras praesent blandit nunc, justo neque euismod mollis lacus orci scelerisque. Id hendrerit metus mus iaculis vestibulum, tellus nostra vitae libero tincidunt facilisi, eleifend cubilia nibh leo. Condimentum molestie imperdiet turpis in velit fringilla maecenas nullam, enim rhoncus magna aptent sociis lacinia eu libero posuere, taciti rutrum commodo montes aenean congue est. Praesent nostra suscipit tempus congue lacinia cubilia hendrerit, a nam gravida convallis vulputate dignissim, leo lobortis quis cursus augue posuere. Iaculis duis sociosqu curabitur phasellus placerat dictumst consequat fames posuere, pharetra nunc scelerisque ante malesuada eros fermentum sed.",
-    date: "18-02-2020",
+    createdAt: new Date(),
     tags: ["Empezando", "Tu comunidad"],
     status: "published",
   };
@@ -73,7 +73,7 @@ describe("BlogPostComponent", () => {
   });
 
   it("should create and call getWebContentByParam() function in BlogService", () => {
-    expect(httpSpy.get.calls.count()).toBe(1, "getWebContentByParam is called");
+    expect(httpSpy.get.calls.count()).toBe(2, "getWebContentByParam is called");
     expect(component).toBeTruthy();
   });
 });

@@ -8,6 +8,8 @@ import { CoordinatorPage } from "../../../models/web/web-coordinator.model";
 import { COORDINATOR_CONTENT } from "./coordinators-static-content";
 import { environment } from "src/environments/environment";
 import { Subscription, fromEvent } from "rxjs";
+import { METADATA } from "../../web-pages-metadata";
+import { GlobalService } from "src/app/services/global.service";
 
 @Component({
   selector: "app-coordinators",
@@ -52,7 +54,14 @@ export class CoordinatorsComponent implements OnInit {
   coordinatorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=coordinatorPage";
 
-  constructor(private http: HttpClient, private zone: NgZone) {}
+  constructor(
+    private http: HttpClient,
+    private globalService: GlobalService,
+    private zone: NgZone
+  ) {
+    this.globalService.setTitle(METADATA.coordinatorsPage.title);
+    this.globalService.setMetaTags(METADATA.coordinatorsPage.metatags);
+  }
 
   ngOnInit() {
     // this.setStaticService();
