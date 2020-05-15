@@ -1,15 +1,11 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  inject,
-} from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { AboutComponent } from "./about.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "../../shared/shared.module";
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { HttpClientModule } from "@angular/common/http";
 import { OwlModule } from "ngx-owl-carousel";
+import { AngularSvgIconModule } from "angular-svg-icon";
 
 describe("AboutComponent", () => {
   let component: AboutComponent;
@@ -25,6 +21,7 @@ describe("AboutComponent", () => {
         OwlModule,
         CarouselModule,
         HttpClientModule,
+        AngularSvgIconModule,
       ],
       providers: [],
     });
@@ -59,8 +56,7 @@ describe("AboutComponent", () => {
   });
 
   it("should have a h2 tag in three pillars section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.pillars h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.pillars h2").length;
     expect(h2Count).toBe(1);
   });
 
@@ -71,8 +67,7 @@ describe("AboutComponent", () => {
   });
 
   it("should have a h2 tag in awards section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.awards h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.awards h2").length;
     expect(h2Count).toBe(1);
   });
 

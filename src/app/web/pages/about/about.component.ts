@@ -17,6 +17,7 @@ import { ApiWebContentService } from "src/app/services/web/api-web-content.servi
 import { environment } from "src/environments/environment";
 import { ABOUT_US_CONTENT } from "./about-us-static-content";
 import { ModalService } from "src/app/services/modal.service";
+import { SvgIconRegistryService } from "angular-svg-icon";
 
 @Component({
   selector: "app-about",
@@ -105,7 +106,14 @@ export class AboutComponent implements OnInit {
   aboutUsService: WebContentService;
   ABOUT_US_PATH = "webcontent?page=aboutUsPage";
 
-  constructor(private http: HttpClient, private modalService: ModalService) {
+  constructor(
+    private http: HttpClient,
+    private modalService: ModalService,
+    private iconService: SvgIconRegistryService
+  ) {
+    this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
+    this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
+    this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
     this.modalService.defaultOptions = {
       ...this.modalService.defaultOptions,
       size: "lg",
