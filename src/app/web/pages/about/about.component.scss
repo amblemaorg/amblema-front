@@ -1,10 +1,10 @@
-@import 'scss/responsive';
-@import 'scss/variables';
-@import 'scss/elements/headings';
-@import 'scss/elements/button';
+@import "scss/responsive";
+@import "scss/variables";
+@import "scss/elements/headings";
+@import "scss/elements/button";
 
-
-h1, h2 {
+h1,
+h2 {
   text-align: center;
 }
 
@@ -20,7 +20,7 @@ section.about-us {
   color: $blue;
   padding: 12vw 0;
   min-height: 40vw;
-  background-image: url('../../../../assets/images/leaves-background-movil.png');
+  background-image: url("../../../../assets/images/leaves-background-movil.png");
   background-position-y: 3vw;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -28,14 +28,14 @@ section.about-us {
   @include breakpoint(small, landscape) {
     padding: 6vw 0 12vw;
     min-height: 55vw;
-    background-image: url('../../../../assets/images/leaves-background-desktop.png');
+    background-image: url("../../../../assets/images/leaves-background-desktop.png");
     background-position-y: 0;
   }
 
   @include breakpoint(medium) {
     padding: 6vw 0 12vw;
     min-height: 55vw;
-    background-image: url('../../../../assets/images/leaves-background-desktop.png');
+    background-image: url("../../../../assets/images/leaves-background-desktop.png");
   }
 
   .heading {
@@ -148,6 +148,20 @@ section.about-us {
   }
 }
 
+::ng-deep {
+  .pillar {
+    .amblema-icon {
+      &--white {
+        svg {
+          .st0 {
+            fill: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
 section.pillars {
   .heading {
     background-color: $blue;
@@ -183,17 +197,15 @@ section.pillars {
         position: relative;
 
         &.environment {
-          background-image: url('../../../../assets/images/background-pillar-ambiente.jpg');
+          background-image: url("../../../../assets/images/background-pillar-ambiente.jpg");
         }
 
         &.reading {
-          background-image: url('../../../../assets/images/background-pillar-lectura.jpg');
-
+          background-image: url("../../../../assets/images/background-pillar-lectura.jpg");
         }
 
         &.math {
-          background-image: url('../../../../assets/images/background-pillar-matematica.jpg');
-
+          background-image: url("../../../../assets/images/background-pillar-matematica.jpg");
         }
       }
     }
@@ -206,13 +218,13 @@ section.pillars {
     text-align: center;
 
     @include breakpoint(small, landscape) {
-      padding: 3vw 5vw;
-      margin: 0 .5vw;
+      padding: 2vw 3vw;
+      margin: 0 0.5vw;
     }
 
     @include breakpoint(medium) {
-      padding: 3vw 5vw;
-      margin: 0 .5vw;
+      padding: 2vw 3vw;
+      margin: 0 0.5vw;
     }
 
     @include breakpoint(large) {
@@ -220,12 +232,12 @@ section.pillars {
       flex-grow: 1;
       margin: 0;
       position: relative;
-      transition: 1s bottom ease, .5s background-color ease;
+      transition: 1s bottom ease, 0.5s background-color ease;
 
       &:hover {
         background-color: $blue;
         bottom: 0;
-        transition: 1s bottom ease, .5s background-color ease;
+        transition: 1s bottom ease, 0.5s background-color ease;
       }
     }
 
@@ -245,7 +257,7 @@ section.pillars {
 
     p {
       font-size: 4vw;
-      margin: 10vw 0;
+      margin: 8vw 0;
 
       @include breakpoint(small, landscape) {
         font-size: 1.8vw;
@@ -354,7 +366,7 @@ section.awards {
       }
 
       @include breakpoint(large) {
-        font-size: .9vw;
+        font-size: 0.9vw;
       }
     }
 
@@ -367,17 +379,17 @@ section.awards {
       @include breakpoint(small, landscape) {
         font-size: 1.8vw;
         border-radius: 4px;
-        padding: .75vw 3vw;
+        padding: 0.75vw 3vw;
       }
 
       @include breakpoint(medium) {
         font-size: 1.8vw;
         border-radius: 4px;
-        padding: .75vw 3vw;
+        padding: 0.75vw 3vw;
       }
 
       @include breakpoint(large) {
-        font-size: .9vw;
+        font-size: 0.9vw;
       }
     }
   }

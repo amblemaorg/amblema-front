@@ -9,6 +9,7 @@ import { ChartsSwitcherModule } from "../../shared/charts-switcher/charts-switch
 import { GlobalService } from "src/app/services/global.service";
 import { RouterTestingModule } from "@angular/router/testing";
 import { CountoModule } from "angular2-counto";
+import { AngularSvgIconModule } from "angular-svg-icon";
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
@@ -27,6 +28,7 @@ describe("HomeComponent", () => {
         ChartsSwitcherModule,
         HttpClientModule,
         CountoModule,
+        AngularSvgIconModule,
       ],
       providers: [GlobalService],
     });

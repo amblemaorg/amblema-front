@@ -12,6 +12,7 @@ import { HOME_CONTENT } from "./home-static-content";
 import { environment } from "src/environments/environment";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { Subscription, fromEvent } from "rxjs";
+import { SvgIconRegistryService } from "angular-svg-icon";
 
 @Component({
   selector: "app-home",
@@ -99,8 +100,13 @@ export class HomeComponent implements OnInit {
     private chartService: ChartService,
     private modalService: ModalService,
     private http: HttpClient,
-    private zone: NgZone
-  ) {}
+    private zone: NgZone,
+    private iconService: SvgIconRegistryService
+  ) {
+    this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
+    this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
+    this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
+  }
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
