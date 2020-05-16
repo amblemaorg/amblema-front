@@ -13,6 +13,11 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   settings: {
     columns: any;
     data: any;
+    classes: {
+      hideView: boolean;
+      hideEdit: boolean;
+      hideDelete: boolean;
+    };
   };
 
   constructor() {

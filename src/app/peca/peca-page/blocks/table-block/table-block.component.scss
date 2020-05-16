@@ -1,0 +1,165 @@
+@import 'scss/placeholders';
+
+$table-border-color: 1px solid $blue;
+
+::ng-deep {
+    .nb-theme-default ng2-smart-table {
+        thead {
+            border: $table-border-color;
+
+            tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input {
+                border: $table-border-color;
+
+                &::placeholder {
+                    color: transparent !important;
+                }
+            }            
+
+            tr {
+                th {       
+                    text-align: center;             
+                    border: none !important;
+                    border-right: $table-border-color !important;
+
+                    &, a {
+                        color: $blue !important;
+                    }
+                }                
+            }
+        }
+
+        tbody {
+            border: $table-border-color;
+
+            tr {
+                &:nth-child(even) {
+                    background-color: map-get($color_map, gray);
+                }
+
+                &:hover {
+                    background-color: map-get($color_map, grayer) !important;
+                }
+                
+                td {
+                    color: $blue !important;
+                    border: none !important;
+                    border-right: $table-border-color !important;
+
+                    &:first-child {
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+                    }
+
+                    &.ng2-smart-actions {
+                        ng2-st-tbody-edit-delete {
+                            display: none !important;
+                        }
+
+                        ng2-st-tbody-custom {
+                            display: grid;
+                            grid-template-columns: auto auto auto;
+                            grid-column-gap: 0.5rem;
+                        }
+
+                        a.ng2-smart-action {
+                            color: $blue !important; 
+                            font-size: 1.4rem !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.hide-view, &.hide-edit, &.hide-delete {
+            tbody .ng2-smart-actions ng2-st-tbody-custom {
+                grid-template-columns: auto auto;
+            }
+        }
+
+        &.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:first-child,
+        &.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:nth-child(2),
+        &.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:last-child {
+            display: none;
+        } 
+        
+        // pagination
+        nav.ng2-smart-pagination-nav {
+            ul.pagination {
+                border: none !important;
+
+                li.page-item {
+                    cursor: pointer;
+                    border: $table-border-color !important;    
+                    
+                    &:not(:nth-last-child(2)) {
+                        border-right: none !important;
+                    }
+
+                    &:first-child,
+                    &:last-child {
+                        display: none;
+                    }
+
+                    &:nth-child(2), &:nth-last-child(2) {
+                        span {
+                            transform: scaleY(1.5);
+                            display: inline-block;
+                        }
+                    }
+
+                    & .page-link,
+                    &.disabled .page-link {
+                        background: none;
+                    }
+
+                    & .page-link {                        
+                        color: $blue;
+                        font-size: small;
+                        padding: 0.9rem 1.2rem;
+                    
+                        @include mediabreak(small, portrait) {
+                          font-size: medium;
+                        }
+                        @include mediabreak(large, landscape) {
+                          padding: 0.8rem 1.1rem;
+                          font-size: 0.75rem;
+                        }
+                        @include mediabreak(larger, landscape, true, 1900px) {
+                          padding: 0.95rem 1.4rem;
+                          font-size: 1rem;
+                        }
+                      }
+                      
+                      &.disabled {
+                        border-color: $dark-gray !important;
+                        
+                        &:nth-child(2) {
+                            border-right: none !important;
+                        }
+                        &:nth-last-child(2) {
+                            border-left: none !important;
+                        }
+
+                        .page-link {                            
+                            color: $dark-gray;
+                          }
+                      }
+
+                      &.active .page-link {
+                        color: #fff;
+                        background: $blue;                                                      
+                      }
+
+                      &:nth-child(2) {
+                        border-bottom-left-radius: 0.35rem;
+                        border-top-left-radius: 0.35rem;                        
+                      }
+                      &:nth-last-child(2) {
+                        border-bottom-right-radius: 0.35rem;
+                        border-top-right-radius: 0.35rem;
+                      }
+                }
+            }
+        }
+    }
+}

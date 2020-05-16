@@ -171,7 +171,7 @@
             </button>
           </ng-container>
 
-          <ng-container *ngSwitchDefault>
+          <ng-container *ngSwitchCase="'guardar'">
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
@@ -181,7 +181,7 @@
               {{ !sendingForm? 'Guardar':'Guardando..' }}
             </button>
           </ng-container>
-          <ng-container *ngSwitchDefault>
+          <ng-container *ngSwitchCase="'editar'">
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
