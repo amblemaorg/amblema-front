@@ -28,12 +28,27 @@
   <div #pillarsList class="pillars-wrapper fade-in-animation animation-init">
     <div class="pillars-list">
       <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="environment-icon"
+          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+        ></svg-icon>
         <h3><span class="bold">Amb</span>iente</h3>
       </div>
       <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="reading-icon"
+          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+        ></svg-icon>
         <h3><span class="bold">Le</span>ctura</h3>
       </div>
       <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="math-icon"
+          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+        ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
       </div>
     </div>
@@ -45,12 +60,27 @@
       [carouselClasses]="['']"
     >
       <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="environment-icon"
+          [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
+        ></svg-icon>
         <h3><span class="bold">Amb</span>iente</h3>
       </div>
       <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="reading-icon"
+          [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
+        ></svg-icon>
         <h3><span class="bold">Le</span>ctura</h3>
       </div>
       <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="math-icon"
+          [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
+        ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
       </div>
     </owl-carousel>

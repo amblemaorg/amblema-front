@@ -1,8 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  faTwitter,
-  faFacebookSquare,
-} from "@fortawesome/free-brands-svg-icons";
+import { faTwitter, faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 
 @Component({
   selector: "social-sharing",
@@ -10,8 +7,8 @@ import {
     <div class="social-sharing">
       <span>Compartir</span>
       <span class="social-buttons">
-        <fa-icon [icon]="facebookIcon" (click)="share('facebook')"></fa-icon>
-        <fa-icon [icon]="twitterIcon" (click)="share('twitter')"></fa-icon>
+        <fa-icon mat-fab shareButton="facebook" [title] [icon]="facebookIcon"></fa-icon>
+        <fa-icon mat-fab shareButton="twitter" [icon]="twitterIcon"></fa-icon>
       </span>
     </div>
   `,
@@ -24,8 +21,4 @@ export class SocialSharingComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  share(socialNetwork: string) {
-    console.log(socialNetwork);
-  }
 }

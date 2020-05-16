@@ -5,7 +5,7 @@
   *ngIf="coverData.slider"
 >
 </web-cover>
-<!-- End cover section -->
+<!-- End cover section  -->
 <section class="about-us">
   <h1 class="heading">Nosotros</h1>
   <div class="about-text">
@@ -24,15 +24,36 @@
       "
     >
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Amb</span>iente</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Amb</span>iente
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="environment-icon"
+            [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
+          ></svg-icon>
+        </h3>
         <p class="pillar-text">{{ aboutUsPageData.environmentText }}</p>
       </div>
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Le</span>ctura</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Le</span>ctura
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="reading-icon"
+            [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
+          ></svg-icon>
+        </h3>
         <p class="pillar-text">{{ aboutUsPageData.readingText }}</p>
       </div>
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Ma</span>temática</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Ma</span>temática
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="math-icon"
+            [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
+          ></svg-icon>
+        </h3>
         <p class="pillar-text">{{ aboutUsPageData.mathText }}</p>
       </div>
     </owl-carousel>
@@ -40,7 +61,14 @@
   <div class="pillars-list show-lg">
     <div class="pillar-wrapper environment">
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Amb</span>iente</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Amb</span>iente
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="environment-icon"
+            [svgStyle]="{ 'height.vw': 4, 'width.vw': 4 }"
+          ></svg-icon>
+        </h3>
         <p *ngIf="aboutUsPageData.environmentText" class="pillar-text">
           {{ aboutUsPageData.environmentText }}
         </p>
@@ -48,7 +76,14 @@
     </div>
     <div class="pillar-wrapper reading">
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Le</span>ctura</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Le</span>ctura
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="reading-icon"
+            [svgStyle]="{ 'height.vw': 4, 'width.vw': 4 }"
+          ></svg-icon>
+        </h3>
         <p *ngIf="aboutUsPageData.readingText" class="pillar-text">
           {{ aboutUsPageData.readingText }}
         </p>
@@ -56,7 +91,14 @@
     </div>
     <div class="pillar-wrapper math">
       <div class="pillar">
-        <h3 class="pillar-title"><span class="bold">Ma</span>temática</h3>
+        <h3 class="pillar-title">
+          <span class="bold">Ma</span>temática
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="math-icon"
+            [svgStyle]="{ 'height.vw': 4, 'width.vw': 4 }"
+          ></svg-icon>
+        </h3>
         <p *ngIf="aboutUsPageData.mathText" class="pillar-text">
           {{ aboutUsPageData.mathText }}
         </p>

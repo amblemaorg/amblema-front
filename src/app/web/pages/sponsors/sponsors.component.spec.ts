@@ -6,8 +6,13 @@ import { SharedModule } from "../../shared/shared.module";
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { HttpClientModule } from "@angular/common/http";
 import { OwlModule } from "ngx-owl-carousel";
+import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
+import { Title, Meta } from "@angular/platform-browser";
+import { METADATA } from "../../web-pages-metadata";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("SponsorsComponent", () => {
+  const testHelpers = new WebPageTestHelpers();
   let component: SponsorsComponent;
   let fixture: ComponentFixture<SponsorsComponent>;
   let el: HTMLElement;
@@ -16,13 +21,17 @@ describe("SponsorsComponent", () => {
     TestBed.configureTestingModule({
       declarations: [SponsorsComponent],
       imports: [
+        RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
         SharedModule,
         CarouselModule,
         OwlModule,
         HttpClientModule,
       ],
-      providers: [],
+      providers: [
+        { provide: Title, useClass: Title },
+        { provide: Meta, useClass: Meta },
+      ],
     }).compileComponents();
   }));
 
@@ -55,8 +64,7 @@ describe("SponsorsComponent", () => {
   });
 
   it("should have a h2 tag in steps section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.steps h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.steps h2").length;
     expect(h2Count).toBe(1);
   });
 
@@ -67,8 +75,7 @@ describe("SponsorsComponent", () => {
   });
 
   it("should have a h2 tag in sponsors section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.sponsors h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.sponsors h2").length;
     expect(h2Count).toBe(1);
   });
 
@@ -76,5 +83,15 @@ describe("SponsorsComponent", () => {
     el = fixture.nativeElement.querySelector("section.sponsors h2");
     const h2Text = el.textContent;
     expect(h2Text).toBe("Nuestros padrinos");
+  });
+
+  it(`should have meta title tag with content ${METADATA.sponsorsPage.title}`, () => {
+    testHelpers.testMetaTitle(TestBed.get(Title), METADATA.sponsorsPage.title);
+  });
+
+  METADATA.sponsorsPage.metatags.map((metatag) => {
+    it(`should have meta ${metatag.name} with content`, () => {
+      testHelpers.testMetaTag(TestBed.get(Meta), `name="${metatag.name}"`, metatag.content);
+    });
   });
 });
