@@ -15,19 +15,32 @@ describe('TableBlockComponent', () => {
     component: 'table',
     settings: {
       columns: {
-        grade: {
-          title: "Grados"
+        column1: {
+          title: "Column 1",
         },
-        section: {
-          title: 'Sección'
+        column2: {
+          title: "Column 2"
         },
-        multipĺication: {
-          title: 'Multiplicación'
+        column3: {
+          title: 'Column 3'
         },
-        mathLogic: {
-          title: 'Lógica Matemática'
+        column4: {
+          title: 'Column 4'
         }
-      }
+      },
+      data: [
+        {
+          column1: 'Item 1 column1',
+          column2: 'Item 1 column2',
+          column3: 'Item 1 column3',
+          column4: 'Item 1 column4'
+        }
+      ],
+      classes: {
+        hideView: false,
+        hideEdit: false,
+        hideDelete: false,
+      },
     }
   }
 
@@ -53,7 +66,7 @@ describe('TableBlockComponent', () => {
     fixture = TestBed.createComponent(TableBlockComponent);
     component = fixture.componentInstance;
     factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
-    component.setSettings(tableSettings);
+    component.setSettings(tableSettings.settings);
     fixture.detectChanges();
   });
 
