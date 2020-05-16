@@ -9,6 +9,8 @@ import { SponsorPage } from "../../../models/web/web-sponsor.model";
 import { environment } from "src/environments/environment";
 import { SPONSOR_CONTENT } from "./sponsor-static-content";
 import { Subscription, fromEvent } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { METADATA } from "../../web-pages-metadata";
 
 @Component({
   selector: "app-sponsors",
@@ -79,7 +81,14 @@ export class SponsorsComponent implements OnInit {
   sponsorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=sponsorPage";
 
-  constructor(private http: HttpClient, private zone: NgZone) {}
+  constructor(
+    private http: HttpClient,
+    private globalService: GlobalService,
+    private zone: NgZone
+  ) {
+    this.globalService.setTitle(METADATA.sponsorsPage.title);
+    this.globalService.setMetaTags(METADATA.sponsorsPage.metatags);
+  }
 
   ngOnInit() {
     this.setStaticService();
