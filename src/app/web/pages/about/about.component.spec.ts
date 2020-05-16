@@ -1,33 +1,39 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  inject,
-} from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
 import { AboutComponent } from "./about.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "../../shared/shared.module";
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { HttpClientModule } from "@angular/common/http";
 import { OwlModule } from "ngx-owl-carousel";
+import { AngularSvgIconModule } from "angular-svg-icon";
+import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
+import { METADATA } from "../../web-pages-metadata";
+import { Title, Meta } from "@angular/platform-browser";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("AboutComponent", () => {
+  const testHelpers = new WebPageTestHelpers();
   let component: AboutComponent;
   let fixture: ComponentFixture<AboutComponent>;
   let el: HTMLElement;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [AboutComponent],
       imports: [
+        RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
         SharedModule,
         OwlModule,
         CarouselModule,
         HttpClientModule,
+        AngularSvgIconModule,
       ],
-      providers: [],
-    });
+      providers: [
+        { provide: Title, useClass: Title },
+        { provide: Meta, useClass: Meta },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -59,8 +65,7 @@ describe("AboutComponent", () => {
   });
 
   it("should have a h2 tag in three pillars section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.pillars h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.pillars h2").length;
     expect(h2Count).toBe(1);
   });
 
@@ -71,8 +76,7 @@ describe("AboutComponent", () => {
   });
 
   it("should have a h2 tag in awards section", () => {
-    let h2Count = fixture.nativeElement.querySelectorAll("section.awards h2")
-      .length;
+    let h2Count = fixture.nativeElement.querySelectorAll("section.awards h2").length;
     expect(h2Count).toBe(1);
   });
 
@@ -80,5 +84,15 @@ describe("AboutComponent", () => {
     el = fixture.nativeElement.querySelector("section.awards h2");
     const h2Text = el.textContent;
     expect(h2Text).toBe("Premios y reconocimientos");
+  });
+
+  it(`should have meta title tag with content ${METADATA.aboutUsPage.title}`, () => {
+    testHelpers.testMetaTitle(TestBed.get(Title), METADATA.aboutUsPage.title);
+  });
+
+  METADATA.aboutUsPage.metatags.map((metatag) => {
+    it(`should have meta ${metatag.name} with content`, () => {
+      testHelpers.testMetaTag(TestBed.get(Meta), `name="${metatag.name}"`, metatag.content);
+    });
   });
 });

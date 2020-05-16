@@ -113,6 +113,20 @@ section.about-us {
   }
 }
 
+::ng-deep {
+  .pillar {
+    &:hover {
+      .amblema-icon {
+        svg {
+          .st0 {
+            fill: $green;
+          }
+        }
+      }
+    }
+  }
+}
+
 section.pillars {
   background-color: $white;
   padding: 8vw 5vw 25vw;
@@ -126,41 +140,17 @@ section.pillars {
 
   web-bg-heading {
     display: block;
-    margin: auto;
+    margin: 0 auto 20vw auto;
     width: 100%;
 
     @include breakpoint(small, landscape) {
+      margin: 0 auto 5vw auto;
       width: 70%;
     }
 
     @include breakpoint(medium) {
+      margin: 0 auto 5vw auto;
       width: 70%;
-    }
-
-    .bg-heading {
-      background-color: black;
-
-      h2 {
-        font-size: 7vw;
-        font-weight: normal;
-        margin: 0;
-        text-align: center;
-        width: 100%;
-      }
-    }
-
-    .line {
-      &.blue {
-        height: 10vw;
-        right: -18vw;
-        width: 60%;
-      }
-      &.green {
-        height: 10vw;
-        left: 2vw;
-        top: -1vw;
-        width: 95%;
-      }
     }
   }
 
@@ -190,27 +180,24 @@ section.pillars {
   }
 
   .pillar {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 35vw;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     text-align: center;
     position: relative;
     width: 100%;
-    height: 80vw;
+    height: 70vw;
 
     @include breakpoint(small, landscape) {
       background-size: 11vw;
       width: 25vw;
-      height: 25vw;
+      height: 18vw;
     }
 
     @include breakpoint(medium) {
       background-size: 11vw;
       width: 25vw;
-      height: 25vw;
+      height: 18vw;
     }
 
     &:hover {
@@ -231,27 +218,6 @@ section.pillars {
 
       @include breakpoint(medium) {
         font-size: 3.2vw;
-      }
-    }
-
-    &.ambiente {
-      background-image: url("../../../../assets/images/icon-ambiente-blue.png");
-      &:hover {
-        background-image: url("../../../../assets/images/icon-ambiente-green.png");
-      }
-    }
-
-    &.lectura {
-      background-image: url("../../../../assets/images/icon-lectura-blue.png");
-      &:hover {
-        background-image: url("../../../../assets/images/icon-lectura-green.png");
-      }
-    }
-
-    &.matematica {
-      background-image: url("../../../../assets/images/icon-matematica-blue.png");
-      &:hover {
-        background-image: url("../../../../assets/images/icon-matematica-green.png");
       }
     }
   }

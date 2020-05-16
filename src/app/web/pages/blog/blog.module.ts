@@ -14,7 +14,7 @@ import { RecentPostCardComponent } from "./widgets/recent-post-card/recent-post-
 import { RecentPostsListComponent } from "./widgets/recent-post-card/recent-posts-list.component";
 import { SocialSharingComponent } from "./widgets/social-sharing/social-sharing.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-import { JwPaginationComponent } from "../../shared/jw-angular-pagination/lib/jw-pagination.component";
+import { ShareModule } from "@ngx-share/core";
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { JwPaginationComponent } from "../../shared/jw-angular-pagination/lib/jw
     FontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
+    ShareModule,
   ],
 })
 export class BlogModule {}

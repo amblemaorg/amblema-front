@@ -7,6 +7,7 @@ import { HomeComponent } from "./home.component";
 import { OwlModule } from "ngx-owl-carousel";
 import { ChartsSwitcherModule } from "../../shared/charts-switcher/charts-switcher.module";
 import { CountoModule } from "angular2-counto";
+import { AngularSvgIconModule } from "angular-svg-icon";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -17,6 +18,7 @@ import { CountoModule } from "angular2-counto";
     CarouselModule,
     OwlModule,
     ChartsSwitcherModule,
+    AngularSvgIconModule,
     CountoModule,
   ],
 })
