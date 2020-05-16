@@ -79,6 +79,12 @@
             font-size: .9vw;
           }
         }
+
+        &.input-group {
+          .error-message {
+            width: 100%;
+          }
+        }
       }
 
       .form-control {

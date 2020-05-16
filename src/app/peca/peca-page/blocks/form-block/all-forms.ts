@@ -159,6 +159,23 @@ export const sampleFormData = {
       },
     },
   },
+  documentGroup: {
+    type: "prepend",
+    fields: {
+      prependSelect: {
+        label: "Input group select",
+        placeholder: "Input group select",
+        fullwidth: false,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "V" },
+          { id: "2", name: "J" },
+          { id: "3", name: "E" },
+        ],
+      },
+      prependInput: { label: "Input group description", placeholder: "Input group description", fullwidth: false, ...controlProps.numberAndRequired },      
+    },
+  },
 }
 
 export const formCoordinador = {
