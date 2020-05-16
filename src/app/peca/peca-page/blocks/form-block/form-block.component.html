@@ -9,7 +9,8 @@
         <ng-container *ngIf="isField(field); else titleLabel">
           <div
             [class]="'form-group ' + settings.formsContent[field].type"
-            [class.full-width]="settings.formsContent[field].fullwidth"          
+            [class.full-width]="settings.formsContent[field].fullwidth"  
+            [class.input-group]="settings.formsContent[field].type==='prepend'"        
             [ngSwitch]="settings.formsContent[field].type"
           >
             <ng-container *ngSwitchCase="'email'">
@@ -42,6 +43,40 @@
                   <small>{{item.name}}</small>
                 </ng-template>
               </ng-select>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'prepend'" [formGroupName]="field">
+              <div class="input-group-prepend">
+                <ng-select
+                  class="form-control"
+                  notFoundText="Elementos no encontrados"
+                  [items]="settings.formsContent[field].fields['prependSelect'].options"
+                  bindValue="id"
+                  bindLabel="name"
+                  labelForId="prependSelect"
+                  formControlName="prependSelect"
+                  [virtualScroll]="true"
+                  id="prependSelect"
+                  [clearable]="false"
+                >
+                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                    <small>{{item.name}}</small>
+                  </ng-template>
+                </ng-select>              
+              </div>
+              <input
+                class="form-control"
+                autocomplete='off'
+                type="text"
+                formControlName="prependInput" 
+                id="prependInput"
+                [placeholder]="settings.formsContent[field].fields['prependInput'].placeholder"
+              />
+              <ng-container *ngIf="hasErrors(field,true)">
+                <div class="error-message">
+                  <strong>{{hasErrors(field,true)}}</strong>
+                </div>
+              </ng-container>
             </ng-container>
             
             <ng-container *ngSwitchCase="'date'">

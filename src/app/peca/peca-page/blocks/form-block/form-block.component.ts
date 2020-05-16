@@ -43,9 +43,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
-    if(settings.formsContent['imageGroup']) 
-      this.componentForm.addControl('imageGroup',this.buildImageGroup());
+    this.loadGroupedInfo(settings);
     console.log(this.componentForm.value)
+  }
+
+  private loadGroupedInfo(settings) {
+    if(settings.formsContent['imageGroup']) 
+      this.componentForm.addControl('imageGroup',this.buildGroupControl('imageGroup'));
+    if(settings.formsContent['documentGroup']) 
+      this.componentForm.addControl('documentGroup',this.buildGroupControl('documentGroup'));
   }
 
   private buildFormGroup(formContent: any): FormGroup {
@@ -53,8 +59,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return this.fb.group(formControls);
   }
 
-  private buildImageGroup(): FormGroup { // for building formgroup for add image container
-    const formControls = this.getFormControlProperty('imageGroup')
+  private buildGroupControl(item_grouped): FormGroup { // for building formgroup for add image container
+    const formControls = this.getFormControlProperty(item_grouped)
     return this.fb.group(formControls);
   }
 
@@ -85,9 +91,11 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   private getFormControlProperty(name: string, params: { value: any, validations: object } = { value: null, validations: null }): object {
     let defaultValue = '';
-    if (name==="imageGroup") { // adding form control to Image Group, when the form has images to be added
-      let imageGroupContent =  Object.keys(this.settings.formsContent[name].fields);
-      let formControls = this.reduceFormControls(imageGroupContent, this.settings.formsContent[name].fields);     
+
+      // adding form control to Image or Document Group, when the form has images or Identification document to be added
+    if (name==="imageGroup" || name==="documentGroup") {
+      let itemGroupContent =  Object.keys(this.settings.formsContent[name].fields);
+      let formControls = this.reduceFormControls(itemGroupContent, this.settings.formsContent[name].fields);     
       
       return formControls;
     } 
@@ -115,12 +123,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return index;
   }
 
-  hasErrors(field: string): string | null {
-    const errors: any = this.componentForm.get(field).errors;
+  hasErrors(field: string, isPrepend: boolean = false): string | null {
+    const errors: any = !isPrepend? this.componentForm.get(field).errors : this.componentForm.controls[field].get('prependInput').errors;
     if (errors) {
       return errors.required ? MESSAGES.REQUIRED_MESSAGE :
              (errors.pattern || errors.minlength || errors.maxlength) ? 
-             this.settings.formsContent[field].messages.pattern :
+             (!isPrepend? this.settings.formsContent[field].messages.pattern : this.settings.formsContent[field].fields['prependInput'].messages.pattern) :
              null;
     }
 
