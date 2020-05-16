@@ -70,6 +70,59 @@ const formSet = {
   }
 }
 
+// ! FOR TABLE COMPONENT TESTING----------
+const testingTable = {
+  component: 'table',
+  settings: {
+    columns: {
+      column1: {
+        title: "Column 1",
+      },
+      column2: {
+        title: "Column 2"
+      },
+      column3: {
+        title: 'Column 3'
+      },
+      column4: {
+        title: 'Column 4'
+      }
+    },
+    data: [
+      {
+        column1: 'Item 1 column1',
+        column2: 'Item 1 column2',
+        column3: 'Item 1 column3',
+        column4: 'Item 1 column4'
+      },
+      {
+        column1: 'Item 2 column1',
+        column2: 'Item 2 column2',
+        column3: 'Item 2 column3',
+        column4: 'Item 2 column4'
+      },
+      {
+        column1: 'Item 3 column1',
+        column2: 'Item 3 column2',
+        column3: 'Item 3 column3',
+        column4: 'Item 3 column4'
+      },
+      {
+        column1: 'Item 4 column1',
+        column2: 'Item 4 column2',
+        column3: 'Item 4 column3',
+        column4: 'Item 4 column4'
+      },
+    ],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  }
+}
+// !---------------------------------------------
+
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
     title: "Taller inicial"
@@ -79,6 +132,13 @@ export const INITIAL_WORKSHOP_CONFIG = {
       component: 'accordion',
       settings: {
         items: [
+          {
+            title: "Prueba de componente tabla",
+            icon: "planificacion",
+            childBlocks: [
+              { ...testingTable }
+            ]
+          },
           {
             title: "Reunión para Planificación del taller inicial",
             icon: "planificacion",

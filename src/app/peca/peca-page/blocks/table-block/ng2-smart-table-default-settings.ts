@@ -18,7 +18,7 @@ export const NG2_SMART_TABLE_DEFAULT_SETTINGS = {
   },
   pager: {
     display: true,
-    perPage: 10
+    perPage: 5
   },
   // Fake column cuz a bug
   delete: {
