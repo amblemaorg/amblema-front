@@ -1,24 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../shared/shared.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SharedModule } from "../../shared/shared.module";
+import { CarouselModule } from "ngx-owl-carousel-o";
 
-import { AboutRoutingModule } from './about-routing.module';
-import { AboutComponent } from './about.component';
-import { OwlModule } from 'ngx-owl-carousel';
-import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { AboutRoutingModule } from "./about-routing.module";
+import { AboutComponent } from "./about.component";
+import { OwlModule } from "ngx-owl-carousel";
+import { AngularSvgIconModule } from "angular-svg-icon";
 
 @NgModule({
-  declarations: [
-    AboutComponent,
-  ],
+  declarations: [AboutComponent],
   imports: [
     CommonModule,
     SharedModule,
     CarouselModule,
     OwlModule,
-    AboutRoutingModule
-  ]
+    AboutRoutingModule,
+    AngularSvgIconModule,
+  ],
 })
-export class AboutModule { }
+export class AboutModule {}

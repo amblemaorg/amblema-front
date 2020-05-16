@@ -1,190 +1,236 @@
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser, Location } from '@angular/common';
-import { Title, Meta } from '@angular/platform-browser';
-import * as $ from 'jquery';
+import { Injectable, PLATFORM_ID, Inject } from "@angular/core";
+import { isPlatformBrowser, Location } from "@angular/common";
+import { Title, Meta } from "@angular/platform-browser";
+import * as $ from "jquery";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: "root",
 })
 export class GlobalService {
-    vh = 0; vw = 0;
+  vh = 0;
+  vw = 0;
 
-    user_agent:string = "";
-    setcountry:string = "";
-    totFrees:string = "";
+  user_agent: string = "";
+  setcountry: string = "";
+  totFrees: string = "";
 
-    mounted_comps = [];
-    show = false;
+  mounted_comps = [];
+  show = false;
 
-    //todo------URL VARS-----------------
-    useCounP:boolean = false;
-    ccode:string = "";
-    //todo-------------------------------
+  //todo------URL VARS-----------------
+  useCounP: boolean = false;
+  ccode: string = "";
+  //todo-------------------------------
 
-    isBrowser;
+  isBrowser;
 
-    constructor(
-      @Inject(PLATFORM_ID) private platformId,
-      private titleService: Title,
-      private metaService: Meta,
-      private location: Location
-    ) {
-      this.isBrowser = isPlatformBrowser(platformId);
+  constructor(
+    @Inject(PLATFORM_ID) private platformId,
+    private titleService: Title,
+    private metaService: Meta,
+    private location: Location
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
+
+  emitCountryName(countryname: string, code: string) {
+    this.setcountry = countryname;
+    this.ccode = code;
+  }
+
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
+
+  setMetaTags(metatags) {
+    metatags.map((metatag) => {
+      const attributeSelector = metatag.name
+        ? `name="${metatag.name}"`
+        : `property="${metatag.property}"`;
+      this.metaService.removeTag(attributeSelector);
+      this.metaService.addTag(metatag, false);
+    });
+  }
+
+  setTags(tags) {
+    this.metaService.addTags(tags);
+  }
+
+  getTitle() {
+    return this.titleService.getTitle();
+  }
+  mngTags(tags) {
+    for (let i = 0; i < tags.length; i++) {
+      if (this.metaService.getTag(`name='${tags[i].name}'`)) {
+        this.metaService.updateTag(tags[i]);
+      } else {
+        this.metaService.addTag(tags[i]);
+      }
     }
+  }
 
-    emitCountryName(countryname: string, code:string){
-        this.setcountry = countryname;
-        this.ccode = code;
+  setHeight(id) {
+    if (this.isBrowser) {
+      this.vh = window.innerHeight;
+      this.vw = window.innerWidth;
+      if (document.getElementById(id)) {
+        document.getElementById(id).setAttribute("style", `min-height:${this.vh}px`);
+      }
     }
+  }
 
-    setTitle( newTitle: string) {
-        this.titleService.setTitle( newTitle );
-    }
-    setTags(tags){
-        this.metaService.addTags(tags);
-    }
+  initSizes() {
+    this.vh = 0;
+    this.vw = 0;
+  }
 
-    getTitle() {
-        return this.titleService.getTitle();
+  whenResize(id) {
+    if (this.isBrowser) {
+      let vh_ = window.innerHeight;
+      let vw_ = window.innerWidth;
+      if (vw_ != this.vw && vh_ != this.vh) {
+        this.setHeight(id);
+      }
     }
-    mngTags(tags){
-        for (let i = 0; i < tags.length; i++) {
-            if (this.metaService.getTag(`name='${tags[i].name}'`)) {
-                this.metaService.updateTag(tags[i]);
-            } else {
-                this.metaService.addTag(tags[i]);
-            }
+  }
+
+  //? SMOOTHSCROLLING-----
+  scrollToTop() {
+    if (this.isBrowser) {
+      $("body,html").animate(
+        {
+          scrollTop: 0,
+        },
+        100
+      );
+    }
+  }
+
+  isIpadChrome() {
+    if (this.isBrowser) {
+      return navigator.userAgent.toLowerCase().includes("ipad") &&
+        navigator.userAgent.toLowerCase().includes("crios")
+        ? true
+        : false;
+    } else {
+      return false;
+    }
+  }
+
+  //? METHOD THAT SHOWS LOADING BAR IF COMPONENT HAS NOT BEEN MOUNTED IN THE APP
+  lodingBar(comp) {
+    let bool = this.mounted_comps.indexOf(comp) == -1 ? true : false;
+    if (this.isBrowser) {
+      if (bool) {
+        this.mounted_comps.push(comp);
+        if ($("ngx-loading-bar").css("display") == "none" && this.show) {
+          $("ngx-loading-bar").show();
         }
-    }
-
-    setHeight(id){
-        if (this.isBrowser) {
-            this.vh = window.innerHeight; this.vw = window.innerWidth;
-            if (document.getElementById(id)) {
-                document.getElementById(id).setAttribute('style',`min-height:${this.vh}px`);
-            }
-        }
-    }
-
-    initSizes(){
-        this.vh = 0; this.vw = 0;
-    }
-
-    whenResize(id){
-        if (this.isBrowser) {
-            let vh_ = window.innerHeight; let vw_ = window.innerWidth;
-            if (vw_ != this.vw && vh_ != this.vh) { this.setHeight(id); }
-        }
-    }
-
-    //? SMOOTHSCROLLING-----
-    scrollToTop() {
-        if (this.isBrowser) {
-            $('body,html').animate({
-                scrollTop: 0
-            }, 100 );
-        }
-    }
-
-    isIpadChrome(){
-        if (this.isBrowser) {
-            return (navigator.userAgent.toLowerCase().includes('ipad') && navigator.userAgent.toLowerCase().includes('crios'))? true:false;
-        } else {
-            return false;
-        }
-    }
-
-    //? METHOD THAT SHOWS LOADING BAR IF COMPONENT HAS NOT BEEN MOUNTED IN THE APP
-    lodingBar(comp){
-        let bool = this.mounted_comps.indexOf(comp) == -1 ? true:false;
-        if (this.isBrowser) {
-            if (bool) {
-                this.mounted_comps.push(comp);
-                if ($('ngx-loading-bar').css('display')=="none" && this.show) {
-                    $('ngx-loading-bar').show();
-                }
-            } else {
-                if ($('ngx-loading-bar').css('display')!="none") {
-                    $('ngx-loading-bar').hide();
-                }
-            }
-        }
-    }
-
-
-    // METHOD TO PUT HTTP:// TO A LINK IF THIS DOES NOT CONTAIN IT
-    addHTTP(link:string){
-        if (link) {
-            if (!link.includes('http://') && !link.includes('https://') && !link.includes('take-bonus')) {
-                return 'https://'+link;
-            }
-            return link;
-        }
-    }
-
-    getCurrentYear(){
-        return (new Date()).getFullYear();
-    }
-    getCurrentMonth(){
-        return this.parseMonth((new Date()).getMonth());
-    }
-
-    parseMonth(m:number){
-        let mp = m+1;
-        return mp===1?'January':mp===2?'February':mp===3?'March':mp===4?'April':mp===5?'May':mp===6?'June':mp===7?'July':mp===8?'August':mp===9?'September':mp===10?'October':mp===11?'November':'December'
-    }
-
-    geoMngr(){
-        let url= this.location.path().slice(1).split('/');
-        let url_len = url.length === 1 ? 1 : 3
-        if (url_len>1) {
-            this.useCounP = true;
-            this.ccode = url[1];
-        } else {
-            this.useCounP = false;
-            this.ccode = "all";
-        }
-    }
-
-    setUserAgent(){
-        if (this.isBrowser) {
-            this.user_agent = navigator.userAgent;
-        }
-    }
-
-    setMetaValues(vals){
-        this.totFrees = vals.frees;
-    }
-
-    getDateFormat(dateSrc:Date) {
-        let numbers = [1,2,3,4,5,6,7,8,9];
-        let correctMonth = numbers.includes(dateSrc.getMonth()+1) ? `0${dateSrc.getMonth()+1}` : (dateSrc.getMonth()+1).toString();
-        let correctDate = numbers.includes(dateSrc.getDate()) ? `0${dateSrc.getDate()}` : dateSrc.getDate().toString();
-
-        return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-    }
-
-    validateDate(e,cond,bool=false){
-        let value = e.target.value;
-        let today = this.getDateFormat(new Date());
-        if(value!=''){
-          if( (cond=='lower' && value>today) || (cond=='greater' && value<=today) ) {            
-            e.target.classList.add('date-not-valid');
-            if(bool) return true;
-          }
-          else {            
-            e.target.classList.remove('date-not-valid');
-            if(bool) return false;
-          }
+      } else {
+        if ($("ngx-loading-bar").css("display") != "none") {
+          $("ngx-loading-bar").hide();
         }
       }
+    }
+  }
 
-      dateStringToISOString(value: any): string {
-        if (typeof value !== 'string' || value === '') {
-          return '';
-        }
-        const newDate = new Date(value);
-        return newDate.toISOString();
+  // METHOD TO PUT HTTP:// TO A LINK IF THIS DOES NOT CONTAIN IT
+  addHTTP(link: string) {
+    if (link) {
+      if (!link.includes("http://") && !link.includes("https://") && !link.includes("take-bonus")) {
+        return "https://" + link;
       }
+      return link;
+    }
+  }
 
+  getCurrentYear() {
+    return new Date().getFullYear();
+  }
+  getCurrentMonth() {
+    return this.parseMonth(new Date().getMonth());
+  }
+
+  parseMonth(m: number) {
+    let mp = m + 1;
+    return mp === 1
+      ? "January"
+      : mp === 2
+      ? "February"
+      : mp === 3
+      ? "March"
+      : mp === 4
+      ? "April"
+      : mp === 5
+      ? "May"
+      : mp === 6
+      ? "June"
+      : mp === 7
+      ? "July"
+      : mp === 8
+      ? "August"
+      : mp === 9
+      ? "September"
+      : mp === 10
+      ? "October"
+      : mp === 11
+      ? "November"
+      : "December";
+  }
+
+  geoMngr() {
+    let url = this.location.path().slice(1).split("/");
+    let url_len = url.length === 1 ? 1 : 3;
+    if (url_len > 1) {
+      this.useCounP = true;
+      this.ccode = url[1];
+    } else {
+      this.useCounP = false;
+      this.ccode = "all";
+    }
+  }
+
+  setUserAgent() {
+    if (this.isBrowser) {
+      this.user_agent = navigator.userAgent;
+    }
+  }
+
+  setMetaValues(vals) {
+    this.totFrees = vals.frees;
+  }
+
+  getDateFormat(dateSrc: Date) {
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let correctMonth = numbers.includes(dateSrc.getMonth() + 1)
+      ? `0${dateSrc.getMonth() + 1}`
+      : (dateSrc.getMonth() + 1).toString();
+    let correctDate = numbers.includes(dateSrc.getDate())
+      ? `0${dateSrc.getDate()}`
+      : dateSrc.getDate().toString();
+
+    return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+  }
+
+  validateDate(e, cond, bool = false) {
+    let value = e.target.value;
+    let today = this.getDateFormat(new Date());
+    if (value != "") {
+      if ((cond == "lower" && value > today) || (cond == "greater" && value <= today)) {
+        e.target.classList.add("date-not-valid");
+        if (bool) return true;
+      } else {
+        e.target.classList.remove("date-not-valid");
+        if (bool) return false;
+      }
+    }
+  }
+
+  dateStringToISOString(value: any): string {
+    if (typeof value !== "string" || value === "") {
+      return "";
+    }
+    const newDate = new Date(value);
+    return newDate.toISOString();
+  }
 }
