@@ -1,28 +1,64 @@
+const botonEstadistica = {
+  component: 'textsbuttons',
+  settings: {
+    action: {
+      type: 1,
+      name: 'Ver estadísticas',
+    },
+  }
+}
+
 const readingDiagnosticTable = {
   component: 'table',
   settings: {
     columns: {
+      name: {
+        title: "Nombre",
+      },
+      lastName: {
+        title: "Apellido"
+      },
+      sex: {
+        title: 'Género'
+      },
       grade: {
-        title: "Grado",
+        title: 'Grado'
       },
       section: {
-        title: "Sección"
+        title: 'Sección'
       },
-      speedReading: {
-        title: 'Velocidad de lectura'
+      result: {
+        title: 'Resultado de lectura '
       },
-      reading: {
-        title: 'Palabras correctas'
-      }
+      index: {
+        title: 'Indice'
+      },
     },
     data: [
       {
-        grade: '6to Grado',
-        section: 'A',
-        speedReading: '30 palabras/min',
-        reading: '20 palabras correctas/min'
+        name: 'Alfredo',
+        lastName: 'Valbuena',
+        sex: 'masculino',
+        grade: '4to grado',
+        section: 'B',
+        result: '20 palabras correctas/min',
+        index: '1',
       },
-    ]
+      {
+        name: 'Manuel',
+        lastName: 'Perez',
+        sex: 'Masculino',
+        grade: '5to grado',
+        section: 'A',
+        result: '20 palabras correctas/min',
+        index: '2',
+      },
+    ],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
   }
 }
 
@@ -30,27 +66,63 @@ const mathDiagnosticTable = {
   component: 'table',
   settings: {
     columns: {
+      name: {
+        title: "Nombre",
+      },
+      lastName: {
+        title: "Apellido"
+      },
+      sex: {
+        title: 'Género'
+      },
       grade: {
-        title: "Grado",
+        title: 'Grado'
       },
       section: {
-        title: "Sección"
+        title: 'Sección'
       },
-      multiplication: {
-        title: 'Multiplicación'
+      resultMul: {
+        title: 'Resultado de multiplicación'
       },
-      mathLogic: {
-        title: 'Lógica Matemática'
-      }
+      resultLog: {
+        title: 'Resultado de lógica matematica'
+      },
+      indexMul: {
+        title: 'Indice de multiplicación'
+      },
+      indexLog: {
+        title: 'Indice de lógica matematica'
+      },
     },
     data: [
       {
-        grade: '5to Grado',
+        name: 'Alfredo',
+        lastName: 'Valbuena',
+        sex: 'masculino',
+        grade: '5to grado',
         section: 'B',
-        multiplication: '30 operaciones/min',
-        mathLogic: '30 operaciones/min'
+        resultMul: '40',
+        resultLog: '50',
+        indexMul: '100',
+        indexLog: '29',
       },
-    ]
+      {
+        name: 'Maria',
+        lastName: 'Torres',
+        sex: 'femenino',
+        grade: '4to grado',
+        section: 'A',
+        resultMul: '60',
+        resultLog: '80',
+        indexMul: '100',
+        indexLog: '29',
+      },
+    ],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
   }
 }
 
@@ -66,12 +138,14 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
           {
             title: "Lectura",
             childBlocks: [
+              { ...botonEstadistica},
               { ...readingDiagnosticTable }
             ]
           },
           {
             title: "Matemática",
             childBlocks: [
+              { ...botonEstadistica},
               { ...mathDiagnosticTable }
             ]
           }
