@@ -49,6 +49,33 @@
     color: nb-theme(text-basic-color);
   }
 
+  @media (max-width: 1199px) {
+    .nb-theme-default
+      nb-layout
+      .layout
+      .layout-container
+      .content
+      .columns
+      nb-layout-column {
+        padding: 2.25rem 2.25rem 0.75rem 5rem
+    }
+  }
+  @media (max-width: 575px) {
+    .nb-theme-default
+      nb-layout
+      .layout
+      .layout-container
+      .content
+      .columns
+      nb-layout-column {
+        padding: 2.25rem 2.25rem 0.75rem
+    }
+  }
+
+  table{
+    margin-top: 60px;
+    margin-bottom: 20px;
+  }
   .nb-theme-default {
     nb-sidebar {
       width: 12rem;

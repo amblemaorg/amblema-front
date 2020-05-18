@@ -10,6 +10,7 @@
           <div
             [class]="'form-group ' + settings.formsContent[field].type"
             [class.full-width]="settings.formsContent[field].fullwidth"  
+            [class.full-width2]="settings.formsContent[field].fullwidth2" 
             [class.input-group]="settings.formsContent[field].type==='prepend'"        
             [ngSwitch]="settings.formsContent[field].type"
           >
@@ -111,6 +112,7 @@
                 [formControlName]="field"
                 [id]="field"
                 [placeholder]="settings.formsContent[field].placeholder"
+                [readonly]="settings.formsContent[field].readonly"
               />
             </ng-container>
 
