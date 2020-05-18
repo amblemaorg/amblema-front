@@ -67,7 +67,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   private getFormGroupControls(formContent): object {
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
     const formContentNoTitles = this.fields.filter(f => { 
-      return formContent[f].type!="title" && formContent[f].type!="image" 
+      return formContent[f].type!="title" && formContent[f].type!="image" && formContent[f].type!="prepend" 
     }); // just fields to be form-grouped
     const formControls = this.reduceFormControls(formContentNoTitles, formContent);
     
