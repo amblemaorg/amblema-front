@@ -14,6 +14,10 @@
   @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
   @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
 } 
+@mixin for-image-widths {  
+  width: 8rem;
+  height: 8rem;
+}
 
 ::ng-deep {
   form {    
@@ -35,13 +39,61 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          position: relative;
 
+          button, img {
+            @include for-image-widths;
+            border: 1px solid $blue;            
+          }
+
+          .overlay, i {
+            height: 0;
+            opacity: 0;
+            position: absolute;
+            -webkit-transition: opacity .5s, color .5s;
+            transition: opacity .5s, color .5s;
+          }
+
+          i {
+            color: $blue;       
+            font-size: 3rem;
+            font-weight: bold;
+            padding: 0;
+            cursor: pointer;
+            overflow: hidden;
+
+            &:hover {
+              color: $red;
+
+              & + .overlay {
+                @include for-image-widths;
+                opacity: 0.25;
+                background: #000;  
+                z-index: 0;          
+              }
+            }
+          }
+
+          img {
+            object-fit: contain;
+
+            &.show-remover + i {              
+              -webkit-text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+              text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+              height: auto;
+              padding: 1rem;
+              opacity: 1;        
+              z-index: 1;  
+            }
+          }
+          
           button {
-            width: 8rem;
-            height: 8rem;
             color: $blue;
-            border: 1px solid $blue;
             background: transparent;
+
+            &:focus {
+              outline: none;
+            }
 
             nb-icon {
               font-size: 4rem;
@@ -102,7 +154,7 @@
           height: auto;
         }
 
-        &[type="date"]:focus + .form-control[readonly] {
+        &[type="date"]:focus + .form-control[readonly].form-control-date {
           display: none;
         }
     

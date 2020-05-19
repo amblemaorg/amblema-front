@@ -1,3 +1,60 @@
+/*
+? INFO:
+
+  (I) for adding titles to the form data::
+  --> i.e; title_sample: { label: "Title_label", type: "title"},
+
+  (II) for adding an add image container to the form data::
+  --> i.e;
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: {
+        label: "image_description",
+        placeholder: "image_description",
+        fullwidth: boolean_here, // true makes this field 100% view width, false just 50%.
+        ...controlProps.normalText,
+      },
+      imageStatus: {
+        label: "image_status",
+        placeholder: "image_status",
+        fullwidth: boolean_here,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "value_one" },
+          { id: "2", name: "value_two" },
+        ],
+      },
+    },
+  }
+
+  (III) for adding an Identification Document to the form data::
+  --> i.e;
+  documentGroup: {
+    type: "prepend",
+    fields: {
+      prependSelect: {
+        label: "select_value",
+        placeholder: "select_value",
+        fullwidth: boolean_here,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "value_one" },
+          { id: "2", name: "value_two" },
+        ],
+      },
+      prependInput: { 
+        label: "input_value", 
+        placeholder: "input_value", 
+        fullwidth: boolean_here, 
+        ...controlProps.numberAndRequired 
+      },
+    },
+  }
+
+  todo: for (II) and (III) their field name is indispensable to be typed as 'imageGroup' and 'documentGroup', in other words, texts typed above with underscore are editable.
+*/
+
 import {
   requiredAndNormalText,
   normalText,
@@ -716,38 +773,3 @@ export const formEscuela = {
   phoneContact2: { label: "Input phone text", placeholder: "Teléfono del SubDirector", fullwidth: false, ...controlProps.phoneAndRequired },
   emailContact2: { label: "Input email text", placeholder: "Input del SubDirector", fullwidth: false, ...controlProps.emailAndRequired },
 }
-
-
-
-/*
-? INFO:
-
-  (I) for adding titles to the form data::
-  --> i.e; title_sample: { label: "Title_label", type: "title"},
-
-  (II) for adding an add image container to the form data::
-  --> i.e;
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: {
-        label: "image_description",
-        placeholder: "image_description",
-        fullwidth: boolean_here, // true makes this field 100% view width, false just 50%.
-        ...controlProps.normalText,
-      },
-      imageStatus: {
-        label: "image_status",
-        placeholder: "image_status",
-        fullwidth: boolean_here,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "value_one" },
-          { id: "2", name: "value_two" },
-        ],
-      },
-    },
-  }
-
-  todo: for (II) is indispensable field name to be typed as 'imageGroup', in other words, texts typed above with underscore are editable.
-*/
