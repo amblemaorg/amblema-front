@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
@@ -34,6 +35,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     private fb: FormBuilder,
     private toastr: ToastrService,
     private globals: GlobalService,
+    @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer
     ) {
     this.type = 'presentational';
     this.component = 'form';
@@ -48,9 +50,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
-    console.log(this.componentForm.value)
   }
 
+  // for assigning unique id to this component instance -------------
   private setId() {
     if(!this.id_) this.id_ = Math.random().toString(36).substring(2);    
   }
@@ -58,6 +60,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   getId(field) {
     return field + '-' + this.id_;
   }
+  // ----------------------------------------------------------------
 
   private loadGroupedInfo(settings) {
     if(settings.formsContent['imageGroup']) 
@@ -102,18 +105,25 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   private getFormControlProperty(name: string, params: { value: any, validations: object } = { value: null, validations: null }): object {
-    let defaultValue = '';
+    let defaultValue = name==="imageSelected" || name==="imageSrc" ? null : '';
 
       // adding form control to Image or Document Group, when the form has images or Identification document to be added
     if (name==="imageGroup" || name==="documentGroup") {
       let itemGroupContent =  Object.keys(this.settings.formsContent[name].fields);
+      if(name==="imageGroup") itemGroupContent.push(...['imageSelected','imageSrc']);
       let formControls = this.reduceFormControls(itemGroupContent, this.settings.formsContent[name].fields);     
       
       return formControls;
     } 
     else {
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
-      if (Object.keys(params.validations).length===1 && !params.validations['required'])
+      if (
+        isNullOrUndefined(params.validations) || 
+        (
+          Object.keys(params.validations).length===1 && 
+          !params.validations['required']
+        ) 
+      )
           return { [name]: [defaultValue] };
       else 
           return { [name]: [defaultValue, this.getValidators(params.validations)] };
@@ -201,4 +211,48 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   isField(field) {
     return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
   }
+
+  //? FOR IMAGE MANAGING ----------------------------------------------------------------
+  // activate click function of the input type file button which calls for the image
+  uploadImageCaller(imgBtnContainer) {
+    imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
+  }
+  // adds the image file and image source to the imageGroup form control
+  fileManager(e) {
+    let reader = new FileReader();
+    reader.readAsDataURL(<File>e.target.files[0]); 
+    reader.onload = (_event) => {      
+      this.componentForm.get('imageGroup').patchValue({ 
+        imageSelected: <File>e.target.files[0],
+        imageSrc: reader.result,
+      });
+    }    
+  }
+  // to disable add image button when conditions apply
+  disableAddImgBtn(){
+    return this.componentForm.controls['imageGroup'].get('imageDescription').value==="" 
+        || this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
+        || !this.componentForm.controls['imageGroup'].get('imageSelected').value;
+  }  
+  // shows image when some uploaded
+  showImage(option: number) {
+    switch (option) {
+      case 1:
+        return this.componentForm.controls['imageGroup'].get('imageSelected').value;
+      case 2:
+        return this.sanitizer.bypassSecurityTrustResourceUrl(this.componentForm.controls['imageGroup'].get('imageSrc').value);    
+      default:
+        return this.componentForm.controls['imageGroup'].get('imageSelected').value.name;
+    }    
+  }
+  // when X image remover is clicked
+  removeSelectedImg() {
+    this.componentForm.controls['imageGroup'].get('imageSelected').reset();
+    this.componentForm.controls['imageGroup'].get('imageSrc').reset();
+  }
+  // method which sends image to the images table
+  addImage() {
+    this.componentForm.get('imageGroup').reset();  
+  }
+  //? -----------------------------------------------------------------------------------
 }

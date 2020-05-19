@@ -90,7 +90,7 @@
               />
               <input 
                 [class.d-none]="inputDate.value.length > 0"
-                class="form-control"
+                class="form-control form-control-date"
                 autocomplete='off'
                 type="text"              
                 [id]="getId(field)"
@@ -140,15 +140,29 @@
                 class="image-upload-btn-container" 
                 [id]="getId('image-upload-btn-container')"
               >
-                  <input class="d-none" [id]="getId('image-upload-btn-input-file')" type="file" />
+                  <input 
+                    class="d-none" 
+                    [id]="getId('image-upload-btn-input-file')" 
+                    type="file" 
+                    (change)="fileManager($event)"
+                  />
                   <button 
+                    *ngIf="!showImage(1)"
                     type="button"
                     [id]="getId('image-upload-btn')"  
                     title="Subir archivo"
                     class="text-decoration-none"
-                  >
-                      <nb-icon icon="planificacion"></nb-icon>
+                    (click)="uploadImageCaller(imageUploadContainer)"
+                  ><nb-icon icon="planificacion"></nb-icon>
                   </button>
+                  <img 
+                    *ngIf="showImage(1)" 
+                    [src]="showImage(2)" 
+                    [alt]="showImage(3)" 
+                    [class.show-remover]="showImage(1)"
+                  />
+                  <i (click)="removeSelectedImg()">&times;</i>
+                  <div class="overlay"></div>
               </div>
 
               <div class="image-fields d-flex flex-column justify-content-center">
@@ -183,6 +197,8 @@
                 <button 
                   type="button" 
                   class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
+                  [disabled]="disableAddImgBtn()"
+                  (click)="addImage()"
                 >Agregar imagen
                 </button>
 
