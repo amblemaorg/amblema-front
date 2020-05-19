@@ -10,7 +10,6 @@
           <div
             [class]="'form-group ' + settings.formsContent[field].type"
             [class.full-width]="settings.formsContent[field].fullwidth"  
-            [class.full-width2]="settings.formsContent[field].fullwidth2" 
             [class.input-group]="settings.formsContent[field].type==='prepend'"        
             [ngSwitch]="settings.formsContent[field].type"
           >
@@ -20,7 +19,7 @@
                 autocomplete='off'
                 type="email"
                 [formControlName]="field"
-                [id]="field"
+                [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 [pattern]="settings.formsContent[field].validations.pattern"
               />
@@ -33,10 +32,10 @@
                 [items]="field!='addressMunicipality'? settings.formsContent[field].options : municipalities"
                 bindValue="id"
                 bindLabel="name"
-                [labelForId]="field"
+                [labelForId]="getId(field)"
                 [formControlName]="field"
                 [virtualScroll]="true"
-                [id]="field"
+                [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 (change)="updateMuns(field==='addressState'? true:false)"
               >
@@ -54,10 +53,10 @@
                   [items]="settings.formsContent[field].fields['prependSelect'].options"
                   bindValue="id"
                   bindLabel="name"
-                  labelForId="prependSelect"
+                  [labelForId]="getId('prependSelect')"
                   formControlName="prependSelect"
                   [virtualScroll]="true"
-                  id="prependSelect"
+                  [id]="getId('prependSelect')"
                   [clearable]="false"
                 >
                   <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -70,7 +69,7 @@
                 autocomplete='off'
                 type="text"
                 formControlName="prependInput" 
-                id="prependInput"
+                [id]="getId('prependInput')"
                 [placeholder]="settings.formsContent[field].fields['prependInput'].placeholder"
               />
               <ng-container *ngIf="hasErrors(field,true)">
@@ -86,6 +85,7 @@
                 type="date" 
                 class="form-control" 
                 [formControlName]="field"
+                [id]="getId('datepicker')"
                 (change)="glbls.validateDate($event,'greater')"
               />
               <input 
@@ -93,7 +93,7 @@
                 class="form-control"
                 autocomplete='off'
                 type="text"              
-                [id]="field"
+                [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 readonly    
                 (click)="focusDatePicker(inputDate)"
@@ -110,9 +110,8 @@
                 autocomplete='off'
                 [type]="settings.formsContent[field].type"
                 [formControlName]="field"
-                [id]="field"
+                [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
-                [readonly]="settings.formsContent[field].readonly"
               />
             </ng-container>
 
@@ -139,12 +138,12 @@
               <div
                 #imageUploadContainer 
                 class="image-upload-btn-container" 
-                id="image-upload-btn-container"
+                [id]="getId('image-upload-btn-container')"
               >
-                  <input class="d-none" id="image-upload-btn-input-file" type="file" />
+                  <input class="d-none" [id]="getId('image-upload-btn-input-file')" type="file" />
                   <button 
                     type="button"
-                    id="image-upload-btn"  
+                    [id]="getId('image-upload-btn')"  
                     title="Subir archivo"
                     class="text-decoration-none"
                   >
@@ -158,7 +157,7 @@
                     autocomplete='off'
                     type="text"
                     formControlName="imageDescription"
-                    id="imageDescription"
+                    [id]="getId('imageDescription')"
                     [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
                   />
 
@@ -168,10 +167,10 @@
                     [items]="settings.formsContent[field].fields['imageStatus'].options"
                     bindValue="id"
                     bindLabel="name"
-                    labelForId="imageStatus"
+                    [labelForId]="getId('imageStatus')"
                     formControlName="imageStatus"
                     [virtualScroll]="true"
-                    id="imageStatus"
+                    [id]="getId('imageStatus')"
                     [placeholder]="settings.formsContent[field].fields['imageStatus'].placeholder"
                   >
                     <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
