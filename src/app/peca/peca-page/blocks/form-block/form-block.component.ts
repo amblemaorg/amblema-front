@@ -26,6 +26,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   sendingForm:boolean;
   glbls:any;
 
+  id_:string;
+
   municipalities:MunicipalityInfo[] = [];
 
   constructor(
@@ -38,13 +40,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.glbls = globals;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setId();
+  }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     console.log(this.componentForm.value)
+  }
+
+  private setId() {
+    if(!this.id_) this.id_ = Math.random().toString(36).substring(2);    
+  }
+
+  getId(field) {
+    return field + '-' + this.id_;
   }
 
   private loadGroupedInfo(settings) {
