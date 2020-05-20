@@ -62,6 +62,14 @@
                 }
             }
         }
+        
+        @media (max-width:768px) {
+            .buttons-wrapper{
+                text-align: left;
+                margin: 0 0 0 0;
+            }
+        }
+
     }
     .select-estatus{
         width: 55%;
