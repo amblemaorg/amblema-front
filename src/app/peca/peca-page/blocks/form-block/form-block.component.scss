@@ -102,6 +102,13 @@
           }
         }
 
+        @media (max-width:768px) {
+          .image-upload-btn-container {
+            flex: 0 0 100%;
+            padding: 30px;
+          }
+        }
+
         .image-fields {
           flex: 1;
 
@@ -266,7 +273,7 @@
 
       two-wrapper .form-group.full-width2, 
       .form-group.full-width2 {
-        flex: 0 0 24.25%;
+        flex: 0 0 21.25%;
       }
       @media (max-width:992px) {
         two-wrapper .form-group.full-width2, 
@@ -284,7 +291,15 @@
         .add-img-button {
           @include shared-btn-confs;
         }
-      }    
+      }
+      
+      @media (max-width:768px) {
+        .btn-container, 
+        .image-group .add-img-btn {
+          width: 100%;
+          text-align: left;
+        }
+      }
     }
   }
 }

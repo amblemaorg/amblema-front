@@ -198,7 +198,18 @@
     @media (max-width: 768px) {
       nb-user.size-giant .user-name {
           display: none;
-        }
+      }
+      .dropdown-content {
+        min-width: 150px;
+        right: 0;
+      }
+    }
+
+    @media (max-width: 576) {
+      .dropdown-content {
+        min-width: 100px;
+        right: 0;
+      }
     }
   }
 }
