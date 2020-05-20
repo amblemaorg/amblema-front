@@ -7,6 +7,13 @@
         }
     }
     .texts-buttons-wrapper {
+        padding: 2rem;
+    }
+    .estilo-date{
+        margin-left: 10px;
+        display: inline-block;
+    }
+    .texts-buttons-wrapper {
         .texts-wrapper {
             .date-download-status {
                 .right-side {
@@ -26,6 +33,9 @@
                             vertical-align: middle;
                         }
                     }
+                }
+                .select-estatus-width{
+                    width: 35%;
                 }               
             }
         }
@@ -52,5 +62,130 @@
                 }
             }
         }
+    }
+    .select-estatus{
+        width: 55%;
+    }
+    .h6-select{
+        margin-right: 10px;
+        font-size: 1rem !important;
+        font-weight: normal !important;
+    }
+    .form-control {
+        color: $blue;
+
+        &[readonly] {
+        cursor: default;
+        background-color: #fff;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        border: none;
+        width: 80%;
+        padding-bottom: 0 !important;
+        height: auto;
+        }
+
+        &[type="date"]:focus + .form-control[readonly] {
+        display: none;
+        }
+    
+        &:focus {
+        box-shadow: none;
+        }
+    
+        &.ng-touched {
+        &.ng-invalid, &.date-not-valid {
+            border: 2px solid $red;
+        }
+    
+        &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
+            border: 2px solid $green;
+        }
+        
+        & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
+            display: block;
+        }
+
+        &:not(.date-not-valid) ~ .date-error-message {
+            display: none;
+        }          
+        }
+    
+        &.ng-untouched {
+        & ~ .error-message, & ~ .date-error-message {
+            display: none;
+        }
+        }
+    }
+    .ng-select {
+        .ng-dropdown-panel {
+        z-index: 3;
+        .scroll-host {
+            left: -0.75rem;
+            top: 0.35rem;
+            background: #fff;
+            border: solid map-get($color_map, form-gray);
+            border-width: 0 1px 1px;
+
+            .scrollable-content{
+                padding: 0 1rem;
+            }
+        }
+        }
+
+        &.ng-select-opened .ng-select-container {
+            z-index: 3;           
+        }
+        
+        .ng-select-container {
+            .ng-placeholder {
+                color: #6c757d;
+            }
+
+            &.ng-has-value .ng-placeholder {
+                display: none;
+            }
+        }         
+
+        &.ng-untouched {
+            &.ng-invalid .ng-select-container .ng-placeholder,
+            &.image-status .ng-select-container .ng-placeholder {
+                display: block;
+            }
+            &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
+                display: none;
+            }
+        }
+
+        &.ng-touched.ng-pristine, 
+        &.ng-touched.ng-invalid {
+        .ng-select-container .ng-placeholder {
+            display: block;
+        }
+        }
+
+        &.ng-select-filtered .ng-select-container .ng-placeholder {
+            display: none !important;
+        }
+
+        .ng-clear-wrapper .ng-clear {
+            color: map-get($color_map, form-gray);
+        }
+
+        .ng-arrow-wrapper {
+            width: 1rem;
+
+            .ng-arrow {
+                height: 0.5rem !important;
+                width: 0.5rem !important;
+                border-color: map-get($color_map, form-gray);
+                border-style: solid;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+                top: -0.15rem;
+            }
+        } 
     }
 }

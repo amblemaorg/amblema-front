@@ -27,7 +27,8 @@ import { PecaPageComponent } from './peca-page/peca-page.component';
 import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagnostic-page.component';
 import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
 import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
-import { ProfilePageComponent } from './peca-page/pages/profile-page.component'
+import { ProfilePageComponent } from './peca-page/pages/profile-page.component';
+import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-planning-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -45,6 +46,7 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
     SchoolDataPageComponent,
     InitialDiagnosticPageComponent,
     ProfilePageComponent,
+    SchedulingPlanningPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
