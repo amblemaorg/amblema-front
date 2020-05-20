@@ -129,7 +129,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   getStatusName(num) {
-    return num=="1" ? "Pendiente" : num=="2" ? "En aprobacion" : num=="8" ? "Procesando" : "Aprobado";
+    return num=="1" ? "Pendiente" : num=="2" ? "En aprobación" : num=="8" ? "Procesando" : "Aprobado";
   }
 
   //? Sending Approval Request ----------------------------------------------------

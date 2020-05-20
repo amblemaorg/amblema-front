@@ -5,6 +5,7 @@ form {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;
+        align-items: baseline;
 
         @include mediabreak(large,landscape) { justify-content: space-between; }
     }
@@ -22,7 +23,7 @@ form {
         @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 1rem; }
     }
 
-    @mixin form-flexings {
+    @mixin form-flexings {        
         @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
         @include mediabreak(large,portrait) { flex: 0 0 100%; }
         @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
@@ -32,7 +33,7 @@ form {
 
     .two-wrapper {
         @include form-mix;
-        @include form-flexings;
+        @include form-flexings;        
 
         .form-group {
             width: 100%;
@@ -42,6 +43,11 @@ form {
     .form-group {
         position: relative;
         @include form-flexings;
+
+        .date-container {
+            width: 100%;
+            position: relative;
+        }
 
         .field-empty,.field-invalid{
             font-size: smaller;
@@ -54,6 +60,11 @@ form {
         }
         .not-enabled {
             color: #6c757d;
+        }
+
+        label {
+            margin-bottom: 0.2rem;
+            width: 100%;
         }
 
         .form-control {
