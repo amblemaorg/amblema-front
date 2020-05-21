@@ -21,15 +21,18 @@
 <!-- Steps section -->
 <section #steps class="steps">
   <web-bg-heading>¿Cómo ser un padrino?</web-bg-heading>
-  <div class="steps-list">
-    <ol #listSteps class="fade-in-animation animation-init">
-      <li *ngFor="let step of sponsorsPageData.steps as steps">{{ step }}</li>
-      <!--
-      <ng-container *ngFor="let step of sponsorsPageData.steps as steps; index as i">
-        <div *ngIf="i <= (steps.length / 2) ">
-        </div>
-      </ng-container>
-      -->
+  <div class="steps-wrapper">
+    <ol #listSteps class="steps-list fade-in-animation animation-init">
+      <div class="steps-list__divider">
+        <li *ngFor="let step of stepsList1">
+          {{ step }}
+        </li>
+      </div>
+      <div class="steps-list__divider">
+        <li *ngFor="let step of stepsList2">
+          {{ step }}
+        </li>
+      </div>
     </ol>
   </div>
 </section>
