@@ -35,6 +35,7 @@ export abstract class ChartComponent {
     ticks: false,
     labels: false,
     color: "#FFF",
+    edgeSpace: 5,
   };
 
   grid: Grid = {
@@ -82,6 +83,7 @@ interface YAxis {
   labels: boolean;
   color: string;
   title?: string;
+  edgeSpace: number;
 }
 
 interface Grid {
@@ -94,16 +96,9 @@ export abstract class LineChartComponent extends ChartComponent {
   asymptotes: Asymptote[] = [];
   abstract configAsymptotes(): void;
 
-  calculateNumericAxisRange(
-    axis: string = "y",
-    space: number = 5
-  ): { min: number; max: number } {
-    const asymtotes = this.asymptotes.filter(
-      (asymtote) => asymtote.axis == axis
-    );
-    const axisValues = [...this.data, ...asymtotes].map(
-      (element) => <number>element.value
-    );
+  calculateNumericAxisRange(axis: string = "y", space: number = 5): { min: number; max: number } {
+    const asymtotes = this.asymptotes.filter((asymtote) => asymtote.axis == axis);
+    const axisValues = [...this.data, ...asymtotes].map((element) => <number>element.value);
     const minAndMax = this.findMinMaxInArray(axisValues);
     return { min: minAndMax[0] - space, max: minAndMax[1] + space };
   }
@@ -135,16 +130,9 @@ export abstract class BarChartComponent extends ChartComponent {
   asymptotes: Asymptote[] = [];
   abstract configAsymptotes(): void;
 
-  calculateNumericAxisRange(
-    axis: string = "y",
-    space: number = 5
-  ): { min: number; max: number } {
-    const asymtotes = this.asymptotes.filter(
-      (asymtote) => asymtote.axis == axis
-    );
-    const axisValues = [...this.data, ...asymtotes].map(
-      (element) => <number>element.value
-    );
+  calculateNumericAxisRange(axis: string = "y", space: number = 5): { min: number; max: number } {
+    const asymtotes = this.asymptotes.filter((asymtote) => asymtote.axis == axis);
+    const axisValues = [...this.data, ...asymtotes].map((element) => <number>element.value);
     const minAndMax = this.findMinMaxInArray(axisValues);
     return { min: minAndMax[0] - space, max: minAndMax[1] + space };
   }

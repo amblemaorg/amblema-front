@@ -1,57 +1,48 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
+import { AngularSvgIconModule } from "angular-svg-icon";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
 
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
-import { NgxsModule } from '@ngxs/store';
-import { environment } from '../environments/environment.prod';
+import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
+import { NgxsModule } from "@ngxs/store";
+import { environment } from "../environments/environment.prod";
 
 // states
-import { ModulesState } from './store/states/e-learning/learning-modules.state';
-import { UserState } from './store/states/e-learning/user.state';
-import { StepsState } from './store/states/steps/project.state';
-import { ResidenceInfoState } from './store/states/steps/residence-info.state';
+import { ModulesState } from "./store/states/e-learning/learning-modules.state";
+import { UserState } from "./store/states/e-learning/user.state";
+import { StepsState } from "./store/states/steps/project.state";
+import { ResidenceInfoState } from "./store/states/steps/residence-info.state";
 //
 
-import { EmbedVideo } from 'ngx-embed-video';
-import { AuthGuard } from './guards/auth.guard';
-import { NbAuthModule } from '@nebular/auth';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { EmbedVideo } from "ngx-embed-video";
+import { AuthGuard } from "./guards/auth.guard";
+import { NbAuthModule } from "@nebular/auth";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { WebState } from "./store/states/web/web.state";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule.withServerTransition({ appId: "serverApp" }),
     AppRoutingModule,
     HttpClientModule,
     AngularSvgIconModule,
     NgbModalModule,
     NbAuthModule.forRoot(),
     // -- NGXS --
-    NgxsModule.forRoot( [
-      ModulesState,
-      UserState,
-      StepsState,
-      ResidenceInfoState,
-    ],
-    {
+    NgxsModule.forRoot([ModulesState, UserState, StepsState, ResidenceInfoState, WebState], {
       compatibility: {
-        strictContentSecurityPolicy: true
+        strictContentSecurityPolicy: true,
       },
-      developmentMode: !environment.production
+      developmentMode: !environment.production,
     }),
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],
-  providers: [
-    AuthGuard
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

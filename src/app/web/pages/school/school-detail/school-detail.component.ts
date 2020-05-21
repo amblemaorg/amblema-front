@@ -15,6 +15,8 @@ import { OwlCarousel } from "ngx-owl-carousel";
 import { ChartService } from "src/app/services/web/chart.service";
 import { GlobalService } from "src/app/services/global.service";
 import { Subscription, fromEvent } from "rxjs";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 
 @Component({
   selector: "app-school-detail",
@@ -31,6 +33,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("charts", { static: false }) charts: ElementRef;
   @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
   scrollSubscription: Subscription;
+  routerSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
 
   ACTIVITIES = {
@@ -151,7 +154,8 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private globalService: GlobalService,
     private schoolService: SchoolService,
     private chartService: ChartService,
-    private zone: NgZone
+    private zone: NgZone,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -160,7 +164,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getSchoolBySlug(params.get("schoolSlug"));
     });
 
-    this.router.events.subscribe((event) => {
+    this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.renavigateToTop();
         this.reinitCarousels();
@@ -176,6 +180,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     if (this.scrollSubscription) {
       this.scrollSubscription.unsubscribe();
+    }
+
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 

@@ -13,6 +13,8 @@ import { JwPaginationComponent } from "src/app/web/shared/jw-angular-pagination/
 import { BLOG_CATEGORIES } from "../categories";
 import { METADATA } from "src/app/web/web-pages-metadata";
 import { GlobalService } from "src/app/services/global.service";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 @Component({
   selector: "app-blog-archive",
   templateUrl: "./blog-archive.component.html",
@@ -38,7 +40,8 @@ export class BlogArchiveComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private globalService: GlobalService,
-    public location: Location
+    public location: Location,
+    private store: Store
   ) {
     this.globalService.setTitle(METADATA.blogPage.title);
     this.globalService.setMetaTags(METADATA.blogPage.metatags);
@@ -53,7 +56,6 @@ export class BlogArchiveComponent implements OnInit {
         this.queryBreadcrums = this.generateQueryBreadcrums(params);
         this.queryParams = this.generateQueryParams(params);
       }
-      console.log(this.queryParams);
       this.BLOG_PATH = this.BLOG_PATH;
       //this.setStaticService();
       this.setApiService(this.activePage, this.pageSize, this.queryParams);
@@ -107,10 +109,11 @@ export class BlogArchiveComponent implements OnInit {
 
   getBlogPostsJSON() {
     this.blogService.getWebContent().subscribe((data) => {
-      console.log(data);
+      //console.log(data);
       this.postsList = this.adaptEndpointResponseToPost(data.records);
       this.updatePostsIndex(data.pagination.total_records);
       this.totalPages = data.pagination.total_pages;
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 
