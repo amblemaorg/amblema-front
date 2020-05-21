@@ -10,6 +10,8 @@ import { environment } from "src/environments/environment";
 import { Subscription, fromEvent } from "rxjs";
 import { METADATA } from "../../web-pages-metadata";
 import { GlobalService } from "src/app/services/global.service";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 
 @Component({
   selector: "app-coordinators",
@@ -51,13 +53,16 @@ export class CoordinatorsComponent implements OnInit {
     testimonials: [],
     steps: [],
   };
+  stepsList1 = [];
+  stepsList2 = [];
   coordinatorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=coordinatorPage";
 
   constructor(
     private http: HttpClient,
     private globalService: GlobalService,
-    private zone: NgZone
+    private zone: NgZone,
+    private store: Store
   ) {
     this.globalService.setTitle(METADATA.coordinatorsPage.title);
     this.globalService.setMetaTags(METADATA.coordinatorsPage.metatags);
@@ -89,12 +94,16 @@ export class CoordinatorsComponent implements OnInit {
   getCoordinatorsData() {
     this.coordinatorService.getWebContent().subscribe((data) => {
       // console.log(data)
+      const stepsLength = data.coordinatorPage.steps.length;
+      this.stepsList1 = data.coordinatorPage.steps.slice(0, (stepsLength + 1) / 2);
+      this.stepsList2 = data.coordinatorPage.steps.slice((stepsLength + 1) / 2, stepsLength);
       this.coordinatorsPageData = data.coordinatorPage;
       this.coverData.slides.push({
         image: this.coordinatorsPageData.backgroundImage,
         title: this.coverData.title,
         description: this.coverData.description,
       });
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 
