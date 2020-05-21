@@ -20,6 +20,8 @@ import { ModalService } from "src/app/services/modal.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
 import { GlobalService } from "src/app/services/global.service";
 import { METADATA } from "../../web-pages-metadata";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 
 @Component({
   selector: "app-about",
@@ -112,7 +114,8 @@ export class AboutComponent implements OnInit {
     private http: HttpClient,
     private globalService: GlobalService,
     private modalService: ModalService,
-    private iconService: SvgIconRegistryService
+    private iconService: SvgIconRegistryService,
+    private store: Store
   ) {
     this.globalService.setTitle(METADATA.aboutUsPage.title);
     this.globalService.setMetaTags(METADATA.aboutUsPage.metatags);
@@ -153,6 +156,7 @@ export class AboutComponent implements OnInit {
         };
       });
       this.aboutUsPageData = data.aboutUsPage;
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 

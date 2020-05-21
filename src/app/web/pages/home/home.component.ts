@@ -1,5 +1,4 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, NgZone } from "@angular/core";
-import { filter, map, mergeMap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
@@ -14,9 +13,9 @@ import { environment } from "src/environments/environment";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { Subscription, fromEvent } from "rxjs";
 import { SvgIconRegistryService } from "angular-svg-icon";
-import { Meta, Title } from "@angular/platform-browser";
-import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { METADATA } from "../../web-pages-metadata";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
+import { Store } from "@ngxs/store";
 
 @Component({
   selector: "app-home",
@@ -105,7 +104,8 @@ export class HomeComponent implements OnInit {
     private modalService: ModalService,
     private http: HttpClient,
     private zone: NgZone,
-    private iconService: SvgIconRegistryService
+    private iconService: SvgIconRegistryService,
+    private store: Store
   ) {
     this.globalService.setTitle(METADATA.homePage.title);
     this.globalService.setMetaTags(METADATA.homePage.metatags);
@@ -159,6 +159,7 @@ export class HomeComponent implements OnInit {
       this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
         chartsData
       );
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 
