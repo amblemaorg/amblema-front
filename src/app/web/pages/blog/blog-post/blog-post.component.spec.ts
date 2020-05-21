@@ -14,6 +14,8 @@ import { SocialSharingComponent } from "../widgets/social-sharing/social-sharing
 import { CategoriesListComponent } from "../widgets/categories-list/categories-list.component";
 import { BlogModule } from "../blog.module";
 import { ShareModule } from "@ngx-share/core";
+import { NgxsModule, Store } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("BlogPostComponent", () => {
   let component: BlogPostComponent;
@@ -55,10 +57,12 @@ describe("BlogPostComponent", () => {
         SharedModule,
         HttpClientModule,
         ShareModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: ApiWebContentService, useValue: blogService },
         { provide: HttpClient, useValue: httpSpy },
+        { provide: Store, useClass: Store },
       ],
     }).compileComponents();
   }));
