@@ -8,12 +8,15 @@
         
         <ng-container *ngIf="isField(field); else titleLabel">
           <div
-            [class]="'form-group ' + settings.formsContent[field].type"
-            [class.full-width]="settings.formsContent[field].fullwidth"  
-            [class.input-group]="settings.formsContent[field].type==='prepend'"        
+            [class]="settings.formsContent[field].type"
+            [ngClass]="{ 'form-group' : settings.formsContent[field].type!='double',
+                         'full-width' : settings.formsContent[field].type!='double' && settings.formsContent[field].fullwidth,
+                         'input-group': settings.formsContent[field].type==='prepend',
+                         'two-wrapper': settings.formsContent[field].type==='double' }"
             [ngSwitch]="settings.formsContent[field].type"
           >
             <ng-container *ngSwitchCase="'email'">
+              <label>{{ settings.formsContent[field].label }}</label>
               <input
                 class="form-control"
                 autocomplete='off'
@@ -26,6 +29,7 @@
             </ng-container>
             
             <ng-container *ngSwitchCase="'select'">
+              <label>{{ settings.formsContent[field].label }}</label>
               <ng-select
                 class="form-control"
                 notFoundText="Elementos no encontrados"
@@ -46,6 +50,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'prepend'" [formGroupName]="field">
+              <label>{{ settings.formsContent[field].fields['prependInput'].label }}</label>
               <div class="input-group-prepend">
                 <ng-select
                   class="form-control"
@@ -80,31 +85,61 @@
             </ng-container>
             
             <ng-container *ngSwitchCase="'date'">
-              <input
-                #inputDate
-                type="date" 
-                class="form-control" 
-                [formControlName]="field"
-                [id]="getId('datepicker')"
-                (change)="glbls.validateDate($event,'greater')"
-              />
-              <input 
-                [class.d-none]="inputDate.value.length > 0"
-                class="form-control form-control-date"
-                autocomplete='off'
-                type="text"              
-                [id]="getId(field)"
-                [placeholder]="settings.formsContent[field].placeholder"
-                readonly    
-                (click)="focusDatePicker(inputDate)"
-              />
-              <div class="date-error-message">
-                <strong>La fecha debe ser mayor a la de hoy</strong>
-              </div>
+              <label>{{ settings.formsContent[field].label }}</label>
+              <div class="date-container">
+                <input
+                  #inputDate
+                  type="date" 
+                  class="form-control" 
+                  [formControlName]="field"
+                  [id]="getId('datepicker')"
+                  (change)="glbls.validateDate($event,'greater')"
+                />
+                <input 
+                  [class.d-none]="inputDate.value.length > 0"
+                  class="form-control form-control-date"
+                  autocomplete='off'
+                  type="text"              
+                  [id]="getId(field)"
+                  [placeholder]="settings.formsContent[field].placeholder"
+                  readonly    
+                  (click)="focusDatePicker(inputDate)"
+                />
+                <div class="date-error-message">
+                  <strong>La fecha debe ser mayor a la de hoy</strong>
+                </div>
+                <ng-container *ngIf="hasErrors(field)">
+                  <div class="error-message">
+                    <strong>{{hasErrors(field)}}</strong>
+                  </div>
+                </ng-container>
+              </div>              
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'double'">
+              <div                 
+                *ngFor="let doublefield of doubleFields[field]; trackBy: trackByFn"
+                [class]="'form-group ' + settings.formsContent[field].fields[doublefield].type"                  
+              >
+                <label>{{ settings.formsContent[field].fields[doublefield].label }}</label>
+                <input
+                  class="form-control"
+                  autocomplete='off'
+                  [type]="settings.formsContent[field].fields[doublefield].type"
+                  [formControlName]="doublefield"
+                  [id]="getId(doublefield)"
+                  [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
+                />
+                <ng-container *ngIf="hasErrors(field,true,doublefield)">
+                  <div class="error-message">
+                    <strong>{{hasErrors(field,true,doublefield)}}</strong>
+                  </div>
+                </ng-container>
+              </div>              
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-              <!-- <label class="field-label" [for]="field">{{ settings.formsContent[field].label }}</label> -->
+              <label>{{ settings.formsContent[field].label }}</label>
               <input
                 class="form-control"
                 autocomplete='off'
@@ -115,11 +150,14 @@
               />
             </ng-container>
 
-            <ng-container *ngIf="hasErrors(field)">
-              <div class="error-message">
-                <strong>{{hasErrors(field)}}</strong>
-              </div>
-            </ng-container>
+            <ng-container *ngIf="settings.formsContent[field].type!='date' && 
+                                 settings.formsContent[field].type!='double'">
+              <ng-container *ngIf="hasErrors(field)">
+                <div class="error-message">
+                  <strong>{{hasErrors(field)}}</strong>
+                </div>
+              </ng-container>
+            </ng-container>            
           </div>
         </ng-container>
         
@@ -166,6 +204,7 @@
               </div>
 
               <div class="image-fields d-flex flex-column justify-content-center">
+                  <label>{{ settings.formsContent[field].fields['imageDescription'].label }}</label>
                   <input
                     class="form-control image-description"
                     autocomplete='off'
@@ -175,6 +214,7 @@
                     [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
                   />
 
+                  <label>{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
                     class="form-control image-status"
                     notFoundText="Elementos no encontrados"

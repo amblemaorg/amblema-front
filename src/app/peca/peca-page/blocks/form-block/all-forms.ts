@@ -52,6 +52,27 @@
     },
   }
 
+  (IV) for adding double inputs to the form data:: 
+  *note: text and number inputs only
+  --> i.e;
+  doubleFieldsN: { // 'doubleFieldsN' can be any name 
+    type: "double",
+    fields: { // only 2 fields allowed
+      field_1: {
+        label: "input_text_or_number",
+        placeholder: "input_text_or_number",
+        fullwidth: false, // it must be false
+        ...controlProps.[number or text controlprops],
+      },
+      field_2: {
+        label: "input2_text_or_number",
+        placeholder: "input2_text_or_number",
+        fullwidth: false, // it must be false
+        ...controlProps.[number or text controlprops],
+      },
+    }
+  },
+
   todo: for (II) and (III) their field name is indispensable to be typed as 'imageGroup' and 'documentGroup', in other words, texts typed above with underscore are editable.
 */
 
@@ -283,14 +304,34 @@ export const formDatosEscuela = {
   emailSubDirector: { label: "Input email text", placeholder: "Correo electrónico del subdirector", fullwidth: false, ...controlProps.emailAndRequired },
   /*Información adicional*/
   title4: { label: "Información adicional", type: "title" },
-  number1: { label: "Input number text", placeholder: "Cantidad de docentes", readonly:true, fullwidth2: true, ...controlProps.number },
-  number2: { label: "Input number text", placeholder: "Cantidad de personal administrativo", readonly:true,fullwidth2: true, ...controlProps.number },
-  number3: { label: "Input number text", placeholder: "Cantidad de personal obrero", readonly:true,fullwidth2: true, ...controlProps.number },
-  number4: { label: "Input number text", placeholder: "Cantidad de estudiantes", readonly:true, fullwidth2: true, ...controlProps.number },
-  number5: { label: "Input number text", placeholder: "Cantidad de grados", readonly:true,fullwidth2: true, ...controlProps.number },
-  facebook: { label: "Input normal text", placeholder: "Facebook", fullwidth2: true, ...controlProps.normalTextAndRequired },
-  instagram: { label: "Input normal text", placeholder: "Instagram", fullwidth2: true, ...controlProps.normalTextAndRequired },
-  twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },
+  doubleFields1: {
+    type: "double",
+    fields: {
+      number1: { label: "Input number text", placeholder: "Cantidad de docentes", readonly:true, fullwidth2: true, ...controlProps.number },
+      number2: { label: "Input number text", placeholder: "Cantidad de personal administrativo", readonly:true,fullwidth2: true, ...controlProps.number },
+    }
+  },
+  doubleFields2: {
+    type: "double",
+    fields: {
+      number3: { label: "Input number text", placeholder: "Cantidad de personal obrero", readonly:true,fullwidth2: true, ...controlProps.number },
+      number4: { label: "Input number text", placeholder: "Cantidad de estudiantes", readonly:true, fullwidth2: true, ...controlProps.number },    
+    }
+  },
+  doubleFields3: {
+    type: "double",
+    fields: {
+      number5: { label: "Input number text", placeholder: "Cantidad de grados", readonly:true,fullwidth2: true, ...controlProps.number },
+      facebook: { label: "Input normal text", placeholder: "Facebook", fullwidth2: true, ...controlProps.normalTextAndRequired },    
+    }
+  },
+  doubleFields4: {
+    type: "double",
+    fields: {
+      instagram: { label: "Input normal text", placeholder: "Instagram", fullwidth2: true, ...controlProps.normalTextAndRequired },
+      twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },  
+    }
+  },
 }
 export const formImgEscuela = {
   title5: { label: "Slider principal de la escuela", type: "title" },

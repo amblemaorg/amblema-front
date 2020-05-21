@@ -4,6 +4,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: baseline;
 
   @include mediabreak(large,landscape) { justify-content: space-between; }
 }
@@ -25,8 +26,13 @@
       @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
       @include mediabreak(large,portrait) { @include form-mix; }
 
-      h6 {
+      h6, label {
         width: 100%;
+      }
+
+      label {
+        margin-bottom: 0.2rem;
+        color: $blue;
       }
 
       .image-group {
@@ -108,8 +114,21 @@
           .image-description {
             margin-bottom: 1rem;
           }
-        }     
+        }
+
+        .add-img-btn {
+          margin-top: 1rem;
+        }
       }
+
+      .two-wrapper {
+          @include form-mix;
+          @include form-flexings;        
+
+          .form-group {
+              width: 100%;
+          }
+      }  
   
       .form-group {
         position: relative;
@@ -118,6 +137,11 @@
         .field-label {
           color: $blue
         }        
+
+        .date-container {
+            width: 100%;
+            position: relative;
+        }
       
         .error-message, .date-error-message {
           color: $red;
@@ -133,6 +157,9 @@
         }
 
         &.input-group {
+          .input-group-prepend {
+            width: 3.5rem;
+          }
           .error-message {
             width: 100%;
           }
