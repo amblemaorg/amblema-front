@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { GlobalService } from '../../../../services/global.service';
 
 @Component({
   selector: 'buttons-set-block',
@@ -13,6 +14,10 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     dateOrtext: {
       text: string;
       date: string;
+      fields: string[];
+    };
+    selectStatus:{
+      lista:string[];
     };
     status: string;
     // texts: {
@@ -29,18 +34,22 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
         type: number; // 1 send, 2 save
         name: string; // text in the button
     };
-    // upload: any;
+    upload: any;
     download: any;
   };
-
-  constructor() {
+  glbls:any;
+  constructor(private globals: GlobalService,) {
     this.type = 'presentational';
     this.component = 'buttons';
+    this.glbls = globals;
   }
 
   ngOnInit() { }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
+  }
+  focusDatePicker(e) {
+    e.focus();
   }
 }

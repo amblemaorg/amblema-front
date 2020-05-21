@@ -21,9 +21,9 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: 'diagnostico-inicial',
       },
       {
-        title: 'Planificación del primer lapso',
+        title: 'Planificación del lapso',
         icon: 'planificacion',
-        link: '/pages/permissions'
+        link: 'planificacion-lapso'
       },
       {
         title: 'Proyecto ambiental',

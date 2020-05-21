@@ -1,11 +1,32 @@
 <div class="texts-buttons-wrapper">
-    <div class="texts-wrapper" *ngIf="settings.dateOrtext || settings.download || settings.status">
+    <div class="texts-wrapper" *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectStatus">
         <div class="date-download-status d-flex justify-content-between">
             <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6>
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span *ngIf="settings.dateOrtext.text && settings.dateOrtext.date">:&nbsp;</span>
                     <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
+                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields">
+                        <input
+                        #inputDate
+                        type="date" 
+                        class="form-control" 
+                        (change)="glbls.validateDate($event,'greater')"
+                        />
+                        <input 
+                        [class.d-none]="inputDate.value.length > 0"
+                        class="form-control"
+                        autocomplete='off'
+                        type="text"
+                        readonly    
+                        (click)="focusDatePicker(inputDate)"
+                        />
+                        <!--
+                        <div class="date-error-message">
+                          <strong>La fecha debe ser mayor a la de hoy</strong>
+                        </div>
+                        -->
+                    </span>
                 </h6>
             </div>
             <div *ngIf="settings.download || settings.status" class="right-side">
@@ -19,11 +40,25 @@
                 [download]="settings.download.name" 
                 class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">Descargar</a>
             </div>
+            <div  *ngIf="settings.selectStatus" class="right-side select-estatus-width">
+                <h6 *ngIf="settings.selectStatus" class="h6-select">
+                    <span>Modificar estatus:</span>
+                </h6>
+                    <ng-select
+                    class="form-control select-estatus"
+                    [items]="settings.selectStatus.lista"
+                    bindValue="id"
+                    bindLabel="name"
+                    placeholder="Estatus"
+                    >
+                    </ng-select>
+                
+            </div>
         </div>
 
         <!-- <ng-container *ngFor="let text of settings.texts"> -->
             <h5 *ngIf="settings.title" class="title" 
-            [class.mt-4]="settings.dateOrtext || settings.download || settings.status"
+            [class.mt-4]="settings.dateOrtext || settings.download || settings.status || settings.selectStatus"
             [class.text-left]="settings.title.aligning == 'left'" 
             [class.text-center]="settings.title.aligning == 'center'">
                 {{ settings.title.text }}
@@ -35,22 +70,22 @@
             </div>
         <!-- </ng-container> -->
     </div>
-    <div *ngIf="settings.action" class="d-inline-block buttons-wrapper">
-        <!-- <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
+    <div *ngIf="settings.action || settings.upload" class="d-inline-block buttons-wrapper">
+        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
-            <button id="upload-btn"  title="Subir archivo"
+            <button id="upload-btn"  title="settings.upload.name"
             class="btn btn-primary text-decoration-none p-1">
-            <nb-icon icon="planificacion"></nb-icon>
+            Adjuntar archivo
             </button>
         </div>
-    
+    <!-- 
         <a *ngIf="settings.download" title="Descargar" 
         [href]="settings.download.url" target="_blank" 
         [download]="settings.download.name" 
         class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">
             <nb-icon icon="planificacion"></nb-icon>
-        </a> -->
-    
+        </a> 
+    -->
         <button *ngIf="settings.action.name"
         class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
             <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>

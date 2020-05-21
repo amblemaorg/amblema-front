@@ -10,6 +10,13 @@
         text-transform: none;
       }
 
+      @media (max-width: 768px) {
+        .tab-link {
+          font-size: 1rem;
+          padding: 1rem 1rem;
+        }
+      }
+
       .tab,
       .tab:hover,
       .tab.active {

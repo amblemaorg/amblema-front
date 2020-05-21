@@ -12,7 +12,8 @@
             [ngClass]="{ 'form-group' : settings.formsContent[field].type!='double',
                          'full-width' : settings.formsContent[field].type!='double' && settings.formsContent[field].fullwidth,
                          'input-group': settings.formsContent[field].type==='prepend',
-                         'two-wrapper': settings.formsContent[field].type==='double' }"
+                         'two-wrapper': settings.formsContent[field].type==='double',
+                         'full-width2': settings.formsContent[field].fullwidth2 }"    
             [ngSwitch]="settings.formsContent[field].type"
           >
             <ng-container *ngSwitchCase="'email'">
