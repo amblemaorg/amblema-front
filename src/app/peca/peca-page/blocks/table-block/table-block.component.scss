@@ -7,13 +7,16 @@ $table-border-color: 1px solid $blue;
         thead {
             border: $table-border-color;
 
-            tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input {
-                border: $table-border-color;
-
-                &::placeholder {
-                    color: transparent !important;
-                }
-            }            
+            tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter {
+                input, input.ng-valid {
+                    border: $table-border-color !important;
+    
+                    &::placeholder {
+                        color: transparent !important;
+                    }
+                } 
+            }
+                        
 
             tr {
                 th {       

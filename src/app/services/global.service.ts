@@ -1,4 +1,4 @@
-import { Injectable, PLATFORM_ID, Inject } from "@angular/core";
+import { Injectable, PLATFORM_ID, Inject, EventEmitter, Output } from "@angular/core"; //! quitar EventEmitter y Output
 import { isPlatformBrowser, Location } from "@angular/common";
 import { Title, Meta } from "@angular/platform-browser";
 import * as $ from "jquery";
@@ -233,4 +233,12 @@ export class GlobalService {
     const newDate = new Date(value);
     return newDate.toISOString();
   }
+
+  //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
+  @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
+  
+  tableDataUpdater(obj) {
+    this.updateTableDataEmitter.emit(obj);
+  }
+  //? -----------------------------------------------------------------------
 }
