@@ -24,6 +24,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   componentForm: FormGroup;
   fields: string[];
+  doubleFields = {};
   sendingForm:boolean;
   glbls:any;
 
@@ -81,21 +82,47 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   private getFormGroupControls(formContent): object {
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
-    const formContentNoTitles = this.fields.filter(f => { 
-      return formContent[f].type!="title" && formContent[f].type!="image" && formContent[f].type!="prepend" 
-    }); // just fields to be form-grouped
-    const formControls = this.reduceFormControls(formContentNoTitles, formContent);
+    
+    let formContentNoTitles = [];
+    this.fields.map(f=> {
+      if (formContent[f].type!="title" && formContent[f].type!="image" && formContent[f].type!="prepend") {
+        if (formContent[f].type==="double") {
+          let fieldsArr = Object.keys(formContent[f].fields);
+          formContentNoTitles.push( ...fieldsArr.map(field => { 
+            return {
+              field: field,
+              parent: f
+            } 
+          }) );          
+          this.doubleFields[f] = fieldsArr;
+        }
+        else 
+          formContentNoTitles.push({
+            field: f,
+            parent: null // means that this field is not a doubleFields field
+          });
+      }
+    });
+    
+    const formControls = this.reduceFormControls(formContentNoTitles, formContent, true);
     
     return formControls
   }
 
   // RETURNS A FORMCONTROL OBJECT TO BE USED IN FORMGROUP
-  private reduceFormControls(formContentFields, formContent): Object {
+  private reduceFormControls(formContentFields, formContent, isMainContent = false): Object {
     let formReduced = formContentFields.reduce(
       (formControlsObj, formControlName) => {
         return {
           ...formControlsObj,
-          ...this.getFormControlProperty(formControlName, formContent[formControlName])
+          ...this.getFormControlProperty(
+            isMainContent? formControlName.field : formControlName, 
+            isMainContent? 
+              (formControlName.parent? 
+                formContent[formControlName.parent].fields[formControlName.field] : 
+                formContent[formControlName.field]) : 
+              formContent[formControlName]
+          )
         }
       },
       {} // This is the initial formControlsObj
@@ -145,13 +172,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return index;
   }
 
-  hasErrors(field: string, isPrepend: boolean = false): string | null {
-    const errors: any = !isPrepend? this.componentForm.get(field).errors : this.componentForm.controls[field].get('prependInput').errors;
+  hasErrors(field: string, specialCase: boolean = false, field2: string = null): string | null {
+    const errors: any = !specialCase? this.componentForm.get(field).errors : 
+                        (!field2? this.componentForm.controls[field].get('prependInput').errors :
+                          this.componentForm.get(field2).errors);
     if (errors) {
       return errors.required ? MESSAGES.REQUIRED_MESSAGE :
              (errors.pattern || errors.minlength || errors.maxlength) ? 
-             (!isPrepend? this.settings.formsContent[field].messages.pattern : this.settings.formsContent[field].fields['prependInput'].messages.pattern) :
-             null;
+             (!specialCase? this.settings.formsContent[field].messages.pattern : 
+              (!field2? this.settings.formsContent[field].fields['prependInput'].messages.pattern : 
+                this.settings.formsContent[field2].messages.pattern) ) : null;
     }
 
     return null;
@@ -163,7 +193,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     }    
   }
 
-  // submitting form
+  // submitting forms
   onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
     console.log('submitting form');   
