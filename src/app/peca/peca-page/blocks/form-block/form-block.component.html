@@ -93,8 +93,8 @@
                   type="date" 
                   class="form-control" 
                   [formControlName]="field"
-                  [id]="getId('datepicker')"
-                  (change)="glbls.validateDate($event,'greater')"
+                  [id]="getId('datepicker-'+field)"
+                  (change)="checkDateOk($event,'greater',field)"
                 />
                 <input 
                   [class.d-none]="inputDate.value.length > 0"
@@ -268,7 +268,7 @@
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-              [disabled]="!componentForm.valid || sendingForm"
+              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
             >
               <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
               {{ !sendingForm? 'Guardar':'Guardando..' }}
