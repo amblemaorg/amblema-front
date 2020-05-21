@@ -29,6 +29,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   glbls:any;
 
   id_:string;
+  wrongDateDisabler = {};
 
   municipalities:MunicipalityInfo[] = [];
 
@@ -96,11 +97,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
           }) );          
           this.doubleFields[f] = fieldsArr;
         }
-        else 
+        else {
+          if (formContent[f].type==="date") this.wrongDateDisabler[f] = false;
           formContentNoTitles.push({
             field: f,
             parent: null // means that this field is not a doubleFields field
           });
+        }
       }
     });
     
@@ -201,8 +204,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
+      // initializers
       cf.reset();
       this.municipalities = [];
+      Object.keys(this.wrongDateDisabler).map(f => {
+        this.wrongDateDisabler[f] = false;
+      });
+      //
       this.toastr.success(
         'form submitted',
         '',
@@ -241,6 +249,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   isField(field) {
     return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
   }
+
+  // wrong date save button enabler/disabler
+  checkDateOk(e,mode,f) {
+    if ( this.globals.validateDate(e,mode,true) || e.target.value==="" ) 
+         this.wrongDateDisabler[f] = false;
+    else this.wrongDateDisabler[f] = true;
+  }
+
+  isDateNotOk() { // for button specifically
+    let bool = false
+    Object.keys(this.wrongDateDisabler).map(f => {
+      if (!this.wrongDateDisabler[f]) bool = true;
+    });
+    if (bool) return true;
+    else return false;
+  }
+  // ---------------------------------------
 
   //? FOR IMAGE MANAGING ----------------------------------------------------------------
   // activate click function of the input type file button which calls for the image
