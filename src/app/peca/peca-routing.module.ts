@@ -5,6 +5,7 @@ import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagno
 import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
 import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
 import { ProfilePageComponent} from './peca-page/pages/profile-page.component';
+import { SchedulingPlanningPageComponent} from './peca-page/pages/scheduling-planning-page.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,10 @@ const routes: Routes = [
         path: 'perfil-usuario',
         component: ProfilePageComponent
       },
-      
+      {
+        path: 'planificacion-lapso',
+        component: SchedulingPlanningPageComponent
+      }
     ]
   }
 ];
