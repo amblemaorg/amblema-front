@@ -17,6 +17,8 @@ import { environment } from "src/environments/environment";
 import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
 import { Title, Meta } from "@angular/platform-browser";
 import { METADATA } from "src/app/web/web-pages-metadata";
+import { NgxsModule, Store } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("BlogArchiveComponent", () => {
   const testHelpers = new WebPageTestHelpers();
@@ -105,12 +107,14 @@ describe("BlogArchiveComponent", () => {
         FontAwesomeModule,
         ReactiveFormsModule,
         FormsModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: ApiWebContentService, useValue: blogService },
         { provide: HttpClient, useValue: httpSpy },
         { provide: Title, useClass: Title },
         { provide: Meta, useClass: Meta },
+        { provide: Store, useClass: Store },
       ],
     }).compileComponents();
   }));
