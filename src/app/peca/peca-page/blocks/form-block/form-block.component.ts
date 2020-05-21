@@ -307,6 +307,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
   // method which sends image to the images table
   addImage() {
+    let imgGrp = this.componentForm.controls['imageGroup'];
+    let imageObj = {
+      image: imgGrp.get('imageSelected').value.name,
+      description: imgGrp.get('imageDescription').value,
+      state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
+      status: 'En espera'
+    };
+    this.globals.tableDataUpdater(imageObj);
     this.componentForm.get('imageGroup').reset();  
   }
   //? -----------------------------------------------------------------------------------
