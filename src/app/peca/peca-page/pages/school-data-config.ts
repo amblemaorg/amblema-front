@@ -25,6 +25,7 @@ const formImageEscuela = {
   component: 'form',
   settings: {
     formsContent: formImgEscuela,
+    tableCode: 'dataRegistroEscuela',
   }
 }
 
@@ -45,24 +46,19 @@ const registroEscuela = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataRegistroEscuela',
+    dataRegistroEscuela: [
       {
-        image: '5to Grado',
-        description: 'lorem',
-        state: 'Proceso',
-        status: 'Activo'
+        image: 'imagen1.png',
+        description: 'descripcion 1',
+        state: 'Visible',
+        status: 'Aprobado'
       },
       {
-        image: '6to Grado',
-        description: 'lorem',
-        state: 'Proceso',
-        status: 'Inactivo'
-      },
-      {
-        image: '4to Grado',
-        description: 'loremlorem',
-        state: 'Proceso',
-        status: 'Activo'
+        image: 'imagen2.png',
+        description: 'descripcion 2',
+        state: 'No visible',
+        status: 'Aprobado'
       },
     ],
     classes: {
@@ -77,6 +73,7 @@ const formDocente = {
   settings: {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
+    tableCode: 'dataTablaDocente',
   }
 }
 const tablaDocente = {
@@ -99,7 +96,8 @@ const tablaDocente = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataTablaDocente',
+    dataTablaDocente: [
       {
         name: 'ALfredo',
         lastName: 'Valbuena',
@@ -134,6 +132,7 @@ const formGradosYSecciones = {
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
+    tableCode: 'dataTablaGradosSecciones',
   }
 }
 const tablaGradosSecciones = {
@@ -150,7 +149,8 @@ const tablaGradosSecciones = {
         title: 'Docente'
       },
     },
-    data: [
+    tableCode: 'dataTablaGradosSecciones',
+    dataTablaGradosSecciones: [
       {
         grades: '5',
         secctions: 'B',
@@ -179,6 +179,7 @@ const formEstudiantes = {
   settings: {
     formsContent: formTabsEstudiantes,
     buttons: ['guardar'],
+    tableCode: 'dataTablaEstudiante',
   }
 }
 const tablaEstudiante = {
@@ -201,7 +202,8 @@ const tablaEstudiante = {
         title: 'Edad'
       },
     },
-    data: [
+    tableCode: 'dataTablaEstudiante',
+    dataTablaEstudiante: [
       {
         name: 'Isa',
         lastName: 'Godoy',

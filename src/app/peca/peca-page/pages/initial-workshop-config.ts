@@ -26,6 +26,7 @@ const formTaller2 = {
   component: 'form',
   settings:{
     formsContent: formRegistroInicial,
+    tableCode: 'dataRegistroTallerInicial',
   }
 }
 
@@ -47,7 +48,8 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataRegistroTallerInicial',
+    dataRegistroTallerInicial: [
       {
         image: 'imagen1.png',
         description: 'descripcion 1',
