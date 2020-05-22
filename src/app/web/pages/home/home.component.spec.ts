@@ -12,6 +12,8 @@ import { AngularSvgIconModule } from "angular-svg-icon";
 import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
 import { Meta, Title } from "@angular/platform-browser";
 import { METADATA } from "../../web-pages-metadata";
+import { NgxsModule, Store } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("HomeComponent", () => {
   const testHelpers = new WebPageTestHelpers();
@@ -32,10 +34,12 @@ describe("HomeComponent", () => {
         HttpClientModule,
         CountoModule,
         AngularSvgIconModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: Title, useClass: Title },
         { provide: Meta, useClass: Meta },
+        { provide: Store, useClass: Store },
       ],
     }).compileComponents();
   });

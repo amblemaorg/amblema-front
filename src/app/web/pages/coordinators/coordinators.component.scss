@@ -70,16 +70,25 @@ web-bg-heading {
   }
 }
 
-.steps-list {
+.steps-wrapper {
   @import "scss/animations";
   @include columns(10);
   margin: 8vw auto;
+}
 
-  @include breakpoint(small, landscape) {
-    column-count: 2;
-  }
+.steps-list {
+  display: flex;
+  flex-wrap: wrap;
 
-  @include breakpoint(medium) {
-    column-count: 2;
+  .steps-list__divider {
+    flex: 1 0 100%;
+
+    @include breakpoint(small, landscape) {
+      flex: 1 0 50%;
+    }
+
+    @include breakpoint(medium) {
+      flex: 1 0 50%;
+    }
   }
 }

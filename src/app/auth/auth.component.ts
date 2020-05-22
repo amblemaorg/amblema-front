@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { NbAuthComponent, NbAuthService } from '@nebular/auth';
-import { NbIconLibraries } from '@nebular/theme';
+import { Component } from "@angular/core";
+import { Location } from "@angular/common";
+import { NbAuthComponent, NbAuthService } from "@nebular/auth";
 
 @Component({
-  selector: 'app-auth',
-  styleUrls: ['./auth.component.scss'],
+  selector: "app-auth",
+  styleUrls: ["./auth.component.scss"],
   template: `
     <nb-layout>
       <nb-layout-column>
         <nb-card>
           <nb-card-header>
             <nav class="navigation">
-              <a href="#" (click)="back()" class="link" aria-label="Back">
-                <i class="icon nb-arrow-thin-left"></i>
+              <a href="#" (click)="back()" class="link arrow-back" aria-label="Back">
+                <!-- <nb-icon icon="arrow-back-outline"></nb-icon> -->
+                <nb-icon icon="arrow-ios-back-outline"></nb-icon>
               </a>
             </nav>
           </nb-card-header>
@@ -28,11 +28,7 @@ import { NbIconLibraries } from '@nebular/theme';
   `,
 })
 export class AuthComponent extends NbAuthComponent {
-  constructor(
-    private iconLibraries: NbIconLibraries,
-    authService: NbAuthService,
-    location: Location
-  ) {
+  constructor(authService: NbAuthService, location: Location) {
     super(authService, location);
   }
 }

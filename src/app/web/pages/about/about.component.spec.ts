@@ -10,6 +10,8 @@ import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
 import { METADATA } from "../../web-pages-metadata";
 import { Title, Meta } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
+import { Store, NgxsModule } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("AboutComponent", () => {
   const testHelpers = new WebPageTestHelpers();
@@ -28,10 +30,12 @@ describe("AboutComponent", () => {
         CarouselModule,
         HttpClientModule,
         AngularSvgIconModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: Title, useClass: Title },
         { provide: Meta, useClass: Meta },
+        { provide: Store, useClass: Store },
       ],
     }).compileComponents();
   });
