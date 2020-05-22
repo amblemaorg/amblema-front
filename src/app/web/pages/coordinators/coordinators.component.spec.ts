@@ -9,6 +9,8 @@ import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
 import { Title, Meta } from "@angular/platform-browser";
 import { METADATA } from "../../web-pages-metadata";
 import { RouterTestingModule } from "@angular/router/testing";
+import { NgxsModule, Store } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("CoordinatorsComponent", () => {
   const testHelpers = new WebPageTestHelpers();
@@ -25,10 +27,12 @@ describe("CoordinatorsComponent", () => {
         SharedModule,
         CarouselModule,
         HttpClientModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: Title, useClass: Title },
         { provide: Meta, useClass: Meta },
+        { provide: Store, useClass: Store },
       ],
     }).compileComponents();
   }));
