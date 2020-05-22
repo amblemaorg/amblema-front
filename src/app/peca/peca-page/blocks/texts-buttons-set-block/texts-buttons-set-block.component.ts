@@ -17,6 +17,8 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
       fields: string[];
     };
     selectStatus:{
+      text:string;
+      placeholder: string;
       lista:string[];
     };
     status: string;
@@ -36,6 +38,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     };
     upload: any;
     download: any;
+    btnGeneral: any;
   };
   glbls:any;
   constructor(private globals: GlobalService,) {

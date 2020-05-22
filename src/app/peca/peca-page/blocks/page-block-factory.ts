@@ -10,6 +10,8 @@ import { AccordionBlockComponent } from './accordion-block/accordion-block.compo
 import { TextsButtonsSetBlockComponent } from './texts-buttons-set-block/texts-buttons-set-block.component';
 import { FormBlockComponent } from './form-block/form-block.component';
 import { ProfileBlockComponent } from './profile-block/profile-block.component';
+import { SliderBlockComponent } from './slider-block/slider-block.component';
+import { StepperBlockComponent } from './stepper-block/stepper-block.component';
 
 export class PageBlockFactory {
 
@@ -29,6 +31,10 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(FormBlockComponent);
       case 'profiles':
         return this.componentFactoryResolver.resolveComponentFactory(ProfileBlockComponent);
+      case 'slider':
+        return this.componentFactoryResolver.resolveComponentFactory(SliderBlockComponent);
+      case 'stepper':
+        return this.componentFactoryResolver.resolveComponentFactory(StepperBlockComponent);
       default:
         throw Error('PageBlockTypeException: invalid page block type');
     }
