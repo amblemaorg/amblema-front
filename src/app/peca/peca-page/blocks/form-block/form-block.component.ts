@@ -20,6 +20,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     formsContent: any;
     buttons: string[];
     images: any[];
+    tableCode?: string; // to know which table to update
   };
 
   componentForm: FormGroup;
@@ -309,10 +310,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   addImage() {
     let imgGrp = this.componentForm.controls['imageGroup'];
     let imageObj = {
-      image: imgGrp.get('imageSelected').value.name,
-      description: imgGrp.get('imageDescription').value,
-      state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
-      status: 'En espera'
+      code: this.settings.tableCode,
+      data: {
+        image: imgGrp.get('imageSelected').value.name,
+        description: imgGrp.get('imageDescription').value,
+        state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
+        status: 'En espera'
+      },      
     };
     this.globals.tableDataUpdater(imageObj);
     this.componentForm.get('imageGroup').reset();  

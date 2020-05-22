@@ -28,6 +28,7 @@ describe('TableBlockComponent', () => {
           title: 'Column 4'
         }
       },
+      tableCode: 'data',
       data: [
         {
           column1: 'Item 1 column1',
