@@ -33,7 +33,9 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   ngOnInit() {
     this.globals.updateTableDataEmitter.subscribe(data => {
       if (this.settings[data.code]) {
-        this.settings[data.code].push(data.data);
+        if (data.resetData) this.settings[data.code] = data.dataArr;
+        else this.settings[data.code].push(data.data);
+
         this.source = new LocalDataSource(this.settings[data.code]);
       }      
     });
