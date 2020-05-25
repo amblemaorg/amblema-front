@@ -28,6 +28,7 @@ const reunionAprobacionSet = {
         },
         selectStatus:
         {
+            text: 'Modificar estatus:',
             lista: [
                 { id: 1, name: 'Pendiente' },
                 { id: 2, name: 'Aprobado' },

@@ -15,6 +15,8 @@ import {
   NbIconModule,
   NbActionsModule,
   NbUserModule,
+  NbStepperModule,
+  NbButtonModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
@@ -29,6 +31,8 @@ import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.comp
 import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
 import { ProfilePageComponent } from './peca-page/pages/profile-page.component';
 import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-planning-page.component';
+import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
+import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -36,6 +40,8 @@ import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/acco
 import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component';
 import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.component';
 import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-block.component';
+import { SliderBlockComponent } from './peca-page/blocks/slider-block/slider-block.component';
+import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-block.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +53,8 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
     InitialDiagnosticPageComponent,
     ProfilePageComponent,
     SchedulingPlanningPageComponent,
+    AmblemonedaPageComponent,
+    AnnualConventionPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -54,6 +62,8 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
     TextsButtonsSetBlockComponent,
     FormBlockComponent,
     ProfileBlockComponent,
+    SliderBlockComponent,
+    StepperBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +84,8 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
     NgSelectModule,
     NbActionsModule,
     NbUserModule,
+    NbStepperModule,
+    NbButtonModule,
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -82,6 +94,8 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
     TextsButtonsSetBlockComponent,
     FormBlockComponent,
     ProfileBlockComponent,
+    SliderBlockComponent,
+    StepperBlockComponent,
   ]
 })
 export class PecaModule { }
