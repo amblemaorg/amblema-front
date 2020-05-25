@@ -1,0 +1,72 @@
+@import "scss/placeholders";
+
+::ng-deep {
+  .padding-stepper {
+    padding: 3rem 15rem;
+  }
+  @media (min-width: 992px) and (max-width: 1200px) {
+    .padding-stepper {
+      padding: 3rem 10rem;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 992px) {
+    .padding-stepper {
+      padding: 3rem 5rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .padding-stepper {
+      padding: 3rem 1rem;
+    }
+  }
+  .style-button {
+    margin: 2rem 0;
+  }
+
+  button {
+    margin-right: 1rem;
+  }
+  @media (max-width: 464px) {
+    button {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .nb-theme-default {
+    h3,
+    nb-stepper .header .step.selected .label-index {
+      color: $blue;
+      border-color: $blue;
+    }
+    nb-stepper .header .step.completed .label-index {
+      background-color: $blue;
+      border-color: $blue;
+      color: #ffffff;
+    }
+    nb-stepper .header .connector-past {
+      background-color: $blue;
+    }
+    [nbButton].appearance-filled.status-primary:hover {
+      background-color: #00809a78;
+      border-color: #00809a78;
+    }
+    [nbButton].appearance-filled.status-primary[disabled]:hover {
+      background-color: rgba(143, 155, 179, 0.24);
+      border-color: transparent;
+      color: rgba(143, 155, 179, 0.48);
+    }
+    p {
+      color: $dark-gray !important;
+      margin: 1rem 0;
+    }
+  }
+  .nb-theme-default [nbButton].appearance-filled.status-primary:active {
+    background-color: $blue;
+    border-color: $blue;
+  }
+  .nb-theme-default [nbButton].appearance-filled.status-primary {
+    background-color: $blue;
+    border-color: $blue;
+    color: #ffffff;
+  }
+}

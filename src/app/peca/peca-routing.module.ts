@@ -5,6 +5,9 @@ import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagno
 import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
 import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
 import { ProfilePageComponent} from './peca-page/pages/profile-page.component';
+import { SchedulingPlanningPageComponent} from './peca-page/pages/scheduling-planning-page.component';
+import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
+import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
 
 const routes: Routes = [
   {
@@ -27,7 +30,18 @@ const routes: Routes = [
         path: 'perfil-usuario',
         component: ProfilePageComponent
       },
-      
+      {
+        path: 'planificacion-lapso',
+        component: SchedulingPlanningPageComponent
+      },
+      {
+        path: 'amblemoneda-page',
+        component: AmblemonedaPageComponent
+      },
+      {
+        path: 'convencion-anual',
+        component: AnnualConventionPageComponent
+      }
     ]
   }
 ];

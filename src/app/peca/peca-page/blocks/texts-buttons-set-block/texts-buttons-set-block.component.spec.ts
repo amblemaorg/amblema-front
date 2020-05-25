@@ -5,6 +5,7 @@ import { PageBlockFactory } from '../page-block-factory';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -48,6 +49,7 @@ describe('TextsButtonsSetBlockComponent', () => {
         TextsButtonsSetBlockComponent,
       ],
       imports: [
+        NgSelectModule,
         RouterTestingModule.withRoutes([]),
       ]
     })

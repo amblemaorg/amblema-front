@@ -1,74 +1,88 @@
-import { sampleFormData } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial } from '../blocks/form-block/all-forms'
 
-const textsbuttonsSet = {
+const textsAndButtons = {
   component: 'textsbuttons',
   settings: {
-    dateOrtext: {
-      text: 'Fecha actividad',
-      date: '22/12/12',
+    title: {
+      text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
+      aligning: 'center',
     },
-    status: 'pendiente',
-    download: {
-      url: '#',
-      name: 'hola.png',
-    },
-    // texts: [
-      /* { */
-        title: {
-          text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-          aligning: 'center',
-          // text: '(A la izquierda) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-          // aligning: 'left',
-        },
-        subtitles: [
-          {
-            title: 'Carta convenio con la escuela',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          },
-          {
-            title: 'Otro parrafo',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          },
-        ],
-      /* }, */
-      /* {
-        title: {
-          // text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-          // aligning: 'center',
-          text: '(A la izquierda) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-          aligning: 'left',
-        },
-        subtitles: [
-          {
-            title: 'Tres',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          },
-          {
-            // title: 'Otro parrafo',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          },
-        ],
-      }, */
-    // ],
     action: {
       type: 1,
-      name: 'Enviar',
+      name: 'Enviar Solicitud',
     },
-    // upload: {
-    //   url: null,
-    //   name: 'hola.png',
-    //   file: null,
-    // },    
   }
 }
 
-const formSet = {
+const formTaller1 = {
   component: 'form',
   settings: {
-    formsContent: sampleFormData,
+    formsContent: formPreparacionTallerInicial,
     buttons: ['guardar'],
   }
 }
+
+const formTaller2 = {
+  component: 'form',
+  settings:{
+    formsContent: formRegistroInicial,
+    tableCode: 'dataRegistroTallerInicial',
+  }
+}
+
+// ! FOR TABLE COMPONENT TESTING----------
+const registroTallerInicial = {
+  component: 'table',
+  settings: {
+    columns: {
+      image: {
+        title: "Imágen",
+      },
+      description: {
+        title: "Descripción"
+      },
+      state: {
+        title: 'Estado'
+      },
+      status: {
+        title: 'Estatus'
+      }
+    },
+    tableCode: 'dataRegistroTallerInicial',
+    dataRegistroTallerInicial: [
+      {
+        image: 'imagen1.png',
+        description: 'descripcion 1',
+        state: 'Visible',
+        status: 'Aprobado'
+      },
+      {
+        image: 'imagen2.png',
+        description: 'descripcion 2',
+        state: 'No visible',
+        status: 'Aprobado'
+      },
+      {
+        image: 'imagen3.png',
+        description: 'descripcion 3',
+        state: 'Visible',
+        status: 'Aprobado'
+      },
+      {
+        image: 'imagen4.png',
+        description: 'descripcion 4',
+        state: 'No visible',
+        status: 'Aprobado'
+      },
+    ],
+    classes: {
+      hideView: true,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  }
+}
+// !---------------------------------------------
 
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
@@ -80,19 +94,21 @@ export const INITIAL_WORKSHOP_CONFIG = {
       settings: {
         items: [
           {
-            title: "Reunión para Planificación del taller inicial",
-            icon: "planificacion",
+            title: "Preparación del taller",
+            icon: "taller-inicial",
             childBlocks: [
-              { ...textsbuttonsSet }
+              { ...formTaller1 }
             ]
           },
           {
-            title: "Registro del taller inicial",
+            title: "Registros inicial",
             icon: "planificacion",
-            childBlocks: [
-              { ...formSet }
+            childBlocks: [   
+              { ...formTaller2 },           
+              { ...registroTallerInicial },
+              { ...textsAndButtons }
             ]
-          }
+          },
         ]
       }
     }

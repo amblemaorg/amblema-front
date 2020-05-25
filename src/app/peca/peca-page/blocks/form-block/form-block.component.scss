@@ -4,6 +4,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: baseline;
 
   @include mediabreak(large,landscape) { justify-content: space-between; }
 }
@@ -14,15 +15,34 @@
   @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
   @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
 } 
+@mixin form-flexings-one-row {
+  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { flex: 0 0 38%; }
+  @include mediabreak(larger,landscape) { flex: 0 0 38%; }
+  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 38%; }
+} 
+@mixin for-image-widths {  
+  width: 8rem;
+  height: 8rem;
+}
 
 ::ng-deep {
   form {    
     .fields-container {
       @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
       @include mediabreak(large,portrait) { @include form-mix; }
+      &.one-row-form {
+        align-items: center;
+      }
 
-      h6 {
+      h6, label {
         width: 100%;
+      }
+
+      label {
+        margin-bottom: 0.2rem;
+        color: $blue;
       }
 
       .image-group {
@@ -35,18 +55,73 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          position: relative;
 
+          button, img {
+            @include for-image-widths;
+            border: 1px solid $blue;            
+          }
+
+          .overlay, i {
+            height: 0;
+            opacity: 0;
+            position: absolute;
+            -webkit-transition: opacity .5s, color .5s;
+            transition: opacity .5s, color .5s;
+          }
+
+          i {
+            color: $blue;       
+            font-size: 3rem;
+            font-weight: bold;
+            padding: 0;
+            cursor: pointer;
+            overflow: hidden;
+
+            &:hover {
+              color: $red;
+
+              & + .overlay {
+                @include for-image-widths;
+                opacity: 0.25;
+                background: #000;  
+                z-index: 0;          
+              }
+            }
+          }
+
+          img {
+            object-fit: contain;
+
+            &.show-remover + i {              
+              -webkit-text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+              text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+              height: auto;
+              padding: 1rem;
+              opacity: 1;        
+              z-index: 1;  
+            }
+          }
+          
           button {
-            width: 8rem;
-            height: 8rem;
             color: $blue;
-            border: 1px solid $blue;
             background: transparent;
+
+            &:focus {
+              outline: none;
+            }
 
             nb-icon {
               font-size: 4rem;
               display: inline;
             }
+          }
+        }
+
+        @media (max-width:768px) {
+          .image-upload-btn-container {
+            flex: 0 0 100%;
+            padding: 30px;
           }
         }
 
@@ -56,16 +131,40 @@
           .image-description {
             margin-bottom: 1rem;
           }
-        }     
+        }
+
+        .add-img-btn {
+          margin-top: 1rem;
+        }
       }
+
+      .two-wrapper {
+          @include form-mix;
+          @include form-flexings;        
+
+          .form-group {
+              width: 100%;
+          }
+      }  
   
       .form-group {
         position: relative;
-        @include form-flexings;
+        
+        &.one-row-form-form-group {
+          @include form-flexings-one-row;
+        }
+        &:not(.one-row-form-form-group) {
+          @include form-flexings;
+        }
   
         .field-label {
           color: $blue
         }        
+
+        .date-container {
+            width: 100%;
+            position: relative;
+        }
       
         .error-message, .date-error-message {
           color: $red;
@@ -79,12 +178,21 @@
             font-size: .9vw;
           }
         }
+
+        &.input-group {
+          .input-group-prepend {
+            width: 3.5rem;
+          }
+          .error-message {
+            width: 100%;
+          }
+        }
       }
 
       .form-control {
         color: $blue;
 
-        &[readonly] {
+        &[readonly].form-control-date {
           cursor: default;
           background-color: #fff;
           position: absolute;
@@ -96,7 +204,7 @@
           height: auto;
         }
 
-        &[type="date"]:focus + .form-control[readonly] {
+        &[type="date"]:focus + .form-control[readonly].form-control-date {
           display: none;
         }
     
@@ -205,17 +313,43 @@
       .form-group.full-width {
         flex: 0 0 100%;
       }
+
+      two-wrapper .form-group.full-width2, 
+      .form-group.full-width2 {
+        flex: 0 0 21.25%;
+      }
+      @media (max-width:992px) {
+        two-wrapper .form-group.full-width2, 
+        .form-group.full-width2 {
+          flex: 0 0 100%;
+        }
+      }
   
       .btn-container, 
       .image-group .add-img-btn {
-        width: 100%;
-        text-align: right;
+        &:not(.one-row-form-btn-container) {
+          width: 100%;
+          text-align: right;
+        }
+        &.one-row-form-btn-container {
+          width: 14%;
+          text-align: right;
+        }
         
         .submit-btn, 
         .add-img-button {
           @include shared-btn-confs;
         }
-      }    
+      }
+      
+      @media (max-width:768px) {
+        .btn-container,
+        .btn-container.one-row-form-btn-container,
+        .image-group .add-img-btn {
+          width: 100%;
+          text-align: right;          
+        }
+      }
     }
   }
 }
