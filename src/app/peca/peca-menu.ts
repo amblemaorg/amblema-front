@@ -31,14 +31,14 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/permissions'
       },
       {
-        title: 'Amblemonedas',
+        title: 'AmbLeMonedas',
         icon: 'amblemoneda',
-        link: '/pages/permissions'
+        link: 'amblemoneda-page'
       },
       {
         title: 'Convención anual',
         icon: 'convencion',
-        link: '/pages/permissions'
+        link: 'convencion-anual'
       },
       {
         title: 'Anuario',

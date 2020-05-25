@@ -1,0 +1,25 @@
+<div class="padding-stepper">
+    <nb-stepper orientation="horizontal" disableStepNavigation>
+        <nb-step [label]="labelOne" *ngFor="let title of settings.titles">
+            <ng-template #labelOne></ng-template>
+            <div [class.text-center]="title.aligning == 'center'">
+                <h3>{{title.text}}</h3>
+                <p class="lorem">
+                    {{title.content}}
+                </p>
+                <div class="style-button" *ngIf="title.id === 1">
+                    <button nbButton nbStepperPrevious disabled>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                <div class="style-button" *ngIf="title.id === 2 || title.id === 3 ">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                <div class="style-button" *ngIf="title.id === 4">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext disabled>Siguiente</button>
+                </div>
+            </div>
+        </nb-step>
+    </nb-stepper>
+</div>

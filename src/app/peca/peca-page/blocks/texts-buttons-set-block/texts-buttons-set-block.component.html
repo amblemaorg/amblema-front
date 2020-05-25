@@ -40,19 +40,20 @@
                 [download]="settings.download.name" 
                 class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">Descargar</a>
             </div>
-            <div  *ngIf="settings.selectStatus" class="right-side select-estatus-width">
+            <div  *ngIf="settings.selectStatus || settings.btnGeneral" class="right-side select-estatus-width">
                 <h6 *ngIf="settings.selectStatus" class="h6-select">
-                    <span>Modificar estatus:</span>
+                    <span>{{settings.selectStatus.text}}</span>
                 </h6>
                     <ng-select
                     class="form-control select-estatus"
                     [items]="settings.selectStatus.lista"
                     bindValue="id"
                     bindLabel="name"
-                    placeholder="Estatus"
+                    [placeholder]="settings.selectStatus.placeholder"
                     >
                     </ng-select>
-                
+                    <a *ngIf="settings.btnGeneral" title="general" 
+                    class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{settings.btnGeneral.name}}</a>
             </div>
         </div>
 
