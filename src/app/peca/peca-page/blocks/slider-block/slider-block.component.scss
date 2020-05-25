@@ -1,0 +1,206 @@
+@import '../../../../web/pages/previous-steps/previous-steps.component.scss';
+@import 'scss/placeholders';
+
+%bold-blue {
+	color: map-get($color_map, blue);
+	line-height: 1.7rem;
+}
+
+@mixin gallery-height {
+    height: 65vw;
+    @include mediabreak(small,portrait) { height: 46.35vw; }
+    @include mediabreak(small,landscape,true,640px) { height: 46vw; }
+    @include mediabreak(large,landscape) { height: 41.5vw; }
+    @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
+}
+
+
+.gallery {
+	@include mediabreak(small,landscape,true,640px) { margin-top: 2rem; }
+	@include mediabreak(larger,landscape,true,1366px) { margin: 3rem; }
+
+	.col-sm-7{
+		@include mediabreak(larger,landscape,true,1600px) {
+			flex: 0 0 50%;
+			max-width: 50%   
+		}            
+	}
+	.col-sm-2 {
+		@include mediabreak(larger,landscape,true,1600px) {
+			flex: 0 0 20%;
+			max-width: 20%   
+		}            
+	}
+	.col-sm-3 {
+		@include mediabreak(larger,landscape,true,1600px) {
+			flex: 0 0 30%;
+			max-width: 30%   
+		}            
+	}
+
+	::ng-deep .owl-carousel {
+		-webkit-transition: opacity .25s;
+		transition: opacity .25s;
+	}
+
+	.carousel {           
+		owl-carousel ::ng-deep .owl-carousel .owl-item {
+			.owl-video-wrapper, img {  
+				@include gallery-height;    
+				object-fit: cover;          
+				@include mediabreak(small,portrait) {
+					width: 67vw;
+				}
+				@include mediabreak(small,landscape,true,640px) {
+					width: 69.5vw;
+				}
+				@include mediabreak(medium,landscape,true,800px) {
+					width: 67vw;
+				}
+				@include mediabreak(large,portrait) {
+					width: 69.5vw;
+				}
+				@include mediabreak(large,landscape) {
+					width: 100%;
+				}
+			}
+		}                    
+
+		h6 {                
+			@extend %bold-blue;
+
+			@include mediabreak(small,portrait) {
+				display: none;
+			}
+			@include mediabreak(small,landscape,true,640px) {
+				display: none;
+			}  
+		}
+	}
+
+	.images {
+		@mixin images-redo { display: flex; flex-direction: column; justify-content: space-between; }
+		@include mediabreak(small,landscape,true,640px) {
+			@include images-redo;
+		}
+		@include mediabreak(large,portrait) {
+			@include images-redo;
+		}
+
+		owl-carousel ::ng-deep .owl-carousel .owl-stage {
+			@media screen and (orientation:landscape) and (min-width:640px) {
+				@include gallery-height;    
+			}
+			
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			width: 100% !important;
+			&::after {
+				display: none;
+			}
+			
+			.owl-item:first-child { display: none; }
+			.owl-item { width: 100% !important; }
+
+			.owl-video-wrapper{
+				.owl-video-play-icon {
+					background-size: 50%;
+					background-position: center;
+				}
+				.owl-video-wrapper .owl-video-play-icon { display: none; }
+			}
+		}
+		.image-item {
+			display: flex; align-items: center;
+			cursor: pointer;
+			position: relative;
+							
+			@include mediabreak(small,landscape,true,640px) {
+				margin-bottom: 0 !important;
+			}
+			@include mediabreak(large,portrait) {
+				margin-bottom: 0 !important;
+			}
+			
+			img, ::ng-deep .owl-video-wrapper, .over-video {
+				min-width: 33vw;max-width: 33vw;
+				min-height: 22vw;max-height: 22vw;
+				object-fit: cover;
+
+				@mixin img-redo { min-width: 22vw;max-width: 22vw; margin-right: 0 !important; margin-left: auto; }
+				@include mediabreak(small,portrait) {
+					@include img-redo;
+					min-height: 14vw;max-height: 14vw;                        
+				}
+				@include mediabreak(small,landscape,true,640px) {
+					@include img-redo;
+					min-height: 13vw;max-height: 13vw;                        
+				}
+				@include mediabreak(large,landscape) {
+					min-width: unset;
+					max-width: unset;
+					width: 87%;
+					min-height: 12vw;
+					max-height: 12vw;
+				}
+				@include mediabreak(larger,landscape,true,1366px) { min-height: 10vw; max-height: 10vw; }
+				@include mediabreak(larger,landscape,true,1600px) { 
+					min-height: 10.3vw;
+					max-height: 10.3vw;
+				}
+			}
+			p {                    
+				color: map-get($color_map, blue);
+				line-height: initial;
+
+				small {
+					font-size: 95%;
+				}
+
+				@include mediabreak(small,portrait) {
+					display: none;
+				}
+				@include mediabreak(small,landscape,true,640px) {
+					display: none;
+				}
+			}
+		}            
+	}
+}    
+.image-desc-container {
+	@include mediabreak(large, landscape) { margin-bottom: 6rem; }
+	text-align: justify;
+	.image-desc {
+		display: none;
+		@extend %bold-blue;
+		opacity: 1;
+		-webkit-transition: opacity .75s;transition: opacity .75s;
+		-webkit-transition-delay: .25s;transition-delay: .25s;
+
+		@mixin image-desc-redo { display: inline-block; width: 73.25%; }
+		@include mediabreak(small,portrait) {
+			@include image-desc-redo;
+			font-size: larger;
+			margin-top: -1rem;
+			margin-bottom: 3rem !important;
+		}
+		@include mediabreak(small,landscape,true,640px) {
+			@include image-desc-redo;
+		}
+		@include mediabreak(large,portrait) {
+			font-size: x-large;
+			margin-top: 0;
+		}
+		@include mediabreak(large,landscape) { font-size: 1.25rem !important; width: 75.25%; }
+		@include mediabreak(larger,landscape,true,1600px) { width: 100%; }
+		@include mediabreak(larger,landscape,true,1900px) { font-size: 1.75rem !important; }
+
+		&.hidden {
+			height: 0; width: 0;
+			overflow: hidden;
+			margin: 0 !important;
+			opacity: 0;
+		}
+	}  
+}      

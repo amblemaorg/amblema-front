@@ -1,5 +1,9 @@
 <ng2-smart-table
   [settings]="settings"
-  [source]="settings.data"
->
-</ng2-smart-table>
+  [source]="source"
+  [class.hide-view]="settings.classes.hideView"
+  [class.hide-edit]="settings.classes.hideEdit"
+  [class.hide-delete]="settings.classes.hideDelete"
+></ng2-smart-table>
+
+  <!-- (custom)="onCustomActions($event)" -->
