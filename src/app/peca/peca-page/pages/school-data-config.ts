@@ -74,7 +74,8 @@ const formDocente = {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
     tableCode: 'dataTablaDocente',
-  }
+    formType: 'agregarDocente',
+  },  
 }
 const tablaDocente = {
   component: 'table',
@@ -133,6 +134,7 @@ const formGradosYSecciones = {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
     tableCode: 'dataTablaGradosSecciones',
+    formType: 'agregarGradoSeccion',
   }
 }
 const tablaGradosSecciones = {
@@ -178,8 +180,10 @@ const formEstudiantes = {
   component: 'form',
   settings: {
     formsContent: formTabsEstudiantes,
-    buttons: ['guardar'],
+    buttons: ['buscar'],
     tableCode: 'dataTablaEstudiante',
+    formType: 'buscarEstudiante',
+    // isOneRow: true,
   }
 }
 const tablaEstudiante = {

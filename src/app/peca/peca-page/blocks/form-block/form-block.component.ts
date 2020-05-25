@@ -21,6 +21,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     buttons: string[];
     images: any[];
     tableCode?: string; // to know which table to update
+    formType?: string; // to specify what action to take on the submit button
+    isOneRow?: boolean;
   };
 
   componentForm: FormGroup;
@@ -201,7 +203,38 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
     console.log('submitting form');   
-    
+
+    let obj = {
+      code: this.settings.tableCode,
+      data: {},
+      dataArr: [],
+      resetData: false,
+    }; 
+
+    switch (this.settings.formType) {
+      case 'agregarGradoSeccion':
+        obj.data = {
+          grades: cf.get('grades').value,
+          secctions: cf.get('section').value,
+          name: this.settings.formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
+        };              
+        break;
+      case 'agregarDocente':
+        obj.data = {
+          name: cf.get('nameDocente').value,
+          lastName: cf.get('lastNameDocente').value,
+          identity: cf.controls['documentGroup'].get('prependInput').value,
+          mail: cf.get('email').value,
+          status: cf.get('status').value=="1"? 'Activo':'Inactivo',
+        };              
+        break;
+      
+      default:
+        break;
+    }
+
+    this.globals.tableDataUpdater(obj);  
+
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
@@ -322,4 +355,28 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.get('imageGroup').reset();  
   }
   //? -----------------------------------------------------------------------------------
+
+  searchAndFillTable() {
+    let obj = {
+      code: this.settings.tableCode,
+      dataArr: [],
+      resetData: true,
+    }; 
+
+    switch (this.settings.formType) {
+      case 'buscarEstudiante':
+        obj.dataArr = [
+          { name: 'Name 1', lastName: 'Lastname 1', doc: '123456789', sex: 'Femenino', age: '11', },
+          { name: 'Name 2', lastName: 'Lastname 2', doc: '123456789', sex: 'Masculino', age: '13', },
+          { name: 'Name 3', lastName: 'Lastname 3', doc: '123456789', sex: 'Femenino', age: '12', },
+        ];
+        break;
+    
+      default:
+        break;
+    }
+
+    this.globals.tableDataUpdater(obj);
+    this.componentForm.reset();  
+  }
 }
