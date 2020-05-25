@@ -22,6 +22,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CarouselModule } from "ngx-owl-carousel-o";
+import { OwlModule } from 'ngx-owl-carousel';
 // COMPONENTS
 import { PecaComponent } from './peca.component';
 import { PecaPageComponent } from './peca-page/peca-page.component';
@@ -86,6 +88,8 @@ import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-
     NbUserModule,
     NbStepperModule,
     NbButtonModule,
+    CarouselModule,
+    OwlModule,
   ],
   entryComponents: [
     TabsBlockComponent,
