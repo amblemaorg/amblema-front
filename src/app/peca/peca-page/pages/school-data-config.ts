@@ -180,7 +180,7 @@ const formEstudiantes = {
   component: 'form',
   settings: {
     formsContent: formTabsEstudiantes,
-    buttons: ['buscar'],
+    buttons: ['agregar'],
     tableCode: 'dataTablaEstudiante',
     formType: 'buscarEstudiante',
     // isOneRow: true,

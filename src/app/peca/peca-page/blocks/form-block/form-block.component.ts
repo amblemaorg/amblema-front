@@ -228,16 +228,26 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
           status: cf.get('status').value=="1"? 'Activo':'Inactivo',
         };              
         break;
+      case 'buscarEstudiante':
+        obj.data = {
+          name: cf.get('letterName').value, 
+          lastName: cf.get('lastNameLetter').value, 
+          doc: cf.controls['documentGroup'].get('prependInput').value, 
+          sex: cf.get('sexo').value=="1"? 'Femenino':'Masculino', 
+          age: null,
+        };              
+        break;
       
       default:
         break;
     }
 
-    this.globals.tableDataUpdater(obj);  
-
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
+
+      this.globals.tableDataUpdater(obj);  
+      
       // initializers
       cf.reset();
       this.municipalities = [];
