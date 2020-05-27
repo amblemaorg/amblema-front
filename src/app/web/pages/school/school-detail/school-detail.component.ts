@@ -208,9 +208,11 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.symbols.nativeElement.classList.add("animation-init");
     this.chartTestimonial.nativeElement.classList.add("animation-init");
     this.scrollToPage();
-    setTimeout(() => {
-      this.subscribeScrollEvent();
-    }, 2100);
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.subscribeScrollEvent();
+      }, 2100);
+    }
   }
 
   subscribeScrollEvent() {

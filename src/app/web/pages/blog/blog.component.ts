@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
   templateUrl: "./blog.component.html",
   styleUrls: ["./blog.component.scss"],
 })
-export class BlogComponent implements OnInit, AfterViewChecked {
+export class BlogComponent implements OnInit {
   isBlogArchive: boolean = true;
   coverData = {
     slides: [
@@ -18,12 +18,7 @@ export class BlogComponent implements OnInit, AfterViewChecked {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
-
-  ngAfterViewChecked(): void {
-    setTimeout(() => {
-      this.isBlogArchive =
-        this.router.url.includes("/blog") && !this.router.url.includes("/post");
-    });
+  ngOnInit() {
+    this.isBlogArchive = this.router.url.includes("/blog") && !this.router.url.includes("/post");
   }
 }
