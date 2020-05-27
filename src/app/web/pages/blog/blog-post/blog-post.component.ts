@@ -49,7 +49,7 @@ export class BlogPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.setStaticService();
+    // this.setStaticService();
     this.setApiService();
     this.route.paramMap.subscribe((params) => {
       this.blogService.getWebContentByParam("id", params.get("postSlug")).subscribe(
@@ -66,7 +66,10 @@ export class BlogPostComponent implements OnInit {
           });
         },
         (err) => console.error(err),
-        () => this.getRecentPosts()
+        () => {
+          this.getRecentPosts();
+          this.store.dispatch([new SetIsLoadingPage(false)]);
+        }
       );
     });
   }

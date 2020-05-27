@@ -56,7 +56,6 @@ export class BlogArchiveComponent implements OnInit {
         this.queryBreadcrums = this.generateQueryBreadcrums(params);
         this.queryParams = this.generateQueryParams(params);
       }
-      this.BLOG_PATH = this.BLOG_PATH;
       //this.setStaticService();
       this.setApiService(this.activePage, this.pageSize, this.queryParams);
       this.getBlogPostsJSON();
@@ -155,6 +154,7 @@ export class BlogArchiveComponent implements OnInit {
   changePostPage(event) {
     const firstPostIndex = event[0] + this.pageSize - 1;
     this.activePage = firstPostIndex / this.pageSize;
+    //this.setStaticService();
     this.setApiService(this.activePage, this.pageSize, this.queryParams);
     this.getBlogPostsJSON();
   }
