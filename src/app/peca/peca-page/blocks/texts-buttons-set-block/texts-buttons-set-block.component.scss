@@ -6,9 +6,9 @@
             color: $blue;
         }
     }
-    .texts-buttons-wrapper {
-        padding: 2rem;
-    }
+    // .texts-buttons-wrapper {
+        // padding: 2rem;
+    // }
     .estilo-date{
         margin-left: 10px;
         display: inline-block;
@@ -34,8 +34,17 @@
                         }
                     }
                 }
-                .select-estatus-width{
-                    width: 35%;
+                .select-estatus-width {
+                    width: auto;
+                    flex: auto;
+                    align-items: center;
+                    justify-content: flex-end;
+                    
+                    .ng-select {
+                        max-width: 13rem;
+                        width: auto;
+                        min-width: 10rem;
+                    }                  
                 }               
             }
         }
