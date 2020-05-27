@@ -25,7 +25,7 @@ const formImageEscuela = {
   component: 'form',
   settings: {
     formsContent: formImgEscuela,
-    tableCode: 'dataRegistroEscuela',
+    tableCode: 'schoolDataConfigRegistroEscuela',
   }
 }
 
@@ -46,8 +46,8 @@ const registroEscuela = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataRegistroEscuela',
-    dataRegistroEscuela: [
+    tableCode: 'schoolDataConfigRegistroEscuela',
+    schoolDataConfigRegistroEscuela: [
       {
         image: 'imagen1.png',
         description: 'descripcion 1',
@@ -73,7 +73,7 @@ const formDocente = {
   settings: {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
-    tableCode: 'dataTablaDocente',
+    tableCode: 'schoolDataConfigTablaDocente',
     formType: 'agregarDocente',
   },  
 }
@@ -97,8 +97,8 @@ const tablaDocente = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataTablaDocente',
-    dataTablaDocente: [
+    tableCode: 'schoolDataConfigTablaDocente',
+    schoolDataConfigTablaDocente: [
       {
         name: 'ALfredo',
         lastName: 'Valbuena',
@@ -133,7 +133,7 @@ const formGradosYSecciones = {
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
-    tableCode: 'dataTablaGradosSecciones',
+    tableCode: 'schoolDataConfigTablaGradosSecciones',
     formType: 'agregarGradoSeccion',
   }
 }
@@ -151,8 +151,8 @@ const tablaGradosSecciones = {
         title: 'Docente'
       },
     },
-    tableCode: 'dataTablaGradosSecciones',
-    dataTablaGradosSecciones: [
+    tableCode: 'schoolDataConfigTablaGradosSecciones',
+    schoolDataConfigTablaGradosSecciones: [
       {
         grades: '5',
         secctions: 'B',
@@ -181,7 +181,7 @@ const formEstudiantes = {
   settings: {
     formsContent: formTabsEstudiantes,
     buttons: ['agregar'],
-    tableCode: 'dataTablaEstudiante',
+    tableCode: 'schoolDataConfigTablaEstudiante',
     formType: 'buscarEstudiante',
     // isOneRow: true,
   }
@@ -206,8 +206,8 @@ const tablaEstudiante = {
         title: 'Edad'
       },
     },
-    tableCode: 'dataTablaEstudiante',
-    dataTablaEstudiante: [
+    tableCode: 'schoolDataConfigTablaEstudiante',
+    schoolDataConfigTablaEstudiante: [
       {
         name: 'Isa',
         lastName: 'Godoy',

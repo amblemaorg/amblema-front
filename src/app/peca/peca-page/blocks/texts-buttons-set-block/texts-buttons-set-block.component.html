@@ -38,22 +38,29 @@
                 <a *ngIf="settings.download" title="Descargar" 
                 [href]="settings.download.url" target="_blank" 
                 [download]="settings.download.name" 
-                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">Descargar</a>
+                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4">Descargar</a>
             </div>
             <div  *ngIf="settings.selectStatus || settings.btnGeneral" class="right-side select-estatus-width">
                 <h6 *ngIf="settings.selectStatus" class="h6-select">
                     <span>{{settings.selectStatus.text}}</span>
                 </h6>
                     <ng-select
-                    class="form-control select-estatus"
-                    [items]="settings.selectStatus.lista"
-                    bindValue="id"
-                    bindLabel="name"
-                    [placeholder]="settings.selectStatus.placeholder"
+                        class="form-control select-estatus"
+                        [items]="settings.selectStatus.lista"
+                        [(ngModel)]="currentSelected"
+                        bindValue="id"
+                        bindLabel="name"
+                        [placeholder]="settings.selectStatus.placeholder"
                     >
                     </ng-select>
-                    <a *ngIf="settings.btnGeneral" title="general" 
-                    class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{settings.btnGeneral.name}}</a>
+                    <button 
+                        *ngIf="settings.btnGeneral"
+                        title="general" 
+                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+                        (click)="addToTable()"
+                        [disabled]="!currentSelected"
+                    >{{settings.btnGeneral.name}}
+                    </button>
             </div>
         </div>
 
@@ -75,7 +82,7 @@
         <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
             <button id="upload-btn"  title="settings.upload.name"
-            class="btn btn-primary text-decoration-none p-1">
+            class="btn btn-primary text-decoration-none py-1 px-4">
             Adjuntar archivo
             </button>
         </div>

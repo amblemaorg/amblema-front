@@ -8,15 +8,17 @@ const preinscripcionDocente = {
         {
             placeholder: 'Selecciona el docente',
             lista: [
-                { id: 1, name: 'ALfredo' },
-                { id: 2, name: 'Yanior' },
-                { id: 3, name: 'Jose' },
+                { id: '1', name: 'ALfredo' },
+                { id: '2', name: 'Yanior' },
+                { id: '3', name: 'Jose' },
             ]
         },
         btnGeneral:
         {
             name: 'Agregar docente'
         },
+        buttonType: 'agregarDocentePreinscripcion',
+        tableCode: 'annualConventionPreinscripcionDocente',
     }
 }
 
@@ -79,7 +81,8 @@ const tablaPreinscripcionDocente = {
                 title: 'Correo'
             }
         },
-        data: [
+        tableCode: 'annualConventionPreinscripcionDocente',
+        annualConventionPreinscripcionDocente: [
             {
                 name: 'ALfredo',
                 lastName: 'Valbuena',
