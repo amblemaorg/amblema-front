@@ -10,7 +10,7 @@ import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
   styleUrls: ["./school.component.scss"],
 })
 export class SchoolComponent implements OnInit, AfterViewInit {
-  constructor(private globalService: GlobalService, private store: Store) {
+  constructor(public globalService: GlobalService, private store: Store) {
     this.globalService.setTitle(METADATA.schoolsPage.title);
     this.globalService.setMetaTags(METADATA.schoolsPage.metatags);
   }
@@ -18,8 +18,10 @@ export class SchoolComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.store.dispatch([new SetIsLoadingPage(false)]);
-    });
+    if (this.globalService.isBrowser) {
+      setTimeout(() => {
+        this.store.dispatch([new SetIsLoadingPage(false)]);
+      });
+    }
   }
 }
