@@ -10,7 +10,9 @@ import { GlobalService } from '../../../../services/global.service';
 export class TextsButtonsSetBlockComponent implements PresentationalBlockComponent, OnInit {
   type: 'presentational';
   component: string;
-  settings: {    
+  settings: {   
+    tableCode?: string; // to know which table to update 
+    buttonType?: string; // to specify what action to take on the button
     dateOrtext: {
       text: string;
       date: string;
@@ -19,7 +21,10 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     selectStatus:{
       text:string;
       placeholder: string;
-      lista:string[];
+      lista:{
+        id: string;
+        name: string;
+      }[];
     };
     status: string;
     // texts: {
@@ -47,6 +52,8 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     this.glbls = globals;
   }
 
+  currentSelected = null;
+
   ngOnInit() { }
 
   setSettings(settings: any) {
@@ -55,4 +62,29 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   focusDatePicker(e) {
     e.focus();
   }
+
+  addToTable() {
+    let obj = {
+      code: this.settings.tableCode,
+      data: {},
+      resetData: false,
+    }; 
+
+    switch (this.settings.buttonType) {
+      case 'agregarDocentePreinscripcion':
+        obj.data = {
+          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+          lastName: 'Melendez',
+          phone: '15487985',
+          email: 'josmel@yahoo.com'
+        };
+        break;
+    
+      default:
+        break;
+    }
+
+    this.globals.tableDataUpdater(obj);
+  }
+
 }

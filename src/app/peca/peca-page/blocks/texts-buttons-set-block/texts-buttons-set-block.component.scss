@@ -20,7 +20,7 @@
                     display: flex;
                     align-items: baseline;
 
-                    a {
+                    a, button {
                         @include shared-btn-confs;
                     }
 

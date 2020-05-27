@@ -26,7 +26,7 @@ const formTaller2 = {
   component: 'form',
   settings:{
     formsContent: formRegistroInicial,
-    tableCode: 'dataRegistroTallerInicial',
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
   }
 }
 
@@ -48,8 +48,8 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataRegistroTallerInicial',
-    dataRegistroTallerInicial: [
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    initialWorkshopConfigRegistroTallerInicial: [
       {
         image: 'imagen1.png',
         description: 'descripcion 1',

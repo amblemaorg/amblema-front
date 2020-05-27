@@ -389,4 +389,5 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.globals.tableDataUpdater(obj);
     this.componentForm.reset();  
   }
+  
 }
