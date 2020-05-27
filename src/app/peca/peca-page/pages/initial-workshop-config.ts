@@ -7,10 +7,10 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: {
+    action: [{
       type: 1,
       name: 'Enviar Solicitud',
-    },
+    }],
   }
 }
 

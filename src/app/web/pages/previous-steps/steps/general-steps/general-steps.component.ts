@@ -50,7 +50,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   compareMode() {
-    return this.mode!=(+this.user_type);
+    return this.mode!=(+this.user_type) && this.mode!=1;
   }
   isSelectorReadOnly() {
     return this.compareMode() && this.mode!=1 && !this.isAdmin();
@@ -71,10 +71,6 @@ export class GeneralStepsComponent implements OnInit {
   isAdmin() { //usertype 0 or 1 is super and admin
     return this.user_type=='0' || this.user_type=='1'
   }
-
-  // onlyHasFile(step:Step) {
-  //   return step.hasFile && !step.hasChecklist && !step.hasUpload && !step.hasDate && step.approvalType=="1";
-  // }
 
   // METHOD THAT ALLOWS THE SENDER USER TO SEE THE CANCEL BUTTON FROM REQUEST STEP
   canUserSee(step:Step) {
