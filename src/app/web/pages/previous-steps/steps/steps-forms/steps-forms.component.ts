@@ -277,7 +277,8 @@ export class StepsFormsComponent implements OnInit {
         principalPhone: this.schoolForm.controls['principalPhone'].value,
         subPrincipalFirstName: this.schoolForm.controls['subPrincipalFirstName'].value,
         subPrincipalLastName: this.schoolForm.controls['subPrincipalLastName'].value,
-        subPrincipalEmail: this.schoolForm.controls['subPrincipalEmail'].value,
+        subPrincipalEmail: this.schoolForm.controls['subPrincipalEmail'].value.length > 0 ? 
+                                this.schoolForm.controls['subPrincipalEmail'].value : null,
         subPrincipalPhone: this.schoolForm.controls['subPrincipalPhone'].value,
         nTeachers: this.schoolForm.controls['nTeachers'].value,
         nAdministrativeStaff: this.schoolForm.controls['nAdministrativeStaff'].value,

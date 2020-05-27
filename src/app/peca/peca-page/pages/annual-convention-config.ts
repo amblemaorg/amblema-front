@@ -23,10 +23,10 @@ const preinscripcionDocente = {
 const btnGuardar = {
     component: 'textsbuttons',
     settings: {
-        action: {
+        action: [{
             type: 2,
             name: 'Guardar',
-        }
+        }]
     }
 }
 

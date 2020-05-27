@@ -19,7 +19,7 @@
             (approvalMethodCallerEmitter)="approvalMethodCaller($event)">
           </status-selector>
 
-          <p *ngIf="step.hasText" class="first-p">{{ step.text }}</p> 
+          <p *ngIf="step.hasText && !step.isForm" class="first-p">{{ step.text }}</p> 
           
           <ng-container *ngIf="!step.isForm; else formOpt">        
             <div *ngIf="step.hasDate" class="form-group">
