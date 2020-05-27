@@ -34,10 +34,10 @@ describe('TextsButtonsSetBlockComponent', () => {
               text: 'parrafo', // paragraph
             },],
           // }[];    
-          action: {
+          action: [{
               type: 1, // 1 send, 2 save
               name: 'Enviar', // text in the button
-          },
+          }],
           // upload: any;
         //   download: any;
     }

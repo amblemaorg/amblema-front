@@ -1,10 +1,12 @@
 const botonEstadistica = {
   component: 'textsbuttons',
   settings: {
-    action: {
-      type: 1,
-      name: 'Ver estadísticas',
-    },
+    action: [
+      {
+        type: 1,
+        name: 'Ver estadísticas',
+      }
+    ],
   }
 }
 

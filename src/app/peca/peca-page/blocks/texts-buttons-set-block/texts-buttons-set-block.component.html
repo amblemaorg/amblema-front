@@ -71,7 +71,7 @@
             </div>
         <!-- </ng-container> -->
     </div>
-    <div *ngIf="settings.action || settings.upload" class="d-inline-block buttons-wrapper">
+    <div *ngIf="(settings.action && settings.action.length>0) || settings.upload" class="d-inline-block buttons-wrapper">
         <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
             <button id="upload-btn"  title="settings.upload.name"
@@ -87,10 +87,13 @@
             <nb-icon icon="planificacion"></nb-icon>
         </a> 
     -->
-        <button *ngIf="settings.action.name"
-        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
-            <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
-            {{ settings.action.name }}
-        </button>
+        <ng-container *ngFor="let action of settings.action">
+            <button 
+                *ngIf="action.name"
+                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
+                    <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
+                    {{ action.name }}
+            </button>
+        </ng-container>        
     </div>
 </div>

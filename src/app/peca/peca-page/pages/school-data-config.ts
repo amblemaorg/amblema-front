@@ -7,10 +7,10 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: {
+    action: [{
       type: 1,
       name: 'Enviar Solicitud',
-    },
+    }],
   }
 }
 
@@ -62,7 +62,7 @@ const registroEscuela = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -122,7 +122,7 @@ const tablaDocente = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -170,7 +170,7 @@ const tablaGradosSecciones = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -224,7 +224,7 @@ const tablaEstudiante = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },

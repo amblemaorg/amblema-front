@@ -35,7 +35,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     action: {
         type: number; // 1 send, 2 save
         name: string; // text in the button
-    };
+    }[];
     upload: any;
     download: any;
     btnGeneral: any;
