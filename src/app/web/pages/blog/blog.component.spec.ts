@@ -19,7 +19,8 @@ describe("BlogComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BlogComponent);
     component = fixture.componentInstance;
-    component.ngAfterViewChecked();
+    fixture.detectChanges();
+    component.isBlogArchive = true;
     fixture.detectChanges();
   });
 

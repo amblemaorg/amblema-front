@@ -154,7 +154,7 @@ section.about-us {
       &--white {
         svg {
           .st0 {
-            fill: $white;
+            fill: $white !important;
           }
         }
       }
