@@ -11,6 +11,8 @@ import { SPONSOR_CONTENT } from "./sponsor-static-content";
 import { Subscription, fromEvent } from "rxjs";
 import { GlobalService } from "src/app/services/global.service";
 import { METADATA } from "../../web-pages-metadata";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
+import { Store } from "@ngxs/store";
 
 @Component({
   selector: "app-sponsors",
@@ -18,7 +20,7 @@ import { METADATA } from "../../web-pages-metadata";
   styleUrls: ["./sponsors.component.scss"],
 })
 export class SponsorsComponent implements OnInit {
-  @ViewChild("sponsorsCarousel", { static: true }) sponsorsCarousel: OwlCarousel;
+  @ViewChild("sponsorsCarousel", { static: false }) sponsorsCarousel: OwlCarousel;
   @ViewChild("listSteps", { static: true }) listSteps: ElementRef;
   scrollSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
@@ -53,10 +55,10 @@ export class SponsorsComponent implements OnInit {
       0: {
         items: 2,
       },
-      [767 * 0.8]: {
+      768: {
         items: 3,
       },
-      [1279 * 0.8]: {
+      1280: {
         items: 4,
       },
     },
@@ -78,21 +80,24 @@ export class SponsorsComponent implements OnInit {
     steps: [],
     sponsors: [],
   };
+  stepsList1 = [];
+  stepsList2 = [];
   sponsorService: WebContentService;
   SPONSOR_PATH = "webcontent?page=sponsorPage";
 
   constructor(
     private http: HttpClient,
     private globalService: GlobalService,
-    private zone: NgZone
+    private zone: NgZone,
+    private store: Store
   ) {
     this.globalService.setTitle(METADATA.sponsorsPage.title);
     this.globalService.setMetaTags(METADATA.sponsorsPage.metatags);
   }
 
   ngOnInit() {
-    this.setStaticService();
-    // this.setApiService();
+    // this.setStaticService();
+    this.setApiService();
     this.getSponsorsData();
     this.zone.runOutsideAngular(() => {
       this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
@@ -114,16 +119,19 @@ export class SponsorsComponent implements OnInit {
   }
 
   getSponsorsData() {
-    // console.log(SPONSOR_CONTENT);
     this.sponsorService.getWebContent().subscribe((data) => {
       data.sponsorPage.sponsors = SPONSOR_CONTENT.sponsorPage.sponsors;
       // console.log(data);
+      const stepsLength = data.sponsorPage.steps.length;
+      this.stepsList1 = data.sponsorPage.steps.slice(0, (stepsLength + 1) / 2);
+      this.stepsList2 = data.sponsorPage.steps.slice((stepsLength + 1) / 2, stepsLength);
       this.sponsorsPageData = data.sponsorPage;
       this.coverData.slides.push({
         image: this.sponsorsPageData.backgroundImage,
         title: this.coverData.title,
         description: this.coverData.description,
       });
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 

@@ -11,6 +11,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { WebPageTestHelpers } from "src/assets/tests/page-testing-helpers";
 import { Title, Meta } from "@angular/platform-browser";
 import { METADATA } from "../../web-pages-metadata";
+import { NgxsModule, Store } from "@ngxs/store";
+import { WebState } from "src/app/store/states/web/web.state";
 
 describe("SchoolComponent", () => {
   const testHelpers = new WebPageTestHelpers();
@@ -25,10 +27,12 @@ describe("SchoolComponent", () => {
         HttpClientModule,
         BrowserAnimationsModule,
         NgbModule,
+        NgxsModule.forRoot([WebState]),
       ],
       providers: [
         { provide: Title, useClass: Title },
         { provide: Meta, useClass: Meta },
+        { provide: Store, useClass: Store },
       ],
     });
   });

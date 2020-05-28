@@ -1,10 +1,12 @@
 const botonEstadistica = {
   component: 'textsbuttons',
   settings: {
-    action: {
-      type: 1,
-      name: 'Ver estadísticas',
-    },
+    action: [
+      {
+        type: 1,
+        name: 'Ver estadísticas',
+      }
+    ],
   }
 }
 
@@ -34,7 +36,8 @@ const readingDiagnosticTable = {
         title: 'Indice'
       },
     },
-    data: [
+    tableCode: 'dataLectura',
+    dataLectura: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',
@@ -94,7 +97,8 @@ const mathDiagnosticTable = {
         title: 'Indice de lógica matematica'
       },
     },
-    data: [
+    tableCode: 'dataMatematica',
+    dataMatematica: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',

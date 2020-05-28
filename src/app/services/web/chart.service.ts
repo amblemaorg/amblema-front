@@ -11,6 +11,7 @@ const chartDefaultProps = {
   xaxis: {},
   yaxis: {
     labels: false,
+    edgeSpace: 0,
   },
   grid: {},
   asymptoteDefaultProps: {

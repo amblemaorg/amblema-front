@@ -1,3 +1,13 @@
+<div
+  #pageLoader
+  class="page-loader page-loader--l-center page-loader--hidden"
+  [ngClass]="{
+    'page-loader--visible': isloading,
+    'page-loader--hidden': !isloading
+  }"
+>
+  <img class="page-loader__image" src="assets/images/amblema-loader.gif" />
+</div>
 <web-header #header>
   <router-outlet></router-outlet>
   <web-footer #footer (openModal)="openOffcanvas($event)"></web-footer>

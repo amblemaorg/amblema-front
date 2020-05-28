@@ -3,17 +3,21 @@
   (keydown.enter)="prevDef($event)" 
   (ngSubmit)="onSubmitForm(componentForm)"
 >
-    <div class="fields-container">
+    <div 
+      class="fields-container"
+      [class.one-row-form]="settings.isOneRow"
+    >
       <ng-container *ngFor="let field of fields; trackBy: trackByFn">
         
         <ng-container *ngIf="isField(field); else titleLabel">
           <div
             [class]="settings.formsContent[field].type"
-            [ngClass]="{ 'form-group' : settings.formsContent[field].type!='double',
-                         'full-width' : settings.formsContent[field].type!='double' && settings.formsContent[field].fullwidth,
-                         'input-group': settings.formsContent[field].type==='prepend',
-                         'two-wrapper': settings.formsContent[field].type==='double',
-                         'full-width2': settings.formsContent[field].fullwidth2 }"    
+            [ngClass]="{ 'form-group'              : settings.formsContent[field].type!='double',
+                         'full-width'              : settings.formsContent[field].type!='double' && settings.formsContent[field].fullwidth,
+                         'input-group'             : settings.formsContent[field].type==='prepend',
+                         'two-wrapper'             : settings.formsContent[field].type==='double',
+                         'one-row-form-form-group' : settings.isOneRow,
+                         'full-width2'             : settings.formsContent[field].fullwidth2 }"    
             [ngSwitch]="settings.formsContent[field].type"
           >
             <ng-container *ngSwitchCase="'email'">
@@ -93,8 +97,8 @@
                   type="date" 
                   class="form-control" 
                   [formControlName]="field"
-                  [id]="getId('datepicker')"
-                  (change)="glbls.validateDate($event,'greater')"
+                  [id]="getId('datepicker-'+field)"
+                  (change)="checkDateOk($event,'greater',field)"
                 />
                 <input 
                   [class.d-none]="inputDate.value.length > 0"
@@ -248,7 +252,10 @@
         </ng-template>
       </ng-container>        
 
-      <div class="btn-container">
+      <div 
+        class="btn-container"
+        [class.one-row-form-btn-container]="settings.isOneRow"
+      >
         <ng-container
           *ngFor="let btn of settings.buttons" 
           [ngSwitch]="btn"
@@ -268,12 +275,36 @@
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-              [disabled]="!componentForm.valid || sendingForm"
+              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
             >
               <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
               {{ !sendingForm? 'Guardar':'Guardando..' }}
             </button>
           </ng-container>
+
+          <ng-container *ngSwitchCase="'agregar'">
+            <button 
+              type="submit" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+            >
+              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+              {{ !sendingForm? 'Agregar':'Agregando..' }}
+            </button>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'buscar'">
+            <button 
+              type="button" 
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+              (click)="searchAndFillTable()"
+            >
+              <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+              {{ !sendingForm? 'Buscar':'Buscando..' }}
+            </button>
+          </ng-container>
+
           <ng-container *ngSwitchCase="'editar'">
             <button 
               type="submit" 
@@ -284,6 +315,7 @@
               {{ !sendingForm? 'Editar':'Editando..' }}
             </button>
           </ng-container>  
+
           <ng-container *ngSwitchDefault>
             <button 
               type="submit" 
