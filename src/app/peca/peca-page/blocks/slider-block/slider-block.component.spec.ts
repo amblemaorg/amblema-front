@@ -1,23 +1,64 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SliderBlockComponent } from './slider-block.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import {  } from '@nebular/theme';
+import { CarouselModule } from "ngx-owl-carousel-o";
+import { OwlModule } from 'ngx-owl-carousel';
+import { PageBlockFactory } from '../page-block-factory';
+import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
+import { PageBlockComponent } from '../page-block.component';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+
 
 describe('SliderBlockComponent', () => {
   let component: SliderBlockComponent;
   let fixture: ComponentFixture<SliderBlockComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SliderBlockComponent ]
-    })
-    .compileComponents();
-  }));
+  let factoryResolver: ComponentFactoryResolver;
+  let pageBlockFactory: ComponentFactory<PageBlockComponent>;
+  //factoryResolver.resolveComponentFactory.and.returnValue(pageBlockFactory)
+
+  let factory: PageBlockFactory = new PageBlockFactory(factoryResolver);
+  let sliderSettings = {
+    component: 'slider',
+    settings: {
+        sliderImage: [
+            {
+                image: "../../../../../assets/images/profile-leena.jpg",
+                description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+            },
+            {
+                image: "../../../../../assets/images/profile-oscar.jpg",
+                description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+            },
+        ],
+    }
+  }
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SliderBlockComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    TestBed.configureTestingModule({
+        declarations: [SliderBlockComponent],
+        imports: [
+            RouterTestingModule.withRoutes([]),
+            OwlModule,
+            CarouselModule,
+        ]
+    })
+    TestBed.overrideModule(BrowserDynamicTestingModule, {
+        set: {
+            entryComponents: [SliderBlockComponent]
+        }
+    });
+});
+
+beforeEach(() => {
+  fixture = TestBed.createComponent(SliderBlockComponent);
+  component = fixture.componentInstance;
+  factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
+  component.setSettings(SliderBlockComponent);
+  fixture.detectChanges();
+});
 
   it('should create', () => {
     expect(component).toBeTruthy();
