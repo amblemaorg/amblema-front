@@ -117,7 +117,7 @@ export class ChartJSLineChart extends LineChartComponent {
         ticks: {
           display: this.yaxis.ticks || false,
           min: 0,
-          ...this.calculateNumericAxisRange("y", 5),
+          ...this.calculateNumericAxisRange("y", this.yaxis.edgeSpace),
           fontColor: this.yaxis.color || "#FFF",
           padding: 20,
         },
@@ -158,7 +158,7 @@ export class ChartJSLineChart extends LineChartComponent {
           ...yaxis,
           ticks: {
             ...yaxis.ticks,
-            ...this.calculateNumericAxisRange("y", 5),
+            ...this.calculateNumericAxisRange("y", this.yaxis.edgeSpace),
           },
         };
       }

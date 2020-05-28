@@ -15,9 +15,18 @@
 
 <section class="steps">
   <web-bg-heading>¿Cómo ser un coordinador?</web-bg-heading>
-  <div class="steps-list">
-    <ol #stepsList class="fade-in-animation animation-init">
-      <li *ngFor="let step of coordinatorsPageData.steps">{{ step }}</li>
+  <div class="steps-wrapper">
+    <ol #stepsList class="steps-list fade-in-animation animation-init">
+      <div class="steps-list__divider">
+        <li *ngFor="let step of stepsList1">
+          {{ step }}
+        </li>
+      </div>
+      <div class="steps-list__divider">
+        <li *ngFor="let step of stepsList2">
+          {{ step }}
+        </li>
+      </div>
     </ol>
   </div>
 </section>

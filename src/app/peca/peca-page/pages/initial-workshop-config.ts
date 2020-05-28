@@ -7,10 +7,10 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: {
+    action: [{
       type: 1,
       name: 'Enviar Solicitud',
-    },
+    }],
   }
 }
 
@@ -26,6 +26,7 @@ const formTaller2 = {
   component: 'form',
   settings:{
     formsContent: formRegistroInicial,
+    tableCode: 'dataRegistroTallerInicial',
   }
 }
 
@@ -35,7 +36,7 @@ const registroTallerInicial = {
   settings: {
     columns: {
       image: {
-        title: "Imágenes",
+        title: "Imágen",
       },
       description: {
         title: "Descripción"
@@ -47,34 +48,35 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataRegistroTallerInicial',
+    dataRegistroTallerInicial: [
       {
-        image: '5to Grado',
-        description: 'B',
-        state: '30 operaciones/min',
-        status: '30 operaciones/min'
+        image: 'imagen1.png',
+        description: 'descripcion 1',
+        state: 'Visible',
+        status: 'Aprobado'
       },
       {
-        image: '6to Grado',
-        description: 'A',
-        state: '30 operaciones/min',
-        status: '30 operaciones/min'
+        image: 'imagen2.png',
+        description: 'descripcion 2',
+        state: 'No visible',
+        status: 'Aprobado'
       },
       {
-        image: '4to Grado',
-        description: 'A',
-        state: '30 operaciones/min',
-        status: '30 operaciones/min'
+        image: 'imagen3.png',
+        description: 'descripcion 3',
+        state: 'Visible',
+        status: 'Aprobado'
       },
       {
-        image: '2do Grado',
-        description: 'C',
-        state: '30 operaciones/min',
-        status: '30 operaciones/min'
+        image: 'imagen4.png',
+        description: 'descripcion 4',
+        state: 'No visible',
+        status: 'Aprobado'
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },

@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { OwlModule } from 'ngx-owl-carousel';
 import { SliderBlockComponent } from './slider-block.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {  } from '@nebular/theme';
 import { CarouselModule } from "ngx-owl-carousel-o";
-import { OwlModule } from 'ngx-owl-carousel';
 import { PageBlockFactory } from '../page-block-factory';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
@@ -12,8 +10,8 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 
 
 describe('SliderBlockComponent', () => {
-  let component: SliderBlockComponent;
   let fixture: ComponentFixture<SliderBlockComponent>;
+  let component: SliderBlockComponent;
 
   let factoryResolver: ComponentFactoryResolver;
   let pageBlockFactory: ComponentFactory<PageBlockComponent>;
@@ -56,7 +54,7 @@ beforeEach(() => {
   fixture = TestBed.createComponent(SliderBlockComponent);
   component = fixture.componentInstance;
   factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
-  component.setSettings(SliderBlockComponent);
+  component.setSettings(sliderSettings.settings);
   fixture.detectChanges();
 });
 

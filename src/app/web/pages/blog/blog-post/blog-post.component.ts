@@ -11,6 +11,8 @@ import { BLOG_CONTENT } from "../blog-static-content";
 import { registerLocaleData } from "@angular/common";
 import localeEs from "@angular/common/locales/es-VE";
 import { Title, Meta } from "@angular/platform-browser";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 registerLocaleData(localeEs, "es");
 
 @Component({
@@ -38,7 +40,8 @@ export class BlogPostComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private store: Store
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -145,6 +148,7 @@ export class BlogPostComponent implements OnInit {
       this.recentPosts = data.records.map((record) => {
         return this.adaptEndpointResponseToPost(record);
       });
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 }

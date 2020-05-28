@@ -20,6 +20,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     formsContent: any;
     buttons: string[];
     images: any[];
+    tableCode?: string; // to know which table to update
+    formType?: string; // to specify what action to take on the submit button
+    isOneRow?: boolean;
   };
 
   componentForm: FormGroup;
@@ -29,6 +32,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   glbls:any;
 
   id_:string;
+  wrongDateDisabler = {};
 
   municipalities:MunicipalityInfo[] = [];
 
@@ -96,11 +100,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
           }) );          
           this.doubleFields[f] = fieldsArr;
         }
-        else 
+        else {
+          if (formContent[f].type==="date") this.wrongDateDisabler[f] = false;
           formContentNoTitles.push({
             field: f,
             parent: null // means that this field is not a doubleFields field
           });
+        }
       }
     });
     
@@ -197,12 +203,58 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
     console.log('submitting form');   
-    
+
+    let obj = {
+      code: this.settings.tableCode,
+      data: {},
+      dataArr: [],
+      resetData: false,
+    }; 
+
+    switch (this.settings.formType) {
+      case 'agregarGradoSeccion':
+        obj.data = {
+          grades: cf.get('grades').value,
+          secctions: cf.get('section').value,
+          name: this.settings.formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
+        };              
+        break;
+      case 'agregarDocente':
+        obj.data = {
+          name: cf.get('nameDocente').value,
+          lastName: cf.get('lastNameDocente').value,
+          identity: cf.controls['documentGroup'].get('prependInput').value,
+          mail: cf.get('email').value,
+          status: cf.get('status').value=="1"? 'Activo':'Inactivo',
+        };              
+        break;
+      case 'buscarEstudiante':
+        obj.data = {
+          name: cf.get('letterName').value, 
+          lastName: cf.get('lastNameLetter').value, 
+          doc: cf.controls['documentGroup'].get('prependInput').value, 
+          sex: cf.get('sexo').value=="1"? 'Femenino':'Masculino', 
+          age: null,
+        };              
+        break;
+      
+      default:
+        break;
+    }
+
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
+
+      this.globals.tableDataUpdater(obj);  
+      
+      // initializers
       cf.reset();
       this.municipalities = [];
+      Object.keys(this.wrongDateDisabler).map(f => {
+        this.wrongDateDisabler[f] = false;
+      });
+      //
       this.toastr.success(
         'form submitted',
         '',
@@ -241,6 +293,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   isField(field) {
     return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
   }
+
+  // wrong date save button enabler/disabler
+  checkDateOk(e,mode,f) {
+    if ( this.globals.validateDate(e,mode,true) || e.target.value==="" ) 
+         this.wrongDateDisabler[f] = false;
+    else this.wrongDateDisabler[f] = true;
+  }
+
+  isDateNotOk() { // for button specifically
+    let bool = false
+    Object.keys(this.wrongDateDisabler).map(f => {
+      if (!this.wrongDateDisabler[f]) bool = true;
+    });
+    if (bool) return true;
+    else return false;
+  }
+  // ---------------------------------------
 
   //? FOR IMAGE MANAGING ----------------------------------------------------------------
   // activate click function of the input type file button which calls for the image
@@ -282,7 +351,42 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
   // method which sends image to the images table
   addImage() {
+    let imgGrp = this.componentForm.controls['imageGroup'];
+    let imageObj = {
+      code: this.settings.tableCode,
+      data: {
+        image: imgGrp.get('imageSelected').value.name,
+        description: imgGrp.get('imageDescription').value,
+        state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
+        status: 'En espera'
+      },      
+    };
+    this.globals.tableDataUpdater(imageObj);
     this.componentForm.get('imageGroup').reset();  
   }
   //? -----------------------------------------------------------------------------------
+
+  searchAndFillTable() {
+    let obj = {
+      code: this.settings.tableCode,
+      dataArr: [],
+      resetData: true,
+    }; 
+
+    switch (this.settings.formType) {
+      case 'buscarEstudiante':
+        obj.dataArr = [
+          { name: 'Name 1', lastName: 'Lastname 1', doc: '123456789', sex: 'Femenino', age: '11', },
+          { name: 'Name 2', lastName: 'Lastname 2', doc: '123456789', sex: 'Masculino', age: '13', },
+          { name: 'Name 3', lastName: 'Lastname 3', doc: '123456789', sex: 'Femenino', age: '12', },
+        ];
+        break;
+    
+      default:
+        break;
+    }
+
+    this.globals.tableDataUpdater(obj);
+    this.componentForm.reset();  
+  }
 }

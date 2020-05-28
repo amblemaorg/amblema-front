@@ -11,7 +11,7 @@ export class StepperBlockComponent implements PresentationalBlockComponent, OnIn
   component: string;
   settings: {
     titles: {
-      id: number,
+      id: number;
       text: string;
       content: string;
       aligning: string; // 'center' for center aligning, 'left' otherwise

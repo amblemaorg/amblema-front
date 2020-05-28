@@ -7,10 +7,10 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: {
+    action: [{
       type: 1,
       name: 'Enviar Solicitud',
-    },
+    }],
   }
 }
 
@@ -25,6 +25,7 @@ const formImageEscuela = {
   component: 'form',
   settings: {
     formsContent: formImgEscuela,
+    tableCode: 'dataRegistroEscuela',
   }
 }
 
@@ -45,28 +46,23 @@ const registroEscuela = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataRegistroEscuela',
+    dataRegistroEscuela: [
       {
-        image: '5to Grado',
-        description: 'lorem',
-        state: 'Proceso',
-        status: 'Activo'
+        image: 'imagen1.png',
+        description: 'descripcion 1',
+        state: 'Visible',
+        status: 'Aprobado'
       },
       {
-        image: '6to Grado',
-        description: 'lorem',
-        state: 'Proceso',
-        status: 'Inactivo'
-      },
-      {
-        image: '4to Grado',
-        description: 'loremlorem',
-        state: 'Proceso',
-        status: 'Activo'
+        image: 'imagen2.png',
+        description: 'descripcion 2',
+        state: 'No visible',
+        status: 'Aprobado'
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -77,7 +73,9 @@ const formDocente = {
   settings: {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
-  }
+    tableCode: 'dataTablaDocente',
+    formType: 'agregarDocente',
+  },  
 }
 const tablaDocente = {
   component: 'table',
@@ -99,7 +97,8 @@ const tablaDocente = {
         title: 'Estatus'
       }
     },
-    data: [
+    tableCode: 'dataTablaDocente',
+    dataTablaDocente: [
       {
         name: 'ALfredo',
         lastName: 'Valbuena',
@@ -123,7 +122,7 @@ const tablaDocente = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -134,6 +133,8 @@ const formGradosYSecciones = {
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
+    tableCode: 'dataTablaGradosSecciones',
+    formType: 'agregarGradoSeccion',
   }
 }
 const tablaGradosSecciones = {
@@ -150,7 +151,8 @@ const tablaGradosSecciones = {
         title: 'Docente'
       },
     },
-    data: [
+    tableCode: 'dataTablaGradosSecciones',
+    dataTablaGradosSecciones: [
       {
         grades: '5',
         secctions: 'B',
@@ -168,7 +170,7 @@ const tablaGradosSecciones = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },
@@ -178,7 +180,10 @@ const formEstudiantes = {
   component: 'form',
   settings: {
     formsContent: formTabsEstudiantes,
-    buttons: ['guardar'],
+    buttons: ['agregar'],
+    tableCode: 'dataTablaEstudiante',
+    formType: 'buscarEstudiante',
+    // isOneRow: true,
   }
 }
 const tablaEstudiante = {
@@ -201,7 +206,8 @@ const tablaEstudiante = {
         title: 'Edad'
       },
     },
-    data: [
+    tableCode: 'dataTablaEstudiante',
+    dataTablaEstudiante: [
       {
         name: 'Isa',
         lastName: 'Godoy',
@@ -218,7 +224,7 @@ const tablaEstudiante = {
       },
     ],
     classes: {
-      hideView: false,
+      hideView: true,
       hideEdit: false,
       hideDelete: false,
     },

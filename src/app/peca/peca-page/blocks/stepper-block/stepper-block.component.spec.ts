@@ -14,6 +14,7 @@ describe('StepperBlockComponent', () => {
   let fixture: ComponentFixture<StepperBlockComponent>;
 
 
+
   let factoryResolver: ComponentFactoryResolver;
   let pageBlockFactory: ComponentFactory<PageBlockComponent>;
   //factoryResolver.resolveComponentFactory.and.returnValue(pageBlockFactory)
