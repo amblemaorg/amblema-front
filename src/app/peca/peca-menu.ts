@@ -53,7 +53,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Actividad especial del primer lapso',
         icon: 'actividades',
-        link: '/pages/permissions'
+        link: 'actividad-especial'
       }
     ]
   },
