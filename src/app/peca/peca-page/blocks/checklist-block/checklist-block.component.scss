@@ -1,0 +1,60 @@
+@import "scss/placeholders";
+::ng-deep {
+  .bloque {
+    display: none;
+  }
+  .visually-hidden {
+    position: absolute !important;
+    height: 22px;
+    width: 49px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+  }
+  .container-form {
+    width: 100%;
+    padding: 10px 40px !important;
+  }
+  .nb-theme-default {
+    nb-checkbox .text:not(:empty) {
+      padding-left: 1rem;
+    }
+
+    h6 {
+      color: $blue !important;
+    }
+
+    nb-checkbox.status-basic
+      .native-input:enabled:active
+      + .custom-checkbox.checked {
+      background-color: $blue;
+      border-color: $blue;
+    }
+
+    nb-checkbox.status-basic .custom-checkbox.checked {
+      background-color: $blue;
+      border-color: $blue;
+    }
+    span .descripcion {
+      color: $dark-gray;
+    }
+    nb-checkbox .custom-checkbox {
+      border-radius: 0px !important;
+    }
+    .style-btn{
+      text-align: right;
+      margin-top: 3rem;
+    }
+    a.btn, button.btn {
+      @include shared-btn-confs;
+  }
+
+  @media (max-width:768px) {
+    .style-btn{
+      text-align: left;
+      margin-left: -40px;
+    }
+  }
+
+  }
+}

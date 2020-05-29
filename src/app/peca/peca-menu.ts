@@ -36,6 +36,11 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: 'amblemoneda-page'
       },
       {
+        title: 'Preparación de la convención anual',
+        icon: 'convencion',
+        link: 'preparacion-convencion-anual'
+      },
+      {
         title: 'Convención anual',
         icon: 'convencion',
         link: 'convencion-anual'
@@ -48,7 +53,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Actividad especial del primer lapso',
         icon: 'actividades',
-        link: '/pages/permissions'
+        link: 'actividad-especial'
       }
     ]
   },

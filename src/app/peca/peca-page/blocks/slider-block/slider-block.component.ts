@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { DOCUMENT } from "@angular/common";
@@ -9,13 +9,14 @@ import { GlobalService } from '../../../../services/global.service';
   templateUrl: './slider-block.component.html',
   styleUrls: ['./slider-block.component.scss']
 })
+
 export class SliderBlockComponent implements PresentationalBlockComponent, OnInit {
-  @ViewChild('owlElement', {static: false}) owlEl:OwlCarousel;
+  @ViewChild('owlElement', { static: false }) owlEl: OwlCarousel;
   type: 'presentational';
   component: string;
   settings: {
     sliderImage: {
-      image:string;
+      image: string[];
       description: string;
     }[];
     dateOrtext: {
@@ -24,8 +25,8 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
     };
   };
 
-  glbls:any;
-  constructor(@Inject(DOCUMENT) private document: Document,private globals: GlobalService) {
+  glbls: any;
+  constructor(@Inject(DOCUMENT) private document: Document, private globals: GlobalService) {
     this.type = 'presentational';
     this.component = 'slider';
     this.glbls = globals;
@@ -36,22 +37,37 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
 
   title = 'OwlCarousel2 in Angular7 with Custom Navigation Arrows';
 
- 
-mySlideOptions={items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
-myCarouselOptions={items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true, lazyLoad: true};
 
-  
+  mySlideOptions = { items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video: true, lazyLoad: true };
+  myCarouselOptions = { items: 4, dots: false, mouseDrag: false, touchDrag: false, video: true, lazyLoad: true };
+
+  OwlOptions = {
+    items: 1,
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    nav: true,
+    responsiveClass: true,
+  }
+
+
+
+
   shown = 0;
 
   goToImg(i) {
     this.owlEl.to([i]);
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(this.shown).setAttribute('style','display:block');
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(i).setAttribute('style','display:none');
-    this.shown = i;    
+    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(this.shown).setAttribute('style', 'display:block');
+    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(i).setAttribute('style', 'display:none');
+    this.shown = i;
     // to stop playing video
     this.owlEl.reInit();
   }
-  
+
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
