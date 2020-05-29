@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 services:
   web:
     container_name: amblema_web
@@ -10,13 +10,13 @@ services:
     env_file:
       - .env
     # environment:
-      # Set enviroment values in .env file or here
-      # - NGINX_HOST=
-      # - NGINX_PORT=
-      # - NGINX_ROOT=
-      # - SSR_PORT=
-      # - G_MAPS_ID=
-      # - G_ANALYTICS_ID=
+    # Set enviroment values in .env file or here
+    # - NGINX_HOST=
+    # - NGINX_PORT=
+    # - NGINX_ROOT=
+    # - SSR_PORT=
+    # - G_MAPS_ID=
+    # - G_ANALYTICS_ID=
     volumes:
       - .:/home/amblema
     command: >
@@ -25,19 +25,17 @@ services:
       && exec nginx -g 'daemon off;'"
     networks:
       - default
-#volumes:
-#  amblema_web:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: ${PWD}
-#      o: bind
+# volumes:
+#   amblema_web:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: ${PWD}
+#       o: bind
 networks:
   default:
-    driver: bridge
-    name: amblema_web_network
-
-
+    external:
+      name: amblema_db_db_network
 #YANIOR-USO-LOCAL
 # version: '3.3'
 

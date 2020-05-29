@@ -37,6 +37,7 @@ import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-pl
 import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
 import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
 import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
+import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -61,6 +62,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     AmblemonedaPageComponent,
     AnnualConventionPageComponent,
     AnnualConventionPreparationPageComponent,
+    SpecialActivityPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,

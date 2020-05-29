@@ -10,9 +10,7 @@ import { SchoolService } from "src/app/services/web/school.service";
 import { Router } from "@angular/router";
 import { GlobalService } from "src/app/services/global.service";
 import { isNullOrUndefined } from "util";
-// import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from "src/app/services/modal.service";
-
 const DISMISS = "0";
 const ACCEPT = "1";
 
