@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
 
@@ -7,12 +7,14 @@ import { GlobalService } from '../../../../services/global.service';
   templateUrl: './texts-buttons-set-block.component.html',
   styleUrls: ['./texts-buttons-set-block.component.scss']
 })
-export class TextsButtonsSetBlockComponent implements PresentationalBlockComponent, OnInit {
+export class TextsButtonsSetBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: 'presentational';
   component: string;
   settings: {   
     tableCode?: string; // to know which table to update 
     buttonType?: string; // to specify what action to take on the button
+    receivesFromTableOrForm?: string; // to know if make action receiving data fronm a table, form or both
+    buttonCode?: string; // to check if this instance can make actions receiving data from table, form or both
     dateOrtext: {
       text: string;
       date: string;
@@ -37,15 +39,23 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
         text: string; // paragraph
       }[];
     // }[];    
-    action: {
-        type: number; // 1 send, 2 save
+    action: { // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas
+        type: number;
         name: string; // text in the button
     }[];
     upload: any;
     download: any;
     btnGeneral: any;
   };
+
   glbls:any;
+
+  // data from form, table or both.
+  dataTorF = {
+    table: null,
+    form: null,
+  };
+
   constructor(private globals: GlobalService,) {
     this.type = 'presentational';
     this.component = 'buttons';
@@ -54,13 +64,37 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
 
   currentSelected = null;
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.globals.updateButtonDataEmitter.subscribe(data => {
+      if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
+        if (data.whichData=="table") this.dataTorF.table = data.table;
+        if (data.whichData=="form") this.dataTorF.form = data.form;
+      }
+    });
+  }
+  ngOnDestroy() {
+    this.dataTorF = {
+      table: null,
+      form: null,
+    }
+  }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
   focusDatePicker(e) {
     e.focus();
+  }
+
+  disableThis(type: number) {
+    if (this.settings.receivesFromTableOrForm && (type == 1 || type == 3 || type == 4) ) {
+      if (
+        (this.settings.receivesFromTableOrForm=="table" && !this.dataTorF.table) ||
+        (this.settings.receivesFromTableOrForm=="form" && !this.dataTorF.form)   ||
+        (this.settings.receivesFromTableOrForm=="both" && (/* !this.dataTorF.table ||  */!this.dataTorF.form) )
+      ) return true;
+    }
+    return false
   }
 
   addToTable() {
@@ -85,6 +119,18 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     }
 
     this.globals.tableDataUpdater(obj);
+  }
+
+  takeAction(type: number, e) {
+    switch (type) {
+      case 2:
+        this.globals.ImageContainerShower(this.settings.buttonCode);
+        e.target.classList.add('d-none');
+        break;
+    
+      default:
+        break;
+    }
   }
 
 }

@@ -95,9 +95,12 @@
         </a> 
     -->
         <ng-container *ngFor="let action of settings.action">
-            <button 
+            <button
                 *ngIf="action.name"
-                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn">
+                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+                [disabled]="disableThis(action.type)"
+                (click)="takeAction(action.type, $event)"
+            >
                     <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
                     {{ action.name }}
             </button>

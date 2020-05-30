@@ -168,14 +168,17 @@
         
         <ng-template #titleLabel>          
             <ng-container *ngIf="settings.formsContent[field].type==='title'; else imageGroup">
-              <h6>{{ settings.formsContent[field].label }}</h6>
+              <h6 [class.d-none]="settings.formsContent[field].hideImgContainer && settings.hideImgContainer">
+                {{ settings.formsContent[field].label }}
+              </h6>
             </ng-container>
         </ng-template>
 
         <ng-template #imageGroup>
             <div 
               [formGroupName]="field" 
-              class="image-group d-flex flex-wrap"
+              class="image-group"
+              [class.d-none]="settings.hideImgContainer"
             >
               <!-- camera-outline -->
               <div
@@ -275,7 +278,7 @@
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+              [disabled]="disableBtn()"
             >
               <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
               {{ !sendingForm? 'Guardar':'Guardando..' }}

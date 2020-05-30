@@ -16,6 +16,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     columns: any;
     // dataTypes: {};
     tableCode: string; // specifies which table to work with
+    buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
+    hideImgContainer?: boolean; // if view has image adder container set this to true
     classes: {
       hideView: boolean;
       hideEdit: boolean;
@@ -37,7 +39,19 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         else this.settings[data.code].push(data.data);
 
         this.source = new LocalDataSource(this.settings[data.code]);
+
+        if (this.settings.buttonCode)
+          this.globals.buttonDataUpdater({
+            code: this.settings.buttonCode,
+            whichData: 'table',
+            table: this.settings[data.code],
+          });
       }      
+    });
+
+    this.globals.showImageContainerEmitter.subscribe(code => {
+      if(this.settings.buttonCode && this.settings.buttonCode == code)
+        this.settings.hideImgContainer = false;
     });
   }
   ngOnDestroy() {
