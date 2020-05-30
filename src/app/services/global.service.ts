@@ -236,9 +236,17 @@ export class GlobalService {
 
   //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() showImageContainerEmitter: EventEmitter<any> = new EventEmitter();
   
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
+  }
+  buttonDataUpdater(obj) {
+    this.updateButtonDataEmitter.emit(obj);
+  }
+  ImageContainerShower(code:string) {
+    this.showImageContainerEmitter.emit(code);
   }
   //? -----------------------------------------------------------------------
 }

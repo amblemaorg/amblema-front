@@ -26,7 +26,7 @@ const btnGuardar = {
     component: 'textsbuttons',
     settings: {
         action: [{
-            type: 2,
+            type: 1,
             name: 'Guardar',
         }]
     }

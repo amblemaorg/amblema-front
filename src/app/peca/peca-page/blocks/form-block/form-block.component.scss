@@ -46,6 +46,8 @@
       }
 
       .image-group {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -339,6 +341,9 @@
         .submit-btn, 
         .add-img-button {
           @include shared-btn-confs;
+        }
+        button {
+          margin-right: 0;
         }
       }
       

@@ -3,7 +3,7 @@ const botonEstadistica = {
   settings: {
     action: [
       {
-        type: 1,
+        type: 5,
         name: 'Ver estadísticas',
       }
     ],

@@ -1,4 +1,4 @@
-import { formDatosEscuela, formImgEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes } from '../blocks/form-block/all-forms';
+import { formDatosEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes } from '../blocks/form-block/all-forms';
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -7,25 +7,28 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: [{
-      type: 1,
-      name: 'Enviar Solicitud',
-    }],
+    action: [
+      {
+        type: 2,
+        name: 'Adjuntar fotos',
+      },
+      {
+        type: 3,
+        name: 'Enviar Solicitud',
+      },
+    ],
+    receivesFromTableOrForm: 'both',
+    buttonCode: 'schoolDataConfigRegistroEscuela',
   }
 }
 
 const formEscuela = {
   component: 'form',
   settings: {
-    formsContent: formDatosEscuela,
-    buttons: ['guardar'],
-  }
-}
-const formImageEscuela = {
-  component: 'form',
-  settings: {
-    formsContent: formImgEscuela,
+    formsContent: formDatosEscuela,  
+    buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
+    hideImgContainer: true,  
   }
 }
 
@@ -46,6 +49,8 @@ const registroEscuela = {
         title: 'Estatus'
       }
     },
+    hideImgContainer: true,
+    buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
     schoolDataConfigRegistroEscuela: [
       {
@@ -245,7 +250,6 @@ export const SCHOOL_DATA_CONFIG = {
             icon: "taller-inicial",
             childBlocks: [
               { ...formEscuela },
-              { ...formImageEscuela },
               { ...registroEscuela },
               { ...textsAndButtons }
             ]

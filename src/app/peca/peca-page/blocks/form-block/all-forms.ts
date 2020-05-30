@@ -332,9 +332,7 @@ export const formDatosEscuela = {
       twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },  
     }
   },
-}
-export const formImgEscuela = {
-  title5: { label: "Slider principal de la escuela", type: "title" },
+  title5: { label: "Slider principal de la escuela", type: "title", hideImgContainer: true },
   imageGroup: {
     type: "image",
     fields: {
@@ -352,6 +350,7 @@ export const formImgEscuela = {
     },
   },
 }
+
 /*TABS DOCENTE*/
 export const formTabsDocente = {
   titleName: { label: "Datos del Docente", type: "title" },

@@ -7,6 +7,7 @@ import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
+import { structureData } from './data-structure';
 
 @Component({
   selector: 'form-block',
@@ -22,7 +23,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     images: any[];
     tableCode?: string; // to know which table to update
     formType?: string; // to specify what action to take on the submit button
+    buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
     isOneRow?: boolean;
+    hideImgContainer?: boolean; // if view has image adder container set this to true
   };
 
   componentForm: FormGroup;
@@ -48,7 +51,26 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   ngOnInit() {
+    this.componentForm.statusChanges.subscribe( (val) => {
+      if (val==="INVALID" || this.isDateNotOk()) this.btnUpdater(null);
+      else this.btnUpdater(this.componentForm.value);
+    });
+
+    this.globals.showImageContainerEmitter.subscribe(code => {
+      if(this.settings.buttonCode && this.settings.buttonCode == code)
+        this.settings.hideImgContainer = false;
+    });
+
     this.setId();
+  }
+
+  btnUpdater(val) {
+    if (this.settings.buttonCode)
+      this.globals.buttonDataUpdater({
+        code: this.settings.buttonCode,
+        whichData: 'form',
+        form: val,
+      });
   }
 
   setSettings(settings: any) {
@@ -202,51 +224,22 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   // submitting forms
   onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
-    console.log('submitting form');   
+    console.log('submitting form');  
+    
+    let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
     let obj = {
       code: this.settings.tableCode,
-      data: {},
+      data: manageData.data,
       dataArr: [],
       resetData: false,
     }; 
-
-    switch (this.settings.formType) {
-      case 'agregarGradoSeccion':
-        obj.data = {
-          grades: cf.get('grades').value,
-          secctions: cf.get('section').value,
-          name: this.settings.formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
-        };              
-        break;
-      case 'agregarDocente':
-        obj.data = {
-          name: cf.get('nameDocente').value,
-          lastName: cf.get('lastNameDocente').value,
-          identity: cf.controls['documentGroup'].get('prependInput').value,
-          mail: cf.get('email').value,
-          status: cf.get('status').value=="1"? 'Activo':'Inactivo',
-        };              
-        break;
-      case 'buscarEstudiante':
-        obj.data = {
-          name: cf.get('letterName').value, 
-          lastName: cf.get('lastNameLetter').value, 
-          doc: cf.controls['documentGroup'].get('prependInput').value, 
-          sex: cf.get('sexo').value=="1"? 'Femenino':'Masculino', 
-          age: null,
-        };              
-        break;
-      
-      default:
-        break;
-    }
 
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
 
-      this.globals.tableDataUpdater(obj);  
+      if (manageData.isThereTable) this.globals.tableDataUpdater(obj);  
       
       // initializers
       cf.reset();
@@ -287,6 +280,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   focusDatePicker(e) {
     e.focus();
+  }
+
+  disableBtn() {
+    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk()
   }
 
   // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE

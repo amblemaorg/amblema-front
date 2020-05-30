@@ -8,9 +8,11 @@ const textsAndButtons = {
       aligning: 'center',
     },
     action: [{
-      type: 1,
+      type: 3,
       name: 'Enviar Solicitud',
-    }],
+    }],    
+    receivesFromTableOrForm: 'both',
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
   }
 }
 
@@ -19,6 +21,7 @@ const formTaller1 = {
   settings: {
     formsContent: formPreparacionTallerInicial,
     buttons: ['guardar'],
+    formType: 'initialWorkshopConfigPreparacionTaller',
   }
 }
 
@@ -27,6 +30,7 @@ const formTaller2 = {
   settings:{
     formsContent: formRegistroInicial,
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
   }
 }
 
@@ -48,6 +52,7 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
       {
