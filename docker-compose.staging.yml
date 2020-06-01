@@ -38,4 +38,4 @@ networks:
   #   name: amblema_front_network
   default:
     external:
-      name: amblema_db_db_network
+      name: amblema_db_network

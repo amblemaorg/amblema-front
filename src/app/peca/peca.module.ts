@@ -17,6 +17,7 @@ import {
   NbUserModule,
   NbStepperModule,
   NbButtonModule,
+  NbCheckboxModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
@@ -35,6 +36,8 @@ import { ProfilePageComponent } from './peca-page/pages/profile-page.component';
 import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-planning-page.component';
 import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
 import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
+import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
+import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -44,6 +47,7 @@ import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.com
 import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-block.component';
 import { SliderBlockComponent } from './peca-page/blocks/slider-block/slider-block.component';
 import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-block.component';
+import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/checklist-block.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,8 @@ import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-
     SchedulingPlanningPageComponent,
     AmblemonedaPageComponent,
     AnnualConventionPageComponent,
+    AnnualConventionPreparationPageComponent,
+    SpecialActivityPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -66,6 +72,7 @@ import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-
     ProfileBlockComponent,
     SliderBlockComponent,
     StepperBlockComponent,
+    ChecklistBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -90,6 +97,7 @@ import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-
     NbButtonModule,
     CarouselModule,
     OwlModule,
+    NbCheckboxModule,
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -100,6 +108,7 @@ import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-
     ProfileBlockComponent,
     SliderBlockComponent,
     StepperBlockComponent,
+    ChecklistBlockComponent,
   ]
 })
 export class PecaModule { }
