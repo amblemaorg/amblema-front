@@ -54,6 +54,11 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         title: 'Actividad especial del primer lapso',
         icon: 'actividades',
         link: 'actividad-especial'
+      },
+      {
+        title: 'Olimpiadas de matemáticas',
+        icon: 'diagnostico',
+        link: 'olimpiadas-matematicas'
       }
     ]
   },
