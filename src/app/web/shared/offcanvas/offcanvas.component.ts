@@ -1,21 +1,42 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 @Component({
-  selector: 'web-offcanvas',
-  templateUrl: './offcanvas.component.html',
-  styleUrls: ['./offcanvas.component.scss']
+  selector: "web-offcanvas",
+  templateUrl: "./offcanvas.component.html",
+  styleUrls: ["./offcanvas.component.scss"],
 })
 export class OffcanvasComponent implements OnInit {
-  @Input() status;
-  @Output() close = new EventEmitter;
-  constructor() { }
+  @ViewChild("ref", { read: ElementRef, static: true }) ref: ElementRef;
+  @Output() close = new EventEmitter();
+  status: string = "closed";
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
   onClose() {
+    this.toClose();
     if (this.close) {
-      this.close.emit('complete');
+      this.close.emit("complete");
     }
+  }
+
+  open() {
+    this.status = "opened";
+    disableBodyScroll(this.ref.nativeElement);
+  }
+
+  toClose() {
+    this.status = "closed";
+    enableBodyScroll(this.ref.nativeElement);
   }
 }

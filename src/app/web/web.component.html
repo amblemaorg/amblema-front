@@ -12,7 +12,7 @@
   <router-outlet></router-outlet>
   <web-footer #footer (openModal)="openOffcanvas($event)"></web-footer>
 </web-header>
-<web-offcanvas #offcanvas [status]="offcanvasClass" (close)="closeOffcanvas()">
+<web-offcanvas #offcanvas (close)="closeOffcanvas()">
   <web-implemented-forms [form]="formSelected" (success)="closeOffcanvas()">
   </web-implemented-forms>
 </web-offcanvas>
