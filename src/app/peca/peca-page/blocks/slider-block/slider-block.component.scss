@@ -15,33 +15,159 @@
 }
 
 
+.h6-responsive{
+	display: inline-block;
+}
+.carousel-1,
+.carousel-2,
+.carousel-text{
+	display: initial;
+}
+.secundario{
+	display: none;
+	margin-top: 1.5rem;
+}
+@media (max-width:768px){
+	.secundario{
+		display: initial;
+	}
+	.carousel-1,
+	.carousel-2{
+		display: none;
+	}
+	.carousel-text{
+		display: none !important;
+	}
+}
+
+::ng-deep .owl-carousel {
+	-webkit-transition: opacity .25s;
+	transition: opacity .25s;
+
+	.owl-nav button.owl-next {
+		right: -77vw;
+	}
+
+	@media (max-width:400px){
+		.owl-nav button.owl-prev{
+			top: -3rem;
+		}
+		.owl-nav button.owl-next{
+			top: -3rem;
+		}
+		.owl-nav button.owl-next {
+			right: -70vw;
+		}
+	}
+}
+
+.form-control {
+	color: $blue;
+
+	&[readonly] {
+	cursor: default;
+	background-color: #fff;
+	position: absolute;
+	top: 55px;
+	left: 135px;
+	border: none;
+	width: 10%;
+	padding-bottom: 0 !important;
+	height: auto;
+	}
+
+	&[type="date"]:focus + .form-control[readonly] {
+	display: none;
+	}
+
+	&:focus {
+	box-shadow: none;
+	}
+
+	&.ng-touched {
+	&.ng-invalid, &.date-not-valid {
+		border: 2px solid $red;
+	}
+
+	&.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
+		border: 2px solid $green;
+	}
+	
+	& ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
+		display: block;
+	}
+
+	&:not(.date-not-valid) ~ .date-error-message {
+		display: none;
+	}          
+	}
+
+	&.ng-untouched {
+	& ~ .error-message, & ~ .date-error-message {
+		display: none;
+	}
+	}
+
+	.input-responsive{
+		display: inline-block;
+	}
+
+}
+
+@media (min-width:576px) and (max-width:992px){
+	.form-control{
+		width: 40%;
+		margin-left: 1rem;
+		display: inline-block;
+	}
+}
+@media (min-width:576px) and (max-width:768px){
+	.form-control{
+		top: 3px !important;
+    	left: 316px !important;
+	}
+}
+@media (max-width: 576px){
+	.input-responsive{
+		margin-bottom: 1rem;
+	}
+}
+
 .gallery {
 	@include mediabreak(small,landscape,true,640px) { margin-top: 2rem; }
 	@include mediabreak(larger,landscape,true,1366px) { margin: 3rem; }
 
 	.col-sm-7{
 		@include mediabreak(larger,landscape,true,1600px) {
-			flex: 0 0 50%;
-			max-width: 50%   
-		}            
+			flex: 0 0 55%;
+			max-width: 55%   
+		}  
+		@media (min-width:576px) and (max-width: 992px){
+			flex: 0 0 80%;
+			max-width: 80%  
+		}          
 	}
 	.col-sm-2 {
 		@include mediabreak(larger,landscape,true,1600px) {
+			flex: 0 0 15%;
+			max-width: 15%   
+		} 
+		@media (min-width:576px) and (max-width: 992px){
 			flex: 0 0 20%;
-			max-width: 20%   
-		}            
+			max-width: 20%  
+		}              
 	}
 	.col-sm-3 {
 		@include mediabreak(larger,landscape,true,1600px) {
 			flex: 0 0 30%;
 			max-width: 30%   
+		}   
+		@media (min-width:576px) and (max-width: 992px){
+			flex: 0 0 100%;
+			max-width: 100%  
 		}            
 	}
 
-	::ng-deep .owl-carousel {
-		-webkit-transition: opacity .25s;
-		transition: opacity .25s;
-	}
 
 	.carousel {           
 		owl-carousel ::ng-deep .owl-carousel .owl-item {
@@ -65,17 +191,6 @@
 				}
 			}
 		}                    
-
-		h6 {                
-			@extend %bold-blue;
-
-			@include mediabreak(small,portrait) {
-				display: none;
-			}
-			@include mediabreak(small,landscape,true,640px) {
-				display: none;
-			}  
-		}
 	}
 
 	.images {
@@ -168,7 +283,7 @@
 		}            
 	}
 }    
-.image-desc-container {
+/*.image-desc-container {
 	@include mediabreak(large, landscape) { margin-bottom: 6rem; }
 	text-align: justify;
 	.image-desc {
@@ -203,4 +318,23 @@
 			opacity: 0;
 		}
 	}  
-}      
+}      */
+
+.image-desc-container {
+	@media (max-width:992px){
+		margin-top: 3rem;
+	}
+	.image-desc {
+		&.hidden {
+			height: 0; width: 0;
+			overflow: hidden;
+			margin: 0 !important;
+			opacity: 0;
+		}
+		@media (min-width:576px) and (max-width:992px){
+			h6{
+				display: inline-block;
+			}
+		}
+	}
+}
