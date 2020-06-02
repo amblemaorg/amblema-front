@@ -238,6 +238,7 @@ export class GlobalService {
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() showImageContainerEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() hideModalEmitter: EventEmitter<any> = new EventEmitter();
   
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
@@ -247,6 +248,9 @@ export class GlobalService {
   }
   ImageContainerShower(code:string) {
     this.showImageContainerEmitter.emit(code);
+  }
+  ModalHider(code:string) {
+    this.hideModalEmitter.emit(code);
   }
   //? -----------------------------------------------------------------------
 }

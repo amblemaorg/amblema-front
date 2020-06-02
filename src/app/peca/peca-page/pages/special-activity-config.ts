@@ -1,3 +1,5 @@
+import { formParaPruebaModal } from '../blocks/form-block/all-forms'
+
 const controlProps = {
     dateAndRequired: {
         type: "date",
@@ -13,9 +15,11 @@ const textsAndButtons = {
     component: 'textsbuttons',
     settings: {
         action: [{
-            type: 1,
+            type: 3,
             name: 'Enviar Solicitud',
         }],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataSpecialActivityTable',
     }
 }
 
@@ -30,10 +34,11 @@ const dateAndStatus = {
         status: 'pendiente',
         action: [
             {
-                type: 1,
+                type: 6,
                 name: 'Agregar Nuevo',
             }
         ],
+        modalCode: 'dataSpecialActivityTable',
     }
 }
 const specialActivityTable = {
@@ -59,8 +64,9 @@ const specialActivityTable = {
                 title: 'subtotal'
             },
         },
-        tableCode: 'dataSpecialActivity',
-        dataSpecialActivity: [
+        buttonCode: 'dataSpecialActivityTable',
+        tableCode: 'dataSpecialActivityTable',
+        dataSpecialActivityTable: [
             {
                 item: '1',
                 description: 'cosa',
@@ -86,19 +92,33 @@ const specialActivityTable = {
     }
 }
 
+//! PRUEBAS ----------------------------------
+const formPrueba = {
+    component: 'form',
+    settings: {
+      formsContent: formParaPruebaModal,
+      buttons: ['guardar'],
+      formType: 'pruebaaaaaaaa',
+      tableCode: 'dataSpecialActivityTable',
+      modalCode: 'dataSpecialActivityTable',
+    }
+  }
+//! ------------------------------------------
+
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
         title: "Actividad especial"
     },
     blocks: [
         {
-            component: 'profiles',
+            component: 'modal',
             settings: {
+                modalCode: 'dataSpecialActivityTable',
                 items: [
                     {
-
+                        formBlock: { ...formPrueba }, 
                         childBlocks: [
-                            { ...dateAndStatus },
+                            { ...dateAndStatus },                            
                             { ...specialActivityTable },
                             { ...textsAndButtons }
                         ]

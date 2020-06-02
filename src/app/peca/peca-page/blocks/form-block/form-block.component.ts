@@ -26,6 +26,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
     isOneRow?: boolean;
     hideImgContainer?: boolean; // if view has image adder container set this to true
+    modalCode?: string; // for views with modal inside
   };
 
   componentForm: FormGroup;
@@ -240,6 +241,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       console.log('form submitted'); 
 
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);  
+
+      if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
       
       // initializers
       cf.reset();
