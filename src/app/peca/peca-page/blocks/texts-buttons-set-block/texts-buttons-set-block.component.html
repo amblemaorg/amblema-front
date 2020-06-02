@@ -2,7 +2,7 @@
     <div class="texts-wrapper" *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectStatus">
         <div class="date-download-status d-flex justify-content-between">
             <div *ngIf="settings.dateOrtext" class="left-side">
-                <h6>
+                <h6 class="left-sided-content">
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span *ngIf="settings.dateOrtext.text && settings.dateOrtext.date">:&nbsp;</span>
                     <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
@@ -95,15 +95,26 @@
         </a> 
     -->
         <ng-container *ngFor="let action of settings.action">
-            <button
-                *ngIf="action.name"
-                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-                [disabled]="disableThis(action.type)"
-                (click)="takeAction(action.type, $event)"
-            >
-                    <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
-                    {{ action.name }}
-            </button>
+            <ng-container *ngIf="action.type==6; else notModal">
+                <button
+                    *ngIf="action.name"
+                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
+                    data-toggle="modal" 
+                    [attr.data-target]="'#'+settings.modalCode+'-modal'"
+                >{{ action.name }}
+                </button>
+            </ng-container>
+            <ng-template #notModal>
+                <button
+                    *ngIf="action.name"
+                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+                    [disabled]="disableThis(action.type)"
+                    (click)="takeAction(action.type, $event)"
+                >
+                        <span *ngIf="false" class="spinner-grow spinner-grow-sm"></span>
+                        {{ action.name }}
+                </button>
+            </ng-template>
         </ng-container>        
     </div>
 </div>

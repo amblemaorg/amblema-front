@@ -255,6 +255,14 @@ export const sampleFormData = {
     },
   },
 }
+export const formParaPruebaModal = {
+  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  impuesto: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+}
 
 /*TALLER INICIAL*/
 export const formPreparacionTallerInicial = {
