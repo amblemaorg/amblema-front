@@ -11,6 +11,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   type: 'presentational';
   component: string;
   settings: {   
+    modalCode?: string; // for views with modal inside
     tableCode?: string; // to know which table to update 
     buttonType?: string; // to specify what action to take on the button
     receivesFromTableOrForm?: string; // to know if make action receiving data fronm a table, form or both
@@ -39,7 +40,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
         text: string; // paragraph
       }[];
     // }[];    
-    action: { // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas
+    action: { // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar
         type: number;
         name: string; // text in the button
     }[];
@@ -111,6 +112,15 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
           lastName: 'Melendez',
           phone: '15487985',
           email: 'josmel@yahoo.com'
+        };
+        break;
+      case 'agregarResultadoEstudiante':
+        obj.data = {
+          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+          lastName: 'Valbuena',
+          gradeAndSection: '5to grado B',
+          state: 'Lara',
+          result: 'Aprobado',
         };
         break;
     

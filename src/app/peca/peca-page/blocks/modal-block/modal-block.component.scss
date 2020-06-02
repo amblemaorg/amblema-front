@@ -1,0 +1,28 @@
+::ng-deep {
+    .container-for-modal-and-content {
+        padding: 1rem 2rem;
+
+        .not-modal {
+
+        }
+
+        .modal {
+            .modal-content {
+                .modal-header {
+                    padding: 1rem 1rem 0;
+                    border-bottom: none;
+
+                    .close {
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+
+                .modal-body {
+
+                }
+            }            
+        }
+    }
+}
