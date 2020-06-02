@@ -80,9 +80,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, Af
         pageBlockComponent.instance.setSettings(block.settings);
       });
       const containerInsideModal = this.modalContainer.toArray()[i];
-      const pageBlockComponentFactory2 = this.factory.createPageBlockFactory(item.formBlock.component);
-      const pageBlockComponent2 = containerInsideModal.createComponent(pageBlockComponentFactory2);
-      pageBlockComponent2.instance.setSettings(item.formBlock.settings);
+      if (item.formBlock) {
+        const pageBlockComponentFactory2 = this.factory.createPageBlockFactory(item.formBlock.component);
+        const pageBlockComponent2 = containerInsideModal.createComponent(pageBlockComponentFactory2);
+        pageBlockComponent2.instance.setSettings(item.formBlock.settings);
+      }      
     })
   }
 }
