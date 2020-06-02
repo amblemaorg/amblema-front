@@ -42,6 +42,8 @@ const selectEstudiantes = {
         {
             name: 'Agregar'
         },
+        buttonType: 'agregarResultadoEstudiante',
+        tableCode: 'dataResultadoEstudiante',
     }
 }
 
@@ -53,9 +55,11 @@ const textsAndButtons = {
             aligning: 'center',
         },
         action: [{
-            type: 1,
+            type: 3,
             name: 'Enviar Solicitud',
         }],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataResultadoEstudiante',
     }
 }
 
@@ -79,8 +83,9 @@ const resultadoEstudiante = {
                 title: 'Resultado'
             },
         },
-        tableCode: 'dataEstudiante',
-        dataEstudiante: [
+        buttonCode: 'dataResultadoEstudiante',
+        tableCode: 'dataResultadoEstudiante',
+        dataResultadoEstudiante: [
             {
                 name: 'Alfredo',
                 lastName: 'Valbuena',

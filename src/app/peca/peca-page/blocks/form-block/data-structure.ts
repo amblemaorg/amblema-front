@@ -36,6 +36,16 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           data.isThereTable = false;
           console.log(cf.value);
           break;
+        case 'pruebaaaaaaaa': //! borrar
+          data.data = {
+            item: cf.get('item').value,
+            description: cf.get('description').value,
+            cantidad: cf.get('cantidad').value,
+            price: cf.get('price').value,
+            impuesto: cf.get('impuesto').value,
+            subtotal: cf.get('subtotal').value,
+          };
+          break;   
         
         default:
           break;

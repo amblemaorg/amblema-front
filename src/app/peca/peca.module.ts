@@ -49,6 +49,7 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
 import { SliderBlockComponent } from './peca-page/blocks/slider-block/slider-block.component';
 import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-block.component';
 import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/checklist-block.component';
+import { ModalBlockComponent } from './peca-page/blocks/modal-block/modal-block.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ModalBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -111,6 +113,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ModalBlockComponent,
   ]
 })
 export class PecaModule { }
