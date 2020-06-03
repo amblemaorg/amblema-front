@@ -96,13 +96,26 @@ const specialActivityTable = {
 const formPrueba = {
     component: 'form',
     settings: {
-      formsContent: formParaPruebaModal,
-      buttons: ['guardar'],
-      formType: 'pruebaaaaaaaa',
-      tableCode: 'dataSpecialActivityTable',
-      modalCode: 'dataSpecialActivityTable',
+        formsContent: formParaPruebaModal,
+        buttons: ['guardar'],
+        formType: 'pruebaaaaaaaa',
+        tableCode: 'dataSpecialActivityTable',
+        modalCode: 'dataSpecialActivityTable',
     }
-  }
+}
+const modalPrueba = {
+    component: 'modal',
+    settings: {
+        modalCode: 'dataSpecialActivityTable',
+        items: [
+        {
+            childBlocks: [
+            { ...formPrueba }
+            ]
+        }
+        ]
+    }
+}
 //! ------------------------------------------
 
 export const SPECIAL_ACTIVITY_CONFIG = {
@@ -111,16 +124,15 @@ export const SPECIAL_ACTIVITY_CONFIG = {
     },
     blocks: [
         {
-            component: 'modal',
-            settings: {
-                modalCode: 'dataSpecialActivityTable',
+            component: 'profiles',
+            settings: {                
                 items: [
-                    {
-                        formBlock: { ...formPrueba }, 
+                    {     
                         childBlocks: [
                             { ...dateAndStatus },                            
                             { ...specialActivityTable },
-                            { ...textsAndButtons }
+                            { ...textsAndButtons },
+                            { ...modalPrueba },
                         ]
                     },
                 ],
