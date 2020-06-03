@@ -1,4 +1,4 @@
-import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal } from '../blocks/form-block/all-forms'
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -89,6 +89,31 @@ const registroTallerInicial = {
 }
 // !---------------------------------------------
 
+//! PRUEBAS ----------------------------------
+const formPrueba = {
+  component: 'form',
+  settings: {
+    formsContent: formParaPruebaModal,
+    buttons: ['guardar'],
+    formType: 'pruebaaaaaaaa',
+    tableCode: 'dataSpecialActivityTable',
+    modalCode: 'dataSpecialActivityTable',
+  }
+}
+const modalPrueba = {
+  component: 'modal',
+  settings: {
+    items: [
+      {
+        childBlocks: [
+          { ...formPrueba }
+        ]
+      }
+    ]
+  }
+}
+//! ------------------------------------------
+
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
     title: "Taller inicial"
@@ -111,7 +136,8 @@ export const INITIAL_WORKSHOP_CONFIG = {
             childBlocks: [   
               { ...formTaller2 },           
               { ...registroTallerInicial },
-              { ...textsAndButtons }
+              { ...textsAndButtons },
+              { ...modalPrueba },
             ]
           },
         ]

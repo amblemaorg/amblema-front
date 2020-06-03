@@ -14,9 +14,8 @@ export interface StructuralBlockComponent extends PageBlockComponent {
 }
 
 export interface StructuralItem {
-  title: string;
+  title?: string;
   childBlocks: PageBlockComponent[];
-  formBlock?: PageBlockComponent;
   icon?: string;
   description?: string;
   image?: string;
