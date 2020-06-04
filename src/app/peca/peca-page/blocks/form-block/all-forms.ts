@@ -267,12 +267,12 @@ export const formParaPruebaModal2 = {
   imageGroup: {
     type: "image",
     fields: {
-      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
       imageStatus: {
         label: "Input image status",
         placeholder: "Estatus",
         fullwidth: false,
-        ...controlProps.select,
+        ...controlProps.selectAndRequired,
         options: [
           { id: "1", name: "Visible" },
           { id: "2", name: "No visible" },

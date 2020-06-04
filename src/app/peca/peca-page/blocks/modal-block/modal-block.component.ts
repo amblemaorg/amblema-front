@@ -33,7 +33,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
   type: 'structural';
   component: string;
   settings: {
-    isFromImgContainer?: boolean;
+    isFromImgContainer?: boolean; // indicates if data in table is from an image container
     modalCode?: string;
     items: StructuralItem[];
   };

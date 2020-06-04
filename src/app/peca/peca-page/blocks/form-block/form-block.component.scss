@@ -59,6 +59,16 @@
           align-items: center;
           position: relative;
 
+          &.inside-modal {
+            flex: 0 0 36%;
+            justify-content: flex-start;
+
+            i {
+              -webkit-transform: translateX(55%);
+              transform: translateX(55%);
+            }
+          }
+
           button, img {
             @include for-image-widths;
             border: 1px solid $blue;            
@@ -130,8 +140,23 @@
         .image-fields {
           flex: 1;
 
-          .image-description {
+          .image-item:first-child {
             margin-bottom: 1rem;
+          }
+
+          &.inside-modal {
+            .image-item:first-child {
+              margin-bottom: 0;
+            } 
+
+            .error-message {            
+              color: $red;
+              font-size: small;
+            }
+
+            .image-item:last-child {
+              margin-top: 1rem;
+            }
           }
         }
 
