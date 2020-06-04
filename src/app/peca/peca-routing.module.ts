@@ -9,7 +9,10 @@ import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-pl
 import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
 import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
 import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
-import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component'
+import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
+import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
+import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
+import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
 
 const routes: Routes = [
   {
@@ -51,7 +54,19 @@ const routes: Routes = [
       {
         path: 'actividad-especial',
         component: SpecialActivityPageComponent
-      }
+      },
+      {
+        path: 'olimpiadas-matematicas',
+        component: MathOlympicsPageComponent
+      },
+      {
+        path: 'testimonio-docentes',
+        component: TeacherTestimonyPageComponent
+      },
+      {
+        path: 'proyecto-ambiental',
+        component: EnvironmentalProjectPageComponent
+      },
     ]
   }
 ];
