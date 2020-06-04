@@ -251,10 +251,45 @@ export const sampleFormData = {
           { id: "3", name: "E" },
         ],
       },
-      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },      
+      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
 }
+
+/*TESTIMONIO DE DOCENTES*/
+export const formTestimonioDocentes = {
+  title4: { label: "Titulo", type: "title" },
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDocente: {
+        label: "Input select docentes",
+        placeholder: "Seleecione un docente",
+        fullwidth: false,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "Alfredo Valbuena" },
+          { id: "2", name: "Sthepanie SOteldo" },
+          { id: "3", name: "Manuel Guerrero" },
+          { id: "4", name: "Gustavo Castillo" },
+        ],
+      },
+      imageCargo: { label: "Input image cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.normalText },
+      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageStatus: {
+        label: "Input image status",
+        placeholder: "Estado de la imágen",
+        fullwidth: false,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "Visible" },
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
+  },
+}
+
 
 /*TALLER INICIAL*/
 export const formPreparacionTallerInicial = {
@@ -285,51 +320,51 @@ export const formRegistroInicial = {
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
   title1: { label: "Datos básicos de la escuela", type: "title" },
-  nameEscuela: { label: "Input letter text", placeholder: "Nombre de la escuela", readonly:true, fullwidth: false,...controlProps.onlyLettersNumbers},
-  codigoEscuela: { label: "Input letter text", placeholder: "Código del plantel", readonly:true, fullwidth: false,...controlProps.onlyLettersNumbers},
-  phoneEscuela: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, readonly:true,...controlProps.phone},
-  estadoEscuela: { label: "Input letter text", placeholder: "Estado", readonly:true, fullwidth: false,...controlProps.onlyLettersNumbers},
-  municipioEscuela: { label: "Input letter text", placeholder: "Municipio", readonly:true,fullwidth: false,...controlProps.onlyLettersNumbers},
-  callesEscuela: { label: "Input letter text", placeholder: "Calles / carreras", readonly:true, fullwidth: false,...controlProps.onlyLettersNumbers},
-  ciudadEscuela: { label: "Input letter text", placeholder: "Ciudad", readonly:true,fullwidth: false,...controlProps.onlyLettersNumbers},
+  nameEscuela: { label: "Input letter text", placeholder: "Nombre de la escuela", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  codigoEscuela: { label: "Input letter text", placeholder: "Código del plantel", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  phoneEscuela: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, readonly: true, ...controlProps.phone },
+  estadoEscuela: { label: "Input letter text", placeholder: "Estado", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  municipioEscuela: { label: "Input letter text", placeholder: "Municipio", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  callesEscuela: { label: "Input letter text", placeholder: "Calles / carreras", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  ciudadEscuela: { label: "Input letter text", placeholder: "Ciudad", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   /*DATOS DIRECTOR*/
   title2: { label: "Datos del director", type: "title" },
   nameDirector: { label: "Input normal text", placeholder: "Nombre del director o directora ", fullwidth: false, ...controlProps.normalTextAndRequired },
-  phoneDirector: { label: "Input phone text", placeholder: "Número de teléfono del director", fullwidth: false,...controlProps.phoneAndRequired},
+  phoneDirector: { label: "Input phone text", placeholder: "Número de teléfono del director", fullwidth: false, ...controlProps.phoneAndRequired },
   emailDirector: { label: "Input email text", placeholder: "Correo electrónico del director", fullwidth: false, ...controlProps.emailAndRequired },
   /*DATOS SUB-DIRECTOR*/
   title3: { label: "Datos del subdirector", type: "title" },
   nameSubDirector: { label: "Input normal text", placeholder: "Nombre del subdirector o subdirectora ", fullwidth: false, ...controlProps.normalTextAndRequired },
-  phoneSubDirector: { label: "Input phone text", placeholder: "Número de teléfono del subdirector", fullwidth: false,...controlProps.phoneAndRequired},
+  phoneSubDirector: { label: "Input phone text", placeholder: "Número de teléfono del subdirector", fullwidth: false, ...controlProps.phoneAndRequired },
   emailSubDirector: { label: "Input email text", placeholder: "Correo electrónico del subdirector", fullwidth: false, ...controlProps.emailAndRequired },
   /*Información adicional*/
   title4: { label: "Información adicional", type: "title" },
   doubleFields1: {
     type: "double",
     fields: {
-      number1: { label: "Input number text", placeholder: "Cantidad de docentes", readonly:true, fullwidth2: true, ...controlProps.number },
-      number2: { label: "Input number text", placeholder: "Cantidad de personal administrativo", readonly:true,fullwidth2: true, ...controlProps.number },
+      number1: { label: "Input number text", placeholder: "Cantidad de docentes", readonly: true, fullwidth2: true, ...controlProps.number },
+      number2: { label: "Input number text", placeholder: "Cantidad de personal administrativo", readonly: true, fullwidth2: true, ...controlProps.number },
     }
   },
   doubleFields2: {
     type: "double",
     fields: {
-      number3: { label: "Input number text", placeholder: "Cantidad de personal obrero", readonly:true,fullwidth2: true, ...controlProps.number },
-      number4: { label: "Input number text", placeholder: "Cantidad de estudiantes", readonly:true, fullwidth2: true, ...controlProps.number },    
+      number3: { label: "Input number text", placeholder: "Cantidad de personal obrero", readonly: true, fullwidth2: true, ...controlProps.number },
+      number4: { label: "Input number text", placeholder: "Cantidad de estudiantes", readonly: true, fullwidth2: true, ...controlProps.number },
     }
   },
   doubleFields3: {
     type: "double",
     fields: {
-      number5: { label: "Input number text", placeholder: "Cantidad de grados", readonly:true,fullwidth2: true, ...controlProps.number },
-      facebook: { label: "Input normal text", placeholder: "Facebook", fullwidth2: true, ...controlProps.normalTextAndRequired },    
+      number5: { label: "Input number text", placeholder: "Cantidad de grados", readonly: true, fullwidth2: true, ...controlProps.number },
+      facebook: { label: "Input normal text", placeholder: "Facebook", fullwidth2: true, ...controlProps.normalTextAndRequired },
     }
   },
   doubleFields4: {
     type: "double",
     fields: {
       instagram: { label: "Input normal text", placeholder: "Instagram", fullwidth2: true, ...controlProps.normalTextAndRequired },
-      twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },  
+      twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },
     }
   },
 }
@@ -371,7 +406,7 @@ export const formTabsDocente = {
           { id: "3", name: "E" },
         ],
       },
-      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },      
+      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
   phone: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, ...controlProps.phoneAndRequired },
@@ -502,7 +537,7 @@ export const formTabsEstudiantes = {
           { id: "3", name: "E" },
         ],
       },
-      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },      
+      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
   date: { label: "Input date", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
@@ -536,7 +571,7 @@ export const formCoordinador = {
           { id: "3", name: "E" },
         ],
       },
-      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },      
+      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
   email: { label: "Input email text", placeholder: "Correo", fullwidth: false, ...controlProps.emailAndRequired },
@@ -631,7 +666,7 @@ export const formPadrino = {
           { id: "3", name: "E" },
         ],
       },
-      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },      
+      prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
   phone: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, ...controlProps.phoneAndRequired },
