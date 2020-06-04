@@ -163,11 +163,13 @@ export class GeneralStepsComponent implements OnInit {
     else { // when a register of this approval request already exists
       let rqstApv = step.approvalHistory.length>0? step.approvalHistory[step.approvalHistory.length-1].status : "0"; // approval request Status; located in the last item of the approval history.
       //posting
-      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) || 
+      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4" || rqstApv=="1") ) || // I added 1 for it to work to send request 
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) { getPosting(); } // updating
       //putting
-      if(step.hasUpload && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
-      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
+      if(step.hasUpload && rqstApv=="1" && step.status!="1")  // I added 1 for it to work to send request 
+        formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
+      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") 
+        formData.append('stepChecklist', JSON.stringify(step.checklist));
       
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
@@ -214,7 +216,6 @@ export class GeneralStepsComponent implements OnInit {
     let formDataStatus = new FormData(); 
     let isCancel = false;
     if (step.status!="1" && step.approvalType=="3") {
-      console.log('canceling');
       formDataStatus.append('status', '4');   
       isCancel = true;   
     }
