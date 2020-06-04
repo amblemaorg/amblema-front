@@ -25,9 +25,9 @@ variables:
     - git config user.email "jose.guerrero@binauraldev.com"
     - git config user.name "Jose Guerrero"
     - if [ -z "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
-    -  git pull $CI_REPOSITORY_URL $CI_COMMIT_REF_NAME
+    - git pull $CI_REPOSITORY_URL $CI_COMMIT_REF_NAME
     - else
-    -  git pull $CI_REPOSITORY_URL $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
+    - git pull $CI_REPOSITORY_URL $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME
     - fi
     - npm install
     - npm run test
@@ -86,8 +86,7 @@ staging-deploy:
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm install"
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build"
     - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run build:ssr"
-    # TODO: run server SSR in background
-    # - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr"
+    - docker-compose -f docker-compose.staging.yml -p $STAGING_CONTAINER_NAME exec -T web /bin/bash -c "cd /home/amblema && npm run serve:ssr &"
   tags:
     - amblema
   only:
