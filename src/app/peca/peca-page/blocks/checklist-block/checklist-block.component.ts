@@ -10,11 +10,29 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
   type: 'presentational';
   component: string;
   settings: {
-    title: string,
-    checkList: {
-      description: string,
+    infoContainer:{
+    principal:{
+      tema: string,
+      objetivo: string[],
+      estrategia: string[],
+      contenido: string[],
+    },
+      datosNivel: {
+        nivel: string,
+        week: string,
+        time: string,
+        tecnica:string[];
+        recurso:string[];
+        evaluacion:string[];
+      },
+      title: string,
+      checkList: {
+        description: string,
+      }[],
+      material: string,
+      button: any,
+      line: boolean
     }[],
-    button: any,
   };
 
   constructor() {

@@ -214,10 +214,46 @@
               </div>
 
               <div 
-                class="image-fields d-flex flex-column justify-content-center"
+                class="image-fields d-flex" 
+                [class.flex-column]="!settings.formsContent[field].fields['imageDocente']"
+                [class.justify-content-center]="!settings.formsContent[field].fields['imageDocente']"
+                [class.flex-wrap]="settings.formsContent[field].fields['imageDocente']"
+                [class.justify-content-between]="settings.formsContent[field].fields['imageDocente']"
+                [class.general-container]="settings.formsContent[field].fields['imageDocente']"
                 [class.inside-modal]="settings.isFromCustomTableActions"
-              >
-                <div class="image-item">
+              >                  
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDocente']">
+                  <label>{{ settings.formsContent[field].fields['imageDocente'].label }}</label>
+                  <ng-select
+                    class="form-control image-status"
+                    notFoundText="Elementos no encontrados"
+                    [items]="settings.formsContent[field].fields['imageDocente'].options"
+                    bindValue="id"
+                    bindLabel="name"
+                    [labelForId]="getId('imageDocente')"
+                    formControlName="imageDocente"
+                    [virtualScroll]="true"
+                    [id]="getId('imageDocente')"
+                    [placeholder]="settings.formsContent[field].fields['imageDocente'].placeholder"
+                  >
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                      <small>{{item.name}}</small>
+                    </ng-template>
+                  </ng-select>
+                </div>
+                  
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageCargo']">
+                  <label>{{ settings.formsContent[field].fields['imageCargo'].label }}</label>
+                  <input
+                    class="form-control image-description"
+                    autocomplete='off'
+                    type="text"
+                    formControlName="imageCargo"
+                    [id]="getId('imageCarago')"
+                    [placeholder]="settings.formsContent[field].fields['imageCargo'].placeholder"
+                  />
+                </div>
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDescription']">
                   <label>{{ settings.formsContent[field].fields['imageDescription'].label }}</label>
                   <input
                     class="form-control image-description"
@@ -235,7 +271,7 @@
                   </ng-container>
                 </div>
                 
-                <div class="image-item">
+                <div class="input-container">
                   <label class="label-image-status">{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
                     class="form-control image-status"

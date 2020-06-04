@@ -140,12 +140,21 @@
         .image-fields {
           flex: 1;
 
-          .image-item:first-child {
+          .input-container:not(:last-child) {
             margin-bottom: 1rem;
           }
 
+          &.general-container {
+            .input-container {
+              width: 48%;
+            }
+            .input-container:last-child {
+              width: 100%;
+            }
+          }
+
           &.inside-modal {
-            .image-item:first-child {
+            .input-container:not(:last-child) {
               margin-bottom: 0;
             } 
 
@@ -154,8 +163,26 @@
               font-size: small;
             }
 
-            .image-item:last-child {
+            .input-container:not(:first-child) {
               margin-top: 1rem;
+            }
+
+            &.general-container {
+              .input-container {
+                width: 100%;
+              }
+              .input-container:last-child {
+                width: 100%;
+              }
+            }            
+          }
+
+          @media (max-width:768px) {
+            .input-container {
+              width: 100% !important;
+            }
+            .input-container:last-child {
+              width: 100% !important;
             }
           }
         }
@@ -377,7 +404,7 @@
         .btn-container.one-row-form-btn-container,
         .image-group .add-img-btn {
           width: 100%;
-          text-align: right;          
+          text-align: left !important;          
         }
       }
     }
