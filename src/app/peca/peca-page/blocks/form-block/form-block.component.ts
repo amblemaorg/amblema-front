@@ -329,7 +329,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
   // to disable add image button when conditions apply
   disableAddImgBtn(){
-    return this.componentForm.controls['imageGroup'].get('imageDescription').value==="" 
+    return ( this.componentForm.controls['imageGroup'].get('imageDocente') && this.componentForm.controls['imageGroup'].get('imageDocente').value==="")
+        || (this.componentForm.controls['imageGroup'].get('imageCargo') && this.componentForm.controls['imageGroup'].get('imageCargo').value==="")
+        || ( this.componentForm.controls['imageGroup'].get('imageDescription') && this.componentForm.controls['imageGroup'].get('imageDescription').value==="") 
         || this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
         || !this.componentForm.controls['imageGroup'].get('imageSelected').value;
   }  

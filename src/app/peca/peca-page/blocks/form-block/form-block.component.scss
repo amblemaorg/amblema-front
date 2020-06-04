@@ -128,8 +128,24 @@
         .image-fields {
           flex: 1;
 
-          .image-description {
+          .image-description, .image-status {
             margin-bottom: 1rem;
+          }
+          &.general-container{
+            .input-container{
+              width: 48%;
+            }
+            .select-container{
+              width: 48%;
+            }
+          }
+          @media (max-width:768px) {
+            .input-container{
+              width: 100% !important;
+            }
+            .select-container{
+              width: 100% !important;
+            }
           }
         }
 
@@ -347,7 +363,7 @@
         .btn-container.one-row-form-btn-container,
         .image-group .add-img-btn {
           width: 100%;
-          text-align: right;          
+          text-align: left !important;          
         }
       }
     }
