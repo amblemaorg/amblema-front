@@ -15,6 +15,7 @@ import { Observable } from "rxjs";
 import { WebState } from "../store/states/web/web.state";
 import { Select, Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "../store/actions/web/web.actions";
+import { OffcanvasComponent } from "./shared/offcanvas/offcanvas.component";
 
 @Component({
   selector: "app-web",
@@ -23,7 +24,8 @@ import { SetIsLoadingPage } from "../store/actions/web/web.actions";
 })
 export class WebComponent implements OnInit {
   @ViewChild("footer", { read: ElementRef, static: true }) footer: ElementRef;
-  @ViewChild("offcanvas", { read: ElementRef, static: true }) offcanvas: ElementRef;
+  @ViewChild("offcanvas", { read: OffcanvasComponent, static: true })
+  offcanvas: OffcanvasComponent;
   @ViewChild("pageLoader", { read: ElementRef, static: true }) pageLoader: ElementRef;
   isloading: Boolean = true;
   offcanvasClass: string = "closed";
@@ -81,15 +83,13 @@ export class WebComponent implements OnInit {
   }
 
   openOffcanvas(content: string) {
-    disableBodyScroll(this.offcanvas.nativeElement);
-    this.offcanvasClass = "opened";
+    this.offcanvas.open();
     this.formSelected = content;
     this.addElementClass(this._document.body, "active-form-wizard");
   }
 
   closeOffcanvas() {
-    enableBodyScroll(this.offcanvas.nativeElement);
-    this.offcanvasClass = "closed";
+    this.offcanvas.toClose();
     this.removeElementClass(this._document.body, "active-form-wizard");
   }
 
