@@ -33,6 +33,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
   type: 'structural';
   component: string;
   settings: {
+    isFromImgContainer?: boolean;
     modalCode?: string;
     items: StructuralItem[];
   };
@@ -46,6 +47,22 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
   }
 
   ngOnInit() {
+    this.globals.showModalEmitter.subscribe(data => {
+      if (this.settings.modalCode == data.code && this.isBrowser) {
+        let data_to_img_container = this.settings.isFromImgContainer? {
+          imageGroup: {
+            imageDescription: data.data.description,
+            imageStatus: data.data.stateNumber? data.data.stateNumber:null,
+            imageSrc: data.data.source? data.data.source:null,
+            imageSelected: data.data.imageSelected? data.data.imageSelected:null,
+          }
+        } : data.data;
+        this.settings.items[0].childBlocks[0].settings['data'] = data_to_img_container;
+        this.instantiateChildBlocks();
+        $(`#${data.code}-modal`).modal('show');     
+      }
+    });
+
     this.globals.hideModalEmitter.subscribe(code => {
       if (this.settings.modalCode == code && this.isBrowser) {
         $(`#${code}-modal`).modal('hide');     
@@ -70,6 +87,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
       const container = this.modalContainer.toArray()[i];
       item.childBlocks.map(block => {         
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
+        if (container.length > 0) container.clear();
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
         pageBlockComponent.instance.setSettings(block.settings);
       });   

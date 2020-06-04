@@ -27,6 +27,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     isOneRow?: boolean;
     hideImgContainer?: boolean; // if view has image adder container set this to true
     modalCode?: string; // for views with modal inside
+    data?: any; // data to fill all inputs
   };
 
   componentForm: FormGroup;
@@ -78,6 +79,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
+    if (this.settings.data) this.setAllFields(this.settings.data);
   }
 
   // for assigning unique id to this component instance -------------
@@ -234,6 +236,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       data: manageData.data,
       dataArr: [],
       resetData: false,
+      action: 'set',
     }; 
 
     setTimeout(() => {
@@ -358,8 +361,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
         image: imgGrp.get('imageSelected').value.name,
         description: imgGrp.get('imageDescription').value,
         state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
-        status: 'En espera'
-      },      
+        stateNumber: imgGrp.get('imageStatus').value,
+        status: 'En espera',
+        source: imgGrp.get('imageSrc').value,
+        imageSelected: imgGrp.get('imageSelected').value,
+      },
+      action: 'add',    
     };
     this.globals.tableDataUpdater(imageObj);
     this.componentForm.get('imageGroup').reset();  
@@ -371,6 +378,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       code: this.settings.tableCode,
       dataArr: [],
       resetData: true,
+      action: 'add',
     }; 
 
     switch (this.settings.formType) {
@@ -390,4 +398,17 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.reset();  
   }
   
+  // setting inputs data
+  setAllFields(data) {
+    const dataKeys = Object.keys(data);
+    dataKeys.map(key => {
+      if (key == "imageGroup" && this.settings.formsContent['imageGroup'])
+        this.componentForm.get('imageGroup').setValue( data[key] );
+      else if(this.settings.formsContent[key])
+        this.componentForm.patchValue( { [key]: data[key] } );
+    });  
+    // console.log(this.componentForm.value); 
+    // this.componentForm.setValue(data); 
+  }
+
 }

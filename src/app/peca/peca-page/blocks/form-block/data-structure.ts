@@ -42,7 +42,8 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             description: cf.get('description').value,
             cantidad: cf.get('cantidad').value,
             price: cf.get('price').value,
-            impuesto: cf.get('impuesto').value,
+            impuesto: cf.get('impuestoValue').value+'%',
+            impuestoValue: cf.get('impuestoValue').value,
             subtotal: cf.get('subtotal').value,
           };
           break;   

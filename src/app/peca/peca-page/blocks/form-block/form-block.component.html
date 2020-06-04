@@ -191,6 +191,7 @@
                     [id]="getId('image-upload-btn-input-file')" 
                     type="file" 
                     (change)="fileManager($event)"
+                    accept="image/*"
                   />
                   <button 
                     *ngIf="!showImage(1)"

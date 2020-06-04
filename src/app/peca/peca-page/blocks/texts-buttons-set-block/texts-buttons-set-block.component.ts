@@ -103,6 +103,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
       code: this.settings.tableCode,
       data: {},
       resetData: false,
+      action: 'add',
     }; 
 
     switch (this.settings.buttonType) {
@@ -120,7 +121,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
           lastName: 'Valbuena',
           gradeAndSection: '5to grado B',
           state: 'Lara',
-          result: 'Aprobado',
+          result: 'Aprobado',          
         };
         break;
     

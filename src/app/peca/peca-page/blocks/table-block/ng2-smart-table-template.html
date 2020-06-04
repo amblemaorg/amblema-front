@@ -6,7 +6,6 @@
     [class.hide-view]="settings.classes.hideView"
     [class.hide-edit]="settings.classes.hideEdit"
     [class.hide-delete]="settings.classes.hideDelete"
+    (custom)="onCustomActions($event)"
   ></ng2-smart-table>
 </div>
-
-  <!-- (custom)="onCustomActions($event)" -->

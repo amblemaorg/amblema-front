@@ -64,6 +64,7 @@ const specialActivityTable = {
                 title: 'subtotal'
             },
         },
+        modalCode: 'dataSpecialActivityTable',
         buttonCode: 'dataSpecialActivityTable',
         tableCode: 'dataSpecialActivityTable',
         dataSpecialActivityTable: [
@@ -73,6 +74,7 @@ const specialActivityTable = {
                 cantidad: '34',
                 price: '444',
                 impuesto: '20%',
+                impuestoValue: '20',
                 subtotal: '500',
             },
             {
@@ -81,6 +83,7 @@ const specialActivityTable = {
                 cantidad: '34',
                 price: '444',
                 impuesto: '20%',
+                impuestoValue: '20',
                 subtotal: '500',
             },
         ],
@@ -110,7 +113,7 @@ const modalPrueba = {
         items: [
         {
             childBlocks: [
-            { ...formPrueba }
+                { ...formPrueba },                
             ]
         }
         ]
