@@ -78,7 +78,8 @@ export class GeneralStepsComponent implements OnInit {
       let bool = step.approvalHistory[step.approvalHistory.length-1].data? 
                 (step.approvalHistory[step.approvalHistory.length-1].data.user? 
                 true : false) : false;      
-      if(bool) return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
+      if(bool) return step.status == "1" || step.approvalHistory[step.approvalHistory.length-1].status == "4" || 
+        (step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id);
       else return false;
     } 
     else return true;
@@ -171,6 +172,7 @@ export class GeneralStepsComponent implements OnInit {
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
+      else if (step.status=="1") this.postAR(formData,step,indd,modd);
       else this.putAR(formData,step,indd,modd,step.approvalHistory[step.approvalHistory.length-1].id);
     }
   }
@@ -209,7 +211,15 @@ export class GeneralStepsComponent implements OnInit {
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
-    this.stepsService.updateRequestApproval(id,formData).subscribe(res=>{
+    let formDataStatus = new FormData(); 
+    let isCancel = false;
+    if (step.status!="1" && step.approvalType=="3") {
+      console.log('canceling');
+      formDataStatus.append('status', '4');   
+      isCancel = true;   
+    }
+
+    this.stepsService.updateRequestApproval(id,isCancel?formDataStatus:formData,isCancel).subscribe(res=>{
       if(step.status=="1") step.status = (step.hasUpload)? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
       else step.status = "1"; // this is not reached by checklist btn
 
