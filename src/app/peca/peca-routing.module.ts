@@ -16,43 +16,43 @@ import { EnvironmentalProjectPageComponent } from './peca-page/pages/environment
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: PecaComponent,
     children: [
       {
-        path: 'taller-inicial',
+        path: "taller-inicial",
         component: InitialWorkshopPageComponent
       },
       {
-        path: 'datos-escuela',
+        path: "datos-escuela",
         component: SchoolDataPageComponent
       },
       {
-        path: 'diagnostico-inicial',
+        path: "diagnostico-inicial",
         component: InitialDiagnosticPageComponent
       },
       {
-        path: 'perfil-usuario',
+        path: "perfil-usuario",
         component: ProfilePageComponent
       },
       {
-        path: 'planificacion-lapso',
+        path: "planificacion-lapso",
         component: SchedulingPlanningPageComponent
       },
       {
-        path: 'amblemoneda-page',
+        path: "amblemoneda-page",
         component: AmblemonedaPageComponent
       },
       {
-        path: 'convencion-anual',
+        path: "convencion-anual",
         component: AnnualConventionPageComponent
       },
       {
-        path: 'preparacion-convencion-anual',
+        path: "preparacion-convencion-anual",
         component: AnnualConventionPreparationPageComponent
       },
       {
-        path: 'actividad-especial',
+        path: "actividad-especial",
         component: SpecialActivityPageComponent
       },
       {
@@ -75,4 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PecaRoutingModule { }
+export class PecaRoutingModule {}
