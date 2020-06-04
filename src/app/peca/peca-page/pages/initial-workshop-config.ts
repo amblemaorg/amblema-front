@@ -99,6 +99,7 @@ const formPrueba = {
     formType: 'pruebaaaaaaaa',
     tableCode: 'dataSpecialActivityTable',
     modalCode: 'dataSpecialActivityTable',
+    isFromCustomTableActions: true,
   }
 }
 const modalPrueba = {

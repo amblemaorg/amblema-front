@@ -28,6 +28,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     hideImgContainer?: boolean; // if view has image adder container set this to true
     modalCode?: string; // for views with modal inside
     data?: any; // data to fill all inputs
+    isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
   };
 
   componentForm: FormGroup;
@@ -203,16 +204,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return index;
   }
 
-  hasErrors(field: string, specialCase: boolean = false, field2: string = null): string | null {
+  hasErrors(field: string, specialCase: boolean = false, field2: string = null, fromImg: boolean = false): string | null {
     const errors: any = !specialCase? this.componentForm.get(field).errors : 
-                        (!field2? this.componentForm.controls[field].get('prependInput').errors :
-                          this.componentForm.get(field2).errors);
+                (!field2? this.componentForm.controls[field].get('prependInput').errors :
+                  (!fromImg? this.componentForm.get(field2).errors : 
+                    this.componentForm.controls['imageGroup'].get(field2).errors) );
     if (errors) {
       return errors.required ? MESSAGES.REQUIRED_MESSAGE :
              (errors.pattern || errors.minlength || errors.maxlength) ? 
              (!specialCase? this.settings.formsContent[field].messages.pattern : 
               (!field2? this.settings.formsContent[field].fields['prependInput'].messages.pattern : 
-                this.settings.formsContent[field2].messages.pattern) ) : null;
+                (!fromImg? this.settings.formsContent[field2].messages.pattern : 
+                  this.settings.formsContent['imageGroup'].fields[field2].messages.pattern) ) ) : null;
     }
 
     return null;

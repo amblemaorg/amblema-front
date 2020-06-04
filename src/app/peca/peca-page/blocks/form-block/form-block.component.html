@@ -185,6 +185,7 @@
                 #imageUploadContainer 
                 class="image-upload-btn-container" 
                 [id]="getId('image-upload-btn-container')"
+                [class.inside-modal]="settings.isFromCustomTableActions"
               >
                   <input 
                     class="d-none" 
@@ -212,7 +213,11 @@
                   <div class="overlay"></div>
               </div>
 
-              <div class="image-fields d-flex flex-column justify-content-center">
+              <div 
+                class="image-fields d-flex flex-column justify-content-center"
+                [class.inside-modal]="settings.isFromCustomTableActions"
+              >
+                <div class="image-item">
                   <label>{{ settings.formsContent[field].fields['imageDescription'].label }}</label>
                   <input
                     class="form-control image-description"
@@ -222,8 +227,16 @@
                     [id]="getId('imageDescription')"
                     [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
                   />
-
-                  <label>{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
+                  <ng-container *ngIf="hasErrors(field,true,'imageDescription',true) 
+                                          && settings.isFromCustomTableActions">
+                    <div class="error-message">
+                      <strong>{{hasErrors(field,true,'imageDescription',true)}}</strong>
+                    </div>
+                  </ng-container>
+                </div>
+                
+                <div class="image-item">
+                  <label class="label-image-status">{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
                     class="form-control image-status"
                     notFoundText="Elementos no encontrados"
@@ -240,9 +253,16 @@
                       <small>{{item.name}}</small>
                     </ng-template>
                   </ng-select>
+                  <ng-container *ngIf="hasErrors(field,true,'imageStatus',true) 
+                                          && settings.isFromCustomTableActions">
+                    <div class="error-message">
+                      <strong>{{hasErrors(field,true,'imageStatus',true)}}</strong>
+                    </div>
+                  </ng-container>
+                </div>                  
               </div>  
 
-              <div class="add-img-btn">
+              <div *ngIf="!settings.isFromCustomTableActions" class="add-img-btn">
                 <button 
                   type="button" 
                   class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
