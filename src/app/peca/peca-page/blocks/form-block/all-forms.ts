@@ -256,12 +256,30 @@ export const sampleFormData = {
   },
 }
 export const formParaPruebaModal = {
-  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
-  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
-  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
-  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
-  impuesto: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
-  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.onlyLettersNumbersAndRequired },
+  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
+  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
+  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
+  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
+  impuestoValue: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
+  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
+}
+export const formParaPruebaModal2 = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageStatus: {
+        label: "Input image status",
+        placeholder: "Estatus",
+        fullwidth: false,
+        ...controlProps.select,
+        options: [
+          { id: "1", name: "Visible" },
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
+  },  
 }
 
 /*TALLER INICIAL*/

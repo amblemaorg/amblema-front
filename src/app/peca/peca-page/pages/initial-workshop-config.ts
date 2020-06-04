@@ -1,4 +1,4 @@
-import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal2 } from '../blocks/form-block/all-forms'
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -52,6 +52,7 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
+    modalCode: 'dataSpecialActivityTable',
     buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
@@ -93,7 +94,7 @@ const registroTallerInicial = {
 const formPrueba = {
   component: 'form',
   settings: {
-    formsContent: formParaPruebaModal,
+    formsContent: formParaPruebaModal2,
     buttons: ['guardar'],
     formType: 'pruebaaaaaaaa',
     tableCode: 'dataSpecialActivityTable',
@@ -103,8 +104,10 @@ const formPrueba = {
 const modalPrueba = {
   component: 'modal',
   settings: {
+    modalCode: 'dataSpecialActivityTable',
+    isFromImgContainer: true,
     items: [
-      {
+      {        
         childBlocks: [
           { ...formPrueba }
         ]

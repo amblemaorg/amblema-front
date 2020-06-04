@@ -10,6 +10,7 @@ export interface StructuralBlockComponent extends PageBlockComponent {
   settings: {
     items: StructuralItem[];
     modalCode?: string; // for views with modal inside
+    isFromImgContainer?: boolean;
   };
 }
 
