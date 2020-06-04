@@ -39,6 +39,8 @@ import { AnnualConventionPageComponent } from './peca-page/pages/annual-conventi
 import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
 import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
+import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
+import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -66,6 +68,8 @@ import { ModalBlockComponent } from './peca-page/blocks/modal-block/modal-block.
     AnnualConventionPreparationPageComponent,
     SpecialActivityPageComponent,
     MathOlympicsPageComponent,
+    TeacherTestimonyPageComponent,
+    EnvironmentalProjectPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
