@@ -28,7 +28,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Proyecto ambiental',
         icon: 'venezuela',
-        link: '/pages/permissions'
+        link: 'proyecto-ambiental'
       },
       {
         title: 'AmbLeMonedas',
@@ -54,6 +54,16 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         title: 'Actividad especial del primer lapso',
         icon: 'actividades',
         link: 'actividad-especial'
+      },
+      {
+        title: 'Olimpiadas de matemáticas',
+        icon: 'diagnostico',
+        link: 'olimpiadas-matematicas'
+      },
+      {
+        title:'Testimonio docentes',
+        icon: 'taller-inicial',
+        link: 'testimonio-docentes'
       }
     ]
   },
