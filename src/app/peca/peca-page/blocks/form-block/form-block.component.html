@@ -225,7 +225,8 @@
                 <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDocente']">
                   <label>{{ settings.formsContent[field].fields['imageDocente'].label }}</label>
                   <ng-select
-                    class="form-control image-status"
+                    class="form-control"
+                    [class.image-status]="!settings.isFromCustomTableActions"
                     notFoundText="Elementos no encontrados"
                     [items]="settings.formsContent[field].fields['imageDocente'].options"
                     bindValue="id"
@@ -274,7 +275,8 @@
                 <div class="input-container">
                   <label class="label-image-status">{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
-                    class="form-control image-status"
+                    class="form-control"
+                    [class.image-status]="!settings.isFromCustomTableActions"
                     notFoundText="Elementos no encontrados"
                     [items]="settings.formsContent[field].fields['imageStatus'].options"
                     bindValue="id"
