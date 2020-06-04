@@ -13,9 +13,13 @@ import {
   NbLayoutModule,
   NbMenuModule,
   NbCardModule,
-  NbIconModule,
+  NbIconModule
 } from "@nebular/theme";
-import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from "@nebular/auth";
+import {
+  NbPasswordAuthStrategy,
+  NbAuthModule,
+  NbAuthJWTToken
+} from "@nebular/auth";
 import { AuthComponent } from "./auth.component";
 import { LoginComponent } from "./login/login.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
@@ -28,25 +32,32 @@ const authStrategies = [
     baseEndpoint: `${environment.baseUrl}`,
     token: {
       class: NbAuthJWTToken,
-      key: "access_token",
+      key: "access_token"
     },
     login: {
       endpoint: "auth/login",
       method: "post",
       redirect: {
-        success: "peca",
-        failure: null,
+        success: "seleccion-escuela",
+        failure: null
       },
       defaultErrors: [
-        "La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.",
+        "La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente."
       ],
-      defaultMessages: ["Has ingresado exitosamente. Te estamos redirigiendo al PECA..."],
-    },
-  }),
+      defaultMessages: [
+        "Has ingresado exitosamente. Te estamos redirigiendo al PECA..."
+      ]
+    }
+  })
 ];
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent, ResetPasswordComponent, RequestPasswordComponent],
+  declarations: [
+    AuthComponent,
+    LoginComponent,
+    ResetPasswordComponent,
+    RequestPasswordComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -67,8 +78,8 @@ const authStrategies = [
     NbMenuModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: authStrategies,
-      forms: {},
-    }),
-  ],
+      forms: {}
+    })
+  ]
 })
 export class AuthModule {}

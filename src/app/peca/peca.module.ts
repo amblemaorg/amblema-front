@@ -1,7 +1,7 @@
 // MODULES
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import {
   NbThemeModule,
   NbLayoutModule,
@@ -17,37 +17,38 @@ import {
   NbUserModule,
   NbStepperModule,
   NbButtonModule,
-  NbCheckboxModule,
-} from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { PecaRoutingModule } from './peca-routing.module';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NgSelectModule } from '@ng-select/ng-select';
+  NbCheckboxModule
+} from "@nebular/theme";
+import { NbEvaIconsModule } from "@nebular/eva-icons";
+import { PecaRoutingModule } from "./peca-routing.module";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+import { NgSelectModule } from "@ng-select/ng-select";
 import { CarouselModule } from "ngx-owl-carousel-o";
-import { OwlModule } from 'ngx-owl-carousel';
+import { OwlModule } from "ngx-owl-carousel";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 // COMPONENTS
-import { PecaComponent } from './peca.component';
-import { PecaPageComponent } from './peca-page/peca-page.component';
+import { PecaComponent } from "./peca.component";
+import { PecaPageComponent } from "./peca-page/peca-page.component";
 // Page Components
-import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagnostic-page.component';
-import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
-import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
-import { ProfilePageComponent } from './peca-page/pages/profile-page.component';
-import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-planning-page.component';
-import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
-import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
-import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
-import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
+import { InitialDiagnosticPageComponent } from "./peca-page/pages/initial-diagnostic-page.component";
+import { SchoolDataPageComponent } from "./peca-page/pages/school-data-page.component";
+import { InitialWorkshopPageComponent } from "./peca-page/pages/initial-workshop-page.component";
+import { ProfilePageComponent } from "./peca-page/pages/profile-page.component";
+import { SchedulingPlanningPageComponent } from "./peca-page/pages/scheduling-planning-page.component";
+import { AmblemonedaPageComponent } from "./peca-page/pages/amblemoneda-page.component";
+import { AnnualConventionPageComponent } from "./peca-page/pages/annual-convention-page.component";
+import { AnnualConventionPreparationPageComponent } from "./peca-page/pages/annual-convention-preparation-page.component";
+import { SpecialActivityPageComponent } from "./peca-page/pages/special-activity-page.component";
 // Block Components
-import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
-import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
-import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/accordion-block.component';
-import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component';
-import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.component';
-import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-block.component';
-import { SliderBlockComponent } from './peca-page/blocks/slider-block/slider-block.component';
-import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-block.component';
-import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/checklist-block.component';
+import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
+import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
+import { AccordionBlockComponent } from "./peca-page/blocks/accordion-block/accordion-block.component";
+import { TextsButtonsSetBlockComponent } from "./peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component";
+import { FormBlockComponent } from "./peca-page/blocks/form-block/form-block.component";
+import { ProfileBlockComponent } from "./peca-page/blocks/profile-block/profile-block.component";
+import { SliderBlockComponent } from "./peca-page/blocks/slider-block/slider-block.component";
+import { StepperBlockComponent } from "./peca-page/blocks/stepper-block/stepper-block.component";
+import { ChecklistBlockComponent } from "./peca-page/blocks/checklist-block/checklist-block.component";
 
 @NgModule({
   declarations: [
@@ -72,12 +73,12 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     ProfileBlockComponent,
     SliderBlockComponent,
     StepperBlockComponent,
-    ChecklistBlockComponent,
+    ChecklistBlockComponent
   ],
   imports: [
     CommonModule,
     PecaRoutingModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    NbThemeModule.forRoot({ name: "default" }),
     NbLayoutModule,
     NbEvaIconsModule,
     NbIconModule,
@@ -98,6 +99,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     CarouselModule,
     OwlModule,
     NbCheckboxModule,
+    FontAwesomeModule
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -108,7 +110,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     ProfileBlockComponent,
     SliderBlockComponent,
     StepperBlockComponent,
-    ChecklistBlockComponent,
+    ChecklistBlockComponent
   ]
 })
-export class PecaModule { }
+export class PecaModule {}
