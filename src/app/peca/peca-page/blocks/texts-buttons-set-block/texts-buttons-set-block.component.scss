@@ -20,11 +20,17 @@
     .texts-buttons-wrapper {
         .texts-wrapper {
             .date-download-status {
+                .left-side {
+                    .left-sided-content {
+                        margin-bottom: 0;
+                    }
+                }
                 .right-side {
                     display: flex;
-                    align-items: baseline;
+                    // align-items: baseline;
+                    align-items: center;
 
-                    a {
+                    a, button {
                         @include shared-btn-confs;
 
                         @media (max-width:768px) {
@@ -82,6 +88,7 @@
     
             a.btn, button.btn {
                 @include shared-btn-confs;
+                margin-right: 0;
             }
     
             .btn-in-wrapper {

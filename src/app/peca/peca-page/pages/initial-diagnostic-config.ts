@@ -3,7 +3,7 @@ const botonEstadistica = {
   settings: {
     action: [
       {
-        type: 1,
+        type: 5,
         name: 'Ver estadísticas',
       }
     ],
@@ -36,8 +36,8 @@ const readingDiagnosticTable = {
         title: 'Indice'
       },
     },
-    tableCode: 'dataLectura',
-    dataLectura: [
+    tableCode: 'initialDiagnosticConfigLectura',
+    initialDiagnosticConfigLectura: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',
@@ -97,8 +97,8 @@ const mathDiagnosticTable = {
         title: 'Indice de lógica matematica'
       },
     },
-    tableCode: 'dataMatematica',
-    dataMatematica: [
+    tableCode: 'initialDiagnosticConfigMatematica',
+    initialDiagnosticConfigMatematica: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',

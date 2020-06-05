@@ -29,8 +29,9 @@ export class StepsService {
     return this.http.post<any>(this.baseUrl+'requestsstepapproval',fd)
   }
 
-  updateRequestApproval (id,fd): Observable<any> {
-    return this.http.put<any>(this.baseUrl+`requestsstepapproval/${id}`,fd)
+  updateRequestApproval (id,fd, isCalcelling: boolean): Observable<any> {
+    if (isCalcelling) return this.http.put<any>(this.baseUrl+`requestscontentapproval/${id}`,fd);
+    else return this.http.put<any>(this.baseUrl+`requestsstepapproval/${id}`,fd);
   }
 
 
