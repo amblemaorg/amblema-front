@@ -246,7 +246,8 @@
                 <div class="input-container" *ngIf="settings.formsContent[field].fields['imageCargo']">
                   <label>{{ settings.formsContent[field].fields['imageCargo'].label }}</label>
                   <input
-                    class="form-control image-description"
+                    class="form-control"
+                    [class.image-description]="!settings.isFromCustomTableActions"
                     autocomplete='off'
                     type="text"
                     formControlName="imageCargo"
@@ -257,7 +258,8 @@
                 <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDescription']">
                   <label>{{ settings.formsContent[field].fields['imageDescription'].label }}</label>
                   <input
-                    class="form-control image-description"
+                    class="form-control"
+                    [class.image-description]="!settings.isFromCustomTableActions"
                     autocomplete='off'
                     type="text"
                     formControlName="imageDescription"
@@ -314,7 +316,8 @@
         </ng-template>
       </ng-container>        
 
-      <div 
+      <div
+        *ngIf="formInModalBtnConditioner()"
         class="btn-container"
         [class.one-row-form-btn-container]="settings.isOneRow"
       >

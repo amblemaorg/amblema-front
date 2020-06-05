@@ -51,13 +51,14 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
       if (this.settings.modalCode == data.code && this.isBrowser) {
         let data_to_img_container = this.settings.isFromImgContainer? {
           imageGroup: {
-            imageDescription: data.data.description,
-            imageStatus: data.data.stateNumber? data.data.stateNumber:null,
-            imageSrc: data.data.source? data.data.source:null,
-            imageSelected: data.data.imageSelected? data.data.imageSelected:null,
+            imageDescription: data.data.oldData.description,
+            imageStatus: data.data.oldData.stateNumber? data.data.oldData.stateNumber:null,
+            imageSrc: data.data.oldData.source? data.data.oldData.source:null,
+            imageSelected: data.data.oldData.imageSelected? data.data.oldData.imageSelected:null,
           }
-        } : data.data;
+        } : data.data.oldData;
         this.settings.items[0].childBlocks[0].settings['data'] = data_to_img_container;
+        this.settings.items[0].childBlocks[0].settings['dataFromRow'] = data;
         this.instantiateChildBlocks();
         $(`#${data.code}-modal`).modal('show');     
       }
