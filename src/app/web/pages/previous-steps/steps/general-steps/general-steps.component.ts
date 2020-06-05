@@ -78,7 +78,8 @@ export class GeneralStepsComponent implements OnInit {
       let bool = step.approvalHistory[step.approvalHistory.length-1].data? 
                 (step.approvalHistory[step.approvalHistory.length-1].data.user? 
                 true : false) : false;      
-      if(bool) return step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id;
+      if(bool) return step.status == "1" || step.approvalHistory[step.approvalHistory.length-1].status == "4" || 
+        (step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id);
       else return false;
     } 
     else return true;
@@ -162,15 +163,18 @@ export class GeneralStepsComponent implements OnInit {
     else { // when a register of this approval request already exists
       let rqstApv = step.approvalHistory.length>0? step.approvalHistory[step.approvalHistory.length-1].status : "0"; // approval request Status; located in the last item of the approval history.
       //posting
-      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) || 
+      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4" || rqstApv=="1") ) || // I added 1 for it to work to send request 
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) { getPosting(); } // updating
       //putting
-      if(step.hasUpload && rqstApv=="1") formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
-      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") formData.append('stepChecklist', JSON.stringify(step.checklist));
+      if(step.hasUpload && rqstApv=="1" && step.status!="1")  // I added 1 for it to work to send request 
+        formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
+      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") 
+        formData.append('stepChecklist', JSON.stringify(step.checklist));
       
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
+      else if (step.status=="1") this.postAR(formData,step,indd,modd);
       else this.putAR(formData,step,indd,modd,step.approvalHistory[step.approvalHistory.length-1].id);
     }
   }
@@ -209,7 +213,14 @@ export class GeneralStepsComponent implements OnInit {
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
-    this.stepsService.updateRequestApproval(id,formData).subscribe(res=>{
+    let formDataStatus = new FormData(); 
+    let isCancel = false;
+    if (step.status!="1" && step.approvalType=="3") {
+      formDataStatus.append('status', '4');   
+      isCancel = true;   
+    }
+
+    this.stepsService.updateRequestApproval(id,isCancel?formDataStatus:formData,isCancel).subscribe(res=>{
       if(step.status=="1") step.status = (step.hasUpload)? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
       else step.status = "1"; // this is not reached by checklist btn
 

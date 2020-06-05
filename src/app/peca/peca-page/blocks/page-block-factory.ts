@@ -13,6 +13,7 @@ import { ProfileBlockComponent } from './profile-block/profile-block.component';
 import { SliderBlockComponent } from './slider-block/slider-block.component';
 import { StepperBlockComponent } from './stepper-block/stepper-block.component';
 import { ChecklistBlockComponent} from './checklist-block/checklist-block.component';
+import { ModalBlockComponent } from './modal-block/modal-block.component';
 
 export class PageBlockFactory {
 
@@ -38,6 +39,8 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(StepperBlockComponent);
       case 'checkList':
         return this.componentFactoryResolver.resolveComponentFactory(ChecklistBlockComponent);
+      case 'modal':
+        return this.componentFactoryResolver.resolveComponentFactory(ModalBlockComponent);
       default:
         throw Error('PageBlockTypeException: invalid page block type');
     }
