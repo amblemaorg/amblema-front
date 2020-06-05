@@ -28,6 +28,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     hideImgContainer?: boolean; // if view has image adder container set this to true
     modalCode?: string; // for views with modal inside
     data?: any; // data to fill all inputs
+    dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
   };
 
@@ -74,6 +75,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
         whichData: 'form',
         form: val,
       });
+  }
+
+  formInModalBtnConditioner() {
+    if (this.settings.isFromCustomTableActions) {
+      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn) return true;
+      else return false;
+    } else return true;
   }
 
   setSettings(settings: any) {
@@ -234,12 +242,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
+    if (this.settings.isFromCustomTableActions) this.settings.dataFromRow.data.newData = manageData.data;
+
     let obj = {
       code: this.settings.tableCode,
-      data: manageData.data,
+      data: this.settings.isFromCustomTableActions? this.settings.dataFromRow.data : manageData.data,
       dataArr: [],
       resetData: false,
-      action: 'set',
+      action: this.settings.isFromCustomTableActions? 'edit':'set',
     }; 
 
     setTimeout(() => {

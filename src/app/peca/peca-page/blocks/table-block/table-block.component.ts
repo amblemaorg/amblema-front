@@ -37,8 +37,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   ngOnInit() {
     // data actions (data.action): set, add, edit, delete, view
     this.globals.updateTableDataEmitter.subscribe(data => {
-      this.confsOnTable(data);
-      console.log(this.settings[data.code])
+      this.confsOnTable(data);      
     });
 
     this.globals.showImageContainerEmitter.subscribe(code => {
@@ -56,7 +55,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
       switch (data.action) {
         case 'edit':
-          this.source.update(data.rowData.oldData,data.rowData.newData);
+          this.source.update(data.data.oldData,data.data.newData);
           this.source.refresh();
           break;
         case 'delete':
@@ -101,21 +100,19 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     switch ( e.action) {
       case 'VIEW':
-        this.globals.ModalShower(this.settings.modalCode);
+        this.globals.ModalShower({
+          code: this.settings.modalCode,
+          data: obj.rowData,
+          showBtn: false,
+        });
         break;
 
      case 'EDIT':
         this.globals.ModalShower({
           code: this.settings.modalCode,
-          data: obj.rowData.oldData,
+          data: obj.rowData,
+          showBtn: true,
         });
-        obj.rowData.newData = {
-          description: "descripcion actualizada",
-          image: e.data.image,
-          state: e.data.state,
-          status: e.data.status,
-        };
-        this.confsOnTable(obj);
         break;
 
      case 'DELETE':

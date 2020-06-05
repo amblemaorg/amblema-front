@@ -7,14 +7,14 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     };
 
     switch (formType) {
-        case 'agregarGradoSeccion':          
+        case 'agregarGradoSeccion': // for Datos de la Escuela view and Grados y Secciones section         
           data.data = {
             grades: cf.get('grades').value,
             secctions: cf.get('section').value,
             name: formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
           };              
           break;
-        case 'agregarDocente':
+        case 'agregarDocente': // for Datos de la Escuela view and Docentes section
           data.data = {
             name: cf.get('nameDocente').value,
             lastName: cf.get('lastNameDocente').value,
@@ -23,7 +23,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             status: cf.get('status').value=="1"? 'Activo':'Inactivo',
           };              
           break;
-        case 'buscarEstudiante':
+        case 'buscarEstudiante': // for Datos de la Escuela view and Estudiantes section
           data.data = {
             name: cf.get('letterName').value, 
             lastName: cf.get('lastNameLetter').value, 
@@ -32,7 +32,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             age: null,
           };              
           break;
-        case 'initialWorkshopConfigPreparacionTaller':
+        case 'initialWorkshopConfigPreparacionTaller': // for Taller Inicial view and Preparacion del Taller section
           data.isThereTable = false;
           console.log(cf.value);
           break;
@@ -46,7 +46,18 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             impuestoValue: cf.get('impuestoValue').value,
             subtotal: cf.get('subtotal').value,
           };
-          break;   
+          break;
+        case 'pruebaaaaaaaa2': //! borrar
+          data.data = {
+            image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
+            description: cf.controls['imageGroup'].get('imageDescription').value,
+            state: cf.controls['imageGroup'].get('imageStatus').value == "1" ? 'Visible':'No visible',
+            stateNumber: cf.controls['imageGroup'].get('imageStatus').value,
+            status: 'En espera',
+            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+          };
+          break;
         
         default:
           break;
