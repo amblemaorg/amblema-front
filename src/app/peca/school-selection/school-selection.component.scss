@@ -1,16 +1,21 @@
 @import "scss/responsive";
 @import "scss/variables";
 @import "scss/elements/button";
-
+body {
+  overflow: visible !important;
+}
+.nb-theme-default {
+  overflow: visible !important;
+}
 #grid {
   display: grid;
   min-height: 100vh;
   height: auto;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 6% 94%;
 }
 #grid #navbar {
   display: grid;
-  min-height: 60px;
+  min-height: 60px !important;
   background-color: $blue;
   grid-auto-flow: column;
   grid-gap: 20px;

@@ -33,7 +33,7 @@
       color-primary-600: #274bdb,
       color-primary-700: #1a34b8,
       color-primary-800: #102694,
-      color-primary-900: #091c7a,
+      color-primary-900: #091c7a
     ),
     default,
     default
@@ -57,7 +57,7 @@
       .content
       .columns
       nb-layout-column {
-        padding: 2.25rem 2.25rem 0.75rem 5rem
+      padding: 2.25rem 2.25rem 0.75rem 5rem;
     }
   }
   @media (max-width: 575px) {
@@ -68,11 +68,11 @@
       .content
       .columns
       nb-layout-column {
-        padding: 2.25rem 2.25rem 0.75rem
+      padding: 2.25rem 2.25rem 0.75rem;
     }
   }
 
-  table{
+  table {
     margin-top: 60px;
     margin-bottom: 20px;
   }
@@ -191,13 +191,13 @@
 
     @media (min-width: 1200px) {
       .h1-amblema {
-          margin-left: -50px;
-        }
+        margin-left: -50px;
+      }
     }
 
     @media (max-width: 768px) {
       nb-user.size-giant .user-name {
-          display: none;
+        display: none;
       }
       .dropdown-content {
         min-width: 150px;
