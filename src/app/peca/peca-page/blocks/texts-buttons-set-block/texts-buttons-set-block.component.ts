@@ -12,6 +12,8 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   component: string;
   settings: {   
     modalCode?: string; // for views with modal inside
+    dataFromRow?: any; // table's row data
+    isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
     tableCode?: string; // to know which table to update 
     buttonType?: string; // to specify what action to take on the button
     receivesFromTableOrForm?: string; // to know if make action receiving data fronm a table, form or both
@@ -134,9 +136,19 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
 
   takeAction(type: number, e) {
     switch (type) {
+      case 1:
+        if (this.settings.isFromCustomTableActions && this.settings.modalCode) {
+          this.globals.tableDataUpdater(this.settings.dataFromRow);
+          this.globals.ModalHider(this.settings.modalCode); 
+        }          
+        break;
       case 2:
-        this.globals.ImageContainerShower(this.settings.buttonCode);
-        e.target.classList.add('d-none');
+        if (this.settings.isFromCustomTableActions && this.settings.modalCode) 
+          this.globals.ModalHider(this.settings.modalCode);
+        else {
+          this.globals.ImageContainerShower(this.settings.buttonCode);
+          e.target.classList.add('d-none');
+        }
         break;
     
       default:

@@ -74,6 +74,16 @@
                 }
                 
             }
+
+            title {
+
+            }
+
+            .sub-titles {
+                &.text-incremented p {
+                    font-size: large !important;
+                }
+            }
         }
         .buttons-wrapper {
             width: 100%;

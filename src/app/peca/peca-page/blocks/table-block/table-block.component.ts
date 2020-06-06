@@ -59,7 +59,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           this.source.refresh();
           break;
         case 'delete':
-          this.source.remove(data.rowData.oldData);
+          this.source.remove(data.data.oldData);
           this.source.refresh();
           break;
         case 'view':
@@ -90,33 +90,29 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
   onCustomActions(e) {
     let obj = {
-      code: this.settings.tableCode,
-      action: e.action.toLowerCase(),
-      rowData: {
+      code: this.settings.modalCode,
+      data: {
         oldData: e.data,
         newData: {...e.data},
-      }
+      },
+      action: e.action.toLowerCase(),
+      showBtn: false,
+      component: 'form',
     };
 
     switch ( e.action) {
       case 'VIEW':
-        this.globals.ModalShower({
-          code: this.settings.modalCode,
-          data: obj.rowData,
-          showBtn: false,
-        });
+        this.globals.ModalShower(obj);
         break;
 
      case 'EDIT':
-        this.globals.ModalShower({
-          code: this.settings.modalCode,
-          data: obj.rowData,
-          showBtn: true,
-        });
+        obj.showBtn = true;
+        this.globals.ModalShower(obj);
         break;
 
      case 'DELETE':
-        this.confsOnTable(obj);
+        obj.component = 'textsbuttons';
+        this.globals.ModalShower(obj);
         break;
     }
   }

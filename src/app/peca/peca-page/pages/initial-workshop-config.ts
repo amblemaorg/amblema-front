@@ -3,10 +3,6 @@ import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formP
 const textsAndButtons = {
   component: 'textsbuttons',
   settings: {
-    title: {
-      text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-      aligning: 'center',
-    },
     action: [{
       type: 3,
       name: 'Enviar Solicitud',
@@ -52,7 +48,7 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
-    modalCode: 'dataSpecialActivityTable',
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
@@ -60,25 +56,33 @@ const registroTallerInicial = {
         image: 'imagen1.png',
         description: 'descripcion 1',
         state: 'Visible',
-        status: 'Aprobado'
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
         image: 'imagen2.png',
         description: 'descripcion 2',
         state: 'No visible',
-        status: 'Aprobado'
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
         image: 'imagen3.png',
         description: 'descripcion 3',
         state: 'Visible',
-        status: 'Aprobado'
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
         image: 'imagen4.png',
         description: 'descripcion 4',
         state: 'No visible',
-        status: 'Aprobado'
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
     ],
     classes: {
@@ -96,21 +100,42 @@ const formPrueba = {
   settings: {
     formsContent: formParaPruebaModal2,
     buttons: ['guardar'],
-    formType: 'pruebaaaaaaaa',
-    tableCode: 'dataSpecialActivityTable',
-    modalCode: 'dataSpecialActivityTable',
+    formType: 'pruebaaaaaaaa2',
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
+    isFromCustomTableActions: true,
+  }
+}
+const textsAndButtonsPrueba = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
   }
 }
 const modalPrueba = {
   component: 'modal',
   settings: {
-    modalCode: 'dataSpecialActivityTable',
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromImgContainer: true,
     items: [
       {        
         childBlocks: [
-          { ...formPrueba }
+          { ...formPrueba },
+          { ...textsAndButtonsPrueba },
         ]
       }
     ]

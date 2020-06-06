@@ -49,18 +49,22 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
   ngOnInit() {
     this.globals.showModalEmitter.subscribe(data => {
       if (this.settings.modalCode == data.code && this.isBrowser) {
-        let data_to_img_container = this.settings.isFromImgContainer? {
-          imageGroup: {
-            imageDescription: data.data.oldData.description,
-            imageStatus: data.data.oldData.stateNumber? data.data.oldData.stateNumber:null,
-            imageSrc: data.data.oldData.source? data.data.oldData.source:null,
-            imageSelected: data.data.oldData.imageSelected? data.data.oldData.imageSelected:null,
-          }
-        } : data.data.oldData;
-        this.settings.items[0].childBlocks[0].settings['data'] = data_to_img_container;
-        this.settings.items[0].childBlocks[0].settings['dataFromRow'] = data;
-        this.instantiateChildBlocks();
-        $(`#${data.code}-modal`).modal('show');     
+
+        let data_from_table = data.action=="delete"? data.data.oldData : 
+                this.settings.isFromImgContainer? 
+                  {
+                    imageGroup: {
+                      imageDescription: data.data.oldData.description,
+                      imageStatus: data.data.oldData.stateNumber? data.data.oldData.stateNumber:null,
+                      imageSrc: data.data.oldData.source? data.data.oldData.source:null,
+                      imageSelected: data.data.oldData.imageSelected? data.data.oldData.imageSelected:null,
+                    }
+                  } 
+                  : data.data.oldData;      
+
+        this.instantiateChildBlocks( data.component, [data_from_table, data] );
+        $(`#${data.code}-modal`).modal('show');
+
       }
     });
 
@@ -83,14 +87,19 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
     this.factory = settings.factory ? settings.factory : {};
   }
 
-  public instantiateChildBlocks() {
+  public instantiateChildBlocks(componentType: string = "none", data: any = null) {    
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
-      item.childBlocks.map(block => {         
-        const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
-        if (container.length > 0) container.clear();
-        const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
-        pageBlockComponent.instance.setSettings(block.settings);
+      if (container.length > 0) container.clear();
+      item.childBlocks.map(block => {    
+        if (block.component === componentType) {
+          if (block.component === "form")
+            block.settings['data'] = data[0];     
+          block.settings['dataFromRow'] = data[1];
+          const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
+          const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
+          pageBlockComponent.instance.setSettings(block.settings);
+        }             
       });   
     })
   }
