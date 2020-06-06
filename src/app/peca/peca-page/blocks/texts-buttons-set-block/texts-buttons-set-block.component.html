@@ -1,5 +1,7 @@
 <div class="texts-buttons-wrapper">
-    <div class="texts-wrapper" *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectStatus">
+    <div class="texts-wrapper" 
+        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectStatus || 
+               settings.title || (settings.subtitles && settings.subtitles.length>0)">
         <div class="date-download-status d-flex justify-content-between">
             <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6 class="left-sided-content">
@@ -72,13 +74,23 @@
                 {{ settings.title.text }}
             </h5> <br *ngIf="settings.title">
     
-            <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles">
+            <div 
+                class="sub-titles mb-2" 
+                *ngFor="let subtitle of settings.subtitles"
+                [class.text-center]="settings.isFromCustomTableActions"
+                [class.text-incremented]="settings.isFromCustomTableActions"
+            >
                 <h6 class="sub-title">{{ subtitle.title }}</h6>
                 <p>{{ subtitle.text }}</p>
             </div>
         <!-- </ng-container> -->
     </div>
-    <div *ngIf="(settings.action && settings.action.length>0) || settings.upload" class="d-inline-block buttons-wrapper">
+    <div 
+        *ngIf="(settings.action && settings.action.length>0) || settings.upload" 
+        class="d-inline-block buttons-wrapper"
+        [class.text-center]="settings.isFromCustomTableActions"
+        [class.py-3]="settings.isFromCustomTableActions"
+    >
         <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
             <input class="d-none" id="upload-btn-input-file" type="file">
             <button id="upload-btn"  title="settings.upload.name"
