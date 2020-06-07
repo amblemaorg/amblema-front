@@ -47,8 +47,8 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             subtotal: cf.get('subtotal').value,
           };
           break;
-        case 'pruebaaaaaaaa2': //! borrar
-          data.data = {
+        case 'initialWorkshopConfigRegistroTallerInicial': // for Taller Inicial view and Registro Inicial modal
+          data.data = {            
             image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
             description: cf.controls['imageGroup'].get('imageDescription').value,
             state: cf.controls['imageGroup'].get('imageStatus').value == "1" ? 'Visible':'No visible',
@@ -56,7 +56,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             status: 'En espera',
             source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
             imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
-          };
+          };   
           break;
         
         default:

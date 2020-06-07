@@ -242,7 +242,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
-    if (this.settings.isFromCustomTableActions) this.settings.dataFromRow.data.newData = manageData.data;
+    if (this.settings.isFromCustomTableActions) {
+      this.settings.dataFromRow.data.newData = manageData.data;
+      this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
+    }
 
     let obj = {
       code: this.settings.tableCode,
@@ -373,6 +376,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     let imageObj = {
       code: this.settings.tableCode,
       data: {
+        id: Math.random().toString(36).substring(2),
         image: imgGrp.get('imageSelected').value.name,
         description: imgGrp.get('imageDescription').value,
         state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
