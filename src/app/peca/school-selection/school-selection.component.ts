@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { Location } from "@angular/common";
 @Component({
   selector: "app-school-selection",
   templateUrl: "./school-selection.component.html",
@@ -30,7 +31,11 @@ export class SchoolSelectionComponent implements OnInit {
 
   //schools = [this.escuela1, this.escuela2, this.escuela3];
 
-  constructor(private router: Router, private authService: NbAuthService) {}
+  constructor(
+    private router: Router,
+    private authService: NbAuthService,
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.getTokenInfo();
@@ -56,5 +61,8 @@ export class SchoolSelectionComponent implements OnInit {
         //console.log(this.projects);
       }
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }
