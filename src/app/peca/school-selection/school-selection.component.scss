@@ -1,12 +1,7 @@
 @import "scss/responsive";
 @import "scss/variables";
 @import "scss/elements/button";
-body {
-  overflow: visible !important;
-}
-.nb-theme-default {
-  overflow: visible !important;
-}
+
 #grid {
   display: grid;
   min-height: 100vh;
@@ -28,9 +23,8 @@ body {
   align-content: center;
 }
 a {
-  color: $white;
+  color: $white !important;
   text-decoration: none;
-  color: $white;
 }
 #grid #principal {
   min-width: 100vw;
@@ -168,6 +162,8 @@ section {
   #button {
     padding-top: 2%;
     grid-row-gap: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
     @include breakpoint(small) {
       padding-top: 2%;
       grid-row-gap: 10%;
@@ -182,5 +178,8 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .button-col .btn {
+    margin-bottom: 2%;
   }
 }
