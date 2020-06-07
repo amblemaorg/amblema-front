@@ -52,13 +52,20 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
   confsOnTable(data) {
     if (this.settings[data.code]) {
+      let index = -1; //initial
+
+      if (data.action!='add' && data.action!='set') {
+        index = this.settings['dataCopy'].findIndex(obj=>{return obj.id === data.data.oldData.id});
+      } 
 
       switch (data.action) {
-        case 'edit':
+        case 'edit':           
+          if (index!=-1) this.settings['dataCopy'][index] = data.data.newData;
           this.source.update(data.data.oldData,data.data.newData);
-          this.source.refresh();
+          this.source.refresh();          
           break;
         case 'delete':
+          if (index!=-1) this.settings['dataCopy'].splice(index, 1);;
           this.source.remove(data.data.oldData);
           this.source.refresh();
           break;
@@ -67,31 +74,46 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           break;
       
         default: // add or set
-          if (data.resetData) this.settings[data.code] = data.dataArr;
-          else this.settings[data.code].push(data.data);
+          if (data.resetData) {
+            this.settings[data.code] = data.dataArr;
+            this.settings['dataCopy'] = [ ...this.settings[data.code] ];
+          }
+          else {
+            this.settings['dataCopy'].push(data.data);
+            this.settings[data.code] = [ ...this.settings['dataCopy'] ];
+          }
           this.source = new LocalDataSource(this.settings[data.code]);
           break;
       }
 
       //updating textAndButton button data
-      if (this.settings.buttonCode)
+      if (this.settings.buttonCode) {
         this.globals.buttonDataUpdater({
           code: this.settings.buttonCode,
           whichData: 'table',
-          table: this.settings[data.code],
+          // table: value,
+          table: this.settings['dataCopy'],
         });
+        this.source.getAll().then(value => {          
+        });
+      }            
+        
     }  
   }
 
   setSettings(settings: any) {    
     this.settings = { ...defaultSettings, ...settings };
+    this.settings['dataCopy'] = [ ...this.settings[this.settings.tableCode] ];
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
   onCustomActions(e) {
+    let index = this.settings['dataCopy'].findIndex(obj=>{return obj.id === e.data.id});
+    
     let obj = {
       code: this.settings.modalCode,
       data: {
+        dataCopyData: index!=-1? this.settings['dataCopy'][index] : e.data,
         oldData: e.data,
         newData: {...e.data},
       },

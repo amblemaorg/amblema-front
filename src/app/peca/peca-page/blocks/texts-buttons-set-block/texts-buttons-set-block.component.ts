@@ -72,6 +72,8 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
       if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
         if (data.whichData=="table") this.dataTorF.table = data.table;
         if (data.whichData=="form") this.dataTorF.form = data.form;
+
+        console.log(this.dataTorF);
       }
     });
   }

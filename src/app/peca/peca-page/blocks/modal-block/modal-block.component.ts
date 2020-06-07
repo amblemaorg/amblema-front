@@ -57,11 +57,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
                       imageDescription: data.data.oldData.description,
                       imageStatus: data.data.oldData.stateNumber? data.data.oldData.stateNumber:null,
                       imageSrc: data.data.oldData.source? data.data.oldData.source:null,
-                      imageSelected: data.data.oldData.imageSelected? data.data.oldData.imageSelected:null,
+                      imageSelected: data.data.dataCopyData.imageSelected? data.data.dataCopyData.imageSelected:null,
                     }
                   } 
                   : data.data.oldData;      
-
+        
         this.instantiateChildBlocks( data.component, [data_from_table, data] );
         $(`#${data.code}-modal`).modal('show');
 

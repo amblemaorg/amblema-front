@@ -263,24 +263,6 @@ export const formParaPruebaModal = {
   impuestoValue: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
   subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
 }
-export const formParaPruebaModal2 = {
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Estatus",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },  
-}
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
@@ -343,14 +325,69 @@ export const formRegistroInicial = {
     },
   },
 }
+    //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+    export const formRegistroInicialModal = {
+      imageGroup: {
+        type: "image",
+        fields: {
+          imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
+          imageStatus: {
+            label: "Input image status",
+            placeholder: "Estatus",
+            fullwidth: false,
+            ...controlProps.selectAndRequired,
+            options: [
+              { id: "1", name: "Visible" },
+              { id: "2", name: "No visible" },
+            ],
+          },
+        },
+      },  
+    }
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
   title1: { label: "Datos básicos de la escuela", type: "title" },
   nameEscuela: { label: "Input letter text", placeholder: "Nombre de la escuela", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   codigoEscuela: { label: "Input letter text", placeholder: "Código del plantel", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   phoneEscuela: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, readonly: true, ...controlProps.phone },
-  estadoEscuela: { label: "Input letter text", placeholder: "Estado", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
-  municipioEscuela: { label: "Input letter text", placeholder: "Municipio", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  addressState: {
+    label: "Input select state",
+    placeholder: "Estado",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "165146541654hjvjh", name: "Lara" },
+      { id: "165146wfw254hjvjh", name: "Yaracuy" },
+    ],
+  },
+  addressMunicipality: {
+    label: "Input select municipality",
+    placeholder: "Municipio",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      {
+        id: "dgisgsd64646464",
+        name: "Iribarren",
+        state: { id: "165146541654hjvjh", name: "Lara" },
+      },
+      {
+        id: "tdjsgshdge8791654",
+        name: "Palavecinos",
+        state: { id: "165146541654hjvjh", name: "Lara" },
+      },
+      {
+        id: "jgisgsd64646464",
+        name: "Cocorote",
+        state: { id: "165146wfw254hjvjh", name: "Yaracuy" },
+      },
+      {
+        id: "bdjsgshdge8791654",
+        name: "Bruzual",
+        state: { id: "165146wfw254hjvjh", name: "Yaracuy" },
+      },
+    ],
+  },
   callesEscuela: { label: "Input letter text", placeholder: "Calles / carreras", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   ciudadEscuela: { label: "Input letter text", placeholder: "Ciudad", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   /*DATOS DIRECTOR*/

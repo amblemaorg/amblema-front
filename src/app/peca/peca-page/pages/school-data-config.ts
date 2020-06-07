@@ -3,10 +3,6 @@ import { formDatosEscuela, formTabsDocente, formGradosSecciones, formTabsEstudia
 const textsAndButtons = {
   component: 'textsbuttons',
   settings: {
-    title: {
-      text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-      aligning: 'center',
-    },
     action: [
       {
         type: 2,

@@ -1,4 +1,4 @@
-import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal2 } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formRegistroInicialModal } from '../blocks/form-block/all-forms'
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -53,6 +53,7 @@ const registroTallerInicial = {
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
       {
+        id: 'wfwfwfwfwfwfwfw',
         image: 'imagen1.png',
         description: 'descripcion 1',
         state: 'Visible',
@@ -61,6 +62,7 @@ const registroTallerInicial = {
         imageSelected: null,
       },
       {
+        id: 'egrwegefwgwegfwqg',
         image: 'imagen2.png',
         description: 'descripcion 2',
         state: 'No visible',
@@ -69,6 +71,7 @@ const registroTallerInicial = {
         imageSelected: null,
       },
       {
+        id: 'dwfswafsfwafa',
         image: 'imagen3.png',
         description: 'descripcion 3',
         state: 'Visible',
@@ -77,6 +80,7 @@ const registroTallerInicial = {
         imageSelected: null,
       },
       {
+        id: 'hwegsgseges',
         image: 'imagen4.png',
         description: 'descripcion 4',
         state: 'No visible',
@@ -95,18 +99,18 @@ const registroTallerInicial = {
 // !---------------------------------------------
 
 //! PRUEBAS ----------------------------------
-const formPrueba = {
+const formRegistroTallerInicial = {
   component: 'form',
   settings: {
-    formsContent: formParaPruebaModal2,
+    formsContent: formRegistroInicialModal,
     buttons: ['guardar'],
-    formType: 'pruebaaaaaaaa2',
+    formType: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
   }
 }
-const textsAndButtonsPrueba = {
+const textsAndButtonsRegistroTallerInicial = {
   component: 'textsbuttons',
   settings: {
     subtitles: [{
@@ -126,7 +130,7 @@ const textsAndButtonsPrueba = {
     isFromCustomTableActions: true,
   }
 }
-const modalPrueba = {
+const modalRegistroTallerInicial = {
   component: 'modal',
   settings: {
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
@@ -134,8 +138,8 @@ const modalPrueba = {
     items: [
       {        
         childBlocks: [
-          { ...formPrueba },
-          { ...textsAndButtonsPrueba },
+          { ...formRegistroTallerInicial },
+          { ...textsAndButtonsRegistroTallerInicial },
         ]
       }
     ]
@@ -166,7 +170,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
               { ...formTaller2 },           
               { ...registroTallerInicial },
               { ...textsAndButtons },
-              { ...modalPrueba },
+              { ...modalRegistroTallerInicial },
             ]
           },
         ]
