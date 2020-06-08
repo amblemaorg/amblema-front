@@ -7,6 +7,7 @@ import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
+import { structureData } from './data-structure';
 
 @Component({
   selector: 'form-block',
@@ -22,7 +23,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     images: any[];
     tableCode?: string; // to know which table to update
     formType?: string; // to specify what action to take on the submit button
+    buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
     isOneRow?: boolean;
+    hideImgContainer?: boolean; // if view has image adder container set this to true
+    modalCode?: string; // for views with modal inside
+    data?: any; // data to fill all inputs
+    isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
   };
 
   componentForm: FormGroup;
@@ -48,13 +54,33 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   ngOnInit() {
+    this.componentForm.statusChanges.subscribe( (val) => {
+      if (val==="INVALID" || this.isDateNotOk()) this.btnUpdater(null);
+      else this.btnUpdater(this.componentForm.value);
+    });
+
+    this.globals.showImageContainerEmitter.subscribe(code => {
+      if(this.settings.buttonCode && this.settings.buttonCode == code)
+        this.settings.hideImgContainer = false;
+    });
+
     this.setId();
+  }
+
+  btnUpdater(val) {
+    if (this.settings.buttonCode)
+      this.globals.buttonDataUpdater({
+        code: this.settings.buttonCode,
+        whichData: 'form',
+        form: val,
+      });
   }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
+    if (this.settings.data) this.setAllFields(this.settings.data);
   }
 
   // for assigning unique id to this component instance -------------
@@ -178,16 +204,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     return index;
   }
 
-  hasErrors(field: string, specialCase: boolean = false, field2: string = null): string | null {
+  hasErrors(field: string, specialCase: boolean = false, field2: string = null, fromImg: boolean = false): string | null {
     const errors: any = !specialCase? this.componentForm.get(field).errors : 
-                        (!field2? this.componentForm.controls[field].get('prependInput').errors :
-                          this.componentForm.get(field2).errors);
+                (!field2? this.componentForm.controls[field].get('prependInput').errors :
+                  (!fromImg? this.componentForm.get(field2).errors : 
+                    this.componentForm.controls['imageGroup'].get(field2).errors) );
     if (errors) {
       return errors.required ? MESSAGES.REQUIRED_MESSAGE :
              (errors.pattern || errors.minlength || errors.maxlength) ? 
              (!specialCase? this.settings.formsContent[field].messages.pattern : 
               (!field2? this.settings.formsContent[field].fields['prependInput'].messages.pattern : 
-                this.settings.formsContent[field2].messages.pattern) ) : null;
+                (!fromImg? this.settings.formsContent[field2].messages.pattern : 
+                  this.settings.formsContent['imageGroup'].fields[field2].messages.pattern) ) ) : null;
     }
 
     return null;
@@ -202,51 +230,25 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   // submitting forms
   onSubmitForm(cf: FormGroup) { //cf: component form
     this.sendingForm = true;
-    console.log('submitting form');   
+    console.log('submitting form');  
+    
+    let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
     let obj = {
       code: this.settings.tableCode,
-      data: {},
+      data: manageData.data,
       dataArr: [],
       resetData: false,
+      action: 'set',
     }; 
-
-    switch (this.settings.formType) {
-      case 'agregarGradoSeccion':
-        obj.data = {
-          grades: cf.get('grades').value,
-          secctions: cf.get('section').value,
-          name: this.settings.formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
-        };              
-        break;
-      case 'agregarDocente':
-        obj.data = {
-          name: cf.get('nameDocente').value,
-          lastName: cf.get('lastNameDocente').value,
-          identity: cf.controls['documentGroup'].get('prependInput').value,
-          mail: cf.get('email').value,
-          status: cf.get('status').value=="1"? 'Activo':'Inactivo',
-        };              
-        break;
-      case 'buscarEstudiante':
-        obj.data = {
-          name: cf.get('letterName').value, 
-          lastName: cf.get('lastNameLetter').value, 
-          doc: cf.controls['documentGroup'].get('prependInput').value, 
-          sex: cf.get('sexo').value=="1"? 'Femenino':'Masculino', 
-          age: null,
-        };              
-        break;
-      
-      default:
-        break;
-    }
 
     setTimeout(() => {
       this.sendingForm = false;
       console.log('form submitted'); 
 
-      this.globals.tableDataUpdater(obj);  
+      if (manageData.isThereTable) this.globals.tableDataUpdater(obj);  
+
+      if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
       
       // initializers
       cf.reset();
@@ -289,6 +291,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     e.focus();
   }
 
+  disableBtn() {
+    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk()
+  }
+
   // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE
   isField(field) {
     return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
@@ -329,7 +335,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
   // to disable add image button when conditions apply
   disableAddImgBtn(){
-    return this.componentForm.controls['imageGroup'].get('imageDescription').value==="" 
+    return ( this.componentForm.controls['imageGroup'].get('imageDocente') && this.componentForm.controls['imageGroup'].get('imageDocente').value==="")
+        || (this.componentForm.controls['imageGroup'].get('imageCargo') && this.componentForm.controls['imageGroup'].get('imageCargo').value==="")
+        || ( this.componentForm.controls['imageGroup'].get('imageDescription') && this.componentForm.controls['imageGroup'].get('imageDescription').value==="") 
         || this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
         || !this.componentForm.controls['imageGroup'].get('imageSelected').value;
   }  
@@ -358,8 +366,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
         image: imgGrp.get('imageSelected').value.name,
         description: imgGrp.get('imageDescription').value,
         state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
-        status: 'En espera'
-      },      
+        stateNumber: imgGrp.get('imageStatus').value,
+        status: 'En espera',
+        source: imgGrp.get('imageSrc').value,
+        imageSelected: imgGrp.get('imageSelected').value,
+      },
+      action: 'add',    
     };
     this.globals.tableDataUpdater(imageObj);
     this.componentForm.get('imageGroup').reset();  
@@ -371,6 +383,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       code: this.settings.tableCode,
       dataArr: [],
       resetData: true,
+      action: 'add',
     }; 
 
     switch (this.settings.formType) {
@@ -389,4 +402,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.globals.tableDataUpdater(obj);
     this.componentForm.reset();  
   }
+  
+  // setting inputs data
+  setAllFields(data) {
+    const dataKeys = Object.keys(data);
+    dataKeys.map(key => {
+      if (key == "imageGroup" && this.settings.formsContent['imageGroup'])
+        this.componentForm.get('imageGroup').setValue( data[key] );
+      else if(this.settings.formsContent[key])
+        this.componentForm.patchValue( { [key]: data[key] } );
+    });  
+    // console.log(this.componentForm.value); 
+    // this.componentForm.setValue(data); 
+  }
+
 }

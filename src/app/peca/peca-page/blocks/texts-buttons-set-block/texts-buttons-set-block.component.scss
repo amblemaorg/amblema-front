@@ -12,18 +12,32 @@
     .estilo-date{
         margin-left: 10px;
         display: inline-block;
+
+        @media (max-width:768px){
+            margin: 10px 0px;
+        }
     }
     .texts-buttons-wrapper {
         .texts-wrapper {
             .date-download-status {
+                .left-side {
+                    .left-sided-content {
+                        margin-bottom: 0;
+                    }
+                }
                 .right-side {
                     display: flex;
-                    align-items: baseline;
+                    // align-items: baseline;
+                    align-items: center;
 
-                    a {
+                    a, button {
                         @include shared-btn-confs;
-                    }
 
+                        @media (max-width:768px) {
+                            margin: 10px 0px;
+                            margin-left: 0px !important;
+                        }
+                    }
                     .status {
                         .rounded-circle {
                             background: #ffff00;
@@ -32,8 +46,15 @@
                             display: inline-block;
                             vertical-align: middle;
                         }
+                        @media (max-width:768px){
+                            margin: 5px 0px 15px !important;
+                        }
+                    }
+                    @media  (max-width:768px){
+                        display: block;
                     }
                 }
+                
                 .select-estatus-width {
                     width: auto;
                     flex: auto;
@@ -46,6 +67,12 @@
                         min-width: 10rem;
                     }                  
                 }               
+            }
+            @media  (max-width:768px){
+                .d-flex{
+                    display: flow-root !important;
+                }
+                
             }
         }
         .buttons-wrapper {
@@ -61,6 +88,7 @@
     
             a.btn, button.btn {
                 @include shared-btn-confs;
+                margin-right: 0;
             }
     
             .btn-in-wrapper {

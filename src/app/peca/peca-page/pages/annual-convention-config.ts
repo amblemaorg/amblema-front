@@ -1,23 +1,26 @@
 const checkList = {
     component: 'checkList',
-    settings:{
-        title: 'Convención anual',
-        checkList:[
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-            {description: 'Lorem, ipsum dolor.'},
-        ],
-        button: {
-            name: 'Guardar'
-        }
-        
+    settings: {
+        infoContainer: [
+            {
+                title: 'Convención anual',
+                checkList: [
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' },
+                ],
+                button: {
+                    name: 'Guardar'
+                },
+            }
+        ]
     }
 }
 export const ANNUAL_CONVENTION_CONFIG = {
@@ -30,12 +33,12 @@ export const ANNUAL_CONVENTION_CONFIG = {
             settings: {
                 items: [
                     {
-                        
+
                         childBlocks: [
                             { ...checkList }
                         ]
                     },
-                    
+
                 ]
             }
         }

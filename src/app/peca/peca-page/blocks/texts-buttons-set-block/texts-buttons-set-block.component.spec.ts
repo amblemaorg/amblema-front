@@ -6,6 +6,7 @@ import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -50,6 +51,8 @@ describe('TextsButtonsSetBlockComponent', () => {
       ],
       imports: [
         NgSelectModule,
+        ReactiveFormsModule,
+        FormsModule,
         RouterTestingModule.withRoutes([]),
       ]
     })

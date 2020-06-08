@@ -41,9 +41,11 @@ export class ProfileBlockComponent implements StructuralBlockComponent, OnInit, 
     this.settings.items.map((item, i) => {
       const container = this.profileContainer.toArray()[i];
       item.childBlocks.map(block => {
+        let settings = block.settings;
+        if (block.component=="modal") settings = { settings: block.settings, factory: this.factory };
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
-        pageBlockComponent.instance.setSettings(block.settings);
+        pageBlockComponent.instance.setSettings(settings);
       })
     })
   }
