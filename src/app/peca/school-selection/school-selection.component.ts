@@ -26,8 +26,11 @@ export class SchoolSelectionComponent implements OnInit {
     name: "Escuela 3",
     phase: "2"
   };*/
-  //userType: string;
+  userType: string;
   projects: any;
+  idUser: string;
+  nameUser: string;
+  emailUser: string;
 
   //schools = [this.escuela1, this.escuela2, this.escuela3];
 
@@ -40,12 +43,24 @@ export class SchoolSelectionComponent implements OnInit {
   ngOnInit() {
     this.getTokenInfo();
   }
-  goTo(phase) {
+  goTo(phase, id) {
     let phaseProject = phase;
+    let idProject = id;
     if (phaseProject == 1) {
-      this.router.navigate(["previous-steps"]);
+      this.router.navigate([
+        "previous-steps",
+        { idProject: idProject, userType: this.userType, idUser: this.idUser }
+      ]);
     } else {
-      this.router.navigate(["peca"]);
+      this.router.navigate([
+        "peca",
+        {
+          nameUser: this.nameUser,
+          idUser: this.idUser,
+          userType: this.userType,
+          emailUser: this.emailUser
+        }
+      ]);
     }
   }
   getTokenInfo() {
@@ -53,9 +68,13 @@ export class SchoolSelectionComponent implements OnInit {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
         response = token.getPayload();
-        //localStorage.setItem("payload", response);
-        //this.userType = response.identity.userType;
+        //localStorage.setItem("payload", JSON.stringify(response));
+        this.userType = response.identity.userType;
         this.projects = response.identity.projects;
+        this.idUser = response.identity.id;
+        this.emailUser = response.identity.email;
+        this.nameUser = response.identity.name;
+
         console.log(token);
         //console.log(this.userType);
         //console.log(this.projects);
