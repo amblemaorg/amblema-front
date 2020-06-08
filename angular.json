@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
+          "style": "scss"
         }
       },
       "root": "",
@@ -26,6 +26,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/robots.txt",
               "src/assets/icons",
               "src/assets/fonts"
             ],
@@ -41,9 +42,7 @@
               "node_modules/owl.carousel/dist/owl.carousel.min.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/assets/."
-              ]
+              "includePaths": ["src/assets/."]
             }
           },
           "configurations": {
@@ -102,36 +101,23 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/owl.carousel/dist/owl.carousel.min.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/assets/."
-              ]
+              "includePaths": ["src/assets/."]
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -157,9 +143,7 @@
               "mergeStrategies": { "externals": "replace" }
             },
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/assets/."
-              ]
+              "includePaths": ["src/assets/."]
             }
           },
           "configurations": {
@@ -179,6 +163,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "amblema-web"
 }

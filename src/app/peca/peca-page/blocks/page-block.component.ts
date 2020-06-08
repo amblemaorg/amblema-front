@@ -9,11 +9,13 @@ export interface StructuralBlockComponent extends PageBlockComponent {
   type: 'structural';
   settings: {
     items: StructuralItem[];
+    modalCode?: string; // for views with modal inside
+    isFromImgContainer?: boolean;
   };
 }
 
 export interface StructuralItem {
-  title: string;
+  title?: string;
   childBlocks: PageBlockComponent[];
   icon?: string;
   description?: string;

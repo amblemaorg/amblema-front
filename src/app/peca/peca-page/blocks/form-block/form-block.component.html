@@ -168,26 +168,31 @@
         
         <ng-template #titleLabel>          
             <ng-container *ngIf="settings.formsContent[field].type==='title'; else imageGroup">
-              <h6>{{ settings.formsContent[field].label }}</h6>
+              <h6 [class.d-none]="settings.formsContent[field].hideImgContainer && settings.hideImgContainer">
+                {{ settings.formsContent[field].label }}
+              </h6>
             </ng-container>
         </ng-template>
 
         <ng-template #imageGroup>
             <div 
               [formGroupName]="field" 
-              class="image-group d-flex flex-wrap"
+              class="image-group"
+              [class.d-none]="settings.hideImgContainer"
             >
               <!-- camera-outline -->
               <div
                 #imageUploadContainer 
                 class="image-upload-btn-container" 
                 [id]="getId('image-upload-btn-container')"
+                [class.inside-modal]="settings.isFromCustomTableActions"
               >
                   <input 
                     class="d-none" 
                     [id]="getId('image-upload-btn-input-file')" 
                     type="file" 
                     (change)="fileManager($event)"
+                    accept="image/*"
                   />
                   <button 
                     *ngIf="!showImage(1)"
@@ -208,7 +213,48 @@
                   <div class="overlay"></div>
               </div>
 
-              <div class="image-fields d-flex flex-column justify-content-center">
+              <div 
+                class="image-fields d-flex" 
+                [class.flex-column]="!settings.formsContent[field].fields['imageDocente']"
+                [class.justify-content-center]="!settings.formsContent[field].fields['imageDocente']"
+                [class.flex-wrap]="settings.formsContent[field].fields['imageDocente']"
+                [class.justify-content-between]="settings.formsContent[field].fields['imageDocente']"
+                [class.general-container]="settings.formsContent[field].fields['imageDocente']"
+                [class.inside-modal]="settings.isFromCustomTableActions"
+              >                  
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDocente']">
+                  <label>{{ settings.formsContent[field].fields['imageDocente'].label }}</label>
+                  <ng-select
+                    class="form-control"
+                    [class.image-status]="!settings.isFromCustomTableActions"
+                    notFoundText="Elementos no encontrados"
+                    [items]="settings.formsContent[field].fields['imageDocente'].options"
+                    bindValue="id"
+                    bindLabel="name"
+                    [labelForId]="getId('imageDocente')"
+                    formControlName="imageDocente"
+                    [virtualScroll]="true"
+                    [id]="getId('imageDocente')"
+                    [placeholder]="settings.formsContent[field].fields['imageDocente'].placeholder"
+                  >
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                      <small>{{item.name}}</small>
+                    </ng-template>
+                  </ng-select>
+                </div>
+                  
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageCargo']">
+                  <label>{{ settings.formsContent[field].fields['imageCargo'].label }}</label>
+                  <input
+                    class="form-control image-description"
+                    autocomplete='off'
+                    type="text"
+                    formControlName="imageCargo"
+                    [id]="getId('imageCarago')"
+                    [placeholder]="settings.formsContent[field].fields['imageCargo'].placeholder"
+                  />
+                </div>
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageDescription']">
                   <label>{{ settings.formsContent[field].fields['imageDescription'].label }}</label>
                   <input
                     class="form-control image-description"
@@ -218,10 +264,19 @@
                     [id]="getId('imageDescription')"
                     [placeholder]="settings.formsContent[field].fields['imageDescription'].placeholder"
                   />
-
-                  <label>{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
+                  <ng-container *ngIf="hasErrors(field,true,'imageDescription',true) 
+                                          && settings.isFromCustomTableActions">
+                    <div class="error-message">
+                      <strong>{{hasErrors(field,true,'imageDescription',true)}}</strong>
+                    </div>
+                  </ng-container>
+                </div>
+                
+                <div class="input-container">
+                  <label class="label-image-status">{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
-                    class="form-control image-status"
+                    class="form-control"
+                    [class.image-status]="!settings.isFromCustomTableActions"
                     notFoundText="Elementos no encontrados"
                     [items]="settings.formsContent[field].fields['imageStatus'].options"
                     bindValue="id"
@@ -236,9 +291,16 @@
                       <small>{{item.name}}</small>
                     </ng-template>
                   </ng-select>
+                  <ng-container *ngIf="hasErrors(field,true,'imageStatus',true) 
+                                          && settings.isFromCustomTableActions">
+                    <div class="error-message">
+                      <strong>{{hasErrors(field,true,'imageStatus',true)}}</strong>
+                    </div>
+                  </ng-container>
+                </div>                  
               </div>  
 
-              <div class="add-img-btn">
+              <div *ngIf="!settings.isFromCustomTableActions" class="add-img-btn">
                 <button 
                   type="button" 
                   class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
@@ -275,7 +337,7 @@
             <button 
               type="submit" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
-              [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+              [disabled]="disableBtn()"
             >
               <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
               {{ !sendingForm? 'Guardar':'Guardando..' }}
