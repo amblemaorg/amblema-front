@@ -19,6 +19,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
     hideImgContainer?: boolean; // if view has image adder container set this to true
     modalCode?: string; // for views with modal inside
+    isFromImgContainer?: boolean; // indicates if data in table is from an image container
     classes: {
       hideView: boolean;
       hideEdit: boolean;
@@ -26,8 +27,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     };
   };
 
-  source: LocalDataSource | any;
-  // source: LocalDataSource;
+  // source: LocalDataSource | any;
+  source: LocalDataSource;
 
   constructor(private globals: GlobalService) {
     this.type = 'presentational';
@@ -54,7 +55,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     if (this.settings[data.code]) {
       let index = -1; //initial
 
-      if (data.action!='add' && data.action!='set') {
+      if (data.action!='add' && data.action!='set' && this.settings.isFromImgContainer) {
         index = this.settings['dataCopy'].findIndex(obj=>{return obj.id === data.data.oldData.id});
       } 
 
@@ -76,26 +77,37 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         default: // add or set
           if (data.resetData) {
             this.settings[data.code] = data.dataArr;
-            this.settings['dataCopy'] = [ ...this.settings[data.code] ];
+            if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [ ...this.settings[data.code] ];
+            this.source = new LocalDataSource(this.settings[data.code]);
           }
           else {
-            this.settings['dataCopy'].push(data.data);
-            this.settings[data.code] = [ ...this.settings['dataCopy'] ];
+            if (this.settings.isFromImgContainer) this.settings['dataCopy'].push(data.data);
+            if (this.settings.isFromImgContainer) this.settings[data.code] = [ ...this.settings['dataCopy'] ];
+            this.source.add(data.data);
+            this.source.refresh();
           }
-          this.source = new LocalDataSource(this.settings[data.code]);
+          // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);
           break;
       }
 
-      //updating textAndButton button data
+      console.log(data);
+      //updating textAndButton button data      
       if (this.settings.buttonCode) {
-        this.globals.buttonDataUpdater({
-          code: this.settings.buttonCode,
-          whichData: 'table',
-          // table: value,
-          table: this.settings['dataCopy'],
-        });
-        this.source.getAll().then(value => {          
-        });
+        if (this.settings.isFromImgContainer) {
+          this.globals.buttonDataUpdater({
+            code: this.settings.buttonCode,
+            whichData: 'table',
+            table: this.settings['dataCopy'],
+          });
+        } else {
+          this.source.getAll().then(value => {    
+            this.globals.buttonDataUpdater({
+              code: this.settings.buttonCode,
+              whichData: 'table',
+              table: value,
+            });      
+          });
+        }                
       }            
         
     }  
@@ -103,12 +115,12 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
   setSettings(settings: any) {    
     this.settings = { ...defaultSettings, ...settings };
-    this.settings['dataCopy'] = [ ...this.settings[this.settings.tableCode] ];
+    if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [ ...this.settings[this.settings.tableCode] ];
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
   onCustomActions(e) {
-    let index = this.settings['dataCopy'].findIndex(obj=>{return obj.id === e.data.id});
+    let index = this.settings.isFromImgContainer? this.settings['dataCopy'].findIndex(obj=>{return obj.id === e.data.id}) : -1;
     
     let obj = {
       code: this.settings.modalCode,

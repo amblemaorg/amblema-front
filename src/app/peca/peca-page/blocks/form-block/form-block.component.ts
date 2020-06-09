@@ -289,14 +289,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.patchValue({addressMunicipality:munId});
   }
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
-  updateMuns(bool:boolean = true){
+  updateMuns(bool:boolean = true, munId: string = ''){
     if(bool) {
       let currStateId = "default";
       currStateId = this.componentForm.controls['addressState'].value && this.componentForm.controls['addressState'].value.length>0? 
         this.componentForm.controls['addressState'].value :
         "default";      
     
-      this.fillMunicipalities(currStateId);
+      this.fillMunicipalities(currStateId, munId);
     }    
   }
 
@@ -379,8 +379,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
         id: Math.random().toString(36).substring(2),
         image: imgGrp.get('imageSelected').value.name,
         description: imgGrp.get('imageDescription').value,
-        state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
-        stateNumber: imgGrp.get('imageStatus').value,
+        state: imgGrp.get('imageStatus').value,
         status: 'En espera',
         source: imgGrp.get('imageSrc').value,
         imageSelected: imgGrp.get('imageSelected').value,
@@ -419,12 +418,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   
   // setting inputs data
   setAllFields(data) {
+    console.log(data);
     const dataKeys = Object.keys(data);
     dataKeys.map(key => {
-      if (key == "imageGroup" && this.settings.formsContent['imageGroup'])
-        this.componentForm.get('imageGroup').setValue( data[key] );
-      else if(this.settings.formsContent[key])
-        this.componentForm.patchValue( { [key]: data[key] } );
+      if ( (key == 'imageGroup' && this.settings.formsContent['imageGroup']) || 
+           (key == 'documentGroup' && this.settings.formsContent['documentGroup']) )
+        this.componentForm.get(key).setValue( data[key] );
+      else if(this.settings.formsContent[key]) {
+        if (key == 'addressMunicipality') this.updateMuns(true, data[key]);
+        else this.componentForm.patchValue( { [key]: data[key] } );
+      }        
     });  
     // console.log(this.componentForm.value); 
     // this.componentForm.setValue(data); 

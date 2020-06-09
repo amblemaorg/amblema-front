@@ -1,4 +1,4 @@
-import { formDatosEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes } from '../blocks/form-block/all-forms';
+import { formDatosEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes, formDatosEscuelaModal } from '../blocks/form-block/all-forms';
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -24,7 +24,7 @@ const formEscuela = {
     formsContent: formDatosEscuela,  
     buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
-    hideImgContainer: true,  
+    hideImgContainer: true,
   }
 }
 
@@ -39,27 +39,46 @@ const registroEscuela = {
         title: "Descripción"
       },
       state: {
-        title: 'Estado'
+        title: 'Estado',
+        valuePrepareFunction: ( row: any ) => {
+          if (row) return row == "1" ? 'Visible':'No visible';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? 'Visible':'No visible';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       status: {
         title: 'Estatus'
       }
     },
     hideImgContainer: true,
+    isFromImgContainer: true,
+    modalCode: 'schoolDataConfigRegistroEscuela',
     buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
     schoolDataConfigRegistroEscuela: [
       {
+        id: '1abcdefghijk',
         image: 'imagen1.png',
         description: 'descripcion 1',
-        state: 'Visible',
-        status: 'Aprobado'
+        state: '1',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
+        id: '2abcdefghijk',
         image: 'imagen2.png',
         description: 'descripcion 2',
-        state: 'No visible',
-        status: 'Aprobado'
+        state: '2',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
     ],
     classes: {
@@ -69,6 +88,56 @@ const registroEscuela = {
     },
   }
 }
+//* MODAL ----------------------------------
+const formRegistroEscuela = {
+  component: 'form',
+  settings: {
+    formsContent: formDatosEscuelaModal,
+    buttons: ['guardar'],
+    formType: 'imageContainerFormType',
+    tableCode: 'schoolDataConfigRegistroEscuela',
+    modalCode: 'schoolDataConfigRegistroEscuela',
+    isFromCustomTableActions: true,
+  }
+}
+const textsAndButtonsRegistroEscuela = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'schoolDataConfigRegistroEscuela',
+    isFromCustomTableActions: true,
+  }
+}
+const modalRegistroEscuela = {
+  component: 'modal',
+  settings: {
+    modalCode: 'schoolDataConfigRegistroEscuela',
+    isFromImgContainer: true,
+    items: [
+      {        
+        childBlocks: [
+          { ...formRegistroEscuela },
+          { ...textsAndButtonsRegistroEscuela },
+        ]
+      }
+    ]
+  }
+}
+//* ------------------------------------------
+
+
 const formDocente = {
   component: 'form',
   settings: {
@@ -88,38 +157,88 @@ const tablaDocente = {
       lastName: {
         title: "Apellido"
       },
-      identity: {
-        title: 'Cedula'
+      documentGroup: {
+        title: 'Cedula',
+        valuePrepareFunction: ( row: any ) => {
+          if (row) return row.prependInput;
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell.prependInput;
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
-      mail: {
+      email: {
         title: 'Correo'
       },
       status: {
-        title: 'Estatus'
+        title: 'Estatus',
+        valuePrepareFunction: ( row: any ) => {
+          if (row) return row == "1" ? 'Activo':'Inactivo';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? 'Activo':'Inactivo';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       }
     },
+    modalCode: 'schoolDataConfigTablaDocente',
     tableCode: 'schoolDataConfigTablaDocente',
     schoolDataConfigTablaDocente: [
       {
+        id: '1abcdefghijk',
         name: 'ALfredo',
         lastName: 'Valbuena',
-        identity: '20017764',
-        mail: 'almavalo11@gmail.com',
-        status: 'Activo'
+        email: 'almavalo11@gmail.com',
+        status: '1',
+        documentGroup: {
+          prependSelect: '1',
+          prependInput: '20017764',
+        },
+        phone: '546546',
+        addressState: '165146541654hjvjh',
+        addressMunicipality: 'dgisgsd64646464',
+        street: 'wefewf',
+        city: 'ewfwef',
       },
       {
+        id: '2abcdefghijk',
         name: 'Manuel',
         lastName: 'Perez',
-        identity: '123456789',
-        mail: 'almavalo@gmail.com',
-        status: 'Activo'
+        email: 'almavalo@gmail.com',
+        status: '1',
+        documentGroup: {
+          prependSelect: '1',
+          prependInput: '123456789',
+        },
+        phone: '546546',
+        addressState: '165146541654hjvjh',
+        addressMunicipality: 'dgisgsd64646464',
+        street: 'wefewf',
+        city: 'ewfwef',
       },
       {
+        id: '3abcdefghijk',
         name: 'Luis',
         lastName: 'Valbuena',
-        identity: '20017764',
-        mail: 'almavalo@hotmail.com',
-        status: 'Inactivo'
+        email: 'almavalo@hotmail.com',
+        status: '2',
+        documentGroup: {
+          prependSelect: '1',
+          prependInput: '20017764',
+        },
+        phone: '546546',
+        addressState: '165146541654hjvjh',
+        addressMunicipality: 'dgisgsd64646464',
+        street: 'wefewf',
+        city: 'ewfwef',
       },
     ],
     classes: {
@@ -129,6 +248,56 @@ const tablaDocente = {
     },
   }
 }
+//* MODAL ----------------------------------
+const formTablaDocente = {
+  component: 'form',
+  settings: {
+    formsContent: formTabsDocente,
+    buttons: ['guardar'],
+    formType: 'agregarDocente',
+    tableCode: 'schoolDataConfigTablaDocente',
+    modalCode: 'schoolDataConfigTablaDocente',
+    isFromCustomTableActions: true,
+  }
+}
+const textsAndButtonsTablaDocente = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'schoolDataConfigTablaDocente',
+    isFromCustomTableActions: true,
+  }
+}
+const modalTablaDocente = {
+  component: 'modal',
+  settings: {
+    modalCode: 'schoolDataConfigTablaDocente',
+    items: [
+      {        
+        childBlocks: [
+          { ...formTablaDocente },
+          { ...textsAndButtonsTablaDocente },
+        ]
+      }
+    ]
+  }
+}
+//* ------------------------------------------
+
+
+
 const formGradosYSecciones = {
   component: 'form',
   settings: {
@@ -155,16 +324,19 @@ const tablaGradosSecciones = {
     tableCode: 'schoolDataConfigTablaGradosSecciones',
     schoolDataConfigTablaGradosSecciones: [
       {
+        id: '1abcdefghijk',
         grades: '5',
         secctions: 'B',
         name: 'Isa',
       },
       {
+        id: '2abcdefghijk',
         grades: '6',
         secctions: 'A',
         name: 'Alfredo',
       },
       {
+        id: '3abcdefghijk',
         grades: '3',
         secctions: 'C',
         name: 'Manuel',
@@ -210,6 +382,7 @@ const tablaEstudiante = {
     tableCode: 'schoolDataConfigTablaEstudiante',
     schoolDataConfigTablaEstudiante: [
       {
+        id: '1abcdefghijk',
         name: 'Isa',
         lastName: 'Godoy',
         doc: '23577413',
@@ -217,6 +390,7 @@ const tablaEstudiante = {
         age: '15',
       },
       {
+        id: '2abcdefghijk',
         name: 'ALfredo',
         lastName: 'Valbuena',
         doc: '123456',
@@ -247,7 +421,8 @@ export const SCHOOL_DATA_CONFIG = {
             childBlocks: [
               { ...formEscuela },
               { ...registroEscuela },
-              { ...textsAndButtons }
+              { ...textsAndButtons },
+              { ...modalRegistroEscuela },
             ]
           },
           {
@@ -255,7 +430,8 @@ export const SCHOOL_DATA_CONFIG = {
             icon: "folder-open",
             childBlocks: [
               { ...formDocente },
-              { ...tablaDocente }
+              { ...tablaDocente },
+              { ...modalTablaDocente },
             ]
           },
           {
