@@ -241,6 +241,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     console.log('submitting form');  
     
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
+    if(this.settings.formType==="buscarEstudiante") manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);    
 
     if (this.settings.isFromCustomTableActions) {
       this.settings.dataFromRow.data.newData = manageData.data;
@@ -314,8 +315,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   // wrong date save button enabler/disabler
-  checkDateOk(e,mode,f) {
-    if ( this.globals.validateDate(e,mode,true) || e.target.value==="" ) 
+  checkDateOk(e,mode,f,notE:boolean = false) {
+    let value = !notE? e.target.value==="" : e==="";
+    if ( this.globals.validateDate(e,mode,true,notE) || value ) 
          this.wrongDateDisabler[f] = false;
     else this.wrongDateDisabler[f] = true;
   }
@@ -425,8 +427,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
            (key == 'documentGroup' && this.settings.formsContent['documentGroup']) )
         this.componentForm.get(key).setValue( data[key] );
       else if(this.settings.formsContent[key]) {
-        if (key == 'addressMunicipality') this.updateMuns(true, data[key]);
-        else this.componentForm.patchValue( { [key]: data[key] } );
+        if (key == 'addressMunicipality') 
+          this.updateMuns(true, data[key]);
+        else if (key == 'age') {// if 'Z' comes in the date format it gets removed
+          let dateKey = this.globals.getDateFormat( new Date( data[key].replace('Z','') ) );
+          this.componentForm.patchValue( { [key]: dateKey } );
+          this.checkDateOk(dateKey,this.settings.formsContent[key]['lower']?'lower':'greater',key,true);
+        }
+        else 
+          this.componentForm.patchValue( { [key]: data[key] } );
       }        
     });  
     // console.log(this.componentForm.value); 

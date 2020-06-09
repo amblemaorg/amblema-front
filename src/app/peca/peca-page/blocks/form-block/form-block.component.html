@@ -99,7 +99,7 @@
                   class="form-control" 
                   [formControlName]="field"
                   [id]="getId('datepicker-'+field)"
-                  (change)="checkDateOk($event,'greater',field)"
+                  (change)="checkDateOk($event,settings.formsContent[field].lower?'lower':'greater',field)"
                 />
                 <input 
                   [class.d-none]="inputDate.value.length > 0"
@@ -112,7 +112,12 @@
                   (click)="focusDatePicker(inputDate)"
                 />
                 <div class="date-error-message">
-                  <strong>La fecha debe ser mayor a la de hoy</strong>
+                  <strong>{{
+                    settings.formsContent[field].lower?
+                    'La fecha no debe ser mayor a la de hoy' :
+                    'La fecha debe ser mayor a la de hoy'
+                  }}</strong>
+                  
                 </div>
                 <ng-container *ngIf="hasErrors(field)">
                   <div class="error-message">
