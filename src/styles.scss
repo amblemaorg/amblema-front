@@ -1,8 +1,9 @@
 @import "scss/variables";
 @import "scss/responsive";
 
-@import "~ngx-toastr/toastr", "~bootstrap/dist/css/bootstrap.css", "~bootstrap/scss/print",
-  "~bootstrap/scss/reboot", "~bootstrap/scss/type", "~owl.carousel/dist/assets/owl.carousel.min.css",
+@import "~ngx-toastr/toastr", "~bootstrap/dist/css/bootstrap.css",
+  "~bootstrap/scss/print", "~bootstrap/scss/reboot", "~bootstrap/scss/type",
+  "~owl.carousel/dist/assets/owl.carousel.min.css",
   "~owl.carousel/dist/assets/owl.theme.default.min.css";
 
   @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
@@ -35,10 +36,14 @@
   src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356");
   src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356#iefix")
       format("embedded-opentype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff2?46373356") format("woff2"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff?46373356") format("woff"),
-    url("./assets/fonts/amblema-icons/amblemaicons.ttf?46373356") format("truetype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons") format("svg");
+    url("./assets/fonts/amblema-icons/amblemaicons.woff2?46373356")
+      format("woff2"),
+    url("./assets/fonts/amblema-icons/amblemaicons.woff?46373356")
+      format("woff"),
+    url("./assets/fonts/amblema-icons/amblemaicons.ttf?46373356")
+      format("truetype"),
+    url("./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons")
+      format("svg");
   font-weight: normal;
   font-style: normal;
 }

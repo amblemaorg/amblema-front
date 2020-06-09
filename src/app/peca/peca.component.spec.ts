@@ -1,16 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PecaComponent } from './peca.component';
-import { NbLayoutModule, NbMenuModule, NbCardModule, NbSidebarModule, NbThemeModule, NbIconLibraries, NbThemeService,NbActionsModule,NbUserModule,NbSidebarService  } from '@nebular/theme';
-import { RouterTestingModule } from '@angular/router/testing';
+import { PecaComponent } from "./peca.component";
+import {
+  NbLayoutModule,
+  NbMenuModule,
+  NbCardModule,
+  NbSidebarModule,
+  NbThemeModule,
+  NbIconLibraries,
+  NbThemeService,
+  NbActionsModule,
+  NbUserModule,
+  NbSidebarService
+} from "@nebular/theme";
+import { RouterTestingModule } from "@angular/router/testing";
 
-xdescribe('PecaComponent', () => {
+xdescribe("PecaComponent", () => {
   let component: PecaComponent;
   let fixture: ComponentFixture<PecaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PecaComponent ],
+      declarations: [PecaComponent],
       imports: [
         RouterTestingModule.withRoutes([]),
         NbThemeModule,
@@ -22,12 +33,8 @@ xdescribe('PecaComponent', () => {
         NbUserModule,
         NbSidebarService
       ],
-      providers: [
-        NbIconLibraries,
-        NbThemeService
-      ]
-    })
-    .compileComponents();
+      providers: [NbIconLibraries, NbThemeService]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,7 +43,7 @@ xdescribe('PecaComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
