@@ -6,11 +6,11 @@
   display: grid;
   min-height: 100vh;
   height: auto;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 6% 94%;
 }
 #grid #navbar {
   display: grid;
-  min-height: 60px;
+  min-height: 60px !important;
   background-color: $blue;
   grid-auto-flow: column;
   grid-gap: 20px;
@@ -23,9 +23,8 @@
   align-content: center;
 }
 a {
-  color: $white;
+  color: $white !important;
   text-decoration: none;
-  color: $white;
 }
 #grid #principal {
   min-width: 100vw;
@@ -163,6 +162,8 @@ section {
   #button {
     padding-top: 2%;
     grid-row-gap: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
     @include breakpoint(small) {
       padding-top: 2%;
       grid-row-gap: 10%;
@@ -177,5 +178,8 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .button-col .btn {
+    margin-bottom: 2%;
   }
 }
