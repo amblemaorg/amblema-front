@@ -10,9 +10,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         case 'agregarGradoSeccion': // for Datos de la Escuela view and Grados y Secciones section         
           data.data = {
             grades: cf.get('grades').value,
-            secctions: cf.get('section').value,
-            name: formsContent['docentes'].options.find(d=>{return d.id===cf.get('docentes').value}).name,
-          };              
+            section: cf.get('section').value,
+            docente: formsContent['docente'].options.find(d=>{return d.id===cf.get('docente').value}).id,
+          };
           break;
         case 'agregarDocente': // for Datos de la Escuela view and Docentes section
           data.data = {
@@ -33,11 +33,15 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           break;
         case 'buscarEstudiante': // for Datos de la Escuela view and Estudiantes section
           data.data = {
-            name: cf.get('letterName').value, 
-            lastName: cf.get('lastNameLetter').value, 
-            doc: cf.controls['documentGroup'].get('prependInput').value, 
-            sex: cf.get('sexo').value=="1"? 'Femenino':'Masculino', 
-            age: null,
+            name: cf.get('name').value, 
+            lastName: cf.get('lastName').value, 
+            documentGroup: {
+              prependSelect: cf.controls['documentGroup'].get('prependSelect').value,
+              prependInput: cf.controls['documentGroup'].get('prependInput').value,
+            },
+            gender: cf.get('gender').value, 
+            grades: cf.get('grades').value,
+            section: cf.get('section').value,
           };              
           break;
         case 'initialWorkshopConfigPreparacionTaller': // for Taller Inicial view and Preparacion del Taller section

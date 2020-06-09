@@ -560,7 +560,7 @@ export const formGradosSecciones = {
     ],
   },
   section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
-  docentes: {
+  docente: {
     label: "Input select sex",
     placeholder: "Docentes",
     fullwidth: false,
@@ -588,7 +588,7 @@ export const formTabsEstudiantes = {
       { id: "6", name: "6" },
     ],
   },
-  secction: {
+  section: {
     label: "Input select section",
     placeholder: "Sección",
     fullwidth: false,
@@ -602,8 +602,8 @@ export const formTabsEstudiantes = {
       { id: "6", name: "F" },
     ],
   },
-  letterName: { label: "Nombre Estudiante", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
-  lastNameLetter: { label: "Apellido Estudiante", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  name: { label: "Nombre Estudiante", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido Estudiante", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   documentGroup: {
     type: "prepend",
     fields: {
@@ -621,8 +621,8 @@ export const formTabsEstudiantes = {
       prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
-  date: { label: "Input date", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
-  sexo: {
+  age: { lower: true, label: "Input date", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
+  gender: {
     label: "Input select sex",
     placeholder: "Género (Femenino ó Msculino)",
     fullwidth: false,
