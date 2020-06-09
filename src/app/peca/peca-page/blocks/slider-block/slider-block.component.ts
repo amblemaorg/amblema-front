@@ -16,13 +16,11 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   component: string;
   settings: {
     sliderImage: {
+      text: string;
       image: string[];
       description: string;
-    }[];
-    dateOrtext: {
-      text: string;
       fields: string[];
-    };
+    }[];
   };
 
   glbls: any;
