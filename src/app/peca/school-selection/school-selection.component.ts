@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
+import { Router } from "@angular/router";
+import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { Location } from "@angular/common";
 @Component({
   selector: "app-school-selection",
   templateUrl: "./school-selection.component.html",
@@ -11,22 +13,75 @@ export class SchoolSelectionComponent implements OnInit {
   title = "Bienvenido a AmbleMa";
   description =
     " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quam pariatur hic dignissimos nam laborum expedita nostrum temporibus adipisci, amet quos neque animi, obcaecati, quisquam officia dolorum inventore deserunt! Officia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam sapiente placeat veritatis, reprehenderit accusantium, illo aspernatur qui, cupiditate magni quis provident! Quibusdam fugiat voluptatum doloribus fugit? Illum dolores dicta eveniet quos neque animi, illo aspernatur qui.";
-  schools = [
-    {
-      name: "Escuela 1",
-      addres: ""
-    },
-    {
-      name: "Escuela 2",
-      addres: ""
-    },
-    {
-      name: "Escuela 3",
-      addres: ""
+  /*escuela1 = {
+    name: "Escuela 1",
+    addres: "",
+    phase: "1"
+  };
+  escuela2 = {
+    name: "Escuela 2",
+    phase: "1"
+  };
+  escuela3 = {
+    name: "Escuela 3",
+    phase: "2"
+  };*/
+  userType: string;
+  projects: any;
+  idUser: string;
+  nameUser: string;
+  emailUser: string;
+
+  //schools = [this.escuela1, this.escuela2, this.escuela3];
+
+  constructor(
+    private router: Router,
+    private authService: NbAuthService,
+    private location: Location
+  ) {}
+
+  ngOnInit() {
+    this.getTokenInfo();
+  }
+  goTo(phase, id) {
+    let phaseProject = phase;
+    let idProject = id;
+    if (phaseProject == 1) {
+      this.router.navigate([
+        "previous-steps",
+        { idProject: idProject, userType: this.userType, idUser: this.idUser }
+      ]);
+    } else {
+      this.router.navigate([
+        "peca",
+        {
+          nameUser: this.nameUser,
+          idUser: this.idUser,
+          userType: this.userType,
+          emailUser: this.emailUser
+        }
+      ]);
     }
-  ];
+  }
+  getTokenInfo() {
+    let response;
+    this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
+      if (token.isValid()) {
+        response = token.getPayload();
+        //localStorage.setItem("payload", JSON.stringify(response));
+        this.userType = response.identity.userType;
+        this.projects = response.identity.projects;
+        this.idUser = response.identity.id;
+        this.emailUser = response.identity.email;
+        this.nameUser = response.identity.name;
 
-  constructor() {}
-
-  ngOnInit() {}
+        console.log(token);
+        //console.log(this.userType);
+        //console.log(this.projects);
+      }
+    });
+  }
+  goBack() {
+    this.location.back();
+  }
 }
