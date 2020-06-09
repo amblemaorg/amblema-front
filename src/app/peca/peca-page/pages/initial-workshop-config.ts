@@ -36,54 +36,66 @@ const registroTallerInicial = {
   settings: {
     columns: {
       image: {
-        title: "Imágen",
+        title: "Imágen"
       },
       description: {
         title: "Descripción"
       },
       state: {
-        title: 'Estado'
+        title: 'Estado',
+        valuePrepareFunction: ( row: any ) => {
+          if (row) return row == "1" ? 'Visible':'No visible';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? 'Visible':'No visible';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       status: {
         title: 'Estatus'
       }
     },
+    isFromImgContainer: true,
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
       {
-        id: 'wfwfwfwfwfwfwfw',
+        id: '1abcdefghijk',
         image: 'imagen1.png',
         description: 'descripcion 1',
-        state: 'Visible',
+        state: '1',
         status: 'Aprobado',
         source: null,
         imageSelected: null,
       },
       {
-        id: 'egrwegefwgwegfwqg',
+        id: '2abcdefghijk',
         image: 'imagen2.png',
         description: 'descripcion 2',
-        state: 'No visible',
+        state: '2',
         status: 'Aprobado',
         source: null,
         imageSelected: null,
       },
       {
-        id: 'dwfswafsfwafa',
+        id: '3abcdefghijk',
         image: 'imagen3.png',
         description: 'descripcion 3',
-        state: 'Visible',
+        state: '1',
         status: 'Aprobado',
         source: null,
         imageSelected: null,
       },
       {
-        id: 'hwegsgseges',
+        id: '4abcdefghijk',
         image: 'imagen4.png',
         description: 'descripcion 4',
-        state: 'No visible',
+        state: '2',
         status: 'Aprobado',
         source: null,
         imageSelected: null,
@@ -98,13 +110,13 @@ const registroTallerInicial = {
 }
 // !---------------------------------------------
 
-//! PRUEBAS ----------------------------------
+//* MODAL ----------------------------------
 const formRegistroTallerInicial = {
   component: 'form',
   settings: {
     formsContent: formRegistroInicialModal,
     buttons: ['guardar'],
-    formType: 'initialWorkshopConfigRegistroTallerInicial',
+    formType: 'imageContainerFormType',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
@@ -145,7 +157,7 @@ const modalRegistroTallerInicial = {
     ]
   }
 }
-//! ------------------------------------------
+//* ------------------------------------------
 
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {

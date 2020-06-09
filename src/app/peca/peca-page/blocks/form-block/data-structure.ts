@@ -16,11 +16,19 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           break;
         case 'agregarDocente': // for Datos de la Escuela view and Docentes section
           data.data = {
-            name: cf.get('nameDocente').value,
-            lastName: cf.get('lastNameDocente').value,
-            identity: cf.controls['documentGroup'].get('prependInput').value,
-            mail: cf.get('email').value,
-            status: cf.get('status').value=="1"? 'Activo':'Inactivo',
+            name: cf.get('name').value,
+            lastName: cf.get('lastName').value,
+            email: cf.get('email').value,
+            status: cf.get('status').value,
+            documentGroup: {
+              prependSelect: cf.controls['documentGroup'].get('prependSelect').value,
+              prependInput: cf.controls['documentGroup'].get('prependInput').value,
+            },
+            phone: cf.get('phone').value,
+            addressState: cf.get('addressState').value,
+            addressMunicipality: cf.get('addressMunicipality').value,
+            street: cf.get('street').value,
+            city: cf.get('city').value,
           };              
           break;
         case 'buscarEstudiante': // for Datos de la Escuela view and Estudiantes section
@@ -47,18 +55,17 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             subtotal: cf.get('subtotal').value,
           };
           break;
-        case 'initialWorkshopConfigRegistroTallerInicial': // for Taller Inicial view and Registro Inicial modal
+        case 'imageContainerFormType': // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
           data.data = {            
             image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
             description: cf.controls['imageGroup'].get('imageDescription').value,
-            state: cf.controls['imageGroup'].get('imageStatus').value == "1" ? 'Visible':'No visible',
-            stateNumber: cf.controls['imageGroup'].get('imageStatus').value,
+            state: cf.controls['imageGroup'].get('imageStatus').value,
             status: 'En espera',
             source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
             imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
           };   
           break;
-        
+
         default:
           break;
     }

@@ -55,7 +55,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
                   {
                     imageGroup: {
                       imageDescription: data.data.oldData.description,
-                      imageStatus: data.data.oldData.stateNumber? data.data.oldData.stateNumber:null,
+                      imageStatus: data.data.oldData.state? data.data.oldData.state:null,
                       imageSrc: data.data.oldData.source? data.data.oldData.source:null,
                       imageSelected: data.data.dataCopyData.imageSelected? data.data.dataCopyData.imageSelected:null,
                     }

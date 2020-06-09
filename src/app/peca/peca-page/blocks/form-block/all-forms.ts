@@ -448,12 +448,31 @@ export const formDatosEscuela = {
     },
   },
 }
+      //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+      export const formDatosEscuelaModal = {
+        imageGroup: {
+          type: "image",
+          fields: {
+            imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
+            imageStatus: {
+              label: "Input image status",
+              placeholder: "Estatus",
+              fullwidth: false,
+              ...controlProps.selectAndRequired,
+              options: [
+                { id: "1", name: "Visible" },
+                { id: "2", name: "No visible" },
+              ],
+            },
+          },
+        },  
+      }
 
 /*TABS DOCENTE*/
 export const formTabsDocente = {
   titleName: { label: "Datos del Docente", type: "title" },
-  nameDocente: { label: "Nombre del Docente", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
-  lastNameDocente: { label: "Apellido del Docente", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  name: { label: "Nombre del Docente", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido del Docente", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   documentGroup: {
     type: "prepend",
     fields: {
