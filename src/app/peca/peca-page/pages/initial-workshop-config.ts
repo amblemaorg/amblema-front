@@ -1,4 +1,4 @@
-import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal2 } from '../blocks/form-block/all-forms'
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -8,9 +8,11 @@ const textsAndButtons = {
       aligning: 'center',
     },
     action: [{
-      type: 1,
+      type: 3,
       name: 'Enviar Solicitud',
-    }],
+    }],    
+    receivesFromTableOrForm: 'both',
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
   }
 }
 
@@ -19,6 +21,7 @@ const formTaller1 = {
   settings: {
     formsContent: formPreparacionTallerInicial,
     buttons: ['guardar'],
+    formType: 'initialWorkshopConfigPreparacionTaller',
   }
 }
 
@@ -26,7 +29,8 @@ const formTaller2 = {
   component: 'form',
   settings:{
     formsContent: formRegistroInicial,
-    tableCode: 'dataRegistroTallerInicial',
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
   }
 }
 
@@ -48,8 +52,10 @@ const registroTallerInicial = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataRegistroTallerInicial',
-    dataRegistroTallerInicial: [
+    modalCode: 'dataSpecialActivityTable',
+    buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    initialWorkshopConfigRegistroTallerInicial: [
       {
         image: 'imagen1.png',
         description: 'descripcion 1',
@@ -84,6 +90,34 @@ const registroTallerInicial = {
 }
 // !---------------------------------------------
 
+//! PRUEBAS ----------------------------------
+const formPrueba = {
+  component: 'form',
+  settings: {
+    formsContent: formParaPruebaModal2,
+    buttons: ['guardar'],
+    formType: 'pruebaaaaaaaa',
+    tableCode: 'dataSpecialActivityTable',
+    modalCode: 'dataSpecialActivityTable',
+    isFromCustomTableActions: true,
+  }
+}
+const modalPrueba = {
+  component: 'modal',
+  settings: {
+    modalCode: 'dataSpecialActivityTable',
+    isFromImgContainer: true,
+    items: [
+      {        
+        childBlocks: [
+          { ...formPrueba }
+        ]
+      }
+    ]
+  }
+}
+//! ------------------------------------------
+
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
     title: "Taller inicial"
@@ -106,7 +140,8 @@ export const INITIAL_WORKSHOP_CONFIG = {
             childBlocks: [   
               { ...formTaller2 },           
               { ...registroTallerInicial },
-              { ...textsAndButtons }
+              { ...textsAndButtons },
+              { ...modalPrueba },
             ]
           },
         ]

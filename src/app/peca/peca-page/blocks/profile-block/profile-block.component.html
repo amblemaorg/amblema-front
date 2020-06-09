@@ -1,5 +1,5 @@
 <div fullWidth *ngFor="let item of settings.items; index as i">
-    <div class="bloque">
+    <div *ngIf="item.image || item.title || item.description" class="bloque">
         <div class="bloque1">
             <div #imagenPerfil>
                 <input type='file' class="d-none" (change)="readUrl($event)">

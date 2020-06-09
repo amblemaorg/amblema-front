@@ -65,7 +65,7 @@ const propuestaAmblema = {
             },
         ],
         action: [{
-            type: 1,
+            type: 3,
             name: 'Enviar',
         }],
         upload: {

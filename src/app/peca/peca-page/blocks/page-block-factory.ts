@@ -14,6 +14,7 @@ import { SliderBlockComponent } from './slider-block/slider-block.component';
 import { StepperBlockComponent } from './stepper-block/stepper-block.component';
 import { ChecklistBlockComponent } from './checklist-block/checklist-block.component';
 import { ScheduleBlockComponent } from './schedule-block/schedule-block.component';
+import { ModalBlockComponent } from './modal-block/modal-block.component';
 
 export class PageBlockFactory {
 
@@ -41,6 +42,8 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(ChecklistBlockComponent);
       case 'agendas':
         return this.componentFactoryResolver.resolveComponentFactory(ScheduleBlockComponent);
+      case 'modal':
+        return this.componentFactoryResolver.resolveComponentFactory(ModalBlockComponent);
       default:
         throw Error('PageBlockTypeException: invalid page block type');
     }
