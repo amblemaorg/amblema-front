@@ -17,6 +17,8 @@ const preinscripcionDocente = {
         {
             name: 'Agregar docente'
         },
+        buttonType: 'agregarDocentePreinscripcion',
+        tableCode: 'dataPreinscripcionDocente',
     }
 }
 
@@ -24,7 +26,7 @@ const btnGuardar = {
     component: 'textsbuttons',
     settings: {
         action: {
-            type: 2,
+            type: 1,
             name: 'Guardar',
         }
     }
@@ -79,7 +81,8 @@ const tablaPreinscripcionDocente = {
                 title: 'Correo'
             }
         },
-        data: [
+        tableCode: 'dataPreinscripcionDocente',
+        dataPreinscripcionDocente: [
             {
                 name: 'ALfredo',
                 lastName: 'Valbuena',

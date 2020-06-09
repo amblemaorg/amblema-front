@@ -255,6 +255,32 @@ export const sampleFormData = {
     },
   },
 }
+export const formParaPruebaModal = {
+  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
+  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
+  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
+  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
+  impuestoValue: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
+  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
+}
+export const formParaPruebaModal2 = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
+      imageStatus: {
+        label: "Input image status",
+        placeholder: "Estatus",
+        fullwidth: false,
+        ...controlProps.selectAndRequired,
+        options: [
+          { id: "1", name: "Visible" },
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
+  },  
+}
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
@@ -367,9 +393,7 @@ export const formDatosEscuela = {
       twitter: { label: "Input normal text", placeholder: "Twitter", fullwidth2: true, ...controlProps.normalTextAndRequired },
     }
   },
-}
-export const formImgEscuela = {
-  title5: { label: "Slider principal de la escuela", type: "title" },
+  title5: { label: "Slider principal de la escuela", type: "title", hideImgContainer: true },
   imageGroup: {
     type: "image",
     fields: {
@@ -387,6 +411,7 @@ export const formImgEscuela = {
     },
   },
 }
+
 /*TABS DOCENTE*/
 export const formTabsDocente = {
   titleName: { label: "Datos del Docente", type: "title" },

@@ -46,6 +46,8 @@
       }
 
       .image-group {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -56,6 +58,16 @@
           justify-content: center;
           align-items: center;
           position: relative;
+
+          &.inside-modal {
+            flex: 0 0 36%;
+            justify-content: flex-start;
+
+            i {
+              -webkit-transform: translateX(55%);
+              transform: translateX(55%);
+            }
+          }
 
           button, img {
             @include for-image-widths;
@@ -128,22 +140,48 @@
         .image-fields {
           flex: 1;
 
-          .image-description, .image-status {
+          .input-container:not(:last-child) {
             margin-bottom: 1rem;
           }
-          &.general-container{
-            .input-container{
+
+          &.general-container {
+            .input-container {
               width: 48%;
             }
-            .select-container{
+            .input-container:last-child {
               width: 48%;
             }
           }
+
+          &.inside-modal {
+            .input-container:not(:last-child) {
+              margin-bottom: 0;
+            } 
+
+            .error-message {            
+              color: $red;
+              font-size: small;
+            }
+
+            .input-container:not(:first-child) {
+              margin-top: 1rem;
+            }
+
+            &.general-container {
+              .input-container {
+                width: 100%;
+              }
+              .input-container:last-child {
+                width: 100%;
+              }
+            }            
+          }
+
           @media (max-width:768px) {
-            .input-container{
+            .input-container {
               width: 100% !important;
             }
-            .select-container{
+            .input-container:last-child {
               width: 100% !important;
             }
           }
@@ -355,6 +393,9 @@
         .submit-btn, 
         .add-img-button {
           @include shared-btn-confs;
+        }
+        button {
+          margin-right: 0;
         }
       }
       

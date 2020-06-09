@@ -1,3 +1,5 @@
+import { formParaPruebaModal } from '../blocks/form-block/all-forms'
+
 const controlProps = {
     dateAndRequired: {
         type: "date",
@@ -13,9 +15,11 @@ const textsAndButtons = {
     component: 'textsbuttons',
     settings: {
         action: [{
-            type: 1,
+            type: 3,
             name: 'Enviar Solicitud',
         }],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataSpecialActivityTable',
     }
 }
 
@@ -30,10 +34,11 @@ const dateAndStatus = {
         status: 'pendiente',
         action: [
             {
-                type: 1,
+                type: 6,
                 name: 'Agregar Nuevo',
             }
         ],
+        modalCode: 'dataSpecialActivityTable',
     }
 }
 const specialActivityTable = {
@@ -59,14 +64,17 @@ const specialActivityTable = {
                 title: 'subtotal'
             },
         },
-        tableCode: 'dataSpecialActivity',
-        dataSpecialActivity: [
+        modalCode: 'dataSpecialActivityTable',
+        buttonCode: 'dataSpecialActivityTable',
+        tableCode: 'dataSpecialActivityTable',
+        dataSpecialActivityTable: [
             {
                 item: '1',
                 description: 'cosa',
                 cantidad: '34',
                 price: '444',
                 impuesto: '20%',
+                impuestoValue: '20',
                 subtotal: '500',
             },
             {
@@ -75,6 +83,7 @@ const specialActivityTable = {
                 cantidad: '34',
                 price: '444',
                 impuesto: '20%',
+                impuestoValue: '20',
                 subtotal: '500',
             },
         ],
@@ -86,6 +95,32 @@ const specialActivityTable = {
     }
 }
 
+//! PRUEBAS ----------------------------------
+const formPrueba = {
+    component: 'form',
+    settings: {
+        formsContent: formParaPruebaModal,
+        buttons: ['guardar'],
+        formType: 'pruebaaaaaaaa',
+        tableCode: 'dataSpecialActivityTable',
+        modalCode: 'dataSpecialActivityTable',
+    }
+}
+const modalPrueba = {
+    component: 'modal',
+    settings: {
+        modalCode: 'dataSpecialActivityTable',
+        items: [
+        {
+            childBlocks: [
+                { ...formPrueba },                
+            ]
+        }
+        ]
+    }
+}
+//! ------------------------------------------
+
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
         title: "Actividad especial"
@@ -93,14 +128,14 @@ export const SPECIAL_ACTIVITY_CONFIG = {
     blocks: [
         {
             component: 'profiles',
-            settings: {
+            settings: {                
                 items: [
-                    {
-
+                    {     
                         childBlocks: [
-                            { ...dateAndStatus },
+                            { ...dateAndStatus },                            
                             { ...specialActivityTable },
-                            { ...textsAndButtons }
+                            { ...textsAndButtons },
+                            { ...modalPrueba },
                         ]
                     },
                 ],

@@ -1,4 +1,4 @@
-import { formDatosEscuela, formImgEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes } from '../blocks/form-block/all-forms';
+import { formDatosEscuela, formTabsDocente, formGradosSecciones, formTabsEstudiantes } from '../blocks/form-block/all-forms';
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -7,25 +7,28 @@ const textsAndButtons = {
       text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
       aligning: 'center',
     },
-    action: [{
-      type: 1,
-      name: 'Enviar Solicitud',
-    }],
+    action: [
+      {
+        type: 2,
+        name: 'Adjuntar fotos',
+      },
+      {
+        type: 3,
+        name: 'Enviar Solicitud',
+      },
+    ],
+    receivesFromTableOrForm: 'both',
+    buttonCode: 'schoolDataConfigRegistroEscuela',
   }
 }
 
 const formEscuela = {
   component: 'form',
   settings: {
-    formsContent: formDatosEscuela,
-    buttons: ['guardar'],
-  }
-}
-const formImageEscuela = {
-  component: 'form',
-  settings: {
-    formsContent: formImgEscuela,
-    tableCode: 'dataRegistroEscuela',
+    formsContent: formDatosEscuela,  
+    buttonCode: 'schoolDataConfigRegistroEscuela',
+    tableCode: 'schoolDataConfigRegistroEscuela',
+    hideImgContainer: true,  
   }
 }
 
@@ -46,8 +49,10 @@ const registroEscuela = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataRegistroEscuela',
-    dataRegistroEscuela: [
+    hideImgContainer: true,
+    buttonCode: 'schoolDataConfigRegistroEscuela',
+    tableCode: 'schoolDataConfigRegistroEscuela',
+    schoolDataConfigRegistroEscuela: [
       {
         image: 'imagen1.png',
         description: 'descripcion 1',
@@ -73,7 +78,7 @@ const formDocente = {
   settings: {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
-    tableCode: 'dataTablaDocente',
+    tableCode: 'schoolDataConfigTablaDocente',
     formType: 'agregarDocente',
   },  
 }
@@ -97,8 +102,8 @@ const tablaDocente = {
         title: 'Estatus'
       }
     },
-    tableCode: 'dataTablaDocente',
-    dataTablaDocente: [
+    tableCode: 'schoolDataConfigTablaDocente',
+    schoolDataConfigTablaDocente: [
       {
         name: 'ALfredo',
         lastName: 'Valbuena',
@@ -133,7 +138,7 @@ const formGradosYSecciones = {
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
-    tableCode: 'dataTablaGradosSecciones',
+    tableCode: 'schoolDataConfigTablaGradosSecciones',
     formType: 'agregarGradoSeccion',
   }
 }
@@ -151,8 +156,8 @@ const tablaGradosSecciones = {
         title: 'Docente'
       },
     },
-    tableCode: 'dataTablaGradosSecciones',
-    dataTablaGradosSecciones: [
+    tableCode: 'schoolDataConfigTablaGradosSecciones',
+    schoolDataConfigTablaGradosSecciones: [
       {
         grades: '5',
         secctions: 'B',
@@ -181,7 +186,7 @@ const formEstudiantes = {
   settings: {
     formsContent: formTabsEstudiantes,
     buttons: ['agregar'],
-    tableCode: 'dataTablaEstudiante',
+    tableCode: 'schoolDataConfigTablaEstudiante',
     formType: 'buscarEstudiante',
     // isOneRow: true,
   }
@@ -206,8 +211,8 @@ const tablaEstudiante = {
         title: 'Edad'
       },
     },
-    tableCode: 'dataTablaEstudiante',
-    dataTablaEstudiante: [
+    tableCode: 'schoolDataConfigTablaEstudiante',
+    schoolDataConfigTablaEstudiante: [
       {
         name: 'Isa',
         lastName: 'Godoy',
@@ -245,7 +250,6 @@ export const SCHOOL_DATA_CONFIG = {
             icon: "taller-inicial",
             childBlocks: [
               { ...formEscuela },
-              { ...formImageEscuela },
               { ...registroEscuela },
               { ...textsAndButtons }
             ]

@@ -60,7 +60,8 @@ const ConfirmacionDocente = {
                 title: 'Confirmación'
             },
         },
-        data: [
+        tableCode: 'amblemonedaConfigConfirmacionDocente',
+        amblemonedaConfigConfirmacionDocente: [
             {
                 grade: '5to grado',
                 section: 'B',
