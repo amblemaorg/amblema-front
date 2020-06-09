@@ -37,6 +37,7 @@
               <label>{{ settings.formsContent[field].label }}</label>
               <ng-select
                 class="form-control"
+                [class.is-in-modal]="settings.isFromCustomTableActions"
                 notFoundText="Elementos no encontrados"
                 [items]="field!='addressMunicipality'? settings.formsContent[field].options : municipalities"
                 bindValue="id"
@@ -227,6 +228,7 @@
                   <ng-select
                     class="form-control"
                     [class.image-status]="!settings.isFromCustomTableActions"
+                    [class.is-in-modal]="settings.isFromCustomTableActions"
                     notFoundText="Elementos no encontrados"
                     [items]="settings.formsContent[field].fields['imageDocente'].options"
                     bindValue="id"
@@ -279,6 +281,7 @@
                   <ng-select
                     class="form-control"
                     [class.image-status]="!settings.isFromCustomTableActions"
+                    [class.is-in-modal]="settings.isFromCustomTableActions"
                     notFoundText="Elementos no encontrados"
                     [items]="settings.formsContent[field].fields['imageStatus'].options"
                     bindValue="id"
@@ -326,7 +329,7 @@
           [ngSwitch]="btn"
         >
           <ng-container *ngSwitchCase="'cargarImagenes'">
-            <button 
+            <button
               type="button" 
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
               [disabled]="!componentForm.valid || sendingForm"
