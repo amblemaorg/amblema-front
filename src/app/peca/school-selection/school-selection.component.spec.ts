@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { SchoolSelectionComponent } from "./school-selection.component";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NbAuthService, NbTokenService, NbTokenStorage } from "@nebular/auth";
+import { NbAuthService, NbTokenService, NbAuthModule } from "@nebular/auth";
 
 describe("SchoolSelectionComponent", () => {
   let component: SchoolSelectionComponent;
@@ -11,8 +11,8 @@ describe("SchoolSelectionComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SchoolSelectionComponent],
-      imports: [FontAwesomeModule, RouterTestingModule],
-      providers: [NbAuthService, NbTokenService, NbTokenStorage]
+      imports: [FontAwesomeModule, RouterTestingModule, NbAuthModule.forRoot()],
+      providers: [NbAuthService, NbTokenService]
     }).compileComponents();
   }));
 
