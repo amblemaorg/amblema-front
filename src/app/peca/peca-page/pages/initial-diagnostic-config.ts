@@ -1,3 +1,5 @@
+import { formLecturaModal, formMatematicaModal } from '../blocks/form-block/all-forms';
+
 const botonEstadistica = {
   component: 'textsbuttons',
   settings: {
@@ -20,11 +22,33 @@ const readingDiagnosticTable = {
       lastName: {
         title: "Apellido"
       },
-      sex: {
-        title: 'Género'
+      gender: {
+        title: 'Género',
+        valuePrepareFunction: ( row: any ) => {  
+          if (row) return row == "1"? 'Femenino' : 'Masculino';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {          
+            let value: string = cell == "1"? 'Femenino' : 'Masculino';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       grade: {
-        title: 'Grado'
+        title: 'Grado',
+        valuePrepareFunction: ( row: any ) => {          
+          if (row) return formLecturaModal.grade.options.find(d=>{return d.id===row}).name;
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = formLecturaModal.grade.options.find(d=>{return d.id===cell}).name;
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       section: {
         title: 'Sección'
@@ -36,25 +60,26 @@ const readingDiagnosticTable = {
         title: 'Indice'
       },
     },
+    modalCode: 'initialDiagnosticConfigLectura',
     tableCode: 'initialDiagnosticConfigLectura',
     initialDiagnosticConfigLectura: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',
-        sex: 'masculino',
-        grade: '4to grado',
+        gender: '2',
+        grade: '4',
         section: 'B',
         result: '20 palabras correctas/min',
-        index: '1',
+        index: 1,
       },
       {
         name: 'Manuel',
         lastName: 'Perez',
-        sex: 'Masculino',
-        grade: '5to grado',
+        gender: '2',
+        grade: '5',
         section: 'A',
         result: '20 palabras correctas/min',
-        index: '2',
+        index: 2,
       },
     ],
     classes: {
@@ -64,6 +89,54 @@ const readingDiagnosticTable = {
     },
   }
 }
+//* MODAL LECTURA ----------------------------------
+const formReadingDiagnosticTable = {
+  component: 'form',
+  settings: {
+    formsContent: formLecturaModal,
+    buttons: ['guardar'],
+    formType: 'tablaLectura',
+    tableCode: 'initialDiagnosticConfigLectura',
+    modalCode: 'initialDiagnosticConfigLectura',
+    isFromCustomTableActions: true,
+  }
+}
+const textsAndButtonsReadingDiagnosticTable = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'initialDiagnosticConfigLectura',
+    isFromCustomTableActions: true,
+  }
+}
+const modalReadingDiagnosticTable = {
+  component: 'modal',
+  settings: {
+    modalCode: 'initialDiagnosticConfigLectura',
+    items: [
+      {        
+        childBlocks: [
+          { ...formReadingDiagnosticTable },
+          { ...textsAndButtonsReadingDiagnosticTable },
+        ]
+      }
+    ]
+  }
+}
+//* ------------------------------------------
+
 
 const mathDiagnosticTable = {
   component: 'table',
@@ -75,11 +148,33 @@ const mathDiagnosticTable = {
       lastName: {
         title: "Apellido"
       },
-      sex: {
-        title: 'Género'
+      gender: {
+        title: 'Género',
+        valuePrepareFunction: ( row: any ) => {  
+          if (row) return row == "1"? 'Femenino' : 'Masculino';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {          
+            let value: string = cell == "1"? 'Femenino' : 'Masculino';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       grade: {
-        title: 'Grado'
+        title: 'Grado',
+        valuePrepareFunction: ( row: any ) => {          
+          if (row) return formMatematicaModal.grade.options.find(d=>{return d.id===row}).name;
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = formMatematicaModal.grade.options.find(d=>{return d.id===cell}).name;
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       section: {
         title: 'Sección'
@@ -97,29 +192,30 @@ const mathDiagnosticTable = {
         title: 'Indice de lógica matematica'
       },
     },
+    modalCode: 'initialDiagnosticConfigMatematica',
     tableCode: 'initialDiagnosticConfigMatematica',
     initialDiagnosticConfigMatematica: [
       {
         name: 'Alfredo',
         lastName: 'Valbuena',
-        sex: 'masculino',
-        grade: '5to grado',
+        gender: '2',
+        grade: '5',
         section: 'B',
-        resultMul: '40',
-        resultLog: '50',
-        indexMul: '100',
-        indexLog: '29',
+        resultMul: 40,
+        resultLog: 50,
+        indexMul: 100,
+        indexLog: 29,
       },
       {
-        name: 'Maria',
-        lastName: 'Torres',
-        sex: 'femenino',
-        grade: '4to grado',
-        section: 'A',
-        resultMul: '60',
-        resultLog: '80',
-        indexMul: '100',
-        indexLog: '29',
+        name: 'Maria', //
+        lastName: 'Torres', //
+        gender: '1', //
+        grade: '4', //
+        section: 'A', //
+        resultMul: 60,
+        resultLog: 80,
+        indexMul: 100,
+        indexLog: 29,
       },
     ],
     classes: {
@@ -129,6 +225,53 @@ const mathDiagnosticTable = {
     },
   }
 }
+//* MODAL MATEMATICA ----------------------------------
+const formMathDiagnosticTable = {
+  component: 'form',
+  settings: {
+    formsContent: formMatematicaModal,
+    buttons: ['guardar'],
+    formType: 'tablaMatematica',
+    tableCode: 'initialDiagnosticConfigMatematica',
+    modalCode: 'initialDiagnosticConfigMatematica',
+    isFromCustomTableActions: true,
+  }
+}
+const textsAndButtonsMathDiagnosticTable = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'initialDiagnosticConfigMatematica',
+    isFromCustomTableActions: true,
+  }
+}
+const modalMathDiagnosticTable = {
+  component: 'modal',
+  settings: {
+    modalCode: 'initialDiagnosticConfigMatematica',
+    items: [
+      {        
+        childBlocks: [
+          { ...formMathDiagnosticTable },
+          { ...textsAndButtonsMathDiagnosticTable },
+        ]
+      }
+    ]
+  }
+}
+//* ------------------------------------------
 
 export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
@@ -142,15 +285,17 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
           {
             title: "Lectura",
             childBlocks: [
-              { ...botonEstadistica},
-              { ...readingDiagnosticTable }
+              { ...botonEstadistica },
+              { ...readingDiagnosticTable },
+              { ...modalReadingDiagnosticTable },
             ]
           },
           {
             title: "Matemática",
             childBlocks: [
-              { ...botonEstadistica},
-              { ...mathDiagnosticTable }
+              { ...botonEstadistica },
+              { ...mathDiagnosticTable },
+              { ...modalMathDiagnosticTable },
             ]
           }
         ],
