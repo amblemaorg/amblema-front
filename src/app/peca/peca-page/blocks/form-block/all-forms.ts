@@ -930,3 +930,69 @@ export const formEscuela = {
   phoneContact2: { label: "Input phone text", placeholder: "Teléfono del SubDirector", fullwidth: false, ...controlProps.phoneAndRequired },
   emailContact2: { label: "Input email text", placeholder: "Input del SubDirector", fullwidth: false, ...controlProps.emailAndRequired },
 }
+
+/*MODALES  DIAGNOSTICO INICIAL*/
+export const formLecturaModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  gender: {
+    label: "Input select gender",
+    placeholder: "Genero",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Femenino" },
+      { id: "2", name: "Masculino" },
+    ],
+  },
+  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
+  index: { label: "Indice", placeholder: "Indice", fullwidth: false, ...controlProps.numberAndRequired },
+}
+export const formMatematicaModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  gender: {
+    label: "Input select gender",
+    placeholder: "Genero",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Femenino" },
+      { id: "2", name: "Masculino" },
+    ],
+  },
+  resultMul: { label: "Resultado de multiplicacion", placeholder: "Resultado de multiplicacion", fullwidth: false, ...controlProps.numberAndRequired },
+  resultLog: { label: "Resultado de logica matematica", placeholder: "Resultado de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
+  indexMul: { label: "Indice de multiplicacion", placeholder: "Indice de multiplicacion", fullwidth: false, ...controlProps.numberAndRequired },
+  indexLog: { label: "Indice de logica matematica", placeholder: "Indice de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
+}

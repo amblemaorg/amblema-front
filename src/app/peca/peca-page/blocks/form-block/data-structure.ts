@@ -48,15 +48,28 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           data.isThereTable = false;
           console.log(cf.value);
           break;
-        case 'pruebaaaaaaaa': //! borrar
+        case 'tablaLectura': // for Diagnostico Inicial view and Lectura tab table
           data.data = {
-            item: cf.get('item').value,
-            description: cf.get('description').value,
-            cantidad: cf.get('cantidad').value,
-            price: cf.get('price').value,
-            impuesto: cf.get('impuestoValue').value+'%',
-            impuestoValue: cf.get('impuestoValue').value,
-            subtotal: cf.get('subtotal').value,
+            name: cf.get('name').value,
+            lastName: cf.get('lastName').value,
+            gender: cf.get('gender').value,
+            grade: cf.get('grade').value,
+            section: cf.get('section').value,
+            result: cf.get('result').value,
+            index: cf.get('index').value,
+          };
+          break;
+        case 'tablaMatematica': // for Diagnostico Inicial view and Matematica tab table
+          data.data = {
+            name: cf.get('name').value,
+            lastName: cf.get('lastName').value,
+            gender: cf.get('gender').value,
+            grade: cf.get('grade').value,
+            section: cf.get('section').value,
+            resultMul: cf.get('resultMul').value,
+            resultLog: cf.get('resultLog').value,
+            indexMul: cf.get('indexMul').value,
+            indexLog: cf.get('indexLog').value,
           };
           break;
         case 'imageContainerFormType': // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
