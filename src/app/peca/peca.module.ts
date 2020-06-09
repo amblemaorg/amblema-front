@@ -25,6 +25,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CarouselModule } from "ngx-owl-carousel-o";
 import { OwlModule } from 'ngx-owl-carousel';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 // COMPONENTS
 import { PecaComponent } from './peca.component';
 import { PecaPageComponent } from './peca-page/peca-page.component';
@@ -41,6 +42,8 @@ import { SpecialActivityPageComponent } from './peca-page/pages/special-activity
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
 import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
 import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
+import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component';
+import { SchedulePageComponent } from './peca-page/pages/schedule-page.component'
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -51,6 +54,7 @@ import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-
 import { SliderBlockComponent } from './peca-page/blocks/slider-block/slider-block.component';
 import { StepperBlockComponent } from './peca-page/blocks/stepper-block/stepper-block.component';
 import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/checklist-block.component';
+import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedule-block.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +73,8 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     MathOlympicsPageComponent,
     TeacherTestimonyPageComponent,
     EnvironmentalProjectPageComponent,
+    MonitoringStrategyPageComponent,
+    SchedulePageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -79,6 +85,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ScheduleBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -104,6 +111,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     CarouselModule,
     OwlModule,
     NbCheckboxModule,
+    ScheduleModule,
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -115,6 +123,7 @@ import { ChecklistBlockComponent } from './peca-page/blocks/checklist-block/chec
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ScheduleBlockComponent,
   ]
 })
 export class PecaModule { }
