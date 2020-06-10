@@ -29,6 +29,11 @@ const routes: Routes = [
       import("./peca/school-selection/school-selection.module").then(
         m => m.SchoolSelectionModule
       )
+  },
+  {
+    path: "**",
+    loadChildren: () =>
+      import("./web/pages/error404/error404.module").then(m => m.Error404Module)
   }
 ];
 
