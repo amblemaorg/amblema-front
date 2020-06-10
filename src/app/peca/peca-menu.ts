@@ -161,10 +161,12 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Estrategia de seguimiento para actividades extraordinarias',
-    icon: 'email-outline',
+    icon: 'actividades',
+    link: 'estrategia-seguimiento'
   },
   {
     title: 'Agenda de actividades',
     icon: 'calendar',
+    link: 'agenda-page'
   },
 ];
