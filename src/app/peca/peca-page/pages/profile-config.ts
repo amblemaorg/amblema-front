@@ -22,7 +22,6 @@ export const PROFILE_CONFIG = {
                     {
                         image: "../../assets/images/profile-oscar.jpg",
                         title: "Carlos Camacaro",
-                        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis possimus culpa voluptatum eveniet hic voluptas! ",
                         childBlocks: [
                             { ...formSet }
                         ]

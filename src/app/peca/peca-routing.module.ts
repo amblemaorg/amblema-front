@@ -13,6 +13,8 @@ import { SpecialActivityPageComponent } from './peca-page/pages/special-activity
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
 import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
 import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
+import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component';
+import { SchedulePageComponent } from './peca-page/pages/schedule-page.component';
 
 const routes: Routes = [
   {
@@ -67,6 +69,14 @@ const routes: Routes = [
         path: 'proyecto-ambiental',
         component: EnvironmentalProjectPageComponent
       },
+      {
+        path: 'estrategia-seguimiento',
+        component: MonitoringStrategyPageComponent
+      },
+      {
+        path: 'agenda-page',
+        component: SchedulePageComponent
+      }
     ]
   }
 ];
