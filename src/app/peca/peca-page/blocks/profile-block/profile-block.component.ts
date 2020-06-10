@@ -17,6 +17,22 @@ export class ProfileBlockComponent implements StructuralBlockComponent, OnInit, 
     items: StructuralItem[];
   }
 
+  url="";
+  uploadImageCaller(imgBtnContainer) {
+    imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
+  }
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = (event:any) => {
+            this.url = event.target.result;
+        }
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+}
+
 
   constructor() {
     this.type = 'structural';

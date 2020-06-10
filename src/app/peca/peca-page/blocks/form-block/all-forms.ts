@@ -703,23 +703,6 @@ export const formCoordinador = {
   street: { label: "Input normal text", placeholder: "Calles / Carreras", fullwidth: false, ...controlProps.normalTextAndRequired },
   house: { label: "Input normal text", placeholder: "Casa / edificio", fullwidth: false, ...controlProps.normalTextAndRequired },
   proffesion: { label: "Input normal text", placeholder: "Profesión", fullwidth: false, ...controlProps.normalTextAndRequired },
-  titleImagen: { label: "Imagen Coordinador", type: "title" },
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Input image status",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },
 }
 /* PERFIL DE USUARIO PADRINO*/
 export const formPadrino = {
@@ -811,23 +794,6 @@ export const formPadrino = {
   },
   city: { label: "Input normal text", placeholder: "Ciudad", fullwidth: false, ...controlProps.normalTextAndRequired },
   street: { label: "Input normal text", placeholder: "Calles / Carreras", fullwidth: false, ...controlProps.normalTextAndRequired },
-  titleImagen: { label: "Imagen del Padrino", type: "title" },
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Input image status",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },
 }
 /* PERFIL DE USUARIO ESCUELA*/
 export const formEscuela = {
