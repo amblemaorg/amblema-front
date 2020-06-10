@@ -24,7 +24,8 @@ import { PecaRoutingModule } from "./peca-routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { CarouselModule } from "ngx-owl-carousel-o";
-import { OwlModule } from "ngx-owl-carousel";
+import { OwlModule } from 'ngx-owl-carousel';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 // COMPONENTS
 import { PecaComponent } from "./peca.component";
@@ -42,6 +43,8 @@ import { SpecialActivityPageComponent } from './peca-page/pages/special-activity
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
 import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
 import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
+import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component';
+import { SchedulePageComponent } from './peca-page/pages/schedule-page.component'
 // Block Components
 import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
 import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
@@ -53,6 +56,7 @@ import { SliderBlockComponent } from "./peca-page/blocks/slider-block/slider-blo
 import { StepperBlockComponent } from "./peca-page/blocks/stepper-block/stepper-block.component";
 import { ChecklistBlockComponent } from "./peca-page/blocks/checklist-block/checklist-block.component";
 import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.component";
+import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedule-block.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +75,8 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     MathOlympicsPageComponent,
     TeacherTestimonyPageComponent,
     EnvironmentalProjectPageComponent,
+    MonitoringStrategyPageComponent,
+    SchedulePageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -81,6 +87,7 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ScheduleBlockComponent,
     ModalBlockComponent,
   ],
   imports: [
@@ -107,6 +114,7 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     CarouselModule,
     OwlModule,
     NbCheckboxModule,
+    ScheduleModule,
     FontAwesomeModule
   ],
   entryComponents: [
@@ -119,6 +127,7 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     SliderBlockComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
+    ScheduleBlockComponent,
     ModalBlockComponent,
   ]
 })
