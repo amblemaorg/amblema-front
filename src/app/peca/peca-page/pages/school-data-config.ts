@@ -569,12 +569,10 @@ export const SCHOOL_DATA_CONFIG = {
   },
   blocks: [
     {
-      component: 'accordion',
+      component: 'profiles',
       settings: {
         items: [
           {
-            title: "Datos de la Escuela",
-            icon: "taller-inicial",
             childBlocks: [
               { ...formEscuela },
               { ...registroEscuela },
@@ -583,32 +581,40 @@ export const SCHOOL_DATA_CONFIG = {
             ]
           },
           {
-            title: "Docentes",
-            icon: "folder-open",
-            childBlocks: [
-              { ...formDocente },
-              { ...tablaDocente },
-              { ...modalTablaDocente },
+            childBlocks:[
+              {
+                component: 'tabs',
+                settings:{
+                  items:[
+                    {
+                      title: 'Docentes',
+                      childBlocks: [
+                        { ...formDocente },
+                        { ...tablaDocente },
+                        { ...modalTablaDocente },
+                      ]
+                    },
+                    {
+                      title: 'Grados y secciones',
+                      childBlocks: [
+                        { ...formGradosYSecciones },
+                        { ...tablaGradosSecciones },
+                        { ...modalTablaGradosSecciones },
+                      ]
+                    },
+                    {
+                      title: 'Estudiantes',
+                      childBlocks: [
+                        { ...formEstudiantes },
+                        { ...tablaEstudiante },
+                        { ...modalTablaEstudiante },
+                      ]
+                    },
+                  ]
+                }
+              }
             ]
-          },
-          {
-            title: "Grados y secciones",
-            icon: "diagnostico",
-            childBlocks: [
-              { ...formGradosYSecciones },
-              { ...tablaGradosSecciones },
-              { ...modalTablaGradosSecciones },
-            ]
-          },
-          {
-            title: "Estudiantes",
-            icon: "planificacion",
-            childBlocks: [
-              { ...formEstudiantes },
-              { ...tablaEstudiante },
-              { ...modalTablaEstudiante },
-            ]
-          },
+          }
         ]
       }
     },
