@@ -72,6 +72,13 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             indexLog: cf.get('indexLog').value,
           };
           break;
+        case 'tablaConfirmacionDocente': // for Amblemonedas view and Confirmacion Docente tab table
+          data.data = {
+            grade: cf.get('grade').value,
+            section: cf.get('section').value,
+            confirmation: cf.get('confirmation').value,
+          };
+          break;
         case 'imageContainerFormType': // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
           data.data = {            
             image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
@@ -81,6 +88,38 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
             imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
           };   
+          break;
+        case 'agregarDocentePreinscripcion': // Agregar de la Preparacion anual view
+          data.data = {
+            name: cf.get('name').value,
+            lastName: cf.get('lastName').value,
+            phone: cf.get('phone').value,
+            email: cf.get('email').value,
+          };
+          break;
+        case 'agregarResultadoEstudiante': // Agregar del Olimpiadas de matematicas
+          data.data = {
+            name: cf.get('name').value,
+            lastName: cf.get('lastName').value,
+            grade: cf.get('grade').value,
+            section: cf.get('section').value,
+            gradeAndSection: {
+                grade: cf.get('grade').value,
+                section: cf.get('section').value,
+            },
+            addressState: cf.get('addressState').value,
+            result: cf.get('result').value,
+          };
+          break;
+        case 'agregarActividadEspecial': // for Actividad Especial view and table
+          data.data = {
+            item: cf.get('item').value,
+            description: cf.get('description').value,
+            cantidad: cf.get('cantidad').value,
+            price: cf.get('price').value,
+            impuesto: cf.get('impuesto').value,
+            subtotal: cf.get('subtotal').value,
+          };
           break;
 
         default:

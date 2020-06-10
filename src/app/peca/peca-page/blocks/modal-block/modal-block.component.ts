@@ -48,9 +48,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
 
   ngOnInit() {
     this.globals.showModalEmitter.subscribe(data => {
+      
       if (this.settings.modalCode == data.code && this.isBrowser) {
 
-        let data_from_table = data.action=="delete"? data.data.oldData : 
+        let data_from_table = data.action=="add"? null :
+                data.action=="delete"? data.data.oldData : 
                 this.settings.isFromImgContainer? 
                   {
                     imageGroup: {
@@ -61,7 +63,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
                     }
                   } 
                   : data.data.oldData;      
-        
+
         this.instantiateChildBlocks( data.component, [data_from_table, data] );
         $(`#${data.code}-modal`).modal('show');
 

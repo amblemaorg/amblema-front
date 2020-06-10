@@ -255,14 +255,6 @@ export const sampleFormData = {
     },
   },
 }
-export const formParaPruebaModal = {
-  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
-  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
-  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
-  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
-  impuestoValue: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
-  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
-}
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
@@ -931,7 +923,8 @@ export const formEscuela = {
   emailContact2: { label: "Input email text", placeholder: "Input del SubDirector", fullwidth: false, ...controlProps.emailAndRequired },
 }
 
-/*MODALES  DIAGNOSTICO INICIAL*/
+//? -- MODALES -----------------------------------------------
+// DIAGNOSTICO INICIAL
 export const formLecturaModal = {
   name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
@@ -995,4 +988,80 @@ export const formMatematicaModal = {
   resultLog: { label: "Resultado de logica matematica", placeholder: "Resultado de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
   indexMul: { label: "Indice de multiplicacion", placeholder: "Indice de multiplicacion", fullwidth: false, ...controlProps.numberAndRequired },
   indexLog: { label: "Indice de logica matematica", placeholder: "Indice de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
+}
+
+// AMBLEMONEDAS
+export const formConfirmacionDocenteModal = {
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section:  { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  confirmation: {
+    label: "Input select confirmacion",
+    placeholder: "Confirmacion",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Confirmado" },
+      { id: "2", name: "Por confirmar" },
+    ],
+  },
+}
+// PREPARACION DE LA CONVENCION ANUAL
+export const formPreinscripcionDocenteModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  phone: { label: "Telefono", placeholder: "Telefono", fullwidth: false, ...controlProps.phoneAndRequired },
+  email: { label: "Correo", placeholder: "Correo", fullwidth: false, ...controlProps.emailAndRequired },
+}
+// ACTIVIDAD ESPECIAL
+export const formSpecialActivityTableModal = {
+  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
+  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
+  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
+  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
+  impuesto: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
+  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
+}
+// OLIMPIADAS DE MATEMATICA
+export const formResultadoEstudianteModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section:  { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  addressState: {
+    label: "Input select state",
+    placeholder: "Estado",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "165146541654hjvjh", name: "Lara" },
+      { id: "165146wfw254hjvjh", name: "Yaracuy" },
+    ],
+  },
+  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
 }

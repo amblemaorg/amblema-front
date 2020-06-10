@@ -243,9 +243,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
     if(this.settings.formType==="buscarEstudiante") manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);    
 
+    const assignId = () => Math.random().toString(36).substring(2);
+
     if (this.settings.isFromCustomTableActions) {
-      this.settings.dataFromRow.data.newData = manageData.data;
-      this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
+      if (this.settings.data) {
+        this.settings.dataFromRow.data.newData = manageData.data;
+        this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
+      } else { // is for adding in modal view
+        this.settings.dataFromRow['data'] = manageData.data;
+        this.settings.dataFromRow['data']['id'] = assignId();
+      }      
+    } else {
+      manageData.data['id'] = assignId();
     }
 
     let obj = {
@@ -253,7 +262,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
       data: this.settings.isFromCustomTableActions? this.settings.dataFromRow.data : manageData.data,
       dataArr: [],
       resetData: false,
-      action: this.settings.isFromCustomTableActions? 'edit':'set',
+      action: this.settings.isFromCustomTableActions? (this.settings.data? 'edit':'add') :'set',
     }; 
 
     setTimeout(() => {
@@ -282,7 +291,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   // filling municipalities according to selected state
   private fillMunicipalities(state_id="default",munId='') {
-    if (state_id=="default") this.municipalities = [];
+    if (state_id=="default" || !this.settings.formsContent['addressMunicipality']) this.municipalities = [];
     else {
       this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
     }   
@@ -420,7 +429,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   
   // setting inputs data
   setAllFields(data) {
-    console.log(data);
     const dataKeys = Object.keys(data);
     dataKeys.map(key => {
       if ( (key == 'imageGroup' && this.settings.formsContent['imageGroup']) || 
