@@ -90,7 +90,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           break;
       }
 
-      console.log(data);
+      // console.log(data);
       //updating textAndButton button data      
       if (this.settings.buttonCode) {
         if (this.settings.isFromImgContainer) {
@@ -105,7 +105,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
               code: this.settings.buttonCode,
               whichData: 'table',
               table: value,
-            });      
+            });  
+            // console.log('datos del modal form',value);    
           });
         }                
       }            

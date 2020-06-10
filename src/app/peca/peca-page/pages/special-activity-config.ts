@@ -1,4 +1,4 @@
-import { formParaPruebaModal } from '../blocks/form-block/all-forms'
+import { formSpecialActivityTableModal } from '../blocks/form-block/all-forms'
 
 const controlProps = {
     dateAndRequired: {
@@ -58,7 +58,18 @@ const specialActivityTable = {
                 title: 'Precio unitario'
             },
             impuesto: {
-                title: 'impuesto'
+                title: 'impuesto',
+                valuePrepareFunction: ( row: any ) => {
+                    if (row) return row.toString()+'%';
+                    else return '';
+                  },
+                  filterFunction: (cell?: any, search?: string) => {
+                      let value: string = cell.toString()+'%';
+                      value = value.toUpperCase();
+                      
+                      if (value.includes(search.toUpperCase()) || search === '') return true;
+                      else return false;
+                  }
             },
             subtotal: {
                 title: 'subtotal'
@@ -69,22 +80,22 @@ const specialActivityTable = {
         tableCode: 'dataSpecialActivityTable',
         dataSpecialActivityTable: [
             {
-                item: '1',
+                id: '1sdfsdfsdfsd',
+                item: 1,
                 description: 'cosa',
-                cantidad: '34',
-                price: '444',
-                impuesto: '20%',
-                impuestoValue: '20',
-                subtotal: '500',
+                cantidad: 34,
+                price: 444,
+                impuesto: 20,
+                subtotal: 500,
             },
             {
-                item: '1',
+                id: '2sdfsdfsdfsd',
+                item: 1,
                 description: 'cosa',
-                cantidad: '34',
-                price: '444',
-                impuesto: '20%',
-                impuestoValue: '20',
-                subtotal: '500',
+                cantidad: 34,
+                price: 444,
+                impuesto: 20,
+                subtotal: 500,
             },
         ],
         classes: {
@@ -95,31 +106,53 @@ const specialActivityTable = {
     }
 }
 
-//! PRUEBAS ----------------------------------
-const formPrueba = {
+//* MODAL ACTIVIDAD ESPECIAL ----------------------------------
+const formSpecialActivityTable = {
     component: 'form',
     settings: {
-        formsContent: formParaPruebaModal,
-        buttons: ['guardar'],
-        formType: 'pruebaaaaaaaa',
-        tableCode: 'dataSpecialActivityTable',
-        modalCode: 'dataSpecialActivityTable',
+      formsContent: formSpecialActivityTableModal,
+      buttons: ['guardar'],
+      formType: 'agregarActividadEspecial',
+      tableCode: 'dataSpecialActivityTable',
+      modalCode: 'dataSpecialActivityTable',
+      isFromCustomTableActions: true,
     }
-}
-const modalPrueba = {
+  }
+  const textsAndButtonsSpecialActivityTable = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataSpecialActivityTable',
+      isFromCustomTableActions: true,
+    }
+  }
+  const modalSpecialActivityTable = {
     component: 'modal',
     settings: {
-        modalCode: 'dataSpecialActivityTable',
-        items: [
-        {
-            childBlocks: [
-                { ...formPrueba },                
-            ]
+      modalCode: 'dataSpecialActivityTable',
+      items: [
+        {        
+          childBlocks: [
+            { ...formSpecialActivityTable },
+            { ...textsAndButtonsSpecialActivityTable },
+          ]
         }
-        ]
+      ]
     }
-}
-//! ------------------------------------------
+  }
+  //* ------------------------------------------
 
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
@@ -135,7 +168,7 @@ export const SPECIAL_ACTIVITY_CONFIG = {
                             { ...dateAndStatus },                            
                             { ...specialActivityTable },
                             { ...textsAndButtons },
-                            { ...modalPrueba },
+                            { ...modalSpecialActivityTable },
                         ]
                     },
                 ],

@@ -26,10 +26,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     selectStatus:{
       text:string;
       placeholder: string;
-      lista:{
-        id: string;
-        name: string;
-      }[];
+      lista:any[];
     };
     status: string;
     // texts: {
@@ -73,7 +70,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
         if (data.whichData=="table") this.dataTorF.table = data.table;
         if (data.whichData=="form") this.dataTorF.form = data.form;
 
-        console.log(this.dataTorF);
+        // console.log(this.dataTorF);
       }
     });
   }
@@ -102,38 +99,53 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     return false
   }
 
-  addToTable() {
-    let obj = {
+  addToTable(usingModal: boolean = false) {
+    let obj = !usingModal? {
       code: this.settings.tableCode,
       data: {},
       resetData: false,
       action: 'add',
-    }; 
+    } : {
+      code: this.settings.modalCode,
+      action: 'add',
+      showBtn: true,
+      component: 'form',
+    };
 
-    switch (this.settings.buttonType) {
-      case 'agregarDocentePreinscripcion':
-        obj.data = {
-          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
-          lastName: 'Melendez',
-          phone: '15487985',
-          email: 'josmel@yahoo.com'
-        };
-        break;
-      case 'agregarResultadoEstudiante':
-        obj.data = {
-          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
-          lastName: 'Valbuena',
-          gradeAndSection: '5to grado B',
-          state: 'Lara',
-          result: 'Aprobado',          
-        };
-        break;
-    
-      default:
-        break;
+    if (!usingModal) {
+      switch (this.settings.buttonType) {
+        case 'agregarDocentePreinscripcion':
+          obj.data = {
+            id: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).id.toString(),
+            name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+            lastName: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).lastName,
+            phone: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).phone,
+            email: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).email,
+          };
+          break;
+        case 'agregarResultadoEstudiante':
+          obj.data = {
+            id: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).id.toString(),
+            name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+            lastName: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).lastName,
+            gradeAndSection: {
+              grade: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).grade,
+              section: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).section,
+            },
+            addressState: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).addressState,
+            result: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).result,          
+            grade: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).grade,
+            section: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).section,
+          };
+          break;
+      
+        default:
+          break;
+      }
     }
 
-    this.globals.tableDataUpdater(obj);
+    if (!usingModal) this.globals.tableDataUpdater(obj);
+    else this.globals.ModalShower(obj);
   }
 
   takeAction(type: number, e) {
