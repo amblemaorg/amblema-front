@@ -64,7 +64,12 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         title:'Testimonio docentes',
         icon: 'taller-inicial',
         link: 'testimonio-docentes'
-      }
+      },
+      {
+        title: 'Imagenes escuela',
+        icon: 'anuario',
+        link: 'imagenes-escuela'
+      },
     ]
   },
   {
