@@ -15,13 +15,13 @@ import { ModulesState } from "./store/states/e-learning/learning-modules.state";
 import { UserState } from "./store/states/e-learning/user.state";
 import { StepsState } from "./store/states/steps/project.state";
 import { ResidenceInfoState } from "./store/states/steps/residence-info.state";
-//
+import { WebState } from "./store/states/web/web.state";
 
 import { EmbedVideo } from "ngx-embed-video";
-import { AuthGuard } from "./guards/auth.guard";
 import { NbAuthModule } from "@nebular/auth";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
-import { WebState } from "./store/states/web/web.state";
+import { AllowAuthenticatedGuard } from "./guards/allow-authenticated.guard";
+import { DenyAuthenticatedGuard } from "./guards/deny-authenticated.guard";
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +42,7 @@ import { WebState } from "./store/states/web/web.state";
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],
-  providers: [AuthGuard],
+  providers: [AllowAuthenticatedGuard, DenyAuthenticatedGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
