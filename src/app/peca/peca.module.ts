@@ -17,7 +17,7 @@ import {
   NbUserModule,
   NbStepperModule,
   NbButtonModule,
-  NbCheckboxModule
+  NbCheckboxModule,
 } from "@nebular/theme";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { PecaRoutingModule } from "./peca-routing.module";
@@ -30,18 +30,18 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { PecaComponent } from "./peca.component";
 import { PecaPageComponent } from "./peca-page/peca-page.component";
 // Page Components
-import { InitialDiagnosticPageComponent } from './peca-page/pages/initial-diagnostic-page.component';
-import { SchoolDataPageComponent } from './peca-page/pages/school-data-page.component';
-import { InitialWorkshopPageComponent } from './peca-page/pages/initial-workshop-page.component';
-import { ProfilePageComponent } from './peca-page/pages/profile-page.component';
-import { SchedulingPlanningPageComponent } from './peca-page/pages/scheduling-planning-page.component';
-import { AmblemonedaPageComponent } from './peca-page/pages/amblemoneda-page.component';
-import { AnnualConventionPageComponent } from './peca-page/pages/annual-convention-page.component';
-import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component';
-import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component';
-import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component';
-import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component';
-import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component';
+import { InitialDiagnosticPageComponent } from "./peca-page/pages/initial-diagnostic-page.component";
+import { SchoolDataPageComponent } from "./peca-page/pages/school-data-page.component";
+import { InitialWorkshopPageComponent } from "./peca-page/pages/initial-workshop-page.component";
+import { ProfilePageComponent } from "./peca-page/pages/profile-page.component";
+import { SchedulingPlanningPageComponent } from "./peca-page/pages/scheduling-planning-page.component";
+import { AmblemonedaPageComponent } from "./peca-page/pages/amblemoneda-page.component";
+import { AnnualConventionPageComponent } from "./peca-page/pages/annual-convention-page.component";
+import { AnnualConventionPreparationPageComponent } from "./peca-page/pages/annual-convention-preparation-page.component";
+import { SpecialActivityPageComponent } from "./peca-page/pages/special-activity-page.component";
+import { MathOlympicsPageComponent } from "./peca-page/pages/math-olympics-page.component";
+import { TeacherTestimonyPageComponent } from "./peca-page/pages/teacher-testimony-page.component";
+import { EnvironmentalProjectPageComponent } from "./peca-page/pages/environmental-project-page.component";
 // Block Components
 import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
 import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
@@ -53,6 +53,7 @@ import { SliderBlockComponent } from "./peca-page/blocks/slider-block/slider-blo
 import { StepperBlockComponent } from "./peca-page/blocks/stepper-block/stepper-block.component";
 import { ChecklistBlockComponent } from "./peca-page/blocks/checklist-block/checklist-block.component";
 import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.component";
+import { NbTokenStorage, NbTokenLocalStorage } from "@nebular/auth";
 
 @NgModule({
   declarations: [
@@ -107,7 +108,7 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     CarouselModule,
     OwlModule,
     NbCheckboxModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -120,6 +121,7 @@ import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.
     StepperBlockComponent,
     ChecklistBlockComponent,
     ModalBlockComponent,
-  ]
+  ],
+  providers: [{ provide: NbTokenStorage, useClass: NbTokenLocalStorage }],
 })
 export class PecaModule {}

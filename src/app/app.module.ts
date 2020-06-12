@@ -16,6 +16,7 @@ import { UserState } from "./store/states/e-learning/user.state";
 import { StepsState } from "./store/states/steps/project.state";
 import { ResidenceInfoState } from "./store/states/steps/residence-info.state";
 import { WebState } from "./store/states/web/web.state";
+import { PecaState } from "./store/states/peca/peca.state";
 
 import { EmbedVideo } from "ngx-embed-video";
 import { NbAuthModule } from "@nebular/auth";
@@ -33,12 +34,15 @@ import { DenyAuthenticatedGuard } from "./guards/deny-authenticated.guard";
     NgbModalModule,
     NbAuthModule.forRoot(),
     // -- NGXS --
-    NgxsModule.forRoot([ModulesState, UserState, StepsState, ResidenceInfoState, WebState], {
-      compatibility: {
-        strictContentSecurityPolicy: true,
-      },
-      developmentMode: !environment.production,
-    }),
+    NgxsModule.forRoot(
+      [ModulesState, UserState, StepsState, ResidenceInfoState, WebState, PecaState],
+      {
+        compatibility: {
+          strictContentSecurityPolicy: true,
+        },
+        developmentMode: !environment.production,
+      }
+    ),
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],

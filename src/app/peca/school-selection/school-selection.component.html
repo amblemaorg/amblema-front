@@ -19,14 +19,10 @@
       <div class="col">
         <div id="button" class="row">
           <div
-            *ngFor="let item of projects"
+            *ngFor="let item of projects; index as i"
             class="col-6 col-sm-6 col-md-4 col-lg-4 button-col"
           >
-            <button
-              type="button"
-              (click)="goTo(item.phase, item.id)"
-              class="btn btn-light"
-            >
+            <button type="button" (click)="goTo(item.phase, item.id, i)" class="btn btn-light">
               {{
                 item.school.name != undefined
                   ? item.school.name
