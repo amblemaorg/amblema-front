@@ -61,7 +61,7 @@ const textsAndButtons = {
     component: 'textsbuttons',
     settings: {
         action: [{
-            type: 1,
+            type: 3,
             name: 'Enviar Solicitud',
         }],
     }

@@ -79,7 +79,8 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   },
   {
     title: "Estrategia de seguimiento para actividades extraordinarias",
-    icon: "email-outline",
+    icon: "actividades",
+    link: "estrategia-seguimiento",
   },
   {
     title: "Proyecto ambiental",
@@ -89,6 +90,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   {
     title: "Agenda de actividades",
     icon: "calendar",
+    link: "agenda-page",
   },
   {
     title: "Anuario",

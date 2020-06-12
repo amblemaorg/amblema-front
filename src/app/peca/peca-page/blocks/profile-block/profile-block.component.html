@@ -1,7 +1,15 @@
 <div fullWidth *ngFor="let item of settings.items; index as i">
     <div *ngIf="item.image || item.title || item.description" class="bloque">
         <div class="bloque1">
-            <img src="{{item.image}}" alt="">
+            <div #imagenPerfil>
+                <input type='file' class="d-none" (change)="readUrl($event)">
+                
+            </div>
+            <div class="text-hover">
+                <img [src]="url" src="{{item.image}}" alt="" (click)="uploadImageCaller(imagenPerfil)">
+                <h6>Actualizar Imagen</h6>
+            </div>
+            
         </div>
         <div class="bloque2">
             <h1>{{ item.title }}</h1>
