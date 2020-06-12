@@ -25,5 +25,6 @@ export interface PecaUserModel {
 
 export interface PecaStateModel {
   user?: PecaUserModel;
+  content: any;
   selectedProject: PecaProjectModel | null;
 }

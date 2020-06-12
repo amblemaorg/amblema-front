@@ -10,6 +10,11 @@ export class SetSelectedProject {
   constructor(public payload: PecaProjectModel) {}
 }
 
+export class GetPecaContent {
+  static readonly type = "[peca] get PecaContent";
+  constructor(public payload: string) {}
+}
+
 export class ClearPecaState {
   static readonly type = "[peca] clear PecaState";
   constructor() {}
