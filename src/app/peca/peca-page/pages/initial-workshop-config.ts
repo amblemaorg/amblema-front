@@ -1,12 +1,8 @@
-import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formParaPruebaModal2 } from '../blocks/form-block/all-forms'
+import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formRegistroInicialModal } from '../blocks/form-block/all-forms'
 
 const textsAndButtons = {
   component: 'textsbuttons',
   settings: {
-    title: {
-      text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-      aligning: 'center',
-    },
     action: [{
       type: 3,
       name: 'Enviar Solicitud',
@@ -40,45 +36,69 @@ const registroTallerInicial = {
   settings: {
     columns: {
       image: {
-        title: "Imágen",
+        title: "Imágen"
       },
       description: {
         title: "Descripción"
       },
       state: {
-        title: 'Estado'
+        title: 'Estado',
+        valuePrepareFunction: ( row: any ) => {
+          if (row) return row == "1" ? 'Visible':'No visible';
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? 'Visible':'No visible';
+            value = value.toUpperCase();
+            
+            if (value.includes(search.toUpperCase()) || search === '') return true;
+            else return false;
+        }
       },
       status: {
         title: 'Estatus'
       }
     },
-    modalCode: 'dataSpecialActivityTable',
+    isFromImgContainer: true,
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     initialWorkshopConfigRegistroTallerInicial: [
       {
+        id: '1abcdefghijk',
         image: 'imagen1.png',
         description: 'descripcion 1',
-        state: 'Visible',
-        status: 'Aprobado'
+        state: '1',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
+        id: '2abcdefghijk',
         image: 'imagen2.png',
         description: 'descripcion 2',
-        state: 'No visible',
-        status: 'Aprobado'
+        state: '2',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
+        id: '3abcdefghijk',
         image: 'imagen3.png',
         description: 'descripcion 3',
-        state: 'Visible',
-        status: 'Aprobado'
+        state: '1',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
       {
+        id: '4abcdefghijk',
         image: 'imagen4.png',
         description: 'descripcion 4',
-        state: 'No visible',
-        status: 'Aprobado'
+        state: '2',
+        status: 'Aprobado',
+        source: null,
+        imageSelected: null,
       },
     ],
     classes: {
@@ -90,33 +110,54 @@ const registroTallerInicial = {
 }
 // !---------------------------------------------
 
-//! PRUEBAS ----------------------------------
-const formPrueba = {
+//* MODAL ----------------------------------
+const formRegistroTallerInicial = {
   component: 'form',
   settings: {
-    formsContent: formParaPruebaModal2,
+    formsContent: formRegistroInicialModal,
     buttons: ['guardar'],
-    formType: 'pruebaaaaaaaa',
-    tableCode: 'dataSpecialActivityTable',
-    modalCode: 'dataSpecialActivityTable',
+    formType: 'imageContainerFormType',
+    tableCode: 'initialWorkshopConfigRegistroTallerInicial',
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
   }
 }
-const modalPrueba = {
+const textsAndButtonsRegistroTallerInicial = {
+  component: 'textsbuttons',
+  settings: {
+    subtitles: [{
+      text: '¿Desea eliminar este ítem?',
+    }],
+    action: [
+      {
+          type: 1,
+          name: 'Si',
+      },
+      {
+          type: 2,
+          name: 'No',
+      },
+    ],
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
+    isFromCustomTableActions: true,
+  }
+}
+const modalRegistroTallerInicial = {
   component: 'modal',
   settings: {
-    modalCode: 'dataSpecialActivityTable',
+    modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromImgContainer: true,
     items: [
       {        
         childBlocks: [
-          { ...formPrueba }
+          { ...formRegistroTallerInicial },
+          { ...textsAndButtonsRegistroTallerInicial },
         ]
       }
     ]
   }
 }
-//! ------------------------------------------
+//* ------------------------------------------
 
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
@@ -141,7 +182,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
               { ...formTaller2 },           
               { ...registroTallerInicial },
               { ...textsAndButtons },
-              { ...modalPrueba },
+              { ...modalRegistroTallerInicial },
             ]
           },
         ]

@@ -1,16 +1,36 @@
 .bloque {
   width: 100%;
-  padding: 50px;
+  padding: 50px !important;
   display: contents !important;
 }
 .bloque1 {
   text-align: center;
   width: 35%;
   display: inline-block;
-}
-.bloque1 img {
-  width: 60%;
-  border-radius: 50%;
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .text-hover {
+    position: relative;
+    h6 {
+      position: absolute;
+      top: 90px;
+      right: 0;
+      left: 0;
+      display: none;
+    }
+  }
+  .text-hover:hover {
+    img {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+    h6 {
+      display: initial;
+    }
+  }
 }
 
 .bloque2 {
@@ -18,9 +38,9 @@
   width: 50%;
   display: inline-block;
   vertical-align: middle;
-}
-.bloque2 h1 {
-  color: #00809a;
+  h1 {
+    color: #00809a;
+  }
 }
 
 .container-form {
@@ -32,7 +52,7 @@
   .bloque1 {
     width: 100%;
   }
-  .bloque1 img{
+  .bloque1 img {
     width: 35%;
   }
   .bloque2 {

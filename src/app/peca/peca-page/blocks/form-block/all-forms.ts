@@ -255,32 +255,6 @@ export const sampleFormData = {
     },
   },
 }
-export const formParaPruebaModal = {
-  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
-  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
-  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
-  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
-  impuestoValue: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
-  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
-}
-export const formParaPruebaModal2 = {
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Estatus",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },  
-}
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
@@ -343,14 +317,69 @@ export const formRegistroInicial = {
     },
   },
 }
+    //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+    export const formRegistroInicialModal = {
+      imageGroup: {
+        type: "image",
+        fields: {
+          imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
+          imageStatus: {
+            label: "Input image status",
+            placeholder: "Estatus",
+            fullwidth: false,
+            ...controlProps.selectAndRequired,
+            options: [
+              { id: "1", name: "Visible" },
+              { id: "2", name: "No visible" },
+            ],
+          },
+        },
+      },  
+    }
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
   title1: { label: "Datos básicos de la escuela", type: "title" },
   nameEscuela: { label: "Input letter text", placeholder: "Nombre de la escuela", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   codigoEscuela: { label: "Input letter text", placeholder: "Código del plantel", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   phoneEscuela: { label: "Input phone text", placeholder: "Teléfono", fullwidth: false, readonly: true, ...controlProps.phone },
-  estadoEscuela: { label: "Input letter text", placeholder: "Estado", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
-  municipioEscuela: { label: "Input letter text", placeholder: "Municipio", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  addressState: {
+    label: "Input select state",
+    placeholder: "Estado",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "165146541654hjvjh", name: "Lara" },
+      { id: "165146wfw254hjvjh", name: "Yaracuy" },
+    ],
+  },
+  addressMunicipality: {
+    label: "Input select municipality",
+    placeholder: "Municipio",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      {
+        id: "dgisgsd64646464",
+        name: "Iribarren",
+        state: { id: "165146541654hjvjh", name: "Lara" },
+      },
+      {
+        id: "tdjsgshdge8791654",
+        name: "Palavecinos",
+        state: { id: "165146541654hjvjh", name: "Lara" },
+      },
+      {
+        id: "jgisgsd64646464",
+        name: "Cocorote",
+        state: { id: "165146wfw254hjvjh", name: "Yaracuy" },
+      },
+      {
+        id: "bdjsgshdge8791654",
+        name: "Bruzual",
+        state: { id: "165146wfw254hjvjh", name: "Yaracuy" },
+      },
+    ],
+  },
   callesEscuela: { label: "Input letter text", placeholder: "Calles / carreras", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   ciudadEscuela: { label: "Input letter text", placeholder: "Ciudad", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   /*DATOS DIRECTOR*/
@@ -411,12 +440,31 @@ export const formDatosEscuela = {
     },
   },
 }
+      //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+      export const formDatosEscuelaModal = {
+        imageGroup: {
+          type: "image",
+          fields: {
+            imageDescription: { label: "Input image description", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
+            imageStatus: {
+              label: "Input image status",
+              placeholder: "Estatus",
+              fullwidth: false,
+              ...controlProps.selectAndRequired,
+              options: [
+                { id: "1", name: "Visible" },
+                { id: "2", name: "No visible" },
+              ],
+            },
+          },
+        },  
+      }
 
 /*TABS DOCENTE*/
 export const formTabsDocente = {
   titleName: { label: "Datos del Docente", type: "title" },
-  nameDocente: { label: "Nombre del Docente", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
-  lastNameDocente: { label: "Apellido del Docente", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  name: { label: "Nombre del Docente", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido del Docente", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   documentGroup: {
     type: "prepend",
     fields: {
@@ -504,7 +552,7 @@ export const formGradosSecciones = {
     ],
   },
   section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
-  docentes: {
+  docente: {
     label: "Input select sex",
     placeholder: "Docentes",
     fullwidth: false,
@@ -532,7 +580,7 @@ export const formTabsEstudiantes = {
       { id: "6", name: "6" },
     ],
   },
-  secction: {
+  section: {
     label: "Input select section",
     placeholder: "Sección",
     fullwidth: false,
@@ -546,8 +594,8 @@ export const formTabsEstudiantes = {
       { id: "6", name: "F" },
     ],
   },
-  letterName: { label: "Nombre Estudiante", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
-  lastNameLetter: { label: "Apellido Estudiante", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  name: { label: "Nombre Estudiante", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido Estudiante", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   documentGroup: {
     type: "prepend",
     fields: {
@@ -565,8 +613,8 @@ export const formTabsEstudiantes = {
       prependInput: { label: "Input group description", placeholder: "documento de identidad", fullwidth: false, ...controlProps.numberAndRequired },
     },
   },
-  date: { label: "Input date", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
-  sexo: {
+  age: { lower: true, label: "Input date", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
+  gender: {
     label: "Input select sex",
     placeholder: "Género (Femenino ó Msculino)",
     fullwidth: false,
@@ -655,23 +703,6 @@ export const formCoordinador = {
   street: { label: "Input normal text", placeholder: "Calles / Carreras", fullwidth: false, ...controlProps.normalTextAndRequired },
   house: { label: "Input normal text", placeholder: "Casa / edificio", fullwidth: false, ...controlProps.normalTextAndRequired },
   proffesion: { label: "Input normal text", placeholder: "Profesión", fullwidth: false, ...controlProps.normalTextAndRequired },
-  titleImagen: { label: "Imagen Coordinador", type: "title" },
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Input image status",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },
 }
 /* PERFIL DE USUARIO PADRINO*/
 export const formPadrino = {
@@ -763,23 +794,6 @@ export const formPadrino = {
   },
   city: { label: "Input normal text", placeholder: "Ciudad", fullwidth: false, ...controlProps.normalTextAndRequired },
   street: { label: "Input normal text", placeholder: "Calles / Carreras", fullwidth: false, ...controlProps.normalTextAndRequired },
-  titleImagen: { label: "Imagen del Padrino", type: "title" },
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: { label: "Input image description", placeholder: "Input image description", fullwidth: false, ...controlProps.normalText },
-      imageStatus: {
-        label: "Input image status",
-        placeholder: "Input image status",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
-        ],
-      },
-    },
-  },
 }
 /* PERFIL DE USUARIO ESCUELA*/
 export const formEscuela = {
@@ -873,4 +887,147 @@ export const formEscuela = {
   letterLastName2: { label: "Apellido del SubDirector", placeholder: "Apellido del SubDirector", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   phoneContact2: { label: "Input phone text", placeholder: "Teléfono del SubDirector", fullwidth: false, ...controlProps.phoneAndRequired },
   emailContact2: { label: "Input email text", placeholder: "Input del SubDirector", fullwidth: false, ...controlProps.emailAndRequired },
+}
+
+//? -- MODALES -----------------------------------------------
+// DIAGNOSTICO INICIAL
+export const formLecturaModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  gender: {
+    label: "Input select gender",
+    placeholder: "Genero",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Femenino" },
+      { id: "2", name: "Masculino" },
+    ],
+  },
+  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
+  index: { label: "Indice", placeholder: "Indice", fullwidth: false, ...controlProps.numberAndRequired },
+}
+export const formMatematicaModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  gender: {
+    label: "Input select gender",
+    placeholder: "Genero",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Femenino" },
+      { id: "2", name: "Masculino" },
+    ],
+  },
+  resultMul: { label: "Resultado de multiplicacion", placeholder: "Resultado de multiplicacion", fullwidth: false, ...controlProps.numberAndRequired },
+  resultLog: { label: "Resultado de logica matematica", placeholder: "Resultado de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
+  indexMul: { label: "Indice de multiplicacion", placeholder: "Indice de multiplicacion", fullwidth: false, ...controlProps.numberAndRequired },
+  indexLog: { label: "Indice de logica matematica", placeholder: "Indice de logica matematica", fullwidth: false, ...controlProps.numberAndRequired },
+}
+
+// AMBLEMONEDAS
+export const formConfirmacionDocenteModal = {
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section:  { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  confirmation: {
+    label: "Input select confirmacion",
+    placeholder: "Confirmacion",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Confirmado" },
+      { id: "2", name: "Por confirmar" },
+    ],
+  },
+}
+// PREPARACION DE LA CONVENCION ANUAL
+export const formPreinscripcionDocenteModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  phone: { label: "Telefono", placeholder: "Telefono", fullwidth: false, ...controlProps.phoneAndRequired },
+  email: { label: "Correo", placeholder: "Correo", fullwidth: false, ...controlProps.emailAndRequired },
+}
+// ACTIVIDAD ESPECIAL
+export const formSpecialActivityTableModal = {
+  item: { label: "item", placeholder: "item", fullwidth: false, ...controlProps.numberAndRequired },
+  description: { label: "description", placeholder: "description", fullwidth: false, ...controlProps.normalTextAndRequired },
+  cantidad: { label: "cantidad", placeholder: "cantidad", fullwidth: false, ...controlProps.numberAndRequired },
+  price: { label: "price", placeholder: "price", fullwidth: false, ...controlProps.numberAndRequired },
+  impuesto: { label: "impuesto", placeholder: "impuesto", fullwidth: false, ...controlProps.numberAndRequired },
+  subtotal: { label: "subtotal", placeholder: "subtotal", fullwidth: false, ...controlProps.numberAndRequired },
+}
+// OLIMPIADAS DE MATEMATICA
+export const formResultadoEstudianteModal = {
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  grade: {
+    label: "Input select sex",
+    placeholder: "Grados",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "1er grado" },
+      { id: "2", name: "2do grado" },
+      { id: "3", name: "3er grado" },
+      { id: "4", name: "4to grado" },
+      { id: "5", name: "5to grado" },
+      { id: "6", name: "6to grado" },
+    ],
+  },
+  section:  { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  addressState: {
+    label: "Input select state",
+    placeholder: "Estado",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "165146541654hjvjh", name: "Lara" },
+      { id: "165146wfw254hjvjh", name: "Yaracuy" },
+    ],
+  },
+  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
 }

@@ -1,0 +1,15 @@
+<div style="padding: 1.5rem;">
+    <ejs-schedule width='100%' height='550px' locale='es' [eventSettings]='eventSettings' [currentView]='currentView' [readonly]="isReadOnly">
+        <e-views>
+            <e-view option='Month'></e-view>
+            <e-view option='Agenda' [allowVirtualScrolling]="allowVirtualScroll">
+                <ng-template #eventTemplate let-data>
+                    <div class="template-wrap">
+                        <div class="subject">{{data.Subject}}</div>
+                        <div class="time">{{getTimeString(data.StartTime)}} - {{getTimeString(data.EndTime)}}</div>
+                    </div>
+                </ng-template>
+            </e-view>
+        </e-views>
+    </ejs-schedule>
+</div>
