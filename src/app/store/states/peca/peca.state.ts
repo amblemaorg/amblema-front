@@ -1,5 +1,10 @@
 import { State, Action, StateContext, Selector } from "@ngxs/store";
-import { SetUser, ClearPecaState, SetSelectedProject } from "../../actions/peca/peca.actions";
+import {
+  SetUser,
+  ClearPecaState,
+  SetSelectedProject,
+  GetPecaContent,
+} from "../../actions/peca/peca.actions";
 import { PecaStateModel } from "./peca.model";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { environment } from "src/environments/environment";
@@ -8,6 +13,7 @@ import { environment } from "src/environments/environment";
   name: "peca",
   defaults: {
     selectedProject: null,
+    content: {},
   },
 })
 export class PecaState {
@@ -28,6 +34,18 @@ export class PecaState {
     patchState({ selectedProject: payload });
   }
 
+  @Action(GetPecaContent)
+  getPecaContent({ patchState }: StateContext<PecaStateModel>, { payload }: GetPecaContent) {
+    this.apiService.setResourcePath("pecaprojects/" + payload);
+
+    return this.apiService.getWebContent().subscribe((response) => {
+      if (response) {
+        const pecaContent: any = response;
+        patchState({ content: pecaContent });
+      }
+    });
+  }
+
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
     setState({ content: {}, selectedProject: null });
@@ -36,5 +54,20 @@ export class PecaState {
   @Selector()
   static getUser(state: any) {
     return state.user;
+  }
+
+  @Selector()
+  static getActivePeca(state: any) {
+    const activeYearId = state.user.activeSchoolYear.id;
+    const activePeca = state.selectedProject.pecas.reduce(
+      (prevPeca, peca) => (peca.schoolYear.id === activeYearId ? peca : prevPeca),
+      {}
+    );
+    return { activePeca };
+  }
+
+  @Selector()
+  static getActivePecaContent(state: any) {
+    return { activePecaContent: state.content };
   }
 }
