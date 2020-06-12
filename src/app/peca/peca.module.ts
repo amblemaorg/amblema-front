@@ -45,6 +45,7 @@ import { TeacherTestimonyPageComponent } from "./peca-page/pages/teacher-testimo
 import { EnvironmentalProjectPageComponent } from "./peca-page/pages/environmental-project-page.component";
 import { MonitoringStrategyPageComponent } from "./peca-page/pages/monitoring-strategy-page.component";
 import { SchedulePageComponent } from "./peca-page/pages/schedule-page.component";
+import { SchoolPicturesPageComponent } from "./peca-page/pages/school-pictures-page.component";
 // Block Components
 import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
 import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
@@ -78,6 +79,7 @@ import { ScheduleBlockComponent } from "./peca-page/blocks/schedule-block/schedu
     EnvironmentalProjectPageComponent,
     MonitoringStrategyPageComponent,
     SchedulePageComponent,
+    SchoolPicturesPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,

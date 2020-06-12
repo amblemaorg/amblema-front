@@ -104,7 +104,8 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   },
   {
     title: "Fotos de la escuela y actividades",
-    icon: "email-outline",
+    icon: "anuario",
+    link: "imagenes-escuela",
   },
   {
     title: "Salir",
