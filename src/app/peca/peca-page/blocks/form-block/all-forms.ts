@@ -266,29 +266,72 @@ export const formTestimonioDocentes = {
         label: "Seleccione un docente",
         placeholder: "Seleccione un docente",
         fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Alfredo Valbuena" },
-          { id: "2", name: "Sthepanie SOteldo" },
-          { id: "3", name: "Manuel Guerrero" },
-          { id: "4", name: "Gustavo Castillo" },
-        ],
+        ...controlProps.selectAndRequired,
+        options: [],
       },
-      imageCargo: { label: "Cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.normalText },
-      imageDescription: { label: "Descripción de la imágen", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageCargo: { label: "Cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.normalTextAndRequired },
+      imageDescription: { label: "Descripción", placeholder: "Descripción", fullwidth: false, ...controlProps.normalTextAndRequired },
       imageStatus: {
-        label: "Estado de la imágen",
-        placeholder: "Estado de la imágen",
+        label: "Estatus",
+        placeholder: "Estatus",
         fullwidth: false,
-        ...controlProps.select,
+        ...controlProps.selectAndRequired,
         options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" },
+          { id: "1", name: "Activo" },
+          { id: "2", name: "Inactivo" },
         ],
       },
     },
   },
 }
+    //* TESTIMONIO DOCENTES MODAL
+    //modal edit
+    export const formTestimonioDocentesModalEdit = {
+      imageGroup: {
+        type: "image",
+        fields: {
+          imageCargo: { label: "Cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.normalTextAndRequired },
+          imageDescription: { label: "Descripción", placeholder: "Descripción", fullwidth: false, ...controlProps.normalTextAndRequired },
+          imageStatus: {
+            label: "Estatus",
+            placeholder: "Estatus",
+            fullwidth: false,
+            ...controlProps.selectAndRequired,
+            options: [
+              { id: "1", name: "Activo" },
+              { id: "2", name: "Inactivo" },
+            ],
+          },
+        },
+      },
+    }
+    //modal view
+    export const formTestimonioDocentesModal = {
+      name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+      lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+      cargo: { label: "Cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+      description: { label: "Descripcion", placeholder: "Descripcion", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+      addressState: {
+        label: "Estado",
+        placeholder: "Estado",
+        fullwidth: false,
+        ...controlProps.selectAndRequired,
+        options: [
+          { id: "165146541654hjvjh", name: "Lara" },
+          { id: "165146wfw254hjvjh", name: "Yaracuy" },
+        ],
+      },
+      status: {
+        label: "Estatus",
+        placeholder: "Estatus",
+        fullwidth: false,
+        ...controlProps.selectAndRequired,
+        options: [
+          { id: "1", name: "Activo" },
+          { id: "2", name: "Inactivo" },
+        ],
+      },
+    }
 
 
 /*TALLER INICIAL*/
@@ -1030,4 +1073,14 @@ export const formResultadoEstudianteModal = {
     ],
   },
   result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
+}
+// FOTOS DE LA ESCUELA
+//* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+export const tablaImagenesEscuelaModal = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: { label: "Descripción", placeholder: "Descripción", fullwidth: false, ...controlProps.normalTextAndRequired },
+    },
+  },  
 }
