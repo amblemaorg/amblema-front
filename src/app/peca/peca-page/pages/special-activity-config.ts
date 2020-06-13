@@ -109,6 +109,7 @@ const specialActivityTable = {
 //* MODAL ACTIVIDAD ESPECIAL ----------------------------------
 const formSpecialActivityTable = {
     component: 'form',
+    viewMode: 'both',
     settings: {
       formsContent: formSpecialActivityTableModal,
       buttons: ['guardar'],

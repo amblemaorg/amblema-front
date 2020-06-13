@@ -149,6 +149,7 @@ const resultadoEstudiante = {
 //* MODAL RESULTADOS OLIMPIADAS ----------------------------------
 const formResultadoEstudiante = {
     component: 'form',
+    viewMode: 'both',
     settings: {
       formsContent: formResultadoEstudianteModal,
       buttons: ['guardar'],

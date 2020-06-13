@@ -3,6 +3,7 @@ import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.
 import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from './ng2-smart-table-default-settings';
 import { LocalDataSource } from 'ng2-smart-table';
 import { GlobalService } from 'src/app/services/global.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'table-block',
@@ -30,25 +31,32 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   // source: LocalDataSource | any;
   source: LocalDataSource;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private globals: GlobalService) {
     this.type = 'presentational';
     this.component = 'table';
   }
 
   ngOnInit() {
-    // data actions (data.action): set, add, edit, delete, view
-    this.globals.updateTableDataEmitter.subscribe(data => {
-      this.confsOnTable(data);      
-    });
+    this.subscription.add(
+      // data actions (data.action): set, add, edit, delete, view
+      this.globals.updateTableDataEmitter.subscribe(data => {
+        this.confsOnTable(data);      
+      })
+    );
 
-    this.globals.showImageContainerEmitter.subscribe(code => {
-      if(this.settings.buttonCode && this.settings.buttonCode == code)
-        this.settings.hideImgContainer = false;
-    });
+    this.subscription.add(
+      this.globals.showImageContainerEmitter.subscribe(code => {
+        if(this.settings.buttonCode && this.settings.buttonCode == code)
+          this.settings.hideImgContainer = false;
+      })
+    );    
   }
   ngOnDestroy() {
     this.settings[this.settings.tableCode] = null;
     this.source = null;
+    this.subscription.unsubscribe();
   }
 
   confsOnTable(data) {
