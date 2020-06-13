@@ -55,14 +55,23 @@
                         [placeholder]="settings.selectStatus.placeholder"
                     >
                     </ng-select>
-                    <button 
-                        *ngIf="settings.btnGeneral"
-                        title="general" 
-                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-                        (click)="addToTable()"
-                        [disabled]="!currentSelected"
-                    >{{settings.btnGeneral.name}}
-                    </button>
+                    <ng-container *ngIf="settings.btnGeneral && settings.btnGeneral.addToTable; else regularGeneral">
+                        <button 
+                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+                            (click)="addToTable(true)"
+                        >{{settings.btnGeneral.name}}
+                        </button>
+                    </ng-container>
+                    <ng-template #regularGeneral>
+                        <button 
+                            *ngIf="settings.btnGeneral"
+                            title="general" 
+                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+                            (click)="addToTable()"
+                            [disabled]="!currentSelected"
+                        >{{settings.btnGeneral.name}}
+                        </button>
+                    </ng-template>                    
             </div>
         </div>
 
