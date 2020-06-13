@@ -301,9 +301,22 @@ export class StepsFormsComponent implements OnInit {
         indd: this.index,
         modd:this.mode,
       });
-    }, (error) => {
+    }, (error) => {      
+      let errorType = (error.error && error.error['code'])? 'code':
+                      (error.error && error.error['email'])? 'email': 'regular';      
       this.sendingForm = false;
-      this.emitMessage.emit({i:this.index,m:this.mode});
+      switch (type) {
+        case 1:
+          if (errorType!='regular') this.sponsorForm.get('email').setValue('');
+          break;
+        case 2:
+          if (errorType!='regular') this.coordinatorForm.get('email').setValue('');
+            break;
+        default:
+          if (errorType!='regular') this.schoolForm.get(errorType).setValue('');
+          break;
+      }
+      this.emitMessage.emit({i:this.index,m:this.mode,messageType:errorType});
     }, ()=>{});  
   }
 
