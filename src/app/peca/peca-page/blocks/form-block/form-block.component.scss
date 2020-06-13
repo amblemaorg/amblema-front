@@ -153,6 +153,12 @@
             }
           }
 
+          &.extra-fields-modal {
+            .error-message {            
+              color: $red;
+              font-size: small;
+            }
+          }
           &.inside-modal {
             .input-container:not(:last-child) {
               margin-bottom: 0;
