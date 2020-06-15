@@ -105,6 +105,7 @@
             @include mediabreak(larger,landscape,true,1680px) { width: 96%; }
 
             .toast {
+                border-color: $red;
                 position: absolute;
                 z-index: -1;
                 right: 0;
@@ -114,11 +115,16 @@
 
                 @include mediabreak(large,landscape) { max-width: 30rem; }
 
-                button:focus {
-                    outline: none;
+                button {                    
+                    color: $red;
+
+                    &:focus {
+                        outline: none;
+                    }
                 }
                 p {
                     padding: 0.25rem 1rem;
+                    color: $red;
                 }
             }
             .toast.show {

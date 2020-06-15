@@ -1,3 +1,5 @@
+import { tablaImagenesEscuelaModal } from '../blocks/form-block/all-forms'
+
 const selectEstatus = {
     component: 'textsbuttons',
     settings: {
@@ -9,14 +11,15 @@ const selectEstatus = {
             placeholder: 'Pendiente',
             lista: [
                 { id: 1, name: 'Activo' },
-                { id: 2, name: 'Proces0' },
+                { id: 2, name: 'En proceso' },
             ]
         },
         btnGeneral:
         {
-            name: 'Adjuntar foto',
-            url: '#'
+            addToTable: true,
+            name: 'Adjuntar foto',           
         },
+        modalCode: 'dataTablaImagenesEscuela',
     }
 }
 const botonAprobacion = {
@@ -24,10 +27,12 @@ const botonAprobacion = {
     settings: {
         action: [
             {
-                type: 1,
+                type: 3,
                 name: 'Enviar solicitud',
             }
         ],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataTablaImagenesEscuela',
     }
 }
 
@@ -35,22 +40,31 @@ const tablaImagenesEscuela = {
     component: 'table',
     settings: {
         columns: {
-            img: {
+            image: {
                 title: "Imagen",
             },
             description: {
                 title: "Descripcion"
             },
         },
-        tableCode: 'dataLectura',
-        dataLectura: [
+        isFromImgContainer: true,
+        modalCode: 'dataTablaImagenesEscuela',
+        buttonCode: 'dataTablaImagenesEscuela',
+        tableCode: 'dataTablaImagenesEscuela',
+        dataTablaImagenesEscuela: [
             {
-                img: 'imagen',
+                id: '1efwef',
+                image: 'imagen',
                 description: 'loremp',
+                source: null,
+                imageSelected: null,
             },
             {
-                img: 'imagen',
+                id: '2efwef',
+                image: 'imagen',
                 description: 'loremp',
+                source: null,
+                imageSelected: null,
             },
         ],
         classes: {
@@ -60,6 +74,91 @@ const tablaImagenesEscuela = {
         },
     }
 }
+
+
+const selectStatusActivity = { component: 'textsbuttons', settings: { ...selectEstatus.settings } };
+selectStatusActivity.settings.modalCode = 'dataTablaImagenesActividad';
+const botonAprobacionActivity = { component: 'textsbuttons', settings: { ...botonAprobacion.settings } };
+botonAprobacionActivity.settings.buttonCode = 'dataTablaImagenesActividad';
+const tablaImagenesActividad = { component: 'table', settings: { ...tablaImagenesEscuela.settings } };
+['modalCode','buttonCode','tableCode'].map(el => {
+    tablaImagenesActividad.settings[el] = 'dataTablaImagenesActividad';
+});
+tablaImagenesActividad.settings['dataTablaImagenesActividad'] = [ ...tablaImagenesActividad.settings['dataTablaImagenesEscuela'] ];
+tablaImagenesActividad.settings['dataTablaImagenesEscuela'] = null;
+
+
+//* MODAL FOTOS DE LA ESCUELA ----------------------------------
+const formTablaImagenesEscuela = {
+    component: 'form',
+    viewMode: 'both',
+    settings: {
+      formsContent: tablaImagenesEscuelaModal,
+      buttons: ['guardar'],
+      formType: 'agregarImagenEscuela',
+      tableCode: 'dataTablaImagenesEscuela',
+      modalCode: 'dataTablaImagenesEscuela',
+      isFromCustomTableActions: true,
+    }
+}
+const textsAndButtonsTablaImagenesEscuela = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataTablaImagenesEscuela',
+      isFromCustomTableActions: true,
+    }
+}
+const modalTablaImagenesEscuela = {
+    component: 'modal',
+    settings: {
+      modalCode: 'dataTablaImagenesEscuela',
+      isFromImgContainer: true,
+      items: [
+        {        
+          childBlocks: [
+            { ...formTablaImagenesEscuela },
+            { ...textsAndButtonsTablaImagenesEscuela },
+          ]
+        }
+      ]
+    }
+}
+
+const formTablaImagenesActividad = { component: 'form', viewMode: 'both', settings: { ...formTablaImagenesEscuela.settings } };
+['modalCode','tableCode'].map(el => {
+    formTablaImagenesActividad.settings[el] = 'dataTablaImagenesActividad';
+});
+const textsAndButtonsTablaImagenesActividad = { component: 'textsbuttons', settings: { ...textsAndButtonsTablaImagenesEscuela.settings } };
+textsAndButtonsTablaImagenesActividad.settings.modalCode = 'dataTablaImagenesActividad';
+const modalTablaImagenesActividad = {
+    component: 'modal',
+    settings: {
+      modalCode: 'dataTablaImagenesActividad',
+      isFromImgContainer: true,
+      items: [
+        {        
+          childBlocks: [
+            { ...formTablaImagenesActividad },
+            { ...textsAndButtonsTablaImagenesActividad },
+          ]
+        }
+      ]
+    }
+}
+//* ------------------------------------------
 
 export const SCHOOL_PICTURES_CONFIG = {
     header: {
@@ -75,15 +174,17 @@ export const SCHOOL_PICTURES_CONFIG = {
                         childBlocks: [
                             { ...selectEstatus },
                             { ...tablaImagenesEscuela },
-                            { ...botonAprobacion }
+                            { ...botonAprobacion },
+                            { ...modalTablaImagenesEscuela },
                         ]
                     },
                     {
                         title: "Actividades",
                         childBlocks: [
-                            { ...selectEstatus },
-                            { ...tablaImagenesEscuela },
-                            { ...botonAprobacion }
+                            { ...selectStatusActivity },
+                            { ...tablaImagenesActividad },
+                            { ...botonAprobacionActivity },
+                            { ...modalTablaImagenesActividad },
                         ]
                     }
                 ],

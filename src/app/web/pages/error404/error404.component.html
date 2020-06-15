@@ -1,0 +1,26 @@
+<section class="background">
+  <div class="container adjust-margin">
+    <div class="row">
+      <div class="col">
+        <h1>{{ content.error }}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-6 col-md-10">
+        <h2>{{ content.title }}</h2>
+      </div>
+    </div>
+    <div class="row text-context">
+      <div class="col-10 col-sm-6 col-md-10 col-lg-7 col-xl-8">
+        <span>{{ content.text }} {{ textLocation }} {{ buttonText }}</span>
+      </div>
+    </div>
+    <div class="row button-style">
+      <div class="col">
+        <button type="button" class="btn btn-outline-light" (click)="goTo()">
+          {{ buttonTextCapital }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

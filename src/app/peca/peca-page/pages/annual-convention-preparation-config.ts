@@ -119,6 +119,7 @@ const tablaPreinscripcionDocente = {
 //* MODAL PREINSCRIPCION DOCENTE ----------------------------------
 const formTablaPreinscripcionDocente = {
     component: 'form',
+    viewMode: 'both',
     settings: {
       formsContent: formPreinscripcionDocenteModal,
       buttons: ['guardar'],
