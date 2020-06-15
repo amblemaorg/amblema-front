@@ -8,6 +8,8 @@ import { UpdateModulesTotal } from '../../../store/actions/e-learning/learning-m
 import { UpdateUserInfo } from '../../../store/actions/e-learning/user.actions';
 import { CoordinatorModule, Module } from '../../../models/steps/learning-modules.model';
 import { ModulesService } from '../../../services/steps/modules.service';
+import { UpdateStepsProgress } from '../../../store/actions/steps/project.actions';
+import { StepsService } from '../../../services/steps/steps.service';
 
 @Component({
   selector: 'app-eheader',
@@ -25,28 +27,30 @@ export class EheaderComponent implements OnInit {
   @Select(UserState.user_brief) userBrief$: Observable<any>;
   @Select(UserState.user_type) user_type$: Observable<string>;
 
-  constructor(private store: Store, private modulesService: ModulesService, private route: ActivatedRoute) {
+  constructor(private store: Store, private modulesService: ModulesService, private route: ActivatedRoute, private stepsService: StepsService) {
   }
 
   ngOnInit() {
     this.modulesService.updateCoorMod.subscribe(res=>{
       this.setUserValues(res); //! THIS IS TEMPORARY
-      if (res.type!=0) this.modulesService.actualUser = {user:res.usu,type:res.usut};
     });
   
     //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
-    if (this.route.snapshot.params && this.route.snapshot.params.user) this.setUserValues({type:1,usu:this.route.snapshot.params.user,usut:(+this.route.snapshot.params.type)});
+    if (this.route.snapshot.params && this.route.snapshot.params.idUser) 
+      this.setUserValues({
+        type:1,
+        usu: this.route.snapshot.params.idUser,
+        usut: (+this.route.snapshot.params.userType),
+        project: this.route.snapshot.params.idProject
+      });
     else if (this.route.snapshot.children.length>0) {
       if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-          this.route.snapshot.children[this.route.snapshot.children.length-1].params.user) {
+          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
             this.setUserValues({
-              type:1,usu:this.route.snapshot.children[this.route.snapshot.children.length-1].params.user,
-              usut:(+this.route.snapshot.children[this.route.snapshot.children.length-1].params.type)
+              type:1,usu:this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser,
+              usut:(+this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType),
+              project: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject
             });
-          }          
-      else {
-        if (this.modulesService.actualUser.user.length==0) this.setUserValues({type:1,usu:'5e8256b83640bd4be811444a',usut:2});
-        else this.setUserValues({type:1,usu:this.modulesService.actualUser.user,usut:this.modulesService.actualUser.type});
       }
     }    
     //! -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -66,6 +70,9 @@ export class EheaderComponent implements OnInit {
     // else {
       this.store.dispatch(new UpdateModulesTotal);
       this.store.dispatch(new UpdateUserInfo(user.usu,user.usut));
+      this.store.dispatch(new UpdateStepsProgress(user.project)).subscribe(res=>{
+        this.stepsService.enableTabMethod(true);
+      });
     // }
     // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
     
