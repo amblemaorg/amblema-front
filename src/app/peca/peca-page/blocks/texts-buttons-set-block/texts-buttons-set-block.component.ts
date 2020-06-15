@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'buttons-set-block',
@@ -78,21 +79,26 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
 
   currentSelected = null;
 
+  private subscription: Subscription = new Subscription();
+  
   ngOnInit() { 
-    this.globals.updateButtonDataEmitter.subscribe(data => {
-      if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
-        if (data.whichData=="table") this.dataTorF.table = data.table;
-        if (data.whichData=="form") this.dataTorF.form = data.form;
-
-        // console.log(this.dataTorF);
-      }
-    });
+    this.subscription.add(
+      this.globals.updateButtonDataEmitter.subscribe(data => {
+        if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
+          if (data.whichData=="table") this.dataTorF.table = data.table;
+          if (data.whichData=="form") this.dataTorF.form = data.form;
+  
+          // console.log(this.dataTorF);
+        }
+      })
+    );
   }
   ngOnDestroy() {
     this.dataTorF = {
       table: null,
       form: null,
-    }
+    };
+    this.subscription.unsubscribe();
   }
 
   setSettings(settings: any) {

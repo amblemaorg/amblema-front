@@ -110,6 +110,7 @@ const ConfirmacionDocente = {
 //* MODAL CONFIRMACION DOCENTE ----------------------------------
 const formConfirmacionDocente = {
     component: 'form',
+    viewMode: 'both',
     settings: {
       formsContent: formConfirmacionDocenteModal,
       buttons: ['guardar'],

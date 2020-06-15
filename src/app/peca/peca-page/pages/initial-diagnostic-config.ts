@@ -94,6 +94,7 @@ const readingDiagnosticTable = {
 //* MODAL LECTURA ----------------------------------
 const formReadingDiagnosticTable = {
   component: 'form',
+  viewMode: 'both',
   settings: {
     formsContent: formLecturaModal,
     buttons: ['guardar'],
@@ -232,6 +233,7 @@ const mathDiagnosticTable = {
 //* MODAL MATEMATICA ----------------------------------
 const formMathDiagnosticTable = {
   component: 'form',
+  viewMode: 'both',
   settings: {
     formsContent: formMatematicaModal,
     buttons: ['guardar'],
