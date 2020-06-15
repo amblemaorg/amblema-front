@@ -14,7 +14,7 @@ L10n.load({
   "es": {
     "schedule": {
       "month": "Mes",
-      "agenda": "Agenda",
+      "agenda": "Listado",
       "today": "Hoy",
       "allDay": "Todo el dia",
       "close": "Cerrar",

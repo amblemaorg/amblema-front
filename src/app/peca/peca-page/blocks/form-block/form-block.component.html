@@ -149,6 +149,17 @@
               </div>              
             </ng-container>
 
+            <ng-container *ngSwitchCase="'textarea'">
+              <label>{{ settings.formsContent[field].label }}</label>
+              <textarea
+                class="form-control"
+                autocomplete='off'
+                [formControlName]="field"
+                [id]="getId(field)"
+                [placeholder]="settings.formsContent[field].placeholder"
+              ></textarea>
+            </ng-container>
+
             <ng-container *ngSwitchDefault>
               <label>{{ settings.formsContent[field].label }}</label>
               <input
@@ -281,7 +292,7 @@
                   </ng-container>
                 </div>
                 
-                <div class="input-container">
+                <div class="input-container" *ngIf="settings.formsContent[field].fields['imageStatus']">
                   <label class="label-image-status">{{ settings.formsContent[field].fields['imageStatus'].label }}</label>
                   <ng-select
                     class="form-control"

@@ -14,7 +14,7 @@ import { PageBlockFactory } from './blocks/page-block-factory';
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
   // protected factoryResolver: ComponentFactoryResolver;
-  header: { title: string }
+  header: { title: string ,download:any}
   blocks: { component: string, settings: any[] }[]
 
   constructor(protected factoryResolver: ComponentFactoryResolver) { }

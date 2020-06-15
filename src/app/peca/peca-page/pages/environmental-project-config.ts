@@ -105,7 +105,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
             settings: {
                 items: [
                     {
-                        title: "tabs 1",
+                        title: "Lapso 1",
                         childBlocks: [
                             {
                                 component: 'accordion',
@@ -135,7 +135,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         ]
                     },
                     {
-                        title: "tabs 2",
+                        title: "Lapso 2",
                         childBlocks: [
                             {
                                 component: 'accordion',
@@ -165,7 +165,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         ]
                     },
                     {
-                        title: "tabs 3",
+                        title: "Lapso 3",
                         childBlocks: [
                             {
                                 component: 'accordion',

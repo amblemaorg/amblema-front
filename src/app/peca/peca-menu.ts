@@ -46,12 +46,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: 'convencion-anual'
       },
       {
-        title: 'Anuario',
-        icon: 'anuario',
-        link: '/pages/permissions'
-      },
-      {
-        title: 'Actividad especial del primer lapso',
+        title: 'Actividad especial del lapso',
         icon: 'actividades',
         link: 'actividad-especial'
       },
@@ -112,7 +107,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/permissions'
       },
       {
-        title: 'Actividad especial del segundo lapso',
+        title: 'Actividad especial del lapso',
         icon: 'actividades',
         link: '/pages/permissions'
       }
@@ -158,7 +153,7 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/permissions'
       },
       {
-        title: 'Actividad especial del tercer lapso',
+        title: 'Actividad especial del lapso',
         icon: 'actividades',
         link: '/pages/permissions'
       }
@@ -173,5 +168,10 @@ export const PECA_MENU_ITEMS: NbMenuItem[] = [
     title: 'Agenda de actividades',
     icon: 'calendar',
     link: 'agenda-page'
+  },
+  {
+    title: 'Anuario',
+    icon: 'anuario',
+    link: 'anuario-page'
   },
 ];
