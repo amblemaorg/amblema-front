@@ -73,7 +73,7 @@
   }
 
   table {
-    margin-top: 60px;
+    margin-top: 30px;
     margin-bottom: 20px;
   }
   .nb-theme-default {
@@ -205,11 +205,23 @@
       }
     }
 
-    @media (max-width: 576) {
+    @media (max-width: 576px) {
       .dropdown-content {
         min-width: 100px;
         right: 0;
       }
+    }
+    .style-btn-anuario{
+      text-align: right;
+      display: inline-block;
+    }
+    @media (max-width: 576px) {
+      .style-btn-anuario{
+        text-align: left;
+      }
+    }
+    .title-style {
+      display: inline-block;
     }
   }
 }

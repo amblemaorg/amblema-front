@@ -4,9 +4,9 @@ const selectEstatus = {
         dateOrtext: {
 
         },
-        selectStatus:
+        selectGeneralStatus:
         {
-            placeholder: 'Selecciona el estatus',
+            placeholder: 'Pendiente',
             lista: [
                 { id: 1, name: 'Activo' },
                 { id: 2, name: 'Proces0' },

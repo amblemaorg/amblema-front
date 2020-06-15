@@ -28,7 +28,15 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
       placeholder: string;
       lista:any[];
     };
-    status: string;
+    selectGeneralStatus:{
+      text:string;
+      placeholder: string;
+      lista:any[];
+    };
+    status: {
+      text: string;
+      subText: string;
+    };
     // texts: {
       title: {
         aligning: string; // 'center' for center aligning, 'left' otherwise
@@ -46,6 +54,12 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     upload: any;
     download: any;
     btnGeneral: any;
+    inputAndBtns: {
+        input: string;
+        btn: string;
+        //textDesc: string;
+        titleInput:string;
+    }[];
   };
 
   glbls:any;

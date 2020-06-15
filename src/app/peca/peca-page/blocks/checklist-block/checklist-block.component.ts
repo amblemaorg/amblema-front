@@ -31,7 +31,8 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
       }[],
       material: string,
       button: any,
-      line: boolean
+      line: boolean,
+      subtitle: string;
     }[],
   };
 

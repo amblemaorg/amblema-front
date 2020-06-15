@@ -1,7 +1,6 @@
 <div class="texts-buttons-wrapper">
     <div class="texts-wrapper" 
-        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectStatus || 
-               settings.title || (settings.subtitles && settings.subtitles.length>0)">
+        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || (settings.subtitles && settings.subtitles.length>0)">
         <div class="date-download-status d-flex justify-content-between">
             <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6 class="left-sided-content">
@@ -33,8 +32,8 @@
             </div>
             <div *ngIf="settings.download || settings.status" class="right-side">
                 <h6 *ngIf="settings.status" class="status ml-4">
-                    <span>Estatus:&nbsp;</span><span class="rounded-circle"></span>&nbsp;
-                    <span class="font-weight-normal">{{ settings.status }}</span>
+                    <span>{{settings.status.text}}:&nbsp;</span><span class="rounded-circle"></span>&nbsp;
+                    <span class="font-weight-normal">{{ settings.status.subText }}</span>
                 </h6>
 
                 <a *ngIf="settings.download" title="Descargar" 
@@ -42,11 +41,20 @@
                 [download]="settings.download.name" 
                 class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4">Descargar</a>
             </div>
-            <div  *ngIf="settings.selectStatus || settings.btnGeneral" class="right-side select-estatus-width">
-                <h6 *ngIf="settings.selectStatus" class="h6-select">
-                    <span>{{settings.selectStatus.text}}</span>
+            <div  *ngIf="settings.selectStatus || settings.btnGeneral || settings.selectGeneralStatus" class="right-side select-estatus-width">
+                <h6 *ngIf="settings.selectGeneralStatus" class="h6-select">
+                    <span>{{settings.selectGeneralStatus.text}}</span>
                 </h6>
-                    <ng-select
+                    <ng-select *ngIf="settings.selectGeneralStatus"
+                        class="form-control select-general"
+                        [items]="settings.selectGeneralStatus.lista"
+                        [(ngModel)]="currentSelected"
+                        bindValue="id"
+                        bindLabel="name"
+                        [placeholder]="settings.selectGeneralStatus.placeholder"
+                    >
+                    </ng-select>
+                    <ng-select *ngIf="settings.selectStatus"
                         class="form-control select-estatus"
                         [items]="settings.selectStatus.lista"
                         [(ngModel)]="currentSelected"
@@ -63,6 +71,32 @@
                         [disabled]="!currentSelected"
                     >{{settings.btnGeneral.name}}
                     </button>
+            </div>
+
+            <!--Input y boton para el anuario-->
+            <div *ngIf="settings.inputAndBtns" class="containerInputAndBtn buttons-wrapper">
+                <div *ngFor="let prueba of settings.inputAndBtns" class="" >
+                    <h6 class="text-left" *ngIf="prueba.titleInput" [class.mb-negativo]="prueba.titleInput">{{prueba.titleInput}}</h6>
+                    <input *ngIf="prueba.input"
+                    class="form-control style-input"
+                    type="text"
+                    placeholder="{{prueba.input}}"
+                    />
+                    <button *ngIf="prueba.btn"
+                    title="general" 
+                    type="button"
+                    class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn"
+                    (click)="addToTable()"
+                    >{{prueba.btn}}
+                    </button>
+                    <!--<textarea *ngIf="prueba.textDesc"
+                    class="form-control mt-3 style-textarea"
+                    type="text"
+                    placeholder="{{prueba.textDesc}}"
+                    ></textarea>-->
+                </div>
+            <!--------------------------------------->
+
             </div>
         </div>
 
