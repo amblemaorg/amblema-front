@@ -76,7 +76,7 @@
             </button>
 
             <!-- ? GO LEARNING MODULES BUTTON -->
-            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
+            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" (click)="goToMods()" 
             [disabled]="(!isAdmin() && (compareMode() || curriculumPending) ) || !enableActions" [title]="isAdmin()? '' : (compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de currículo':'') )">
               Ir a los módulos
             </button>
