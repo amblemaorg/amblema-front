@@ -1,3 +1,5 @@
+import { formConfirmacionDocenteModal } from '../blocks/form-block/all-forms'
+
 const controlProps = {
     dateAndRequired: {
         type: "date",
@@ -52,25 +54,50 @@ const ConfirmacionDocente = {
         columns: {
             grade: {
                 title: "Grado",
+                valuePrepareFunction: ( row: any ) => {          
+                    if (row) return formConfirmacionDocenteModal.grade.options.find(d=>{return d.id===row}).name;
+                    else return '';
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = formConfirmacionDocenteModal.grade.options.find(d=>{return d.id===cell}).name;
+                    value = value.toUpperCase();
+                    
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
             section: {
                 title: "Sección"
             },
             confirmation: {
-                title: 'Confirmación'
+                title: 'Confirmación',
+                valuePrepareFunction: ( row: any ) => {  
+                    if (row) return row == "1"? 'Confirmado' : 'Por confirmar';
+                    else return '';
+                },
+                filterFunction: (cell?: any, search?: string) => {          
+                    let value: string = cell == "1"? 'Confirmado' : 'Por confirmar';
+                    value = value.toUpperCase();
+                    
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
         },
+        modalCode: 'amblemonedaConfigConfirmacionDocente',
         tableCode: 'amblemonedaConfigConfirmacionDocente',
         amblemonedaConfigConfirmacionDocente: [
             {
-                grade: '5to grado',
+                id: '1abcdefghijk',
+                grade: '5',
                 section: 'B',
-                confirmation: 'Confirmado',
+                confirmation: '1',
             },
             {
-                grade: '4to grado',
+                id: '2abcdefghijk',
+                grade: '4',
                 section: 'A',
-                confirmation: 'Por Confirmar',
+                confirmation: '2',
             },
         ],
         classes: {
@@ -80,6 +107,56 @@ const ConfirmacionDocente = {
         },
     }
 }
+//* MODAL CONFIRMACION DOCENTE ----------------------------------
+const formConfirmacionDocente = {
+    component: 'form',
+    viewMode: 'both',
+    settings: {
+      formsContent: formConfirmacionDocenteModal,
+      buttons: ['guardar'],
+      formType: 'tablaConfirmacionDocente',
+      tableCode: 'amblemonedaConfigConfirmacionDocente',
+      modalCode: 'amblemonedaConfigConfirmacionDocente',
+      isFromCustomTableActions: true,
+    }
+  }
+  const textsAndButtonsConfirmacionDocente = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'amblemonedaConfigConfirmacionDocente',
+      isFromCustomTableActions: true,
+    }
+  }
+  const modalConfirmacionDocente = {
+    component: 'modal',
+    settings: {
+      modalCode: 'amblemonedaConfigConfirmacionDocente',
+      items: [
+        {        
+          childBlocks: [
+            { ...formConfirmacionDocente },
+            { ...textsAndButtonsConfirmacionDocente },
+          ]
+        }
+      ]
+    }
+  }
+  //* ------------------------------------------
+
+
 
 const charlaConDocentes = {
     component: 'textsbuttons',
@@ -116,21 +193,22 @@ export const AMBLEMONEDA_CONFIG = {
             settings: {
                 items: [
                     {
-                        title: "Charla con los docentes acerca de las amblemonedas",
+                        title: "Charla con los docentes",
                         childBlocks: [
                             { ...charlaConDocentes }
                         ]
                     },
                     {
-                        title: "Elaboración de la alcancía por estudiante",
+                        title: "Elaboración de alcancía",
                         childBlocks: [
                             { ...sliderAmblemoneda }
                         ]
                     },
                     {
-                        title: "Confirmar que cada docente tiene sus amblemonedas",
+                        title: "Entrega de AmbLeMonedas",
                         childBlocks: [
-                            { ...ConfirmacionDocente }
+                            { ...ConfirmacionDocente },
+                            { ...modalConfirmacionDocente },
                         ]
                     }
                 ]

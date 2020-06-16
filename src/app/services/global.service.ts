@@ -212,15 +212,15 @@ export class GlobalService {
     return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
   }
 
-  validateDate(e, cond, bool = false) {
-    let value = e.target.value;
+  validateDate(e, cond, bool = false, notE:boolean = false) {
+    let value = !notE? e.target.value : e;
     let today = this.getDateFormat(new Date());
     if (value != "") {
       if ((cond == "lower" && value > today) || (cond == "greater" && value <= today)) {
-        e.target.classList.add("date-not-valid");
+        if (!notE) e.target.classList.add("date-not-valid");
         if (bool) return true;
       } else {
-        e.target.classList.remove("date-not-valid");
+        if (!notE) e.target.classList.remove("date-not-valid");
         if (bool) return false;
       }
     }

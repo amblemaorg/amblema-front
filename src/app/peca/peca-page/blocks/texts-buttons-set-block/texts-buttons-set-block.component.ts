@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'buttons-set-block',
@@ -12,6 +13,8 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
   component: string;
   settings: {   
     modalCode?: string; // for views with modal inside
+    dataFromRow?: any; // table's row data
+    isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
     tableCode?: string; // to know which table to update 
     buttonType?: string; // to specify what action to take on the button
     receivesFromTableOrForm?: string; // to know if make action receiving data fronm a table, form or both
@@ -24,12 +27,17 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     selectStatus:{
       text:string;
       placeholder: string;
-      lista:{
-        id: string;
-        name: string;
-      }[];
+      lista:any[];
     };
-    status: string;
+    selectGeneralStatus:{
+      text:string;
+      placeholder: string;
+      lista:any[];
+    };
+    status: {
+      text: string;
+      subText: string;
+    };
     // texts: {
       title: {
         aligning: string; // 'center' for center aligning, 'left' otherwise
@@ -47,6 +55,12 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     upload: any;
     download: any;
     btnGeneral: any;
+    inputAndBtns: {
+        input: string;
+        btn: string;
+        //textDesc: string;
+        titleInput:string;
+    }[];
   };
 
   glbls:any;
@@ -65,19 +79,26 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
 
   currentSelected = null;
 
+  private subscription: Subscription = new Subscription();
+  
   ngOnInit() { 
-    this.globals.updateButtonDataEmitter.subscribe(data => {
-      if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
-        if (data.whichData=="table") this.dataTorF.table = data.table;
-        if (data.whichData=="form") this.dataTorF.form = data.form;
-      }
-    });
+    this.subscription.add(
+      this.globals.updateButtonDataEmitter.subscribe(data => {
+        if (this.settings.buttonCode && this.settings.buttonCode==data.code) {
+          if (data.whichData=="table") this.dataTorF.table = data.table;
+          if (data.whichData=="form") this.dataTorF.form = data.form;
+  
+          // console.log(this.dataTorF);
+        }
+      })
+    );
   }
   ngOnDestroy() {
     this.dataTorF = {
       table: null,
       form: null,
-    }
+    };
+    this.subscription.unsubscribe();
   }
 
   setSettings(settings: any) {
@@ -98,45 +119,70 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     return false
   }
 
-  addToTable() {
-    let obj = {
+  addToTable(usingModal: boolean = false) {
+    let obj = !usingModal? {
       code: this.settings.tableCode,
       data: {},
       resetData: false,
       action: 'add',
-    }; 
+    } : {
+      code: this.settings.modalCode,
+      action: 'add',
+      showBtn: true,
+      component: 'form',
+    };
 
-    switch (this.settings.buttonType) {
-      case 'agregarDocentePreinscripcion':
-        obj.data = {
-          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
-          lastName: 'Melendez',
-          phone: '15487985',
-          email: 'josmel@yahoo.com'
-        };
-        break;
-      case 'agregarResultadoEstudiante':
-        obj.data = {
-          name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
-          lastName: 'Valbuena',
-          gradeAndSection: '5to grado B',
-          state: 'Lara',
-          result: 'Aprobado',          
-        };
-        break;
-    
-      default:
-        break;
+    if (!usingModal) {
+      switch (this.settings.buttonType) {
+        case 'agregarDocentePreinscripcion':
+          obj.data = {
+            id: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).id.toString(),
+            name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+            lastName: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).lastName,
+            phone: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).phone,
+            email: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).email,
+          };
+          break;
+        case 'agregarResultadoEstudiante':
+          obj.data = {
+            id: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).id.toString(),
+            name: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).name,
+            lastName: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).lastName,
+            gradeAndSection: {
+              grade: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).grade,
+              section: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).section,
+            },
+            addressState: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).addressState,
+            result: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).result,          
+            grade: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).grade,
+            section: this.settings.selectStatus['lista'].find(d=>{return d.id===this.currentSelected}).section,
+          };
+          break;
+      
+        default:
+          break;
+      }
     }
 
-    this.globals.tableDataUpdater(obj);
+    if (!usingModal) this.globals.tableDataUpdater(obj);
+    else this.globals.ModalShower(obj);
   }
 
   takeAction(type: number, e) {
     switch (type) {
+      case 1:
+        if (this.settings.isFromCustomTableActions && this.settings.modalCode) {
+          this.globals.tableDataUpdater(this.settings.dataFromRow);
+          this.globals.ModalHider(this.settings.modalCode); 
+        }          
+        break;
       case 2:
-        this.globals.ImageContainerShower(this.settings.buttonCode);
-        e.target.classList.add('d-none');
+        if (this.settings.isFromCustomTableActions && this.settings.modalCode) 
+          this.globals.ModalHider(this.settings.modalCode);
+        else {
+          this.globals.ImageContainerShower(this.settings.buttonCode);
+          e.target.classList.add('d-none');
+        }
         break;
     
       default:

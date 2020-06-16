@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -8,13 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'form-block',
   templateUrl: './form-block.component.html',
   styleUrls: ['./form-block.component.scss']
 })
-export class FormBlockComponent implements PresentationalBlockComponent, OnInit {
+export class FormBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: 'presentational';
   component: string;
   settings: {    
@@ -28,8 +29,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     hideImgContainer?: boolean; // if view has image adder container set this to true
     modalCode?: string; // for views with modal inside
     data?: any; // data to fill all inputs
+    dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
+    alwaysValidations?: boolean; // when imageGroup has extra fields (i.e. imageCargo) set this to true
   };
+
+  private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
   fields: string[];
@@ -54,17 +59,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   ngOnInit() {
-    this.componentForm.statusChanges.subscribe( (val) => {
-      if (val==="INVALID" || this.isDateNotOk()) this.btnUpdater(null);
-      else this.btnUpdater(this.componentForm.value);
-    });
+    this.subscription.add(
+      this.componentForm.statusChanges.subscribe( (val) => {
+        if (val==="INVALID" || this.isDateNotOk()) this.btnUpdater(null);
+        else this.btnUpdater(this.componentForm.value);
+      })
+    );
 
-    this.globals.showImageContainerEmitter.subscribe(code => {
-      if(this.settings.buttonCode && this.settings.buttonCode == code)
-        this.settings.hideImgContainer = false;
-    });
+    this.subscription.add(
+      this.globals.showImageContainerEmitter.subscribe(code => {
+        if(this.settings.buttonCode && this.settings.buttonCode == code)
+          this.settings.hideImgContainer = false;
+      })
+    );
 
     this.setId();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   btnUpdater(val) {
@@ -74,6 +86,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
         whichData: 'form',
         form: val,
       });
+  }
+
+  formInModalBtnConditioner() {
+    if (this.settings.isFromCustomTableActions) {
+      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn) return true;
+      else return false;
+    } else return true;
   }
 
   setSettings(settings: any) {
@@ -233,13 +252,28 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     console.log('submitting form');  
     
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
+    if(this.settings.formType==="buscarEstudiante") manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);    
+
+    const assignId = () => Math.random().toString(36).substring(2);
+
+    if (this.settings.isFromCustomTableActions) {
+      if (this.settings.data) {
+        this.settings.dataFromRow.data.newData = { ...this.settings.dataFromRow.data.oldData, ...manageData.data };
+        this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
+      } else { // is for adding in modal view
+        this.settings.dataFromRow['data'] = manageData.data;
+        this.settings.dataFromRow['data']['id'] = assignId();
+      }      
+    } else {
+      manageData.data['id'] = assignId();
+    }
 
     let obj = {
       code: this.settings.tableCode,
-      data: manageData.data,
+      data: this.settings.isFromCustomTableActions? this.settings.dataFromRow.data : manageData.data,
       dataArr: [],
       resetData: false,
-      action: 'set',
+      action: this.settings.isFromCustomTableActions? (this.settings.data? 'edit':'add') :'set',
     }; 
 
     setTimeout(() => {
@@ -268,7 +302,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
   // filling municipalities according to selected state
   private fillMunicipalities(state_id="default",munId='') {
-    if (state_id=="default") this.municipalities = [];
+    if (state_id=="default" || !this.settings.formsContent['addressMunicipality']) this.municipalities = [];
     else {
       this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
     }   
@@ -276,14 +310,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.patchValue({addressMunicipality:munId});
   }
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
-  updateMuns(bool:boolean = true){
+  updateMuns(bool:boolean = true, munId: string = ''){
     if(bool) {
       let currStateId = "default";
       currStateId = this.componentForm.controls['addressState'].value && this.componentForm.controls['addressState'].value.length>0? 
         this.componentForm.controls['addressState'].value :
         "default";      
     
-      this.fillMunicipalities(currStateId);
+      this.fillMunicipalities(currStateId, munId);
     }    
   }
 
@@ -301,8 +335,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   // wrong date save button enabler/disabler
-  checkDateOk(e,mode,f) {
-    if ( this.globals.validateDate(e,mode,true) || e.target.value==="" ) 
+  checkDateOk(e,mode,f,notE:boolean = false) {
+    let value = !notE? e.target.value==="" : e==="";
+    if ( this.globals.validateDate(e,mode,true,notE) || value ) 
          this.wrongDateDisabler[f] = false;
     else this.wrongDateDisabler[f] = true;
   }
@@ -335,12 +370,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
   // to disable add image button when conditions apply
   disableAddImgBtn(){
-    return ( this.componentForm.controls['imageGroup'].get('imageDocente') && this.componentForm.controls['imageGroup'].get('imageDocente').value==="")
-        || (this.componentForm.controls['imageGroup'].get('imageCargo') && this.componentForm.controls['imageGroup'].get('imageCargo').value==="")
-        || ( this.componentForm.controls['imageGroup'].get('imageDescription') && this.componentForm.controls['imageGroup'].get('imageDescription').value==="") 
-        || this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
-        || !this.componentForm.controls['imageGroup'].get('imageSelected').value;
-  }  
+    return ( this.componentForm.controls['imageGroup'].get('imageDocente') && ( this.componentForm.controls['imageGroup'].get('imageDocente').value==="" 
+        || !this.componentForm.controls['imageGroup'].get('imageDocente').value ) )
+        || ( this.componentForm.controls['imageGroup'].get('imageCargo') && this.componentForm.controls['imageGroup'].get('imageCargo').value==="" )
+        || ( this.componentForm.controls['imageGroup'].get('imageDescription') && this.componentForm.controls['imageGroup'].get('imageDescription').value==="" ) 
+        || ( this.componentForm.controls['imageGroup'].get('imageStatus') && ( this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
+        || !this.componentForm.controls['imageGroup'].get('imageStatus').value ) )
+        || ( this.componentForm.controls['imageGroup'].get('imageSelected') && !this.componentForm.controls['imageGroup'].get('imageSelected').value );
+  }
   // shows image when some uploaded
   showImage(option: number) {
     switch (option) {
@@ -358,23 +395,35 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.controls['imageGroup'].get('imageSrc').reset();
   }
   // method which sends image to the images table
-  addImage() {
+  addImage(addImg: boolean = true) {
     let imgGrp = this.componentForm.controls['imageGroup'];
     let imageObj = {
       code: this.settings.tableCode,
-      data: {
+      data: addImg? {
+        id: Math.random().toString(36).substring(2),
         image: imgGrp.get('imageSelected').value.name,
         description: imgGrp.get('imageDescription').value,
-        state: imgGrp.get('imageStatus').value == "1" ? 'Visible':'No visible',
-        stateNumber: imgGrp.get('imageStatus').value,
+        state: imgGrp.get('imageStatus').value,
         status: 'En espera',
+        source: imgGrp.get('imageSrc').value,
+        imageSelected: imgGrp.get('imageSelected').value,
+      } : {
+        id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).id.toString(),
+        name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).name,
+        lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).lastName,
+        cargo: imgGrp.get('imageCargo').value,
+        description: imgGrp.get('imageDescription').value,
+        addressState: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).addressState,
+        status: imgGrp.get('imageStatus').value,
         source: imgGrp.get('imageSrc').value,
         imageSelected: imgGrp.get('imageSelected').value,
       },
       action: 'add',    
     };
+
     this.globals.tableDataUpdater(imageObj);
-    this.componentForm.get('imageGroup').reset();  
+    if (addImg) this.componentForm.get('imageGroup').reset();
+    else this.componentForm.reset();  
   }
   //? -----------------------------------------------------------------------------------
 
@@ -407,13 +456,28 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   setAllFields(data) {
     const dataKeys = Object.keys(data);
     dataKeys.map(key => {
-      if (key == "imageGroup" && this.settings.formsContent['imageGroup'])
-        this.componentForm.get('imageGroup').setValue( data[key] );
-      else if(this.settings.formsContent[key])
-        this.componentForm.patchValue( { [key]: data[key] } );
+      if ( (key == 'imageGroup' && this.settings.formsContent['imageGroup']) || 
+           (key == 'documentGroup' && this.settings.formsContent['documentGroup']) )
+        this.componentForm.get(key).setValue( data[key] );
+      else if(this.settings.formsContent[key]) {
+        if (key == 'addressMunicipality') 
+          this.updateMuns(true, data[key]);
+        else if (key == 'age') {// if 'Z' comes in the date format it gets removed
+          let dateKey = this.globals.getDateFormat( new Date( data[key].replace('Z','') ) );
+          this.componentForm.patchValue( { [key]: dateKey } );
+          this.checkDateOk(dateKey,this.settings.formsContent[key]['lower']?'lower':'greater',key,true);
+        }
+        else 
+          this.componentForm.patchValue( { [key]: data[key] } );
+      }        
     });  
     // console.log(this.componentForm.value); 
     // this.componentForm.setValue(data); 
+  }
+
+  //? turning imageGroup fields into array
+  imageFieldsArr(fields) {
+    return Object.keys(fields);
   }
 
 }

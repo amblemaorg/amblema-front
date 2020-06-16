@@ -1,3 +1,5 @@
+import { formResultadoEstudianteModal } from '../blocks/form-block/all-forms';
+
 const datosOlimpiadas = {
     component: 'textsbuttons',
     settings: {
@@ -26,16 +28,34 @@ const datosOlimpiadas = {
 const selectEstudiantes = {
     component: 'textsbuttons',
     settings: {
-        dateOrtext: {
-
-        },
         selectStatus:
         {
             placeholder: 'Selecciona el estudiante',
             lista: [
-                { id: 1, name: 'ALfredo' },
-                { id: 2, name: 'Yanior' },
-                { id: 3, name: 'Jose' },
+                { 
+                    id: 1, name: 'Alfredo',
+                    lastName: 'Valvuena',
+                    addressState: '165146541654hjvjh',
+                    result: 'Aprobado',
+                    grade: '5',
+                    section: 'B',
+                },
+                { 
+                    id: 2, name: 'Yanior',
+                    lastName: 'Zambrano',
+                    addressState: '165146541654hjvjh',
+                    result: 'Aprobado',
+                    grade: '6',
+                    section: 'A',
+                },
+                { 
+                    id: 3, name: 'Jose',
+                    lastName: 'Guerrero',
+                    addressState: '165146541654hjvjh',
+                    result: 'Aprobado',
+                    grade: '4',
+                    section: 'C',
+                },
             ]
         },
         btnGeneral:
@@ -50,10 +70,6 @@ const selectEstudiantes = {
 const textsAndButtons = {
     component: 'textsbuttons',
     settings: {
-        title: {
-            text: '(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar',
-            aligning: 'center',
-        },
         action: [{
             type: 3,
             name: 'Enviar Solicitud',
@@ -75,29 +91,51 @@ const resultadoEstudiante = {
             },
             gradeAndSection: {
                 title: "Grado y sección",
+                valuePrepareFunction: ( row: any ) => {          
+                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.section;
+                    else return '';
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.section;
+                    value = value.toUpperCase();
+                    
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
-            state: {
-                title: "Estado"
+            addressState: {
+                title: "Estado",
+                valuePrepareFunction: ( row: any ) => {          
+                    if (row) return formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===row}).name;
+                    else return '';
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===cell}).name;
+                    value = value.toUpperCase();
+                    
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
             result: {
                 title: 'Resultado'
             },
         },
+        modalCode: 'dataResultadoEstudiante',
         buttonCode: 'dataResultadoEstudiante',
         tableCode: 'dataResultadoEstudiante',
         dataResultadoEstudiante: [
             {
-                name: 'Alfredo',
-                lastName: 'Valbuena',
-                gradeAndSection: '5to grado B',
-                state: 'Lara',
-                result: 'Aprobado',
-            },
-            {
-                name: 'saul',
-                lastName: 'ramos',
-                gradeAndSection: '6to grado A',
-                state: 'Lara',
+                id: '1dvbdjvjd',
+                name: 'Jhon',
+                lastName: 'Week',
+                grade: '5',
+                section: 'B',
+                gradeAndSection: {
+                    grade: '5',
+                    section: 'B',
+                },
+                addressState: '165146541654hjvjh',
                 result: 'Aprobado',
             },
         ],
@@ -108,6 +146,54 @@ const resultadoEstudiante = {
         },
     }
 }
+//* MODAL RESULTADOS OLIMPIADAS ----------------------------------
+const formResultadoEstudiante = {
+    component: 'form',
+    viewMode: 'both',
+    settings: {
+      formsContent: formResultadoEstudianteModal,
+      buttons: ['guardar'],
+      formType: 'agregarResultadoEstudiante',
+      tableCode: 'dataResultadoEstudiante',
+      modalCode: 'dataResultadoEstudiante',
+      isFromCustomTableActions: true,
+    }
+  }
+  const textsAndButtonsResultadoEstudiante = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataResultadoEstudiante',
+      isFromCustomTableActions: true,
+    }
+  }
+  const modalResultadoEstudiante = {
+    component: 'modal',
+    settings: {
+      modalCode: 'dataResultadoEstudiante',
+      items: [
+        {        
+          childBlocks: [
+            { ...formResultadoEstudiante },
+            { ...textsAndButtonsResultadoEstudiante },
+          ]
+        }
+      ]
+    }
+  }
+  //* ------------------------------------------
 
 
 
@@ -131,7 +217,8 @@ export const MATH_OLYMPICS_CONFIG = {
                         childBlocks: [
                             { ...selectEstudiantes },
                             { ...resultadoEstudiante },
-                            { ...textsAndButtons }
+                            { ...textsAndButtons },
+                            { ...modalResultadoEstudiante },
                         ]
                     }
                 ]

@@ -47,6 +47,7 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
       item.childBlocks.map(block => {
         let settings = block.settings;
         if (block.component=="modal") settings = { settings: block.settings, factory: this.factory };
+        if (block.component=="accordion") settings = { settings: block.settings, factory: this.factory };
 
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);

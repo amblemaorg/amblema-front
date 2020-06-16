@@ -92,7 +92,7 @@ const infoGeneral = {
                 line: true
             }
         ]
-    }      
+    }
 }
 
 export const ENVIRONMENTAL_PROJECT_CONFIG = {
@@ -101,25 +101,97 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
     },
     blocks: [
         {
-            component: 'accordion',
+            component: 'tabs',
             settings: {
                 items: [
                     {
-                        title: "Geografia de Venezuela",
+                        title: "Lapso 1",
                         childBlocks: [
-                            { ...infoGeneral }
+                            {
+                                component: 'accordion',
+                                settings: {
+                                    items: [
+                                        {
+                                            title: "Geografia de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Ecositemas de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Parque nacionales y monumentos naturales",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                    ]
+                                }
+                            }
                         ]
                     },
                     {
-                        title: "Ecositemas de Venezuela",
+                        title: "Lapso 2",
                         childBlocks: [
-                            { ...infoGeneral }
+                            {
+                                component: 'accordion',
+                                settings: {
+                                    items: [
+                                        {
+                                            title: "Geografia de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Ecositemas de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Parque nacionales y monumentos naturales",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                    ]
+                                }
+                            }
                         ]
                     },
                     {
-                        title: "Parque nacionales y monumentos naturales",
+                        title: "Lapso 3",
                         childBlocks: [
-                            { ...infoGeneral }
+                            {
+                                component: 'accordion',
+                                settings: {
+                                    items: [
+                                        {
+                                            title: "Geografia de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Ecositemas de Venezuela",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                        {
+                                            title: "Parque nacionales y monumentos naturales",
+                                            childBlocks: [
+                                                { ...infoGeneral }
+                                            ]
+                                        },
+                                    ]
+                                }
+                            }
                         ]
                     },
                 ]

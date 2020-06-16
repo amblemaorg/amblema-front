@@ -1,4 +1,4 @@
-import { formParaPruebaModal } from '../blocks/form-block/all-forms'
+import { formSpecialActivityTableModal } from '../blocks/form-block/all-forms'
 
 const controlProps = {
     dateAndRequired: {
@@ -31,7 +31,10 @@ const dateAndStatus = {
             text: 'Fecha de la actividad especial:',
             fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired },
         },
-        status: 'pendiente',
+        status: {
+            text: 'Estatus',
+            subText: 'Pendiente'
+        },
         action: [
             {
                 type: 6,
@@ -58,7 +61,18 @@ const specialActivityTable = {
                 title: 'Precio unitario'
             },
             impuesto: {
-                title: 'impuesto'
+                title: 'impuesto',
+                valuePrepareFunction: ( row: any ) => {
+                    if (row) return row.toString()+'%';
+                    else return '';
+                  },
+                  filterFunction: (cell?: any, search?: string) => {
+                      let value: string = cell.toString()+'%';
+                      value = value.toUpperCase();
+                      
+                      if (value.includes(search.toUpperCase()) || search === '') return true;
+                      else return false;
+                  }
             },
             subtotal: {
                 title: 'subtotal'
@@ -69,22 +83,22 @@ const specialActivityTable = {
         tableCode: 'dataSpecialActivityTable',
         dataSpecialActivityTable: [
             {
-                item: '1',
+                id: '1sdfsdfsdfsd',
+                item: 1,
                 description: 'cosa',
-                cantidad: '34',
-                price: '444',
-                impuesto: '20%',
-                impuestoValue: '20',
-                subtotal: '500',
+                cantidad: 34,
+                price: 444,
+                impuesto: 20,
+                subtotal: 500,
             },
             {
-                item: '1',
+                id: '2sdfsdfsdfsd',
+                item: 1,
                 description: 'cosa',
-                cantidad: '34',
-                price: '444',
-                impuesto: '20%',
-                impuestoValue: '20',
-                subtotal: '500',
+                cantidad: 34,
+                price: 444,
+                impuesto: 20,
+                subtotal: 500,
             },
         ],
         classes: {
@@ -94,32 +108,67 @@ const specialActivityTable = {
         },
     }
 }
-
-//! PRUEBAS ----------------------------------
-const formPrueba = {
-    component: 'form',
+const labelTotal = {
+    component: 'textsbuttons',
     settings: {
-        formsContent: formParaPruebaModal,
-        buttons: ['guardar'],
-        formType: 'pruebaaaaaaaa',
-        tableCode: 'dataSpecialActivityTable',
-        modalCode: 'dataSpecialActivityTable',
-    }
+        dateOrtext: {
+            
+        },
+        status: {
+            text: 'Total',
+            subText: '1500'
+        }
+  }
 }
-const modalPrueba = {
+
+//* MODAL ACTIVIDAD ESPECIAL ----------------------------------
+const formSpecialActivityTable = {
+    component: 'form',
+    viewMode: 'both',
+    settings: {
+      formsContent: formSpecialActivityTableModal,
+      buttons: ['guardar'],
+      formType: 'agregarActividadEspecial',
+      tableCode: 'dataSpecialActivityTable',
+      modalCode: 'dataSpecialActivityTable',
+      isFromCustomTableActions: true,
+    }
+  }
+  const textsAndButtonsSpecialActivityTable = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataSpecialActivityTable',
+      isFromCustomTableActions: true,
+    }
+  }
+  const modalSpecialActivityTable = {
     component: 'modal',
     settings: {
-        modalCode: 'dataSpecialActivityTable',
-        items: [
-        {
-            childBlocks: [
-                { ...formPrueba },                
-            ]
+      modalCode: 'dataSpecialActivityTable',
+      items: [
+        {        
+          childBlocks: [
+            { ...formSpecialActivityTable },
+            { ...textsAndButtonsSpecialActivityTable },
+          ]
         }
-        ]
+      ]
     }
-}
-//! ------------------------------------------
+  }
+  //* ------------------------------------------
 
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
@@ -134,8 +183,9 @@ export const SPECIAL_ACTIVITY_CONFIG = {
                         childBlocks: [
                             { ...dateAndStatus },                            
                             { ...specialActivityTable },
+                            { ...labelTotal },
                             { ...textsAndButtons },
-                            { ...modalPrueba },
+                            { ...modalSpecialActivityTable },
                         ]
                     },
                 ],
