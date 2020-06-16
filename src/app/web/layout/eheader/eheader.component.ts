@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModulesState } from '../../../store/states/e-learning/learning-modules.state';
 import { UserState } from '../../../store/states/e-learning/user.state';
 import { UpdateModulesTotal } from '../../../store/actions/e-learning/learning-modules.actions';
@@ -27,8 +27,18 @@ export class EheaderComponent implements OnInit {
   @Select(UserState.user_brief) userBrief$: Observable<any>;
   @Select(UserState.user_type) user_type$: Observable<string>;
 
-  constructor(private store: Store, private modulesService: ModulesService, private route: ActivatedRoute, private stepsService: StepsService) {
-  }
+  user_email = "";
+  user_name = "";
+  user_id = "";
+  user_type = "";
+
+  constructor(
+    private store: Store, 
+    private modulesService: ModulesService, 
+    private route: ActivatedRoute, 
+    private stepsService: StepsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.modulesService.updateCoorMod.subscribe(res=>{
@@ -36,19 +46,21 @@ export class EheaderComponent implements OnInit {
     });
   
     //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
-    if (this.route.snapshot.params && this.route.snapshot.params.idUser) 
+    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
       this.setUserValues({
-        type:1,
+        type: 1,
         usu: this.route.snapshot.params.idUser,
         usut: (+this.route.snapshot.params.userType),
         project: this.route.snapshot.params.idProject
       });
+    }      
     else if (this.route.snapshot.children.length>0) {
       if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
           this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
             this.setUserValues({
-              type:1,usu:this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser,
-              usut:(+this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType),
+              type: 1,
+              usu: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser,
+              usut: (+this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType),
               project: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject
             });
       }
@@ -61,6 +73,13 @@ export class EheaderComponent implements OnInit {
     });
     this.modules_$.subscribe(res=> {
       this.modulesService.all_modules = res;
+    });
+
+    this.userBrief$.subscribe(res=> {
+      this.user_email = res.email;
+      this.user_id = res.userId;
+      this.user_name = res.name;
+      this.user_type = res.userType;
     });
   }
 
@@ -75,7 +94,18 @@ export class EheaderComponent implements OnInit {
       });
     // }
     // this.store.dispatch(new UpdateModulesTotal).subscribe(() => console.log(this.store.snapshot()));  
-    
+  }
+
+  goToProfile() {
+    this.router.navigate([
+      "peca/perfil-usuario",
+      { 
+        userType: this.user_type, 
+        idUser: this.user_id,
+        nameUser: this.user_name,
+        emailUser: this.user_email
+      }
+    ]);
   }
 
 }
