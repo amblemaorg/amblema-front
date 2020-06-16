@@ -127,7 +127,7 @@
     }
     .containerInputAndBtn{
         width: 100%;
-        padding: 1rem;
+        padding: 1rem 0rem;
         .mb-negativo{
             margin-bottom: 0rem !important;
         }
@@ -151,6 +151,10 @@
                 display: inline-block;
                 margin-top: 1rem;
                 margin-left: 0px !important;
+            }
+            .style-input{
+                width: 100%;
+                display: inline-block;
             }
         }
         .style-textarea{
