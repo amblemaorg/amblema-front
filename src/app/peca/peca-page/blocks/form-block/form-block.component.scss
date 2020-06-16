@@ -249,6 +249,11 @@
         }
       }
 
+      textarea{
+        resize: none;
+        height: 130px;
+      }
+
       .form-control {
         color: $blue;
 

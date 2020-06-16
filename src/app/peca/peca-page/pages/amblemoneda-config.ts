@@ -193,19 +193,19 @@ export const AMBLEMONEDA_CONFIG = {
             settings: {
                 items: [
                     {
-                        title: "Charla con los docentes acerca de las amblemonedas",
+                        title: "Charla con los docentes",
                         childBlocks: [
                             { ...charlaConDocentes }
                         ]
                     },
                     {
-                        title: "Elaboración de la alcancía por estudiante",
+                        title: "Elaboración de alcancía",
                         childBlocks: [
                             { ...sliderAmblemoneda }
                         ]
                     },
                     {
-                        title: "Confirmar que cada docente tiene sus amblemonedas",
+                        title: "Entrega de AmbLeMonedas",
                         childBlocks: [
                             { ...ConfirmacionDocente },
                             { ...modalConfirmacionDocente },

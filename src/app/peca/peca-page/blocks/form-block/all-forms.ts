@@ -169,6 +169,16 @@ const controlProps = {
     options: [],
     validations: { required: false }
   },
+  textareaNormalTextAndRequired: {
+    type: 'textarea',
+    validations: requiredAndNormalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+  },
+  textareaNnormalText: {
+    type: 'textarea',
+    validations: normalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+  },
 }
 
 export const sampleFormData = {
@@ -263,17 +273,17 @@ export const formTestimonioDocentes = {
     type: "image",
     fields: {
       imageDocente: {
-        label: "Seleccione un docente",
-        placeholder: "Seleccione un docente",
+        label: "Seleccione el docente",
+        placeholder: "Seleccione el docente",
         fullwidth: false,
         ...controlProps.selectAndRequired,
         options: [],
       },
       imageCargo: { label: "Cargo", placeholder: "Cargo", fullwidth: false, ...controlProps.normalTextAndRequired },
-      imageDescription: { label: "Descripción", placeholder: "Descripción", fullwidth: false, ...controlProps.normalTextAndRequired },
+      imageDescription: { label: "Descripción de la imagen", placeholder: "Descripción de la imagen", fullwidth: false, ...controlProps.normalTextAndRequired },
       imageStatus: {
-        label: "Estatus",
-        placeholder: "Estatus",
+        label: "Estado de la imagen",
+        placeholder: "Estado de la imagen",
         fullwidth: false,
         ...controlProps.selectAndRequired,
         options: [
@@ -346,10 +356,10 @@ export const formRegistroInicial = {
   imageGroup: {
     type: "image",
     fields: {
-      imageDescription: { label: "Descripción de la imágen", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageDescription: { label: "Descripción de la imagen", placeholder: "Descripción de la imagen", fullwidth: false, ...controlProps.normalText },
       imageStatus: {
-        label: "Estado de la imágen",
-        placeholder: "Estado de la imágen",
+        label: "Estado de la imagen",
+        placeholder: "Estado de la imagen",
         fullwidth: false,
         ...controlProps.select,
         options: [
@@ -360,25 +370,25 @@ export const formRegistroInicial = {
     },
   },
 }
-    //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
-    export const formRegistroInicialModal = {
-      imageGroup: {
-        type: "image",
-        fields: {
-          imageDescription: { label: "Descripción de la imágen", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
-          imageStatus: {
-            label: "Estado de la imágen",
-            placeholder: "Estado de la imágen",
-            fullwidth: false,
-            ...controlProps.selectAndRequired,
-            options: [
-              { id: "1", name: "Visible" },
-              { id: "2", name: "No visible" },
-            ],
-          },
-        },
-      },  
-    }
+//* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
+export const formRegistroInicialModal = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: { label: "Descripción de la imagen", placeholder: "Descripción de la imagen", fullwidth: false, ...controlProps.normalTextAndRequired },
+      imageStatus: {
+        label: "Estado de la imagen",
+        placeholder: "Estado de la imagen",
+        fullwidth: false,
+        ...controlProps.selectAndRequired,
+        options: [
+          { id: "1", name: "Visible" },
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
+  },
+}
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
   title1: { label: "Datos básicos de la escuela", type: "title" },
@@ -469,10 +479,10 @@ export const formDatosEscuela = {
   imageGroup: {
     type: "image",
     fields: {
-      imageDescription: { label: "Descripción de la imágen", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalText },
+      imageDescription: { label: "Descripción de la imagen", placeholder: "Descripción de la imagen", fullwidth: false, ...controlProps.normalText },
       imageStatus: {
-        label: "Estado de la imágen",
-        placeholder: "Estado de la imágen",
+        label: "Estado de la imagen",
+        placeholder: "Estado de la imagen",
         fullwidth: false,
         ...controlProps.select,
         options: [
@@ -483,25 +493,25 @@ export const formDatosEscuela = {
     },
   },
 }
-      //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DE DATOS DE LA ESCUELA
-      export const formDatosEscuelaModal = {
-        imageGroup: {
-          type: "image",
-          fields: {
-            imageDescription: { label: "Descripción de la imágen", placeholder: "Descripción de la imágen", fullwidth: false, ...controlProps.normalTextAndRequired },
-            imageStatus: {
-              label: "Estado de la imágen",
-              placeholder: "Estado de la imágen",
-              fullwidth: false,
-              ...controlProps.selectAndRequired,
-              options: [
-                { id: "1", name: "Visible" },
-                { id: "2", name: "No visible" },
-              ],
-            },
-          },
-        },  
-      }
+//* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DE DATOS DE LA ESCUELA
+export const formDatosEscuelaModal = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDescription: { label: "Descripción de la imagen", placeholder: "Descripción de la imagen", fullwidth: false, ...controlProps.normalTextAndRequired },
+      imageStatus: {
+        label: "Estado de la imagen",
+        placeholder: "Estado de la imagen",
+        fullwidth: false,
+        ...controlProps.selectAndRequired,
+        options: [
+          { id: "1", name: "Visible" },
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
+  },
+}
 
 /*TABS DOCENTE*/
 export const formTabsDocente = {
@@ -569,7 +579,7 @@ export const formTabsDocente = {
   city: { label: "Ciudad", placeholder: "Ciudad", fullwidth: false, ...controlProps.normalTextAndRequired },
   status: {
     label: "Estatus",
-    placeholder: "Estatus",
+    placeholder: "Pendiente",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -582,7 +592,7 @@ export const formTabsDocente = {
 export const formGradosSecciones = {
   grades: {
     label: "Seleccione el grado",
-    placeholder: "Grados",
+    placeholder: "Grado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -597,7 +607,7 @@ export const formGradosSecciones = {
   section: { label: "Sección", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
   docente: {
     label: "Seleccione el docente",
-    placeholder: "Docentes",
+    placeholder: "Docente",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -658,7 +668,7 @@ export const formTabsEstudiantes = {
   },
   age: { lower: true, label: "Fecha de nacimiento", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
   gender: {
-    label: "Género (Femenino ó Maculino)",
+    label: "Género (Femenino ó Masculino)",
     placeholder: "Género (Femenino ó Masculino)",
     fullwidth: false,
     ...controlProps.selectAndRequired,
@@ -695,8 +705,8 @@ export const formCoordinador = {
   phone: { label: "Teléfono de habitación", placeholder: "Teléfono de habitación", fullwidth: false, ...controlProps.phoneAndRequired },
   date: { label: "Fecha de nacimiento", placeholder: "Fecha de nacimiento", fullwidth: false, ...controlProps.dateAndRequired },
   sexo: {
-    label: "Sexo (Femenino ó Masculino)",
-    placeholder: "Sexo (Femenino ó Masculino)",
+    label: "Género (Femenino ó Masculino)",
+    placeholder: "Género (Femenino ó Masculino)",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -932,6 +942,39 @@ export const formEscuela = {
   emailContact2: { label: "Input del SubDirector", placeholder: "Input del SubDirector", fullwidth: false, ...controlProps.emailAndRequired },
 }
 
+//ANUARIO-----------------------------------------------------
+//RESENA HISTORICA
+export const formResenaHistorica = {
+  nameDescription: { placeholder: "Descripción de la reseña histórica ", fullwidth: true, ...controlProps.textareaNnormalText},
+}
+//PADRINO
+export const formPadrinoAnuario = {
+  //name: { placeholder: "Padrino", fullwidth: false, ...controlProps.onlyLetters },
+  nameDescription: { placeholder: "Descripción del padrino", fullwidth: true, ...controlProps.textareaNnormalText},
+}
+//Coordinador
+export const formCoordinadorAnuario = {
+  nameDescription: { placeholder: "Descripción del coordinador", fullwidth: true, ...controlProps.textareaNnormalText},
+}
+//escuela
+export const formEscuelaAnuario = {
+  nameDescription: { placeholder: "Descripción del escuela", fullwidth: true, ...controlProps.textareaNnormalText},
+}
+//Actividades
+export const formActividades = {
+  nameDescription: { placeholder: "Descripción de la actividad", fullwidth: true, ...controlProps.textareaNnormalText},
+}
+export const formImgActividades = {
+  imageGroup: {
+    type: "image",
+    fields: {
+     
+    },
+  },
+}
+
+
+
 //? -- MODALES -----------------------------------------------
 // DIAGNOSTICO INICIAL
 export const formLecturaModal = {
@@ -953,8 +996,8 @@ export const formLecturaModal = {
   },
   section: { label: "Sección", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
   gender: {
-    label: "Genero (Femenino ó Masculino)",
-    placeholder: "Genero (Femenino ó Masculino)",
+    label: "Género (Femenino ó Masculino)",
+    placeholder: "Género (Femenino ó Masculino)",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -984,8 +1027,8 @@ export const formMatematicaModal = {
   },
   section: { label: "Sección", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
   gender: {
-    label: "Genero (Femenino ó Masculino)",
-    placeholder: "Genero (Femenino ó Masculino)",
+    label: "Género (Femenino ó Masculino)",
+    placeholder: "Género (Femenino ó Masculino)",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1015,7 +1058,7 @@ export const formConfirmacionDocenteModal = {
       { id: "6", name: "6to grado" },
     ],
   },
-  section:  { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  section: { label: "Input normal text", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
   confirmation: {
     label: "Input select confirmacion",
     placeholder: "Confirmacion",
@@ -1061,7 +1104,7 @@ export const formResultadoEstudianteModal = {
       { id: "6", name: "6to grado" },
     ],
   },
-  section:  { label: "Sección", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
+  section: { label: "Sección", placeholder: "Sección", fullwidth: false, ...controlProps.normalTextAndRequired },
   addressState: {
     label: "Selecione estado",
     placeholder: "Selecione estado",

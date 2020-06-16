@@ -149,6 +149,17 @@
               </div>              
             </ng-container>
 
+            <ng-container *ngSwitchCase="'textarea'">
+              <label>{{ settings.formsContent[field].label }}</label>
+              <textarea
+                class="form-control"
+                autocomplete='off'
+                [formControlName]="field"
+                [id]="getId(field)"
+                [placeholder]="settings.formsContent[field].placeholder"
+              ></textarea>
+            </ng-container>
+
             <ng-container *ngSwitchDefault>
               <label>{{ settings.formsContent[field].label }}</label>
               <input
