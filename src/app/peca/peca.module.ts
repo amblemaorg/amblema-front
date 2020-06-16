@@ -46,6 +46,7 @@ import { EnvironmentalProjectPageComponent } from './peca-page/pages/environment
 import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component';
 import { SchedulePageComponent } from './peca-page/pages/schedule-page.component'
 import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-page.component';
+import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component';
 // Block Components
 import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
 import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
@@ -58,6 +59,7 @@ import { StepperBlockComponent } from "./peca-page/blocks/stepper-block/stepper-
 import { ChecklistBlockComponent } from "./peca-page/blocks/checklist-block/checklist-block.component";
 import { ModalBlockComponent } from "./peca-page/blocks/modal-block/modal-block.component";
 import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedule-block.component';
+import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphics-block.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,7 @@ import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedu
     MonitoringStrategyPageComponent,
     SchedulePageComponent,
     SchoolPicturesPageComponent,
+    YearbookPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -91,6 +94,7 @@ import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedu
     ChecklistBlockComponent,
     ScheduleBlockComponent,
     ModalBlockComponent,
+    GraphicsBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -131,6 +135,7 @@ import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedu
     ChecklistBlockComponent,
     ScheduleBlockComponent,
     ModalBlockComponent,
+    GraphicsBlockComponent
   ]
 })
-export class PecaModule {}
+export class PecaModule { }

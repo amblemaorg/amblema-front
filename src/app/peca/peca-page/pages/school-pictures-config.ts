@@ -3,9 +3,12 @@ import { tablaImagenesEscuelaModal } from '../blocks/form-block/all-forms'
 const selectEstatus = {
     component: 'textsbuttons',
     settings: {
-        selectStatus:
+        dateOrtext: {
+
+        },
+        selectGeneralStatus:
         {
-            text: 'Modificar estatus:',
+            placeholder: 'Pendiente',
             lista: [
                 { id: 1, name: 'Activo' },
                 { id: 2, name: 'En proceso' },

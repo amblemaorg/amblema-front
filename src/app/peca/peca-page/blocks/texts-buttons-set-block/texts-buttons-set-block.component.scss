@@ -62,8 +62,8 @@
                     justify-content: flex-end;
                     
                     .ng-select {
-                        max-width: 13rem;
-                        width: auto;
+                        //max-width: 13rem;
+                        //width: auto;
                         min-width: 10rem;
                     }                  
                 }               
@@ -73,10 +73,6 @@
                     display: flow-root !important;
                 }
                 
-            }
-
-            title {
-
             }
 
             .sub-titles {
@@ -119,13 +115,55 @@
 
     }
     .select-estatus{
-        width: 55%;
+        width: 40%;
+    }
+    .select-general{
+        width: 10%;
     }
     .h6-select{
         margin-right: 10px;
         font-size: 1rem !important;
         font-weight: normal !important;
     }
+    .containerInputAndBtn{
+        width: 100%;
+        padding: 1rem 0rem;
+        .mb-negativo{
+            margin-bottom: 0rem !important;
+        }
+        .style-input{
+            width: 73%;
+            display: inline-block;
+        }
+        .styleInputAndBtn{
+            width: 25%;
+            display: inline-block;
+        }
+        @media (min-width: 768px) and (max-width:992px){
+            .style-input{
+                width: 72%;
+                display: inline-block;
+            }
+        }
+        @media (max-width:768px){
+            .styleInputAndBtn{
+                width: 200px;
+                display: inline-block;
+                margin-top: 1rem;
+                margin-left: 0px !important;
+            }
+            .style-input{
+                width: 100%;
+                display: inline-block;
+            }
+        }
+        .style-textarea{
+            width: 100%;
+            resize: none;
+            height: 130px;
+        }
+    }
+    
     .form-control {
         color: $blue;
 
