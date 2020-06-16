@@ -1,16 +1,30 @@
+import { formPreinscripcionDocenteModal } from '../blocks/form-block/all-forms'
+
 const preinscripcionDocente = {
     component: 'textsbuttons',
     settings: {
-        dateOrtext: {
-
-        },
         selectStatus:
         {
             placeholder: 'Selecciona el docente',
             lista: [
-                { id: 1, name: 'ALfredo' },
-                { id: 2, name: 'Yanior' },
-                { id: 3, name: 'Jose' },
+                { 
+                    id: 1, name: 'Alfredo',
+                    lastName: 'Valvuena',
+                    phone: '156456465',
+                    email: 'vfhgdygt@ddd.com', 
+                },
+                { 
+                    id: 2, name: 'Yanior',
+                    lastName: 'Zambrano',
+                    phone: '5646465465',
+                    email: 'cdhgdgd@dw.com', 
+                },
+                { 
+                    id: 3, name: 'Jose',
+                    lastName: 'Guerrero',
+                    phone: '564654',
+                    email: 'hfdhydh@de.com', 
+                },
             ]
         },
         btnGeneral:
@@ -25,10 +39,12 @@ const preinscripcionDocente = {
 const btnGuardar = {
     component: 'textsbuttons',
     settings: {
-        action: {
+        action: [{
             type: 1,
             name: 'Guardar',
-        }
+        }],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataPreinscripcionDocente',
     }
 }
 
@@ -81,19 +97,16 @@ const tablaPreinscripcionDocente = {
                 title: 'Correo'
             }
         },
+        modalCode: 'dataPreinscripcionDocente',
+        buttonCode: 'dataPreinscripcionDocente',
         tableCode: 'dataPreinscripcionDocente',
         dataPreinscripcionDocente: [
             {
-                name: 'ALfredo',
-                lastName: 'Valbuena',
-                phone: '1511555415',
-                email: 'almavalo@hotmail.com'
-            },
-            {
-                name: 'Luis',
-                lastName: 'Valbuena',
-                phone: '0416958745',
-                email: 'lu.valbuena@hotmail.com'
+                id: '1abcdefghijk',
+                name: 'Jhon',
+                lastName: 'Week',
+                phone: '235235235',
+                email: 'jhonw@hotmail.com'
             },
         ],
         classes: {
@@ -103,6 +116,54 @@ const tablaPreinscripcionDocente = {
         },
     }
 }
+//* MODAL PREINSCRIPCION DOCENTE ----------------------------------
+const formTablaPreinscripcionDocente = {
+    component: 'form',
+    viewMode: 'both',
+    settings: {
+      formsContent: formPreinscripcionDocenteModal,
+      buttons: ['guardar'],
+      formType: 'agregarDocentePreinscripcion',
+      tableCode: 'dataPreinscripcionDocente',
+      modalCode: 'dataPreinscripcionDocente',
+      isFromCustomTableActions: true,
+    }
+  }
+  const textsAndButtonsTablaPreinscripcionDocente = {
+    component: 'textsbuttons',
+    settings: {
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataPreinscripcionDocente',
+      isFromCustomTableActions: true,
+    }
+  }
+  const modalTablaPreinscripcionDocente = {
+    component: 'modal',
+    settings: {
+      modalCode: 'dataPreinscripcionDocente',
+      items: [
+        {        
+          childBlocks: [
+            { ...formTablaPreinscripcionDocente },
+            { ...textsAndButtonsTablaPreinscripcionDocente },
+          ]
+        }
+      ]
+    }
+  }
+  //* ------------------------------------------
 
 export const ANNUAL_CONVENTION_PREPARATION_CONFIG = {
     header: {
@@ -124,7 +185,8 @@ export const ANNUAL_CONVENTION_PREPARATION_CONFIG = {
                         childBlocks: [
                             { ...preinscripcionDocente },
                             { ...tablaPreinscripcionDocente },
-                            { ...btnGuardar }
+                            { ...btnGuardar },
+                            { ...modalTablaPreinscripcionDocente },
                         ]
                     },
                 ]

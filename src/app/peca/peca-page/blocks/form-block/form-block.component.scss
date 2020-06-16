@@ -153,6 +153,12 @@
             }
           }
 
+          &.extra-fields-modal {
+            .error-message {            
+              color: $red;
+              font-size: small;
+            }
+          }
           &.inside-modal {
             .input-container:not(:last-child) {
               margin-bottom: 0;
@@ -241,6 +247,11 @@
             width: 100%;
           }
         }
+      }
+
+      textarea{
+        resize: none;
+        height: 130px;
       }
 
       .form-control {
@@ -337,6 +348,10 @@
             .ng-select-container .ng-placeholder {
                 display: block;
             }
+          }
+
+          &.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+              display: none;
           }
 
           &.ng-select-filtered .ng-select-container .ng-placeholder {
