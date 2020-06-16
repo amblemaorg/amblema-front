@@ -471,7 +471,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.componentForm.patchValue( { [key]: data[key] } );
       }        
     });  
-    console.log(this.componentForm.value); 
+    // console.log(this.componentForm.value); 
     // this.componentForm.setValue(data); 
   }
 
