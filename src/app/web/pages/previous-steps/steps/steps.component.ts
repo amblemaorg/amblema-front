@@ -135,11 +135,11 @@ export class StepsComponent implements OnInit {
     // });
   }
 
-  // updateSteps(p_i) {    
-  //   this.store.dispatch(new UpdateStepsProgress(p_i)).subscribe(res=>{
-  //     this.enabledTabs = true;
-  //   });
-  // }
+  updateSteps(p_i) {    
+    this.store.dispatch(new UpdateStepsProgress(p_i)).subscribe(res=>{
+      this.enabledTabs = true;
+    });
+  }
   getResidenceInfo() {
     this.store.dispatch(new UpdateStates);
     this.store.dispatch(new UpdateMunicipalities);
