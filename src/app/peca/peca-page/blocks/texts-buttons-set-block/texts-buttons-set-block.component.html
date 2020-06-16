@@ -1,7 +1,7 @@
 <div class="texts-buttons-wrapper">
     <div class="texts-wrapper" 
         *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || (settings.subtitles && settings.subtitles.length>0)">
-        <div class="date-download-status d-flex justify-content-between">
+        <div class="date-download-status d-flex justify-content-between mt-1">
             <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6 class="left-sided-content">
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>

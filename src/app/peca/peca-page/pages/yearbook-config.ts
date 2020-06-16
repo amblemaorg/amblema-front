@@ -129,7 +129,7 @@ const tablaDiagnostico = {
         },
     }
 }
-const subGrafico= {
+const subGrafico = {
     component: 'textsbuttons',
     settings: {
         title: {
@@ -142,7 +142,7 @@ const graficos = {
     component: 'graphics',
     settings: {
         items: [
-            
+
         ]
     }
 }
@@ -211,6 +211,16 @@ const tablaLapso1 = {
     }
 }
 
+const btnEnviarSolicitud = {
+    component: 'textsbuttons',
+    settings: {
+        action: [{
+            type: 3,
+            name: 'Enviar Solicitud',
+        }],
+    }
+}
+
 export const YEARBOOK_CONFIG = {
     header: {
         title: "Anuario",
@@ -221,73 +231,91 @@ export const YEARBOOK_CONFIG = {
     },
     blocks: [
         {
-            component: 'accordion',
+            component: 'profiles',
             settings: {
                 items: [
                     {
-                        title: "Reseña histórica",
                         childBlocks: [
-                            { ...btnAddImgResanaHistorica },
-                            { ...dataResenaHistorica }
-                        ]
-                    },
-                    {
-                        title: "Padrino",
-                        childBlocks: [
-                            { ...btnAddImgPadrino },
-                            { ...dataPadrino },
-                        ]
-                    },
-                    {
-                        title: "Coordinador ",
-                        childBlocks: [
-                            { ...btnAddImgCoordinador },
-                            { ...dataCoordinador }
-                        ]
-                    },
-                    {
-                        title: "Escuela",
-                        childBlocks: [
-                            { ...btnAddImgEscuela },
-                            { ...dataEscuela }
-                        ]
-                    },
-                    {
-                        title: "Lapso 1",
-                        childBlocks: [
-                            { ...subDiagnostico },
-                            { ...tablaDiagnostico },
-                            { ...subGrafico },
-                            { ...graficos },
-                            { ...subtitleActividad },
-                            { ...ActividadesLapso1 },
-                            { ...dataActividad },
-                            { ...dataImgActividad },
-                            { ...tablaLapso1 },
-                            //*********************
-                            { ...ActividadesLapso1 },
-                            { ...dataActividad },
-                            { ...dataImgActividad },
-                            { ...tablaLapso1 },
-                            //***********************
-                            { ...ActividadesLapso1 },
-                            { ...dataActividad },
-                            { ...dataImgActividad },
-                            { ...tablaLapso1 }
-                        ]
-                    },
-                    {
-                        title: "Lapso 2",
-                        childBlocks: [
+                            {
+                                component: 'accordion',
+                                settings: {
+                                    items: [
+                                        {
+                                            title: "Reseña histórica",
+                                            childBlocks: [
+                                                { ...btnAddImgResanaHistorica },
+                                                { ...dataResenaHistorica }
+                                            ]
+                                        },
+                                        {
+                                            title: "Padrino",
+                                            childBlocks: [
+                                                { ...btnAddImgPadrino },
+                                                { ...dataPadrino },
+                                            ]
+                                        },
+                                        {
+                                            title: "Coordinador ",
+                                            childBlocks: [
+                                                { ...btnAddImgCoordinador },
+                                                { ...dataCoordinador }
+                                            ]
+                                        },
+                                        {
+                                            title: "Escuela",
+                                            childBlocks: [
+                                                { ...btnAddImgEscuela },
+                                                { ...dataEscuela }
+                                            ]
+                                        },
+                                        {
+                                            title: "Lapso 1",
+                                            childBlocks: [
+                                                { ...subDiagnostico },
+                                                { ...tablaDiagnostico },
+                                                { ...subGrafico },
+                                                { ...graficos },
+                                                { ...subtitleActividad },
+                                                //*********************
+                                                { ...ActividadesLapso1 },
+                                                { ...dataActividad },
+                                                { ...dataImgActividad },
+                                                { ...tablaLapso1 },
+                                                //*********************
+                                                { ...ActividadesLapso1 },
+                                                { ...dataActividad },
+                                                { ...dataImgActividad },
+                                                { ...tablaLapso1 },
+                                                //***********************
+                                                { ...ActividadesLapso1 },
+                                                { ...dataActividad },
+                                                { ...dataImgActividad },
+                                                { ...tablaLapso1 }
+                                            ]
+                                        },
+                                        {
+                                            title: "Lapso 2",
+                                            childBlocks: [
 
+                                            ]
+                                        },
+                                        {
+                                            title: "Lapso 3",
+                                            childBlocks: [
+
+                                            ]
+                                        },
+                                    ]
+                                }
+                            }
                         ]
                     },
                     {
-                        title: "Lapso 3",
                         childBlocks: [
-
+                            { ...btnEnviarSolicitud }
                         ]
-                    },
+                    }
+
                 ]
             },
         },
