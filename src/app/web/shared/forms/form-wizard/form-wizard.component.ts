@@ -1,19 +1,19 @@
-import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { isNullOrUndefined } from 'util';
-import { ToastrService } from 'ngx-toastr';
-import cloneDeep from 'lodash/cloneDeep';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { isNullOrUndefined } from "util";
+import { ToastrService } from "ngx-toastr";
+import cloneDeep from "lodash/cloneDeep";
+import { ReCaptchaV3Service } from "ng-recaptcha";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'web-form-wizard',
-  templateUrl: './form-wizard.component.html',
-  styleUrls: ['./form-wizard.component.scss']
+  selector: "web-form-wizard",
+  templateUrl: "./form-wizard.component.html",
+  styleUrls: ["./form-wizard.component.scss"],
 })
 export class FormWizardComponent implements OnInit, OnDestroy {
-  @Input()  formsContent: any;
-  @Input()  recaptchaAction: string = 'form_wizard';
+  @Input() formsContent: any;
+  @Input() recaptchaAction: string = "form_wizard";
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   stepItems: Array<any>;
   activeStepIndex: number;
@@ -29,7 +29,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.activeStepIndex = 0;
@@ -38,7 +38,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.fields = [];
     this.stepItems = cloneDeep(this.formsContent);
     this.stepItems.forEach((data, i) => {
-      const index = this.appendStepContent(this.stepItems[i]['data']);
+      const index = this.appendStepContent(this.stepItems[i]["data"]);
       const formGroupBuilt = this.buildFormGroupStep(this.stepsContent[index]);
       this.formWizard.push(formGroupBuilt);
     });
@@ -61,30 +61,30 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   private addIdentificationFieldsToStepContent(index: number, content: object): void {
-    Object.entries(content).map(field => {
+    Object.entries(content).map((field) => {
       const { 0: fieldName, 1: fieldProps } = { ...field };
-      if ( this.isFormControlTypeof(fieldName, 'identification') ) {
-        Object.entries(fieldProps.subfields).map(subfield => {
+      if (this.isFormControlTypeof(fieldName, "identification")) {
+        Object.entries(fieldProps.subfields).map((subfield) => {
           const { 0: subfieldType, 1: subfieldProps } = { ...subfield };
-          const subfieldName = subfieldProps['name'];
+          const subfieldName = subfieldProps["name"];
           this.stepsContent[index][subfieldName] = subfieldProps;
-        })
+        });
       }
-    })
+    });
   }
 
   private isFormControlTypeof(formControlName: string, formControlType: string): boolean {
     let isTypeof = false;
-    this.stepsContent.map(stepContent => {
+    this.stepsContent.map((stepContent) => {
       if (stepContent[formControlName]) {
         isTypeof = stepContent[formControlName].type === formControlType;
       }
-    })
+    });
     return isTypeof;
   }
 
   private buildFormGroupStep(stepContent: any): FormGroup {
-    const formControls = this.getFormGroupControls(stepContent)
+    const formControls = this.getFormGroupControls(stepContent);
     return this.fb.group(formControls);
   }
 
@@ -93,16 +93,19 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       (formControlsObj, formControlName) => {
         return {
           ...formControlsObj,
-          ...this.getFormControlProperty(formControlName, stepContent[formControlName])
-        }
+          ...this.getFormControlProperty(formControlName, stepContent[formControlName]),
+        };
       },
       {} // This is the initial formControlsObj
     );
-    return formControls
+    return formControls;
   }
 
-  private getFormControlProperty(name: string, params: { value: any, validations: object }): object {
-    let defaultValue = '';
+  private getFormControlProperty(
+    name: string,
+    params: { value: any; validations: object }
+  ): object {
+    let defaultValue = "";
     if (!isNullOrUndefined(params.value)) {
       defaultValue = params.value;
     }
@@ -110,11 +113,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   private getValidators(validations: object): Validators {
-    const fieldValidators = Object.keys(validations).map(validator => {
-      if (validator === 'required') {
+    const fieldValidators = Object.keys(validations).map((validator) => {
+      if (validator === "required") {
         return Validators[validator];
-      }
-      else {
+      } else {
         return Validators[validator](validations[validator]);
       }
     });
@@ -134,18 +136,15 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     if (this.isValid()) {
       this.recaptchaSubscription = this.recaptchaService
         .execute(this.recaptchaAction)
-        .subscribe(token => {
+        .subscribe((token) => {
           console.log(token);
           this.isSubmitting = true;
           this.submit.emit(this.dataToSubmit);
         });
-    }
-    else {
-      this.toastr.error(
-        'Uno o más campos del formulario son inválidos',
-        '',
-        { positionClass: 'toast-bottom-right' }
-      );
+    } else {
+      this.toastr.error("Uno o más campos del formulario son inválidos", "", {
+        positionClass: "toast-bottom-right",
+      });
     }
   }
 
@@ -173,33 +172,30 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   private checkStepOrFieldCondition(condition: any): boolean {
     if (
-      typeof condition == 'object'
-      && !isNullOrUndefined(this.dataToSubmit)
-      && !isNullOrUndefined(condition.value)
-      && !isNullOrUndefined(condition.formControlName)
-      && typeof condition.formControlName == 'string'
-      && this.dataToSubmit[condition.formControlName] !== condition.value
+      typeof condition == "object" &&
+      !isNullOrUndefined(this.dataToSubmit) &&
+      !isNullOrUndefined(condition.value) &&
+      !isNullOrUndefined(condition.formControlName) &&
+      typeof condition.formControlName == "string" &&
+      this.dataToSubmit[condition.formControlName] !== condition.value
     ) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
 
   private getFormGroupValues(form: FormGroup): object {
     const formDataValues = {};
-    Object.entries(form.value).map(field => {
+    Object.entries(form.value).map((field) => {
       // Destructuring array into variables with names
       const { 0: fieldProp, 1: fieldValue } = { ...field };
-      if (this.isFormControlTypeof(fieldProp, 'date')) {
+      if (this.isFormControlTypeof(fieldProp, "date")) {
         formDataValues[fieldProp] = this.dateStringToISOString(fieldValue);
-      }
-      else {
-        if (fieldProp.includes('subPrincipalEmail') && fieldValue == '') {
+      } else {
+        if (fieldProp.toLowerCase().includes("subprincipalemail") && fieldValue == "") {
           formDataValues[fieldProp] = null;
-        }
-        else {
+        } else {
           formDataValues[fieldProp] = fieldValue;
         }
       }
@@ -208,8 +204,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   private dateStringToISOString(value: any): string {
-    if (typeof value !== 'string' || value === '') {
-      return '';
+    if (typeof value !== "string" || value === "") {
+      return "";
     }
     const newDate = new Date(value);
     return newDate.toISOString();
@@ -224,36 +220,33 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         return validFlag && true;
       },
       true // Initial value for validFlag
-    )
+    );
   }
 
   private subscribeDependentFields() {
     this.stepsContent.map((stepContent, i) => {
-      Object.keys(stepContent).map(prop => {
+      Object.keys(stepContent).map((prop) => {
         if (
-          stepContent[prop].condition
-          && stepContent[prop].condition.formControlName
-          && stepContent[prop].condition.value
+          stepContent[prop].condition &&
+          stepContent[prop].condition.formControlName &&
+          stepContent[prop].condition.value
         ) {
           let conditionalFormControlName = stepContent[prop].condition.formControlName;
           let conditionalFormControl = this.getFormControlInFormWizard(conditionalFormControlName);
-          let dependentFormControl =  this.getFormControlInFormWizard(prop);
-          conditionalFormControl.valueChanges.subscribe(currentValue => {
-            if ( currentValue == stepContent[prop].condition.value )
-              dependentFormControl.enable();
-            else
-              dependentFormControl.disable();
-          })
+          let dependentFormControl = this.getFormControlInFormWizard(prop);
+          conditionalFormControl.valueChanges.subscribe((currentValue) => {
+            if (currentValue == stepContent[prop].condition.value) dependentFormControl.enable();
+            else dependentFormControl.disable();
+          });
         }
-      })
-    })
+      });
+    });
   }
 
   private getFormControlInFormWizard(name: string): FormControl {
     let formControl = null;
-    this.formWizard.map(formStep => {
-      if (formStep.controls[name])
-        formControl = formStep.controls[name]
+    this.formWizard.map((formStep) => {
+      if (formStep.controls[name]) formControl = formStep.controls[name];
     });
     return formControl;
   }
@@ -263,22 +256,20 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     step = this.validateStep(step);
     if (this.isStepWriteable(step)) {
       this.activeStepIndex = step;
-    }
-    else {
-      if (this.stepMovement(step) == 'next') {
+    } else {
+      if (this.stepMovement(step) == "next") {
         this.goToStep(step + 1);
-      }
-      else if (this.stepMovement(step) == 'prev') {
+      } else if (this.stepMovement(step) == "prev") {
         this.goToStep(step - 1);
       }
     }
   }
 
   private validateStep(step: number) {
-    if ( step < 0 ) {
+    if (step < 0) {
       step = 0;
     }
-    if ( step > this.getLastStepIndex() ) {
+    if (step > this.getLastStepIndex()) {
       step = this.getLastStepIndex();
     }
     return step;
@@ -286,21 +277,21 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   public getLastStepIndex(): number {
     let lastIndex = this.stepItems.length - 1;
-    while(!this.isStepWriteable(lastIndex) || lastIndex == 0) {
+    while (!this.isStepWriteable(lastIndex) || lastIndex == 0) {
       --lastIndex;
     }
     this.lastStepIndex = lastIndex;
-    return this.lastStepIndex
+    return this.lastStepIndex;
   }
 
   private stepMovement(step: number) {
-    return step > this.activeStepIndex ? 'next' : 'prev';
+    return step > this.activeStepIndex ? "next" : "prev";
   }
 
   public clear(): void {
     this.formWizard.map((wizardFormStep: FormGroup) => {
       wizardFormStep.reset(this.getFormControlsWithDefaultValue());
-    })
+    });
     this.activeStepIndex = 0;
     this.updateDataToSubmit();
   }
@@ -308,12 +299,12 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   private getFormControlsWithDefaultValue(): object {
     let formControls = {};
     this.stepsContent.map((stepContent, i) => {
-      Object.keys(stepContent).map(prop => {
-        if ( !isNullOrUndefined(stepContent[prop].value) ) {
+      Object.keys(stepContent).map((prop) => {
+        if (!isNullOrUndefined(stepContent[prop].value)) {
           formControls[prop] = stepContent[prop].value;
         }
       });
-    })
+    });
     return formControls;
   }
 
