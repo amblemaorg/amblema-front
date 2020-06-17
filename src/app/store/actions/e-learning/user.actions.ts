@@ -17,6 +17,7 @@ export interface UserStateModel {
   coins: number;
   coordinator_modules: CoordinatorModule[];
   name: string;
+  email: string;
   gender: string;
   user_id: string;
   image: string;

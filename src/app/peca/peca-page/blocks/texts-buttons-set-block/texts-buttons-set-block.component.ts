@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { PresentationalBlockComponent } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'buttons-set-block',
@@ -30,7 +31,15 @@ export class TextsButtonsSetBlockComponent
       placeholder: string;
       lista: any[];
     };
-    status: string;
+    selectGeneralStatus: {
+      text: string;
+      placeholder: string;
+      lista: any[];
+    };
+    status: {
+      text: string;
+      subText: string;
+    };
     // texts: {
     title: {
       aligning: string; // 'center' for center aligning, 'left' otherwise
@@ -49,6 +58,12 @@ export class TextsButtonsSetBlockComponent
     upload: any;
     download: any;
     btnGeneral: any;
+    inputAndBtns: {
+      input: string;
+      btn: string;
+      //textDesc: string;
+      titleInput: string;
+    }[];
     fetcherUrls: {
       delete: string;
     };
@@ -71,21 +86,26 @@ export class TextsButtonsSetBlockComponent
 
   currentSelected = null;
 
-  ngOnInit() {
-    this.globals.updateButtonDataEmitter.subscribe((data) => {
-      if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
-        if (data.whichData == 'table') this.dataTorF.table = data.table;
-        if (data.whichData == 'form') this.dataTorF.form = data.form;
+  private subscription: Subscription = new Subscription();
 
-        // console.log(this.dataTorF);
-      }
-    });
+  ngOnInit() {
+    this.subscription.add(
+      this.globals.updateButtonDataEmitter.subscribe((data) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
+          if (data.whichData == 'table') this.dataTorF.table = data.table;
+          if (data.whichData == 'form') this.dataTorF.form = data.form;
+
+          // console.log(this.dataTorF);
+        }
+      })
+    );
   }
   ngOnDestroy() {
     this.dataTorF = {
       table: null,
       form: null,
     };
+    this.subscription.unsubscribe();
   }
 
   setSettings(settings: any) {

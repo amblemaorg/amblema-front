@@ -76,7 +76,7 @@
             </button>
 
             <!-- ? GO LEARNING MODULES BUTTON -->
-            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" [routerLink]="['/previous-steps/modules']" 
+            <button *ngIf="step.goMods" class="btn btn-primary text-decoration-none py-2 px-4 mt-1" (click)="goToMods()" 
             [disabled]="(!isAdmin() && (compareMode() || curriculumPending) ) || !enableActions" [title]="isAdmin()? '' : (compareMode()?'':(curriculumPending? 'Aún no has aprobado el paso de currículo':'') )">
               Ir a los módulos
             </button>
@@ -162,7 +162,7 @@
           <div [id]="'toast'+i+'-'+mode" class="toast">
             <div class="toast-body">
               <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-              <p class="mb-0">Hubo un problema al conectar con el servidor, por favor intente más tarde.</p>              
+              <p class="mb-0">{{messageInToaster}}</p>              
             </div>
           </div>
         </div>

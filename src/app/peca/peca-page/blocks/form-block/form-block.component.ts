@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PresentationalBlockComponent } from '../page-block.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,13 +9,14 @@ import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'form-block',
   templateUrl: './form-block.component.html',
   styleUrls: ['./form-block.component.scss'],
 })
-export class FormBlockComponent implements PresentationalBlockComponent, OnInit {
+export class FormBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: 'presentational';
   component: string;
   settings: {
@@ -31,6 +32,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     data?: any; // data to fill all inputs
     dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
+    alwaysValidations?: boolean; // when imageGroup has extra fields (i.e. imageCargo) set this to true
     fetcherUrls: {
       // get: string;
       post: string;
@@ -40,6 +42,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
   };
+
+  private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
   fields: string[];
@@ -65,17 +69,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   }
 
   ngOnInit() {
-    this.componentForm.statusChanges.subscribe((val) => {
-      if (val === 'INVALID' || this.isDateNotOk()) this.btnUpdater(null);
-      else this.btnUpdater(this.componentForm.value);
-    });
+    this.subscription.add(
+      this.componentForm.statusChanges.subscribe((val) => {
+        if (val === 'INVALID' || this.isDateNotOk()) this.btnUpdater(null);
+        else this.btnUpdater(this.componentForm.value);
+      })
+    );
 
-    this.globals.showImageContainerEmitter.subscribe((code) => {
-      if (this.settings.buttonCode && this.settings.buttonCode == code)
-        this.settings.hideImgContainer = false;
-    });
+    this.subscription.add(
+      this.globals.showImageContainerEmitter.subscribe((code) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == code)
+          this.settings.hideImgContainer = false;
+      })
+    );
 
     this.setId();
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   btnUpdater(val) {
@@ -294,7 +305,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
 
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
-        this.settings.dataFromRow.data.newData = manageData.data;
+        this.settings.dataFromRow.data.newData = {
+          ...this.settings.dataFromRow.data.oldData,
+          ...manageData.data,
+        };
         this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
       } else {
         // is for adding in modal view
@@ -427,20 +441,27 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
   disableAddImgBtn() {
     return (
       (this.componentForm.controls['imageGroup'].get('imageDocente') &&
-        this.componentForm.controls['imageGroup'].get('imageDocente').value === '') ||
+        (this.componentForm.controls['imageGroup'].get('imageDocente').value === '' ||
+          !this.componentForm.controls['imageGroup'].get('imageDocente').value)) ||
       (this.componentForm.controls['imageGroup'].get('imageCargo') &&
         this.componentForm.controls['imageGroup'].get('imageCargo').value === '') ||
       (this.componentForm.controls['imageGroup'].get('imageDescription') &&
         this.componentForm.controls['imageGroup'].get('imageDescription').value === '') ||
-      this.componentForm.controls['imageGroup'].get('imageStatus').value === '' ||
-      !this.componentForm.controls['imageGroup'].get('imageSelected').value
+      (this.componentForm.controls['imageGroup'].get('imageStatus') &&
+        (this.componentForm.controls['imageGroup'].get('imageStatus').value === '' ||
+          !this.componentForm.controls['imageGroup'].get('imageStatus').value)) ||
+      (this.componentForm.controls['imageGroup'].get('imageSelected') &&
+        !this.componentForm.controls['imageGroup'].get('imageSelected').value)
     );
   }
   // shows image when some uploaded
   showImage(option: number) {
     switch (option) {
       case 1:
-        return this.componentForm.controls['imageGroup'].get('imageSelected').value;
+        return (
+          this.componentForm.controls['imageGroup'].get('imageSelected').value ||
+          this.componentForm.controls['imageGroup'].get('imageSrc').value
+        );
       case 2:
         return this.sanitizer.bypassSecurityTrustResourceUrl(
           this.componentForm.controls['imageGroup'].get('imageSrc').value
@@ -455,23 +476,53 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     this.componentForm.controls['imageGroup'].get('imageSrc').reset();
   }
   // method which sends image to the images table
-  addImage() {
+  addImage(addImg: boolean = true) {
     let imgGrp = this.componentForm.controls['imageGroup'];
     let imageObj = {
       code: this.settings.tableCode,
-      data: {
-        id: Math.random().toString(36).substring(2),
-        image: imgGrp.get('imageSelected').value.name,
-        description: imgGrp.get('imageDescription').value,
-        state: imgGrp.get('imageStatus').value,
-        status: 'En espera',
-        source: imgGrp.get('imageSrc').value,
-        imageSelected: imgGrp.get('imageSelected').value,
-      },
+      data: addImg
+        ? {
+            id: Math.random().toString(36).substring(2),
+            image: imgGrp.get('imageSelected').value.name,
+            description: imgGrp.get('imageDescription').value,
+            state: imgGrp.get('imageStatus').value,
+            status: 'En espera',
+            source: imgGrp.get('imageSrc').value,
+            imageSelected: imgGrp.get('imageSelected').value,
+          }
+        : {
+            id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+              .find((d) => {
+                return d.id === imgGrp.get('imageDocente').value;
+              })
+              .id.toString(),
+            name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(
+              (d) => {
+                return d.id === imgGrp.get('imageDocente').value;
+              }
+            ).name,
+            lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(
+              (d) => {
+                return d.id === imgGrp.get('imageDocente').value;
+              }
+            ).lastName,
+            cargo: imgGrp.get('imageCargo').value,
+            description: imgGrp.get('imageDescription').value,
+            addressState: this.settings.formsContent['imageGroup'].fields[
+              'imageDocente'
+            ].options.find((d) => {
+              return d.id === imgGrp.get('imageDocente').value;
+            }).addressState,
+            status: imgGrp.get('imageStatus').value,
+            source: imgGrp.get('imageSrc').value,
+            imageSelected: imgGrp.get('imageSelected').value,
+          },
       action: 'add',
     };
+
     this.globals.tableDataUpdater(imageObj);
-    this.componentForm.get('imageGroup').reset();
+    if (addImg) this.componentForm.get('imageGroup').reset();
+    else this.componentForm.reset();
   }
   //? -----------------------------------------------------------------------------------
 
@@ -526,5 +577,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit 
     });
     // console.log(this.componentForm.value);
     // this.componentForm.setValue(data);
+  }
+
+  //? turning imageGroup fields into array
+  imageFieldsArr(fields) {
+    return Object.keys(fields);
   }
 }

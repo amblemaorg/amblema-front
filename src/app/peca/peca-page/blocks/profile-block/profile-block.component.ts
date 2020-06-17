@@ -75,6 +75,8 @@ export class ProfileBlockComponent implements StructuralBlockComponent, OnInit, 
           settings = { settings: block.settings, factory: this.factory };
         if (block.component == 'tabs')
           settings = { settings: block.settings, factory: this.factory };
+        if (block.component == 'accordion')
+          settings = { settings: block.settings, factory: this.factory };
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
         pageBlockComponent.instance.setSettings(settings);

@@ -31,7 +31,10 @@ const dateAndStatus = {
             text: 'Fecha de la actividad especial:',
             fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired },
         },
-        status: 'pendiente',
+        status: {
+            text: 'Estatus',
+            subText: 'Pendiente'
+        },
         action: [
             {
                 type: 6,
@@ -105,10 +108,23 @@ const specialActivityTable = {
         },
     }
 }
+const labelTotal = {
+    component: 'textsbuttons',
+    settings: {
+        dateOrtext: {
+            
+        },
+        status: {
+            text: 'Total',
+            subText: '1500'
+        }
+  }
+}
 
 //* MODAL ACTIVIDAD ESPECIAL ----------------------------------
 const formSpecialActivityTable = {
     component: 'form',
+    viewMode: 'both',
     settings: {
       formsContent: formSpecialActivityTableModal,
       buttons: ['guardar'],
@@ -167,6 +183,7 @@ export const SPECIAL_ACTIVITY_CONFIG = {
                         childBlocks: [
                             { ...dateAndStatus },                            
                             { ...specialActivityTable },
+                            { ...labelTotal },
                             { ...textsAndButtons },
                             { ...modalSpecialActivityTable },
                         ]
