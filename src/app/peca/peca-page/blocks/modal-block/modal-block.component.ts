@@ -1,33 +1,47 @@
-import { Component, OnInit, ViewChildren, ViewContainerRef, QueryList, Inject, PLATFORM_ID } from '@angular/core';
-import { PageBlockComponent, StructuralItem, StructuralBlockComponent } from '../page-block.component';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  ViewContainerRef,
+  QueryList,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import {
+  PageBlockComponent,
+  StructuralItem,
+  StructuralBlockComponent,
+} from '../page-block.component';
 import { PageBlockFactory } from '../page-block-factory';
 import { isPlatformBrowser } from '@angular/common';
 import * as $ from 'jquery';
 import { GlobalService } from '../../../../services/global.service';
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'modal-block',
   template: `
-    <div class="modal fade" [id]="settings.modalCode+'-modal'">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div *ngFor="let item of settings.items; index as i">
-                        <ng-template #modalContainer></ng-template>
-                    </div>                 
-                </div>    
+    <div class="modal fade" [id]="settings.modalCode + '-modal'">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let item of settings.items; index as i">
+              <ng-template #modalContainer></ng-template>
             </div>
+          </div>
         </div>
+      </div>
     </div>
   `,
-  styleUrls: ['./modal-block.component.scss']
+  styleUrls: ['./modal-block.component.scss'],
 })
 export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
-  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<ViewContainerRef>;
+  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<
+    ViewContainerRef
+  >;
   factory: PageBlockFactory;
 
   type: 'structural';
@@ -47,41 +61,42 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
   }
 
   ngOnInit() {
-    this.globals.showModalEmitter.subscribe(data => {
-      
+    this.globals.showModalEmitter.subscribe((data) => {
       if (this.settings.modalCode == data.code && this.isBrowser) {
+        let data_from_table =
+          data.action == 'add'
+            ? null
+            : data.action == 'delete'
+            ? data.data.oldData
+            : this.settings.isFromImgContainer
+            ? {
+                imageGroup: {
+                  imageDescription: data.data.oldData.description,
+                  imageStatus: data.data.oldData.state ? data.data.oldData.state : null,
+                  imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
+                  imageSelected: data.data.dataCopyData.imageSelected
+                    ? data.data.dataCopyData.imageSelected
+                    : null,
+                },
+              }
+            : data.data.oldData;
 
-        let data_from_table = data.action=="add"? null :
-                data.action=="delete"? data.data.oldData : 
-                this.settings.isFromImgContainer? 
-                  {
-                    imageGroup: {
-                      imageDescription: data.data.oldData.description,
-                      imageStatus: data.data.oldData.state? data.data.oldData.state:null,
-                      imageSrc: data.data.oldData.source? data.data.oldData.source:null,
-                      imageSelected: data.data.dataCopyData.imageSelected? data.data.dataCopyData.imageSelected:null,
-                    }
-                  } 
-                  : data.data.oldData;      
-
-        this.instantiateChildBlocks( data.component, [data_from_table, data] );
+        this.instantiateChildBlocks(data.component, [data_from_table, data]);
         $(`#${data.code}-modal`).modal('show');
-
       }
     });
 
-    this.globals.hideModalEmitter.subscribe(code => {
+    this.globals.hideModalEmitter.subscribe((code) => {
       if (this.settings.modalCode == code && this.isBrowser) {
-        $(`#${code}-modal`).modal('hide');     
+        $(`#${code}-modal`).modal('hide');
       }
     });
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-        if (this.settings.items)
-            this.instantiateChildBlocks();
-    })
+      if (this.settings.items) this.instantiateChildBlocks();
+    });
   }
 
   public setSettings(settings: any) {
@@ -89,21 +104,22 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit {
     this.factory = settings.factory ? settings.factory : {};
   }
 
-  public instantiateChildBlocks(componentType: string = "none", data: any = null) {    
+  public instantiateChildBlocks(componentType: string = 'none', data: any = null) {
+    let blockInstances = new Map<string, PageBlockComponent>();
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
-      item.childBlocks.map(block => {    
+      item.childBlocks.map((block, j) => {
         if (block.component === componentType) {
-          if (block.component === "form")
-            block.settings['data'] = data[0];     
+          if (block.component === 'form') block.settings['data'] = data[0];
           block.settings['dataFromRow'] = data[1];
           const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
           const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
           pageBlockComponent.instance.setSettings(block.settings);
-        }             
-      });   
-    })
+          blockInstances.set(block.name || `modal${i}block${j}`, pageBlockComponent.instance);
+        }
+      });
+    });
+    this.globals.createdBlockInstances(blockInstances);
   }
-
 }

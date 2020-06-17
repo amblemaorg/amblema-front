@@ -1,16 +1,16 @@
-import { State, Action, StateContext, Selector } from "@ngxs/store";
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import {
   SetUser,
   ClearPecaState,
   SetSelectedProject,
-  GetPecaContent,
-} from "../../actions/peca/peca.actions";
-import { PecaStateModel } from "./peca.model";
-import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
-import { environment } from "src/environments/environment";
+  FetchPecaContent,
+} from '../../actions/peca/peca.actions';
+import { PecaStateModel } from './peca.model';
+import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
+import { environment } from 'src/environments/environment';
 
 @State<PecaStateModel>({
-  name: "peca",
+  name: 'peca',
   defaults: {
     selectedProject: null,
     content: {},
@@ -34,9 +34,9 @@ export class PecaState {
     patchState({ selectedProject: payload });
   }
 
-  @Action(GetPecaContent)
-  getPecaContent({ patchState }: StateContext<PecaStateModel>, { payload }: GetPecaContent) {
-    this.apiService.setResourcePath("pecaprojects/" + payload);
+  @Action(FetchPecaContent)
+  fetchPecaContent({ patchState }: StateContext<PecaStateModel>, { payload }: FetchPecaContent) {
+    this.apiService.setResourcePath('pecaprojects/' + payload);
 
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
@@ -69,5 +69,15 @@ export class PecaState {
   @Selector()
   static getActivePecaContent(state: any) {
     return { activePecaContent: state.content };
+  }
+
+  @Selector()
+  static getPecaSchoolData(state: any) {
+    return {
+      school: {
+        ...state.content.school,
+        id: state.selectedProject.school.id,
+      },
+    };
   }
 }

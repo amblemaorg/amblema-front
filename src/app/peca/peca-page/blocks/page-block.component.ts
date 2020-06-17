@@ -1,8 +1,11 @@
 export interface PageBlockComponent {
   type: 'structural' | 'presentational';
+  name?: string;
   component: string;
   settings: any;
   setSettings(settings: any): void;
+  setData?(data: any): void;
+  setFetcherUrls?(urls: object): void;
 }
 
 export interface StructuralBlockComponent extends PageBlockComponent {
