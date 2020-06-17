@@ -19,75 +19,75 @@ import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-p
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: PecaComponent,
     children: [
       {
-        path: "taller-inicial",
-        component: InitialWorkshopPageComponent
+        path: 'taller-inicial',
+        component: InitialWorkshopPageComponent,
       },
       {
-        path: "datos-escuela",
-        component: SchoolDataPageComponent
+        path: 'datos-escuela',
+        component: SchoolDataPageComponent,
       },
       {
-        path: "diagnostico-inicial",
-        component: InitialDiagnosticPageComponent
+        path: 'diagnostico-inicial',
+        component: InitialDiagnosticPageComponent,
       },
       {
-        path: "perfil-usuario",
-        component: ProfilePageComponent
+        path: 'perfil-usuario',
+        component: ProfilePageComponent,
       },
       {
-        path: "planificacion-lapso",
-        component: SchedulingPlanningPageComponent
+        path: 'lapso/:lapsoNumber/planificacion-lapso',
+        component: SchedulingPlanningPageComponent,
       },
       {
-        path: "amblemoneda-page",
-        component: AmblemonedaPageComponent
+        path: 'lapso/:lapsoNumber/amblemoneda-page',
+        component: AmblemonedaPageComponent,
       },
       {
-        path: "convencion-anual",
-        component: AnnualConventionPageComponent
+        path: 'lapso/:lapsoNumber/convencion-anual',
+        component: AnnualConventionPageComponent,
       },
       {
-        path: "preparacion-convencion-anual",
-        component: AnnualConventionPreparationPageComponent
+        path: 'lapso/:lapsoNumber/preparacion-convencion-anual',
+        component: AnnualConventionPreparationPageComponent,
       },
       {
-        path: "actividad-especial",
-        component: SpecialActivityPageComponent
+        path: 'lapso/:lapsoNumber/actividad-especial',
+        component: SpecialActivityPageComponent,
       },
       {
-        path: 'olimpiadas-matematicas',
-        component: MathOlympicsPageComponent
+        path: 'lapso/:lapsoNumber/olimpiadas-matematicas',
+        component: MathOlympicsPageComponent,
       },
       {
         path: 'testimonio-docentes',
-        component: TeacherTestimonyPageComponent
+        component: TeacherTestimonyPageComponent,
       },
       {
         path: 'proyecto-ambiental',
-        component: EnvironmentalProjectPageComponent
+        component: EnvironmentalProjectPageComponent,
       },
       {
         path: 'estrategia-seguimiento',
-        component: MonitoringStrategyPageComponent
+        component: MonitoringStrategyPageComponent,
       },
       {
         path: 'agenda-page',
-        component: SchedulePageComponent
+        component: SchedulePageComponent,
       },
       {
         path: 'imagenes-escuela',
-        component: SchoolPicturesPageComponent
-      }
-    ]
-  }
+        component: SchoolPicturesPageComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PecaRoutingModule {}
