@@ -1,6 +1,6 @@
 <div class="module-detail-container">
     <div class="go-back-btn">
-        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" [routerLink]="['/previous-steps/modules']"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
+        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" (click)="goToMods()"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
     </div>
     <section class="main-info d-flex flex-wrap">
         <div class="col-lg-12 px-0 mb-3 module-title">

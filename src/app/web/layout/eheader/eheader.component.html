@@ -2,12 +2,18 @@
     <div class="d-flex header-first-row flex-wrap pt-2" [class.no-under]="(user_type$ | async) != '2'">
         <h2 class="main-name ml-3 mr-auto mb-0 font-weight-bold">AmbLeMa</h2>
 
-        <div class="avatar-container media p-3 d-flex align-items-center">
-            <img [src]="(userBrief$ | async).image ? (userBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(userBrief$ | async).name" class="mr-2 rounded-circle">
-            <div class="media-body">
-                <h4 class="mb-0 name font-weight-bold">{{ (userBrief$ | async).name }}</h4>
+        <div class="dropdown">
+            <div class="avatar-container media p-3 d-flex align-items-center" data-toggle="dropdown">
+                <img [src]="(userBrief$ | async).image ? (userBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(userBrief$ | async).name" class="mr-2 rounded-circle">
+                <div class="media-body">
+                    <h4 class="mb-0 name font-weight-bold">{{ (userBrief$ | async).name }}</h4>
+                </div>
             </div>
-        </div>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="goToProfile()">Perfil</a>
+                <a class="dropdown-item" href="#">Salir</a>
+            </div>
+        </div>        
     </div>
 
     <p *ngIf="(user_type$ | async) == '2'" class="user-info px-3">

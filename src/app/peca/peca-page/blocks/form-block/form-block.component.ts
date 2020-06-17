@@ -382,7 +382,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   showImage(option: number) {
     switch (option) {
       case 1:
-        return this.componentForm.controls['imageGroup'].get('imageSelected').value;
+        return this.componentForm.controls['imageGroup'].get('imageSelected').value || this.componentForm.controls['imageGroup'].get('imageSrc').value;
       case 2:
         return this.sanitizer.bypassSecurityTrustResourceUrl(this.componentForm.controls['imageGroup'].get('imageSrc').value);    
       default:

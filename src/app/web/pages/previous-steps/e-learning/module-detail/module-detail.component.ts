@@ -64,6 +64,9 @@ export class ModuleDetailComponent implements OnInit {
   isPortrait = true;
   isLandscapeCurrent = false;
   isValidating:boolean;
+  projectId = '';
+  user_type = '';
+  user_id = '';
 
   constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
               private route: ActivatedRoute, private router: Router) { 
@@ -84,16 +87,29 @@ export class ModuleDetailComponent implements OnInit {
       updatedAt: "",
     };
   }
-
+  
   ngOnInit() {
     this.module_id = this.route.snapshot.params.id;
+
+    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
+      this.projectId = this.route.snapshot.params.idProject;
+      this.user_type = this.route.snapshot.params.userType;
+      this.user_id = this.route.snapshot.params.idUser;
+    }
+    else if (this.route.snapshot.children.length>0) {
+      if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
+            this.projectId = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject;  
+            this.user_type = this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType;
+            this.user_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser;
+      }
+    }
 
     this.moduleNum = this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(this.module_id) + 1;
     this.checkApprove(this.module_id);
 
     this.coorId$.subscribe(id_ => {
       this.current_coor_id = id_;
-      this.moduleService.actualUser = {user:id_,type:2}//!remove
     })
 
     this.userType$.subscribe(res => {
@@ -174,13 +190,13 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
-            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
             this.warningBtn.nativeElement.click(); // opening warning modal
           } 
         } else {
           if (!wrong) {
             this.completedModule = true;
-            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2}); //! THIS IS TEMPORARY
+            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
             el.click(); // opening success modal
           }
         }        
@@ -293,6 +309,13 @@ export class ModuleDetailComponent implements OnInit {
       let nvpth = '/previous-steps/module-detail/'+this.nextModuleId;
       this.router.navigate([nvpth]);
     });
+  }
+
+  goToMods() {
+    this.router.navigate([
+      "previous-steps/modules",
+      { idProject: this.projectId, userType: this.user_type, idUser: this.user_id }
+    ]);
   }
 
 }
