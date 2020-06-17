@@ -16,7 +16,7 @@ import { EnvironmentalProjectPageComponent } from './peca-page/pages/environment
 import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component';
 import { SchedulePageComponent } from './peca-page/pages/schedule-page.component';
 import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-page.component';
-
+import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -81,6 +81,10 @@ const routes: Routes = [
       {
         path: 'imagenes-escuela',
         component: SchoolPicturesPageComponent,
+      },
+      {
+        path: 'anuario-page',
+        component: YearbookPageComponent,
       },
     ],
   },

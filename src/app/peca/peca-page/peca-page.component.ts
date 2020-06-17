@@ -9,7 +9,7 @@ import { PageBlockComponent } from './blocks/page-block.component';
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
-  header: { title: string };
+  header: { title: string; download: any };
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 

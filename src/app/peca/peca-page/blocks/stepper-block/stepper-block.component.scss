@@ -69,4 +69,11 @@
     border-color: $blue;
     color: #ffffff;
   }
+
+  @media (max-width: 576px){
+    .nb-theme-default nb-stepper.horizontal .header .step {
+      width: 0rem;
+      margin: 0 0rem;
+  }
+  }
 }

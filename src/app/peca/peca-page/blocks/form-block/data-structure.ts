@@ -128,6 +128,33 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         subtotal: cf.get('subtotal').value,
       };
       break;
+    case 'docenteTestimonioUpdate': // for Testimonio Docente view table
+      data.data = {
+        cargo: cf.controls['imageGroup'].get('imageCargo').value,
+        description: cf.controls['imageGroup'].get('imageDescription').value,
+        status: cf.controls['imageGroup'].get('imageStatus').value,
+        source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value
+          : null,
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value
+          : null,
+      };
+      break;
+    case 'agregarImagenEscuela': // for Agregar Fotos Escuela view
+      data.data = {
+        image: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value.name
+          : null,
+        description: cf.controls['imageGroup'].get('imageDescription').value,
+        source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value
+          : null,
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value
+          : null,
+      };
+      break;
 
     default:
       break;

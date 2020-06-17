@@ -13,6 +13,7 @@ form {
     @include mediabreak(large,portrait) { @include form-mix; }    
 
     h6 {
+        color: $blue;
         font-weight: bold;  
         margin-right: auto;     
         @include mediabreak(large,landscape) { width: 100%; margin-bottom: 1rem; } 

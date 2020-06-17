@@ -70,8 +70,8 @@ const registroTallerInicial = {
         description: 'descripcion 1',
         state: '1',
         status: 'Aprobado',
-        source: null,
-        imageSelected: null,
+        source: 'https://us.123rf.com/450wm/kchung/kchung1610/kchung161001155/64507708-futura-prueba-escrita-a-mano-escritura-de-la-mano-a-bordo-transparente-foto.jpg?ver=6',
+        imageSelected: { name: 'imagen prueba' },
       },
       {
         id: '2abcdefghijk',

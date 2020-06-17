@@ -2,6 +2,7 @@ export interface PageBlockComponent {
   type: 'structural' | 'presentational';
   name?: string;
   component: string;
+  viewMode?: string; // view, edit, both
   settings: any;
   setSettings(settings: any): void;
   setData?(data: any): void;

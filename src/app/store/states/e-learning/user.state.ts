@@ -9,6 +9,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
       coins: 0,
       coordinator_modules: [],
       name: '',
+      email: '',
       gender: '',
       user_id: '',
       image: '',
@@ -37,7 +38,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
     }
     @Selector()
     static user_brief(state: UserStateModel) {
-      return {name:state.name, gender:state.gender, image:state.image, userType: state.userType};
+      return {name:state.name, email:state.email, gender:state.gender, image:state.image, userType:state.userType, userId:state.user_id};
     }
     @Selector()
     static user_id(state: UserStateModel) {
@@ -69,6 +70,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
             ...state,
             coins: user.nCoins,
             name: user.name,
+            email: user.email,
             gender: user.gender? user.gender:null,
             user_id: user.id,
             image: user.image? user.image:null,

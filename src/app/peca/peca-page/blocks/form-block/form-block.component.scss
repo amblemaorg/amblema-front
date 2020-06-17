@@ -153,6 +153,12 @@
             }
           }
 
+          &.extra-fields-modal {
+            .error-message {            
+              color: $red;
+              font-size: small;
+            }
+          }
           &.inside-modal {
             .input-container:not(:last-child) {
               margin-bottom: 0;
@@ -241,6 +247,11 @@
             width: 100%;
           }
         }
+      }
+
+      textarea{
+        resize: none;
+        height: 130px;
       }
 
       .form-control {
@@ -392,6 +403,12 @@
         &.one-row-form-btn-container {
           width: 14%;
           text-align: right;
+        }
+        &.no-fields {
+          width: auto;
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
         }
         
         .submit-btn, 

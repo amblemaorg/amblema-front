@@ -213,14 +213,17 @@ export class GeneralStepsComponent implements OnInit {
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
-    let formDataStatus = new FormData(); 
+    // let formDataStatus = new FormData(); 
+    let jsonDataStatus = { status: null};
     let isCancel = false;
     if (step.status!="1" && step.approvalType=="3") {
-      formDataStatus.append('status', '4');   
+      // formDataStatus.append('status', '4');
+      jsonDataStatus.status = '4';   
       isCancel = true;   
     }
 
-    this.stepsService.updateRequestApproval(id,isCancel?formDataStatus:formData,isCancel).subscribe(res=>{
+    // this.stepsService.updateRequestApproval(id,isCancel?formDataStatus:formData,isCancel).subscribe(res=>{
+    this.stepsService.updateRequestApproval(id,isCancel?jsonDataStatus:formData,isCancel).subscribe(res=>{
       if(step.status=="1") step.status = (step.hasUpload)? "2": step.approvalType=="1"? (step.status=="1"?"2":"1"): "1";
       else step.status = "1"; // this is not reached by checklist btn
 
@@ -232,16 +235,29 @@ export class GeneralStepsComponent implements OnInit {
     });
   }
   //? -----------------------------------------------------------------------------------------------------------------
-
-  toasterMeth(i,m) {
+  messageInToaster = 'Problema con el servidor.';
+  toasterMeth(i,m, error = null) {
     if (this.isBrowser) {
+      if (error) this.messageInToaster = error;
       $(`#toast${i}-${m}`).toast({delay: 5000});
       $(`#toast${i}-${m}`).toast('show');
     }
   }
 
   callToaster(e) {
-    this.toasterMeth(e.i,e.m);
+    let errorMessage = '';
+    switch (e.messageType) {
+      case 'code':
+        errorMessage = 'La escuela que intentas registrar ya se encuentra registrada.';
+        break;
+      case 'email':
+        errorMessage = 'El correo ingresado ya se encuentra registrado.';
+          break;
+      default:
+        errorMessage = 'Hubo un problema al conectar con el servidor, por favor intente más tarde.';
+        break;
+    }
+    this.toasterMeth(e.i,e.m,errorMessage);
   }
 
   // if there ares everal steps that send information, this method handles that
@@ -267,6 +283,10 @@ export class GeneralStepsComponent implements OnInit {
     // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
     if (!this.globals.validateDate(e,'greater',true)) step.date = this.globals.dateStringToISOString(e.target.value);
     else step.date = null;
+  }
+
+  goToMods() {
+    this.stepsService.goToModules();
   }
 
 }

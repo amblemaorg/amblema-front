@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
@@ -14,9 +14,18 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class StepsService {
-  baseUrl = environment.baseUrl;  
+  baseUrl = environment.baseUrl;
+  @Output() enableTab:EventEmitter<boolean> = new EventEmitter();
+  @Output() goToMods:EventEmitter<any> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
+
+  enableTabMethod(bool) {
+    this.enableTab.emit(bool);
+  }
+  goToModules() {
+    this.goToMods.emit(null);
+  }
 
   getSteps (proj_id): Observable<Project> {
     return this.http.get<Project>(this.baseUrl + `projects/${proj_id}`)
