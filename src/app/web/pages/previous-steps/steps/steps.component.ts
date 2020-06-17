@@ -7,7 +7,7 @@ import { Step } from '../../../../models/steps/previous-steps.model';
 import { UpdateStepsProgress } from '../../../../store/actions/steps/project.actions';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { UProject } from '../../../../models/steps/learning-modules.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 
@@ -23,6 +23,8 @@ export class StepsComponent implements OnInit {
   activeStep = 0;
   curriculumPending = false;
   project_id = "";
+  user_id = "";
+  user_type = "";
 
   canOrganizationConfirm:boolean = true; // approval button which confirms to create PECA
 
@@ -42,16 +44,27 @@ export class StepsComponent implements OnInit {
   coordinatorSteps = [];
   schoolSteps = [];
 
-  constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute) { }
+  constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.stepsService.enableTab.subscribe(res => {
+      this.enabledTabs = res;
+    });
+    this.stepsService.goToMods.subscribe(res => {
+      this.goToModules();
+    });
+
     this.getResidenceInfo();
     if (!this.isTest) { 
       //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
-      let pjId = (this.route.snapshot.params && this.route.snapshot.params.project)? 
-        this.route.snapshot.params.project : '5e853175164bc53ac50ff5fe'; 
+      let pjId = (this.route.snapshot.params && this.route.snapshot.params.idProject)? 
+        this.route.snapshot.params.idProject : '';
+      if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
+        this.user_id = this.route.snapshot.params.idUser;
+        this.user_type = this.route.snapshot.params.userType;
+      }
       //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
-      this.updateSteps(pjId);
+      // this.updateSteps(pjId);
 
       this.project_steps$.subscribe(res => {           
         this.project_id = pjId;
@@ -153,6 +166,13 @@ export class StepsComponent implements OnInit {
     });
 
     return enable;
+  }
+
+  goToModules() {
+    this.router.navigate([
+      "previous-steps/modules",
+      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
+    ]);
   }
 
 }

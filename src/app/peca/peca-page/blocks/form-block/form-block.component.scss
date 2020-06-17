@@ -404,6 +404,12 @@
           width: 14%;
           text-align: right;
         }
+        &.no-fields {
+          width: auto;
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
+        }
         
         .submit-btn, 
         .add-img-button {

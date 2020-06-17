@@ -231,6 +231,7 @@
               </div>
 
               <div 
+                *ngIf="imageFieldsArr(settings.formsContent[field].fields).length>0"
                 class="image-fields d-flex" 
                 [ngClass]="{
                   'flex-column justify-content-center': !settings.alwaysValidations,
@@ -281,7 +282,11 @@
                 </ng-container>
               </div>  
 
-              <div *ngIf="!settings.isFromCustomTableActions" class="add-img-btn">
+              <div 
+                *ngIf="!settings.isFromCustomTableActions" 
+                class="add-img-btn" 
+                [class.no-fields]="imageFieldsArr(settings.formsContent[field].fields).length==0"
+              >
                 <ng-container *ngIf="!settings.formsContent[field].fields['imageDocente']; else notAddImg">
                   <button 
                     type="button" 
