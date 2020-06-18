@@ -1,34 +1,49 @@
-import { Component, OnInit, ViewChildren, ViewContainerRef, QueryList, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
-import { PageBlockComponent, StructuralItem, StructuralBlockComponent } from '../page-block.component';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  ViewContainerRef,
+  QueryList,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
+import {
+  PageBlockComponent,
+  StructuralItem,
+  StructuralBlockComponent,
+} from '../page-block.component';
 import { PageBlockFactory } from '../page-block-factory';
 import { isPlatformBrowser } from '@angular/common';
 import * as $ from 'jquery';
 import { GlobalService } from '../../../../services/global.service';
 import { Subscription } from 'rxjs';
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'modal-block',
   template: `
-    <div class="modal fade" [id]="settings.modalCode+'-modal'">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div *ngFor="let item of settings.items; index as i">
-                        <ng-template #modalContainer></ng-template>
-                    </div>                 
-                </div>    
+    <div class="modal fade" [id]="settings.modalCode + '-modal'">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let item of settings.items; index as i">
+              <ng-template #modalContainer></ng-template>
             </div>
+          </div>
         </div>
+      </div>
     </div>
   `,
-  styleUrls: ['./modal-block.component.scss']
+  styleUrls: ['./modal-block.component.scss'],
 })
 export class ModalBlockComponent implements StructuralBlockComponent, OnInit, OnDestroy {
-  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<ViewContainerRef>;
+  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<
+    ViewContainerRef
+  >;
   factory: PageBlockFactory;
 
   type: 'structural';
@@ -52,52 +67,66 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
 
   ngOnInit() {
     this.subscription.add(
-      this.globals.showModalEmitter.subscribe(data => {      
+      this.globals.showModalEmitter.subscribe((data) => {
         if (this.settings.modalCode == data.code && this.isBrowser) {
-          const image_group = this.settings.isFromImgContainer && data.action!="add" && data.action!="delete"? {
-            imageDescription: data.data.oldData.description,          
-            imageSrc: data.data.oldData.source? data.data.oldData.source:null,
-            imageSelected: data.data.dataCopyData.imageSelected? data.data.dataCopyData.imageSelected:null,
-          } : {};
-          
-          let data_from_table = data.action=="add"? null :
-                  data.action=="delete"? data.data.oldData : 
-                  this.settings.isFromImgContainer? 
-                    {
-                      imageGroup: data.data.oldData.state? { 
-                        ...image_group, 
-                        imageStatus: data.data.oldData.state, 
-                      } : { ...image_group }
-                    } : 
-                    this.settings.isFromImgPlusContainer? 
-                    (data.action=="view"? {
-                        name: data.data.oldData.name,
-                        lastName: data.data.oldData.lastName,
-                        cargo: data.data.oldData.cargo,
-                        description: data.data.oldData.description,
-                        addressState: data.data.oldData.addressState,
-                        status: data.data.oldData.status,
-                    } : {
-                      imageGroup: {
-                        imageCargo: data.data.oldData.cargo,
-                        imageDescription: data.data.oldData.description,
-                        imageStatus: data.data.oldData.status? data.data.oldData.status:null,
-                        imageSrc: data.data.oldData.source? data.data.oldData.source:null,
-                        imageSelected: data.data.dataCopyData.imageSelected? data.data.dataCopyData.imageSelected:null,
+          const image_group =
+            this.settings.isFromImgContainer && data.action != 'add' && data.action != 'delete'
+              ? {
+                  imageDescription: data.data.oldData.description,
+                  imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
+                  imageSelected: data.data.dataCopyData.imageSelected
+                    ? data.data.dataCopyData.imageSelected
+                    : null,
+                }
+              : {};
+
+          let data_from_table =
+            data.action == 'add'
+              ? null
+              : data.action == 'delete'
+              ? data.data.oldData
+              : this.settings.isFromImgContainer
+              ? {
+                  imageGroup: data.data.oldData.state
+                    ? {
+                        ...image_group,
+                        imageStatus: data.data.oldData.state,
                       }
-                    }) : data.data.oldData;      
-  
-          this.instantiateChildBlocks( data, [data_from_table, data] );
+                    : { ...image_group },
+                }
+              : this.settings.isFromImgPlusContainer
+              ? data.action == 'view'
+                ? {
+                    name: data.data.oldData.name,
+                    lastName: data.data.oldData.lastName,
+                    cargo: data.data.oldData.cargo,
+                    description: data.data.oldData.description,
+                    addressState: data.data.oldData.addressState,
+                    status: data.data.oldData.status,
+                  }
+                : {
+                    imageGroup: {
+                      imageCargo: data.data.oldData.cargo,
+                      imageDescription: data.data.oldData.description,
+                      imageStatus: data.data.oldData.status ? data.data.oldData.status : null,
+                      imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
+                      imageSelected: data.data.dataCopyData.imageSelected
+                        ? data.data.dataCopyData.imageSelected
+                        : null,
+                    },
+                  }
+              : data.data.oldData;
+
+          this.instantiateChildBlocks(data, [data_from_table, data]);
           $(`#${data.code}-modal`).modal('show');
-  
         }
       })
-    );    
+    );
 
     this.subscription.add(
-      this.globals.hideModalEmitter.subscribe(code => {
+      this.globals.hideModalEmitter.subscribe((code) => {
         if (this.settings.modalCode == code && this.isBrowser) {
-          $(`#${code}-modal`).modal('hide');     
+          $(`#${code}-modal`).modal('hide');
         }
       })
     );
@@ -108,9 +137,8 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-        if (this.settings.items)
-            this.instantiateChildBlocks();
-    })
+      if (this.settings.items) this.instantiateChildBlocks();
+    });
   }
 
   public setSettings(settings: any) {
@@ -119,32 +147,43 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   }
 
   public instantiateChildBlocks(dataAttrs: any = null, data: any = null) {
+    let blockInstances = new Map<string, PageBlockComponent>();
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
-      if (dataAttrs && dataAttrs.action=="view") {
-        item.childBlocks.map(block => {
-          if (block.viewMode && block.viewMode!="edit")
-            this.setChildBlock(block, data, container);             
-        });  
-      } else {
-        item.childBlocks.map(block => {
-          if (dataAttrs && block.component === dataAttrs.component && block.viewMode && block.viewMode!="view")
-            this.setChildBlock(block, data, container);
-          else if (dataAttrs && block.component === dataAttrs.component && !block.viewMode)
-            this.setChildBlock(block, data, container);          
+      if (dataAttrs && dataAttrs.action == 'view') {
+        item.childBlocks.map((block, j) => {
+          if (block.viewMode && block.viewMode != 'edit') {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          }
         });
-      }       
-    })
+      } else {
+        item.childBlocks.map((block, j) => {
+          if (
+            dataAttrs &&
+            block.component === dataAttrs.component &&
+            block.viewMode &&
+            block.viewMode != 'view'
+          ) {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          } else if (dataAttrs && block.component === dataAttrs.component && !block.viewMode) {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          }
+        });
+      }
+    });
+    this.globals.createdBlockInstances(blockInstances);
   }
 
   setChildBlock(block, data, container) {
-    if (block.component === "form")
-      block.settings['data'] = data[0];     
+    if (block.component === 'form') block.settings['data'] = data[0];
     block.settings['dataFromRow'] = data[1];
     const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
     const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
     pageBlockComponent.instance.setSettings(block.settings);
+    return pageBlockComponent.instance;
   }
-
 }
