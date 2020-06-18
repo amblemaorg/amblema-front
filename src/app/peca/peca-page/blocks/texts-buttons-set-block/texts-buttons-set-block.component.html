@@ -150,7 +150,7 @@
         </a> 
     -->
         <ng-container *ngFor="let action of settings.action">
-            <ng-container *ngIf="action.type==6; else notModal">
+            <ng-container *ngIf="action.type==6 || action.type == 5; else notModal">
                 <button
                     *ngIf="action.name"
                     class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
