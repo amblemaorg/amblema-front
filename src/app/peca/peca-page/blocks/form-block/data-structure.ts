@@ -89,6 +89,13 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
           };   
           break;
+        case 'imageSoloType': // for generic Actividades image container in Anuario's view
+          data.data = {
+            image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,            
+            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+          };
+          break;
         case 'agregarDocentePreinscripcion': // Agregar de la Preparacion anual view
           data.data = {
             name: cf.get('name').value,

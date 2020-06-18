@@ -963,6 +963,12 @@ export const formEscuelaAnuario = {
 //Actividades
 export const formActividades = {
   nameDescription: { placeholder: "Descripción de la actividad", fullwidth: true, ...controlProps.textareaNnormalText},
+  imageGroup: {
+    type: "image",
+    fields: {
+     
+    },
+  },
 }
 export const formImgActividades = {
   imageGroup: {

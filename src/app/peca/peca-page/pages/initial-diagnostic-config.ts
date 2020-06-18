@@ -24,7 +24,7 @@ const modalEstadisticas = {
   component: 'modal',
   settings: {
     modalCode: 'dataModalEstadisticas',
-    dataPrueba: true,
+    isNotTableEditing: true,
     items: [
       {
         childBlocks:[

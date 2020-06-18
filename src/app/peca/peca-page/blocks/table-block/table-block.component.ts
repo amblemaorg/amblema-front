@@ -74,7 +74,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           this.source.refresh();          
           break;
         case 'delete':
-          if (index!=-1) this.settings['dataCopy'].splice(index, 1);;
+          if (index!=-1) this.settings['dataCopy'].splice(index, 1);
           this.source.remove(data.data.oldData);
           this.source.refresh();
           break;

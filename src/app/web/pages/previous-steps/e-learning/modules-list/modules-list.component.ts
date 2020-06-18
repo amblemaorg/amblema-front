@@ -4,6 +4,7 @@ import { faAngleLeft, faAngleRight, faPlay, faCheck } from '@fortawesome/free-so
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { ModulesService } from '../../../../../services/steps/modules.service';
 import { Select } from '@ngxs/store';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Module } from '../../../../../models/steps/learning-modules.model';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
@@ -29,12 +30,30 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   canCheck = true;
 
+  project_id = '';
+  user_type = '';
+  user_id = '';
+
   @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
   @Select(UserState.user_brief) coorBrf$: Observable<any>;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {     
+    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
+      this.user_id = this.route.snapshot.params.idUser;
+      this.project_id = this.route.snapshot.params.idProject;
+      this.user_type = this.route.snapshot.params.userType;
+    }
+    else if (this.route.snapshot.children.length>0) {
+      if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
+            this.user_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser;  
+            this.project_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject;  
+            this.user_type = this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType;  
+      }
+    }
+
     this.modules$.subscribe(res => {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
@@ -68,9 +87,20 @@ export class ModulesListComponent implements OnInit, DoCheck {
   canEnable(mod:Module) { //? temporarly unused
     return this.moduleService.isPrevModuleDone(mod.id)
   }
-
-  loadMod(i) {
+  
+  loadMod(i,modId) {
     this.isLoading[i] = true;
+    this.router.navigate([
+      `previous-steps/module-detail/${modId}`,
+      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
+    ]);
+  }
+
+  goToSteps() {
+    this.router.navigate([
+      "previous-steps",
+      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
+    ]);
   }
 
   getModuleNum(module_id) {

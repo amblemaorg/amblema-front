@@ -285,6 +285,10 @@ export class GeneralStepsComponent implements OnInit {
     else step.date = null;
   }
 
+  goToMods() {
+    this.stepsService.goToModules();
+  }
+
 }
 
 

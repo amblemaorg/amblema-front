@@ -159,57 +159,134 @@ const subtitleActividad = {
     }
 }
 
-const ActividadesLapso1 = {
-    component: 'textsbuttons',
-    settings: {
-        inputAndBtns: [
-            {
-                titleInput: "Venezuela Megadiversa"
-            },
-
-        ]
-    },
-}
-const dataActividad = {
-    component: 'form',
-    settings: {
-        formsContent: formActividades,
-    }
-}
-const dataImgActividad = {
-    component: 'form',
-    settings: {
-        formsContent: formImgActividades,
-    }
-}
-
-const tablaLapso1 = {
-    component: 'table',
-    settings: {
-        columns: {
-            img: {
-                title: "imagen",
-            },
+//----------------------------------------------------------------------
+const sections = [
+    {title: 'Venezuela Megadiversa', id: 'dataTablaLapso1_1'},
+    {title: 'Otro titulo', id: 'dataTablaLapso1_2'},
+    {title: 'Titulo 3', id: 'dataTablaLapso1_3'},
+    {title: 'Ultimo titulo', id: 'dataTablaLapso1_4'}
+].map(val=>{
+    let ActividadesLapso1 = {
+        component: 'textsbuttons',
+        settings: {
+            inputAndBtns: [
+                {
+                    titleInput: val.title
+                },
+    
+            ],            
         },
-        tableCode: 'dataTablaLapso',
-        dataTablaLapso: [
+    };
+    let dataActividadLapso1 = {
+        component: 'form',
+        settings: {
+            formsContent: formActividades,
+            tableCode: val.id,
+        }
+    };
+    let tablaLapso1 = {
+        component: 'table',
+        settings: {
+            columns: {
+                image: {
+                    title: "imagen",
+                },
+            },
+            isFromImgContainer: true,
+            modalCode: val.id,
+            tableCode: val.id,
+            [val.id]: [
+                {
+                    id: '1abcdefghijk',
+                    image: 'imagen1.png',
+                    source: null,
+                    imageSelected: null,
+                },
+                {
+                    id: '2abcdefghijk',
+                    image: 'imagen2.png',
+                    source: null,
+                    imageSelected: null,
+                },
+                {
+                    id: '3abcdefghijk',
+                    image: 'imagen3.png',
+                    source: null,
+                    imageSelected: null,
+                },
+            ],
+            classes: {
+                hideView: false,
+                hideEdit: false,
+                hideDelete: false,
+            },
+        }
+    };
+    //* MODAL ----------------------------------
+    let formTablaLapso1 = {
+        component: 'form',
+        viewMode: 'both',
+        settings: {
+        formsContent: formImgActividades,
+        buttons: ['guardar'],
+        formType: 'imageSoloType',
+        tableCode: val.id,
+        modalCode: val.id,
+        isFromCustomTableActions: true,
+        }
+    }
+    let textsAndButtonsTablaLapso1 = {
+        component: 'textsbuttons',
+        settings: {
+        subtitles: [{
+            text: '¿Desea eliminar este ítem?',
+        }],
+        action: [
             {
-                img: 'lorem inpsu',
+                type: 1,
+                name: 'Si',
             },
             {
-                img: 'lorem inpsu',
-            },
-            {
-                img: 'lorem inpsu',
+                type: 2,
+                name: 'No',
             },
         ],
-        classes: {
-            hideView: false,
-            hideEdit: false,
-            hideDelete: false,
-        },
+        modalCode: val.id,
+        isFromCustomTableActions: true,
+        }
     }
-}
+    let modalTablaLapso1 = {
+        component: 'modal',
+        settings: {
+        modalCode: val.id,
+        isFromImgContainer: true,
+        items: [
+            {        
+            childBlocks: [
+                { ...formTablaLapso1 },
+                { ...textsAndButtonsTablaLapso1 },
+            ]
+            }
+        ]
+        }
+    }
+    //* ------------------------------------------
+
+    return [
+        { ...ActividadesLapso1 },
+        { ...dataActividadLapso1 },
+        { ...tablaLapso1 },
+        { ...modalTablaLapso1 }
+    ]
+});
+var sectionsObjects = (sections) => {
+    let objs = [];
+    sections.map(s=>{
+        objs.push(...s);
+    });
+    return objs
+};
+//----------------------------------------------------------------------
 
 const btnEnviarSolicitud = {
     component: 'textsbuttons',
@@ -276,21 +353,7 @@ export const YEARBOOK_CONFIG = {
                                                 { ...subGrafico },
                                                 { ...graficos },
                                                 { ...subtitleActividad },
-                                                //*********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 },
-                                                //*********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 },
-                                                //***********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 }
+                                                ...sectionsObjects(sections),
                                             ]
                                         },
                                         {

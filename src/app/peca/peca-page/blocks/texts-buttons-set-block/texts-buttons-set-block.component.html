@@ -55,7 +55,7 @@
                     >
                     </ng-select>
                     <ng-select *ngIf="settings.selectStatus"
-                        class="form-control select-estatus"
+                        class="form-control select-estatuz"
                         [items]="settings.selectStatus.lista"
                         [(ngModel)]="currentSelected"
                         bindValue="id"
@@ -154,7 +154,7 @@
                 <button
                     *ngIf="action.name"
                     class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
-                    (click)="addToTable(true)"
+                    (click)="addToTable(true, action.type==6?false : true)"
                 >{{ action.name }}
                 </button>
             </ng-container>
