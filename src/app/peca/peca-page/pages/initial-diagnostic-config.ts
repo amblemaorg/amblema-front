@@ -9,6 +9,29 @@ const botonEstadistica = {
         name: 'Ver estadísticas',
       }
     ],
+    modalCode:'dataModalEstadisticas'
+  }
+}
+
+const estadistica = {
+  component: 'graphics',
+  settings: {
+    items:[]
+  }
+}
+
+const modalEstadisticas = {
+  component: 'modal',
+  settings: {
+    modalCode: 'dataModalEstadisticas',
+    dataPrueba: true,
+    items: [
+      {
+        childBlocks:[
+          {...estadistica}
+        ]
+      }
+    ]
   }
 }
 
@@ -294,6 +317,7 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
               { ...botonEstadistica },
               { ...readingDiagnosticTable },
               { ...modalReadingDiagnosticTable },
+              { ...modalEstadisticas }
             ]
           },
           {

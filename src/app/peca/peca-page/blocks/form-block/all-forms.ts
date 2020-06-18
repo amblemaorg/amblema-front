@@ -392,7 +392,7 @@ export const formRegistroInicialModal = {
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
   title1: { label: "Datos básicos de la escuela", type: "title" },
-  nameEscuela: { label: "Nombre de la escuela", placeholder: "Nombre de la escuela", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
+  nameEscuela: { label: "Nombre de la escuela", placeholder: "Nombre de la escuela", readonly:true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   codigoEscuela: { label: "Código del plantel", placeholder: "Código del plantel", readonly: true, fullwidth: false, ...controlProps.onlyLettersNumbers },
   phoneEscuela: { label: "Teléfono", placeholder: "Teléfono", fullwidth: false, readonly: true, ...controlProps.phone },
   addressState: {
@@ -978,7 +978,7 @@ export const formImgActividades = {
 //? -- MODALES -----------------------------------------------
 // DIAGNOSTICO INICIAL
 export const formLecturaModal = {
-  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false, ...controlProps.onlyLettersAndRequired },
+  name: { label: "Nombre", placeholder: "Nombre", fullwidth: false,readonly: true, ...controlProps.onlyLettersAndRequired },
   lastName: { label: "Apellido", placeholder: "Apellido", fullwidth: false, ...controlProps.onlyLettersAndRequired },
   grade: {
     label: "Grado",
@@ -1005,7 +1005,7 @@ export const formLecturaModal = {
       { id: "2", name: "Masculino" },
     ],
   },
-  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.normalTextAndRequired },
+  result: { label: "Resultado", placeholder: "Resultado", fullwidth: false, ...controlProps.numberAndRequired },
   index: { label: "Indice", placeholder: "Indice", fullwidth: false, ...controlProps.numberAndRequired },
 }
 export const formMatematicaModal = {
