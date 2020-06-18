@@ -1,4 +1,4 @@
-<form 
+<form
   [formGroup]="componentForm" 
   (keydown.enter)="prevDef($event)" 
   (ngSubmit)="onSubmitForm(componentForm)"
@@ -6,6 +6,7 @@
     <div 
       class="fields-container"
       [class.one-row-form]="settings.isOneRow"
+      [class.one-line]="settings.formsContent['imageGroup'] && settings.isFromCustomTableActions && imageFieldsArr(settings.formsContent['imageGroup'].fields).length==0"
     >
       <ng-container *ngFor="let field of fields; trackBy: trackByFn">
         
@@ -196,6 +197,7 @@
               [formGroupName]="field" 
               class="image-group"
               [class.d-none]="settings.hideImgContainer"
+              [class.solo-image]="!formInModalBtnConditioner() && settings.formsContent[field] && imageFieldsArr(settings.formsContent[field].fields).length==0"
             >
               <!-- camera-outline -->
               <div
@@ -243,8 +245,16 @@
                 <ng-container *ngFor="let imgField of imageFieldsArr(settings.formsContent[field].fields)">
                   <div class="input-container">
                     <label [class.label-image-status]="imgField=='imageStatus'">{{ settings.formsContent[field].fields[imgField].label }}</label>
+                    <input 
+                      *ngIf="!showSelectTeacher"
+                      class="form-control"
+                      type="text"
+                      [formControlName]="imgField"
+                      [id]="getId(imgField)"
+                      [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                    /> 
                     <ng-select
-                      *ngIf="imgField=='imageDocente' || imgField=='imageStatus'"
+                      *ngIf="(imgField=='imageDocente' && showSelectTeacher) || imgField=='imageStatus'"
                       class="form-control"
                       [class.image-status]="!settings.isFromCustomTableActions && !settings.alwaysValidations"
                       [class.is-in-modal]="settings.isFromCustomTableActions"
@@ -314,6 +324,7 @@
         *ngIf="formInModalBtnConditioner()"
         class="btn-container"
         [class.one-row-form-btn-container]="settings.isOneRow"
+        [class.on-this-line-btn]="settings.formsContent['imageGroup'] && settings.isFromCustomTableActions && imageFieldsArr(settings.formsContent['imageGroup'].fields).length==0"
       >
         <ng-container
           *ngFor="let btn of settings.buttons" 

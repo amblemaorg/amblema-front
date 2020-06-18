@@ -1,7 +1,6 @@
 import { formTestimonioDocentes, formTestimonioDocentesModal, formTestimonioDocentesModalEdit } from '../blocks/form-block/all-forms'
 
 formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
-    { id: "1", name: "Alfredo", lastName: 'Valbuena', addressState: '165146541654hjvjh' },
     { id: "2", name: "Sthepanie", lastName: 'Soteldo', addressState: '165146541654hjvjh' },
     { id: "3", name: "Manuel", lastName: 'Guerrero', addressState: '165146541654hjvjh' },
     { id: "4", name: "Gustavo", lastName: 'Castillo', addressState: '165146541654hjvjh' },
