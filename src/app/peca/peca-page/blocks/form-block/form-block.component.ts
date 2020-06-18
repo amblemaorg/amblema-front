@@ -382,7 +382,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   showImage(option: number) {
     switch (option) {
       case 1:
-        return this.componentForm.controls['imageGroup'].get('imageSelected').value;
+        return this.componentForm.controls['imageGroup'].get('imageSelected').value || this.componentForm.controls['imageGroup'].get('imageSrc').value;
       case 2:
         return this.sanitizer.bypassSecurityTrustResourceUrl(this.componentForm.controls['imageGroup'].get('imageSrc').value);    
       default:
@@ -394,19 +394,35 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.componentForm.controls['imageGroup'].get('imageSelected').reset();
     this.componentForm.controls['imageGroup'].get('imageSrc').reset();
   }
+
+  imageObjWithAvailableFields() {
+    const imgGrp = this.componentForm.controls['imageGroup'];
+
+    let obj = {};
+
+    if ( imgGrp.get('imageDescription') ) obj['description'] = imgGrp.get('imageDescription').value;
+    if ( imgGrp.get('imageStatus') ) {
+      obj['state'] = imgGrp.get('imageStatus').value;
+      obj['status'] = 'En espera';
+    }
+
+    return obj
+  }
   // method which sends image to the images table
+  showSelectTeacher: boolean = true;
   addImage(addImg: boolean = true) {
-    let imgGrp = this.componentForm.controls['imageGroup'];
+    const imgGrp = this.componentForm.controls['imageGroup'];
+
+    if (!addImg) this.showSelectTeacher = false;
+
     let imageObj = {
       code: this.settings.tableCode,
       data: addImg? {
         id: Math.random().toString(36).substring(2),
         image: imgGrp.get('imageSelected').value.name,
-        description: imgGrp.get('imageDescription').value,
-        state: imgGrp.get('imageStatus').value,
-        status: 'En espera',
         source: imgGrp.get('imageSrc').value,
         imageSelected: imgGrp.get('imageSelected').value,
+        ...this.imageObjWithAvailableFields(),
       } : {
         id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).id.toString(),
         name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).name,
@@ -423,7 +439,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     this.globals.tableDataUpdater(imageObj);
     if (addImg) this.componentForm.get('imageGroup').reset();
-    else this.componentForm.reset();  
+    else {
+      const inx = this.settings.formsContent['imageGroup'].fields['imageDocente'].options.findIndex(d=>{return d.id===imgGrp.get('imageDocente').value});
+      if (inx!=-1) this.settings.formsContent['imageGroup'].fields['imageDocente'].options.splice(inx, 1);
+      this.componentForm.reset();
+      setTimeout(() => {
+        this.showSelectTeacher = true;
+      });      
+    }  
   }
   //? -----------------------------------------------------------------------------------
 

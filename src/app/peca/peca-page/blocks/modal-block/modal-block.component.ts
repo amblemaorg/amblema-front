@@ -35,7 +35,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   type: 'structural';
   component: string;
   settings: {
-    dataPrueba?: boolean;
+    isNotTableEditing?: boolean;
     isFromImgContainer?: boolean; // indicates if data in table is from an image container
     isFromImgPlusContainer?: boolean; // indicates if data in table is from an image container +
     modalCode?: string;
@@ -55,10 +55,10 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   ngOnInit() {
     this.subscription.add(
       this.globals.showModalEmitter.subscribe(data => {
-        if (!this.settings.dataPrueba) {
-          if (this.settings.modalCode == data.code && this.isBrowser) {
+        if (this.settings.modalCode == data.code && this.isBrowser) {
+
+          if (!this.settings.isNotTableEditing) {
             const image_group = this.settings.isFromImgContainer && data.action != "add" && data.action != "delete" ? {
-              imageDescription: data.data.oldData.description,
               imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
               imageSelected: data.data.dataCopyData.imageSelected ? data.data.dataCopyData.imageSelected : null,
             } : {};
@@ -69,7 +69,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                   {
                     imageGroup: data.data.oldData.state ? {
                       ...image_group,
+                      imageDescription: data.data.oldData.description,
                       imageStatus: data.data.oldData.state,
+                    } : data.data.oldData.description ? {
+                      ...image_group,
+                      imageDescription: data.data.oldData.description,
                     } : { ...image_group }
                   } :
                   this.settings.isFromImgPlusContainer ?
@@ -91,17 +95,15 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                       }) : data.data.oldData;
 
             this.instantiateChildBlocks(data, [data_from_table, data]);
-            
-
           }
-
-        }
-        else 
-          {
+          else {
             this.instantiateChildBlocksGraphics();
           }
+
+
           $(`#${data.code}-modal`).modal('show');
-        
+        }
+
 
 
 
@@ -123,7 +125,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.settings.items) {
-        if (!this.settings.dataPrueba)
+        if (!this.settings.isNotTableEditing)
           this.instantiateChildBlocks();
         else this.instantiateChildBlocksGraphics();
       }

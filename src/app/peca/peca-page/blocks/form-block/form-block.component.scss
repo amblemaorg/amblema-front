@@ -35,6 +35,9 @@
       &.one-row-form {
         align-items: center;
       }
+      &.one-line {
+        flex-wrap: nowrap;
+      }
 
       h6, label {
         width: 100%;
@@ -127,6 +130,14 @@
               font-size: 4rem;
               display: inline;
             }
+          }
+        }
+
+        &.solo-image {
+          justify-content: center;
+          
+          .image-upload-btn-container {
+            flex: 0;
           }
         }
 
@@ -403,6 +414,17 @@
         &.one-row-form-btn-container {
           width: 14%;
           text-align: right;
+        }
+        &.no-fields {
+          width: auto;
+          margin-left: auto;
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+
+        &.on-this-line-btn {
+          margin-top: auto;
+          margin-bottom: auto;
         }
         
         .submit-btn, 

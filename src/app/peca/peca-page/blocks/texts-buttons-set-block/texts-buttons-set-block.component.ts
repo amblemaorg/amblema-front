@@ -119,7 +119,7 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
     return false
   }
 
-  addToTable(usingModal: boolean = false) {
+  addToTable(usingModal: boolean = false, isNotFromTable: boolean = false) {
     let obj = !usingModal? {
       code: this.settings.tableCode,
       data: {},
@@ -127,9 +127,9 @@ export class TextsButtonsSetBlockComponent implements PresentationalBlockCompone
       action: 'add',
     } : {
       code: this.settings.modalCode,
-      action: 'add',
-      showBtn: true,
-      component: 'form',
+      action: !isNotFromTable? 'add':'view',
+      showBtn: !isNotFromTable? true : false,
+      component: !isNotFromTable? 'form' : 'graphics',
     };
 
     if (!usingModal) {

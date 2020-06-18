@@ -768,6 +768,10 @@
         text-shadow: 0 0 0 !important;
         color: map-get($color_map, soft-green);
         opacity: 1;
+
+        &:focus {
+            outline: none;
+        }
     }
     .modal-content {
         background: transparent;
