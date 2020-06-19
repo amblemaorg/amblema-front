@@ -13,15 +13,12 @@ import {
   NbLayoutModule,
   NbMenuModule,
   NbCardModule,
-  NbIconModule
+  NbIconModule,
 } from "@nebular/theme";
-import {
-  NbPasswordAuthStrategy,
-  NbAuthModule,
-  NbAuthJWTToken
-} from "@nebular/auth";
+import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from "@nebular/auth";
 import { AuthComponent } from "./auth.component";
 import { LoginComponent } from "./login/login.component";
+import { LogoutComponent } from "./logout/logout.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { RequestPasswordComponent } from "./request-password/request-password.component";
 import { environment } from "src/environments/environment.prod";
@@ -32,31 +29,63 @@ const authStrategies = [
     baseEndpoint: `${environment.baseUrl}`,
     token: {
       class: NbAuthJWTToken,
-      key: "access_token"
+      key: "access_token",
     },
     login: {
       endpoint: "auth/login",
       method: "post",
       redirect: {
         success: "seleccion-escuela",
-        failure: null
+        failure: null,
       },
       defaultErrors: [
-        "La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente."
+        "La combinación de inicio de sesión / correo electrónico no es correcta, intente nuevamente.",
       ],
-      defaultMessages: [
-        "Has ingresado exitosamente. Te estamos redirigiendo al PECA..."
-      ]
-    }
-  })
+      defaultMessages: ["Has ingresado exitosamente. Te estamos redirigiendo al PECA..."],
+    },
+    logout: {
+      endpoint: null,
+      redirect: {
+        success: "/auth/login",
+        failure: null,
+      },
+    },
+  }),
 ];
+
+const authForms = {
+  login: {
+    redirectDelay: 500,
+    strategy: "email",
+    rememberMe: true,
+    showMessages: {
+      success: true,
+      error: true,
+    },
+  },
+  logout: {
+    redirectDelay: 500,
+    strategy: "email",
+  },
+  validation: {
+    password: {
+      required: true,
+      minLength: 4,
+      maxLength: 50,
+    },
+    email: {
+      required: true,
+    },
+  },
+};
 
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
+    LogoutComponent,
     ResetPasswordComponent,
-    RequestPasswordComponent
+    RequestPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -78,8 +107,8 @@ const authStrategies = [
     NbMenuModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: authStrategies,
-      forms: {}
-    })
-  ]
+      forms: authForms,
+    }),
+  ],
 })
 export class AuthModule {}
