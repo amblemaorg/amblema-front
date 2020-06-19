@@ -1,12 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
-import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
+import { NbAuthJWTToken, NbAuthService, decodeJwtPayload } from "@nebular/auth";
 import { Location } from "@angular/common";
+import { Store } from "@ngxs/store";
+import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
+
 @Component({
   selector: "app-school-selection",
   templateUrl: "./school-selection.component.html",
-  styleUrls: ["./school-selection.component.scss"]
+  styleUrls: ["./school-selection.component.scss"],
 })
 export class SchoolSelectionComponent implements OnInit {
   backIcon = faArrowLeft;
@@ -37,50 +40,57 @@ export class SchoolSelectionComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: NbAuthService,
-    private location: Location
+    private location: Location,
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.getTokenInfo();
   }
-  goTo(phase, id) {
+
+  getTokenInfo() {
+    let response;
+    this.authService.getToken().subscribe((token: NbAuthJWTToken) => {
+      if (token.isValid()) {
+        response = decodeJwtPayload(token.getValue());
+        //console.log(response);
+        this.store.dispatch([new SetUser(response.identity)]);
+        this.projects = response.identity.projects;
+        this.userType = response.identity.userType;
+        this.idUser = response.identity.id;
+        this.emailUser = response.identity.email;
+        this.nameUser = response.identity.name;
+
+        if (this.projects.length === 1) {
+          const projectPhase = parseInt(this.projects[0].phase);
+          const projectId = this.projects[0].id;
+          this.goTo(projectPhase, projectId, 0);
+        }
+      }
+    });
+  }
+
+  goTo(phase, id, index) {
     let phaseProject = phase;
     let idProject = id;
     if (phaseProject == 1) {
       this.router.navigate([
         "previous-steps",
-        { idProject: idProject, userType: this.userType, idUser: this.idUser }
+        { idProject: idProject, userType: this.userType, idUser: this.idUser },
       ]);
+      this.store.dispatch([new SetSelectedProject(this.projects[index])]);
     } else {
-      this.router.navigate([
-        "peca",
-        {
-          nameUser: this.nameUser,
-          idUser: this.idUser,
-          userType: this.userType,
-          emailUser: this.emailUser
-        }
-      ]);
+      this.router.navigate(["peca"]);
+      //{
+      //  nameUser: this.nameUser,
+      //  idUser: this.idUser,
+      //  userType: this.userType,
+      //  emailUser: this.emailUser,
+      //},
+      this.store.dispatch([new SetSelectedProject(this.projects[index])]);
     }
   }
-  getTokenInfo() {
-    let response;
-    this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
-      if (token.isValid()) {
-        response = token.getPayload();
-        //localStorage.setItem("payload", JSON.stringify(response));
-        this.userType = response.identity.userType;
-        this.projects = response.identity.projects;
-        this.idUser = response.identity.id;
-        this.emailUser = response.identity.email;
-        this.nameUser = response.identity.name;
 
-        console.log(token);
-        //console.log(this.userType);
-        //console.log(this.projects);
-      }
-    });
-  }
   goBack() {
     this.location.back();
   }

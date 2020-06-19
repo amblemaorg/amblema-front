@@ -1,10 +1,10 @@
 import { FormGroup } from '@angular/forms';
 
 export function structureData(formType: string, formsContent, cf: FormGroup) {
-    let data = {
-      isThereTable: true,
-      data: {},
-    };
+  let data = {
+    isThereTable: true,
+    data: {},
+  };
 
     switch (formType) {
         case 'agregarGradoSeccion': // for Datos de la Escuela view and Grados y Secciones section         
@@ -29,6 +29,20 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             addressMunicipality: cf.get('addressMunicipality').value,
             street: cf.get('street').value,
             city: cf.get('city').value,
+            /**
+             firstName: cf.get('name').value,
+        lastName: cf.get('lastName').value,
+        cardType: cf.controls['documentGroup'].get('prependSelect').value,
+        cardId: cf.controls['documentGroup'].get('prependInput').value,
+        email: cf.get('email').value,
+        gender: cf.get('gender').value,
+        status: cf.get('status').value,
+        phone: cf.get('phone').value,
+        addressState: cf.get('addressState').value,
+        addressMunicipality: cf.get('addressMunicipality').value,
+        address: cf.get('street').value,
+        addressCity: cf.get('city').value,
+             */
           };              
           break;
         case 'buscarEstudiante': // for Datos de la Escuela view and Estudiantes section
@@ -80,20 +94,47 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           };
           break;
         case 'imageContainerFormType': // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
+          console.log(formsContent);
           data.data = {            
-            image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
+            image: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value.name 
+              : null,
             description: cf.controls['imageGroup'].get('imageDescription').value,
             state: cf.controls['imageGroup'].get('imageStatus').value,
             status: 'En espera',
-            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
-            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+            source: cf.controls['imageGroup'].get('imageSrc').value
+              ? cf.controls['imageGroup'].get('imageSrc').value 
+              : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value 
+              : null,
+            /**
+             image: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value.name
+          : null,
+        description: cf.controls['imageGroup'].get('imageDescription').value,
+        state: cf.controls['imageGroup'].get('imageStatus').value,
+        status: 'En espera',
+        source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value
+          : null,
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value
+          : null,
+             */
           };   
           break;
         case 'imageSoloType': // for generic Actividades image container in Anuario's view
           data.data = {
-            image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,            
-            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
-            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+            image: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value.name 
+              : null,            
+            source: cf.controls['imageGroup'].get('imageSrc').value
+              ? cf.controls['imageGroup'].get('imageSrc').value 
+              : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value 
+              : null,
           };
           break;
         case 'agregarDocentePreinscripcion': // Agregar de la Preparacion anual view
@@ -133,22 +174,52 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             cargo: cf.controls['imageGroup'].get('imageCargo').value,
             description: cf.controls['imageGroup'].get('imageDescription').value,
             status: cf.controls['imageGroup'].get('imageStatus').value,
-            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
-            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+            source: cf.controls['imageGroup'].get('imageSrc').value
+              ? cf.controls['imageGroup'].get('imageSrc').value 
+              : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value 
+              : null,
+            /**
+             source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value
+          : null,
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value
+          : null,
+             */
           };
           break;
         case 'agregarImagenEscuela': // for Agregar Fotos Escuela view
           data.data = {
-            image: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value.name : null,
+            image: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value.name 
+              : null,
             description: cf.controls['imageGroup'].get('imageDescription').value,
-            source: cf.controls['imageGroup'].get('imageSrc').value? cf.controls['imageGroup'].get('imageSrc').value : null,
-            imageSelected: cf.controls['imageGroup'].get('imageSelected').value? cf.controls['imageGroup'].get('imageSelected').value : null,
+            source: cf.controls['imageGroup'].get('imageSrc').value
+              ? cf.controls['imageGroup'].get('imageSrc').value 
+              : null,
+            imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+              ? cf.controls['imageGroup'].get('imageSelected').value 
+              : null,
+            /**
+             image: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value.name
+          : null,
+        description: cf.controls['imageGroup'].get('imageDescription').value,
+        source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value
+          : null,
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value
+          : null,
+             */
           };
           break;
 
-        default:
-          break;
-    }
+    default:
+      break;
+  }
 
-    return data
+  return data;
 }
