@@ -1,24 +1,25 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { PresentationalBlockComponent } from '../page-block.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isNullOrUndefined } from 'util';
 import { MESSAGES } from '../../../../web/shared/forms/validation-messages';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
+import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'form-block',
   templateUrl: './form-block.component.html',
-  styleUrls: ['./form-block.component.scss']
+  styleUrls: ['./form-block.component.scss'],
 })
 export class FormBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: 'presentational';
   component: string;
-  settings: {    
+  settings: {
     formsContent: any;
     buttons: string[];
     images: any[];
@@ -32,6 +33,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
     alwaysValidations?: boolean; // when imageGroup has extra fields (i.e. imageCargo) set this to true
+    fetcherUrls: {
+      // get: string;
+      post: string;
+      put: string;
+      patch: string;
+      // delete: string;
+    };
+    fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
   };
 
   private subscription: Subscription = new Subscription();
@@ -39,20 +48,21 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   componentForm: FormGroup;
   fields: string[];
   doubleFields = {};
-  sendingForm:boolean;
-  glbls:any;
+  sendingForm: boolean;
+  glbls: any;
 
-  id_:string;
+  id_: string;
   wrongDateDisabler = {};
 
-  municipalities:MunicipalityInfo[] = [];
+  municipalities: MunicipalityInfo[] = [];
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private globals: GlobalService,
+    private fetcher: HttpFetcherService,
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer
-    ) {
+  ) {
     this.type = 'presentational';
     this.component = 'form';
     this.glbls = globals;
@@ -60,15 +70,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   ngOnInit() {
     this.subscription.add(
-      this.componentForm.statusChanges.subscribe( (val) => {
-        if (val==="INVALID" || this.isDateNotOk()) this.btnUpdater(null);
+      this.componentForm.statusChanges.subscribe((val) => {
+        if (val === 'INVALID' || this.isDateNotOk()) this.btnUpdater(null);
         else this.btnUpdater(this.componentForm.value);
       })
     );
 
     this.subscription.add(
-      this.globals.showImageContainerEmitter.subscribe(code => {
-        if(this.settings.buttonCode && this.settings.buttonCode == code)
+      this.globals.showImageContainerEmitter.subscribe((code) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == code)
           this.settings.hideImgContainer = false;
       })
     );
@@ -102,9 +112,22 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     if (this.settings.data) this.setAllFields(this.settings.data);
   }
 
+  setData(data: any) {
+    this.settings.data = data;
+    this.setAllFields(this.settings.data);
+  }
+
+  setFetcherUrls({ post, put, patch }) {
+    this.settings.fetcherUrls = {
+      post,
+      put,
+      patch,
+    };
+  }
+
   // for assigning unique id to this component instance -------------
   private setId() {
-    if(!this.id_) this.id_ = Math.random().toString(36).substring(2);    
+    if (!this.id_) this.id_ = Math.random().toString(36).substring(2);
   }
 
   getId(field) {
@@ -113,51 +136,57 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // ----------------------------------------------------------------
 
   private loadGroupedInfo(settings) {
-    if(settings.formsContent['imageGroup']) 
-      this.componentForm.addControl('imageGroup',this.buildGroupControl('imageGroup'));
-    if(settings.formsContent['documentGroup']) 
-      this.componentForm.addControl('documentGroup',this.buildGroupControl('documentGroup'));
+    if (settings.formsContent['imageGroup'])
+      this.componentForm.addControl('imageGroup', this.buildGroupControl('imageGroup'));
+    if (settings.formsContent['documentGroup'])
+      this.componentForm.addControl('documentGroup', this.buildGroupControl('documentGroup'));
   }
 
   private buildFormGroup(formContent: any): FormGroup {
-    const formControls = this.getFormGroupControls(formContent)
+    const formControls = this.getFormGroupControls(formContent);
     return this.fb.group(formControls);
   }
 
-  private buildGroupControl(item_grouped): FormGroup { // for building formgroup for add image container
-    const formControls = this.getFormControlProperty(item_grouped)
+  private buildGroupControl(item_grouped): FormGroup {
+    // for building formgroup for add image container
+    const formControls = this.getFormControlProperty(item_grouped);
     return this.fb.group(formControls);
   }
 
   private getFormGroupControls(formContent): object {
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
-    
+
     let formContentNoTitles = [];
-    this.fields.map(f=> {
-      if (formContent[f].type!="title" && formContent[f].type!="image" && formContent[f].type!="prepend") {
-        if (formContent[f].type==="double") {
+    this.fields.map((f) => {
+      if (
+        formContent[f].type != 'title' &&
+        formContent[f].type != 'image' &&
+        formContent[f].type != 'prepend'
+      ) {
+        if (formContent[f].type === 'double') {
           let fieldsArr = Object.keys(formContent[f].fields);
-          formContentNoTitles.push( ...fieldsArr.map(field => { 
-            return {
-              field: field,
-              parent: f
-            } 
-          }) );          
+          formContentNoTitles.push(
+            ...fieldsArr.map((field) => {
+              return {
+                field: field,
+                parent: f,
+              };
+            })
+          );
           this.doubleFields[f] = fieldsArr;
-        }
-        else {
-          if (formContent[f].type==="date") this.wrongDateDisabler[f] = false;
+        } else {
+          if (formContent[f].type === 'date') this.wrongDateDisabler[f] = false;
           formContentNoTitles.push({
             field: f,
-            parent: null // means that this field is not a doubleFields field
+            parent: null, // means that this field is not a doubleFields field
           });
         }
       }
     });
-    
+
     const formControls = this.reduceFormControls(formContentNoTitles, formContent, true);
-    
-    return formControls
+
+    return formControls;
   }
 
   // RETURNS A FORMCONTROL OBJECT TO BE USED IN FORMGROUP
@@ -167,14 +196,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         return {
           ...formControlsObj,
           ...this.getFormControlProperty(
-            isMainContent? formControlName.field : formControlName, 
-            isMainContent? 
-              (formControlName.parent? 
-                formContent[formControlName.parent].fields[formControlName.field] : 
-                formContent[formControlName.field]) : 
-              formContent[formControlName]
-          )
-        }
+            isMainContent ? formControlName.field : formControlName,
+            isMainContent
+              ? formControlName.parent
+                ? formContent[formControlName.parent].fields[formControlName.field]
+                : formContent[formControlName.field]
+              : formContent[formControlName]
+          ),
+        };
       },
       {} // This is the initial formControlsObj
     );
@@ -182,38 +211,37 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     return formReduced;
   }
 
-  private getFormControlProperty(name: string, params: { value: any, validations: object } = { value: null, validations: null }): object {
-    let defaultValue = name==="imageSelected" || name==="imageSrc" ? null : '';
+  private getFormControlProperty(
+    name: string,
+    params: { value: any; validations: object } = { value: null, validations: null }
+  ): object {
+    let defaultValue = name === 'imageSelected' || name === 'imageSrc' ? null : '';
 
-      // adding form control to Image or Document Group, when the form has images or Identification document to be added
-    if (name==="imageGroup" || name==="documentGroup") {
-      let itemGroupContent =  Object.keys(this.settings.formsContent[name].fields);
-      if(name==="imageGroup") itemGroupContent.push(...['imageSelected','imageSrc']);
-      let formControls = this.reduceFormControls(itemGroupContent, this.settings.formsContent[name].fields);     
-      
+    // adding form control to Image or Document Group, when the form has images or Identification document to be added
+    if (name === 'imageGroup' || name === 'documentGroup') {
+      let itemGroupContent = Object.keys(this.settings.formsContent[name].fields);
+      if (name === 'imageGroup') itemGroupContent.push(...['imageSelected', 'imageSrc']);
+      let formControls = this.reduceFormControls(
+        itemGroupContent,
+        this.settings.formsContent[name].fields
+      );
+
       return formControls;
-    } 
-    else {
+    } else {
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
       if (
-        isNullOrUndefined(params.validations) || 
-        (
-          Object.keys(params.validations).length===1 && 
-          !params.validations['required']
-        ) 
+        isNullOrUndefined(params.validations) ||
+        (Object.keys(params.validations).length === 1 && !params.validations['required'])
       )
-          return { [name]: [defaultValue] };
-      else 
-          return { [name]: [defaultValue, this.getValidators(params.validations)] };
-    }    
+        return { [name]: [defaultValue] };
+      else return { [name]: [defaultValue, this.getValidators(params.validations)] };
+    }
   }
 
   private getValidators(validations: object): Validators {
-    const fieldValidators = Object.keys(validations).map(validator => {
-      if (validator === 'required') 
-        return Validators[validator];
-      else 
-        return Validators[validator](validations[validator]);      
+    const fieldValidators = Object.keys(validations).map((validator) => {
+      if (validator === 'required') return Validators[validator];
+      else return Validators[validator](validations[validator]);
     });
 
     return fieldValidators;
@@ -223,102 +251,140 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     return index;
   }
 
-  hasErrors(field: string, specialCase: boolean = false, field2: string = null, fromImg: boolean = false): string | null {
-    const errors: any = !specialCase? this.componentForm.get(field).errors : 
-                (!field2? this.componentForm.controls[field].get('prependInput').errors :
-                  (!fromImg? this.componentForm.get(field2).errors : 
-                    this.componentForm.controls['imageGroup'].get(field2).errors) );
+  hasErrors(
+    field: string,
+    specialCase: boolean = false,
+    field2: string = null,
+    fromImg: boolean = false
+  ): string | null {
+    const errors: any = !specialCase
+      ? this.componentForm.get(field).errors
+      : !field2
+      ? this.componentForm.controls[field].get('prependInput').errors
+      : !fromImg
+      ? this.componentForm.get(field2).errors
+      : this.componentForm.controls['imageGroup'].get(field2).errors;
     if (errors) {
-      return errors.required ? MESSAGES.REQUIRED_MESSAGE :
-             (errors.pattern || errors.minlength || errors.maxlength) ? 
-             (!specialCase? this.settings.formsContent[field].messages.pattern : 
-              (!field2? this.settings.formsContent[field].fields['prependInput'].messages.pattern : 
-                (!fromImg? this.settings.formsContent[field2].messages.pattern : 
-                  this.settings.formsContent['imageGroup'].fields[field2].messages.pattern) ) ) : null;
+      return errors.required
+        ? MESSAGES.REQUIRED_MESSAGE
+        : errors.pattern || errors.minlength || errors.maxlength
+        ? !specialCase
+          ? this.settings.formsContent[field].messages.pattern
+          : !field2
+          ? this.settings.formsContent[field].fields['prependInput'].messages.pattern
+          : !fromImg
+          ? this.settings.formsContent[field2].messages.pattern
+          : this.settings.formsContent['imageGroup'].fields[field2].messages.pattern
+        : null;
     }
 
     return null;
   }
 
-  prevDef(e){ //PREVENTING SUBMITTING FORM WHEN ENTER KEY PRESSED IN TETAREA OR ONY BUTTON INSIDE FORM
-    if (e.target.tagName.toLowerCase()!==("textarea") && e.target.tagName.toLowerCase()!==("button")) {
-      e.preventDefault() 
-    }    
+  prevDef(e) {
+    //PREVENTING SUBMITTING FORM WHEN ENTER KEY PRESSED IN TETAREA OR ONY BUTTON INSIDE FORM
+    if (
+      e.target.tagName.toLowerCase() !== 'textarea' &&
+      e.target.tagName.toLowerCase() !== 'button'
+    ) {
+      e.preventDefault();
+    }
   }
 
   // submitting forms
-  onSubmitForm(cf: FormGroup) { //cf: component form
+  onSubmitForm(cf: FormGroup) {
+    //cf: component form
     this.sendingForm = true;
-    console.log('submitting form');  
-    
+    console.log('submitting form');
+
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
-    if(this.settings.formType==="buscarEstudiante") manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);    
+    if (this.settings.formType === 'buscarEstudiante')
+      manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);
 
     const assignId = () => Math.random().toString(36).substring(2);
 
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
-        this.settings.dataFromRow.data.newData = { ...this.settings.dataFromRow.data.oldData, ...manageData.data };
+        this.settings.dataFromRow.data.newData = {
+          ...this.settings.dataFromRow.data.oldData,
+          ...manageData.data,
+        };
         this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
-      } else { // is for adding in modal view
+      } else {
+        // is for adding in modal view
         this.settings.dataFromRow['data'] = manageData.data;
         this.settings.dataFromRow['data']['id'] = assignId();
-      }      
+      }
     } else {
       manageData.data['id'] = assignId();
     }
 
     let obj = {
       code: this.settings.tableCode,
-      data: this.settings.isFromCustomTableActions? this.settings.dataFromRow.data : manageData.data,
+      data: this.settings.isFromCustomTableActions
+        ? this.settings.dataFromRow.data
+        : manageData.data,
       dataArr: [],
       resetData: false,
-      action: this.settings.isFromCustomTableActions? (this.settings.data? 'edit':'add') :'set',
-    }; 
+      action: this.settings.isFromCustomTableActions
+        ? this.settings.data
+          ? 'edit'
+          : 'add'
+        : 'set',
+    };
 
-    setTimeout(() => {
-      this.sendingForm = false;
-      console.log('form submitted'); 
+    const method = this.settings.fetcherMethod || 'post';
+    const resourcePath = this.settings.fetcherUrls[method];
+    const body = this.settings.isFromCustomTableActions ? obj.data.newData : obj.data;
 
-      if (manageData.isThereTable) this.globals.tableDataUpdater(obj);  
+    this.fetcher[method](resourcePath, body).subscribe(
+      (response) => {
+        this.sendingForm = false;
+        console.log('Form response', response);
 
-      if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
-      
-      // initializers
-      cf.reset();
-      this.municipalities = [];
-      Object.keys(this.wrongDateDisabler).map(f => {
-        this.wrongDateDisabler[f] = false;
-      });
-      //
-      this.toastr.success(
-        'form submitted',
-        '',
-        { positionClass: 'toast-bottom-right' }
-      );
-    }, 3000);
+        if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
+
+        if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
+
+        // initializers
+        cf.reset();
+        this.municipalities = [];
+        Object.keys(this.wrongDateDisabler).map((f) => {
+          this.wrongDateDisabler[f] = false;
+        });
+        //
+        this.toastr.success('form submitted', '', { positionClass: 'toast-bottom-right' });
+      },
+      (error) => console.error(error)
+    );
   }
-
 
   // filling municipalities according to selected state
-  private fillMunicipalities(state_id="default",munId='') {
-    if (state_id=="default" || !this.settings.formsContent['addressMunicipality']) this.municipalities = [];
+  private fillMunicipalities(state_id = 'default', munId = '') {
+    if (state_id == 'default' || !this.settings.formsContent['addressMunicipality'])
+      this.municipalities = [];
     else {
-      this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(m => {return m.state.id == state_id}); 
-    }   
+      this.municipalities = this.settings.formsContent['addressMunicipality'].options.filter(
+        (m) => {
+          return m.state.id == state_id;
+        }
+      );
+    }
 
-    this.componentForm.patchValue({addressMunicipality:munId});
+    this.componentForm.patchValue({ addressMunicipality: munId });
   }
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
-  updateMuns(bool:boolean = true, munId: string = ''){
-    if(bool) {
-      let currStateId = "default";
-      currStateId = this.componentForm.controls['addressState'].value && this.componentForm.controls['addressState'].value.length>0? 
-        this.componentForm.controls['addressState'].value :
-        "default";      
-    
+  updateMuns(bool: boolean = true, munId: string = '') {
+    if (bool) {
+      let currStateId = 'default';
+      currStateId =
+        this.componentForm.controls['addressState'].value &&
+        this.componentForm.controls['addressState'].value.length > 0
+          ? this.componentForm.controls['addressState'].value
+          : 'default';
+
       this.fillMunicipalities(currStateId, munId);
-    }    
+    }
   }
 
   focusDatePicker(e) {
@@ -326,25 +392,28 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
 
   disableBtn() {
-    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk()
+    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
   // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE
   isField(field) {
-    return this.settings.formsContent[field].type != "title" && this.settings.formsContent[field].type != "image";
+    return (
+      this.settings.formsContent[field].type != 'title' &&
+      this.settings.formsContent[field].type != 'image'
+    );
   }
 
   // wrong date save button enabler/disabler
-  checkDateOk(e,mode,f,notE:boolean = false) {
-    let value = !notE? e.target.value==="" : e==="";
-    if ( this.globals.validateDate(e,mode,true,notE) || value ) 
-         this.wrongDateDisabler[f] = false;
+  checkDateOk(e, mode, f, notE: boolean = false) {
+    let value = !notE ? e.target.value === '' : e === '';
+    if (this.globals.validateDate(e, mode, true, notE) || value) this.wrongDateDisabler[f] = false;
     else this.wrongDateDisabler[f] = true;
   }
 
-  isDateNotOk() { // for button specifically
-    let bool = false
-    Object.keys(this.wrongDateDisabler).map(f => {
+  isDateNotOk() {
+    // for button specifically
+    let bool = false;
+    Object.keys(this.wrongDateDisabler).map((f) => {
       if (!this.wrongDateDisabler[f]) bool = true;
     });
     if (bool) return true;
@@ -360,34 +429,46 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // adds the image file and image source to the imageGroup form control
   fileManager(e) {
     let reader = new FileReader();
-    reader.readAsDataURL(<File>e.target.files[0]); 
-    reader.onload = (_event) => {      
-      this.componentForm.get('imageGroup').patchValue({ 
+    reader.readAsDataURL(<File>e.target.files[0]);
+    reader.onload = (_event) => {
+      this.componentForm.get('imageGroup').patchValue({
         imageSelected: <File>e.target.files[0],
         imageSrc: reader.result,
       });
-    }    
+    };
   }
   // to disable add image button when conditions apply
-  disableAddImgBtn(){
-    return ( this.componentForm.controls['imageGroup'].get('imageDocente') && ( this.componentForm.controls['imageGroup'].get('imageDocente').value==="" 
-        || !this.componentForm.controls['imageGroup'].get('imageDocente').value ) )
-        || ( this.componentForm.controls['imageGroup'].get('imageCargo') && this.componentForm.controls['imageGroup'].get('imageCargo').value==="" )
-        || ( this.componentForm.controls['imageGroup'].get('imageDescription') && this.componentForm.controls['imageGroup'].get('imageDescription').value==="" ) 
-        || ( this.componentForm.controls['imageGroup'].get('imageStatus') && ( this.componentForm.controls['imageGroup'].get('imageStatus').value==="" 
-        || !this.componentForm.controls['imageGroup'].get('imageStatus').value ) )
-        || ( this.componentForm.controls['imageGroup'].get('imageSelected') && !this.componentForm.controls['imageGroup'].get('imageSelected').value );
+  disableAddImgBtn() {
+    return (
+      (this.componentForm.controls['imageGroup'].get('imageDocente') &&
+        (this.componentForm.controls['imageGroup'].get('imageDocente').value === '' ||
+          !this.componentForm.controls['imageGroup'].get('imageDocente').value)) ||
+      (this.componentForm.controls['imageGroup'].get('imageCargo') &&
+        this.componentForm.controls['imageGroup'].get('imageCargo').value === '') ||
+      (this.componentForm.controls['imageGroup'].get('imageDescription') &&
+        this.componentForm.controls['imageGroup'].get('imageDescription').value === '') ||
+      (this.componentForm.controls['imageGroup'].get('imageStatus') &&
+        (this.componentForm.controls['imageGroup'].get('imageStatus').value === '' ||
+          !this.componentForm.controls['imageGroup'].get('imageStatus').value)) ||
+      (this.componentForm.controls['imageGroup'].get('imageSelected') &&
+        !this.componentForm.controls['imageGroup'].get('imageSelected').value)
+    );
   }
   // shows image when some uploaded
   showImage(option: number) {
     switch (option) {
       case 1:
-        return this.componentForm.controls['imageGroup'].get('imageSelected').value || this.componentForm.controls['imageGroup'].get('imageSrc').value;
+        return (
+          this.componentForm.controls['imageGroup'].get('imageSelected').value ||
+          this.componentForm.controls['imageGroup'].get('imageSrc').value
+        );
       case 2:
-        return this.sanitizer.bypassSecurityTrustResourceUrl(this.componentForm.controls['imageGroup'].get('imageSrc').value);    
+        return this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.componentForm.controls['imageGroup'].get('imageSrc').value
+        );
       default:
         return this.componentForm.controls['imageGroup'].get('imageSelected').value.name;
-    }    
+    }
   }
   // when X image remover is clicked
   removeSelectedImg() {
@@ -417,31 +498,52 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     let imageObj = {
       code: this.settings.tableCode,
-      data: addImg? {
-        id: Math.random().toString(36).substring(2),
-        image: imgGrp.get('imageSelected').value.name,
-        source: imgGrp.get('imageSrc').value,
-        imageSelected: imgGrp.get('imageSelected').value,
-        ...this.imageObjWithAvailableFields(),
-      } : {
-        id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).id.toString(),
-        name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).name,
-        lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).lastName,
-        cargo: imgGrp.get('imageCargo').value,
-        description: imgGrp.get('imageDescription').value,
-        addressState: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(d=>{return d.id===imgGrp.get('imageDocente').value}).addressState,
-        status: imgGrp.get('imageStatus').value,
-        source: imgGrp.get('imageSrc').value,
-        imageSelected: imgGrp.get('imageSelected').value,
-      },
+      data: addImg
+        ? {
+          id: Math.random().toString(36).substring(2),
+          image: imgGrp.get('imageSelected').value.name,
+          source: imgGrp.get('imageSrc').value,
+          imageSelected: imgGrp.get('imageSelected').value,
+          ...this.imageObjWithAvailableFields(),
+        } 
+        : {
+          id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .id.toString(),
+          name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .name,
+          lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .lastName,
+          cargo: imgGrp.get('imageCargo').value,
+          description: imgGrp.get('imageDescription').value,
+          addressState: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .addressState,
+          status: imgGrp.get('imageStatus').value,
+          source: imgGrp.get('imageSrc').value,
+          imageSelected: imgGrp.get('imageSelected').value,
+        },
       action: 'add',    
     };
 
     this.globals.tableDataUpdater(imageObj);
     if (addImg) this.componentForm.get('imageGroup').reset();
     else {
-      const inx = this.settings.formsContent['imageGroup'].fields['imageDocente'].options.findIndex(d=>{return d.id===imgGrp.get('imageDocente').value});
-      if (inx!=-1) this.settings.formsContent['imageGroup'].fields['imageDocente'].options.splice(inx, 1);
+      const inx = this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+        .findIndex( (d) => {
+          return d.id === imgGrp.get('imageDocente').value
+        });
+      if (inx != -1) this.settings.formsContent['imageGroup'].fields['imageDocente'].options.splice(inx, 1);
       this.componentForm.reset();
       setTimeout(() => {
         this.showSelectTeacher = true;
@@ -456,51 +558,55 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       dataArr: [],
       resetData: true,
       action: 'add',
-    }; 
+    };
 
     switch (this.settings.formType) {
       case 'buscarEstudiante':
         obj.dataArr = [
-          { name: 'Name 1', lastName: 'Lastname 1', doc: '123456789', sex: 'Femenino', age: '11', },
-          { name: 'Name 2', lastName: 'Lastname 2', doc: '123456789', sex: 'Masculino', age: '13', },
-          { name: 'Name 3', lastName: 'Lastname 3', doc: '123456789', sex: 'Femenino', age: '12', },
+          { name: 'Name 1', lastName: 'Lastname 1', doc: '123456789', sex: 'Femenino', age: '11' },
+          { name: 'Name 2', lastName: 'Lastname 2', doc: '123456789', sex: 'Masculino', age: '13' },
+          { name: 'Name 3', lastName: 'Lastname 3', doc: '123456789', sex: 'Femenino', age: '12' },
         ];
         break;
-    
+
       default:
         break;
     }
 
     this.globals.tableDataUpdater(obj);
-    this.componentForm.reset();  
+    this.componentForm.reset();
   }
-  
+
   // setting inputs data
   setAllFields(data) {
     const dataKeys = Object.keys(data);
-    dataKeys.map(key => {
-      if ( (key == 'imageGroup' && this.settings.formsContent['imageGroup']) || 
-           (key == 'documentGroup' && this.settings.formsContent['documentGroup']) )
-        this.componentForm.get(key).setValue( data[key] );
-      else if(this.settings.formsContent[key]) {
-        if (key == 'addressMunicipality') 
-          this.updateMuns(true, data[key]);
-        else if (key == 'age') {// if 'Z' comes in the date format it gets removed
-          let dateKey = this.globals.getDateFormat( new Date( data[key].replace('Z','') ) );
-          this.componentForm.patchValue( { [key]: dateKey } );
-          this.checkDateOk(dateKey,this.settings.formsContent[key]['lower']?'lower':'greater',key,true);
-        }
-        else 
-          this.componentForm.patchValue( { [key]: data[key] } );
-      }        
-    });  
-    // console.log(this.componentForm.value); 
-    // this.componentForm.setValue(data); 
+    dataKeys.map((key) => {
+      if (
+        (key == 'imageGroup' && this.settings.formsContent['imageGroup']) ||
+        (key == 'documentGroup' && this.settings.formsContent['documentGroup'])
+      )
+        this.componentForm.get(key).setValue(data[key]);
+      else if (this.settings.formsContent[key]) {
+        if (key == 'addressMunicipality') this.updateMuns(true, data[key]);
+        else if (key == 'age') {
+          // if 'Z' comes in the date format it gets removed
+          let dateKey = this.globals.getDateFormat(new Date(data[key].replace('Z', '')));
+          this.componentForm.patchValue({ [key]: dateKey });
+          this.checkDateOk(
+            dateKey,
+            this.settings.formsContent[key]['lower'] ? 'lower' : 'greater',
+            key,
+            true
+          );
+        } else this.componentForm.patchValue({ [key]: data[key] });
+      }
+    });
+    // console.log(this.componentForm.value);
+    // this.componentForm.setValue(data);
   }
 
   //? turning imageGroup fields into array
   imageFieldsArr(fields) {
     return Object.keys(fields);
   }
-
 }

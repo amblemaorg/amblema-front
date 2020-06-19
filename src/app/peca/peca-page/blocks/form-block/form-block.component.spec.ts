@@ -11,6 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NbIconModule } from '@nebular/theme';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -24,25 +25,23 @@ describe('FormBlockComponent', () => {
   let formSettings = {
     component: 'form',
     settings: {
-        formsContent: {
-            name: { 
-                label: "Nombre del campo", 
-                placeholder: "Nombre del campo",
-                fullwidth: false,
-                type:        'text',
-                validations: requiredAndNormalText,
-                messages:    { pattern: MESSAGES.TEXT_MESSAGE }
-            },    
+      formsContent: {
+        name: {
+          label: 'Nombre del campo',
+          placeholder: 'Nombre del campo',
+          fullwidth: false,
+          type: 'text',
+          validations: requiredAndNormalText,
+          messages: { pattern: MESSAGES.TEXT_MESSAGE },
         },
-        buttons: ['guardar'],
-    }
-  }
+      },
+      buttons: ['guardar'],
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        FormBlockComponent,
-      ],
+      declarations: [FormBlockComponent],
       imports: [
         RouterTestingModule.withRoutes([]),
         ReactiveFormsModule,
@@ -50,16 +49,15 @@ describe('FormBlockComponent', () => {
         NgSelectModule,
         NbIconModule,
         ToastrModule.forRoot(),
+        HttpClientModule,
       ],
-      providers: [
-        { provide: ToastrService, useClass: ToastrService }
-      ],
-    })
+      providers: [{ provide: ToastrService, useClass: ToastrService }],
+    });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [FormBlockComponent]
-      }
+        entryComponents: [FormBlockComponent],
+      },
     });
   });
 
@@ -73,5 +71,5 @@ describe('FormBlockComponent', () => {
 
   it('should create component', () => {
     expect(component).toBeTruthy();
-  });  
+  });
 });
