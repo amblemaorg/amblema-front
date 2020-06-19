@@ -1,5 +1,18 @@
-import { Component, OnInit, ViewChildren, ViewContainerRef, QueryList, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
-import { PageBlockComponent, StructuralItem, StructuralBlockComponent } from '../page-block.component';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  ViewContainerRef,
+  QueryList,
+  Inject,
+  PLATFORM_ID,
+  OnDestroy,
+} from '@angular/core';
+import {
+  PageBlockComponent,
+  StructuralItem,
+  StructuralBlockComponent,
+} from '../page-block.component';
 import { PageBlockFactory } from '../page-block-factory';
 import { isPlatformBrowser } from '@angular/common';
 import * as $ from 'jquery';
@@ -10,25 +23,27 @@ declare var $: any;
 @Component({
   selector: 'modal-block',
   template: `
-    <div class="modal fade" [id]="settings.modalCode+'-modal'">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div *ngFor="let item of settings.items; index as i">
-                        <ng-template #modalContainer></ng-template>
-                    </div>                 
-                </div>    
+    <div class="modal fade" [id]="settings.modalCode + '-modal'">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div *ngFor="let item of settings.items; index as i">
+              <ng-template #modalContainer></ng-template>
             </div>
+          </div>
         </div>
+      </div>
     </div>
   `,
-  styleUrls: ['./modal-block.component.scss']
+  styleUrls: ['./modal-block.component.scss'],
 })
 export class ModalBlockComponent implements StructuralBlockComponent, OnInit, OnDestroy {
-  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<ViewContainerRef>;
+  @ViewChildren('modalContainer', { read: ViewContainerRef }) modalContainer: QueryList<
+    ViewContainerRef
+  >;
   factory: PageBlockFactory;
 
 
@@ -111,7 +126,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     );
 
     this.subscription.add(
-      this.globals.hideModalEmitter.subscribe(code => {
+      this.globals.hideModalEmitter.subscribe((code) => {
         if (this.settings.modalCode == code && this.isBrowser) {
           $(`#${code}-modal`).modal('hide');
         }
@@ -139,6 +154,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   }
 
   public instantiateChildBlocks(dataAttrs: any = null, data: any = null) {
+    let blockInstances = new Map<string, PageBlockComponent>();
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
@@ -165,6 +181,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
     const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
     pageBlockComponent.instance.setSettings(block.settings);
+    return pageBlockComponent.instance;
   }
 
   public instantiateChildBlocksGraphics() {

@@ -7,6 +7,7 @@ import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -20,47 +21,50 @@ describe('TextsButtonsSetBlockComponent', () => {
   let textsAndButtonsSettings = {
     component: 'buttons',
     settings: {
-          dateOrtext: {
-            text: 'texto fecha',
-            date: '12/12/12',
-          },
-          status: 'pendiente',
-          // texts: {
-            title: {
-              aligning: 'center', // 'center' for center aligning, 'left' otherwise
-              text: 'texto alineado',
-            },
-            subtitles: [{
-              title: 'subtitulo', // subtitle
-              text: 'parrafo', // paragraph
-            },],
-          // }[];    
-          action: [{
-              type: 1, // 1 send, 2 save
-              name: 'Enviar', // text in the button
-          }],
-          // upload: any;
-        //   download: any;
-    }
-  }
+      dateOrtext: {
+        text: 'texto fecha',
+        date: '12/12/12',
+      },
+      status: 'pendiente',
+      // texts: {
+      title: {
+        aligning: 'center', // 'center' for center aligning, 'left' otherwise
+        text: 'texto alineado',
+      },
+      subtitles: [
+        {
+          title: 'subtitulo', // subtitle
+          text: 'parrafo', // paragraph
+        },
+      ],
+      // }[];
+      action: [
+        {
+          type: 1, // 1 send, 2 save
+          name: 'Enviar', // text in the button
+        },
+      ],
+      // upload: any;
+      //   download: any;
+    },
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        TextsButtonsSetBlockComponent,
-      ],
+      declarations: [TextsButtonsSetBlockComponent],
       imports: [
         NgSelectModule,
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule.withRoutes([]),
-      ]
-    })
+        HttpClientModule,
+      ],
+    });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [TextsButtonsSetBlockComponent]
-      }
+        entryComponents: [TextsButtonsSetBlockComponent],
+      },
     });
   });
 
@@ -74,5 +78,5 @@ describe('TextsButtonsSetBlockComponent', () => {
 
   it('should create component', () => {
     expect(component).toBeTruthy();
-  });  
+  });
 });
