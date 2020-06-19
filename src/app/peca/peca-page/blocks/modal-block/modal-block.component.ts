@@ -139,7 +139,6 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   }
 
   public instantiateChildBlocks(dataAttrs: any = null, data: any = null) {
-    console.log(this.settings.items)
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
@@ -169,14 +168,12 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   }
 
   public instantiateChildBlocksGraphics() {
-    console.log(this.settings.items)
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
       item.childBlocks.map(block => {
         let settings = block.settings;
         if (block.component == "graphics") settings = { settings: block.settings, factory: this.factory };
-        console.log(settings)
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
         pageBlockComponent.instance.setSettings(settings);
