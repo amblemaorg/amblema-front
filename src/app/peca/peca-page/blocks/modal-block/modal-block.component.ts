@@ -72,8 +72,8 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           const image_group = 
             this.settings.isFromImgContainer && data.action != "add" && data.action != "delete"
               ? {
-                imageSrc: data.data.oldData.source
-                  ? data.data.oldData.source
+                imageSrc: data.data.newData.source
+                  ? data.data.newData.source
                   : null,
                 imageSelected: data.data.dataCopyData.imageSelected
                   ? data.data.dataCopyData.imageSelected
@@ -91,13 +91,13 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                     imageGroup: data.data.oldData.state
                       ? { 
                         ...image_group, 
-                        imageDescription: data.data.oldData.description,
-                        imageStatus: data.data.oldData.state, 
+                        imageDescription: data.data.newData.description,
+                        imageStatus: data.data.newData.state, 
                       } 
                       : data.data.oldData.description
                         ? { 
                           ...image_group, 
-                          imageDescription: data.data.oldData.description,
+                          imageDescription: data.data.newData.description,
                         } 
                         : { 
                           ...image_group 
@@ -115,20 +115,20 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                       } 
                       : {
                         imageGroup: {
-                          imageCargo: data.data.oldData.cargo,
-                          imageDescription: data.data.oldData.description,
-                          imageStatus: data.data.oldData.status
-                            ? data.data.oldData.status
+                          imageCargo: data.data.newData.cargo,
+                          imageDescription: data.data.newData.description,
+                          imageStatus: data.data.newData.status
+                            ? data.data.newData.status
                             : null,
-                          imageSrc: data.data.oldData.source
-                            ? data.data.oldData.source
+                          imageSrc: data.data.newData.source
+                            ? data.data.newData.source
                             : null,
                           imageSelected: data.data.dataCopyData.imageSelected
                             ? data.data.dataCopyData.imageSelected
                             : null,
                         }
                       }) 
-                      : data.data.oldData;
+                      : data.data.newData;
 
 
           this.instantiateChildBlocks(data, [data_from_table, data]);

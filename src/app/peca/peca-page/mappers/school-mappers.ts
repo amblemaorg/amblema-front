@@ -48,13 +48,21 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     nameSubDirector: subPrincipalName,
     phoneSubDirector: subPrincipalPhone,
     emailSubDirector: subPrincipalEmail,
-    number1: `${nTeachers}`,
-    number2: `${nAdministrativeStaff}`,
-    number3: `${nLaborStaff}`,
-    number4: `${nStudents}`,
-    number5: `${nGrades}`,
-    facebook,
-    instagram,
-    twitter,
+    doubleFields1: {
+      number1: nTeachers,
+      number2: nAdministrativeStaff,
+    },
+    doubleFields2: {
+      number3: nLaborStaff,
+      number4: nStudents,
+    },
+    doubleFields3: {
+      number5: nGrades,
+      facebook,
+    },
+    doubleFields4: {
+      instagram,
+      twitter,
+    },
   };
 }
