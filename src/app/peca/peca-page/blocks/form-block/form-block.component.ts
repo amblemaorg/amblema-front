@@ -135,7 +135,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
-    console.log(this.settings.formsContent);
   }
 
   setData(data: any) {
@@ -622,7 +621,11 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             key,
             true
           );
-        } else this.componentForm.patchValue({ [key]: data[key] });
+        } 
+        else if (this.settings.formsContent[key].type === 'double') {
+          this.componentForm.patchValue(data[key]);
+        }
+        else this.componentForm.patchValue({ [key]: data[key] });
       }
     });
     // console.log(this.componentForm.value);
