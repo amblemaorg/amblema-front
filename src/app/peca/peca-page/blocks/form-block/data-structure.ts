@@ -29,20 +29,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             addressMunicipality: cf.get('addressMunicipality').value,
             street: cf.get('street').value,
             city: cf.get('city').value,
-            /**
-             firstName: cf.get('name').value,
-        lastName: cf.get('lastName').value,
-        cardType: cf.controls['documentGroup'].get('prependSelect').value,
-        cardId: cf.controls['documentGroup'].get('prependInput').value,
-        email: cf.get('email').value,
-        gender: cf.get('gender').value,
-        status: cf.get('status').value,
-        phone: cf.get('phone').value,
-        addressState: cf.get('addressState').value,
-        addressMunicipality: cf.get('addressMunicipality').value,
-        address: cf.get('street').value,
-        addressCity: cf.get('city').value,
-             */
+            gender: cf.get('gender').value,        
           };              
           break;
         case 'buscarEstudiante': // for Datos de la Escuela view and Estudiantes section
