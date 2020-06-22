@@ -71,56 +71,77 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     this.subscription.add(
       this.globals.showModalEmitter.subscribe(data => {
         if (this.settings.modalCode == data.code && this.isBrowser) {
-
           if (!this.settings.isNotTableEditing) {
-            const image_group = this.settings.isFromImgContainer && data.action != "add" && data.action != "delete" ? {
-              imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
-              imageSelected: data.data.dataCopyData.imageSelected ? data.data.dataCopyData.imageSelected : null,
-            } : {};
+            const image_group =
+              this.settings.isFromImgContainer && data.action != "add" && data.action != "delete"
+                ? {
+                  imageSrc: data.data.newData.source
+                    ? data.data.newData.source
+                    : null,
+                  imageSelected: data.data.dataCopyData.imageSelected
+                    ? data.data.dataCopyData.imageSelected
+                    : null,
+                }
+                : {};
 
-            let data_from_table = data.action == "add" ? null :
-              data.action == "delete" ? data.data.oldData :
-                this.settings.isFromImgContainer ?
-                  {
-                    imageGroup: data.data.oldData.state ? {
-                      ...image_group,
-                      imageDescription: data.data.oldData.description,
-                      imageStatus: data.data.oldData.state,
-                    } : data.data.oldData.description ? {
-                      ...image_group,
-                      imageDescription: data.data.oldData.description,
-                    } : { ...image_group }
-                  } :
-                  this.settings.isFromImgPlusContainer ?
-                    (data.action == "view" ? {
-                      name: data.data.oldData.name,
-                      lastName: data.data.oldData.lastName,
-                      cargo: data.data.oldData.cargo,
-                      description: data.data.oldData.description,
-                      addressState: data.data.oldData.addressState,
-                      status: data.data.oldData.status,
-                    } : {
-                        imageGroup: {
-                          imageCargo: data.data.oldData.cargo,
-                          imageDescription: data.data.oldData.description,
-                          imageStatus: data.data.oldData.status ? data.data.oldData.status : null,
-                          imageSrc: data.data.oldData.source ? data.data.oldData.source : null,
-                          imageSelected: data.data.dataCopyData.imageSelected ? data.data.dataCopyData.imageSelected : null,
+            let data_from_table =
+              data.action == "add"
+                ? null
+                : data.action == "delete"
+                  ? data.data.oldData
+                  : this.settings.isFromImgContainer
+                    ? {
+                      imageGroup: data.data.oldData.state
+                        ? {
+                          ...image_group,
+                          imageDescription: data.data.newData.description,
+                          imageStatus: data.data.newData.state,
                         }
-                      }) : data.data.oldData;
+                        : data.data.oldData.description
+                          ? {
+                            ...image_group,
+                            imageDescription: data.data.newData.description,
+                          }
+                          : {
+                            ...image_group
+                          }
+                    }
+                    : this.settings.isFromImgPlusContainer
+                      ? (data.action == "view"
+                        ? {
+                          name: data.data.oldData.name,
+                          lastName: data.data.oldData.lastName,
+                          cargo: data.data.oldData.cargo,
+                          description: data.data.oldData.description,
+                          addressState: data.data.oldData.addressState,
+                          status: data.data.oldData.status,
+                        }
+                        : {
+                          imageGroup: {
+                            imageCargo: data.data.newData.cargo,
+                            imageDescription: data.data.newData.description,
+                            imageStatus: data.data.newData.status
+                              ? data.data.newData.status
+                              : null,
+                            imageSrc: data.data.newData.source
+                              ? data.data.newData.source
+                              : null,
+                            imageSelected: data.data.dataCopyData.imageSelected
+                              ? data.data.dataCopyData.imageSelected
+                              : null,
+                          }
+                        })
+                      : data.data.newData;
+
 
             this.instantiateChildBlocks(data, [data_from_table, data]);
+            
           }
-          else {
+          else{
             this.instantiateChildBlocksGraphics();
           }
-
-
           $(`#${data.code}-modal`).modal('show');
         }
-
-
-
 
       })
     );
@@ -158,17 +179,35 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
-      if (dataAttrs && dataAttrs.action == "view") {
-        item.childBlocks.map(block => {
-          if (block.viewMode && block.viewMode != "edit")
-            this.setChildBlock(block, data, container);
+      if (dataAttrs && dataAttrs.action == 'view') {
+        item.childBlocks.map((block, j) => {
+          if (
+            block.viewMode &&
+            block.viewMode != 'edit'
+          ) {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          }
         });
       } else {
-        item.childBlocks.map(block => {
-          if (dataAttrs && block.component === dataAttrs.component && block.viewMode && block.viewMode != "view")
-            this.setChildBlock(block, data, container);
-          else if (dataAttrs && block.component === dataAttrs.component && !block.viewMode)
-            this.setChildBlock(block, data, container);
+        item.childBlocks.map((block, j) => {
+          if (
+            dataAttrs &&
+            block.component === dataAttrs.component &&
+            block.viewMode &&
+            block.viewMode != 'view'
+          ) {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          }
+          else if (
+            dataAttrs &&
+            block.component === dataAttrs.component &&
+            !block.viewMode
+          ) {
+            const blockInstance = this.setChildBlock(block, data, container);
+            blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
+          }
         });
       }
     })
