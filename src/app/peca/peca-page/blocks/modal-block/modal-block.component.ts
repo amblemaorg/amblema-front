@@ -167,7 +167,10 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
       if (container.length > 0) container.clear();
       if (dataAttrs && dataAttrs.action == 'view') {
         item.childBlocks.map((block, j) => {
-          if (block.viewMode && block.viewMode != 'edit') {
+          if (
+            block.viewMode && 
+            block.viewMode != 'edit'
+          ) {
             const blockInstance = this.setChildBlock(block, data, container);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
           }
@@ -182,7 +185,12 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           ) {
             const blockInstance = this.setChildBlock(block, data, container);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
-          } else if (dataAttrs && block.component === dataAttrs.component && !block.viewMode) {
+          } 
+          else if (
+            dataAttrs && 
+            block.component === dataAttrs.component && 
+            !block.viewMode
+          ) {
             const blockInstance = this.setChildBlock(block, data, container);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
           }
