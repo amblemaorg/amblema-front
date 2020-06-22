@@ -23,8 +23,21 @@ export interface PecaUserModel {
   userType: string;
 }
 
+export interface PecaModel {
+  createdAt: string;
+  id: string;
+  lapse1: Object;
+  lapse2: Object;
+  lapse3: Object;
+  project: PecaProjectModel;
+  schedule: any[];
+  school: Object;
+  schoolYearName: string;
+  updatedAt: string;
+}
+
 export interface PecaStateModel {
   user?: PecaUserModel;
-  content: any;
+  content: PecaModel | null;
   selectedProject: PecaProjectModel | null;
 }
