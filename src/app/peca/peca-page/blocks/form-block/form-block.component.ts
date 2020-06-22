@@ -9,7 +9,10 @@ import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { adaptBody } from './fetcher-body-adapter';
+import { Select } from '@ngxs/store';
+import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 
 @Component({
   selector: 'form-block',
@@ -43,6 +46,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
   };
 
+  @Select(ResidenceInfoState.get_states) states$: Observable<any>;
+  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
@@ -55,6 +60,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   wrongDateDisabler = {};
 
   municipalities: MunicipalityInfo[] = [];
+  showSelectTeacher: boolean = true;
+  showSelectState: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -82,6 +89,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.settings.hideImgContainer = false;
       })
     );
+
+    if (this.settings.formsContent['addressState'])
+      this.subscription.add(
+        this.states$.subscribe( states => {
+          this.showSelectState = false;
+          this.settings.formsContent['addressState'].options = states;
+          setTimeout(() => {
+            this.showSelectState = true;
+          });
+        })
+      );
+
+    if (this.settings.formsContent['addressMunicipality'])
+      this.subscription.add(
+        this.municipalities$.subscribe( municipalities => {
+          this.settings.formsContent['addressMunicipality'].options = municipalities;
+        })
+      );
 
     this.setId();
   }
@@ -114,7 +139,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   setData(data: any) {
     this.settings.data = data;
-    this.setAllFields(this.settings.data);
+    this.setAllFields(this.settings.data);    
   }
 
   setFetcherUrls({ post, put, patch }) {
@@ -302,7 +327,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);
 
     const assignId = () => Math.random().toString(36).substring(2);
-
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
         this.settings.dataFromRow.data.newData = {
@@ -335,13 +359,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     const method = this.settings.fetcherMethod || 'post';
     const resourcePath = this.settings.fetcherUrls[method];
-    const body = this.settings.isFromCustomTableActions ? obj.data.newData : obj.data;
+    const body = adaptBody( this.settings.formType, this.settings.isFromCustomTableActions ? obj.data.newData : obj.data );
 
     this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         this.sendingForm = false;
         console.log('Form response', response);
-
+        
         if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
 
         if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
@@ -489,8 +513,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     return obj
   }
-  // method which sends image to the images table
-  showSelectTeacher: boolean = true;
+  // method which sends image to the images table  
   addImage(addImg: boolean = true) {
     const imgGrp = this.componentForm.controls['imageGroup'];
 
@@ -500,47 +523,55 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: Math.random().toString(36).substring(2),
-            image: imgGrp.get('imageSelected').value.name,
-            description: imgGrp.get('imageDescription').value,
-            state: imgGrp.get('imageStatus').value,
-            status: 'En espera',
-            source: imgGrp.get('imageSrc').value,
-            imageSelected: imgGrp.get('imageSelected').value,
-          }
+          id: Math.random().toString(36).substring(2),
+          image: imgGrp.get('imageSelected').value.name,
+          source: imgGrp.get('imageSrc').value,
+          imageSelected: imgGrp.get('imageSelected').value,
+          ...this.imageObjWithAvailableFields(),
+        } 
         : {
-            id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
-              .find((d) => {
-                return d.id === imgGrp.get('imageDocente').value;
-              })
-              .id.toString(),
-            name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(
-              (d) => {
-                return d.id === imgGrp.get('imageDocente').value;
-              }
-            ).name,
-            lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options.find(
-              (d) => {
-                return d.id === imgGrp.get('imageDocente').value;
-              }
-            ).lastName,
-            cargo: imgGrp.get('imageCargo').value,
-            description: imgGrp.get('imageDescription').value,
-            addressState: this.settings.formsContent['imageGroup'].fields[
-              'imageDocente'
-            ].options.find((d) => {
-              return d.id === imgGrp.get('imageDocente').value;
-            }).addressState,
-            status: imgGrp.get('imageStatus').value,
-            source: imgGrp.get('imageSrc').value,
-            imageSelected: imgGrp.get('imageSelected').value,
-          },
-      action: 'add',
+          id: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .id.toString(),
+          name: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .name,
+          lastName: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .lastName,
+          cargo: imgGrp.get('imageCargo').value,
+          description: imgGrp.get('imageDescription').value,
+          addressState: this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+            .find( (d) => {
+              return d.id === imgGrp.get('imageDocente').value
+            })
+            .addressState,
+          status: imgGrp.get('imageStatus').value,
+          source: imgGrp.get('imageSrc').value,
+          imageSelected: imgGrp.get('imageSelected').value,
+        },
+      action: 'add',    
     };
 
     this.globals.tableDataUpdater(imageObj);
     if (addImg) this.componentForm.get('imageGroup').reset();
-    else this.componentForm.reset();
+    else {
+      const inx = this.settings.formsContent['imageGroup'].fields['imageDocente'].options
+        .findIndex( (d) => {
+          return d.id === imgGrp.get('imageDocente').value
+        });
+      if (inx != -1) this.settings.formsContent['imageGroup'].fields['imageDocente'].options.splice(inx, 1);
+      this.componentForm.reset();
+      setTimeout(() => {
+        this.showSelectTeacher = true;
+      });      
+    }  
   }
   //? -----------------------------------------------------------------------------------
 
@@ -590,7 +621,11 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             key,
             true
           );
-        } else this.componentForm.patchValue({ [key]: data[key] });
+        } 
+        else if (this.settings.formsContent[key].type === 'double') {
+          this.componentForm.patchValue(data[key]);
+        }
+        else this.componentForm.patchValue({ [key]: data[key] });
       }
     });
     // console.log(this.componentForm.value);
