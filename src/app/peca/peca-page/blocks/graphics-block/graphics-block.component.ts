@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
@@ -11,21 +11,23 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   type: 'presentational';
   component: string;
   settings: {
+    id: string;
     items: any[];
   }
   canvas: any;
   ctx: any;
   chart: any;
+
   constructor() {
     this.type = 'presentational';
     this.component = 'graphics';
   }
 
   ngOnInit() {
-    this.canvas = document.getElementById('myChart');
+    this.canvas = document.getElementById('chart');
     this.ctx = this.canvas.getContext('2d');
 
-    this.chart = new Chart(this.ctx, {
+    let chart = new Chart(this.ctx, {
       type: "bar",
       data: {
         labels: ['col1', 'col2', 'col3'],
@@ -77,6 +79,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
 
       }
     })
+    console.log(chart);
   }
 
 
