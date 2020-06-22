@@ -141,9 +141,19 @@ const subGrafico = {
 const graficos = {
     component: 'graphics',
     settings: {
+        id:'chart',
         items: [
 
-        ]
+        ],
+        
+    }
+}
+const graficos2 = {
+    component: 'graphics',
+    settings: {
+        items: [
+
+        ],
     }
 }
 
@@ -161,11 +171,11 @@ const subtitleActividad = {
 
 //----------------------------------------------------------------------
 const sections = [
-    {title: 'Venezuela Megadiversa', id: 'dataTablaLapso1_1'},
-    {title: 'Otro titulo', id: 'dataTablaLapso1_2'},
-    {title: 'Titulo 3', id: 'dataTablaLapso1_3'},
-    {title: 'Ultimo titulo', id: 'dataTablaLapso1_4'}
-].map(val=>{
+    { title: 'Venezuela Megadiversa', id: 'dataTablaLapso1_1' },
+    { title: 'Otro titulo', id: 'dataTablaLapso1_2' },
+    { title: 'Titulo 3', id: 'dataTablaLapso1_3' },
+    { title: 'Ultimo titulo', id: 'dataTablaLapso1_4' }
+].map(val => {
     let ActividadesLapso1 = {
         component: 'textsbuttons',
         settings: {
@@ -173,8 +183,8 @@ const sections = [
                 {
                     titleInput: val.title
                 },
-    
-            ],            
+
+            ],
         },
     };
     let dataActividadLapso1 = {
@@ -227,47 +237,47 @@ const sections = [
         component: 'form',
         viewMode: 'both',
         settings: {
-        formsContent: formImgActividades,
-        buttons: ['guardar'],
-        formType: 'imageSoloType',
-        tableCode: val.id,
-        modalCode: val.id,
-        isFromCustomTableActions: true,
+            formsContent: formImgActividades,
+            buttons: ['guardar'],
+            formType: 'imageSoloType',
+            tableCode: val.id,
+            modalCode: val.id,
+            isFromCustomTableActions: true,
         }
     }
     let textsAndButtonsTablaLapso1 = {
         component: 'textsbuttons',
         settings: {
-        subtitles: [{
-            text: '¿Desea eliminar este ítem?',
-        }],
-        action: [
-            {
-                type: 1,
-                name: 'Si',
-            },
-            {
-                type: 2,
-                name: 'No',
-            },
-        ],
-        modalCode: val.id,
-        isFromCustomTableActions: true,
+            subtitles: [{
+                text: '¿Desea eliminar este ítem?',
+            }],
+            action: [
+                {
+                    type: 1,
+                    name: 'Si',
+                },
+                {
+                    type: 2,
+                    name: 'No',
+                },
+            ],
+            modalCode: val.id,
+            isFromCustomTableActions: true,
         }
     }
     let modalTablaLapso1 = {
         component: 'modal',
         settings: {
-        modalCode: val.id,
-        isFromImgContainer: true,
-        items: [
-            {        
-            childBlocks: [
-                { ...formTablaLapso1 },
-                { ...textsAndButtonsTablaLapso1 },
+            modalCode: val.id,
+            isFromImgContainer: true,
+            items: [
+                {
+                    childBlocks: [
+                        { ...formTablaLapso1 },
+                        { ...textsAndButtonsTablaLapso1 },
+                    ]
+                }
             ]
-            }
-        ]
         }
     }
     //* ------------------------------------------
@@ -281,7 +291,7 @@ const sections = [
 });
 var sectionsObjects = (sections) => {
     let objs = [];
-    sections.map(s=>{
+    sections.map(s => {
         objs.push(...s);
     });
     return objs
@@ -365,7 +375,12 @@ export const YEARBOOK_CONFIG = {
                                         {
                                             title: "Lapso 3",
                                             childBlocks: [
-
+                                                { ...subDiagnostico },
+                                                { ...tablaDiagnostico },
+                                                { ...subGrafico },
+                                                { ...graficos2 },
+                                                { ...subtitleActividad },
+                                                ...sectionsObjects(sections),
                                             ]
                                         },
                                     ]

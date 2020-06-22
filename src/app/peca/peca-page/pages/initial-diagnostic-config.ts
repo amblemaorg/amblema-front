@@ -1,6 +1,6 @@
 import { formLecturaModal, formMatematicaModal } from '../blocks/form-block/all-forms';
-
-const botonEstadistica = {
+/*Boton estadistica Lectura y modal con grafica*/
+const botonEstadisticaLectura = {
   component: 'textsbuttons',
   settings: {
     action: [
@@ -9,32 +9,69 @@ const botonEstadistica = {
         name: 'Ver estadísticas',
       }
     ],
-    modalCode:'dataModalEstadisticas'
+    modalCode:'dataModalEstadisticasLectura'
   }
 }
 
-const estadistica = {
+const estadisticaLectura = {
   component: 'graphics',
   settings: {
-    items:[]
+    id: 'chart',
+    items:[],
   }
 }
 
-const modalEstadisticas = {
+const modalEstadisticasLectura = {
   component: 'modal',
   settings: {
-    modalCode: 'dataModalEstadisticas',
+    modalCode: 'dataModalEstadisticasLectura',
     isNotTableEditing: true,
     items: [
       {
         childBlocks:[
-          {...estadistica}
+          {...estadisticaLectura}
         ]
       }
     ]
   }
 }
 
+/*Boton estadistica matematica y modales*/
+const botonEstadisticaMatematica = {
+  component: 'textsbuttons',
+  settings: {
+    action: [
+      {
+        type: 5,
+        name: 'Ver estadísticas',
+      }
+    ],
+    modalCode:'dataModalEstadisticasMatematica'
+  }
+}
+
+const estadisticaMatematica = {
+  component: 'graphics',
+  settings: {
+    items:[],
+  }
+}
+
+const modalEstadisticasMatematica = {
+  component: 'modal',
+  settings: {
+    modalCode: 'dataModalEstadisticasMatematica',
+    isNotTableEditing: true,
+    items: [
+      {
+        childBlocks:[
+          {...estadisticaMatematica}
+        ]
+      }
+    ]
+  }
+}
+/*Fin de botones y modales */
 const readingDiagnosticTable = {
   component: 'table',
   settings: {
@@ -314,18 +351,19 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
           {
             title: "Lectura",
             childBlocks: [
-              { ...botonEstadistica },
+              { ...botonEstadisticaLectura },
               { ...readingDiagnosticTable },
               { ...modalReadingDiagnosticTable },
-              { ...modalEstadisticas }
+              { ...modalEstadisticasLectura }
             ]
           },
           {
             title: "Matemática",
             childBlocks: [
-              { ...botonEstadistica },
+              { ...botonEstadisticaMatematica },
               { ...mathDiagnosticTable },
               { ...modalMathDiagnosticTable },
+              { ...modalEstadisticasMatematica }
             ]
           }
         ],
