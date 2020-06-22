@@ -9,7 +9,10 @@ import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { adaptBody } from './fetcher-body-adapter';
+import { Select } from '@ngxs/store';
+import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 
 @Component({
   selector: 'form-block',
@@ -43,6 +46,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
   };
 
+  @Select(ResidenceInfoState.get_states) states$: Observable<any>;
+  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
@@ -55,6 +60,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   wrongDateDisabler = {};
 
   municipalities: MunicipalityInfo[] = [];
+  showSelectTeacher: boolean = true;
+  showSelectState: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -83,6 +90,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       })
     );
 
+    if (this.settings.formsContent['addressState'])
+      this.subscription.add(
+        this.states$.subscribe( states => {
+          this.showSelectState = false;
+          this.settings.formsContent['addressState'].options = states;
+          setTimeout(() => {
+            this.showSelectState = true;
+          });
+        })
+      );
+
+    if (this.settings.formsContent['addressMunicipality'])
+      this.subscription.add(
+        this.municipalities$.subscribe( municipalities => {
+          this.settings.formsContent['addressMunicipality'].options = municipalities;
+        })
+      );
+
     this.setId();
   }
   ngOnDestroy() {
@@ -110,11 +135,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
+    console.log(this.settings.formsContent);
   }
 
   setData(data: any) {
     this.settings.data = data;
-    this.setAllFields(this.settings.data);
+    this.setAllFields(this.settings.data);    
   }
 
   setFetcherUrls({ post, put, patch }) {
@@ -302,7 +328,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       manageData.data['age'] = this.globals.dateStringToISOString(cf.get('age').value);
 
     const assignId = () => Math.random().toString(36).substring(2);
-
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
         this.settings.dataFromRow.data.newData = {
@@ -335,13 +360,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     const method = this.settings.fetcherMethod || 'post';
     const resourcePath = this.settings.fetcherUrls[method];
-    const body = this.settings.isFromCustomTableActions ? obj.data.newData : obj.data;
+    const body = adaptBody( this.settings.formType, this.settings.isFromCustomTableActions ? obj.data.newData : obj.data );
 
     this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         this.sendingForm = false;
         console.log('Form response', response);
-
+        
         if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
 
         if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
@@ -489,8 +514,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     return obj
   }
-  // method which sends image to the images table
-  showSelectTeacher: boolean = true;
+  // method which sends image to the images table  
   addImage(addImg: boolean = true) {
     const imgGrp = this.componentForm.controls['imageGroup'];
 
