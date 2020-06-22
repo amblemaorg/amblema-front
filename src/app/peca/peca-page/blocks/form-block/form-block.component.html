@@ -36,7 +36,16 @@
             
             <ng-container *ngSwitchCase="'select'">
               <label>{{ settings.formsContent[field].label }}</label>
+              <input 
+                *ngIf="field=='addressState' && !showSelectState"
+                class="form-control"
+                type="text"
+                [formControlName]="field"
+                [id]="getId(field)"
+                [placeholder]="settings.formsContent[field].placeholder"
+              /> 
               <ng-select
+                *ngIf="(field=='addressState' && showSelectState) || field!='addressState'"
                 class="form-control"
                 [class.is-in-modal]="settings.isFromCustomTableActions"
                 notFoundText="Elementos no encontrados"
@@ -246,7 +255,7 @@
                   <div class="input-container">
                     <label [class.label-image-status]="imgField=='imageStatus'">{{ settings.formsContent[field].fields[imgField].label }}</label>
                     <input 
-                      *ngIf="!showSelectTeacher"
+                      *ngIf="imgField=='imageDocente' && !showSelectTeacher"
                       class="form-control"
                       type="text"
                       [formControlName]="imgField"
