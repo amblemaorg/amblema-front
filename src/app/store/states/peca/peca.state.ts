@@ -5,7 +5,7 @@ import {
   SetSelectedProject,
   FetchPecaContent,
 } from '../../actions/peca/peca.actions';
-import { PecaStateModel } from './peca.model';
+import { PecaStateModel, PecaModel } from './peca.model';
 import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
   name: 'peca',
   defaults: {
     selectedProject: null,
-    content: {},
+    content: null,
   },
 })
 export class PecaState {
@@ -35,20 +35,25 @@ export class PecaState {
   }
 
   @Action(FetchPecaContent)
-  fetchPecaContent({ patchState }: StateContext<PecaStateModel>, { payload }: FetchPecaContent) {
+  fetchPecaContent(
+    { patchState, setState, getState }: StateContext<PecaStateModel>,
+    { payload }: FetchPecaContent
+  ) {
     this.apiService.setResourcePath('pecaprojects/' + payload);
 
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
-        const pecaContent: any = response;
+        //const prevState = getState();
+        const pecaContent: PecaModel = response;
         patchState({ content: pecaContent });
+        //setState({ ...prevState, content: pecaContent });
       }
     });
   }
 
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
-    setState({ content: {}, selectedProject: null });
+    setState({ content: null, selectedProject: null });
   }
 
   @Selector()
