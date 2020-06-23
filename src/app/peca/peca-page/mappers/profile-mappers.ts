@@ -107,8 +107,8 @@ export function profileDataToSchoolFormMapper(schoolData) {
 
   return {
     id,
-    name: name,
-    code: code,
+    name,
+    code,
     email: email,
     phone: phone,
     addressState: addressState.id,
