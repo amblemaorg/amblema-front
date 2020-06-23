@@ -313,7 +313,7 @@ export const sampleFormData = {
       },
       prependInput: {
         label: "Input group description",
-        placeholder: "documento de identidad",
+        placeholder: "Documento de identidad",
         fullwidth: false,
         ...controlProps.numberAndRequired
       }
@@ -982,7 +982,7 @@ export const formTabsEstudiantes = {
       },
       prependInput: {
         label: "Documento de identidad",
-        placeholder: "documento de identidad",
+        placeholder: "Documento de identidad",
         fullwidth: false,
         ...controlProps.numberAndRequired
       }
@@ -1037,7 +1037,7 @@ export const formCoordinador = {
       },
       prependInput: {
         label: "Documento de identidad",
-        placeholder: "documento de identidad",
+        placeholder: "Documento de identidad",
         fullwidth: false,
         ...controlProps.numberAndRequired
       }
