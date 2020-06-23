@@ -141,7 +141,6 @@ const subGrafico = {
 const graficos = {
     component: 'graphics',
     settings: {
-        id:'chart',
         items: [
 
         ],

@@ -16,7 +16,6 @@ const botonEstadisticaLectura = {
 const estadisticaLectura = {
   component: 'graphics',
   settings: {
-    id: 'chart',
     items:[],
   }
 }
