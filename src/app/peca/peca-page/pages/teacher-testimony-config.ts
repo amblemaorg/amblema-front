@@ -32,20 +32,6 @@ const testimonioDocenteTabla = {
             description: {
                 title: 'Descripcion'
             },
-            addressState: {
-                title: 'Estado',
-                valuePrepareFunction: ( row: any ) => {          
-                    if (row) return formTestimonioDocentesModal.addressState.options.find(d=>{return d.id===row}).name;
-                    else return '';
-                },
-                filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formTestimonioDocentesModal.addressState.options.find(d=>{return d.id===cell}).name;
-                    value = value.toUpperCase();
-                    
-                    if (value.includes(search.toUpperCase()) || search === '') return true;
-                    else return false;
-                }
-            },
             status: {
                 title: 'Estatus',
                 valuePrepareFunction: ( row: any ) => {
@@ -72,7 +58,6 @@ const testimonioDocenteTabla = {
                 lastName: 'Valbuena',
                 cargo: 'profesor',
                 description: 'lorem ipsum dolor',
-                addressState: '165146541654hjvjh',
                 status: '1',
                 source: null,
                 imageSelected: null,
