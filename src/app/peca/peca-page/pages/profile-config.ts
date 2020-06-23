@@ -6,7 +6,7 @@ const formSet = {
     component: 'form',
     settings: {
         formsContent: formCoordinador,
-        buttons: ['guardar,editar,cancelar'],
+        buttons: ['guardar','editar','cancelar'],
     }
 }
 
