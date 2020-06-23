@@ -143,7 +143,16 @@ const graficos = {
     settings: {
         items: [
 
-        ]
+        ],
+        
+    }
+}
+const graficos2 = {
+    component: 'graphics',
+    settings: {
+        items: [
+
+        ],
     }
 }
 
@@ -159,57 +168,134 @@ const subtitleActividad = {
     }
 }
 
-const ActividadesLapso1 = {
-    component: 'textsbuttons',
-    settings: {
-        inputAndBtns: [
-            {
-                titleInput: "Venezuela Megadiversa"
-            },
+//----------------------------------------------------------------------
+const sections = [
+    { title: 'Venezuela Megadiversa', id: 'dataTablaLapso1_1' },
+    { title: 'Otro titulo', id: 'dataTablaLapso1_2' },
+    { title: 'Titulo 3', id: 'dataTablaLapso1_3' },
+    { title: 'Ultimo titulo', id: 'dataTablaLapso1_4' }
+].map(val => {
+    let ActividadesLapso1 = {
+        component: 'textsbuttons',
+        settings: {
+            inputAndBtns: [
+                {
+                    titleInput: val.title
+                },
 
-        ]
-    },
-}
-const dataActividad = {
-    component: 'form',
-    settings: {
-        formsContent: formActividades,
+            ],
+        },
+    };
+    let dataActividadLapso1 = {
+        component: 'form',
+        settings: {
+            formsContent: formActividades,
+            tableCode: val.id,
+        }
+    };
+    let tablaLapso1 = {
+        component: 'table',
+        settings: {
+            columns: {
+                image: {
+                    title: "imagen",
+                },
+            },
+            isFromImgContainer: true,
+            modalCode: val.id,
+            tableCode: val.id,
+            [val.id]: [
+                {
+                    id: '1abcdefghijk',
+                    image: 'imagen1.png',
+                    source: null,
+                    imageSelected: null,
+                },
+                {
+                    id: '2abcdefghijk',
+                    image: 'imagen2.png',
+                    source: null,
+                    imageSelected: null,
+                },
+                {
+                    id: '3abcdefghijk',
+                    image: 'imagen3.png',
+                    source: null,
+                    imageSelected: null,
+                },
+            ],
+            classes: {
+                hideView: false,
+                hideEdit: false,
+                hideDelete: false,
+            },
+        }
+    };
+    //* MODAL ----------------------------------
+    let formTablaLapso1 = {
+        component: 'form',
+        viewMode: 'both',
+        settings: {
+            formsContent: formImgActividades,
+            buttons: ['guardar'],
+            formType: 'imageSoloType',
+            tableCode: val.id,
+            modalCode: val.id,
+            isFromCustomTableActions: true,
+        }
     }
-}
-const dataImgActividad = {
-    component: 'form',
-    settings: {
-        formsContent: formImgActividades,
+    let textsAndButtonsTablaLapso1 = {
+        component: 'textsbuttons',
+        settings: {
+            subtitles: [{
+                text: '¿Desea eliminar este ítem?',
+            }],
+            action: [
+                {
+                    type: 1,
+                    name: 'Si',
+                },
+                {
+                    type: 2,
+                    name: 'No',
+                },
+            ],
+            modalCode: val.id,
+            isFromCustomTableActions: true,
+        }
     }
-}
+    let modalTablaLapso1 = {
+        component: 'modal',
+        settings: {
+            modalCode: val.id,
+            isFromImgContainer: true,
+            items: [
+                {
+                    childBlocks: [
+                        { ...formTablaLapso1 },
+                        { ...textsAndButtonsTablaLapso1 },
+                    ]
+                }
+            ]
+        }
+    }
+    //* ------------------------------------------
 
-const tablaLapso1 = {
-    component: 'table',
-    settings: {
-        columns: {
-            img: {
-                title: "imagen",
-            },
-        },
-        tableCode: 'dataTablaLapso',
-        dataTablaLapso: [
-            {
-                img: 'lorem inpsu',
-            },
-            {
-                img: 'lorem inpsu',
-            },
-            {
-                img: 'lorem inpsu',
-            },
-        ],
-        classes: {
-            hideView: false,
-            hideEdit: false,
-            hideDelete: false,
-        },
-    }
-}
+    return [
+        { ...ActividadesLapso1 },
+        { ...dataActividadLapso1 },
+        { ...tablaLapso1 },
+        { ...modalTablaLapso1 }
+    ]
+});
+var sectionsObjects = (sections) => {
+    let objs = [];
+    sections.map(s => {
+        objs.push(...s);
+    });
+    return objs
+};
+//----------------------------------------------------------------------
 
 const btnEnviarSolicitud = {
     component: 'textsbuttons',
@@ -276,21 +362,7 @@ export const YEARBOOK_CONFIG = {
                                                 { ...subGrafico },
                                                 { ...graficos },
                                                 { ...subtitleActividad },
-                                                //*********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 },
-                                                //*********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 },
-                                                //***********************
-                                                { ...ActividadesLapso1 },
-                                                { ...dataActividad },
-                                                { ...dataImgActividad },
-                                                { ...tablaLapso1 }
+                                                ...sectionsObjects(sections),
                                             ]
                                         },
                                         {
@@ -302,7 +374,12 @@ export const YEARBOOK_CONFIG = {
                                         {
                                             title: "Lapso 3",
                                             childBlocks: [
-
+                                                { ...subDiagnostico },
+                                                { ...tablaDiagnostico },
+                                                { ...subGrafico },
+                                                { ...graficos2 },
+                                                { ...subtitleActividad },
+                                                ...sectionsObjects(sections),
                                             ]
                                         },
                                     ]

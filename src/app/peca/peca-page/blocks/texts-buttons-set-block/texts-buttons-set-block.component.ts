@@ -135,20 +135,18 @@ export class TextsButtonsSetBlockComponent
     return false;
   }
 
-  addToTable(usingModal: boolean = false) {
-    let obj = !usingModal
-      ? {
-          code: this.settings.tableCode,
-          data: {},
-          resetData: false,
-          action: 'add',
-        }
-      : {
-          code: this.settings.modalCode,
-          action: 'add',
-          showBtn: true,
-          component: 'form',
-        };
+  addToTable(usingModal: boolean = false, isNotFromTable: boolean = false) {
+    let obj = !usingModal? {
+      code: this.settings.tableCode,
+      data: {},
+      resetData: false,
+      action: 'add',
+    } : {
+      code: this.settings.modalCode,
+      action: !isNotFromTable? 'add':'view',
+      showBtn: !isNotFromTable? true : false,
+      component: !isNotFromTable? 'form' : 'graphics',
+    };
 
     if (!usingModal) {
       switch (this.settings.buttonType) {

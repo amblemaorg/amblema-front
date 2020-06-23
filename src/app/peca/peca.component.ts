@@ -8,6 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/internal/operators/first';
 import { take } from 'rxjs/internal/operators/take';
 import cloneDeep from 'lodash/cloneDeep';
+import { UpdateStates, UpdateMunicipalities } from '../store/actions/steps/residence-info.actions';
 
 @Component({
   selector: 'app-peca',
@@ -96,5 +97,10 @@ export class PecaComponent implements OnInit, OnDestroy {
 
   toggle() {
     this.sidebarService.toggle(true, 'menu-sidebar');
+  }
+
+  getResidenceInfo() {
+    this.store.dispatch(new UpdateStates);
+    this.store.dispatch(new UpdateMunicipalities);
   }
 }

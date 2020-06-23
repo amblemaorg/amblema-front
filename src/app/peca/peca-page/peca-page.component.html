@@ -1,10 +1,12 @@
 <nb-card>
   <nb-card-body>
-    <div class="col-sm-6 title-style">
+    <div [class.col-sm-6]="header.title && header.download"
+    class="title-style">
       <h1>{{ header.title }}</h1>
     </div>
 
-    <div class="col-sm-6 style-btn-anuario">
+    <div [class.col-sm-6]="header.download"
+    class="style-btn-anuario">
       <button *ngIf="header.download" title="general"
         class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">{{header.download.name}}
       </button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
@@ -16,6 +16,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   canvas: any;
   ctx: any;
   chart: any;
+
   constructor() {
     this.type = 'presentational';
     this.component = 'graphics';

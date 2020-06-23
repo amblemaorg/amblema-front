@@ -214,14 +214,14 @@ export const sampleFormData = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -230,30 +230,30 @@ export const sampleFormData = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   title3: { label: 'Otros campos', type: 'title' },
@@ -313,7 +313,7 @@ export const sampleFormData = {
       },
       prependInput: {
         label: 'Input group description',
-        placeholder: 'documento de identidad',
+        placeholder: 'Documento de identidad',
         fullwidth: false,
         ...controlProps.numberAndRequired,
       },
@@ -422,8 +422,8 @@ export const formTestimonioDocentesModal = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: '165146541654hjvjh', name: 'Lara' },
-      { id: '165146wfw254hjvjh', name: 'Yaracuy' },
+      // { id: '165146541654hjvjh', name: 'Lara' },
+      // { id: '165146wfw254hjvjh', name: 'Yaracuy' },
     ],
   },
   status: {
@@ -538,14 +538,14 @@ export const formDatosEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -554,30 +554,30 @@ export const formDatosEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   callesEscuela: {
@@ -779,6 +779,7 @@ export const formTabsDocente = {
         label: 'Input group select',
         placeholder: 'Input group select',
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: '1', name: 'V' },
@@ -795,7 +796,8 @@ export const formTabsDocente = {
   },
   gender: {
     label: 'Sexo',
-    ...controlProps.select,
+    placeholder: 'Sexo',
+    ...controlProps.selectAndRequired,
     options: [
       { id: '1', name: 'Femenino' },
       { id: '2', name: 'Masculino' },
@@ -819,14 +821,14 @@ export const formTabsDocente = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -835,30 +837,30 @@ export const formTabsDocente = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   street: {
@@ -875,7 +877,7 @@ export const formTabsDocente = {
   },
   status: {
     label: 'Estatus',
-    placeholder: 'Pendiente',
+    placeholder: 'Estatus',
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -976,7 +978,7 @@ export const formTabsEstudiantes = {
       },
       prependInput: {
         label: 'Documento de identidad',
-        placeholder: 'documento de identidad',
+        placeholder: 'Documento de identidad',
         fullwidth: false,
         ...controlProps.numberAndRequired,
       },
@@ -1031,7 +1033,7 @@ export const formCoordinador = {
       },
       prependInput: {
         label: 'Documento de identidad',
-        placeholder: 'documento de identidad',
+        placeholder: 'Documento de identidad',
         fullwidth: false,
         ...controlProps.numberAndRequired,
       },
@@ -1077,14 +1079,14 @@ export const formCoordinador = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -1093,30 +1095,30 @@ export const formCoordinador = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   city: {
@@ -1169,7 +1171,7 @@ export const formPadrino = {
       },
       prependInput: {
         label: 'Documento de identidad',
-        placeholder: 'documento de identidad',
+        placeholder: 'Documento de identidad',
         fullwidth: false,
         ...controlProps.numberAndRequired,
       },
@@ -1243,14 +1245,14 @@ export const formPadrino = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -1259,30 +1261,30 @@ export const formPadrino = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   city: {
@@ -1331,14 +1333,14 @@ export const formEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        name: 'Lara',
-        id: '5e82377e3640bd4be8114442',
-      },
-      {
-        name: 'Yaracuy',
-        id: '5e82378c3640bd4be8114443',
-      },
+      // {
+      //   name: 'Lara',
+      //   id: '5e82377e3640bd4be8114442',
+      // },
+      // {
+      //   name: 'Yaracuy',
+      //   id: '5e82378c3640bd4be8114443',
+      // },
     ],
   },
   addressMunicipality: {
@@ -1347,30 +1349,30 @@ export const formEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      {
-        id: '5e8237ca3640bd4be8114444',
-        name: 'Iribarren',
-        state: {
-          name: 'Lara',
-          id: '5e82377e3640bd4be8114442',
-        },
-      },
-      {
-        id: '5ea0ab5bb20b418e50fd8f8b',
-        name: 'Peña',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
-      {
-        id: '5ee7a51ac55bc7a4c9cde549',
-        name: 'San Felipe',
-        state: {
-          name: 'Yaracuy',
-          id: '5e82378c3640bd4be8114443',
-        },
-      },
+      // {
+      //   id: '5e8237ca3640bd4be8114444',
+      //   name: 'Iribarren',
+      //   state: {
+      //     name: 'Lara',
+      //     id: '5e82377e3640bd4be8114442',
+      //   },
+      // },
+      // {
+      //   id: '5ea0ab5bb20b418e50fd8f8b',
+      //   name: 'Peña',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
+      // {
+      //   id: '5ee7a51ac55bc7a4c9cde549',
+      //   name: 'San Felipe',
+      //   state: {
+      //     name: 'Yaracuy',
+      //     id: '5e82378c3640bd4be8114443',
+      //   },
+      // },
     ],
   },
   city: {
@@ -1513,12 +1515,18 @@ export const formEscuelaAnuario = {
 };
 //Actividades
 export const formActividades = {
-  nameDescription: {
-    placeholder: 'Descripción de la actividad',
-    fullwidth: true,
-    ...controlProps.textareaNnormalText,
+  nameDescription: { 
+    placeholder: "Descripción de la actividad", 
+    fullwidth: true, 
+    ...controlProps.textareaNnormalText
   },
-};
+  imageGroup: {
+    type: "image",
+    fields: {
+     
+    },
+  },
+}
 export const formImgActividades = {
   imageGroup: {
     type: 'image',
@@ -1787,8 +1795,8 @@ export const formResultadoEstudianteModal = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: '165146541654hjvjh', name: 'Lara' },
-      { id: '165146wfw254hjvjh', name: 'Yaracuy' },
+      // { id: '165146541654hjvjh', name: 'Lara' },
+      // { id: '165146wfw254hjvjh', name: 'Yaracuy' },
     ],
   },
   result: {
