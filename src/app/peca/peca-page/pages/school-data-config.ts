@@ -613,7 +613,7 @@ export const SCHOOL_DATA_CONFIG = {
                       ],
                     },
                     {
-                      title: 'Grados y secciones',
+                      title: 'Grado y secciones',
                       childBlocks: [
                         { ...formGradosYSecciones },
                         { ...tablaGradosSecciones },
