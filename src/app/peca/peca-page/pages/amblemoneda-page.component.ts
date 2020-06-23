@@ -21,8 +21,8 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     super(factoryResolver);
     this.instantiateComponent(config);
     // TODO: change for a code that must reload only this page component
-    // It reloads all components
-    router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // It reloads all components including PecaComponent, and it generates some bugs
+    // router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngAfterViewInit(): void {

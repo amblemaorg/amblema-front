@@ -8,4 +8,8 @@
     [class.hide-delete]="settings.classes.hideDelete"
     (custom)="onCustomActions($event)"
   ></ng2-smart-table>
+
+  <div *ngIf="settings.total" class="estilo-total">
+    <h5>Total: <span>{{settings.total}}</span></h5>
+  </div>
 </div>

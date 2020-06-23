@@ -4,6 +4,25 @@ $table-border-color: 1px solid $blue;
 
 ::ng-deep {
     .table-container { overflow-x: auto; }
+    .estilo-total{
+        text-align: right;
+        margin: 0 2.5rem 2rem 0;
+    }
+    .nb-theme-default ng2-smart-table table tr th, .nb-theme-default ng2-smart-table table tr th a{
+        font-family: "Montserrat";
+        font-weight: bold;
+        font-style: normal;
+        font-size: 0.9rem;
+    }
+    .nb-theme-default ng2-smart-table table tr td{
+        font-family: "Montserrat";
+        font-weight: 700;
+        font-style: normal;
+        font-size: 0.9rem;
+    }
+    .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.asc, .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.desc{
+        font-weight: 700;
+    }
     .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th {
         padding: 0.375rem 2rem;
     }
