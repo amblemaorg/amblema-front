@@ -27,6 +27,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       hideEdit: boolean;
       hideDelete: boolean;
     };
+    total?: number;
   };
 
   // source: LocalDataSource | any;
