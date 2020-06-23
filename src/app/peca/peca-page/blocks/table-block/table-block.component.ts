@@ -27,6 +27,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       hideEdit: boolean;
       hideDelete: boolean;
     };
+    total?: number;
   };
 
   // source: LocalDataSource | any;
@@ -150,7 +151,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       data: {
         dataCopyData: index != -1 ? this.settings['dataCopy'][index] : e.data,
         oldData: e.data,
-        newData: { ...e.data },
+        newData: e.data,
       },
       action: e.action.toLowerCase(),
       showBtn: false,
