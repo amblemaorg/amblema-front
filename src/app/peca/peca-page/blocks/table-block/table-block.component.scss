@@ -4,6 +4,10 @@ $table-border-color: 1px solid $blue;
 
 ::ng-deep {
     .table-container { overflow-x: auto; }
+    .estilo-total{
+        text-align: right;
+        margin: 0 2.5rem 2rem 0;
+    }
     .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th {
         padding: 0.375rem 2rem;
     }
