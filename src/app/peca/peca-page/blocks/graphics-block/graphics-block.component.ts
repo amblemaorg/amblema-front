@@ -11,7 +11,6 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   type: 'presentational';
   component: string;
   settings: {
-    id: string;
     items: any[];
   }
   canvas: any;
@@ -24,10 +23,10 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   }
 
   ngOnInit() {
-    this.canvas = document.getElementById('chart');
+    this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
 
-    let chart = new Chart(this.ctx, {
+    this.chart = new Chart(this.ctx, {
       type: "bar",
       data: {
         labels: ['col1', 'col2', 'col3'],
@@ -79,7 +78,6 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
 
       }
     })
-    console.log(chart);
   }
 
 
