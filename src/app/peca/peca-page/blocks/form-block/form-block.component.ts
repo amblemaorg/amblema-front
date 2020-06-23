@@ -611,7 +611,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.componentForm.get(key).setValue(data[key]);
       else if (this.settings.formsContent[key]) {
         if (key == 'addressMunicipality') this.updateMuns(true, data[key]);
-        else if (key == 'age') {
+        else if (this.settings.formsContent[key].type === 'date') {
           // if 'Z' comes in the date format it gets removed
           let dateKey = this.globals.getDateFormat(new Date(data[key].replace('Z', '')));
           this.componentForm.patchValue({ [key]: dateKey });
