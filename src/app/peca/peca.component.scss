@@ -45,7 +45,7 @@
   }
 
   body {
-    font-family: nb-theme(font-family-primary);
+    font-family: "Montserrat";
     color: nb-theme(text-basic-color);
   }
 
@@ -76,6 +76,25 @@
     margin-top: 30px;
     margin-bottom: 20px;
   }
+  .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:hover {
+    color: #091c7a ;
+  }
+  .nb-theme-default nb-menu .menu-item a:hover{
+    color: #091c7a ;
+  }
+  .nb-theme-default nb-menu .menu-item a:hover .menu-icon{
+    color: #091c7a !important;
+  }
+  .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:focus {
+    color: #091c7a ;
+  }
+  .nb-theme-default nb-menu .menu-item a:focus{
+    color: #091c7a ;
+  }
+  .nb-theme-default nb-menu .menu-item a:focus .menu-icon{
+    color: #091c7a !important;
+  }
+  
   .nb-theme-default {
     nb-sidebar {
       width: 12rem;
@@ -96,6 +115,7 @@
             font-weight: normal;
             line-height: 1.2;
             max-width: 100%;
+            font-family: "Montserrat";
           }
         }
         // Submenu items
@@ -110,7 +130,9 @@
         }
       }
     }
-
+    h6, nb-card, nb-tabset nb-tab, p, nb-checkbox .text {
+      font-family: "Montserrat";
+    }
     h1 {
       font-size: 1.6rem;
       font-family: "Montserrat";
