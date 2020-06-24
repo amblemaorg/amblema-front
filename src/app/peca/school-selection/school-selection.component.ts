@@ -5,6 +5,11 @@ import { NbAuthJWTToken, NbAuthService, decodeJwtPayload } from "@nebular/auth";
 import { Location } from "@angular/common";
 import { Store } from "@ngxs/store";
 import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
+import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
+import { UpdateUserInfo } from 'src/app/store/actions/e-learning/user.actions';
+import { UpdateStepsProgress } from 'src/app/store/actions/steps/project.actions';
+import { StepsService } from 'src/app/services/steps/steps.service';
+import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 
 @Component({
   selector: "app-school-selection",
@@ -41,7 +46,8 @@ export class SchoolSelectionComponent implements OnInit {
     private router: Router,
     private authService: NbAuthService,
     private location: Location,
-    private store: Store
+    private store: Store,
+    private stepsService: StepsService
   ) {}
 
   ngOnInit() {
@@ -79,6 +85,14 @@ export class SchoolSelectionComponent implements OnInit {
         { idProject: idProject, userType: this.userType, idUser: this.idUser },
       ]);
       this.store.dispatch([new SetSelectedProject(this.projects[index])]);
+
+      //for steps/modules view...................
+      this.store.dispatch( new UpdateModulesTotal );
+      this.store.dispatch( new UpdateUserInfo( this.idUser, (+this.userType) ) );
+      this.store.dispatch( new UpdateStepsProgress(idProject) ).subscribe(res => {
+        this.stepsService.enableTabMethod(true);
+      });
+      
     } else {
       this.router.navigate(["peca"]);
       //{
@@ -89,9 +103,17 @@ export class SchoolSelectionComponent implements OnInit {
       //},
       this.store.dispatch([new SetSelectedProject(this.projects[index])]);
     }
+
+    this.getResidenceInfo();
   }
 
   goBack() {
     this.location.back();
   }
+
+  getResidenceInfo() {
+    this.store.dispatch(new UpdateStates);
+    this.store.dispatch(new UpdateMunicipalities);
+  }
+  
 }

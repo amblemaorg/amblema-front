@@ -31,6 +31,7 @@
                 [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 [pattern]="settings.formsContent[field].validations.pattern"
+                [readonly]="settings.formsContent[field].readonly"
               />
             </ng-container>
             
@@ -58,6 +59,7 @@
                 [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 (change)="updateMuns(field==='addressState'? true:false)"
+                [readonly]="settings.formsContent[field].readonly"
               >
                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                   <small>{{item.name}}</small>
@@ -79,6 +81,7 @@
                   [virtualScroll]="true"
                   [id]="getId('prependSelect')"
                   [clearable]="false"
+                  [readonly]="settings.formsContent[field].fields['prependInput'].readonly"
                 >
                   <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                     <small>{{item.name}}</small>
@@ -92,6 +95,7 @@
                 formControlName="prependInput" 
                 [id]="getId('prependInput')"
                 [placeholder]="settings.formsContent[field].fields['prependInput'].placeholder"
+                [readonly]="settings.formsContent[field].fields['prependInput'].readonly"
               />
               <ng-container *ngIf="hasErrors(field,true)">
                 <div class="error-message">
@@ -110,10 +114,11 @@
                   [formControlName]="field"
                   [id]="getId('datepicker-'+field)"
                   (change)="checkDateOk($event,settings.formsContent[field].lower?'lower':'greater',field)"
+                  [readonly]="settings.formsContent[field].readonly"
                 />
                 <input 
                   [class.d-none]="inputDate.value.length > 0"
-                  class="form-control form-control-date"
+                  class="form-control form-control-date is-date-input-placeholder"
                   autocomplete='off'
                   type="text"              
                   [id]="getId(field)"
@@ -150,6 +155,7 @@
                   [formControlName]="doublefield"
                   [id]="getId(doublefield)"
                   [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
+                  [readonly]="settings.formsContent[field].fields[doublefield].readonly"
                 />
                 <ng-container *ngIf="hasErrors(field,true,doublefield)">
                   <div class="error-message">
@@ -167,6 +173,7 @@
                 [formControlName]="field"
                 [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
+                [readonly]="settings.formsContent[field].readonly"
               ></textarea>
             </ng-container>
 
@@ -179,6 +186,7 @@
                 [formControlName]="field"
                 [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
+                [readonly]="settings.formsContent[field].readonly"
               />
             </ng-container>
 
@@ -276,6 +284,7 @@
                       [virtualScroll]="true"
                       [id]="getId(imgField)"
                       [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                      [readonly]="settings.formsContent[field].fields[imgField].readonly"
                     >
                       <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                         <small>{{item.name}}</small>
@@ -290,6 +299,7 @@
                       [formControlName]="imgField"
                       [id]="getId(imgField)"
                       [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                      [readonly]="settings.formsContent[field].fields[imgField].readonly"
                     /> 
                     <ng-container *ngIf="hasErrors(field,true,imgField,true) 
                       && (settings.isFromCustomTableActions || settings.alwaysValidations)">

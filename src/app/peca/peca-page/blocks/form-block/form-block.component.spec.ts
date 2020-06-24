@@ -12,6 +12,11 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NbIconModule } from '@nebular/theme';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
+import { UserState } from '../../../../store/states/e-learning/user.state';
+import { StepsState } from '../../../../store/states/steps/project.state';
+import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -50,6 +55,18 @@ describe('FormBlockComponent', () => {
         NbIconModule,
         ToastrModule.forRoot(),
         HttpClientModule,
+        NgxsModule.forRoot( [
+          ModulesState,
+          UserState,
+          StepsState,
+          ResidenceInfoState,
+        ],
+        {
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        })
       ],
       providers: [{ provide: ToastrService, useClass: ToastrService }],
     });
