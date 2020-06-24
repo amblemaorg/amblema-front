@@ -106,19 +106,8 @@ const specialActivityTable = {
             hideEdit: false,
             hideDelete: false,
         },
+        total:1000
     }
-}
-const labelTotal = {
-    component: 'textsbuttons',
-    settings: {
-        dateOrtext: {
-            
-        },
-        status: {
-            text: 'Total',
-            subText: '1500'
-        }
-  }
 }
 
 //* MODAL ACTIVIDAD ESPECIAL ----------------------------------
@@ -183,7 +172,6 @@ export const SPECIAL_ACTIVITY_CONFIG = {
                         childBlocks: [
                             { ...dateAndStatus },                            
                             { ...specialActivityTable },
-                            { ...labelTotal },
                             { ...textsAndButtons },
                             { ...modalSpecialActivityTable },
                         ]
