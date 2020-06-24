@@ -1,7 +1,7 @@
-@import "scss/responsive";
-@import "scss/variables";
-@import "scss/elements/headings";
-@import "scss/elements/button";
+@import 'scss/responsive';
+@import 'scss/variables';
+@import 'scss/elements/headings';
+@import 'scss/elements/button';
 
 h1,
 h2 {
@@ -20,7 +20,7 @@ section.about-us {
   color: $blue;
   padding: 11vw 0;
   min-height: 40vw;
-  background-image: url("../../../../assets/images/leaves-background-movil.png");
+  background-image: url('../../../../assets/images/leaves-background-movil.png');
   background-position-y: 3vw;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -28,14 +28,14 @@ section.about-us {
   @include breakpoint(small, landscape) {
     padding: 6vw 0 12vw;
     min-height: 55vw;
-    background-image: url("../../../../assets/images/leaves-background-desktop.png");
+    background-image: url('../../../../assets/images/leaves-background-desktop.png');
     background-position-y: 0;
   }
 
   @include breakpoint(medium) {
     padding: 6vw 0 12vw;
     min-height: 55vw;
-    background-image: url("../../../../assets/images/leaves-background-desktop.png");
+    background-image: url('../../../../assets/images/leaves-background-desktop.png');
   }
 
   .heading {
@@ -111,41 +111,6 @@ section.about-us {
       }
     }
   }
-
-  owl-carousel {
-    // Awards owl carousel in about us page
-    &.awards-carousel {
-      .owl-stage-outer {
-        display: flex;
-        justify-content: center;
-
-        @include breakpoint(medium, portrait, down) {
-          justify-content: unset;
-        }
-
-        .owl-stage {
-          display: flex;
-          justify-content: center;
-          .owl-item {
-            display: flex;
-            justify-content: center;
-          }
-        }
-      }
-
-      .owl-prev {
-        @include breakpoint(large) {
-          left: 1vw !important;
-        }
-      }
-
-      .owl-next {
-        @include breakpoint(large) {
-          right: -98vw !important;
-        }
-      }
-    }
-  }
 }
 
 ::ng-deep {
@@ -197,15 +162,15 @@ section.pillars {
         position: relative;
 
         &.environment {
-          background-image: url("../../../../assets/images/background-pillar-ambiente.jpg");
+          background-image: url('../../../../assets/images/background-pillar-ambiente.jpg');
         }
 
         &.reading {
-          background-image: url("../../../../assets/images/background-pillar-lectura.jpg");
+          background-image: url('../../../../assets/images/background-pillar-lectura.jpg');
         }
 
         &.math {
-          background-image: url("../../../../assets/images/background-pillar-matematica.jpg");
+          background-image: url('../../../../assets/images/background-pillar-matematica.jpg');
         }
       }
     }
@@ -292,6 +257,42 @@ section.awards {
     }
   }
 }
+::ng-deep {
+  owl-carousel {
+    // Awards owl carousel in about us page
+    &.awards-carousel {
+      .owl-stage-outer {
+        // display: flex;
+        // justify-content: center;
+
+        @include breakpoint(medium, portrait, down) {
+          justify-content: unset;
+        }
+
+        .owl-stage {
+          display: flex;
+          justify-content: center;
+          .owl-item {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+
+      .owl-prev {
+        @include breakpoint(large) {
+          left: 1vw !important;
+        }
+      }
+
+      .owl-next {
+        @include breakpoint(large) {
+          right: -98vw !important;
+        }
+      }
+    }
+  }
+}
 
 .awards-list {
   margin: 12vw auto;
@@ -306,7 +307,7 @@ section.awards {
     color: $blue;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     text-align: center;
     padding: 1vw 0;

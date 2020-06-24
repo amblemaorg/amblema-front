@@ -8,8 +8,8 @@
     [options]="customOptions"
   >
     <ng-template carouselSlide *ngFor="let slide of slides">
-      <div class="web-cover__mobile-image-extended-wrapper">
-        <picture class="web-cover__image">
+      <div class="web-cover__mobile-image-extended-wrapper web-cover__overlay-green">
+        <picture class="web-cover__image web-cover__image--transparent">
           <source [srcset]="slide.image" media="(min-width: 1024px) and (orientation: landscape)" />
           <source [srcset]="slide.image" media="(min-width: 767px) and (orientation: portrait)" />
           <source [srcset]="slide.image" media="(min-width: 320px) and (orientation: landscape)" />
@@ -27,8 +27,8 @@
   </owl-carousel-o>
   <!-- Image element if only 1 slide -->
   <div *ngIf="slides.length == 1">
-    <div class="web-cover__mobile-image-extended-wrapper">
-      <picture class="web-cover__image">
+    <div class="web-cover__mobile-image-extended-wrapper web-cover__overlay-green">
+      <picture class="web-cover__image web-cover__image--transparent">
         <source
           [srcset]="slides[0].image"
           media="(min-width: 1024px) and (orientation: landscape)"
