@@ -54,7 +54,6 @@ export class StepsComponent implements OnInit {
       this.goToModules();
     });
 
-    this.getResidenceInfo();
     if (!this.isTest) { 
       //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
       let pjId = (this.route.snapshot.params && this.route.snapshot.params.idProject)? 
@@ -139,10 +138,6 @@ export class StepsComponent implements OnInit {
     this.store.dispatch(new UpdateStepsProgress(p_i)).subscribe(res=>{
       this.enabledTabs = true;
     });
-  }
-  getResidenceInfo() {
-    this.store.dispatch(new UpdateStates);
-    this.store.dispatch(new UpdateMunicipalities);
   }
 
   swicthStep(num,e) {
