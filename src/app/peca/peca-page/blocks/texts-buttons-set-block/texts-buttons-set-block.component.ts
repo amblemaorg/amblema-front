@@ -192,9 +192,9 @@ export class TextsButtonsSetBlockComponent
                 return d.id === this.currentSelected;
               }).section,
             },
-            addressState: this.settings.selectStatus['lista'].find((d) => {
+            status: this.settings.selectStatus['lista'].find((d) => {
               return d.id === this.currentSelected;
-            }).addressState,
+            }).status,
             result: this.settings.selectStatus['lista'].find((d) => {
               return d.id === this.currentSelected;
             }).result,
