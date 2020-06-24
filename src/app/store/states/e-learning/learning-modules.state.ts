@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { ModuleStateModel, UpdateModulesTotal } from '../../actions/e-learning/learning-modules.actions';
+import { ModuleStateModel, UpdateModulesTotal, ClearModulesTotal } from '../../actions/e-learning/learning-modules.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<ModuleStateModel>({
@@ -37,4 +37,13 @@ import { ModulesService } from '../../../services/steps/modules.service';
         })
       );
     }
+
+    @Action(ClearModulesTotal)
+    ClearModulesTotal(ctx: StateContext<ModuleStateModel>) {
+      ctx.setState({
+        modulesTotal: 0,
+        modules: [],
+      });
+    }
+
   }

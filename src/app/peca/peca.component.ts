@@ -62,8 +62,6 @@ export class PecaComponent implements OnInit, OnDestroy {
       },
       (error) => console.error(error)
     );
-
-    this.getResidenceInfo();
   }
 
   createMenuOptions(pecaContent) {
@@ -101,8 +99,4 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.sidebarService.toggle(true, 'menu-sidebar');
   }
 
-  getResidenceInfo() {
-    this.store.dispatch(new UpdateStates);
-    this.store.dispatch(new UpdateMunicipalities);
-  }
 }
