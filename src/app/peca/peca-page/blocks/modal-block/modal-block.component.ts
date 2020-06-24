@@ -46,9 +46,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   >;
   factory: PageBlockFactory;
 
+
   type: 'structural';
   component: string;
   settings: {
+    isNotTableEditing?: boolean;
     isFromImgContainer?: boolean; // indicates if data in table is from an image container
     isFromImgPlusContainer?: boolean; // indicates if data in table is from an image container +
     modalCode?: string;
@@ -67,73 +69,80 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
 
   ngOnInit() {
     this.subscription.add(
-      this.globals.showModalEmitter.subscribe((data) => {
+      this.globals.showModalEmitter.subscribe(data => {
         if (this.settings.modalCode == data.code && this.isBrowser) {
-          const image_group = 
-            this.settings.isFromImgContainer && data.action != "add" && data.action != "delete"
-              ? {
-                imageSrc: data.data.newData.source
-                  ? data.data.newData.source
-                  : null,
-                imageSelected: data.data.dataCopyData.imageSelected
-                  ? data.data.dataCopyData.imageSelected
-                  : null,
-              } 
-              : {};
-          
-          let data_from_table = 
-            data.action == "add"
-            ? null 
-            : data.action == "delete"
-              ? data.data.oldData 
-              : this.settings.isFromImgContainer
+          if (!this.settings.isNotTableEditing) {
+            const image_group =
+              this.settings.isFromImgContainer && data.action != "add" && data.action != "delete"
                 ? {
-                    imageGroup: data.data.oldData.state
-                      ? { 
-                        ...image_group, 
-                        imageDescription: data.data.newData.description,
-                        imageStatus: data.data.newData.state, 
-                      } 
-                      : data.data.oldData.description
-                        ? { 
-                          ...image_group, 
+                  imageSrc: data.data.newData.source
+                    ? data.data.newData.source
+                    : null,
+                  imageSelected: data.data.dataCopyData.imageSelected
+                    ? data.data.dataCopyData.imageSelected
+                    : null,
+                }
+                : {};
+
+            let data_from_table =
+              data.action == "add"
+                ? null
+                : data.action == "delete"
+                  ? data.data.oldData
+                  : this.settings.isFromImgContainer
+                    ? {
+                      imageGroup: data.data.oldData.state
+                        ? {
+                          ...image_group,
                           imageDescription: data.data.newData.description,
-                        } 
-                        : { 
-                          ...image_group 
+                          imageStatus: data.data.newData.state,
                         }
-                  } 
-                  : this.settings.isFromImgPlusContainer
-                    ? (data.action == "view"
-                      ? {
+                        : data.data.oldData.description
+                          ? {
+                            ...image_group,
+                            imageDescription: data.data.newData.description,
+                          }
+                          : {
+                            ...image_group
+                          }
+                    }
+                    : this.settings.isFromImgPlusContainer
+                      ? (data.action == "view"
+                        ? {
                           name: data.data.oldData.name,
                           lastName: data.data.oldData.lastName,
                           cargo: data.data.oldData.cargo,
                           description: data.data.oldData.description,
                           addressState: data.data.oldData.addressState,
                           status: data.data.oldData.status,
-                      } 
-                      : {
-                        imageGroup: {
-                          imageCargo: data.data.newData.cargo,
-                          imageDescription: data.data.newData.description,
-                          imageStatus: data.data.newData.status
-                            ? data.data.newData.status
-                            : null,
-                          imageSrc: data.data.newData.source
-                            ? data.data.newData.source
-                            : null,
-                          imageSelected: data.data.dataCopyData.imageSelected
-                            ? data.data.dataCopyData.imageSelected
-                            : null,
                         }
-                      }) 
+                        : {
+                          imageGroup: {
+                            imageCargo: data.data.newData.cargo,
+                            imageDescription: data.data.newData.description,
+                            imageStatus: data.data.newData.status
+                              ? data.data.newData.status
+                              : null,
+                            imageSrc: data.data.newData.source
+                              ? data.data.newData.source
+                              : null,
+                            imageSelected: data.data.dataCopyData.imageSelected
+                              ? data.data.dataCopyData.imageSelected
+                              : null,
+                          }
+                        })
                       : data.data.newData;
 
 
-          this.instantiateChildBlocks(data, [data_from_table, data]);
+            this.instantiateChildBlocks(data, [data_from_table, data]);
+            
+          }
+          else{
+            this.instantiateChildBlocksGraphics();
+          }
           $(`#${data.code}-modal`).modal('show');
         }
+
       })
     );
 
@@ -151,8 +160,13 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      if (this.settings.items) this.instantiateChildBlocks();
-    });
+      if (this.settings.items) {
+        if (!this.settings.isNotTableEditing)
+          this.instantiateChildBlocks();
+        else this.instantiateChildBlocksGraphics();
+      }
+
+    })
   }
 
   public setSettings(settings: any) {
@@ -168,7 +182,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
       if (dataAttrs && dataAttrs.action == 'view') {
         item.childBlocks.map((block, j) => {
           if (
-            block.viewMode && 
+            block.viewMode &&
             block.viewMode != 'edit'
           ) {
             const blockInstance = this.setChildBlock(block, data, container);
@@ -185,10 +199,10 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           ) {
             const blockInstance = this.setChildBlock(block, data, container);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
-          } 
+          }
           else if (
-            dataAttrs && 
-            block.component === dataAttrs.component && 
+            dataAttrs &&
+            block.component === dataAttrs.component &&
             !block.viewMode
           ) {
             const blockInstance = this.setChildBlock(block, data, container);
@@ -196,16 +210,31 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           }
         });
       }
-    });
-    this.globals.createdBlockInstances(blockInstances);
+    })
   }
 
   setChildBlock(block, data, container) {
-    if (block.component === 'form') block.settings['data'] = data[0];
+    if (block.component === "form")
+      block.settings['data'] = data[0];
     block.settings['dataFromRow'] = data[1];
     const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
     const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
     pageBlockComponent.instance.setSettings(block.settings);
     return pageBlockComponent.instance;
   }
+
+  public instantiateChildBlocksGraphics() {
+    this.settings.items.map((item, i) => {
+      const container = this.modalContainer.toArray()[i];
+      if (container.length > 0) container.clear();
+      item.childBlocks.map(block => {
+        let settings = block.settings;
+        if (block.component == "graphics") settings = { settings: block.settings, factory: this.factory };
+        const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
+        const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
+        pageBlockComponent.instance.setSettings(settings);
+      })
+    })
+  }
+
 }
