@@ -4,6 +4,7 @@ import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from './ng2-smart
 import { LocalDataSource } from 'ng2-smart-table';
 import { GlobalService } from 'src/app/services/global.service';
 import { Subscription } from 'rxjs';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'table-block',
@@ -69,17 +70,21 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           return obj.id === data.data.oldData.id;
         });
       }
-
+      
       switch (data.action) {
         case 'edit':
-          if (index != -1) this.settings['dataCopy'][index] = data.data.newData;
-          this.source.update(data.data.oldData, data.data.newData);
-          this.source.refresh();
+          this.source.find(data.data.dataToCompare).then((value) => {
+            if (index != -1) this.settings['dataCopy'][index] = data.data.newData;
+            this.source.update(data.data.dataToCompare, data.data.newData);
+            this.source.refresh();
+          }).catch( (error) => {});                    
           break;
         case 'delete':
-          if (index != -1) this.settings['dataCopy'].splice(index, 1);
-          this.source.remove(data.data.oldData);
-          this.source.refresh();
+          this.source.find(data.data.dataToCompare).then((value) => {
+            if (index != -1) this.settings['dataCopy'].splice(index, 1);
+            this.source.remove(data.data.dataToCompare);
+            this.source.refresh();
+          }).catch( (error) => {});            
           break;
         case 'view':
           break;
@@ -149,8 +154,9 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       code: this.settings.modalCode,
       data: {
         dataCopyData: index != -1 ? this.settings['dataCopy'][index] : e.data,
-        oldData: e.data,
-        newData: e.data,
+        dataToCompare: e.data,
+        oldData: cloneDeep(e.data),
+        newData: cloneDeep(e.data),
       },
       action: e.action.toLowerCase(),
       showBtn: false,
