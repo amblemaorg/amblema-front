@@ -1,4 +1,5 @@
-@import "scss/responsive";
+@import 'scss/responsive';
+@import 'scss/variables';
 
 ::ng-deep {
   owl-carousel-o.web-cover__carousel {
@@ -17,6 +18,10 @@
   position: relative;
   overflow: hidden;
   width: 100vw;
+
+  &__overlay-green {
+    background-color: $green;
+  }
 
   &__overlay-image {
     bottom: 0;
@@ -38,21 +43,30 @@
   &__mobile-image-extended-wrapper {
     width: 300vw;
     margin-left: -50vw;
+    max-height: 70vh;
 
     @include breakpoint(small, landscape) {
       margin-left: initial;
       width: initial;
+      max-height: 100vh;
     }
 
     @include breakpoint(medium) {
       margin-left: initial;
       width: initial;
+      max-height: 100vh;
     }
   }
 
   &__image {
     img {
       width: 100%;
+    }
+
+    &--transparent {
+      img {
+        opacity: 0.2;
+      }
     }
   }
 
