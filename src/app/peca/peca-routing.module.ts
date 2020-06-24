@@ -23,7 +23,7 @@ const routes: Routes = [
     component: PecaComponent,
     children: [
       {
-        path: 'taller-inicial',
+        path: 'lapso/:lapsoNumber/taller-inicial',
         component: InitialWorkshopPageComponent,
       },
       {
