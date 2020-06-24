@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { StepsService } from '../../../services/steps/steps.service';
-import { StepStateModel, UpdateStepsProgress } from '../../actions/steps/project.actions';
+import { StepStateModel, UpdateStepsProgress, ClearStepsProgress } from '../../actions/steps/project.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<StepStateModel>({
@@ -55,4 +55,19 @@ export class StepsState {
           })
         );
     }
+
+    @Action(ClearStepsProgress)
+    ClearStepsProgress(ctx: StateContext<StepStateModel>) {
+      ctx.setState({
+        sponsor_id: '',
+        school_id: '',
+        coordinator_id: '',
+        general: '',
+        sponsor: '',
+        school: '',
+        coordinator: '',
+        steps: [],
+      });
+    }
+    
 }

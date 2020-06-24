@@ -46,25 +46,25 @@ export class EheaderComponent implements OnInit {
     });
   
     //! ------------------------- THIS IS TEMPORARY -----------------------------------------------------------------------------------------------------
-    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
-      this.setUserValues({
-        type: 1,
-        usu: this.route.snapshot.params.idUser,
-        usut: (+this.route.snapshot.params.userType),
-        project: this.route.snapshot.params.idProject
-      });
-    }      
-    else if (this.route.snapshot.children.length>0) {
-      if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
-            this.setUserValues({
-              type: 1,
-              usu: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser,
-              usut: (+this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType),
-              project: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject
-            });
-      }
-    }    
+    // if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
+    //   this.setUserValues({
+    //     type: 1,
+    //     usu: this.route.snapshot.params.idUser,
+    //     usut: (+this.route.snapshot.params.userType),
+    //     project: this.route.snapshot.params.idProject
+    //   });
+    // }      
+    // else if (this.route.snapshot.children.length>0) {
+    //   if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+    //       this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
+    //         this.setUserValues({
+    //           type: 1,
+    //           usu: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser,
+    //           usut: (+this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType),
+    //           project: this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject
+    //         });
+    //   }
+    // }    
     //! -------------------------------------------------------------------------------------------------------------------------------------------------
 
     // this.setCoordinatorModulesValues({type:0,usu:null}); //! THIS IS TEMPORARY
