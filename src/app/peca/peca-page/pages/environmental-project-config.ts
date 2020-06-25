@@ -6,42 +6,18 @@ const infoGeneral = {
                 principal:
                 {
                     tema: 'Geografia de Venezuela',
-                    objetivo: [
-                        { id: 1, name: 'Pendiente' },
-                        { id: 2, name: 'Aprobado' },
-                        { id: 3, name: 'Rechazado' },
-                    ],
-                    estrategia: [
-                        { id: 1, name: 'plastilina' },
-                        { id: 2, name: 'tijera' },
-                        { id: 3, name: 'pega' },
-                    ],
-                    contenido: [
-                        { id: 1, name: 'Pendiente' },
-                        { id: 2, name: 'Aprobado' },
-                        { id: 3, name: 'Rechazado' },
-                    ]
+                    objetivo: 'Conocer los estados y capitales de Venezuela',
+                    estrategia: 'Aprendizaje, interactivo, Auto-aprendizaje',
+                    contenido: 'Estados y capitales de Venezuela',
                 },
                 datosNivel:
                 {
                     nivel: 'Primer grado',
                     week: '1 al 6 - 05 - 2020',
                     time: '45 min',
-                    tecnica: [
-                        { id: 1, name: 'Pendiente' },
-                        { id: 2, name: 'Aprobado' },
-                        { id: 3, name: 'Rechazado' },
-                    ],
-                    recurso: [
-                        { id: 1, name: 'plastilina' },
-                        { id: 2, name: 'tijera' },
-                        { id: 3, name: 'pega' },
-                    ],
-                    evaluacion: [
-                        { id: 1, name: 'Pendiente' },
-                        { id: 2, name: 'Aprobado' },
-                        { id: 3, name: 'Rechazado' },
-                    ]
+                    tecnica: 'Juego didactico',
+                    recurso: 'plastilina, tijera, lapiz, borrador',
+                    evaluacion: 'participar en el juego "Conoce las capitales"'
                 },
                 title: 'Convención anual',
                 checkList: [

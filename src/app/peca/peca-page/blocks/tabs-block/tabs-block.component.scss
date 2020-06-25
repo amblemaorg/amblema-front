@@ -4,7 +4,7 @@
   .nb-theme-default {
     nb-tabset {
       .tab-link {
-        font-family: Montserrat;
+        font-family: "Montserrat";
         font-size: 1.2rem;
         padding: 1rem 3rem;
         text-transform: none;
@@ -42,11 +42,15 @@
         }
       }
 
+      .tab.active .tab-link {
+        background-color: transparent;
+        color: $blue;
+    }
       .tab,
       .tab:hover,
       .tab.active {
         .tab-link {
-          color: $blue;
+          //color: $blue;
           &:hover {
             color: $blue;
           }
