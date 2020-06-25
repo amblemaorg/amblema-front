@@ -124,7 +124,7 @@ const readingDiagnosticTable = {
     initialDiagnosticConfigLectura: [
       {
         id: '1abcdefghijk',
-        name: 'Alfredo',
+        name: 'Alfredo manuel',
         lastName: 'Valbuena',
         gender: '2',
         grade: '4',
@@ -134,7 +134,7 @@ const readingDiagnosticTable = {
       },
       {
         id: '2abcdefghijk',
-        name: 'Manuel',
+        name: 'Stephanie danniela',
         lastName: 'Perez',
         gender: '2',
         grade: '5',
@@ -259,7 +259,7 @@ const mathDiagnosticTable = {
     initialDiagnosticConfigMatematica: [
       {
         id: '1abcdefghijk',
-        name: 'Alfredo',
+        name: 'Alfredo manuel',
         lastName: 'Valbuena',
         gender: '2',
         grade: '5',
@@ -271,7 +271,7 @@ const mathDiagnosticTable = {
       },
       {
         id: '2abcdefghijk',
-        name: 'Maria',
+        name: 'Stephanie Danniela',
         lastName: 'Torres',
         gender: '1',
         grade: '4',
