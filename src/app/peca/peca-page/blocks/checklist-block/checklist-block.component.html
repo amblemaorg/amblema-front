@@ -7,21 +7,21 @@
         </div>
         <div class="style-principal-div">
             <h6>Objetivos:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.principal.objetivo" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>
+                {{info.principal.objetivo}}
+            </span>
         </div>
         <div class="style-principal-div">
             <h6>Estrategias:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.principal.estrategia" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>
+                {{info.principal.estrategia}}
+            </span>
         </div>
         <div class="style-principal-div">
             <h6>Contenidos:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.principal.contenido" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>
+                {{info.principal.contenido}}
+            </span>
         </div>
     </div>
 
@@ -40,21 +40,15 @@
         </div>
         <div class="style-nivel-div">
             <h6>Técnica:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.datosNivel.tecnica" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>{{info.datosNivel.tecnica}}</span>
         </div>
         <div class="style-nivel-div">
             <h6>Recursos:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.datosNivel.recurso" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>{{info.datosNivel.recurso}}</span>
         </div>
         <div class="style-nivel-div">
             <h6>Evaluación:</h6>
-            <ng-select class="form-control select-estatus" [items]="info.datosNivel.evaluacion" bindValue="id"
-                bindLabel="name">
-            </ng-select>
+            <span>{{info.datosNivel.evaluacion}}</span>
         </div>
     </div>
 
