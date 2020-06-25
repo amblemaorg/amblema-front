@@ -15,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
 import { schoolDataToSchoolFormMapper } from '../mappers/school-mappers';
 import { teachersDataToTeachersTableMapper } from '../mappers/teacher-mappers';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'peca-school-data',
@@ -28,6 +29,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
   schoolDataSubscription: Subscription;
   schoolFormData: any;
   teachersTableData: any;
+  // controlling when data from school is loaded
+  isInstanciated: boolean;
+  loadedData: boolean;
 
   constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
     super(factoryResolver);
@@ -35,9 +39,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     globals.blockIntancesEmitter.subscribe((blocks) => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
       //console.log(this.blockInstances);
-      this.updateDataToBlocks();
-      this.updateStaticFetchers();
-      this.updateDynamicFetchers();
+      if (this.loadedData) this.updateMethods();
     });
 
     this.instantiateComponent(config);
@@ -46,12 +48,24 @@ export class SchoolDataPageComponent extends PecaPageComponent
   ngOnInit() {
     this.schoolDataSubscription = this.schoolData$.subscribe(
       (data) => {
-        this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
-        this.setTeachersTableData(data.school.teachers, teachersDataToTeachersTableMapper);
+        if ( !isNullOrUndefined(data) ) {
+          console.log('mostrando data de escuela');          
+          this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
+          this.setTeachersTableData(data.school.teachers, teachersDataToTeachersTableMapper);
+          this.loadedData = true;
+
+          if (this.isInstanciated) this.updateMethods();
+        };
         // this.updateDataToBlocks();
       },
       (error) => console.error(error)
     );
+  }
+
+  updateMethods() {
+    this.updateDataToBlocks();
+    this.updateStaticFetchers();
+    this.updateDynamicFetchers();
   }
 
   updateDataToBlocks() {
@@ -102,10 +116,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
     });
   }
 
   ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
     this.schoolDataSubscription.unsubscribe();
   }
 }
