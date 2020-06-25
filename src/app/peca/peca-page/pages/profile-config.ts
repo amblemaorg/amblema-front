@@ -7,8 +7,10 @@ const formSetCoordinador = {
   name: "userCordinatorForm",
   settings: {
     formsContent: formCoordinador,
-    buttons: ["guardar,editar,cancelar"],
-    data: {}
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarCoordinador",
+    fetcherMethod: "put"
   }
 };
 const formSetEscuela = {
@@ -16,8 +18,10 @@ const formSetEscuela = {
   name: "userSchoolForm",
   settings: {
     formsContent: formEscuela,
-    buttons: ["guardar,editar,cancelar"],
-    data: {}
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarEscuela",
+    fetcherMethod: "put"
   }
 };
 const formSetPadrino = {
@@ -25,8 +29,10 @@ const formSetPadrino = {
   name: "userSponsorForm",
   settings: {
     formsContent: formPadrino,
-    buttons: ["guardar,editar,cancelar"],
-    data: {}
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarPadrino",
+    fetcherMethod: "put"
   }
 };
 
