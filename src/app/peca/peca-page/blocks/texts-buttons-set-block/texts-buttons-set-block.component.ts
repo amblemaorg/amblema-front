@@ -65,6 +65,10 @@ export class TextsButtonsSetBlockComponent
       titleInput: string;
     }[];
     fetcherUrls: {
+      // get: string;
+      // post: string;
+      put: string;
+      // patch: string;
       delete: string;
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -112,8 +116,14 @@ export class TextsButtonsSetBlockComponent
     this.settings = { ...settings };
   }
 
-  setFetcherUrls({ delete: deleteFn }) {
+  // setFetcherUrls({ delete: deleteFn }) {
+  //   this.settings.fetcherUrls = {
+  //     delete: deleteFn,
+  //   };
+  // }
+  setFetcherUrls({ put, delete: deleteFn }) {
     this.settings.fetcherUrls = {
+      put,
       delete: deleteFn,
     };
   }
