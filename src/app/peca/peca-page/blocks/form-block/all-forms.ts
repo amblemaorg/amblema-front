@@ -795,8 +795,8 @@ export const formTabsDocente = {
     },
   },
   gender: {
-    label: 'Sexo',
-    placeholder: 'Sexo',
+    label: 'Género',
+    placeholder: 'Género',
     ...controlProps.selectAndRequired,
     options: [
       { id: '1', name: 'Femenino' },
@@ -992,8 +992,8 @@ export const formTabsEstudiantes = {
     ...controlProps.dateAndRequired,
   },
   gender: {
-    label: 'Género (Femenino ó Masculino)',
-    placeholder: 'Género (Femenino ó Masculino)',
+    label: 'Género',
+    placeholder: 'Género',
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1064,8 +1064,8 @@ export const formCoordinador = {
     ...controlProps.dateAndRequired,
   },
   sexo: {
-    label: 'Género (Femenino ó Masculino)',
-    placeholder: 'Género (Femenino ó Masculino)',
+    label: 'Género',
+    placeholder: 'Género',
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1570,8 +1570,8 @@ export const formLecturaModal = {
     ...controlProps.normalTextAndRequired,
   },
   gender: {
-    label: 'Género (Femenino ó Masculino)',
-    placeholder: 'Género (Femenino ó Masculino)',
+    label: 'Género',
+    placeholder: 'Género',
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1626,8 +1626,8 @@ export const formMatematicaModal = {
     ...controlProps.normalTextAndRequired,
   },
   gender: {
-    label: 'Género (Femenino ó Masculino)',
-    placeholder: 'Género (Femenino ó Masculino)',
+    label: 'Género',
+    placeholder: 'Género',
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
