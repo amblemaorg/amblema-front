@@ -74,6 +74,10 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   updateStaticFetchers() {
+    this.setBlockFetcherUrls('schoolFormButton', {
+      put: `users/${this.schoolFormData.id}?userType=4`,
+    });
+
     this.setBlockFetcherUrls('teacherForm', {
       post: `schools/teachers/${this.schoolFormData.id}`,
     });

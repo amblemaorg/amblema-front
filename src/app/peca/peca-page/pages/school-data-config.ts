@@ -8,6 +8,7 @@ import {
 
 const textsAndButtons = {
   component: 'textsbuttons',
+  name: 'schoolFormButton',
   settings: {
     // title: {
     //   text: "(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar",
@@ -25,6 +26,7 @@ const textsAndButtons = {
     ],
     receivesFromTableOrForm: 'both',
     buttonCode: 'schoolDataConfigRegistroEscuela',
+    fetcherMethod: 'put',
   },
 };
 
@@ -37,6 +39,7 @@ const formEscuela = {
     tableCode: 'schoolDataConfigRegistroEscuela',
     hideImgContainer: true,
     data: {},
+    // fetcherMethod: 'put',
   },
 };
 
