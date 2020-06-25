@@ -253,16 +253,24 @@
             &.image-status .ng-select-container .ng-placeholder {
                 display: block;
             }
-            &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
+            &.ng-valid:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
                 display: none;
             }
         }
 
-        &.ng-touched.ng-pristine, 
-        &.ng-touched.ng-invalid {
-        .ng-select-container .ng-placeholder {
-            display: block;
-        }
+        &.ng-touched {
+            &.ng-pristine, 
+            &.ng-invalid {
+              .ng-select-container .ng-placeholder {
+                  display: block;
+              }
+            }
+            &.ng-invalid .ng-select-container .ng-placeholder {
+                display: block !important;
+            }
+            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+                display: none;
+            }
         }
 
         &.ng-select-filtered .ng-select-container .ng-placeholder {
