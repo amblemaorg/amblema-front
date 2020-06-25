@@ -158,7 +158,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           grade: cf.get("grade").value,
           section: cf.get("section").value
         },
-        addressState: cf.get("addressState").value,
+        status: cf.get("status").value,
         result: cf.get("result").value
       };
       break;

@@ -10,21 +10,28 @@ $table-border-color: 1px solid $blue;
     }
     .nb-theme-default ng2-smart-table table tr th, .nb-theme-default ng2-smart-table table tr th a{
         font-family: "Montserrat";
-        font-weight: bold;
+        font-weight: 300;
         font-style: normal;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
     .nb-theme-default ng2-smart-table table tr td{
         font-family: "Montserrat";
-        font-weight: 700;
+        font-weight: 300;
         font-style: normal;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
     .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.asc, .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.desc{
-        font-weight: 700;
+        font-weight: 300;
     }
     .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th {
-        padding: 0.375rem 2rem;
+        padding: 0.375rem 1rem;
+    }
+    .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th {
+        padding: 0.875rem 1.25rem 0;
+        text-align: left;
+    }
+    .nb-theme-default ng2-smart-table .ng2-smart-actions {
+        text-align: center !important;
     }
     .nb-theme-default ng2-smart-table {
         thead {

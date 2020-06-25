@@ -1780,14 +1780,14 @@ export const formResultadoEstudianteModal = {
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
-  addressState: {
-    label: "Selecione estado",
-    placeholder: "Selecione estado",
+  status: {
+    label: "Estatus",
+    placeholder: "Estatus",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      // { id: '165146541654hjvjh', name: 'Lara' },
-      // { id: '165146wfw254hjvjh', name: 'Yaracuy' },
+      { id: "1", name: "Registrado" },
+      { id: "2", name: "Calificado" }
     ]
   },
   result: {

@@ -35,24 +35,24 @@ const selectEstudiantes = {
                 { 
                     id: 1, name: 'Alfredo',
                     lastName: 'Valvuena',
-                    addressState: '165146541654hjvjh',
-                    result: 'Aprobado',
+                    status: '2',
+                    result: 'Plata',
                     grade: '5',
                     section: 'B',
                 },
                 { 
                     id: 2, name: 'Yanior',
                     lastName: 'Zambrano',
-                    addressState: '165146541654hjvjh',
-                    result: 'Aprobado',
+                    status: '1',
+                    result: 'Bronce',
                     grade: '6',
                     section: 'A',
                 },
                 { 
                     id: 3, name: 'Jose',
                     lastName: 'Guerrero',
-                    addressState: '165146541654hjvjh',
-                    result: 'Aprobado',
+                    status: '1',
+                    result: 'Oro',
                     grade: '4',
                     section: 'C',
                 },
@@ -103,7 +103,7 @@ const resultadoEstudiante = {
                     else return false;
                 }
             },
-            addressState: {
+            /*addressState: {
                 title: "Estado",
                 valuePrepareFunction: ( row: any ) => {          
                     if (row) return formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===row}).name;
@@ -111,6 +111,20 @@ const resultadoEstudiante = {
                 },
                 filterFunction: (cell?: any, search?: string) => {
                     let value: string = formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===cell}).name;
+                    value = value.toUpperCase();
+                    
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
+            },*/
+            status: {
+                title: 'Estatus',
+                valuePrepareFunction: ( row: any ) => {
+                    if (row) return row == "1" ? 'Registrado':'Calificado';
+                    else return '';
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = cell == "1" ? 'Registrado':'Calificado';
                     value = value.toUpperCase();
                     
                     if (value.includes(search.toUpperCase()) || search === '') return true;
@@ -135,8 +149,8 @@ const resultadoEstudiante = {
                     grade: '5',
                     section: 'B',
                 },
-                addressState: '165146541654hjvjh',
-                result: 'Aprobado',
+                status: '2',
+                result: 'Oro',
             },
         ],
         classes: {
