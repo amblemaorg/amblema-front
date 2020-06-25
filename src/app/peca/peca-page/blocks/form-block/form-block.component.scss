@@ -9,18 +9,18 @@
   @include mediabreak(large,landscape) { justify-content: space-between; }
 }
 @mixin form-flexings {
-  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
-  @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
-  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { max-width: 46.5%; flex: 0 0 46.5%; }
+  @include mediabreak(larger,landscape) { max-width: 47.25%; flex: 0 0 47.25%; }
+  @include mediabreak(larger,landscape,true,1680px) { max-width: 47.75%; flex: 0 0 47.75%; }
 } 
 @mixin form-flexings-one-row {
-  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { flex: 0 0 38%; }
-  @include mediabreak(larger,landscape) { flex: 0 0 38%; }
-  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 38%; }
+  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { max-width: 38%; flex: 0 0 38%; }
+  @include mediabreak(larger,landscape) { max-width: 38%; flex: 0 0 38%; }
+  @include mediabreak(larger,landscape,true,1680px) { max-width: 38%; flex: 0 0 38%; }
 } 
 @mixin for-image-widths {  
   width: 8rem;
@@ -359,14 +359,22 @@
               }
           }
 
-          &.ng-touched.ng-pristine, 
-          &.ng-touched.ng-invalid {
-            .ng-select-container .ng-placeholder {
-                display: block;
+          &.ng-touched {
+            &.ng-pristine, 
+            &.ng-invalid {
+              .ng-select-container .ng-placeholder {
+                  display: block;
+              }
+            }
+            &.ng-invalid .ng-select-container .ng-placeholder {
+                display: block !important;
+            }
+            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+                display: none;
             }
           }
 
-          &.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+          &.ng-dirty.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
               display: none;
           }
 
@@ -396,16 +404,19 @@
   
       .two-wrapper .form-group.full-width, 
       .form-group.full-width {
+        max-width: 100%;
         flex: 0 0 100%;
       }
 
       two-wrapper .form-group.full-width2, 
       .form-group.full-width2 {
+        max-width: 21.25%;
         flex: 0 0 21.25%;
       }
       @media (max-width:992px) {
         two-wrapper .form-group.full-width2, 
         .form-group.full-width2 {
+          max-width: 100%;
           flex: 0 0 100%;
         }
       }
