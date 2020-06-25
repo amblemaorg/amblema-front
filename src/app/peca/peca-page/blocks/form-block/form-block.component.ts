@@ -8,11 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from '../../../../services/global.service';
 import { MunicipalityInfo } from '../../../../models/steps/previous-steps.model';
 import { structureData } from './data-structure';
-import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
+import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
 import { Subscription, Observable } from 'rxjs';
 import { adaptBody } from './fetcher-body-adapter';
-import { Select } from '@ngxs/store';
-import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
+import { Select, Store } from '@ngxs/store';
+import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
+import { FetchPecaContent } from '../../../../store/actions/peca/peca.actions';
 
 @Component({
   selector: 'form-block',
@@ -64,6 +65,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   showSelectState: boolean = true;
 
   constructor(
+    private store: Store,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private globals: GlobalService,
@@ -330,7 +332,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
         this.settings.dataFromRow.data.newData = {
-          ...this.settings.dataFromRow.data.oldData,
+          ...this.settings.dataFromRow.data.newData,
           ...manageData.data,
         };
         this.settings.dataFromRow.data.newData['id'] = this.settings.dataFromRow.data.oldData['id'];
@@ -377,9 +379,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.wrongDateDisabler[f] = false;
         });
         //
-        this.toastr.success('form submitted', '', { positionClass: 'toast-bottom-right' });
+        this.toastr.success('Suministrado con éxito', '', { positionClass: 'toast-bottom-right' });
+
+        this.store.dispatch( [new FetchPecaContent( this.globals.getPecaId() )] );
       },
-      (error) => console.error(error)
+      (error) => {
+        this.sendingForm = false;
+        this.toastr.error('Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde', '', { positionClass: 'toast-bottom-right' });
+        console.error(error)
+      }
     );
   }
 
@@ -603,18 +611,19 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // setting inputs data
   setAllFields(data) {
     const dataKeys = Object.keys(data);
+    
     dataKeys.map((key) => {
       if (
         (key == 'imageGroup' && this.settings.formsContent['imageGroup']) ||
         (key == 'documentGroup' && this.settings.formsContent['documentGroup'])
       )
-        this.componentForm.get(key).setValue(data[key]);
+        this.componentForm.get(key).setValue( {...data[key]} );
       else if (this.settings.formsContent[key]) {
         if (key == 'addressMunicipality') this.updateMuns(true, data[key]);
-        else if (key == 'age') {
+        else if (this.settings.formsContent[key].type === 'date') {
           // if 'Z' comes in the date format it gets removed
-          let dateKey = this.globals.getDateFormat(new Date(data[key].replace('Z', '')));
-          this.componentForm.patchValue({ [key]: dateKey });
+          const dateKey = this.globals.getDateFormat( new Date( data[key].replace('Z', '') ) );
+          this.componentForm.patchValue( { [key]: dateKey } );
           this.checkDateOk(
             dateKey,
             this.settings.formsContent[key]['lower'] ? 'lower' : 'greater',
@@ -623,9 +632,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           );
         } 
         else if (this.settings.formsContent[key].type === 'double') {
-          this.componentForm.patchValue(data[key]);
+          this.componentForm.patchValue( {...data[key]} );
         }
-        else this.componentForm.patchValue({ [key]: data[key] });
+        else this.componentForm.patchValue( { [key]: data[key] } );
       }
     });
     // console.log(this.componentForm.value);

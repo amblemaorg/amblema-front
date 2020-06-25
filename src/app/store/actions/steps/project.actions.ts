@@ -5,6 +5,9 @@ export class UpdateStepsProgress {
   static readonly type = '[Steps] UpdateStepsProgress';
   constructor(public project_id: string) {}
 }
+export class ClearStepsProgress {
+  static readonly type = '[Steps] ClearStepsProgress';
+}
 //todo: ---------- END ACTION CLASSES ----------------------------- //
 
 //? ---------- MODEL CLASSES --------------------------------- //

@@ -210,7 +210,8 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           }
         });
       }
-    })
+    });
+    this.globals.createdBlockInstances(blockInstances);
   }
 
   setChildBlock(block, data, container) {

@@ -9,6 +9,7 @@ import { first } from 'rxjs/internal/operators/first';
 import { take } from 'rxjs/internal/operators/take';
 import cloneDeep from 'lodash/cloneDeep';
 import { UpdateStates, UpdateMunicipalities } from '../store/actions/steps/residence-info.actions';
+import { GlobalService } from '../services/global.service';
 
 @Component({
   selector: 'app-peca',
@@ -24,11 +25,13 @@ export class PecaComponent implements OnInit, OnDestroy {
   @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
   activePecaSubscription: Subscription;
   activePecaContentSubscription: Subscription;
+  globalsSubscription: Subscription;
 
   constructor(
     private store: Store,
     private iconLibraries: NbIconLibraries,
-    private sidebarService: NbSidebarService
+    private sidebarService: NbSidebarService,
+    private globals: GlobalService
   ) {
     this.iconLibraries.registerFontPack('amblemaicons', {
       iconClassPrefix: 'icon',
@@ -42,6 +45,8 @@ export class PecaComponent implements OnInit, OnDestroy {
       ({ activePeca }) => {
         //console.log(activePeca);
         activePecaId = activePeca.id;
+        this.globals.setPecaId(activePecaId ? activePecaId : null);
+
         activePecaId
           ? this.store.dispatch([new FetchPecaContent(activePecaId)])
           : console.error('No pudo obtenerse el PecaId activo');
@@ -99,8 +104,4 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.sidebarService.toggle(true, 'menu-sidebar');
   }
 
-  getResidenceInfo() {
-    this.store.dispatch(new UpdateStates);
-    this.store.dispatch(new UpdateMunicipalities);
-  }
 }

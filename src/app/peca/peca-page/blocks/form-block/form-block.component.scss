@@ -268,7 +268,8 @@
       .form-control {
         color: $blue;
 
-        &[readonly].form-control-date {
+        // &[readonly].form-control-date {
+        &.is-date-input-placeholder.form-control-date {
           cursor: default;
           background-color: #fff;
           position: absolute;
@@ -280,7 +281,11 @@
           height: auto;
         }
 
-        &[type="date"]:focus + .form-control[readonly].form-control-date {
+        &[readonly] {
+          background-color: #fff;
+        }
+
+        &[type="date"]:focus + .form-control.is-date-input-placeholder.form-control-date {
           display: none;
         }
     

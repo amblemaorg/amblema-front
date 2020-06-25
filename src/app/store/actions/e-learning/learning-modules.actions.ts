@@ -4,6 +4,9 @@ import { Module } from '../../../models/steps/learning-modules.model';
 export class UpdateModulesTotal {
     static readonly type = '[ELearning] UpdateModulesTotal';
 }
+export class ClearModulesTotal {
+    static readonly type = '[ELearning] ClearModulesTotal';
+}
 //todo: ---------- END ACTION CLASSES ----------------------------- //
 
 //? ---------- MODEL CLASSES --------------------------------- //

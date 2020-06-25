@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { OwlOptions } from "ngx-owl-carousel-o";
-import { Input } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Input } from '@angular/core';
 
 interface Slide {
   image: string;
@@ -8,9 +8,9 @@ interface Slide {
   description: string;
 }
 @Component({
-  selector: "web-cover",
-  templateUrl: "./cover.component.html",
-  styleUrls: ["./cover.component.scss"],
+  selector: 'web-cover',
+  templateUrl: './cover.component.html',
+  styleUrls: ['./cover.component.scss'],
 })
 export class CoverComponent implements OnInit {
   @Input() overlayImage;
