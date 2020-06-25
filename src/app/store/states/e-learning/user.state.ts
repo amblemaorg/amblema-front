@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { UserStateModel, UpdateUserInfo } from '../../actions/e-learning/user.actions';
+import { UserStateModel, UpdateUserInfo, ClearUserInfo } from '../../actions/e-learning/user.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<UserStateModel>({
@@ -82,4 +82,20 @@ import { ModulesService } from '../../../services/steps/modules.service';
         })
       );
     }
+
+    @Action(ClearUserInfo)
+    ClearUserInfo(ctx: StateContext<UserStateModel>) {
+      ctx.setState({
+        coins: 0,
+        coordinator_modules: [],
+        name: '',
+        email: '',
+        gender: '',
+        user_id: '',
+        image: '',
+        user_projects: [],
+        userType: '',
+      });
+    }
+
   }

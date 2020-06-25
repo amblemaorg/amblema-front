@@ -40,13 +40,16 @@
     img {
       border-radius: 50%;
       width: 20vw;
+      height: 20vw;
 
       @include breakpoint(small, landscape) {
         width: 7vw;
+        height: 7vw;
       }
 
       @include breakpoint(medium) {
         width: 7vw;
+        height: 7vw;
       }
     }
   }
@@ -72,7 +75,6 @@
       font-weight: bold;
       line-height: 1;
     }
-
   }
 
   .testimonial-description {
@@ -92,7 +94,7 @@
     }
 
     @include breakpoint(large) {
-      font-size: .9vw;
+      font-size: 0.9vw;
     }
   }
 }
