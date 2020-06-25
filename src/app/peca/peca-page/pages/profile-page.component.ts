@@ -37,18 +37,26 @@ export class ProfilePageComponent extends PecaPageComponent
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService,
+    private globals: GlobalService,
     private httpFetcherService: HttpFetcherService
   ) {
     super(factoryResolver);
+    //this.getUser();
+    /*globals.blockIntancesEmitter.subscribe(blocks => {
+      blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      console.log(this.blockInstances);
+      this.updateDataToBlocks()
+    });*/
+  }
+  ngOnInit() {
     this.getUser();
-    globals.blockIntancesEmitter.subscribe(blocks => {
+    //this.loadForm();
+    this.globals.blockIntancesEmitter.subscribe(blocks => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
       console.log(this.blockInstances);
       this.updateDataToBlocks();
+      //this.updateStaticFetchers();
     });
-  }
-  ngOnInit() {
     this.loadForm();
   }
   loadForm() {
@@ -62,34 +70,7 @@ export class ProfilePageComponent extends PecaPageComponent
       this.instantiateComponent(configCoordinador);
     }
   }
-  getUser() {
-    /*this.getGeneralInformation();
-    const info = this.httpFetcherService
-      .get(`users/${this.idUser}?userType=${this.userType}`)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.userDataSubscription = data;
-          this.setUserFormData(data, profileDataToSponsorFormMapper);
-        },
-        error => console.error(error),
-        () => {
-          info.unsubscribe();
-        }
-      );*/
-    /////////////////
-    /* this.getGeneralInformation();
-    this.userDataSubscription = this.httpFetcherService
-      .get(`users/${this.idUser}?userType=${this.userType}`)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.setUserFormData(data, profileDataToSponsorFormMapper);
-        },
-        err => {
-          console.log(err);
-        }
-      );*/
+  async getUser() {
     this.getGeneralInformation();
     this.userDataSubscription = this.httpFetcherService
       .get(`users/${this.idUser}?userType=${this.userType}`)
@@ -137,6 +118,23 @@ export class ProfilePageComponent extends PecaPageComponent
     }
     if (this.userType === "2") {
       this.setBlockData("userCordinatorForm", this.userFormData);
+    }
+  }
+  updateStaticFetchers() {
+    if (this.userType === "4") {
+      this.setBlockFetcherUrls("userSchoolForm", {
+        put: `users/${this.userFormData.id}`
+      });
+    }
+    if (this.userType === "3") {
+      this.setBlockFetcherUrls("userSponsorForm", {
+        put: `users/${this.userFormData.id}`
+      });
+    }
+    if (this.userType === "2") {
+      this.setBlockFetcherUrls("userCordinatorForm", {
+        put: `users/${this.userFormData.id}`
+      });
     }
   }
 
