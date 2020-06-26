@@ -82,6 +82,7 @@ export class PecaState {
       school: {
         ...state.content.school,
         id: state.selectedProject.school.id,
+        pecaId: state.content.id,
       },
     };
   }
