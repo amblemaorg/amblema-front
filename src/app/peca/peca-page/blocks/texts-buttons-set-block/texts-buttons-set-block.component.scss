@@ -224,7 +224,7 @@
 
         &[readonly] {
             cursor: default;
-            &:focus {
+            &:not(.is-date-input-placeholder):focus {
                 border: 1px solid map-get($color_map, form-gray) !important;
             }
         }
