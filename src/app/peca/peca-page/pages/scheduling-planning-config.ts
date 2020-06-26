@@ -90,17 +90,18 @@ export const SCHEDULING_PLANNING_CONFIG = {
             settings: {
                 items: [
                     {
+                        title: "Propuesta a fundación AmbLeMa",
+                        childBlocks: [
+                            { ...propuestaAmblema }
+                        ]
+                    },
+                    {
                         title: "Reunión y aprobación de la escuela",
                         childBlocks: [
                             { ...reunionAprobacionSet }
                         ]
                     },
-                    {
-                        title: "Propuesta a fundación AmbLeMa",
-                        childBlocks: [
-                            { ...propuestaAmblema }
-                        ]
-                    }
+                    
                 ],
             },
         },
