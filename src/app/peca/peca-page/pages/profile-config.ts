@@ -1,33 +1,104 @@
-import { formCoordinador } from '../blocks/form-block/all-forms'
-import { formPadrino } from '../blocks/form-block/all-forms'
-import { formEscuela } from '../blocks/form-block/all-forms'
+import { formCoordinador } from "../blocks/form-block/all-forms";
+import { formPadrino } from "../blocks/form-block/all-forms";
+import { formEscuela } from "../blocks/form-block/all-forms";
 
-const formSet = {
-    component: 'form',
-    settings: {
-        formsContent: formCoordinador,
-        buttons: ['guardar','editar','cancelar'],
+const formSetCoordinador = {
+  component: "form",
+  name: "userCordinatorForm",
+  settings: {
+    formsContent: formCoordinador,
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarCoordinador",
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
+  }
+};
+const formSetEscuela = {
+  component: "form",
+  name: "userSchoolForm",
+  settings: {
+    formsContent: formEscuela,
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarEscuela",
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
+  }
+};
+const formSetPadrino = {
+  component: "form",
+  name: "userSponsorForm",
+  settings: {
+    formsContent: formPadrino,
+    buttons: ["guardar", "editar", "cancelar"],
+    data: {},
+    formType: "actualizarPadrino",
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
+  }
+};
+
+export const PROFILE_CONFIG_PADRINO = {
+  header: {
+    title: "Perfil de Usuario"
+  },
+  blocks: [
+    {
+      component: "profiles",
+      settings: {
+        items: [
+          {
+            image: "../../assets/images/profile-oscar.jpg",
+            title: "Carlos Camacaro",
+            childBlocks: [{ ...formSetPadrino }]
+          }
+        ]
+      }
     }
-}
-
-export const PROFILE_CONFIG = {
-    header: {
-        title: "Perfil de Usuario"
-    },
-    blocks: [
-        {
-            component: 'profiles',
-            settings: {
-                items: [
-                    {
-                        image: "../../assets/images/profile-oscar.jpg",
-                        title: "Carlos Camacaro",
-                        childBlocks: [
-                            { ...formSet }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-}
+  ]
+};
+export const PROFILE_CONFIG_ESCUELA = {
+  header: {
+    title: "Perfil de Usuario"
+  },
+  blocks: [
+    {
+      component: "profiles",
+      settings: {
+        items: [
+          {
+            image: "../../assets/images/profile-oscar.jpg",
+            title: "Carlos Camacaro",
+            childBlocks: [{ ...formSetEscuela }]
+          }
+        ]
+      }
+    }
+  ]
+};
+export const PROFILE_CONFIG_COORDINADOR = {
+  header: {
+    title: "Perfil de Usuario"
+  },
+  blocks: [
+    {
+      component: "profiles",
+      settings: {
+        items: [
+          {
+            image: "../../assets/images/profile-oscar.jpg",
+            title: "Carlos Camacaro",
+            childBlocks: [{ ...formSetCoordinador }]
+          }
+        ]
+      }
+    }
+  ]
+};
