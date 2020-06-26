@@ -10,7 +10,10 @@ const formSetCoordinador = {
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarCoordinador",
-    fetcherMethod: "put"
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
   }
 };
 const formSetEscuela = {
@@ -21,7 +24,10 @@ const formSetEscuela = {
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarEscuela",
-    fetcherMethod: "put"
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
   }
 };
 const formSetPadrino = {
@@ -32,7 +38,10 @@ const formSetPadrino = {
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarPadrino",
-    fetcherMethod: "put"
+    fetcherMethod: "put",
+    isEditable: true,
+    notGenerateId: true,
+    notResetForm: true
   }
 };
 

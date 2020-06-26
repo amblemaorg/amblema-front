@@ -17,15 +17,10 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       };
       break;
     ////////////////////
-    case "actualizarEscuela": // for Datos de la Escuela view and Grados y Secciones section
+    case "actualizarPadrino": // for Perfil de usuario view and padrinos form
+      data.isThereTable = false;
       console.log("le has dado clic" + cf.value);
-      data.data = {
-        grades: cf.get("grades").value,
-        section: cf.get("section").value,
-        docente: formsContent["docente"].options.find(d => {
-          return d.id === cf.get("docente").value;
-        }).id
-      };
+      data.data = {};
       break;
     ////////////////////////////
     case "agregarDocente": // for Datos de la Escuela view and Docentes section

@@ -1445,25 +1445,25 @@ export const formEscuela = {
     label: "Nombre del SubDirector",
     placeholder: "Nombre del SubDirector",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLetters
   },
   letterLastName2: {
     label: "Apellido del SubDirector",
     placeholder: "Apellido del SubDirector",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLetters
   },
   phoneContact2: {
     label: "Teléfono del SubDirector",
     placeholder: "Teléfono del SubDirector",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phone
   },
   emailContact2: {
     label: "Correo del SubDirector",
     placeholder: "Correo del SubDirector",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.email
   }
 };
 
