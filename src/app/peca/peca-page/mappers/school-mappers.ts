@@ -1,6 +1,7 @@
 export function schoolDataToSchoolFormMapper(schoolData) {
   const {
     id,
+    pecaId,
     name,
     code,
     addressState,
@@ -35,6 +36,7 @@ export function schoolDataToSchoolFormMapper(schoolData) {
 
   return {
     id,
+    pecaId,
     nameEscuela: name,
     codigoEscuela: code,
     phoneEscuela: null,

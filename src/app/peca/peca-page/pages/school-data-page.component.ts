@@ -74,8 +74,11 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   updateStaticFetchers() {
+    // /pecaprojects/school/<string:pecaprojectId> | PUT Actualizar Escuela
+    // /pecaprojects/schoolsliders/<string:pecaprojectId>?userId=<string:userId> | POST Agregar imagen
     this.setBlockFetcherUrls('schoolFormButton', {
-      put: `users/${this.schoolFormData.id}?userType=4`,
+      // put: `users/${this.schoolFormData.id}?userType=4`,
+      put: `pecaprojects/school/${this.schoolFormData.pecaId}`,
     });
 
     this.setBlockFetcherUrls('teacherForm', {
