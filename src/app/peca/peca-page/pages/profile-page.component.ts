@@ -20,6 +20,7 @@ import {
   profileDataToCordinatorFormMapper,
   profileDataToSchoolFormMapper
 } from "../mappers/profile-mappers";
+import { isNullOrUndefined } from "util";
 
 @Component({
   selector: "peca-profile",
@@ -34,29 +35,25 @@ export class ProfilePageComponent extends PecaPageComponent
   userFormData: any;
   idUser = "";
   userType = "";
+  isInstanciated: boolean;
+  loadedData: boolean;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    private globals: GlobalService,
+    globals: GlobalService,
     private httpFetcherService: HttpFetcherService
   ) {
     super(factoryResolver);
     //this.getUser();
-    /*globals.blockIntancesEmitter.subscribe(blocks => {
+    globals.blockIntancesEmitter.subscribe(blocks => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
       console.log(this.blockInstances);
-      this.updateDataToBlocks()
-    });*/
+      if (this.loadedData) this.updateMethods();
+    });
+    //this.loadForm();
   }
   ngOnInit() {
     this.getUser();
-    //this.loadForm();
-    this.globals.blockIntancesEmitter.subscribe(blocks => {
-      blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      console.log(this.blockInstances);
-      this.updateDataToBlocks();
-      //this.updateStaticFetchers();
-    });
     this.loadForm();
   }
   loadForm() {
@@ -70,21 +67,32 @@ export class ProfilePageComponent extends PecaPageComponent
       this.instantiateComponent(configCoordinador);
     }
   }
-  async getUser() {
+  getUser() {
     this.getGeneralInformation();
     this.userDataSubscription = this.httpFetcherService
       .get(`users/${this.idUser}?userType=${this.userType}`)
       .subscribe(
         data => {
-          console.log(data);
-          if (this.userType === "4") {
-            this.setUserFormData(data, profileDataToSchoolFormMapper);
-          }
-          if (this.userType === "3") {
-            this.setUserFormData(data, profileDataToSponsorFormMapper);
-          }
-          if (this.userType === "2") {
-            this.setUserFormData(data, profileDataToCordinatorFormMapper);
+          if (!isNullOrUndefined(data)) {
+            console.log(data);
+            if (this.userType === "4") {
+              this.setUserFormData(data, profileDataToSchoolFormMapper);
+              this.loadedData = true;
+              if (this.isInstanciated) this.updateMethods();
+            }
+            if (this.userType === "3") {
+              this.setUserFormData(data, profileDataToSponsorFormMapper);
+              this.loadedData = true;
+              if (this.isInstanciated) this.updateMethods();
+            }
+            if (this.userType === "2") {
+              this.setUserFormData(data, profileDataToCordinatorFormMapper);
+              this.loadedData = true;
+              if (this.isInstanciated) this.updateMethods();
+            }
+            /*this.setUserFormData(data, profileDataToSponsorFormMapper);
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();*/
           }
         },
         err => {
@@ -95,6 +103,7 @@ export class ProfilePageComponent extends PecaPageComponent
   getGeneralInformation() {
     const user = this.userData$.subscribe(
       data => {
+        console.log(data);
         this.idUser = data.id;
         this.userType = data.userType;
       },
@@ -104,10 +113,10 @@ export class ProfilePageComponent extends PecaPageComponent
       }
     );
   }
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.instantiateBlocks(this.container);
-    });
+
+  updateMethods() {
+    this.updateDataToBlocks();
+    //this.updateStaticFetchers();
   }
   updateDataToBlocks() {
     if (this.userType === "4") {
@@ -119,23 +128,27 @@ export class ProfilePageComponent extends PecaPageComponent
     if (this.userType === "2") {
       this.setBlockData("userCordinatorForm", this.userFormData);
     }
+    //this.setBlockData("userSponsorForm", this.userFormData);
   }
   updateStaticFetchers() {
     if (this.userType === "4") {
       this.setBlockFetcherUrls("userSchoolForm", {
-        put: `users/${this.userFormData.id}`
+        put: `users/${this.userFormData.id}?userType=4`
       });
     }
     if (this.userType === "3") {
       this.setBlockFetcherUrls("userSponsorForm", {
-        put: `users/${this.userFormData.id}`
+        put: `users/${this.userFormData.id}?userType=3`
       });
     }
     if (this.userType === "2") {
       this.setBlockFetcherUrls("userCordinatorForm", {
-        put: `users/${this.userFormData.id}`
+        put: `users/${this.userFormData.id}?userType=2`
       });
     }
+    /* this.setBlockFetcherUrls("userSponsorForm", {
+      put: `users/${this.userFormData.id}?userType=3`
+    });*/
   }
 
   setUserFormData(userData, _mapper?: Function) {
@@ -145,7 +158,16 @@ export class ProfilePageComponent extends PecaPageComponent
       this.userFormData = userData;
     }
   }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
+    });
+  }
   ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
     this.userDataSubscription.unsubscribe();
   }
 }

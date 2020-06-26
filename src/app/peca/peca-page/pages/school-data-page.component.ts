@@ -5,17 +5,17 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { SCHOOL_DATA_CONFIG as config } from './school-data-config';
-import { Select } from '@ngxs/store';
-import { PecaState } from 'src/app/store/states/peca/peca.state';
-import { Observable, Subscription } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { schoolDataToSchoolFormMapper } from '../mappers/school-mappers';
-import { teachersDataToTeachersTableMapper } from '../mappers/teacher-mappers';
-import { isNullOrUndefined } from 'util';
+  OnDestroy
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { Select } from "@ngxs/store";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { Observable, Subscription } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
+import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
+import { isNullOrUndefined } from "util";
 
 @Component({
   selector: "peca-school-data",
@@ -50,24 +50,18 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   ngOnInit() {
     this.schoolDataSubscription = this.schoolData$.subscribe(
-<<<<<<< HEAD
       data => {
-        this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
-        this.setTeachersTableData(
-          data.school.teachers,
-          teachersDataToTeachersTableMapper
-        );
-=======
-      (data) => {
-        if ( !isNullOrUndefined(data) ) {
-          console.log('mostrando data de escuela');          
+        if (!isNullOrUndefined(data)) {
+          console.log("mostrando data de escuela");
           this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
-          this.setTeachersTableData(data.school.teachers, teachersDataToTeachersTableMapper);
+          this.setTeachersTableData(
+            data.school.teachers,
+            teachersDataToTeachersTableMapper
+          );
           this.loadedData = true;
 
           if (this.isInstanciated) this.updateMethods();
-        };
->>>>>>> 73a9d345f64cb95779cb367a40689e736145137d
+        }
         // this.updateDataToBlocks();
       },
       error => console.error(error)
