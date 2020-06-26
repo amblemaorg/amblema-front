@@ -447,16 +447,16 @@ export const formRegistroInicial = {
         fullwidth: false,
         ...controlProps.normalText,
       },
-      imageStatus: {
-        label: 'Estado de la imagen',
-        placeholder: 'Estado de la imagen',
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: '1', name: 'Visible' },
-          { id: '2', name: 'No visible' },
-        ],
-      },
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.select,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
     },
   },
 };
@@ -471,16 +471,16 @@ export const formRegistroInicialModal = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired,
       },
-      imageStatus: {
-        label: 'Estado de la imagen',
-        placeholder: 'Estado de la imagen',
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: '1', name: 'Visible' },
-          { id: '2', name: 'No visible' },
-        ],
-      },
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
     },
   },
 };
@@ -663,16 +663,16 @@ export const formDatosEscuela = {
         fullwidth: false,
         ...controlProps.normalText,
       },
-      imageStatus: {
-        label: 'Estado de la imagen',
-        placeholder: 'Estado de la imagen',
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: '1', name: 'Visible' },
-          { id: '2', name: 'No visible' },
-        ],
-      },
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.select,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
     },
   },
 };
@@ -687,16 +687,16 @@ export const formDatosEscuelaModal = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired,
       },
-      imageStatus: {
-        label: 'Estado de la imagen',
-        placeholder: 'Estado de la imagen',
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: '1', name: 'Visible' },
-          { id: '2', name: 'No visible' },
-        ],
-      },
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
     },
   },
 };

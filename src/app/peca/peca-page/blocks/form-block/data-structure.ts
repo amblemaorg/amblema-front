@@ -87,8 +87,8 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
               ? cf.controls['imageGroup'].get('imageSelected').value.name 
               : null,
             description: cf.controls['imageGroup'].get('imageDescription').value,
-            state: cf.controls['imageGroup'].get('imageStatus').value,
-            status: 'En espera',
+            // state: cf.controls['imageGroup'].get('imageStatus').value,
+            // status: 'En espera',
             source: cf.controls['imageGroup'].get('imageSrc').value
               ? cf.controls['imageGroup'].get('imageSrc').value 
               : null,
