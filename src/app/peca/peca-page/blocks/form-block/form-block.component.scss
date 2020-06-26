@@ -68,7 +68,7 @@
 
             i {
               -webkit-transform: translateX(55%);
-              transform: translateX(55%);
+              transform: translateX(55%);              
             }
           }
 
@@ -92,6 +92,7 @@
             padding: 0;
             cursor: pointer;
             overflow: hidden;
+            font-style: normal;
 
             &:hover {
               color: $red;
