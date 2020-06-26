@@ -32,20 +32,20 @@ const testimonioDocenteTabla = {
             description: {
                 title: 'Descripcion'
             },
-            status: {
-                title: 'Estatus',
-                valuePrepareFunction: ( row: any ) => {
-                    if (row) return row == "1" ? 'Activo':'Inactivo';
-                    else return '';
-                },
-                filterFunction: (cell?: any, search?: string) => {
-                    let value: string = cell == "1" ? 'Activo':'Inactivo';
-                    value = value.toUpperCase();
+            // status: {
+            //     title: 'Estatus',
+            //     valuePrepareFunction: ( row: any ) => {
+            //         if (row) return row == "1" ? 'Activo':'Inactivo';
+            //         else return '';
+            //     },
+            //     filterFunction: (cell?: any, search?: string) => {
+            //         let value: string = cell == "1" ? 'Activo':'Inactivo';
+            //         value = value.toUpperCase();
                     
-                    if (value.includes(search.toUpperCase()) || search === '') return true;
-                    else return false;
-                }
-            },
+            //         if (value.includes(search.toUpperCase()) || search === '') return true;
+            //         else return false;
+            //     }
+            // },
         },
         isFromImgContainer: true,
         modalCode: 'dataTestimonioDocenteTabla',
@@ -58,7 +58,7 @@ const testimonioDocenteTabla = {
                 lastName: 'Valbuena',
                 cargo: 'profesor',
                 description: 'lorem ipsum dolor',
-                status: '1',
+                // status: '1',
                 source: null,
                 imageSelected: null,
             },  
