@@ -5,25 +5,25 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { SCHOOL_DATA_CONFIG as config } from './school-data-config';
-import { Select } from '@ngxs/store';
-import { PecaState } from 'src/app/store/states/peca/peca.state';
-import { Observable, Subscription } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { schoolDataToSchoolFormMapper } from '../mappers/school-mappers';
-import { teachersDataToTeachersTableMapper } from '../mappers/teacher-mappers';
-import { isNullOrUndefined } from 'util';
+  OnDestroy
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { Select } from "@ngxs/store";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { Observable, Subscription } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
+import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
+import { isNullOrUndefined } from "util";
 
 @Component({
-  selector: 'peca-school-data',
-  templateUrl: '../peca-page.component.html',
+  selector: "peca-school-data",
+  templateUrl: "../peca-page.component.html"
 })
 export class SchoolDataPageComponent extends PecaPageComponent
   implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('blocksContainer', { read: ViewContainerRef, static: false })
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getPecaSchoolData) schoolData$: Observable<any>;
   schoolDataSubscription: Subscription;
@@ -33,10 +33,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
   isInstanciated: boolean;
   loadedData: boolean;
 
-  constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    globals: GlobalService
+  ) {
     super(factoryResolver);
 
-    globals.blockIntancesEmitter.subscribe((blocks) => {
+    globals.blockIntancesEmitter.subscribe(blocks => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
       //console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods();
@@ -47,18 +50,21 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   ngOnInit() {
     this.schoolDataSubscription = this.schoolData$.subscribe(
-      (data) => {
-        if ( !isNullOrUndefined(data) ) {
-          console.log('mostrando data de escuela');          
+      data => {
+        if (!isNullOrUndefined(data)) {
+          console.log("mostrando data de escuela");
           this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
-          this.setTeachersTableData(data.school.teachers, teachersDataToTeachersTableMapper);
+          this.setTeachersTableData(
+            data.school.teachers,
+            teachersDataToTeachersTableMapper
+          );
           this.loadedData = true;
 
           if (this.isInstanciated) this.updateMethods();
-        };
+        }
         // this.updateDataToBlocks();
       },
-      (error) => console.error(error)
+      error => console.error(error)
     );
   }
 
@@ -69,8 +75,8 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   updateDataToBlocks() {
-    this.setBlockData('schoolForm', this.schoolFormData);
-    this.setBlockData('teachersTable', this.teachersTableData);
+    this.setBlockData("schoolForm", this.schoolFormData);
+    this.setBlockData("teachersTable", this.teachersTableData);
   }
 
   updateStaticFetchers() {
@@ -88,19 +94,21 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   updateDynamicFetchers() {
     this.createAndSetBlockFetcherUrls(
-      'teacherModalForm',
+      "teacherModalForm",
       {
-        put: (teacherId) => `schools/teachers/${this.schoolFormData.id}/${teacherId}`,
+        put: teacherId =>
+          `schools/teachers/${this.schoolFormData.id}/${teacherId}`
       },
-      'settings.data.id'
+      "settings.data.id"
     );
 
     this.createAndSetBlockFetcherUrls(
-      'teacherDeleteModal',
+      "teacherDeleteModal",
       {
-        delete: (teacherId) => `schools/teachers/${this.schoolFormData.id}/${teacherId}`,
+        delete: teacherId =>
+          `schools/teachers/${this.schoolFormData.id}/${teacherId}`
       },
-      'settings.dataFromRow.data.newData.id'
+      "settings.dataFromRow.data.newData.id"
     );
   }
 
