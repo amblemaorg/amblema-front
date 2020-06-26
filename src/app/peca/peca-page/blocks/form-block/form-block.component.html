@@ -21,20 +21,6 @@
                          'full-width2'             : settings.formsContent[field].fullwidth2 }"    
             [ngSwitch]="settings.formsContent[field].type"
           >
-            <ng-container *ngSwitchCase="'email'">
-              <label>{{ settings.formsContent[field].label }}</label>
-              <input
-                class="form-control"
-                autocomplete='off'
-                type="email"
-                [formControlName]="field"
-                [id]="getId(field)"
-                [placeholder]="settings.formsContent[field].placeholder"
-                [pattern]="settings.formsContent[field].validations.pattern"
-                [readonly]="settings.formsContent[field].readonly"
-              />
-            </ng-container>
-            
             <ng-container *ngSwitchCase="'select'">
               <label>{{ settings.formsContent[field].label }}</label>
               <input 
@@ -187,6 +173,7 @@
                 [id]="getId(field)"
                 [placeholder]="settings.formsContent[field].placeholder"
                 [readonly]="settings.formsContent[field].readonly"
+                [pattern]="settings.formsContent[field].validations.pattern"
               />
             </ng-container>
 
