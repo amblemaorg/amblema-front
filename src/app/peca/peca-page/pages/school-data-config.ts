@@ -5,6 +5,20 @@ import {
   formTabsEstudiantes,
   formDatosEscuelaModal,
 } from '../blocks/form-block/all-forms';
+import { settings } from 'cluster';
+
+const statusGeneral = {
+  component: 'textsbuttons',
+  settings: {
+    dateOrtext:{
+      
+    },
+    status: {
+      text: 'Estatus',
+      subText: 'Pendiente'
+    },
+  }
+};
 
 const textsAndButtons = {
   component: 'textsbuttons',
@@ -27,7 +41,6 @@ const textsAndButtons = {
     buttonCode: 'schoolDataConfigRegistroEscuela',
   },
 };
-
 const formEscuela = {
   component: 'form',
   name: 'schoolForm',
@@ -592,6 +605,7 @@ export const SCHOOL_DATA_CONFIG = {
         items: [
           {
             childBlocks: [
+              { ...statusGeneral },
               { ...formEscuela },
               { ...registroEscuela },
               { ...textsAndButtons },
