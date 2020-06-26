@@ -16,6 +16,7 @@ const botonEstadisticaLectura = {
 const estadisticaLectura = {
   component: 'graphics',
   settings: {
+    chartId: 'estadisticaLectura',
     items:[],
   }
 }
@@ -52,6 +53,7 @@ const botonEstadisticaMatematica = {
 const estadisticaMatematica = {
   component: 'graphics',
   settings: {
+    chartId: 'estadisticaMatematica',
     items:[],
   }
 }

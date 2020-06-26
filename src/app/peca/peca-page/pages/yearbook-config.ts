@@ -142,6 +142,7 @@ const subGraficoLectura = {
 const graficosLectura = {
     component: 'graphics',
     settings: {
+        chartId: 'graficosLectura',
         items: [
 
         ],
@@ -212,6 +213,7 @@ const subGraficoMultiplicacion = {
 const graficosMultiplicacion = {
     component: 'graphics',
     settings: {
+        chartId: 'graficosMultiplicacion',
         items: [
 
         ],
@@ -282,6 +284,7 @@ const subGraficoLogicoMate = {
 const graficosLogicoMate = {
     component: 'graphics',
     settings: {
+        chartId: 'graficosLogicoMate',
         items: [
 
         ],
