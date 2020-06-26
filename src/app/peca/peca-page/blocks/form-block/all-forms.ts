@@ -282,6 +282,7 @@ export const sampleFormData = {
         label: 'Input group select',
         placeholder: 'Input group select',
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: '1', name: 'V' },
@@ -878,6 +879,7 @@ export const formTabsEstudiantes = {
         label: 'Input group select',
         placeholder: 'Input group select',
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: '1', name: 'V' },
@@ -933,6 +935,7 @@ export const formCoordinador = {
         label: 'Input group select',
         placeholder: 'Input group select',
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: '1', name: 'V' },
@@ -1037,6 +1040,7 @@ export const formPadrino = {
         label: 'Input group select',
         placeholder: 'Input group select',
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: '1', name: 'V' },
