@@ -299,7 +299,13 @@
           }
     
           &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
-            border: 2px solid $green;
+            &:focus.ng-dirty, &.ng-select-focused.ng-dirty {
+              border: 2px solid $green;
+            }            
+          }
+
+          &[readonly] {
+            border: 1px solid map-get($color_map, form-gray) !important;
           }
           
           & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
@@ -308,7 +314,18 @@
 
           &:not(.date-not-valid) ~ .date-error-message {
             display: none;
-          }          
+          }    
+          
+          &[readonly] ~ .date-error-message {
+            display: none !important;
+          }
+        }
+
+        &[readonly] {
+          cursor: default;
+          &:focus {
+              border: 1px solid map-get($color_map, form-gray) !important;
+          }
         }
     
         &.ng-untouched {
