@@ -642,7 +642,7 @@ export class FormBlockComponent
             ].options.find(d => {
               return d.id === imgGrp.get("imageDocente").value;
             }).addressState,
-            status: imgGrp.get("imageStatus").value,
+            // status: imgGrp.get("imageStatus").value,
             source: imgGrp.get("imageSrc").value,
             imageSelected: imgGrp.get("imageSelected").value
           },

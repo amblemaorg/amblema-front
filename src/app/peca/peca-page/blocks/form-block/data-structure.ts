@@ -171,7 +171,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       data.data = {
         cargo: cf.controls["imageGroup"].get("imageCargo").value,
         description: cf.controls["imageGroup"].get("imageDescription").value,
-        status: cf.controls["imageGroup"].get("imageStatus").value,
+        // status: cf.controls["imageGroup"].get("imageStatus").value,
         source: cf.controls["imageGroup"].get("imageSrc").value
           ? cf.controls["imageGroup"].get("imageSrc").value
           : null,

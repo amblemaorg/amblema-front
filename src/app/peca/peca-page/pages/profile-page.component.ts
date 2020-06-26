@@ -47,7 +47,6 @@ export class ProfilePageComponent extends PecaPageComponent
     //this.getUser();
     globals.blockIntancesEmitter.subscribe(blocks => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods();
     });
     //this.loadForm();
@@ -74,7 +73,6 @@ export class ProfilePageComponent extends PecaPageComponent
       .subscribe(
         data => {
           if (!isNullOrUndefined(data)) {
-            console.log(data);
             if (this.userType === "4") {
               this.setUserFormData(data, profileDataToSchoolFormMapper);
               this.loadedData = true;
@@ -103,7 +101,6 @@ export class ProfilePageComponent extends PecaPageComponent
   getGeneralInformation() {
     const user = this.userData$.subscribe(
       data => {
-        console.log(data);
         this.idUser = data.id;
         this.userType = data.userType;
       },

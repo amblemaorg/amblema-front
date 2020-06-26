@@ -325,16 +325,16 @@ export const formTestimonioDocentes = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Activo" },
-          { id: "2", name: "Inactivo" }
-        ]
-      }
+      // imageStatus: {
+      //   label: "Estado de la imagen",
+      //   placeholder: "Estado de la imagen",
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: "1", name: "Activo" },
+      //     { id: "2", name: "Inactivo" }
+      //   ]
+      // }
     }
   }
 };
@@ -356,16 +356,16 @@ export const formTestimonioDocentesModalEdit = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estatus",
-        placeholder: "Estatus",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Activo" },
-          { id: "2", name: "Inactivo" }
-        ]
-      }
+      // imageStatus: {
+      //   label: "Estatus",
+      //   placeholder: "Estatus",
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: "1", name: "Activo" },
+      //     { id: "2", name: "Inactivo" }
+      //   ]
+      // }
     }
   }
 };
@@ -402,16 +402,16 @@ export const formTestimonioDocentesModal = {
     ...controlProps.selectAndRequired,
     options: [],
   },
-  status: {
-    label: "Estatus",
-    placeholder: "Estatus",
-    fullwidth: false,
-    ...controlProps.selectAndRequired,
-    options: [
-      { id: "1", name: "Activo" },
-      { id: "2", name: "Inactivo" }
-    ]
-  }
+  // status: {
+  //   label: "Estatus",
+  //   placeholder: "Estatus",
+  //   fullwidth: false,
+  //   ...controlProps.selectAndRequired,
+  //   options: [
+  //     { id: "1", name: "Activo" },
+  //     { id: "2", name: "Inactivo" }
+  //   ]
+  // }
 };
 
 /*TALLER INICIAL*/

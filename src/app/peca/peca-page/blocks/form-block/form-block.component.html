@@ -321,7 +321,13 @@
                 )
               "
             >
-              <div class="input-container">
+              <div 
+                class="input-container"
+                [class.expand-wide]="
+                  imgField == 'imageDescription' && 
+                  !settings.formsContent[field].fields['imageStatus']
+                "  
+              >
                 <label [class.label-image-status]="imgField == 'imageStatus'">{{
                   settings.formsContent[field].fields[imgField].label
                 }}</label>
@@ -341,11 +347,12 @@
                     imgField == 'imageStatus'
                   "
                   class="form-control"
-                  [class.image-status]="
-                    !settings.isFromCustomTableActions &&
-                    !settings.alwaysValidations
-                  "
-                  [class.is-in-modal]="settings.isFromCustomTableActions"
+                  [ngClass]="{
+                    'image-status': 
+                      !settings.isFromCustomTableActions &&
+                      !settings.alwaysValidations,
+                    'is-in-modal': settings.isFromCustomTableActions
+                  }"
                   notFoundText="Elementos no encontrados"
                   [items]="
                     settings.formsContent[field].fields[imgField].options
@@ -375,8 +382,8 @@
                   *ngIf="
                     imgField == 'imageCargo' || imgField == 'imageDescription'
                   "
-                  class="form-control"
-                  [class.image-description]="
+                  class="form-control"                  
+                  [class.image-description]=" 
                     !settings.isFromCustomTableActions &&
                     !settings.alwaysValidations
                   "

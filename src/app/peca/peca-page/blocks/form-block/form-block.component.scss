@@ -160,8 +160,11 @@
             .input-container {
               width: 48%;
             }
-            .input-container:last-child {
+            .input-container:not(.expand-wide):last-child {
               width: 48%;
+            }
+            .expand-wide {
+              width: 100%;
             }
           }
 
