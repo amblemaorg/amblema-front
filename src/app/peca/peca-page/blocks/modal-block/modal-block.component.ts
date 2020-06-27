@@ -185,7 +185,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
             block.viewMode &&
             block.viewMode != 'edit'
           ) {
-            const blockInstance = this.setChildBlock(block, data, container);
+            const blockInstance = this.setChildBlock(block, data, container, true);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
           }
         });
@@ -214,7 +214,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     this.globals.createdBlockInstances(blockInstances);
   }
 
-  setChildBlock(block, data, container) {
+  setChildBlock(block, data, container, viewOnly: boolean = false) {
+    if (viewOnly) block.settings['isEditable'] = true; // to set readonly all fields
+    else if (block.viewMode && block.viewMode == "both")
+      block.settings['isEditable'] = false;
+      
     if (block.component === "form")
       block.settings['data'] = data[0];
     block.settings['dataFromRow'] = data[1];
