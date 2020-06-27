@@ -41,6 +41,7 @@
 
       h6, label {
         width: 100%;
+        color: $blue;
       }
 
       label {
@@ -320,7 +321,7 @@
             display: none;
           }    
           
-          &[readonly] ~ .date-error-message {
+          &[readonly] ~ .error-message, &[readonly] ~ .date-error-message {
             display: none !important;
           }
         }

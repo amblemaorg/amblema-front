@@ -59,7 +59,10 @@
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
               (change)="updateMuns(field === 'addressState' ? true : false)"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || 
+                (settings.isEditable && !isEditing)
+              "
             >
               <ng-template
                 ng-option-tmp
@@ -90,7 +93,8 @@
                 [id]="getId('prependSelect')"
                 [clearable]="false"
                 [readonly]="
-                  settings.formsContent[field].fields['prependInput'].readonly
+                  settings.formsContent[field].fields['prependInput'].readonly || 
+                  (settings.isEditable && !isEditing)
                 "
               >
                 <ng-template
@@ -112,7 +116,8 @@
                 settings.formsContent[field].fields['prependInput'].placeholder
               "
               [readonly]="
-                settings.formsContent[field].fields['prependInput'].readonly
+                settings.formsContent[field].fields['prependInput'].readonly || 
+                (settings.isEditable && !isEditing)
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -138,7 +143,10 @@
                     field
                   )
                 "
-                [readonly]="settings.formsContent[field].readonly"
+                [readonly]="
+                  settings.formsContent[field].readonly || 
+                  (settings.isEditable && !isEditing)
+                "
               />
               <input
                 [class.d-none]="inputDate.value.length > 0"
@@ -189,7 +197,8 @@
                   settings.formsContent[field].fields[doublefield].placeholder
                 "
                 [readonly]="
-                  settings.formsContent[field].fields[doublefield].readonly
+                  settings.formsContent[field].fields[doublefield].readonly || 
+                  (settings.isEditable && !isEditing)
                 "
               />
               <ng-container *ngIf="hasErrors(field, true, doublefield)">
@@ -208,7 +217,10 @@
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || 
+                (settings.isEditable && !isEditing)
+              "
             ></textarea>
           </ng-container>
 
@@ -221,7 +233,10 @@
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || 
+                (settings.isEditable && !isEditing)
+              "
               [pattern]="settings.formsContent[field].validations.pattern"
             />
           </ng-container>
@@ -367,7 +382,8 @@
                     settings.formsContent[field].fields[imgField].placeholder
                   "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly
+                    settings.formsContent[field].fields[imgField].readonly || 
+                    (settings.isEditable && !isEditing)
                   "
                 >
                   <ng-template
@@ -395,7 +411,8 @@
                     settings.formsContent[field].fields[imgField].placeholder
                   "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly
+                    settings.formsContent[field].fields[imgField].readonly || 
+                    (settings.isEditable && !isEditing)
                   "
                 />
                 <ng-container

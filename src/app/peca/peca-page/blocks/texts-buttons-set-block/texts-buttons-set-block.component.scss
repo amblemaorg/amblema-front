@@ -217,7 +217,7 @@
                 display: none;
             }      
             
-            &[readonly] ~ .date-error-message {
+            &[readonly] ~ .error-message, &[readonly] ~ .date-error-message {
                 display: none !important;
             }
         }
