@@ -226,7 +226,7 @@ const subDiagnosticoLogicoMate = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Diagnóstico de Lectura",
+            text: "Diagnóstico de razonamiento lógico - matemático",
             aligning: "left"
         }
     },
@@ -276,7 +276,7 @@ const subGraficoLogicoMate = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Gráfico estadistico de Lectura",
+            text: "Gráfico diagnóstico de razonamiento lógico - matemático",
             aligning: "left"
         }
     },
