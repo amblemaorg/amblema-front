@@ -76,6 +76,7 @@
 	width: 10%;
 	padding-bottom: 0 !important;
 	height: auto;
+	visibility: hidden;
 	}
 
 	&[type="date"]:focus + .form-control[readonly] {
