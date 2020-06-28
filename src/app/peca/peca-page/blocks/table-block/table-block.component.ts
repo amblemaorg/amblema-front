@@ -29,10 +29,13 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       hideDelete: boolean;
     };
     total?: number;
+    isImageFirstCol?: boolean;
+    makesNoRequest?: boolean; // if true, this form makes no request to api
   };
 
   // source: LocalDataSource | any;
   source: LocalDataSource;
+  isEdited: boolean;
 
   private subscription: Subscription = new Subscription();
 
@@ -55,10 +58,18 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           this.settings.hideImgContainer = false;
       })
     );
+
+    this.subscription.add(
+      this.globals.resetEditedEmitter.subscribe((btnCode) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+          this.isEdited = false;
+      })
+    );
   }
   ngOnDestroy() {
     this.settings[this.settings.tableCode] = null;
     this.source = null;
+    this.isEdited =  null;
     this.subscription.unsubscribe();
   }
 
@@ -78,6 +89,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             if (index != -1) this.settings['dataCopy'][index] = data.data.newData;
             this.source.update(data.data.dataToCompare, data.data.newData);
             this.source.refresh();
+            if (this.settings.makesNoRequest && this.settings.buttonCode) 
+              this.isEdited = true;
           }).catch( (error) => {});                    
           break;
         case 'delete':
@@ -85,6 +98,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             if (index != -1) this.settings['dataCopy'].splice(index, 1);
             this.source.remove(data.data.dataToCompare);
             this.source.refresh();
+            if (this.settings.makesNoRequest && this.settings.buttonCode) 
+              this.isEdited = true;
           }).catch( (error) => {});            
           break;
         case 'view':
@@ -108,25 +123,29 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           break;
       }
 
-      // console.log(data);
-      //updating textAndButton button data
-      if (this.settings.buttonCode) {
-        if (this.settings.isFromImgContainer) {
+      this.sendTableData();
+    }
+  }
+
+  sendTableData() {
+    // console.log(data);
+    //updating textAndButton button data
+    if (this.settings.buttonCode) {
+      if (this.settings.isFromImgContainer) {
+        this.globals.buttonDataUpdater({
+          code: this.settings.buttonCode,
+          whichData: 'table',
+          table: this.settings['dataCopy'],
+        });
+      } else {
+        this.source.getAll().then((value) => {
           this.globals.buttonDataUpdater({
             code: this.settings.buttonCode,
             whichData: 'table',
-            table: this.settings['dataCopy'],
+            table: value,
           });
-        } else {
-          this.source.getAll().then((value) => {
-            this.globals.buttonDataUpdater({
-              code: this.settings.buttonCode,
-              whichData: 'table',
-              table: value,
-            });
-            // console.log('datos del modal form',value);
-          });
-        }
+          // console.log('datos del modal form',value);
+        });
       }
     }
   }
@@ -139,8 +158,12 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   setData(data: any) {
-    if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data];
-    this.source = new LocalDataSource(data);
+    if (!this.isEdited) {
+      if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data];
+      this.source = new LocalDataSource(data);
+  
+      this.sendTableData();
+    }    
   }
 
   onCustomActions(e) {

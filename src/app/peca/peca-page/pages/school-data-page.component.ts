@@ -15,7 +15,9 @@ import { Observable, Subscription } from "rxjs";
 import { GlobalService } from "src/app/services/global.service";
 import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
 import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
+import { schoolPicturesSliderDataToSchoolPicturesTableMapper } from "../mappers/school-prictures-slider-mappers";
 import { isNullOrUndefined } from "util";
+import { UserState } from 'src/app/store/states/e-learning/user.state';
 
 @Component({
   selector: "peca-school-data",
@@ -25,10 +27,19 @@ export class SchoolDataPageComponent extends PecaPageComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
+
   @Select(PecaState.getPecaSchoolData) schoolData$: Observable<any>;
+  @Select(UserState.user_id) userId$: Observable<string>;
+
   schoolDataSubscription: Subscription;
+  userIdSubscription: Subscription;
+  
   schoolFormData: any;
   teachersTableData: any;
+  sliderPicturesData: any;
+  currentUserId: string;
+  requestIdToCancel: string;
+  
   // controlling when data from school is loaded
   isInstanciated: boolean;
   loadedData: boolean;
@@ -39,10 +50,10 @@ export class SchoolDataPageComponent extends PecaPageComponent
   ) {
     super(factoryResolver);
 
-    globals.blockIntancesEmitter.subscribe(blocks => {
-      blocks.forEach((block, name) => this.blockInstances.set(name, block));
+    globals.blockIntancesEmitter.subscribe(data => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       //console.log(this.blockInstances);
-      if (this.loadedData) this.updateMethods();
+      if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
 
     this.instantiateComponent(config);
@@ -58,9 +69,26 @@ export class SchoolDataPageComponent extends PecaPageComponent
             data.school.teachers,
             teachersDataToTeachersTableMapper
           );
-          this.loadedData = true;
+          this.setSchoolPicturesTableData(
+            data.school.isInApproval 
+              ? (data.school.approvalHistory.length > 0 
+                  ? data.school.approvalHistory[data.school.approvalHistory.length - 1]
+                      .detail.slider 
+                  : [] ) 
+              : data.school.slider,
+            schoolPicturesSliderDataToSchoolPicturesTableMapper
+          );
+          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
 
-          if (this.isInstanciated) this.updateMethods();
+          this.userIdSubscription = this.userId$.subscribe(
+            user_id => {
+              this.currentUserId = user_id;
+              this.loadedData = true;
+
+              if (this.isInstanciated) this.updateMethods();
+            },
+            error => console.error(error)
+          );          
         }
         // this.updateDataToBlocks();
       },
@@ -68,23 +96,31 @@ export class SchoolDataPageComponent extends PecaPageComponent
     );
   }
 
-  updateMethods() {
-    this.updateDataToBlocks();
+  updateMethods(updateTables: boolean = true) {
+    this.updateDataToBlocks(updateTables);
     this.updateStaticFetchers();
     this.updateDynamicFetchers();
   }
 
-  updateDataToBlocks() {
+  updateDataToBlocks(updateTables: boolean) {
     this.setBlockData("schoolForm", this.schoolFormData);
-    this.setBlockData("teachersTable", this.teachersTableData);
+    if (updateTables) {
+      this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
+      this.setBlockData("teachersTable", this.teachersTableData); 
+    }    
+  }
+
+  setCancelRequest(approvalHistory: any[]) {
+    if (approvalHistory.length > 0)
+      this.requestIdToCancel = approvalHistory[approvalHistory.length - 1].id;
   }
 
   updateStaticFetchers() {
-    // /pecaprojects/school/<string:pecaprojectId> | PUT Actualizar Escuela
-    // /pecaprojects/schoolsliders/<string:pecaprojectId>?userId=<string:userId> | POST Agregar imagen
     this.setBlockFetcherUrls('schoolFormButton', {
-      // put: `users/${this.schoolFormData.id}?userType=4`,
-      put: `pecaprojects/school/${this.schoolFormData.pecaId}`,
+      put: `pecaprojects/school/${this.schoolFormData.pecaId}?userId=${this.currentUserId}`,
+      cancel: this.requestIdToCancel 
+                ? `requestscontentapproval/${this.requestIdToCancel}` 
+                : null,
     });
 
     this.setBlockFetcherUrls('teacherForm', {
@@ -125,6 +161,14 @@ export class SchoolDataPageComponent extends PecaPageComponent
       this.teachersTableData = _mapper(teachersData);
     } else {
       this.teachersTableData = teachersData;
+    }
+  }
+
+  setSchoolPicturesTableData(sliderData, _mapper?: Function) {
+    if (_mapper) {
+      this.sliderPicturesData = _mapper(sliderData);
+    } else {
+      this.sliderPicturesData = sliderData;
     }
   }
 
