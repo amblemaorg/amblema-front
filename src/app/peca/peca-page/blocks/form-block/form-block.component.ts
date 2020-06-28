@@ -49,6 +49,7 @@ export class FormBlockComponent
     isEditable?: boolean; //It is for views that have data that can be edited
     notGenerateId?: boolean; // It is for forms that do not need to be assigned an id
     notResetForm?: boolean; //It is for events that do not require the component to be reset
+    makesNoRequest?: boolean; // if true, this form makes no request to api
   };
 
   @Select(ResidenceInfoState.get_states) states$: Observable<any>;
@@ -70,6 +71,8 @@ export class FormBlockComponent
   showSelectTeacher: boolean = true;
   showSelectState: boolean = true;
   isEditing: boolean = false;
+  isInApproval: boolean;
+  isEdited: boolean;
 
   constructor(
     private store: Store,
@@ -87,7 +90,11 @@ export class FormBlockComponent
   ngOnInit() {
     this.subscription.add(
       this.componentForm.statusChanges.subscribe(val => {
-        if (val === "INVALID" || this.isDateNotOk()) this.btnUpdater(null);
+        if ( val === "INVALID" || this.isDateNotOk() || !this.isDirty() ) {
+          if (this.settings.makesNoRequest && this.settings.buttonCode) 
+            this.isEdited = true;
+          this.btnUpdater(null);
+        }          
         else this.btnUpdater(this.componentForm.value);
       })
     );
@@ -119,10 +126,20 @@ export class FormBlockComponent
         })
       );
 
+    this.subscription.add(
+      this.globals.resetEditedEmitter.subscribe((btnCode) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+          this.isEdited = false;
+      })
+    );
+
     this.setId();
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.isEditing = false;
+    this.isInApproval = null;
+    this.isEdited = null;
   }
 
   btnUpdater(val) {
@@ -142,6 +159,15 @@ export class FormBlockComponent
     } else return true;
   }
 
+  isDirty(): boolean {
+    return this.componentForm.dirty
+  }
+
+  isReadOnly(): boolean {
+    return (this.settings.isEditable && !this.isEditing) || 
+           this.isInApproval
+  }
+
   setSettings(settings: any) {
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
@@ -150,8 +176,12 @@ export class FormBlockComponent
   }
 
   setData(data: any) {
-    this.settings.data = data;
-    this.setAllFields(this.settings.data);
+    if (!this.isEdited) {
+      this.settings.data = data;
+      this.setAllFields(this.settings.data);
+  
+      this.btnUpdater(this.componentForm.value);
+    }    
   }
 
   setFetcherUrls({ post, put, patch }) {
@@ -411,49 +441,60 @@ export class FormBlockComponent
           : "add"
         : "set"
     };
+    
+    const commonTasks = () => {
+      this.sendingForm = false;
+      
+      if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
+  
+      if (this.settings.modalCode)
+        this.globals.ModalHider(this.settings.modalCode);
 
-    const method = this.settings.fetcherMethod || "post";
-    const resourcePath = this.settings.fetcherUrls[method];
-    const body = adaptBody(
-      this.settings.formType,
-      this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
-    );
-
-    this.fetcher[method](resourcePath, body).subscribe(
-      response => {
-        this.sendingForm = false;
-        console.log("Form response", response);
-
-        if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
-
-        if (this.settings.modalCode)
-          this.globals.ModalHider(this.settings.modalCode);
-
-        // initializers
-        if (!this.settings.notResetForm) {
-          cf.reset();
-          this.municipalities = [];
-          Object.keys(this.wrongDateDisabler).map(f => {
-            this.wrongDateDisabler[f] = false;
-          });
-        }
-        //
-        this.toastr.success("Suministrado con éxito", "", {
-          positionClass: "toast-bottom-right"
+      // initializers
+      if (!this.settings.notResetForm) {
+        cf.reset();
+        this.municipalities = [];
+        Object.keys(this.wrongDateDisabler).map(f => {
+          this.wrongDateDisabler[f] = false;
         });
-        this.isEditing = false;
-        this.store.dispatch([new FetchPecaContent(this.globals.getPecaId())]);
-      },
-      error => {
-        this.sendingForm = false;
-        this.toastr.error(
-          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
-          "",
-          { positionClass: "toast-bottom-right" }
-        );
-        console.error(error);
       }
-    );
+      //
+
+      this.isEditing = false;
+    };
+
+    if (this.settings.makesNoRequest) commonTasks();
+    else {
+      const method = this.settings.fetcherMethod || "post";
+      const resourcePath = this.settings.fetcherUrls[method];
+      const body = adaptBody(
+        this.settings.formType,
+        this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
+      );
+      
+      this.fetcher[method](resourcePath, body).subscribe(
+        response => {
+          commonTasks();
+          console.log("Form response", response);
+            
+          this.toastr.success("Suministrado con éxito", "", {
+            positionClass: "toast-bottom-right"
+          });
+          
+          this.store.dispatch([new FetchPecaContent(this.globals.getPecaId())]);
+        },
+        error => {
+          this.sendingForm = false;
+          this.toastr.error(
+            "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+            "",
+            { positionClass: "toast-bottom-right" }
+          );
+          console.error(error);
+        }
+      );
+    }
+    
   }
 
   // filling municipalities according to selected state
@@ -575,8 +616,9 @@ export class FormBlockComponent
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       default:
-        return this.componentForm.controls["imageGroup"].get("imageSelected")
-          .value.name;
+        return this.componentForm.controls["imageGroup"].value["imageSelected"] 
+                ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
+                : 'image';
     }
   }
   // when X image remover is clicked
@@ -612,7 +654,8 @@ export class FormBlockComponent
             id: Math.random()
               .toString(36)
               .substring(2),
-            image: imgGrp.get("imageSelected").value.name,
+            // image: imgGrp.get("imageSelected").value.name,
+            image: imgGrp.get("imageSrc").value,
             source: imgGrp.get("imageSrc").value,
             imageSelected: imgGrp.get("imageSelected").value,
             ...this.imageObjWithAvailableFields()
@@ -716,6 +759,8 @@ export class FormBlockComponent
   setAllFields(data) {
     const dataKeys = Object.keys(data);
 
+    if (data.isInApproval) this.isInApproval = data.isInApproval;
+
     dataKeys.map(key => {
       if (
         (key == "imageGroup" && this.settings.formsContent["imageGroup"]) ||
@@ -742,7 +787,7 @@ export class FormBlockComponent
       }
     });
     // console.log(this.componentForm.value);
-    // this.componentForm.setValue(data);
+    // this.componentForm.setValue(data);    
   }
 
   //? turning imageGroup fields into array

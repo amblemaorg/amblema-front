@@ -1,7 +1,15 @@
 export function schoolDataToSchoolFormMapper(schoolData) {
+  const schoolData_ = schoolData.approvalHistory.length > 0 
+  ? {
+    ...schoolData,
+    ...schoolData.approvalHistory[schoolData.approvalHistory.length - 1].detail
+  }
+  : { ...schoolData };
+
   const {
     id,
     pecaId,
+    isInApproval,
     name,
     code,
     addressState,
@@ -24,7 +32,34 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     facebook,
     instagram,
     twitter,
-  } = schoolData;
+  } = schoolData_;
+
+  // const {
+  //   id,
+  //   pecaId,
+  //   name,
+  //   code,
+  //   addressState,
+  //   addressMunicipality,
+  //   address,
+  //   addressCity,
+  //   principalFirstName,
+  //   principalLastName,
+  //   principalPhone,
+  //   principalEmail,
+  //   subPrincipalFirstName,
+  //   subPrincipalLastName,
+  //   subPrincipalPhone,
+  //   subPrincipalEmail,
+  //   nTeachers,
+  //   nAdministrativeStaff,
+  //   nLaborStaff,
+  //   nStudents,
+  //   nGrades,
+  //   facebook,
+  //   instagram,
+  //   twitter,
+  // } = schoolData;
 
   const principalName =
     principalFirstName && principalLastName ? `${principalFirstName} ${principalLastName}` : null;
@@ -37,6 +72,7 @@ export function schoolDataToSchoolFormMapper(schoolData) {
   return {
     id,
     pecaId,
+    isInApproval,
     nameEscuela: name,
     codigoEscuela: code,
     phoneEscuela: null,
