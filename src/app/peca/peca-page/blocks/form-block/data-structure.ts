@@ -92,10 +92,12 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       };
       break;
     case "imageContainerFormType": // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
-      console.log(formsContent);
       data.data = {
-        image: cf.controls["imageGroup"].get("imageSelected").value
-          ? cf.controls["imageGroup"].get("imageSelected").value.name
+        // image: cf.controls["imageGroup"].get("imageSelected").value
+        //   ? cf.controls["imageGroup"].get("imageSelected").value.name
+        //   : null,
+        image: cf.controls["imageGroup"].get("imageSrc").value
+          ? cf.controls["imageGroup"].get("imageSrc").value
           : null,
         description: cf.controls["imageGroup"].get("imageDescription").value,
         // state: cf.controls["imageGroup"].get("imageStatus").value,
