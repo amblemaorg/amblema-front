@@ -45,8 +45,8 @@ export class ProfilePageComponent extends PecaPageComponent
   ) {
     super(factoryResolver);
     //this.getUser();
-    globals.blockIntancesEmitter.subscribe(blocks => {
-      blocks.forEach((block, name) => this.blockInstances.set(name, block));
+    globals.blockIntancesEmitter.subscribe(data => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       if (this.loadedData) this.updateMethods();
     });
     //this.loadForm();

@@ -34,7 +34,7 @@ const textsAndButtons = {
         name: 'Adjuntar fotos',
       },
       {
-        type: 3,
+        type: 4,
         name: 'Enviar Solicitud',
       },
     ],
@@ -58,10 +58,16 @@ const formEscuela = {
 
 const registroEscuela = {
   component: 'table',
+  name: 'schoolPicturesTable',
   settings: {
     columns: {
       image: {
-        title: 'Imágenes',
+        type: 'html',
+        title: 'Imágen',
+        valuePrepareFunction: 
+          (img) => {
+            return `<img src="${img}" alt="image" />` 
+          }
       },
       description: {
         title: 'Descripción',
@@ -86,28 +92,33 @@ const registroEscuela = {
     },
     hideImgContainer: true,
     isFromImgContainer: true,
+    isImageFirstCol: true,
+    makesNoRequest: true,
     modalCode: 'schoolDataConfigRegistroEscuela',
     buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
     schoolDataConfigRegistroEscuela: [
-      {
-        id: '1abcdefghijk',
-        image: 'imagen1.png',
-        description: 'descripcion 1',
+      /* {
+        // id: '1abcdefghijk',
+        // image: 'imagen1.png',
+        // description: 'descripcion 1',
         // state: '1',
         // status: 'Aprobado',
-        source: null,
+        // source: null,
+        // imageSelected: null,
+        id: '1abcdefghijk',
+        image: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
+        description: 'descripcion 1',
+        source: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
         imageSelected: null,
       },
       {
         id: '2abcdefghijk',
-        image: 'imagen2.png',
+        image: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
         description: 'descripcion 2',
-        // state: '2',
-        // status: 'Aprobado',
-        source: null,
+        source: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
         imageSelected: null,
-      },
+      }, */
     ],
     classes: {
       hideView: true,
@@ -126,6 +137,7 @@ const formRegistroEscuela = {
     tableCode: 'schoolDataConfigRegistroEscuela',
     modalCode: 'schoolDataConfigRegistroEscuela',
     isFromCustomTableActions: true,
+    makesNoRequest: true,
   },
 };
 const textsAndButtonsRegistroEscuela = {
@@ -148,6 +160,7 @@ const textsAndButtonsRegistroEscuela = {
     ],
     modalCode: 'schoolDataConfigRegistroEscuela',
     isFromCustomTableActions: true,
+    makesNoRequest: true,
   },
 };
 const modalRegistroEscuela = {
