@@ -6,7 +6,7 @@ import { Location } from "@angular/common";
 import { Store } from "@ngxs/store";
 import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
 import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
-import { UpdateUserInfo } from 'src/app/store/actions/e-learning/user.actions';
+import { UpdateUserInfo, SetCurrentUser } from 'src/app/store/actions/e-learning/user.actions';
 import { UpdateStepsProgress } from 'src/app/store/actions/steps/project.actions';
 import { StepsService } from 'src/app/services/steps/steps.service';
 import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
@@ -102,6 +102,7 @@ export class SchoolSelectionComponent implements OnInit {
       //  emailUser: this.emailUser,
       //},
       this.store.dispatch([new SetSelectedProject(this.projects[index])]);
+      this.store.dispatch( new SetCurrentUser( this.idUser, (+this.userType) ) );
     }
 
     this.getResidenceInfo();
