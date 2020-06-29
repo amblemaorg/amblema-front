@@ -1,5 +1,8 @@
-import { CoordinatorModule, UProject } from '../../../models/steps/learning-modules.model';
-import { Project } from '../../../models/steps/previous-steps.model';
+import {
+  CoordinatorModule,
+  UProject
+} from "../../../models/steps/learning-modules.model";
+import { Project } from "../../../models/steps/previous-steps.model";
 
 //todo: ---------- ACTION CLASSES --------------------------------- //
 /* export class IncreaseCoins {
@@ -7,11 +10,15 @@ import { Project } from '../../../models/steps/previous-steps.model';
     constructor(public coinsCount: number) {}
 } */
 export class UpdateUserInfo {
-  static readonly type = '[ELearning] UpdateUserInfo';
+  static readonly type = "[ELearning] UpdateUserInfo";
+  constructor(public user_id: string, public user_type: number) {}
+}
+export class SetCurrentUser {
+  static readonly type = "[Peca] SetCurrentUser";
   constructor(public user_id: string, public user_type: number) {}
 }
 export class ClearUserInfo {
-  static readonly type = '[ELearning] ClearUserInfo';
+  static readonly type = "[ELearning] ClearUserInfo";
 }
 //todo: ---------- END ACTION CLASSES ----------------------------- //
 
