@@ -159,14 +159,16 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       };
       break;
     case "imageContainerFormType": // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
-      console.log(formsContent);
       data.data = {
-        image: cf.controls["imageGroup"].get("imageSelected").value
-          ? cf.controls["imageGroup"].get("imageSelected").value.name
+        // image: cf.controls["imageGroup"].get("imageSelected").value
+        //   ? cf.controls["imageGroup"].get("imageSelected").value.name
+        //   : null,
+        image: cf.controls["imageGroup"].get("imageSrc").value
+          ? cf.controls["imageGroup"].get("imageSrc").value
           : null,
         description: cf.controls["imageGroup"].get("imageDescription").value,
-        state: cf.controls["imageGroup"].get("imageStatus").value,
-        status: "En espera",
+        // state: cf.controls["imageGroup"].get("imageStatus").value,
+        // status: "En espera",
         source: cf.controls["imageGroup"].get("imageSrc").value
           ? cf.controls["imageGroup"].get("imageSrc").value
           : null,
@@ -238,7 +240,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       data.data = {
         cargo: cf.controls["imageGroup"].get("imageCargo").value,
         description: cf.controls["imageGroup"].get("imageDescription").value,
-        status: cf.controls["imageGroup"].get("imageStatus").value,
+        // status: cf.controls["imageGroup"].get("imageStatus").value,
         source: cf.controls["imageGroup"].get("imageSrc").value
           ? cf.controls["imageGroup"].get("imageSrc").value
           : null,

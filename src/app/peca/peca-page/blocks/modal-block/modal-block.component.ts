@@ -114,15 +114,15 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                           cargo: data.data.oldData.cargo,
                           description: data.data.oldData.description,
                           addressState: data.data.oldData.addressState,
-                          status: data.data.oldData.status,
+                          // status: data.data.oldData.status,
                         }
                         : {
                           imageGroup: {
                             imageCargo: data.data.newData.cargo,
                             imageDescription: data.data.newData.description,
-                            imageStatus: data.data.newData.status
-                              ? data.data.newData.status
-                              : null,
+                            // imageStatus: data.data.newData.status
+                            //   ? data.data.newData.status
+                            //   : null,
                             imageSrc: data.data.newData.source
                               ? data.data.newData.source
                               : null,
@@ -185,7 +185,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
             block.viewMode &&
             block.viewMode != 'edit'
           ) {
-            const blockInstance = this.setChildBlock(block, data, container);
+            const blockInstance = this.setChildBlock(block, data, container, true);
             blockInstances.set(block.name || `modal${i}block${j}`, blockInstance);
           }
         });
@@ -211,10 +211,14 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
         });
       }
     });
-    this.globals.createdBlockInstances(blockInstances);
+    this.globals.createdBlockInstances(blockInstances,true);
   }
 
-  setChildBlock(block, data, container) {
+  setChildBlock(block, data, container, viewOnly: boolean = false) {
+    if (viewOnly) block.settings['isEditable'] = true; // to set readonly all fields
+    else if (block.viewMode && block.viewMode == "both")
+      block.settings['isEditable'] = false;
+      
     if (block.component === "form")
       block.settings['data'] = data[0];
     block.settings['dataFromRow'] = data[1];
@@ -229,11 +233,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
       item.childBlocks.map(block => {
-        let settings = block.settings;
-        if (block.component == "graphics") settings = { settings: block.settings, factory: this.factory };
+        // let settings = block.settings;
+        // if (block.component == "graphics") settings = { settings: block.settings, factory: this.factory };
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
-        pageBlockComponent.instance.setSettings(settings);
+        pageBlockComponent.instance.setSettings(block.settings);
       })
     })
   }

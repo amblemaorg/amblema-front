@@ -28,20 +28,6 @@
           }"
           [ngSwitch]="settings.formsContent[field].type"
         >
-          <ng-container *ngSwitchCase="'email'">
-            <label>{{ settings.formsContent[field].label }}</label>
-            <input
-              class="form-control"
-              autocomplete="off"
-              type="email"
-              [formControlName]="field"
-              [id]="getId(field)"
-              [placeholder]="settings.formsContent[field].placeholder"
-              [pattern]="settings.formsContent[field].validations.pattern"
-              [readonly]="settings.formsContent[field].readonly"
-            />
-          </ng-container>
-
           <ng-container *ngSwitchCase="'select'">
             <label>{{ settings.formsContent[field].label }}</label>
             <input
@@ -73,7 +59,9 @@
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
               (change)="updateMuns(field === 'addressState' ? true : false)"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || isReadOnly()
+              "
             >
               <ng-template
                 ng-option-tmp
@@ -104,7 +92,7 @@
                 [id]="getId('prependSelect')"
                 [clearable]="false"
                 [readonly]="
-                  settings.formsContent[field].fields['prependInput'].readonly
+                  settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
                 "
               >
                 <ng-template
@@ -126,7 +114,7 @@
                 settings.formsContent[field].fields['prependInput'].placeholder
               "
               [readonly]="
-                settings.formsContent[field].fields['prependInput'].readonly
+                settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -152,7 +140,9 @@
                     field
                   )
                 "
-                [readonly]="settings.formsContent[field].readonly"
+                [readonly]="
+                  settings.formsContent[field].readonly || isReadOnly()
+                "
               />
               <input
                 [class.d-none]="inputDate.value.length > 0"
@@ -203,7 +193,7 @@
                   settings.formsContent[field].fields[doublefield].placeholder
                 "
                 [readonly]="
-                  settings.formsContent[field].fields[doublefield].readonly
+                  settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
                 "
               />
               <ng-container *ngIf="hasErrors(field, true, doublefield)">
@@ -222,7 +212,9 @@
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || isReadOnly()
+              "
             ></textarea>
           </ng-container>
 
@@ -230,12 +222,15 @@
             <label>{{ settings.formsContent[field].label }}</label>
             <input
               class="form-control"
-              autocomplete="off"
+              autocomplete='off'
               [type]="settings.formsContent[field].type"
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="settings.formsContent[field].readonly"
+              [readonly]="
+                settings.formsContent[field].readonly || isReadOnly()
+              "
+              [pattern]="settings.formsContent[field].validations.pattern"
             />
           </ng-container>
 
@@ -334,7 +329,13 @@
                 )
               "
             >
-              <div class="input-container">
+              <div 
+                class="input-container"
+                [class.expand-wide]="
+                  imgField == 'imageDescription' && 
+                  !settings.formsContent[field].fields['imageStatus']
+                "  
+              >
                 <label [class.label-image-status]="imgField == 'imageStatus'">{{
                   settings.formsContent[field].fields[imgField].label
                 }}</label>
@@ -354,11 +355,12 @@
                     imgField == 'imageStatus'
                   "
                   class="form-control"
-                  [class.image-status]="
-                    !settings.isFromCustomTableActions &&
-                    !settings.alwaysValidations
-                  "
-                  [class.is-in-modal]="settings.isFromCustomTableActions"
+                  [ngClass]="{
+                    'image-status': 
+                      !settings.isFromCustomTableActions &&
+                      !settings.alwaysValidations,
+                    'is-in-modal': settings.isFromCustomTableActions
+                  }"
                   notFoundText="Elementos no encontrados"
                   [items]="
                     settings.formsContent[field].fields[imgField].options
@@ -373,7 +375,7 @@
                     settings.formsContent[field].fields[imgField].placeholder
                   "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly
+                    settings.formsContent[field].fields[imgField].readonly || isReadOnly()
                   "
                 >
                   <ng-template
@@ -388,8 +390,8 @@
                   *ngIf="
                     imgField == 'imageCargo' || imgField == 'imageDescription'
                   "
-                  class="form-control"
-                  [class.image-description]="
+                  class="form-control"                  
+                  [class.image-description]=" 
                     !settings.isFromCustomTableActions &&
                     !settings.alwaysValidations
                   "
@@ -401,7 +403,7 @@
                     settings.formsContent[field].fields[imgField].placeholder
                   "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly
+                    settings.formsContent[field].fields[imgField].readonly || isReadOnly()
                   "
                 />
                 <ng-container
