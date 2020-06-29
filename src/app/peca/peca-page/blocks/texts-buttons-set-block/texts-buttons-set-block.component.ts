@@ -65,9 +65,15 @@ export class TextsButtonsSetBlockComponent
       titleInput: string;
     }[];
     fetcherUrls: {
+      // get: string;
+      // post: string;
+      put: string;
+      // patch: string;
       delete: string;
+      cancel: string;
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
+    makesNoRequest?: boolean; // if true, this form makes no request to api
   };
 
   glbls: any;
@@ -90,13 +96,14 @@ export class TextsButtonsSetBlockComponent
 
   ngOnInit() {
     this.subscription.add(
-      this.globals.updateButtonDataEmitter.subscribe((data) => {
+      this.globals.updateButtonDataEmitter.subscribe((data) => {        
         if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
           if (data.whichData == 'table') this.dataTorF.table = data.table;
           if (data.whichData == 'form') this.dataTorF.form = data.form;
 
           // console.log(this.dataTorF);
         }
+        // console.log(this.dataTorF);
       })
     );
   }
@@ -112,9 +119,16 @@ export class TextsButtonsSetBlockComponent
     this.settings = { ...settings };
   }
 
-  setFetcherUrls({ delete: deleteFn }) {
+  // setFetcherUrls({ delete: deleteFn }) {
+  //   this.settings.fetcherUrls = {
+  //     delete: deleteFn,
+  //   };
+  // }
+  setFetcherUrls({ put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
+      put,
       delete: deleteFn,
+      cancel
     };
   }
 
@@ -131,7 +145,7 @@ export class TextsButtonsSetBlockComponent
           /* !this.dataTorF.table ||  */ !this.dataTorF.form)
       )
         return true;
-    }
+    } else if (type == 2 && this.settings.fetcherUrls.cancel) return true;
     return false;
   }
 
@@ -220,13 +234,21 @@ export class TextsButtonsSetBlockComponent
     switch (type) {
       case 1:
         if (this.settings.isFromCustomTableActions && this.settings.modalCode) {
-          const method = this.settings.fetcherMethod || 'delete';
-          const url = this.settings.fetcherUrls[method];
-          this.fetcher[method](url).subscribe((data) => {
-            //console.log(data);
+          const commonTasks = () => {
             this.globals.tableDataUpdater(this.settings.dataFromRow);
             this.globals.ModalHider(this.settings.modalCode);
-          });
+          };
+
+          if (this.settings.makesNoRequest) commonTasks();
+          else {
+            const method = this.settings.fetcherMethod || 'delete';
+            const url = this.settings.fetcherUrls[method];
+            this.fetcher[method](url).subscribe((data) => {
+              //console.log(data);
+              commonTasks();
+              if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+            });
+          }          
         }
         break;
       case 2:
@@ -241,5 +263,9 @@ export class TextsButtonsSetBlockComponent
       default:
         break;
     }
+  }
+
+  cancelRequest() {
+    if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
   }
 }

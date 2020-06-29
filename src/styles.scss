@@ -514,23 +514,47 @@ span[class*="icon-"].icon-awesum {
 //?----------------------------------------------
 
 //SCHEDULE
-
+.nb-theme-default li {
+  color: #00809a !important;
+  font-family: "Montserrat" !important;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+.e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn-text {
+  color: #00809a;
+  font-weight: bold;
+}
+.e-schedule .e-month-view .e-date-header-wrap table td {
+  color: #00809a;
+  font-weight: bold;
+}
+.e-schedule .e-month-view .e-work-cells {
+  color: #00809a;
+}
+.e-schedule .e-agenda-view .e-day-date-header {
+  color: #00809a;
+}
+.e-schedule .e-month-view .e-other-month,
+.e-schedule .e-month-agenda-view .e-other-month {
+  color: rgba(0, 0, 0, 0.54);
+}
 .e-schedule .e-schedule-toolbar .e-active-view .e-tbar-btn-text,
 .e-schedule .e-schedule-toolbar .e-active-view .e-icons {
-  color: #00809a;
+  color: #00353a;
 }
 
 .e-schedule .e-month-view .e-current-date .e-date-header,
 .e-schedule .e-month-agenda-view .e-current-date .e-date-header {
-  background-color: #00809a;
+  background-color: #00353a;
 }
 
 .e-toolbar .e-icons {
-  color: #00809a;
+  color: #00353a;
 }
 .e-schedule .e-month-view .e-date-header-wrap table td.e-current-day,
 .e-schedule .e-month-agenda-view .e-date-header-wrap table td.e-current-day {
-  color: #00809a;
+  color: #00353a;
 }
 
 .e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left),
@@ -543,25 +567,25 @@ span[class*="icon-"].icon-awesum {
   .e-input-in-wrap,
 .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error)
   .e-input-in-wrap {
-  border-color: #00809a;
+  border-color: #00353a;
 }
 
 .e-btn.e-flat.e-primary:hover,
 .e-css.e-btn.e-flat.e-primary:hover {
   background-color: rgba(22, 171, 227, 0.04);
   border-color: transparent;
-  color: #00809a;
+  color: #00353a;
 }
 .e-btn.e-flat.e-primary,
 .e-css.e-btn.e-flat.e-primary {
   background-color: rgba(22, 171, 227, 0.04);
   border-color: transparent;
-  color: #00809a;
+  color: #00353a;
 }
 
 .e-checkbox-wrapper .e-frame.e-check,
 .e-css.e-checkbox-wrapper .e-frame.e-check {
-  background-color: #00809a;
+  background-color: #00353a;
   border-color: transparent;
   color: #fff;
 }
@@ -576,13 +600,13 @@ textarea.e-input::selection,
 .e-input-group.e-control-wrapper textarea.e-input::selection,
 .e-float-input textarea::selection,
 .e-float-input.e-control-wrapper textarea::selection {
-  background: #00809a;
+  background: #00353a;
   color: #fff;
 }
 
 .e-float-input.e-small textarea::selection,
 .e-float-input textarea::selection {
-  background: #00809a;
+  background: #00353a;
   color: #fff;
 }
 

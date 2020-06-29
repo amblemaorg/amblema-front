@@ -2,76 +2,88 @@
 ? INFO:
 
   (I) for adding titles to the form data::
-  --> i.e; title_sample: { label: "Title_label", type: "title"},
+  --> i.e; 
+    title_sample: { label: "Title_label", type: "title"},
 
   (II) for adding an add image container to the form data::
   --> i.e;
-  imageGroup: {
-    type: "image",
-    fields: {
-      imageDescription: {
-        label: "image_description",
-        placeholder: "image_description",
-        fullwidth: boolean_here, // true makes this field 100% view width, false just 50%.
-        ...controlProps.normalText,
+    imageGroup: {
+      type: "image",
+      fields: {
+        imageDescription: {
+          label: "image_description",
+          placeholder: "image_description",
+          fullwidth: boolean_here, // true makes this field 100% view width, false just 50%.
+          ...controlProps.normalText,
+        },
+        imageStatus: {
+          label: "image_status",
+          placeholder: "image_status",
+          fullwidth: boolean_here,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "value_one" },
+            { id: "2", name: "value_two" },
+          ],
+        },
       },
-      imageStatus: {
-        label: "image_status",
-        placeholder: "image_status",
-        fullwidth: boolean_here,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "value_one" },
-          { id: "2", name: "value_two" },
-        ],
-      },
-    },
-  }
+    }
 
   (III) for adding an Identification Document to the form data::
   --> i.e;
-  documentGroup: {
-    type: "prepend",
-    fields: {
-      prependSelect: {
-        label: "select_value",
-        placeholder: "select_value",
-        fullwidth: boolean_here,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "value_one" },
-          { id: "2", name: "value_two" },
-        ],
+    documentGroup: {
+      type: "prepend",
+      fields: {
+        prependSelect: {
+          label: "select_value",
+          placeholder: "select_value",
+          fullwidth: boolean_here,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "value_one" },
+            { id: "2", name: "value_two" },
+          ],
+        },
+        prependInput: {
+          label: "input_value",
+          placeholder: "input_value",
+          fullwidth: boolean_here,
+          ...controlProps.numberAndRequired
+        },
       },
-      prependInput: {
-        label: "input_value",
-        placeholder: "input_value",
-        fullwidth: boolean_here,
-        ...controlProps.numberAndRequired
-      },
-    },
-  }
+    }
 
   (IV) for adding double inputs to the form data::
   *note: text and number inputs only
   --> i.e;
-  doubleFieldsN: { // 'doubleFieldsN' can be any name
-    type: "double",
-    fields: { // only 2 fields allowed
-      field_1: {
-        label: "input_text_or_number",
-        placeholder: "input_text_or_number",
-        fullwidth: false, // it must be false
-        ...controlProps.[number or text controlprops],
-      },
-      field_2: {
-        label: "input2_text_or_number",
-        placeholder: "input2_text_or_number",
-        fullwidth: false, // it must be false
-        ...controlProps.[number or text controlprops],
-      },
+    doubleFieldsN: { // 'doubleFieldsN' can be any name
+      type: "double",
+      fields: { // only 2 fields allowed
+        field_1: {
+          label: "input_text_or_number",
+          placeholder: "input_text_or_number",
+          fullwidth: false, // it must be false
+          ...controlProps.[number or text controlprops],
+        },
+        field_2: {
+          label: "input2_text_or_number",
+          placeholder: "input2_text_or_number",
+          fullwidth: false, // it must be false
+          ...controlProps.[number or text controlprops],
+        },
+      }
+    },
+
+  (V) to make a field Read Only set readonly property as following::
+  -->
+    field_name: {
+      ...(this field's properties),
+      .
+      .
+      readonly: true,
+      .
+      .
     }
-  },
 
   todo: for (II) and (III) their field name is indispensable to be typed as 'imageGroup' and 'documentGroup', in other words, texts typed above with underscore are editable.
 */
@@ -213,48 +225,14 @@ export const sampleFormData = {
     placeholder: "Input select state",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Input select municipality",
     placeholder: "Input select municipality",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   title3: { label: "Otros campos", type: "title" },
   email: {
@@ -304,6 +282,7 @@ export const sampleFormData = {
         label: "Input group select",
         placeholder: "Input group select",
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
@@ -346,16 +325,16 @@ export const formTestimonioDocentes = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Activo" },
-          { id: "2", name: "Inactivo" }
-        ]
-      }
+      // imageStatus: {
+      //   label: "Estado de la imagen",
+      //   placeholder: "Estado de la imagen",
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: "1", name: "Activo" },
+      //     { id: "2", name: "Inactivo" }
+      //   ]
+      // }
     }
   }
 };
@@ -377,16 +356,16 @@ export const formTestimonioDocentesModalEdit = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estatus",
-        placeholder: "Estatus",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Activo" },
-          { id: "2", name: "Inactivo" }
-        ]
-      }
+      // imageStatus: {
+      //   label: "Estatus",
+      //   placeholder: "Estatus",
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: "1", name: "Activo" },
+      //     { id: "2", name: "Inactivo" }
+      //   ]
+      // }
     }
   }
 };
@@ -421,21 +400,18 @@ export const formTestimonioDocentesModal = {
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // { id: '165146541654hjvjh', name: 'Lara' },
-      // { id: '165146wfw254hjvjh', name: 'Yaracuy' },
-    ]
+    options: [],
   },
-  status: {
-    label: "Estatus",
-    placeholder: "Estatus",
-    fullwidth: false,
-    ...controlProps.selectAndRequired,
-    options: [
-      { id: "1", name: "Activo" },
-      { id: "2", name: "Inactivo" }
-    ]
-  }
+  // status: {
+  //   label: "Estatus",
+  //   placeholder: "Estatus",
+  //   fullwidth: false,
+  //   ...controlProps.selectAndRequired,
+  //   options: [
+  //     { id: "1", name: "Activo" },
+  //     { id: "2", name: "Inactivo" }
+  //   ]
+  // }
 };
 
 /*TALLER INICIAL*/
@@ -471,18 +447,18 @@ export const formRegistroInicial = {
         fullwidth: false,
         ...controlProps.normalText
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" }
-        ]
-      }
-    }
-  }
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.select,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
+    },
+  },
 };
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
 export const formRegistroInicialModal = {
@@ -495,18 +471,18 @@ export const formRegistroInicialModal = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" }
-        ]
-      }
-    }
-  }
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
+    },
+  },
 };
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
@@ -536,49 +512,17 @@ export const formDatosEscuela = {
     label: "Seleccione el Estado",
     placeholder: "Seleccione el Estado",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el Municipio",
     placeholder: "Seleccione el Municipio",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   callesEscuela: {
     label: "Calles / carreras",
@@ -600,19 +544,19 @@ export const formDatosEscuela = {
     label: "Nombre del director o directora",
     placeholder: "Nombre del director o directora",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalText,
   },
   phoneDirector: {
     label: "Número de teléfono del director",
     placeholder: "Número de teléfono del director",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phone,
   },
   emailDirector: {
     label: "Correo electrónico del director",
     placeholder: "Correo electrónico del director",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.email,
   },
   /*DATOS SUB-DIRECTOR*/
   title3: { label: "Datos del subdirector", type: "title" },
@@ -620,19 +564,19 @@ export const formDatosEscuela = {
     label: "Nombre del subdirector o subdirectora",
     placeholder: "Nombre del subdirector o subdirectora",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalText,
   },
   phoneSubDirector: {
     label: "Número de teléfono del subdirector",
     placeholder: "Número de teléfono del subdirector",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phone,
   },
   emailSubDirector: {
     label: "Correo electrónico del subdirector",
     placeholder: "Correo electrónico del subdirector",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.email,
   },
   /*Información adicional*/
   title4: { label: "Información adicional", type: "title" },
@@ -688,9 +632,9 @@ export const formDatosEscuela = {
         label: "Facebook",
         placeholder: "Facebook",
         fullwidth2: true,
-        ...controlProps.normalTextAndRequired
-      }
-    }
+        ...controlProps.normalText,
+      },
+    },
   },
   doubleFields4: {
     type: "double",
@@ -699,20 +643,15 @@ export const formDatosEscuela = {
         label: "Instagram",
         placeholder: "Instagram",
         fullwidth2: true,
-        ...controlProps.normalTextAndRequired
+        ...controlProps.normalText,
       },
       twitter: {
         label: "Twitter",
         placeholder: "Twitter",
         fullwidth2: true,
-        ...controlProps.normalTextAndRequired
-      }
-    }
-  },
-  title5: {
-    label: "Slider principal de la escuela",
-    type: "title",
-    hideImgContainer: true
+        ...controlProps.normalText,
+      },
+    },
   },
   imageGroup: {
     type: "image",
@@ -723,18 +662,18 @@ export const formDatosEscuela = {
         fullwidth: false,
         ...controlProps.normalText
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.select,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" }
-        ]
-      }
-    }
-  }
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.select,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
+    },
+  },
 };
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DE DATOS DE LA ESCUELA
 export const formDatosEscuelaModal = {
@@ -747,18 +686,18 @@ export const formDatosEscuelaModal = {
         fullwidth: false,
         ...controlProps.normalTextAndRequired
       },
-      imageStatus: {
-        label: "Estado de la imagen",
-        placeholder: "Estado de la imagen",
-        fullwidth: false,
-        ...controlProps.selectAndRequired,
-        options: [
-          { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" }
-        ]
-      }
-    }
-  }
+      // imageStatus: {
+      //   label: 'Estado de la imagen',
+      //   placeholder: 'Estado de la imagen',
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: '1', name: 'Visible' },
+      //     { id: '2', name: 'No visible' },
+      //   ],
+      // },
+    },
+  },
 };
 
 /*TABS DOCENTE*/
@@ -799,8 +738,8 @@ export const formTabsDocente = {
     }
   },
   gender: {
-    label: "Sexo",
-    placeholder: "Sexo",
+    label: "Género (Femenino ó Masculino)",
+    placeholder: "Género (Femenino ó Masculino)",
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
@@ -824,48 +763,14 @@ export const formTabsDocente = {
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el Municipio",
     placeholder: "Municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   street: {
     label: "Calles / Carreras",
@@ -973,6 +878,7 @@ export const formTabsEstudiantes = {
         label: "Input group select",
         placeholder: "Input group select",
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
@@ -1028,6 +934,7 @@ export const formCoordinador = {
         label: "Input group select",
         placeholder: "Input group select",
         fullwidth: false,
+        value: '1',
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
@@ -1083,48 +990,14 @@ export const formCoordinador = {
     placeholder: "Seleccione el estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el Municipio",
     placeholder: "Seleccione el Municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   city: {
     label: "Ciudad",
@@ -1233,48 +1106,14 @@ export const formPadrino = {
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el Municipio",
     placeholder: "Municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   city: {
     label: "Ciudad",
@@ -1321,48 +1160,14 @@ export const formEscuela = {
     placeholder: "Seleccione el estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   name: 'Lara',
-      //   id: '5e82377e3640bd4be8114442',
-      // },
-      // {
-      //   name: 'Yaracuy',
-      //   id: '5e82378c3640bd4be8114443',
-      // },
-    ]
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
     placeholder: "Seleccione el municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: [
-      // {
-      //   id: '5e8237ca3640bd4be8114444',
-      //   name: 'Iribarren',
-      //   state: {
-      //     name: 'Lara',
-      //     id: '5e82377e3640bd4be8114442',
-      //   },
-      // },
-      // {
-      //   id: '5ea0ab5bb20b418e50fd8f8b',
-      //   name: 'Peña',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-      // {
-      //   id: '5ee7a51ac55bc7a4c9cde549',
-      //   name: 'San Felipe',
-      //   state: {
-      //     name: 'Yaracuy',
-      //     id: '5e82378c3640bd4be8114443',
-      //   },
-      // },
-    ]
+    options: [],
   },
   city: {
     label: "Ciudad",

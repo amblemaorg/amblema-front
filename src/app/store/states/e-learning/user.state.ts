@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { UserStateModel, UpdateUserInfo, ClearUserInfo } from '../../actions/e-learning/user.actions';
+import { UserStateModel, UpdateUserInfo, ClearUserInfo, SetCurrentUser } from '../../actions/e-learning/user.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<UserStateModel>({
@@ -81,6 +81,14 @@ import { ModulesService } from '../../../services/steps/modules.service';
           });
         })
       );
+    }
+
+    @Action(SetCurrentUser)
+    SetCurrentUser(ctx: StateContext<UserStateModel>, action: SetCurrentUser) {
+      ctx.patchState({
+        user_id: action.user_id,
+        userType: `${action.user_type}`,
+      });
     }
 
     @Action(ClearUserInfo)

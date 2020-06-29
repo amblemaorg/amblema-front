@@ -79,25 +79,26 @@ const dataEscuela = {
 
 
 //Lapsos
-const subDiagnostico = {
+//DIAGNOSTICO LECTURA
+const subDiagnosticoLectura = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Diagnóstico del lapso",
+            text: "Diagnóstico de Lectura",
             aligning: "left"
         }
     },
 }
-const tablaDiagnostico = {
+const tablaDiagnosticoLectura = {
     component: 'table',
     settings: {
         actions: false,
         columns: {
             grade: {
-                title: "grado",
+                title: "Grado",
             },
             section: {
-                title: "seccion"
+                title: "Seccion"
             },
             multi: {
                 title: "Multiplicacion",
@@ -129,30 +130,165 @@ const tablaDiagnostico = {
         },
     }
 }
-const subGrafico = {
+const subGraficoLectura = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Gráfico estadisticos del diagnóstico",
+            text: "Gráfico estadistico de Lectura",
             aligning: "left"
         }
     },
 }
-const graficos = {
+const graficosLectura = {
     component: 'graphics',
     settings: {
+        chartId: 'graficosLectura',
         items: [
 
         ],
         
     }
 }
-const graficos2 = {
+
+//DIAGNOSTICO MULTIPLICACION
+const subDiagnosticoMultiplicacion = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Diagnóstico de Multiplicacion",
+            aligning: "left"
+        }
+    },
+}
+const tablaDiagnosticoMultiplicacion = {
+    component: 'table',
+    settings: {
+        actions: false,
+        columns: {
+            grade: {
+                title: "Grado",
+            },
+            section: {
+                title: "Seccion"
+            },
+            multi: {
+                title: "Multiplicacion",
+            },
+            logic: {
+                title: "Logica Matematica"
+            },
+        },
+        tableCode: 'dataLectura',
+        dataLectura: [
+            {
+                grade: '1er grado',
+                section: 'B',
+                multi: '30 operacion por min',
+                logic: '30 operacion por min'
+
+            },
+            {
+                grade: '2do grado',
+                section: 'A',
+                multi: '30 operacion por min',
+                logic: '30 operacion por min'
+            },
+        ],
+        classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+        },
+    }
+}
+const subGraficoMultiplicacion = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Gráfico estadistico de Multiplicacion",
+            aligning: "left"
+        }
+    },
+}
+const graficosMultiplicacion = {
     component: 'graphics',
     settings: {
+        chartId: 'graficosMultiplicacion',
         items: [
 
         ],
+        
+    }
+}
+
+//DIAGNOSTICO LOGICO-MATEMATICO
+const subDiagnosticoLogicoMate = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Diagnóstico de razonamiento lógico - matemático",
+            aligning: "left"
+        }
+    },
+}
+const tablaDiagnosticoLogicoMate = {
+    component: 'table',
+    settings: {
+        actions: false,
+        columns: {
+            grade: {
+                title: "Grado",
+            },
+            section: {
+                title: "Seccion"
+            },
+            multi: {
+                title: "Multiplicacion",
+            },
+            logic: {
+                title: "Logica Matematica"
+            },
+        },
+        tableCode: 'dataLectura',
+        dataLectura: [
+            {
+                grade: '1er grado',
+                section: 'B',
+                multi: '30 operacion por min',
+                logic: '30 operacion por min'
+
+            },
+            {
+                grade: '2do grado',
+                section: 'A',
+                multi: '30 operacion por min',
+                logic: '30 operacion por min'
+            },
+        ],
+        classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+        },
+    }
+}
+const subGraficoLogicoMate = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Gráfico diagnóstico de razonamiento lógico - matemático",
+            aligning: "left"
+        }
+    },
+}
+const graficosLogicoMate = {
+    component: 'graphics',
+    settings: {
+        chartId: 'graficosLogicoMate',
+        items: [
+
+        ],
+        
     }
 }
 
@@ -357,10 +493,21 @@ export const YEARBOOK_CONFIG = {
                                         {
                                             title: "Lapso 1",
                                             childBlocks: [
-                                                { ...subDiagnostico },
-                                                { ...tablaDiagnostico },
-                                                { ...subGrafico },
-                                                { ...graficos },
+                                                //Diagnostico Lectura
+                                                { ...subDiagnosticoLectura },
+                                                { ...tablaDiagnosticoLectura },
+                                                { ...subGraficoLectura },
+                                                { ...graficosLectura },
+                                                //Diagnostico Multiplicacion
+                                                { ...subDiagnosticoMultiplicacion },
+                                                { ...tablaDiagnosticoMultiplicacion },
+                                                { ...subGraficoMultiplicacion },
+                                                { ...graficosMultiplicacion },
+                                                //Diagnostico Logico Matematica
+                                                { ...subDiagnosticoLogicoMate },
+                                                { ...tablaDiagnosticoLogicoMate },
+                                                { ...subGraficoLogicoMate },
+                                                { ...graficosLogicoMate },
                                                 { ...subtitleActividad },
                                                 ...sectionsObjects(sections),
                                             ]
@@ -374,12 +521,6 @@ export const YEARBOOK_CONFIG = {
                                         {
                                             title: "Lapso 3",
                                             childBlocks: [
-                                                { ...subDiagnostico },
-                                                { ...tablaDiagnostico },
-                                                { ...subGrafico },
-                                                { ...graficos2 },
-                                                { ...subtitleActividad },
-                                                ...sectionsObjects(sections),
                                             ]
                                         },
                                     ]

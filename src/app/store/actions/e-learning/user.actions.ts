@@ -17,6 +17,10 @@ export class SetCurrentUser {
   static readonly type = "[Peca] SetCurrentUser";
   constructor(public user_id: string, public user_type: number) {}
 }
+export class SetCurrentUser {
+  static readonly type = '[Peca] SetCurrentUser';
+  constructor(public user_id: string, public user_type: number) {}
+}
 export class ClearUserInfo {
   static readonly type = "[ELearning] ClearUserInfo";
 }
