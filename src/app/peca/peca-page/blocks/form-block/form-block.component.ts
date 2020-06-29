@@ -375,6 +375,10 @@ export class FormBlockComponent
       manageData.data["age"] = this.globals.dateStringToISOString(
         cf.get("age").value
       );
+      if (this.settings.formType === "actualizarCoordinador")
+      manageData.data["birthdate"] = this.globals.dateStringToISOString(
+        cf.get("date").value
+      );
 
     const assignId = () =>
       Math.random()

@@ -1062,6 +1062,7 @@ export const formCoordinador = {
     ...controlProps.phoneAndRequired
   },
   date: {
+    lower: true,
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,
@@ -1194,7 +1195,7 @@ export const formPadrino = {
     label: "Otro tipo de empresa",
     placeholder: "Otro tipo de empresa ",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired,
+    ...controlProps.onlyLetters,
     options: [
       {
         id: "5",
