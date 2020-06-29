@@ -17,7 +17,7 @@ import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
 import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
 import { schoolPicturesSliderDataToSchoolPicturesTableMapper } from "../mappers/school-prictures-slider-mappers";
 import { isNullOrUndefined } from "util";
-import { UserState } from 'src/app/store/states/e-learning/user.state';
+import { UserState } from "src/app/store/states/e-learning/user.state";
 
 @Component({
   selector: "peca-school-data",
@@ -33,13 +33,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   schoolDataSubscription: Subscription;
   userIdSubscription: Subscription;
-  
+
   schoolFormData: any;
   teachersTableData: any;
   sliderPicturesData: any;
   currentUserId: string;
   requestIdToCancel: string;
-  
+
   // controlling when data from school is loaded
   isInstanciated: boolean;
   loadedData: boolean;
@@ -51,7 +51,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
     super(factoryResolver);
 
     globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
       //console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
@@ -70,15 +72,17 @@ export class SchoolDataPageComponent extends PecaPageComponent
             teachersDataToTeachersTableMapper
           );
           this.setSchoolPicturesTableData(
-            data.school.isInApproval 
-              ? (data.school.approvalHistory.length > 0 
-                  ? data.school.approvalHistory[data.school.approvalHistory.length - 1]
-                      .detail.slider 
-                  : [] ) 
+            data.school.isInApproval
+              ? data.school.approvalHistory.length > 0
+                ? data.school.approvalHistory[
+                    data.school.approvalHistory.length - 1
+                  ].detail.slider
+                : []
               : data.school.slider,
             schoolPicturesSliderDataToSchoolPicturesTableMapper
           );
-          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
+          if (data.school.isInApproval)
+            this.setCancelRequest(data.school.approvalHistory);
 
           this.userIdSubscription = this.userId$.subscribe(
             user_id => {
@@ -88,7 +92,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
               if (this.isInstanciated) this.updateMethods();
             },
             error => console.error(error)
-          );          
+          );
         }
         // this.updateDataToBlocks();
       },
@@ -106,13 +110,8 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.setBlockData("schoolForm", this.schoolFormData);
     if (updateTables) {
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
-<<<<<<< HEAD
       this.setBlockData("teachersTable", this.teachersTableData);
     }
-=======
-      this.setBlockData("teachersTable", this.teachersTableData); 
-    }    
->>>>>>> b71939fc1576d45bfc7d1de42d2888100f553345
   }
 
   setCancelRequest(approvalHistory: any[]) {
@@ -121,15 +120,15 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   updateStaticFetchers() {
-    this.setBlockFetcherUrls('schoolFormButton', {
+    this.setBlockFetcherUrls("schoolFormButton", {
       put: `pecaprojects/school/${this.schoolFormData.pecaId}?userId=${this.currentUserId}`,
-      cancel: this.requestIdToCancel 
-                ? `requestscontentapproval/${this.requestIdToCancel}` 
-                : null,
+      cancel: this.requestIdToCancel
+        ? `requestscontentapproval/${this.requestIdToCancel}`
+        : null
     });
 
-    this.setBlockFetcherUrls('teacherForm', {
-      post: `schools/teachers/${this.schoolFormData.id}`,
+    this.setBlockFetcherUrls("teacherForm", {
+      post: `schools/teachers/${this.schoolFormData.id}`
     });
   }
 
