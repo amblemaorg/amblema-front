@@ -1,7 +1,6 @@
 import {
   Component,
   AfterViewInit,
-  Injector,
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver
@@ -14,7 +13,6 @@ import { PecaState } from "src/app/store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { Select } from "@ngxs/store";
 import { GlobalService } from "src/app/services/global.service";
-import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import {
   profileDataToSponsorFormMapper,
   profileDataToCordinatorFormMapper,
@@ -33,24 +31,20 @@ export class ProfilePageComponent extends PecaPageComponent
   @Select(PecaState.getUser) userData$: Observable<any>;
   userDataSubscription: Subscription;
   userFormData: any;
-  idUser = "";
   userType = "";
   isInstanciated: boolean;
   loadedData: boolean;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService,
-    private httpFetcherService: HttpFetcherService
+    globals: GlobalService
   ) {
     super(factoryResolver);
-    //this.getUser();
     globals.blockIntancesEmitter.subscribe(blocks => {
       blocks.forEach((block, name) => this.blockInstances.set(name, block));
       console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods();
     });
-    //this.loadForm();
   }
   ngOnInit() {
     this.getUser();
@@ -68,55 +62,35 @@ export class ProfilePageComponent extends PecaPageComponent
     }
   }
   getUser() {
-    this.getGeneralInformation();
-    this.userDataSubscription = this.httpFetcherService
-      .get(`users/${this.idUser}?userType=${this.userType}`)
-      .subscribe(
-        data => {
-          if (!isNullOrUndefined(data)) {
-            console.log(data);
-            if (this.userType === "4") {
-              this.setUserFormData(data, profileDataToSchoolFormMapper);
-              this.loadedData = true;
-              if (this.isInstanciated) this.updateMethods();
-            }
-            if (this.userType === "3") {
-              this.setUserFormData(data, profileDataToSponsorFormMapper);
-              this.loadedData = true;
-              if (this.isInstanciated) this.updateMethods();
-            }
-            if (this.userType === "2") {
-              this.setUserFormData(data, profileDataToCordinatorFormMapper);
-              this.loadedData = true;
-              if (this.isInstanciated) this.updateMethods();
-            }
-            /*this.setUserFormData(data, profileDataToSponsorFormMapper);
-            this.loadedData = true;
-            if (this.isInstanciated) this.updateMethods();*/
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      );
-  }
-  getGeneralInformation() {
-    const user = this.userData$.subscribe(
+    this.userDataSubscription = this.userData$.subscribe(
       data => {
-        console.log(data);
-        this.idUser = data.id;
         this.userType = data.userType;
+        if (!isNullOrUndefined(data)) {
+          console.log(data);
+          if (this.userType === "4") {
+            this.setUserFormData(data, profileDataToSchoolFormMapper);
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();
+          }
+          if (this.userType === "3") {
+            this.setUserFormData(data, profileDataToSponsorFormMapper);
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();
+          }
+          if (this.userType === "2") {
+            this.setUserFormData(data, profileDataToCordinatorFormMapper);
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();
+          }
+        }
       },
-      error => console.error(error),
-      () => {
-        user.unsubscribe();
-      }
+      error => console.error(error)
     );
   }
 
   updateMethods() {
     this.updateDataToBlocks();
-    //this.updateStaticFetchers();
+    this.updateStaticFetchers();
   }
   updateDataToBlocks() {
     if (this.userType === "4") {
@@ -128,7 +102,6 @@ export class ProfilePageComponent extends PecaPageComponent
     if (this.userType === "2") {
       this.setBlockData("userCordinatorForm", this.userFormData);
     }
-    //this.setBlockData("userSponsorForm", this.userFormData);
   }
   updateStaticFetchers() {
     if (this.userType === "4") {
@@ -146,9 +119,6 @@ export class ProfilePageComponent extends PecaPageComponent
         put: `users/${this.userFormData.id}?userType=2`
       });
     }
-    /* this.setBlockFetcherUrls("userSponsorForm", {
-      put: `users/${this.userFormData.id}?userType=3`
-    });*/
   }
 
   setUserFormData(userData, _mapper?: Function) {
