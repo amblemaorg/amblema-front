@@ -36,6 +36,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   // source: LocalDataSource | any;
   source: LocalDataSource;
   isEdited: boolean;
+  isEditable: boolean = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -70,6 +71,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     this.settings[this.settings.tableCode] = null;
     this.source = null;
     this.isEdited =  null;
+    this.isEditable = true;
     this.subscription.unsubscribe();
   }
 
@@ -158,10 +160,14 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   setData(data: any) {
+    console.log('is editable',this.isEditable);
     if (!this.isEdited) {
-      if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data];
-      this.source = new LocalDataSource(data);
-  
+      if (data.setData) {
+        if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data.data];
+        this.source = new LocalDataSource(data.data);
+      }      
+      this.isEditable = data.isEditable;
+      console.log('is editable2',this.isEditable);
       this.sendTableData();
     }    
   }
@@ -189,17 +195,24 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     switch (e.action) {
       case 'VIEW':
-        this.globals.ModalShower(obj);
+        console.log('is editableeeeee', this.isEditable);
+        if (this.isEditable) this.globals.ModalShower(obj);
         break;
 
       case 'EDIT':
-        obj.showBtn = true;
-        this.globals.ModalShower(obj);
+        console.log('is editableeeeee', this.isEditable);
+        if (this.isEditable) {
+          obj.showBtn = true;
+          this.globals.ModalShower(obj);
+        }        
         break;
 
       case 'DELETE':
-        obj.component = 'textsbuttons';
-        this.globals.ModalShower(obj);
+        console.log('is editableeeeee', this.isEditable);
+        if (this.isEditable) {
+          obj.component = 'textsbuttons';
+          this.globals.ModalShower(obj); 
+        }        
         break;
     }
   }

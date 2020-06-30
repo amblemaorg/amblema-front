@@ -21,7 +21,10 @@
             'full-width':
               settings.formsContent[field].type != 'double' &&
               settings.formsContent[field].fullwidth,
-            'input-group': settings.formsContent[field].type === 'prepend',
+            'input-group': 
+              settings.formsContent[field].type === 'prepend' 
+              || (settings.formsContent[field].type === 'double' 
+                  && settings.formsContent[field].isInputGroup),
             'two-wrapper': settings.formsContent[field].type === 'double',
             'one-row-form-form-group': settings.isOneRow,
             'full-width2': settings.formsContent[field].fullwidth2
@@ -170,38 +173,82 @@
           </ng-container>
 
           <ng-container *ngSwitchCase="'double'">
-            <div
+            <label *ngIf="settings.formsContent[field].isInputGroup">{{
+              settings.formsContent[field].label
+            }}</label>
+            <ng-container
               *ngFor="
                 let doublefield of doubleFields[field];
-                trackBy: trackByFn
+                index as ig
               "
-              [class]="
-                'form-group ' +
-                settings.formsContent[field].fields[doublefield].type
-              "
-            >
-              <label>{{
-                settings.formsContent[field].fields[doublefield].label
-              }}</label>
-              <input
-                class="form-control"
-                autocomplete="off"
-                [type]="settings.formsContent[field].fields[doublefield].type"
-                [formControlName]="doublefield"
-                [id]="getId(doublefield)"
-                [placeholder]="
-                  settings.formsContent[field].fields[doublefield].placeholder
-                "
-                [readonly]="
-                  settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
-                "
-              />
-              <ng-container *ngIf="hasErrors(field, true, doublefield)">
-                <div class="error-message">
-                  <strong>{{ hasErrors(field, true, doublefield) }}</strong>
-                </div>
+            >              
+              <ng-container *ngIf="settings.formsContent[field].isInputGroup; else regularDouble">               
+                <input
+                  class="form-control"
+                  [class.sibling-one]="ig == 0"
+                  [class.sibling-two]="ig == 1"
+                  autocomplete="off"
+                  [type]="settings.formsContent[field].fields[doublefield].type"
+                  [formControlName]="doublefield"
+                  [id]="getId(doublefield)"
+                  [placeholder]="
+                    settings.formsContent[field].fields[doublefield].placeholder
+                  "
+                  [readonly]="
+                    settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
+                  "
+                  [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                />                
               </ng-container>
-            </div>
+              <ng-template #regularDouble>
+                <div
+                  [class]="
+                    'form-group ' +
+                    settings.formsContent[field].fields[doublefield].type
+                  "
+                >
+                  <label>{{
+                    settings.formsContent[field].fields[doublefield].label
+                  }}</label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    [type]="settings.formsContent[field].fields[doublefield].type"
+                    [formControlName]="doublefield"
+                    [id]="getId(doublefield)"
+                    [placeholder]="
+                      settings.formsContent[field].fields[doublefield].placeholder
+                    "
+                    [readonly]="
+                      settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
+                    "
+                    [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                  />
+                  <ng-container *ngIf="hasErrors(field, true, doublefield)">
+                    <div class="error-message">
+                      <strong>{{ hasErrors(field, true, doublefield) }}</strong>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-template>        
+            </ng-container>
+            <ng-container *ngIf="settings.formsContent[field].isInputGroup">
+              <ng-container 
+                *ngFor="
+                  let doublefield2 of doubleFields[field];
+                  index as ige
+                "
+              >
+                <div
+                  *ngIf="hasErrors(field, true, doublefield2)" 
+                  class="error-message"
+                  [class.sibling-error-one]="ige == 0"
+                  [class.sibling-error-two]="ige == 1"
+                >
+                  <strong>{{ hasErrors(field, true, doublefield2) }}</strong>
+                </div>
+              </ng-container>                
+            </ng-container> 
           </ng-container>
 
           <ng-container *ngSwitchCase="'textarea'">
@@ -296,6 +343,7 @@
               title="Subir archivo"
               class="text-decoration-none"
               (click)="uploadImageCaller(imageUploadContainer)"
+              [disabled]="isReadOnly()"
             >
               <nb-icon icon="planificacion"></nb-icon>
             </button>

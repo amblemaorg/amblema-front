@@ -85,7 +85,9 @@ $table-border-color: 1px solid $blue;
                     word-break: break-word;
 
                     img {
-                        max-width: 5rem;
+                        width: 3.5rem;
+                        height: 3.5rem;
+                        object-fit: contain;
                     }
 
                     &:first-child {

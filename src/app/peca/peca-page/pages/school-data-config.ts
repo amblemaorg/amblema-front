@@ -9,6 +9,7 @@ import { settings } from 'cluster';
 
 const statusGeneral = {
   component: 'textsbuttons',
+  name: 'schoolFormStatus',
   settings: {
     dateOrtext:{
       
@@ -17,6 +18,7 @@ const statusGeneral = {
       text: 'Estatus',
       subText: 'Pendiente'
     },
+    buttonCode: 'schoolDataConfigRegistroEscuela',
   }
 };
 
@@ -61,7 +63,7 @@ const registroEscuela = {
   name: 'schoolPicturesTable',
   settings: {
     columns: {
-      image: {
+      source: {
         type: 'html',
         title: 'Imágen',
         valuePrepareFunction: 

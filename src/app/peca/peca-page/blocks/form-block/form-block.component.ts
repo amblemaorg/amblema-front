@@ -14,6 +14,7 @@ import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
 import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
+import { PecaState } from '../../../../store/states/peca/peca.state';
 
 @Component({
   selector: "form-block",
@@ -52,6 +53,8 @@ export class FormBlockComponent
     makesNoRequest?: boolean; // if true, this form makes no request to api
   };
 
+  pecaId: string;
+  @Select(PecaState.getPecaId) pecaId$: Observable<string>;
   @Select(ResidenceInfoState.get_states) states$: Observable<any>;
   @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<
     any
@@ -73,6 +76,8 @@ export class FormBlockComponent
   isEditing: boolean = false;
   isInApproval: boolean;
   isEdited: boolean;
+  sendNull: boolean = true;
+  someImgAdded: boolean;
 
   constructor(
     private store: Store,
@@ -89,13 +94,26 @@ export class FormBlockComponent
 
   ngOnInit() {
     this.subscription.add(
+      this.pecaId$.subscribe( peca_id => {
+        this.pecaId = peca_id;
+      })
+    );
+
+    this.subscription.add(
       this.componentForm.statusChanges.subscribe(val => {
-        if ( val === "INVALID" || this.isDateNotOk() || !this.isDirty() ) {
-          if (this.settings.makesNoRequest && this.settings.buttonCode) 
+        if (
+          !this.someImgAdded 
+          && (
+            val === "INVALID" 
+            || this.isDateNotOk() 
+            || !this.isDirty() 
+          )
+        ) {
+          if ( this.settings.buttonCode && this.isDirty() ) 
             this.isEdited = true;
-          this.btnUpdater(null);
+          if (this.sendNull) this.btnUpdater(null);
         }          
-        else this.btnUpdater(this.componentForm.value);
+        else {this.btnUpdater(this.componentForm.value);}
       })
     );
 
@@ -136,10 +154,10 @@ export class FormBlockComponent
     this.setId();
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.isEditing = false;
-    this.isInApproval = null;
-    this.isEdited = null;
+    this.subscription.unsubscribe();    
+    ['isEdited','isInApproval','isEditing','sendNull','someImgAdded'].map( (attr,i) => {
+      this[attr] = [null,null,false,true,null][i];
+    });
   }
 
   btnUpdater(val) {
@@ -160,7 +178,13 @@ export class FormBlockComponent
   }
 
   isDirty(): boolean {
-    return this.componentForm.dirty
+    const keys = Object.keys(this.componentForm.value);
+    return keys.some( (key) => {
+      return key === "imageGroup" 
+              ? false 
+              : this.componentForm.controls[key].dirty
+    });
+    // return this.componentForm.dirty
   }
 
   isReadOnly(): boolean {
@@ -180,7 +204,7 @@ export class FormBlockComponent
       this.settings.data = data;
       this.setAllFields(this.settings.data);
   
-      this.btnUpdater(this.componentForm.value);
+      if ( this.isDirty() ) this.btnUpdater(this.componentForm.value);
     }    
   }
 
@@ -371,7 +395,7 @@ export class FormBlockComponent
           ? this.settings.formsContent[field].fields["prependInput"].messages
               .pattern
           : !fromImg
-          ? this.settings.formsContent[field2].messages.pattern
+          ? this.settings.formsContent[field].fields[field2].messages.pattern
           : this.settings.formsContent["imageGroup"].fields[field2].messages
               .pattern
         : null;
@@ -422,10 +446,10 @@ export class FormBlockComponent
       } else {
         // is for adding in modal view
         this.settings.dataFromRow["data"] = manageData.data;
-        this.settings.dataFromRow["data"]["id"] = assignId();
+        this.settings.dataFromRow["data"]["id"] = `auto-${assignId()}`;
       }
     } else {
-      if (!this.settings.notGenerateId) manageData.data["id"] = assignId();
+      if (!this.settings.notGenerateId) manageData.data["id"] = `auto-${assignId()}`;
     }
 
     let obj = {
@@ -481,7 +505,7 @@ export class FormBlockComponent
             positionClass: "toast-bottom-right"
           });
           
-          this.store.dispatch([new FetchPecaContent(this.globals.getPecaId())]);
+          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
         },
         error => {
           this.sendingForm = false;
@@ -573,9 +597,13 @@ export class FormBlockComponent
     let reader = new FileReader();
     reader.readAsDataURL(<File>e.target.files[0]);
     reader.onload = _event => {
+      this.sendNull = false;
       this.componentForm.get("imageGroup").patchValue({
         imageSelected: <File>e.target.files[0],
         imageSrc: reader.result
+      });
+      setTimeout(() => {
+        this.sendNull = true;
       });
     };
   }
@@ -651,11 +679,9 @@ export class FormBlockComponent
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: Math.random()
-              .toString(36)
-              .substring(2),
+            id: `auto-${Math.random().toString(36).substring(2)}`,
             // image: imgGrp.get("imageSelected").value.name,
-            image: imgGrp.get("imageSrc").value,
+            // image: imgGrp.get("imageSrc").value,
             source: imgGrp.get("imageSrc").value,
             imageSelected: imgGrp.get("imageSelected").value,
             ...this.imageObjWithAvailableFields()
@@ -693,7 +719,14 @@ export class FormBlockComponent
     };
 
     this.globals.tableDataUpdater(imageObj);
-    if (addImg) this.componentForm.get("imageGroup").reset();
+    if (addImg) {
+      // this.sendNull = false;
+      this.someImgAdded = true;
+      this.componentForm.get("imageGroup").reset();
+      // setTimeout(() => {
+      //   this.sendNull = true;
+      // });      
+    }
     else {
       const inx = this.settings.formsContent["imageGroup"].fields[
         "imageDocente"
@@ -760,6 +793,7 @@ export class FormBlockComponent
     const dataKeys = Object.keys(data);
 
     if (data.isInApproval) this.isInApproval = data.isInApproval;
+    else this.isInApproval = false;
 
     dataKeys.map(key => {
       if (
