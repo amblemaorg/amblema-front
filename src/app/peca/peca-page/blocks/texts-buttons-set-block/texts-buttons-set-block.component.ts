@@ -306,6 +306,8 @@ export class TextsButtonsSetBlockComponent
         const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
         const method = this.settings.fetcherMethod || "post";
         const resourcePath = this.settings.fetcherUrls[method];
+
+        if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
         
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
@@ -321,6 +323,7 @@ export class TextsButtonsSetBlockComponent
             this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
+            if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
               "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
@@ -350,7 +353,8 @@ export class TextsButtonsSetBlockComponent
     this.fetcher[method](url, body).subscribe(
       response => {
         console.log(response);
-        if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
+        // if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
+        this.sleepSend = true;
         this.isSending = false;
 
         this.toastr.success("Solicitud cancelada", "", {

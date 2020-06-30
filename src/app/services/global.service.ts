@@ -242,6 +242,7 @@ export class GlobalService {
   @Output() hideModalEmitter: EventEmitter<any> = new EventEmitter();
   @Output() showModalEmitter: EventEmitter<any> = new EventEmitter();
   @Output() resetEditedEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesEmitter: EventEmitter<{
     blocks: Map<string, PageBlockComponent>, 
     fromModal: boolean
@@ -264,6 +265,12 @@ export class GlobalService {
   }
   resetEdited(buttonCode: string) {
     this.resetEditedEmitter.emit(buttonCode);
+  }
+  setAsReadOnly(buttonCode: string, setReadOnly: boolean) {
+    this.setReadonlyEmitter.emit({
+      buttonCode,
+      setReadOnly
+    });
   }
 
   createdBlockInstances(blocks: Map<string, PageBlockComponent>, isFromModal: boolean = false) {

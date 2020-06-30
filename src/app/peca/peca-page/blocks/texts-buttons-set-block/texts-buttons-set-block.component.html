@@ -173,7 +173,7 @@
                 <ng-container *ngIf="action.type==4 && settings.fetcherUrls && settings.fetcherUrls.cancel">
                     <button                        
                         class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-                        [disabled]="isSending"
+                        [disabled]="isSending || sleepSend"
                         (click)="cancelRequest()"
                     >
                         <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>

@@ -146,10 +146,19 @@ export class FormBlockComponent
 
     this.subscription.add(
       this.globals.resetEditedEmitter.subscribe((btnCode) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
+          this.isInApproval = true;
+        }          
       })
     );
+    this.subscription.add(
+      this.globals.setReadonlyEmitter.subscribe((data) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == data.btnCode) {
+          this.isInApproval = data.setReadOnly;
+        }          
+      })
+    );    
 
     this.setId();
   }
@@ -593,7 +602,7 @@ export class FormBlockComponent
     imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
   }
   // adds the image file and image source to the imageGroup form control
-  fileManager(e) {
+  fileManager(e) {    
     let reader = new FileReader();
     reader.readAsDataURL(<File>e.target.files[0]);
     reader.onload = _event => {
@@ -604,6 +613,7 @@ export class FormBlockComponent
       });
       setTimeout(() => {
         this.sendNull = true;
+        e.target.value = null;
       });
     };
   }
