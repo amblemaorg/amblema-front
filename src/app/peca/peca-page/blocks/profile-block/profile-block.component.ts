@@ -47,6 +47,8 @@ export class ProfileBlockComponent
 
       reader.onload = (event: any) => {
         this.url = event.target.result;
+        //To send data to profile component
+        this.globals.formWithImage(this.url);
       };
 
       reader.readAsDataURL(event.target.files[0]);

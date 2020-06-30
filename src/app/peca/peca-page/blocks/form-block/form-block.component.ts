@@ -73,6 +73,7 @@ export class FormBlockComponent
   isEditing: boolean = false;
   isInApproval: boolean;
   isEdited: boolean;
+  imageUrl: string;
 
   constructor(
     private store: Store,
@@ -90,15 +91,20 @@ export class FormBlockComponent
   ngOnInit() {
     this.subscription.add(
       this.componentForm.statusChanges.subscribe(val => {
-        if ( val === "INVALID" || this.isDateNotOk() || !this.isDirty() ) {
-          if (this.settings.makesNoRequest && this.settings.buttonCode) 
+        if (val === "INVALID" || this.isDateNotOk() || !this.isDirty()) {
+          if (this.settings.makesNoRequest && this.settings.buttonCode)
             this.isEdited = true;
           this.btnUpdater(null);
-        }          
-        else this.btnUpdater(this.componentForm.value);
+        } else this.btnUpdater(this.componentForm.value);
       })
     );
 
+    this.subscription.add(
+      this.globals.passImageEmitter.subscribe(image => {
+        console.log("resp", image);
+        this.imageUrl = image;
+      })
+    );
     this.subscription.add(
       this.globals.showImageContainerEmitter.subscribe(code => {
         if (this.settings.buttonCode && this.settings.buttonCode == code)
@@ -127,7 +133,7 @@ export class FormBlockComponent
       );
 
     this.subscription.add(
-      this.globals.resetEditedEmitter.subscribe((btnCode) => {
+      this.globals.passImageEmitter.subscribe(btnCode => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
           this.isEdited = false;
       })
@@ -140,6 +146,7 @@ export class FormBlockComponent
     this.isEditing = false;
     this.isInApproval = null;
     this.isEdited = null;
+    this.imageUrl = null;
   }
 
   btnUpdater(val) {
@@ -160,12 +167,11 @@ export class FormBlockComponent
   }
 
   isDirty(): boolean {
-    return this.componentForm.dirty
+    return this.componentForm.dirty;
   }
 
   isReadOnly(): boolean {
-    return (this.settings.isEditable && !this.isEditing) || 
-           this.isInApproval
+    return (this.settings.isEditable && !this.isEditing) || this.isInApproval;
   }
 
   setSettings(settings: any) {
@@ -179,9 +185,9 @@ export class FormBlockComponent
     if (!this.isEdited) {
       this.settings.data = data;
       this.setAllFields(this.settings.data);
-  
+
       this.btnUpdater(this.componentForm.value);
-    }    
+    }
   }
 
   setFetcherUrls({ post, put, patch }) {
@@ -405,10 +411,17 @@ export class FormBlockComponent
       manageData.data["age"] = this.globals.dateStringToISOString(
         cf.get("age").value
       );
-      if (this.settings.formType === "actualizarCoordinador")
+    if (this.settings.formType === "actualizarCoordinador") {
       manageData.data["birthdate"] = this.globals.dateStringToISOString(
         cf.get("date").value
       );
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+    }
+    if (this.settings.formType === "actualizarPadrino")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+
+    if (this.settings.formType === "actualizarEscuela")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
 
     const assignId = () =>
       Math.random()
@@ -445,12 +458,12 @@ export class FormBlockComponent
           : "add"
         : "set"
     };
-    
+
     const commonTasks = () => {
       this.sendingForm = false;
-      
+
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
-  
+
       if (this.settings.modalCode)
         this.globals.ModalHider(this.settings.modalCode);
 
@@ -475,16 +488,16 @@ export class FormBlockComponent
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      
+
       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
-            
+
           this.toastr.success("Suministrado con éxito", "", {
             positionClass: "toast-bottom-right"
           });
-          
+
           this.store.dispatch([new FetchPecaContent(this.globals.getPecaId())]);
         },
         error => {
@@ -498,7 +511,6 @@ export class FormBlockComponent
         }
       );
     }
-    
   }
 
   // filling municipalities according to selected state
@@ -620,9 +632,10 @@ export class FormBlockComponent
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       default:
-        return this.componentForm.controls["imageGroup"].value["imageSelected"] 
-                ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
-                : 'image';
+        return this.componentForm.controls["imageGroup"].value["imageSelected"]
+          ? this.componentForm.controls["imageGroup"].get("imageSelected").value
+              .name
+          : "image";
     }
   }
   // when X image remover is clicked
@@ -791,7 +804,7 @@ export class FormBlockComponent
       }
     });
     // console.log(this.componentForm.value);
-    // this.componentForm.setValue(data);    
+    // this.componentForm.setValue(data);
   }
 
   //? turning imageGroup fields into array
