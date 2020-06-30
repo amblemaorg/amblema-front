@@ -107,10 +107,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.setBlockData("schoolForm", this.schoolFormData);
     if (updateTables) {      
       this.setBlockData("teachersTable", this.teachersTableData); 
-    } else {
-      this.sliderPicturesData['setData'] = false;
-      this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
-    }      
+    } else
+      this.sliderPicturesData['setData'] = false;    
+    this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
   }
 
   setCancelRequest(approvalHistory: any[]) {
