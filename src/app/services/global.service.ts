@@ -236,7 +236,6 @@ export class GlobalService {
   }
 
   //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
-  private activePecaId: string;
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() showImageContainerEmitter: EventEmitter<any> = new EventEmitter();
@@ -272,13 +271,6 @@ export class GlobalService {
       blocks: blocks, 
       fromModal: isFromModal
     });
-  }
-
-  setPecaId(id: string) {
-    this.activePecaId = id
-  }
-  getPecaId(): string {
-    return this.activePecaId
   }
   //? -----------------------------------------------------------------------
 }
