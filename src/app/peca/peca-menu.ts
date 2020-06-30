@@ -109,7 +109,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   },
   {
     title: 'Salir',
-    icon: '',
+    icon: 'trash-empty',
     link: '/auth/logout',
   },
 ];
