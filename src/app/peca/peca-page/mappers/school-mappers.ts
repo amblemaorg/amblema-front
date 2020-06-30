@@ -1,5 +1,5 @@
 export function schoolDataToSchoolFormMapper(schoolData) {
-  const schoolData_ = schoolData.approvalHistory.length > 0 
+  const schoolData_ = schoolData.isInApproval && schoolData.approvalHistory.length > 0 
   ? {
     ...schoolData,
     ...schoolData.approvalHistory[schoolData.approvalHistory.length - 1].detail
@@ -80,10 +80,18 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     addressMunicipality: addressMunicipality.id,
     callesEscuela: address,
     ciudadEscuela: addressCity,
-    nameDirector: principalName,
+    // nameDirector: principalName,
+    namesDirector : {
+      nameDirector: principalFirstName,
+      lastnameDirector: principalLastName,
+    },
     phoneDirector: principalPhone,
     emailDirector: principalEmail,
-    nameSubDirector: subPrincipalName,
+    // nameSubDirector: subPrincipalName,
+    namesSubDirector : {
+      nameSubDirector: subPrincipalFirstName,
+      lastnameSubDirector: subPrincipalLastName,
+    },
     phoneSubDirector: subPrincipalPhone,
     emailSubDirector: subPrincipalEmail,
     doubleFields1: {
