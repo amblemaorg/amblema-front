@@ -16,7 +16,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         }).id
       };
       break;
-    ////////////////////
+
     case "actualizarPadrino": // for Perfil de usuario view and padrinos form
       data.isThereTable = false;
       console.log("le has dado clic" + JSON.stringify(cf.value));
@@ -35,8 +35,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
-        address: cf.get("street").value,
-        image: null
+        address: cf.get("street").value
       };
       break;
     case "actualizarEscuela": // for Perfil de usuario view and escuelas form
@@ -45,7 +44,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       data.data = {
         name: cf.get("name").value,
         code: cf.get("code").value,
-        image: null,
         addressZoneType: cf.get("zone").value,
         addressZone: cf.get("address").value,
         schoolType: cf.get("typeEscuela").value,
@@ -81,7 +79,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         homePhone: cf.get("phone").value,
         addressHome: cf.get("house").value,
         profession: cf.get("proffesion").value,
-        image: null,
         email: cf.get("email").value,
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
@@ -89,7 +86,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         address: cf.get("street").value
       };
       break;
-    ////////////////////////////
     case "agregarDocente": // for Datos de la Escuela view and Docentes section
       data.data = {
         name: cf.get("name").value,

@@ -37,11 +37,13 @@ export class ProfilePageComponent extends PecaPageComponent
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService
+    private globals: GlobalService
   ) {
     super(factoryResolver);
-    globals.blockIntancesEmitter.subscribe(blocks => {
-      blocks.forEach((block, name) => this.blockInstances.set(name, block));
+    globals.blockIntancesEmitter.subscribe(data => {
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
       console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods();
     });
@@ -50,6 +52,7 @@ export class ProfilePageComponent extends PecaPageComponent
     this.getUser();
     this.loadForm();
   }
+
   loadForm() {
     if (this.userType === "4") {
       this.instantiateComponent(configEscuela);
