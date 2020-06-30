@@ -67,18 +67,6 @@ const selectEstudiantes = {
     }
 }
 
-const textsAndButtons = {
-    component: 'textsbuttons',
-    settings: {
-        action: [{
-            type: 3,
-            name: 'Enviar Solicitud',
-        }],
-        receivesFromTableOrForm: 'table',
-        buttonCode: 'dataResultadoEstudiante',
-    }
-}
-
 const resultadoEstudiante = {
     component: 'table',
     settings: {
@@ -231,7 +219,6 @@ export const MATH_OLYMPICS_CONFIG = {
                         childBlocks: [
                             { ...selectEstudiantes },
                             { ...resultadoEstudiante },
-                            { ...textsAndButtons },
                             { ...modalResultadoEstudiante },
                         ]
                     }
