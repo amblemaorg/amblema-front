@@ -1,5 +1,5 @@
 export function textsAndButtonsAdaptBody(buttonCode: string, tAndFData: {table: any[]; form: any;}) {
-    let body_adapted = {};
+    const body_adapted = {};
 
     switch (buttonCode) {        
         case 'schoolDataConfigRegistroEscuela':
@@ -28,8 +28,8 @@ export function textsAndButtonsAdaptBody(buttonCode: string, tAndFData: {table: 
                     ] = tAndFData.form[key];
             });
             body_adapted["slider"] = tAndFData.table.map( slide => {
-                let slide_ = {};
-                let hasAutoId = slide.id.substring(0, 5) === "auto-";
+                const slide_ = {};
+                const hasAutoId = slide.id.substring(0, 5) === "auto-";
                 if (!hasAutoId) slide_['id'] = slide.id;
                 slide_['description'] = slide.description;
                 slide_['image'] = slide.source;

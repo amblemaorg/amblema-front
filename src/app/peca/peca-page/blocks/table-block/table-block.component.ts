@@ -62,10 +62,20 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     this.subscription.add(
       this.globals.resetEditedEmitter.subscribe((btnCode) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
+          this.isEditable = false;
+        }          
       })
     );
+
+    this.subscription.add(
+      this.globals.setReadonlyEmitter.subscribe((data) => {
+        if (this.settings.buttonCode && this.settings.buttonCode == data.btnCode) {
+          this.isEditable = !data.setReadOnly;
+        }          
+      })
+    ); 
   }
   ngOnDestroy() {
     this.settings[this.settings.tableCode] = null;
@@ -160,14 +170,10 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   setData(data: any) {
-    console.log('is editable',this.isEditable);
     if (!this.isEdited) {
-      if (data.setData) {
-        if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data.data];
-        this.source = new LocalDataSource(data.data);
-      }      
-      this.isEditable = data.isEditable;
-      console.log('is editable2',this.isEditable);
+      if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data.data];
+      this.source = new LocalDataSource(data.data);
+      this.isEditable = data.isEditable ? true : false;
       this.sendTableData();
     }    
   }
@@ -195,12 +201,10 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     switch (e.action) {
       case 'VIEW':
-        console.log('is editableeeeee', this.isEditable);
         if (this.isEditable) this.globals.ModalShower(obj);
         break;
 
       case 'EDIT':
-        console.log('is editableeeeee', this.isEditable);
         if (this.isEditable) {
           obj.showBtn = true;
           this.globals.ModalShower(obj);
@@ -208,7 +212,6 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         break;
 
       case 'DELETE':
-        console.log('is editableeeeee', this.isEditable);
         if (this.isEditable) {
           obj.component = 'textsbuttons';
           this.globals.ModalShower(obj); 
