@@ -75,9 +75,9 @@ export class FormBlockComponent
   showSelectState: boolean = true;
   isEditing: boolean = false;
   isInApproval: boolean;
-  isEdited: boolean;
-  sendNull: boolean = true;
-  someImgAdded: boolean;
+  isEdited: boolean; // if form has been edited
+  sendNull: boolean = true; // to avoid send form data null when uploading images
+  someImgAdded: boolean; // to avoid send form null when images are saved in table
 
   constructor(
     private store: Store,
@@ -154,9 +154,8 @@ export class FormBlockComponent
     );
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == data.btnCode) {
-          this.isInApproval = data.setReadOnly;
-        }          
+        if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+          this.isInApproval = data.setReadOnly;        
       })
     );    
 

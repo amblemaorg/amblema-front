@@ -35,10 +35,12 @@ export class SchoolDataPageComponent extends PecaPageComponent
   userIdSubscription: Subscription;
   
   schoolFormData: any;
+  schoolFormStatusData: any;
   teachersTableData: any;
-  sliderPicturesData: any;
-  currentUserId: string;
-  requestIdToCancel: string;
+  sliderPicturesData: any; // slider for school images
+  currentUserId: string; // current user id on session
+  requestIdToCancel: string; // if school data is in approval this holds last request id
+  schoolDataStatus: number; // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
   
   // controlling when data from school is loaded
   isInstanciated: boolean;
@@ -53,6 +55,8 @@ export class SchoolDataPageComponent extends PecaPageComponent
     globals.blockIntancesEmitter.subscribe(data => {
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       //console.log(this.blockInstances);
+
+      // if an action from a modal gets click then this view components' data don't get updated
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
 
@@ -64,6 +68,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
       data => {
         if (!isNullOrUndefined(data)) {
           console.log("mostrando data de escuela");
+          
+          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
+          else this.unsetCancelRequest()
+          
+          this.setSchoolStatus(data.school); // sets current school status number
+          
+          this.setSchoolFormStatusData();
           this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
           this.setTeachersTableData(
             data.school.teachers,
@@ -77,9 +88,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
                   : [] ) 
               : data.school.slider,
             schoolPicturesSliderDataToSchoolPicturesTableMapper
-          );
-          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
-          else this.unsetCancelRequest()
+          );          
 
           this.userIdSubscription = this.userId$.subscribe(
             user_id => {
@@ -97,19 +106,19 @@ export class SchoolDataPageComponent extends PecaPageComponent
     );
   }
 
-  updateMethods(updateTables: boolean = true) {
-    this.updateDataToBlocks(updateTables);
+  updateMethods(updateData: boolean = true) {
+    this.updateDataToBlocks(updateData);
     this.updateStaticFetchers();
     this.updateDynamicFetchers();
   }
 
-  updateDataToBlocks(updateTables: boolean) {
-    this.setBlockData("schoolForm", this.schoolFormData);
-    if (updateTables) {      
+  updateDataToBlocks(updateData: boolean) {    
+    if (updateData) {
+      this.setBlockData("schoolFormStatus", this.schoolFormStatusData);
+      this.setBlockData("schoolForm", this.schoolFormData);
+      this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
       this.setBlockData("teachersTable", this.teachersTableData); 
-    } else
-      this.sliderPicturesData['setData'] = false;    
-    this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
+    }    
   }
 
   setCancelRequest(approvalHistory: any[]) {
@@ -118,6 +127,21 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
   unsetCancelRequest() {
     this.requestIdToCancel = null;
+  }
+
+  setSchoolStatus(school) { // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
+    /* this.schoolDataStatus = school.isInApproval 
+      ? 1 : (
+        school.approvalHistory.length > 0 
+        ? (
+            school.approvalHistory[school.approvalHistory.length - 1].status === "2" 
+            || school.approvalHistory[school.approvalHistory.length - 1].status === "3" 
+            ? (+school.approvalHistory[school.approvalHistory.length - 1].status) 
+            : 0
+          ) 
+        : 0
+      ) */
+    this.schoolDataStatus = school.isInApproval ? 1 : 0;
   }
 
   updateStaticFetchers() {
@@ -161,9 +185,20 @@ export class SchoolDataPageComponent extends PecaPageComponent
     }
   }
 
+  setSchoolFormStatusData() {
+    this.schoolFormStatusData = {
+      status: {
+        subText: this.schoolDataStatus
+      }
+    };
+  }
+
   setTeachersTableData(teachersData, _mapper?: Function) {
     if (_mapper) {
-      this.teachersTableData = _mapper(teachersData);
+      this.teachersTableData = {
+        data: _mapper(teachersData),
+        isEditable: true,
+      };
     } else {
       this.teachersTableData = teachersData;
     }
@@ -172,7 +207,6 @@ export class SchoolDataPageComponent extends PecaPageComponent
   setSchoolPicturesTableData(sliderData, _mapper?: Function) {
     if (_mapper) {
       this.sliderPicturesData = {
-        setData: true,
         data: _mapper(sliderData),
         isEditable: this.requestIdToCancel ? false : true,
       };
