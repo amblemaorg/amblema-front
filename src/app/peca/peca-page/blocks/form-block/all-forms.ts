@@ -73,6 +73,25 @@
         },
       }
     },
+    --> special case:
+    // if double input is for sibling inputs, do the following::
+    sibling_fields: { // 'sibling_fields' can be any name
+      type: "double",
+      isInputGroup: true, // this attribute must be placed here as true
+      label: "input_text_or_number", // must have a label here, and not in children fields
+      fields: { // only 2 fields allowed
+        sibling_field1: {
+          placeholder: "input_text_or_number",
+          fullwidth: false, // it must be false
+          ...controlProps.[number or text controlprops],
+        },
+        sibling_field2: {
+          placeholder: "input_text_or_number",
+          fullwidth: false, // it must be false
+          ...controlProps.[number or text controlprops],
+        },
+      }
+    },
 
   (V) to make a field Read Only set readonly property as following::
   -->
@@ -540,12 +559,29 @@ export const formDatosEscuela = {
   },
   /*DATOS DIRECTOR*/
   title2: { label: "Datos del director", type: "title" },
-  nameDirector: {
-    label: "Nombre del director o directora",
-    placeholder: "Nombre del director o directora",
-    fullwidth: false,
-    ...controlProps.normalText,
+  namesDirector: {
+    type: "double",
+    isInputGroup: true,
+    label: "Nombres del director o directora",
+    fields: {
+      nameDirector: {
+        placeholder: "Nombre",
+        fullwidth: false,
+        ...controlProps.onlyLetters,
+      },
+      lastnameDirector: {
+        placeholder: "Apellido",
+        fullwidth: false,
+        ...controlProps.onlyLetters,
+      },
+    }
   },
+  // nameDirector: {
+  //   label: "Nombre del director o directora",
+  //   placeholder: "Nombre del director o directora",
+  //   fullwidth: false,
+  //   ...controlProps.normalText,
+  // },
   phoneDirector: {
     label: "Número de teléfono del director",
     placeholder: "Número de teléfono del director",
@@ -560,12 +596,29 @@ export const formDatosEscuela = {
   },
   /*DATOS SUB-DIRECTOR*/
   title3: { label: "Datos del subdirector", type: "title" },
-  nameSubDirector: {
-    label: "Nombre del subdirector o subdirectora",
-    placeholder: "Nombre del subdirector o subdirectora",
-    fullwidth: false,
-    ...controlProps.normalText,
+  namesSubDirector: {
+    type: "double",
+    isInputGroup: true,
+    label: "Nombres del subdirector o subdirectora",
+    fields: {
+      nameSubDirector: {
+        placeholder: "Nombre",
+        fullwidth: false,
+        ...controlProps.onlyLetters,
+      },
+      lastnameSubDirector: {
+        placeholder: "Apellido",
+        fullwidth: false,
+        ...controlProps.onlyLetters,
+      },
+    }
   },
+  // nameSubDirector: {
+  //   label: "Nombre del subdirector o subdirectora",
+  //   placeholder: "Nombre del subdirector o subdirectora",
+  //   fullwidth: false,
+  //   ...controlProps.normalText,
+  // },
   phoneSubDirector: {
     label: "Número de teléfono del subdirector",
     placeholder: "Número de teléfono del subdirector",

@@ -8,7 +8,7 @@ export function schoolPicturesSliderDataToSchoolPicturesTableMapper(sliderData) 
 
         return {
             id,
-            image,
+            // image,
             description,
             source: image,
             imageSelected: null,
