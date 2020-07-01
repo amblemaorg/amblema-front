@@ -13,7 +13,7 @@ import { Subscription, Observable } from "rxjs";
 import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
-import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
+import { FetchPecaContent, SetUser } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 
 @Component({
@@ -59,6 +59,8 @@ export class FormBlockComponent
   @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<
     any
   >;
+  
+
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
@@ -79,6 +81,7 @@ export class FormBlockComponent
   imageUrl: string;
   sendNull: boolean = true;
   someImgAdded: boolean;
+  
 
   constructor(
     private store: Store,
@@ -94,6 +97,7 @@ export class FormBlockComponent
   }
 
   ngOnInit() {
+    
     this.subscription.add(
       this.pecaId$.subscribe(peca_id => {
         this.pecaId = peca_id;
@@ -527,6 +531,16 @@ export class FormBlockComponent
           });
 
           this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          
+          if (this.settings.formType === "actualizarCoordinador" || this.settings.formType === "actualizarEscuela" || this.settings.formType === "actualizarPadrino") { 
+            
+            //Do the consult to the endpoint which bring me the data of specific user
+            this.fetcher.get(`users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`).subscribe( respuesta => {
+               // within the answer I send the content to the SetUser::
+               this.store.dispatch([new SetUser(respuesta)]);
+            }, error => {console.log(error)});
+          }
+          
         },
         error => {
           this.sendingForm = false;
