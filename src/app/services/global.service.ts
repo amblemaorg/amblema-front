@@ -236,15 +236,17 @@ export class GlobalService {
   }
 
   //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
-  private activePecaId: string;
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() showImageContainerEmitter: EventEmitter<any> = new EventEmitter();
   @Output() hideModalEmitter: EventEmitter<any> = new EventEmitter();
   @Output() showModalEmitter: EventEmitter<any> = new EventEmitter();
-  @Output() blockIntancesEmitter: EventEmitter<
-    Map<string, PageBlockComponent>
-  > = new EventEmitter();
+  @Output() resetEditedEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() blockIntancesEmitter: EventEmitter<{
+    blocks: Map<string, PageBlockComponent>, 
+    fromModal: boolean
+  }> = new EventEmitter();
 
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
@@ -261,16 +263,21 @@ export class GlobalService {
   ModalShower(obj) {
     this.showModalEmitter.emit(obj);
   }
-
-  createdBlockInstances(blocks: Map<string, PageBlockComponent>) {
-    this.blockIntancesEmitter.emit(blocks);
+  resetEdited(buttonCode: string) {
+    this.resetEditedEmitter.emit(buttonCode);
+  }
+  setAsReadOnly(buttonCode: string, setReadOnly: boolean) {
+    this.setReadonlyEmitter.emit({
+      buttonCode,
+      setReadOnly
+    });
   }
 
-  setPecaId(id: string) {
-    this.activePecaId = id
-  }
-  getPecaId(): string {
-    return this.activePecaId
+  createdBlockInstances(blocks: Map<string, PageBlockComponent>, isFromModal: boolean = false) {
+    this.blockIntancesEmitter.emit({
+      blocks: blocks, 
+      fromModal: isFromModal
+    });
   }
   //? -----------------------------------------------------------------------
 }

@@ -41,23 +41,23 @@ const registroTallerInicial = {
       description: {
         title: "Descripción"
       },
-      state: {
-        title: 'Estado',
-        valuePrepareFunction: ( row: any ) => {
-          if (row) return row == "1" ? 'Visible':'No visible';
-          else return '';
-        },
-        filterFunction: (cell?: any, search?: string) => {
-            let value: string = cell == "1" ? 'Visible':'No visible';
-            value = value.toUpperCase();
+      // state: {
+      //   title: 'Estado',
+      //   valuePrepareFunction: ( row: any ) => {
+      //     if (row) return row == "1" ? 'Visible':'No visible';
+      //     else return '';
+      //   },
+      //   filterFunction: (cell?: any, search?: string) => {
+      //       let value: string = cell == "1" ? 'Visible':'No visible';
+      //       value = value.toUpperCase();
             
-            if (value.includes(search.toUpperCase()) || search === '') return true;
-            else return false;
-        }
-      },
-      status: {
-        title: 'Estatus'
-      }
+      //       if (value.includes(search.toUpperCase()) || search === '') return true;
+      //       else return false;
+      //   }
+      // },
+      // status: {
+      //   title: 'Estatus'
+      // }
     },
     isFromImgContainer: true,
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
@@ -68,8 +68,8 @@ const registroTallerInicial = {
         id: '1abcdefghijk',
         image: 'imagen1.png',
         description: 'descripcion 1',
-        state: '1',
-        status: 'Aprobado',
+        // state: '1',
+        // status: 'Aprobado',
         source: 'https://us.123rf.com/450wm/kchung/kchung1610/kchung161001155/64507708-futura-prueba-escrita-a-mano-escritura-de-la-mano-a-bordo-transparente-foto.jpg?ver=6',
         imageSelected: { name: 'imagen prueba' },
       },
@@ -77,8 +77,8 @@ const registroTallerInicial = {
         id: '2abcdefghijk',
         image: 'imagen2.png',
         description: 'descripcion 2',
-        state: '2',
-        status: 'Aprobado',
+        // state: '2',
+        // status: 'Aprobado',
         source: null,
         imageSelected: null,
       },
@@ -86,8 +86,8 @@ const registroTallerInicial = {
         id: '3abcdefghijk',
         image: 'imagen3.png',
         description: 'descripcion 3',
-        state: '1',
-        status: 'Aprobado',
+        // state: '1',
+        // status: 'Aprobado',
         source: null,
         imageSelected: null,
       },
@@ -95,8 +95,8 @@ const registroTallerInicial = {
         id: '4abcdefghijk',
         image: 'imagen4.png',
         description: 'descripcion 4',
-        state: '2',
-        status: 'Aprobado',
+        // state: '2',
+        // status: 'Aprobado',
         source: null,
         imageSelected: null,
       },

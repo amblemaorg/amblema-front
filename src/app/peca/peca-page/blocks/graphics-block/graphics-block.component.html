@@ -1,6 +1,5 @@
-<div>
-    <canvas id="myChart">
+<div *ngIf="settings.chartId">
+    <canvas [id]="settings.chartId">
         {{chart}}
     </canvas>
 </div>
-

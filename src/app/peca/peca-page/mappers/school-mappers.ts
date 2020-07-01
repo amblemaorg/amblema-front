@@ -1,6 +1,15 @@
 export function schoolDataToSchoolFormMapper(schoolData) {
+  const schoolData_ = schoolData.isInApproval && schoolData.approvalHistory.length > 0 
+  ? {
+    ...schoolData,
+    ...schoolData.approvalHistory[schoolData.approvalHistory.length - 1].detail
+  }
+  : { ...schoolData };
+
   const {
     id,
+    pecaId,
+    isInApproval,
     name,
     code,
     addressState,
@@ -23,7 +32,34 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     facebook,
     instagram,
     twitter,
-  } = schoolData;
+  } = schoolData_;
+
+  // const {
+  //   id,
+  //   pecaId,
+  //   name,
+  //   code,
+  //   addressState,
+  //   addressMunicipality,
+  //   address,
+  //   addressCity,
+  //   principalFirstName,
+  //   principalLastName,
+  //   principalPhone,
+  //   principalEmail,
+  //   subPrincipalFirstName,
+  //   subPrincipalLastName,
+  //   subPrincipalPhone,
+  //   subPrincipalEmail,
+  //   nTeachers,
+  //   nAdministrativeStaff,
+  //   nLaborStaff,
+  //   nStudents,
+  //   nGrades,
+  //   facebook,
+  //   instagram,
+  //   twitter,
+  // } = schoolData;
 
   const principalName =
     principalFirstName && principalLastName ? `${principalFirstName} ${principalLastName}` : null;
@@ -35,6 +71,8 @@ export function schoolDataToSchoolFormMapper(schoolData) {
 
   return {
     id,
+    pecaId,
+    isInApproval,
     nameEscuela: name,
     codigoEscuela: code,
     phoneEscuela: null,
@@ -42,10 +80,18 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     addressMunicipality: addressMunicipality.id,
     callesEscuela: address,
     ciudadEscuela: addressCity,
-    nameDirector: principalName,
+    // nameDirector: principalName,
+    namesDirector : {
+      nameDirector: principalFirstName,
+      lastnameDirector: principalLastName,
+    },
     phoneDirector: principalPhone,
     emailDirector: principalEmail,
-    nameSubDirector: subPrincipalName,
+    // nameSubDirector: subPrincipalName,
+    namesSubDirector : {
+      nameSubDirector: subPrincipalFirstName,
+      lastnameSubDirector: subPrincipalLastName,
+    },
     phoneSubDirector: subPrincipalPhone,
     emailSubDirector: subPrincipalEmail,
     doubleFields1: {

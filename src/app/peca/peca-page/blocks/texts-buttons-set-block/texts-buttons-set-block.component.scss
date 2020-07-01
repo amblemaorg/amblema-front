@@ -39,12 +39,21 @@
                         }
                     }
                     .status {
-                        .rounded-circle {
-                            background: #ffff00;
+                        .rounded-circle {                            
                             width: 0.85rem;
                             height: 0.85rem;
                             display: inline-block;
                             vertical-align: middle;
+
+                            &.yellow {
+                                background: #ffff00;
+                            }
+                            &.green {
+                                background: #19ff00;
+                            }
+                            &.red {
+                                background: #fb6743;
+                            }
                         }
                         @media (max-width:768px){
                             margin: 5px 0px 15px !important;
@@ -171,15 +180,15 @@
         color: $blue;
 
         &.is-date-placeholder {
-        cursor: default;
-        background-color: #fff;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        border: none;
-        width: 80%;
-        padding-bottom: 0 !important;
-        height: auto;
+            cursor: default;
+            background-color: #fff;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            border: none;
+            width: 80%;
+            padding-bottom: 0 !important;
+            height: auto;
         }
 
         &[readonly] {
@@ -187,51 +196,68 @@
         }
 
         &[type="date"]:focus + .form-control.is-date-placeholder {
-        display: none;
+            display: none;
         }
     
         &:focus {
-        box-shadow: none;
+            box-shadow: none;
         }
     
         &.ng-touched {
-        &.ng-invalid, &.date-not-valid {
-            border: 2px solid $red;
-        }
-    
-        &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
-            border: 2px solid $green;
-        }
+            &.ng-invalid, &.date-not-valid {
+                border: 2px solid $red;
+            }
         
-        & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
-            display: block;
+            &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
+                &:focus.ng-dirty, &.ng-select-focused.ng-dirty {
+                    border: 2px solid $green;
+                }
+            }
+
+            &[readonly] {
+                border: 1px solid map-get($color_map, form-gray) !important;
+            }
+            
+            & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
+                display: block;
+            }
+
+            &:not(.date-not-valid) ~ .date-error-message {
+                display: none;
+            }      
+            
+            &[readonly] ~ .error-message, &[readonly] ~ .date-error-message {
+                display: none !important;
+            }
         }
 
-        &:not(.date-not-valid) ~ .date-error-message {
-            display: none;
-        }          
+        &[readonly] {
+            cursor: default;
+            &:not(.is-date-input-placeholder):focus {
+                border: 1px solid map-get($color_map, form-gray) !important;
+            }
         }
     
         &.ng-untouched {
-        & ~ .error-message, & ~ .date-error-message {
-            display: none;
-        }
+            & ~ .error-message, & ~ .date-error-message {
+                display: none;
+            }
         }
     }
     .ng-select {
         .ng-dropdown-panel {
-        z-index: 3;
-        .scroll-host {
-            left: -0.75rem;
-            top: 0.35rem;
-            background: #fff;
-            border: solid map-get($color_map, form-gray);
-            border-width: 0 1px 1px;
+            z-index: 3;
+            .scroll-host {
+                left: -0.75rem;
+                top: 0.35rem;
+                background: #fff;
+                border: solid map-get($color_map, form-gray);
+                border-width: 0 1px 1px;
 
-            .scrollable-content{
-                padding: 0 1rem;
+                .scrollable-content{
+                    padding: 0 1rem;
+                }
             }
-        }
         }
 
         &.ng-select-opened .ng-select-container {
@@ -253,16 +279,24 @@
             &.image-status .ng-select-container .ng-placeholder {
                 display: block;
             }
-            &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
+            &.ng-valid:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
                 display: none;
             }
         }
 
-        &.ng-touched.ng-pristine, 
-        &.ng-touched.ng-invalid {
-        .ng-select-container .ng-placeholder {
-            display: block;
-        }
+        &.ng-touched {
+            &.ng-pristine, 
+            &.ng-invalid {
+              .ng-select-container .ng-placeholder {
+                  display: block;
+              }
+            }
+            &.ng-invalid .ng-select-container .ng-placeholder {
+                display: block !important;
+            }
+            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+                display: none;
+            }
         }
 
         &.ng-select-filtered .ng-select-container .ng-placeholder {
