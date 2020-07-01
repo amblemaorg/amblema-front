@@ -11,7 +11,12 @@
     <web-menu class="desktop-menu"></web-menu>
     <div class="user-access">
       <a [routerLink]="['/auth/login']">
-        <img class="profile" src="../../../../assets/images/profile.png" alt="profile image" />
+        <!-- <img class="profile" src="../../../../assets/images/profile.png" alt="profile image" /> -->
+        <svg-icon
+          name="user-icon"
+          [svgStyle]="{ fill: '#00809A', 'height.em': 1.5, 'width.em': 1.5 }"
+        >
+        </svg-icon>
         <span>Entrar</span>
       </a>
     </div>
