@@ -34,6 +34,10 @@ $table-border-color: 1px solid $blue;
         text-align: center !important;
     }
     .nb-theme-default ng2-smart-table {
+        &.has-img-in-first-col tbody tr td:nth-child(2) {
+            text-align: center;
+        }
+
         thead {
             border: $table-border-color;
 
@@ -79,6 +83,12 @@ $table-border-color: 1px solid $blue;
                     border-right: $table-border-color !important;
                     max-width: 20rem;
                     word-break: break-word;
+
+                    img {
+                        width: 3.5rem;
+                        height: 3.5rem;
+                        object-fit: contain;
+                    }
 
                     &:first-child {
                         padding-left: 1rem;

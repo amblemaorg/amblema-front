@@ -1,8 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PresentationalBlockComponent } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
-import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Subscription } from 'rxjs';
+import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
+import { ToastrService } from "ngx-toastr";
+import { FetchPecaContent } from '../../../../store/actions/peca/peca.actions';
+import { Subscription, Observable } from "rxjs";
+import { Select, Store } from "@ngxs/store";
+import { PecaState } from '../../../../store/states/peca/peca.state';
+import { textsAndButtonsAdaptBody } from './tb-body-adapter';
 
 @Component({
   selector: 'buttons-set-block',
@@ -38,7 +43,7 @@ export class TextsButtonsSetBlockComponent
     };
     status: {
       text: string;
-      subText: string;
+      subText: number; // 1 Pendiente = Amarillo, 2 Aprobado = Verde, 3 Rechazado = Rojo
     };
     // texts: {
     title: {
@@ -65,10 +70,19 @@ export class TextsButtonsSetBlockComponent
       titleInput: string;
     }[];
     fetcherUrls: {
+      // get: string;
+      // post: string;
+      put: string;
+      // patch: string;
       delete: string;
+      cancel: string;
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
+    makesNoRequest?: boolean; // if true, this form makes no request to api
   };
+
+  pecaId: string;
+  @Select(PecaState.getPecaId) pecaId$: Observable<string>;
 
   glbls: any;
 
@@ -78,25 +92,40 @@ export class TextsButtonsSetBlockComponent
     form: null,
   };
 
-  constructor(private globals: GlobalService, private fetcher: HttpFetcherService) {
+  sleepSend: boolean; // disables actions button meanwhile peca content gets updated
+
+  constructor(
+    private globals: GlobalService, 
+    private fetcher: HttpFetcherService,
+    private store: Store,
+    private toastr: ToastrService,
+  ) {
     this.type = 'presentational';
     this.component = 'buttons';
     this.glbls = globals;
   }
 
   currentSelected = null;
+  isSending: boolean;
 
   private subscription: Subscription = new Subscription();
 
   ngOnInit() {
     this.subscription.add(
-      this.globals.updateButtonDataEmitter.subscribe((data) => {
+      this.globals.updateButtonDataEmitter.subscribe((data) => {        
         if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
           if (data.whichData == 'table') this.dataTorF.table = data.table;
           if (data.whichData == 'form') this.dataTorF.form = data.form;
 
           // console.log(this.dataTorF);
         }
+        // console.log(this.dataTorF);
+      })
+    );
+
+    this.subscription.add(
+      this.pecaId$.subscribe( peca_id => {
+        this.pecaId = peca_id;
       })
     );
   }
@@ -106,16 +135,29 @@ export class TextsButtonsSetBlockComponent
       form: null,
     };
     this.subscription.unsubscribe();
+    this.sleepSend = null;
   }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
 
-  setFetcherUrls({ delete: deleteFn }) {
+  setData(data: any) {
+    if (data["status"]) this.settings.status.subText = data.status.subText;
+  }
+
+  // setFetcherUrls({ delete: deleteFn }) {
+  //   this.settings.fetcherUrls = {
+  //     delete: deleteFn,
+  //   };
+  // }
+  setFetcherUrls({ put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
+      put,
       delete: deleteFn,
-    };
+      cancel // when there's a cancel request button this can be used
+    };    
+    this.sleepSend = false;
   }
 
   focusDatePicker(e) {
@@ -131,7 +173,7 @@ export class TextsButtonsSetBlockComponent
           /* !this.dataTorF.table ||  */ !this.dataTorF.form)
       )
         return true;
-    }
+    } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel) return true; // when there's cancel request button
     return false;
   }
 
@@ -217,19 +259,35 @@ export class TextsButtonsSetBlockComponent
   }
 
   takeAction(type: number, e) {
+    /**
+     * 1 guardar or Si (on delete action),
+     * 2 adjuntar fotos or No (on delete action),
+     * 3 enviar,
+     * 4 solicitar aprobacion,
+     * 5 ver estadisticas,
+     * 6 agregar.
+     */
     switch (type) {
       case 1:
         if (this.settings.isFromCustomTableActions && this.settings.modalCode) {
-          const method = this.settings.fetcherMethod || 'delete';
-          const url = this.settings.fetcherUrls[method];
-          this.fetcher[method](url).subscribe((data) => {
-            //console.log(data);
+          const commonTasks = () => {
             this.globals.tableDataUpdater(this.settings.dataFromRow);
             this.globals.ModalHider(this.settings.modalCode);
-          });
+          };
+
+          if (this.settings.makesNoRequest) commonTasks();
+          else {
+            const method = this.settings.fetcherMethod || 'delete';
+            const url = this.settings.fetcherUrls[method];
+            this.fetcher[method](url).subscribe((data) => {
+              //console.log(data);
+              commonTasks();
+              if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+            });
+          }          
         }
         break;
-      case 2:
+      case 2: 
         if (this.settings.isFromCustomTableActions && this.settings.modalCode)
           this.globals.ModalHider(this.settings.modalCode);
         else {
@@ -237,9 +295,87 @@ export class TextsButtonsSetBlockComponent
           e.target.classList.add('d-none');
         }
         break;
+      case 4:
+        this.isSending = true;
+        if ( // if has a date
+          this.dataTorF.form 
+          && (
+            this.dataTorF.form.age 
+            || this.dataTorF.form.date
+          ) 
+        ) this.dataTorF.form[this.dataTorF.form.age ? 'age' : 'date'] 
+          = this.globals.dateStringToISOString(
+            this.dataTorF.form[this.dataTorF.form.age ? 'age' : 'date']
+          );//---------------
+        const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
+        const method = this.settings.fetcherMethod || "post";
+        const resourcePath = this.settings.fetcherUrls[method];
+
+        if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
+        
+        this.fetcher[method](resourcePath, body).subscribe(
+          response => {
+            console.log("form response",response);
+            this.sleepSend = true;
+            this.isSending = false;
+    
+            this.toastr.success("Solicitud enviada", "", {
+              positionClass: "toast-bottom-right"
+            });
+                    
+            if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+            this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          },
+          error => {
+            if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
+            this.isSending = false;
+            this.toastr.error(
+              "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              "",
+              { positionClass: "toast-bottom-right" }
+            );
+            console.error(error);
+          }
+        );
+        break;
 
       default:
         break;
     }
+  }
+
+  cancelRequest() {
+    this.isSending = true;
+
+    const body = {
+      status: '4'
+    };
+    const method = 'put';
+    const url = this.settings.fetcherUrls['cancel'];
+
+    this.fetcher[method](url, body).subscribe(
+      response => {
+        console.log("form response",response);
+        // if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
+        this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success("Solicitud cancelada", "", {
+          positionClass: "toast-bottom-right"
+        });
+                
+        if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      error => {
+        this.isSending = false;
+        this.toastr.error(
+          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );
   }
 }

@@ -8,6 +8,12 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { NgxsModule } from '@ngxs/store';
+import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
+import { UserState } from '../../../../store/states/e-learning/user.state';
+import { StepsState } from '../../../../store/states/steps/project.state';
+import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -57,8 +63,22 @@ describe('TextsButtonsSetBlockComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule.withRoutes([]),
+        ToastrModule.forRoot(),
         HttpClientModule,
+        NgxsModule.forRoot( [
+          ModulesState,
+          UserState,
+          StepsState,
+          ResidenceInfoState,
+        ],
+        {
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        })
       ],
+      providers: [{ provide: ToastrService, useClass: ToastrService }],
     });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {

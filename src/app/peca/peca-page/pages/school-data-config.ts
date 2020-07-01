@@ -9,19 +9,20 @@ import { settings } from 'cluster';
 
 const statusGeneral = {
   component: 'textsbuttons',
+  name: 'schoolFormStatus',
   settings: {
-    dateOrtext:{
-      
-    },
+    dateOrtext:{},
     status: {
       text: 'Estatus',
-      subText: 'Pendiente'
+      subText: 0
     },
+    buttonCode: 'schoolDataConfigRegistroEscuela',
   }
 };
 
 const textsAndButtons = {
   component: 'textsbuttons',
+  name: 'schoolFormButton',
   settings: {
     // title: {
     //   text: "(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar",
@@ -33,12 +34,13 @@ const textsAndButtons = {
         name: 'Adjuntar fotos',
       },
       {
-        type: 3,
+        type: 4,
         name: 'Enviar Solicitud',
       },
     ],
     receivesFromTableOrForm: 'both',
     buttonCode: 'schoolDataConfigRegistroEscuela',
+    fetcherMethod: 'put',
   },
 };
 const formEscuela = {
@@ -50,61 +52,73 @@ const formEscuela = {
     tableCode: 'schoolDataConfigRegistroEscuela',
     hideImgContainer: true,
     data: {},
+    // fetcherMethod: 'put',
   },
 };
 
 const registroEscuela = {
   component: 'table',
+  name: 'schoolPicturesTable',
   settings: {
     columns: {
-      image: {
-        title: 'Imágenes',
+      source: {
+        type: 'html',
+        title: 'Imágen',
+        valuePrepareFunction: 
+          (img) => {
+            return `<img src="${img}" alt="image" />` 
+          }
       },
       description: {
         title: 'Descripción',
       },
-      state: {
-        title: 'Estado',
-        valuePrepareFunction: (row: any) => {
-          if (row) return row == '1' ? 'Visible' : 'No visible';
-          else return '';
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = cell == '1' ? 'Visible' : 'No visible';
-          value = value.toUpperCase();
+      // state: {
+      //   title: 'Estado',
+      //   valuePrepareFunction: (row: any) => {
+      //     if (row) return row == '1' ? 'Visible' : 'No visible';
+      //     else return '';
+      //   },
+      //   filterFunction: (cell?: any, search?: string) => {
+      //     let value: string = cell == '1' ? 'Visible' : 'No visible';
+      //     value = value.toUpperCase();
 
-          if (value.includes(search.toUpperCase()) || search === '') return true;
-          else return false;
-        },
-      },
-      status: {
-        title: 'Estatus',
-      },
+      //     if (value.includes(search.toUpperCase()) || search === '') return true;
+      //     else return false;
+      //   },
+      // },
+      // status: {
+      //   title: 'Estatus',
+      // },
     },
     hideImgContainer: true,
     isFromImgContainer: true,
+    isImageFirstCol: true,
+    makesNoRequest: true,
     modalCode: 'schoolDataConfigRegistroEscuela',
     buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
     schoolDataConfigRegistroEscuela: [
-      {
+      /* {
+        // id: '1abcdefghijk',
+        // image: 'imagen1.png',
+        // description: 'descripcion 1',
+        // state: '1',
+        // status: 'Aprobado',
+        // source: null,
+        // imageSelected: null,
         id: '1abcdefghijk',
-        image: 'imagen1.png',
+        image: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
         description: 'descripcion 1',
-        state: '1',
-        status: 'Aprobado',
-        source: null,
+        source: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
         imageSelected: null,
       },
       {
         id: '2abcdefghijk',
-        image: 'imagen2.png',
+        image: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
         description: 'descripcion 2',
-        state: '2',
-        status: 'Aprobado',
-        source: null,
+        source: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
         imageSelected: null,
-      },
+      }, */
     ],
     classes: {
       hideView: true,
@@ -123,6 +137,7 @@ const formRegistroEscuela = {
     tableCode: 'schoolDataConfigRegistroEscuela',
     modalCode: 'schoolDataConfigRegistroEscuela',
     isFromCustomTableActions: true,
+    makesNoRequest: true,
   },
 };
 const textsAndButtonsRegistroEscuela = {
@@ -145,6 +160,7 @@ const textsAndButtonsRegistroEscuela = {
     ],
     modalCode: 'schoolDataConfigRegistroEscuela',
     isFromCustomTableActions: true,
+    makesNoRequest: true,
   },
 };
 const modalRegistroEscuela = {

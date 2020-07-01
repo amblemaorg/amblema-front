@@ -2,10 +2,13 @@
   <ng2-smart-table
     [settings]="settings"
     [source]="source"
-    [class.d-none]="settings.hideImgContainer"
-    [class.hide-view]="settings.classes.hideView"
-    [class.hide-edit]="settings.classes.hideEdit"
-    [class.hide-delete]="settings.classes.hideDelete"
+    [ngClass]="{
+      'd-none': settings.hideImgContainer,
+      'hide-view': settings.classes.hideView,
+      'hide-edit': settings.classes.hideEdit,
+      'hide-delete': settings.classes.hideDelete,
+      'has-img-in-first-col': settings.isImageFirstCol
+    }"
     (custom)="onCustomActions($event)"
   ></ng2-smart-table>
 

@@ -77,11 +77,17 @@ export class PecaState {
   }
 
   @Selector()
+  static getPecaId(state: any) {
+    return state.content.id;
+  }
+
+  @Selector()
   static getPecaSchoolData(state: any) {
     return {
       school: {
         ...state.content.school,
         id: state.selectedProject.school.id,
+        pecaId: state.content.id,
       },
     };
   }

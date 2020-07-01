@@ -9,18 +9,18 @@
   @include mediabreak(large,landscape) { justify-content: space-between; }
 }
 @mixin form-flexings {
-  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
-  @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
-  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { max-width: 46.5%; flex: 0 0 46.5%; }
+  @include mediabreak(larger,landscape) { max-width: 47.25%; flex: 0 0 47.25%; }
+  @include mediabreak(larger,landscape,true,1680px) { max-width: 47.75%; flex: 0 0 47.75%; }
 } 
 @mixin form-flexings-one-row {
-  @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { flex: 0 0 38%; }
-  @include mediabreak(larger,landscape) { flex: 0 0 38%; }
-  @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 38%; }
+  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
+  @include mediabreak(large,landscape) { max-width: 38%; flex: 0 0 38%; }
+  @include mediabreak(larger,landscape) { max-width: 38%; flex: 0 0 38%; }
+  @include mediabreak(larger,landscape,true,1680px) { max-width: 38%; flex: 0 0 38%; }
 } 
 @mixin for-image-widths {  
   width: 8rem;
@@ -41,6 +41,7 @@
 
       h6, label {
         width: 100%;
+        color: $blue;
       }
 
       label {
@@ -68,7 +69,7 @@
 
             i {
               -webkit-transform: translateX(55%);
-              transform: translateX(55%);
+              transform: translateX(55%);              
             }
           }
 
@@ -92,6 +93,7 @@
             padding: 0;
             cursor: pointer;
             overflow: hidden;
+            font-style: normal;
 
             &:hover {
               color: $red;
@@ -159,8 +161,11 @@
             .input-container {
               width: 48%;
             }
-            .input-container:last-child {
+            .input-container:not(.expand-wide):last-child {
               width: 48%;
+            }
+            .expand-wide {
+              width: 100%;
             }
           }
 
@@ -249,13 +254,37 @@
             font-size: .9vw;
           }
         }
-
-        &.input-group {
-          .input-group-prepend {
-            width: 3.5rem;
+      }
+      .input-group {
+        .input-group-prepend {
+          width: 3.5rem;
+        }
+        .error-message {
+          width: 100%;
+        }
+        &.double {
+          input {
+            min-width: 50%;
           }
+
+          & > .form-control:not(:last-child) {
+            border-top-left-radius: 0.25rem !important;
+            border-bottom-left-radius: 0.25rem !important;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
           .error-message {
+            color: $red;
             width: 100%;
+            @include mediabreak(large,landscape) { width: 50%; } 
+
+            &.sibling-error-one {
+              @include mediabreak(large,landscape) { margin-right: auto; }
+            }
+            &.sibling-error-two {
+              @include mediabreak(large,landscape) { margin-left: auto; }
+            }
           }
         }
       }
@@ -299,20 +328,46 @@
           }
     
           &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
-            border: 2px solid $green;
+            &:focus.ng-dirty, &.ng-select-focused.ng-dirty {
+              border: 2px solid $green;
+            }            
+          }
+
+          &[readonly] {
+            border: 1px solid map-get($color_map, form-gray) !important;
           }
           
-          & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
+          &:not(.sibling-one,.sibling-two) ~ .error-message, 
+          &.sibling-one ~ .error-message.sibling-error-one,
+          &.sibling-two ~ .error-message.sibling-error-two,
+          &.ng-invalid.date-not-valid ~ .date-error-message {
             display: block;
           }
 
           &:not(.date-not-valid) ~ .date-error-message {
             display: none;
-          }          
+          }    
+          
+          &[readonly]:not(.sibling-one,.sibling-two) ~ .error-message, 
+          &[readonly].sibling-one ~ .error-message.sibling-error-one,
+          &[readonly].sibling-two ~ .error-message.sibling-error-two,
+          &[readonly] ~ .date-error-message {
+            display: none !important;
+          }
+        }
+
+        &[readonly] {
+          cursor: default;
+          &:not(.is-date-input-placeholder):focus {
+              border: 1px solid map-get($color_map, form-gray) !important;
+          }
         }
     
         &.ng-untouched {
-          & ~ .error-message, & ~ .date-error-message {
+          &:not(.sibling-one,.sibling-two) ~ .error-message, 
+          &.sibling-one ~ .error-message.sibling-error-one,
+          &.sibling-two ~ .error-message.sibling-error-two,
+          & ~ .date-error-message {
             display: none;
           }
         }
@@ -359,14 +414,22 @@
               }
           }
 
-          &.ng-touched.ng-pristine, 
-          &.ng-touched.ng-invalid {
-            .ng-select-container .ng-placeholder {
-                display: block;
+          &.ng-touched {
+            &.ng-pristine, 
+            &.ng-invalid {
+              .ng-select-container .ng-placeholder {
+                  display: block;
+              }
+            }
+            &.ng-invalid .ng-select-container .ng-placeholder {
+                display: block !important;
+            }
+            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+                display: none;
             }
           }
 
-          &.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
+          &.ng-dirty.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
               display: none;
           }
 
@@ -396,16 +459,19 @@
   
       .two-wrapper .form-group.full-width, 
       .form-group.full-width {
+        max-width: 100%;
         flex: 0 0 100%;
       }
 
       two-wrapper .form-group.full-width2, 
       .form-group.full-width2 {
+        max-width: 21.25%;
         flex: 0 0 21.25%;
       }
       @media (max-width:992px) {
         two-wrapper .form-group.full-width2, 
         .form-group.full-width2 {
+          max-width: 100%;
           flex: 0 0 100%;
         }
       }
