@@ -31,7 +31,6 @@ export class PecaComponent implements OnInit, OnDestroy {
     private store: Store,
     private iconLibraries: NbIconLibraries,
     private sidebarService: NbSidebarService,
-    private globals: GlobalService
   ) {
     this.iconLibraries.registerFontPack('amblemaicons', {
       iconClassPrefix: 'icon',
@@ -43,10 +42,7 @@ export class PecaComponent implements OnInit, OnDestroy {
     let activePecaId = null;
     this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
       ({ activePeca }) => {
-        //console.log(activePeca);
         activePecaId = activePeca.id;
-        this.globals.setPecaId(activePecaId ? activePecaId : null);
-
         activePecaId
           ? this.store.dispatch([new FetchPecaContent(activePecaId)])
           : console.error('No pudo obtenerse el PecaId activo');

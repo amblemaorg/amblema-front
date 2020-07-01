@@ -159,9 +159,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         // image: cf.controls["imageGroup"].get("imageSelected").value
         //   ? cf.controls["imageGroup"].get("imageSelected").value.name
         //   : null,
-        image: cf.controls["imageGroup"].get("imageSrc").value
-          ? cf.controls["imageGroup"].get("imageSrc").value
-          : null,
+        // image: cf.controls["imageGroup"].get("imageSrc").value
+        //   ? cf.controls["imageGroup"].get("imageSrc").value
+        //   : null,
         description: cf.controls["imageGroup"].get("imageDescription").value,
         // state: cf.controls["imageGroup"].get("imageStatus").value,
         // status: "En espera",

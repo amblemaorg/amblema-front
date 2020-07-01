@@ -83,6 +83,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
           );
           if (data.school.isInApproval)
             this.setCancelRequest(data.school.approvalHistory);
+          else this.unsetCancelRequest();
 
           this.userIdSubscription = this.userId$.subscribe(
             user_id => {
@@ -109,14 +110,17 @@ export class SchoolDataPageComponent extends PecaPageComponent
   updateDataToBlocks(updateTables: boolean) {
     this.setBlockData("schoolForm", this.schoolFormData);
     if (updateTables) {
-      this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
       this.setBlockData("teachersTable", this.teachersTableData);
-    }
+    } else this.sliderPicturesData["setData"] = false;
+    this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
   }
 
   setCancelRequest(approvalHistory: any[]) {
     if (approvalHistory.length > 0)
       this.requestIdToCancel = approvalHistory[approvalHistory.length - 1].id;
+  }
+  unsetCancelRequest() {
+    this.requestIdToCancel = null;
   }
 
   updateStaticFetchers() {
@@ -170,7 +174,11 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   setSchoolPicturesTableData(sliderData, _mapper?: Function) {
     if (_mapper) {
-      this.sliderPicturesData = _mapper(sliderData);
+      this.sliderPicturesData = {
+        setData: true,
+        data: _mapper(sliderData),
+        isEditable: this.requestIdToCancel ? false : true
+      };
     } else {
       this.sliderPicturesData = sliderData;
     }
