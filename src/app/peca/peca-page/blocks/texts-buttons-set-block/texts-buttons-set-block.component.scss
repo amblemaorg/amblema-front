@@ -39,12 +39,21 @@
                         }
                     }
                     .status {
-                        .rounded-circle {
-                            background: #ffff00;
+                        .rounded-circle {                            
                             width: 0.85rem;
                             height: 0.85rem;
                             display: inline-block;
                             vertical-align: middle;
+
+                            &.yellow {
+                                background: #ffff00;
+                            }
+                            &.green {
+                                background: #19ff00;
+                            }
+                            &.red {
+                                background: #fb6743;
+                            }
                         }
                         @media (max-width:768px){
                             margin: 5px 0px 15px !important;

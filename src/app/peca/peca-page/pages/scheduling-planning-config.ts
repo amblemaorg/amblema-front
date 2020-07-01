@@ -58,7 +58,7 @@ const propuestaAmblema = {
         },
         status: {
             text: 'Estatus',
-            subText: 'Pendiente'
+            subText: 1
         },
         subtitles: [
             {

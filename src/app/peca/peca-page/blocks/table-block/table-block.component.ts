@@ -36,7 +36,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   // source: LocalDataSource | any;
   source: LocalDataSource;
   isEdited: boolean;
-  isEditable: boolean = true;
+  isEditable: boolean = true; // to disable editing on table actions
 
   private subscription: Subscription = new Subscription();
 
@@ -71,9 +71,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == data.btnCode) {
+        if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
           this.isEditable = !data.setReadOnly;
-        }          
       })
     ); 
   }
@@ -105,6 +104,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
               this.isEdited = true;
           }).catch( (error) => {});                    
           break;
+
         case 'delete':
           this.source.find(data.data.dataToCompare).then((value) => {
             if (index != -1) this.settings['dataCopy'].splice(index, 1);
@@ -114,6 +114,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
               this.isEdited = true;
           }).catch( (error) => {});            
           break;
+
         case 'view':
           break;
 
@@ -140,7 +141,6 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   sendTableData() {
-    // console.log(data);
     //updating textAndButton button data
     if (this.settings.buttonCode) {
       if (this.settings.isFromImgContainer) {
@@ -156,7 +156,6 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             whichData: 'table',
             table: value,
           });
-          // console.log('datos del modal form',value);
         });
       }
     }
@@ -201,7 +200,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
 
     switch (e.action) {
       case 'VIEW':
-        if (this.isEditable) this.globals.ModalShower(obj);
+        this.globals.ModalShower(obj);
         break;
 
       case 'EDIT':
