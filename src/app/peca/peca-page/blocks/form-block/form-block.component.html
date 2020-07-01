@@ -62,6 +62,7 @@
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
               (change)="updateMuns(field === 'addressState' ? true : false)"
+              (change)="setFactoryTypeSelected(settings.formsContent[field].isFactoryType? $event : null)"
               [readonly]="
                 settings.formsContent[field].readonly || isReadOnly()
               "
