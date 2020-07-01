@@ -1,6 +1,7 @@
 export function profileDataToSponsorFormMapper(sponsorData) {
   const {
     id,
+    userType,
     name,
     companyRif,
     companyType,
@@ -20,6 +21,7 @@ export function profileDataToSponsorFormMapper(sponsorData) {
 
   return {
     id,
+    userType,
     letter: name,
     rif: companyRif,
     phone: companyPhone,
@@ -39,6 +41,7 @@ export function profileDataToSponsorFormMapper(sponsorData) {
 export function profileDataToCordinatorFormMapper(coordinatorData) {
   const {
     id,
+    userType,
     firstName,
     lastName,
     cardType,
@@ -59,6 +62,7 @@ export function profileDataToCordinatorFormMapper(coordinatorData) {
 
   return {
     id,
+    userType,
     letter: firstName,
     lastNameLetter: lastName,
     documentGroup: {
@@ -82,6 +86,7 @@ export function profileDataToCordinatorFormMapper(coordinatorData) {
 export function profileDataToSchoolFormMapper(schoolData) {
   const {
     id,
+    userType,
     code,
     name,
     image,
@@ -107,6 +112,7 @@ export function profileDataToSchoolFormMapper(schoolData) {
 
   return {
     id,
+    userType,
     name,
     code,
     email: email,

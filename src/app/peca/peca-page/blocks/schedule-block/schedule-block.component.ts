@@ -56,7 +56,7 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
 /*--------------------------------------------------------*/
 
   /*COnsumo Local*/
-  public data: object[] = [{
+  /*public data: object[] = [{
     Id: 1,
     Subject: 'Meeting',
     StartTime: new Date(2020, 5, 15),
