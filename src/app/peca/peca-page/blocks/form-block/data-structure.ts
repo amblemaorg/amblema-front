@@ -188,22 +188,22 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           ? cf.controls['imageGroup'].get('imageSelected').value
           : null,
              */
-      };
-      break;
-    case "agregarImagenEscuela": // for Agregar Fotos Escuela view
+          };
+          break;
+    case 'agregarImagenActividad': // for Agregar Fotos Actividad view
       data.data = {
-        image: cf.controls["imageGroup"].get("imageSelected").value
-          ? cf.controls["imageGroup"].get("imageSelected").value.name
+        image: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value.name 
           : null,
-        description: cf.controls["imageGroup"].get("imageDescription").value,
-        source: cf.controls["imageGroup"].get("imageSrc").value
-          ? cf.controls["imageGroup"].get("imageSrc").value
+        //description: cf.controls['imageGroup'].get('imageDescription').value,
+        source: cf.controls['imageGroup'].get('imageSrc').value
+          ? cf.controls['imageGroup'].get('imageSrc').value 
           : null,
-        imageSelected: cf.controls["imageGroup"].get("imageSelected").value
-          ? cf.controls["imageGroup"].get("imageSelected").value
-          : null
+        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
+          ? cf.controls['imageGroup'].get('imageSelected').value 
+          : null,
         /**
-             image: cf.controls['imageGroup'].get('imageSelected').value
+        image: cf.controls['imageGroup'].get('imageSelected').value
           ? cf.controls['imageGroup'].get('imageSelected').value.name
           : null,
         description: cf.controls['imageGroup'].get('imageDescription').value,

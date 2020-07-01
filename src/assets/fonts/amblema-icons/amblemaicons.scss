@@ -1,16 +1,6 @@
-/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-/*
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'amblemaicons';
-    src: url('../font/amblemaicons.svg?46373356#amblemaicons') format('svg');
-  }
-}
-*/
-
 ::ng-deep {
-  [class^="icon-"]:before, [class*=" icon-"]:before {
+  [class^="icon-"]:before,
+  [class*=" icon-"]:before {
     font-family: "amblemaicons";
     font-style: normal;
     font-weight: normal;
@@ -18,7 +8,7 @@
     display: inline-block;
     text-decoration: inherit;
     width: 1em;
-    margin-right: .2em;
+    margin-right: 0.2em;
     text-align: center;
     /* opacity: .8; */
 
@@ -31,7 +21,7 @@
 
     /* Animation center compensation - margins should be symmetric */
     /* remove if not needed */
-    margin-left: .2em;
+    margin-left: 0.2em;
 
     /* you can be more comfortable with increased icons size */
     /* font-size: 120%; */
@@ -51,23 +41,75 @@
     font-weight: bold;
   }
 
-  .icon-one:before { content: '1'; }
-  .icon-two:before { content: '2'; }
-  .icon-three:before { content: '3'; }
-  .icon-folder-open:before { content: '\e800'; }
-  .icon-amblemaicons:before { content: '\e801'; }
-  .icon-calendar:before { content: '\e802'; }
-  .icon-trash-empty:before { content: '\e803'; }
-  .icon-pencil:before { content: '\e804'; }
-  .icon-eye:before { content: '\e805'; }
-  .icon-actividades:before { content: '\e806'; }
-  .icon-amblemoneda:before { content: '\e807'; }
-  .icon-anuario:before { content: '\e808'; }
-  .icon-convencion:before { content: '\e809'; }
-  .icon-diagnostico:before { content: '\e80a'; }
-  .icon-venezuela:before { content: '\e80b'; }
-  .icon-taller-inicial:before { content: '\e80c'; }
-  .icon-planificacion:before { content: '\e80d'; }
-  .icon-list-numbered:before { content: '\f0cb'; }
-  .icon-trash:before { content: '\f1f8'; }
+  .icon-one:before {
+    content: "1";
+  }
+  .icon-two:before {
+    content: "2";
+  }
+  .icon-three:before {
+    content: "3";
+  }
+
+  .icon-trash-empty:before {
+    content: "\f014";
+  }
+  .icon-camera:before {
+    content: "\f030";
+  }
+  .icon-pencil:before {
+    content: "\f040";
+  }
+  .icon-eye:before {
+    content: "\f06e";
+  }
+  .icon-calendar:before {
+    content: "\f073";
+  }
+  .icon-folder-open:before {
+    content: "\f07c";
+  }
+  .icon-bars:before {
+    content: "\f0c9";
+  }
+  .icon-navicon:before {
+    content: "\f0c9";
+  }
+  .icon-reorder:before {
+    content: "\f0c9";
+  }
+  .icon-list-numbered:before {
+    content: "\f0cb";
+  }
+  .icon-trash:before {
+    content: "\f1f8";
+  }
+  .icon-amblemoneda:before {
+    content: "\e900";
+  }
+  .icon-anuario:before {
+    content: "\e901";
+  }
+  .icon-convencion:before {
+    content: "\e902";
+  }
+  .icon-diagnostico:before {
+    content: "\e903";
+  }
+  .icon-icn-docentes:before {
+    content: "\e904";
+  }
+  .icon-planificacion:before {
+    content: "\e905";
+  }
+  .icon-taller-inicial:before {
+    content: "\e906";
+  }
+  .icon-venezuela:before {
+    content: "\e907";
+
+  }
+  .icon-actividades:before {
+    content: "\e908";
+  }
 }

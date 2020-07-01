@@ -342,7 +342,7 @@ const modalMathDiagnosticTable = {
 
 export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
-    title: "Diagnóstico inicial"
+    title: "Diagnóstico"
   },
   blocks: [
     {

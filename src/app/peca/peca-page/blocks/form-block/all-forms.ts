@@ -1655,18 +1655,18 @@ export const formResultadoEstudianteModal = {
     ...controlProps.normalTextAndRequired
   }
 };
-// FOTOS DE LA ESCUELA
+// FOTOS DE LA ACTIVIDAD
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
-export const tablaImagenesEscuelaModal = {
+export const tablaImagenesActividadModal = {
   imageGroup: {
     type: "image",
     fields: {
-      imageDescription: {
-        label: "Descripción",
-        placeholder: "Descripción",
+      /*imageDescription: {
+        label: 'Descripción',
+        placeholder: 'Descripción',
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
-    }
-  }
+        ...controlProps.normalTextAndRequired,
+      },*/
+    },
+  },
 };

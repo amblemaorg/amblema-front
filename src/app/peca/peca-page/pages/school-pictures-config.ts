@@ -1,6 +1,6 @@
-import { tablaImagenesEscuelaModal } from '../blocks/form-block/all-forms'
+import { tablaImagenesActividadModal } from '../blocks/form-block/all-forms'
 
-const selectEstatus = {
+const selectEstatusActivity = {
     component: 'textsbuttons',
     settings: {
         dateOrtext: {
@@ -10,19 +10,20 @@ const selectEstatus = {
         {
             placeholder: 'Pendiente',
             lista: [
-                { id: 1, name: 'Activo' },
-                { id: 2, name: 'En proceso' },
+                { id: 1, name: 'Pendiente' },
+                { id: 2, name: 'Aprobado' },
+                { id: 3, name: 'Rechazado' },
             ]
         },
         btnGeneral:
         {
             addToTable: true,
-            name: 'Adjuntar foto',           
+            name: 'Adjuntar foto',
         },
-        modalCode: 'dataTablaImagenesEscuela',
+        modalCode: 'dataTablaImagenesActividad',
     }
 }
-const botonAprobacion = {
+const botonAprobacionActivity = {
     component: 'textsbuttons',
     settings: {
         action: [
@@ -32,37 +33,32 @@ const botonAprobacion = {
             }
         ],
         receivesFromTableOrForm: 'table',
-        buttonCode: 'dataTablaImagenesEscuela',
+        buttonCode: 'dataTablaImagenesActividad',
     }
 }
 
-const tablaImagenesEscuela = {
+const tablaImagenesActivity = {
     component: 'table',
     settings: {
         columns: {
             image: {
                 title: "Imagen",
             },
-            description: {
-                title: "Descripcion"
-            },
         },
         isFromImgContainer: true,
-        modalCode: 'dataTablaImagenesEscuela',
-        buttonCode: 'dataTablaImagenesEscuela',
-        tableCode: 'dataTablaImagenesEscuela',
-        dataTablaImagenesEscuela: [
+        modalCode: 'dataTablaImagenesActividad',
+        buttonCode: 'dataTablaImagenesActividad',
+        tableCode: 'dataTablaImagenesActividad',
+        dataTablaImagenesActividad: [
             {
                 id: '1efwef',
                 image: 'imagen',
-                description: 'loremp',
                 source: null,
                 imageSelected: null,
             },
             {
                 id: '2efwef',
                 image: 'imagen',
-                description: 'loremp',
                 source: null,
                 imageSelected: null,
             },
@@ -75,116 +71,71 @@ const tablaImagenesEscuela = {
     }
 }
 
-
-const selectStatusActivity = { component: 'textsbuttons', settings: { ...selectEstatus.settings } };
-selectStatusActivity.settings.modalCode = 'dataTablaImagenesActividad';
-const botonAprobacionActivity = { component: 'textsbuttons', settings: { ...botonAprobacion.settings } };
-botonAprobacionActivity.settings.buttonCode = 'dataTablaImagenesActividad';
-const tablaImagenesActividad = { component: 'table', settings: { ...tablaImagenesEscuela.settings } };
-['modalCode','buttonCode','tableCode'].map(el => {
-    tablaImagenesActividad.settings[el] = 'dataTablaImagenesActividad';
-});
-tablaImagenesActividad.settings['dataTablaImagenesActividad'] = [ ...tablaImagenesActividad.settings['dataTablaImagenesEscuela'] ];
-tablaImagenesActividad.settings['dataTablaImagenesEscuela'] = null;
-
-
-//* MODAL FOTOS DE LA ESCUELA ----------------------------------
-const formTablaImagenesEscuela = {
+//* MODAL FOTOS DE LA Activiadad ----------------------------------
+const formTablaImagenesActivity = {
     component: 'form',
     viewMode: 'both',
     settings: {
-      formsContent: tablaImagenesEscuelaModal,
-      buttons: ['guardar'],
-      formType: 'agregarImagenEscuela',
-      tableCode: 'dataTablaImagenesEscuela',
-      modalCode: 'dataTablaImagenesEscuela',
-      isFromCustomTableActions: true,
+        formsContent: tablaImagenesActividadModal,
+        buttons: ['guardar'],
+        formType: 'agregarImagenActividad',
+        tableCode: 'dataTablaImagenesActividad',
+        modalCode: 'dataTablaImagenesActividad',
+        isFromCustomTableActions: true,
     }
 }
-const textsAndButtonsTablaImagenesEscuela = {
+const textsAndButtonsTablaImagenesActivity = {
     component: 'textsbuttons',
     settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'dataTablaImagenesEscuela',
-      isFromCustomTableActions: true,
+        subtitles: [{
+            text: '¿Desea eliminar este ítem?',
+        }],
+        action: [
+            {
+                type: 1,
+                name: 'Si',
+            },
+            {
+                type: 2,
+                name: 'No',
+            },
+        ],
+        modalCode: 'dataTablaImagenesActividad',
+        isFromCustomTableActions: true,
     }
 }
-const modalTablaImagenesEscuela = {
+const modalTablaImagenesActivity = {
     component: 'modal',
     settings: {
-      modalCode: 'dataTablaImagenesEscuela',
-      isFromImgContainer: true,
-      items: [
-        {        
-          childBlocks: [
-            { ...formTablaImagenesEscuela },
-            { ...textsAndButtonsTablaImagenesEscuela },
-          ]
-        }
-      ]
-    }
-}
-
-const formTablaImagenesActividad = { component: 'form', viewMode: 'both', settings: { ...formTablaImagenesEscuela.settings } };
-['modalCode','tableCode'].map(el => {
-    formTablaImagenesActividad.settings[el] = 'dataTablaImagenesActividad';
-});
-const textsAndButtonsTablaImagenesActividad = { component: 'textsbuttons', settings: { ...textsAndButtonsTablaImagenesEscuela.settings } };
-textsAndButtonsTablaImagenesActividad.settings.modalCode = 'dataTablaImagenesActividad';
-const modalTablaImagenesActividad = {
-    component: 'modal',
-    settings: {
-      modalCode: 'dataTablaImagenesActividad',
-      isFromImgContainer: true,
-      items: [
-        {        
-          childBlocks: [
-            { ...formTablaImagenesActividad },
-            { ...textsAndButtonsTablaImagenesActividad },
-          ]
-        }
-      ]
+        modalCode: 'dataTablaImagenesActividad',
+        isFromImgContainer: true,
+        items: [
+            {
+                childBlocks: [
+                    { ...formTablaImagenesActivity },
+                    { ...textsAndButtonsTablaImagenesActivity },
+                ]
+            }
+        ]
     }
 }
 //* ------------------------------------------
 
 export const SCHOOL_PICTURES_CONFIG = {
     header: {
-        title: "Fotos de la escuela"
+        title: "Fotos de las actividades"
     },
     blocks: [
         {
-            component: 'tabs',
+            component: 'profiles',
             settings: {
                 items: [
                     {
-                        title: "Escuela",
                         childBlocks: [
-                            { ...selectEstatus },
-                            { ...tablaImagenesEscuela },
-                            { ...botonAprobacion },
-                            { ...modalTablaImagenesEscuela },
-                        ]
-                    },
-                    {
-                        title: "Actividades",
-                        childBlocks: [
-                            { ...selectStatusActivity },
-                            { ...tablaImagenesActividad },
+                            { ...selectEstatusActivity },
+                            { ...tablaImagenesActivity },
                             { ...botonAprobacionActivity },
-                            { ...modalTablaImagenesActividad },
+                            { ...modalTablaImagenesActivity },
                         ]
                     }
                 ],
