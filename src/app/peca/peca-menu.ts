@@ -7,7 +7,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     link: 'amblemoneda-page',
   },
   olympics: {
-    title: 'Olimpiadas de matemáticas',
+    title: 'Olimpíadas de matemáticas',
     icon: 'diagnostico',
     link: 'olimpiadas-matematicas',
   },
@@ -49,7 +49,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
         link: 'datos-escuela',
       },
       {
-        title: 'Diagnóstico inicial',
+        title: 'Diagnóstico',
         icon: 'diagnostico',
         link: 'diagnostico-inicial',
       },
@@ -60,7 +60,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     icon: 'two',
     children: [
       {
-        title: 'Diagnóstico inicial',
+        title: 'Diagnóstico',
         icon: 'diagnostico',
         link: 'diagnostico-inicial',
       },
@@ -71,7 +71,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     icon: 'three',
     children: [
       {
-        title: 'Diagnóstico inicial',
+        title: 'Diagnóstico',
         icon: 'diagnostico',
         link: 'diagnostico-inicial',
       },
@@ -103,13 +103,13 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     link: 'testimonio-docentes',
   },
   {
-    title: 'Fotos de la escuela y actividades',
+    title: 'Fotos de las actividades',
     icon: 'anuario',
     link: 'imagenes-escuela',
   },
   {
     title: 'Salir',
-    icon: '',
+    icon: 'trash-empty',
     link: '/auth/logout',
   },
 ];
