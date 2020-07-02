@@ -35,6 +35,10 @@ export class GeneralStepsComponent implements OnInit {
 
   isBrowser;
   glbls:any;
+
+  showThisVideo: boolean;  
+  timesVideoSourceCalled:number = 0;
+
   constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService, 
     private sanitizer: DomSanitizer, private stepsService: StepsService, private globals: GlobalService) {
       this.isBrowser = isPlatformBrowser(platformId);
@@ -85,8 +89,16 @@ export class GeneralStepsComponent implements OnInit {
     else return true;
   }
 
-  getVideo(url) {
-    return this.embedService.embed(url);
+  resetTimesLoadedVideo() {
+    this.timesVideoSourceCalled = 0;
+  }
+
+  getVideo(url) {  
+    if (this.showThisVideo && this.timesVideoSourceCalled < 10 ) {
+      const video = this.embedService.embed(url);
+      if (video) this.timesVideoSourceCalled++;
+      return video; 
+    }    
   }
 
   sanitizeFile(url) {
@@ -287,6 +299,17 @@ export class GeneralStepsComponent implements OnInit {
 
   goToMods() {
     this.stepsService.goToModules();
+  }
+
+  // For videos  
+  videoShower(step:Step) {
+    this.showThisVideo = false;
+    if (step.hasVideo) {
+      setTimeout(() => {
+        this.showThisVideo = true;
+        this.timesVideoSourceCalled = 0;
+      });
+    }
   }
 
 }
