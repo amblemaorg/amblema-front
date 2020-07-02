@@ -523,6 +523,16 @@
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
     </div>
+    <!-- MAPA ---------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <ng-container *ngIf="glbls.isBrowser && showMap">
+      <div class="map-container">
+        <hr/>
+        <label>Marca la ubicación exacta de la escuela</label>
+        <div #schoolAddressMap id="school-address-map"></div>
+        <hr/>
+      </div>      
+    </ng-container>    
+    <!-- END-MAPA ------------------------------------------------------------------------------------------------------------------------------------------------ -->
     
     <h6>Datos del director o directora</h6>
     <div class="form-group">
