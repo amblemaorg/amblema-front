@@ -33,6 +33,7 @@ export class PecaComponent implements OnInit, OnDestroy {
   activePecaSubscription: Subscription;
   activePecaContentSubscription: Subscription;
   globalsSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
     private store: Store,
@@ -73,7 +74,7 @@ export class PecaComponent implements OnInit, OnDestroy {
         error => console.error(error)
       );
 
-    this.userInfo$.subscribe(res => {
+    this.userSubscription = this.userInfo$.subscribe(res => {
       console.log(res);
     });
   }
@@ -110,6 +111,7 @@ export class PecaComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.activePecaSubscription.unsubscribe();
     this.activePecaContentSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   toggle() {

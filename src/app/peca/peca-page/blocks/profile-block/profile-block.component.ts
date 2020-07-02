@@ -14,7 +14,7 @@ import {
 import { PageBlockFactory } from "../page-block-factory";
 import { GlobalService } from "src/app/services/global.service";
 import { Select } from "@ngxs/store";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
 
 @Component({
@@ -37,6 +37,7 @@ export class ProfileBlockComponent
   url = "";
 
   @Select(PecaState.getUser) userInfo$: Observable<any>;
+  userSubscription: Subscription;
 
   uploadImageCaller(imgBtnContainer) {
     imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
@@ -61,7 +62,7 @@ export class ProfileBlockComponent
   }
 
   ngOnInit(): void {
-    this.userInfo$.subscribe(res => {
+    this.userSubscription = this.userInfo$.subscribe(res => {
       console.log(res);
     });
   }
@@ -103,5 +104,8 @@ export class ProfileBlockComponent
       });
     });
     this.globals.createdBlockInstances(blockInstances);
+  }
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
   }
 }

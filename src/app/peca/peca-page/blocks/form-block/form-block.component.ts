@@ -885,7 +885,7 @@ export class FormBlockComponent
   setFactoryTypeSelected() {
     if (this.settings.data["companyType"] == 5) {
       //hacer que el campo otro tipo de empresa, sea requerido
-      this.settings.formsContent;
+      console.log("si es otro tipo");
     }
   }
 }
