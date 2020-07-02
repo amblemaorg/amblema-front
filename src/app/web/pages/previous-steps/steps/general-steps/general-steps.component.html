@@ -1,7 +1,13 @@
 <div [id]="'steps-accordion'+mode" class="steps-accordion">
     <div class="card" *ngFor="let step of steps; index as i">
       <div class="card-header">
-        <a class="card-link" data-toggle="collapse" [href]="'#step'+i+'-'+mode" [class.active-arrow]="getCollapsed(i,mode)">
+        <a 
+          class="card-link" 
+          data-toggle="collapse" 
+          [href]="'#step'+i+'-'+mode" 
+          [class.active-arrow]="getCollapsed(i,mode)"
+          (click)="videoShower(step)"
+        >
           <div class="texts"><h6 class="font-weight-bold">{{ step.name }}</h6> <div class="bar mx-3"></div> <h6 class="desktop-only">Estatus: {{ getStatusName(step.status) }}</h6></div>
           <div class="arrow"><fa-icon [icon]="arrow"></fa-icon></div>
         </a>
@@ -31,7 +37,7 @@
                 <div class="field-invalid">¡Debe tener una fecha valida, mayor a la de hoy!</div>
               </div>
             </div>   
-            <div *ngIf="step.hasVideo" class="video-container">
+            <div *ngIf="step.hasVideo && showThisVideo" class="video-container">
               <div class="video" [innerHTML]="getVideo(step.video.url)"></div>              
             </div>   
                                     

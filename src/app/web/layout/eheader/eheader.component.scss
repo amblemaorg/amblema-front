@@ -75,6 +75,10 @@ p {
                         background-color: transparent;
                         color: $blue;
                     }
+
+                    &:hover {
+                        color: $green;
+                    }
                 }
             }
         }
