@@ -1,6 +1,6 @@
-@import "scss/responsive";
-@import "scss/variables";
-@import "scss/elements/headings";
+@import 'scss/responsive';
+@import 'scss/variables';
+@import 'scss/elements/headings';
 
 web-schools-map {
   display: block;
@@ -122,9 +122,9 @@ section.school-details {
   }
 }
 
-@import "scss/animations";
+@import 'scss/animations';
 .symbols-container {
-  background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
+  background-image: url('../../../../../assets/images/cover-blue-simbolos.png');
   background-repeat: no-repeat;
   background-size: 240vw;
   background-position-y: 102.5%;
@@ -189,7 +189,7 @@ section.school-details {
         .owl-prev {
           position: absolute;
           bottom: 0;
-          top: 0;
+          top: 0.3vw;
 
           &::before {
             display: flex;
@@ -259,7 +259,7 @@ section.charts {
     }
   }
 
-  @import "scss/animations";
+  @import 'scss/animations';
   .chart-testimonial {
     position: relative;
     margin: 5vw 0;
@@ -671,7 +671,7 @@ section.activities {
 }
 
 section.teachers {
-  background-image: url("../../../../../assets/images/background-trees-movil.png");
+  background-image: url('../../../../../assets/images/background-trees-movil.png');
   background-color: $white;
   background-size: cover;
   background-repeat: no-repeat;
@@ -682,12 +682,12 @@ section.teachers {
   z-index: 10;
 
   @include breakpoint(small, landscape) {
-    background-image: url("../../../../../assets/images/background-trees.png");
+    background-image: url('../../../../../assets/images/background-trees.png');
     min-height: 56vw;
   }
 
   @include breakpoint(medium) {
-    background-image: url("../../../../../assets/images/background-trees.png");
+    background-image: url('../../../../../assets/images/background-trees.png');
     min-height: 56vw;
   }
 

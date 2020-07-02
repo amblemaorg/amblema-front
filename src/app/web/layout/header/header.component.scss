@@ -28,7 +28,7 @@ header {
   @include breakpoint(large) {
     @include columns(10);
     margin: 0 calc((100% / 12) * 1);
-    padding: .5vw;
+    padding: 0.5vw;
     position: absolute;
     top: 5vw;
   }
@@ -62,7 +62,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 3%;
+    padding: 0 2.5%;
     width: 15%;
 
     img.profile {

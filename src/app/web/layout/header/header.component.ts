@@ -5,28 +5,24 @@ import { SvgIconRegistryService } from 'angular-svg-icon';
 @Component({
   selector: 'web-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   slideoutMenu;
-  constructor(
-    private iconReg: SvgIconRegistryService
-  ) {
+  constructor(private iconReg: SvgIconRegistryService) {
     this.iconReg.loadSvg('./assets/icons/menu.svg', 'menu-icon');
+    this.iconReg.loadSvg('./assets/icons/user.svg', 'user-icon');
   }
 
   ngOnInit() {
     // Slideout only when the device is mobile and portrait
-    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
-      this.createMobileMenu();
+    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight) this.createMobileMenu();
   }
 
   @HostListener('window:resize', [''])
   onResize() {
     this.destroyMobileMenu();
-    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
-      this.createMobileMenu();
+    if (window.innerWidth < 768 && window.innerWidth < window.innerHeight) this.createMobileMenu();
   }
 
   createMobileMenu() {
@@ -34,7 +30,7 @@ export class HeaderComponent implements OnInit {
       panel: document.getElementById('web-main'),
       menu: document.querySelector('web-menu.mobile-menu'),
       padding: 256,
-      tolerance: 70
+      tolerance: 70,
     });
   }
 
@@ -45,5 +41,4 @@ export class HeaderComponent implements OnInit {
   onMenuClick() {
     this.slideoutMenu && this.slideoutMenu.toggle();
   }
-
 }
