@@ -883,7 +883,7 @@ export class FormBlockComponent
   }
   //To do required the "otro tipo de empresa" field in the profile component when the value of the field "tipo de empresa" is "otro"
   setFactoryTypeSelected() {
-    if (this.settings.data["companyType"] == 5) {
+    if (this.settings.data["companyType"] == '0') {
       //hacer que el campo otro tipo de empresa, sea requerido
       console.log("si es otro tipo");
     }

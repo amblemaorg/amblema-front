@@ -1114,7 +1114,7 @@ export const formPadrino = {
       { id: "2", name: "Tienda" },
       { id: "3", name: "Negocio Personal" },
       { id: "4", name: "Hacienda" },
-      { id: "5", name: "Otro" }
+      { id: "0", name: "Otro" }
     ],
     isFactoryType: true
   },
