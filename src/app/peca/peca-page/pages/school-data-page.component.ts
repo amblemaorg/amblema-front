@@ -130,7 +130,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   setSchoolStatus(school) { // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    /* this.schoolDataStatus = school.isInApproval 
+    this.schoolDataStatus = school.isInApproval 
       ? 1 : (
         school.approvalHistory.length > 0 
         ? (
@@ -140,8 +140,8 @@ export class SchoolDataPageComponent extends PecaPageComponent
             : 0
           ) 
         : 0
-      ) */
-    this.schoolDataStatus = school.isInApproval ? 1 : 0;
+      )
+    // this.schoolDataStatus = school.isInApproval ? 1 : 0;
   }
 
   updateStaticFetchers() {
