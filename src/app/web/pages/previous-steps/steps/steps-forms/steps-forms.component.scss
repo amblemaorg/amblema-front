@@ -221,4 +221,13 @@ form {
             color: map-get($color_map, blue) !important;
         }
     }
+
+    .map-container {
+        width: 100%;
+        
+        #school-address-map {            
+            height: 45vh;
+            min-height: 20rem;
+        }
+    }    
 }
