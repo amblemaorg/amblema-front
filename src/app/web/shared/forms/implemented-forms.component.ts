@@ -25,6 +25,7 @@ import { isNullOrUndefined } from "util";
         *ngSwitchCase="'schoolForm'"
         class="school-form-wizard"
         [formsContent]="schoolStepItems"
+        [isSchoolForm]="true"
         (submit)="submitContactForm('school', $event)"
       >
       </web-form-wizard>
@@ -148,6 +149,17 @@ export class ImplementedFormsComponent implements OnInit {
         },
       },
     },
+    coordinate: {
+      label: "Marca la ubicación exacta de la escuela",
+      button: "Abrir mapa",
+      header: "Selecciona la ubicación de la escuela",
+      type: "googlemap",
+      validations: { 
+        required: true, 
+        pattern: null 
+      },
+      messages: {},
+    }
   };
 
   schoolStep2 = {
