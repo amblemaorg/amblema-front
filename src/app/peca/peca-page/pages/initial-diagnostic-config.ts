@@ -114,6 +114,9 @@ const readingDiagnosticTable = {
       section: {
         title: 'Sección'
       },
+      date: {
+        title: 'Fecha'
+      },
       result: {
         title: 'Resultado de lectura '
       },
@@ -131,6 +134,7 @@ const readingDiagnosticTable = {
         gender: '2',
         grade: '4',
         section: 'B',
+        date: '20/10/2020',
         result: '20 palabras correctas/min',
         index: 1,
       },
@@ -141,6 +145,7 @@ const readingDiagnosticTable = {
         gender: '2',
         grade: '5',
         section: 'A',
+        date: '20/05/2020',
         result: '20 palabras correctas/min',
         index: 2,
       },
@@ -243,6 +248,9 @@ const mathDiagnosticTable = {
       section: {
         title: 'Sección'
       },
+      date: {
+        title: 'Fecha'
+      },
       resultMul: {
         title: 'Resultado de multiplicación'
       },
@@ -266,6 +274,7 @@ const mathDiagnosticTable = {
         gender: '2',
         grade: '5',
         section: 'B',
+        date: '27/06/2020',
         resultMul: 40,
         resultLog: 50,
         indexMul: 100,
@@ -278,6 +287,7 @@ const mathDiagnosticTable = {
         gender: '1',
         grade: '4',
         section: 'A',
+        date: '27/06/2020',
         resultMul: 60,
         resultLog: 80,
         indexMul: 100,

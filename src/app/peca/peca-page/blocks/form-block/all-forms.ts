@@ -1423,6 +1423,12 @@ export const formLecturaModal = {
       { id: "2", name: "Masculino" }
     ]
   },
+  date: {
+    label: "Fecha del diagnostico",
+    placeholder: "Fecha del diagnostico",
+    fullwidth: false,
+    ...controlProps.dateAndRequired
+  },
   result: {
     label: "Resultado",
     placeholder: "Resultado",
@@ -1478,6 +1484,12 @@ export const formMatematicaModal = {
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
+  },
+  date: {
+    label: "Fecha del diagnostico",
+    placeholder: "Fecha del diagnostico",
+    fullwidth: false,
+    ...controlProps.dateAndRequired
   },
   resultMul: {
     label: "Resultado de multiplicacion",
