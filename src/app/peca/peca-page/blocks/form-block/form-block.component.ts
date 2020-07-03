@@ -592,8 +592,26 @@ export class FormBlockComponent
         this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
-
       this.fillMunicipalities(currStateId, munId);
+    }
+  }
+
+  requiredOtherCompany(e: any) {
+    if (e) {
+      if (e.id == "0") {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(
+            this.componentForm.get("companyOtherType").value,
+            Validators.required
+          )
+        );
+      } else {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(this.componentForm.get("companyOtherType").value)
+        );
+      }
     }
   }
 
@@ -880,12 +898,5 @@ export class FormBlockComponent
   }
   disableSaveAndCancelButtons() {
     this.isEditing = false;
-  }
-  //To do required the "otro tipo de empresa" field in the profile component when the value of the field "tipo de empresa" is "otro"
-  setFactoryTypeSelected() {
-    if (this.settings.data["companyType"] == '0') {
-      //hacer que el campo otro tipo de empresa, sea requerido
-      console.log("si es otro tipo");
-    }
   }
 }
