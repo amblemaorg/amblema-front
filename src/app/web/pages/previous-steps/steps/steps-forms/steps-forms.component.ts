@@ -225,9 +225,10 @@ export class StepsFormsComponent implements OnInit {
     if (!disabled) {
       google.maps.event.addListener(this.map, "click", (e) => {
         this.loadAllMarkers({
-          name: this.schoolForm.get('name').value.length > 0 
-            ? this.schoolForm.get('name').value 
-            : "Escuela",
+          name: this.schoolForm.get('name').value 
+            && this.schoolForm.get('name').value.length > 0 
+              ? this.schoolForm.get('name').value 
+              : "Escuela",
           coordinate: {
             latitude: e.latLng.lat(),
             longitude: e.latLng.lng()
