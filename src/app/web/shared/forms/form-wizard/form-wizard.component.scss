@@ -182,6 +182,75 @@
         width: 40%;
       }
     }
+
+    &.googlemap {
+      .google-map-container {
+        width: 100%;
+        display: flex;
+
+        label {
+          max-width: unset;
+          flex: 1;
+          margin-right: 0;
+        }
+
+        .google-map-opener {
+          background: $white;
+          border: 2px solid $blue;
+          padding: 0.4rem 1.25rem;
+          color: $blue;
+          border-radius: 0.45rem;   
+
+          &:focus {
+            outline: none;
+          }
+          &:hover {
+            background: $blue;
+            border: 2px solid $white;
+            color: $white;
+          }
+        }
+
+        #google-map-modal {
+          .modal-content {
+            border: none;
+
+            .modal-header {
+              border: none;
+              
+              strong {
+                color: $blue;
+                position: relative;
+                bottom: -0.5rem;                
+              }
+              .close {
+                color: $blue;
+                &:focus {
+                  outline: none;
+                }
+              }
+            }
+
+            .modal-body {
+              #google-map {
+                min-height: 20rem;
+                height: 45vh;
+              }
+            }
+          }
+        }
+
+        .google-map-opener, #google-map-modal strong {
+          font-size: 4vw;
+          @include breakpoint(medium) {
+            font-size: 2vw;
+          }
+          @include breakpoint(large, landscape) {
+            font-size: 1vw;
+          }
+        }        
+      }
+    }
   }
 
   input,

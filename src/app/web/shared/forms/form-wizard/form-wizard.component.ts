@@ -1,4 +1,16 @@
-import { Component, OnInit, EventEmitter, Output, Input, OnDestroy } from "@angular/core";
+import { 
+  Component, 
+  OnInit, 
+  EventEmitter, 
+  Output, 
+  Input, 
+  OnDestroy, 
+  PLATFORM_ID, 
+  Inject,
+  ViewChild,
+  ElementRef 
+} from "@angular/core";
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { ToastrService } from "ngx-toastr";
@@ -12,7 +24,11 @@ import { Subscription } from "rxjs";
   styleUrls: ["./form-wizard.component.scss"],
 })
 export class FormWizardComponent implements OnInit, OnDestroy {
+  @ViewChild("googleMap", { read: ElementRef, static: false })
+  googleMap: ElementRef;
+
   @Input() formsContent: any;
+  @Input() isSchoolForm: boolean = false;
   @Input() recaptchaAction: string = "form_wizard";
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   stepItems: Array<any>;
@@ -24,12 +40,40 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   formWizard: Array<FormGroup>;
   isSubmitting: boolean = false;
   recaptchaSubscription: Subscription;
+  isBrowser;
+
+  // MAPA------------------------------------------------------
+  map: any;
+  lat = 8.60831668; // Venezuela's middle latitude
+  lng = -66.029011; // Venezuela's middle longitude
+  coordinates: any;
+
+  mapOptions: any;
+  currentMarker: any;
+  // END-MAPA--------------------------------------------------
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private recaptchaService: ReCaptchaV3Service
-  ) {}
+    private recaptchaService: ReCaptchaV3Service,
+    @Inject(PLATFORM_ID) private platformId,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+
+    if (this.isBrowser) {
+      this.map = null;
+      this.currentMarker = null;
+
+      if ( !isNullOrUndefined(google) ) {
+        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+        const mapOps: google.maps.MapOptions = {
+          center: this.coordinates,
+          zoom: 7,      
+        };
+        this.mapOptions = mapOps;
+      }      
+    }
+  }
 
   ngOnInit() {
     this.activeStepIndex = 0;
@@ -41,16 +85,84 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       const index = this.appendStepContent(this.stepItems[i]["data"]);
       const formGroupBuilt = this.buildFormGroupStep(this.stepsContent[index]);
       this.formWizard.push(formGroupBuilt);
-    });
+    });    
     this.lastStepIndex = this.getLastStepIndex();
     this.subscribeDependentFields();
+
+    // MAP -----------------------------------------------------------------
+    if (this.isBrowser && this.isSchoolForm) {
+      if ( !isNullOrUndefined(google) ) {
+        setTimeout(() => {
+          if (this.googleMap)
+            this.mapInitializer();
+        });  
+      }             
+    }
+    //----------------------------------------------------------------------
+
+    if (this.isSchoolForm) {
+      this.formWizard[0].get('name').statusChanges.subscribe( res => {
+        if (
+          this.currentMarker 
+          && this.formWizard[0].get('name').value 
+          && this.formWizard[0].get('name').value.length > 0
+        ) {
+          this.loadAllMarkers({
+            name: this.formWizard[0].get('name').value,
+            coordinate: this.formWizard[0].get('coordinate').value
+          });
+        }
+      });
+    }
   }
 
   public ngOnDestroy() {
+    if (this.currentMarker) this.currentMarker.setMap(null);
+    this.currentMarker = null;
+    this.map = null;
     if (this.recaptchaSubscription) {
       this.recaptchaSubscription.unsubscribe();
     }
   }
+
+  // MAP CONFS -------------------------------------------------------------------------------------------
+  mapInitializer() {
+    this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
+
+    google.maps.event.addListener(this.map, "click", (e) => {
+      this.loadAllMarkers({
+        name: this.formWizard[0].get('name').value 
+          && this.formWizard[0].get('name').value.length > 0 
+            ? this.formWizard[0].get('name').value 
+            : "Escuela",
+        coordinate: {
+          latitude: e.latLng.lat(),
+          longitude: e.latLng.lng()
+        }
+      });
+    });
+  }
+
+  loadAllMarkers(data) {
+    if (this.currentMarker) {
+      this.currentMarker.setMap(null);
+      this.currentMarker = null;
+    }
+
+    this.currentMarker = new google.maps.Marker({
+      map: this.map,
+      position: new google.maps.LatLng(data.coordinate.latitude, data.coordinate.longitude),
+      label: data.name.substring(0, 1).toUpperCase(),
+      title: data.name.toLowerCase() == "escuela" 
+        ? data.name 
+        : `Escuela: ${data.name}`,
+    });
+
+    this.formWizard[0].get('coordinate').setValue(data.coordinate);
+
+    this.currentMarker.setMap(this.map);
+  }
+  // END-MAP-CONFS ---------------------------------------------------------------------------------------
 
   private appendStepContent(content: object): number {
     const newStepsContentLength = this.stepsContent.push(content);
@@ -105,11 +217,19 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     name: string,
     params: { value: any; validations: object }
   ): object {
-    let defaultValue = "";
+    let defaultValue = name === "coordinate" ? null : "";
     if (!isNullOrUndefined(params.value)) {
       defaultValue = params.value;
     }
-    return { [name]: [defaultValue, this.getValidators(params.validations)] };
+    if (name === "coordinate" && this.isSchoolForm) 
+      return { 
+        [name] : this.fb.group({
+          latitude: [defaultValue, this.getValidators(params.validations)],
+          longitude: [defaultValue, this.getValidators(params.validations)]
+        })
+      }
+    else 
+      return { [name]: [defaultValue, this.getValidators(params.validations)] }
   }
 
   private getValidators(validations: object): Validators {
@@ -289,6 +409,15 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   public clear(): void {
+    if (this.isBrowser && this.isSchoolForm) {
+      if (this.currentMarker) this.currentMarker.setMap(null);
+      if ( !isNullOrUndefined(google) ) {
+        setTimeout(() => {
+          if (this.googleMap)
+            this.mapInitializer();
+        });  
+      }             
+    }       
     this.formWizard.map((wizardFormStep: FormGroup) => {
       wizardFormStep.reset(this.getFormControlsWithDefaultValue());
     });
