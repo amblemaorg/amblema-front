@@ -5,20 +5,20 @@
         <input type="file" class="d-none" (change)="readUrl($event)" />
       </div>
       <div class="text-hover">
-        <img
+        <img 
           [src]="
-            (userInfo$ | async).image
-              ? (userInfo$ | async).image
+            url
+              ? url
               : '../../../../assets/images/profile2.png'
           "
-          [alt]="(userInfo$ | async).name"
+          [alt]="name"
           (click)="uploadImageCaller(imagenPerfil)"
         />
         <h6>Actualizar Imagen</h6>
       </div>
     </div>
     <div class="bloque2">
-      <h1>{{ (userInfo$ | async).name }}</h1>
+      <h1>{{name}}</h1>
       <p>{{ item.description }}</p>
     </div>
   </div>

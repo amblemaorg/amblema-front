@@ -34,7 +34,8 @@ export class PecaComponent implements OnInit, OnDestroy {
   activePecaContentSubscription: Subscription;
   globalsSubscription: Subscription;
   userSubscription: Subscription;
-
+  imageUser="";
+  nameUser="";
   constructor(
     private store: Store,
     private iconLibraries: NbIconLibraries,
@@ -75,8 +76,9 @@ export class PecaComponent implements OnInit, OnDestroy {
       );
 
     this.userSubscription = this.userInfo$.subscribe(res => {
-      console.log(res);
-    });
+      this.imageUser=res.image;
+      this.nameUser=res.name
+    }); 
   }
 
   createMenuOptions(pecaContent) {

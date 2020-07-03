@@ -1084,7 +1084,7 @@ export const formPadrino = {
     label: "Nombre de la Empresa",
     placeholder: "Nombre de la Empresa",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersNumbersAndRequired
   },
   rif: {
     label: "Rif",
@@ -1189,8 +1189,7 @@ export const formEscuela = {
     label: "Nombre de la Escuela",
     placeholder: "Nombre de la Escuela",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
-  },
+    ...controlProps.onlyLettersNumbersAndRequired  },
   code: {
     label: "Código del plantel",
     placeholder: "Código del plantel",
