@@ -67,6 +67,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         gender: cf.get("gender").value,
         grade: cf.get("grade").value,
         section: cf.get("section").value,
+        date: cf.get("date").value,
         result: cf.get("result").value,
         index: cf.get("index").value
       };
@@ -78,6 +79,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         gender: cf.get("gender").value,
         grade: cf.get("grade").value,
         section: cf.get("section").value,
+        date: cf.get("date").value,
         resultMul: cf.get("resultMul").value,
         resultLog: cf.get("resultLog").value,
         indexMul: cf.get("indexMul").value,
