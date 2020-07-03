@@ -1122,13 +1122,7 @@ export const formPadrino = {
     label: "Otro tipo de empresa",
     placeholder: "Otro tipo de empresa ",
     fullwidth: false,
-    ...controlProps.onlyLetters,
-    options: [
-      {
-        id: "5",
-        state: { id: "5", name: "Otro" }
-      }
-    ]
+    ...controlProps.onlyLetters
   },
   titleName2: { label: "Datos de la Persona de contacto", type: "title" },
   letterName: {
