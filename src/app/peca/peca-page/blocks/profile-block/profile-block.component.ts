@@ -16,7 +16,7 @@ import { GlobalService } from "src/app/services/global.service";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
-import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+import { ClassGetter } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "peca-profile-block",
@@ -36,7 +36,7 @@ export class ProfileBlockComponent
   };
 
   url = "";
-  name="";
+  name = "";
 
   @Select(PecaState.getUser) userInfo$: Observable<any>;
   userSubscription: Subscription;
@@ -53,7 +53,7 @@ export class ProfileBlockComponent
         //To send data to profile component
         this.globals.formWithImage(this.url);
       };
-console.log("evebt", event.target.filess=[0]);
+      console.log("evebt", (event.target.filess = [0]));
       reader.readAsDataURL(event.target.files[0]);
     }
   }
@@ -65,8 +65,8 @@ console.log("evebt", event.target.filess=[0]);
 
   ngOnInit(): void {
     this.userSubscription = this.userInfo$.subscribe(res => {
-      this.url=res.image;
-      this.name=res.name;
+      this.url = res.image;
+      this.name = res.name;
     });
   }
 
