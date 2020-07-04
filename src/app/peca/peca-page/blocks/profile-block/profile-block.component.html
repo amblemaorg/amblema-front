@@ -5,12 +5,8 @@
         <input type="file" class="d-none" (change)="readUrl($event)" />
       </div>
       <div class="text-hover">
-        <img 
-          [src]="
-            url
-              ? url
-              : '../../../../assets/images/profile2.png'
-          "
+        <img
+          [src]="url ? url : '../../../../assets/images/profile2.png'"
           [alt]="name"
           (click)="uploadImageCaller(imagenPerfil)"
         />
@@ -18,7 +14,7 @@
       </div>
     </div>
     <div class="bloque2">
-      <h1>{{name}}</h1>
+      <h1>{{ name }}</h1>
       <p>{{ item.description }}</p>
     </div>
   </div>
