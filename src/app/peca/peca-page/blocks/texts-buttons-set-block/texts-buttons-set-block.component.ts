@@ -43,7 +43,7 @@ export class TextsButtonsSetBlockComponent
     };
     status: {
       text: string;
-      subText: string;
+      subText: number; // 1 Pendiente = Amarillo, 2 Aprobado = Verde, 3 Rechazado = Rojo
     };
     // texts: {
     title: {
@@ -92,7 +92,7 @@ export class TextsButtonsSetBlockComponent
     form: null,
   };
 
-  sleepSend: boolean;
+  sleepSend: boolean; // disables actions button meanwhile peca content gets updated
 
   constructor(
     private globals: GlobalService, 
@@ -142,6 +142,10 @@ export class TextsButtonsSetBlockComponent
     this.settings = { ...settings };
   }
 
+  setData(data: any) {
+    if (data["status"]) this.settings.status.subText = data.status.subText;
+  }
+
   // setFetcherUrls({ delete: deleteFn }) {
   //   this.settings.fetcherUrls = {
   //     delete: deleteFn,
@@ -151,7 +155,7 @@ export class TextsButtonsSetBlockComponent
     this.settings.fetcherUrls = {
       put,
       delete: deleteFn,
-      cancel
+      cancel // when there's a cancel request button this can be used
     };    
     this.sleepSend = false;
   }
@@ -169,7 +173,7 @@ export class TextsButtonsSetBlockComponent
           /* !this.dataTorF.table ||  */ !this.dataTorF.form)
       )
         return true;
-    } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel) return true;
+    } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel) return true; // when there's cancel request button
     return false;
   }
 
@@ -306,10 +310,12 @@ export class TextsButtonsSetBlockComponent
         const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
         const method = this.settings.fetcherMethod || "post";
         const resourcePath = this.settings.fetcherUrls[method];
+
+        if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
         
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
-            console.log(response);
+            console.log("form response",response);
             this.sleepSend = true;
             this.isSending = false;
     
@@ -321,6 +327,7 @@ export class TextsButtonsSetBlockComponent
             this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
+            if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
               "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
@@ -345,12 +352,12 @@ export class TextsButtonsSetBlockComponent
     };
     const method = 'put';
     const url = this.settings.fetcherUrls['cancel'];
-    console.log('presentando el Id: ',this.pecaId);
 
     this.fetcher[method](url, body).subscribe(
       response => {
-        console.log(response);
-        if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
+        console.log("form response",response);
+        // if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
+        this.sleepSend = true;
         this.isSending = false;
 
         this.toastr.success("Solicitud cancelada", "", {

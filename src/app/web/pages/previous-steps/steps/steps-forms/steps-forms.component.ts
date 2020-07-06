@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StateInfo, MunicipalityInfo } from '../../../../../models/steps/previous-steps.model';
 import { GlobalService } from '../../../../../services/global.service';
 import { StepsService } from '../../../../../services/steps/steps.service';
+import { isNullOrUndefined } from "util";
 
 export const EMAIL_PTTRN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 export const LETTERS_PTTRN = /^[a-z A-Zá-úÁ-Ú]*$/;
@@ -17,6 +18,11 @@ export const VIDEO_PTTRN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/
   styleUrls: ['./steps-forms.component.scss']
 })
 export class StepsFormsComponent implements OnInit {
+  @ViewChild("schoolAddressMap", { read: ElementRef, static: false })
+  schoolmap: ElementRef;
+
+  showMap: boolean = true;
+
   @Input() who:string;
   @Input() disable:boolean= false;
   @Input() setStates = [];
@@ -30,6 +36,19 @@ export class StepsFormsComponent implements OnInit {
 
   @Output() emitMessage:EventEmitter<any> = new EventEmitter();
   @Output() emitUpdate:EventEmitter<any> = new EventEmitter();
+
+  // MAPA------------------------------------------------------
+  map: any;//google.maps.Map;
+  lat = 8.60831668; // Venezuela's middle latitude
+  lng = -66.029011; // Venezuela's middle longitude
+  coordinates: any; //= new google.maps.LatLng(this.lat, this.lng);
+
+  mapOptions: any; /*  google.maps.MapOptions = {
+    center: this.coordinates,
+    zoom: 7,      
+  }; */
+  currentMarker: any;
+  // END-MAPA--------------------------------------------------
 
   sendingForm:boolean;  
 
@@ -112,7 +131,7 @@ export class StepsFormsComponent implements OnInit {
   });
 
   schoolForm = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str(nombre de la escuela),
+    name: ['', [Validators.required]],//str(nombre de la escuela),
     email: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]],//str,
     code: ['', [Validators.required, Validators.pattern(LETTERS_NUMBERS_PTTRN)]],//str(codigo de la escuela),
     addressState: ['', [Validators.required]],//str addressID,
@@ -121,8 +140,12 @@ export class StepsFormsComponent implements OnInit {
     addressCity: ['', [Validators.required]],//str,
     phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],//str solo numeros,
     schoolType: ['', [Validators.required]],//str '1'=nacional, '2'=estadal, '3'=municipal,
-    addressZoneType: ['1', [Validators.required]],//str '1'=sector, '2'=barrio, '3'=caserio,
+    addressZoneType: ['1', [Validators.required]],//str '1'=sector, '2'=barrio, '3'=caserio
     addressZone: ['', [Validators.required]],
+    coordinate: this.fb.group({
+      latitude: [null, [Validators.required]],
+      longitude: [null, [Validators.required]],
+    }),
     //
     principalFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
     principalLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],//str,
@@ -145,7 +168,21 @@ export class StepsFormsComponent implements OnInit {
 
   makingRequest = false;
   glbls:any;
-  constructor(private fb: FormBuilder, private stepsService: StepsService, private globals: GlobalService) { }
+  constructor(private fb: FormBuilder, private stepsService: StepsService, private globals: GlobalService) {
+    if (globals.isBrowser) {
+      this.map = null;
+      this.currentMarker = null;
+
+      if ( !isNullOrUndefined(google) ) {
+        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+        const mapOps: google.maps.MapOptions = {
+          center: this.coordinates,
+          zoom: 7,      
+        };
+        this.mapOptions = mapOps;
+      }      
+    }
+  }
 
   ngOnInit() {
     this.fillStates();
@@ -154,11 +191,78 @@ export class StepsFormsComponent implements OnInit {
     this.glbls = this.globals;    
 
     this.fillForm();
+
+    if (this.who == "school") {
+      this.schoolForm.get('name').statusChanges.subscribe( res => {
+        if (
+          this.currentMarker 
+          && this.schoolForm.get('name').value 
+          && this.schoolForm.get('name').value.length > 0
+        ) {
+          this.loadAllMarkers({
+            name: this.schoolForm.get('name').value,
+            coordinate: this.schoolForm.get('coordinate').value
+          });
+        }
+      });
+    }
   }
+
+  // MAP CONFS -------------------------------------------------------------------------------------------
+  mapInitializer(disabled: boolean = false) {    
+    if (disabled) {
+      this.mapOptions["disableDefaultUI"] = true;
+      this.mapOptions["gestureHandling"] = 'none';
+    } else {
+      if (this.mapOptions["disableDefaultUI"]) 
+        this.mapOptions["disableDefaultUI"] = false;
+      if (this.mapOptions["gestureHandling"])        
+        this.mapOptions["gestureHandling"] = 'cooperative';
+    }
+
+    this.map = new google.maps.Map(this.schoolmap.nativeElement, this.mapOptions);
+
+    if (!disabled) {
+      google.maps.event.addListener(this.map, "click", (e) => {
+        this.loadAllMarkers({
+          name: this.schoolForm.get('name').value 
+            && this.schoolForm.get('name').value.length > 0 
+              ? this.schoolForm.get('name').value 
+              : "Escuela",
+          coordinate: {
+            latitude: e.latLng.lat(),
+            longitude: e.latLng.lng()
+          }
+        });
+      });
+    }
+  }
+
+  loadAllMarkers(data) {
+    if (this.currentMarker) {
+      this.currentMarker.setMap(null);
+      this.currentMarker = null;
+    }
+
+    this.currentMarker = new google.maps.Marker({
+      map: this.map,
+      position: new google.maps.LatLng(data.coordinate.latitude, data.coordinate.longitude),
+      label: data.name.substring(0, 1).toUpperCase(),
+      title: data.name.toLowerCase() == "escuela" 
+        ? data.name 
+        : `Escuela: ${data.name}`,
+    });
+
+    this.schoolForm.get('coordinate').setValue(data.coordinate);
+
+    this.currentMarker.setMap(this.map);
+  }
+  // END-MAP-CONFS ---------------------------------------------------------------------------------------
 
   private fillForm() {
     if (this.approvalHistory.length > 0 && this.approvalHistory[this.approvalHistory.length-1].status!=3) {
       let data = this.approvalHistory[this.approvalHistory.length-1].data;
+      
       switch (this.who) {
         case 'sponsor':
           this.fillSponsor(data);
@@ -169,6 +273,16 @@ export class StepsFormsComponent implements OnInit {
         default:
           this.fillSchool(data);
           break;
+      }
+    } else {
+      if (this.globals.isBrowser) {
+        if ( !isNullOrUndefined(google) ) {
+          this.showMap = true;
+          setTimeout(() => {
+            if (this.schoolmap)
+              this.mapInitializer();
+          });  
+        }             
       }
     }
   }
@@ -271,14 +385,19 @@ export class StepsFormsComponent implements OnInit {
         schoolType: this.schoolForm.controls['schoolType'].value,
         addressZoneType: this.schoolForm.controls['addressZoneType'].value,
         addressZone: this.schoolForm.controls['addressZone'].value,
+        coordinate: this.schoolForm.controls['coordinate'].value.latitude 
+          && this.schoolForm.controls['coordinate'].value.longitude
+            ? this.schoolForm.controls['coordinate'].value 
+            : null,
         principalFirstName: this.schoolForm.controls['principalFirstName'].value,
         principalLastName: this.schoolForm.controls['principalLastName'].value,
         principalEmail: this.schoolForm.controls['principalEmail'].value,
         principalPhone: this.schoolForm.controls['principalPhone'].value,
         subPrincipalFirstName: this.schoolForm.controls['subPrincipalFirstName'].value,
         subPrincipalLastName: this.schoolForm.controls['subPrincipalLastName'].value,
-        subPrincipalEmail: this.schoolForm.controls['subPrincipalEmail'].value.length > 0 ? 
-                                this.schoolForm.controls['subPrincipalEmail'].value : null,
+        subPrincipalEmail: this.schoolForm.controls['subPrincipalEmail'].value.length > 0 
+            ? this.schoolForm.controls['subPrincipalEmail'].value 
+            : null,
         subPrincipalPhone: this.schoolForm.controls['subPrincipalPhone'].value,
         nTeachers: this.schoolForm.controls['nTeachers'].value,
         nAdministrativeStaff: this.schoolForm.controls['nAdministrativeStaff'].value,
@@ -289,13 +408,17 @@ export class StepsFormsComponent implements OnInit {
         schoolShift: this.schoolForm.controls['schoolShift'].value,
     }
   
-      this.postForm(solicitudBody,fo,3);
+    this.postForm(solicitudBody,fo,3);
   }
 
   private postForm(solicitudBody, fo, type) {
     this.stepsService.requestsFind(type,solicitudBody).subscribe(res => {
       this.sendingForm = false; 
       fo.reset();
+
+      if (this.who == "school" && !isNullOrUndefined(google) ) 
+        this.mapInitializer(true);
+
       this.emitUpdate.emit({
         project_id: this.project_id,
         indd: this.index,
@@ -406,6 +529,10 @@ export class StepsFormsComponent implements OnInit {
       schoolType: res.schoolType? res.schoolType:'',
       addressZoneType: res.addressZoneType? res.addressZoneType:'1',
       addressZone: res.addressZone? res.addressZone:'',
+      coordinate: {
+        latitude: res.coordinate ? res.coordinate.latitude : null,
+        longitude: res.coordinate ? res.coordinate.longitude : null
+      },
       //
       principalFirstName: res.principalFirstName? res.principalFirstName:'',
       principalLastName: res.principalLastName? res.principalLastName:'',
@@ -425,6 +552,22 @@ export class StepsFormsComponent implements OnInit {
       nSections: res.nSections? res.nSections:null,
       schoolShift: res.schoolShift? res.schoolShift:'',
     });
+
+    if (res.coordinate && this.globals.isBrowser) {
+      if ( !isNullOrUndefined(google) ) {
+        this.showMap = true;
+        setTimeout(() => {
+          if (this.schoolmap) {
+            this.mapInitializer(true);
+            this.loadAllMarkers({
+              name: res.name,
+              coordinate: res.coordinate
+            });
+          }        
+        });
+      }      
+    } else this.showMap = false;
+
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);
   }
 

@@ -79,10 +79,10 @@ export class FormBlockComponent
   showSelectState: boolean = true;
   isEditing: boolean = false;
   isInApproval: boolean;
-  isEdited: boolean;
-  imageUrl: string;
-  sendNull: boolean = true;
-  someImgAdded: boolean;
+  isEdited: boolean; // if form has been edited
+  sendNull: boolean = true; // to avoid send form data null when uploading images
+  someImgAdded: boolean; // to avoid send form null when images are saved in table
+  imageUrl: string; //to can upload the image in profile component
 
   constructor(
     private store: Store,
@@ -152,9 +152,20 @@ export class FormBlockComponent
       );
 
     this.subscription.add(
-      this.globals.passImageEmitter.subscribe(btnCode => {
-        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+      this.globals.resetEditedEmitter.subscribe(btnCode => {
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
+          this.isInApproval = true;
+        }
+      })
+    );
+    this.subscription.add(
+      this.globals.setReadonlyEmitter.subscribe(data => {
+        if (
+          this.settings.buttonCode &&
+          this.settings.buttonCode == data.buttonCode
+        )
+          this.isInApproval = data.setReadOnly;
       })
     );
 
@@ -667,6 +678,7 @@ export class FormBlockComponent
       });
       setTimeout(() => {
         this.sendNull = true;
+        e.target.value = null;
       });
     };
   }

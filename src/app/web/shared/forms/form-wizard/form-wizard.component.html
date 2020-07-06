@@ -129,6 +129,47 @@
             />
           </ng-container>
 
+          <!-- MAPA ---------------------------------------------------------------------------------------------------------------------------------------------------- -->
+          <ng-container *ngSwitchCase="'googlemap'">
+            <ng-container *ngIf="isBrowser">
+              <div class="google-map-container">                
+                <label class="field-label">{{
+                  stepsContent[i][field].label
+                }}</label>               
+                <button 
+                  type="button" 
+                  class="google-map-opener font-weight-bold" 
+                  data-toggle="modal" 
+                  data-target="#google-map-modal"
+                  data-backdrop="false"
+                  data-keyboard="false"
+                >{{
+                  stepsContent[i][field].button
+                }}</button>
+                <div class="modal fade" id="google-map-modal">
+                  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <strong>{{
+                          stepsContent[i][field].header
+                        }}</strong>
+                        <button 
+                          type="button" 
+                          class="close" 
+                          data-dismiss="modal"
+                        >&times;</button>
+                      </div>
+                      <div class="modal-body">
+                        <div #googleMap id="google-map"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </ng-container>            
+          </ng-container> 
+          <!-- END-MAPA ------------------------------------------------------------------------------------------------------------------------------------------------ -->          
+
           <ng-container *ngSwitchDefault>
             <label class="field-label" [for]="field">{{
               stepsContent[i][field].label
@@ -144,7 +185,8 @@
           </ng-container>
 
           <web-form-validation
-            *ngIf="stepsContent[i][field].type !== 'identification'"
+            *ngIf="stepsContent[i][field].type !== 'identification' 
+                   && stepsContent[i][field].type !== 'googlemap'"
             [patternMessage]="
               stepsContent[i][field].messages &&
               stepsContent[i][field].messages.pattern

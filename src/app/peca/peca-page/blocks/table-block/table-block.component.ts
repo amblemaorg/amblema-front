@@ -40,7 +40,7 @@ export class TableBlockComponent
   // source: LocalDataSource | any;
   source: LocalDataSource;
   isEdited: boolean;
-  isEditable: boolean = true;
+  isEditable: boolean = true; // to disable editing on table actions
 
   private subscription: Subscription = new Subscription();
 
@@ -66,8 +66,20 @@ export class TableBlockComponent
 
     this.subscription.add(
       this.globals.resetEditedEmitter.subscribe(btnCode => {
-        if (this.settings.buttonCode && this.settings.buttonCode == btnCode)
+        if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
+          this.isEditable = false;
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.globals.setReadonlyEmitter.subscribe(data => {
+        if (
+          this.settings.buttonCode &&
+          this.settings.buttonCode == data.buttonCode
+        )
+          this.isEditable = !data.setReadOnly;
       })
     );
   }
@@ -107,6 +119,7 @@ export class TableBlockComponent
             })
             .catch(error => {});
           break;
+
         case "delete":
           this.source
             .find(data.data.dataToCompare)
@@ -119,6 +132,7 @@ export class TableBlockComponent
             })
             .catch(error => {});
           break;
+
         case "view":
           break;
 
@@ -146,7 +160,6 @@ export class TableBlockComponent
   }
 
   sendTableData() {
-    // console.log(data);
     //updating textAndButton button data
     if (this.settings.buttonCode) {
       if (this.settings.isFromImgContainer) {
@@ -162,7 +175,6 @@ export class TableBlockComponent
             whichData: "table",
             table: value
           });
-          // console.log('datos del modal form',value);
         });
       }
     }
@@ -176,15 +188,11 @@ export class TableBlockComponent
   }
 
   setData(data: any) {
-    console.log("is editable", this.isEditable);
     if (!this.isEdited) {
-      if (data.setData) {
-        if (this.settings.isFromImgContainer)
-          this.settings["dataCopy"] = [...data.data];
-        this.source = new LocalDataSource(data.data);
-      }
-      this.isEditable = data.isEditable;
-      console.log("is editable2", this.isEditable);
+      if (this.settings.isFromImgContainer)
+        this.settings["dataCopy"] = [...data.data];
+      this.source = new LocalDataSource(data.data);
+      this.isEditable = data.isEditable ? true : false;
       this.sendTableData();
     }
   }
@@ -212,12 +220,10 @@ export class TableBlockComponent
 
     switch (e.action) {
       case "VIEW":
-        console.log("is editableeeeee", this.isEditable);
-        if (this.isEditable) this.globals.ModalShower(obj);
+        this.globals.ModalShower(obj);
         break;
 
       case "EDIT":
-        console.log("is editableeeeee", this.isEditable);
         if (this.isEditable) {
           obj.showBtn = true;
           this.globals.ModalShower(obj);
@@ -225,7 +231,6 @@ export class TableBlockComponent
         break;
 
       case "DELETE":
-        console.log("is editableeeeee", this.isEditable);
         if (this.isEditable) {
           obj.component = "textsbuttons";
           this.globals.ModalShower(obj);

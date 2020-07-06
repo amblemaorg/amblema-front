@@ -36,7 +36,8 @@ networks:
   default:
     external:
       name: amblema_db_db_network
-#YANIOR-USO-LOCAL
+
+#USO-LOCAL
 # version: '3.3'
 
 # services:
