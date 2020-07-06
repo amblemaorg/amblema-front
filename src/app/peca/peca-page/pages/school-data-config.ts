@@ -11,12 +11,10 @@ const statusGeneral = {
   component: 'textsbuttons',
   name: 'schoolFormStatus',
   settings: {
-    dateOrtext:{
-      
-    },
+    dateOrtext:{},
     status: {
       text: 'Estatus',
-      subText: 'Pendiente'
+      subText: 0
     },
     buttonCode: 'schoolDataConfigRegistroEscuela',
   }

@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { 
+  Component, 
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { StepsService } from '../../../../services/steps/steps.service';
 import { UserState } from '../../../../store/states/e-learning/user.state';
@@ -10,6 +15,7 @@ import { UProject } from '../../../../models/steps/learning-modules.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
+import { GeneralStepsComponent } from './general-steps/general-steps.component';
 
 @Component({
   selector: 'app-steps',
@@ -17,6 +23,10 @@ import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/
   styleUrls: ['./steps.component.scss']
 })
 export class StepsComponent implements OnInit {
+  @ViewChildren('generalStep', { read: GeneralStepsComponent }) generalStepsRef: QueryList<
+  GeneralStepsComponent
+  >;
+
   fillCounter:number = 0;
   // userCallsCounter:number = 0;
   isTest:boolean = false;
@@ -65,7 +75,11 @@ export class StepsComponent implements OnInit {
       //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
       // this.updateSteps(pjId);
 
-      this.project_steps$.subscribe(res => {           
+      this.project_steps$.subscribe(res => { 
+        if (this.stepsService.getIsPageReloaded()) {
+          this.enabledTabs = true;
+        } 
+
         this.project_id = pjId;
         if (res.steps.length>0) {
           this.fillCounter++;
@@ -140,8 +154,12 @@ export class StepsComponent implements OnInit {
     });
   }
 
-  swicthStep(num,e) {
+  switchStep(num,e) {
     this.activeStep = num;
+
+    this.generalStepsRef.toArray().map(tab => {
+      tab.resetTimesLoadedVideo();
+    });
   }
 
   getChecks(ch) {

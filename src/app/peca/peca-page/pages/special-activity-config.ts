@@ -33,7 +33,7 @@ const dateAndStatus = {
         },
         status: {
             text: 'Estatus',
-            subText: 'Pendiente'
+            subText: 1
         },
         action: [
             {

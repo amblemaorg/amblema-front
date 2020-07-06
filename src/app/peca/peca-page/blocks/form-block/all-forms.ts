@@ -1418,6 +1418,12 @@ export const formLecturaModal = {
       { id: "2", name: "Masculino" }
     ]
   },
+  date: {
+    label: "Fecha del diagnostico",
+    placeholder: "Fecha del diagnostico",
+    fullwidth: false,
+    ...controlProps.dateAndRequired
+  },
   result: {
     label: "Resultado",
     placeholder: "Resultado",
@@ -1473,6 +1479,12 @@ export const formMatematicaModal = {
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
+  },
+  date: {
+    label: "Fecha del diagnostico",
+    placeholder: "Fecha del diagnostico",
+    fullwidth: false,
+    ...controlProps.dateAndRequired
   },
   resultMul: {
     label: "Resultado de multiplicacion",
@@ -1650,18 +1662,18 @@ export const formResultadoEstudianteModal = {
     ...controlProps.normalTextAndRequired
   }
 };
-// FOTOS DE LA ESCUELA
+// FOTOS DE LA ACTIVIDAD
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
-export const tablaImagenesEscuelaModal = {
+export const tablaImagenesActividadModal = {
   imageGroup: {
     type: "image",
     fields: {
-      imageDescription: {
-        label: "Descripción",
-        placeholder: "Descripción",
+      /*imageDescription: {
+        label: 'Descripción',
+        placeholder: 'Descripción',
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
-    }
-  }
+        ...controlProps.normalTextAndRequired,
+      },*/
+    },
+  },
 };

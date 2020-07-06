@@ -18,9 +18,16 @@ export class StepsService {
   @Output() enableTab:EventEmitter<boolean> = new EventEmitter();
   @Output() goToMods:EventEmitter<any> = new EventEmitter();
 
+  private isPageReloaded: boolean = true;
+
   constructor(private http: HttpClient) { }
 
+  getIsPageReloaded() {
+    return this.isPageReloaded;
+  }
+
   enableTabMethod(bool) {
+    this.isPageReloaded = false;
     this.enableTab.emit(bool);
   }
   goToModules() {

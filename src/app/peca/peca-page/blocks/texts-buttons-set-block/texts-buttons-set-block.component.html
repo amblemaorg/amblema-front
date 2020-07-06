@@ -31,9 +31,23 @@
                 </h6>
             </div>
             <div *ngIf="settings.download || settings.status" class="right-side">
-                <h6 *ngIf="settings.status" class="status ml-4">
-                    <span>{{settings.status.text}}:&nbsp;</span><span class="rounded-circle"></span>&nbsp;
-                    <span class="font-weight-normal">{{ settings.status.subText }}</span>
+                <h6 *ngIf="settings.status && settings.status.subText != 0" class="status ml-4">
+                    <span>{{settings.status.text}}:&nbsp;</span>
+                    <span 
+                        class="rounded-circle"
+                        [ngClass]="{
+                            'yellow': settings.status.subText === 1,
+                            'green': settings.status.subText === 2,
+                            'red': settings.status.subText === 3
+                        }"
+                    ></span>&nbsp;
+                    <span class="font-weight-normal">{{
+                        settings.status.subText === 1 
+                        ? 'Pendiente' 
+                        : settings.status.subText === 2 
+                        ? 'Aprobado'
+                        : 'Rechazado'
+                    }}</span>
                 </h6>
 
                 <a *ngIf="settings.download" title="Descargar" 
@@ -173,7 +187,7 @@
                 <ng-container *ngIf="action.type==4 && settings.fetcherUrls && settings.fetcherUrls.cancel">
                     <button                        
                         class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-                        [disabled]="isSending"
+                        [disabled]="isSending || sleepSend"
                         (click)="cancelRequest()"
                     >
                         <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
