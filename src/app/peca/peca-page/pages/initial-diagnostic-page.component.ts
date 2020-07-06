@@ -35,6 +35,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   mathData: any;
   isInstanciated: boolean;
   loadedData: boolean;
+  allStudents:any;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
@@ -42,12 +43,12 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   ) {
     super(factoryResolver);
     //this.instantiateComponent(config);
-    globals.blockIntancesEmitter.subscribe(data => {
+   /*  globals.blockIntancesEmitter.subscribe(data => {
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
       if (this.loadedData) this.updateMethods();
-    });
+    }); */
   }
   ngOnInit() {
     this.getInfo();
@@ -56,9 +57,36 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
-        //console.log(data.activePecaContent);
-        this.response = data.activePecaContent.school.sections;
-        for (let i = 0; i < this.response.length; i++) {
+        this.response = data.activePecaContent.school;
+      // console.log(this.response.sections);
+       let auxStudents = [];
+        for (let i = 0; i < this.response.sections.length; i++){
+        this.grade = this.response.sections[i].grade;
+        this.section = this.response.sections[i].name;
+       // console.log(this.response.sections[i].students)
+        this.response.sections[i].students.forEach(student => {
+          student.grade = this.grade;
+          student.section = this.section;
+        });
+       auxStudents =  auxStudents.concat(this.response.sections[i].students) //this.response.sections[i].students; 
+
+       
+
+        }
+        this.students = auxStudents
+        console.log(this.students);
+
+       // console.log(this.students);
+       // console.log(this.grade);
+        //console.log(this.section)
+       /*  
+        this.students.forEach(student => {
+          student.grade = this.grade;
+          student.section = this.section;
+          //console.log(student);
+        }); */
+        
+        /* for (let i = 0; i < this.response.length; i++) {
           this.grade = this.response[i].grade;
           this.section = this.response[i].name;
           this.students = this.response[i].students;
@@ -73,9 +101,9 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
             this.students,
             diagnosticDataToReadingFormMapper
           );*/
-          this.loadedData = true;
+         /*  this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
-        }
+        } */ 
       },
 
       error => console.error(error)
