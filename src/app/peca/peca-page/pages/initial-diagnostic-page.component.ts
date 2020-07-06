@@ -11,7 +11,12 @@ import { INITIAL_DIAGNOSTIC_CONFIG as config } from "./initial-diagnostic-config
 import { Subscription, Observable } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
-
+import { isNullOrUndefined } from "util";
+import { GlobalService } from "src/app/services/global.service";
+import {
+  diagnosticDataToReadingFormMapper,
+  diagnosticDataToMathFormMapper
+} from "../mappers/diagnostic-mapper";
 @Component({
   selector: "peca-initial-diagnostic",
   templateUrl: "../peca-page.component.html"
@@ -20,22 +25,38 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   implements AfterViewInit {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
-  userDataSubscription: Subscription;
-  @Select(PecaState.getActivePecaContent) userData$: Observable<any>;
+  infoDataSubscription: Subscription;
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   students = [];
   section = "";
   grade = "";
   response: any;
-  constructor(factoryResolver: ComponentFactoryResolver) {
+  readingData: any;
+  mathData: any;
+  isInstanciated: boolean;
+  loadedData: boolean;
+
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    globals: GlobalService
+  ) {
     super(factoryResolver);
-    this.instantiateComponent(config);
+    //this.instantiateComponent(config);
+    globals.blockIntancesEmitter.subscribe(data => {
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
+      if (this.loadedData) this.updateMethods();
+    });
   }
   ngOnInit() {
-    this.getUser();
+    this.getInfo();
+    this.instantiateComponent(config);
   }
-  getUser() {
-    this.userDataSubscription = this.userData$.subscribe(
+  getInfo() {
+    this.infoDataSubscription = this.infoData$.subscribe(
       data => {
+        //console.log(data.activePecaContent);
         this.response = data.activePecaContent.school.sections;
         for (let i = 0; i < this.response.length; i++) {
           this.grade = this.response[i].grade;
@@ -45,17 +66,68 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         this.students.forEach(student => {
           student.grade = this.grade;
           student.section = this.section;
-          console.log(student);
         });
+        if (!isNullOrUndefined(data)) {
+          console.log(this.students);
+          /*this.setReadingTableData(
+            this.students,
+            diagnosticDataToReadingFormMapper
+          );*/
+          this.loadedData = true;
+          if (this.isInstanciated) this.updateMethods();
+        }
       },
 
       error => console.error(error)
     );
   }
+  updateMethods(updateData: boolean = true) {
+    this.updateDataToBlocks(updateData);
+    // this.updateStaticFetchers();
+    // this.updateDynamicFetchers();
+  }
+  updateDataToBlocks(updateData: boolean) {
+    if (updateData) {
+      this.setBlockData("readingTable", this.readingData);
+      this.setBlockData("mathTable", this.mathData);
+    }
+  }
+  updateStaticFetchers() {
+    console.log("static");
+  }
 
+  updateDynamicFetchers() {
+    console.log("dynamic");
+  }
+  setReadingTableData(readingTableData, _mapper?: Function) {
+    if (_mapper) {
+      this.readingData = {
+        data: _mapper(readingTableData),
+        isEditable: true
+      };
+    } else {
+      this.readingData = readingTableData;
+    }
+  }
+  setMathTableData(mathTableData, _mapper?: Function) {
+    if (_mapper) {
+      this.mathData = {
+        data: _mapper(mathTableData),
+        isEditable: true
+      };
+    } else {
+      this.mathData = mathTableData;
+    }
+  }
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
     });
+  }
+  ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
+    this.infoDataSubscription.unsubscribe();
   }
 }
