@@ -1486,8 +1486,8 @@ export const formMatematicaModal = {
     ]
   },
   date: {
-    label: "Fecha del diagnostico",
-    placeholder: "Fecha del diagnostico",
+    label: "Fecha del resultado de multiplicacion",
+    placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
     ...controlProps.dateAndRequired
   },
@@ -1496,6 +1496,12 @@ export const formMatematicaModal = {
     placeholder: "Resultado de multiplicacion",
     fullwidth: false,
     ...controlProps.numberAndRequired
+  },
+  date2: {
+    label: "Fecha del resultado logica matematica",
+    placeholder: "Fecha del resultado de logica matematica",
+    fullwidth: false,
+    ...controlProps.dateAndRequired
   },
   resultLog: {
     label: "Resultado de logica matematica",
