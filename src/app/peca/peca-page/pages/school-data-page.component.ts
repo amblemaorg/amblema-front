@@ -17,7 +17,7 @@ import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
 import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
 import { schoolPicturesSliderDataToSchoolPicturesTableMapper } from "../mappers/school-prictures-slider-mappers";
 import { isNullOrUndefined } from "util";
-import { UserState } from 'src/app/store/states/e-learning/user.state';
+import { UserState } from "src/app/store/states/e-learning/user.state";
 
 @Component({
   selector: "peca-school-data",
@@ -33,7 +33,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   schoolDataSubscription: Subscription;
   userIdSubscription: Subscription;
-  
+
   schoolFormData: any;
   schoolFormStatusData: any;
   teachersTableData: any;
@@ -41,7 +41,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
   currentUserId: string; // current user id on session
   requestIdToCancel: string; // if school data is in approval this holds last request id
   schoolDataStatus: number; // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-  
+
   // controlling when data from school is loaded
   isInstanciated: boolean;
   loadedData: boolean;
@@ -53,7 +53,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
     super(factoryResolver);
 
     globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
       //console.log(this.blockInstances);
 
       // if an action from a modal gets click then this view components' data don't get updated
@@ -68,12 +70,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
       data => {
         if (!isNullOrUndefined(data)) {
           console.log("mostrando data de escuela");
-          
-          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
-          else this.unsetCancelRequest()
-          
+
+          if (data.school.isInApproval)
+            this.setCancelRequest(data.school.approvalHistory);
+          else this.unsetCancelRequest();
+
           this.setSchoolStatus(data.school); // sets current school status number
-          
+
           this.setSchoolFormStatusData();
           this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
           this.setTeachersTableData(
@@ -81,14 +84,15 @@ export class SchoolDataPageComponent extends PecaPageComponent
             teachersDataToTeachersTableMapper
           );
           this.setSchoolPicturesTableData(
-            data.school.isInApproval 
-              ? (data.school.approvalHistory.length > 0 
-                  ? data.school.approvalHistory[data.school.approvalHistory.length - 1]
-                      .detail.slider 
-                  : [] ) 
+            data.school.isInApproval
+              ? data.school.approvalHistory.length > 0
+                ? data.school.approvalHistory[
+                    data.school.approvalHistory.length - 1
+                  ].detail.slider
+                : []
               : data.school.slider,
             schoolPicturesSliderDataToSchoolPicturesTableMapper
-          );          
+          );
 
           this.userIdSubscription = this.userId$.subscribe(
             user_id => {
@@ -98,7 +102,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
               if (this.isInstanciated) this.updateMethods();
             },
             error => console.error(error)
-          );          
+          );
         }
         // this.updateDataToBlocks();
       },
@@ -112,13 +116,13 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.updateDynamicFetchers();
   }
 
-  updateDataToBlocks(updateData: boolean) {    
+  updateDataToBlocks(updateData: boolean) {
     if (updateData) {
       this.setBlockData("schoolFormStatus", this.schoolFormStatusData);
       this.setBlockData("schoolForm", this.schoolFormData);
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
-      this.setBlockData("teachersTable", this.teachersTableData); 
-    }    
+      this.setBlockData("teachersTable", this.teachersTableData);
+    }
   }
 
   setCancelRequest(approvalHistory: any[]) {
@@ -129,31 +133,30 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.requestIdToCancel = null;
   }
 
-  setSchoolStatus(school) { // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = school.isInApproval 
-      ? 1 : (
-        school.approvalHistory.length > 0 
-        ? (
-            school.approvalHistory[school.approvalHistory.length - 1].status === "2" 
-            || school.approvalHistory[school.approvalHistory.length - 1].status === "3" 
-            ? (+school.approvalHistory[school.approvalHistory.length - 1].status) 
-            : 0
-          ) 
+  setSchoolStatus(school) {
+    // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
+    this.schoolDataStatus = school.isInApproval
+      ? 1
+      : school.approvalHistory.length > 0
+      ? school.approvalHistory[school.approvalHistory.length - 1].status ===
+          "2" ||
+        school.approvalHistory[school.approvalHistory.length - 1].status === "3"
+        ? +school.approvalHistory[school.approvalHistory.length - 1].status
         : 0
-      )
+      : 0;
     // this.schoolDataStatus = school.isInApproval ? 1 : 0;
   }
 
   updateStaticFetchers() {
-    this.setBlockFetcherUrls('schoolFormButton', {
+    this.setBlockFetcherUrls("schoolFormButton", {
       put: `pecaprojects/school/${this.schoolFormData.pecaId}?userId=${this.currentUserId}`,
-      cancel: this.requestIdToCancel 
-                ? `requestscontentapproval/${this.requestIdToCancel}` 
-                : null,
+      cancel: this.requestIdToCancel
+        ? `requestscontentapproval/${this.requestIdToCancel}`
+        : null
     });
 
-    this.setBlockFetcherUrls('teacherForm', {
-      post: `schools/teachers/${this.schoolFormData.id}`,
+    this.setBlockFetcherUrls("teacherForm", {
+      post: `schools/teachers/${this.schoolFormData.id}`
     });
   }
 
@@ -197,7 +200,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     if (_mapper) {
       this.teachersTableData = {
         data: _mapper(teachersData),
-        isEditable: true,
+        isEditable: true
       };
     } else {
       this.teachersTableData = teachersData;
@@ -208,7 +211,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     if (_mapper) {
       this.sliderPicturesData = {
         data: _mapper(sliderData),
-        isEditable: this.requestIdToCancel ? false : true,
+        isEditable: this.requestIdToCancel ? false : true
       };
     } else {
       this.sliderPicturesData = sliderData;
