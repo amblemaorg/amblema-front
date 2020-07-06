@@ -145,12 +145,23 @@
       font-family: "Montserrat" !important;
       margin: 0;
     }
-
+    @media (max-width: 768px) {
+    h1{
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
     nb-layout-column {
       nb-card {
         nb-card-body {
           padding: 1.25rem 2.5rem;
         }
+        @media (max-width: 768px) {
+          nb-card-body {
+            padding: 1.25rem 1rem;
+          }
+        }
+    
 
         &:nth-child(2) nb-card-body {
           padding: 1.25rem 0;

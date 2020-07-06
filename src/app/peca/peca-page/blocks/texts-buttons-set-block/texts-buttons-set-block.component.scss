@@ -17,6 +17,11 @@
             margin: 10px 0px;
         }
     }
+    .display-date{
+        @media (max-width:768px){
+           display: inherit !important;
+        }
+    }
     .texts-buttons-wrapper {
         .texts-wrapper {
             .date-download-status {
