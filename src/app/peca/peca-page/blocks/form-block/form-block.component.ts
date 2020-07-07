@@ -13,8 +13,11 @@ import { Subscription, Observable } from "rxjs";
 import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
-import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
-import { PecaState } from '../../../../store/states/peca/peca.state';
+import {
+  FetchPecaContent,
+  SetUser
+} from "../../../../store/actions/peca/peca.actions";
+import { PecaState } from "../../../../store/states/peca/peca.state";
 
 @Component({
   selector: "form-block",
@@ -61,6 +64,7 @@ export class FormBlockComponent
   @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<
     any
   >;
+
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
@@ -81,6 +85,7 @@ export class FormBlockComponent
   isEdited: boolean; // if form has been edited
   sendNull: boolean = true; // to avoid send form data null when uploading images
   someImgAdded: boolean; // to avoid send form null when images are saved in table
+  imageUrl: string; //to can upload the image in profile component
 
   // currentGrade: string; // for grades selector only
   sectionsArr: any[] = [];
@@ -100,7 +105,7 @@ export class FormBlockComponent
 
   ngOnInit() {
     this.subscription.add(
-      this.pecaId$.subscribe( peca_id => {
+      this.pecaId$.subscribe(peca_id => {
         this.pecaId = peca_id;
       })
     );
@@ -108,18 +113,14 @@ export class FormBlockComponent
     this.subscription.add(
       this.componentForm.statusChanges.subscribe(val => {
         if (
-          !this.someImgAdded 
-          && (
-            val === "INVALID" 
-            || this.isDateNotOk() 
-            || !this.isDirty() 
-          )
+          !this.someImgAdded &&
+          (val === "INVALID" || this.isDateNotOk() || !this.isDirty())
         ) {
-          if ( this.settings.buttonCode && this.isDirty() ) 
-            this.isEdited = true;
+          if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
-        }          
-        else {this.btnUpdater(this.componentForm.value);}
+        } else {
+          this.btnUpdater(this.componentForm.value);
+        }
       })
     );
 
@@ -136,6 +137,12 @@ export class FormBlockComponent
       })
     );
 
+    this.subscription.add(
+      this.globals.passImageEmitter.subscribe(image => {
+        console.log("resp", image);
+        this.imageUrl = image;
+      })
+    );
     this.subscription.add(
       this.globals.showImageContainerEmitter.subscribe(code => {
         if (this.settings.buttonCode && this.settings.buttonCode == code)
@@ -164,31 +171,44 @@ export class FormBlockComponent
       );
 
     this.subscription.add(
-      this.globals.resetEditedEmitter.subscribe((btnCode) => {
+      this.globals.resetEditedEmitter.subscribe(btnCode => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
           this.isInApproval = true;
-        }          
+        }
       })
     );
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
-          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+          if (
+            this.settings.buttonCode && 
+            this.settings.buttonCode == data.buttonCode
+          )
             this.isInApproval = data.setReadOnly;        
         } else {
-          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+          if (
+            this.settings.tableCode && 
+            this.settings.tableCode == data.buttonCode
+          )
             this.isInApproval = data.setReadOnly;        
         }    
       })
-    );    
+    );
 
     this.setId();
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();    
-    ['isEdited','isInApproval','isEditing','sendNull','someImgAdded'].map( (attr,i) => {
-      this[attr] = [null,null,false,true,null][i];
+    this.subscription.unsubscribe();
+    [
+      "isEdited",
+      "isInApproval",
+      "isEditing",
+      "sendNull",
+      "someImgAdded",
+      "imageUrl"
+    ].map((attr, i) => {
+      this[attr] = [null, null, false, true, null, null][i];
     });
   }
 
@@ -211,17 +231,16 @@ export class FormBlockComponent
 
   isDirty(): boolean {
     const keys = Object.keys(this.componentForm.value);
-    return keys.some( (key) => {
-      return key === "imageGroup" 
-              ? false 
-              : this.componentForm.controls[key].dirty
+    return keys.some(key => {
+      return key === "imageGroup"
+        ? false
+        : this.componentForm.controls[key].dirty;
     });
     // return this.componentForm.dirty
   }
 
   isReadOnly(): boolean {
-    return (this.settings.isEditable && !this.isEditing) || 
-           this.isInApproval
+    return (this.settings.isEditable && !this.isEditing) || this.isInApproval;
   }
 
   setSettings(settings: any) {
@@ -480,6 +499,17 @@ export class FormBlockComponent
       manageData.data["age"] = this.globals.dateStringToISOString(
         cf.get("age").value
       );
+    if (this.settings.formType === "actualizarCoordinador") {
+      manageData.data["birthdate"] = this.globals.dateStringToISOString(
+        cf.get("date").value
+      );
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+    }
+    if (this.settings.formType === "actualizarPadrino")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+
+    if (this.settings.formType === "actualizarEscuela")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
 
     const assignId = () =>
       Math.random()
@@ -500,7 +530,8 @@ export class FormBlockComponent
         this.settings.dataFromRow["data"]["id"] = `auto-${assignId()}`;
       }
     } else {
-      if (!this.settings.notGenerateId) manageData.data["id"] = `auto-${assignId()}`;
+      if (!this.settings.notGenerateId)
+        manageData.data["id"] = `auto-${assignId()}`;
     }
 
     let obj = {
@@ -516,12 +547,12 @@ export class FormBlockComponent
           : "add"
         : "set"
     };
-    
+
     const commonTasks = () => {
       this.sendingForm = false;
-      
+
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
-  
+
       if (this.settings.modalCode)
         this.globals.ModalHider(this.settings.modalCode);
 
@@ -561,8 +592,29 @@ export class FormBlockComponent
           this.toastr.success("Suministrado con éxito", "", {
             positionClass: "toast-bottom-right"
           });
-          
+
           this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+
+          if (
+            this.settings.formType === "actualizarCoordinador" ||
+            this.settings.formType === "actualizarEscuela" ||
+            this.settings.formType === "actualizarPadrino"
+          ) {
+            //Do the consult to the endpoint which bring me the data of specific user
+            this.fetcher
+              .get(
+                `users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`
+              )
+              .subscribe(
+                respuesta => {
+                  // within the answer I send the content to the SetUser::
+                  this.store.dispatch([new SetUser(respuesta)]);
+                },
+                error => {
+                  console.log(error);
+                }
+              );
+          }
         },
         error => {
           this.sendingForm = false;
@@ -577,7 +629,6 @@ export class FormBlockComponent
         }
       );
     }
-    
   }
 
   // filling municipalities according to selected state
@@ -606,8 +657,26 @@ export class FormBlockComponent
         this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
-
       this.fillMunicipalities(currStateId, munId);
+    }
+  }
+
+  requiredOtherCompany(e: any) {
+    if (e) {
+      if (e.id == "0") {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(
+            this.componentForm.get("companyOtherType").value,
+            Validators.required
+          )
+        );
+      } else {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(this.componentForm.get("companyOtherType").value)
+        );
+      }
     }
   }
 
@@ -652,7 +721,7 @@ export class FormBlockComponent
     imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
   }
   // adds the image file and image source to the imageGroup form control
-  fileManager(e) {    
+  fileManager(e) {
     let reader = new FileReader();
     reader.readAsDataURL(<File>e.target.files[0]);
     reader.onload = _event => {
@@ -704,9 +773,10 @@ export class FormBlockComponent
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       default:
-        return this.componentForm.controls["imageGroup"].value["imageSelected"] 
-                ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
-                : 'image';
+        return this.componentForm.controls["imageGroup"].value["imageSelected"]
+          ? this.componentForm.controls["imageGroup"].get("imageSelected").value
+              .name
+          : "image";
     }
   }
   // when X image remover is clicked
@@ -739,7 +809,9 @@ export class FormBlockComponent
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: `auto-${Math.random().toString(36).substring(2)}`,
+            id: `auto-${Math.random()
+              .toString(36)
+              .substring(2)}`,
             // image: imgGrp.get("imageSelected").value.name,
             // image: imgGrp.get("imageSrc").value,
             source: imgGrp.get("imageSrc").value,
@@ -785,9 +857,8 @@ export class FormBlockComponent
       this.componentForm.get("imageGroup").reset();
       // setTimeout(() => {
       //   this.sendNull = true;
-      // });      
-    }
-    else {
+      // });
+    } else {
       const inx = this.settings.formsContent["imageGroup"].fields[
         "imageDocente"
       ].options.findIndex(d => {
@@ -881,7 +952,7 @@ export class FormBlockComponent
       }
     });
     // console.log(this.componentForm.value);
-    // this.componentForm.setValue(data);    
+    // this.componentForm.setValue(data);
   }
 
   //? turning imageGroup fields into array
