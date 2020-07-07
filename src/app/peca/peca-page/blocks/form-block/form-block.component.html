@@ -67,9 +67,13 @@
               [virtualScroll]="true"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              (change)="settings.formsContent[field].isGrades 
-                ? setSchoolSections($event)
-                : updateMuns(field === 'addressState' ? true : false)"
+              (change)="
+                settings.formsContent[field].isGrades 
+                  ? setSchoolSections($event)
+                  : settings.formsContent[field].isFactoryType 
+                    ? requiredOtherCompany($event)
+                    : updateMuns(field === 'addressState' ? true : false)
+              "
               [readonly]="
                 settings.formsContent[field].readonly || isReadOnly()
               "
