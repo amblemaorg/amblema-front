@@ -3,6 +3,11 @@
 ::ng-deep {
   .nb-theme-default {
     nb-tabset {
+      @media (max-width: 768px) {
+        .tabs-padding-escuela {
+          padding: 1.5rem 0rem;
+        }
+      }
       .tab-link {
         font-family: "Montserrat";
         font-size: 1.2rem;
@@ -41,11 +46,18 @@
           }
         }
       }
+      @media (max-width: 405px) {
+        .tabset {
+          a {
+            width: 100%;
+          }
+        }
+      }
 
       .tab.active .tab-link {
         background-color: transparent;
         color: $blue;
-    }
+      }
       .tab,
       .tab:hover,
       .tab.active {

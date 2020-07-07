@@ -47,7 +47,11 @@
   width: 100%;
   padding: 50px;
 }
-
+@media (max-width: 768px) {
+  .container-form  {
+    padding: 1.5rem;
+  }
+}
 @media (max-width: 768px) {
   .bloque1 {
     width: 100%;

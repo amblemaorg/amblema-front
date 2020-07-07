@@ -165,19 +165,17 @@ export const INITIAL_WORKSHOP_CONFIG = {
   },
   blocks: [
     {
-      component: 'accordion',
+      component: 'tabs',
       settings: {
         items: [
           {
             title: "Preparación del taller",
-            icon: "taller-inicial",
             childBlocks: [
               { ...formTaller1 }
             ]
           },
           {
             title: "Registros inicial",
-            icon: "planificacion",
             childBlocks: [   
               { ...formTaller2 },           
               { ...registroTallerInicial },

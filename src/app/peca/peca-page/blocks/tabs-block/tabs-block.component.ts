@@ -18,7 +18,7 @@ import { GlobalService } from 'src/app/services/global.service';
   selector: 'peca-tabs-block',
   template: `
     <nb-tabset fullWidth>
-      <nb-tab [tabTitle]="item.title" *ngFor="let item of settings.items; index as i">
+      <nb-tab [class.tabs-padding-escuela]="item.title === 'Docentes' || item.title === 'Grado y secciones' || item.title === 'Estudiantes'" [tabTitle]="item.title" *ngFor="let item of settings.items; index as i">
         <ng-template #tabContainer></ng-template>
       </nb-tab>
     </nb-tabset>

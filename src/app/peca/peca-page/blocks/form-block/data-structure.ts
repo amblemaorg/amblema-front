@@ -144,6 +144,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         section: cf.get("section").value,
         date: cf.get("date").value,
         resultMul: cf.get("resultMul").value,
+        date2: cf.get("date").value,
         resultLog: cf.get("resultLog").value,
         indexMul: cf.get("indexMul").value,
         indexLog: cf.get("indexLog").value

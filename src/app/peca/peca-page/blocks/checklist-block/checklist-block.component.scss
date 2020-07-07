@@ -40,6 +40,11 @@
       font-size: 1rem;
       font-weight: 100;
     }
+    @media (max-width:768px){
+      span .descripcion {
+        font-size: 0.8rem;
+      }
+    }
     nb-checkbox .custom-checkbox {
       border-radius: 0px !important;
     }
@@ -78,6 +83,11 @@
       span {
         font-size: 1.125rem;
         color: white;
+      }
+      @media (max-width: 768px) {
+        span {
+          font-size: 0.9rem;
+        }
       }
     }
     .ng-select {
@@ -163,6 +173,11 @@
         font-size: 1.125rem;
         color: $blue;
       }
+      @media (max-width: 768px) {
+        span {
+          font-size: 0.9rem;
+        }
+      }
     }
     .ng-select {
       .ng-dropdown-panel {
@@ -246,6 +261,11 @@
       font-size: 1.125rem;
       color: $blue;
       word-wrap: break-word;
+    }
+    @media (max-width:768px){
+      span {
+        font-size: 0.9rem;
+      }
     }
   }
 
