@@ -351,7 +351,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
           : [],
         hasTitle: {
           tableTitle: this.currentStudentsGroup 
-            ? `Estudiantes de: ${mapper.grades[mapper.sections[section_name_index].grade].name}, sección ${mapper.sections[section_name_index].name}` 
+            ? `Estudiantes de ${mapper.grades[mapper.sections[section_name_index].grade].name}, sección ${mapper.sections[section_name_index].name}` 
             : "",
         },
         isEditable: true,
