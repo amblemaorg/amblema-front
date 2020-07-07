@@ -49,9 +49,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               label: 'Num datos',
               data: [10, 9, 15],
               backgroundColor: [
-                'rgb(66, 134, 244,0.5)',
-                'rgb(66, 134, 244,0.5)',
-                'rgb(66, 134, 244,0.5)',
+                '#81b03e',
+                '#81b03e',
+                '#81b03e',
               ],
               fill: false
             },
@@ -59,9 +59,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               label: 'Num datos',
               data: [3, 15, 11],
               backgroundColor: [
-                'rgb(74, 135, 72,0.5)',
-                'rgb(74, 135, 72,0.5)',
-                'rgb(74, 135, 72,0.5)',
+                '#fff',
+                '#fff',
+                '#fff',
               ],
               fill: false
             },
@@ -69,9 +69,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               label: 'Num datos',
               data: [8, 5, 12],
               backgroundColor: [
-                'rgb(229, 89, 50,0.5)',
-                'rgb(229, 89, 50,0.5)',
-                'rgb(229, 89, 50,0.5)'
+                '#00353a',
+                '#00353a',
+                '#00353a',
               ],
               fill: false
             }
