@@ -14,7 +14,6 @@
     @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
 }
 
-
 .h6-responsive{
 	display: inline-block;
 }
@@ -46,6 +45,31 @@
 
 	.owl-nav button.owl-next {
 		right: -77vw;
+	}
+
+	@media (min-width:576px) and (max-width:768px){
+		.owl-item img {
+			position: relative;
+			display: block;
+			width: 80% !important;
+			left: 60px;
+		}
+	}
+	@media (min-width:400px) and (max-width:575px){
+		.owl-item img {
+			position: relative;
+			display: block;
+			width: 80% !important;
+			left: 45px;
+		}
+	}
+	@media (max-width:399px){
+		.owl-item img {
+			position: relative;
+			display: block;
+			width: 80% !important;
+			left: 35px;
+		}
 	}
 
 	@media (max-width:400px){
