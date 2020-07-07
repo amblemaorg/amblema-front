@@ -115,7 +115,7 @@ const readingDiagnosticTable = {
         title: 'Sección'
       },
       date: {
-        title: 'Fecha'
+        title: 'Fecha resultado de lectura'
       },
       result: {
         title: 'Resultado de lectura '
@@ -249,10 +249,13 @@ const mathDiagnosticTable = {
         title: 'Sección'
       },
       date: {
-        title: 'Fecha'
+        title: 'Fecha resultado de multiplicación'
       },
       resultMul: {
         title: 'Resultado de multiplicación'
+      },
+      dateLog: {
+        title: 'Fecha resultado de lógica matematica'
       },
       resultLog: {
         title: 'Resultado de lógica matematica'
@@ -276,6 +279,7 @@ const mathDiagnosticTable = {
         section: 'B',
         date: '27/06/2020',
         resultMul: 40,
+        dateLog: '23/06/2020',
         resultLog: 50,
         indexMul: 100,
         indexLog: 29,
@@ -289,6 +293,7 @@ const mathDiagnosticTable = {
         section: 'A',
         date: '27/06/2020',
         resultMul: 60,
+        dateLog: '23/06/2020',
         resultLog: 80,
         indexMul: 100,
         indexLog: 29,
