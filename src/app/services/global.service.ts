@@ -243,6 +243,7 @@ export class GlobalService {
   @Output() showModalEmitter: EventEmitter<any> = new EventEmitter();
   @Output() resetEditedEmitter: EventEmitter<any> = new EventEmitter();
   @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() blockIntancesTableRefresherEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesEmitter: EventEmitter<{
     blocks: Map<string, PageBlockComponent>, 
     fromModal: boolean
@@ -266,10 +267,11 @@ export class GlobalService {
   resetEdited(buttonCode: string) {
     this.resetEditedEmitter.emit(buttonCode);
   }
-  setAsReadOnly(buttonCode: string, setReadOnly: boolean) {
+  setAsReadOnly(buttonCode: string, setReadOnly: boolean, isBtnCode: boolean = true) {
     this.setReadonlyEmitter.emit({
       buttonCode,
-      setReadOnly
+      setReadOnly,
+      isBtnCode
     });
   }
 
@@ -277,6 +279,13 @@ export class GlobalService {
     this.blockIntancesEmitter.emit({
       blocks: blocks, 
       fromModal: isFromModal
+    });
+  }
+
+  emitStudentsTableRefresh(tableName: string, id_string: string) {
+    this.blockIntancesTableRefresherEmitter.emit({
+      tableName, 
+      id_string
     });
   }
   //? -----------------------------------------------------------------------

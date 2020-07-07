@@ -1,5 +1,5 @@
 export function adaptBody(formType: string, body: any) {
-    let body_adapted = {};
+    const body_adapted = {};
 
     switch (formType) {        
         case 'agregarDocente':
@@ -19,9 +19,23 @@ export function adaptBody(formType: string, body: any) {
                 }
             });
             break;
+
+        case 'agregarGradoSeccion':
+            Object.keys(body).map( (key) => {
+                if (key != 'id') 
+                    body_adapted[key === 'grades' 
+                        ? 'grade'
+                        : key === 'docente' 
+                            ? 'teacher' 
+                            : 'name'] 
+                    = body[key];
+            });
+            break;
     
         default:
-            body_adapted = body;
+            Object.keys(body).map( (key) => {
+                body_adapted[key] = body[key];
+            });
             break;
     }
 
