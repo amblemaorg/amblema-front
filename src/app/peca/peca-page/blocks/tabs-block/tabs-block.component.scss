@@ -46,6 +46,13 @@
           }
         }
       }
+      @media (max-width: 405px) {
+        .tabset {
+          a {
+            width: 100%;
+          }
+        }
+      }
 
       .tab.active .tab-link {
         background-color: transparent;
