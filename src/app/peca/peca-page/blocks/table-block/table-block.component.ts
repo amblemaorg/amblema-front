@@ -35,6 +35,7 @@ export class TableBlockComponent
     total?: number;
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    tableTitle?: string; // to set a title for the table
   };
 
   // source: LocalDataSource | any;
