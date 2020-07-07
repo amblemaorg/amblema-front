@@ -150,6 +150,11 @@
     nb-user .user-name {
       font-family: "Montserrat" !important;
     }
+    @media (max-width: 768px) {
+      h6{
+        font-size: 1rem;
+      }
+    }
     h1 {
       font-size: 1.6rem;
       font-family: "Montserrat" !important;

@@ -21,6 +21,11 @@
                 font-size: 3rem;
             }
         }
+        @media (max-width: 768px) {
+          nb-accordion-item-header {
+            font-size: 0.9rem;
+          }
+        }
         nb-accordion-item {
           font-family: "Montserrat";
       }
