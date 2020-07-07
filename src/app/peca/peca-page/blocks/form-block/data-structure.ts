@@ -1,7 +1,7 @@
 import { FormGroup } from "@angular/forms";
 
 export function structureData(formType: string, formsContent, cf: FormGroup) {
-  let data = {
+  const data = {
     isThereTable: true,
     data: {}
   };
@@ -10,7 +10,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     case "agregarGradoSeccion": // for Datos de la Escuela view and Grados y Secciones section
       data.data = {
         grades: cf.get("grades").value,
-        section: cf.get("section").value,
+        section: cf.get("section").value.toUpperCase(),
         docente: formsContent["docente"].options.find(d => {
           return d.id === cf.get("docente").value;
         }).id

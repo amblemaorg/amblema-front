@@ -37,6 +37,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   source: LocalDataSource;
   isEdited: boolean;
   isEditable: boolean = true; // to disable editing on table actions
+  isContentRefreshing: boolean = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -70,9 +71,14 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     );
 
     this.subscription.add(
-      this.globals.setReadonlyEmitter.subscribe((data) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
-          this.isEditable = !data.setReadOnly;
+      this.globals.setReadonlyEmitter.subscribe((data) => {        
+        if (data.isBtnCode) {
+          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+            this.isEditable = !data.setReadOnly;
+        } else {
+          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+            this.isEditable = !data.setReadOnly;      
+        } 
       })
     ); 
   }
@@ -173,6 +179,15 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       if (this.settings.isFromImgContainer) this.settings['dataCopy'] = [...data.data];
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
+      
+      if (data.hasTitle) {
+        this.isContentRefreshing = true;
+        this.settings['tableTitle'] = data.hasTitle.tableTitle;
+        setTimeout(() => {
+          this.isContentRefreshing = false;
+        });
+      }
+      
       this.sendTableData();
     }    
   }

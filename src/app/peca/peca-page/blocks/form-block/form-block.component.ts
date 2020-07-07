@@ -51,6 +51,8 @@ export class FormBlockComponent
     notGenerateId?: boolean; // It is for forms that do not need to be assigned an id
     notResetForm?: boolean; //It is for events that do not require the component to be reset
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    methodUrlPlus?: string; // if fetcher method url cannot be set in the initial component use this prop, to complete it
+    tableRefreshName?: string; // to refresh table in the initial setter component
   };
 
   pecaId: string;
@@ -73,11 +75,15 @@ export class FormBlockComponent
   municipalities: MunicipalityInfo[] = [];
   showSelectTeacher: boolean = true;
   showSelectState: boolean = true;
+  isContentRefreshing: boolean = false;
   isEditing: boolean = false;
-  isInApproval: boolean;
+  isInApproval: boolean; // sets to true when a request has been sent and requires approval
   isEdited: boolean; // if form has been edited
   sendNull: boolean = true; // to avoid send form data null when uploading images
   someImgAdded: boolean; // to avoid send form null when images are saved in table
+
+  // currentGrade: string; // for grades selector only
+  sectionsArr: any[] = [];
 
   constructor(
     private store: Store,
@@ -114,6 +120,19 @@ export class FormBlockComponent
           if (this.sendNull) this.btnUpdater(null);
         }          
         else {this.btnUpdater(this.componentForm.value);}
+      })
+    );
+
+    if (
+      this.settings.formsContent["section"] &&
+      this.settings.formsContent["section"].emmitSectionChange
+    )
+    this.subscription.add(
+      this.componentForm.get("section").statusChanges.subscribe(val => {
+        if (val === "VALID" ) 
+          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,this.componentForm.get("section").value);
+        else 
+          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,null);
       })
     );
 
@@ -154,8 +173,13 @@ export class FormBlockComponent
     );
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
-          this.isInApproval = data.setReadOnly;        
+        if (data.isBtnCode) {
+          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+            this.isInApproval = data.setReadOnly;        
+        } else {
+          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+            this.isInApproval = data.setReadOnly;        
+        }    
       })
     );    
 
@@ -208,9 +232,28 @@ export class FormBlockComponent
   }
 
   setData(data: any) {
+    if (data.setContent) {
+      data.contentToSet.map((attr) => {
+        this.isContentRefreshing = true;
+        this.settings.formsContent[attr].options = data.data[attr];
+        if (
+          attr == "section" && 
+          this.settings.formsContent["section"] &&
+          this.settings.formsContent["section"].emmitSectionChange && 
+          this.componentForm.controls["section"].value
+        ) 
+          this.componentForm.patchValue({ section: "" });
+        setTimeout(() => {
+          this.isContentRefreshing = false;
+        });
+      });
+    }  
+
     if (!this.isEdited) {
-      this.settings.data = data;
-      this.setAllFields(this.settings.data);
+      if (!data.setContent) {
+        this.settings.data = data;
+        this.setAllFields(this.settings.data);
+      }
   
       if ( this.isDirty() ) this.btnUpdater(this.componentForm.value);
     }    
@@ -497,18 +540,24 @@ export class FormBlockComponent
 
     if (this.settings.makesNoRequest) commonTasks();
     else {
-      const method = this.settings.fetcherMethod || "post";
-      const resourcePath = this.settings.fetcherUrls[method];
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      
+
+      const method = this.settings.fetcherMethod || "post";
+      const resourcePath = this.settings.methodUrlPlus 
+        ? `${this.settings.fetcherUrls[method]}/${body[this.settings.methodUrlPlus]}`
+        : this.settings.fetcherUrls[method];      
+
+      if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
+ 
       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
-            
+          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+          
           this.toastr.success("Suministrado con éxito", "", {
             positionClass: "toast-bottom-right"
           });
@@ -517,6 +566,8 @@ export class FormBlockComponent
         },
         error => {
           this.sendingForm = false;
+          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+          
           this.toastr.error(
             "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
             "",
@@ -545,7 +596,7 @@ export class FormBlockComponent
     }
 
     this.componentForm.patchValue({ addressMunicipality: munId });
-  }
+  }  
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
   updateMuns(bool: boolean = true, munId: string = "") {
     if (bool) {
@@ -843,4 +894,32 @@ export class FormBlockComponent
   disableSaveAndCancelButtons() {
     this.isEditing = false;
   }
+  
+  // filling sections according to selected grade
+  private fillSections(grade = null) {
+    if (!grade)
+      this.sectionsArr = [];
+    else {
+      this.sectionsArr = this.settings.formsContent[
+        "section"
+      ].options.filter(s => {
+        return s.grade == grade;
+      });
+    }
+    this.componentForm.patchValue({ section: "" });
+  }  
+  // managing sections depending on grades
+  setSchoolSections(e) {
+    if (e) {
+      let currGrade = null;
+      currGrade =
+        this.componentForm.controls["grades"].value &&
+        this.componentForm.controls["grades"].value.length > 0
+          ? this.componentForm.controls["grades"].value
+          : null;
+
+      this.fillSections(currGrade);
+    } else this.fillSections();
+  }
+
 }

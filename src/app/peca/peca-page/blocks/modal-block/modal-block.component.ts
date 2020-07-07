@@ -140,7 +140,15 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
           else{
             this.instantiateChildBlocksGraphics();
           }
-          $(`#${data.code}-modal`).modal('show');
+
+          if (this.isBrowser) {
+            $(`#${data.code}-modal`).modal({
+              backdrop: false,
+              keyboard: false
+            });
+
+            $(`#${data.code}-modal`).modal('show');
+          }
         }
 
       })

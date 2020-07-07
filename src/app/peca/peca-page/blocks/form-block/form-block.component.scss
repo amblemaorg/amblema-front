@@ -377,6 +377,16 @@
       .ng-select {
           .ng-dropdown-panel {
             z-index: 3;
+
+            .ng-dropdown-panel-items {
+              .ng-option {
+                &.ng-option-marked {
+                  small, a {
+                    font-weight: bold;
+                  }
+                }
+              }
+            }
     
             .scroll-host {
                 left: -0.75rem;
@@ -434,7 +444,8 @@
               display: none;
           }
 
-          &.ng-select-filtered .ng-select-container .ng-placeholder {
+          &.ng-select-filtered .ng-select-container .ng-placeholder,
+          &.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder {
               display: none !important;
           }
 
