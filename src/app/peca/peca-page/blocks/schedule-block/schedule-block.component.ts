@@ -56,7 +56,7 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
 /*--------------------------------------------------------*/
 
   /*COnsumo Local*/
-  /*public data: object[] = [{
+  public data: object[] = [{
     Id: 1,
     Subject: 'Meeting',
     StartTime: new Date(2020, 5, 15),
@@ -74,8 +74,8 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
   }];
   public eventSettings: EventSettingsModel = {
     dataSource: this.data
-  }/*
--------------------------------------------------------*/
+  }
+/*-------------------------------------------------------*/
 
   public allowVirtualScroll: boolean = true;
   public currentView: View = 'Month';
