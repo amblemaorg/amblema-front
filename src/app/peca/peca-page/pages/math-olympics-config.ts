@@ -179,6 +179,7 @@ const formResultadoEstudiante = {
       ],
       modalCode: 'dataResultadoEstudiante',
       isFromCustomTableActions: true,
+      isDeleting: true,
     }
   }
   const modalResultadoEstudiante = {

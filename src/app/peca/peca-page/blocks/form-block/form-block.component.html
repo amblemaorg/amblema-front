@@ -34,7 +34,10 @@
           <ng-container *ngSwitchCase="'select'">
             <label>{{ settings.formsContent[field].label }}</label>
             <input
-              *ngIf="field == 'addressState' && !showSelectState"
+              *ngIf="
+                (field == 'addressState' && !showSelectState) ||
+                (settings.formsContent[field].shouldContentRefresh && isContentRefreshing)
+              "
               class="form-control"
               type="text"
               [formControlName]="field"
@@ -44,13 +47,16 @@
             <ng-select
               *ngIf="
                 (field == 'addressState' && showSelectState) ||
-                field != 'addressState'
+                (settings.formsContent[field].shouldContentRefresh && !isContentRefreshing) ||
+                field != 'addressState' 
               "
               class="form-control"
               [class.is-in-modal]="settings.isFromCustomTableActions"
               notFoundText="Elementos no encontrados"
               [items]="
-                field != 'addressMunicipality'
+                settings.formsContent[field].emmitSectionChange 
+                ? sectionsArr
+                : field != 'addressMunicipality'
                   ? settings.formsContent[field].options
                   : municipalities
               "
@@ -61,7 +67,9 @@
               [virtualScroll]="true"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              (change)="updateMuns(field === 'addressState' ? true : false)"
+              (change)="settings.formsContent[field].isGrades 
+                ? setSchoolSections($event)
+                : updateMuns(field === 'addressState' ? true : false)"
               [readonly]="
                 settings.formsContent[field].readonly || isReadOnly()
               "
@@ -118,6 +126,10 @@
               "
               [readonly]="
                 settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
+              "
+              [maxlength]="settings.formsContent[field].fields['prependInput'].maxlength 
+                ? settings.formsContent[field].fields['prependInput'].maxlength
+                : 'default'
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -198,6 +210,10 @@
                     settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
                   "
                   [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                  [maxlength]="settings.formsContent[field].fields[doublefield].maxlength 
+                    ? settings.formsContent[field].fields[doublefield].maxlength
+                    : 'default'
+                  "
                 />                
               </ng-container>
               <ng-template #regularDouble>
@@ -223,6 +239,10 @@
                       settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
                     "
                     [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                    [maxlength]="settings.formsContent[field].fields[doublefield].maxlength 
+                      ? settings.formsContent[field].fields[doublefield].maxlength
+                      : 'default'
+                    "
                   />
                   <ng-container *ngIf="hasErrors(field, true, doublefield)">
                     <div class="error-message">
@@ -278,6 +298,10 @@
                 settings.formsContent[field].readonly || isReadOnly()
               "
               [pattern]="settings.formsContent[field].validations.pattern"
+              [maxlength]="settings.formsContent[field].maxlength 
+                ? settings.formsContent[field].maxlength
+                : 'default'
+              "
             />
           </ng-container>
 

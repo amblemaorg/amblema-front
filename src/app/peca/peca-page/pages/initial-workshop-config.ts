@@ -140,6 +140,7 @@ const textsAndButtonsRegistroTallerInicial = {
     ],
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
+    isDeleting: true,
   }
 }
 const modalRegistroTallerInicial = {

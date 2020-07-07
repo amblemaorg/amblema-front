@@ -125,6 +125,7 @@ const textsAndButtonsTestimonioDocenteTabla = {
       ],
       modalCode: 'dataTestimonioDocenteTabla',
       isFromCustomTableActions: true,
+      isDeleting: true,
     }
 }
 const modalTestimonioDocenteTabla = {

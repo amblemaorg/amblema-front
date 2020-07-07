@@ -3,7 +3,17 @@
 $table-border-color: 1px solid $blue;
 
 ::ng-deep {
-    .table-container { overflow-x: auto; }
+    .table-container { 
+        overflow-x: auto; 
+
+        .table-title {
+            width: 100%;
+            color: $blue;
+            position: relative;
+            bottom: -0.85rem;
+            margin-top: 1rem;
+        }
+    }
     .estilo-total{
         text-align: right;
         margin: 0 2.5rem 2rem 0;

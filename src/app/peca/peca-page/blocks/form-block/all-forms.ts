@@ -93,13 +93,22 @@
       }
     },
 
-  (V) to make a field Read Only set readonly property as following::
+  (V) to make a field 'Read Only', 'Max length', 'Refreshable', 'Grades sections refreshable', 'Section change emmitter'; set 
+    'readonly', 
+    'maxlength',
+    'shouldContentRefresh',
+    'isGrades',
+    'emmitSectionChange'; 
+    property as following::
   -->
     field_name: {
       ...(this field's properties),
-      .
-      .
+      ..
       readonly: true,
+      maxlength: "[number]",
+      shouldContentRefresh: true,
+      isGrades: true,
+      emmitSectionChange: true,
       .
       .
     }
@@ -856,29 +865,32 @@ export const formGradosSecciones = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "1" },
-      { id: "2", name: "2" },
-      { id: "3", name: "3" },
-      { id: "4", name: "4" },
-      { id: "5", name: "5" },
-      { id: "6", name: "6" }
+      { id: "0", name: "Preescolar" },
+      { id: "1", name: "1er Grado" },
+      { id: "2", name: "2do Grado" },
+      { id: "3", name: "3er Grado" },
+      { id: "4", name: "4to Grado" },
+      { id: "5", name: "5to Grado" },
+      { id: "6", name: "6to Grado" }
     ]
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    maxlength: "1",
+    ...controlProps.onlyLettersAndRequired
   },
   docente: {
     label: "Seleccione el docente",
     placeholder: "Docente",
     fullwidth: false,
+    shouldContentRefresh: true,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "Alfredo" },
-      { id: "2", name: "Yanior" },
-      { id: "3", name: "Stephanie" }
+      // { id: "1", name: "Alfredo" },
+      // { id: "2", name: "Yanior" },
+      // { id: "3", name: "Stephanie" }
     ]
   }
 };
@@ -888,28 +900,31 @@ export const formTabsEstudiantes = {
     label: "Seleccione el grado",
     placeholder: "Grados",
     fullwidth: false,
+    isGrades: true,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "1" },
-      { id: "2", name: "2" },
-      { id: "3", name: "3" },
-      { id: "4", name: "4" },
-      { id: "5", name: "5" },
-      { id: "6", name: "6" }
+      // { id: "0", name: "Preescolar" },
+      // { id: "1", name: "1er Grado" },
+      // { id: "2", name: "2do Grado" },
+      // { id: "3", name: "3er Grado" },
+      // { id: "4", name: "4to Grado" },
+      // { id: "5", name: "5to Grado" },
+      // { id: "6", name: "6to Grado" }
     ]
   },
   section: {
     label: "Seleccione la sección",
     placeholder: "Sección",
     fullwidth: false,
+    emmitSectionChange: true,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "A" },
-      { id: "2", name: "B" },
-      { id: "3", name: "C" },
-      { id: "4", name: "D" },
-      { id: "5", name: "E" },
-      { id: "6", name: "F" }
+      // { id: "1", name: "A" },
+      // { id: "2", name: "B" },
+      // { id: "3", name: "C" },
+      // { id: "4", name: "D" },
+      // { id: "5", name: "E" },
+      // { id: "6", name: "F" }
     ]
   },
   name: {
