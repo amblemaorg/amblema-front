@@ -43,12 +43,13 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   ) {
     super(factoryResolver);
     //this.instantiateComponent(config);
-   /*  globals.blockIntancesEmitter.subscribe(data => {
+   globals.blockIntancesEmitter.subscribe(data => {
       data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
+      this.blockInstances.set(name, block));
+      console.log(this.blockInstances);
+
       if (this.loadedData) this.updateMethods();
-    }); */
+    }); 
   }
   ngOnInit() {
     this.getInfo();
@@ -75,7 +76,13 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         }
         this.students = auxStudents
         console.log(this.students);
-
+        if (!isNullOrUndefined(data)) {
+         console.log("el primer estudiante es",this.students[0]);
+         this.setReadingTableData(this.students[0], diagnosticDataToReadingFormMapper);
+         this.setMathTableData (this.students[0], diagnosticDataToMathFormMapper);
+          this.loadedData = true;
+          if (this.isInstanciated) this.updateMethods();
+        }
        // console.log(this.students);
        // console.log(this.grade);
         //console.log(this.section)
@@ -133,6 +140,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(readingTableData),
         isEditable: true
       };
+      console.log("este es el mapper de lectura", this.readingData.data)
     } else {
       this.readingData = readingTableData;
     }
@@ -143,6 +151,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(mathTableData),
         isEditable: true
       };
+      console.log("este es el mapper de matematica", this.mathData.data)
     } else {
       this.mathData = mathTableData;
     }
