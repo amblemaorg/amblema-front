@@ -31,6 +31,27 @@ export function adaptBody(formType: string, body: any) {
                     = body[key];
             });
             break;
+
+        case 'buscarEstudiante':
+            Object.keys(body).map( (key) => {
+                if (
+                    key != 'id' && 
+                    key != 'documentGroup' && 
+                    key != 'grades' && 
+                    key != 'section'
+                ) 
+                    body_adapted[key === 'name' 
+                        ? 'firstName' 
+                        : key === 'age' 
+                            ? 'birthdate'
+                            : key] 
+                    = body[key];
+                else if (key === 'documentGroup') {
+                    body_adapted['cardType'] = body[key]['prependSelect'];
+                    body_adapted['cardId'] = body[key]['prependInput'];
+                }
+            });
+            break;
     
         default:
             Object.keys(body).map( (key) => {

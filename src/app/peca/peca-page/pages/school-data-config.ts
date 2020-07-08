@@ -4,6 +4,7 @@ import {
   formGradosSecciones,
   formTabsEstudiantes,
   formDatosEscuelaModal,
+  formTabsEstudiantesGradesSections,
 } from '../blocks/form-block/all-forms';
 
 const statusGeneral = {
@@ -379,7 +380,7 @@ const formEstudiantes = {
   component: 'form',
   name: 'estudiantesPostForm',
   settings: {
-    formsContent: formTabsEstudiantes,
+    formsContent: { ...formTabsEstudiantesGradesSections, ...formTabsEstudiantes },
     buttons: ['agregar'],
     tableCode: 'schoolDataConfigTablaEstudiante',
     formType: 'buscarEstudiante',
@@ -450,34 +451,7 @@ const tablaEstudiante = {
     },
     modalCode: 'schoolDataConfigTablaEstudiante',
     tableCode: 'schoolDataConfigTablaEstudiante',
-    schoolDataConfigTablaEstudiante: [
-      // {
-      //   id: '1abcdefghijk',
-      //   name: 'Ysa',
-      //   lastName: 'Godoy',
-      //   documentGroup: {
-      //     prependInput: '23577413',
-      //     prependSelect: '1',
-      //   },
-      //   gender: '1',
-      //   age: '1993-06-02T00:00:00.000Z',
-      //   grades: '1',
-      //   section: '1',
-      // },
-      // {
-      //   id: '2abcdefghijk',
-      //   name: 'ALfredo',
-      //   lastName: 'Valbuena',
-      //   documentGroup: {
-      //     prependInput: '123456',
-      //     prependSelect: '1',
-      //   },
-      //   gender: '2',
-      //   age: '1992-06-02T20:09:07.465000',
-      //   grades: '1',
-      //   section: '1',
-      // },
-    ],
+    schoolDataConfigTablaEstudiante: [],
     classes: {
       hideView: true,
       hideEdit: false,
