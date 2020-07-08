@@ -31,7 +31,7 @@ const routes: Routes = [
         component: SchoolDataPageComponent,
       },
       {
-        path: 'lapso/:lapsoNumber/diagnostico-inicial',
+        path: 'diagnostico-inicial',
         component: InitialDiagnosticPageComponent,
       },
       {

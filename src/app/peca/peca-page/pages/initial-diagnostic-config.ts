@@ -218,6 +218,7 @@ const modalReadingDiagnosticTable = {
 
 const mathDiagnosticTable = {
   component: "table",
+  name: "mathTable",
   settings: {
     columns: {
       name: {
@@ -368,7 +369,7 @@ const modalMathDiagnosticTable = {
 };
 //* ------------------------------------------
 
-export const INITIAL_DIAGNOSTIC_CONFIG = {
+ export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
     title: "Diagnóstico"
   },
@@ -399,4 +400,28 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
       }
     }
   ]
+}; 
+/* export const INITIAL_DIAGNOSTIC_CONFIG = {
+  header: {
+    title: "Diagnóstico"
+  },
+  blocks: [
+    {
+      component: "table",
+      settings: {
+        items: [
+          {
+            title: "Lectura",
+            childBlocks: [
+              { ...botonEstadisticaLectura },
+              { ...readingDiagnosticTable },
+              { ...modalReadingDiagnosticTable },
+              { ...modalEstadisticasLectura }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 };
+ */

@@ -6,9 +6,11 @@ export function diagnosticDataToReadingFormMapper(diagnosticReadingData) {
     gender,
     grade,
     section,
+    lapse1: {
     readingDate,
     wordsPerMin,
     wordsPerMinIndex
+    }
   } = diagnosticReadingData;
 
   return {
@@ -32,12 +34,14 @@ export function diagnosticDataToMathFormMapper(diagnosticMathData) {
     gender,
     grade,
     section,
+    lapse1: {
     mathDate,
     logicDate,
     multiplicationsPerMin,
     operationsPerMin,
     multiplicationsPerMinIndex,
     operationsPerMinIndex
+    }
   } = diagnosticMathData;
 
   return {
