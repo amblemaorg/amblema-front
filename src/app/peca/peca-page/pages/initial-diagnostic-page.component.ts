@@ -48,7 +48,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       this.blockInstances.set(name, block));
       console.log(this.blockInstances);
 
-      if (this.loadedData) this.updateMethods();
+      if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     }); 
   }
   ngOnInit() {
@@ -59,7 +59,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
         this.response = data.activePecaContent.school;
-      // console.log(this.response.sections);
+      //console.log(this.response.sections);
        let auxStudents = [];
         for (let i = 0; i < this.response.sections.length; i++){
         this.grade = this.response.sections[i].grade;
@@ -78,8 +78,8 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         console.log(this.students);
         if (!isNullOrUndefined(data)) {
          console.log("el primer estudiante es",this.students[0]);
-         this.setReadingTableData(this.students[0], diagnosticDataToReadingFormMapper);
-         this.setMathTableData (this.students[0], diagnosticDataToMathFormMapper);
+         this.setReadingTableData(this.students, diagnosticDataToReadingFormMapper);
+         this.setMathTableData (this.students, diagnosticDataToMathFormMapper);
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
@@ -118,8 +118,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   }
   updateMethods(updateData: boolean = true) {
     this.updateDataToBlocks(updateData);
-    // this.updateStaticFetchers();
-    // this.updateDynamicFetchers();
+    this.updateDynamicFetchers();
   }
   updateDataToBlocks(updateData: boolean) {
     if (updateData) {
@@ -127,13 +126,29 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       this.setBlockData("mathTable", this.mathData);
     }
   }
-  updateStaticFetchers() {
-    console.log("static");
+  
+  updateDynamicFetchers() {
+    //Update reading modal
+    this.createAndSetBlockFetcherUrls(
+      "readingModalForm",
+      {
+        put: () =>
+          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`
+      }/*,
+      "settings.data.id"*/
+    );
+    //Delete reading modal
+    this.createAndSetBlockFetcherUrls(
+      "readingDeleteModal",
+      {
+        delete: () =>
+        `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`
+      },
+      "settings.dataFromRow.data.newData.id" 
+    );  
   }
 
-  updateDynamicFetchers() {
-    console.log("dynamic");
-  }
+
   setReadingTableData(readingTableData, _mapper?: Function) {
     if (_mapper) {
       this.readingData = {
