@@ -298,4 +298,14 @@
       font-family: "Montserrat";
     }
   }
+
+  .ng-select {
+    .ng-select-container {
+      .ng-placeholder {
+          font-size: 0.8rem;
+          font-family: "Montserrat";
+          line-height: 2;
+      }
+    }
+  }
 }

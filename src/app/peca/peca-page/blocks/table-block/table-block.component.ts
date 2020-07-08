@@ -35,12 +35,14 @@ export class TableBlockComponent
     total?: number;
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    tableTitle?: string; // to set a title for the table
   };
 
   // source: LocalDataSource | any;
   source: LocalDataSource;
   isEdited: boolean;
   isEditable: boolean = true; // to disable editing on table actions
+  isContentRefreshing: boolean = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -74,12 +76,20 @@ export class TableBlockComponent
     );
 
     this.subscription.add(
-      this.globals.setReadonlyEmitter.subscribe(data => {
-        if (
-          this.settings.buttonCode &&
-          this.settings.buttonCode == data.buttonCode
-        )
-          this.isEditable = !data.setReadOnly;
+      this.globals.setReadonlyEmitter.subscribe((data) => {        
+        if (data.isBtnCode) {
+          if (
+            this.settings.buttonCode && 
+            this.settings.buttonCode == data.buttonCode
+          )
+            this.isEditable = !data.setReadOnly;
+        } else {
+          if (
+            this.settings.tableCode && 
+            this.settings.tableCode == data.buttonCode
+          )
+            this.isEditable = !data.setReadOnly;      
+        } 
       })
     );
   }
@@ -193,6 +203,15 @@ export class TableBlockComponent
         this.settings["dataCopy"] = [...data.data];
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
+      
+      if (data.hasTitle) {
+        this.isContentRefreshing = true;
+        this.settings['tableTitle'] = data.hasTitle.tableTitle;
+        setTimeout(() => {
+          this.isContentRefreshing = false;
+        });
+      }
+      
       this.sendTableData();
     }
   }

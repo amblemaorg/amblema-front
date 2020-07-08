@@ -95,6 +95,7 @@ const textsAndButtonsTablaImagenesActivity = {
         ],
         modalCode: 'dataTablaImagenesActividad',
         isFromCustomTableActions: true,
+        isDeleting: true,
     }
 }
 const modalTablaImagenesActivity = {

@@ -1,4 +1,9 @@
 <div class="table-container">
+  <h6 *ngIf="settings.tableTitle && !isContentRefreshing" class="table-title">
+    {{
+      settings.tableTitle
+    }}
+  </h6>
   <ng2-smart-table
     [settings]="settings"
     [source]="source"
