@@ -254,7 +254,8 @@ export class FormBlockComponent
     if (data.setContent) {
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
-        this.settings.formsContent[attr].options = data.data[attr];
+        this.settings.formsContent[attr].options = data.data[attr];        
+
         if (
           attr == "section" && 
           this.settings.formsContent["section"] &&
@@ -262,10 +263,27 @@ export class FormBlockComponent
           this.componentForm.controls["section"].value
         ) 
           this.componentForm.patchValue({ section: "" });
+
+        if (
+          attr == "grades" && 
+          this.settings.formsContent["grades"] &&
+          this.settings.formsContent["grades"].isGrades && 
+          (
+            this.componentForm.controls["grades"].value == "" ||
+            !this.componentForm.dirty
+          )
+        ) {
+          this.componentForm.patchValue({ 
+            grades: this.settings.formsContent["grades"].options[0].id 
+          });
+          this.setSchoolSections(true);          
+        }
+        
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
       });
+      // console.log(this.componentForm.dirty);
     }  
 
     if (!this.isEdited) {
@@ -559,6 +577,8 @@ export class FormBlockComponent
       // initializers
       if (!this.settings.notResetForm) {
         cf.reset();
+        if (this.settings.formsContent['documentGroup'])
+          cf.controls["documentGroup"].get("prependSelect").setValue("1");
         this.municipalities = [];
         Object.keys(this.wrongDateDisabler).map(f => {
           this.wrongDateDisabler[f] = false;
@@ -570,19 +590,25 @@ export class FormBlockComponent
     };
 
     if (this.settings.makesNoRequest) commonTasks();
-    else {
+    else {      
+      const method = this.settings.fetcherMethod || "post";
+      const resourcePath = this.settings.methodUrlPlus 
+        ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]}`
+        : this.settings.fetcherUrls[method];    
+        
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
 
-      const method = this.settings.fetcherMethod || "post";
-      const resourcePath = this.settings.methodUrlPlus 
-        ? `${this.settings.fetcherUrls[method]}/${body[this.settings.methodUrlPlus]}`
-        : this.settings.fetcherUrls[method];      
-
       if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
  
+      // console.log(
+      //   'method: ', method,
+      //   'url: ', resourcePath,
+      //   'body: ', body
+      // );
+
       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
@@ -876,48 +902,48 @@ export class FormBlockComponent
   }
   //? -----------------------------------------------------------------------------------
 
-  searchAndFillTable() {
-    let obj = {
-      code: this.settings.tableCode,
-      dataArr: [],
-      resetData: true,
-      action: "add"
-    };
+  // searchAndFillTable() {
+  //   let obj = {
+  //     code: this.settings.tableCode,
+  //     dataArr: [],
+  //     resetData: true,
+  //     action: "add"
+  //   };
 
-    switch (this.settings.formType) {
-      case "buscarEstudiante":
-        obj.dataArr = [
-          {
-            name: "Name 1",
-            lastName: "Lastname 1",
-            doc: "123456789",
-            sex: "Femenino",
-            age: "11"
-          },
-          {
-            name: "Name 2",
-            lastName: "Lastname 2",
-            doc: "123456789",
-            sex: "Masculino",
-            age: "13"
-          },
-          {
-            name: "Name 3",
-            lastName: "Lastname 3",
-            doc: "123456789",
-            sex: "Femenino",
-            age: "12"
-          }
-        ];
-        break;
+  //   switch (this.settings.formType) {
+  //     case "buscarEstudiante":
+  //       obj.dataArr = [
+  //         {
+  //           name: "Name 1",
+  //           lastName: "Lastname 1",
+  //           doc: "123456789",
+  //           sex: "Femenino",
+  //           age: "11"
+  //         },
+  //         {
+  //           name: "Name 2",
+  //           lastName: "Lastname 2",
+  //           doc: "123456789",
+  //           sex: "Masculino",
+  //           age: "13"
+  //         },
+  //         {
+  //           name: "Name 3",
+  //           lastName: "Lastname 3",
+  //           doc: "123456789",
+  //           sex: "Femenino",
+  //           age: "12"
+  //         }
+  //       ];
+  //       break;
 
-      default:
-        break;
-    }
+  //     default:
+  //       break;
+  //   }
 
-    this.globals.tableDataUpdater(obj);
-    this.componentForm.reset();
-  }
+  //   this.globals.tableDataUpdater(obj);
+  //   this.componentForm.reset();
+  // }
 
   // setting inputs data
   setAllFields(data) {
@@ -968,16 +994,21 @@ export class FormBlockComponent
   
   // filling sections according to selected grade
   private fillSections(grade = null) {
-    if (!grade)
+    if (!grade){
       this.sectionsArr = [];
+      this.componentForm.patchValue({ section: "" });
+    }
     else {
       this.sectionsArr = this.settings.formsContent[
         "section"
       ].options.filter(s => {
         return s.grade == grade;
       });
-    }
-    this.componentForm.patchValue({ section: "" });
+
+      this.componentForm.patchValue({ 
+        section: this.sectionsArr[0].id 
+      }); 
+    }   
   }  
   // managing sections depending on grades
   setSchoolSections(e) {
