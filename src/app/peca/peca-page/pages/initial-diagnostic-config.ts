@@ -167,6 +167,7 @@ const readingDiagnosticTable = {
 //* MODAL LECTURA ----------------------------------
 const formReadingDiagnosticTable = {
   component: "form",
+  name: 'readingModalForm',
   viewMode: "both",
   settings: {
     formsContent: formLecturaModal,
@@ -174,11 +175,13 @@ const formReadingDiagnosticTable = {
     formType: "tablaLectura",
     tableCode: "initialDiagnosticConfigLectura",
     modalCode: "initialDiagnosticConfigLectura",
-    isFromCustomTableActions: true
+    isFromCustomTableActions: true,
+    fetcherMethod: 'put',
   }
 };
 const textsAndButtonsReadingDiagnosticTable = {
   component: "textsbuttons",
+  name: 'readingDeleteModal',
   settings: {
     subtitles: [
       {
@@ -196,12 +199,13 @@ const textsAndButtonsReadingDiagnosticTable = {
       }
     ],
     modalCode: "initialDiagnosticConfigLectura",
-    isFromCustomTableActions: true
+    isFromCustomTableActions: true,
+    //isDeleting: true,
+    fetcherMethod: 'delete',
   }
 };
 const modalReadingDiagnosticTable = {
   component: "modal",
-  name: "mathTable",
   settings: {
     modalCode: "initialDiagnosticConfigLectura",
     items: [
@@ -326,6 +330,7 @@ const mathDiagnosticTable = {
 //* MODAL MATEMATICA ----------------------------------
 const formMathDiagnosticTable = {
   component: "form",
+  name: 'mathModalForm',
   viewMode: "both",
   settings: {
     formsContent: formMatematicaModal,
@@ -333,11 +338,13 @@ const formMathDiagnosticTable = {
     formType: "tablaMatematica",
     tableCode: "initialDiagnosticConfigMatematica",
     modalCode: "initialDiagnosticConfigMatematica",
-    isFromCustomTableActions: true
+    isFromCustomTableActions: true,
+    fetcherMethod: 'put',
   }
 };
 const textsAndButtonsMathDiagnosticTable = {
   component: "textsbuttons",
+  name: 'mathDeleteModal',
   settings: {
     subtitles: [
       {
@@ -355,7 +362,9 @@ const textsAndButtonsMathDiagnosticTable = {
       }
     ],
     modalCode: "initialDiagnosticConfigMatematica",
-    isFromCustomTableActions: true
+    isFromCustomTableActions: true,
+    isDeleting: true,
+    fetcherMethod: 'delete',
   }
 };
 const modalMathDiagnosticTable = {
@@ -406,27 +415,3 @@ const modalMathDiagnosticTable = {
     }
   ]
 }; 
-/* export const INITIAL_DIAGNOSTIC_CONFIG = {
-  header: {
-    title: "Diagnóstico"
-  },
-  blocks: [
-    {
-      component: "table",
-      settings: {
-        items: [
-          {
-            title: "Lectura",
-            childBlocks: [
-              { ...botonEstadisticaLectura },
-              { ...readingDiagnosticTable },
-              { ...modalReadingDiagnosticTable },
-              { ...modalEstadisticasLectura }
-            ]
-          }
-        ]
-      }
-    }
-  ]
-};
- */

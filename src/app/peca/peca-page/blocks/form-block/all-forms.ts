@@ -1492,7 +1492,7 @@ export const formMatematicaModal = {
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
-  date2: {
+  dateLog: {
     label: "Fecha del resultado logica matematica",
     placeholder: "Fecha del resultado de logica matematica",
     fullwidth: false,

@@ -1,5 +1,6 @@
 export function diagnosticDataToReadingFormMapper(diagnosticReadingData) {
-  const {
+  return diagnosticReadingData.map((student) => {
+    const {
     id,
     firstName,
     lastName,
@@ -11,7 +12,7 @@ export function diagnosticDataToReadingFormMapper(diagnosticReadingData) {
     wordsPerMin,
     wordsPerMinIndex
     }
-  } = diagnosticReadingData;
+  } = student;
 
   return {
     id,
@@ -24,9 +25,11 @@ export function diagnosticDataToReadingFormMapper(diagnosticReadingData) {
     result: wordsPerMin,
     index: wordsPerMinIndex
   };
+})
 }
 
 export function diagnosticDataToMathFormMapper(diagnosticMathData) {
+  return diagnosticMathData.map((student) => {
   const {
     id,
     firstName,
@@ -42,7 +45,7 @@ export function diagnosticDataToMathFormMapper(diagnosticMathData) {
     multiplicationsPerMinIndex,
     operationsPerMinIndex
     }
-  } = diagnosticMathData;
+  } = student;
 
   return {
     id,
@@ -52,11 +55,13 @@ export function diagnosticDataToMathFormMapper(diagnosticMathData) {
     grade,
     section,
     date: mathDate,
+    dateLog: logicDate,
     resultMul: multiplicationsPerMin,
     resultLog: operationsPerMin,
     indexMul: multiplicationsPerMinIndex,
     indexLog: operationsPerMinIndex
   };
+})
 }
 /*
 export function diagnosticDataToMathFormMapper(diagnosticData) {
