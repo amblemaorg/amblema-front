@@ -895,22 +895,14 @@ export const formGradosSecciones = {
   }
 };
 /*Tabs Estudiantes*/
-export const formTabsEstudiantes = {
+export const formTabsEstudiantesGradesSections = {
   grades: {
     label: "Seleccione el grado",
     placeholder: "Grados",
     fullwidth: false,
     isGrades: true,
     ...controlProps.selectAndRequired,
-    options: [
-      // { id: "0", name: "Preescolar" },
-      // { id: "1", name: "1er Grado" },
-      // { id: "2", name: "2do Grado" },
-      // { id: "3", name: "3er Grado" },
-      // { id: "4", name: "4to Grado" },
-      // { id: "5", name: "5to Grado" },
-      // { id: "6", name: "6to Grado" }
-    ]
+    options: []
   },
   section: {
     label: "Seleccione la sección",
@@ -918,15 +910,10 @@ export const formTabsEstudiantes = {
     fullwidth: false,
     emmitSectionChange: true,
     ...controlProps.selectAndRequired,
-    options: [
-      // { id: "1", name: "A" },
-      // { id: "2", name: "B" },
-      // { id: "3", name: "C" },
-      // { id: "4", name: "D" },
-      // { id: "5", name: "E" },
-      // { id: "6", name: "F" }
-    ]
+    options: []
   },
+}
+export const formTabsEstudiantes = {  
   name: {
     label: "Nombre Estudiante",
     placeholder: "Nombre",

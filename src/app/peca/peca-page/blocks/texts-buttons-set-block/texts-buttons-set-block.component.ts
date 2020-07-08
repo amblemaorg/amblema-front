@@ -282,6 +282,11 @@ export class TextsButtonsSetBlockComponent
             const method = this.settings.fetcherMethod || 'delete';
             const url = this.settings.fetcherUrls[method];
 
+            // console.log(
+            //   'method: ', method,
+            //   'url: ', url
+            // );
+
             this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();

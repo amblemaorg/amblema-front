@@ -114,10 +114,12 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
             .value,
           prependInput: cf.controls["documentGroup"].get("prependInput").value
         },
-        gender: cf.get("gender").value,
-        grades: cf.get("grades").value,
-        section: cf.get("section").value
+        gender: cf.get("gender").value, 
       };
+      if (formsContent["grades"]) 
+        data.data["grades"] = cf.get("grades").value;
+      if (formsContent["section"]) 
+        data.data["section"] = cf.get("section").value;
       break;
     case "initialWorkshopConfigPreparacionTaller": // for Taller Inicial view and Preparacion del Taller section
       data.isThereTable = false;
