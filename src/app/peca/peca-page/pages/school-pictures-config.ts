@@ -3,17 +3,10 @@ import { tablaImagenesActividadModal } from '../blocks/form-block/all-forms'
 const selectEstatusActivity = {
     component: 'textsbuttons',
     settings: {
-        dateOrtext: {
-
-        },
-        selectGeneralStatus:
-        {
-            placeholder: 'Pendiente',
-            lista: [
-                { id: 1, name: 'Pendiente' },
-                { id: 2, name: 'Aprobado' },
-                { id: 3, name: 'Rechazado' },
-            ]
+        dateOrtext: {},
+        status: {
+            text: 'Estatus',
+            subText: 1
         },
         btnGeneral:
         {
