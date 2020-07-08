@@ -6,6 +6,16 @@ formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
     { id: "4", name: "Gustavo", lastName: 'Castillo', addressState: '165146541654hjvjh' },
 ];
 
+const statusGeneral = {
+    component: 'textsbuttons',
+    settings: {
+        dateOrtext: {},
+        status: {
+            text: 'Estatus',
+            subText: 1
+        },
+    }
+};
 const formTestDoc = {
     component: 'form',
     settings: {
@@ -41,7 +51,7 @@ const testimonioDocenteTabla = {
             //     filterFunction: (cell?: any, search?: string) => {
             //         let value: string = cell == "1" ? 'Activo':'Inactivo';
             //         value = value.toUpperCase();
-                    
+
             //         if (value.includes(search.toUpperCase()) || search === '') return true;
             //         else return false;
             //     }
@@ -61,7 +71,7 @@ const testimonioDocenteTabla = {
                 // status: '1',
                 source: null,
                 imageSelected: null,
-            },  
+            },
         ],
         classes: {
             hideView: false,
@@ -88,23 +98,23 @@ const formTestimonioDocenteTabla = {
     component: 'form',
     viewMode: 'edit',
     settings: {
-      formsContent: formTestimonioDocentesModalEdit,
-      buttons: ['guardar'],
-      formType: 'docenteTestimonioUpdate',
-      tableCode: 'dataTestimonioDocenteTabla',
-      modalCode: 'dataTestimonioDocenteTabla',
-      isFromCustomTableActions: true,
-      alwaysValidations: true,
+        formsContent: formTestimonioDocentesModalEdit,
+        buttons: ['guardar'],
+        formType: 'docenteTestimonioUpdate',
+        tableCode: 'dataTestimonioDocenteTabla',
+        modalCode: 'dataTestimonioDocenteTabla',
+        isFromCustomTableActions: true,
+        alwaysValidations: true,
     }
 }
 const formTestimonioDocenteTablaViewOnly = {
     component: 'form',
     viewMode: 'view',
     settings: {
-      formsContent: formTestimonioDocentesModal,
-      tableCode: 'dataTestimonioDocenteTabla',
-      modalCode: 'dataTestimonioDocenteTabla',
-      isFromCustomTableActions: true,
+        formsContent: formTestimonioDocentesModal,
+        tableCode: 'dataTestimonioDocenteTabla',
+        modalCode: 'dataTestimonioDocenteTabla',
+        isFromCustomTableActions: true,
     }
 }
 const textsAndButtonsTestimonioDocenteTabla = {
@@ -131,17 +141,17 @@ const textsAndButtonsTestimonioDocenteTabla = {
 const modalTestimonioDocenteTabla = {
     component: 'modal',
     settings: {
-      modalCode: 'dataTestimonioDocenteTabla',
-      isFromImgPlusContainer: true,
-      items: [
-        {        
-          childBlocks: [
-            { ...formTestimonioDocenteTabla },
-            { ...formTestimonioDocenteTablaViewOnly },
-            { ...textsAndButtonsTestimonioDocenteTabla },
-          ]
-        }
-      ]
+        modalCode: 'dataTestimonioDocenteTabla',
+        isFromImgPlusContainer: true,
+        items: [
+            {
+                childBlocks: [
+                    { ...formTestimonioDocenteTabla },
+                    { ...formTestimonioDocenteTablaViewOnly },
+                    { ...textsAndButtonsTestimonioDocenteTabla },
+                ]
+            }
+        ]
     }
 }
 //* ------------------------------------------
@@ -157,6 +167,7 @@ export const TEACHER_TESTIMONY_CONFIG = {
                 items: [
                     {
                         childBlocks: [
+                            { ...statusGeneral },
                             { ...formTestDoc },
                             { ...testimonioDocenteTabla },
                             { ...textsAndButtons },

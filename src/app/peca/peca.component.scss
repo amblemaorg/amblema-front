@@ -33,7 +33,7 @@
       color-primary-600: #274bdb,
       color-primary-700: #1a34b8,
       color-primary-800: #102694,
-      color-primary-900: #091c7a
+      color-primary-900: #091c7a,
     ),
     default,
     default
@@ -78,24 +78,24 @@
   }
   //COLOROES DEL MENU
   .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:hover {
-    color: #00353A ;
+    color: #00353a;
   }
-  .nb-theme-default nb-menu .menu-item a:hover{
-    color: #00353A ;
+  .nb-theme-default nb-menu .menu-item a:hover {
+    color: #00353a;
   }
-  .nb-theme-default nb-menu .menu-item a:hover .menu-icon{
-    color: #00353A !important;
+  .nb-theme-default nb-menu .menu-item a:hover .menu-icon {
+    color: #00353a !important;
   }
   .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:focus {
-    color: #00353A ;
+    color: #00353a;
   }
-  .nb-theme-default nb-menu .menu-item a:focus{
-    color: #00353A ;
+  .nb-theme-default nb-menu .menu-item a:focus {
+    color: #00353a;
   }
-  .nb-theme-default nb-menu .menu-item a:focus .menu-icon{
-    color: #00353A !important;
+  .nb-theme-default nb-menu .menu-item a:focus .menu-icon {
+    color: #00353a !important;
   }
-  
+
   .nb-theme-default {
     nb-sidebar {
       width: 12rem;
@@ -131,25 +131,50 @@
         }
       }
     }
-    .e-toolbar .e-tbar-btn .e-tbar-btn-text,.e-control{
+    .e-toolbar .e-tbar-btn .e-tbar-btn-text,
+    .e-control {
       font-family: "Montserrat" !important;
     }
-    nb-layout-header nav a:focus, nb-layout-header nav a:active, nb-layout-header nav a:hover{
-      color: #00353A;
+    nb-layout-header nav a:focus,
+    nb-layout-header nav a:active,
+    nb-layout-header nav a:hover {
+      color: #00353a;
     }
-    h6, h5,nb-card, nb-tabset nb-tab, p, nb-checkbox .text,a, nb-user .user-name {
+    h6,
+    h5,
+    nb-card,
+    nb-tabset nb-tab,
+    p,
+    nb-checkbox .text,
+    a,
+    nb-user .user-name {
       font-family: "Montserrat" !important;
+    }
+    @media (max-width: 768px) {
+      h6{
+        font-size: 1rem;
+      }
     }
     h1 {
       font-size: 1.6rem;
       font-family: "Montserrat" !important;
       margin: 0;
     }
-
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+    }
     nb-layout-column {
       nb-card {
         nb-card-body {
           padding: 1.25rem 2.5rem;
+        }
+        @media (max-width: 768px) {
+          nb-card-body {
+            padding: 1.25rem 1rem;
+          }
         }
 
         &:nth-child(2) nb-card-body {
@@ -241,17 +266,36 @@
         right: 0;
       }
     }
-    .style-btn-anuario{
+    .style-btn-anuario {
       text-align: right;
       display: inline-block;
     }
     @media (max-width: 576px) {
-      .style-btn-anuario{
+      .style-btn-anuario {
         text-align: left;
       }
     }
     .title-style {
       display: inline-block;
+    }
+
+    ::-webkit-input-placeholder {
+      font-size: 0.8rem;
+      font-family: "Montserrat";
+    }
+    :-moz-placeholder {
+      /* Firefox 18- */
+      font-size: 0.8rem;
+      font-family: "Montserrat";
+    }
+    ::-moz-placeholder {
+      /* Firefox 19+ */
+      font-size: 0.8rem;
+      font-family: "Montserrat";
+    }
+    :-ms-input-placeholder {
+      font-size: 0.8rem;
+      font-family: "Montserrat";
     }
   }
 }

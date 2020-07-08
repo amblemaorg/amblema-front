@@ -25,7 +25,7 @@ declare var $: any;
   template: `
     <div class="modal fade" [id]="settings.modalCode + '-modal'">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
+        <div [class.color]="settings.modalCode === 'dataModalEstadisticasLectura' ||settings.modalCode === 'dataModalEstadisticasMatematica'" class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>

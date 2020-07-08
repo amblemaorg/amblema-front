@@ -1,4 +1,7 @@
 ::ng-deep {
+    .color {
+        background-color: #00809a;
+    }
     .modal {
         &.show {
             background: rgba(0,0,0,0.5);
