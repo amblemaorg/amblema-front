@@ -603,11 +603,11 @@ export class FormBlockComponent
 
       if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
  
-      // console.log(
-      //   'method: ', method,
-      //   'url: ', resourcePath,
-      //   'body: ', body
-      // );
+      console.log(
+        'method: ', method,
+        'url: ', resourcePath,
+        'body: ', body
+      );
 
       this.fetcher[method](resourcePath, body).subscribe(
         response => {
@@ -645,9 +645,24 @@ export class FormBlockComponent
         error => {
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+
+          const errorType = (error.error && error.error["name"])
+            ? (this.settings.formType === "agregarGradoSeccion" 
+              ? "section" 
+              : "name") 
+            : "regular";      
+
+          // console.log(errorType);
+
+          if (
+            errorType!="regular" && 
+            this.settings.formType === "agregarGradoSeccion"
+          ) this.componentForm.get(errorType).setValue("");
           
           this.toastr.error(
-            "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+            errorType!="regular" 
+              ? error.error["name"][0].msg 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
             "",
             { positionClass: "toast-bottom-right" }
           );
