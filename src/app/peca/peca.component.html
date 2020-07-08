@@ -1,13 +1,23 @@
 <nb-layout>
   <nb-layout-header fixed>
     <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="padding: 0;">
-      <nb-icon icon="bars" style="color: white;font-size: 1.5rem;" (click)="toggle()"></nb-icon> 
+      <nb-icon
+        icon="bars"
+        style="color: white;font-size: 1.5rem;"
+        (click)="toggle()"
+      ></nb-icon>
     </div>
     <div class="col-8 col-sm-9 col-md-8 col-lg-8 col-xl-9">
       <h1 class="h1-amblema"><b>AmbLeMa</b></h1>
     </div>
     <div class="dropdown col-3 col-sm-2 col-md-3 col-lg-3 col-xl-2">
-      <nb-user size="giant" name="Carlos Camacaro" [picture]="image_profile">
+      <nb-user
+        size="giant"
+        [name]="nameUser"
+        [picture]="
+          imageUser ? imageUser : '../../../../assets/images/profile2.png'
+        "
+      >
       </nb-user>
       <div class="dropdown-content">
         <a [routerLink]="['perfil-usuario']">Perfil</a>

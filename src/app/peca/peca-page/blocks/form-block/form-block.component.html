@@ -61,7 +61,8 @@
               [virtualScroll]="true"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              (change)="updateMuns(field === 'addressState' ? true : false)"
+              (change)="settings.formsContent[field].isFactoryType? requiredOtherCompany($event) : 
+              updateMuns(field === 'addressState' ? true : false)"
               [readonly]="
                 settings.formsContent[field].readonly || isReadOnly()
               "

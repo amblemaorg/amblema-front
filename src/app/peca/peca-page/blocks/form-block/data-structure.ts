@@ -16,13 +16,76 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         }).id
       };
       break;
-    ////////////////////
+
     case "actualizarPadrino": // for Perfil de usuario view and padrinos form
       data.isThereTable = false;
-      console.log("le has dado clic" + cf.value);
-      data.data = {};
+      console.log("le has dado clic" + JSON.stringify(cf.value));
+
+      data.data = {
+        name: cf.get("letter").value,
+        companyRif: cf.get("rif").value,
+        companyPhone: cf.get("phone").value,
+        email: cf.get("email").value,
+        companyType: cf.get("tipoEmpresa").value,
+        companyOtherType: cf.get("companyOtherType").value,
+        contactFirstName: cf.get("letterName").value,
+        contactLastName: cf.get("letterLastName").value,
+        contactPhone: cf.get("phoneContact").value,
+        contactEmail: cf.get("emailContact").value,
+        addressState: cf.get("addressState").value,
+        addressMunicipality: cf.get("addressMunicipality").value,
+        addressCity: cf.get("city").value,
+        address: cf.get("street").value
+      };
       break;
-    ////////////////////////////
+    case "actualizarEscuela": // for Perfil de usuario view and escuelas form
+      data.isThereTable = false;
+      console.log("le has dado clic" + JSON.stringify(cf.value));
+      data.data = {
+        name: cf.get("name").value,
+        code: cf.get("code").value,
+        addressZoneType: cf.get("zone").value,
+        addressZone: cf.get("address").value,
+        schoolType: cf.get("typeEscuela").value,
+        principalFirstName: cf.get("letterName").value,
+        principalLastName: cf.get("letterLastName").value,
+        principalEmail: cf.get("emailContact").value,
+        principalPhone: cf.get("phoneContact").value,
+        subPrincipalFirstName: cf.get("letterName2").value,
+        subPrincipalLastName: cf.get("letterLastName2").value,
+        subPrincipalEmail: cf.get("emailContact2").value,
+        subPrincipalPhone: cf.get("phoneContact2").value,
+        schoolShift: cf.get("turno").value,
+        email: cf.get("email").value,
+        phone: cf.get("phone").value,
+        addressState: cf.get("addressState").value,
+        addressMunicipality: cf.get("addressMunicipality").value,
+        addressCity: cf.get("city").value,
+        address: cf.get("street").value
+      };
+      break;
+    case "actualizarCoordinador": // for Perfil de usuario view and coordinadores form
+      data.isThereTable = false;
+      console.log("le has dado clic" + JSON.stringify(cf.value));
+
+      data.data = {
+        firstName: cf.get("letter").value,
+        lastName: cf.get("lastNameLetter").value,
+        cardType: cf.controls["documentGroup"].get("prependSelect").value,
+        cardId: cf.controls["documentGroup"].get("prependInput").value,
+        phone: cf.get("phoneMovil").value,
+        birthdate: cf.get("date").value,
+        gender: cf.get("sexo").value,
+        homePhone: cf.get("phone").value,
+        addressHome: cf.get("house").value,
+        profession: cf.get("proffesion").value,
+        email: cf.get("email").value,
+        addressState: cf.get("addressState").value,
+        addressMunicipality: cf.get("addressMunicipality").value,
+        addressCity: cf.get("city").value,
+        address: cf.get("street").value
+      };
+      break;
     case "agregarDocente": // for Datos de la Escuela view and Docentes section
       data.data = {
         name: cf.get("name").value,
@@ -81,6 +144,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         section: cf.get("section").value,
         date: cf.get("date").value,
         resultMul: cf.get("resultMul").value,
+        date2: cf.get("date").value,
         resultLog: cf.get("resultLog").value,
         indexMul: cf.get("indexMul").value,
         indexLog: cf.get("indexLog").value

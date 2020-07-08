@@ -4,7 +4,7 @@ const datosOlimpiadas = {
     component: 'textsbuttons',
     settings: {
         dateOrtext: {
-            text: 'Fecha de la prueba',
+            text: 'Fecha de la prueba:',
             date: '12-05-2020',
         },
         upload: {
