@@ -17,6 +17,7 @@ import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-st
 import { SchedulePageComponent } from './peca-page/pages/schedule-page.component';
 import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-page.component';
 import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component';
+import { GenericActivityPageComponent } from './peca-page/pages/generic-activity-page.component';
 const routes: Routes = [
   {
     path: '',
@@ -31,7 +32,7 @@ const routes: Routes = [
         component: SchoolDataPageComponent,
       },
       {
-        path: 'diagnostico-inicial',
+        path: 'lapso/:lapsoNumber/diagnostico-inicial',
         component: InitialDiagnosticPageComponent,
       },
       {
@@ -57,6 +58,10 @@ const routes: Routes = [
       {
         path: 'lapso/:lapsoNumber/actividad-especial',
         component: SpecialActivityPageComponent,
+      },
+      {
+        path: 'lapso/:lapsoNumber/actividad/:activityId',
+        component: GenericActivityPageComponent,
       },
       {
         path: 'lapso/:lapsoNumber/olimpiadas-matematicas',

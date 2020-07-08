@@ -4,8 +4,8 @@ import {
   formGradosSecciones,
   formTabsEstudiantes,
   formDatosEscuelaModal,
+  formTabsEstudiantesGradesSections,
 } from '../blocks/form-block/all-forms';
-import { settings } from 'cluster';
 
 const statusGeneral = {
   component: 'textsbuttons',
@@ -24,10 +24,6 @@ const textsAndButtons = {
   component: 'textsbuttons',
   name: 'schoolFormButton',
   settings: {
-    // title: {
-    //   text: "(Centrado) Solicitud de asesoria a AmbLeMa: Licencia para operar",
-    //   aligning: "center",
-    // },
     action: [
       {
         type: 2,
@@ -52,7 +48,6 @@ const formEscuela = {
     tableCode: 'schoolDataConfigRegistroEscuela',
     hideImgContainer: true,
     data: {},
-    // fetcherMethod: 'put',
   },
 };
 
@@ -71,24 +66,7 @@ const registroEscuela = {
       },
       description: {
         title: 'Descripción',
-      },
-      // state: {
-      //   title: 'Estado',
-      //   valuePrepareFunction: (row: any) => {
-      //     if (row) return row == '1' ? 'Visible' : 'No visible';
-      //     else return '';
-      //   },
-      //   filterFunction: (cell?: any, search?: string) => {
-      //     let value: string = cell == '1' ? 'Visible' : 'No visible';
-      //     value = value.toUpperCase();
-
-      //     if (value.includes(search.toUpperCase()) || search === '') return true;
-      //     else return false;
-      //   },
-      // },
-      // status: {
-      //   title: 'Estatus',
-      // },
+      }
     },
     hideImgContainer: true,
     isFromImgContainer: true,
@@ -97,29 +75,7 @@ const registroEscuela = {
     modalCode: 'schoolDataConfigRegistroEscuela',
     buttonCode: 'schoolDataConfigRegistroEscuela',
     tableCode: 'schoolDataConfigRegistroEscuela',
-    schoolDataConfigRegistroEscuela: [
-      /* {
-        // id: '1abcdefghijk',
-        // image: 'imagen1.png',
-        // description: 'descripcion 1',
-        // state: '1',
-        // status: 'Aprobado',
-        // source: null,
-        // imageSelected: null,
-        id: '1abcdefghijk',
-        image: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
-        description: 'descripcion 1',
-        source: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg',
-        imageSelected: null,
-      },
-      {
-        id: '2abcdefghijk',
-        image: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
-        description: 'descripcion 2',
-        source: 'https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg',
-        imageSelected: null,
-      }, */
-    ],
+    schoolDataConfigRegistroEscuela: [],
     classes: {
       hideView: true,
       hideEdit: false,
@@ -161,6 +117,7 @@ const textsAndButtonsRegistroEscuela = {
     modalCode: 'schoolDataConfigRegistroEscuela',
     isFromCustomTableActions: true,
     makesNoRequest: true,
+    isDeleting: true,
   },
 };
 const modalRegistroEscuela = {
@@ -233,58 +190,7 @@ const tablaDocente = {
     },
     modalCode: 'schoolDataConfigTablaDocente',
     tableCode: 'schoolDataConfigTablaDocente',
-    schoolDataConfigTablaDocente: [
-      /*
-      {
-        id: '1abcdefghijk',
-        name: 'ALfredo',
-        lastName: 'Valbuena',
-        email: 'almavalo11@gmail.com',
-        status: '1',
-        documentGroup: {
-          prependSelect: '1',
-          prependInput: '20017764',
-        },
-        phone: '546546',
-        addressState: '165146541654hjvjh',
-        addressMunicipality: 'dgisgsd64646464',
-        street: 'wefewf',
-        city: 'ewfwef',
-      },
-      {
-        id: '2abcdefghijk',
-        name: 'Manuel',
-        lastName: 'Perez',
-        email: 'almavalo@gmail.com',
-        status: '1',
-        documentGroup: {
-          prependSelect: '1',
-          prependInput: '123456789',
-        },
-        phone: '546546',
-        addressState: '165146541654hjvjh',
-        addressMunicipality: 'dgisgsd64646464',
-        street: 'wefewf',
-        city: 'ewfwef',
-      },
-      {
-        id: '3abcdefghijk',
-        name: 'Luis',
-        lastName: 'Valbuena',
-        email: 'almavalo@hotmail.com',
-        status: '2',
-        documentGroup: {
-          prependSelect: '1',
-          prependInput: '20017764',
-        },
-        phone: '546546',
-        addressState: '165146541654hjvjh',
-        addressMunicipality: 'dgisgsd64646464',
-        street: 'wefewf',
-        city: 'ewfwef',
-      },
-      */
-    ],
+    schoolDataConfigTablaDocente: [],
     classes: {
       hideView: true,
       hideEdit: false,
@@ -328,6 +234,7 @@ const textsAndButtonsTablaDocente = {
     modalCode: 'schoolDataConfigTablaDocente',
     isFromCustomTableActions: true,
     fetcherMethod: 'delete',
+    isDeleting: true,
   },
 };
 const modalTablaDocente = {
@@ -345,19 +252,39 @@ const modalTablaDocente = {
 
 const formGradosYSecciones = {
   component: 'form',
+  name: 'gradosYSeccionesPostForm',
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
     tableCode: 'schoolDataConfigTablaGradosSecciones',
     formType: 'agregarGradoSeccion',
+    data: {},
+    fetcherMethod: 'post',
   },
 };
 const tablaGradosSecciones = {
   component: 'table',
+  name: 'gradosYSeccionesTable',
   settings: {
     columns: {
       grades: {
         title: 'Grados',
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return formGradosSecciones.grades.options.find((d) => {
+              return d.id === row;
+            }).name;
+          else return '';
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = formGradosSecciones.grades.options.find((d) => {
+            return d.id === cell;
+          }).name;
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === '') return true;
+          else return false;
+        }
       },
       section: {
         title: 'Secciones',
@@ -365,16 +292,21 @@ const tablaGradosSecciones = {
       docente: {
         title: 'Docente',
         valuePrepareFunction: (row: any) => {
-          if (row)
+          if (
+            row && 
+            formGradosSecciones.docente.options.length > 0
+          )
             return formGradosSecciones.docente.options.find((d) => {
               return d.id === row;
             }).name;
           else return '';
         },
         filterFunction: (cell?: any, search?: string) => {
-          let value: string = formGradosSecciones.docente.options.find((d) => {
-            return d.id === cell;
-          }).name;
+          let value: string = formGradosSecciones.docente.options.length > 0 
+            ? (formGradosSecciones.docente.options.find((d) => {
+                  return d.id === cell;
+                }).name) 
+            : '';
           value = value.toUpperCase();
 
           if (value.includes(search.toUpperCase()) || search === '') return true;
@@ -384,26 +316,7 @@ const tablaGradosSecciones = {
     },
     modalCode: 'schoolDataConfigTablaGradosSecciones',
     tableCode: 'schoolDataConfigTablaGradosSecciones',
-    schoolDataConfigTablaGradosSecciones: [
-      {
-        id: '1abcdefghijk',
-        grades: '5',
-        section: 'B',
-        docente: '1',
-      },
-      {
-        id: '2abcdefghijk',
-        grades: '6',
-        section: 'A',
-        docente: '2',
-      },
-      {
-        id: '3abcdefghijk',
-        grades: '3',
-        section: 'C',
-        docente: '3',
-      },
-    ],
+    schoolDataConfigTablaGradosSecciones: [],
     classes: {
       hideView: true,
       hideEdit: false,
@@ -414,6 +327,7 @@ const tablaGradosSecciones = {
 //* MODAL GRADOS Y SECCIONES ----------------------------------
 const formTablaGradosSecciones = {
   component: 'form',
+  name: 'gradesAndSectionsModalForm',
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
@@ -421,10 +335,12 @@ const formTablaGradosSecciones = {
     tableCode: 'schoolDataConfigTablaGradosSecciones',
     modalCode: 'schoolDataConfigTablaGradosSecciones',
     isFromCustomTableActions: true,
+    fetcherMethod: 'put',
   },
 };
 const textsAndButtonsTablaGradosSecciones = {
   component: 'textsbuttons',
+  name: 'gradesAndSectionsDeleteModal',
   settings: {
     subtitles: [
       {
@@ -443,6 +359,8 @@ const textsAndButtonsTablaGradosSecciones = {
     ],
     modalCode: 'schoolDataConfigTablaGradosSecciones',
     isFromCustomTableActions: true,
+    fetcherMethod: 'delete',
+    isDeleting: true,
   },
 };
 const modalTablaGradosSecciones = {
@@ -460,16 +378,22 @@ const modalTablaGradosSecciones = {
 
 const formEstudiantes = {
   component: 'form',
+  name: 'estudiantesPostForm',
   settings: {
-    formsContent: formTabsEstudiantes,
+    formsContent: { ...formTabsEstudiantesGradesSections, ...formTabsEstudiantes },
     buttons: ['agregar'],
     tableCode: 'schoolDataConfigTablaEstudiante',
     formType: 'buscarEstudiante',
     // isOneRow: true,
+    data: {},
+    fetcherMethod: 'post',
+    methodUrlPlus: 'section',
+    tableRefreshName: 'estudiantesTable',
   },
 };
 const tablaEstudiante = {
   component: 'table',
+  name: 'estudiantesTable',
   settings: {
     columns: {
       name: {
@@ -527,34 +451,7 @@ const tablaEstudiante = {
     },
     modalCode: 'schoolDataConfigTablaEstudiante',
     tableCode: 'schoolDataConfigTablaEstudiante',
-    schoolDataConfigTablaEstudiante: [
-      {
-        id: '1abcdefghijk',
-        name: 'Ysa',
-        lastName: 'Godoy',
-        documentGroup: {
-          prependInput: '23577413',
-          prependSelect: '1',
-        },
-        gender: '1',
-        age: '1993-06-02T00:00:00.000Z',
-        grades: '1',
-        section: '1',
-      },
-      {
-        id: '2abcdefghijk',
-        name: 'ALfredo',
-        lastName: 'Valbuena',
-        documentGroup: {
-          prependInput: '123456',
-          prependSelect: '1',
-        },
-        gender: '2',
-        age: '1992-06-02T20:09:07.465000',
-        grades: '1',
-        section: '1',
-      },
-    ],
+    schoolDataConfigTablaEstudiante: [],
     classes: {
       hideView: true,
       hideEdit: false,
@@ -565,6 +462,7 @@ const tablaEstudiante = {
 //* MODAL ESTUDIANTES ----------------------------------
 const formTablaEstudiante = {
   component: 'form',
+  name: 'estudiantesModalForm',
   settings: {
     formsContent: formTabsEstudiantes,
     buttons: ['guardar'],
@@ -572,10 +470,12 @@ const formTablaEstudiante = {
     tableCode: 'schoolDataConfigTablaEstudiante',
     modalCode: 'schoolDataConfigTablaEstudiante',
     isFromCustomTableActions: true,
+    fetcherMethod: 'put',
   },
 };
 const textsAndButtonsTablaEstudiante = {
   component: 'textsbuttons',
+  name: 'estudiantesDeleteModal',
   settings: {
     subtitles: [
       {
@@ -594,6 +494,8 @@ const textsAndButtonsTablaEstudiante = {
     ],
     modalCode: 'schoolDataConfigTablaEstudiante',
     isFromCustomTableActions: true,
+    isDeleting: true,
+    fetcherMethod: 'delete',
   },
 };
 const modalTablaEstudiante = {

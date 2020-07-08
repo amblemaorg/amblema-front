@@ -79,6 +79,7 @@ export class TextsButtonsSetBlockComponent
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    isDeleting?: boolean; // SI option on delete mode modal
   };
 
   pecaId: string;
@@ -277,12 +278,35 @@ export class TextsButtonsSetBlockComponent
 
           if (this.settings.makesNoRequest) commonTasks();
           else {
+            this.isSending = true;
             const method = this.settings.fetcherMethod || 'delete';
             const url = this.settings.fetcherUrls[method];
+
+            // console.log(
+            //   'method: ', method,
+            //   'url: ', url
+            // );
+
             this.fetcher[method](url).subscribe((data) => {
-              //console.log(data);
+              console.log(data);
               commonTasks();
+
+              this.isSending = false;
+
+              this.toastr.success("Eliminado exitosamente", "", {
+                positionClass: "toast-bottom-right"
+              });
+
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            }, (error) => {
+              this.isSending = false;
+              this.toastr.error(
+                "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                "",
+                { positionClass: "toast-bottom-right" }
+              );
+              console.error(error);
             });
           }          
         }
@@ -312,7 +336,7 @@ export class TextsButtonsSetBlockComponent
         const resourcePath = this.settings.fetcherUrls[method];
 
         if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
-        
+
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
             console.log("form response",response);
