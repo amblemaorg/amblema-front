@@ -143,8 +143,8 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       {
         delete: () =>
         `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`
-      },
-      "settings.dataFromRow.data.newData.id" 
+      }/* ,
+      "settings.dataFromRow.data.newData.id"  */
     );  
   }
 
