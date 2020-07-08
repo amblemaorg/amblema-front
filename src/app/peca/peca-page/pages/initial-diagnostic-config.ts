@@ -188,6 +188,7 @@ const textsAndButtonsReadingDiagnosticTable = {
     ],
     modalCode: 'initialDiagnosticConfigLectura',
     isFromCustomTableActions: true,
+    isDeleting: true,
   }
 }
 const modalReadingDiagnosticTable = {
@@ -337,6 +338,7 @@ const textsAndButtonsMathDiagnosticTable = {
     ],
     modalCode: 'initialDiagnosticConfigMatematica',
     isFromCustomTableActions: true,
+    isDeleting: true,
   }
 }
 const modalMathDiagnosticTable = {

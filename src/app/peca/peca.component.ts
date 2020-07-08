@@ -83,9 +83,12 @@ export class PecaComponent implements OnInit, OnDestroy {
 
   createMenuOptions(pecaContent) {
     for (let i of [1, 2, 3]) {
-      const lapse = pecaContent[`lapse${i}`];
+      if (this.menu[i - 1].children.length > 0) 
+        this.menu[i - 1].children.splice(i === 1 ? 2 : 1);
+      
+        const lapse = pecaContent[`lapse${i}`];
       const lapseOptions = this.menu[i - 1].children;
-
+      
       Object.entries(lapse).map(({ 0: key, 1: value }) => {
         if (key !== "activities" && value) {
           const lapseOption = this.lapseOptionsConfig[key];
@@ -102,7 +105,7 @@ export class PecaComponent implements OnInit, OnDestroy {
         lapseOptions.push({
           ...lapseActivity,
           title: activity.name,
-          link: `lapso/${i}/${lapseActivity.link}`
+          link: `lapso/${i}/${lapseActivity.link}/${activity.id}`
         });
       });
 
