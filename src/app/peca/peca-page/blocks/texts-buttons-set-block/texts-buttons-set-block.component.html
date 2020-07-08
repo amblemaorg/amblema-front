@@ -180,7 +180,11 @@
                     [disabled]="disableThis(action.type) || isSending || sleepSend"
                     (click)="takeAction(action.type, $event)"
                 >
-                        <span *ngIf="isSending && action.type==4" class="spinner-grow spinner-grow-sm"></span>
+                        <span *ngIf="isSending && ( 
+                            action.type==4 
+                            || (settings.isDeleting 
+                                && action.type==1) 
+                        )" class="spinner-grow spinner-grow-sm"></span>
                         {{ isSending && action.type==4 ? 'Enviando' : action.name }}
                 </button>
 
