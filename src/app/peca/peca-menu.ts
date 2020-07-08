@@ -31,10 +31,15 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     icon: 'taller-inicial',
     link: 'taller-inicial',
   },
+  specialActivity: {
+    title: 'Actividad especial de lapso',
+    icon: 'actividades',
+    link: 'actividad-especial',
+  },
   activity: {
     title: '',
     icon: 'actividades',
-    link: 'actividad-especial',
+    link: 'actividad',
   },
 };
 
@@ -51,7 +56,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
       {
         title: 'Diagnóstico',
         icon: 'diagnostico',
-        link: 'diagnostico-inicial',
+        link: 'lapso/1/diagnostico-inicial',
       },
     ],
   },
@@ -62,7 +67,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
       {
         title: 'Diagnóstico',
         icon: 'diagnostico',
-        link: 'diagnostico-inicial',
+        link: 'lapso/2/diagnostico-inicial',
       },
     ],
   },
@@ -73,7 +78,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
       {
         title: 'Diagnóstico',
         icon: 'diagnostico',
-        link: 'diagnostico-inicial',
+        link: 'lapso/3/diagnostico-inicial',
       },
     ],
   },
