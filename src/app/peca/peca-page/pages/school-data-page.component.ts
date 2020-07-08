@@ -328,12 +328,12 @@ export class SchoolDataPageComponent extends PecaPageComponent
       if (both) {
         this.studentsFormData = {
           setContent: true,
-          contentToSet: ["grades","section"],
-          data: {
+          contentToSet: [ "section", "grades" ],
+          data: {            
+            section: mapper.sections,
             grades: Object.keys(mapper.grades).map((grade) => {
                   return mapper.grades[grade]
               }),
-            section: mapper.sections,
           }
         };
       }
@@ -343,7 +343,6 @@ export class SchoolDataPageComponent extends PecaPageComponent
             return s.id === this.currentStudentsGroup
           }) 
         : null;
-      console.log('index', section_name_index);
 
       this.studentsTableData = {
         data: this.currentStudentsGroup 
