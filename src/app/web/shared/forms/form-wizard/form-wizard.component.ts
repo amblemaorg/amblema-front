@@ -17,7 +17,7 @@ import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
 import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Subscription } from "rxjs";
-import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
+// import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
 
 @Component({
   selector: "web-form-wizard",
@@ -45,6 +45,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   // MAPA------------------------------------------------------
   map: any;
+  geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
   lng = -66.029011; // Venezuela's middle longitude
   coordinates: any;
@@ -58,7 +59,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service,
     @Inject(PLATFORM_ID) private platformId,
-    private fetcher: HttpFetcherService,
+    // private fetcher: HttpFetcherService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -108,7 +109,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           });
         }
       });
-      //* NEW
+      
       this.formWizard[0].get('addressMunicipality').statusChanges.subscribe( res => {
         if (
           this.formWizard[0].get('addressMunicipality').value &&
@@ -144,7 +145,6 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
-  //* NEW
   mapSettings(lat,lng,zoom) {
     if ( !isNullOrUndefined(google) ) {
       this.coordinates = new google.maps.LatLng(lat, lng);
@@ -172,7 +172,9 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       });
     });
 
-    if (this.currentMarker) this.currentMarker.setMap(this.map); //* NEW
+    this.geocoder = new google.maps.Geocoder();
+
+    if (this.currentMarker) this.currentMarker.setMap(this.map);
   }
 
   loadAllMarkers(data) {
@@ -195,15 +197,50 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.currentMarker.setMap(this.map);
   }
 
-  //* NEW
   mapPositioner(state: string, county: string) {
     // google maps geocoding
-    // this.fetcher.geoCodeGet("https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka&key=YOUR_API_KEY").subscribe( res => {
-    //   console.log(res);
-    // });
+    if ( !isNullOrUndefined(google) ) {
+
+      this.geocoder.geocode({ componentRestrictions: {
+        country: 'Venezuela',
+        administrativeArea: state,
+        locality: county
+      } }, (results, status) => {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results.length > 0)
+            this.mapSettings(
+              results[0].geometry.location.lat(),
+              results[0].geometry.location.lng(),
+              11
+            );
+          else           
+            this.mapSettings(this.lat, this.lng, 7);
+        } 
+        else {
+          switch (status) {
+            case 'ZERO_RESULTS':
+              console.log('None result found, showing default map options');
+              break;
+            case 'OVER_QUERY_LIMIT':
+              console.error('You are over your quota');
+              break;
+            case 'REQUEST_DENIED':
+              console.error('Your site is unavailable to use geocoder');
+              break;
+            default:
+              console.error('Unknown server error');
+              break;
+          }
+          this.mapSettings(this.lat,this.lng,7);          
+        }
+        this.mapInitializer();
+      });
+
+    }
+    
     // OpenStreetMap
     // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
-    this.fetcher.geoCodeGet(
+    /* this.fetcher.geoCodeGet(
       `https://nominatim.openstreetmap.org/search?
         country=Venezuela&
         state=${state}&
@@ -224,7 +261,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       () => {
         this.mapInitializer();
       }
-    );
+    ); */
   }
   // END-MAP-CONFS ---------------------------------------------------------------------------------------
 

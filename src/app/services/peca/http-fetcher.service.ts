@@ -17,9 +17,9 @@ export class HttpFetcherService implements FetcherService {
 
   constructor(private http: HttpClient) {}
 
-  geoCodeGet(resourcePath: string): Observable<any> {
-    return this.http.get<any>(resourcePath, this.httpOptions);
-  }
+  // geoCodeGet(resourcePath: string): Observable<any> {
+  //   return this.http.get<any>(resourcePath, this.httpOptions);
+  // }
 
   get(resourcePath: string, options?: object): Observable<any> {
     if (options) this.mergeHttpOptions(options);
