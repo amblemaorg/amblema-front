@@ -159,6 +159,7 @@ section.pillars {
         background-size: cover;
         display: flex;
         flex-direction: column;
+        height: 35vw;
         position: relative;
 
         &.environment {
@@ -262,9 +263,6 @@ section.awards {
     // Awards owl carousel in about us page
     &.awards-carousel {
       .owl-stage-outer {
-        // display: flex;
-        // justify-content: center;
-
         @include breakpoint(medium, portrait, down) {
           justify-content: unset;
         }
@@ -274,6 +272,7 @@ section.awards {
           justify-content: center;
           .owl-item {
             display: flex;
+            align-items: flex-start;
             justify-content: center;
           }
         }

@@ -1,7 +1,7 @@
-@import "scss/responsive";
-@import "scss/elements/button";
-@import "scss/elements/headings";
-@import "scss/elements/lists";
+@import 'scss/responsive';
+@import 'scss/elements/button';
+@import 'scss/elements/headings';
+@import 'scss/elements/lists';
 
 h1 {
   color: $white;
@@ -113,7 +113,7 @@ web-bg-heading {
 }
 
 .steps-wrapper {
-  @import "scss/animations";
+  @import 'scss/animations';
   @include columns(10);
   margin: 8vw auto;
 }
@@ -153,8 +153,6 @@ web-bg-heading {
 }
 
 .sponsors-list {
-  //@include columns(10);
-  //display: flex;
   margin: auto;
 
   .inner-wrap {
@@ -171,7 +169,8 @@ web-bg-heading {
     align-items: center;
     text-align: center;
     padding: 0 3vw;
-    height: 45%;
+    margin-bottom: 10%;
+    min-height: 40%;
 
     .image-wrapper {
       display: flex;
