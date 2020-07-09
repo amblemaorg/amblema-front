@@ -17,6 +17,7 @@ import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
 import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Subscription } from "rxjs";
+import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
 
 @Component({
   selector: "web-form-wizard",
@@ -57,6 +58,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service,
     @Inject(PLATFORM_ID) private platformId,
+    private fetcher: HttpFetcherService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -64,14 +66,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.map = null;
       this.currentMarker = null;
 
-      if ( !isNullOrUndefined(google) ) {
-        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
-        const mapOps: google.maps.MapOptions = {
-          center: this.coordinates,
-          zoom: 7,      
-        };
-        this.mapOptions = mapOps;
-      }      
+      this.mapSettings(this.lat,this.lng,7); //* NEW
     }
   }
 
@@ -94,7 +89,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       if ( !isNullOrUndefined(google) ) {
         setTimeout(() => {
           if (this.googleMap)
-            this.mapInitializer();
+            this.mapInitializer();            
         });  
       }             
     }
@@ -113,6 +108,29 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           });
         }
       });
+      //* NEW
+      this.formWizard[0].get('addressMunicipality').statusChanges.subscribe( res => {
+        if (
+          this.formWizard[0].get('addressMunicipality').value &&
+          this.formWizard[0].get('addressMunicipality').value.length > 0
+        ) {       
+          const addressData = this.stepsContent[0]['addressMunicipality'].options.filter(s=>{
+              return s.id===this.formWizard[0].get('addressMunicipality').value
+            });
+          if (addressData.length > 0) {
+            this.mapPositioner(
+              addressData[0].state.name,
+              addressData[0].name
+            ); 
+          }          
+        } 
+        else {
+          if (this.googleMap) {
+            this.mapSettings(this.lat,this.lng,7);
+            this.mapInitializer(); 
+          }          
+        }
+      });
     }
   }
 
@@ -126,6 +144,18 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
+  //* NEW
+  mapSettings(lat,lng,zoom) {
+    if ( !isNullOrUndefined(google) ) {
+      this.coordinates = new google.maps.LatLng(lat, lng);
+      const mapOps: google.maps.MapOptions = {
+        center: this.coordinates,
+        zoom: zoom,      
+      };
+      this.mapOptions = mapOps;
+    }
+  }
+
   mapInitializer() {
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
@@ -141,6 +171,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+    if (this.currentMarker) this.currentMarker.setMap(this.map); //* NEW
   }
 
   loadAllMarkers(data) {
@@ -161,6 +193,38 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.formWizard[0].get('coordinate').setValue(data.coordinate);
 
     this.currentMarker.setMap(this.map);
+  }
+
+  //* NEW
+  mapPositioner(state: string, county: string) {
+    // google maps geocoding
+    // this.fetcher.geoCodeGet("https://maps.googleapis.com/maps/api/geocode/json?address=Winnetka&key=YOUR_API_KEY").subscribe( res => {
+    //   console.log(res);
+    // });
+    // OpenStreetMap
+    // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
+    this.fetcher.geoCodeGet(
+      `https://nominatim.openstreetmap.org/search?
+        country=Venezuela&
+        state=${state}&
+        county=${county}&
+        format=json&
+        limit=1`
+    ).subscribe(
+      (res) => {
+        if (res.length > 0)
+          this.mapSettings(+res[0].lat,+res[0].lon,11);
+        else 
+          this.mapSettings(this.lat,this.lng,7);
+      },
+      (error) => {
+        this.mapSettings(this.lat,this.lng,7);                
+        console.error(error);
+      },
+      () => {
+        this.mapInitializer();
+      }
+    );
   }
   // END-MAP-CONFS ---------------------------------------------------------------------------------------
 
@@ -413,8 +477,12 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       if (this.currentMarker) this.currentMarker.setMap(null);
       if ( !isNullOrUndefined(google) ) {
         setTimeout(() => {
-          if (this.googleMap)
+          if (this.googleMap){
+            if (this.currentMarker) this.currentMarker.setMap(null);
+            this.currentMarker = null;  
+            this.mapSettings(this.lat,this.lng,7);
             this.mapInitializer();
+          }            
         });  
       }             
     }       
