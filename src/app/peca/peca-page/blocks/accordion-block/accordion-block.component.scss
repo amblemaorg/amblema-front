@@ -20,6 +20,12 @@
                 right: 1.25rem;
                 font-size: 3rem;
             }
+            @media (max-width:768px) {
+              .expansion-indicator {
+                right: -1rem;
+                font-size: 2rem;
+              }
+            }
         }
         @media (max-width: 768px) {
           nb-accordion-item-header {

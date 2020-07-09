@@ -8,6 +8,12 @@ $table-border-color: 1px solid $blue;
         text-align: right;
         margin: 0 2.5rem 2rem 0;
     }
+    .estilo-total h5{
+        font-size: 1rem;
+    }
+    .nb-theme-default nb-tabset nb-tab{
+        padding: 1rem 1rem !important;
+    }
     .nb-theme-default ng2-smart-table table tr th, .nb-theme-default ng2-smart-table table tr th a{
         font-family: "Montserrat";
         font-weight: 300;
