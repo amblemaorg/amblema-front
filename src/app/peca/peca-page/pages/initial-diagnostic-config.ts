@@ -119,7 +119,20 @@ const readingDiagnosticTable = {
         }
       },
       section: {
-        title: "Sección"
+        title: "Sección",
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return row.name;
+          else return "";
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = cell.name;
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "")
+            return true;
+          else return false;
+        }
       },
       date: {
         title: 'Fecha resultado de lectura'
@@ -134,7 +147,7 @@ const readingDiagnosticTable = {
     modalCode: "initialDiagnosticConfigLectura",
     tableCode: "initialDiagnosticConfigLectura",
     initialDiagnosticConfigLectura: [
-      {
+      /* {
         id: "1abcdefghijk",
         name: "Alfredo manuel",
         lastName: "Valbuena",
@@ -155,7 +168,7 @@ const readingDiagnosticTable = {
         date: "20/05/2020",
         result: "20 palabras correctas/min",
         index: 2
-      }
+      } */
     ],
     classes: {
       hideView: false,
@@ -200,7 +213,7 @@ const textsAndButtonsReadingDiagnosticTable = {
     ],
     modalCode: "initialDiagnosticConfigLectura",
     isFromCustomTableActions: true,
-    //isDeleting: true,
+    isDeleting: true,
     fetcherMethod: 'delete',
   }
 };
