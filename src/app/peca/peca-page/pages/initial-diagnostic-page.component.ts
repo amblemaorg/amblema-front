@@ -28,7 +28,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   infoDataSubscription: Subscription;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   students = [];
-  section = "";
+  section = {};
   grade = "";
   response: any;
   readingData: any;
@@ -59,11 +59,14 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
         this.response = data.activePecaContent.school;
-      //console.log(this.response.sections);
+      console.log(this.response.sections);
        let auxStudents = [];
         for (let i = 0; i < this.response.sections.length; i++){
         this.grade = this.response.sections[i].grade;
-        this.section = this.response.sections[i].name;
+        this.section = {
+          name:this.response.sections[i].name,
+          id: this.response.sections[i].id
+        } 
        // console.log(this.response.sections[i].students)
         this.response.sections[i].students.forEach(student => {
           student.grade = this.grade;
@@ -147,7 +150,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       "settings.dataFromRow.data.newData.id"  */
     );  
   }
-
+///pecaprojects/diagnostics/reading/<string:lapse>/<string:pecaId>/<string:sectionId>/<string:studentId> 
 
   setReadingTableData(readingTableData, _mapper?: Function) {
     if (_mapper) {

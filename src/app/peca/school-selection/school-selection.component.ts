@@ -21,7 +21,7 @@ export class SchoolSelectionComponent implements OnInit {
   title = "Bienvenido a AmbleMa";
   description =
     " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quam pariatur hic dignissimos nam laborum expedita nostrum temporibus adipisci, amet quos neque animi, obcaecati, quisquam officia dolorum inventore deserunt! Officia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam sapiente placeat veritatis, reprehenderit accusantium, illo aspernatur qui, cupiditate magni quis provident! Quibusdam fugiat voluptatum doloribus fugit? Illum dolores dicta eveniet quos neque animi, illo aspernatur qui.";
-  escuela1 = {
+ /*  escuela1 = {
     name: "Escuela 1",
     addres: "",
     phase: "1"
@@ -71,15 +71,15 @@ export class SchoolSelectionComponent implements OnInit {
   escuela9 = {
     name: "Escuela 3",
     phase: "2"
-  };
+  }; */
   userType: string;
   projects: any;
   idUser: string;
   nameUser: string;
   emailUser: string;
 
-  schools = [this.escuela1, this.escuela2, this.escuela3, this.escuela4, this.escuela5, this.escuela5, this.escuela6, this.escuela7, this.escuela8, this.escuela10, this.escuela11, this.escuela12, this.escuela9];
-
+/*   schools = [this.escuela1, this.escuela2, this.escuela3, this.escuela4, this.escuela5, this.escuela5, this.escuela6, this.escuela7, this.escuela8, this.escuela10, this.escuela11, this.escuela12, this.escuela9];
+ */
   constructor(
     private router: Router,
     private authService: NbAuthService,
