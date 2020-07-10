@@ -53,7 +53,7 @@ export class TextsButtonsSetBlockComponent
     subtitles: {
       title: string; // subtitle
       text: string; // paragraph
-    }[];
+    };
     // }[];
     action: {
       // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar
@@ -145,6 +145,7 @@ export class TextsButtonsSetBlockComponent
 
   setData(data: any) {
     if (data["status"]) this.settings.status.subText = data.status.subText;
+    if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
