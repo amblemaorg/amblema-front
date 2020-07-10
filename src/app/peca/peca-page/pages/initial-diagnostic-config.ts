@@ -120,7 +120,7 @@ const readingDiagnosticTable = {
       },
       section: {
         title: "Sección",
-        valuePrepareFunction: (row: any) => {
+        /* valuePrepareFunction: (row: any) => {
           if (row)
             return row.name;
           else return "";
@@ -132,7 +132,7 @@ const readingDiagnosticTable = {
           if (value.includes(search.toUpperCase()) || search === "")
             return true;
           else return false;
-        }
+        } */
       },
       date: {
         title: 'Fecha resultado de lectura'
