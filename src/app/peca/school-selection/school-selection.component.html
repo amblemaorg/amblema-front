@@ -1,7 +1,7 @@
 <div id="grid">
   <div id="navbar">
     <div id="icon">
-      <a (click)="goBack()"><fa-icon [icon]="backIcon"></fa-icon></a>
+      <a [routerLink]="['/auth/logout']"><fa-icon [icon]="backIcon"></fa-icon></a>
     </div>
   </div>
   <section id="principal">

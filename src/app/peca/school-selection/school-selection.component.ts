@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
 import { NbAuthJWTToken, NbAuthService, decodeJwtPayload } from "@nebular/auth";
-import { Location } from "@angular/common";
 import { Store } from "@ngxs/store";
 import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
 import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
@@ -45,7 +44,6 @@ export class SchoolSelectionComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: NbAuthService,
-    private location: Location,
     private store: Store,
     private stepsService: StepsService
   ) {}
@@ -106,10 +104,6 @@ export class SchoolSelectionComponent implements OnInit {
     }
 
     this.getResidenceInfo();
-  }
-
-  goBack() {
-    this.location.back();
   }
 
   getResidenceInfo() {
