@@ -109,6 +109,10 @@
             a.btn, button.btn {
                 @include shared-btn-confs;
                 margin-right: 0;
+                font-family: 'Montserrat';
+                @media (max-width: 768px) {
+                    font-size: 0.7rem;
+                }
             }
     
             .btn-in-wrapper {
@@ -179,6 +183,11 @@
             .style-input{
                 width: 100%;
                 display: inline-block;
+            }
+        }
+        @media (max-width:400px){
+            .styleInputAndBtn{
+                width: 130px;
             }
         }
         .style-textarea{
