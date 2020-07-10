@@ -1,24 +1,95 @@
 <div class="padding-stepper">
     <nb-stepper orientation="horizontal" disableStepNavigation>
-        <nb-step [label]="labelOne" *ngFor="let title of settings.titles">
+        <nb-step [label]="labelOne" *ngIf="settings.text1">
             <ng-template #labelOne></ng-template>
-            <div [class.text-center]="title.aligning == 'center'">
-                <h3>{{title.text}}</h3>
+            <div [class.text-center]="settings.text1.aligning == 'center'">
+                <h3>{{settings.text1.text}}</h3>
                 <p class="lorem">
-                    {{title.content}}
+                    {{settings.text1.content}}
                 </p>
-                <div class="style-button" *ngIf="title.id === 1">
+               
+                
+                <div class="style-button" *ngIf="settings.text1.id === 1">
                     <button nbButton nbStepperPrevious disabled>Anterior</button>
                     <button nbButton nbStepperNext>Siguiente</button>
                 </div>
-                <div class="style-button" *ngIf="title.id === 2 || title.id === 3 ">
+                 <div class="style-button" *ngIf="settings.text1.id === 2 || settings.text1.id === 3 ">
                     <button nbButton nbStepperPrevious>Anterior</button>
                     <button nbButton nbStepperNext>Siguiente</button>
                 </div>
-                <div class="style-button" *ngIf="title.id === 4">
+                <div class="style-button" *ngIf="settings.text1.id=== 4">
                     <button nbButton nbStepperPrevious>Anterior</button>
                     <button nbButton nbStepperNext disabled>Siguiente</button>
+                </div> 
+            </div>
+        </nb-step>
+        <nb-step [label]="labelOne" *ngIf="settings.text2">
+            <ng-template #labelOne></ng-template>
+            <div [class.text-center]="settings.text2.aligning == 'center'">
+                <h3>{{settings.text2.text}}</h3>
+                <p class="lorem">
+                    {{settings.text2.content}}
+                </p>
+               
+                
+                <div class="style-button" *ngIf="settings.text2.id === 1">
+                    <button nbButton nbStepperPrevious disabled>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
                 </div>
+                 <div class="style-button" *ngIf="settings.text2.id === 2 || settings.text2.id === 3 ">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                <div class="style-button" *ngIf="settings.text2.id=== 4">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext disabled>Siguiente</button>
+                </div> 
+            </div>
+        </nb-step>
+        <nb-step [label]="labelOne" *ngIf="settings.text2">
+            <ng-template #labelOne></ng-template>
+            <div [class.text-center]="settings.text2.aligning == 'center'">
+                <h3>{{settings.text3.text}}</h3>
+                <p class="lorem">
+                    {{settings.text3.content}}
+                </p>
+               
+                
+                <div class="style-button" *ngIf="settings.text3.id === 1">
+                    <button nbButton nbStepperPrevious disabled>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                 <div class="style-button" *ngIf="settings.text3.id === 2 || settings.text3.id === 3 ">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                <div class="style-button" *ngIf="settings.text3.id=== 4">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext disabled>Siguiente</button>
+                </div> 
+            </div>
+        </nb-step>
+        <nb-step [label]="labelOne" *ngIf="settings.text4">
+            <ng-template #labelOne></ng-template>
+            <div [class.text-center]="settings.text4.aligning == 'center'">
+                <h3>{{settings.text4.text}}</h3>
+                <p class="lorem">
+                    {{settings.text4.content}}
+                </p>
+               
+                
+                <div class="style-button" *ngIf="settings.text4.id === 1">
+                    <button nbButton nbStepperPrevious disabled>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                 <div class="style-button" *ngIf="settings.text4.id === 2 || settings.text4.id === 3 ">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext>Siguiente</button>
+                </div>
+                <div class="style-button" *ngIf="settings.text4.id=== 4">
+                    <button nbButton nbStepperPrevious>Anterior</button>
+                    <button nbButton nbStepperNext disabled>Siguiente</button>
+                </div> 
             </div>
         </nb-step>
     </nb-stepper>

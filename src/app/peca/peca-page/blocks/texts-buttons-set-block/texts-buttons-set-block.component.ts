@@ -145,6 +145,7 @@ export class TextsButtonsSetBlockComponent
 
   setData(data: any) {
     if (data["status"]) this.settings.status.subText = data.status.subText;
+    console.log(data.status.subText);
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
