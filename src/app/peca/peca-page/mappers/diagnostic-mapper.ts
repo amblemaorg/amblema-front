@@ -1,103 +1,184 @@
-export function diagnosticDataToReadingFormMapper(diagnosticReadingData) {
+export function diagnosticDataToReadingFormMapperLapse1(diagnosticReadingData) {
   return diagnosticReadingData.map((student) => {
     const {
-    id,
-    firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    lapse1: {
-    readingDate,
-    wordsPerMin,
-    wordsPerMinIndex
-    }
-  } = student;
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse1: { readingDate, wordsPerMin, wordsPerMinIndex },
+    } = student;
 
-  return {
-    id,
-    name: firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    date: readingDate,
-    result: wordsPerMin,
-    index: wordsPerMinIndex
-  };
-})
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: readingDate,
+      result: wordsPerMin,
+      index: wordsPerMinIndex,
+    };
+  });
 }
 
-export function diagnosticDataToMathFormMapper(diagnosticMathData) {
+export function diagnosticDataToReadingFormMapperLapse2(diagnosticReadingData) {
+  return diagnosticReadingData.map((student) => {
+    const {
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse2: { readingDate, wordsPerMin, wordsPerMinIndex },
+    } = student;
+
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: readingDate,
+      result: wordsPerMin,
+      index: wordsPerMinIndex,
+    };
+  });
+}
+
+export function diagnosticDataToReadingFormMapperLapse3(diagnosticReadingData) {
+  return diagnosticReadingData.map((student) => {
+    const {
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse3: { readingDate, wordsPerMin, wordsPerMinIndex },
+    } = student;
+
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: readingDate,
+      result: wordsPerMin,
+      index: wordsPerMinIndex,
+    };
+  });
+}
+
+export function diagnosticDataToMathFormMapperLapse1(diagnosticMathData) {
   return diagnosticMathData.map((student) => {
-  const {
-    id,
-    firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    lapse1: {
-    mathDate,
-    logicDate,
-    multiplicationsPerMin,
-    operationsPerMin,
-    multiplicationsPerMinIndex,
-    operationsPerMinIndex
-    }
-  } = student;
+    const {
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse1: {
+        mathDate,
+        logicDate,
+        multiplicationsPerMin,
+        operationsPerMin,
+        multiplicationsPerMinIndex,
+        operationsPerMinIndex,
+      },
+    } = student;
 
-  return {
-    id,
-    name: firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    date: mathDate,
-    dateLog: logicDate,
-    resultMul: multiplicationsPerMin,
-    resultLog: operationsPerMin,
-    indexMul: multiplicationsPerMinIndex,
-    indexLog: operationsPerMinIndex
-  };
-})
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: mathDate,
+      dateLog: logicDate,
+      resultMul: multiplicationsPerMin,
+      resultLog: operationsPerMin,
+      indexMul: multiplicationsPerMinIndex,
+      indexLog: operationsPerMinIndex,
+    };
+  });
 }
-/*
-export function diagnosticDataToMathFormMapper(diagnosticData) {
-  const {
-    id,
-    firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    mathDate,
-    logicDate,
-    multiplicationsPerMin,
-    operationsPerMin,
-    multiplicationsPerMinIndex,
-    operationsPerMinIndex,
-     readingDate,
-    wordsPerMin,
-    wordsPerMinIndex
-  } = diagnosticData;
+export function diagnosticDataToMathFormMapperLapse2(diagnosticMathData) {
+  return diagnosticMathData.map((student) => {
+    const {
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse2: {
+        mathDate,
+        logicDate,
+        multiplicationsPerMin,
+        operationsPerMin,
+        multiplicationsPerMinIndex,
+        operationsPerMinIndex,
+      },
+    } = student;
 
-  return {
-    id,
-    name: firstName,
-    lastName,
-    gender,
-    grade,
-    section,
-    date: mathDate,
-    resultMul: multiplicationsPerMin,
-    resultLog: operationsPerMin,
-    indexMul: multiplicationsPerMinIndex,
-    indexLog: operationsPerMinIndex,
-     date: readingDate,
-    result: wordsPerMin,
-    index: wordsPerMinIndex
-  };
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: mathDate,
+      dateLog: logicDate,
+      resultMul: multiplicationsPerMin,
+      resultLog: operationsPerMin,
+      indexMul: multiplicationsPerMinIndex,
+      indexLog: operationsPerMinIndex,
+    };
+  });
 }
-*/
+export function diagnosticDataToMathFormMapperLapse3(diagnosticMathData) {
+  return diagnosticMathData.map((student) => {
+    const {
+      id,
+      firstName,
+      lastName,
+      gender,
+      grade,
+      section: { name },
+      lapse3: {
+        mathDate,
+        logicDate,
+        multiplicationsPerMin,
+        operationsPerMin,
+        multiplicationsPerMinIndex,
+        operationsPerMinIndex,
+      },
+    } = student;
+
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      grade,
+      section: name,
+      date: mathDate,
+      dateLog: logicDate,
+      resultMul: multiplicationsPerMin,
+      resultLog: operationsPerMin,
+      indexMul: multiplicationsPerMinIndex,
+      indexLog: operationsPerMinIndex,
+    };
+  });
+}
+

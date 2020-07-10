@@ -1,11 +1,11 @@
 import {
   Component,
   AfterViewInit,
-  Injector,
   ComponentFactoryResolver,
   ViewContainerRef,
-  ViewChild
+  ViewChild,
 } from "@angular/core";
+import { Router, Event, NavigationEnd } from "@angular/router";
 import { PecaPageComponent } from "../peca-page.component";
 import { INITIAL_DIAGNOSTIC_CONFIG as config } from "./initial-diagnostic-config";
 import { Subscription, Observable } from "rxjs";
@@ -14,12 +14,16 @@ import { Select } from "@ngxs/store";
 import { isNullOrUndefined } from "util";
 import { GlobalService } from "src/app/services/global.service";
 import {
-  diagnosticDataToReadingFormMapper,
-  diagnosticDataToMathFormMapper
+  diagnosticDataToReadingFormMapperLapse1,
+  diagnosticDataToReadingFormMapperLapse2,
+  diagnosticDataToReadingFormMapperLapse3,
+  diagnosticDataToMathFormMapperLapse1,
+  diagnosticDataToMathFormMapperLapse2,
+  diagnosticDataToMathFormMapperLapse3,
 } from "../mappers/diagnostic-mapper";
 @Component({
   selector: "peca-initial-diagnostic",
-  templateUrl: "../peca-page.component.html"
+  templateUrl: "../peca-page.component.html",
 })
 export class InitialDiagnosticPageComponent extends PecaPageComponent
   implements AfterViewInit {
@@ -35,88 +39,97 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   mathData: any;
   isInstanciated: boolean;
   loadedData: boolean;
-  allStudents:any;
-
+  allStudents: any;
+  UrlLapse = "";
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService
+    globals: GlobalService,
+    private router: Router
   ) {
     super(factoryResolver);
     //this.instantiateComponent(config);
-   globals.blockIntancesEmitter.subscribe(data => {
+    globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>
-      this.blockInstances.set(name, block));
+        this.blockInstances.set(name, block)
+      );
       console.log(this.blockInstances);
 
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
-    }); 
-  }
+    });
+    /* this.router.events.subscribe((event:Event) => {
+      if(event instanceof NavigationEnd ){
+        this.UrlLapse = event.url;
+        //console.log("el ev", this.UrlLapse);
+      }
+  }); */
+    }
   ngOnInit() {
+    this.UrlLapse = this.router.url.substr(6, 7);
     this.getInfo();
     this.instantiateComponent(config);
+    console.log("la ruta es;", this.UrlLapse);
   }
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
-      data => {
+      (data) => {
         this.response = data.activePecaContent.school;
-      console.log(this.response.sections);
-       let auxStudents = [];
-        for (let i = 0; i < this.response.sections.length; i++){
-        this.grade = this.response.sections[i].grade;
-        this.section = {
-          name:this.response.sections[i].name,
-          id: this.response.sections[i].id
-        } 
-       // console.log(this.response.sections[i].students)
-        this.response.sections[i].students.forEach(student => {
-          student.grade = this.grade;
-          student.section = this.section;
-        });
-       auxStudents =  auxStudents.concat(this.response.sections[i].students) //this.response.sections[i].students; 
-
-       
-
+        console.log(this.response.sections);
+        let auxStudents = [];
+        for (let i = 0; i < this.response.sections.length; i++) {
+          this.grade = this.response.sections[i].grade;
+          this.section = {
+            name: this.response.sections[i].name,
+            id: this.response.sections[i].id,
+          };
+          // console.log(this.response.sections[i].students)
+          this.response.sections[i].students.forEach((student) => {
+            student.grade = this.grade;
+            student.section = this.section;
+          });
+          auxStudents = auxStudents.concat(this.response.sections[i].students); //this.response.sections[i].students;
         }
-        this.students = auxStudents
+        this.students = auxStudents;
         console.log(this.students);
         if (!isNullOrUndefined(data)) {
-         console.log("el primer estudiante es",this.students[0]);
-         this.setReadingTableData(this.students, diagnosticDataToReadingFormMapper);
-         this.setMathTableData (this.students, diagnosticDataToMathFormMapper);
+          //loading data on the students of lapse1
+          if (this.UrlLapse === "lapso/1") {
+            this.setReadingTableData(
+              this.students,
+              diagnosticDataToReadingFormMapperLapse1
+            );
+            this.setMathTableData(
+              this.students,
+              diagnosticDataToMathFormMapperLapse1
+            );
+          }
+          //loading data on the students of lapse2
+          if (this.UrlLapse === "lapso/2") {
+            this.setReadingTableData(
+              this.students,
+              diagnosticDataToReadingFormMapperLapse2
+            );
+            this.setMathTableData(
+              this.students,
+              diagnosticDataToMathFormMapperLapse2
+            );
+          }
+          //loading data on the students of lapse3
+          if (this.UrlLapse === "lapso/3") {
+            this.setReadingTableData(
+              this.students,
+              diagnosticDataToReadingFormMapperLapse3
+            );
+            this.setMathTableData(
+              this.students,
+              diagnosticDataToMathFormMapperLapse3
+            );
+          }
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
-       // console.log(this.students);
-       // console.log(this.grade);
-        //console.log(this.section)
-       /*  
-        this.students.forEach(student => {
-          student.grade = this.grade;
-          student.section = this.section;
-          //console.log(student);
-        }); */
-        
-        /* for (let i = 0; i < this.response.length; i++) {
-          this.grade = this.response[i].grade;
-          this.section = this.response[i].name;
-          this.students = this.response[i].students;
-        }
-        this.students.forEach(student => {
-          student.grade = this.grade;
-          student.section = this.section;
-        });
-        if (!isNullOrUndefined(data)) {
-          console.log(this.students);
-          /*this.setReadingTableData(
-            this.students,
-            diagnosticDataToReadingFormMapper
-          );*/
-         /*  this.loadedData = true;
-          if (this.isInstanciated) this.updateMethods();
-        } */ 
       },
 
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
   updateMethods(updateData: boolean = true) {
@@ -129,15 +142,15 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       this.setBlockData("mathTable", this.mathData);
     }
   }
-  
+
   updateDynamicFetchers() {
     //Update reading modal
     this.createAndSetBlockFetcherUrls(
       "readingModalForm",
       {
         put: () =>
-          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`
-      }/*,
+          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`,
+      } /*,
       "settings.data.id"*/
     );
     //Delete reading modal
@@ -145,20 +158,20 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       "readingDeleteModal",
       {
         delete: () =>
-        `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`
-      }/* ,
+          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`,
+      } /* ,
       "settings.dataFromRow.data.newData.id"  */
-    );  
+    );
   }
-///pecaprojects/diagnostics/reading/<string:lapse>/<string:pecaId>/<string:sectionId>/<string:studentId> 
+  ///pecaprojects/diagnostics/reading/<string:lapse>/<string:pecaId>/<string:sectionId>/<string:studentId>
 
   setReadingTableData(readingTableData, _mapper?: Function) {
     if (_mapper) {
       this.readingData = {
         data: _mapper(readingTableData),
-        isEditable: true
+        isEditable: true,
       };
-      console.log("este es el mapper de lectura", this.readingData.data)
+      console.log("este es el mapper de lectura", this.readingData.data);
     } else {
       this.readingData = readingTableData;
     }
@@ -167,9 +180,9 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     if (_mapper) {
       this.mathData = {
         data: _mapper(mathTableData),
-        isEditable: true
+        isEditable: true,
       };
-      console.log("este es el mapper de matematica", this.mathData.data)
+      console.log("este es el mapper de matematica", this.mathData.data);
     } else {
       this.mathData = mathTableData;
     }

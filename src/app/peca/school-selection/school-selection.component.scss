@@ -9,6 +9,8 @@
   grid-template-rows: 6% 94%;
 }
 #grid #navbar {
+  //position: absolute;
+  top: 0;
   display: grid;
   min-height: 60px !important;
   background-color: $blue;
@@ -27,7 +29,7 @@ a {
   text-decoration: none;
 }
 #grid #principal {
-  position: absolute;
+  position: relative;
   min-width: 100vw;
   min-height: 130vh;
   width: auto;

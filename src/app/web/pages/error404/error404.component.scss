@@ -176,6 +176,10 @@ span {
   }
 }
 .text-context {
+  @include breakpoint(small) {
+    padding-right: 25%;
+
+  }
   line-height: 1;
   padding-top: 1.5%;
   padding-right: 0%;
