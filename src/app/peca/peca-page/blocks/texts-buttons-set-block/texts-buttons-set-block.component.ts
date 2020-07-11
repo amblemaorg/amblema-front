@@ -28,7 +28,7 @@ export class TextsButtonsSetBlockComponent
     buttonCode?: string; // to check if this instance can make actions receiving data from table, form or both
     dateOrtext: {
       text: string;
-      date: string;
+      date: Date;
       fields: string[];
     };
     selectStatus: {
@@ -146,6 +146,7 @@ export class TextsButtonsSetBlockComponent
   setData(data: any) {
     if (data["status"]) this.settings.status.subText = data.status.subText;
     if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
+    if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
