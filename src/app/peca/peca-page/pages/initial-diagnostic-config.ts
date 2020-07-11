@@ -2,6 +2,8 @@ import {
   formLecturaModal,
   formMatematicaModal
 } from "../blocks/form-block/all-forms";
+import { parseDate } from '../functions/parse-date';
+
 /*Boton estadistica Lectura y modal con grafica*/
 const botonEstadisticaLectura = {
   component: "textsbuttons",
@@ -135,7 +137,20 @@ const readingDiagnosticTable = {
         } */
       },
       date: {
-        title: 'Fecha resultado de lectura'
+        title: 'Fecha resultado de lectura',
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return parseDate(new Date(row));
+          else return "";
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = parseDate(new Date(cell));
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "")
+            return true;
+          else return false;
+        }
       },
       result: {
         title: "Resultado de lectura "

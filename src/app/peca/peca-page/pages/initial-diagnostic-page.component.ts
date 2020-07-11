@@ -14,12 +14,8 @@ import { Select } from "@ngxs/store";
 import { isNullOrUndefined } from "util";
 import { GlobalService } from "src/app/services/global.service";
 import {
-  diagnosticDataToReadingFormMapperLapse1,
-  diagnosticDataToReadingFormMapperLapse2,
-  diagnosticDataToReadingFormMapperLapse3,
-  diagnosticDataToMathFormMapperLapse1,
-  diagnosticDataToMathFormMapperLapse2,
-  diagnosticDataToMathFormMapperLapse3,
+  diagnosticDataToReadingFormMapper,
+  diagnosticDataToMathFormMapper,
 } from "../mappers/diagnostic-mapper";
 @Component({
   selector: "peca-initial-diagnostic",
@@ -34,6 +30,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   students = [];
   section = {};
   grade = "";
+  idPeca = "";
   response: any;
   readingData: any;
   mathData: any;
@@ -56,22 +53,28 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
 
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
-    /* this.router.events.subscribe((event:Event) => {
-      if(event instanceof NavigationEnd ){
+
+    this.instantiateComponent(config);
+
+    //To know if the url change
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         //console.log("el ev", this.UrlLapse);
+        this.getInfo();
       }
-  }); */
-    }
+    });
+  }
   ngOnInit() {
-    this.UrlLapse = this.router.url.substr(6, 7);
+    this.UrlLapse = this.router.url.substr(12, 1);
     this.getInfo();
-    this.instantiateComponent(config);
     console.log("la ruta es;", this.UrlLapse);
   }
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
+        console.log("resp necesaria", data);
+        this.idPeca = data.activePecaContent.id;
         this.response = data.activePecaContent.school;
         console.log(this.response.sections);
         let auxStudents = [];
@@ -79,7 +82,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
           this.grade = this.response.sections[i].grade;
           this.section = {
             name: this.response.sections[i].name,
-            id: this.response.sections[i].id,
+            idSection: this.response.sections[i].id,
           };
           // console.log(this.response.sections[i].students)
           this.response.sections[i].students.forEach((student) => {
@@ -92,18 +95,20 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         console.log(this.students);
         if (!isNullOrUndefined(data)) {
           //loading data on the students of lapse1
-          if (this.UrlLapse === "lapso/1") {
-            this.setReadingTableData(
-              this.students,
-              diagnosticDataToReadingFormMapperLapse1
-            );
-            this.setMathTableData(
-              this.students,
-              diagnosticDataToMathFormMapperLapse1
-            );
-          }
+          // if (this.UrlLapse === "lapso/1") {
+          this.setReadingTableData(
+            this.students,
+            this.UrlLapse,
+            diagnosticDataToReadingFormMapper
+          );
+          this.setMathTableData(
+            this.students,
+            this.UrlLapse,
+            diagnosticDataToMathFormMapper
+          );
+          // }
           //loading data on the students of lapse2
-          if (this.UrlLapse === "lapso/2") {
+          /*   if (this.UrlLapse === "lapso/2") {
             this.setReadingTableData(
               this.students,
               diagnosticDataToReadingFormMapperLapse2
@@ -112,9 +117,9 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
               this.students,
               diagnosticDataToMathFormMapperLapse2
             );
-          }
+          } */
           //loading data on the students of lapse3
-          if (this.UrlLapse === "lapso/3") {
+          /*  if (this.UrlLapse === "lapso/3") {
             this.setReadingTableData(
               this.students,
               diagnosticDataToReadingFormMapperLapse3
@@ -123,7 +128,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
               this.students,
               diagnosticDataToMathFormMapperLapse3
             );
-          }
+          } */
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
@@ -148,27 +153,28 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "readingModalForm",
       {
-        put: () =>
-          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`,
-      } /*,
-      "settings.data.id"*/
+        put: (sectionId, studentId) =>
+          `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+      },
+      "settings.data.sectionId",
+      "settings.data.id"
     );
     //Delete reading modal
     this.createAndSetBlockFetcherUrls(
       "readingDeleteModal",
       {
-        delete: () =>
-          `pecaprojects/diagnostics/reading/lapse1/5ed6b7e9073310fdc86ea305/"5ef66b03bf3212aa82622562"/"5ef66d66bf3212aa82622575"`,
-      } /* ,
-      "settings.dataFromRow.data.newData.id"  */
+        delete: (sectionId, studentId) =>
+          `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+      }  ,
+      "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
     );
   }
   ///pecaprojects/diagnostics/reading/<string:lapse>/<string:pecaId>/<string:sectionId>/<string:studentId>
 
-  setReadingTableData(readingTableData, _mapper?: Function) {
+  setReadingTableData(readingTableData, number, _mapper?: Function) {
     if (_mapper) {
       this.readingData = {
-        data: _mapper(readingTableData),
+        data: _mapper(readingTableData, number),
         isEditable: true,
       };
       console.log("este es el mapper de lectura", this.readingData.data);
@@ -176,10 +182,10 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       this.readingData = readingTableData;
     }
   }
-  setMathTableData(mathTableData, _mapper?: Function) {
+  setMathTableData(mathTableData, number, _mapper?: Function) {
     if (_mapper) {
       this.mathData = {
-        data: _mapper(mathTableData),
+        data: _mapper(mathTableData, number),
         isEditable: true,
       };
       console.log("este es el mapper de matematica", this.mathData.data);
