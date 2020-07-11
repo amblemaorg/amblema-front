@@ -1,5 +1,6 @@
 const checkList = {
     component: 'checkList',
+    name: "AnnualConventionCheckLists",
     settings: {
         infoContainer: [
             {
@@ -14,7 +15,7 @@ const checkList = {
                     { description: 'Lorem, ipsum dolor.' },
                     { description: 'Lorem, ipsum dolor.' },
                     { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
+                    { description: 'Lorem, ipsum dolor.' }, 
                 ],
                 button: {
                     name: 'Guardar'
