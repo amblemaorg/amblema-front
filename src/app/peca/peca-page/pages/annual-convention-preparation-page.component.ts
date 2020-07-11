@@ -20,7 +20,7 @@ import { isNullOrUndefined } from 'util';
 })
 export class AnnualConventionPreparationPageComponent extends PecaPageComponent implements AfterViewInit {
     isInstanciated: boolean;
-    loadedData: boolean;
+    //loadedData: boolean;
     description1="";
     description2="";
     description3="";
@@ -46,19 +46,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent 
         this.instantiateComponent(config);
       }
       getInfo() {
-        /* this.infoDataSubscription = this.infoData$.subscribe(
-            data => {
-                if (!isNullOrUndefined(data)) {
-                    console.log(data, "mostrando data de planificacion")
-                }
-
-                this.setPropuestaText(data);
-                this.setPropuestaTextData();
-
-                this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
-
-            }
-        ) */
+    
         this.infoDataSubscription = this.infoData$.subscribe(
           (data) => {
             if (!isNullOrUndefined(data)) {
@@ -78,10 +66,6 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent 
         );
       }
 
-      /* setPropuestaText(data) {
-        this.descriptions = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;
-        console.log(this.text, "descricion propuesta fundacion")
-    } */
 
     setPreparationData() {
         this.preparationInfo = {
@@ -108,7 +92,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent 
     }
     ngOnDestroy() {
         this.isInstanciated = false;
-        this.loadedData = false;
+        //this.loadedData = false;
         this.infoDataSubscription.unsubscribe();
     }
 }

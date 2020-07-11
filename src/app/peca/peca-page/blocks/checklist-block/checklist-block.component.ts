@@ -48,4 +48,11 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     this.settings = { ...settings };
   }
 
+  setData(data: any) {
+    if (data["checkList"]) this.settings.infoContainer[0].checkList[0].description = data.checkList[0].description.name;
+/*     console.log("checkkk",data.checkList[0].description.name);
+ */  
+console.log("checkkk",data.checkList[0].description);
+console.log("no se", this.settings.infoContainer[0].checkList );
+  }
 }
