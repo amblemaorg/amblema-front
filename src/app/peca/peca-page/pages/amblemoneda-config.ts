@@ -50,6 +50,7 @@ const sliderAmblemoneda = {
 
 const ConfirmacionDocente = {
     component: 'table',
+    name: 'amblemonedaTable',
     settings: {
         columns: {
             grade: {
@@ -161,6 +162,7 @@ const formConfirmacionDocente = {
 
 const charlaConDocentes = {
     component: 'textsbuttons',
+    name: 'amblemonedaCharla',
     settings: {
         dateOrtext: {
             text: 'Fecha de la reunión:',
@@ -170,17 +172,10 @@ const charlaConDocentes = {
             url: '#',
             name: 'hola.png',
         },
-        subtitles: [
+        subtitles: 
             {
                 text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             },
-            {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-            },
-            {
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-            },
-        ],
     }
 }
 
