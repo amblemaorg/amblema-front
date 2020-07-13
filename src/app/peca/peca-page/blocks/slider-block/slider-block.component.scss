@@ -13,7 +13,9 @@
     @include mediabreak(large,landscape) { height: 41.5vw; }
     @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
 }
-
+.noesta{
+	display: none;
+}
 .h6-responsive{
 	display: inline-block;
 }
