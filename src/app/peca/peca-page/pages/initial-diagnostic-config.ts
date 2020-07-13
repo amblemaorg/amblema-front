@@ -204,7 +204,7 @@ const formReadingDiagnosticTable = {
     tableCode: "initialDiagnosticConfigLectura",
     modalCode: "initialDiagnosticConfigLectura",
     isFromCustomTableActions: true,
-    fetcherMethod: 'put',
+    fetcherMethod: 'post',
   }
 };
 const textsAndButtonsReadingDiagnosticTable = {
@@ -297,9 +297,24 @@ const mathDiagnosticTable = {
       section: {
         title: "Sección"
       },
+
       date: {
-        title: 'Fecha resultado de multiplicación'
+        title: 'Fecha resultado de lectura',
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return parseDate(new Date(row));
+          else return "";
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = parseDate(new Date(cell));
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "")
+            return true;
+          else return false;
+        }
       },
+      
       resultMul: {
         title: "Resultado de multiplicación"
       },
@@ -367,7 +382,7 @@ const formMathDiagnosticTable = {
     tableCode: "initialDiagnosticConfigMatematica",
     modalCode: "initialDiagnosticConfigMatematica",
     isFromCustomTableActions: true,
-    fetcherMethod: 'put',
+    fetcherMethod: 'post',
   }
 };
 const textsAndButtonsMathDiagnosticTable = {

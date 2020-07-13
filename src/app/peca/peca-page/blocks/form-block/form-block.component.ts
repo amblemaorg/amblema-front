@@ -248,7 +248,7 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
-    console.log("aasdsds",this.componentForm.value);
+    console.log("Esto es lo que mando",this.componentForm.value);
 
   }
 
@@ -610,8 +610,8 @@ export class FormBlockComponent
         'url: ', resourcePath,
         'body: ', body
       );
-/* 
-      this.fetcher[method](resourcePath, body).subscribe(
+//console log... comentar todo el fetcher antes de probar el put
+     /*  this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
@@ -670,7 +670,7 @@ export class FormBlockComponent
           );
           console.error(error);
         }
-      ); */
+      );  */
     }
   }
 
@@ -729,7 +729,7 @@ export class FormBlockComponent
 
   disableBtn() {
     Object.keys(this.componentForm.value).map(val =>{
-      console.log(`${val}: `,this.componentForm.get(val).valid);
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
     });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
