@@ -186,7 +186,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       "mathDeleteModal",
       {
         delete: (sectionId, studentId) =>
-          `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
       }  ,
       "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
     );
