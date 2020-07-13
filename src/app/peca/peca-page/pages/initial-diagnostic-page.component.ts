@@ -60,7 +60,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
-        //console.log("el ev", this.UrlLapse);
+        console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
     });
@@ -153,8 +153,19 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "readingModalForm",
       {
-        put: (sectionId, studentId) =>
+        post: (sectionId, studentId) =>
           `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+      },
+      "settings.data.sectionId",
+      "settings.data.id"
+    );
+
+    //Update math modal
+    this.createAndSetBlockFetcherUrls(
+      "mathModalForm",
+      {
+        post: (sectionId, studentId) =>
+          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
       },
       "settings.data.sectionId",
       "settings.data.id"
@@ -168,8 +179,17 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       }  ,
       "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
     );
+
+    //Delete math modal
+    this.createAndSetBlockFetcherUrls(
+      "mathDeleteModal",
+      {
+        delete: (sectionId, studentId) =>
+          `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+      }  ,
+      "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
+    );
   }
-  ///pecaprojects/diagnostics/reading/<string:lapse>/<string:pecaId>/<string:sectionId>/<string:studentId>
 
   setReadingTableData(readingTableData, number, _mapper?: Function) {
     if (_mapper) {

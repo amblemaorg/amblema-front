@@ -1444,7 +1444,7 @@ export const formLecturaModal = {
     placeholder: "Indice",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalTextAndRequired
   }
 };
 export const formMatematicaModal = {
@@ -1500,6 +1500,7 @@ export const formMatematicaModal = {
     placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
     readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
   },
   resultMul: {
@@ -1513,6 +1514,7 @@ export const formMatematicaModal = {
     placeholder: "Fecha del resultado de logica matematica",
     fullwidth: false,
     readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
   },
   resultLog: {
@@ -1526,14 +1528,14 @@ export const formMatematicaModal = {
     placeholder: "Indice de multiplicacion",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalTextAndRequired
   },
   indexLog: {
     label: "Indice de logica matematica",
     placeholder: "Indice de logica matematica",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalTextAndRequired
   }
 };
 
