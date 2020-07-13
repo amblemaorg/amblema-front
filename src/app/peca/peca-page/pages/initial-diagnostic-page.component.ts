@@ -85,7 +85,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
             name: this.response.sections[i].name,
             idSection: this.response.sections[i].id,
           };
-          // console.log(this.response.sections[i].students)
+          console.log(this.response.sections[i].students)
           this.response.sections[i].students.forEach((student) => {
             student.grade = this.grade;
             student.section = this.section;

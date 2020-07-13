@@ -1424,7 +1424,7 @@ export const formLecturaModal = {
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
-  },
+  }, 
   date: {
     label: "Fecha del diagnostico",
     placeholder: "Fecha del diagnostico",
