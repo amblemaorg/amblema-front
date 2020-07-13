@@ -314,12 +314,26 @@ const mathDiagnosticTable = {
           else return false;
         }
       },
-      
+
       resultMul: {
         title: "Resultado de multiplicación"
       },
       dateLog: {
-        title: 'Fecha resultado de lógica matematica'
+        title: 'Fecha resultado de lógica matematica',
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return parseDate(new Date(row));
+          else return "";
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = parseDate(new Date(cell));
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "")
+            return true;
+          else return false;
+        }
+  
       },
       resultLog: {
         title: "Resultado de lógica matematica"
