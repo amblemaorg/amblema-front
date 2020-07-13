@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit {
   };
   isBrowser: boolean;
   selectedPillar: any = {};
-  finalStatistics;
+  finalStatistics: any = {};
   homeService: WebContentService;
 
   HOME_PATH = "webcontent?page=homePage";
@@ -153,8 +153,22 @@ export class HomeComponent implements OnInit {
           title: slide.description,
         };
       });
-      this.finalStatistics = HOME_CONTENT.homePage.statistics;
-      const chartsData = HOME_CONTENT.homePage.statistics.charts;
+      this.finalStatistics = {
+        totalSchools: String(data.homePage.nSchools),
+        totalSponsors: String(data.homePage.nSponsors),
+        totalStudents: String(data.homePage.nStudents),
+        totalTeachers: String(data.homePage.nTeachers),
+      };
+      let chartsData = HOME_CONTENT.homePage.statistics.charts;
+      chartsData.map((chart) => {
+        chart.data = data.homePage.diagnostics[chart.id].map((lapse)=>{
+          if (lapse.value == 0)
+            lapse.value = 0.01
+          return lapse
+        });
+        return chart.data
+      });
+
       this.homePageData = data.homePage;
       this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
         chartsData
