@@ -46,7 +46,9 @@
 
       label {
         margin-bottom: 0.2rem;
-        color: $blue;
+        //color: $blue;
+        font-size: 0.9rem;
+        color: gray;
       }
 
       .image-group {
@@ -216,7 +218,8 @@
 
       .two-wrapper {
           @include form-mix;
-          @include form-flexings;        
+          @include form-flexings; 
+          margin-bottom: 1rem;       
 
           .form-group {
               width: 100%;
