@@ -79,7 +79,11 @@
                         //max-width: 13rem;
                         //width: auto;
                         min-width: 10rem;
-                    }                  
+                        @media  (max-width:768px){
+                            min-width: 100%;
+                        }
+                    }  
+
                 }               
             }
             @media  (max-width:768px){
