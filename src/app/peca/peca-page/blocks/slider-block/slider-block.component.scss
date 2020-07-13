@@ -71,7 +71,11 @@
 			left: 35px;
 		}
 	}
-
+	@media (min-width:400px) and (max-width:576px){
+		.owl-nav button.owl-next {
+			right: -80vw;
+		}
+	}
 	@media (max-width:400px){
 		.owl-nav button.owl-prev{
 			top: -3rem;
@@ -80,7 +84,7 @@
 			top: -3rem;
 		}
 		.owl-nav button.owl-next {
-			right: -70vw;
+			right: -80vw;
 		}
 	}
 }
