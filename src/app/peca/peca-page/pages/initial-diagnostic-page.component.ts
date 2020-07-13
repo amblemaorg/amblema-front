@@ -60,6 +60,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
+        this.UrlLapse = this.router.url.substr(12, 1);
         console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
@@ -73,7 +74,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
-        console.log("resp necesaria", data);
+       // console.log("resp necesaria", data);
         this.idPeca = data.activePecaContent.id;
         this.response = data.activePecaContent.school;
         console.log(this.response.sections);
