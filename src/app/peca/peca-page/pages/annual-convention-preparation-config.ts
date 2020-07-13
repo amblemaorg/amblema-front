@@ -5,7 +5,7 @@ const preinscripcionDocente = {
     settings: {
         selectStatus:
         {
-            placeholder: 'Selecciona el estudiante',
+            placeholder: 'Selecciona el docente',
             lista: [
                 { 
                     id: 1, name: 'Alfredo',

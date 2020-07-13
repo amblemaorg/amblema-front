@@ -321,7 +321,6 @@ export const sampleFormData = {
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
-  title4: { label: "Titulo", type: "title" },
   imageGroup: {
     type: "image",
     fields: {
@@ -544,8 +543,8 @@ export const formDatosEscuela = {
     options: [],
   },
   callesEscuela: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     readonly: true,
     fullwidth: false,
     ...controlProps.onlyLettersNumbers
@@ -826,8 +825,8 @@ export const formTabsDocente = {
     options: [],
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1058,8 +1057,8 @@ export const formCoordinador = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1174,8 +1173,8 @@ export const formPadrino = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   }
@@ -1228,8 +1227,8 @@ export const formEscuela = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
