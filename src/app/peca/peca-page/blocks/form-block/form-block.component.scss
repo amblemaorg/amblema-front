@@ -517,6 +517,9 @@
         .submit-btn, 
         .add-img-button {
           @include shared-btn-confs;
+          @media (max-width:768px) {
+            font-size: 0.7rem;
+          }
         }
         button {
           margin-right: 0;
