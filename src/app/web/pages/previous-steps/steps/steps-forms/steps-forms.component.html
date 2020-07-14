@@ -2,7 +2,17 @@
 <form *ngIf="who=='sponsor'" [formGroup]="sponsorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitSponsor(sponsorForm)" [class.form-disabled]="disableThis()">
     <div class="form-group">
       <label>Nombre</label>
-      <input name="name" type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la empresa" [readonly]="disableThis()">
+      <input 
+        name="name" 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('name')" 
+        [class.not-empty]="isEmpty('name')" 
+        formControlName="name" 
+        placeholder="Nombre de la empresa" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -52,7 +62,17 @@
     </div>
     <div class="form-group">
       <label>Correo electrónico</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electrónico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
+      <input 
+        type="email" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('email')" 
+        [class.not-empty]="isEmpty('email')" 
+        formControlName="email" 
+        placeholder="Correo electrónico" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -107,21 +127,48 @@
     </div>
     <div class="form-group">
       <label>Calles / Carreras</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carreras" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressStreet')" 
+        [class.not-empty]="isEmpty('addressStreet')" 
+        formControlName="addressStreet" 
+        placeholder="Calles / Carreras" 
+        [readonly]="disableThis()"
+        maxlength="100"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
       <label>Ciudad</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressCity')" 
+        [class.not-empty]="isEmpty('addressCity')" 
+        formControlName="addressCity" 
+        placeholder="Ciudad" 
+        [readonly]="disableThis()"
+        maxlength="20"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
       <label>Número de teléfono</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Número de teléfono" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('phone')" 
+        [class.not-empty]="isEmpty('phone')" 
+        formControlName="phone" 
+        placeholder="Número de teléfono" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -152,7 +199,16 @@
     <div class="two-wrapper">
       <div class="form-group">
         <label>Nombre de la persona de contacto</label>
-        <input type="text" class="form-control" [class.not-valid]="validate('contactFirstName')" [class.not-empty]="isEmpty('contactFirstName')" formControlName="contactFirstName" placeholder="Nombre de la persona de contacto" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('contactFirstName')" 
+          [class.not-empty]="isEmpty('contactFirstName')" 
+          formControlName="contactFirstName" 
+          placeholder="Nombre de la persona de contacto" 
+          [readonly]="disableThis()"
+          maxlength="25"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -160,7 +216,16 @@
       </div>
       <div class="form-group">
         <label>Apellido de la persona de contacto</label>
-        <input type="text" class="form-control" [class.not-valid]="validate('contactLastName')" [class.not-empty]="isEmpty('contactLastName')" formControlName="contactLastName" placeholder="Apellido de la persona de contacto" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('contactLastName')" 
+          [class.not-empty]="isEmpty('contactLastName')" 
+          formControlName="contactLastName" 
+          placeholder="Apellido de la persona de contacto" 
+          [readonly]="disableThis()"
+          maxlength="25"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -169,7 +234,16 @@
     </div>    
     <div class="form-group">
       <label>Teléfono de la persona de contacto</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('contactPhone')" [class.not-empty]="isEmpty('contactPhone')" formControlName="contactPhone" placeholder="Teléfono de la persona de contacto" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('contactPhone')" 
+        [class.not-empty]="isEmpty('contactPhone')" 
+        formControlName="contactPhone" 
+        placeholder="Teléfono de la persona de contacto" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -177,7 +251,17 @@
     </div>
     <div class="form-group">
       <label>Correo electrónico de la persona de contacto</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('contactEmail')" [class.not-empty]="isEmpty('contactEmail')" formControlName="contactEmail" placeholder="Correo electrónico de la persona de contacto" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
+      <input 
+        type="email" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('contactEmail')" 
+        [class.not-empty]="isEmpty('contactEmail')" 
+        formControlName="contactEmail" 
+        placeholder="Correo electrónico de la persona de contacto" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -194,7 +278,16 @@
 <form *ngIf="who=='coordinator'" [formGroup]="coordinatorForm" (keydown.enter)="prevDef($event)" (ngSubmit)="onSubmitCoordinator(coordinatorForm)" [class.form-disabled]="disableThis()">
     <div class="form-group">
       <label>Nombre</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('firstName')" [class.not-empty]="isEmpty('firstName')" formControlName="firstName" placeholder="Nombre" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('firstName')" 
+        [class.not-empty]="isEmpty('firstName')" 
+        formControlName="firstName" 
+        placeholder="Nombre" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -202,7 +295,16 @@
     </div>
     <div class="form-group">
       <label>Apellido</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('lastName')" [class.not-empty]="isEmpty('lastName')" formControlName="lastName" placeholder="Apellido" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('lastName')" 
+        [class.not-empty]="isEmpty('lastName')" 
+        formControlName="lastName" 
+        placeholder="Apellido" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -304,7 +406,16 @@
     </div>
     <div class="form-group">
       <label>Teléfono de habitación</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('homePhone')" [class.not-empty]="isEmpty('homePhone')" formControlName="homePhone" placeholder="Teléfono de habitación" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('homePhone')" 
+        [class.not-empty]="isEmpty('homePhone')" 
+        formControlName="homePhone" 
+        placeholder="Teléfono de habitación" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -357,14 +468,32 @@
     </div>
     <div class="form-group">
       <label>Calles / Carreras</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carreras" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressStreet')" 
+        [class.not-empty]="isEmpty('addressStreet')" 
+        formControlName="addressStreet" 
+        placeholder="Calles / Carreras" 
+        [readonly]="disableThis()"
+        maxlength="100"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
     </div>
     <div class="form-group">
       <label>Ciudad de residencia</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad de residencia" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressCity')" 
+        [class.not-empty]="isEmpty('addressCity')" 
+        formControlName="addressCity" 
+        placeholder="Ciudad de residencia" 
+        [readonly]="disableThis()"
+        maxlength="20"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
@@ -378,7 +507,17 @@
     </div>
     <div class="form-group">
       <label>Correo electrónico</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electrónico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
+      <input 
+        type="email" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('email')" 
+        [class.not-empty]="isEmpty('email')" 
+        formControlName="email" 
+        placeholder="Correo electrónico" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -386,7 +525,16 @@
     </div>
     <div class="form-group">
       <label>Número de teléfono</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Número de teléfono" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('phone')" 
+        [class.not-empty]="isEmpty('phone')" 
+        formControlName="phone" 
+        placeholder="Número de teléfono" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -410,7 +558,16 @@
     <h6>Datos de la escuela</h6>
     <div class="form-group">
       <label>Nombre de la escuela</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('name')" [class.not-empty]="isEmpty('name')" formControlName="name" placeholder="Nombre de la escuela" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('name')" 
+        [class.not-empty]="isEmpty('name')" 
+        formControlName="name" 
+        placeholder="Nombre de la escuela" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -418,7 +575,16 @@
     </div>
     <div class="form-group">
       <label>Correo electrónico</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('email')" [class.not-empty]="isEmpty('email')" formControlName="email" placeholder="Correo electrónico" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
+      <input 
+        type="email" class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('email')" 
+        [class.not-empty]="isEmpty('email')" 
+        formControlName="email" 
+        placeholder="Correo electrónico" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -426,7 +592,16 @@
     </div>
     <div class="form-group">
       <label>Código del plantel</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('code')" [class.not-empty]="isEmpty('code')" formControlName="code" placeholder="Código del plantel" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('code')" 
+        [class.not-empty]="isEmpty('code')" 
+        formControlName="code" 
+        placeholder="Código del plantel" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras y números permitidos!</div>
@@ -487,21 +662,48 @@
     </div>
     <div class="form-group">
       <label>Calles / Carreras</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressStreet')" [class.not-empty]="isEmpty('addressStreet')" formControlName="addressStreet" placeholder="Calles / Carreras" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressStreet')" 
+        [class.not-empty]="isEmpty('addressStreet')" 
+        formControlName="addressStreet" 
+        placeholder="Calles / Carreras" 
+        [readonly]="disableThis()"
+        maxlength="100"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
     </div>
     <div class="form-group">   
       <label>Ciudad</label>   
-      <input type="text" class="form-control" [class.not-valid]="validate('addressCity')" [class.not-empty]="isEmpty('addressCity')" formControlName="addressCity" placeholder="Ciudad" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressCity')" 
+        [class.not-empty]="isEmpty('addressCity')" 
+        formControlName="addressCity" 
+        placeholder="Ciudad" 
+        [readonly]="disableThis()"
+        maxlength="20"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
     </div>
     <div class="form-group">
       <label>Número de teléfono</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('phone')" [class.not-empty]="isEmpty('phone')" formControlName="phone" placeholder="Número de teléfono" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('phone')" 
+        [class.not-empty]="isEmpty('phone')" 
+        formControlName="phone" 
+        placeholder="Número de teléfono" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -571,7 +773,16 @@
     <h6>Datos del director o directora</h6>
     <div class="form-group">
       <label>Nombre de director o directora</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('principalFirstName')" [class.not-empty]="isEmpty('principalFirstName')" formControlName="principalFirstName" placeholder="Nombre de director o directora" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('principalFirstName')" 
+        [class.not-empty]="isEmpty('principalFirstName')" 
+        formControlName="principalFirstName" 
+        placeholder="Nombre de director o directora" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -579,7 +790,16 @@
     </div>
     <div class="form-group">
       <label>Apellido del director</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('principalLastName')" [class.not-empty]="isEmpty('principalLastName')" formControlName="principalLastName" placeholder="Apellido del director" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('principalLastName')" 
+        [class.not-empty]="isEmpty('principalLastName')" 
+        formControlName="principalLastName" 
+        placeholder="Apellido del director" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -587,7 +807,17 @@
     </div>
     <div class="form-group">
       <label>Correo del director</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('principalEmail')" [class.not-empty]="isEmpty('principalEmail')" formControlName="principalEmail" placeholder="Correo del director" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()">
+      <input 
+        type="email" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('principalEmail')" 
+        [class.not-empty]="isEmpty('principalEmail')" 
+        formControlName="principalEmail" 
+        placeholder="Correo del director" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Debe tener un formato valido!</div>
@@ -595,7 +825,16 @@
     </div>
     <div class="form-group">
       <label>Número de teléfono del director</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('principalPhone')" [class.not-empty]="isEmpty('principalPhone')" formControlName="principalPhone" placeholder="Número de teléfono del director" [readonly]="disableThis()">
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('principalPhone')" 
+        [class.not-empty]="isEmpty('principalPhone')" 
+        formControlName="principalPhone" 
+        placeholder="Número de teléfono del director" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -604,7 +843,16 @@
     <h6>Datos del subdirector o subdirectora</h6>
     <div class="form-group">
       <label>Nombre de subdirector o subdirectora</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalFirstName')" formControlName="subPrincipalFirstName" placeholder="Nombre de subdirector o subdirectora" [readonly]="disableThis()"> <!-- [class.not-empty]="isEmpty('subPrincipalFirstName')" -->
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('subPrincipalFirstName')" 
+        [class.not-empty]="isEmpty('subPrincipalFirstName')"
+        formControlName="subPrincipalFirstName" 
+        placeholder="Nombre de subdirector o subdirectora" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      > <!-- [class.not-empty]="isEmpty('subPrincipalFirstName')" -->
       <div class="field-alerts">
         <!-- <div class="field-empty">¡Debe llenar este campo!</div> -->
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -612,7 +860,16 @@
     </div>
     <div class="form-group">
       <label>Apellido del subdirector</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('subPrincipalLastName')" formControlName="subPrincipalLastName" placeholder="Apellido del subdirector" [readonly]="disableThis()"> <!-- [class.not-empty]="isEmpty('subPrincipalLastName')" -->
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('subPrincipalLastName')" 
+        [class.not-empty]="isEmpty('subPrincipalLastName')"
+        formControlName="subPrincipalLastName" 
+        placeholder="Apellido del subdirector" 
+        [readonly]="disableThis()"
+        maxlength="25"
+      > <!-- [class.not-empty]="isEmpty('subPrincipalLastName')" -->
       <div class="field-alerts">
         <!-- <div class="field-empty">¡Debe llenar este campo!</div> -->
         <div class="field-invalid">¡Solo letras permitidas!</div>
@@ -620,15 +877,34 @@
     </div>
     <div class="form-group">
       <label>Correo del subdirector</label>
-      <input type="email" class="form-control" [class.not-valid]="validate('subPrincipalEmail')" formControlName="subPrincipalEmail" placeholder="Correo del subdirector" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" [readonly]="disableThis()"> <!-- [class.not-empty]="isEmpty('subPrincipalEmail')" -->
+      <input 
+        type="email" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('subPrincipalEmail')" 
+        [class.not-empty]="isEmpty('subPrincipalEmail')"
+        formControlName="subPrincipalEmail" 
+        placeholder="Correo del subdirector" 
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{1,5}$" 
+        [readonly]="disableThis()"
+        maxlength="320"
+      > <!-- [class.not-empty]="isEmpty('subPrincipalEmail')" -->
       <div class="field-alerts">
         <!-- <div class="field-empty">¡Debe llenar este campo!</div> -->
         <div class="field-invalid">¡Debe tener un formato valido!</div>
       </div>
     </div>
     <div class="form-group">
-      <label>Número de teléfono del director</label>
-      <input type="tel" class="form-control" [class.not-valid]="validate('subPrincipalPhone')" formControlName="subPrincipalPhone" placeholder="Número de teléfono del director" [readonly]="disableThis()"> <!-- [class.not-empty]="isEmpty('subPrincipalPhone')" -->
+      <label>Número de teléfono del subdirector</label>
+      <input 
+        type="tel" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('subPrincipalPhone')" 
+        [class.not-empty]="isEmpty('subPrincipalPhone')" 
+        formControlName="subPrincipalPhone" 
+        placeholder="Número de teléfono del subdirector" 
+        [readonly]="disableThis()"
+        maxlength="15"
+      > <!-- [class.not-empty]="isEmpty('subPrincipalPhone')" -->
       <div class="field-alerts">
         <!-- <div class="field-empty">¡Debe llenar este campo!</div> -->
         <div class="field-invalid">¡Solo números permitidos!</div>
@@ -638,7 +914,16 @@
     <div class="two-wrapper">
       <div class="form-group">   
         <label>Cantidad de docentes</label>   
-        <input type="number" class="form-control" [class.not-valid]="validate('nTeachers')" [class.not-empty]="isEmpty('nTeachers')" formControlName="nTeachers" placeholder="Cantidad de docentes" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nTeachers')" 
+          [class.not-empty]="isEmpty('nTeachers')" 
+          formControlName="nTeachers" 
+          placeholder="Cantidad de docentes" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
@@ -646,7 +931,16 @@
       </div>
       <div class="form-group">
         <label>Cantidad personal administrativo</label>
-        <input type="number" class="form-control" [class.not-valid]="validate('nAdministrativeStaff')" [class.not-empty]="isEmpty('nAdministrativeStaff')" formControlName="nAdministrativeStaff" placeholder="Cantidad personal administrativo" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nAdministrativeStaff')" 
+          [class.not-empty]="isEmpty('nAdministrativeStaff')" 
+          formControlName="nAdministrativeStaff" 
+          placeholder="Cantidad personal administrativo" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
@@ -656,7 +950,16 @@
     <div class="two-wrapper">
       <div class="form-group">
         <label>Cantidad personal obrero</label>
-        <input type="number" class="form-control" [class.not-valid]="validate('nLaborStaff')" [class.not-empty]="isEmpty('nLaborStaff')" formControlName="nLaborStaff" placeholder="Cantidad personal obrero" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nLaborStaff')" 
+          [class.not-empty]="isEmpty('nLaborStaff')" 
+          formControlName="nLaborStaff" 
+          placeholder="Cantidad personal obrero" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
@@ -664,7 +967,16 @@
       </div>
       <div class="form-group"> 
         <label>Cantidad de estudiantes</label>     
-        <input type="number" class="form-control" [class.not-valid]="validate('nStudents')" [class.not-empty]="isEmpty('nStudents')" formControlName="nStudents" placeholder="Cantidad de estudiantes" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nStudents')" 
+          [class.not-empty]="isEmpty('nStudents')" 
+          formControlName="nStudents" 
+          placeholder="Cantidad de estudiantes" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
@@ -674,7 +986,16 @@
     <div class="two-wrapper">
       <div class="form-group">
         <label>Cantidad de grados</label>
-        <input type="number" class="form-control" [class.not-valid]="validate('nGrades')" [class.not-empty]="isEmpty('nGrades')" formControlName="nGrades" placeholder="Cantidad de grados" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nGrades')" 
+          [class.not-empty]="isEmpty('nGrades')" 
+          formControlName="nGrades" 
+          placeholder="Cantidad de grados" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
@@ -682,7 +1003,16 @@
       </div>
       <div class="form-group">
         <label>Cantidad de secciones</label>
-        <input type="number" class="form-control" [class.not-valid]="validate('nSections')" [class.not-empty]="isEmpty('nSections')" formControlName="nSections" placeholder="Cantidad de secciones" [readonly]="disableThis()">
+        <input 
+          type="text" 
+          class="form-control not-has-max-or-min" 
+          [class.not-valid]="validate('nSections')" 
+          [class.not-empty]="isEmpty('nSections')" 
+          formControlName="nSections" 
+          placeholder="Cantidad de secciones" 
+          [readonly]="disableThis()"
+          maxlength="5"
+        >
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
           <div class="field-invalid">¡Solo números positivos permitidos!</div>
