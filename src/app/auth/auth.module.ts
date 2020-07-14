@@ -15,7 +15,7 @@ import {
   NbCardModule,
   NbIconModule,
 } from "@nebular/theme";
-import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from "@nebular/auth";
+import { NbPasswordAuthStrategy, NbAuthModule, NbAuthOAuth2Token } from "@nebular/auth";
 import { AuthComponent } from "./auth.component";
 import { LoginComponent } from "./login/login.component";
 import { LogoutComponent } from "./logout/logout.component";
@@ -28,11 +28,11 @@ const authStrategies = [
     name: "email",
     baseEndpoint: `${environment.baseUrl}`,
     token: {
-      class: NbAuthJWTToken,
-      key: "access_token",
+      class: NbAuthOAuth2Token,
+      key: "token_access",
     },
     login: {
-      endpoint: "auth/login",
+      endpoint: "auth/login?site=peca",
       method: "post",
       redirect: {
         success: "seleccion-escuela",

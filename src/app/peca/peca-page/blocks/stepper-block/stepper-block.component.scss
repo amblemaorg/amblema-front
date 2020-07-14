@@ -50,11 +50,13 @@
     [nbButton].appearance-filled.status-primary:hover {
       background-color: #00809a78;
       border-color: #00809a78;
+      font-family: 'Montserrat';
     }
     [nbButton].appearance-filled.status-primary[disabled]:hover {
       background-color: rgba(143, 155, 179, 0.24);
       border-color: transparent;
       color: rgba(143, 155, 179, 0.48);
+      font-family: 'Montserrat';
     }
     p {
       color: $dark-gray !important;
@@ -64,11 +66,13 @@
   .nb-theme-default [nbButton].appearance-filled.status-primary:active {
     background-color: $blue;
     border-color: $blue;
+    font-family: 'Montserrat';
   }
   .nb-theme-default [nbButton].appearance-filled.status-primary {
     background-color: $blue;
     border-color: $blue;
     color: #ffffff;
+    font-family: 'Montserrat';
   }
 
   @media (max-width: 576px){

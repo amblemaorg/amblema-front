@@ -13,7 +13,9 @@
     @include mediabreak(large,landscape) { height: 41.5vw; }
     @include mediabreak(larger,landscape,true,1366px) { height: 35.5vw; }
 }
-
+.noesta{
+	display: none;
+}
 .h6-responsive{
 	display: inline-block;
 }
@@ -71,7 +73,11 @@
 			left: 35px;
 		}
 	}
-
+	@media (min-width:400px) and (max-width:576px){
+		.owl-nav button.owl-next {
+			right: -80vw;
+		}
+	}
 	@media (max-width:400px){
 		.owl-nav button.owl-prev{
 			top: -3rem;
@@ -80,7 +86,7 @@
 			top: -3rem;
 		}
 		.owl-nav button.owl-next {
-			right: -70vw;
+			right: -80vw;
 		}
 	}
 }
