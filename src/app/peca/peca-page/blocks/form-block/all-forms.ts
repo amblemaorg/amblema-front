@@ -1443,7 +1443,7 @@ export const formLecturaModal = {
     placeholder: "Indice",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalText
   }
 };
 export const formMatematicaModal = {
@@ -1527,14 +1527,14 @@ export const formMatematicaModal = {
     placeholder: "Indice de multiplicacion",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalText
   },
   indexLog: {
     label: "Indice de logica matematica",
     placeholder: "Indice de logica matematica",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalText
   }
 };
 
