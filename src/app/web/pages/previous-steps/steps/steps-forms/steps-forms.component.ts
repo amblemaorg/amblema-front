@@ -504,12 +504,12 @@ export class StepsFormsComponent implements OnInit {
             ? this.schoolForm.controls['subPrincipalEmail'].value 
             : null,
         subPrincipalPhone: this.schoolForm.controls['subPrincipalPhone'].value,
-        nTeachers: this.schoolForm.controls['nTeachers'].value,
-        nAdministrativeStaff: this.schoolForm.controls['nAdministrativeStaff'].value,
-        nLaborStaff: this.schoolForm.controls['nLaborStaff'].value,
-        nStudents: this.schoolForm.controls['nStudents'].value,
-        nGrades: this.schoolForm.controls['nGrades'].value,
-        nSections: this.schoolForm.controls['nSections'].value,
+        nTeachers: +this.schoolForm.controls['nTeachers'].value,
+        nAdministrativeStaff: +this.schoolForm.controls['nAdministrativeStaff'].value,
+        nLaborStaff: +this.schoolForm.controls['nLaborStaff'].value,
+        nStudents: +this.schoolForm.controls['nStudents'].value,
+        nGrades: +this.schoolForm.controls['nGrades'].value,
+        nSections: +this.schoolForm.controls['nSections'].value,
         schoolShift: this.schoolForm.controls['schoolShift'].value,
     }
   
@@ -653,12 +653,12 @@ export class StepsFormsComponent implements OnInit {
       subPrincipalEmail: res.subPrincipalEmail? res.subPrincipalEmail : '',
       subPrincipalPhone: res.subPrincipalPhone? res.subPrincipalPhone : '',
       //
-      nTeachers: res.nTeachers? res.nTeachers:null,
-      nAdministrativeStaff: res.nAdministrativeStaff? res.nAdministrativeStaff:null,
-      nLaborStaff: res.nLaborStaff? res.nLaborStaff:null,
-      nStudents: res.nStudents? res.nStudents:null,
-      nGrades: res.nGrades? res.nGrades:null,
-      nSections: res.nSections? res.nSections:null,
+      nTeachers: res.nTeachers? `${res.nTeachers}`:null,
+      nAdministrativeStaff: res.nAdministrativeStaff? `${res.nAdministrativeStaff}`:null,
+      nLaborStaff: res.nLaborStaff? `${res.nLaborStaff}`:null,
+      nStudents: res.nStudents? `${res.nStudents}`:null,
+      nGrades: res.nGrades? `${res.nGrades}`:null,
+      nSections: res.nSections? `${res.nSections}`:null,
       schoolShift: res.schoolShift? res.schoolShift:'',
     });
 
