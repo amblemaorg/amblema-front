@@ -26,6 +26,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
+  routerSubscription: Subscription;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   students = [];
   section = {};
@@ -57,7 +58,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.instantiateComponent(config);
 
     //To know if the url change
-    this.router.events.subscribe((event: Event) => {
+    this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
@@ -74,7 +75,8 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
-       // console.log("resp necesaria", data);
+       if (data.activePecaContent){
+         // console.log("resp necesaria", data);
         this.idPeca = data.activePecaContent.id;
         this.response = data.activePecaContent.school;
         console.log(this.response.sections);
@@ -105,32 +107,11 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
             this.UrlLapse,
             diagnosticDataToMathFormMapper
           );
-          // }
-          //loading data on the students of lapse2
-          /*   if (this.UrlLapse === "lapso/2") {
-            this.setReadingTableData(
-              this.students,
-              diagnosticDataToReadingFormMapperLapse2
-            );
-            this.setMathTableData(
-              this.students,
-              diagnosticDataToMathFormMapperLapse2
-            );
-          } */
-          //loading data on the students of lapse3
-          /*  if (this.UrlLapse === "lapso/3") {
-            this.setReadingTableData(
-              this.students,
-              diagnosticDataToReadingFormMapperLapse3
-            );
-            this.setMathTableData(
-              this.students,
-              diagnosticDataToMathFormMapperLapse3
-            );
-          } */
+          
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
+       }
       },
 
       (error) => console.error(error)
@@ -222,5 +203,6 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }
