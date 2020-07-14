@@ -50,13 +50,15 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     setActivity(lapseId, activityId) {
         this.pecaDataSubscription = this.pecaContentData$.subscribe(
             (data) => {
-                const lapse_id = lapseId;
-                const activity_id = activityId;
-                const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
-                    return activity.id === activity_id;
-                });
-                const activity = data.activePecaContent[`lapse${lapse_id}`].activities[index];
-                this.changeComponentHeader(activity.name);
+                if (data.activePecaContent) {
+                    const lapse_id = lapseId;
+                    const activity_id = activityId;
+                    const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
+                        return activity.id === activity_id;
+                    });
+                    const activity = data.activePecaContent[`lapse${lapse_id}`].activities[index];
+                    this.changeComponentHeader(activity.name);   
+                }                
             },
             error => console.error(error)
         );

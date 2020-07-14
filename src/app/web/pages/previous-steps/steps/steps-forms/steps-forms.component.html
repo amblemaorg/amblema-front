@@ -13,24 +13,41 @@
       <div class="input-group-prepend">
         <ng-select
         class="form-control"
-        [items]="doc_type"
-        bindValue="name"
+        [items]="cardTypes"
+        bindValue="id"
         bindLabel="name"
         formControlName="selectedDoc"
         [id]="mode+'-'+index+'-'+1" 
         [virtualScroll]="true"
         [clearable]="false"
         [searchable]="false"
-        [readonly]="true">
+        [readonly]="true"
+      >
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
       </ng-select>
       </div>
-      <input type="text" class="form-control" [class.not-valid]="validate('rif')" [class.not-empty]="isEmpty('rif')" formControlName="rif" placeholder="RIF de la empresa" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control" 
+        [ngClass]="{
+          'not-valid': validate('rif'),
+          'not-empty': isEmpty('rif'),          
+          'max-len-over': isMaxLenOver('rif','selectedDoc'),
+          'min-len-under': isMinLenUnder('rif','selectedDoc'),
+          'not-has-max-or-min': !hasMaxOrMin('rif','selectedDoc')
+        }"
+        formControlName="rif" 
+        placeholder="RIF de la empresa" 
+        [readonly]="disableThis()"
+        [maxlength]="setMaxLen('selectedDoc')"      
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
+        <div class="field-max-len-over">¡Superó el máximo de caracteres permitidos!</div>
+        <div class="field-min-len-under">¡Está por debajo del mínimo de caracteres permitidos!</div>
       </div> 
     </div>
     <div class="form-group">
@@ -256,16 +273,33 @@
         [virtualScroll]="true"
         [clearable]="false"
         [searchable]="false"
-        [readonly]="disableThis()">
+        [readonly]="disableThis()"        
+      >
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
       </ng-select>
       </div>
-      <input type="text" class="form-control" [class.not-valid]="validate('cardId')" [class.not-empty]="isEmpty('cardId')" formControlName="cardId" placeholder="Identificación" [readonly]="disableThis()">
+      <input
+        type="text" 
+        class="form-control" 
+        [ngClass]="{
+          'not-valid': validate('cardId'),
+          'not-empty': isEmpty('cardId'),          
+          'max-len-over': isMaxLenOver('cardId','cardType'),
+          'min-len-under': isMinLenUnder('cardId','cardType'),
+          'not-has-max-or-min': !hasMaxOrMin('cardId','cardType')
+        }"
+        formControlName="cardId" 
+        placeholder="Identificación" 
+        [readonly]="disableThis()"
+        [maxlength]="setMaxLen('cardType')"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
         <div class="field-invalid">¡Solo números permitidos!</div>
+        <div class="field-max-len-over">¡Superó el máximo de caracteres permitidos!</div>
+        <div class="field-min-len-under">¡Está por debajo del mínimo de caracteres permitidos!</div>
       </div> 
     </div>
     <div class="form-group">
