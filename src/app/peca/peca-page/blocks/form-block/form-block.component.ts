@@ -611,7 +611,7 @@ export class FormBlockComponent
         'body: ', body
       );
 //console log... comentar todo el fetcher antes de probar el put
-      this.fetcher[method](resourcePath, body).subscribe(
+      /* this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
@@ -670,7 +670,7 @@ export class FormBlockComponent
           );
           console.error(error);
         }
-      );  
+      );   */
     }
   }
 
