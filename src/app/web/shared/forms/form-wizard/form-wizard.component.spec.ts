@@ -17,6 +17,7 @@ import { FormValidationComponent } from '../elements/form-validation.component';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { ReCaptchaV3Service, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('FormWizardComponent', () => {
   let component: FormWizardComponent;
@@ -124,7 +125,8 @@ describe('FormWizardComponent', () => {
         ReactiveFormsModule,
         NgSelectModule,
         FormsModule,
-        RecaptchaV3Module
+        RecaptchaV3Module,
+        HttpClientModule
       ],
       providers: [
         FormBuilder,
