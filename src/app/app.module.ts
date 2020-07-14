@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AngularSvgIconModule } from "angular-svg-icon";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -23,6 +23,7 @@ import { NbAuthModule } from "@nebular/auth";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { AllowAuthenticatedGuard } from "./guards/allow-authenticated.guard";
 import { DenyAuthenticatedGuard } from "./guards/deny-authenticated.guard";
+import { JwtInterceptor } from "./interceptors/auth-jwt-interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,15 @@ import { DenyAuthenticatedGuard } from "./guards/deny-authenticated.guard";
     NgxsStoragePluginModule.forRoot({}),
     EmbedVideo.forRoot(),
   ],
-  providers: [AllowAuthenticatedGuard, DenyAuthenticatedGuard],
+  providers: [
+    AllowAuthenticatedGuard,
+    DenyAuthenticatedGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
