@@ -52,10 +52,10 @@ export function adaptBody(formType: string, body: any) {
                 }
             });
             break;
-    /*
-          case 'buscarEstudiante':
+    
+          case 'tablaLectura"':
             Object.keys(body).map( (key) => {
-                if (
+             /*    if (
                     key != 'id' && 
                     key != 'documentGroup' && 
                     key != 'grades' && 
@@ -70,10 +70,11 @@ export function adaptBody(formType: string, body: any) {
                 else if (key === 'documentGroup') {
                     body_adapted['cardType'] = body[key]['prependSelect'];
                     body_adapted['cardId'] = body[key]['prependInput'];
-                }
+                } */
+                console.log("body", key)
             });
             break;
-    */
+    
         default:
             Object.keys(body).map( (key) => {
                 body_adapted[key] = body[key];
