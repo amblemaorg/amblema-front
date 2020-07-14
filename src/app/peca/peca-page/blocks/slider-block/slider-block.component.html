@@ -35,11 +35,12 @@
       [class.margin-both-auto]="settings.sliderImage && settings.sliderImage.length<2"
       [carouselClasses]="['owl-theme', 'row', 'sliding']">
       <div class="item" *ngFor="let image of settings.sliderImage;index as i">
-        <h6 class="mb-4 image-desc h6-responsive">Fecha de la actividad:</h6>
-        <input #inputDate type="date" class="form-control input-responsive"
-          (change)="glbls.validateDate($event,'greater')" />
-        <input [class.d-none]="inputDate.value.length > 0" class="form-control input-responsive" autocomplete='off'
-          type="text" readonly />
+        <h6 class="mb-4 image-desc h6-responsive">{{image.text}}</h6>
+        <span *ngIf="image.fields">
+          <input #inputDate type="date" class="form-control" (change)="glbls.validateDate($event,'greater')" />
+          <input [class.d-none]="inputDate.value.length > 0" class="form-control" autocomplete='off' type="text" readonly
+            (click)="focusDatePicker(inputDate)" />
+        </span>
         <img class="slide-image" src="{{image.image}}">
         <div class="slide-text">
           <p class="mb-4 mt-4 image-desc">{{ image.description }}</p>
