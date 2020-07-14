@@ -48,7 +48,7 @@ export class StepsFormsComponent implements OnInit {
   currentMarker: any;
   // END-MAPA--------------------------------------------------
 
-  sendingForm:boolean;  
+  sendingForm: boolean;  
 
   doc_type = [
     {id:'1',name:'J'},
@@ -94,10 +94,10 @@ export class StepsFormsComponent implements OnInit {
   ];
 
   sponsorForm = this.fb.group({
-    selectedDoc: ['J'],
+    selectedDoc: ['2'],
     name: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
     email: ['', [Validators.required, Validators.email, Validators.pattern(EMAIL_PTTRN)]],
-    rif: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],
+    rif: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern(NUMBER_PTTRN)]],
     addressState: ['', [Validators.required]],
     addressMunicipality: ['', [Validators.required]],
     addressStreet: ['', [Validators.required]],
@@ -116,7 +116,7 @@ export class StepsFormsComponent implements OnInit {
     birthdate: ['', [Validators.required]], //str isoformat,
     gender: ['', [Validators.required]], //str (1=femenino, 2=masculino),
     cardType: ['1', [Validators.required]], //str (1=v, 2=j, 3=e),
-    cardId: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str solo numeros,
+    cardId: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8), Validators.pattern(NUMBER_PTTRN)]], //str solo numeros,
     homePhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str(solo numeros),
     addressState: ['', [Validators.required]], //str stateID,
     addressMunicipality: ['', [Validators.required]], //str municipalityID, 
@@ -179,7 +179,13 @@ export class StepsFormsComponent implements OnInit {
     this.fillStates();
     this.fillMunicipalities();
 
-    this.glbls = this.globals;    
+    this.glbls = this.globals;   
+    
+    if (this.who==="coordinator") {
+      this.coordinatorForm.get("cardType"). statusChanges.subscribe( res => {        
+        this.setLength('cardId','cardType');
+      });
+    }    
 
     this.fillForm();
 
@@ -498,12 +504,12 @@ export class StepsFormsComponent implements OnInit {
             ? this.schoolForm.controls['subPrincipalEmail'].value 
             : null,
         subPrincipalPhone: this.schoolForm.controls['subPrincipalPhone'].value,
-        nTeachers: this.schoolForm.controls['nTeachers'].value,
-        nAdministrativeStaff: this.schoolForm.controls['nAdministrativeStaff'].value,
-        nLaborStaff: this.schoolForm.controls['nLaborStaff'].value,
-        nStudents: this.schoolForm.controls['nStudents'].value,
-        nGrades: this.schoolForm.controls['nGrades'].value,
-        nSections: this.schoolForm.controls['nSections'].value,
+        nTeachers: +this.schoolForm.controls['nTeachers'].value,
+        nAdministrativeStaff: +this.schoolForm.controls['nAdministrativeStaff'].value,
+        nLaborStaff: +this.schoolForm.controls['nLaborStaff'].value,
+        nStudents: +this.schoolForm.controls['nStudents'].value,
+        nGrades: +this.schoolForm.controls['nGrades'].value,
+        nSections: +this.schoolForm.controls['nSections'].value,
         schoolShift: this.schoolForm.controls['schoolShift'].value,
     }
   
@@ -580,7 +586,7 @@ export class StepsFormsComponent implements OnInit {
 
   private fillSponsor(res){
     this.sponsorForm.setValue({
-      selectedDoc: 'J',
+      selectedDoc: '2',
       name: res.name? res.name:'',
       email: res.email? res.email:'',
       rif: res.rif? res.rif:'',
@@ -647,12 +653,12 @@ export class StepsFormsComponent implements OnInit {
       subPrincipalEmail: res.subPrincipalEmail? res.subPrincipalEmail : '',
       subPrincipalPhone: res.subPrincipalPhone? res.subPrincipalPhone : '',
       //
-      nTeachers: res.nTeachers? res.nTeachers:null,
-      nAdministrativeStaff: res.nAdministrativeStaff? res.nAdministrativeStaff:null,
-      nLaborStaff: res.nLaborStaff? res.nLaborStaff:null,
-      nStudents: res.nStudents? res.nStudents:null,
-      nGrades: res.nGrades? res.nGrades:null,
-      nSections: res.nSections? res.nSections:null,
+      nTeachers: res.nTeachers? `${res.nTeachers}`:null,
+      nAdministrativeStaff: res.nAdministrativeStaff? `${res.nAdministrativeStaff}`:null,
+      nLaborStaff: res.nLaborStaff? `${res.nLaborStaff}`:null,
+      nStudents: res.nStudents? `${res.nStudents}`:null,
+      nGrades: res.nGrades? `${res.nGrades}`:null,
+      nSections: res.nSections? `${res.nSections}`:null,
       schoolShift: res.schoolShift? res.schoolShift:'',
     });
 
@@ -687,6 +693,74 @@ export class StepsFormsComponent implements OnInit {
     if (!this.disableThis()) {
       e.focus();
     }    
+  }
+
+  setMaxLen(controlName: string) {
+    const ct = this[this.who==="coordinator"
+      ? "coordinatorForm"
+      : "sponsorForm"]
+      .get(controlName).value; // 1: V, 2: J, 3: E      
+    return ct === "1" ? 8 : 9;   
+  }
+  setMinLen(controlName: string) {
+    const ct = this[this.who==="coordinator"
+      ? "coordinatorForm"
+      : "sponsorForm"]
+      .get(controlName).value; // 1: V, 2: J, 3: E    
+    return ct === "1" ? 7 : ct === "2" ? 8 : 9; 
+  }
+
+  setLength(controlName: string, controlCardType: string) {
+    this[this.who==="coordinator"
+      ? "coordinatorForm"
+      : "sponsorForm"].setControl(
+        controlName,
+        this.fb.control(
+          this[this.who==="coordinator"
+          ? "coordinatorForm"
+          : "sponsorForm"].get(controlName).value,
+          [
+            Validators.required, 
+            Validators.minLength(this.setMinLen(controlCardType)), 
+            Validators.maxLength(this.setMaxLen(controlCardType)), 
+            Validators.pattern(NUMBER_PTTRN)
+          ]
+        )
+      );
+
+      this[this.who==="coordinator"
+        ? "coordinatorForm"
+        : "sponsorForm"].get(controlName).markAsTouched();
+
+      // const fieldVal = this[this.who==="coordinator"
+      //   ? "coordinatorForm"
+      //   : "sponsorForm"].get(controlName).value;      
+  }
+
+  isMaxLenOver(controlName: string, controlCardType: string) {    
+    const ctrlNameVal = this[this.who==="coordinator"
+      ? "coordinatorForm"
+      : "sponsorForm"]
+      .controls[controlName].value;
+    if (ctrlNameVal)
+      return ctrlNameVal.length > this.setMaxLen(controlCardType)
+        && ctrlNameVal.length > 0;
+    else 
+      return false
+  }
+  isMinLenUnder(controlName: string, controlCardType: string) {
+    const ctrlNameVal = this[this.who==="coordinator"
+      ? "coordinatorForm"
+      : "sponsorForm"]
+      .controls[controlName].value;
+    if (ctrlNameVal)
+      return ctrlNameVal.length < this.setMinLen(controlCardType) 
+        && ctrlNameVal.length > 0;
+    else 
+      return false
+  }
+  hasMaxOrMin(controlName: string, controlCardType: string) {    
+    return this.isMaxLenOver(controlName,controlCardType) || this.isMinLenUnder(controlName,controlCardType);
   }
 
 }
