@@ -66,11 +66,13 @@
   .nb-theme-default [nbButton].appearance-filled.status-primary:active {
     background-color: $blue;
     border-color: $blue;
+    font-family: 'Montserrat';
   }
   .nb-theme-default [nbButton].appearance-filled.status-primary {
     background-color: $blue;
     border-color: $blue;
     color: #ffffff;
+    font-family: 'Montserrat';
   }
 
   @media (max-width: 576px){
