@@ -90,13 +90,11 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
             student.grade = this.grade;
             student.section = this.section;
           });
-          auxStudents = auxStudents.concat(this.response.sections[i].students); //this.response.sections[i].students;
+          auxStudents = auxStudents.concat(this.response.sections[i].students); 
         }
         this.students = auxStudents;
         console.log(this.students);
         if (!isNullOrUndefined(data)) {
-          //loading data on the students of lapse1
-          // if (this.UrlLapse === "lapso/1") {
           this.setReadingTableData(
             this.students,
             this.UrlLapse,
