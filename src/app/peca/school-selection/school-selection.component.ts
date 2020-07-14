@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
-import { NbAuthJWTToken, NbAuthService, decodeJwtPayload } from "@nebular/auth";
+import { NbAuthService, decodeJwtPayload, NbAuthOAuth2Token } from "@nebular/auth";
+import { Location } from "@angular/common";
 import { Store } from "@ngxs/store";
 import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
 import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
@@ -54,10 +55,10 @@ export class SchoolSelectionComponent implements OnInit {
 
   getTokenInfo() {
     let response;
-    this.authService.getToken().subscribe((token: NbAuthJWTToken) => {
+    this.authService.getToken().subscribe((token: NbAuthOAuth2Token) => {
       if (token.isValid()) {
-        response = decodeJwtPayload(token.getValue());
-        //console.log(response);
+        let tokens = JSON.parse(token.getValue());
+        response = decodeJwtPayload(tokens.access_token);
         this.store.dispatch([new SetUser(response.identity)]);
         this.projects = response.identity.projects;
         this.userType = response.identity.userType;

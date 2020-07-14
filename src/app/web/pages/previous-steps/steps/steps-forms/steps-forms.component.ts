@@ -39,14 +39,12 @@ export class StepsFormsComponent implements OnInit {
 
   // MAPA------------------------------------------------------
   map: any;//google.maps.Map;
+  geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
   lng = -66.029011; // Venezuela's middle longitude
-  coordinates: any; //= new google.maps.LatLng(this.lat, this.lng);
+  coordinates: any;
 
-  mapOptions: any; /*  google.maps.MapOptions = {
-    center: this.coordinates,
-    zoom: 7,      
-  }; */
+  mapOptions: any;
   currentMarker: any;
   // END-MAPA--------------------------------------------------
 
@@ -173,14 +171,7 @@ export class StepsFormsComponent implements OnInit {
       this.map = null;
       this.currentMarker = null;
 
-      if ( !isNullOrUndefined(google) ) {
-        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
-        const mapOps: google.maps.MapOptions = {
-          center: this.coordinates,
-          zoom: 7,      
-        };
-        this.mapOptions = mapOps;
-      }      
+      this.mapSettings(this.lat, this.lng, 7);
     }
   }
 
@@ -192,7 +183,7 @@ export class StepsFormsComponent implements OnInit {
 
     this.fillForm();
 
-    if (this.who == "school") {
+    if (this.who == "school") {      
       this.schoolForm.get('name').statusChanges.subscribe( res => {
         if (
           this.currentMarker 
@@ -205,10 +196,46 @@ export class StepsFormsComponent implements OnInit {
           });
         }
       });
+      
+      this.schoolForm.get('addressMunicipality').statusChanges.subscribe( res => {
+        if (
+          this.schoolForm.get('addressMunicipality').value &&
+          this.schoolForm.get('addressMunicipality').value.length > 0
+        ) {     
+          const addressData = this.municipalitiesData.filter(s=>{
+              return s.id===this.schoolForm.get('addressMunicipality').value
+            });
+          if (addressData.length > 0) {
+            this.mapPositioner(
+              addressData[0].state.name,
+              addressData[0].name
+            ); 
+          }          
+        } 
+        else {
+          if (this.schoolmap && this.mapOptions) {
+            if (this.mapOptions.zoom != 7) {
+              this.mapSettings(this.lat,this.lng,7);
+              this.mapInitializer();  
+            }            
+          }          
+        }
+      });
     }
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
+  mapSettings(lat,lng,zoom) {
+    if ( !isNullOrUndefined(google) ) {
+      this.coordinates = new google.maps.LatLng(lat, lng);
+      const mapOps: google.maps.MapOptions = {
+        center: this.coordinates,
+        zoom: zoom,      
+      };
+      this.mapOptions = mapOps;
+    }
+  }
+  
   mapInitializer(disabled: boolean = false) {    
     if (disabled) {
       this.mapOptions["disableDefaultUI"] = true;
@@ -235,7 +262,11 @@ export class StepsFormsComponent implements OnInit {
           }
         });
       });
+
+      this.geocoder = new google.maps.Geocoder();
     }
+
+    if (this.currentMarker) this.currentMarker.setMap(this.map);
   }
 
   loadAllMarkers(data) {
@@ -256,6 +287,74 @@ export class StepsFormsComponent implements OnInit {
     this.schoolForm.get('coordinate').setValue(data.coordinate);
 
     this.currentMarker.setMap(this.map);
+  }
+
+  mapPositioner(state: string, county: string) {
+    // google maps geocoding
+    if ( !isNullOrUndefined(google) ) {
+
+      this.geocoder.geocode({ componentRestrictions: {
+        country: 'Venezuela',
+        administrativeArea: state,
+        locality: county
+      } }, (results, status) => {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results.length > 0)
+            this.mapSettings(
+              results[0].geometry.location.lat(),
+              results[0].geometry.location.lng(),
+              11
+            );
+          else           
+            this.mapSettings(this.lat, this.lng, 7);
+        } 
+        else {
+          switch (status) {
+            case 'ZERO_RESULTS':
+              console.log('None result found, showing default map options');
+              break;
+            case 'OVER_QUERY_LIMIT':
+              console.error('You are over your quota');
+              break;
+            case 'REQUEST_DENIED':
+              console.error('Your site is unavailable to use geocoder');
+              break;
+            default:
+              console.error('Unknown server error');
+              break;
+          }
+          this.mapSettings(this.lat,this.lng,7);          
+        }
+        this.mapInitializer();
+      });
+
+    }    
+
+    // OpenStreetMap
+    // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
+    /* this.stepsService.geoCodeGet(
+      `https://nominatim.openstreetmap.org/search?
+        country=Venezuela&
+        state=${state}&
+        county=${county}&
+        format=json&
+        limit=1`
+    ).subscribe(
+      (res) => {
+        console.log('openStreet map',res);
+        if (res.length > 0)
+          this.mapSettings(+res[0].lat,+res[0].lon,11);
+        else 
+          this.mapSettings(this.lat,this.lng,7);
+      },
+      (error) => {
+        this.mapSettings(this.lat,this.lng,7);                
+        console.error(error);
+      },
+      () => {
+        this.mapInitializer();
+      }
+    ); */
   }
   // END-MAP-CONFS ---------------------------------------------------------------------------------------
 
@@ -280,7 +379,7 @@ export class StepsFormsComponent implements OnInit {
           this.showMap = true;
           setTimeout(() => {
             if (this.schoolmap)
-              this.mapInitializer();
+              this.mapInitializer(this.disable);
           });  
         }             
       }
@@ -416,9 +515,13 @@ export class StepsFormsComponent implements OnInit {
       this.sendingForm = false; 
       fo.reset();
 
-      if (this.who == "school" && !isNullOrUndefined(google) ) 
-        this.mapInitializer(true);
-
+      if (this.who == "school" && !isNullOrUndefined(google) ) {        
+        if (this.schoolmap){
+          this.mapSettings(this.lat,this.lng,7);
+          this.mapInitializer(true);
+        } 
+      }
+        
       this.emitUpdate.emit({
         project_id: this.project_id,
         indd: this.index,
@@ -558,6 +661,11 @@ export class StepsFormsComponent implements OnInit {
         this.showMap = true;
         setTimeout(() => {
           if (this.schoolmap) {
+            this.mapSettings(
+              res.coordinate.latitude, 
+              res.coordinate.longitude, 
+              11
+            );
             this.mapInitializer(true);
             this.loadAllMarkers({
               name: res.name,

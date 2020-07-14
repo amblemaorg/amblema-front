@@ -181,27 +181,32 @@ export class SchoolDataPageComponent extends PecaPageComponent
   }
 
   updateStaticFetchers() {
+    // send and cancel school update request
     this.setBlockFetcherUrls("schoolFormButton", {
       put: `pecaprojects/school/${this.schoolFormData.pecaId}?userId=${this.currentUserId}`,
       cancel: this.requestIdToCancel
         ? `requestscontentapproval/${this.requestIdToCancel}`
         : null
     });
-
+    
+    // create school teacher
     this.setBlockFetcherUrls("teacherForm", {
       post: `schools/teachers/${this.schoolFormData.id}`
     });
 
+    // create school section
     this.setBlockFetcherUrls('gradosYSeccionesPostForm', {
       post: `pecaprojects/sections/${this.schoolFormData.pecaId}`,
     });        
 
+    // create school student
     this.setBlockFetcherUrls('estudiantesPostForm', {
         post: `pecaprojects/students/${this.schoolFormData.pecaId}`,
     });
   }
 
   updateDynamicFetchers() {
+    // school teacher update and delete
     this.createAndSetBlockFetcherUrls(
       "teacherModalForm",
       {
@@ -221,7 +226,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     );
 
     //
-
+    // school section update and delete
     this.createAndSetBlockFetcherUrls(
       "gradesAndSectionsModalForm",
       {
@@ -241,7 +246,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     );
 
     //
-
+    // school student update and delete
     this.createAndSetBlockFetcherUrls(
       "estudiantesModalForm",
       {
