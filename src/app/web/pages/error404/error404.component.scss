@@ -15,8 +15,14 @@ $img-small: url("../../../../assets/images/error404/background-404.jpg");
   position: fixed;
   top: 0;
   left: 0;
-  @include breakpoint(medium) {
+
+  @include breakpoint(large) {
     background-image: $img-big;
+  }
+  //Ipad pro
+
+  @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 1.5) {
+    background-image: $img-small;
   }
 }
 
@@ -30,7 +36,7 @@ h1 {
     font-size: 5em;
   }
   @include breakpoint(large) {
-    font-size: 8.2em;
+    font-size: 11em;
   }
   @media (max-width: 1280px) and (max-height: 290px) {
     font-size: 2.7em;
@@ -50,7 +56,7 @@ h2 {
     font-size: 2.1em;
   }
   @include breakpoint(large) {
-    font-size: 2.4em;
+    font-size: 3em;
     padding-right: 0%;
   }
   @media (max-width: 1280px) and (max-height: 290px) {
@@ -79,7 +85,9 @@ span {
     font-size: 0.9em;
   }
   @include breakpoint(large) {
-    font-size: 1.2em;
+    font-size: 1.6em;
+    padding-right: 5%;
+    letter-spacing: 0.05em;
   }
   @media (max-width: 1280px) and (max-height: 290px) {
     font-size: 0.7em;
@@ -93,7 +101,7 @@ span {
     margin-top: 2em;
   }
   @include breakpoint(large) {
-    margin-top: 2.125em;
+    margin-top: 5.6em;
   }
   @media (max-width: 1280px) and (max-height: 500px) {
     margin-top: 1em;
@@ -116,8 +124,10 @@ span {
     }
     @include breakpoint(large) {
       min-width: 0%;
-      width: 14.5%;
+      width: 19%;
+      font-size: 1.2rem;
     }
+
     @media (max-width: 1280px) and (max-height: 500px) {
       width: 10%;
     }
@@ -155,18 +165,22 @@ span {
     margin-top: 23%;
   }
   @include breakpoint(large) {
-    margin-top: 14%;
-    margin-left: 9.2%;
+    margin-top: 15%;
+    margin-left: 13%;
   }
   @media (max-width: 1050px) and (max-height: 1370px) {
-    margin-top: 60%;
+    margin-top: 54%;
   }
   @media (max-width: 1280px) and (max-height: 500px) {
     margin-top: 5%;
   }
 }
 .text-context {
+  @include breakpoint(small) {
+    padding-right: 25%;
+
+  }
   line-height: 1;
-  padding-top: 2%;
-  padding-right: 20%;
+  padding-top: 1.5%;
+  padding-right: 0%;
 }
