@@ -274,6 +274,12 @@ span {
 
   }
 
+  @media (min-width: 1800px) and (max-width: 1999px) {
+    margin-top: 23%;
+    margin-left: 10%;
+
+  }
+
 }
 .text-context {
   @include breakpoint(small, portrait) {
