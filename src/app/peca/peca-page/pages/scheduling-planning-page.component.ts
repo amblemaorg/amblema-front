@@ -63,14 +63,21 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
                 this.setReunionText(data);
                 this.setReunionTextData();
 
-                this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
-                this.setBlockData("reunionAmblema", this.reunionAmblemaData);
 
+                this.loadedData = true;
+                if (this.isInstanciated) this.updateMethods();
             }
         )
     }
 
-    updateMethods() { }
+    updateMethods() {
+        this.updateDataToBlocks();
+    }
+    updateDataToBlocks() {
+        this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
+        this.setBlockData("reunionAmblema", this.reunionAmblemaData);
+
+    }
 
     setPropuestaText(data) {
         this.text = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;

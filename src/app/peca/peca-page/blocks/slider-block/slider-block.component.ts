@@ -69,6 +69,14 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
+
+  setData(data: any) {
+    if (data["sliderImage"]) this.settings.sliderImage = data.sliderImage.description;
+    if (data["sliderImage"]) this.settings.sliderImage = data.sliderImage.image;
+    console.log("checkkk",data.sliderImage.image);
+    console.log("checkkk22222",data.sliderImage.description);
+  }
+
   focusDatePicker(e) {
     e.focus();
   }
