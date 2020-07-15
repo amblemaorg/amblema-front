@@ -13,6 +13,7 @@ const controlProps = {
 
 const sliderAmblemoneda = {
     component: 'slider',
+    name: "sliderAmblemaData",
     settings: {
         sliderImage: [
             {

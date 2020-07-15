@@ -58,7 +58,8 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
                 this.setOlimpiadas(data);
                 this.setOLimpiadasData();
 
-                this.setBlockData("olimpiadasDateText", this.omlimpiadasData);
+                this.loadedData = true;
+              if (this.isInstanciated) this.updateMethods();
             }
         )
     }
@@ -72,7 +73,7 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
 
     setOLimpiadasData() {
         this.omlimpiadasData = {
-            dateOrtext:{
+            dateOrtext: {
                 date: this.date
             },
             subtitles: {
@@ -81,7 +82,15 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
         }
     }
 
-    updateMethods() { }
+    updateMethods() {
+        this.updateDataToBlocks();
+        //this.updateStaticFetchers();
+        //this.updateDynamicFetchers();
+    }
+
+    updateDataToBlocks() {
+        this.setBlockData("olimpiadasDateText", this.omlimpiadasData);
+    }
 
     ngAfterViewInit(): void {
         setTimeout(() => {

@@ -30,10 +30,17 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   //subscripciones
   infoDataSubscription: Subscription;
 
+  //charla
   amblemonedaData: any
   text: string;
 
+  //tabla
   pruebaData: any;
+
+  //slider
+  sliderData: any;
+  img: string;
+  descripcion: string;
 
   isInstanciated: boolean;
   loadedData: boolean;
@@ -64,38 +71,45 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
         this.setAmblemonedasCharla(data);
         this.setAmblemonedasCharlaData();
 
-        this.setBlockData("amblemonedaCharla", this.amblemonedaData);
+        this.setAmblemonedasSlider(data);
+        this.setAmblemonedasSliderData();
 
-        this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections[0], amblemonedasTableMapper);
+        this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
+
+        this.loadedData = true;
+        if (this.isInstanciated) this.updateMethods();
       }, er => { console.log(er) })
+
+
   }
 
-  updateMethods(updateData: boolean = true) {
-    this.updateDataToBlocks(updateData);
+  updateMethods() {
+    this.updateDataToBlocks();
   }
-  updateDataToBlocks(updateData: boolean) {
-    if (updateData) {
-      this.setBlockData("amblemonedaTable", this.pruebaData);
-    }
+  updateDataToBlocks() {
+    this.setBlockData("amblemonedaTable", this.pruebaData);
+    this.setBlockData("amblemonedaCharla", this.amblemonedaData);
+    this.setBlockData("sliderAmblemaData", this.sliderData);
+
   }
 
   setAmblemonedasMapper(dataAmblema, _mapper?: Function) {
     if (_mapper) {
-      console.log(dataAmblema,'asdasdasdasdasdasd')
+      //console.log(dataAmblema, 'asdasdasdasdasdasd')
       this.pruebaData = {
         data: _mapper(dataAmblema),
         isEditable: true,
       };
-      console.log("este es el mapper de amblemoneda", this.pruebaData);
+      //console.log("este es el mapper de amblemoneda", this.pruebaData);
     } else {
       this.pruebaData = dataAmblema;
-      console.log("este NO es el mapper de lectura", this.pruebaData);
+      //console.log("este NO es el mapper de amblemoneda", this.pruebaData);
     }
   }
 
   setAmblemonedasCharla(data) {
     this.text = data.activePecaContent.lapse1.ambleCoins.teachersMeetingDescription;
-    console.log(this.text, "charla")
+    //console.log(this.text, "charla")
   }
 
   setAmblemonedasCharlaData() {
@@ -106,13 +120,31 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     }
   }
 
+  setAmblemonedasSlider(data) {
+    this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider[0].description;
+    this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider[0].image;
+    console.log(this.descripcion, this.img, "slideeeeeeeeeer")
+  }
+
+  setAmblemonedasSliderData() {
+    this.sliderData = {
+      sliderImage: {
+        description: this.descripcion,
+        image: this.img
+      }
+    }
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
     });
   }
 
   ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
   }
 }

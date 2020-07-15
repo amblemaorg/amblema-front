@@ -1,16 +1,18 @@
 export function amblemonedasTableMapper(amblemonedaData) {
-    const {
-        id,
-        name,
-        grade,
-        status,
-    } = amblemonedaData;
-
-    return {
-        id,
-        grade,
-        section: name,
-        confirmation: status,
-
-    };
+    return amblemonedaData.map( section => {
+        const {
+            id,
+            name,
+            grade,
+            status,
+        } = section;
+    
+        return {
+            id,
+            grade,
+            section: name,
+            confirmation: status,
+    
+        };
+    });    
 }
