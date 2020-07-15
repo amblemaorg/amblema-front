@@ -50,7 +50,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
-    //  console.log(this.blockInstances);
+      //  console.log(this.blockInstances);
 
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
@@ -62,7 +62,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-       // console.log("el ev", this.UrlLapse);
+        // console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
     });
@@ -70,48 +70,50 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
   ngOnInit() {
     this.UrlLapse = this.router.url.substr(12, 1);
     this.getInfo();
-  //  console.log("la ruta es;", this.UrlLapse);
+    //  console.log("la ruta es;", this.UrlLapse);
   }
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
-       if (data.activePecaContent){
-         // console.log("resp necesaria", data);
-        this.idPeca = data.activePecaContent.id;
-        this.response = data.activePecaContent.school;
-      //  console.log(this.response.sections);
-        let auxStudents = [];
-        for (let i = 0; i < this.response.sections.length; i++) {
-          this.grade = this.response.sections[i].grade;
-          this.section = {
-            name: this.response.sections[i].name,
-            idSection: this.response.sections[i].id,
-          };
-        //  console.log(this.response.sections[i].students)
-          this.response.sections[i].students.forEach((student) => {
-            student.grade = this.grade;
-            student.section = this.section;
-          });
-          auxStudents = auxStudents.concat(this.response.sections[i].students); 
+        if (data.activePecaContent) {
+          // console.log("resp necesaria", data);
+          this.idPeca = data.activePecaContent.id;
+          this.response = data.activePecaContent.school;
+          //  console.log(this.response.sections);
+          let auxStudents = [];
+          for (let i = 0; i < this.response.sections.length; i++) {
+            this.grade = this.response.sections[i].grade;
+            this.section = {
+              name: this.response.sections[i].name,
+              idSection: this.response.sections[i].id,
+            };
+            //  console.log(this.response.sections[i].students)
+            this.response.sections[i].students.forEach((student) => {
+              student.grade = this.grade;
+              student.section = this.section;
+            });
+            auxStudents = auxStudents.concat(
+              this.response.sections[i].students
+            );
+          }
+          this.students = auxStudents;
+          console.log(this.students);
+          if (!isNullOrUndefined(data)) {
+            this.setReadingTableData(
+              this.students,
+              this.UrlLapse,
+              diagnosticDataToReadingFormMapper
+            );
+            this.setMathTableData(
+              this.students,
+              this.UrlLapse,
+              diagnosticDataToMathFormMapper
+            );
+
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();
+          }
         }
-        this.students = auxStudents;
-        console.log(this.students);
-        if (!isNullOrUndefined(data)) {
-          this.setReadingTableData(
-            this.students,
-            this.UrlLapse,
-            diagnosticDataToReadingFormMapper
-          );
-          this.setMathTableData(
-            this.students,
-            this.UrlLapse,
-            diagnosticDataToMathFormMapper
-          );
-          
-          this.loadedData = true;
-          if (this.isInstanciated) this.updateMethods();
-        }
-       }
       },
 
       (error) => console.error(error)
@@ -156,8 +158,9 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       {
         delete: (sectionId, studentId) =>
           `pecaprojects/diagnostics/reading/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
-      }  ,
-      "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
+      },
+      "settings.dataFromRow.data.newData.sectionId",
+      "settings.dataFromRow.data.newData.id"
     );
 
     //Delete math modal
@@ -166,8 +169,9 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
       {
         delete: (sectionId, studentId) =>
           `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
-      }  ,
-      "settings.dataFromRow.data.newData.sectionId", "settings.dataFromRow.data.newData.id"  
+      },
+      "settings.dataFromRow.data.newData.sectionId",
+      "settings.dataFromRow.data.newData.id"
     );
   }
 
@@ -177,7 +181,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(readingTableData, number),
         isEditable: true,
       };
-     // console.log("este es el mapper de lectura", this.readingData.data);
+      // console.log("este es el mapper de lectura", this.readingData.data);
     } else {
       this.readingData = readingTableData;
     }
@@ -188,7 +192,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(mathTableData, number),
         isEditable: true,
       };
-     // console.log("este es el mapper de matematica", this.mathData.data);
+      // console.log("este es el mapper de matematica", this.mathData.data);
     } else {
       this.mathData = mathTableData;
     }
