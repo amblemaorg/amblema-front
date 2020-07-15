@@ -13,6 +13,7 @@ import { Select } from "@ngxs/store";
 import { PecaState } from "src/app/store/states/peca/peca.state";
 import { GlobalService } from "src/app/services/global.service";
 import { isNullOrUndefined } from "util";
+import { NavigationEnd, Router, Event } from "@angular/router";
 
 @Component({
   selector: "peca-annual-convention",
@@ -26,11 +27,15 @@ export class AnnualConventionPageComponent extends PecaPageComponent
   AnnualConventionInfo: any;
   isInstanciated: boolean;
   response = [];
+  loadedData: boolean;
+  UrlLapse = "";
+  routerSubscription: Subscription;
 
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService
+    globals: GlobalService,
+    private router: Router
   ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
@@ -38,25 +43,42 @@ export class AnnualConventionPageComponent extends PecaPageComponent
         this.blockInstances.set(name, block)
       );
       console.log(this.blockInstances, "bloques");
+      if (this.loadedData) this.updateMethods();
     });
-    //this.instantiateComponent(config);
+    this.instantiateComponent(config);
+
+    //To know if the url change
+    this.routerSubscription = this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.UrlLapse = event.url;
+        this.UrlLapse = this.router.url.substr(12, 1);
+        console.log("el ev", this.UrlLapse);
+        this.getInfo();
+      }
+    });
   }
   ngOnInit() {
     this.getInfo();
-    this.instantiateComponent(config);
   }
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
-        if (!isNullOrUndefined(data)) {
-          this.response =
-            data.activePecaContent.lapse1.annualConvention.checklist;
-          console.log(this.response);
-          this.setAnnualConventionData();
-          this.setBlockData(
-            "AnnualConventionCheckLists",
-            this.AnnualConventionInfo
-          );
+        if (data.activePecaContent) {
+          if (!isNullOrUndefined(data)) {
+            if (this.UrlLapse === "1") {
+              this.response =
+                data.activePecaContent.lapse1.annualConvention.checklist;
+            } else if (this.UrlLapse === "2") {
+              this.response =
+                data.activePecaContent.lapse2.annualConvention.checklist;
+            } else {
+              data.activePecaContent.lapse3.annualConvention.checklist;
+            }
+            console.log(this.response);
+            this.setAnnualConventionData();
+            this.loadedData = true;
+            if (this.isInstanciated) this.updateMethods();
+          }
         }
       },
 
@@ -66,13 +88,20 @@ export class AnnualConventionPageComponent extends PecaPageComponent
 
   setAnnualConventionData() {
     this.AnnualConventionInfo = {
-      
       checkList: [
         {
           description: this.response,
         },
       ],
     };
+  }
+
+  updateDataToBlocks() {
+    this.setBlockData("AnnualConventionCheckLists", this.AnnualConventionInfo);
+  }
+
+  updateMethods() {
+    this.updateDataToBlocks();
   }
 
   ngAfterViewInit(): void {
@@ -83,7 +112,8 @@ export class AnnualConventionPageComponent extends PecaPageComponent
   }
   ngOnDestroy() {
     this.isInstanciated = false;
-    //this.loadedData = false;
+    this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }
