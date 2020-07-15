@@ -17,7 +17,7 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   settings: {
     sliderImage: {
       text: string;
-      image: string[];
+      image: string;
       description: string;
       fields: string[];
     }[];
@@ -70,10 +70,22 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
     this.settings = { ...settings };
   }
 
+  //prueba:any;
   setData(data: any) {
-    if (data["sliderImage"]) this.settings.sliderImage = data.sliderImage.description;
-    if (data["sliderImage"]) this.settings.sliderImage = data.sliderImage.image;
-    console.log("checkkk",data.sliderImage.image);
+    //this.prueba= data.sliderImage.description;
+    if (data["sliderImage"]) { for (let i = 0; i <data.sliderImage.description.length; i++) {
+      console.log("chkjuhjujuij",data.sliderImage.description[i]);
+     
+      this.settings.sliderImage[i].description = data.sliderImage.description[i].description;
+    
+      this.settings.sliderImage[i].image = data.sliderImage.description[i].image;
+    }
+      
+      //this.settings.sliderImage.description = data.sliderImage.description;
+      //this.settings.sliderImage.image = data.sliderImage.image;
+    }
+    console.log(this.settings.sliderImage, "qweqweqweqweqweqw")
+    //console.log("checkkk",data);
     console.log("checkkk22222",data.sliderImage.description);
   }
 

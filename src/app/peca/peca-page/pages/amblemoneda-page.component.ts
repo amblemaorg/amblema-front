@@ -42,6 +42,8 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   img: string;
   descripcion: string;
 
+  response: any;
+
   isInstanciated: boolean;
   loadedData: boolean;
 
@@ -121,16 +123,17 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   }
 
   setAmblemonedasSlider(data) {
-    this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider[0].description;
-    this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider[0].image;
-    console.log(this.descripcion, this.img, "slideeeeeeeeeer")
+    this.response = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    console.log(this.response, "slideeeeeeeeeer")
   }
 
   setAmblemonedasSliderData() {
     this.sliderData = {
       sliderImage: {
-        description: this.descripcion,
-        image: this.img
+        description: this.response,
+        //image: this.img
       }
     }
   }
