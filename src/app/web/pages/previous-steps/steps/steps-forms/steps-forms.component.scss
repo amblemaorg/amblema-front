@@ -244,5 +244,12 @@ form {
             height: 45vh;
             min-height: 20rem;
         }
+
+        .map-problem {
+            color: map-get($color_map, blue);
+            border: 1px solid map-get($color_map, red);
+            padding: 1rem;
+            border-radius: 0.25rem;
+        }
     }    
 }
