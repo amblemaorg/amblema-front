@@ -1,5 +1,9 @@
 @import 'scss/placeholders';
 
+.nb-theme-default * {
+    font-family: "Montserrat" !important;
+}
+
 h4 {
     @extend %h34;
 }
@@ -42,19 +46,20 @@ p {
             color: map-get($color_map, soft-green);
             font-size: 1.75rem;
             margin-inline-start: auto;
+            cursor: default;
 
             @include mediabreak(small,portrait) { font-size: 2.25rem; }
-            @include mediabreak(medium,landscape,true,800px) { padding-bottom: 0.25rem; }
+            @include mediabreak(medium,landscape,true,800px) { padding-bottom: 0.8rem; }
             @include mediabreak(large,portrait) { font-size: 2.75rem; }
             // desktop 
-            @include mediabreak(large,landscape) { padding-bottom: 0.5rem; }
+            @include mediabreak(large,landscape) { padding-bottom: 0.9rem; }
             @include mediabreak(larger,landscape) { 
                 font-size: xx-large;
-                padding-bottom: 0.25rem !important;
+                padding-bottom: 0.8rem !important;
             }
             @include mediabreak(larger,landscape,true,1600px) {
                 font-size: 2.25rem;
-                padding-bottom: 0 !important;
+                padding-bottom: 0.5rem !important;
             }
             @include mediabreak(larger,landscape,true,1900px) { font-size: 2.5rem; }
         }

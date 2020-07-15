@@ -3,6 +3,9 @@
 ::ng-deep body {
     background: map-get($color_map, gray);
 }
+.nb-theme-default * {
+    font-family: "Montserrat" !important;
+}
 
 //
 h1{
