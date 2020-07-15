@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StateInfo, MunicipalityInfo } from '../../../../../models/steps/previous-steps.model';
 import { GlobalService } from '../../../../../services/global.service';
 import { StepsService } from '../../../../../services/steps/steps.service';
 import { isNullOrUndefined } from "util";
+import { Subscription } from "rxjs";
 
 export const EMAIL_PTTRN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 export const LETTERS_PTTRN = /^[a-z A-Zá-úÁ-Ú]*$/;
@@ -17,7 +18,7 @@ export const VIDEO_PTTRN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/
   templateUrl: './steps-forms.component.html',
   styleUrls: ['./steps-forms.component.scss']
 })
-export class StepsFormsComponent implements OnInit {
+export class StepsFormsComponent implements OnInit, OnDestroy {
   @ViewChild("schoolAddressMap", { read: ElementRef, static: false })
   schoolmap: ElementRef;
 
@@ -37,7 +38,10 @@ export class StepsFormsComponent implements OnInit {
   @Output() emitMessage:EventEmitter<any> = new EventEmitter();
   @Output() emitUpdate:EventEmitter<any> = new EventEmitter();
 
+  private subscription: Subscription = new Subscription();
+
   // MAPA------------------------------------------------------
+  google_: any;
   map: any;//google.maps.Map;
   geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
@@ -49,6 +53,7 @@ export class StepsFormsComponent implements OnInit {
   // END-MAPA--------------------------------------------------
 
   sendingForm: boolean;  
+  disableOther: boolean = true;
 
   doc_type = [
     {id:'1',name:'J'},
@@ -103,7 +108,8 @@ export class StepsFormsComponent implements OnInit {
     addressStreet: ['', [Validators.required]],
     addressCity: ['', [Validators.required]],  
     phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], 
-    companyType: ['', [Validators.required]], //'1'=fabrica,'2'='tienda',3='negocio personal', 4='otro'
+    companyType: ['', [Validators.required]],
+    companyOtherType: ['', [Validators.pattern(LETTERS_PTTRN)]],
     contactFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
     contactLastName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
     contactPhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],
@@ -179,60 +185,106 @@ export class StepsFormsComponent implements OnInit {
     this.fillStates();
     this.fillMunicipalities();
 
-    this.glbls = this.globals;   
+    this.glbls = this.globals;    
     
-    if (this.who==="coordinator") {
-      this.coordinatorForm.get("cardType"). statusChanges.subscribe( res => {        
-        this.setLength('cardId','cardType');
-      });
-    }    
+    if (this.who === "coordinator") {
+      this.subscription.add(
+        this.coordinatorForm.get("cardType").statusChanges.subscribe( res => {        
+          this.setLength('cardId','cardType');
+        })
+      );
+    } 
+    
+    if (this.who === "sponsor") {
+      this.subscription.add(
+        this.sponsorForm.get("companyType").statusChanges.subscribe( res => {        
+          if (
+            this.sponsorForm.get("companyType").value && 
+            this.sponsorForm.get("companyType").value === "0"
+          ) {
+            this.sponsorForm.setControl(
+                "companyOtherType",
+                this.fb.control(
+                  this.sponsorForm.get("companyOtherType").value,
+                  [
+                    Validators.required, 
+                    Validators.pattern(LETTERS_PTTRN)
+                  ]
+                )
+              );
+            this.disableOther = false;
+          }
+          else {
+            this.sponsorForm.setControl(
+              "companyOtherType",
+              this.fb.control(
+                this.sponsorForm.get("companyOtherType").value,
+                Validators.pattern(LETTERS_PTTRN)
+              )
+            );
+            this.sponsorForm.get("companyOtherType").reset();
+            this.disableOther = true;
+          }            
+        })
+      );
+    }
 
     this.fillForm();
 
-    if (this.who == "school") {      
-      this.schoolForm.get('name').statusChanges.subscribe( res => {
-        if (
-          this.currentMarker 
-          && this.schoolForm.get('name').value 
-          && this.schoolForm.get('name').value.length > 0
-        ) {
-          this.loadAllMarkers({
-            name: this.schoolForm.get('name').value,
-            coordinate: this.schoolForm.get('coordinate').value
-          });
-        }
-      });
-      
-      this.schoolForm.get('addressMunicipality').statusChanges.subscribe( res => {
-        if (
-          this.schoolForm.get('addressMunicipality').value &&
-          this.schoolForm.get('addressMunicipality').value.length > 0
-        ) {     
-          const addressData = this.municipalitiesData.filter(s=>{
-              return s.id===this.schoolForm.get('addressMunicipality').value
+    if (this.who === "school") {      
+      this.subscription.add(
+        this.schoolForm.get('name').statusChanges.subscribe( res => {
+          if (
+            this.currentMarker 
+            && this.schoolForm.get('name').value 
+            && this.schoolForm.get('name').value.length > 0
+          ) {
+            this.loadAllMarkers({
+              name: this.schoolForm.get('name').value,
+              coordinate: this.schoolForm.get('coordinate').value
             });
-          if (addressData.length > 0) {
-            this.mapPositioner(
-              addressData[0].state.name,
-              addressData[0].name
-            ); 
-          }          
-        } 
-        else {
-          if (this.schoolmap && this.mapOptions) {
-            if (this.mapOptions.zoom != 7) {
-              this.mapSettings(this.lat,this.lng,7);
-              this.mapInitializer();  
-            }            
-          }          
-        }
-      });
+          }
+        })
+      );
+
+      this.subscription.add(
+        this.schoolForm.get('addressMunicipality').statusChanges.subscribe( res => {
+          if (
+            this.schoolForm.get('addressMunicipality').value &&
+            this.schoolForm.get('addressMunicipality').value.length > 0
+          ) {     
+            const addressData = this.municipalitiesData.filter(s=>{
+                return s.id===this.schoolForm.get('addressMunicipality').value
+              });
+            if (addressData.length > 0) {
+              this.mapPositioner(
+                addressData[0].state.name,
+                addressData[0].name
+              ); 
+            }          
+          } 
+          else {
+            if (this.schoolmap && this.mapOptions) {
+              if (this.mapOptions.zoom != 7) {
+                this.mapSettings(this.lat,this.lng,7);
+                this.mapInitializer();  
+              }            
+            }          
+          }
+        })
+      );
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.disableOther = true;
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
   mapSettings(lat,lng,zoom) {
-    if ( !isNullOrUndefined(google) ) {
+    this.google_ = google || null;
+    if ( !isNullOrUndefined(this.google_) ) {
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
@@ -297,7 +349,8 @@ export class StepsFormsComponent implements OnInit {
 
   mapPositioner(state: string, county: string) {
     // google maps geocoding
-    if ( !isNullOrUndefined(google) ) {
+    this.google_ = google || null; 
+    if ( !isNullOrUndefined(this.google_) ) {
 
       this.geocoder.geocode({ componentRestrictions: {
         country: 'Venezuela',
@@ -381,7 +434,8 @@ export class StepsFormsComponent implements OnInit {
       }
     } else {
       if (this.globals.isBrowser) {
-        if ( !isNullOrUndefined(google) ) {
+        this.google_ = google || null; 
+        if ( !isNullOrUndefined(this.google_) ) {
           this.showMap = true;
           setTimeout(() => {
             if (this.schoolmap)
@@ -427,93 +481,66 @@ export class StepsFormsComponent implements OnInit {
 
   onSubmitSponsor(fo) { //fo: form object
     this.sendingForm = true;
-    let solicitudBody = {
+    const solicitudBodyReduced = Object.keys(this.sponsorForm.value).reduce((solicitudBody, controlName) => { 
+      if (controlName === "addressStreet") solicitudBody["address"] = this.sponsorForm.controls[controlName].value;
+      else if (controlName === "phone") solicitudBody["companyPhone"] = this.sponsorForm.controls[controlName].value;      
+      else solicitudBody[controlName] = this.sponsorForm.controls[controlName].value;
+      
+      return solicitudBody;
+    }, {
       user: this.user_id,
       project: this.project_id,
-      email: this.sponsorForm.controls['email'].value,
-      name: this.sponsorForm.controls['name'].value,
-      rif: this.sponsorForm.controls['rif'].value,
-      companyType: this.sponsorForm.controls['companyType'].value,
-      companyPhone: this.sponsorForm.controls['phone'].value,
-      address: this.sponsorForm.controls['addressStreet'].value,
-      addressState:this.sponsorForm.controls['addressState'].value,
-      addressMunicipality: this.sponsorForm.controls['addressMunicipality'].value,
-      addressCity: this.sponsorForm.controls['addressCity'].value,
-      contactFirstName: this.sponsorForm.controls['contactFirstName'].value,
-      contactLastName: this.sponsorForm.controls['contactLastName'].value,
-      contactPhone: this.sponsorForm.controls['contactPhone'].value,
-      contactEmail: this.sponsorForm.controls['contactEmail'].value,
-    }
+    });
 
-    this.postForm(solicitudBody,fo,1);
+    this.postForm(solicitudBodyReduced,fo,1);
   }
 
   onSubmitCoordinator(fo) { //fo: form object
     this.sendingForm = true;
-    let solicitudBody = {
+    const solicitudBodyReduced = Object.keys(this.coordinatorForm.value).reduce((solicitudBody, controlName) => { 
+      if (controlName === "addressStreet") solicitudBody["address"] = this.coordinatorForm.controls[controlName].value;
+      else if (controlName === "birthdate") solicitudBody[controlName] = this.globals.dateStringToISOString(this.coordinatorForm.controls[controlName].value);      
+      else solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value;
+      
+      return solicitudBody;
+    }, {
       user: this.user_id,
       project: this.project_id,
-      firstName: this.coordinatorForm.controls['firstName'].value,
-      lastName: this.coordinatorForm.controls['lastName'].value,
-      cardType: this.coordinatorForm.controls['cardType'].value,//"str '1'=V '2'=J '3'=E",
-      cardId: this.coordinatorForm.controls['cardId'].value,
-      // birthdate: `${this.coordinatorForm.controls['birthdate'].value}T00:00:00.00`,
-      birthdate: this.globals.dateStringToISOString(this.coordinatorForm.controls['birthdate'].value),
-      gender: this.coordinatorForm.controls['gender'].value,
-      addressState: this.coordinatorForm.controls['addressState'].value,
-      addressMunicipality: this.coordinatorForm.controls['addressMunicipality'].value,
-      addressCity: this.coordinatorForm.controls['addressCity'].value,
-      address: this.coordinatorForm.controls['addressStreet'].value,
-      addressHome: this.coordinatorForm.controls['addressHome'].value,
-      email: this.coordinatorForm.controls['email'].value,
-      phone: this.coordinatorForm.controls['phone'].value,
-      homePhone: this.coordinatorForm.controls['homePhone'].value,
-      profession: this.coordinatorForm.controls['profession'].value,
-    }
+    });
 
-    this.postForm(solicitudBody,fo,2);
+    this.postForm(solicitudBodyReduced,fo,2);
   }
 
   onSubmitschool(fo) { //fo: form object
       this.sendingForm = true;
-      let solicitudBody = {
+      const solicitudBodyReduced = Object.keys(this.schoolForm.value).reduce((solicitudBody, controlName) => { 
+        if (controlName === "addressStreet") solicitudBody["address"] = this.schoolForm.controls[controlName].value;
+        else if (controlName === "coordinate")
+          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.latitude 
+          && this.schoolForm.controls[controlName].value.longitude
+            ? this.schoolForm.controls[controlName].value 
+            : null;
+        else if (controlName === "subPrincipalEmail")
+          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.length > 0 
+            ? this.schoolForm.controls[controlName].value 
+            : null;
+        else if (
+          controlName === "nTeachers" ||
+          controlName === "nAdministrativeStaff" ||
+          controlName === "nLaborStaff" ||
+          controlName === "nStudents" ||
+          controlName === "nGrades" ||
+          controlName === "nSections"
+        ) solicitudBody[controlName] = +this.schoolForm.controls[controlName].value;
+        else solicitudBody[controlName] = this.schoolForm.controls[controlName].value;
+        
+        return solicitudBody;
+      }, {
         user: this.user_id,
         project: this.project_id,
-        name: this.schoolForm.controls['name'].value,
-        code: this.schoolForm.controls['code'].value,
-        email: this.schoolForm.controls['email'].value,
-        address: this.schoolForm.controls['addressStreet'].value,
-        addressState: this.schoolForm.controls['addressState'].value,
-        addressMunicipality: this.schoolForm.controls['addressMunicipality'].value,
-        addressCity: this.schoolForm.controls['addressCity'].value,
-        phone: this.schoolForm.controls['phone'].value,
-        schoolType: this.schoolForm.controls['schoolType'].value,
-        addressZoneType: this.schoolForm.controls['addressZoneType'].value,
-        addressZone: this.schoolForm.controls['addressZone'].value,
-        coordinate: this.schoolForm.controls['coordinate'].value.latitude 
-          && this.schoolForm.controls['coordinate'].value.longitude
-            ? this.schoolForm.controls['coordinate'].value 
-            : null,
-        principalFirstName: this.schoolForm.controls['principalFirstName'].value,
-        principalLastName: this.schoolForm.controls['principalLastName'].value,
-        principalEmail: this.schoolForm.controls['principalEmail'].value,
-        principalPhone: this.schoolForm.controls['principalPhone'].value,
-        subPrincipalFirstName: this.schoolForm.controls['subPrincipalFirstName'].value,
-        subPrincipalLastName: this.schoolForm.controls['subPrincipalLastName'].value,
-        subPrincipalEmail: this.schoolForm.controls['subPrincipalEmail'].value.length > 0 
-            ? this.schoolForm.controls['subPrincipalEmail'].value 
-            : null,
-        subPrincipalPhone: this.schoolForm.controls['subPrincipalPhone'].value,
-        nTeachers: +this.schoolForm.controls['nTeachers'].value,
-        nAdministrativeStaff: +this.schoolForm.controls['nAdministrativeStaff'].value,
-        nLaborStaff: +this.schoolForm.controls['nLaborStaff'].value,
-        nStudents: +this.schoolForm.controls['nStudents'].value,
-        nGrades: +this.schoolForm.controls['nGrades'].value,
-        nSections: +this.schoolForm.controls['nSections'].value,
-        schoolShift: this.schoolForm.controls['schoolShift'].value,
-    }
-  
-    this.postForm(solicitudBody,fo,3);
+      });
+
+      this.postForm(solicitudBodyReduced,fo,3);
   }
 
   private postForm(solicitudBody, fo, type) {
@@ -521,7 +548,8 @@ export class StepsFormsComponent implements OnInit {
       this.sendingForm = false; 
       fo.reset();
 
-      if (this.who == "school" && !isNullOrUndefined(google) ) {        
+      this.google_ = google || null; 
+      if (this.who == "school" && !isNullOrUndefined(this.google_) ) {     
         if (this.schoolmap){
           this.mapSettings(this.lat,this.lng,7);
           this.mapInitializer(true);
@@ -596,6 +624,7 @@ export class StepsFormsComponent implements OnInit {
       addressCity: res.addressCity? res.addressCity:'',
       phone: res.companyPhone? res.companyPhone:'',
       companyType: res.companyType? res.companyType:'',
+      companyOtherType: res.companyOtherType? res.companyOtherType:'',
       contactFirstName: res.contactFirstName? res.contactFirstName:'',
       contactLastName: res.contactLastName? res.contactLastName:'',
       contactPhone: res.contactPhone? res.contactPhone:'',
@@ -663,7 +692,8 @@ export class StepsFormsComponent implements OnInit {
     });
 
     if (res.coordinate && this.globals.isBrowser) {
-      if ( !isNullOrUndefined(google) ) {
+      this.google_ = google || null; 
+      if ( !isNullOrUndefined(this.google_) ) {
         this.showMap = true;
         setTimeout(() => {
           if (this.schoolmap) {

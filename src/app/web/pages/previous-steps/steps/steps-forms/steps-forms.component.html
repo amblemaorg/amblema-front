@@ -196,7 +196,24 @@
         <div class="field-empty">¡Debe Seleccionar un tipo de empresa!</div>
       </div>
     </div>
-    <div class="two-wrapper">
+    <div class="form-group">
+      <label>Otro tipo de empresa</label>
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('companyOtherType')" 
+        [class.not-empty]="isEmpty('companyOtherType')" 
+        formControlName="companyOtherType" 
+        placeholder="Otro tipo de empresa" 
+        [readonly]="disableThis() || disableOther"
+        maxlength="20"
+      >
+      <div class="field-alerts">
+        <div class="field-empty">¡Debe llenar este campo!</div>
+        <div class="field-invalid">¡Solo letras permitidas!</div>
+      </div> 
+    </div>
+    <!-- <div class="two-wrapper"> -->
       <div class="form-group">
         <label>Nombre de la persona de contacto</label>
         <input 
@@ -231,7 +248,7 @@
           <div class="field-invalid">¡Solo letras permitidas!</div>
         </div> 
       </div>
-    </div>    
+    <!-- </div>     -->
     <div class="form-group">
       <label>Teléfono de la persona de contacto</label>
       <input 
@@ -500,7 +517,16 @@
     </div>
     <div class="form-group">
       <label>Casa / Edificio</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressHome')" [class.not-empty]="isEmpty('addressHome')" formControlName="addressHome" placeholder="Casa / Edificio" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressHome')" 
+        [class.not-empty]="isEmpty('addressHome')" 
+        formControlName="addressHome" 
+        placeholder="Casa / Edificio" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
@@ -542,7 +568,16 @@
     </div>
     <div class="form-group">
       <label>Profesión</label>
-      <input type="text" class="form-control" [class.not-valid]="validate('profession')" [class.not-empty]="isEmpty('profession')" formControlName="profession" placeholder="Profesión" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('profession')" 
+        [class.not-empty]="isEmpty('profession')" 
+        formControlName="profession" 
+        placeholder="Profesión" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div>
@@ -754,7 +789,16 @@
           <div class="field-empty">¡Debe Seleccionar una zona!</div>
         </div>
       </div>
-      <input type="text" class="form-control" [class.not-valid]="validate('addressZone')" [class.not-empty]="isEmpty('addressZone')" formControlName="addressZone" placeholder="Detalle de la zona" [readonly]="disableThis()">
+      <input 
+        type="text" 
+        class="form-control not-has-max-or-min" 
+        [class.not-valid]="validate('addressZone')" 
+        [class.not-empty]="isEmpty('addressZone')" 
+        formControlName="addressZone" 
+        placeholder="Detalle de la zona" 
+        [readonly]="disableThis()"
+        maxlength="40"
+      >
       <div class="field-alerts">
         <div class="field-empty">¡Debe llenar este campo!</div>
       </div> 
