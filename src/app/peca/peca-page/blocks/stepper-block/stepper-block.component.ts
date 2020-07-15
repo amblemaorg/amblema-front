@@ -54,7 +54,7 @@ export class StepperBlockComponent implements PresentationalBlockComponent, OnIn
    if (data["text3"]) this.settings.text3.content = data.text3.content;
    if (data["text4"]) this.settings.text4.content = data.text4.content;
 
-    console.log(data, "asdsa");
+    //console.log(data, "asdsa");
   }
 
 }
