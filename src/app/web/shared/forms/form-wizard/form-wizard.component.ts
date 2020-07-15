@@ -44,6 +44,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   isBrowser;
 
   // MAPA------------------------------------------------------
+  google_: any;
   map: any;
   geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
@@ -87,7 +88,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
     // MAP -----------------------------------------------------------------
     if (this.isBrowser && this.isSchoolForm) {
-      if ( !isNullOrUndefined(google) ) {
+      this.google_ = google || null;
+      if ( !isNullOrUndefined(this.google_) ) {
         setTimeout(() => {
           if (this.googleMap)
             this.mapInitializer();            
@@ -146,7 +148,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   // MAP CONFS -------------------------------------------------------------------------------------------
   mapSettings(lat,lng,zoom) {
-    if ( !isNullOrUndefined(google) ) {
+    this.google_ = google || null;
+    if ( !isNullOrUndefined(this.google_) ) {
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
@@ -199,7 +202,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   mapPositioner(state: string, county: string) {
     // google maps geocoding
-    if ( !isNullOrUndefined(google) ) {
+    this.google_ = google || null;
+    if ( !isNullOrUndefined(this.google_) ) {
 
       this.geocoder.geocode({ componentRestrictions: {
         country: 'Venezuela',
@@ -512,7 +516,9 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public clear(): void {
     if (this.isBrowser && this.isSchoolForm) {
       if (this.currentMarker) this.currentMarker.setMap(null);
-      if ( !isNullOrUndefined(google) ) {
+
+      this.google_ = google || null;
+      if ( !isNullOrUndefined(this.google_) ) {
         setTimeout(() => {
           if (this.googleMap){
             if (this.currentMarker) this.currentMarker.setMap(null);
