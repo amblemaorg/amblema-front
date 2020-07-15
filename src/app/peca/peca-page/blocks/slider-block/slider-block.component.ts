@@ -74,7 +74,7 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   setData(data: any) {
     //this.prueba= data.sliderImage.description;
     if (data["sliderImage"]) { for (let i = 0; i <data.sliderImage.description.length; i++) {
-      console.log("chkjuhjujuij",data.sliderImage.description[i]);
+      console.log("posicion i",data.sliderImage.description[i]);
      
       this.settings.sliderImage[i].description = data.sliderImage.description[i].description;
     
@@ -84,7 +84,7 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
       //this.settings.sliderImage.description = data.sliderImage.description;
       //this.settings.sliderImage.image = data.sliderImage.image;
     }
-    console.log(this.settings.sliderImage, "qweqweqweqweqweqw")
+    console.log(this.settings.sliderImage, "imagenes")
     //console.log("checkkk",data);
     console.log("checkkk22222",data.sliderImage.description);
   }
