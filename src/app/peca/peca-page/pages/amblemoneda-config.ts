@@ -15,37 +15,42 @@ const sliderAmblemoneda = {
     component: 'slider',
     name: "sliderAmblemaData",
     settings: {
-        sliderImage: [
-            {
-                text: "Fecha de la actividad:",
-                fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                image: "../../../../../assets/images/profile-leena.jpg",
-                description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                text: "Fecha de la actividad:",
-                fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                image: "../../../../../assets/images/profile-oscar.jpg",
-                description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                text: "Fecha de la actividad:",
-                fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                text: "Fecha de la actividad:",
-                fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                image: "../../../../../assets/images/background-pillar-matematica.jpg",
-                description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            /*{
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
-            },*/
-            
-        ],
+        sliderImage:
+            [
+
+                {
+                    text: "Fecha de la actividad:",
+                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                    image: "../../../../../assets/images/profile-leena.jpg",
+                    description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                },
+
+               
+                                {
+                                    text: "Fecha de la actividad:",
+                                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                                    image: "../../../../../assets/images/profile-oscar.jpg",
+                                    description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                                },
+                               /*  {
+                                    text: "Fecha de la actividad:",
+                                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                                    image: "../../../../../assets/images/background-pillar-lectura.jpg",
+                                    description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                                },
+                                {
+                                    text: "Fecha de la actividad:",
+                                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                                    image: "../../../../../assets/images/background-pillar-matematica.jpg",
+                                    description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                                }*/
+            ]
+        /*{
+            image: "../../../../../assets/images/background-pillar-lectura.jpg",
+            description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
+        },*/
+
+
     }
 }
 
@@ -56,14 +61,14 @@ const ConfirmacionDocente = {
         columns: {
             grade: {
                 title: "Grado",
-                valuePrepareFunction: ( row: any ) => {          
-                    if (row) return formConfirmacionDocenteModal.grade.options.find(d=>{return d.id===row}).name;
+                valuePrepareFunction: (row: any) => {
+                    if (row) return formConfirmacionDocenteModal.grade.options.find(d => { return d.id === row }).name;
                     else return '';
                 },
                 filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formConfirmacionDocenteModal.grade.options.find(d=>{return d.id===cell}).name;
+                    let value: string = formConfirmacionDocenteModal.grade.options.find(d => { return d.id === cell }).name;
                     value = value.toUpperCase();
-                    
+
                     if (value.includes(search.toUpperCase()) || search === '') return true;
                     else return false;
                 }
@@ -73,14 +78,14 @@ const ConfirmacionDocente = {
             },
             confirmation: {
                 title: 'Confirmación',
-                valuePrepareFunction: ( row: any ) => {  
-                    if (row) return row == "1"? 'Confirmado' : 'Por confirmar';
+                valuePrepareFunction: (row: any) => {
+                    if (row) return row == "1" ? 'Confirmado' : 'Por confirmar';
                     else return '';
                 },
-                filterFunction: (cell?: any, search?: string) => {          
-                    let value: string = cell == "1"? 'Confirmado' : 'Por confirmar';
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = cell == "1" ? 'Confirmado' : 'Por confirmar';
                     value = value.toUpperCase();
-                    
+
                     if (value.includes(search.toUpperCase()) || search === '') return true;
                     else return false;
                 }
@@ -114,50 +119,50 @@ const formConfirmacionDocente = {
     component: 'form',
     viewMode: 'both',
     settings: {
-      formsContent: formConfirmacionDocenteModal,
-      buttons: ['guardar'],
-      formType: 'tablaConfirmacionDocente',
-      tableCode: 'amblemonedaConfigConfirmacionDocente',
-      modalCode: 'amblemonedaConfigConfirmacionDocente',
-      isFromCustomTableActions: true,
+        formsContent: formConfirmacionDocenteModal,
+        buttons: ['guardar'],
+        formType: 'tablaConfirmacionDocente',
+        tableCode: 'amblemonedaConfigConfirmacionDocente',
+        modalCode: 'amblemonedaConfigConfirmacionDocente',
+        isFromCustomTableActions: true,
     }
-  }
-  const textsAndButtonsConfirmacionDocente = {
+}
+const textsAndButtonsConfirmacionDocente = {
     component: 'textsbuttons',
     settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'amblemonedaConfigConfirmacionDocente',
-      isFromCustomTableActions: true,
-      isDeleting: true,
+        subtitles: [{
+            text: '¿Desea eliminar este ítem?',
+        }],
+        action: [
+            {
+                type: 1,
+                name: 'Si',
+            },
+            {
+                type: 2,
+                name: 'No',
+            },
+        ],
+        modalCode: 'amblemonedaConfigConfirmacionDocente',
+        isFromCustomTableActions: true,
+        isDeleting: true,
     }
-  }
-  const modalConfirmacionDocente = {
+}
+const modalConfirmacionDocente = {
     component: 'modal',
     settings: {
-      modalCode: 'amblemonedaConfigConfirmacionDocente',
-      items: [
-        {        
-          childBlocks: [
-            { ...formConfirmacionDocente },
-            { ...textsAndButtonsConfirmacionDocente },
-          ]
-        }
-      ]
+        modalCode: 'amblemonedaConfigConfirmacionDocente',
+        items: [
+            {
+                childBlocks: [
+                    { ...formConfirmacionDocente },
+                    { ...textsAndButtonsConfirmacionDocente },
+                ]
+            }
+        ]
     }
-  }
-  //* ------------------------------------------
+}
+//* ------------------------------------------
 
 
 
@@ -173,10 +178,10 @@ const charlaConDocentes = {
             url: '#',
             name: 'hola.png',
         },
-        subtitles: 
-            {
-                text: '',
-            },
+        subtitles:
+        {
+            text: '',
+        },
     }
 }
 

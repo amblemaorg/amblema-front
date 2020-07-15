@@ -728,7 +728,7 @@ export class FormBlockComponent
 
   disableBtn() {
     Object.keys(this.componentForm.value).map(val =>{
-      console.log(`${val}: `,this.componentForm.get(val).valid);
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
     });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
