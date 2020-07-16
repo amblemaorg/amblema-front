@@ -47,7 +47,7 @@
       label {
         margin-bottom: 0.2rem;
         //color: $blue;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: gray;
       }
 
@@ -298,8 +298,8 @@
       }
 
       .form-control {
-        color: $blue;
-        font-size: 0.9rem;
+        color: #615a5a;
+        font-size: 0.8rem;
 
         // &[readonly].form-control-date {
         &.is-date-input-placeholder.form-control-date {
@@ -504,7 +504,7 @@
         
         .submit-btn, 
         .add-img-button {
-          @include shared-btn-confs;
+          //@include shared-btn-confs;
           @media (max-width:768px) {
             font-size: 0.7rem;
           }
