@@ -111,7 +111,8 @@ export class EheaderComponent implements OnInit {
   getUserOneOrTwoLines(name) {
     const name_obj = [name].reduce((nameObj,name) => {
       name.split(" ").map((nameI,i,name_arr) => {
-        if ( i < parseInt(`${name_arr.length / 2}`) )
+        const half = parseInt(`${name_arr.length / 2}`);
+        if ( i < half || half === 0 )
           nameObj["first"] = nameObj["first"] ? `${(nameObj["first"])} ${nameI}` : nameI;
         else
           nameObj["second"] = nameObj["second"] ? `${(nameObj["second"])} ${nameI}` : nameI;
@@ -120,7 +121,7 @@ export class EheaderComponent implements OnInit {
       return nameObj;
     }, {});
 
-    return `<span>${name_obj.first}</span><span>${name_obj.second}</span>`;
+    return name_obj.second ? `<span>${name_obj.first}</span><span>${name_obj.second}</span>` : `<span>${name_obj.first}</span>`;
   }
 
 }
