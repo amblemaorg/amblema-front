@@ -50,7 +50,8 @@ form {
             position: relative;
         }
 
-        .field-empty,.field-invalid{
+        .field-empty,.field-invalid,
+        .field-max-len-over,.field-min-len-under {
             font-size: smaller;
             margin-block-start: 0.45rem;
             color: map-get($color_map, red);
@@ -98,9 +99,11 @@ form {
             color: map-get($color_map, red);
         }
 
-        .ng-touched.ng-invalid.not-empty + .field-alerts .field-invalid,
+        .ng-touched.ng-invalid.not-empty.not-has-max-or-min + .field-alerts .field-invalid,
         .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty,
-        .date-not-valid + .field-alerts .field-invalid {
+        .date-not-valid + .field-alerts .field-invalid,
+        .ng-touched.ng-invalid.max-len-over + .field-alerts .field-max-len-over,
+        .ng-touched.ng-invalid.min-len-under + .field-alerts .field-min-len-under {
             display: inline-block;
         }
 
@@ -116,6 +119,16 @@ form {
     
                 .scrollable-content{
                     padding: 0 1rem;
+                }
+            }
+
+            .ng-dropdown-panel-items {
+                .ng-option {
+                  &.ng-option-marked {
+                    small, a {
+                      font-weight: bold;
+                    }
+                  }
                 }
             }
         }
