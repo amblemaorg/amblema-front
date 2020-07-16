@@ -49,13 +49,17 @@
 <section #charts class="charts">
   <div class="charts-switcher">
     <charts-switcher
+      #chartSwitcher
       [options]="chartSwitcherOptions"
       (switch)="setActiveChart($event)"
-      *ngIf="isBrowser"
+      *ngIf="isBrowser && school.charts.length > 0"
     >
     </charts-switcher>
   </div>
-  <div #chartTestimonial class="chart-testimonial slide-right-animation animation-init">
+  <div 
+    #chartTestimonial
+    class="chart-testimonial slide-right-animation animation-init"
+    *ngIf="school.charts.length > 0">
     <web-testimonial-card
       [testimonial]="school.charts[activeChartIndex].testimonial"
       *ngIf="school.charts[activeChartIndex].testimonial"
@@ -137,7 +141,10 @@
         </div>
       </owl-carousel>
     </div>
-    <div class="activity-details">
+    <div 
+      class="activity-details"
+      *ngIf="school.activities[selectedActivitiesType].length > 0"
+    >
       <div class="activity-info">
         <span class="activity-name">
           {{ school.activities[selectedActivitiesType][activeActivityIndex].name }}
@@ -152,12 +159,12 @@
           [options]="activityImagesOptions"
           class="activity-image-carousel"
           [carouselClasses]="['']"
-          *ngIf="school.activities[selectedActivitiesType][activeActivityIndex].images"
+          *ngIf="school.activitiesSlider.length"
         >
           <div
             class="image-wrapper"
             *ngFor="
-              let image of school.activities[selectedActivitiesType][activeActivityIndex].images;
+              let image of school.activitiesSlider;
               index as i
             "
           >
