@@ -104,6 +104,7 @@ const stepperAnnual = {
 
 const tablaPreinscripcionDocente = {
     component: 'table',
+    name: "teachersAnnualConventionTable",
     settings: {
         columns: {
             name: {
@@ -133,7 +134,7 @@ const tablaPreinscripcionDocente = {
         ],
         classes: {
             hideView: false,
-            hideEdit: false,
+            hideEdit: true,
             hideDelete: false,
         },
     }

@@ -30,7 +30,43 @@ export function teachersDataToTeachersTableMapper(teachersData) {
       },
       phone,
       addressState: addressState.id,
-      addressMunicipality: addressMunicipality.id,
+     addressMunicipality: addressMunicipality.id,
+      street: address,
+      city: addressCity,
+    };
+  });
+}
+
+
+//To annual convention preparation component
+export function teachersDataToTeachersTableAnnualConventionMapper(teachersData) {
+  return teachersData.map((teacher) => {
+    const {
+      id,
+      firstName,
+      lastName,
+      cardId,
+      cardType,
+      gender,
+      email,
+      phone,
+      address,
+      addressCity,
+      status,
+    } = teacher;
+
+    return {
+      id,
+      name: firstName,
+      lastName,
+      gender,
+      email,
+      status,
+      documentGroup: {
+        prependSelect: cardType,
+        prependInput: cardId,
+      },
+      phone,
       street: address,
       city: addressCity,
     };

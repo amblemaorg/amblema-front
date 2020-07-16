@@ -14,13 +14,14 @@ import { Select } from "@ngxs/store";
 import { GlobalService } from "src/app/services/global.service";
 import { isNullOrUndefined } from "util";
 import { Router, NavigationEnd, Event } from "@angular/router";
-
+import { teachersDataToTeachersTableAnnualConventionMapper } from '../mappers/teacher-mappers';
 @Component({
   selector: "peca-annual-convention",
   templateUrl: "../peca-page.component.html",
 })
 export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   implements AfterViewInit {
+  teachers=[];
   isInstanciated: boolean;
   description1 = "";
   description2 = "";
@@ -30,6 +31,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   preparationInfo: any;
   UrlLapse = "";
   routerSubscription: Subscription;
+  teachersData:any;
 
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
@@ -70,8 +72,11 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
+         // this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
+          //console.log("esto es", data.activePecaContent.lapse1.annualPreparation)
           if (!isNullOrUndefined(data)) {
             if (this.UrlLapse === "1") {
+             this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
               this.description1 =
                 data.activePecaContent.lapse1.annualPreparation.step1Description;
               this.description2 =
@@ -81,6 +86,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
               this.description4 =
                 data.activePecaContent.lapse1.annualPreparation.step4Description;
             } else if (this.UrlLapse === "2") {
+            this.teachers= data.activePecaContent.lapse2.annualPreparation.teachers;
               this.description1 =
                 data.activePecaContent.lapse2.annualPreparation.step1Description;
               this.description2 =
@@ -90,6 +96,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
               this.description4 =
                 data.activePecaContent.lapse2.annualPreparation.step4Description;
             } else {
+              this.teachers= data.activePecaContent.lapse3.annualPreparation.teachers;
               this.description1 =
                 data.activePecaContent.lapse3.annualPreparation.step1Description;
               this.description2 =
@@ -99,6 +106,11 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
               this.description4 =
                 data.activePecaContent.lapse3.annualPreparation.step4Description;
             }
+            console.log('docentes', this.teachers)
+            this.setTeachersTableData(
+              this.teachers,
+              teachersDataToTeachersTableAnnualConventionMapper
+            );
             this.setPreparationData();
             //3
             this.loadedData = true;
@@ -111,6 +123,17 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
     );
   }
 
+  setTeachersTableData(teachersAnnualConventionTable, _mapper?: Function) {
+    if (_mapper) {
+      this.teachersData = {
+        data: _mapper(teachersAnnualConventionTable),
+        isEditable: true,
+      };
+      console.log("este es el mapper de lectura", this.teachersData.data);
+    } else {
+      this.teachersData = teachersAnnualConventionTable;
+    }
+  }
   setPreparationData() {
     this.preparationInfo = {
       text1: {
@@ -130,6 +153,8 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   //1
   updateDataToBlocks() {
     this.setBlockData("stepperAnnual", this.preparationInfo);
+    this.setBlockData("teachersAnnualConventionTable", this.teachersData);
+
   }
   //2
   updateMethods() {
