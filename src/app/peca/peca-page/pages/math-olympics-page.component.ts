@@ -51,17 +51,19 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     ngOnInit() {
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
-                if (!isNullOrUndefined(data)) {
-                    console.log(data, "data olimpiadas")
+                if (data.activePecaContent){
+                    if (!isNullOrUndefined(data)) {
+                        console.log(data, "data olimpiadas")
+                    }
+    
+                    this.setOlimpiadas(data);
+                    this.setOLimpiadasData();
+    
+                    this.loadedData = true;
+                  if (this.isInstanciated) this.updateMethods();
                 }
-
-                this.setOlimpiadas(data);
-                this.setOLimpiadasData();
-
-                this.loadedData = true;
-              if (this.isInstanciated) this.updateMethods();
-            }
-        )
+                
+            }, er => { console.log(er) })
     }
 
     setOlimpiadas(data) {
