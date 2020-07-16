@@ -68,7 +68,14 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.map = null;
       this.currentMarker = null;
 
-      this.mapSettings(this.lat,this.lng,7); //* NEW
+      if ( !isNullOrUndefined(google) ) {
+        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+        const mapOps: google.maps.MapOptions = {
+          center: this.coordinates,
+          zoom: 7,      
+        };
+        this.mapOptions = mapOps;
+      }      
     }
   }
 
@@ -92,7 +99,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       if ( !isNullOrUndefined(this.google_) ) {
         setTimeout(() => {
           if (this.googleMap)
-            this.mapInitializer();            
+            this.mapInitializer();
         });  
       }             
     }
@@ -520,12 +527,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.google_ = google || null;
       if ( !isNullOrUndefined(this.google_) ) {
         setTimeout(() => {
-          if (this.googleMap){
-            if (this.currentMarker) this.currentMarker.setMap(null);
-            this.currentMarker = null;  
-            this.mapSettings(this.lat,this.lng,7);
+          if (this.googleMap)
             this.mapInitializer();
-          }            
         });  
       }             
     }       

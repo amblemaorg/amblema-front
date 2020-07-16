@@ -1381,18 +1381,21 @@ export const formLecturaModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   grade: {
     label: "Grado",
     placeholder: "Grados",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "1er grado" },
@@ -1407,12 +1410,14 @@ export const formLecturaModal = {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
+    readonly: true,
     ...controlProps.normalTextAndRequired
   },
   gender: {
     label: "Género",
     placeholder: "Género",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
@@ -1423,6 +1428,8 @@ export const formLecturaModal = {
     label: "Fecha del diagnostico",
     placeholder: "Fecha del diagnostico",
     fullwidth: false,
+    readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
   },
   result: {
@@ -1435,6 +1442,7 @@ export const formLecturaModal = {
     label: "Indice",
     placeholder: "Indice",
     fullwidth: false,
+    readonly: true,
     ...controlProps.numberAndRequired
   }
 };
@@ -1443,18 +1451,21 @@ export const formMatematicaModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   grade: {
     label: "Grados",
     placeholder: "Grados",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "1er grado" },
@@ -1469,12 +1480,14 @@ export const formMatematicaModal = {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
+    readonly: true,
     ...controlProps.normalTextAndRequired
   },
   gender: {
     label: "Género",
     placeholder: "Género",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
@@ -1485,6 +1498,7 @@ export const formMatematicaModal = {
     label: "Fecha del resultado de multiplicacion",
     placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
+    readonly: true,
     ...controlProps.dateAndRequired
   },
   resultMul: {
@@ -1493,10 +1507,11 @@ export const formMatematicaModal = {
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
-  date2: {
+  dateLog: {
     label: "Fecha del resultado logica matematica",
     placeholder: "Fecha del resultado de logica matematica",
     fullwidth: false,
+    readonly: true,
     ...controlProps.dateAndRequired
   },
   resultLog: {
@@ -1509,12 +1524,14 @@ export const formMatematicaModal = {
     label: "Indice de multiplicacion",
     placeholder: "Indice de multiplicacion",
     fullwidth: false,
+    readonly: true,
     ...controlProps.numberAndRequired
   },
   indexLog: {
     label: "Indice de logica matematica",
     placeholder: "Indice de logica matematica",
     fullwidth: false,
+    readonly: true,
     ...controlProps.numberAndRequired
   }
 };

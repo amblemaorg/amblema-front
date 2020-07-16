@@ -28,7 +28,7 @@ export class TextsButtonsSetBlockComponent
     buttonCode?: string; // to check if this instance can make actions receiving data from table, form or both
     dateOrtext: {
       text: string;
-      date: string;
+      date: Date;
       fields: string[];
     };
     selectStatus: {
@@ -53,7 +53,7 @@ export class TextsButtonsSetBlockComponent
     subtitles: {
       title: string; // subtitle
       text: string; // paragraph
-    }[];
+    };
     // }[];
     action: {
       // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar
@@ -145,7 +145,8 @@ export class TextsButtonsSetBlockComponent
 
   setData(data: any) {
     if (data["status"]) this.settings.status.subText = data.status.subText;
-    console.log(data.status.subText);
+    if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
+    if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
@@ -283,12 +284,12 @@ export class TextsButtonsSetBlockComponent
             const method = this.settings.fetcherMethod || 'delete';
             const url = this.settings.fetcherUrls[method];
 
-            // console.log(
-            //   'method: ', method,
-            //   'url: ', url
-            // );
+            console.log(
+              'method: ', method,
+             'url: ', url
+            );
 
-            this.fetcher[method](url).subscribe((data) => {
+            /* this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();
 
@@ -308,7 +309,7 @@ export class TextsButtonsSetBlockComponent
                 { positionClass: "toast-bottom-right" }
               );
               console.error(error);
-            });
+            }); */
           }          
         }
         break;
