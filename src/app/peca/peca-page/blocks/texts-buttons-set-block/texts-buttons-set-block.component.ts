@@ -51,7 +51,7 @@ export class TextsButtonsSetBlockComponent
       text: string;
     };
     subtitles: {
-      title: string; // subtitle
+      title?: string; // subtitle
       text: string; // paragraph
     }[];
     // }[];
@@ -144,7 +144,12 @@ export class TextsButtonsSetBlockComponent
   }
 
   setData(data: any) {
-    if (data["status"]) this.settings.status.subText = data.status.subText;
+    if (data["isGenericActivity"]) {
+      if (data["subtitles"]) this.settings.subtitles = data.subtitles;
+    } 
+    else {
+      if (data["status"]) this.settings.status.subText = data.status.subText;     
+    }    
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
