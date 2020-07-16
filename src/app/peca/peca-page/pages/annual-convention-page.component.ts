@@ -72,7 +72,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
               this.response =
                 data.activePecaContent.lapse2.annualConvention.checklist;
             } else {
-              data.activePecaContent.lapse3.annualConvention.checklist;
+              this.response = data.activePecaContent.lapse3.annualConvention.checklist;
             }
             console.log(this.response);
             this.setAnnualConventionData();
