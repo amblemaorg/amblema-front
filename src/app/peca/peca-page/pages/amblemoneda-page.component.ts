@@ -66,20 +66,23 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   ngOnInit() {
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
-        if (!isNullOrUndefined(data)) {
-          console.log(data, "data amblemonedas")
+        if (data.activePecaContent){
+          if (!isNullOrUndefined(data)) {
+            console.log(data, "data amblemonedas")
+          }
+  
+          this.setAmblemonedasCharla(data);
+          this.setAmblemonedasCharlaData();
+  
+          this.setAmblemonedasSlider(data);
+          this.setAmblemonedasSliderData();
+  
+          this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
+  
+          this.loadedData = true;
+          if (this.isInstanciated) this.updateMethods();
         }
-
-        this.setAmblemonedasCharla(data);
-        this.setAmblemonedasCharlaData();
-
-        this.setAmblemonedasSlider(data);
-        this.setAmblemonedasSliderData();
-
-        this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
-
-        this.loadedData = true;
-        if (this.isInstanciated) this.updateMethods();
+        
       }, er => { console.log(er) })
 
 

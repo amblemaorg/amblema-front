@@ -53,21 +53,22 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     ngOnInit() {
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
-                if (!isNullOrUndefined(data)) {
-                    console.log(data, "mostrando data de planificacion")
+                if (data.activePecaContent){
+                    if (!isNullOrUndefined(data)) {
+                        console.log(data, "mostrando data de planificacion")
+                    }
+    
+                    this.setPropuestaText(data);
+                    this.setPropuestaTextData();
+    
+                    this.setReunionText(data);
+                    this.setReunionTextData();
+    
+    
+                    this.loadedData = true;
+                    if (this.isInstanciated) this.updateMethods();
                 }
-
-                this.setPropuestaText(data);
-                this.setPropuestaTextData();
-
-                this.setReunionText(data);
-                this.setReunionTextData();
-
-
-                this.loadedData = true;
-                if (this.isInstanciated) this.updateMethods();
-            }
-        )
+            }, er => { console.log(er) })
     }
 
     updateMethods() {

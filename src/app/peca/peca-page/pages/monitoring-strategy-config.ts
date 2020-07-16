@@ -1,5 +1,6 @@
 const sliderAmbiente = {
     component: 'slider',
+    name: 'sliderAmbienteData',
     settings: {
         sliderImage: [
             {
@@ -49,13 +50,13 @@ export const MONITORING_STRATEGY_CONFIG = {
                     {
                         title: "Lectura",
                         childBlocks: [
-                            { ...sliderAmbiente }
+                            //{ ...sliderAmbiente }
                         ]
                     },
                     {
                         title: "Matemática",
                         childBlocks: [
-                            { ...sliderAmbiente }
+                            //{ ...sliderAmbiente }
                         ]
                     }
                 ],

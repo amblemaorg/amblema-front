@@ -21,6 +21,7 @@ const datosOlimpiadas = {
 
 const selectEstudiantes = {
     component: 'textsbuttons',
+    name: 'resultadoTabla',
     settings: {
         selectStatus:
         {
