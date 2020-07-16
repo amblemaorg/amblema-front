@@ -122,4 +122,19 @@ export class PecaComponent implements OnInit, OnDestroy {
   toggle() {
     this.sidebarService.toggle(true, "menu-sidebar");
   }
+
+  getUserOneOrTwoLines(name) {
+    const name_obj = [name].reduce((nameObj,name) => {
+      name.split(" ").map((nameI,i,name_arr) => {
+        if ( i < parseInt(`${name_arr.length / 2}`) )
+          nameObj["first"] = nameObj["first"] ? `${(nameObj["first"])} ${nameI}` : nameI;
+        else
+          nameObj["second"] = nameObj["second"] ? `${(nameObj["second"])} ${nameI}` : nameI;
+      });
+
+      return nameObj;
+    }, {});
+
+    return `<span>${name_obj.first}</span><span>${name_obj.second}</span>`;
+  }
 }

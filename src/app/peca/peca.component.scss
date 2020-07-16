@@ -3,8 +3,9 @@
 @import "~@nebular/theme/styles/prebuilt/default.css";
 @import "~@nebular/theme/styles/globals";
 @import "~@nebular/auth/styles/globals";
-@import "scss/variables";
+// @import "scss/variables";
 @import "fonts/amblema-icons/amblemaicons";
+@import 'scss/sharedheader';
 
 ::ng-deep {
   $nb-enable-css-custom-properties: true;
@@ -146,7 +147,7 @@
     nb-tabset nb-tab,
     p,
     nb-checkbox .text,
-    a,
+    a,    
     nb-user .user-name {
       font-family: "Montserrat" !important;
     }
@@ -183,11 +184,11 @@
       }
     }
 
-    nb-user.size-giant .user-name {
-      font-size: 1.5rem;
-      line-height: 1.25rem;
-      font-weight: bold;
-    }
+    // nb-user.size-giant .user-name {
+    //   font-size: 1.5rem;
+    //   line-height: 1.25rem;
+    //   font-weight: bold;
+    // }
 
     nb-layout-header {
       img {
@@ -197,6 +198,21 @@
         position: absolute;
         left: 0px;
         top: -10px;
+      }
+
+      .header-main-name {
+        margin-left: 1rem;
+
+        @media screen and (orientation: landscape){
+          margin-left: 0.5rem;
+        }
+        @include mediabreak(small,landscape,true,640px) { 
+          margin-left: 0;
+        }
+
+        .h1-amblema {
+          @include shared-main-name();
+        }
       }
     }
 
@@ -244,10 +260,29 @@
       display: block;
     }
 
-    .nb-theme-default nb-user.size-giant .user-name {
-      font-size: 1.5rem;
-      line-height: 1.25rem;
-      font-weight: bold;
+    // .nb-theme-default nb-user.size-giant .user-name {
+    //   font-size: 1.5rem;
+    //   line-height: 1.25rem;
+    //   font-weight: bold;
+    // }
+    
+    nb-user .user-picture {
+      border: none;
+      @include shared-user-image-confs();
+    }
+    .header-avatar-user .avartar-container {
+      display: flex;
+      align-items: center;
+
+      .user-name {
+        @include shared-user-name-confs();
+        
+        ::ng-deep {
+          span {
+              display: block;
+          }
+        }
+      }
     }
 
     @media (min-width: 1200px) {
@@ -257,9 +292,9 @@
     }
 
     @media (max-width: 768px) {
-      nb-user.size-giant .user-name {
-        display: none;
-      }
+      // nb-user.size-giant .user-name {
+      //   display: none;
+      // }
       .dropdown-content {
         min-width: 150px;
         right: 0;
