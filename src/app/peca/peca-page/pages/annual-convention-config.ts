@@ -4,18 +4,22 @@ const checkList = {
     settings: {
         infoContainer: [
             {
-                title: 'Convención anual',
-                checkList: [
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' }, 
+                datosNivel: [
+                    {
+                        title: 'Convención anual',
+                        checkList: [
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                            { description: 'Lorem, ipsum dolor.' },
+                        ],
+                    }
                 ],
                 button: {
                     name: 'Guardar'

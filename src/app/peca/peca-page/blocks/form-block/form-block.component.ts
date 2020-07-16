@@ -248,6 +248,8 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
+    console.log("aasdsds",this.componentForm.value);
+
   }
 
   setData(data: any) {
@@ -608,7 +610,7 @@ export class FormBlockComponent
         'url: ', resourcePath,
         'body: ', body
       );
-
+/* 
       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
@@ -667,7 +669,7 @@ export class FormBlockComponent
           );
           console.error(error);
         }
-      );
+      ); */
     }
   }
 
@@ -725,6 +727,9 @@ export class FormBlockComponent
   }
 
   disableBtn() {
+    Object.keys(this.componentForm.value).map(val =>{
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
+    });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 

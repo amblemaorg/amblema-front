@@ -1,6 +1,6 @@
 <div class="texts-buttons-wrapper">
     <div class="texts-wrapper" 
-        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || (settings.subtitles && settings.subtitles.length>0)">
+        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || settings.subtitles">
         <div class="date-download-status d-flex justify-content-between mt-1">
             <div *ngIf="settings.dateOrtext" class="left-side">
                 <h6 class="left-sided-content">
@@ -133,12 +133,12 @@
     
             <div 
                 class="sub-titles mb-2" 
-                *ngFor="let subtitle of settings.subtitles"
+                *ngIf="settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
                 [class.text-incremented]="settings.isFromCustomTableActions"
             >
-                <h6 class="sub-title">{{ subtitle.title }}</h6>
-                <p>{{ subtitle.text }}</p>
+                <h6 class="sub-title">{{ settings.subtitles.title }}</h6>
+                <p>{{ settings.subtitles.text }}</p>
             </div>
         <!-- </ng-container> -->
     </div>
