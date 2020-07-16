@@ -25,6 +25,10 @@ export class PecaPageComponent {
     this.pageBlockFactory = new PageBlockFactory(this.factoryResolver);
   }
 
+  public changeComponentHeader(header) {
+    this.header.title = header;
+  }
+
   public instantiateBlocks(container: ViewContainerRef) {
     this.blocks.map((block, i) => {
       const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(

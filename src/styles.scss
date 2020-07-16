@@ -71,6 +71,18 @@
   font-style: normal;
 }
 
+@media (max-width: 575px) {
+  .nb-theme-default
+    nb-layout
+    .layout
+    .layout-container
+    .content
+    .columns
+    nb-layout-column {
+    padding: 2.25rem 1rem 0.75rem !important;
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
 html.smooth-scrolling {
   scroll-behavior: smooth;
@@ -310,7 +322,7 @@ section.pillars {
       }
     }
   }
-  @media (max-width:768px){
+  @media (max-width: 768px) {
     .owl-nav {
       top: 35%;
     }
