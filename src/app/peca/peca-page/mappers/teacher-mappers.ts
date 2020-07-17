@@ -45,31 +45,18 @@ export function teachersDataToTeachersTableAnnualConventionMapper(teachersData) 
       id,
       firstName,
       lastName,
-      cardId,
-      cardType,
-      gender,
       email,
-      phone,
-      address,
-      addressCity,
-      status,
-      pecaId
+      phone,  
+      annualPreparationStatus
     } = teacher;
 
     return {
-      id: pecaId,
+      id,
       name: firstName,
       lastName,
-      gender,
       email,
-      status,
-      documentGroup: {
-        prependSelect: cardType,
-        prependInput: cardId,
-      },
-      phone,
-      street: address,
-      city: addressCity,
+      status: annualPreparationStatus,
+      phone
     };
   });
 }
