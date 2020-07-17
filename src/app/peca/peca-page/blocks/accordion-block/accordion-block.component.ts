@@ -70,8 +70,8 @@ export class AccordionBlockComponent
       for (let i = 0; i < data.topics1.length; i++) {
         this.settings.items[i].title = data.topics1[i].name;
       }
-      console.log("entro", data);
-      console.log("aja", this.settings.items);
+    //  console.log("entro", data);
+    //  console.log("entrox2", this.settings.items);
     } else if (data["topics2"]) {
       for (let i = 0; i < data.topics2.length; i++) {
         this.settings.items[i].title = data.topics2[i].name;

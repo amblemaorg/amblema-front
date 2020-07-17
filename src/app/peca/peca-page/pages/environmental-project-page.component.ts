@@ -57,7 +57,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
       .subscribe(
         (data) => {
           if (!isNullOrUndefined(data)) {
-            // console.log("proyecto ambiental", data);
+             console.log("proyecto ambiental", data);
             this.topics1lapse = data.lapse1.topics;
             this.topics2lapse = data.lapse2.topics;
             this.topics3lapse = data.lapse3.topics;
