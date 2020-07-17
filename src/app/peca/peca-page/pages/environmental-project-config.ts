@@ -115,8 +115,31 @@ const infoGeneral = {
     }
 }
 
-const tituloObjetivoGeneral = {
+const tituloObjetivoGeneralLapse1 = {
     component: 'textsbuttons',
+    name: "objetivoProyectoAmbiental1",
+    settings: {
+        title: {
+            aligning: 'left', // 'center' for center aligning, 'left' otherwise
+            text: 'Geografia',
+          }
+    }
+}
+
+const tituloObjetivoGeneralLapse2 = {
+    component: 'textsbuttons',
+    name: "objetivoProyectoAmbiental2",
+    settings: {
+        title: {
+            aligning: 'left', // 'center' for center aligning, 'left' otherwise
+            text: 'Areas Naturales',
+          }
+    }
+}
+
+const tituloObjetivoGeneralLapse3 = {
+    component: 'textsbuttons',
+    name: "objetivoProyectoAmbiental3",
     settings: {
         title: {
             aligning: 'left', // 'center' for center aligning, 'left' otherwise
@@ -143,7 +166,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                     items: [
                                         {
                                             childBlocks: [
-                                                { ...tituloObjetivoGeneral }
+                                                { ...tituloObjetivoGeneralLapse1 }
                                             ]
                                         },
                                         {
@@ -188,6 +211,10 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                 component: 'profiles',
                                 settings: {
                                     items: [
+                                        {  childBlocks: [
+                                            { ...tituloObjetivoGeneralLapse2 }
+                                        ]
+                                    },
                                         {
                                             childBlocks: [
                                                 {
@@ -232,7 +259,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                     items: [
                                         {
                                             childBlocks: [
-                                                { ...tituloObjetivoGeneral }
+                                                { ...tituloObjetivoGeneralLapse3 }
                                             ]
                                         },
                                         {
