@@ -19,6 +19,10 @@ import {
   profileDataToSchoolFormMapper
 } from "../mappers/profile-mappers";
 import { isNullOrUndefined } from "util";
+import { ActivatedRoute } from "@angular/router";
+import { first } from "rxjs/internal/operators/first";
+import * as $ from 'jquery';
+declare var $: any;
 
 @Component({
   selector: "peca-profile",
@@ -28,8 +32,13 @@ export class ProfilePageComponent extends PecaPageComponent
   implements AfterViewInit {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
+
   @Select(PecaState.getUser) userData$: Observable<any>;
+  @Select(PecaState.getActivePeca) actPeca$: Observable<any>;
+
   userDataSubscription: Subscription;
+  activePecaSubs: Subscription;
+
   userFormData: any;
   userType = "";
   isInstanciated: boolean;
@@ -37,7 +46,8 @@ export class ProfilePageComponent extends PecaPageComponent
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    private globals: GlobalService
+    private globals: GlobalService,
+    private route: ActivatedRoute
   ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe(data => {
@@ -51,6 +61,22 @@ export class ProfilePageComponent extends PecaPageComponent
   ngOnInit() {
     this.getUser();
     this.loadForm();
+    
+    if (this.globals.isBrowser) {
+      if (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) {
+        this.activePecaSubs = this.actPeca$.pipe(first()).subscribe(
+          ({ activePeca }) => {
+            const activePecaId = activePeca.id;
+            activePecaId
+              ? $("nb-sidebar").removeClass("is-hidden")
+              : $("nb-sidebar").addClass("is-hidden");
+          },
+          error => console.error(error)
+        );        
+      } else {
+        $("nb-sidebar").removeClass("is-hidden");
+      } 
+    }    
   }
 
   loadForm() {

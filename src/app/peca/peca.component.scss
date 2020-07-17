@@ -216,6 +216,12 @@
       }
     }
 
+    nb-sidebar {
+      &.is-hidden {
+        display: none;
+      }
+    }
+
     @media (max-width:768px) {
       .e-popup-header{
         margin-top: 100px !important;

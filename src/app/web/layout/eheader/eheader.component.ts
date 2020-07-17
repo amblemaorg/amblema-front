@@ -100,10 +100,7 @@ export class EheaderComponent implements OnInit {
     this.router.navigate([
       "peca/perfil-usuario",
       { 
-        userType: this.user_type, 
-        idUser: this.user_id,
-        nameUser: this.user_name,
-        emailUser: this.user_email
+        comesFromPreviousSteps: true
       }
     ]);
   }
