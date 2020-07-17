@@ -20,8 +20,8 @@ const preinscripcionDocente = {
                     email: 'cdhgdgd@dw.com', 
                 },
                 { 
-                    id: 3, name: 'Jose',
-                    lastName: 'Guerrero',
+                    id: 3, name: 'Jesus',
+                    lastName: 'Amaro',
                     phone: '564654',
                     email: 'hfdhydh@de.com', 
                 },

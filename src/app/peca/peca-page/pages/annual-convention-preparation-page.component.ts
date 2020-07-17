@@ -61,7 +61,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-        console.log("el ev", this.UrlLapse);
+       // console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
     });
@@ -74,7 +74,8 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
       (data) => {
         if (data.activePecaContent) {
          // this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
-          console.log("esto es", data.activePecaContent.lapse1.annualPreparation.teachers)
+          //console.log("esto es", data.activePecaContent.lapse1.annualPreparation.teachers)
+          console.log("esto es", data.activePecaContent.school.teachers)
           this.idPeca = data.activePecaContent.id;
           if (!isNullOrUndefined(data)) {
             if (this.UrlLapse === "1") {
@@ -131,7 +132,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
         data: _mapper(teachersAnnualConventionTable),
         isEditable: true,
       };
-      console.log("este es el mapper de lectura", this.teachersData.data);
+      //console.log("este es el mapper de lectura", this.teachersData.data);
     } else {
       this.teachersData = teachersAnnualConventionTable;
     }
