@@ -53,10 +53,11 @@ export function teachersDataToTeachersTableAnnualConventionMapper(teachersData) 
       address,
       addressCity,
       status,
+      pecaId
     } = teacher;
 
     return {
-      id,
+      id: pecaId,
       name: firstName,
       lastName,
       gender,

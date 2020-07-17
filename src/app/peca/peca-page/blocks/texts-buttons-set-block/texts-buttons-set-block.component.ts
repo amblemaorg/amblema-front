@@ -339,6 +339,8 @@ export class TextsButtonsSetBlockComponent
 
         if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
 
+
+//console comentar antes de probar
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
             console.log("form response",response);
@@ -362,7 +364,7 @@ export class TextsButtonsSetBlockComponent
             );
             console.error(error);
           }
-        );
+        ); 
         break;
 
       default:

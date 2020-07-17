@@ -154,6 +154,7 @@ const formTablaPreinscripcionDocente = {
   }
   const textsAndButtonsTablaPreinscripcionDocente = {
     component: 'textsbuttons',
+    name: 'annualConventionDeleteModal',
     settings: {
       subtitles: [{
         text: '¿Desea eliminar este ítem?',
@@ -171,6 +172,7 @@ const formTablaPreinscripcionDocente = {
       modalCode: 'dataPreinscripcionDocente',
       isFromCustomTableActions: true,
       isDeleting: true,
+      fetcherMethod: 'delete',
     }
   }
   const modalTablaPreinscripcionDocente = {
