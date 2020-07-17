@@ -1,92 +1,115 @@
 import {
-    Component,
-    AfterViewInit,
-    Injector,
-    ComponentFactoryResolver,
-    ViewContainerRef,
-    ViewChild,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { ENVIRONMENTAL_PROJECT_CONFIG as config } from './environmental-project-config';
-import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Subscription } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { isNullOrUndefined } from 'util';
+  Component,
+  AfterViewInit,
+  Injector,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import { ENVIRONMENTAL_PROJECT_CONFIG as config } from "./environmental-project-config";
+import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
+import { Subscription } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { isNullOrUndefined } from "util";
 
 @Component({
-    selector: 'peca-environmental-project',
-    templateUrl: '../peca-page.component.html',
+  selector: "peca-environmental-project",
+  templateUrl: "../peca-page.component.html",
 })
-export class EnvironmentalProjectPageComponent extends PecaPageComponent implements AfterViewInit {
-    @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) 
-    container: ViewContainerRef;
-    infoDataSubscription: Subscription;
-    enviromentalInfo: any;
-    isInstanciated: boolean;
-    topics = [];
-    loadedData: boolean;
-    UrlLapse = "";
-    routerSubscription: Subscription;
-    constructor(factoryResolver: ComponentFactoryResolver, private globals: GlobalService ,private httpFetcherService: HttpFetcherService) {
-        super(factoryResolver);
-        globals.blockIntancesEmitter.subscribe((data) => {
-            data.blocks.forEach((block, name) =>
-              this.blockInstances.set(name, block)
-            );
-            console.log(this.blockInstances, "bloques");
-            if (this.loadedData) this.updateMethods();
-          });
-        this.instantiateComponent(config);
-    }
+export class EnvironmentalProjectPageComponent extends PecaPageComponent
+  implements AfterViewInit {
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
+  container: ViewContainerRef;
+  infoDataSubscription: Subscription;
+  enviromentalInfo1lapse: any;
+  enviromentalInfo2lapse: any;
+  enviromentalInfo3lapse: any;
+  isInstanciated: boolean;
+  topics1lapse = [];
+  topics2lapse = [];
+  topics3lapse = [];
+  loadedData: boolean;
+  UrlLapse = "";
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    private globals: GlobalService,
+    private httpFetcherService: HttpFetcherService
+  ) {
+    super(factoryResolver);
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
+      console.log(this.blockInstances, "bloques");
+      if (this.loadedData) this.updateMethods();
+    });
+    this.instantiateComponent(config);
+  }
 
-ngOnInit(){
-this.getInfo();
-}
+  ngOnInit() {
+    this.getInfo();
+  }
 
-getInfo(){
-    const info = this.httpFetcherService.get(`pecasetting/environmentalproject`).subscribe(data =>{
-        if (!isNullOrUndefined(data)){
-            console.log("proyecto ambiental", data);
-            this.topics= data.lapse1.topics
+  getInfo() {
+    const info = this.httpFetcherService
+      .get(`pecasetting/environmentalproject`)
+      .subscribe(
+        (data) => {
+          if (!isNullOrUndefined(data)) {
+            // console.log("proyecto ambiental", data);
+            this.topics1lapse = data.lapse1.topics;
+            this.topics2lapse = data.lapse2.topics;
+            this.topics3lapse = data.lapse3.topics;
+          /*   console.log(this.topics1lapse);
+            console.log(this.topics2lapse);
+            console.log(this.topics3lapse); */
+
             this.setEnviromentalProjectData();
             this.loadedData = true;
             if (this.isInstanciated) this.updateMethods();
+          }
+        },
+        (error) => console.log(error),
+        () => {
+          info.unsubscribe();
         }
-    },
-    error => console.log(error), ()=>{
-        info.unsubscribe();
-    })
-}
+      );
+  }
 
+  setEnviromentalProjectData() {
+    this.enviromentalInfo1lapse = {
+      topics1: this.topics1lapse,
 
-
-setEnviromentalProjectData() {
-    this.enviromentalInfo = {
-      topics: this.topics,
+    };
+    this.enviromentalInfo2lapse = {
+      topics2: this.topics2lapse,
+    };
+    this.enviromentalInfo3lapse = {
+      topics3: this.topics3lapse,
     };
   }
 
   updateDataToBlocks() {
-    this.setBlockData("lapse1Enviromental", this.enviromentalInfo);
+    this.setBlockData("lapse1Enviromental", this.enviromentalInfo1lapse);
+     this.setBlockData("lapse2Enviromental", this.enviromentalInfo2lapse);
+     this.setBlockData("lapse3Enviromental", this.enviromentalInfo3lapse);
   }
 
   updateMethods() {
     this.updateDataToBlocks();
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
+    });
+  }
 
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.instantiateBlocks(this.container);
-            this.isInstanciated = true;
-
-        });
-    }
-
-    ngOnDestroy() {
-        this.isInstanciated = false;
-        this.loadedData = false;
-       // this.infoDataSubscription.unsubscribe();
-      //  this.routerSubscription.unsubscribe();
-      }
+  ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
+    //this.infoDataSubscription.unsubscribe();
+  }
 }

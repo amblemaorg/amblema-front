@@ -29,22 +29,22 @@ const infoGeneral = {
                         {
                             nivel: 'Primer grado',
                             week: [
-                                { contWeek: '020-07-18T15:27:23' },
-                                { contWeek: '2020-07-18T15:27:23' },
-                                { contWeek: '2020-07-18T15:27:23' },
+                                { contWeek: '"2020-07-18T15:27:23"' },
+                                { contWeek: '"2020-07-18T15:27:23"' },
+                                { contWeek: '"2020-07-18T15:27:23"' },
                             ],
                             time: '45 min',
-                            tecnicas: [
+                            tecnica: [
                                 { contTecnica: 'Juego didactico' },
                                 { contTecnica: 'Sopa de letra' }
                             ],
-                            recursos: [
+                            recurso: [
                                 { contRecurso: 'plastilina' },
                                 { contRecurso: 'tijera' },
                                 { contRecurso: 'lapiz' },
                                 { contRecurso: 'borrador' },
                             ],
-                            evaluaciones: [
+                            evaluacion: [
                                 { contEvaluacion: 'participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: 'examen' },
                                 { contEvaluacion: 'examen-oral' },
@@ -58,7 +58,7 @@ const infoGeneral = {
                             ],
                             material: [
                                 { link: 'https://binauraldev.com/ecommerce/' },
-                                { link: 'https://binauraldev.com'}
+                                { link: 'https://binauraldev.com' }
                             ]
                         },
                     ],
@@ -102,7 +102,7 @@ const infoGeneral = {
                             ],
                             material: [
                                 { link: 'https://binauraldev.com/ecommerce/' },
-                                { link: 'https://binauraldev.com'}
+                                { link: 'https://binauraldev.com' }
                             ]
                         },
                     ],
@@ -114,6 +114,17 @@ const infoGeneral = {
         ]
     }
 }
+
+const tituloObjetivoGeneral = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            aligning: 'left', // 'center' for center aligning, 'left' otherwise
+            text: 'Geografia y Areas Naturales',
+          }
+    }
+}
+
 export const ENVIRONMENTAL_PROJECT_CONFIG = {
     header: {
         title: "Proyecto ambiental",
@@ -127,28 +138,44 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         title: "Lapso 1",
                         childBlocks: [
                             {
-                                component: 'accordion',
-                                name: "lapse1Enviromental",
+                                component: 'profiles',
                                 settings: {
                                     items: [
                                         {
-                                            title: "Geografia de Venezuela",
                                             childBlocks: [
-                                                { ...infoGeneral }
+                                                { ...tituloObjetivoGeneral }
                                             ]
                                         },
                                         {
-                                            title: "Ecositemas de Venezuela",
                                             childBlocks: [
-                                                { ...infoGeneral }
+                                                {
+                                                    component: 'accordion',
+                                                    name: "lapse1Enviromental",
+                                                    settings: {
+                                                        items: [
+                                                            {
+                                                                title: "(estatico)Geografia de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Ecositemas de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Parque nacionales y monumentos naturales",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                        ]
+                                                    }
+                                                }
                                             ]
-                                        },
-                                        {
-                                            title: "(estatico)Parque nacionales y monumentos naturales",
-                                            childBlocks: [
-                                                { ...infoGeneral }
-                                            ]
-                                        },
+                                        }
                                     ]
                                 }
                             }
@@ -158,28 +185,39 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         title: "Lapso 2",
                         childBlocks: [
                             {
-                                component: 'accordion',
-                                name: "lapse2Enviromental",
+                                component: 'profiles',
                                 settings: {
                                     items: [
                                         {
-                                            title: "Geografia de Venezuela",
                                             childBlocks: [
-                                                { ...infoGeneral }
+                                                {
+                                                    component: 'accordion',
+                                                    name: "lapse2Enviromental",
+                                                    settings: {
+                                                        items: [
+                                                            {
+                                                                title: "(estatico)Geografia de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Ecositemas de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Parque nacionales y monumentos naturales",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                        ]
+                                                    }
+                                                }
                                             ]
-                                        },
-                                        {
-                                            title: "Ecositemas de Venezuela",
-                                            childBlocks: [
-                                                { ...infoGeneral }
-                                            ]
-                                        },
-                                        {
-                                            title: "Parque nacionales y monumentos naturales",
-                                            childBlocks: [
-                                                { ...infoGeneral }
-                                            ]
-                                        },
+                                        }
                                     ]
                                 }
                             }
@@ -189,28 +227,44 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         title: "Lapso 3",
                         childBlocks: [
                             {
-                                component: 'accordion',
-                                name: "lapse3Enviromental",
+                                component: 'profiles',
                                 settings: {
                                     items: [
                                         {
-                                            title: "Geografia de Venezuela",
                                             childBlocks: [
-                                                { ...infoGeneral }
+                                                { ...tituloObjetivoGeneral }
                                             ]
                                         },
                                         {
-                                            title: "Ecositemas de Venezuela",
                                             childBlocks: [
-                                                { ...infoGeneral }
+                                                {
+                                                    component: 'accordion',
+                                                    name: "lapse3Enviromental",
+                                                    settings: {
+                                                        items: [
+                                                            {
+                                                                title: "(estatico)Geografia de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Ecositemas de Venezuela",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                            {
+                                                                title: "(estatico)Parque nacionales y monumentos naturales",
+                                                                childBlocks: [
+                                                                    { ...infoGeneral }
+                                                                ]
+                                                            },
+                                                        ]
+                                                    }
+                                                }
                                             ]
-                                        },
-                                        {
-                                            title: "Parque nacionales y monumentos naturales",
-                                            childBlocks: [
-                                                { ...infoGeneral }
-                                            ]
-                                        },
+                                        }
                                     ]
                                 }
                             }
@@ -221,3 +275,4 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
         },
     ],
 }
+
