@@ -6,7 +6,7 @@
             <div class="avatar-container media p-3 d-flex align-items-center" data-toggle="dropdown">
                 <img [src]="(userBrief$ | async).image ? (userBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(userBrief$ | async).name" class="mr-2 rounded-circle">
                 <div class="media-body">
-                    <h4 class="mb-0 name font-weight-bold">{{ (userBrief$ | async).name }}</h4>
+                    <h4 class="mb-0 name font-weight-bold" [innerHTML]="getUserOneOrTwoLines((userBrief$ | async).name)"></h4>
                 </div>
             </div>
             <div class="dropdown-menu dropdown-menu-right">
