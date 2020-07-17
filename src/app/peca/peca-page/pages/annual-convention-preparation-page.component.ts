@@ -27,6 +27,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   description2 = "";
   description3 = "";
   description4 = "";
+  idPeca = "";
   loadedData: boolean;
   preparationInfo: any;
   UrlLapse = "";
@@ -73,7 +74,8 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
       (data) => {
         if (data.activePecaContent) {
          // this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
-          //console.log("esto es", data.activePecaContent.lapse1.annualPreparation)
+          console.log("esto es", data.activePecaContent.lapse1.annualPreparation.teachers)
+          this.idPeca = data.activePecaContent.id;
           if (!isNullOrUndefined(data)) {
             if (this.UrlLapse === "1") {
              this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
@@ -159,7 +161,25 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   //2
   updateMethods() {
     this.updateDataToBlocks();
+    this.updateDynamicFetchers();
+
   }
+
+
+  updateDynamicFetchers() {
+
+    //Delete math modal
+    this.createAndSetBlockFetcherUrls(
+      "annualConventionDeleteModal",
+      {
+        delete: (teacherId) =>
+          `pecaprojects/annualpreparation/${this.idPeca}/${teacherId}`,
+      },
+      "settings.dataFromRow.data.newData.id"
+    );
+  }
+  
+  ///pecaprojects/annualpreparation/<string:pecaId>/<string:teacherId>
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.instantiateBlocks(this.container);
