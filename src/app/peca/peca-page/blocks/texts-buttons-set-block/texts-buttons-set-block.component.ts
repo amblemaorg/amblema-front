@@ -282,12 +282,12 @@ export class TextsButtonsSetBlockComponent
             const method = this.settings.fetcherMethod || 'delete';
             const url = this.settings.fetcherUrls[method];
 
-            // console.log(
-            //   'method: ', method,
-            //   'url: ', url
-            // );
+            console.log(
+              'method: ', method,
+             'url: ', url
+            );
 
-            this.fetcher[method](url).subscribe((data) => {
+             this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();
 
@@ -307,7 +307,7 @@ export class TextsButtonsSetBlockComponent
                 { positionClass: "toast-bottom-right" }
               );
               console.error(error);
-            });
+            }); 
           }          
         }
         break;

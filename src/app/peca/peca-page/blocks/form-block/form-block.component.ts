@@ -248,6 +248,8 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
+    console.log("Esto es lo que mando",this.componentForm.value);
+
   }
 
   setData(data: any) {
@@ -608,8 +610,8 @@ export class FormBlockComponent
         'url: ', resourcePath,
         'body: ', body
       );
-
-      this.fetcher[method](resourcePath, body).subscribe(
+//console log... comentar todo el fetcher antes de probar el put
+       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
@@ -667,7 +669,7 @@ export class FormBlockComponent
           );
           console.error(error);
         }
-      );
+      );   
     }
   }
 
@@ -725,6 +727,9 @@ export class FormBlockComponent
   }
 
   disableBtn() {
+    Object.keys(this.componentForm.value).map(val =>{
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
+    });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
@@ -976,6 +981,8 @@ export class FormBlockComponent
         if (key == "addressMunicipality") this.updateMuns(true, data[key]);
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
+          if (data[key]) { 
+          //console.log("key", data[key]) 
           const dateKey = this.globals.getDateFormat(
             new Date(data[key].replace("Z", ""))
           );
@@ -986,6 +993,7 @@ export class FormBlockComponent
             key,
             true
           );
+        }
         } else if (this.settings.formsContent[key].type === "double") {
           this.componentForm.patchValue({ ...data[key] });
         } else this.componentForm.patchValue({ [key]: data[key] });
