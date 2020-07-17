@@ -807,8 +807,13 @@
     <ng-container *ngIf="glbls.isBrowser && showMap">
       <div class="map-container">
         <hr/>
-        <label>Marca la ubicación exacta de la escuela</label>
-        <div #schoolAddressMap id="school-address-map"></div>
+        <label>Marca la ubicación exacta de la escuela</label>        
+        <ng-container *ngIf="googleLoaded; else mapProblem">
+          <div #schoolAddressMap id="school-address-map"></div>
+        </ng-container>
+        <ng-template #mapProblem>
+          <p class="map-problem">Hubo un problema al cargar el mapa, por favor recargue la página.</p>
+        </ng-template>
         <hr/>
       </div>      
     </ng-container>    

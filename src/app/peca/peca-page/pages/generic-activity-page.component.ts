@@ -13,6 +13,9 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { Select } from "@ngxs/store";
 import { PecaState } from '../../../store/states/peca/peca.state';
 import { Observable, Subscription } from "rxjs";
+import cloneDeep from "lodash/cloneDeep";
+import { GenericActivity } from '../../../models/peca/generic-activity.model';
+import { GlobalService } from '../../../services/global.service';
 
 @Component({
     selector: 'peca-generic-activity',
@@ -26,9 +29,25 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     pecaDataSubscription: Subscription;
     routerSubscription: Subscription;
     isInstanciated: boolean;
+    loadedData: boolean;
 
-    constructor(factoryResolver: ComponentFactoryResolver, private router: Router) {
+    g_a_text: any;
+
+    constructor(
+        factoryResolver: ComponentFactoryResolver, 
+        private router: Router,
+        globals: GlobalService
+    ) {
         super(factoryResolver);
+
+        globals.blockIntancesEmitter.subscribe(data => {
+            data.blocks.forEach((block, name) =>
+              this.blockInstances.set(name, block)
+            );
+
+            if (this.loadedData) this.updateMethods();
+        });
+
         this.instantiateComponent(config);
 
         this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -56,12 +75,38 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
                         return activity.id === activity_id;
                     });
-                    const activity = data.activePecaContent[`lapse${lapse_id}`].activities[index];
-                    this.changeComponentHeader(activity.name);   
+                    const activity: GenericActivity =  cloneDeep(data.activePecaContent[`lapse${lapse_id}`].activities[index]);
+                    
+                    if (activity) {
+                        this.changeComponentHeader(activity.name); 
+
+                        console.log("Datos de la actividad",activity);
+                        this.setGenericActivityData(activity);
+                        
+                        this.loadedData = true;
+                        if (this.isInstanciated) this.updateMethods();   
+                    }                    
                 }                
             },
             error => console.error(error)
         );
+    }
+
+    updateMethods() {
+        this.updateDataToBlocks();
+        // this.updateStaticFetchers();
+        // this.updateDynamicFetchers();
+    }
+
+    updateDataToBlocks() {
+        if (this.g_a_text) this.setBlockData("genericActivityText", { isGenericActivity: true, ...this.g_a_text } );
+    }
+
+    setGenericActivityData(data: GenericActivity) {
+        this.g_a_text = data.hasText 
+            ? {                
+                subtitles: [{ text: data.text }]
+            } : null;
     }
 
     ngAfterViewInit(): void {
@@ -72,6 +117,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     ngOnDestroy() {
+        this.isInstanciated = false;
+        this.loadedData = false;
         this.pecaDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
     }

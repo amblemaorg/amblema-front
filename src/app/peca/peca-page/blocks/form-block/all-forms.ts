@@ -936,8 +936,7 @@ export const formTabsEstudiantes = {
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
-          { id: "2", name: "J" },
-          { id: "3", name: "E" }
+          { id: "2", name: "E" },
         ]
       },
       prependInput: {
