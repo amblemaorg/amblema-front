@@ -289,7 +289,7 @@ export class TextsButtonsSetBlockComponent
              'url: ', url
             );
 
-            /* this.fetcher[method](url).subscribe((data) => {
+             this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();
 
@@ -309,7 +309,7 @@ export class TextsButtonsSetBlockComponent
                 { positionClass: "toast-bottom-right" }
               );
               console.error(error);
-            }); */
+            }); 
           }          
         }
         break;
