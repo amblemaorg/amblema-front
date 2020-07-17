@@ -23,6 +23,7 @@ export class AccordionBlockComponent implements StructuralBlockComponent, OnInit
   @ViewChildren('accordionItemBodyContainer', { read: ViewContainerRef }) accordionItemBodyContainer: QueryList<ViewContainerRef>;
   factory: PageBlockFactory;
 
+  enviromentalArray: any;
   type: 'structural';
   component: string;
   settings: {
@@ -47,6 +48,29 @@ export class AccordionBlockComponent implements StructuralBlockComponent, OnInit
     this.factory = settings.factory ? settings.factory : {};
   }
 
+  setData(data: any) {
+    //console.log("sadsdsds", this.prueba)
+    if (data["topics"]) {
+      this.enviromentalArray= data.topics;
+/*       this.prueba = data.checkList[0].description;
+      this.flag = true;
+      for (let i = 0; i < this.prueba.length; i++) {
+        this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
+          data.checkList[0].description[i].name; */
+        /* console.log("no se", this.settings.infoContainer[0].checkList[i])
+      console.log("checkkk",data.checkList[0]); */
+
+      for (let i = 0; i < this.enviromentalArray.length; i++) {
+        this.settings.items[i].title= data.topics[i].name;
+      }
+      console.log("entro", data.topics)
+      console.log("aja", this.settings.items)
+;      }
+    else {
+     // this.flag = false;
+
+    }
+  }
   public instantiateChildBlocks() {
     this.settings.items.map((item, i) => {
       const container = this.accordionItemBodyContainer.toArray()[i];

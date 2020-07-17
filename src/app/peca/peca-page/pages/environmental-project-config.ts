@@ -29,22 +29,22 @@ const infoGeneral = {
                         {
                             nivel: 'Primer grado',
                             week: [
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
+                                { contWeek: '020-07-18T15:27:23' },
+                                { contWeek: '2020-07-18T15:27:23' },
+                                { contWeek: '2020-07-18T15:27:23' },
                             ],
                             time: '45 min',
-                            tecnica: [
+                            tecnicas: [
                                 { contTecnica: 'Juego didactico' },
                                 { contTecnica: 'Sopa de letra' }
                             ],
-                            recurso: [
+                            recursos: [
                                 { contRecurso: 'plastilina' },
                                 { contRecurso: 'tijera' },
                                 { contRecurso: 'lapiz' },
                                 { contRecurso: 'borrador' },
                             ],
-                            evaluacion: [
+                            evaluaciones: [
                                 { contEvaluacion: 'participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: 'examen' },
                                 { contEvaluacion: 'examen-oral' },
@@ -128,6 +128,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         childBlocks: [
                             {
                                 component: 'accordion',
+                                name: "lapse1Enviromental",
                                 settings: {
                                     items: [
                                         {
@@ -143,7 +144,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                             ]
                                         },
                                         {
-                                            title: "Parque nacionales y monumentos naturales",
+                                            title: "(estatico)Parque nacionales y monumentos naturales",
                                             childBlocks: [
                                                 { ...infoGeneral }
                                             ]
@@ -158,6 +159,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         childBlocks: [
                             {
                                 component: 'accordion',
+                                name: "lapse2Enviromental",
                                 settings: {
                                     items: [
                                         {
@@ -188,6 +190,7 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                         childBlocks: [
                             {
                                 component: 'accordion',
+                                name: "lapse3Enviromental",
                                 settings: {
                                     items: [
                                         {
