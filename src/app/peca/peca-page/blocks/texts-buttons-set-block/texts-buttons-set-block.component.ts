@@ -288,6 +288,8 @@ export class TextsButtonsSetBlockComponent
               'method: ', method,
              'url: ', url
             );
+            
+//console comentar antes de probar
 
              this.fetcher[method](url).subscribe((data) => {
               console.log(data);
@@ -340,7 +342,6 @@ export class TextsButtonsSetBlockComponent
         if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
 
 
-//console comentar antes de probar
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
             console.log("form response",response);
