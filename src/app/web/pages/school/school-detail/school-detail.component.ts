@@ -256,7 +256,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         nextActivities: data.nextActivities.map((activity) => {
           activity.title = activity.name;
-          activity.date = this.pipe.transform(activity.date, 'd/M/y');
+          activity.date = this.pipe.transform(Date.parse(activity.date), 'd/M/y');
           return activity;
         }),
         otherSchools: data.nearbySchools
