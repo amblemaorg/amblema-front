@@ -76,13 +76,16 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                         return activity.id === activity_id;
                     });
                     const activity: GenericActivity =  cloneDeep(data.activePecaContent[`lapse${lapse_id}`].activities[index]);
-                    this.changeComponentHeader(activity.name); 
-
-                    console.log("Datos de la actividad",activity);
-                    this.setGenericActivityData(activity);
                     
-                    this.loadedData = true;
-                    if (this.isInstanciated) this.updateMethods();
+                    if (activity) {
+                        this.changeComponentHeader(activity.name); 
+
+                        console.log("Datos de la actividad",activity);
+                        this.setGenericActivityData(activity);
+                        
+                        this.loadedData = true;
+                        if (this.isInstanciated) this.updateMethods();   
+                    }                    
                 }                
             },
             error => console.error(error)
