@@ -1423,15 +1423,15 @@ export const formLecturaModal = {
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
-  },
-  date: {
+  }, 
+ /*  date: {
     label: "Fecha del diagnostico",
     placeholder: "Fecha del diagnostico",
     fullwidth: false,
     readonly: true,
     lower: true,
-    ...controlProps.dateAndRequired
-  },
+    ...controlProps.date
+  }, */
   result: {
     label: "Resultado",
     placeholder: "Resultado",
@@ -1443,7 +1443,7 @@ export const formLecturaModal = {
     placeholder: "Indice",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalText
   }
 };
 export const formMatematicaModal = {
@@ -1494,26 +1494,28 @@ export const formMatematicaModal = {
       { id: "2", name: "Masculino" }
     ]
   },
-  date: {
+/*   date: {
     label: "Fecha del resultado de multiplicacion",
     placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
     readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
-  },
+  }, */
   resultMul: {
     label: "Resultado de multiplicacion",
     placeholder: "Resultado de multiplicacion",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
-  dateLog: {
+  /* dateLog: {
     label: "Fecha del resultado logica matematica",
     placeholder: "Fecha del resultado de logica matematica",
     fullwidth: false,
     readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
-  },
+  }, */
   resultLog: {
     label: "Resultado de logica matematica",
     placeholder: "Resultado de logica matematica",
@@ -1525,14 +1527,14 @@ export const formMatematicaModal = {
     placeholder: "Indice de multiplicacion",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalText
   },
   indexLog: {
     label: "Indice de logica matematica",
     placeholder: "Indice de logica matematica",
     fullwidth: false,
     readonly: true,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalText
   }
 };
 
