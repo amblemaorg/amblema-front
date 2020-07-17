@@ -307,7 +307,13 @@ export class TextsButtonsSetBlockComponent
             }, (error) => {
               this.isSending = false;
               this.toastr.error(
-                "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                error.error && error.error["msg"] 
+                  ? (
+                      error.error["entity"] && error.error["entity"].length > 0 
+                        ? `${error.error["msg"]}: ${error.error["entity"]}` 
+                        : error.error["msg"]
+                    )
+                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
                 "",
                 { positionClass: "toast-bottom-right" }
               );
@@ -359,7 +365,15 @@ export class TextsButtonsSetBlockComponent
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
-              "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              (error.error && error.error["name"] && error.error["name"][0])
+                ? error.error["name"][0].msg 
+                : error.error && error.error["email"] && error.error["email"][0]
+                  ? error.error["email"][0].msg 
+                  : error.error && error.error["cardId"] && error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg 
+                    : error.error && error.error["msg"] 
+                      ? error.error["msg"]
+                      : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -399,10 +413,12 @@ export class TextsButtonsSetBlockComponent
       error => {
         this.isSending = false;
         this.toastr.error(
-          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+          error.error && error.error["msg"] 
+            ? error.error["msg"]
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
           "",
           { positionClass: "toast-bottom-right" }
-        );
+        );       
         console.error(error);
       }
     );
