@@ -24,7 +24,7 @@ const reunionAprobacionSet = {
     settings: {
         dateOrtext: {
             text: 'Fecha de la reunión:',
-            fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired },
+            fields: [{ label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         selectGeneralStatus:
         {

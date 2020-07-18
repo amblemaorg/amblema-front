@@ -7,7 +7,7 @@
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span [class.display-date]="settings.dateOrtext.date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"></span>
                     <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
-                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields">
+                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields && settings.dateOrtext.fields.length > 0">
                         <input
                             #inputDate
                             type="date" 
