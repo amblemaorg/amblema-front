@@ -31,7 +31,12 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     isInstanciated: boolean;
     loadedData: boolean;
 
+    // generic activity content variables
     g_a_text: any;
+    g_a_date: any;
+    g_a_download: any;
+    g_a_video: any;
+    g_a_addMT: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -99,13 +104,65 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     updateDataToBlocks() {
-        if (this.g_a_text) this.setBlockData("genericActivityText", { isGenericActivity: true, ...this.g_a_text } );
+        let genericActivityObj = { isGenericActivity: true };
+        if (this.g_a_text) genericActivityObj = { ...genericActivityObj, ...this.g_a_text };
+        if (this.g_a_date) genericActivityObj = { ...genericActivityObj, ...this.g_a_date };
+        if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
+        if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
+        if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
+        this.setBlockData("genericActivityText", genericActivityObj );
     }
 
     setGenericActivityData(data: GenericActivity) {
-        this.g_a_text = data.hasText 
+        this.g_a_text = data.hasText
             ? {                
                 subtitles: [{ text: data.text }]
+            } : null;
+        this.g_a_date = data.hasDate
+            ? {
+                dateOrtext: {
+                    text: "Fecha de la actividad:",
+                    ...[data.date ? true : false].reduce((dateOtherData,isThereDate) => {
+                        dateOtherData[isThereDate ? "date" : "fields"] = isThereDate 
+                        ? data.date 
+                        : [{ 
+                            placeholder: "Fecha de la actividad", 
+                            fullwidth: false, 
+                            type: "date",
+                            validations: { 
+                                required: true, 
+                            }, 
+                          }];
+
+                        return dateOtherData;
+                    },{})
+                }
+            } : null;
+        this.g_a_download = data.hasFile
+            ? {
+                download: {
+                    url: data.file.url,
+                    name: data.file.name,
+                }
+            } : null;
+        this.g_a_video = data.hasVideo
+            ? {
+                video: {
+                    url: data.video.url,
+                    name: data.video.name,
+                }
+            } : null;
+        this.g_a_addMT = data.hasText && (data.hasDate || data.hasFile)
+            ? {
+                addMT: {                    
+                    ...Object.keys(data).reduce((items,checker) => {
+                        if (checker.includes("has")) {
+                            const name = checker === "hasText" ? "subtitles" : null; 
+                            if (name) items[name] = true;
+                        }
+                        return items;
+                    },{}),
+                }
             } : null;
     }
 

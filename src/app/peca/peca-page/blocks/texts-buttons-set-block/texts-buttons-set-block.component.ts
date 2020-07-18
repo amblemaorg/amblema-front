@@ -8,6 +8,7 @@ import { Subscription, Observable } from "rxjs";
 import { Select, Store } from "@ngxs/store";
 import { PecaState } from '../../../../store/states/peca/peca.state';
 import { textsAndButtonsAdaptBody } from './tb-body-adapter';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'buttons-set-block',
@@ -50,6 +51,9 @@ export class TextsButtonsSetBlockComponent
       aligning: string; // 'center' for center aligning, 'left' otherwise
       text: string;
     };
+    addMT?: { // to set margin top to fields
+      subtitles?: boolean;
+    };
     subtitles: {
       title?: string; // subtitle
       text: string; // paragraph
@@ -80,6 +84,10 @@ export class TextsButtonsSetBlockComponent
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
     isDeleting?: boolean; // SI option on delete mode modal
+    video?: { // for generic activity view
+      url?: string;
+      name?: string;
+    }
   };
 
   pecaId: string;
@@ -95,11 +103,16 @@ export class TextsButtonsSetBlockComponent
 
   sleepSend: boolean; // disables actions button meanwhile peca content gets updated
 
+  showThisVideo: boolean;  
+  timesVideoSourceCalled:number = 0;
+  activity_video: any;
+
   constructor(
     private globals: GlobalService, 
     private fetcher: HttpFetcherService,
     private store: Store,
     private toastr: ToastrService,
+    private embedService: EmbedVideoService
   ) {
     this.type = 'presentational';
     this.component = 'buttons';
@@ -137,6 +150,9 @@ export class TextsButtonsSetBlockComponent
     };
     this.subscription.unsubscribe();
     this.sleepSend = null;
+    this.showThisVideo = false;  
+    this.timesVideoSourceCalled = 0;
+    this.activity_video = null;
   }
 
   setSettings(settings: any) {
@@ -145,18 +161,25 @@ export class TextsButtonsSetBlockComponent
 
   setData(data: any) {
     if (data["isGenericActivity"]) {
-      if (data["subtitles"]) this.settings.subtitles = data.subtitles;
+      this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
+      this.settings.download = data["download"] ? data.download : null;
+      this.settings.subtitles = data["subtitles"] ? data.subtitles : null;
+      this.settings.addMT = data["addMT"] ? data.addMT : null;
+
+      if (data["video"]) {        
+        this.resetTimesLoadedVideo();
+        this.videoShower(data.video);
+      } else {
+        this.settings.video = null;
+        this.showThisVideo = false;
+        this.activity_video = null;
+      }
     } 
     else {
       if (data["status"]) this.settings.status.subText = data.status.subText;     
     }    
   }
 
-  // setFetcherUrls({ delete: deleteFn }) {
-  //   this.settings.fetcherUrls = {
-  //     delete: deleteFn,
-  //   };
-  // }
   setFetcherUrls({ put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
       put,
@@ -423,4 +446,36 @@ export class TextsButtonsSetBlockComponent
       }
     );
   }
+
+  // For videos  
+  resetTimesLoadedVideo() {
+    this.timesVideoSourceCalled = 0;
+  }
+
+  getVideo(url) {
+    if (
+      this.showThisVideo && 
+      this.timesVideoSourceCalled < 10 &&
+      !this.activity_video 
+    ) {
+      this.activity_video = this.embedService.embed(url);
+      if (this.activity_video) this.timesVideoSourceCalled++;
+      return this.activity_video;
+    }
+    else if (this.activity_video) 
+      return this.activity_video;
+  }
+
+  videoShower(video) {
+    this.showThisVideo = false;
+    this.settings.video = null;
+    if (video && video.url) {
+      setTimeout(() => {
+        this.showThisVideo = true;
+        this.settings.video = video;
+        this.timesVideoSourceCalled = 0;
+      });
+    }
+  }
+
 }

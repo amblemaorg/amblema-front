@@ -2,7 +2,11 @@ const genericActivityText = {
     component: 'textsbuttons',
     name: 'genericActivityText',
     settings: {
+        dateOrtext: {},
+        download: {},
         subtitles: [],
+        video: {},
+        addMT: {},
     }
 }
 
