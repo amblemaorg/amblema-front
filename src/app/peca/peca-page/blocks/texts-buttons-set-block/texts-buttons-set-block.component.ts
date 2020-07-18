@@ -30,7 +30,7 @@ export class TextsButtonsSetBlockComponent
     dateOrtext: {
       text: string;
       date: string;
-      fields: string[];
+      fields: any[];
     };
     selectStatus: {
       text: string;
