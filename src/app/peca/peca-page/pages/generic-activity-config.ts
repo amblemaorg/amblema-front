@@ -1,12 +1,24 @@
-const genericActivityText = {
+const genericActivityFields = {
     component: 'textsbuttons',
-    name: 'genericActivityText',
+    name: 'genericActivityFields',
     settings: {
         dateOrtext: {},
         download: {},
         subtitles: [],
         video: {},
         addMT: {},
+    }
+}
+
+const genericActivityChecklist = {
+    component: 'checkList',
+    name: 'genericActivityChecklist',
+    settings: {
+        infoContainer: [
+            {   
+                isFromGenericActivity: true,                
+            }
+        ]
     }
 }
 
@@ -22,7 +34,8 @@ export const GENERIC_ACTIVITY_CONFIG = {
                 items: [
                     {     
                         childBlocks: [
-                            { ...genericActivityText },                            
+                            { ...genericActivityFields },
+                            { ...genericActivityChecklist },                         
                         ]
                     },
                 ],

@@ -51,6 +51,10 @@
     .style-btn {
       text-align: right;
       margin-top: 2rem;
+
+      &.no-margin {
+        margin-top: 0;
+      }
     }
     a.btn,
     button.btn {
@@ -70,6 +74,40 @@
 
   .style-checklist {
     padding-left: 1.5rem;
+
+    nb-checkbox.status-basic {
+      .custom-checkbox {
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.16);
+          border-color: $blue;
+        }
+      }
+
+      .native-input:enabled:focus + .custom-checkbox.checked {
+        background-color: $blue;
+        border-color: $blue;
+      }
+    }
+
+    &.in-generic-activity {
+      display: flex;
+      flex-wrap: wrap;
+
+      h6 {
+        flex: 100%;
+      }
+
+      .check-btn {
+        flex: 100%;
+
+        @media screen and (orientation: portrait) and (min-width: 480px) {
+          flex: 50%;
+        }
+        @include mediabreak(small,landscape,true,640px) {
+          flex: 50%;
+        }
+      }
+    }
   }
 
   &.style-principal {

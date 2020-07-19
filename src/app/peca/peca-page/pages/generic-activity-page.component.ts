@@ -37,6 +37,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_download: any;
     g_a_video: any;
     g_a_addMT: any;
+    g_a_checklist: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -110,15 +111,20 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
         if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
         if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
-        this.setBlockData("genericActivityText", genericActivityObj );
+        this.setBlockData("genericActivityFields", genericActivityObj );
+        this.setBlockData("genericActivityChecklist", this.g_a_checklist);
     }
 
     setGenericActivityData(data: GenericActivity) {
-        this.g_a_text = data.hasText
+        // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
+        // "status": "str (1=activo 2=inactivo)"
+        const at = "2"; // approval type
+
+        this.g_a_text = data.hasText && data.approvalType !== at
             ? {                
                 subtitles: [{ text: data.text }]
             } : null;
-        this.g_a_date = data.hasDate
+        this.g_a_date = data.hasDate && data.approvalType !== at
             ? {
                 dateOrtext: {
                     text: "Fecha de la actividad:",
@@ -138,21 +144,23 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     },{})
                 }
             } : null;
-        this.g_a_download = data.hasFile
+        this.g_a_download = data.hasFile && data.approvalType !== at
             ? {
                 download: {
                     url: data.file.url,
                     name: data.file.name,
                 }
             } : null;
-        this.g_a_video = data.hasVideo
+        this.g_a_video = data.hasVideo && data.approvalType !== at
             ? {
                 video: {
                     url: data.video.url,
                     name: data.video.name,
                 }
             } : null;
-        this.g_a_addMT = data.hasText && (data.hasDate || data.hasFile)
+        this.g_a_addMT = data.hasText && 
+            (data.hasDate || data.hasFile) && 
+            data.approvalType !== at
             ? {
                 addMT: {                    
                     ...Object.keys(data).reduce((items,checker) => {
@@ -164,6 +172,19 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     },{}),
                 }
             } : null;
+        
+        // CHECKLIST
+        this.g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
+                checklistObj["isGenericActivity"] = true;
+                if (hasChecklist) {
+                    checklistObj = {
+                        ...checklistObj,
+                        title: 'Los checklists',
+                        checkList: data.checklist
+                    }
+                }
+                return checklistObj;
+            },{});
     }
 
     ngAfterViewInit(): void {

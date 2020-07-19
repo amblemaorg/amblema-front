@@ -72,8 +72,8 @@ const propuestaAmblema = {
             type: 3,
             name: 'Enviar',
         }],
-        upload: {
-            url: null,
+        uploaddown: {
+            url: "#",
             name: 'Adjuntar archivo',
             file: null,
         },

@@ -7,7 +7,7 @@ const datosOlimpiadas = {
             text: 'Fecha de la prueba:',
             date: '12-05-2020',
         },
-        upload: {
+        uploaddown: {
             url: '#',
             name: 'Descargar archivo',
         },

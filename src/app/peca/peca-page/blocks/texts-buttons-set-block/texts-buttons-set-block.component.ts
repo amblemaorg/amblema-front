@@ -65,6 +65,7 @@ export class TextsButtonsSetBlockComponent
       name: string; // text in the button
     }[];
     upload: any;
+    uploaddown?: any;
     download: any;
     btnGeneral: any;
     inputAndBtns: {
