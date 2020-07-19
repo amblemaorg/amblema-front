@@ -12,28 +12,29 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
   settings: {
     infoContainer:{
     principal:{
-      tema: string,
-      objetivo: string[],
-      estrategia: string[],
-      contenido: string[],
-    },
+      tema: string;
+      objetivo: string[];
+      estrategia: string[];
+      contenido: string[];
+    };
       datosNivel: {
-        nivel: string,
-        week: string,
-        time: string,
+        nivel: string;
+        week: string;
+        time: string;
         tecnica:string[];
         recurso:string[];
         evaluacion:string[];
-      },
-      title: string,
+      };
+      title: string;
+      isFromGenericActivity?: boolean;
       checkList: {
-        description: string,
-      }[],
-      material: string,
-      button: any,
-      line: boolean,
+        name: string;
+      }[];
+      material: string;
+      button: any;
+      line: boolean;
       subtitle: string;
-    }[],
+    }[];
   };
 
   constructor() {
@@ -46,6 +47,13 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
   setSettings(settings: any) {
     this.settings = { ...settings };
+  }
+
+  setData(data: any) {
+    if (data["isGenericActivity"]) {
+      this.settings.infoContainer[0].title = data["title"] ? data.title : null;
+      this.settings.infoContainer[0].checkList = data["checkList"] ? data.checkList : null;
+    }
   }
 
 }

@@ -5,16 +5,16 @@ const checkList = {
             {
                 title: 'Convención anual',
                 checkList: [
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
-                    { description: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
+                    { name: 'Lorem, ipsum dolor.' },
                 ],
                 button: {
                     name: 'Guardar'
