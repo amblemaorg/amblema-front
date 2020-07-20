@@ -665,11 +665,11 @@ textarea.e-input::selection,
 }
 
 .nb-theme-default * {
-  font-family: "Montserrat";
+  font-family: "Montserrat" !important;
 }
 
-@media (max-width:768px) {
-  .e-popup-header{
+@media (max-width: 768px) {
+  .e-popup-header {
     margin-top: 100px !important;
-}
+  }
 }

@@ -51,7 +51,7 @@ export class TextsButtonsSetBlockComponent
       text: string;
     };
     subtitles: {
-      title: string; // subtitle
+      title?: string; // subtitle
       text: string; // paragraph
     };
     // }[];
@@ -147,6 +147,12 @@ export class TextsButtonsSetBlockComponent
     if (data["status"]) this.settings.status.subText = data.status.subText;
     if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
     if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
+    if (data["isGenericActivity"]) {
+      if (data["subtitles"]) this.settings.subtitles = data.subtitles;
+    } 
+    else {
+      if (data["status"]) this.settings.status.subText = data.status.subText;     
+    }    
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
@@ -289,7 +295,7 @@ export class TextsButtonsSetBlockComponent
              'url: ', url
             );
 
-            /* this.fetcher[method](url).subscribe((data) => {
+             this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();
 
@@ -304,12 +310,18 @@ export class TextsButtonsSetBlockComponent
             }, (error) => {
               this.isSending = false;
               this.toastr.error(
-                "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                error.error && error.error["msg"] 
+                  ? (
+                      error.error["entity"] && error.error["entity"].length > 0 
+                        ? `${error.error["msg"]}: ${error.error["entity"]}` 
+                        : error.error["msg"]
+                    )
+                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
                 "",
                 { positionClass: "toast-bottom-right" }
               );
               console.error(error);
-            }); */
+            }); 
           }          
         }
         break;
@@ -356,7 +368,15 @@ export class TextsButtonsSetBlockComponent
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
-              "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              (error.error && error.error["name"] && error.error["name"][0])
+                ? error.error["name"][0].msg 
+                : error.error && error.error["email"] && error.error["email"][0]
+                  ? error.error["email"][0].msg 
+                  : error.error && error.error["cardId"] && error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg 
+                    : error.error && error.error["msg"] 
+                      ? error.error["msg"]
+                      : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -396,10 +416,12 @@ export class TextsButtonsSetBlockComponent
       error => {
         this.isSending = false;
         this.toastr.error(
-          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+          error.error && error.error["msg"] 
+            ? error.error["msg"]
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
           "",
           { positionClass: "toast-bottom-right" }
-        );
+        );       
         console.error(error);
       }
     );

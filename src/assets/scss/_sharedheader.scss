@@ -1,0 +1,65 @@
+@import './responsive';
+@import './variables';
+
+@mixin shared-user-image-confs() {
+    width: 3rem !important;
+    height: 3rem !important;
+    object-fit: cover;
+
+    @include mediabreak(small,portrait) { 
+        width: 3rem !important;
+        height: 3rem !important;
+        // margin-top: -0.5rem;
+        margin-right: 1rem !important;
+    }
+    @include mediabreak(small,landscape,true,640px) { 
+        width: 2.75rem !important;
+        height: 2.75rem !important;
+        // margin-top: -0.25rem;
+    }
+    @include mediabreak(large,portrait) { 
+        width: 3rem !important;
+        height: 3rem !important;
+        margin-right: 1.25rem !important;
+    }
+    @include mediabreak(larger,landscape) { 
+        width: 3.3rem !important;
+        height: 3.3rem !important;
+        margin-right: 0.85rem !important;
+        // margin-top: 0rem;
+    }
+    // @include mediabreak(larger,landscape,true,1900px) { 
+    //     width: 4rem !important;
+    //     height: 4rem !important;
+    // }
+}
+
+@mixin shared-user-name-confs() {
+    font-size: large !important;
+    width: auto;
+    color: $green;
+    display: none;    
+
+    @include mediabreak(small,portrait) { font-size: large !important; line-height: 1.2; display: inline-block; }
+    @include mediabreak(small,landscape,true,640px) { display: inline-block; line-height: 1.2; }
+    @include mediabreak(large,portrait) { font-size: x-large !important; }
+    // Desktop
+    @include mediabreak(large,landscape) { font-size: 1.15rem !important; line-height: 1.25rem; }
+    @include mediabreak(larger,landscape,true,1600px) { font-size: 1.25rem !important; line-height: 1; }
+    @include mediabreak(larger,landscape,true,1900px) {
+        font-size: 1.36rem !important;
+        line-height: 1 !important;
+    }
+}
+
+@mixin shared-main-name() {
+    font-size: 1.35rem;
+    cursor: default;
+
+    @include mediabreak(small,portrait) { font-size: 1.6rem; }
+    @include mediabreak(large,portrait) { font-size: 2rem; }
+    // desktop 
+    @include mediabreak(larger,landscape) { font-size: 1.65rem; }
+    @include mediabreak(larger,landscape,true,1600px) { font-size: 1.8rem; }
+    @include mediabreak(larger,landscape,true,1900px) { font-size: 2rem; }
+}

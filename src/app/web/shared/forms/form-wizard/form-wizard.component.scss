@@ -248,11 +248,16 @@
                 min-height: 20rem;
                 height: 45vh;
               }
+
+              .map-problem {
+                color: $blue;
+              }
             }
           }
         }
 
-        .google-map-opener, #google-map-modal strong {
+        .google-map-opener, #google-map-modal strong,
+        #google-map-modal .map-problem {
           font-size: 4vw;
           @include breakpoint(medium) {
             font-size: 2vw;
