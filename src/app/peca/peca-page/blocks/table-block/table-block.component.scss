@@ -17,6 +17,15 @@ $table-border-color: 1px solid $blue;
     .estilo-total{
         text-align: right;
         margin: 0 2.5rem 2rem 0;
+        @media (max-width:768px) {
+            text-align: left;
+        }
+    }
+    .estilo-total h5{
+        font-size: 1rem;
+    }
+    .nb-theme-default nb-tabset nb-tab{
+        padding: 1rem 2rem !important;
     }
     .nb-theme-default ng2-smart-table table tr th, .nb-theme-default ng2-smart-table table tr th a{
         font-family: "Montserrat";
@@ -37,7 +46,7 @@ $table-border-color: 1px solid $blue;
         padding: 0.375rem 1rem;
     }
     .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th {
-        padding: 0.875rem 1.25rem 0;
+        padding: 0.875rem 2rem 0;
         text-align: left;
     }
     .nb-theme-default ng2-smart-table .ng2-smart-actions {

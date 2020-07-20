@@ -14,9 +14,15 @@ import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { ChartService } from "src/app/services/web/chart.service";
 import { GlobalService } from "src/app/services/global.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { environment } from "src/environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { DatePipe } from "@angular/common"
 import { Subscription, fromEvent } from "rxjs";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
+import { ChartsSwitcherComponent } from 'src/app/web/shared/charts-switcher/charts-switcher.component';
 
 @Component({
   selector: "app-school-detail",
@@ -32,6 +38,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("otherSchoolsCarousel", { static: true }) otherSchoolsCarousel: OwlCarousel;
   @ViewChild("charts", { static: false }) charts: ElementRef;
   @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
+  @ViewChild('chartSwitcher', { static: false }) chartSwitcher: ChartsSwitcherComponent;
   scrollSubscription: Subscription;
   routerSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
@@ -76,10 +83,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     loop: false,
     responsive: {
       0: {
-        items: 2,
+        items: 1,
       },
       [768]: {
-        items: 5,
+        items: 3,
       },
     },
   };
@@ -114,6 +121,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activitiesOptions: OwlOptions = {
     ...this.carouselOptions,
+    loop: false,
     responsive: {
       0: {
         items: this.landscape ? 3 : 1,
@@ -144,30 +152,62 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   };
 
-  school;
+  school: any = {
+    name: "",
+    sponsor: "",
+    direction: "",
+    staff: "",
+    coordinator: "",
+    enrollment: "",
+    images: [],
+    mathOlympics: {
+      enrolled: 0,
+      classified: 0,
+      goldMedal: 0,
+      silverMedal: 0,
+      bronzeMedal: 0,
+    },
+    activities: {
+      [this.ACTIVITIES.WITH_TEACHERS]: [],
+      [this.ACTIVITIES.SPECIALS]: []
+    },
+    activitiesSlider: [],
+    testimonials: [],
+    nextActivities: [],
+    otherSchools: [],
+    charts: []
+  };
+
+  SCHOOLS_PATH = "schoolspage";
+  schoolService: WebContentService;
   activeChartIndex: number = 0;
   isBrowser: boolean;
-
+  slug: string;
+  pipe = new DatePipe('en-US');
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private globalService: GlobalService,
-    private schoolService: SchoolService,
+    private staticSchoolService: SchoolService,
     private chartService: ChartService,
     private zone: NgZone,
-    private store: Store
+    private store: Store,
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
     this.route.paramMap.subscribe((params) => {
-      this.getSchoolBySlug(params.get("schoolSlug"));
+      this.slug = params.get("schoolSlug");
+      this.setApiService(params.get("schoolSlug"));
+      this.getSchoolDetail();
     });
 
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.renavigateToTop();
         this.reinitCarousels();
+        this.chartSwitcher.switchChart(1);
       }
     });
   }
@@ -186,14 +226,55 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.routerSubscription.unsubscribe();
     }
   }
-
-  getSchoolBySlug(slug) {
-    this.schoolService.getSchoolBySlugJSON(slug).subscribe((data) => {
-      // console.log(data)
-      this.school = data;
-      this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
-        data.charts
-      );
+  
+  getSchoolDetail() {
+    
+    this.schoolService.getWebContent().subscribe((data) => {
+      this.school = {
+        name: data.name,
+        sponsor: data.sponsor,
+        direction: data.address,
+        staff: data.nAdministrativeStaff,
+        coordinator: data.coordinator,
+        enrollment: data.nStudents,
+        images: data.slider.map((slide) => { return slide.image}),
+        mathOlympics: {
+          enrolled: data.olympicsSummary.inscribed,
+          classified: data.olympicsSummary.classified,
+          goldMedal: data.olympicsSummary.medalsGold,
+          silverMedal: data.olympicsSummary.medalsSilver,
+          bronzeMedal: data.olympicsSummary.medalsBronze,
+        },
+        activities: {
+          [this.ACTIVITIES.WITH_TEACHERS] : [],
+          [this.ACTIVITIES.SPECIALS]: data.activities
+        },
+        activitiesSlider: data.activitiesSlider,
+        testimonials: data.teachersTestimonials.testimonials.map((testimonial) => {
+          testimonial.function = testimonial.position;
+          return testimonial;
+        }),
+        nextActivities: data.nextActivities.map((activity) => {
+          activity.title = activity.name;
+          activity.date = this.pipe.transform(Date.parse(activity.date), 'd/M/y');
+          return activity;
+        }),
+        otherSchools: data.nearbySchools
+      };
+      
+      this.staticSchoolService.getChartsTemplateJSON().subscribe((charts) => {
+        this.school.charts = charts.map((chart) => {
+          chart.data = data.diagnostics[chart.id];
+          return chart;
+        });
+        this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
+          this.school.charts
+        );
+        
+      });
+      this.reinitCarousels();
+      this.chartSwitcher && this.chartSwitcher.switchChart(0);
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 
@@ -255,8 +336,20 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setActiveActivity(index: number) {
-    this.activeActivityIndex = index;
-    this.activityImageCarousel.reInit();
+    try {
+      this.activeActivityIndex = index;
+      //this.activityImageCarousel.reInit();  
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+
+  setApiService(slug) {
+    const service = new ApiWebContentService(this.http);
+    service.setBaseUrl(environment.baseUrl);
+    service.setResourcePath(`${this.SCHOOLS_PATH}/${slug}`);
+    this.schoolService = service;
   }
 
   @HostListener("window:resize", [""])
@@ -279,7 +372,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reinitCarousels() {
     this.activitiesIndexCarousel.reInit();
-    this.activityImageCarousel.reInit();
+    //this.activityImageCarousel.reInit();
     this.activitiesCarousel.reInit();
     this.otherSchoolsCarousel.reInit();
   }

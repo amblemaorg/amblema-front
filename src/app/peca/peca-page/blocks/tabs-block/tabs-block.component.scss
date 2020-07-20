@@ -5,7 +5,7 @@
     nb-tabset {
       @media (max-width: 768px) {
         .tabs-padding-escuela {
-          padding: 1.5rem 0rem;
+          padding: 1.5rem 0rem !important;
         }
       }
       .tab-link {
@@ -29,7 +29,7 @@
 
       @media (max-width: 576px) {
         .tabset {
-          overflow: auto;
+          overflow: inherit;
           justify-content: start !important;
           li {
             margin: 0 1.5rem;
