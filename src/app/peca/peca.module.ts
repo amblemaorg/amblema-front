@@ -62,6 +62,7 @@ import { ModalBlockComponent } from './peca-page/blocks/modal-block/modal-block.
 import { NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
 import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedule-block.component';
 import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphics-block.component';
+import { GenericActivityBlockComponent } from './peca-page/blocks/generic-activity-block/generic-activity-block.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
     ScheduleBlockComponent,
     ModalBlockComponent,
     GraphicsBlockComponent,
+    GenericActivityBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -139,6 +141,7 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
     ScheduleBlockComponent,
     ModalBlockComponent,
     GraphicsBlockComponent,
+    GenericActivityBlockComponent,
   ],
   providers: [{ provide: NbTokenStorage, useClass: NbTokenLocalStorage }],
 })

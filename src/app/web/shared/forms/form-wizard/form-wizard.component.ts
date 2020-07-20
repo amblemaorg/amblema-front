@@ -44,6 +44,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   isBrowser;
 
   // MAPA------------------------------------------------------
+  googleLoaded: boolean;
   map: any;
   geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
@@ -67,14 +68,25 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.map = null;
       this.currentMarker = null;
 
-      if ( !isNullOrUndefined(google) ) {
-        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
-        const mapOps: google.maps.MapOptions = {
-          center: this.coordinates,
-          zoom: 7,      
-        };
-        this.mapOptions = mapOps;
-      }      
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          this.mapSettings(this.lat, this.lng,7);
+        }        
+      };
+      let interval = null;
+
+      try {                
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {      
+          try {            
+            initMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
     }
   }
 
@@ -93,13 +105,29 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.subscribeDependentFields();
 
     // MAP -----------------------------------------------------------------
-    if (this.isBrowser && this.isSchoolForm) {
-      if ( !isNullOrUndefined(google) ) {
-        setTimeout(() => {
-          if (this.googleMap)
-            this.mapInitializer();
-        });  
-      }             
+    if (this.isBrowser && this.isSchoolForm) {    
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          setTimeout(() => {
+            if (this.googleMap)
+              this.mapInitializer();            
+          });
+        }        
+      };
+      let interval = null;
+
+      try {                
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {      
+          try {            
+            initMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
     }
     //----------------------------------------------------------------------
 
@@ -134,8 +162,26 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         } 
         else {
           if (this.googleMap) {
-            this.mapSettings(this.lat,this.lng,7);
-            this.mapInitializer(); 
+            const initMap = () => {
+              if (google) {
+                  clearInterval(interval);
+                  this.mapSettings(this.lat,this.lng,7);
+                  this.mapInitializer(); 
+              }        
+            };
+            let interval = null;
+            
+            try {                
+                initMap();
+            } catch (error) {
+                interval = setInterval(()=> {      
+                    try {            
+                    initMap();
+                    } catch (error) {
+                    // TODO --
+                    }
+                }, 2000); 
+            }
           }          
         }
       });
@@ -152,8 +198,9 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
-  mapSettings(lat,lng,zoom) {
-    if ( !isNullOrUndefined(google) ) {
+  mapSettings(lat,lng,zoom) {    
+    if (google) {
+      this.googleLoaded = true;
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
@@ -206,43 +253,58 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
   mapPositioner(state: string, county: string) {
     // google maps geocoding
-    if ( !isNullOrUndefined(google) ) {
+    const initMap = () => {
+      if (google) {
+          clearInterval(interval);
 
-      this.geocoder.geocode({ componentRestrictions: {
-        country: 'Venezuela',
-        administrativeArea: state,
-        locality: county
-      } }, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results.length > 0)
-            this.mapSettings(
-              results[0].geometry.location.lat(),
-              results[0].geometry.location.lng(),
-              11
-            );
-          else           
-            this.mapSettings(this.lat, this.lng, 7);
-        } 
-        else {
-          switch (status) {
-            case 'ZERO_RESULTS':
-              console.log('None result found, showing default map options');
-              break;
-            case 'OVER_QUERY_LIMIT':
-              console.error('You are over your quota');
-              break;
-            case 'REQUEST_DENIED':
-              console.error('Your site is unavailable to use geocoder');
-              break;
-            default:
-              console.error('Unknown server error');
-              break;
-          }
-          this.mapSettings(this.lat,this.lng,7);          
-        }
-        this.mapInitializer();
-      });
-
+          this.geocoder.geocode({ componentRestrictions: {
+            country: 'Venezuela',
+            administrativeArea: state,
+            locality: county
+          } }, (results, status) => {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results.length > 0)
+                this.mapSettings(
+                  results[0].geometry.location.lat(),
+                  results[0].geometry.location.lng(),
+                  11
+                );
+              else           
+                this.mapSettings(this.lat, this.lng, 7);
+            } 
+            else {
+              switch (status) {
+                case 'ZERO_RESULTS':
+                  console.log('None result found, showing default map options');
+                  break;
+                case 'OVER_QUERY_LIMIT':
+                  console.error('You are over your quota');
+                  break;
+                case 'REQUEST_DENIED':
+                  console.error('Your site is unavailable to use geocoder');
+                  break;
+                default:
+                  console.error('Unknown server error');
+                  break;
+              }
+              this.mapSettings(this.lat,this.lng,7);          
+            }
+            this.mapInitializer();
+          });
+      }        
+    };
+    let interval = null;
+    
+    try {                
+        initMap();
+    } catch (error) {
+        interval = setInterval(()=> {      
+            try {            
+            initMap();
+            } catch (error) {
+            // TODO --
+            }
+        }, 2000); 
     }
     
     // OpenStreetMap
@@ -519,11 +581,32 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public clear(): void {
     if (this.isBrowser && this.isSchoolForm) {
       if (this.currentMarker) this.currentMarker.setMap(null);
-      if ( !isNullOrUndefined(google) ) {
-        setTimeout(() => {
-          if (this.googleMap)
-            this.mapInitializer();
-        });  
+      
+      const reinitMap = () => {
+        if (google) {
+            clearInterval(interval);
+            setTimeout(() => {
+              if (this.googleMap){
+                if (this.currentMarker) this.currentMarker.setMap(null);
+                this.currentMarker = null;  
+                this.mapSettings(this.lat,this.lng,7);
+                this.mapInitializer();
+              }            
+            });  
+        }        
+      };
+      let interval = null;
+      
+      try {                
+          reinitMap();
+      } catch (error) {
+          interval = setInterval(()=> {      
+              try {            
+              reinitMap();
+              } catch (error) {
+              // TODO --
+              }
+          }, 2000); 
       }             
     }       
     this.formWizard.map((wizardFormStep: FormGroup) => {

@@ -1,10 +1,8 @@
-const pageUnderConstructionText = {
+const genericActivityText = {
     component: 'textsbuttons',
+    name: 'genericActivityText',
     settings: {
-        title: {
-            aligning: 'left',
-            text: 'Página de actividad genérica en construcción',
-        },
+        subtitles: [],
     }
 }
 
@@ -14,16 +12,17 @@ export const GENERIC_ACTIVITY_CONFIG = {
     },
     blocks: [
         {
-            component: 'profiles',
+            component: 'genericactivity',
+            name: 'genericActivityConfig',
             settings: {                
                 items: [
                     {     
                         childBlocks: [
-                            { ...pageUnderConstructionText },                            
+                            { ...genericActivityText },                            
                         ]
                     },
                 ],
             },
         },
-    ]
-}
+    ],
+};

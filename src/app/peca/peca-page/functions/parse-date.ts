@@ -6,5 +6,7 @@ export function parseDate(dateSrc: Date) {
   let correctDate = numbers.includes(dateSrc.getDate())
     ? `0${dateSrc.getDate()}`
     : dateSrc.getDate().toString();
-  return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+  //return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
+  return `${correctDate}-${correctMonth}-${dateSrc.getFullYear()}`;
+
 }
