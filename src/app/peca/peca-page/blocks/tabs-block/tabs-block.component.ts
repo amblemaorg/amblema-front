@@ -42,7 +42,7 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
     this.component = 'tabs';
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -65,7 +65,7 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
           settings = { settings: block.settings, factory: this.factory };
         if (block.component == 'accordion')
           settings = { settings: block.settings, factory: this.factory };
-          if (block.component == 'profiles')
+        if (block.component == 'profiles')
           settings = { settings: block.settings, factory: this.factory };
 
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
