@@ -1,42 +1,52 @@
 // Animations
 .growth-animation {
-  transition: 2s ease height !important;
-  &.animation-init {
-    height: 0 !important;
+  @include breakpoint(large) {
+    transition: 2s ease height !important;
+    &.animation-init {
+      height: 0 !important;
+    }
   }
 }
 
 .slide-bottom-animation {
-  transition: 2s ease bottom !important;
-  &.animation-init {
-    bottom: -100vh !important;
+  @include breakpoint(large) {
+    transition: 2s ease bottom !important;
+    &.animation-init {
+      bottom: -100vh !important;
+    }
   }
 }
 
 .slide-right-animation {
-  position: relative !important;
-  transition: 2s ease right, 2s ease left !important;
-  &.animation-init {
-    right: -100vw !important;
-    left: 100vw !important;
+  @include breakpoint(large) {
+    position: relative !important;
+    transition: 2s ease right, 2s ease left !important;
+    &.animation-init {
+      right: -100vw !important;
+      left: 100vw !important;
+    }
   }
 }
 
 .slide-left-animation {
-  position: relative;
-  transition: 2s ease left, 2s ease right !important;
-  &.animation-init {
-    left: -100vw !important;
-    right: 100vw !important;
+  @include breakpoint(large) {
+    position: relative;
+    transition: 2s ease left, 2s ease right !important;
+    &.animation-init {
+      left: -100vw !important;
+      right: 100vw !important;
+    }
   }
 }
 
 .fade-in-animation {
-  transition: 2s ease opacity !important;
-  &.animation-init {
-    opacity: 0 !important;
-  }
-  &.animation-finish {
-    opacity: 1 !important;
+  @include breakpoint(large) {
+    transition: 2s ease opacity !important;
+    &.animation-init {
+      opacity: 0 !important;
+    }
+    &.animation-finish {
+      opacity: 1 !important;
+    }
   }
 }
