@@ -68,10 +68,39 @@ export class AccordionBlockComponent
   setData(data: any) {
     if (data["topics1"]) {
       for (let i = 0; i < data.topics1.length; i++) {
+        //Nombres de los acordeones
         this.settings.items[i].title = data.topics1[i].name;
+        //Temas
+        this.settings.items[
+          i
+        ].childBlocks[0].settings.infoContainer[0].principal[0].tema =
+          data.topics1[i].name;
+
+        //Objetivos
+        for (let j = 0; j < data.topics1[i].objectives.length; j++) {
+          this.settings.items[
+            i
+          ].childBlocks[0].settings.infoContainer[0].principal[0].objetivo[
+            j
+          ].conObjetivo = data.topics1[i].objectives[j];
+        }
+        //Estrategias
+        for (let k = 0; k < data.topics1[i].strategies.length; k++) {
+          this.settings.items[
+            i
+          ].childBlocks[0].settings.infoContainer[0].principal[0].estrategia[
+            k
+          ].contEstrategia = data.topics1[i].strategies[k];
+        }
+        //Contenidos
+        for (let l = 0; l < data.topics1[i].contents.length; l++) {
+          this.settings.items[
+            i
+          ].childBlocks[0].settings.infoContainer[0].principal[0].contenido[
+            l
+          ].contContenido = data.topics1[i].contents[l];
+        }
       }
-    //  console.log("entro", data);
-    //  console.log("entrox2", this.settings.items);
     } else if (data["topics2"]) {
       for (let i = 0; i < data.topics2.length; i++) {
         this.settings.items[i].title = data.topics2[i].name;

@@ -70,15 +70,12 @@ export class ChecklistBlockComponent
   }
 
   setData(data: any) {
-    //console.log("sadsdsds", this.prueba)
     if (data["checkList"]) {
       this.prueba = data.checkList[0].description;
       this.flag = true;
       for (let i = 0; i < this.prueba.length; i++) {
         this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
           data.checkList[0].description[i].name;
-        /* console.log("no se", this.settings.infoContainer[0].checkList[i])
-      console.log("checkkk",data.checkList[0]); */
       }
     }
     else {
