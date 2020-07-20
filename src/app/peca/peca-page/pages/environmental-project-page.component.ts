@@ -25,10 +25,16 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   enviromentalInfo1lapse: any;
   enviromentalInfo2lapse: any;
   enviromentalInfo3lapse: any;
+  objectiveLapse1Data: any;
+  objectiveLapse2Data: any;
+  objectiveLapse3Data: any;
   isInstanciated: boolean;
   topics1lapse = [];
   topics2lapse = [];
   topics3lapse = [];
+  objetiveLapse1= "";
+  objetiveLapse2= "";
+  objetiveLapse3= "";
   loadedData: boolean;
   UrlLapse = "";
   constructor(
@@ -61,6 +67,10 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
             this.topics1lapse = data.lapse1.topics;
             this.topics2lapse = data.lapse2.topics;
             this.topics3lapse = data.lapse3.topics;
+            this.objetiveLapse1=data.lapse1.generalObjective;
+            this.objetiveLapse2=data.lapse2.generalObjective;
+            this.objetiveLapse3=data.lapse3.generalObjective;
+
           /*   console.log(this.topics1lapse);
             console.log(this.topics2lapse);
             console.log(this.topics3lapse); */
@@ -78,8 +88,9 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   }
 
   setEnviromentalProjectData() {
+
     this.enviromentalInfo1lapse = {
-      topics1: this.topics1lapse,
+    topics1: this.topics1lapse,
 
     };
     this.enviromentalInfo2lapse = {
@@ -88,12 +99,26 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     this.enviromentalInfo3lapse = {
       topics3: this.topics3lapse,
     };
+    this.objectiveLapse1Data = {
+      enviromentTitleLapse1: this.objetiveLapse1
+    }
+    this.objectiveLapse2Data = {
+      enviromentTitleLapse1: this.objetiveLapse2
+    }
+    this.objectiveLapse3Data = {
+      enviromentTitleLapse3: this.objetiveLapse3
+    }
   }
 
   updateDataToBlocks() {
     this.setBlockData("lapse1Enviromental", this.enviromentalInfo1lapse);
      this.setBlockData("lapse2Enviromental", this.enviromentalInfo2lapse);
      this.setBlockData("lapse3Enviromental", this.enviromentalInfo3lapse);
+     this.setBlockData("objetivoProyectoAmbiental1", this.objectiveLapse1Data);
+     this.setBlockData("objetivoProyectoAmbiental2", this.objectiveLapse2Data);
+     this.setBlockData("objetivoProyectoAmbiental3", this.objectiveLapse3Data);
+
+
   }
 
   updateMethods() {

@@ -1,64 +1,65 @@
-const infoGeneral = {
+const infoGeneral1 = {
     component: 'checkList',
+    name: 'ArrayInfo1',
     settings: {
         infoContainer: [
             {
                 principal:
                     [
                         {
-                            tema: 'Geografia de Venezuela',
+                            tema: '(estatico)Geografia de Bolivar',
                             objetivo: [
-                                { conObjetivo: 'Conocer Veneuzela' },
-                                { conObjetivo: 'Conocer Lara' },
-                                { conObjetivo: 'Conocer Barquisimeto' }
+                                { conObjetivo: '(estatico)Conocer Veneuzela' },
+                                { conObjetivo: '(estatico)Conocer Lara' },
+                                { conObjetivo: '(estatico)Conocer Barquisimeto' }
                             ],
                             estrategia: [
-                                { contEstrategia: 'estrategia 1' },
-                                { contEstrategia: 'estrategia 2' },
-                                { contEstrategia: 'estrategia 3' },
+                                { contEstrategia: '(estatico)estrategia 1' },
+                                { contEstrategia: '(estatico)estrategia 2' },
+                                { contEstrategia: '(estatico)estrategia 3' },
                             ],
                             contenido: [
-                                { contContenido: 'Prueba' },
-                                { contContenido: 'Probando' },
-                                { contContenido: 'Pruebita' },
+                                { contContenido: '(estatico)Prueba' },
+                                { contContenido: '(estatico)Probando' },
+                                { contContenido: '(estatico)Pruebita' },
                             ],
                         },
                     ],
                 datosNivel:
                     [
                         {
-                            nivel: 'Primer grado',
+                            nivel: '(estatico)Primer grado',
                             week: [
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
                             ],
-                            time: '45 min',
+                            time: '(estatico)45 min',
                             tecnica: [
-                                { contTecnica: 'Juego didactico' },
-                                { contTecnica: 'Sopa de letra' }
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
                             ],
                             recurso: [
-                                { contRecurso: 'plastilina' },
-                                { contRecurso: 'tijera' },
-                                { contRecurso: 'lapiz' },
-                                { contRecurso: 'borrador' },
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
                             ],
                             evaluacion: [
-                                { contEvaluacion: 'participar en el juego "Conoce las capitales' },
-                                { contEvaluacion: 'examen' },
-                                { contEvaluacion: 'examen-oral' },
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
-                                { link: 'https://binauraldev.com/ecommerce/' },
-                                { link: 'https://binauraldev.com' }
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
                     ],
@@ -71,38 +72,38 @@ const infoGeneral = {
                 datosNivel:
                     [
                         {
-                            nivel: 'Primer grado',
+                            nivel: '(estatico)Primer grado',
                             week: [
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
-                                { contWeek: '"2020-07-18T15:27:23"' },
+                                { contWeek: '(estatico)020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
                             ],
-                            time: '45 min',
+                            time: '(estatico)45 min',
                             tecnica: [
-                                { contTecnica: 'Juego didactico' },
-                                { contTecnica: 'Sopa de letra' }
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
                             ],
                             recurso: [
-                                { contRecurso: 'plastilina' },
-                                { contRecurso: 'tijera' },
-                                { contRecurso: 'lapiz' },
-                                { contRecurso: 'borrador' },
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
                             ],
                             evaluacion: [
-                                { contEvaluacion: 'participar en el juego "Conoce las capitales' },
-                                { contEvaluacion: 'examen' },
-                                { contEvaluacion: 'examen-oral' },
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
-                                { link: 'https://binauraldev.com/ecommerce/' },
-                                { link: 'https://binauraldev.com' }
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
                     ],
@@ -114,6 +115,243 @@ const infoGeneral = {
         ]
     }
 }
+
+const infoGeneral2 = {
+    component: 'checkList',
+    name: 'ArrayInfo2',
+    settings: {
+        infoContainer: [
+            {
+                principal:
+                    [
+                        {
+                            tema: '(estatico)Geografia de Venezuela',
+                            objetivo: [
+                                { conObjetivo: '(estatico)Cnada' },
+                                { conObjetivo: '(estatico)Coffffff' },
+                                { conObjetivo: '(estatico)Coffasdsdsds' }
+                            ],
+                            estrategia: [
+                                { contEstrategia: '(estatico)estrategia 1' },
+                                { contEstrategia: '(estatico)estrategia 2' },
+                                { contEstrategia: '(estatico)estrategia 3' },
+                            ],
+                            contenido: [
+                                { contContenido: '(estatico)Prueba' },
+                                { contContenido: '(estatico)Probando' },
+                                { contContenido: '(estatico)Pruebita' },
+                            ],
+                        },
+                    ],
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Primer grado',
+                            week: [
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                            ],
+                            time: '(estatico)45 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
+                            ],
+                            title: 'Actividades',
+                            checkList: [
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            },
+            {
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Primer grado',
+                            week: [
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                            ],
+                            time: '(estatico)45 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
+                            ],
+                            title: '(estatico)Actividades',
+                            checkList: [
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            }
+        ]
+    }
+}
+
+const infoGeneral3 = {
+    component: 'checkList',
+    name: 'ArrayInfo3',
+    settings: {
+        infoContainer: [
+            {
+                principal:
+                    [
+                        {
+                            tema: '(estatico)Geografia de Venezuela',
+                            objetivo: [
+                                { conObjetivo: '(estatico)Conocer Veneuzela' },
+                                { conObjetivo: '(estatico)Conocer Lara' },
+                                { conObjetivo: '(estatico)Conocer Barquisimeto' }
+                            ],
+                            estrategia: [
+                                { contEstrategia: '(estatico)estrategia 1' },
+                                { contEstrategia: '(estatico)estrategia 2' },
+                                { contEstrategia: '(estatico)estrategia 3' },
+                            ],
+                            contenido: [
+                                { contContenido: '(estatico)Prueba' },
+                                { contContenido: '(estatico)Probando' },
+                                { contContenido: '(estatico)Pruebita' },
+                            ],
+                        },
+                    ],
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Primer grado',
+                            week: [
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                            ],
+                            time: '(estatico)45 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
+                            ],
+                            title: 'Actividades',
+                            checkList: [
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            },
+            {
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Primer grado',
+                            week: [
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                            ],
+                            time: '(estatico)45 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
+                            ],
+                            title: '(estatico)Actividades',
+                            checkList: [
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            }
+        ]
+    }
+}
+
 
 const tituloObjetivoGeneralLapse1 = {
     component: 'textsbuttons',
@@ -179,19 +417,19 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                                             {
                                                                 title: "(estatico)Geografia de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral1 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Ecositemas de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral2 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Parque nacionales y monumentos naturales",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral3 }
                                                                 ]
                                                             },
                                                         ]
@@ -225,19 +463,19 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                                             {
                                                                 title: "(estatico)Geografia de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral2 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Ecositemas de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral2 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Parque nacionales y monumentos naturales",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral2 }
                                                                 ]
                                                             },
                                                         ]
@@ -272,19 +510,19 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                                             {
                                                                 title: "(estatico)Geografia de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral3 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Ecositemas de Venezuela",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral3 }
                                                                 ]
                                                             },
                                                             {
                                                                 title: "(estatico)Parque nacionales y monumentos naturales",
                                                                 childBlocks: [
-                                                                    { ...infoGeneral }
+                                                                    { ...infoGeneral3 }
                                                                 ]
                                                             },
                                                         ]
