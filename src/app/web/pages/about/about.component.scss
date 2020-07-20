@@ -493,6 +493,8 @@ section.awards {
     .owl-carousel {
       .owl-stage {
         width: 100%;
+        display: flex;
+        align-items: center;
       }
     }
 
