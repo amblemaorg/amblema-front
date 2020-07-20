@@ -6,11 +6,16 @@ import {
   ElementRef,
   TemplateRef,
 } from "@angular/core";
-import { SchoolService } from "src/app/services/web/school.service";
 import { Router } from "@angular/router";
 import { GlobalService } from "src/app/services/global.service";
 import { isNullOrUndefined } from "util";
 import { ModalService } from "src/app/services/modal.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { environment } from "src/environments/environment";
+import { Store } from "@ngxs/store";
+import { HttpClient } from "@angular/common/http";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 const DISMISS = "0";
 const ACCEPT = "1";
 
@@ -19,7 +24,7 @@ const ACCEPT = "1";
   templateUrl: "./schools-map.component.html",
   styleUrls: ["./schools-map.component.scss"],
 })
-export class SchoolsMapComponent implements AfterViewInit {
+export class SchoolsMapComponent implements AfterViewInit, OnInit {
   @ViewChild("content", { read: TemplateRef, static: false })
   modal: TemplateRef<any>;
   @ViewChild("mapWrapper", { read: ElementRef, static: false })
@@ -36,19 +41,28 @@ export class SchoolsMapComponent implements AfterViewInit {
   };
 
   schoolsList;
+  SCHOOLS_PATH = "schoolspage";
+  schoolService: WebContentService;
+
   constructor(
     private router: Router,
     private globalService: GlobalService,
-    private schoolService: SchoolService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private http: HttpClient,
+    private store: Store
+
   ) {}
 
   ngAfterViewInit() {
     this.mapInitializer();
-    this.getSchoolsList();
     if (this.hadNotAcceptedModal()) {
       this.open(this.modal);
     }
+  }
+
+  ngOnInit() {
+    this.setApiService();
+    this.getSchoolsPageData();
   }
 
   hadNotAcceptedModal(): boolean {
@@ -92,11 +106,26 @@ export class SchoolsMapComponent implements AfterViewInit {
     });
   }
 
-  getSchoolsList() {
-    this.schoolService.getSchoolsJSON().subscribe((data) => {
+  setApiService() {
+    const service = new ApiWebContentService(this.http);
+    service.setBaseUrl(environment.baseUrl);
+    service.setResourcePath(this.SCHOOLS_PATH);
+    this.schoolService = service;
+  }
+
+  getSchoolsPageData() {
+    this.schoolService.getWebContent().subscribe((data) => {
       //console.log(data);
-      this.schoolsList = data.schools;
+      this.schoolsList = data.records.map((school) => {
+        return {
+          slug: school.slug,
+          name: school.name,
+          lat: school.coordinate.latitude,
+          lng: school.coordinate.longitude
+        }
+      });
       this.loadAllMarkers();
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 }
