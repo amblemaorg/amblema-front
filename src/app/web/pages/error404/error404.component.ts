@@ -42,11 +42,11 @@ export class Error404Component implements OnInit {
   changeButtonText() {
     if (this.router.url.substr(0, 5) == "/peca") {
       this.textLocation = "la página anterior haciendo clic en el botón";
-      this.buttonText = "atrás";
+      this.buttonText = "atrás.";
       this.buttonTextCapital = "Atrás";
     } else {
       this.textLocation = "nuestra página principal haciendo clic en el botón";
-      this.buttonText = "inicio";
+      this.buttonText = "inicio.";
       this.buttonTextCapital = "Inicio";
     }
   }

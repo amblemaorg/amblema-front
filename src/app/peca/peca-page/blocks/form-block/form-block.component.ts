@@ -248,13 +248,15 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
+    console.log("Esto es lo que mando",this.componentForm.value);
+
   }
 
   setData(data: any) {
     if (data.setContent) {
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
-        this.settings.formsContent[attr].options = data.data[attr];        
+        this.settings.formsContent[attr].options = data.data[attr];
 
         if (
           attr == "section" && 
@@ -271,7 +273,8 @@ export class FormBlockComponent
           (
             this.componentForm.controls["grades"].value == "" ||
             !this.componentForm.dirty
-          )
+          ) &&
+          this.settings.formsContent[attr].options.length > 0
         ) {
           this.componentForm.patchValue({ 
             grades: this.settings.formsContent["grades"].options[0].id 
@@ -608,8 +611,8 @@ export class FormBlockComponent
         'url: ', resourcePath,
         'body: ', body
       );
-
-      this.fetcher[method](resourcePath, body).subscribe(
+//console log... comentar todo el fetcher antes de probar el put
+       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
@@ -646,29 +649,34 @@ export class FormBlockComponent
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
-          const errorType = (error.error && error.error["name"])
-            ? (this.settings.formType === "agregarGradoSeccion" 
-              ? "section" 
-              : "name") 
-            : "regular";      
+          // const errorType = (error.error && error.error["name"])
+          //   ? (this.settings.formType === "agregarGradoSeccion" 
+          //     ? "section" 
+          //     : "name") 
+          //   : "regular";
 
-          // console.log(errorType);
-
-          if (
-            errorType!="regular" && 
-            this.settings.formType === "agregarGradoSeccion"
-          ) this.componentForm.get(errorType).setValue("");
+          // if (
+          //   errorType!="regular" && 
+          //   this.settings.formType === "agregarGradoSeccion"
+          // ) this.componentForm.get(errorType).setValue("");
           
           this.toastr.error(
-            errorType!="regular" 
+            // errorType!="regular" 
+            error.error && error.error["name"] && error.error["name"][0]
               ? error.error["name"][0].msg 
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              : error.error && error.error["email"] && error.error["email"][0]
+                ? error.error["email"][0].msg 
+                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                  ? error.error["cardId"][0].msg 
+                  : error.error && error.error["msg"] 
+                    ? error.error["msg"]
+                    : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
             "",
             { positionClass: "toast-bottom-right" }
           );
           console.error(error);
         }
-      );
+      );   
     }
   }
 
@@ -726,6 +734,9 @@ export class FormBlockComponent
   }
 
   disableBtn() {
+    Object.keys(this.componentForm.value).map(val =>{
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
+    });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
@@ -977,6 +988,8 @@ export class FormBlockComponent
         if (key == "addressMunicipality") this.updateMuns(true, data[key]);
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
+          if (data[key]) { 
+          //console.log("key", data[key]) 
           const dateKey = this.globals.getDateFormat(
             new Date(data[key].replace("Z", ""))
           );
@@ -987,6 +1000,7 @@ export class FormBlockComponent
             key,
             true
           );
+        }
         } else if (this.settings.formsContent[key].type === "double") {
           this.componentForm.patchValue({ ...data[key] });
         } else this.componentForm.patchValue({ [key]: data[key] });

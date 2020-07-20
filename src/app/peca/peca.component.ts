@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {
   PECA_MENU_DEFAULT_CONFIG,
   PECA_LAPSE_OPTIONS_CONFIG
@@ -11,11 +11,6 @@ import { Observable, Subscription } from "rxjs";
 import { first } from "rxjs/internal/operators/first";
 import { take } from "rxjs/internal/operators/take";
 import cloneDeep from "lodash/cloneDeep";
-import {
-  UpdateStates,
-  UpdateMunicipalities
-} from "../store/actions/steps/residence-info.actions";
-import { GlobalService } from "../services/global.service";
 
 @Component({
   selector: "app-peca",
@@ -23,6 +18,8 @@ import { GlobalService } from "../services/global.service";
   styleUrls: ["./peca.component.scss"]
 })
 export class PecaComponent implements OnInit, OnDestroy {
+  @ViewChild('noPecaModalLauncher', {static: true}) noPecaModalLauncherBtn:any;
+
   menu = cloneDeep(PECA_MENU_DEFAULT_CONFIG);
   lapseOptionsConfig = PECA_LAPSE_OPTIONS_CONFIG;
   image_profile = "../../assets/images/profile-oscar.jpg";
@@ -52,9 +49,12 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
       ({ activePeca }) => {
         activePecaId = activePeca.id;
-        activePecaId
-          ? this.store.dispatch([new FetchPecaContent(activePecaId)])
-          : console.error("No pudo obtenerse el PecaId activo");
+        if (activePecaId)
+          this.store.dispatch([new FetchPecaContent(activePecaId)])
+        else {
+          console.error("No pudo obtenerse el PecaId activo");
+          this.noPecaModalLauncherBtn.nativeElement.click();
+        }
       },
       error => console.error(error)
     );
@@ -121,5 +121,21 @@ export class PecaComponent implements OnInit, OnDestroy {
 
   toggle() {
     this.sidebarService.toggle(true, "menu-sidebar");
+  }
+
+  getUserOneOrTwoLines(name) {
+    const name_obj = [name].reduce((nameObj,name) => {
+      name.split(" ").map((nameI,i,name_arr) => {
+        const half = parseInt(`${name_arr.length / 2}`);
+        if ( i < half || half === 0 )
+          nameObj["first"] = nameObj["first"] ? `${(nameObj["first"])} ${nameI}` : nameI;
+        else
+          nameObj["second"] = nameObj["second"] ? `${(nameObj["second"])} ${nameI}` : nameI;
+      });
+
+      return nameObj;
+    }, {});
+
+    return name_obj.second ? `<span>${name_obj.first}</span><span>${name_obj.second}</span>` : `<span>${name_obj.first}</span>`;
   }
 }

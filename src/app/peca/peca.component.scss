@@ -3,8 +3,9 @@
 @import "~@nebular/theme/styles/prebuilt/default.css";
 @import "~@nebular/theme/styles/globals";
 @import "~@nebular/auth/styles/globals";
-@import "scss/variables";
+// @import "scss/variables";
 @import "fonts/amblema-icons/amblemaicons";
+@import 'scss/sharedheader';
 
 ::ng-deep {
   $nb-enable-css-custom-properties: true;
@@ -73,7 +74,7 @@
   }
 
   table {
-    margin-top: 30px;
+    margin-top: 15px;
     margin-bottom: 20px;
   }
   //COLOROES DEL MENU
@@ -146,7 +147,7 @@
     nb-tabset nb-tab,
     p,
     nb-checkbox .text,
-    a,
+    a,    
     nb-user .user-name {
       font-family: "Montserrat" !important;
     }
@@ -183,11 +184,11 @@
       }
     }
 
-    nb-user.size-giant .user-name {
-      font-size: 1.5rem;
-      line-height: 1.25rem;
-      font-weight: bold;
-    }
+    // nb-user.size-giant .user-name {
+    //   font-size: 1.5rem;
+    //   line-height: 1.25rem;
+    //   font-weight: bold;
+    // }
 
     nb-layout-header {
       img {
@@ -198,8 +199,35 @@
         left: 0px;
         top: -10px;
       }
+
+      .header-main-name {
+        margin-left: 1rem;
+
+        @media screen and (orientation: landscape){
+          margin-left: 0.5rem;
+        }
+        @include mediabreak(small,landscape,true,640px) { 
+          margin-left: 0;
+        }
+
+        .h1-amblema {
+          @include shared-main-name();
+        }
+      }
     }
 
+    nb-sidebar {
+      &.is-hidden {
+        display: none;
+      }
+    }
+
+    @media (max-width:768px) {
+      .e-popup-header{
+        margin-top: 100px !important;
+    }
+    }
+    
     /*DROPDOWN PRUEBA*/
     /* The container <div> - needed to position the dropdown content */
     .dropdown {
@@ -238,10 +266,29 @@
       display: block;
     }
 
-    .nb-theme-default nb-user.size-giant .user-name {
-      font-size: 1.5rem;
-      line-height: 1.25rem;
-      font-weight: bold;
+    // .nb-theme-default nb-user.size-giant .user-name {
+    //   font-size: 1.5rem;
+    //   line-height: 1.25rem;
+    //   font-weight: bold;
+    // }
+    
+    nb-user .user-picture {
+      border: none;
+      @include shared-user-image-confs();
+    }
+    .header-avatar-user .avartar-container {
+      display: flex;
+      align-items: center;
+
+      .user-name {
+        @include shared-user-name-confs();
+        
+        ::ng-deep {
+          span {
+              display: block;
+          }
+        }
+      }
     }
 
     @media (min-width: 1200px) {
@@ -251,9 +298,9 @@
     }
 
     @media (max-width: 768px) {
-      nb-user.size-giant .user-name {
-        display: none;
-      }
+      // nb-user.size-giant .user-name {
+      //   display: none;
+      // }
       .dropdown-content {
         min-width: 150px;
         right: 0;
@@ -307,5 +354,22 @@
           line-height: 2;
       }
     }
+  }
+}
+
+
+#no-peca-modal {
+  background: rgba(0, 0, 0, 0.25);  
+  .modal-content {
+      .modal-header {
+          border-bottom: none;
+          padding: 1rem 1rem;
+          .close:focus { outline: none; }
+      }
+      .modal-body { 
+        color: $blue; 
+        text-align: justify;
+        padding: 0 2rem 3rem 2rem; 
+      }
   }
 }

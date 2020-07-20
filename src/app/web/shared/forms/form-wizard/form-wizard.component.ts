@@ -17,6 +17,7 @@ import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
 import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Subscription } from "rxjs";
+// import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
 
 @Component({
   selector: "web-form-wizard",
@@ -43,7 +44,9 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   isBrowser;
 
   // MAPA------------------------------------------------------
+  googleLoaded: boolean;
   map: any;
+  geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
   lng = -66.029011; // Venezuela's middle longitude
   coordinates: any;
@@ -57,6 +60,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service,
     @Inject(PLATFORM_ID) private platformId,
+    // private fetcher: HttpFetcherService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -64,14 +68,25 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.map = null;
       this.currentMarker = null;
 
-      if ( !isNullOrUndefined(google) ) {
-        this.coordinates = new google.maps.LatLng(this.lat, this.lng);
-        const mapOps: google.maps.MapOptions = {
-          center: this.coordinates,
-          zoom: 7,      
-        };
-        this.mapOptions = mapOps;
-      }      
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          this.mapSettings(this.lat, this.lng,7);
+        }        
+      };
+      let interval = null;
+
+      try {                
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {      
+          try {            
+            initMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
     }
   }
 
@@ -90,13 +105,29 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.subscribeDependentFields();
 
     // MAP -----------------------------------------------------------------
-    if (this.isBrowser && this.isSchoolForm) {
-      if ( !isNullOrUndefined(google) ) {
-        setTimeout(() => {
-          if (this.googleMap)
-            this.mapInitializer();
-        });  
-      }             
+    if (this.isBrowser && this.isSchoolForm) {    
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          setTimeout(() => {
+            if (this.googleMap)
+              this.mapInitializer();            
+          });
+        }        
+      };
+      let interval = null;
+
+      try {                
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {      
+          try {            
+            initMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
     }
     //----------------------------------------------------------------------
 
@@ -113,6 +144,47 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           });
         }
       });
+      
+      this.formWizard[0].get('addressMunicipality').statusChanges.subscribe( res => {
+        if (
+          this.formWizard[0].get('addressMunicipality').value &&
+          this.formWizard[0].get('addressMunicipality').value.length > 0
+        ) {       
+          const addressData = this.stepsContent[0]['addressMunicipality'].options.filter(s=>{
+              return s.id===this.formWizard[0].get('addressMunicipality').value
+            });
+          if (addressData.length > 0) {
+            this.mapPositioner(
+              addressData[0].state.name,
+              addressData[0].name
+            ); 
+          }          
+        } 
+        else {
+          if (this.googleMap) {
+            const initMap = () => {
+              if (google) {
+                  clearInterval(interval);
+                  this.mapSettings(this.lat,this.lng,7);
+                  this.mapInitializer(); 
+              }        
+            };
+            let interval = null;
+            
+            try {                
+                initMap();
+            } catch (error) {
+                interval = setInterval(()=> {      
+                    try {            
+                    initMap();
+                    } catch (error) {
+                    // TODO --
+                    }
+                }, 2000); 
+            }
+          }          
+        }
+      });
     }
   }
 
@@ -126,6 +198,18 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
+  mapSettings(lat,lng,zoom) {    
+    if (google) {
+      this.googleLoaded = true;
+      this.coordinates = new google.maps.LatLng(lat, lng);
+      const mapOps: google.maps.MapOptions = {
+        center: this.coordinates,
+        zoom: zoom,      
+      };
+      this.mapOptions = mapOps;
+    }
+  }
+
   mapInitializer() {
     this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
 
@@ -141,6 +225,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+    this.geocoder = new google.maps.Geocoder();
+
+    if (this.currentMarker) this.currentMarker.setMap(this.map);
   }
 
   loadAllMarkers(data) {
@@ -161,6 +249,88 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     this.formWizard[0].get('coordinate').setValue(data.coordinate);
 
     this.currentMarker.setMap(this.map);
+  }
+
+  mapPositioner(state: string, county: string) {
+    // google maps geocoding
+    const initMap = () => {
+      if (google) {
+          clearInterval(interval);
+
+          this.geocoder.geocode({ componentRestrictions: {
+            country: 'Venezuela',
+            administrativeArea: state,
+            locality: county
+          } }, (results, status) => {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results.length > 0)
+                this.mapSettings(
+                  results[0].geometry.location.lat(),
+                  results[0].geometry.location.lng(),
+                  11
+                );
+              else           
+                this.mapSettings(this.lat, this.lng, 7);
+            } 
+            else {
+              switch (status) {
+                case 'ZERO_RESULTS':
+                  console.log('None result found, showing default map options');
+                  break;
+                case 'OVER_QUERY_LIMIT':
+                  console.error('You are over your quota');
+                  break;
+                case 'REQUEST_DENIED':
+                  console.error('Your site is unavailable to use geocoder');
+                  break;
+                default:
+                  console.error('Unknown server error');
+                  break;
+              }
+              this.mapSettings(this.lat,this.lng,7);          
+            }
+            this.mapInitializer();
+          });
+      }        
+    };
+    let interval = null;
+    
+    try {                
+        initMap();
+    } catch (error) {
+        interval = setInterval(()=> {      
+            try {            
+            initMap();
+            } catch (error) {
+            // TODO --
+            }
+        }, 2000); 
+    }
+    
+    // OpenStreetMap
+    // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
+    /* this.fetcher.geoCodeGet(
+      `https://nominatim.openstreetmap.org/search?
+        country=Venezuela&
+        state=${state}&
+        county=${county}&
+        format=json&
+        limit=1`
+    ).subscribe(
+      (res) => {
+        if (res.length > 0)
+          this.mapSettings(+res[0].lat,+res[0].lon,11);
+        else 
+          this.mapSettings(this.lat,this.lng,7);
+      },
+      (error) => {
+        this.mapSettings(this.lat,this.lng,7);                
+        console.error(error);
+      },
+      () => {
+        this.mapInitializer();
+      }
+    ); */
   }
   // END-MAP-CONFS ---------------------------------------------------------------------------------------
 
@@ -411,11 +581,32 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public clear(): void {
     if (this.isBrowser && this.isSchoolForm) {
       if (this.currentMarker) this.currentMarker.setMap(null);
-      if ( !isNullOrUndefined(google) ) {
-        setTimeout(() => {
-          if (this.googleMap)
-            this.mapInitializer();
-        });  
+      
+      const reinitMap = () => {
+        if (google) {
+            clearInterval(interval);
+            setTimeout(() => {
+              if (this.googleMap){
+                if (this.currentMarker) this.currentMarker.setMap(null);
+                this.currentMarker = null;  
+                this.mapSettings(this.lat,this.lng,7);
+                this.mapInitializer();
+              }            
+            });  
+        }        
+      };
+      let interval = null;
+      
+      try {                
+          reinitMap();
+      } catch (error) {
+          interval = setInterval(()=> {      
+              try {            
+              reinitMap();
+              } catch (error) {
+              // TODO --
+              }
+          }, 2000); 
       }             
     }       
     this.formWizard.map((wizardFormStep: FormGroup) => {

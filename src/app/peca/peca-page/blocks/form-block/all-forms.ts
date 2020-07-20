@@ -330,7 +330,6 @@ export const sampleFormData = {
 
 /*TESTIMONIO DE DOCENTES*/
 export const formTestimonioDocentes = {
-  title4: { label: "Titulo", type: "title" },
   imageGroup: {
     type: "image",
     fields: {
@@ -553,8 +552,8 @@ export const formDatosEscuela = {
     options: []
   },
   callesEscuela: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     readonly: true,
     fullwidth: false,
     ...controlProps.onlyLettersNumbers
@@ -835,8 +834,8 @@ export const formTabsDocente = {
     options: []
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -937,8 +936,7 @@ export const formTabsEstudiantes = {
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
-          { id: "2", name: "J" },
-          { id: "3", name: "E" }
+          { id: "2", name: "E" },
         ]
       },
       prependInput: {
@@ -1061,8 +1059,8 @@ export const formCoordinador = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1172,8 +1170,8 @@ export const formPadrino = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   }
@@ -1225,8 +1223,8 @@ export const formEscuela = {
     ...controlProps.normalTextAndRequired
   },
   street: {
-    label: "calles / carreras",
-    placeholder: "calles / carreras",
+    label: "Calles / carreras",
+    placeholder: "Calles / carreras",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1382,18 +1380,21 @@ export const formLecturaModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   grade: {
     label: "Grado",
     placeholder: "Grados",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "1er grado" },
@@ -1408,24 +1409,28 @@ export const formLecturaModal = {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
+    readonly: true,
     ...controlProps.normalTextAndRequired
   },
   gender: {
     label: "Género",
     placeholder: "Género",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
-  },
-  date: {
+  }, 
+ /*  date: {
     label: "Fecha del diagnostico",
     placeholder: "Fecha del diagnostico",
     fullwidth: false,
-    ...controlProps.dateAndRequired
-  },
+    readonly: true,
+    lower: true,
+    ...controlProps.date
+  }, */
   result: {
     label: "Resultado",
     placeholder: "Resultado",
@@ -1436,7 +1441,8 @@ export const formLecturaModal = {
     label: "Indice",
     placeholder: "Indice",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    readonly: true,
+    ...controlProps.normalText
   }
 };
 export const formMatematicaModal = {
@@ -1444,18 +1450,21 @@ export const formMatematicaModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
+    readonly: true,
     ...controlProps.onlyLettersAndRequired
   },
   grade: {
     label: "Grados",
     placeholder: "Grados",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "1er grado" },
@@ -1470,36 +1479,42 @@ export const formMatematicaModal = {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
+    readonly: true,
     ...controlProps.normalTextAndRequired
   },
   gender: {
     label: "Género",
     placeholder: "Género",
     fullwidth: false,
+    readonly: true,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
       { id: "2", name: "Masculino" }
     ]
   },
-  date: {
+/*   date: {
     label: "Fecha del resultado de multiplicacion",
     placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
+    readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
-  },
+  }, */
   resultMul: {
     label: "Resultado de multiplicacion",
     placeholder: "Resultado de multiplicacion",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
-  date2: {
+  /* dateLog: {
     label: "Fecha del resultado logica matematica",
     placeholder: "Fecha del resultado de logica matematica",
     fullwidth: false,
+    readonly: true,
+    lower: true,
     ...controlProps.dateAndRequired
-  },
+  }, */
   resultLog: {
     label: "Resultado de logica matematica",
     placeholder: "Resultado de logica matematica",
@@ -1510,13 +1525,15 @@ export const formMatematicaModal = {
     label: "Indice de multiplicacion",
     placeholder: "Indice de multiplicacion",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    readonly: true,
+    ...controlProps.normalText
   },
   indexLog: {
     label: "Indice de logica matematica",
     placeholder: "Indice de logica matematica",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    readonly: true,
+    ...controlProps.normalText
   }
 };
 

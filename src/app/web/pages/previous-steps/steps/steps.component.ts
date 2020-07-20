@@ -2,12 +2,13 @@ import {
   Component, 
   OnInit,
   QueryList,
-  ViewChildren
+  ViewChildren,
+  OnDestroy
 } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { StepsService } from '../../../../services/steps/steps.service';
 import { UserState } from '../../../../store/states/e-learning/user.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Step } from '../../../../models/steps/previous-steps.model';
 import { UpdateStepsProgress } from '../../../../store/actions/steps/project.actions';
 import { StepsState } from '../../../../store/states/steps/project.state';
@@ -22,7 +23,7 @@ import { GeneralStepsComponent } from './general-steps/general-steps.component';
   templateUrl: './steps.component.html',
   styleUrls: ['./steps.component.scss']
 })
-export class StepsComponent implements OnInit {
+export class StepsComponent implements OnInit, OnDestroy {
   @ViewChildren('generalStep', { read: GeneralStepsComponent }) generalStepsRef: QueryList<
   GeneralStepsComponent
   >;
@@ -54,15 +55,21 @@ export class StepsComponent implements OnInit {
   coordinatorSteps = [];
   schoolSteps = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.stepsService.enableTab.subscribe(res => {
-      this.enabledTabs = res;
-    });
-    this.stepsService.goToMods.subscribe(res => {
-      this.goToModules();
-    });
+    this.subscription.add(
+      this.stepsService.enableTab.subscribe(res => {
+        this.enabledTabs = res;
+      })
+    );
+    this.subscription.add(
+      this.stepsService.goToMods.subscribe(res => {
+        this.goToModules();
+      })
+    );
 
     if (!this.isTest) { 
       //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -74,78 +81,87 @@ export class StepsComponent implements OnInit {
       }
       //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
       // this.updateSteps(pjId);
-
-      this.project_steps$.subscribe(res => { 
-        if (this.stepsService.getIsPageReloaded()) {
-          this.enabledTabs = true;
-        } 
-
-        this.project_id = pjId;
-        if (res.steps.length>0) {
-          this.fillCounter++;
-          if(this.fillCounter==2){ // updating steps to be shown if case one of them got deleted in bds
-            this.generalSteps = [];
-            this.sponsorSteps = [];
-            this.coordinatorSteps = [];
-            this.schoolSteps = [];
-          }
-          
-          res.steps.forEach(record => {                 
-            let step_:Step = {
-              ...record,
-              checklist: this.getChecks(record.checklist), 
-              sending: false,               
-            };
-            step_.isForm = (step_.devName.toLowerCase().includes("fill") && step_.devName.toLowerCase().includes("form"))? true:false;
-
-            if (step_.isForm) {                
-              if (step_.devName=="sponsorFillCoordinatorForm" || step_.devName=="schoolFillCoordinatorForm") step_.type = 2;
-              else if (step_.devName=="coordinatorFillSponsorForm" || step_.devName=="schoolFillSponsorForm") step_.type = 3;
-              else step_.type = 4;
+      this.subscription.add(
+        this.project_steps$.subscribe(res => {    
+          this.project_id = pjId;
+          if (res.steps.length>0) {
+            this.fillCounter++;
+            if(this.fillCounter==2){ // updating steps to be shown if case one of them got deleted in bds
+              this.generalSteps = [];
+              this.sponsorSteps = [];
+              this.coordinatorSteps = [];
+              this.schoolSteps = [];
             }
-            step_.send = step_.devName=="coordinatorSendCurriculum" ? true:false;
-            if (step_.send && !this.curriculumPending && step_.status!="3") {
-              this.curriculumPending = true;
-            }
-            step_.goMods = step_.devName=="corrdinatorCompleteTrainingModules" ? true:false;
+            
+            res.steps.forEach(record => {                 
+              let step_:Step = {
+                ...record,
+                checklist: this.getChecks(record.checklist), 
+                sending: false,               
+              };
+              step_.isForm = (step_.devName.toLowerCase().includes("fill") && step_.devName.toLowerCase().includes("form"))? true:false;
 
-            if (step_.status!="3" && step_.devName!="amblemaConfirmation") {
-              this.canOrganizationConfirm = false;
-            }
-      
-            switch (step_.tag) {
-              case "2":                  
-                let ind2 = this.coordinatorSteps.findIndex(st => {return st.id === step_.id});
-                if (ind2>=0) this.coordinatorSteps[ind2] = step_;
-                else this.coordinatorSteps.push(step_);
-                break;
-              case "3":
-                let ind3 = this.sponsorSteps.findIndex(st => {return st.id === step_.id});
-                if (ind3>=0) this.sponsorSteps[ind3] = step_;
-                else this.sponsorSteps.push(step_);
-                break;
-              case "4":
-                let ind4 = this.schoolSteps.findIndex(st => {return st.id === step_.id});
-                if (ind4>=0) this.schoolSteps[ind4] = step_;
-                else this.schoolSteps.push(step_);
-                break;
-              default:
-                let ind1 = this.generalSteps.findIndex(st => {return st.id === step_.id});
-                if (ind1>=0) this.generalSteps[ind1] = step_;
-                else this.generalSteps.push(step_);
-                break;
-            }                    
-          });
+              if (step_.isForm) {                
+                if (step_.devName=="sponsorFillCoordinatorForm" || step_.devName=="schoolFillCoordinatorForm") step_.type = 2;
+                else if (step_.devName=="coordinatorFillSponsorForm" || step_.devName=="schoolFillSponsorForm") step_.type = 3;
+                else step_.type = 4;
+              }
+              step_.send = step_.devName=="coordinatorSendCurriculum" ? true:false;
+              if (step_.send && !this.curriculumPending && step_.status!="3") {
+                this.curriculumPending = true;
+              }
+              step_.goMods = step_.devName=="corrdinatorCompleteTrainingModules" ? true:false;
 
-          //Setting progress bar
-          this.stepsProgress[0]= +res.general;
-          this.stepsProgress[1]= +res.sponsor;
-          this.stepsProgress[2]= +res.coordinator;
-          this.stepsProgress[3]= +res.school;
-        }        
-      });
+              if (step_.status!="3" && step_.devName!="amblemaConfirmation") {
+                this.canOrganizationConfirm = false;
+              }
+        
+              switch (step_.tag) {
+                case "2":                  
+                  let ind2 = this.coordinatorSteps.findIndex(st => {return st.id === step_.id});
+                  if (ind2>=0) this.coordinatorSteps[ind2] = step_;
+                  else this.coordinatorSteps.push(step_);
+                  break;
+                case "3":
+                  let ind3 = this.sponsorSteps.findIndex(st => {return st.id === step_.id});
+                  if (ind3>=0) this.sponsorSteps[ind3] = step_;
+                  else this.sponsorSteps.push(step_);
+                  break;
+                case "4":
+                  let ind4 = this.schoolSteps.findIndex(st => {return st.id === step_.id});
+                  if (ind4>=0) this.schoolSteps[ind4] = step_;
+                  else this.schoolSteps.push(step_);
+                  break;
+                default:
+                  let ind1 = this.generalSteps.findIndex(st => {return st.id === step_.id});
+                  if (ind1>=0) this.generalSteps[ind1] = step_;
+                  else this.generalSteps.push(step_);
+                  break;
+              }                    
+            });
+
+            //Setting progress bar
+            this.stepsProgress[0]= +res.general;
+            this.stepsProgress[1]= +res.sponsor;
+            this.stepsProgress[2]= +res.coordinator;
+            this.stepsProgress[3]= +res.school;
+          }        
+        })
+      );
+
+      if (this.stepsService.getIsPageReloaded()) {
+        this.subscription.add(          
+          this.store.dispatch( new UpdateStepsProgress(pjId) ).subscribe(res => {
+            this.enabledTabs = true;
+          })
+        );
+      }
     }
     // });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   updateSteps(p_i) {    
