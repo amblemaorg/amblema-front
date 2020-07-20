@@ -7,6 +7,7 @@ const genericActivityFields = {
         subtitles: [],
         video: {},
         addMT: {},
+        upload: null,
     }
 }
 
@@ -19,6 +20,14 @@ const genericActivityChecklist = {
                 isFromGenericActivity: true,                
             }
         ]
+    }
+}
+
+const genericActivityActionButton = {
+    component: 'textsbuttons',
+    name: 'genericActivityActionButton',
+    settings: {
+        action: null,
     }
 }
 
@@ -36,6 +45,7 @@ export const GENERIC_ACTIVITY_CONFIG = {
                         childBlocks: [
                             { ...genericActivityFields },
                             { ...genericActivityChecklist },                         
+                            { ...genericActivityActionButton },
                         ]
                     },
                 ],

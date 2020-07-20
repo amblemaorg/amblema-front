@@ -156,13 +156,16 @@
         [class.text-center]="settings.isFromCustomTableActions"
         [class.py-3]="settings.isFromCustomTableActions"
     >
-        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
-            <input class="d-none" id="upload-btn-input-file" type="file">
-            <button id="upload-btn"  [title]="settings.upload.name"
-            class="btn btn-primary text-decoration-none py-1 px-4">
-            {{settings.upload.name}}
+        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="tb-upload-btn-container" #tbUploadFile>
+            <input class="d-none tb-upload-btn-input-file" id="tb-upload-btn-input-file" (change)="fileMngr($event)" type="file"
+                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
+            <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
+                (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
+                class="btn btn-primary text-decoration-none py-1 px-4">
+            {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
             </button>
         </div>
+
         <a *ngIf="settings.uploaddown && settings.uploaddown.url" [title]="settings.uploaddown.name" 
             [href]="settings.uploaddown.url" target="_blank" 
             [download]="settings.uploaddown.name" 

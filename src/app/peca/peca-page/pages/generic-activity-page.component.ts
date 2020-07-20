@@ -38,6 +38,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_video: any;
     g_a_addMT: any;
     g_a_checklist: any;
+    g_a_upload: any;
+    g_a_action_btn: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -111,26 +113,63 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
         if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
         if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
+        if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
         this.setBlockData("genericActivityFields", genericActivityObj );
         this.setBlockData("genericActivityChecklist", this.g_a_checklist);
+        this.setBlockData("genericActivityActionButton", this.g_a_action_btn);
     }
 
     setGenericActivityData(data: GenericActivity) {
         // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
-        // "status": "str (1=activo 2=inactivo)"
-        const at = "2"; // approval type
+        // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
+        const at = "2"; // approval type, at '2' means Only Checklist is in the view   
+        const detail = data.approvalHistory.length > 0 ? data.approvalHistory[data.approvalHistory.length-1].detail : null; 
+        const {
+            date,
+            file,
+            text,
+            uploadedFile,
+            video,
+            checklist
+        } = data.approvalHistory.length > 0 && 
+        data.approvalHistory[data.approvalHistory.length-1].status === "1" 
+        ? {
+            date: detail.date ? detail.date : data.date,
+            file: detail.file ? detail.file : data.file,
+            text: detail.text ? detail.text : data.text,
+            uploadedFile: detail.uploadedFile ? detail.uploadedFile : data.uploadedFile,
+            video: detail.video ? detail.video : data.video,
+            checklist: detail.checklist ? detail.checklist : data.checklist
+        } 
+        : {
+            date: data.date,
+            file: data.file,
+            text: data.text,
+            uploadedFile: data.uploadedFile,
+            video: data.video,
+            checklist: data.checklist
+        };
+
+        // console.log(
+        //     "date",date,
+        //     "file",file,
+        //     "text",text,
+        //     "uploadedFile",uploadedFile,
+        //     "video",video,
+        //     "checklist",checklist
+        // );
 
         this.g_a_text = data.hasText && data.approvalType !== at
             ? {                
-                subtitles: [{ text: data.text }]
+                subtitles: [{ text: text }]
             } : null;
         this.g_a_date = data.hasDate && data.approvalType !== at
             ? {
                 dateOrtext: {
                     text: "Fecha de la actividad:",
-                    ...[data.date ? true : false].reduce((dateOtherData,isThereDate) => {
+                    ...[date ? true : false].reduce((dateOtherData,isThereDate) => {
                         dateOtherData[isThereDate ? "date" : "fields"] = isThereDate 
-                        ? data.date 
+                        ? date 
                         : [{ 
                             placeholder: "Fecha de la actividad", 
                             fullwidth: false, 
@@ -146,17 +185,17 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
             } : null;
         this.g_a_download = data.hasFile && data.approvalType !== at
             ? {
-                download: {
-                    url: data.file.url,
-                    name: data.file.name,
-                }
+                download: file ? {
+                    url: file.url,
+                    name: file.name,
+                } : null,
             } : null;
         this.g_a_video = data.hasVideo && data.approvalType !== at
             ? {
-                video: {
-                    url: data.video.url,
-                    name: data.video.name,
-                }
+                video: video ? {
+                    url: video.url,
+                    name: video.name,
+                } : null,
             } : null;
         this.g_a_addMT = data.hasText && 
             (data.hasDate || data.hasFile) && 
@@ -172,6 +211,14 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     },{}),
                 }
             } : null;
+        this.g_a_upload = data.hasUpload && data.approvalType !== at
+            ? {
+                upload: uploadedFile ? {
+                    uploadEmpty: false,
+                    url: uploadedFile.url,
+                    name: uploadedFile.name,
+                } : { uploadEmpty: true },
+            } : null;
         
         // CHECKLIST
         this.g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
@@ -180,11 +227,28 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     checklistObj = {
                         ...checklistObj,
                         title: 'Los checklists',
-                        checkList: data.checklist
+                        checkList: checklist
                     }
                 }
                 return checklistObj;
             },{});
+
+        this.g_a_action_btn = {
+                isGenericActivity: true,
+                action: (data.status === "1" || data.status === "2") 
+                    && +data.approvalType < 4 
+                    ? [
+                        {
+                            type: 7,
+                            name: data.status === "1" 
+                                ? (data.approvalType === "3" 
+                                    ? 'Enviar' 
+                                    : 'Guardar'
+                                  ) 
+                                : 'Cancelar solicitud'
+                        }
+                    ] : null,
+            };
     }
 
     ngAfterViewInit(): void {

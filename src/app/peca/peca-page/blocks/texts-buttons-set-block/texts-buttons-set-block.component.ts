@@ -60,7 +60,11 @@ export class TextsButtonsSetBlockComponent
     }[];
     // }[];
     action: {
-      // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar
+      /**
+       * 1 guardar, 2 adjuntar fotos, 3 enviar, 
+       * 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar, 
+       * (Para Actividad Generica) 7 Enviar/Guardar
+       */
       type: number;
       name: string; // text in the button
     }[];
@@ -166,6 +170,8 @@ export class TextsButtonsSetBlockComponent
       this.settings.download = data["download"] ? data.download : null;
       this.settings.subtitles = data["subtitles"] ? data.subtitles : null;
       this.settings.addMT = data["addMT"] ? data.addMT : null;
+      this.settings.upload = data["upload"] ? data.upload : null;
+      this.settings.action = data["action"] ? data.action : null;
 
       if (data["video"]) {        
         this.resetTimesLoadedVideo();
@@ -477,6 +483,32 @@ export class TextsButtonsSetBlockComponent
         this.timesVideoSourceCalled = 0;
       });
     }
+  }
+
+  // FOR UPLOAD
+  fileMngr(e) {
+    if (
+      e && e.target && e.target.files 
+      && e.target.files.length > 0
+    ) {
+      this.settings.upload = this.settings.upload ? {
+        ...this.settings.upload,
+        uploadEmpty: false,
+        name: <File>e.target.files[0].name,
+        file: <File>e.target.files[0],
+        url: ''
+      } : {
+        uploadEmpty: true,
+      }; 
+    }
+  }
+
+  clickUpload(btn) {
+    btn.getElementsByClassName('tb-upload-btn-input-file')[0].click();
+  }
+
+  shortenName(name: string) {
+    return name.length > 40 ? `${name.substr(0,10)}...${name.substr(30)}` : name;
   }
 
 }
