@@ -16,7 +16,7 @@ export interface User {
 }
 
 export interface ApprovalHistory {
-    detail: Detail;
+    detail: any;
     id: string;
     comments?: any;
     createdAt: Date;
