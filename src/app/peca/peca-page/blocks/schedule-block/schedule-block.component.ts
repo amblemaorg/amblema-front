@@ -13,6 +13,7 @@ import { Observable, Subscription } from "rxjs";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
 import { isNullOrUndefined } from "util";
+import { DatePipe } from "@angular/common"
 loadCldr(numberingSystems['default'], gregorian['default'], numbers['default'], timeZoneNames['default']);
 L10n.load({
   "es": {
@@ -43,6 +44,9 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
   settings: {
     items: any[];
   }
+
+  pipe = new DatePipe('en-US');
+  schedules: any;
   constructor() {
     this.type = 'presentational';
     this.component = 'agendas';
@@ -106,33 +110,32 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
 
 
   ngOnInit() {
-    let prueba = [{Description: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.",
-    EndTime: new Date(2020, 6, 21),
-    Id: "5f0fa00152621b4c06c4cbc2",
-    StartTime: new Date(2020, 6, 21),}]
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
         if (data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
             console.log(data, "data schedule")
-            console.log(new Date(2020, 6, 21))
           }
+          let auxSchedule = [];
+          data.activePecaContent.schedule.forEach((schedule) => {
+            schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
+            schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
+          });
 
+          auxSchedule = auxSchedule.concat(data.activePecaContent.schedule)
+
+          this.schedules = auxSchedule;
+         /*  activity = this.pipe.transform(Date.parse(activity), 'yyyy/MM/dd'); */
           this.eventSettings = {
-            dataSource: prueba
+            dataSource: this.schedules
           } 
-
+          
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
 
       }, er => { console.log(er) })
-      console.log(this.eventSettings, "holaaaaaaaaaaaaaa")
   }
-
-
-
-
   updateMethods() {
     //this.updateDataToBlocks();
   }
