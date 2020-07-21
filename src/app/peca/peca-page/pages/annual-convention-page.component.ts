@@ -88,11 +88,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
 
   setAnnualConventionData() {
     this.AnnualConventionInfo = {
-      checkList: [
-        {
-          description: this.response,
-        },
-      ],
+      checkList: this.response
     };
   }
 
