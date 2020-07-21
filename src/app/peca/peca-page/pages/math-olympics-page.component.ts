@@ -13,7 +13,7 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
 import { GlobalService } from "../../../services/global.service";
 import { isNullOrUndefined } from "util";
-
+import { DatePipe } from "@angular/common"
 @Component({
     selector: 'peca-maths-olympics',
     templateUrl: '../peca-page.component.html',
@@ -29,11 +29,11 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
 
     omlimpiadasData: any;
     text: string;
-    date: Date;
+    date: string;
 
     isInstanciated: boolean;
     loadedData: boolean;
-
+    pipe = new DatePipe('en-US');
     constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
         super(factoryResolver);
 
@@ -69,7 +69,7 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     setOlimpiadas(data) {
         this.text = data.activePecaContent.lapse1.olympics.description;
         console.log(this.text, "descricion olimpiadas")
-        this.date = data.activePecaContent.lapse1.olympics.date;
+        this.date = this.pipe.transform(Date.parse( data.activePecaContent.lapse1.olympics.date), 'dd/MM/yyyy , h:mm');
         console.log(this.date, "datos olimpiadas")
     }
 
@@ -78,9 +78,11 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
             dateOrtext: {
                 date: this.date
             },
-            subtitles: {
-                text: this.text
-            }
+            subtitles: [
+                {
+                    text: this.text
+                }
+            ]
         }
     }
 

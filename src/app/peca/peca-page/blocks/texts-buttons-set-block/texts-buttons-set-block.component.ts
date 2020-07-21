@@ -58,7 +58,7 @@ export class TextsButtonsSetBlockComponent
     subtitles: {
       title?: string; // subtitle
       text: string; // paragraph
-    };
+    }[];
     // }[];
     action: {
       /**
@@ -188,7 +188,7 @@ export class TextsButtonsSetBlockComponent
     }
     else {
       if (data["status"]) this.settings.status.subText = data.status.subText;
-      if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles.text;
+      if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
       if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
     }
   }
