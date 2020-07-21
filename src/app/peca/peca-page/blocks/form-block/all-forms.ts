@@ -1252,7 +1252,7 @@ export const formEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "Manana" },
+      { id: "1", name: "Mañana" },
       { id: "2", name: "Tarde" },
       { id: "3", name: "Ambos" }
     ]
