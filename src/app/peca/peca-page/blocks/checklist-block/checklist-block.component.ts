@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import {
   PageBlockComponent,
-  PresentationalBlockComponent,
+  PresentationalBlockComponent
 } from "../page-block.component";
 
 @Component({
   selector: "checklist-block",
   templateUrl: "./checklist-block.component.html",
-  styleUrls: ["./checklist-block.component.scss"],
+  styleUrls: ["./checklist-block.component.scss"]
 })
 export class ChecklistBlockComponent
   implements PresentationalBlockComponent, OnInit {
@@ -18,45 +18,47 @@ export class ChecklistBlockComponent
   settings: {
     infoContainer: {
       principal: {
-        tema: string,
+        tema: string;
         objetivo: {
-          conObjetivo: string
-        }[],
+          conObjetivo: string;
+        }[];
         estrategia: {
-          contEstrategia: string,
-        }[],
+          contEstrategia: string;
+        }[];
         contenido: {
-          contContenido: string,
-        }[],
-      }[],
+          contContenido: string;
+        }[];
+      }[];
       datosNivel: {
-        nivel: string,
+        nivel: string;
         week: {
-          contWeek: string,
-        }[],
-        time: string,
+          contWeek: string;
+        }[];
+        time: string;
         tecnica: {
-          contTecnica: string,
+          contTecnica: string;
         }[];
         recurso: {
-          contRecurso: string,
-        }[],
-        evaluacion: {
-          contEvaluacion: string,
+          contRecurso: string;
         }[];
-        title: string,
+        evaluacion: {
+          contEvaluacion: string;
+        }[];
+        title: string;
+        isFromGenericActivity?: boolean;
         checkList: {
-          description: string,
-        }[],
+          name: string;
+        }[];
         material: {
-          link: string,
-        }[],
-      }[],
-      button: any,
-      line: boolean,
+          link: string;
+        }[];
+      }[];
+      button: any;
+      line: boolean;
       subtitle: string;
     }[];
   };
+checks=[];
 
   constructor() {
     this.type = "presentational";
@@ -70,22 +72,23 @@ export class ChecklistBlockComponent
   }
 
   setData(data: any) {
+    if (data["isGenericActivity"]) {
+      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
+      this.settings.infoContainer[0].datosNivel[0].checkList = data["checkList"] ? data.checkList : null;
+    }
     if (data["checkList"]) {
-      this.prueba = data.checkList[0].description;
+     // this.prueba = data.checkList[0].description;
       this.flag = true;
-      for (let i = 0; i < this.prueba.length; i++) {
+      /* for (let i = 0; i < this.prueba.length; i++) {
         this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
           data.checkList[0].description[i].name;
-      }
+      } */
+      this.settings.infoContainer[0].datosNivel[0].checkList=data.checkList;
     }
     else {
       this.flag = false;
 
     }
   }
-  //if (data["checkList"]) this.settings.infoContainer[0].checkList[i].description = data.checkList[0].description.name;
-  /*     console.log("checkkk",data.checkList[0].description.name);
-   */
-  //console.log("checkkk",data.checkList[0].description);
-  //console.log("no se", this.settings.infoContainer[0].checkList );
+  
 }

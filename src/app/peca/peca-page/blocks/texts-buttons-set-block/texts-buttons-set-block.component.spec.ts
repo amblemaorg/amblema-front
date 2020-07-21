@@ -14,6 +14,7 @@ import { ModulesState } from '../../../../store/states/e-learning/learning-modul
 import { UserState } from '../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -78,7 +79,7 @@ describe('TextsButtonsSetBlockComponent', () => {
           developmentMode: false
         })
       ],
-      providers: [{ provide: ToastrService, useClass: ToastrService }],
+      providers: [{ provide: ToastrService, useClass: ToastrService },EmbedVideoService],
     });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {

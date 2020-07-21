@@ -1,0 +1,19 @@
+@import 'scss/placeholders';
+
+::ng-deep {
+    .nb-theme-default {
+        p, h5, h6 {
+            color: $blue;
+            @media (max-width:768px) {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .g-a-content {
+        padding: 0 1.5rem;         
+          @media (min-width: 769px) {
+              padding: 0.5rem 2.5rem;
+          }
+    }
+}

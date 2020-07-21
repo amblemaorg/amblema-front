@@ -13,6 +13,9 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { Select } from "@ngxs/store";
 import { PecaState } from '../../../store/states/peca/peca.state';
 import { Observable, Subscription } from "rxjs";
+import cloneDeep from "lodash/cloneDeep";
+import { GenericActivity } from '../../../models/peca/generic-activity.model';
+import { GlobalService } from '../../../services/global.service';
 
 @Component({
     selector: 'peca-generic-activity',
@@ -26,9 +29,33 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     pecaDataSubscription: Subscription;
     routerSubscription: Subscription;
     isInstanciated: boolean;
+    loadedData: boolean;
 
-    constructor(factoryResolver: ComponentFactoryResolver, private router: Router) {
+    // generic activity content variables
+    g_a_text: any;
+    g_a_date: any;
+    g_a_download: any;
+    g_a_video: any;
+    g_a_addMT: any;
+    g_a_checklist: any;
+    g_a_upload: any;
+    g_a_action_btn: any;
+
+    constructor(
+        factoryResolver: ComponentFactoryResolver, 
+        private router: Router,
+        globals: GlobalService
+    ) {
         super(factoryResolver);
+
+        globals.blockIntancesEmitter.subscribe(data => {
+            data.blocks.forEach((block, name) =>
+              this.blockInstances.set(name, block)
+            );
+
+            if (this.loadedData) this.updateMethods();
+        });
+
         this.instantiateComponent(config);
 
         this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -56,12 +83,172 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                     const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
                         return activity.id === activity_id;
                     });
-                    const activity = data.activePecaContent[`lapse${lapse_id}`].activities[index];
-                    this.changeComponentHeader(activity.name);   
+                    const activity: GenericActivity =  cloneDeep(data.activePecaContent[`lapse${lapse_id}`].activities[index]);
+                    
+                    if (activity) {
+                        this.changeComponentHeader(activity.name); 
+
+                        console.log("Datos de la actividad",activity);
+                        this.setGenericActivityData(activity);
+                        
+                        this.loadedData = true;
+                        if (this.isInstanciated) this.updateMethods();   
+                    }                    
                 }                
             },
             error => console.error(error)
         );
+    }
+
+    updateMethods() {
+        this.updateDataToBlocks();
+        // this.updateStaticFetchers();
+        // this.updateDynamicFetchers();
+    }
+
+    updateDataToBlocks() {
+        let genericActivityObj = { isGenericActivity: true };
+        if (this.g_a_text) genericActivityObj = { ...genericActivityObj, ...this.g_a_text };
+        if (this.g_a_date) genericActivityObj = { ...genericActivityObj, ...this.g_a_date };
+        if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
+        if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
+        if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
+        if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
+        this.setBlockData("genericActivityFields", genericActivityObj );
+        this.setBlockData("genericActivityChecklist", this.g_a_checklist);
+        this.setBlockData("genericActivityActionButton", this.g_a_action_btn);
+    }
+
+    setGenericActivityData(data: GenericActivity) {
+        // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
+        // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
+        const at = "2"; // approval type, at '2' means Only Checklist is in the view   
+        const detail = data.approvalHistory.length > 0 ? data.approvalHistory[data.approvalHistory.length-1].detail : null; 
+        const {
+            date,
+            file,
+            text,
+            uploadedFile,
+            video,
+            checklist
+        } = data.approvalHistory.length > 0 && 
+        data.approvalHistory[data.approvalHistory.length-1].status === "1" 
+        ? {
+            date: detail.date ? detail.date : data.date,
+            file: detail.file ? detail.file : data.file,
+            text: detail.text ? detail.text : data.text,
+            uploadedFile: detail.uploadedFile ? detail.uploadedFile : data.uploadedFile,
+            video: detail.video ? detail.video : data.video,
+            checklist: detail.checklist ? detail.checklist : data.checklist
+        } 
+        : {
+            date: data.date,
+            file: data.file,
+            text: data.text,
+            uploadedFile: data.uploadedFile,
+            video: data.video,
+            checklist: data.checklist
+        };
+
+        // console.log(
+        //     "date",date,
+        //     "file",file,
+        //     "text",text,
+        //     "uploadedFile",uploadedFile,
+        //     "video",video,
+        //     "checklist",checklist
+        // );
+
+        this.g_a_text = data.hasText && data.approvalType !== at
+            ? {                
+                subtitles: [{ text: text }]
+            } : null;
+        this.g_a_date = data.hasDate && data.approvalType !== at
+            ? {
+                dateOrtext: {
+                    text: "Fecha de la actividad:",
+                    ...[date ? true : false].reduce((dateOtherData,isThereDate) => {
+                        dateOtherData[isThereDate ? "date" : "fields"] = isThereDate 
+                        ? date 
+                        : [{ 
+                            placeholder: "Fecha de la actividad", 
+                            fullwidth: false, 
+                            type: "date",
+                            validations: { 
+                                required: true, 
+                            }, 
+                          }];
+
+                        return dateOtherData;
+                    },{})
+                }
+            } : null;
+        this.g_a_download = data.hasFile && data.approvalType !== at
+            ? {
+                download: file ? {
+                    url: file.url,
+                    name: file.name,
+                } : null,
+            } : null;
+        this.g_a_video = data.hasVideo && data.approvalType !== at
+            ? {
+                video: video ? {
+                    url: video.url,
+                    name: video.name,
+                } : null,
+            } : null;
+        this.g_a_addMT = data.hasText && 
+            (data.hasDate || data.hasFile) && 
+            data.approvalType !== at
+            ? {
+                addMT: {                    
+                    ...Object.keys(data).reduce((items,checker) => {
+                        if (checker.includes("has")) {
+                            const name = checker === "hasText" ? "subtitles" : null; 
+                            if (name) items[name] = true;
+                        }
+                        return items;
+                    },{}),
+                }
+            } : null;
+        this.g_a_upload = data.hasUpload && data.approvalType !== at
+            ? {
+                upload: uploadedFile ? {
+                    uploadEmpty: false,
+                    url: uploadedFile.url,
+                    name: uploadedFile.name,
+                } : { uploadEmpty: true },
+            } : null;
+        
+        // CHECKLIST
+        this.g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
+                checklistObj["isGenericActivity"] = true;
+                if (hasChecklist) {
+                    checklistObj = {
+                        ...checklistObj,
+                        title: 'Los checklists',
+                        checkList: checklist
+                    }
+                }
+                return checklistObj;
+            },{});
+
+        this.g_a_action_btn = {
+                isGenericActivity: true,
+                action: (data.status === "1" || data.status === "2") 
+                    && +data.approvalType < 4 
+                    ? [
+                        {
+                            type: 7,
+                            name: data.status === "1" 
+                                ? (data.approvalType === "3" 
+                                    ? 'Enviar' 
+                                    : 'Guardar'
+                                  ) 
+                                : 'Cancelar solicitud'
+                        }
+                    ] : null,
+            };
     }
 
     ngAfterViewInit(): void {
@@ -72,6 +259,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     ngOnDestroy() {
+        this.isInstanciated = false;
+        this.loadedData = false;
         this.pecaDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
     }

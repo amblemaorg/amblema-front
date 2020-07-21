@@ -160,7 +160,12 @@
                         >&times;</button>
                       </div>
                       <div class="modal-body">
-                        <div #googleMap id="google-map"></div>
+                        <ng-container *ngIf="googleLoaded; else mapProblem">
+                          <div #googleMap id="google-map"></div>
+                        </ng-container>
+                        <ng-template #mapProblem>
+                          <p class="map-problem">Hubo un problema al cargar el mapa, por favor recargue la página.</p>
+                        </ng-template>                        
                       </div>
                     </div>
                   </div>

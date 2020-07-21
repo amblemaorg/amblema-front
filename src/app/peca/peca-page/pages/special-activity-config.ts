@@ -29,7 +29,7 @@ const dateAndStatus = {
     settings: {
         dateOrtext: {
             text: 'Fecha de la actividad especial:',
-            fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired },
+            fields: [{ label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         status: {
             text: 'Estatus',

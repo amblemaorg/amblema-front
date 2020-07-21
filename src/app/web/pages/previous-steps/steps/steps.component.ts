@@ -81,17 +81,8 @@ export class StepsComponent implements OnInit, OnDestroy {
       }
       //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
       // this.updateSteps(pjId);
-
-      if (this.stepsService.getIsPageReloaded()) {
-        this.subscription.add(
-          this.store.dispatch( new UpdateStepsProgress(pjId) ).subscribe(res => {
-            this.enabledTabs = true;
-          })
-        );          
-      } 
-
       this.subscription.add(
-        this.project_steps$.subscribe(res => {      
+        this.project_steps$.subscribe(res => {    
           this.project_id = pjId;
           if (res.steps.length>0) {
             this.fillCounter++;
@@ -157,6 +148,14 @@ export class StepsComponent implements OnInit, OnDestroy {
           }        
         })
       );
+
+      if (this.stepsService.getIsPageReloaded()) {
+        this.subscription.add(          
+          this.store.dispatch( new UpdateStepsProgress(pjId) ).subscribe(res => {
+            this.enabledTabs = true;
+          })
+        );
+      }
     }
     // });
   }
