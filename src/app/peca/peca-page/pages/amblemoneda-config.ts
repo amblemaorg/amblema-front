@@ -189,9 +189,11 @@ const charlaConDocentes = {
             name: 'hola.png',
         },
         subtitles:
-        {
-            text: '',
-        },
+        [
+            {
+                text: '',
+            },
+        ]
     }
 }
 

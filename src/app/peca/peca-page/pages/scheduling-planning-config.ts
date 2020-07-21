@@ -37,9 +37,14 @@ const reunionAprobacionSet = {
             ],
             placeholder: "Pendiente"
         },
-        subtitles: {
-            text: '',
-        },
+        subtitles: [
+            {
+                text: 'vamosssssssssssssss'
+            },
+            {
+                text: 'deporrrrrrrrrrrrrrrr'
+            },
+        ]
     }
 }
 

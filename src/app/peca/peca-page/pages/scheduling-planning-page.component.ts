@@ -75,8 +75,8 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
         this.updateDataToBlocks();
     }
     updateDataToBlocks() {
-        this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
-        this.setBlockData("reunionAmblema", this.reunionAmblemaData);
+        //this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
+        //this.setBlockData("reunionAmblema", this.reunionAmblemaData);
 
     }
 

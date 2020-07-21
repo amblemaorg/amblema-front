@@ -130,7 +130,7 @@
                 {{ settings.title.text }}
             </h5> <br *ngIf="settings.title">
     
-            <div 
+           <!--  <div 
                 class="sub-titles mb-2" 
                 *ngIf="settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
@@ -139,9 +139,9 @@
             >
                 <h6 class="sub-title">{{ settings.subtitles.title }}</h6>
                 <p [class.text-justify]="settings.isGenericActivity">{{ settings.subtitles.text }}</p>
-            </div>
+            </div> -->
 
-            <!-- <div 
+            <div 
                 class="sub-titles mb-2" 
                 *ngFor="let subtitle of settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
@@ -150,7 +150,7 @@
             >
                 <h6 class="sub-title">{{ subtitle.title }}</h6>
                 <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>
-            </div> -->
+            </div>
         <!-- </ng-container> -->
     </div>
 
