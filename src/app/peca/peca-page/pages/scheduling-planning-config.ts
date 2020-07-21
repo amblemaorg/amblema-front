@@ -39,10 +39,7 @@ const reunionAprobacionSet = {
         },
         subtitles: [
             {
-                text: 'vamosssssssssssssss'
-            },
-            {
-                text: 'deporrrrrrrrrrrrrrrr'
+                text: ''
             },
         ]
     }
@@ -59,10 +56,11 @@ const propuestaAmblema = {
             text: 'Estatus',
             subText: 1
         },
-        subtitles:  {
-            text: '',
-        },
-        
+        subtitles:  [
+            {
+                text: '',
+            },
+        ],        
         action: [{
             type: 3,
             name: 'Enviar',

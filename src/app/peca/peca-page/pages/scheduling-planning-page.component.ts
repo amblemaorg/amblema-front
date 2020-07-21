@@ -75,8 +75,8 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
         this.updateDataToBlocks();
     }
     updateDataToBlocks() {
-        //this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
-        //this.setBlockData("reunionAmblema", this.reunionAmblemaData);
+        this.setBlockData("propuestaAmblema", this.propuestaAmblemaData);
+        this.setBlockData("reunionAmblema", this.reunionAmblemaData);
 
     }
 
@@ -87,9 +87,11 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
 
     setPropuestaTextData() {
         this.propuestaAmblemaData = {
-            subtitles: {
-                text: this.text
-            }
+            subtitles: [
+                {
+                    text: this.text
+                }
+            ]
         }
     }
 
@@ -100,9 +102,11 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
 
     setReunionTextData() {
         this.reunionAmblemaData = {
-            subtitles: {
-                text: this.reunion
-            }
+            subtitles: [
+                {
+                    text: this.reunion
+                }
+            ]
         }
     }
 
