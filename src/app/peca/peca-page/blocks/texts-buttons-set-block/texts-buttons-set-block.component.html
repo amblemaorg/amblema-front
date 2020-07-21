@@ -132,14 +132,14 @@
     
             <div 
                 class="sub-titles mb-2" 
-                *ngFor="let subtitle of settings.subtitles"
+                *ngIf="settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
                 [class.text-incremented]="settings.isFromCustomTableActions"
                 [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
             >
-            <h6 class="sub-title">{{ subtitle.title }}</h6>           
-            <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>    
-                </div>
+                <h6 class="sub-title">{{ settings.subtitles.title }}</h6>
+                <p>{{ settings.subtitles.text }}</p>
+            </div>
         <!-- </ng-container> -->
     </div>
 
