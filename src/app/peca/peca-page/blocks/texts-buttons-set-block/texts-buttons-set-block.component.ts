@@ -54,6 +54,7 @@ export class TextsButtonsSetBlockComponent
     addMT?: { // to set margin top to fields
       subtitles?: boolean;
     };
+    isGenericActivity?: boolean;
     subtitles: {
       title?: string; // subtitle
       text: string; // paragraph
@@ -165,7 +166,10 @@ export class TextsButtonsSetBlockComponent
   }
 
   setData(data: any) {
+    this.settings.isGenericActivity = false;
+
     if (data["isGenericActivity"]) {
+      this.settings.isGenericActivity = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
       this.settings.download = data["download"] ? data.download : null;
       this.settings.subtitles = data["subtitles"] ? data.subtitles : null;
@@ -334,7 +338,11 @@ export class TextsButtonsSetBlockComponent
 
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
               this.store.dispatch([new FetchPecaContent(this.pecaId)]);
-            }, (error) => {
+            }, (error) => {      
+              const error_msg = (error.error && error.error instanceof ProgressEvent) 
+                ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+        
               this.isSending = false;
               this.toastr.error(
                 error.error && error.error["msg"] 
@@ -343,7 +351,7 @@ export class TextsButtonsSetBlockComponent
                         ? `${error.error["msg"]}: ${error.error["entity"]}` 
                         : error.error["msg"]
                     )
-                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                  : error_msg,
                 "",
                 { positionClass: "toast-bottom-right" }
               );
@@ -392,6 +400,10 @@ export class TextsButtonsSetBlockComponent
             this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
+            const error_msg = (error.error && error.error instanceof ProgressEvent) 
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
@@ -403,7 +415,7 @@ export class TextsButtonsSetBlockComponent
                     ? error.error["cardId"][0].msg 
                     : error.error && error.error["msg"] 
                       ? error.error["msg"]
-                      : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                      : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -441,11 +453,14 @@ export class TextsButtonsSetBlockComponent
         this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
+        const error_msg = (error.error && error.error instanceof ProgressEvent) 
+          ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+          : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
         this.isSending = false;
         this.toastr.error(
           error.error && error.error["msg"] 
             ? error.error["msg"]
-            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+            : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
         );       

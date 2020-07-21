@@ -138,7 +138,7 @@
                 [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
             >
                 <h6 class="sub-title">{{ subtitle.title }}</h6>
-                <p>{{ subtitle.text }}</p>
+                <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>
             </div>
         <!-- </ng-container> -->
     </div>
