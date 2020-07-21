@@ -104,14 +104,27 @@ export class AccordionBlockComponent
           ].contContenido = data.topics1[i].contents[l];
         }
         /* Estas lineas de codigo corresponden a la informacion blanca (Nivel, Semanas, Tiempo estimado de ejecución, Técnica, Recursos, Evaluación y Actividades) del componente de proyecto ambiental */
-        for (let k= 0; k < data.topics1[i].levels.length; k++) {
-         console.log("settings",  this.settings.items[i].childBlocks[0].settings)
+      //  for (let k= 0; k < data.topics1[i].levels.length; k++) {
+      //  for (let k= 0; k < data.topics1[i].levels.length; k++) {
+
+       // }
+       // console.log("settings",  this.settings.items[i].childBlocks[0].settings.infoContainer[i])
          //console.log("data",  data.topics1[i].levels)
          //console.log("hola");
-        }
+       // }
        // console.log("data",  data.topics1[i].levels)
 
 
+      }
+      //infocontainer lenght es simulando la cantidad de grados que hay, items deberia ser I. ChildBlocks deberia ser 0 y datosNivel 0
+      //ESTE ES EL FOR ORIGINAL DE PRUEBA, LO HICE CON 2 PORQUE ESTOY RECIBIENDO 2 ELEMENTOS EN LA BD
+      //LO ESTOY HACIENDO PARA MOSTRAR SOLO EL PRIMER ELEMENTO DEL ARRGELO, ES DECIR, GREOGRAFIA DE VENEZUELA
+      //for (let k= 0; k < this.settings.items[0].childBlocks[0].settings.infoContainer.length; k++) {
+        for (let k= 0; k < 2; k++) {
+        console.log("settings",  this.settings.items[0].childBlocks[0].settings.infoContainer[k].datosNivel[0])
+        console.log("data",  data.topics1[k].levels[0])  //aqui deberia ser topics1[i]
+        this.settings.items[0].childBlocks[0].settings.infoContainer[0].datosNivel[0].nivel=data.topics1[0].levels[0].target[0].label
+        //Cambia infocontainer por k y topics por k a ver
       }
     }
      else if (data["topics2"]) {
