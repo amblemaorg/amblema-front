@@ -646,6 +646,10 @@ export class FormBlockComponent
           }
         },
         error => {
+          const error_msg = (error.error && error.error instanceof ProgressEvent) 
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
@@ -670,7 +674,7 @@ export class FormBlockComponent
                   ? error.error["cardId"][0].msg 
                   : error.error && error.error["msg"] 
                     ? error.error["msg"]
-                    : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                    : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );
