@@ -72,13 +72,57 @@ const infoGeneral1 = {
                 datosNivel:
                     [
                         {
-                            nivel: '(estatico)Primer grado',
+                            nivel: '(estatico)Segundo grado',
                             week: [
                                 { contWeek: '(estatico)020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                             ],
-                            time: '(estatico)45 min',
+                            time: '(estatico)46 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' }
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' },
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' },
+                            ],
+                            title: 'Actividades',
+                            checkList: [
+                                { name: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            },
+            {
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Sexto grado',
+                            week: [
+                                { contWeek: '(estatico)020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                            ],
+                            time: '(estatico)46 min',
                             tecnica: [
                                 { contTecnica: '(estatico)Juego didactico' },
                                 { contTecnica: '(estatico)Sopa de letra' }
@@ -190,7 +234,7 @@ const infoGeneral2 = {
                 datosNivel:
                     [
                         {
-                            nivel: '(estatico)Primer grado',
+                            nivel: '(estatico)Tercer grado',
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
@@ -308,7 +352,7 @@ const infoGeneral3 = {
                 datosNivel:
                     [
                         {
-                            nivel: '(estatico)Primer grado',
+                            nivel: '(estatico)Cuarto grado',
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
