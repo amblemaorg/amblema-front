@@ -256,7 +256,7 @@ export class FormBlockComponent
     if (data.setContent) {
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
-        this.settings.formsContent[attr].options = data.data[attr];        
+        this.settings.formsContent[attr].options = data.data[attr];
 
         if (
           attr == "section" && 
@@ -273,7 +273,8 @@ export class FormBlockComponent
           (
             this.componentForm.controls["grades"].value == "" ||
             !this.componentForm.dirty
-          )
+          ) &&
+          this.settings.formsContent[attr].options.length > 0
         ) {
           this.componentForm.patchValue({ 
             grades: this.settings.formsContent["grades"].options[0].id 
@@ -645,6 +646,10 @@ export class FormBlockComponent
           }
         },
         error => {
+          const error_msg = (error.error && error.error instanceof ProgressEvent) 
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
@@ -663,7 +668,13 @@ export class FormBlockComponent
             // errorType!="regular" 
             error.error && error.error["name"] && error.error["name"][0]
               ? error.error["name"][0].msg 
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              : error.error && error.error["email"] && error.error["email"][0]
+                ? error.error["email"][0].msg 
+                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                  ? error.error["cardId"][0].msg 
+                  : error.error && error.error["msg"] 
+                    ? error.error["msg"]
+                    : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );

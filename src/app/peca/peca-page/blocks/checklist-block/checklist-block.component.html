@@ -58,21 +58,22 @@
             </span>
         </div>
     </div>
-    <div *ngFor="let dato of info.datosNivel" class="style-checklist">
-        <div *ngIf="flag;else other_content">
-        <h6>{{dato.title}}</h6>
-        <div class="mt-3 mb-3" *ngFor="let check of prueba">
+    <div *ngFor="let dato of info.datosNivel" class="style-checklist"  [class.in-generic-activity]="info.isFromGenericActivity">
+        
+        <ng-container *ngIf="flag;else other_content">
+        <h6 *ngIf="dato.title">{{dato.title}}</h6>
+        <div class="mt-3 mb-3" *ngFor="let check of dato.checkList">
             <nb-checkbox class="prueba" status="basic"><span class="descripcion">{{check.name}}</span>
             </nb-checkbox>
         </div>
-    </div>
+    </ng-container>
 
 
 
     <ng-template #other_content>
         <h6>{{dato.title}}</h6>
         <div class="mt-3 mb-3" *ngFor="let check of dato.checkList">
-            <nb-checkbox class="prueba" status="basic"><span class="descripcion">{{check.description}}</span>
+            <nb-checkbox class="prueba" status="basic"><span class="descripcion">{{check.name}}</span>
             </nb-checkbox>
         </div>
     </ng-template>
@@ -89,8 +90,11 @@
             </a>
         </span>
     </div>
-</div>
-    <div class="style-btn">
+
+    <div 
+        class="style-btn"
+        [class.no-margin]="info.isFromGenericActivity"
+    >
         <button *ngIf="info.button" title="general"
             class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{info.button.name}}
         </button>

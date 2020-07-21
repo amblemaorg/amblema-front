@@ -1,10 +1,33 @@
-const pageUnderConstructionText = {
+const genericActivityFields = {
     component: 'textsbuttons',
+    name: 'genericActivityFields',
     settings: {
-        title: {
-            aligning: 'left',
-            text: 'Página de actividad genérica en construcción',
-        },
+        dateOrtext: {},
+        download: {},
+        subtitles: [],
+        video: {},
+        addMT: {},
+        upload: null,
+    }
+}
+
+const genericActivityChecklist = {
+    component: 'checkList',
+    name: 'genericActivityChecklist',
+    settings: {
+        infoContainer: [
+            {   
+                isFromGenericActivity: true,                
+            }
+        ]
+    }
+}
+
+const genericActivityActionButton = {
+    component: 'textsbuttons',
+    name: 'genericActivityActionButton',
+    settings: {
+        action: null,
     }
 }
 
@@ -14,16 +37,19 @@ export const GENERIC_ACTIVITY_CONFIG = {
     },
     blocks: [
         {
-            component: 'profiles',
+            component: 'genericactivity',
+            name: 'genericActivityConfig',
             settings: {                
                 items: [
                     {     
                         childBlocks: [
-                            { ...pageUnderConstructionText },                            
+                            { ...genericActivityFields },
+                            { ...genericActivityChecklist },                         
+                            { ...genericActivityActionButton },
                         ]
                     },
                 ],
             },
         },
-    ]
-}
+    ],
+};

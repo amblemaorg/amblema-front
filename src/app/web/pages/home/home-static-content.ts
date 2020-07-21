@@ -25,6 +25,7 @@ export const HOME_CONTENT = {
       totalSponsors: 22,
       charts: [
         {
+          id: "wordsPerMinIndex",
           title: "Diagnóstico de lectura",
           description:
             "Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo.",
@@ -57,6 +58,7 @@ export const HOME_CONTENT = {
           },
         },
         {
+          id: "multiplicationsPerMinIndex",
           title: "Diagnóstico de multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
@@ -89,6 +91,7 @@ export const HOME_CONTENT = {
           },
         },
         {
+          id: "operationsPerMinIndex",
           title: "Diagnóstico de razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo.",

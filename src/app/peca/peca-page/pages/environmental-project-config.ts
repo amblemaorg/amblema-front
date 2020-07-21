@@ -52,10 +52,10 @@ const infoGeneral1 = {
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -96,10 +96,10 @@ const infoGeneral1 = {
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -170,10 +170,10 @@ const infoGeneral2 = {
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -214,10 +214,10 @@ const infoGeneral2 = {
                             ],
                             title: '(estatico)Actividades',
                             checkList: [
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -288,10 +288,10 @@ const infoGeneral3 = {
                             ],
                             title: 'Actividades',
                             checkList: [
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -332,10 +332,10 @@ const infoGeneral3 = {
                             ],
                             title: '(estatico)Actividades',
                             checkList: [
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { description: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },

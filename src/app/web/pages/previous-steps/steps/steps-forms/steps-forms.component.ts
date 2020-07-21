@@ -41,7 +41,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   // MAPA------------------------------------------------------
-  google_: any;
+  googleLoaded: boolean;
   map: any;//google.maps.Map;
   geocoder: any;
   lat = 8.60831668; // Venezuela's middle latitude
@@ -177,7 +177,28 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       this.map = null;
       this.currentMarker = null;
 
-      this.mapSettings(this.lat, this.lng, 7);
+      // this.mapSettings(this.lat, this.lng, 7);
+
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          this.mapSettings(this.lat, this.lng, 7); 
+        }        
+      };
+      let interval = null;
+
+      try {                
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {      
+          try {            
+            initMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
+
     }
   }
 
@@ -265,9 +286,28 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           } 
           else {
             if (this.schoolmap && this.mapOptions) {
-              if (this.mapOptions.zoom != 7) {
-                this.mapSettings(this.lat,this.lng,7);
-                this.mapInitializer();  
+              if (this.mapOptions.zoom != 7) {                
+                const initMap = () => {
+                  if (google) {
+                    clearInterval(interval);
+                    this.mapSettings(this.lat,this.lng,7);
+                    this.mapInitializer();   
+                  }           
+                };
+                let interval = null;
+        
+                try {                      
+                  initMap();
+                } catch (error) {
+                  interval = setInterval(()=> {
+                    try {         
+                      initMap();               
+                    } catch (error) {
+                      // TODO --
+                    }
+                  }, 2000); 
+                }
+
               }            
             }          
           }
@@ -283,8 +323,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
 
   // MAP CONFS -------------------------------------------------------------------------------------------
   mapSettings(lat,lng,zoom) {
-    this.google_ = google || null;
-    if ( !isNullOrUndefined(this.google_) ) {
+    if (google) {
+      this.googleLoaded = true;
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
@@ -348,46 +388,59 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   }
 
   mapPositioner(state: string, county: string) {
-    // google maps geocoding
-    this.google_ = google || null; 
-    if ( !isNullOrUndefined(this.google_) ) {
-
-      this.geocoder.geocode({ componentRestrictions: {
-        country: 'Venezuela',
-        administrativeArea: state,
-        locality: county
-      } }, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results.length > 0)
-            this.mapSettings(
-              results[0].geometry.location.lat(),
-              results[0].geometry.location.lng(),
-              11
-            );
-          else           
-            this.mapSettings(this.lat, this.lng, 7);
-        } 
-        else {
-          switch (status) {
-            case 'ZERO_RESULTS':
-              console.log('None result found, showing default map options');
-              break;
-            case 'OVER_QUERY_LIMIT':
-              console.error('You are over your quota');
-              break;
-            case 'REQUEST_DENIED':
-              console.error('Your site is unavailable to use geocoder');
-              break;
-            default:
-              console.error('Unknown server error');
-              break;
+    // google maps geocoding    
+    const initMap = () => {
+      if (google) {
+        clearInterval(interval);
+        this.geocoder.geocode({ componentRestrictions: {
+          country: 'Venezuela',
+          administrativeArea: state,
+          locality: county
+        } }, (results, status) => {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results.length > 0)
+              this.mapSettings(
+                results[0].geometry.location.lat(),
+                results[0].geometry.location.lng(),
+                11
+              );
+            else           
+              this.mapSettings(this.lat, this.lng, 7);
+          } 
+          else {
+            switch (status) {
+              case 'ZERO_RESULTS':
+                console.log('None result found, showing default map options');
+                break;
+              case 'OVER_QUERY_LIMIT':
+                console.error('You are over your quota');
+                break;
+              case 'REQUEST_DENIED':
+                console.error('Your site is unavailable to use geocoder');
+                break;
+              default:
+                console.error('Unknown server error');
+                break;
+            }
+            this.mapSettings(this.lat,this.lng,7);          
           }
-          this.mapSettings(this.lat,this.lng,7);          
-        }
-        this.mapInitializer();
-      });
+          this.mapInitializer();
+        });
+      }           
+    };
+    let interval = null;
 
-    }    
+    try {                      
+      initMap();
+    } catch (error) {
+      interval = setInterval(()=> {
+        try {         
+          initMap();               
+        } catch (error) {
+          // TODO --
+        }
+      }, 2000); 
+    }
 
     // OpenStreetMap
     // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
@@ -434,14 +487,31 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       }
     } else {
       if (this.globals.isBrowser) {
-        this.google_ = google || null; 
-        if ( !isNullOrUndefined(this.google_) ) {
-          this.showMap = true;
-          setTimeout(() => {
-            if (this.schoolmap)
-              this.mapInitializer(this.disable);
-          });  
-        }             
+        const initMap = () => {
+          if (google) {
+            clearInterval(interval);
+            this.showMap = true;
+            setTimeout(() => {
+              if (this.schoolmap)
+                this.mapInitializer(this.disable);
+            }); 
+          }           
+        };
+        let interval = null;
+        let num = 0;
+
+        try {
+          initMap();
+        } catch (error) {
+          interval = setInterval(()=> {
+            try {
+              initMap();               
+            } catch (error) {
+              // TODO --
+            }
+          }, 2000); 
+        }
+
       }
     }
   }
@@ -548,12 +618,27 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       this.sendingForm = false; 
       fo.reset();
 
-      this.google_ = google || null; 
-      if (this.who == "school" && !isNullOrUndefined(this.google_) ) {     
-        if (this.schoolmap){
-          this.mapSettings(this.lat,this.lng,7);
-          this.mapInitializer(true);
-        } 
+      const reinitMap = () => {
+        if (this.who == "school" && google ) {    
+          clearInterval(interval); 
+          if (this.schoolmap){
+            this.mapSettings(this.lat,this.lng,7);
+            this.mapInitializer(true);
+          } 
+        }
+      };
+      let interval = null;
+
+      try {                      
+        reinitMap();
+      } catch (error) {
+        interval = setInterval(()=> {
+          try {         
+            reinitMap();               
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
       }
         
       this.emitUpdate.emit({
@@ -692,24 +777,40 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     });
 
     if (res.coordinate && this.globals.isBrowser) {
-      this.google_ = google || null; 
-      if ( !isNullOrUndefined(this.google_) ) {
-        this.showMap = true;
-        setTimeout(() => {
-          if (this.schoolmap) {
-            this.mapSettings(
-              res.coordinate.latitude, 
-              res.coordinate.longitude, 
-              11
-            );
-            this.mapInitializer(true);
-            this.loadAllMarkers({
-              name: res.name,
-              coordinate: res.coordinate
-            });
-          }        
-        });
-      }      
+      const initMap = () => {
+        if (google) {
+          clearInterval(interval);
+          this.showMap = true;
+          setTimeout(() => {
+            if (this.schoolmap) {
+              this.mapSettings(
+                res.coordinate.latitude, 
+                res.coordinate.longitude, 
+                11
+              );
+              this.mapInitializer(true);
+              this.loadAllMarkers({
+                name: res.name,
+                coordinate: res.coordinate
+              });
+            }        
+          });
+        }
+      };
+      let interval = null;
+
+      try {                      
+        initMap();
+      } catch (error) {
+        interval = setInterval(()=> {
+          try {         
+            initMap();               
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000); 
+      }
+
     } else this.showMap = false;
 
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);

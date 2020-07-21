@@ -1,13 +1,67 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 
+const charts = [
+  {
+    title: "Diagnóstico de lectura",
+    id: "wordsPerMinIndex",
+    description:
+      "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+    type: "bar",
+    data: [],
+    goals: [{ label: "Valor esperado", value: 1 }],
+    testimonial: {
+      firstName: "Oscar A.",
+      lastName: "Pietri Pacheco",
+      image: "./assets/images/profile-oscar.jpg",
+      function: "Docente de Matemática",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+    },
+  },
+  {
+    title: "Diagnóstico de multiplicación",
+    id: "multiplicationsPerMinIndex",
+    description:
+      "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
+    type: "bar",
+    data: [],
+    goals: [{ label: "Valor esperado", value: 1 }],
+    testimonial: {
+      firstName: "Oscar A.",
+      lastName: "Pietri Pacheco",
+      image: "./assets/images/profile-oscar.jpg",
+      function: "Docente de Matemática",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+    },
+  },
+  {
+    title: "Diagnóstico de razonamiento Lógico - Matemático",
+    id: "operationsPerMinIndex",
+    description:
+      "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+    type: "bar",
+    data: [],
+    goals: [{ label: "Valor esperado", value: 1 }],
+    testimonial: {
+      firstName: "Oscar A.",
+      lastName: "Pietri Pacheco",
+      image: "./assets/images/profile-oscar.jpg",
+      function: "Docente de Matemática",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+    },
+  },
+];
+
 const schoolsList = {
   schools: [
     {
       lat: 8.60123,
       lng: -67.831185,
       name: "U.E.E Santo Ángel",
-      slug: "escuela-santo-angel",
+      slug: "001 Escuela_Santa_Maria",
       sponsor: "Proter & Gamble",
       direction: "Aragua, Lara, Carabobo, Yaracuy, Venezuela",
       staff: "Información del personal docente, obrero y administrativo",
@@ -1264,5 +1318,9 @@ export class SchoolService {
     let school;
     school = schoolsList.schools.filter((item) => item.slug === slug)[0];
     return of<any>(school);
+  }
+
+  getChartsTemplateJSON(): Observable<any> {
+    return of<any>(charts);
   }
 }

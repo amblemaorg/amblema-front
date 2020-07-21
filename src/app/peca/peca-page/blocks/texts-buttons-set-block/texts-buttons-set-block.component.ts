@@ -8,6 +8,7 @@ import { Subscription, Observable } from "rxjs";
 import { Select, Store } from "@ngxs/store";
 import { PecaState } from '../../../../store/states/peca/peca.state';
 import { textsAndButtonsAdaptBody } from './tb-body-adapter';
+import { EmbedVideoService } from 'ngx-embed-video';
 
 @Component({
   selector: 'buttons-set-block',
@@ -28,8 +29,8 @@ export class TextsButtonsSetBlockComponent
     buttonCode?: string; // to check if this instance can make actions receiving data from table, form or both
     dateOrtext: {
       text: string;
-      date: Date;
-      fields: string[];
+      date: string;
+      fields: any[];
     };
     selectStatus: {
       text: string;
@@ -50,17 +51,26 @@ export class TextsButtonsSetBlockComponent
       aligning: string; // 'center' for center aligning, 'left' otherwise
       text: string;
     };
+    addMT?: { // to set margin top to fields
+      subtitles?: boolean;
+    };
+    isGenericActivity?: boolean;
     subtitles: {
-      title: string; // subtitle
+      title?: string; // subtitle
       text: string; // paragraph
     };
     // }[];
     action: {
-      // 1 guardar, 2 adjuntar fotos, 3 enviar, 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar
+      /**
+       * 1 guardar, 2 adjuntar fotos, 3 enviar, 
+       * 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar, 
+       * (Para Actividad Generica) 7 Enviar/Guardar
+       */
       type: number;
       name: string; // text in the button
     }[];
     upload: any;
+    uploaddown?: any;
     download: any;
     btnGeneral: any;
     inputAndBtns: {
@@ -80,6 +90,10 @@ export class TextsButtonsSetBlockComponent
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
     isDeleting?: boolean; // SI option on delete mode modal
+    video?: { // for generic activity view
+      url?: string;
+      name?: string;
+    }
   };
 
   pecaId: string;
@@ -95,11 +109,16 @@ export class TextsButtonsSetBlockComponent
 
   sleepSend: boolean; // disables actions button meanwhile peca content gets updated
 
+  showThisVideo: boolean;  
+  timesVideoSourceCalled:number = 0;
+  activity_video: any;
+
   constructor(
     private globals: GlobalService, 
     private fetcher: HttpFetcherService,
     private store: Store,
     private toastr: ToastrService,
+    private embedService: EmbedVideoService
   ) {
     this.type = 'presentational';
     this.component = 'buttons';
@@ -137,29 +156,45 @@ export class TextsButtonsSetBlockComponent
     };
     this.subscription.unsubscribe();
     this.sleepSend = null;
+    this.showThisVideo = false;  
+    this.timesVideoSourceCalled = 0;
+    this.activity_video = null;
   }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
 
-  setData(data: any) {
-    if (data["status"]) this.settings.status.subText = data.status.subText;
-    if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
-    if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
-    if (data["title"]) console.log("gool", this.settings);
-    if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
-    if (data["enviromentTitleLapse2"]) this.settings.title.text=data.enviromentTitleLapse2;
-    if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3;
-
-      
+  setData(data: any) { 
+    this.settings.isGenericActivity = false;
+    if (data["isGenericActivity"]) {
+      this.settings.isGenericActivity = true;
+      this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
+      this.settings.download = data["download"] ? data.download : null;
+      this.settings.subtitles = data["subtitles"] ? data.subtitles : null;
+      this.settings.addMT = data["addMT"] ? data.addMT : null;
+      this.settings.upload = data["upload"] ? data.upload : null;
+      this.settings.action = data["action"] ? data.action : null;
+      if (data["video"]) {        
+        this.resetTimesLoadedVideo();
+        this.videoShower(data.video);
+      } else {
+        this.settings.video = null;
+        this.showThisVideo = false;
+        this.activity_video = null;
+      }
+    } 
+    else {
+      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
+      if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
+      if (data["title"]) console.log("gool", this.settings);
+      if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
+      if (data["enviromentTitleLapse2"]) this.settings.title.text=data.enviromentTitleLapse2;
+      if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3; 
+       }    
   }
 
-  // setFetcherUrls({ delete: deleteFn }) {
-  //   this.settings.fetcherUrls = {
-  //     delete: deleteFn,
-  //   };
-  // }
   setFetcherUrls({ put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
       put,
@@ -309,10 +344,20 @@ export class TextsButtonsSetBlockComponent
 
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
               this.store.dispatch([new FetchPecaContent(this.pecaId)]);
-            }, (error) => {
+            }, (error) => {      
+              const error_msg = (error.error && error.error instanceof ProgressEvent) 
+                ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+        
               this.isSending = false;
               this.toastr.error(
-                "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                error.error && error.error["msg"] 
+                  ? (
+                      error.error["entity"] && error.error["entity"].length > 0 
+                        ? `${error.error["msg"]}: ${error.error["entity"]}` 
+                        : error.error["msg"]
+                    )
+                  : error_msg,
                 "",
                 { positionClass: "toast-bottom-right" }
               );
@@ -362,10 +407,22 @@ export class TextsButtonsSetBlockComponent
             this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
+            const error_msg = (error.error && error.error instanceof ProgressEvent) 
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
-              "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              (error.error && error.error["name"] && error.error["name"][0])
+                ? error.error["name"][0].msg 
+                : error.error && error.error["email"] && error.error["email"][0]
+                  ? error.error["email"][0].msg 
+                  : error.error && error.error["cardId"] && error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg 
+                    : error.error && error.error["msg"] 
+                      ? error.error["msg"]
+                      : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -403,15 +460,77 @@ export class TextsButtonsSetBlockComponent
         this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
+        const error_msg = (error.error && error.error instanceof ProgressEvent) 
+          ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+          : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
         this.isSending = false;
         this.toastr.error(
-          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+          error.error && error.error["msg"] 
+            ? error.error["msg"]
+            : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
-        );
+        );       
         console.error(error);
       }
     );
   }
 
+  // For videos  
+  resetTimesLoadedVideo() {
+    this.timesVideoSourceCalled = 0;
   }
+
+  getVideo(url) {
+    if (
+      this.showThisVideo && 
+      this.timesVideoSourceCalled < 10 &&
+      !this.activity_video 
+    ) {
+      this.activity_video = this.embedService.embed(url);
+      if (this.activity_video) this.timesVideoSourceCalled++;
+      return this.activity_video;
+    }
+    else if (this.activity_video) 
+      return this.activity_video;
+  }
+
+  videoShower(video) {
+    this.showThisVideo = false;
+    this.settings.video = null;
+    if (video && video.url) {
+      setTimeout(() => {
+        this.showThisVideo = true;
+        this.settings.video = video;
+        this.timesVideoSourceCalled = 0;
+      });
+    }
+  }
+
+  // FOR UPLOAD
+  fileMngr(e) {
+    if (
+      e && e.target && e.target.files 
+      && e.target.files.length > 0
+    ) {
+      this.settings.upload = this.settings.upload ? {
+        ...this.settings.upload,
+        uploadEmpty: false,
+        name: <File>e.target.files[0].name,
+        file: <File>e.target.files[0],
+        url: ''
+      } : {
+        uploadEmpty: true,
+      }; 
+    }
+  }
+
+  clickUpload(btn) {
+    btn.getElementsByClassName('tb-upload-btn-input-file')[0].click();
+  }
+
+  shortenName(name: string) {
+    return name.length > 40 ? `${name.substr(0,10)}...${name.substr(30)}` : name;
+  }
+
+}

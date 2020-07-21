@@ -7,26 +7,25 @@
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span [class.display-date]="settings.dateOrtext.date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"></span>
                     <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
-                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields">
+                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields && settings.dateOrtext.fields.length > 0">
                         <input
-                        #inputDate
-                        type="date" 
-                        class="form-control" 
-                        (change)="glbls.validateDate($event,'greater')"
+                            #inputDate
+                            type="date" 
+                            class="form-control is-date-input"                            
+                            (change)="glbls.validateDate($event,'greater')"
                         />
                         <input 
-                        [class.d-none]="inputDate.value.length > 0"
-                        class="form-control is-date-placeholder"
-                        autocomplete='off'
-                        type="text"
-                        readonly    
-                        (click)="focusDatePicker(inputDate)"
-                        />
-                        <!--
+                            [class.d-none]="inputDate.value.length > 0"
+                            class="form-control is-date-placeholder"
+                            autocomplete='off'
+                            type="text"
+                            readonly
+                            [placeholder]="settings.dateOrtext.fields[0].placeholder"    
+                            (click)="focusDatePicker(inputDate)"
+                        />                        
                         <div class="date-error-message">
                           <strong>La fecha debe ser mayor a la de hoy</strong>
-                        </div>
-                        -->
+                        </div>                       
                     </span>
                 </h6>
             </div>
@@ -50,7 +49,7 @@
                     }}</span>
                 </h6>
 
-                <a *ngIf="settings.download" title="Descargar" 
+                <a *ngIf="settings.download && settings.download.url" title="Descargar" 
                 [href]="settings.download.url" target="_blank" 
                 [download]="settings.download.name" 
                 class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4">Descargar</a>
@@ -136,25 +135,41 @@
                 *ngIf="settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
                 [class.text-incremented]="settings.isFromCustomTableActions"
+                [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
             >
                 <h6 class="sub-title">{{ settings.subtitles.title }}</h6>
-                <p>{{ settings.subtitles.text }}</p>
+                <p [class.text-justify]="settings.isGenericActivity">{{ settings.subtitles.text }}</p>
             </div>
         <!-- </ng-container> -->
     </div>
+
+    <!-- VIDEO SECTION -->
+    <div *ngIf="showThisVideo" class="video-section">
+        <div *ngIf="settings.video && settings.video.url" class="activity-video-container">
+            <div class="activity-video" [innerHTML]="getVideo(settings.video.url)"></div>              
+        </div>  
+    </div>
+
     <div 
-        *ngIf="(settings.action && settings.action.length>0) || settings.upload" 
+        *ngIf="(settings.action && settings.action.length>0) || settings.upload || settings.uploaddown" 
         class="d-inline-block buttons-wrapper"
         [class.text-center]="settings.isFromCustomTableActions"
         [class.py-3]="settings.isFromCustomTableActions"
     >
-        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="upload-btn-container" #uploadFile>
-            <input class="d-none" id="upload-btn-input-file" type="file">
-            <button id="upload-btn"  title="settings.upload.name"
-            class="btn btn-primary text-decoration-none py-1 px-4">
-            {{settings.upload.name}}
+        <div *ngIf="settings.upload" class="d-inline btn-in-wrapper" id="tb-upload-btn-container" #tbUploadFile>
+            <input class="d-none tb-upload-btn-input-file" id="tb-upload-btn-input-file" (change)="fileMngr($event)" type="file"
+                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
+            <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
+                (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
+                class="btn btn-primary text-decoration-none py-1 px-4">
+            {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
             </button>
         </div>
+
+        <a *ngIf="settings.uploaddown && settings.uploaddown.url" [title]="settings.uploaddown.name" 
+            [href]="settings.uploaddown.url" target="_blank" 
+            [download]="settings.uploaddown.name" 
+            class="btn btn-primary text-decoration-none py-1 px-4">{{settings.uploaddown.name}}</a>
     <!-- 
         <a *ngIf="settings.download" title="Descargar" 
         [href]="settings.download.url" target="_blank" 
