@@ -70,6 +70,9 @@ export class AccordionBlockComponent
       for (let i = 0; i < data.topics1.length; i++) {
         //Nombres de los acordeones
         this.settings.items[i].title = data.topics1[i].name;
+
+        /* Estas lineas de codigo es para la informacion azul (Tema, Objetivos, Estrategias y Contenidos) del componente de proyecto ambiental, fue hecho
+        De esta manera, con infoContainer[0] y principal[0] porque esta informacion siempre se muestra en el primer elemento de cada topico */
         //Temas
         this.settings.items[
           i
@@ -100,8 +103,18 @@ export class AccordionBlockComponent
             l
           ].contContenido = data.topics1[i].contents[l];
         }
+        /* Estas lineas de codigo corresponden a la informacion blanca (Nivel, Semanas, Tiempo estimado de ejecución, Técnica, Recursos, Evaluación y Actividades) del componente de proyecto ambiental */
+        for (let k= 0; k < data.topics1[i].levels.length; k++) {
+         console.log("settings",  this.settings.items[i].childBlocks[0].settings)
+         //console.log("data",  data.topics1[i].levels)
+         //console.log("hola");
+        }
+       // console.log("data",  data.topics1[i].levels)
+
+
       }
-    } else if (data["topics2"]) {
+    }
+     else if (data["topics2"]) {
       for (let i = 0; i < data.topics2.length; i++) {
         this.settings.items[i].title = data.topics2[i].name;
       }
