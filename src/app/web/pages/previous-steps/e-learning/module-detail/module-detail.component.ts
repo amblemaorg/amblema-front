@@ -9,6 +9,7 @@ import { Module, Image, ImaVideo, AnswerModule } from '../../../../../models/ste
 import { UserState } from '../../../../../store/states/e-learning/user.state';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { StepsState } from '../../../../../store/states/steps/project.state';
 
 @Component({
   selector: 'app-module-detail',
@@ -22,6 +23,8 @@ export class ModuleDetailComponent implements OnInit {
 
   @Select(UserState.user_id) coorId$: Observable<string>;
   @Select(UserState.user_type) userType$: Observable<string>;
+  @Select(StepsState.selected_proj_id) selectd_proj_id$: Observable<string>;
+
   current_coor_id:string = '';
 
   moduleInfo: Module;
@@ -91,28 +94,20 @@ export class ModuleDetailComponent implements OnInit {
   ngOnInit() {
     this.module_id = this.route.snapshot.params.id;
 
-    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
-      this.projectId = this.route.snapshot.params.idProject;
-      this.user_type = this.route.snapshot.params.userType;
-      this.user_id = this.route.snapshot.params.idUser;
-    }
-    else if (this.route.snapshot.children.length>0) {
-      if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
-            this.projectId = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject;  
-            this.user_type = this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType;
-            this.user_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser;
-      }
-    }
-
     this.moduleNum = this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(this.module_id) + 1;
     this.checkApprove(this.module_id);
 
+    this.selectd_proj_id$.subscribe(res => {
+      if (res) this.projectId = res;
+    });
+
     this.coorId$.subscribe(id_ => {
+      if (id_) this.user_id = id_;
       this.current_coor_id = id_;
     })
 
     this.userType$.subscribe(res => {
+      if (res) this.user_type = res;
       this.forAdminSetFalse = (res=="0" || res=="1") ? false : true;
     });
     
@@ -313,8 +308,7 @@ export class ModuleDetailComponent implements OnInit {
 
   goToMods() {
     this.router.navigate([
-      "previous-steps/modules",
-      { idProject: this.projectId, userType: this.user_type, idUser: this.user_id }
+      "previous-steps/modules"
     ]);
   }
 
