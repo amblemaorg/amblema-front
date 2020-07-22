@@ -16,12 +16,12 @@ const infoGeneral1 = {
                             estrategia: [
                                 { contEstrategia: '(estatico)estrategia 1' },
                                 { contEstrategia: '(estatico)estrategia 2' },
-                                { contEstrategia: '(estatico)estrategia 3' },
+                                { contEstrategia: '(estatico)estrategia 3' }
                             ],
                             contenido: [
-                                { contContenido: '(estatico)Prueba' },
+                                { contContenido: '(estatico)Pruseba' },
                                 { contContenido: '(estatico)Probando' },
-                                { contContenido: '(estatico)Pruebita' },
+                                { contContenido: '(estatico)Pruebita' }
                             ],
                         },
                     ],
@@ -32,7 +32,7 @@ const infoGeneral1 = {
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)45 min',
                             tecnica: [
@@ -43,22 +43,23 @@ const infoGeneral1 = {
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: 'Actividades',
                             checkList: [
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
                                 { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
@@ -76,7 +77,7 @@ const infoGeneral1 = {
                             week: [
                                 { contWeek: '(estatico)020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)46 min',
                             tecnica: [
@@ -87,22 +88,23 @@ const infoGeneral1 = {
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: 'Actividades',
                             checkList: [
                                 { name: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
                                 { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
@@ -120,7 +122,7 @@ const infoGeneral1 = {
                             week: [
                                 { contWeek: '(estatico)020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)46 min',
                             tecnica: [
@@ -131,22 +133,23 @@ const infoGeneral1 = {
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: 'Actividades',
                             checkList: [
                                 { name: '(estatico) Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
                                 { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
@@ -178,12 +181,12 @@ const infoGeneral2 = {
                             estrategia: [
                                 { contEstrategia: '(estatico)estrategia 1' },
                                 { contEstrategia: '(estatico)estrategia 2' },
-                                { contEstrategia: '(estatico)estrategia 3' },
+                                { contEstrategia: '(estatico)estrategia 3' }
                             ],
                             contenido: [
                                 { contContenido: '(estatico)Prueba' },
                                 { contContenido: '(estatico)Probando' },
-                                { contContenido: '(estatico)Pruebita' },
+                                { contContenido: '(estatico)Pruebita' }
                             ],
                         },
                     ],
@@ -194,33 +197,37 @@ const infoGeneral2 = {
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)45 min',
                             tecnica: [
                                 { contTecnica: '(estatico)Juego didactico' },
-                                { contTecnica: '(estatico)Sopa de letra' }
+                                { contTecnica: '(estatico)Sopa de letra' },
+                                { contTecnica: '(estatico)Exposiciones' },
+                                { contTecnica: '(estatico)Bailes' }
                             ],
                             recurso: [
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: 'Actividades',
                             checkList: [
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
+                                { link: '(estatico)https://binauraldev.com' },
                                 { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
@@ -238,33 +245,84 @@ const infoGeneral2 = {
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)45 min',
                             tecnica: [
                                 { contTecnica: '(estatico)Juego didactico' },
-                                { contTecnica: '(estatico)Sopa de letra' }
+                                { contTecnica: '(estatico)Sopa de letra' },
+                                { contTecnica: '(estatico)Exposiciones' },
+                                { contTecnica: '(estatico)Bailes' }
                             ],
                             recurso: [
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: '(estatico)Actividades',
                             checkList: [
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
+                                { link: '(estatico)https://binauraldev.com' }
+                            ]
+                        },
+                    ],
+                button: {
+                    name: 'Guardar'
+                },
+                line: true
+            },
+            {
+                datosNivel:
+                    [
+                        {
+                            nivel: '(estatico)Cuarto grado',
+                            week: [
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
+                            ],
+                            time: '(estatico)45 min',
+                            tecnica: [
+                                { contTecnica: '(estatico)Juego didactico' },
+                                { contTecnica: '(estatico)Sopa de letra' },
+                                { contTecnica: '(estatico)Exposiciones' },
+                                { contTecnica: '(estatico)Bailes' }
+
+                            ],
+                            recurso: [
+                                { contRecurso: '(estatico)plastilina' },
+                                { contRecurso: '(estatico)tijera' },
+                                { contRecurso: '(estatico)lapiz' },
+                                { contRecurso: '(estatico)borrador' }
+                            ],
+                            evaluacion: [
+                                { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
+                                { contEvaluacion: '(estatico)examen' },
+                                { contEvaluacion: '(estatico)examen-oral' }
+                            ],
+                            title: '(estatico)Actividades',
+                            checkList: [
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
+                            ],
+                            material: [
+                                { link: '(estatico)https://binauraldev.com/ecommerce/' },
+                                { link: '(estatico)https://binauraldev.com' },
                                 { link: '(estatico)https://binauraldev.com' }
                             ]
                         },
@@ -296,12 +354,12 @@ const infoGeneral3 = {
                             estrategia: [
                                 { contEstrategia: '(estatico)estrategia 1' },
                                 { contEstrategia: '(estatico)estrategia 2' },
-                                { contEstrategia: '(estatico)estrategia 3' },
+                                { contEstrategia: '(estatico)estrategia 3' }
                             ],
                             contenido: [
                                 { contContenido: '(estatico)Prueba' },
                                 { contContenido: '(estatico)Probando' },
-                                { contContenido: '(estatico)Pruebita' },
+                                { contContenido: '(estatico)Pruebita' }
                             ],
                         },
                     ],
@@ -312,7 +370,7 @@ const infoGeneral3 = {
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)45 min',
                             tecnica: [
@@ -323,19 +381,19 @@ const infoGeneral3 = {
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: 'Actividades',
                             checkList: [
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },
@@ -356,7 +414,7 @@ const infoGeneral3 = {
                             week: [
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
                                 { contWeek: '(estatico)2020-07-18T15:27:23' },
-                                { contWeek: '(estatico)2020-07-18T15:27:23' },
+                                { contWeek: '(estatico)2020-07-18T15:27:23' }
                             ],
                             time: '(estatico)45 min',
                             tecnica: [
@@ -367,19 +425,19 @@ const infoGeneral3 = {
                                 { contRecurso: '(estatico)plastilina' },
                                 { contRecurso: '(estatico)tijera' },
                                 { contRecurso: '(estatico)lapiz' },
-                                { contRecurso: '(estatico)borrador' },
+                                { contRecurso: '(estatico)borrador' }
                             ],
                             evaluacion: [
                                 { contEvaluacion: '(estatico)participar en el juego "Conoce las capitales' },
                                 { contEvaluacion: '(estatico)examen' },
-                                { contEvaluacion: '(estatico)examen-oral' },
+                                { contEvaluacion: '(estatico)examen-oral' }
                             ],
                             title: '(estatico)Actividades',
                             checkList: [
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                                 { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
-                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
+                                { name: '(estatico)Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' }
                             ],
                             material: [
                                 { link: '(estatico)https://binauraldev.com/ecommerce/' },

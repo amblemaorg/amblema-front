@@ -90,7 +90,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   setEnviromentalProjectData() {
 
     this.enviromentalInfo1lapse = {
-    topics1: this.topics1lapse,
+    topics1: this.topics1lapse
 
     };
     this.enviromentalInfo2lapse = {
@@ -112,6 +112,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
 
   updateDataToBlocks() {
     this.setBlockData("lapse1Enviromental", this.enviromentalInfo1lapse);
+    //this.setBlockData("hola", this.enviromentalInfo1lapse); ////////////////////////////
      this.setBlockData("lapse2Enviromental", this.enviromentalInfo2lapse);
      this.setBlockData("lapse3Enviromental", this.enviromentalInfo3lapse);
      this.setBlockData("objetivoProyectoAmbiental1", this.objectiveLapse1Data);

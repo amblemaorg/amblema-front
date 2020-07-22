@@ -18,7 +18,7 @@ export class ChecklistBlockComponent
   settings: {
     infoContainer: {
       principal: {
-        tema: string;
+        name: string;
         objetivo: {
           conObjetivo: string;
         }[];
@@ -72,6 +72,7 @@ checks=[];
   }
 
   setData(data: any) {
+
     if (data["isGenericActivity"]) {
       this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
       this.settings.infoContainer[0].datosNivel[0].checkList = data["checkList"] ? data.checkList : null;
@@ -79,6 +80,7 @@ checks=[];
     if (data["checkList"]) {
      // this.prueba = data.checkList[0].description;
       this.flag = true;
+      console.log(data)
       /* for (let i = 0; i < this.prueba.length; i++) {
         this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
           data.checkList[0].description[i].name;
