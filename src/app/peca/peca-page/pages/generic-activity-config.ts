@@ -8,6 +8,7 @@ const genericActivityFields = {
         video: {},
         addMT: {},
         upload: null,
+        activityUneditable: null,
     }
 }
 
