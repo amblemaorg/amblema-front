@@ -46,6 +46,7 @@ export class AccordionBlockComponent
   settings: {
     items: StructuralItem[];
   };
+  flag=false;
 
   constructor() {
     this.type = "structural";
@@ -66,8 +67,36 @@ export class AccordionBlockComponent
   }
 
   setData(data: any) {
-    if (data["topics1"]) {
+
+
+    if (data["topics111"]) {
+      this.settings.items=data.topics1
+      console.log("hola",this.settings)
       for (let i = 0; i < data.topics1.length; i++) {
+        //this.settings.items[i].childBlocks[0].settings.infoContainer[0].principal[0]=data.topics1[i]
+       // console.log(this.settings.items[i])
+      }
+    }
+if (data["topics2"]) {
+      //console.log(this.settings.items)
+      this.settings.items=data.topics2
+    }
+
+    if (data["topics3"]) {
+    //  console.log(this.settings.items)
+      this.settings.items=data.topics3
+    }
+
+
+
+    if (data["topics1"]) {
+      this.flag=true;
+     // console.log(this.settings)
+
+     //console.log(data)
+      for (let i = 0; i < data.topics1.length; i++) {
+        console.log("hola",this.settings)
+
         //Nombres de los acordeones
         this.settings.items[i].title = data.topics1[i].name;
 
@@ -103,39 +132,64 @@ export class AccordionBlockComponent
             l
           ].contContenido = data.topics1[i].contents[l];
         }
+
         /* Estas lineas de codigo corresponden a la informacion blanca (Nivel, Semanas, Tiempo estimado de ejecución, Técnica, Recursos, Evaluación y Actividades) del componente de proyecto ambiental */
-      //  for (let k= 0; k < data.topics1[i].levels.length; k++) {
-      //  for (let k= 0; k < data.topics1[i].levels.length; k++) {
 
-       // }
-       // console.log("settings",  this.settings.items[i].childBlocks[0].settings.infoContainer[i])
-         //console.log("data",  data.topics1[i].levels)
-         //console.log("hola");
-       // }
-       // console.log("data",  data.topics1[i].levels)
+        for (let b = 0; b < data.topics1[i].levels.length; b++) {
+        console.log("data", data.topics1[1].levels[b]);
+console.log("settings", this.settings.items[i].childBlocks[0].settings.infoContainer[
+  b
+].datosNivel[0])
+          //Nivel
+          this.settings.items[i].childBlocks[0].settings.infoContainer[
+            b
+          ].datosNivel[0].nivel = data.topics1[i].levels[b].target[0].label;
+          //Tiempo
+          this.settings.items[i].childBlocks[0].settings.infoContainer[
+            b
+          ].datosNivel[0].time = data.topics1[i].levels[b].duration;
+          //Recursos
+          for (let r = 0; r < data.topics1[i].levels[b].resources.length; r++) {
+            this.settings.items[i].childBlocks[0].settings.infoContainer[
+              b
+            ].datosNivel[0].recurso[r].contRecurso=data.topics1[i].levels[b].resources[r]
+          }
+          //Semanas
+          for (let s = 0; s < data.topics1[i].levels[b].week.length; s++) {
+            this.settings.items[i].childBlocks[0].settings.infoContainer[
+              b
+            ].datosNivel[0].week[s].contWeek=data.topics1[i].levels[b].week[s]
+          }
 
+           //Tecnicas
+           for (let t = 0; t < data.topics1[i].levels[b].techniques.length; t++) {
+             this.settings.items[i].childBlocks[0].settings.infoContainer[
+              b
+            ].datosNivel[0].tecnica[t].contTecnica=data.topics1[i].levels[b].techniques[t] 
+          }
+           //Evaluaciones
+           for (let e = 0; e < data.topics1[i].levels[b].evaluations.length; e++) {
+            this.settings.items[i].childBlocks[0].settings.infoContainer[
+             b
+           ].datosNivel[0].evaluacion[e].contEvaluacion=data.topics1[i].levels[b].evaluations[e] 
+         }
 
+           //Materiales 
+           for (let m = 0; m < data.topics1[i].levels[b].supportMaterial.length; m++) {
+            this.settings.items[i].childBlocks[0].settings.infoContainer[
+             b
+           ].datosNivel[0].material[m].link=data.topics1[i].levels[b].supportMaterial[m] 
+         }
+           //Actividades
+           for (let a = 0; a < data.topics1[i].levels[b].activities.length; a++) {
+            this.settings.items[i].childBlocks[0].settings.infoContainer[
+             b
+           ].datosNivel[0].checkList[a].name=data.topics1[i].levels[b].activities[a] 
+         }
+            
+        }
       }
-      //infocontainer lenght es simulando la cantidad de grados que hay, items deberia ser I. ChildBlocks deberia ser 0 y datosNivel 0
-      //ESTE ES EL FOR ORIGINAL DE PRUEBA, LO HICE CON 2 PORQUE ESTOY RECIBIENDO 2 ELEMENTOS EN LA BD
-      //LO ESTOY HACIENDO PARA MOSTRAR SOLO EL PRIMER ELEMENTO DEL ARRGELO, ES DECIR, GREOGRAFIA DE VENEZUELA
-      //for (let k= 0; k < this.settings.items[0].childBlocks[0].settings.infoContainer.length; k++) {
-        for (let k= 0; k < 2; k++) {
-        console.log("settings",  this.settings.items[0].childBlocks[0].settings.infoContainer[k].datosNivel[0])
-        console.log("data",  data.topics1[k].levels[0])  //aqui deberia ser topics1[i]
-        this.settings.items[0].childBlocks[0].settings.infoContainer[0].datosNivel[0].nivel=data.topics1[0].levels[0].target[0].label
-        //Cambia infocontainer por k y topics por k a ver
-      }
-    }
-     else if (data["topics2"]) {
-      for (let i = 0; i < data.topics2.length; i++) {
-        this.settings.items[i].title = data.topics2[i].name;
-      }
-    } else if (data["topics3"]) {
-      for (let i = 0; i < data.topics3.length; i++) {
-        this.settings.items[i].title = data.topics3[i].name;
-      }
-    }
+    } 
   }
   public instantiateChildBlocks() {
     this.settings.items.map((item, i) => {
