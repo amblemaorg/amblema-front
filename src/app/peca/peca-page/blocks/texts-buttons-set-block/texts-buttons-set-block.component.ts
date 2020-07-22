@@ -9,6 +9,7 @@ import { Select, Store } from "@ngxs/store";
 import { PecaState } from '../../../../store/states/peca/peca.state';
 import { textsAndButtonsAdaptBody } from './tb-body-adapter';
 import { EmbedVideoService } from 'ngx-embed-video';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'buttons-set-block',
@@ -46,6 +47,7 @@ export class TextsButtonsSetBlockComponent
       text: string;
       subText: number; // 1 Pendiente = Amarillo, 2 Aprobado = Verde, 3 Rechazado = Rojo
     };
+    genActSelectStatus?: boolean;
     // texts: {
     title: {
       aligning: string; // 'center' for center aligning, 'left' otherwise
@@ -55,6 +57,8 @@ export class TextsButtonsSetBlockComponent
       subtitles?: boolean;
     };
     isGenericActivity?: boolean;
+    genericActivityId?: string;
+    isGenericActivityBtnReceptor?: boolean;
     subtitles: {
       title?: string; // subtitle
       text: string; // paragraph
@@ -107,18 +111,27 @@ export class TextsButtonsSetBlockComponent
     form: null,
   };
 
+  // generic activity managing data.
+  dataGenAct = {
+    date: null,
+    checklist: null,
+    upload: null,
+  };
+
   sleepSend: boolean; // disables actions button meanwhile peca content gets updated
 
   showThisVideo: boolean;  
   timesVideoSourceCalled:number = 0;
   activity_video: any;
+  activity_uneditable: boolean;
 
   constructor(
     private globals: GlobalService, 
     private fetcher: HttpFetcherService,
     private store: Store,
     private toastr: ToastrService,
-    private embedService: EmbedVideoService
+    private embedService: EmbedVideoService,
+    private fb: FormBuilder
   ) {
     this.type = 'presentational';
     this.component = 'buttons';
@@ -127,8 +140,18 @@ export class TextsButtonsSetBlockComponent
 
   currentSelected = null;
   isSending: boolean;
+  id_: string;
 
   private subscription: Subscription = new Subscription();
+
+  statuses = [
+    {id:'1',name:'Por completar'},
+    {id:'2',name:'Completado'},
+  ];
+
+  statusForm = this.fb.group({
+    status: ['1']
+  });
 
   ngOnInit() {
     this.subscription.add(
@@ -144,11 +167,29 @@ export class TextsButtonsSetBlockComponent
     );
 
     this.subscription.add(
+      this.globals.updateGenActButtonDataEmitter.subscribe((data) => {        
+        if (this.settings.isGenericActivity && this.settings.isGenericActivityBtnReceptor && this.settings.genericActivityId == data.gaId) {
+          if (data['date']) this.dataGenAct.date = data.date;
+          if (data['checklist']) this.dataGenAct.checklist = data.checklist;
+          if (data['upload']) this.dataGenAct.upload = data.upload;  
+          
+          if (data.reset) {
+            Object.keys(this.dataGenAct).map( (item)=> this.dataGenAct[item] = null )
+          }
+          console.log("activity data to update",data);
+        }
+      })
+    );
+
+    this.subscription.add(
       this.pecaId$.subscribe( peca_id => {
         this.pecaId = peca_id;
       })
     );
+
+    this.setId();
   }
+
   ngOnDestroy() {
     this.dataTorF = {
       table: null,
@@ -159,6 +200,18 @@ export class TextsButtonsSetBlockComponent
     this.showThisVideo = false;  
     this.timesVideoSourceCalled = 0;
     this.activity_video = null;
+    this.activity_uneditable = null;
+  }
+
+  private setId() {
+    if (!this.id_)
+      this.id_ = Math.random()
+        .toString(36)
+        .substring(2);
+  }
+
+  getId(field) {
+    return field + "-" + this.id_;
   }
 
   setSettings(settings: any) {
@@ -176,6 +229,16 @@ export class TextsButtonsSetBlockComponent
       this.settings.addMT = data["addMT"] ? data.addMT : null;
       this.settings.upload = data["upload"] ? data.upload : null;
       this.settings.action = data["action"] ? data.action : null;
+      this.settings.genActSelectStatus = data["statusSelectorData"] ? data.statusSelectorData.genActSelectStatus : null;
+      this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
+      this.settings.genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
+      this.settings.isGenericActivityBtnReceptor = data["isGenericActivityBtnReceptor"] ? data.isGenericActivityBtnReceptor : null;
+
+      if (data["statusSelectorData"]) {
+        this.statusForm.setValue({ status: data.statusSelectorData.status });
+      } else {
+        this.statusForm.reset();
+      }
 
       if (data["video"]) {        
         this.resetTimesLoadedVideo();
@@ -514,7 +577,19 @@ export class TextsButtonsSetBlockComponent
         url: ''
       } : {
         uploadEmpty: true,
-      }; 
+      };
+
+      if (this.settings.isGenericActivity) { // if truty, this is for generic activity            
+        if (this.settings.genActSelectStatus) {
+          this.dataGenAct.upload = this.settings.upload.uploadEmpty? null : <File>e.target.files[0];
+        }
+        else {
+          this.globals.updateGenActButtonDataUpdater({
+            gaId: this.settings.genericActivityId,
+            upload: this.settings.upload.uploadEmpty? null : <File>e.target.files[0]
+          });
+        }
+      }
     }
   }
 
@@ -524,6 +599,28 @@ export class TextsButtonsSetBlockComponent
 
   shortenName(name: string) {
     return name.length > 40 ? `${name.substr(0,10)}...${name.substr(30)}` : name;
+  }
+
+  // FOR STATUS CHANGER
+  changeStatus() {
+    console.log("Status changer");
+  }
+
+  // FOR DATE FIELD
+  controlDateChange(e,dateOrder: string) {
+    const isDateNotValid = this.globals.validateDate(e,dateOrder,true);
+
+    if (this.settings.isGenericActivity && !isDateNotValid && e && e.target) { // if truty, this is for generic activity            
+      if (this.settings.genActSelectStatus) {
+        this.dataGenAct.date = this.globals.dateStringToISOString(e.target.value)
+      }
+      else {
+        this.globals.updateGenActButtonDataUpdater({
+          gaId: this.settings.genericActivityId,
+          date: this.globals.dateStringToISOString(e.target.value)
+        });
+      }
+    }
   }
 
 }

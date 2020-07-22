@@ -2,7 +2,7 @@
     <div class="texts-wrapper" 
         *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || (settings.subtitles && settings.subtitles.length>0)">
         <div class="date-download-status d-flex justify-content-between mt-1">
-            <div *ngIf="settings.dateOrtext" class="left-side">
+            <div *ngIf="settings.dateOrtext" class="left-side" [class.mr-auto]="settings.genActSelectStatus">
                 <h6 class="left-sided-content">
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span [class.display-date]="settings.dateOrtext.date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"></span>
@@ -12,11 +12,13 @@
                             #inputDate
                             type="date" 
                             class="form-control is-date-input"                            
-                            (change)="glbls.validateDate($event,'greater')"
+                            (change)="controlDateChange($event,'greater')"
+                            [disabled]="activity_uneditable"
                         />
                         <input 
                             [class.d-none]="inputDate.value.length > 0"
                             class="form-control is-date-placeholder"
+                            [class.greyer]="activity_uneditable"
                             autocomplete='off'
                             type="text"
                             readonly
@@ -50,11 +52,23 @@
                 </h6>
 
                 <a *ngIf="settings.download && settings.download.url" title="Descargar" 
-                [href]="settings.download.url" target="_blank" 
-                [download]="settings.download.name" 
-                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4">Descargar</a>
+                    [href]="settings.download.url" target="_blank" 
+                    [download]="settings.download.name" 
+                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+                    (click)="activity_uneditable? $event.preventDefault():null"
+                    [class.inactive]="activity_uneditable">Descargar</a>
             </div>
-            <div  *ngIf="settings.selectStatus || settings.btnGeneral || settings.selectGeneralStatus" class="right-side select-estatus-width">
+            <div
+                *ngIf="
+                    settings.selectStatus || 
+                    settings.btnGeneral || 
+                    settings.selectGeneralStatus || 
+                    settings.genActSelectStatus
+                " 
+                class="right-side select-estatus-width"
+                [class.select-gen-act]="settings.genActSelectStatus"
+                [class.ml-auto]="!settings.download && settings.genActSelectStatus"
+            >
                 <h6 *ngIf="settings.selectGeneralStatus" class="h6-select">
                     <span>{{settings.selectGeneralStatus.text}}</span>
                 </h6>
@@ -76,6 +90,33 @@
                         [placeholder]="settings.selectStatus.placeholder"
                     >
                     </ng-select>
+                    <div 
+                        *ngIf="settings.genActSelectStatus"
+                        class="form-group select-gen-act-control" 
+                        [formGroup]="statusForm"
+                    >
+                        <label>Modificar estatus:</label>
+                        <ng-select
+                            class="form-control"  
+                            [class.readonly]="activity_uneditable"
+                            [items]="statuses"
+                            bindValue="id"
+                            bindLabel="name"
+                            [labelForId]="getId('status-changer')"
+                            formControlName="status"
+                            [virtualScroll]="true"
+                            [id]="getId('status-changer')"  
+                            [clearable]="false" 
+                            [searchable]="false"  
+                            [loading]="isSending"
+                            [readonly]="activity_uneditable"
+                            (change)="changeStatus()"         
+                        >
+                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                <small>{{item.name}}</small>
+                            </ng-template>
+                        </ng-select>
+                    </div>
                     <ng-container *ngIf="settings.btnGeneral && settings.btnGeneral.addToTable; else regularGeneral">
                         <button 
                             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
@@ -161,7 +202,8 @@
                 accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
             <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
                 (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
-                class="btn btn-primary text-decoration-none py-1 px-4">
+                class="btn btn-primary text-decoration-none py-1 px-4"
+                [disabled]="activity_uneditable">
             {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
             </button>
         </div>
@@ -169,7 +211,9 @@
         <a *ngIf="settings.uploaddown && settings.uploaddown.url" [title]="settings.uploaddown.name" 
             [href]="settings.uploaddown.url" target="_blank" 
             [download]="settings.uploaddown.name" 
-            class="btn btn-primary text-decoration-none py-1 px-4">{{settings.uploaddown.name}}</a>
+            class="btn btn-primary text-decoration-none py-1 px-4"
+            (click)="activity_uneditable? $event.preventDefault():null"
+            [class.inactive]="activity_uneditable">{{settings.uploaddown.name}}</a>
     <!-- 
         <a *ngIf="settings.download" title="Descargar" 
         [href]="settings.download.url" target="_blank" 

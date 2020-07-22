@@ -32,6 +32,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     loadedData: boolean;
 
     // generic activity content variables
+    g_a_id: string;
     g_a_text: any;
     g_a_date: any;
     g_a_download: any;
@@ -40,6 +41,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_checklist: any;
     g_a_upload: any;
     g_a_action_btn: any;
+    g_a_activity_uneditable: boolean;
+    g_a_status_selector: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -107,16 +110,25 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     updateDataToBlocks() {
-        let genericActivityObj = { isGenericActivity: true };
+        const genericActivity = { 
+            isGenericActivity: true, 
+            genericActivityId: this.g_a_id, 
+            activityUneditable: this.g_a_activity_uneditable 
+        };
+
+        let genericActivityObj = { ...genericActivity };
+
         if (this.g_a_text) genericActivityObj = { ...genericActivityObj, ...this.g_a_text };
         if (this.g_a_date) genericActivityObj = { ...genericActivityObj, ...this.g_a_date };
         if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
         if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
         if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
         if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
+        if (this.g_a_status_selector) genericActivityObj = { ...genericActivityObj, ...this.g_a_status_selector };
+
         this.setBlockData("genericActivityFields", genericActivityObj );
-        this.setBlockData("genericActivityChecklist", this.g_a_checklist);
-        this.setBlockData("genericActivityActionButton", this.g_a_action_btn);
+        this.setBlockData("genericActivityChecklist", { ...genericActivity, ...this.g_a_checklist });
+        this.setBlockData("genericActivityActionButton", { ...genericActivity, ...this.g_a_action_btn });
     }
 
     setGenericActivityData(data: GenericActivity) {
@@ -124,6 +136,10 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
         const at = "2"; // approval type, at '2' means Only Checklist is in the view   
         const detail = data.approvalHistory.length > 0 ? data.approvalHistory[data.approvalHistory.length-1].detail : null; 
+
+        this.g_a_id = `g-a-${data.id}`;
+        this.g_a_activity_uneditable = data.status === "1" ? false : true;
+        
         const {
             date,
             file,
@@ -159,6 +175,13 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         //     "checklist",checklist
         // );
 
+        this.g_a_status_selector = data.approvalType === "4" 
+            ? {
+                statusSelectorData: {
+                    genActSelectStatus: true,
+                    status: data.status !== "1" ? "2" : "1",
+                }
+            } : null;
         this.g_a_text = data.hasText && data.approvalType !== at
             ? {                
                 subtitles: [{ text: text }]
@@ -222,7 +245,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         
         // CHECKLIST
         this.g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
-                checklistObj["isGenericActivity"] = true;
                 if (hasChecklist) {
                     checklistObj = {
                         ...checklistObj,
@@ -234,9 +256,9 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
             },{});
 
         this.g_a_action_btn = {
-                isGenericActivity: true,
+                isGenericActivityBtnReceptor: true,
                 action: (data.status === "1" || data.status === "2") 
-                    && +data.approvalType < 4 
+                    && +data.approvalType > 1 && +data.approvalType < 4 
                     ? [
                         {
                             type: 7,

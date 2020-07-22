@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 
 @Component({
@@ -6,7 +6,7 @@ import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.
   templateUrl: './checklist-block.component.html',
   styleUrls: ['./checklist-block.component.scss']
 })
-export class ChecklistBlockComponent implements PresentationalBlockComponent, OnInit {
+export class ChecklistBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: 'presentational';
   component: string;
   settings: {
@@ -37,6 +37,8 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     }[];
   };
 
+  activity_uneditable: boolean
+
   constructor() {
     this.type = 'presentational';
     this.component = 'checkList';
@@ -45,14 +47,19 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.activity_uneditable = null;
+  }
+
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
 
   setData(data: any) {
-    if (data["isGenericActivity"]) {
+    if (data["isGenericActivity"]) {      
       this.settings.infoContainer[0].title = data["title"] ? data.title : null;
       this.settings.infoContainer[0].checkList = data["checkList"] ? data.checkList : null;
+      this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
     }
   }
 
