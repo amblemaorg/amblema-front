@@ -10,15 +10,33 @@ export class StepperBlockComponent implements PresentationalBlockComponent, OnIn
   type: 'presentational';
   component: string;
   settings: {
-    titles: {
+    text1: {
       id: number;
       text: string;
       content: string;
       aligning: string; // 'center' for center aligning, 'left' otherwise
-    }[];
-    
+    }
+    text2: {
+      id: number;
+      text: string;
+      content: string;
+      aligning: string; // 'center' for center aligning, 'left' otherwise
+    }
+    text3: {
+      id: number;
+      text: string;
+      content: string;
+      aligning: string; // 'center' for center aligning, 'left' otherwise
+    }
+    text4: {
+      id: number;
+      text: string;
+      content: string;
+      aligning: string; // 'center' for center aligning, 'left' otherwise
+    }
+
   };
-  constructor() { 
+  constructor() {
     this.type = 'presentational';
     this.component = 'stepper';
   }
@@ -28,6 +46,15 @@ export class StepperBlockComponent implements PresentationalBlockComponent, OnIn
 
   setSettings(settings: any) {
     this.settings = { ...settings };
+  }
+
+  setData(data: any) {
+    if (data["text1"]) this.settings.text1.content = data.text1.content;
+    if (data["text2"]) this.settings.text2.content = data.text2.content;
+    if (data["text3"]) this.settings.text3.content = data.text3.content;
+    if (data["text4"]) this.settings.text4.content = data.text4.content;
+
+    //console.log(data, "asdsa");
   }
 
 }

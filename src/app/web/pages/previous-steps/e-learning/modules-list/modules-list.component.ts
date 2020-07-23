@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Module } from '../../../../../models/steps/learning-modules.model';
 import { ModulesState } from '../../../../../store/states/e-learning/learning-modules.state';
 import { UserState } from '../../../../../store/states/e-learning/user.state';
+import { StepsState } from '../../../../../store/states/steps/project.state';
 
 @Component({
   selector: 'app-modules-list',
@@ -36,30 +37,23 @@ export class ModulesListComponent implements OnInit, DoCheck {
 
   @Select(ModulesState.modules_array) modules$: Observable<Module[]>;
   @Select(UserState.user_brief) coorBrf$: Observable<any>;
+  @Select(StepsState.selected_proj_id) selected_proj_id$: Observable<string>;
 
   constructor(@Inject(DOCUMENT) private document: Document, private moduleService: ModulesService, private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit() {     
-    if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
-      this.user_id = this.route.snapshot.params.idUser;
-      this.project_id = this.route.snapshot.params.idProject;
-      this.user_type = this.route.snapshot.params.userType;
-    }
-    else if (this.route.snapshot.children.length>0) {
-      if (this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-          this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser) {
-            this.user_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idUser;  
-            this.project_id = this.route.snapshot.children[this.route.snapshot.children.length-1].params.idProject;  
-            this.user_type = this.route.snapshot.children[this.route.snapshot.children.length-1].params.userType;  
-      }
-    }
-
+  ngOnInit() {
     this.modules$.subscribe(res => {
       this.modules = res;    
       this.isLoading = this.modules.map(m => { return false }); 
     });    
 
+    this.selected_proj_id$.subscribe(res => {
+      if (res) this.project_id = res;
+    });
+
     this.coorBrf$.subscribe(res => {
+      if (res.userId) this.user_id = res.userId;
+      if (res.userType) this.user_type = res.userType;
       this.forAdminSetFalse = (res.userType=="0" || res.userType=="1") ? false : true;
     });
   }
@@ -90,17 +84,11 @@ export class ModulesListComponent implements OnInit, DoCheck {
   
   loadMod(i,modId) {
     this.isLoading[i] = true;
-    this.router.navigate([
-      `previous-steps/module-detail/${modId}`,
-      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
-    ]);
+    this.router.navigate([`previous-steps/module-detail/${modId}`]);
   }
 
   goToSteps() {
-    this.router.navigate([
-      "previous-steps",
-      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
-    ]);
+    this.router.navigate(["previous-steps"]);
   }
 
   getModuleNum(module_id) {

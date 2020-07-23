@@ -13,17 +13,46 @@
         // padding: 2rem;
     // }
     .estilo-date{
+        position: relative;
+        width: 100%;
+        padding-right: 0;        
         margin-left: 10px;
         display: inline-block;
 
+        .is-date-placeholder.greyer {
+            background: #e9ecef !important;
+        }
+
+        .date-error-message {
+            display: none;
+            position: relative;
+            font-size: small;
+            color: $red;
+
+            @include mediabreak(small,landscape,true,675px) {
+                position: absolute;
+            }
+        }
+
+        .is-date-input.date-not-valid ~ .date-error-message {
+            display: inline-block;
+        }
+
         @media (max-width:768px){
             margin: 10px 0px;
+        }
+        @include mediabreak(small,landscape,true,640px) {
+            width: 18rem;
+            padding-right: 2.5rem;
         }
     }
     .display-date{
         @media (max-width:768px){
            display: inherit !important;
         }
+    }
+    .inactive {
+        opacity: 0.65;
     }
     .texts-buttons-wrapper {
         .texts-wrapper {
@@ -78,6 +107,29 @@
                     flex: auto;
                     align-items: center;
                     justify-content: flex-end;
+
+                    &.select-gen-act {
+                        flex: unset;
+                        margin-left: 2.25rem;
+
+                        .select-gen-act-control {
+                            width: 20rem;
+                            display: flex;
+                            align-items: center;
+                            margin: 0;
+
+                            label {
+                                flex: 100%;
+                                color: $blue;
+                            }
+
+                            .ng-select {
+                                &.ng-valid, &.ng-valid:focus, &.ng-valid.ng-select-focused {
+                                    border: 1px solid #ced4da;
+                                }
+                            }
+                        }
+                    }
                     
                     .ng-select {
                         //max-width: 13rem;
@@ -98,11 +150,50 @@
             }
 
             .sub-titles {
+                p {
+                    // text-align: justify;
+
+                    @media screen and (orientation: portrait) {
+                        font-size: 1rem;
+                    }
+                }
+
                 &.text-incremented p {
                     font-size: large !important;
                 }
+
+                &.subtitlesMT {
+                    @include mediabreak(small,landscape,true,640px) {
+                        margin-top: 2rem;
+                    }
+                }
             }
         }
+
+        .video-section {
+            .activity-video-container {
+                margin-bottom: 1rem;
+                @media screen and (orientation:landscape) and (min-width:640px) { width: 100%; }
+                @include mediabreak(large,portrait) { width: 100%; }
+            
+                .activity-video {
+                    ::ng-deep iframe {
+                        width: 100%;
+                        height: 50vw;
+        
+                        @include mediabreak(medium,landscape,true,800px) { height: 42vw; }
+                        @include mediabreak(small,portrait) { height: 45vw; }
+                        @include mediabreak(large,landscape) { height: 36vw; }
+                        @include mediabreak(larger,landscape) {
+                            height: 33vw;
+                            margin-top: 1rem;
+                        }
+                    }
+                }
+            }
+        }        
+
+
         .buttons-wrapper {
             width: 100%;
             text-align: right;
@@ -262,7 +353,7 @@
 
         &[readonly] {
             cursor: default;
-            &:not(.is-date-input-placeholder):focus {
+            &:not(.is-date-placeholder):focus {
                 border: 1px solid map-get($color_map, form-gray) !important;
             }
         }
