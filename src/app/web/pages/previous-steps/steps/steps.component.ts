@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 import { GeneralStepsComponent } from './general-steps/general-steps.component';
+import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
 
 @Component({
   selector: 'app-steps',
@@ -56,6 +57,8 @@ export class StepsComponent implements OnInit, OnDestroy {
   coordinatorSteps = [];
   schoolSteps = [];
 
+  fetchingSteps: boolean;
+
   private subscription: Subscription = new Subscription();
 
   constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute, private router: Router) { }
@@ -78,12 +81,15 @@ export class StepsComponent implements OnInit, OnDestroy {
           if (res) {            
             this.project_id = res;
             if ( !this.stepsService.areStepsCalled() ) {
+              this.fetchingSteps = true;
               this.subscription.add(          
-                this.store.dispatch( new UpdateStepsProgress(this.project_id) ).subscribe(res => {
+                this.store.dispatch( new UpdateStepsProgress(this.project_id) ).subscribe(res => {                  
                   this.stepsService.callSteps(true);
                   this.enabledTabs = true;
+                  this.fetchingSteps = false;
                 })
               );
+              this.store.dispatch( new UpdateModulesTotal );
             }            
           }
         })
@@ -209,9 +215,7 @@ export class StepsComponent implements OnInit, OnDestroy {
   }
 
   goToModules() {
-    this.router.navigate([
-      "previous-steps/modules"
-    ]);
+    this.router.navigate(["previous-steps/modules"]);
   }
 
 }
