@@ -210,8 +210,10 @@ export class GeneralStepsComponent implements OnInit {
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
+      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+        ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
-      this.toasterMeth(indd,modd);
+      this.toasterMeth(indd,modd,error_msg);
     });
   }
   postSA(formData,step:Step,indd,modd,proj_id) {
@@ -220,8 +222,10 @@ export class GeneralStepsComponent implements OnInit {
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
+      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+        ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
-      this.toasterMeth(indd,modd);
+      this.toasterMeth(indd,modd,error_msg);
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
@@ -241,9 +245,11 @@ export class GeneralStepsComponent implements OnInit {
 
       this.updatingEmitting(step,indd,modd);
 
-    },(error)=>{
+    },(error)=>{      
+      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+        ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
-      this.toasterMeth(indd,modd);
+      this.toasterMeth(indd,modd,error_msg);
     });
   }
   //? -----------------------------------------------------------------------------------------------------------------
