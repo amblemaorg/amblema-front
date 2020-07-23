@@ -6,22 +6,24 @@ const datosOlimpiadas = {
     settings: {
         dateOrtext: {
             text: 'Fecha de la prueba:',
-            date: '12-05-2020',
+            date: '',
         },
         uploaddown: {
             url: '#',
             name: 'Descargar archivo',
         },
         subtitles: 
-            {
-                text: ''
-            },
+            [
+                {
+                    text: '',
+                },
+            ]
     }
 }
 
 const selectEstudiantes = {
     component: 'textsbuttons',
-    name: 'resultadoTabla',
+    name: 'selectStudents',
     settings: {
         selectStatus:
         {
@@ -64,6 +66,7 @@ const selectEstudiantes = {
 
 const resultadoEstudiante = {
     component: 'table',
+    name: 'resultadoTabla',
     settings: {
         columns: {
             name: {
@@ -75,11 +78,11 @@ const resultadoEstudiante = {
             gradeAndSection: {
                 title: "Grado y sección",
                 valuePrepareFunction: ( row: any ) => {          
-                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.section;
+                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.name;
                     else return '';
                 },
                 filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.section;
+                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.name;
                     value = value.toUpperCase();
                     
                     if (value.includes(search.toUpperCase()) || search === '') return true;
@@ -138,7 +141,7 @@ const resultadoEstudiante = {
         ],
         classes: {
             hideView: false,
-            hideEdit: false,
+            hideEdit: true,
             hideDelete: false,
         },
     }

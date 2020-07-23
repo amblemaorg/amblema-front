@@ -40,7 +40,6 @@ export class PecaState {
     { payload }: FetchPecaContent
   ) {
     this.apiService.setResourcePath('pecaprojects/' + payload);
-
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
         //const prevState = getState();
@@ -59,6 +58,13 @@ export class PecaState {
   @Selector()
   static getUser(state: any) {
     return state.user;
+  }
+
+  @Selector()
+  static getUserResume(state: any) {
+    return {      
+      type: state.user.userType
+    };
   }
 
   @Selector()

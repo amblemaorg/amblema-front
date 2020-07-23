@@ -19,6 +19,10 @@
         margin-left: 10px;
         display: inline-block;
 
+        .is-date-placeholder.greyer {
+            background: #e9ecef !important;
+        }
+
         .date-error-message {
             display: none;
             position: relative;
@@ -46,6 +50,9 @@
         @media (max-width:768px){
            display: inherit !important;
         }
+    }
+    .inactive {
+        opacity: 0.65;
     }
     .texts-buttons-wrapper {
         .texts-wrapper {
@@ -100,6 +107,29 @@
                     flex: auto;
                     align-items: center;
                     justify-content: flex-end;
+
+                    &.select-gen-act {
+                        flex: unset;
+                        margin-left: 2.25rem;
+
+                        .select-gen-act-control {
+                            width: 20rem;
+                            display: flex;
+                            align-items: center;
+                            margin: 0;
+
+                            label {
+                                flex: 100%;
+                                color: $blue;
+                            }
+
+                            .ng-select {
+                                &.ng-valid, &.ng-valid:focus, &.ng-valid.ng-select-focused {
+                                    border: 1px solid #ced4da;
+                                }
+                            }
+                        }
+                    }
                     
                     .ng-select {
                         //max-width: 13rem;
