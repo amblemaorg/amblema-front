@@ -138,6 +138,7 @@ const formConfirmacionDocente = {
       ],
       modalCode: 'amblemonedaConfigConfirmacionDocente',
       isFromCustomTableActions: true,
+      isDeleting: true,
     }
   }
   const modalConfirmacionDocente = {

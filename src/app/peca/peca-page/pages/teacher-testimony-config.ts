@@ -120,21 +120,22 @@ const formTestimonioDocenteTablaViewOnly = {
 const textsAndButtonsTestimonioDocenteTabla = {
     component: 'textsbuttons',
     settings: {
-        subtitles: [{
-            text: '¿Desea eliminar este ítem?',
-        }],
-        action: [
-            {
-                type: 1,
-                name: 'Si',
-            },
-            {
-                type: 2,
-                name: 'No',
-            },
-        ],
-        modalCode: 'dataTestimonioDocenteTabla',
-        isFromCustomTableActions: true,
+      subtitles: [{
+        text: '¿Desea eliminar este ítem?',
+      }],
+      action: [
+        {
+            type: 1,
+            name: 'Si',
+        },
+        {
+            type: 2,
+            name: 'No',
+        },
+      ],
+      modalCode: 'dataTestimonioDocenteTabla',
+      isFromCustomTableActions: true,
+      isDeleting: true,
     }
 }
 const modalTestimonioDocenteTabla = {

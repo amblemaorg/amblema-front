@@ -1,11 +1,15 @@
-import { Component, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { PageBlockFactory } from './blocks/page-block-factory';
-import { PageBlockComponent } from './blocks/page-block.component';
+import {
+  Component,
+  ViewContainerRef,
+  ComponentFactoryResolver
+} from "@angular/core";
+import { PageBlockFactory } from "./blocks/page-block-factory";
+import { PageBlockComponent } from "./blocks/page-block.component";
 
 @Component({
-  selector: 'peca-page',
-  templateUrl: './peca-page.component.html',
-  styleUrls: ['./peca-page.component.scss'],
+  selector: "peca-page",
+  templateUrl: "./peca-page.component.html",
+  styleUrls: ["./peca-page.component.scss"]
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
@@ -21,15 +25,27 @@ export class PecaPageComponent {
     this.pageBlockFactory = new PageBlockFactory(this.factoryResolver);
   }
 
+  public changeComponentHeader(header) {
+    this.header.title = header;
+  }
+
   public instantiateBlocks(container: ViewContainerRef) {
     this.blocks.map((block, i) => {
       const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
         block.component
       );
-      const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
-      const settings = { settings: block.settings, factory: this.pageBlockFactory };
+      const pageBlockComponent = container.createComponent(
+        pageBlockComponentFactory
+      );
+      const settings = {
+        settings: block.settings,
+        factory: this.pageBlockFactory
+      };
       pageBlockComponent.instance.setSettings(settings);
-      this.blockInstances.set(block.name || `block${i}`, pageBlockComponent.instance);
+      this.blockInstances.set(
+        block.name || `block${i}`,
+        pageBlockComponent.instance
+      );
     });
   }
 
@@ -64,23 +80,27 @@ export class PecaPageComponent {
    *   }
    *   in urlGenerators object
    */
-  public createAndSetBlockFetcherUrls(blockName: string, urlGenerators: any, ...generatorsProps) {
+  public createAndSetBlockFetcherUrls(
+    blockName: string,
+    urlGenerators: any,
+    ...generatorsProps
+  ) {
     const { get, post, put, patch, delete: deleteFn } = urlGenerators;
 
     if (this.blockInstances.has(blockName)) {
       const formComponent = this.blockInstances.get(blockName);
 
-      const args = generatorsProps.map((prop) => {
-        const propertyPath = prop.split('.');
+      const args = generatorsProps.map(prop => {
+        const propertyPath = prop.split(".");
         return this.accessPropertyByArrayPath(formComponent, propertyPath);
       });
 
       const urls = {
-        get: typeof get === 'function' ? get(...args) : '',
-        post: typeof post === 'function' ? post(...args) : '',
-        put: typeof put === 'function' ? put(...args) : '',
-        patch: typeof patch === 'function' ? patch(...args) : '',
-        delete: typeof deleteFn === 'function' ? deleteFn(...args) : '',
+        get: typeof get === "function" ? get(...args) : "",
+        post: typeof post === "function" ? post(...args) : "",
+        put: typeof put === "function" ? put(...args) : "",
+        patch: typeof patch === "function" ? patch(...args) : "",
+        delete: typeof deleteFn === "function" ? deleteFn(...args) : ""
       };
       formComponent.setFetcherUrls(urls);
     }

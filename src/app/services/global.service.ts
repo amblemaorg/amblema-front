@@ -1,26 +1,32 @@
-import { Injectable, PLATFORM_ID, Inject, EventEmitter, Output } from '@angular/core'; //! quitar EventEmitter y Output
-import { isPlatformBrowser, Location } from '@angular/common';
-import { Title, Meta } from '@angular/platform-browser';
-import * as $ from 'jquery';
-import { PageBlockComponent } from '../peca/peca-page/blocks/page-block.component';
+import {
+  Injectable,
+  PLATFORM_ID,
+  Inject,
+  EventEmitter,
+  Output
+} from "@angular/core"; //! quitar EventEmitter y Output
+import { isPlatformBrowser, Location } from "@angular/common";
+import { Title, Meta } from "@angular/platform-browser";
+import * as $ from "jquery";
+import { PageBlockComponent } from "../peca/peca-page/blocks/page-block.component";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root"
 })
 export class GlobalService {
   vh = 0;
   vw = 0;
 
-  user_agent: string = '';
-  setcountry: string = '';
-  totFrees: string = '';
+  user_agent: string = "";
+  setcountry: string = "";
+  totFrees: string = "";
 
   mounted_comps = [];
   show = false;
 
   //todo------URL VARS-----------------
   useCounP: boolean = false;
-  ccode: string = '';
+  ccode: string = "";
   //todo-------------------------------
 
   isBrowser;
@@ -44,7 +50,7 @@ export class GlobalService {
   }
 
   setMetaTags(metatags) {
-    metatags.map((metatag) => {
+    metatags.map(metatag => {
       const attributeSelector = metatag.name
         ? `name="${metatag.name}"`
         : `property="${metatag.property}"`;
@@ -75,7 +81,9 @@ export class GlobalService {
       this.vh = window.innerHeight;
       this.vw = window.innerWidth;
       if (document.getElementById(id)) {
-        document.getElementById(id).setAttribute('style', `min-height:${this.vh}px`);
+        document
+          .getElementById(id)
+          .setAttribute("style", `min-height:${this.vh}px`);
       }
     }
   }
@@ -98,9 +106,9 @@ export class GlobalService {
   //? SMOOTHSCROLLING-----
   scrollToTop() {
     if (this.isBrowser) {
-      $('body,html').animate(
+      $("body,html").animate(
         {
-          scrollTop: 0,
+          scrollTop: 0
         },
         100
       );
@@ -109,8 +117,8 @@ export class GlobalService {
 
   isIpadChrome() {
     if (this.isBrowser) {
-      return navigator.userAgent.toLowerCase().includes('ipad') &&
-        navigator.userAgent.toLowerCase().includes('crios')
+      return navigator.userAgent.toLowerCase().includes("ipad") &&
+        navigator.userAgent.toLowerCase().includes("crios")
         ? true
         : false;
     } else {
@@ -124,12 +132,12 @@ export class GlobalService {
     if (this.isBrowser) {
       if (bool) {
         this.mounted_comps.push(comp);
-        if ($('ngx-loading-bar').css('display') == 'none' && this.show) {
-          $('ngx-loading-bar').show();
+        if ($("ngx-loading-bar").css("display") == "none" && this.show) {
+          $("ngx-loading-bar").show();
         }
       } else {
-        if ($('ngx-loading-bar').css('display') != 'none') {
-          $('ngx-loading-bar').hide();
+        if ($("ngx-loading-bar").css("display") != "none") {
+          $("ngx-loading-bar").hide();
         }
       }
     }
@@ -138,8 +146,12 @@ export class GlobalService {
   // METHOD TO PUT HTTP:// TO A LINK IF THIS DOES NOT CONTAIN IT
   addHTTP(link: string) {
     if (link) {
-      if (!link.includes('http://') && !link.includes('https://') && !link.includes('take-bonus')) {
-        return 'https://' + link;
+      if (
+        !link.includes("http://") &&
+        !link.includes("https://") &&
+        !link.includes("take-bonus")
+      ) {
+        return "https://" + link;
       }
       return link;
     }
@@ -155,39 +167,42 @@ export class GlobalService {
   parseMonth(m: number) {
     let mp = m + 1;
     return mp === 1
-      ? 'January'
+      ? "January"
       : mp === 2
-      ? 'February'
+      ? "February"
       : mp === 3
-      ? 'March'
+      ? "March"
       : mp === 4
-      ? 'April'
+      ? "April"
       : mp === 5
-      ? 'May'
+      ? "May"
       : mp === 6
-      ? 'June'
+      ? "June"
       : mp === 7
-      ? 'July'
+      ? "July"
       : mp === 8
-      ? 'August'
+      ? "August"
       : mp === 9
-      ? 'September'
+      ? "September"
       : mp === 10
-      ? 'October'
+      ? "October"
       : mp === 11
-      ? 'November'
-      : 'December';
+      ? "November"
+      : "December";
   }
 
   geoMngr() {
-    let url = this.location.path().slice(1).split('/');
+    let url = this.location
+      .path()
+      .slice(1)
+      .split("/");
     let url_len = url.length === 1 ? 1 : 3;
     if (url_len > 1) {
       this.useCounP = true;
       this.ccode = url[1];
     } else {
       this.useCounP = false;
-      this.ccode = 'all';
+      this.ccode = "all";
     }
   }
 
@@ -216,20 +231,23 @@ export class GlobalService {
   validateDate(e, cond, bool = false, notE: boolean = false) {
     let value = !notE ? e.target.value : e;
     let today = this.getDateFormat(new Date());
-    if (value != '') {
-      if ((cond == 'lower' && value > today) || (cond == 'greater' && value <= today)) {
-        if (!notE) e.target.classList.add('date-not-valid');
+    if (value != "") {
+      if (
+        (cond == "lower" && value > today) ||
+        (cond == "greater" && value <= today)
+      ) {
+        if (!notE) e.target.classList.add("date-not-valid");
         if (bool) return true;
       } else {
-        if (!notE) e.target.classList.remove('date-not-valid');
+        if (!notE) e.target.classList.remove("date-not-valid");
         if (bool) return false;
       }
     }
   }
 
   dateStringToISOString(value: any): string {
-    if (typeof value !== 'string' || value === '') {
-      return '';
+    if (typeof value !== "string" || value === "") {
+      return "";
     }
     const newDate = new Date(value);
     return newDate.toISOString();
@@ -243,10 +261,17 @@ export class GlobalService {
   @Output() showModalEmitter: EventEmitter<any> = new EventEmitter();
   @Output() resetEditedEmitter: EventEmitter<any> = new EventEmitter();
   @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() blockIntancesTableRefresherEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesEmitter: EventEmitter<{
-    blocks: Map<string, PageBlockComponent>, 
-    fromModal: boolean
+    blocks: Map<string, PageBlockComponent>;
+    fromModal: boolean;
   }> = new EventEmitter();
+  //Send image data from formblock to profile component
+  @Output() passImageEmitter: EventEmitter<any> = new EventEmitter();
+
+  formWithImage(image: string) {
+    this.passImageEmitter.emit(image);
+  }
 
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
@@ -266,17 +291,28 @@ export class GlobalService {
   resetEdited(buttonCode: string) {
     this.resetEditedEmitter.emit(buttonCode);
   }
-  setAsReadOnly(buttonCode: string, setReadOnly: boolean) {
+  setAsReadOnly(buttonCode: string, setReadOnly: boolean, isBtnCode: boolean = true) {
     this.setReadonlyEmitter.emit({
       buttonCode,
-      setReadOnly
+      setReadOnly,
+      isBtnCode
     });
   }
 
-  createdBlockInstances(blocks: Map<string, PageBlockComponent>, isFromModal: boolean = false) {
+  createdBlockInstances(
+    blocks: Map<string, PageBlockComponent>,
+    isFromModal: boolean = false
+  ) {
     this.blockIntancesEmitter.emit({
-      blocks: blocks, 
+      blocks: blocks,
       fromModal: isFromModal
+    });
+  }
+
+  emitStudentsTableRefresh(tableName: string, id_string: string) {
+    this.blockIntancesTableRefresherEmitter.emit({
+      tableName, 
+      id_string
     });
   }
   //? -----------------------------------------------------------------------

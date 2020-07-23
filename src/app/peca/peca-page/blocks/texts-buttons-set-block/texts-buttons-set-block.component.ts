@@ -51,7 +51,7 @@ export class TextsButtonsSetBlockComponent
       text: string;
     };
     subtitles: {
-      title: string; // subtitle
+      title?: string; // subtitle
       text: string; // paragraph
     }[];
     // }[];
@@ -79,6 +79,7 @@ export class TextsButtonsSetBlockComponent
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    isDeleting?: boolean; // SI option on delete mode modal
   };
 
   pecaId: string;
@@ -143,7 +144,12 @@ export class TextsButtonsSetBlockComponent
   }
 
   setData(data: any) {
-    if (data["status"]) this.settings.status.subText = data.status.subText;
+    if (data["isGenericActivity"]) {
+      if (data["subtitles"]) this.settings.subtitles = data.subtitles;
+    } 
+    else {
+      if (data["status"]) this.settings.status.subText = data.status.subText;     
+    }    
   }
 
   // setFetcherUrls({ delete: deleteFn }) {
@@ -277,13 +283,42 @@ export class TextsButtonsSetBlockComponent
 
           if (this.settings.makesNoRequest) commonTasks();
           else {
+            this.isSending = true;
             const method = this.settings.fetcherMethod || 'delete';
             const url = this.settings.fetcherUrls[method];
-            this.fetcher[method](url).subscribe((data) => {
-              //console.log(data);
+
+            console.log(
+              'method: ', method,
+             'url: ', url
+            );
+
+             this.fetcher[method](url).subscribe((data) => {
+              console.log(data);
               commonTasks();
+
+              this.isSending = false;
+
+              this.toastr.success("Eliminado exitosamente", "", {
+                positionClass: "toast-bottom-right"
+              });
+
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-            });
+              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            }, (error) => {
+              this.isSending = false;
+              this.toastr.error(
+                error.error && error.error["msg"] 
+                  ? (
+                      error.error["entity"] && error.error["entity"].length > 0 
+                        ? `${error.error["msg"]}: ${error.error["entity"]}` 
+                        : error.error["msg"]
+                    )
+                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                "",
+                { positionClass: "toast-bottom-right" }
+              );
+              console.error(error);
+            }); 
           }          
         }
         break;
@@ -312,7 +347,7 @@ export class TextsButtonsSetBlockComponent
         const resourcePath = this.settings.fetcherUrls[method];
 
         if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
-        
+
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
             console.log("form response",response);
@@ -330,7 +365,15 @@ export class TextsButtonsSetBlockComponent
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
-              "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+              (error.error && error.error["name"] && error.error["name"][0])
+                ? error.error["name"][0].msg 
+                : error.error && error.error["email"] && error.error["email"][0]
+                  ? error.error["email"][0].msg 
+                  : error.error && error.error["cardId"] && error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg 
+                    : error.error && error.error["msg"] 
+                      ? error.error["msg"]
+                      : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -370,10 +413,12 @@ export class TextsButtonsSetBlockComponent
       error => {
         this.isSending = false;
         this.toastr.error(
-          "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+          error.error && error.error["msg"] 
+            ? error.error["msg"]
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
           "",
           { positionClass: "toast-bottom-right" }
-        );
+        );       
         console.error(error);
       }
     );

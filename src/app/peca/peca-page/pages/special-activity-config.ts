@@ -141,6 +141,7 @@ const formSpecialActivityTable = {
       ],
       modalCode: 'dataSpecialActivityTable',
       isFromCustomTableActions: true,
+      isDeleting: true,
     }
   }
   const modalSpecialActivityTable = {

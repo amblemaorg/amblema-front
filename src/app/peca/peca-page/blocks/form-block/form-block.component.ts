@@ -13,8 +13,11 @@ import { Subscription, Observable } from "rxjs";
 import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
-import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
-import { PecaState } from '../../../../store/states/peca/peca.state';
+import {
+  FetchPecaContent,
+  SetUser
+} from "../../../../store/actions/peca/peca.actions";
+import { PecaState } from "../../../../store/states/peca/peca.state";
 
 @Component({
   selector: "form-block",
@@ -51,6 +54,8 @@ export class FormBlockComponent
     notGenerateId?: boolean; // It is for forms that do not need to be assigned an id
     notResetForm?: boolean; //It is for events that do not require the component to be reset
     makesNoRequest?: boolean; // if true, this form makes no request to api
+    methodUrlPlus?: string; // if fetcher method url cannot be set in the initial component use this prop, to complete it
+    tableRefreshName?: string; // to refresh table in the initial setter component
   };
 
   pecaId: string;
@@ -59,6 +64,7 @@ export class FormBlockComponent
   @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<
     any
   >;
+
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
@@ -73,11 +79,16 @@ export class FormBlockComponent
   municipalities: MunicipalityInfo[] = [];
   showSelectTeacher: boolean = true;
   showSelectState: boolean = true;
+  isContentRefreshing: boolean = false;
   isEditing: boolean = false;
-  isInApproval: boolean;
+  isInApproval: boolean; // sets to true when a request has been sent and requires approval
   isEdited: boolean; // if form has been edited
   sendNull: boolean = true; // to avoid send form data null when uploading images
   someImgAdded: boolean; // to avoid send form null when images are saved in table
+  imageUrl: string; //to can upload the image in profile component
+
+  // currentGrade: string; // for grades selector only
+  sectionsArr: any[] = [];
 
   constructor(
     private store: Store,
@@ -94,7 +105,7 @@ export class FormBlockComponent
 
   ngOnInit() {
     this.subscription.add(
-      this.pecaId$.subscribe( peca_id => {
+      this.pecaId$.subscribe(peca_id => {
         this.pecaId = peca_id;
       })
     );
@@ -102,21 +113,36 @@ export class FormBlockComponent
     this.subscription.add(
       this.componentForm.statusChanges.subscribe(val => {
         if (
-          !this.someImgAdded 
-          && (
-            val === "INVALID" 
-            || this.isDateNotOk() 
-            || !this.isDirty() 
-          )
+          !this.someImgAdded &&
+          (val === "INVALID" || this.isDateNotOk() || !this.isDirty())
         ) {
-          if ( this.settings.buttonCode && this.isDirty() ) 
-            this.isEdited = true;
+          if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
-        }          
-        else {this.btnUpdater(this.componentForm.value);}
+        } else {
+          this.btnUpdater(this.componentForm.value);
+        }
       })
     );
 
+    if (
+      this.settings.formsContent["section"] &&
+      this.settings.formsContent["section"].emmitSectionChange
+    )
+    this.subscription.add(
+      this.componentForm.get("section").statusChanges.subscribe(val => {
+        if (val === "VALID" ) 
+          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,this.componentForm.get("section").value);
+        else 
+          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,null);
+      })
+    );
+
+    this.subscription.add(
+      this.globals.passImageEmitter.subscribe(image => {
+        console.log("resp", image);
+        this.imageUrl = image;
+      })
+    );
     this.subscription.add(
       this.globals.showImageContainerEmitter.subscribe(code => {
         if (this.settings.buttonCode && this.settings.buttonCode == code)
@@ -145,26 +171,44 @@ export class FormBlockComponent
       );
 
     this.subscription.add(
-      this.globals.resetEditedEmitter.subscribe((btnCode) => {
+      this.globals.resetEditedEmitter.subscribe(btnCode => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
           this.isInApproval = true;
-        }          
+        }
       })
     );
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
-        if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
-          this.isInApproval = data.setReadOnly;        
+        if (data.isBtnCode) {
+          if (
+            this.settings.buttonCode && 
+            this.settings.buttonCode == data.buttonCode
+          )
+            this.isInApproval = data.setReadOnly;        
+        } else {
+          if (
+            this.settings.tableCode && 
+            this.settings.tableCode == data.buttonCode
+          )
+            this.isInApproval = data.setReadOnly;        
+        }    
       })
-    );    
+    );
 
     this.setId();
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();    
-    ['isEdited','isInApproval','isEditing','sendNull','someImgAdded'].map( (attr,i) => {
-      this[attr] = [null,null,false,true,null][i];
+    this.subscription.unsubscribe();
+    [
+      "isEdited",
+      "isInApproval",
+      "isEditing",
+      "sendNull",
+      "someImgAdded",
+      "imageUrl"
+    ].map((attr, i) => {
+      this[attr] = [null, null, false, true, null, null][i];
     });
   }
 
@@ -187,17 +231,16 @@ export class FormBlockComponent
 
   isDirty(): boolean {
     const keys = Object.keys(this.componentForm.value);
-    return keys.some( (key) => {
-      return key === "imageGroup" 
-              ? false 
-              : this.componentForm.controls[key].dirty
+    return keys.some(key => {
+      return key === "imageGroup"
+        ? false
+        : this.componentForm.controls[key].dirty;
     });
     // return this.componentForm.dirty
   }
 
   isReadOnly(): boolean {
-    return (this.settings.isEditable && !this.isEditing) || 
-           this.isInApproval
+    return (this.settings.isEditable && !this.isEditing) || this.isInApproval;
   }
 
   setSettings(settings: any) {
@@ -205,12 +248,52 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
+    console.log("Esto es lo que mando",this.componentForm.value);
+
   }
 
   setData(data: any) {
+    if (data.setContent) {
+      data.contentToSet.map((attr) => {
+        this.isContentRefreshing = true;
+        this.settings.formsContent[attr].options = data.data[attr];
+
+        if (
+          attr == "section" && 
+          this.settings.formsContent["section"] &&
+          this.settings.formsContent["section"].emmitSectionChange && 
+          this.componentForm.controls["section"].value
+        ) 
+          this.componentForm.patchValue({ section: "" });
+
+        if (
+          attr == "grades" && 
+          this.settings.formsContent["grades"] &&
+          this.settings.formsContent["grades"].isGrades && 
+          (
+            this.componentForm.controls["grades"].value == "" ||
+            !this.componentForm.dirty
+          ) &&
+          this.settings.formsContent[attr].options.length > 0
+        ) {
+          this.componentForm.patchValue({ 
+            grades: this.settings.formsContent["grades"].options[0].id 
+          });
+          this.setSchoolSections(true);          
+        }
+        
+        setTimeout(() => {
+          this.isContentRefreshing = false;
+        });
+      });
+      // console.log(this.componentForm.dirty);
+    }  
+
     if (!this.isEdited) {
-      this.settings.data = data;
-      this.setAllFields(this.settings.data);
+      if (!data.setContent) {
+        this.settings.data = data;
+        this.setAllFields(this.settings.data);
+      }
   
       if ( this.isDirty() ) this.btnUpdater(this.componentForm.value);
     }    
@@ -437,6 +520,17 @@ export class FormBlockComponent
       manageData.data["age"] = this.globals.dateStringToISOString(
         cf.get("age").value
       );
+    if (this.settings.formType === "actualizarCoordinador") {
+      manageData.data["birthdate"] = this.globals.dateStringToISOString(
+        cf.get("date").value
+      );
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+    }
+    if (this.settings.formType === "actualizarPadrino")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+
+    if (this.settings.formType === "actualizarEscuela")
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
 
     const assignId = () =>
       Math.random()
@@ -457,7 +551,8 @@ export class FormBlockComponent
         this.settings.dataFromRow["data"]["id"] = `auto-${assignId()}`;
       }
     } else {
-      if (!this.settings.notGenerateId) manageData.data["id"] = `auto-${assignId()}`;
+      if (!this.settings.notGenerateId)
+        manageData.data["id"] = `auto-${assignId()}`;
     }
 
     let obj = {
@@ -473,18 +568,20 @@ export class FormBlockComponent
           : "add"
         : "set"
     };
-    
+
     const commonTasks = () => {
       this.sendingForm = false;
-      
+
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
-  
+
       if (this.settings.modalCode)
         this.globals.ModalHider(this.settings.modalCode);
 
       // initializers
       if (!this.settings.notResetForm) {
         cf.reset();
+        if (this.settings.formsContent['documentGroup'])
+          cf.controls["documentGroup"].get("prependSelect").setValue("1");
         this.municipalities = [];
         Object.keys(this.wrongDateDisabler).map(f => {
           this.wrongDateDisabler[f] = false;
@@ -496,37 +593,91 @@ export class FormBlockComponent
     };
 
     if (this.settings.makesNoRequest) commonTasks();
-    else {
+    else {      
       const method = this.settings.fetcherMethod || "post";
-      const resourcePath = this.settings.fetcherUrls[method];
+      const resourcePath = this.settings.methodUrlPlus 
+        ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]}`
+        : this.settings.fetcherUrls[method];    
+        
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      
-      this.fetcher[method](resourcePath, body).subscribe(
+
+      if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
+ 
+      console.log(
+        'method: ', method,
+        'url: ', resourcePath,
+        'body: ', body
+      );
+//console log... comentar todo el fetcher antes de probar el put
+       this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
-            
+          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+          
           this.toastr.success("Suministrado con éxito", "", {
             positionClass: "toast-bottom-right"
           });
-          
+
           this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+
+          if (
+            this.settings.formType === "actualizarCoordinador" ||
+            this.settings.formType === "actualizarEscuela" ||
+            this.settings.formType === "actualizarPadrino"
+          ) {
+            //Do the consult to the endpoint which bring me the data of specific user
+            this.fetcher
+              .get(
+                `users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`
+              )
+              .subscribe(
+                respuesta => {
+                  // within the answer I send the content to the SetUser::
+                  this.store.dispatch([new SetUser(respuesta)]);
+                },
+                error => {
+                  console.log(error);
+                }
+              );
+          }
         },
         error => {
           this.sendingForm = false;
+          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+
+          // const errorType = (error.error && error.error["name"])
+          //   ? (this.settings.formType === "agregarGradoSeccion" 
+          //     ? "section" 
+          //     : "name") 
+          //   : "regular";
+
+          // if (
+          //   errorType!="regular" && 
+          //   this.settings.formType === "agregarGradoSeccion"
+          // ) this.componentForm.get(errorType).setValue("");
+          
           this.toastr.error(
-            "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+            // errorType!="regular" 
+            error.error && error.error["name"] && error.error["name"][0]
+              ? error.error["name"][0].msg 
+              : error.error && error.error["email"] && error.error["email"][0]
+                ? error.error["email"][0].msg 
+                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                  ? error.error["cardId"][0].msg 
+                  : error.error && error.error["msg"] 
+                    ? error.error["msg"]
+                    : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
             "",
             { positionClass: "toast-bottom-right" }
           );
           console.error(error);
         }
-      );
+      );   
     }
-    
   }
 
   // filling municipalities according to selected state
@@ -545,7 +696,7 @@ export class FormBlockComponent
     }
 
     this.componentForm.patchValue({ addressMunicipality: munId });
-  }
+  }  
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
   updateMuns(bool: boolean = true, munId: string = "") {
     if (bool) {
@@ -555,8 +706,26 @@ export class FormBlockComponent
         this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
-
       this.fillMunicipalities(currStateId, munId);
+    }
+  }
+
+  requiredOtherCompany(e: any) {
+    if (e) {
+      if (e.id == "0") {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(
+            this.componentForm.get("companyOtherType").value,
+            Validators.required
+          )
+        );
+      } else {
+        this.componentForm.setControl(
+          "companyOtherType",
+          this.fb.control(this.componentForm.get("companyOtherType").value)
+        );
+      }
     }
   }
 
@@ -565,6 +734,9 @@ export class FormBlockComponent
   }
 
   disableBtn() {
+    Object.keys(this.componentForm.value).map(val =>{
+      //console.log(`${val}: `,this.componentForm.get(val).valid);
+    });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
@@ -601,7 +773,7 @@ export class FormBlockComponent
     imgBtnContainer.querySelectorAll('input[type="file"]')[0].click();
   }
   // adds the image file and image source to the imageGroup form control
-  fileManager(e) {    
+  fileManager(e) {
     let reader = new FileReader();
     reader.readAsDataURL(<File>e.target.files[0]);
     reader.onload = _event => {
@@ -653,9 +825,10 @@ export class FormBlockComponent
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       default:
-        return this.componentForm.controls["imageGroup"].value["imageSelected"] 
-                ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
-                : 'image';
+        return this.componentForm.controls["imageGroup"].value["imageSelected"]
+          ? this.componentForm.controls["imageGroup"].get("imageSelected").value
+              .name
+          : "image";
     }
   }
   // when X image remover is clicked
@@ -688,7 +861,9 @@ export class FormBlockComponent
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: `auto-${Math.random().toString(36).substring(2)}`,
+            id: `auto-${Math.random()
+              .toString(36)
+              .substring(2)}`,
             // image: imgGrp.get("imageSelected").value.name,
             // image: imgGrp.get("imageSrc").value,
             source: imgGrp.get("imageSrc").value,
@@ -734,9 +909,8 @@ export class FormBlockComponent
       this.componentForm.get("imageGroup").reset();
       // setTimeout(() => {
       //   this.sendNull = true;
-      // });      
-    }
-    else {
+      // });
+    } else {
       const inx = this.settings.formsContent["imageGroup"].fields[
         "imageDocente"
       ].options.findIndex(d => {
@@ -754,48 +928,48 @@ export class FormBlockComponent
   }
   //? -----------------------------------------------------------------------------------
 
-  searchAndFillTable() {
-    let obj = {
-      code: this.settings.tableCode,
-      dataArr: [],
-      resetData: true,
-      action: "add"
-    };
+  // searchAndFillTable() {
+  //   let obj = {
+  //     code: this.settings.tableCode,
+  //     dataArr: [],
+  //     resetData: true,
+  //     action: "add"
+  //   };
 
-    switch (this.settings.formType) {
-      case "buscarEstudiante":
-        obj.dataArr = [
-          {
-            name: "Name 1",
-            lastName: "Lastname 1",
-            doc: "123456789",
-            sex: "Femenino",
-            age: "11"
-          },
-          {
-            name: "Name 2",
-            lastName: "Lastname 2",
-            doc: "123456789",
-            sex: "Masculino",
-            age: "13"
-          },
-          {
-            name: "Name 3",
-            lastName: "Lastname 3",
-            doc: "123456789",
-            sex: "Femenino",
-            age: "12"
-          }
-        ];
-        break;
+  //   switch (this.settings.formType) {
+  //     case "buscarEstudiante":
+  //       obj.dataArr = [
+  //         {
+  //           name: "Name 1",
+  //           lastName: "Lastname 1",
+  //           doc: "123456789",
+  //           sex: "Femenino",
+  //           age: "11"
+  //         },
+  //         {
+  //           name: "Name 2",
+  //           lastName: "Lastname 2",
+  //           doc: "123456789",
+  //           sex: "Masculino",
+  //           age: "13"
+  //         },
+  //         {
+  //           name: "Name 3",
+  //           lastName: "Lastname 3",
+  //           doc: "123456789",
+  //           sex: "Femenino",
+  //           age: "12"
+  //         }
+  //       ];
+  //       break;
 
-      default:
-        break;
-    }
+  //     default:
+  //       break;
+  //   }
 
-    this.globals.tableDataUpdater(obj);
-    this.componentForm.reset();
-  }
+  //   this.globals.tableDataUpdater(obj);
+  //   this.componentForm.reset();
+  // }
 
   // setting inputs data
   setAllFields(data) {
@@ -814,6 +988,8 @@ export class FormBlockComponent
         if (key == "addressMunicipality") this.updateMuns(true, data[key]);
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
+          if (data[key]) { 
+          //console.log("key", data[key]) 
           const dateKey = this.globals.getDateFormat(
             new Date(data[key].replace("Z", ""))
           );
@@ -824,13 +1000,14 @@ export class FormBlockComponent
             key,
             true
           );
+        }
         } else if (this.settings.formsContent[key].type === "double") {
           this.componentForm.patchValue({ ...data[key] });
         } else this.componentForm.patchValue({ [key]: data[key] });
       }
     });
     // console.log(this.componentForm.value);
-    // this.componentForm.setValue(data);    
+    // this.componentForm.setValue(data);
   }
 
   //? turning imageGroup fields into array
@@ -843,4 +1020,37 @@ export class FormBlockComponent
   disableSaveAndCancelButtons() {
     this.isEditing = false;
   }
+  
+  // filling sections according to selected grade
+  private fillSections(grade = null) {
+    if (!grade){
+      this.sectionsArr = [];
+      this.componentForm.patchValue({ section: "" });
+    }
+    else {
+      this.sectionsArr = this.settings.formsContent[
+        "section"
+      ].options.filter(s => {
+        return s.grade == grade;
+      });
+
+      this.componentForm.patchValue({ 
+        section: this.sectionsArr[0].id 
+      }); 
+    }   
+  }  
+  // managing sections depending on grades
+  setSchoolSections(e) {
+    if (e) {
+      let currGrade = null;
+      currGrade =
+        this.componentForm.controls["grades"].value &&
+        this.componentForm.controls["grades"].value.length > 0
+          ? this.componentForm.controls["grades"].value
+          : null;
+
+      this.fillSections(currGrade);
+    } else this.fillSections();
+  }
+
 }

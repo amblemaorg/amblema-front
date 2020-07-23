@@ -328,7 +328,8 @@
             }
         }
 
-        &.ng-select-filtered .ng-select-container .ng-placeholder {
+        &.ng-select-filtered .ng-select-container .ng-placeholder,
+        &.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder {
             display: none !important;
         }
 

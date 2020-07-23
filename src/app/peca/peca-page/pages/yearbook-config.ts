@@ -398,6 +398,7 @@ const sections = [
             ],
             modalCode: val.id,
             isFromCustomTableActions: true,
+            isDeleting: true,
         }
     }
     let modalTablaLapso1 = {

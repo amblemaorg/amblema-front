@@ -74,8 +74,8 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
   }];
   public eventSettings: EventSettingsModel = {
     dataSource: this.data
-  }/*
--------------------------------------------------------*/
+  }
+/*-------------------------------------------------------*/
 
   public allowVirtualScroll: boolean = true;
   public currentView: View = 'Month';
