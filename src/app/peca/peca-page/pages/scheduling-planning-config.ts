@@ -37,9 +37,11 @@ const reunionAprobacionSet = {
             ],
             placeholder: "Pendiente"
         },
-        subtitles: {
-            text: '',
-        },
+        subtitles: [
+            {
+                text: ''
+            },
+        ]
     }
 }
 
@@ -54,10 +56,11 @@ const propuestaAmblema = {
             text: 'Estatus',
             subText: 1
         },
-        subtitles:  {
-            text: '',
-        },
-        
+        subtitles:  [
+            {
+                text: '',
+            },
+        ],        
         action: [{
             type: 3,
             name: 'Enviar',

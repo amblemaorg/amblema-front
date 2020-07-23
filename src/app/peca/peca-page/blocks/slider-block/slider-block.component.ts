@@ -37,7 +37,7 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
 
 
   mySlideOptions = { items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video: true, lazyLoad: true };
-  myCarouselOptions = { items: 4, dots: false, mouseDrag: false, touchDrag: false, video: true, lazyLoad: true };
+  myCarouselOptions = { items: 5, dots: false, mouseDrag: false, touchDrag: false, video: true, lazyLoad: true };
 
   OwlOptions = {
     items: 1,
@@ -70,23 +70,26 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
     this.settings = { ...settings };
   }
 
-  //prueba:any;
+  prueba:any;
+  flags= false;
   setData(data: any) {
-    //this.prueba= data.sliderImage.description;
-    if (data["sliderImage"]) { for (let i = 0; i <data.sliderImage.description.length; i++) {
-      console.log("posicion i",data.sliderImage.description[i]);
-     
-      this.settings.sliderImage[i].description = data.sliderImage.description[i].description;
-    
-      this.settings.sliderImage[i].image = data.sliderImage.description[i].image;
-    }
-      
+    this.prueba= data.sliderImage.description;
+    this.flags=true;
+    if (data["sliderImage"]) {
+      for (let i = 0; i < data.sliderImage.description.length; i++) {
+        console.log("posicion i", data.sliderImage.description[i]);
+
+        this.settings.sliderImage[i].description = data.sliderImage.description[i].description;
+
+        this.settings.sliderImage[i].image = data.sliderImage.description[i].image;
+      }
+
       //this.settings.sliderImage.description = data.sliderImage.description;
       //this.settings.sliderImage.image = data.sliderImage.image;
     }
     console.log(this.settings.sliderImage, "imagenes")
     //console.log("checkkk",data);
-    console.log("checkkk22222",data.sliderImage.description);
+    console.log("toda la data", data.sliderImage.description);
   }
 
   focusDatePicker(e) {

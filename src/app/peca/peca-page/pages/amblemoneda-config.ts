@@ -41,7 +41,19 @@ const sliderAmblemoneda = {
                     fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
                     image: "../../../../../assets/images/background-pillar-matematica.jpg",
                     description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-                }
+                },
+                /*{
+                    text: "Fecha de la actividad:",
+                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                    image: "../../../../../assets/images/background-pillar-matematica.jpg",
+                    description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                },
+                {
+                    text: "Fecha de la actividad:",
+                    fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
+                    image: "../../../../../assets/images/background-pillar-matematica.jpg",
+                    description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                },*/
             ]
         /*{
             image: "../../../../../assets/images/background-pillar-lectura.jpg",
@@ -177,9 +189,11 @@ const charlaConDocentes = {
             name: 'hola.png',
         },
         subtitles:
-        {
-            text: '',
-        },
+        [
+            {
+                text: '',
+            },
+        ]
     }
 }
 

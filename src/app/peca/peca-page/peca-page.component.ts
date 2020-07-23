@@ -33,7 +33,9 @@ export class PecaPageComponent {
       const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
         block.component
       );
+
       if (reSet && container.length > 0) container.clear();
+      
       const pageBlockComponent = container.createComponent(
         pageBlockComponentFactory
       );
