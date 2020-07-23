@@ -112,7 +112,7 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
   ngOnInit() {
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
-        if (data.activePecaContent) {
+        if (data && data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
             console.log(data, "data schedule")
           }
