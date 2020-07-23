@@ -16,11 +16,11 @@ const genericActivityChecklist = {
     component: 'checkList',
     name: 'genericActivityChecklist',
     settings: {
-        infoContainer: [
-            {   
+        infoContainer: [{
+            datosNivel: [{   
                 isFromGenericActivity: true,                
-            }
-        ]
+            }]
+        }]
     }
 }
 
