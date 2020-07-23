@@ -3,7 +3,14 @@
 export function EnviromentalMapper(EnviromentalData) {
 
     const {
-        name
+        name,
+        lapse1:{
+            topics:
+            [{
+                nameTopic
+            }
+        ]
+        }
       } = EnviromentalData;
     
     return {
@@ -33,23 +40,25 @@ export function EnviromentalMapper(EnviromentalData) {
                                                     {
                                                         component: 'accordion',
                                                         settings: {
+
                                                             items: [
                                                                 {
-                                                                    title: "Geografia de Venezuela Libre",
+                                                                    
+                                                                    title: nameTopic,
                                                                     /* childBlocks: [
                                                                     
                                                                         { ...infoGeneral }
                                                                     ] */
                                                                 },
                                                                 {
-                                                                    title: "Ecositemas de Venezuela",
+                                                                    title: nameTopic,
                                                                    /*  childBlocks: [
                                                                         
                                                                         { ...infoGeneral }
                                                                     ] */
                                                                 },
                                                                 {
-                                                                    title: "Parque nacionales y monumentos naturales",
+                                                                    title: nameTopic,
                                                                   /*   childBlocks: [
                                                                         
                                                                         { ...infoGeneral }

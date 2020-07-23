@@ -61,6 +61,9 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
         (data) => {
            if (!this.isInstantiating) {
              console.log("proyecto ambiental", data);
+             data.lapse1.topics.forEach((topic) => {
+              topic.nameTopic = topic.name;
+            });
             this.topics1lapse = data.lapse1.topics;
             this.topics2lapse = data.lapse2.topics;
             this.topics3lapse = data.lapse3.topics;
