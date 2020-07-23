@@ -86,7 +86,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
         }
       );
   }
-
+  objectiveLapse4Data:any;
   setEnviromentalProjectData() {
 
     this.enviromentalInfo1lapse = {
@@ -108,11 +108,11 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     this.objectiveLapse3Data = {
       enviromentTitleLapse3: this.objetiveLapse3
     }
+  
   }
 
   updateDataToBlocks() {
     this.setBlockData("lapse1Enviromental", this.enviromentalInfo1lapse);
-    //this.setBlockData("hola", this.enviromentalInfo1lapse); ////////////////////////////
      this.setBlockData("lapse2Enviromental", this.enviromentalInfo2lapse);
      this.setBlockData("lapse3Enviromental", this.enviromentalInfo3lapse);
      this.setBlockData("objetivoProyectoAmbiental1", this.objectiveLapse1Data);
