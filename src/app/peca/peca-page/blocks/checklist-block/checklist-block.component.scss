@@ -324,7 +324,7 @@
   .select-estatus {
     width: 55% !important;
   }
-  .form-control {
+  .form-control.in-checklist-view {
     color: $blue;
 
     &[readonly] {

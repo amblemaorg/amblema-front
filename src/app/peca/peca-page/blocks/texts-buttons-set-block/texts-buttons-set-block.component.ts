@@ -178,7 +178,7 @@ export class TextsButtonsSetBlockComponent
           if (data['date'] || data['isDate']) this.dataGenAct.date = data.date;
           if (data['checklist']) this.dataGenAct.checklist = data.checklist;
           if (data['upload']) this.dataGenAct.upload = data.upload;
-          console.log("activity data to update",this.dataGenAct);
+          // console.log("activity data to update",this.dataGenAct);
         }
       })
     );
@@ -270,7 +270,6 @@ export class TextsButtonsSetBlockComponent
           this.dataGenAct.upload = data["upload"] ? true : false;
         }
         else {
-          console.log(data["dateOrtext"],data["upload"]);
           setTimeout(() => {
             this.globals.updateGenActButtonDataUpdater({
               gaId: this.settings.genericActivityId,
