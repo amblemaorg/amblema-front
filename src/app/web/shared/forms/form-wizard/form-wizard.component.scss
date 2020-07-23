@@ -187,6 +187,11 @@
       .google-map-container {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
+
+        @include mediabreak(large,landscape) {
+          flex-wrap: nowrap;
+        }
 
         label {
           max-width: unset;
@@ -199,7 +204,14 @@
           border: 2px solid $blue;
           padding: 0.4rem 1.25rem;
           color: $blue;
-          border-radius: 0.45rem;   
+          border-radius: 0.45rem;  
+          width: 100%;
+          margin-top: 1rem; 
+
+          @include mediabreak(large,landscape) {
+            width: auto;
+            margin-top: 0; 
+          }
 
           &:focus {
             outline: none;
@@ -236,11 +248,16 @@
                 min-height: 20rem;
                 height: 45vh;
               }
+
+              .map-problem {
+                color: $blue;
+              }
             }
           }
         }
 
-        .google-map-opener, #google-map-modal strong {
+        .google-map-opener, #google-map-modal strong,
+        #google-map-modal .map-problem {
           font-size: 4vw;
           @include breakpoint(medium) {
             font-size: 2vw;

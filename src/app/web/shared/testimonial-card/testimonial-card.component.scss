@@ -37,22 +37,29 @@
   }
 
   .testimonial-image {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    height: 20vw;
+    width: 30vw;
+    overflow: hidden;
+
+    @include breakpoint(small, landscape) {
+      width: 7vw;
+      height: 7vw;
+    }
+
+    @include breakpoint(medium) {
+      width: 7vw;
+      height: 7vw;
+    }
+
     img {
-      border-radius: 50%;
-      width: 20vw;
-      height: 20vw;
-
-      @include breakpoint(small, landscape) {
-        width: 7vw;
-        height: 7vw;
-      }
-
-      @include breakpoint(medium) {
-        width: 7vw;
-        height: 7vw;
-      }
+      height: 100%;
+      width: auto;
     }
   }
+
   .testimonial-identity {
     font-size: 3.25vw;
     margin-left: 3vw;

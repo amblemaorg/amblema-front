@@ -47,6 +47,7 @@ import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-st
 import { SchedulePageComponent } from './peca-page/pages/schedule-page.component';
 import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-page.component';
 import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component';
+import { GenericActivityPageComponent } from './peca-page/pages/generic-activity-page.component';
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component';
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component';
@@ -61,6 +62,7 @@ import { ModalBlockComponent } from './peca-page/blocks/modal-block/modal-block.
 import { NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
 import { ScheduleBlockComponent } from './peca-page/blocks/schedule-block/schedule-block.component';
 import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphics-block.component';
+import { GenericActivityBlockComponent } from './peca-page/blocks/generic-activity-block/generic-activity-block.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,7 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
     SchedulePageComponent,
     SchoolPicturesPageComponent,
     YearbookPageComponent,
+    GenericActivityPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -96,6 +99,7 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
     ScheduleBlockComponent,
     ModalBlockComponent,
     GraphicsBlockComponent,
+    GenericActivityBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -137,6 +141,7 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
     ScheduleBlockComponent,
     ModalBlockComponent,
     GraphicsBlockComponent,
+    GenericActivityBlockComponent,
   ],
   providers: [{ provide: NbTokenStorage, useClass: NbTokenLocalStorage }],
 })

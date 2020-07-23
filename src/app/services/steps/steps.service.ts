@@ -34,6 +34,10 @@ export class StepsService {
     this.goToMods.emit(null);
   }
 
+  // geoCodeGet(resourcePath: string): Observable<any> {
+  //   return this.http.get<any>(resourcePath, httpOptions);
+  // }
+
   getSteps (proj_id): Observable<Project> {
     return this.http.get<Project>(this.baseUrl + `projects/${proj_id}`)
   }

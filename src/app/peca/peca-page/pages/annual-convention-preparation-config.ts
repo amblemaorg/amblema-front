@@ -147,6 +147,7 @@ const formTablaPreinscripcionDocente = {
       ],
       modalCode: 'dataPreinscripcionDocente',
       isFromCustomTableActions: true,
+      isDeleting: true,
     }
   }
   const modalTablaPreinscripcionDocente = {

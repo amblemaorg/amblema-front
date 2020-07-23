@@ -100,12 +100,25 @@ export class EheaderComponent implements OnInit {
     this.router.navigate([
       "peca/perfil-usuario",
       { 
-        userType: this.user_type, 
-        idUser: this.user_id,
-        nameUser: this.user_name,
-        emailUser: this.user_email
+        comesFromPreviousSteps: true
       }
     ]);
+  }
+
+  getUserOneOrTwoLines(name) {
+    const name_obj = [name].reduce((nameObj,name) => {
+      name.split(" ").map((nameI,i,name_arr) => {
+        const half = parseInt(`${name_arr.length / 2}`);
+        if ( i < half || half === 0 )
+          nameObj["first"] = nameObj["first"] ? `${(nameObj["first"])} ${nameI}` : nameI;
+        else
+          nameObj["second"] = nameObj["second"] ? `${(nameObj["second"])} ${nameI}` : nameI;
+      });
+
+      return nameObj;
+    }, {});
+
+    return name_obj.second ? `<span>${name_obj.first}</span><span>${name_obj.second}</span>` : `<span>${name_obj.first}</span>`;
   }
 
 }
