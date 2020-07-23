@@ -2,31 +2,28 @@ import { formResultadoEstudianteModal } from '../blocks/form-block/all-forms';
 
 const datosOlimpiadas = {
     component: 'textsbuttons',
+    name: 'olimpiadasDateText',
     settings: {
         dateOrtext: {
             text: 'Fecha de la prueba:',
-            date: '12-05-2020',
+            date: '',
         },
-        upload: {
+        uploaddown: {
             url: '#',
             name: 'Descargar archivo',
         },
-        subtitles: [
-            {
-                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, commodi temporibus fugit tempore recusandae excepturi ex natus voluptatum alias architecto ratione magni accusantium vitae id tenetur doloribus cupiditate voluptatem nostrum quidem! Reprehenderit ratione perferendis iure pariatur omnis ipsam culpa autem! Quam sequi voluptatem consequatur modi dolores repellendus voluptates sint soluta!'
-            },
-            {
-                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, commodi temporibus fugit tempore recusandae excepturi ex natus voluptatum alias architecto ratione magni accusantium vitae id tenetur doloribus cupiditate voluptatem nostrum quidem! Reprehenderit ratione perferendis iure pariatur omnis ipsam culpa autem! Quam sequi voluptatem consequatur modi dolores repellendus voluptates sint soluta! Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-            },
-            {
-                text: 'Magnam, commodi temporibus fugit tempore recusandae excepturi ex natus voluptatum alias architecto ratione magni accusantium vitae id tenetur doloribus cupiditate voluptatem nostrum quidem! Reprehenderit ratione perferendis iure pariatur omnis ipsam culpa autem! Quam sequi voluptatem consequatur modi dolores repellendus voluptates sint soluta! Reprehenderit ratione perferendis iure pariatur omnis ipsam culpa autem! Quam sequi voluptatem consequatur modi dolores repellendus voluptates sint soluta!'
-            }]
-
+        subtitles: 
+            [
+                {
+                    text: '',
+                },
+            ]
     }
 }
 
 const selectEstudiantes = {
     component: 'textsbuttons',
+    name: 'selectStudents',
     settings: {
         selectStatus:
         {
@@ -69,6 +66,7 @@ const selectEstudiantes = {
 
 const resultadoEstudiante = {
     component: 'table',
+    name: 'resultadoTabla',
     settings: {
         columns: {
             name: {
@@ -80,11 +78,11 @@ const resultadoEstudiante = {
             gradeAndSection: {
                 title: "Grado y sección",
                 valuePrepareFunction: ( row: any ) => {          
-                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.section;
+                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.name;
                     else return '';
                 },
                 filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.section;
+                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.name;
                     value = value.toUpperCase();
                     
                     if (value.includes(search.toUpperCase()) || search === '') return true;
@@ -143,7 +141,7 @@ const resultadoEstudiante = {
         ],
         classes: {
             hideView: false,
-            hideEdit: false,
+            //hideEdit: false,
             hideDelete: false,
         },
     }
