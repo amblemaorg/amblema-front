@@ -29,7 +29,8 @@
 
       @media (max-width: 576px) {
         .tabset {
-          overflow: inherit;
+          overflow: auto;
+          overflow-y: hidden;
           justify-content: start !important;
           li {
             margin: 0 1.5rem;

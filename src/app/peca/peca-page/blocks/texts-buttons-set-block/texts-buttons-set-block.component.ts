@@ -126,13 +126,13 @@ export class TextsButtonsSetBlockComponent
 
   sleepSend: boolean; // disables actions button meanwhile peca content gets updated
 
-  showThisVideo: boolean;  
-  timesVideoSourceCalled:number = 0;
+  showThisVideo: boolean;
+  timesVideoSourceCalled: number = 0;
   activity_video: any;
   activity_uneditable: boolean;
 
   constructor(
-    private globals: GlobalService, 
+    private globals: GlobalService,
     private fetcher: HttpFetcherService,
     private store: Store,
     private toastr: ToastrService,
@@ -161,7 +161,7 @@ export class TextsButtonsSetBlockComponent
 
   ngOnInit() {
     this.subscription.add(
-      this.globals.updateButtonDataEmitter.subscribe((data) => {        
+      this.globals.updateButtonDataEmitter.subscribe((data) => {
         if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
           if (data.whichData == 'table') this.dataTorF.table = data.table;
           if (data.whichData == 'form') this.dataTorF.form = data.form;
@@ -204,7 +204,7 @@ export class TextsButtonsSetBlockComponent
     };
     this.subscription.unsubscribe();
     this.sleepSend = null;
-    this.showThisVideo = false;  
+    this.showThisVideo = false;
     this.timesVideoSourceCalled = 0;
     this.activity_video = null;
     this.activity_uneditable = null;
@@ -255,7 +255,7 @@ export class TextsButtonsSetBlockComponent
         this.statusForm.reset();
       }
 
-      if (data["video"]) {        
+      if (data["video"]) {
         this.resetTimesLoadedVideo();
         this.videoShower(data.video);
       } else {
@@ -283,8 +283,10 @@ export class TextsButtonsSetBlockComponent
 
     } 
     else {
-      if (data["status"]) this.settings.status.subText = data.status.subText;     
-    }    
+      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
+      if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
+    }
   }
 
   setFetcherUrls({ put, delete: deleteFn, cancel }) {
@@ -292,7 +294,7 @@ export class TextsButtonsSetBlockComponent
       put,
       delete: deleteFn,
       cancel // when there's a cancel request button this can be used
-    };    
+    };
     this.sleepSend = false;
   }
 
@@ -356,17 +358,17 @@ export class TextsButtonsSetBlockComponent
   }
 
   addToTable(usingModal: boolean = false, isNotFromTable: boolean = false) {
-    let obj = !usingModal? {
+    let obj = !usingModal ? {
       code: this.settings.tableCode,
       data: {},
       resetData: false,
       action: 'add',
     } : {
-      code: this.settings.modalCode,
-      action: !isNotFromTable? 'add':'view',
-      showBtn: !isNotFromTable? true : false,
-      component: !isNotFromTable? 'form' : 'graphics',
-    };
+        code: this.settings.modalCode,
+        action: !isNotFromTable ? 'add' : 'view',
+        showBtn: !isNotFromTable ? true : false,
+        component: !isNotFromTable ? 'form' : 'graphics',
+      };
 
     if (!usingModal) {
       switch (this.settings.buttonType) {
@@ -463,10 +465,10 @@ export class TextsButtonsSetBlockComponent
 
             console.log(
               'method: ', method,
-             'url: ', url
+              'url: ', url
             );
 
-             this.fetcher[method](url).subscribe((data) => {
+            this.fetcher[method](url).subscribe((data) => {
               console.log(data);
               commonTasks();
 
@@ -478,29 +480,29 @@ export class TextsButtonsSetBlockComponent
 
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
               this.store.dispatch([new FetchPecaContent(this.pecaId)]);
-            }, (error) => {      
-              const error_msg = (error.error && error.error instanceof ProgressEvent) 
-                ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+            }, (error) => {
+              const error_msg = (error.error && error.error instanceof ProgressEvent)
+                ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
                 : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
-        
+
               this.isSending = false;
               this.toastr.error(
-                error.error && error.error["msg"] 
+                error.error && error.error["msg"]
                   ? (
-                      error.error["entity"] && error.error["entity"].length > 0 
-                        ? `${error.error["msg"]}: ${error.error["entity"]}` 
-                        : error.error["msg"]
-                    )
+                    error.error["entity"] && error.error["entity"].length > 0
+                      ? `${error.error["msg"]}: ${error.error["entity"]}`
+                      : error.error["msg"]
+                  )
                   : error_msg,
                 "",
                 { positionClass: "toast-bottom-right" }
               );
               console.error(error);
-            }); 
-          }          
+            });
+          }
         }
         break;
-      case 2: 
+      case 2:
         if (this.settings.isFromCustomTableActions && this.settings.modalCode)
           this.globals.ModalHider(this.settings.modalCode);
         else {
@@ -511,12 +513,12 @@ export class TextsButtonsSetBlockComponent
       case 4:
         this.isSending = true;
         if ( // if has a date
-          this.dataTorF.form 
+          this.dataTorF.form
           && (
-            this.dataTorF.form.age 
+            this.dataTorF.form.age
             || this.dataTorF.form.date
-          ) 
-        ) this.dataTorF.form[this.dataTorF.form.age ? 'age' : 'date'] 
+          )
+        ) this.dataTorF.form[this.dataTorF.form.age ? 'age' : 'date']
           = this.globals.dateStringToISOString(
             this.dataTorF.form[this.dataTorF.form.age ? 'age' : 'date']
           );//---------------
@@ -528,32 +530,32 @@ export class TextsButtonsSetBlockComponent
 
         this.fetcher[method](resourcePath, body).subscribe(
           response => {
-            console.log("form response",response);
+            console.log("form response", response);
             this.sleepSend = true;
             this.isSending = false;
-    
+
             this.toastr.success("Solicitud enviada", "", {
               positionClass: "toast-bottom-right"
             });
-                    
+
             if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
             this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
-            const error_msg = (error.error && error.error instanceof ProgressEvent) 
-              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+            const error_msg = (error.error && error.error instanceof ProgressEvent)
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
               : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
             this.isSending = false;
             this.toastr.error(
               (error.error && error.error["name"] && error.error["name"][0])
-                ? error.error["name"][0].msg 
+                ? error.error["name"][0].msg
                 : error.error && error.error["email"] && error.error["email"][0]
-                  ? error.error["email"][0].msg 
+                  ? error.error["email"][0].msg
                   : error.error && error.error["cardId"] && error.error["cardId"][0]
-                    ? error.error["cardId"][0].msg 
-                    : error.error && error.error["msg"] 
+                    ? error.error["cardId"][0].msg
+                    : error.error && error.error["msg"]
                       ? error.error["msg"]
                       : error_msg,
               "",
@@ -589,7 +591,7 @@ export class TextsButtonsSetBlockComponent
 
     this.fetcher[method](url, body).subscribe(
       response => {
-        console.log("form response",response);
+        console.log("form response", response);
         // if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
         this.sleepSend = true;
         this.isSending = false;
@@ -597,22 +599,22 @@ export class TextsButtonsSetBlockComponent
         this.toastr.success("Solicitud cancelada", "", {
           positionClass: "toast-bottom-right"
         });
-                
+
         if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
         this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
-        const error_msg = (error.error && error.error instanceof ProgressEvent) 
-          ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+        const error_msg = (error.error && error.error instanceof ProgressEvent)
+          ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
           : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
         this.isSending = false;
         this.toastr.error(
-          error.error && error.error["msg"] 
+          error.error && error.error["msg"]
             ? error.error["msg"]
             : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
-        );       
+        );
         console.error(error);
       }
     );
@@ -625,15 +627,15 @@ export class TextsButtonsSetBlockComponent
 
   getVideo(url) {
     if (
-      this.showThisVideo && 
+      this.showThisVideo &&
       this.timesVideoSourceCalled < 10 &&
-      !this.activity_video 
+      !this.activity_video
     ) {
       this.activity_video = this.embedService.embed(url);
       if (this.activity_video) this.timesVideoSourceCalled++;
       return this.activity_video;
     }
-    else if (this.activity_video) 
+    else if (this.activity_video)
       return this.activity_video;
   }
 
@@ -652,7 +654,7 @@ export class TextsButtonsSetBlockComponent
   // FOR UPLOAD
   fileMngr(e) {
     if (
-      e && e.target && e.target.files 
+      e && e.target && e.target.files
       && e.target.files.length > 0
     ) {
       this.settings.upload = this.settings.upload ? {
@@ -684,7 +686,7 @@ export class TextsButtonsSetBlockComponent
   }
 
   shortenName(name: string) {
-    return name.length > 40 ? `${name.substr(0,10)}...${name.substr(30)}` : name;
+    return name.length > 40 ? `${name.substr(0, 10)}...${name.substr(30)}` : name;
   }
 
   // FOR STATUS CHANGER
