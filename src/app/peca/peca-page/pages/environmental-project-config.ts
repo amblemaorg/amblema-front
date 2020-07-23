@@ -483,7 +483,7 @@ const tituloObjetivoGeneralLapse3 = {
     settings: {
         title: {
             aligning: 'left', // 'center' for center aligning, 'left' otherwise
-            text: 'Geografia y Areas Naturales',
+            text: 'Subttitulo',
           }
     }
 }
