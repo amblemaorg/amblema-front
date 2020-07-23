@@ -8,6 +8,7 @@ const genericActivityFields = {
         video: {},
         addMT: {},
         upload: null,
+        activityUneditable: null,
     }
 }
 
@@ -15,11 +16,11 @@ const genericActivityChecklist = {
     component: 'checkList',
     name: 'genericActivityChecklist',
     settings: {
-        infoContainer: [
-            {   
+        infoContainer: [{
+            datosNivel: [{   
                 isFromGenericActivity: true,                
-            }
-        ]
+            }]
+        }]
     }
 }
 
@@ -33,7 +34,7 @@ const genericActivityActionButton = {
 
 export const GENERIC_ACTIVITY_CONFIG = {
     header: {
-        title: "Actividad genérica"
+        title: "Actividad del lapso"
     },
     blocks: [
         {

@@ -29,11 +29,14 @@ export class PecaPageComponent {
     this.header.title = header;
   }
 
-  public instantiateBlocks(container: ViewContainerRef) {
+  public instantiateBlocks(container: ViewContainerRef, reSet: boolean = false) {
     this.blocks.map((block, i) => {
       const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
         block.component
       );
+
+      if (reSet && container.length > 0) container.clear();
+      
       const pageBlockComponent = container.createComponent(
         pageBlockComponentFactory
       );
