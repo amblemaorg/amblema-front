@@ -141,7 +141,7 @@ const resultadoEstudiante = {
         ],
         classes: {
             hideView: false,
-            //hideEdit: false,
+            hideEdit: true,
             hideDelete: false,
         },
     }
