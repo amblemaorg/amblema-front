@@ -67,9 +67,10 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
             this.objetiveLapse1=data.lapse1.generalObjective;
             this.objetiveLapse2=data.lapse2.generalObjective;
             this.objetiveLapse3=data.lapse3.generalObjective;
-            const configVista = EnviromentalMapper(this.topics1lapse); //variable_que_almacenara_el_config_para_la_vista
+            const configVista = EnviromentalMapper(data); //variable_que_almacenara_el_config_para_la_vista
             this.instantiateComponent(configVista);
             this.doInstantiateBlocks();
+            console.log("ajaja", configVista)
 
           }
         },
