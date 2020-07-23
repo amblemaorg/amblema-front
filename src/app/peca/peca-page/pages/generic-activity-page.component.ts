@@ -25,11 +25,14 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
 
     @Select(PecaState.getActivePecaContent) pecaContentData$: Observable<any>;
+    @Select(PecaState.getUserResume) userData$: Observable<any>;
 
     pecaDataSubscription: Subscription;
+    userDataSubscription: Subscription;
     routerSubscription: Subscription;
     isInstanciated: boolean;
     loadedData: boolean;
+    user_type: string = "0";
 
     // generic activity content variables
     g_a_id: string;
@@ -43,11 +46,12 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_action_btn: any;
     g_a_activity_uneditable: boolean;
     g_a_status_selector: any;
+    g_a_action_btn_validators: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
         private router: Router,
-        globals: GlobalService
+        private globals: GlobalService
     ) {
         super(factoryResolver);
 
@@ -71,6 +75,10 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     ngOnInit() {
+        this.userDataSubscription = this.userData$.subscribe(user => {
+            this.user_type = user.type;
+        });
+
         this.setActivity(
             this.router.url.substring(1).split("/")[2],
             this.router.url.substring(1).split("/").pop()
@@ -79,7 +87,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
     setActivity(lapseId, activityId) {
         this.pecaDataSubscription = this.pecaContentData$.subscribe(
-            (data) => {
+            (data) => {                
                 if (data.activePecaContent) {
                     const lapse_id = lapseId;
                     const activity_id = activityId;
@@ -124,11 +132,11 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
         if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
         if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
-        if (this.g_a_status_selector) genericActivityObj = { ...genericActivityObj, ...this.g_a_status_selector };
+        if (this.g_a_status_selector) genericActivityObj = { ...genericActivityObj, ...this.g_a_status_selector, ...this.g_a_action_btn_validators };
 
         this.setBlockData("genericActivityFields", genericActivityObj );
         this.setBlockData("genericActivityChecklist", { ...genericActivity, ...this.g_a_checklist });
-        this.setBlockData("genericActivityActionButton", { ...genericActivity, ...this.g_a_action_btn });
+        this.setBlockData("genericActivityActionButton", { ...genericActivity, ...this.g_a_action_btn, ...this.g_a_action_btn_validators });
     }
 
     setGenericActivityData(data: GenericActivity) {
@@ -191,12 +199,11 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                 dateOrtext: {
                     text: "Fecha de la actividad:",
                     ...[date ? true : false].reduce((dateOtherData,isThereDate) => {
-                        dateOtherData[isThereDate ? "date" : "fields"] = isThereDate 
-                        ? date 
-                        : [{ 
+                        dateOtherData["fields"] = [{ 
                             placeholder: "Fecha de la actividad", 
                             fullwidth: false, 
                             type: "date",
+                            value: isThereDate ? this.globals.getDateFormat( new Date(date) ) : null,
                             validations: { 
                                 required: true, 
                             }, 
@@ -254,22 +261,39 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                 }
                 return checklistObj;
             },{});
-
+        
         this.g_a_action_btn = {
-                isGenericActivityBtnReceptor: true,
-                action: (data.status === "1" || data.status === "2") 
-                    && +data.approvalType > 1 && +data.approvalType < 4 
-                    ? [
-                        {
-                            type: 7,
-                            name: data.status === "1" 
-                                ? (data.approvalType === "3" 
-                                    ? 'Enviar' 
-                                    : 'Guardar'
-                                  ) 
-                                : 'Cancelar solicitud'
-                        }
-                    ] : null,
+            isGenericActivityBtnReceptor: true,
+            btnApprovalType: +data.approvalType,
+            action: (data.status === "1" || data.status === "2") &&
+                (data.hasDate || data.hasUpload || data.hasChecklist)
+                // && +data.approvalType > 1 && +data.approvalType < 4 
+                ? ( 
+                    +data.approvalType === 1 && this.user_type && +this.user_type > 1 
+                        ? null : [data.approvalType].reduce((btns,approvalType) => {
+                            if (approvalType === "3" && data.status === "1") 
+                                btns.push({ type: 8, name: 'Guardar' });
+                            btns.push({
+                                type: data.status === "1" ? (data.approvalType === "3" ? 7 : 8) : 9,
+                                name: data.status === "1" 
+                                    ? (data.approvalType === "3" 
+                                        ? 'Enviar' 
+                                        : 'Guardar'
+                                    ) 
+                                    : 'Cancelar solicitud'
+                            });
+                            return btns;
+                        },[]) 
+                  ) 
+                : null,
+            };
+
+        this.g_a_action_btn_validators = {
+                genActSavingTypes: data.hasDate || data.hasUpload || data.hasChecklist ? {
+                    hasDate: data.hasDate,
+                    hasUpload: data.hasUpload,
+                    hasChecklist: data.hasChecklist
+                } : null
             };
     }
 
@@ -284,6 +308,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.isInstanciated = false;
         this.loadedData = false;
         this.pecaDataSubscription.unsubscribe();
+        this.userDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
     }
 }

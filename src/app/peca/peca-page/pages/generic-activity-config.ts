@@ -34,7 +34,7 @@ const genericActivityActionButton = {
 
 export const GENERIC_ACTIVITY_CONFIG = {
     header: {
-        title: "Actividad genérica"
+        title: "Actividad del lapso"
     },
     blocks: [
         {
