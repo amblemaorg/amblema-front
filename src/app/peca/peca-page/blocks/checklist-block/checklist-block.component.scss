@@ -391,4 +391,9 @@
       }
     }
   }
+
+  .nb-theme-default nb-checkbox.status-basic .native-input:enabled:focus + .custom-checkbox.checked {
+    background-color: #00809a;
+    border-color: #00809a;
+}
 }

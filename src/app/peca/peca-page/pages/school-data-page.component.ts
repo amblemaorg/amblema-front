@@ -88,7 +88,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.schoolDataSubscription = this.schoolData$.subscribe(
       data => {
         if (!isNullOrUndefined(data)) {
-          console.log("mostrando data de escuela");
+          console.log(data,"mostrando data de escuela");
 
           if (data.school.isInApproval)
             this.setCancelRequest(data.school.approvalHistory);

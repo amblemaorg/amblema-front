@@ -8,7 +8,12 @@ import * as  numberingSystems from 'cldr-data/supplemental/numberingSystems.json
 import * as  gregorian from 'cldr-data/main/es/ca-gregorian.json';
 import * as  numbers from 'cldr-data/main/es/numbers.json';
 import * as  timeZoneNames from 'cldr-data/main/es/timeZoneNames.json';
-
+import { extend } from '@syncfusion/ej2-base';
+import { Observable, Subscription } from "rxjs";
+import { PecaState } from "../../../../store/states/peca/peca.state";
+import { Select } from "@ngxs/store";
+import { isNullOrUndefined } from "util";
+import { DatePipe } from "@angular/common"
 loadCldr(numberingSystems['default'], gregorian['default'], numbers['default'], timeZoneNames['default']);
 L10n.load({
   "es": {
@@ -39,24 +44,42 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
   settings: {
     items: any[];
   }
+
+  pipe = new DatePipe('en-US');
+  schedules: any;
   constructor() {
     this.type = 'presentational';
     this.component = 'agendas';
   }
 
 
-  /* Ejemplo Consumo remoto
-  private dataManager: DataManager = new DataManager({
-    url: 'https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData',
+  /*************************************** */
+
+  //Selectores
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
+
+  //subscripciones
+  infoDataSubscription: Subscription;
+
+  isInstanciated: boolean;
+  loadedData: boolean;
+  /*************************************** */
+
+
+
+  /*Ejemplo Consumo remoto*/
+  /* private dataManager: DataManager = new DataManager({
+    url: 'https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData', 
     adaptor: new ODataV4Adaptor,
     crossDomain: true
   });
   private dataQuery: Query = new Query().from("Events");
-  public eventSettings: EventSettingsModel = { dataSource: this.dataManager, query: this.dataQuery };
-/*--------------------------------------------------------*/
+
+  public eventSettings: EventSettingsModel = { dataSource: this.dataManager }; */
+  /*--------------------------------------------------------*/
 
   /*COnsumo Local*/
-  public data: object[] = [{
+  /* public data: object[] = [{
     Id: 1,
     Subject: 'Meeting',
     StartTime: new Date(2020, 5, 15),
@@ -71,11 +94,11 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
     StartTime: new Date(2020, 5, 30, 9, 0),
     EndTime: new Date(2020, 5, 30, 10, 30),
     Description: 'Meeting time changed based on team activities.',
-  }];
-  public eventSettings: EventSettingsModel = {
+  }]; */
+  public eventSettings: EventSettingsModel ;/* = {
     dataSource: this.data
-  }
-/*-------------------------------------------------------*/
+  } */
+  /*-------------------------------------------------------*/
 
   public allowVirtualScroll: boolean = true;
   public currentView: View = 'Month';
@@ -87,11 +110,41 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
 
 
   ngOnInit() {
+    this.infoDataSubscription = this.infoData$.subscribe(
+      data => {
+        if (data.activePecaContent) {
+          if (!isNullOrUndefined(data)) {
+            console.log(data, "data schedule")
+          }
+          let auxSchedule = [];
+          data.activePecaContent.schedule.forEach((schedule) => {
+            schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
+            schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
+          });
+
+          auxSchedule = auxSchedule.concat(data.activePecaContent.schedule)
+
+          this.schedules = auxSchedule;
+         /*  activity = this.pipe.transform(Date.parse(activity), 'yyyy/MM/dd'); */
+          this.eventSettings = {
+            dataSource: this.schedules
+          } 
+          
+          this.loadedData = true;
+          if (this.isInstanciated) this.updateMethods();
+        }
+
+      }, er => { console.log(er) })
+  }
+  updateMethods() {
+    //this.updateDataToBlocks();
   }
 
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
-
-
 }
+
+
+
+
