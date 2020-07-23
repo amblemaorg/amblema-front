@@ -26,8 +26,15 @@
 
         <div class="steps-progress-bar">
             <h6>Progreso de los pasos</h6>
-            <div class="progress" [title]="stepsProgress[activeStep]+'%'">
-                <div class="progress-bar" [style.width.%]="stepsProgress[activeStep]"></div>
+            <div class="progress" [title]="fetchingSteps ? 'Cargando' : (stepsProgress[activeStep]+'%')">
+                <div 
+                    class="progress-bar"
+                    [ngClass]="{
+                        'progress-bar-striped': fetchingSteps,
+                        'progress-bar-animated': fetchingSteps
+                    }" 
+                    [style.width.%]="fetchingSteps ? 100 : stepsProgress[activeStep]"
+                ></div>
             </div>
         </div>
         

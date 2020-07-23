@@ -118,36 +118,16 @@ export class SchoolSelectionComponent implements OnInit {
     let phaseProject = phase;
     let idProject = id;
     if (phaseProject == 1) {
-      this.router.navigate([
-        "previous-steps",
-        // { idProject: idProject, userType: this.userType, idUser: this.idUser },
-      ]);
-      // this.store.dispatch([new SetSelectedProject(this.projects[index])]);
-
-      //for steps/modules view...................
-      // this.store.dispatch( new UpdateModulesTotal );
-      // this.store.dispatch( new UpdateUserInfo( this.idUser, (+this.userType) ) );
-      // this.store.dispatch( new UpdateStepsSelectedProject(idProject) );
+      this.router.navigate(["previous-steps"]);      
       this.stepsService.callSteps(false);
-      // this.store.dispatch( new UpdateStepsProgress(idProject) ).subscribe(res => {
-      //   this.stepsService.enableTabMethod(true);
-      // });
       
     } else {
-      this.router.navigate(["peca"]);
-      //{
-      //  nameUser: this.nameUser,
-      //  idUser: this.idUser,
-      //  userType: this.userType,
-      //  emailUser: this.emailUser,
-      //},
-      // this.store.dispatch([new SetSelectedProject(this.projects[index])]);
+      this.router.navigate(["peca"]);      
       this.store.dispatch( new SetCurrentUser( this.idUser, (+this.userType) ) );
     }
 
     // Whether enters to peca or previous steps this has to be called
-    this.store.dispatch([new SetSelectedProject(this.projects[index])]);
-    this.store.dispatch( new UpdateModulesTotal );
+    this.store.dispatch([new SetSelectedProject(this.projects[index])]);    
     this.store.dispatch( new UpdateUserInfo( this.idUser, (+this.userType) ) );
     this.store.dispatch( new UpdateStepsSelectedProject(idProject) );
 

@@ -84,15 +84,11 @@ export class ModulesListComponent implements OnInit, DoCheck {
   
   loadMod(i,modId) {
     this.isLoading[i] = true;
-    this.router.navigate([
-      `previous-steps/module-detail/${modId}`
-    ]);
+    this.router.navigate([`previous-steps/module-detail/${modId}`]);
   }
 
   goToSteps() {
-    this.router.navigate([
-      "previous-steps"
-    ]);
+    this.router.navigate(["previous-steps"]);
   }
 
   getModuleNum(module_id) {

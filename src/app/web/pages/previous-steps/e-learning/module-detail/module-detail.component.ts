@@ -307,9 +307,7 @@ export class ModuleDetailComponent implements OnInit {
   }
 
   goToMods() {
-    this.router.navigate([
-      "previous-steps/modules"
-    ]);
+    this.router.navigate(["previous-steps/modules"]);
   }
 
 }
