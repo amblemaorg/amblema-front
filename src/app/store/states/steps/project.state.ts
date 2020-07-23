@@ -1,7 +1,7 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { StepsService } from '../../../services/steps/steps.service';
-import { StepStateModel, UpdateStepsProgress, ClearStepsProgress } from '../../actions/steps/project.actions';
+import { StepStateModel, UpdateStepsProgress, ClearStepsProgress, UpdateStepsSelectedProject } from '../../actions/steps/project.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
 
 @State<StepStateModel>({
@@ -15,10 +15,16 @@ import { ModulesService } from '../../../services/steps/modules.service';
         school: '',
         coordinator: '',
         steps: [],
+        project_id: null
     }
   })
 export class StepsState {
     // SELECTORS
+    @Selector()
+    static selected_proj_id(state: StepStateModel) {
+      return state.project_id
+    }
+
     @Selector()
     static all_needed(state: StepStateModel) {
         return {
@@ -36,6 +42,11 @@ export class StepsState {
     constructor(private stepsService: StepsService, private modulesService: ModulesService) {}
 
     // ACTIONS
+    @Action(UpdateStepsSelectedProject)
+    UpdateStepsSelectedProject(ctx: StateContext<StepStateModel>, action: UpdateStepsSelectedProject) {
+      ctx.patchState({ project_id: action.proj_id });
+    }
+
     @Action(UpdateStepsProgress)
     UpdateStepsProgress(ctx: StateContext<StepStateModel>, action: UpdateStepsProgress) {
         return this.stepsService.getSteps(action.project_id).pipe(
@@ -55,7 +66,7 @@ export class StepsState {
           })
         );
     }
-
+    
     @Action(ClearStepsProgress)
     ClearStepsProgress(ctx: StateContext<StepStateModel>) {
       ctx.setState({
@@ -67,6 +78,7 @@ export class StepsState {
         school: '',
         coordinator: '',
         steps: [],
+        project_id: null
       });
     }
     

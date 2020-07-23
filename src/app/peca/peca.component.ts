@@ -63,7 +63,7 @@ export class PecaComponent implements OnInit, OnDestroy {
       .pipe(take(2))
       .subscribe(
         ({ activePecaContent }) => {
-          // console.log(activePecaContent);
+          // console.log("peca content",activePecaContent);
           try {
             if (activePecaContent) {
               this.createMenuOptions(activePecaContent);

@@ -20,8 +20,8 @@ const preinscripcionDocente = {
                     email: 'cdhgdgd@dw.com', 
                 },
                 { 
-                    id: 3, name: 'Jose',
-                    lastName: 'Guerrero',
+                    id: 3, name: 'Jesus',
+                    lastName: 'Amaro',
                     phone: '564654',
                     email: 'hfdhydh@de.com', 
                 },
@@ -48,40 +48,63 @@ const btnGuardar = {
     }
 }
 
-const stepperPrueba = {
+const stepperAnnual = {
     component: 'stepper',
+    name: 'stepperAnnual',
     settings: {
-        titles: [
+        text1: 
             {
                 id: 1,
                 text: 'Paso 1 ',
-                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                content: "",
                 aligning: 'center',
             },
+            text2: 
             {
                 id: 2,
                 text: 'Paso 2 ',
-                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                content: "",
+                aligning: 'center',
+            },
+            text3: 
+            {
+                id: 3,
+                text: 'Paso 3 ',
+                content: "",
+                aligning: 'center',
+            },
+            text4: 
+            {
+                id: 4,
+                text: 'Paso 4 ',
+                content: "",
+                aligning: 'center',
+            },
+           /*  {
+                id: 2,
+                text: 'Paso 2 ',
+                content: "Prueba2",
                 aligning: 'center',
             },
             { 
                 id: 3,
                 text: 'Paso 3 ',
-                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                content: "Prueba3",
                 aligning: 'center',
             },{
                 id: 4,
                 text: 'Paso 4 ',
                 content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 aligning: 'center',
-            }
-        ]
+            } */
+        
     }
 
 }
 
 const tablaPreinscripcionDocente = {
     component: 'table',
+    name: "teachersAnnualConventionTable",
     settings: {
         columns: {
             name: {
@@ -111,7 +134,7 @@ const tablaPreinscripcionDocente = {
         ],
         classes: {
             hideView: false,
-            hideEdit: false,
+            hideEdit: true,
             hideDelete: false,
         },
     }
@@ -131,6 +154,7 @@ const formTablaPreinscripcionDocente = {
   }
   const textsAndButtonsTablaPreinscripcionDocente = {
     component: 'textsbuttons',
+    name: 'annualConventionDeleteModal',
     settings: {
       subtitles: [{
         text: '¿Desea eliminar este ítem?',
@@ -148,6 +172,7 @@ const formTablaPreinscripcionDocente = {
       modalCode: 'dataPreinscripcionDocente',
       isFromCustomTableActions: true,
       isDeleting: true,
+      fetcherMethod: 'delete',
     }
   }
   const modalTablaPreinscripcionDocente = {
@@ -178,7 +203,7 @@ export const ANNUAL_CONVENTION_PREPARATION_CONFIG = {
                     {
                         title: "Proceso de inscripción",
                         childBlocks: [
-                            { ...stepperPrueba }
+                            { ...stepperAnnual }
                         ]
                     },
                     {

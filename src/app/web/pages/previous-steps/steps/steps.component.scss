@@ -173,6 +173,9 @@
                     -webkit-transition: width .75s;
                     transition: width .75s;
                 }
+                .progress-bar-striped {
+                    background-color: map-get($color_map, form-gray);
+                }
             }
         }
 
