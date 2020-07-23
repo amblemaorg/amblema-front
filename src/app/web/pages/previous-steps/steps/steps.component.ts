@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
 import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 import { GeneralStepsComponent } from './general-steps/general-steps.component';
+import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
 
 @Component({
   selector: 'app-steps',
@@ -42,6 +43,7 @@ export class StepsComponent implements OnInit, OnDestroy {
   @Select(UserState.user_projects) userProjects$: Observable<UProject[]>; //! TEMPORARY
   @Select(UserState.user_type) user_type$: Observable<string>;
   @Select(UserState.user_id) user_id$: Observable<string>;
+  @Select(StepsState.selected_proj_id) selected_project_id$: Observable<string>;
   @Select(StepsState.all_needed) project_steps$: Observable<any>;
   @Select(ResidenceInfoState.get_states) states$: Observable<any>;
   @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
@@ -54,6 +56,8 @@ export class StepsComponent implements OnInit, OnDestroy {
   sponsorSteps = [];
   coordinatorSteps = [];
   schoolSteps = [];
+
+  fetchingSteps: boolean;
 
   private subscription: Subscription = new Subscription();
 
@@ -71,19 +75,39 @@ export class StepsComponent implements OnInit, OnDestroy {
       })
     );
 
-    if (!this.isTest) { 
-      //! TEMPORARY ---------------------------------------------------------------------------------------------------------------------------------------------------
-      let pjId = (this.route.snapshot.params && this.route.snapshot.params.idProject)? 
-        this.route.snapshot.params.idProject : '';
-      if (this.route.snapshot.params && this.route.snapshot.params.idUser) {
-        this.user_id = this.route.snapshot.params.idUser;
-        this.user_type = this.route.snapshot.params.userType;
-      }
-      //!--------------------------------------------------------------------------------------------------------------------------------------------------------------
-      // this.updateSteps(pjId);
+    if (!this.isTest) {
+      this.subscription.add(
+        this.selected_project_id$.subscribe(res => {
+          if (res) {            
+            this.project_id = res;
+            if ( !this.stepsService.areStepsCalled() ) {
+              this.fetchingSteps = true;
+              this.subscription.add(          
+                this.store.dispatch( new UpdateStepsProgress(this.project_id) ).subscribe(res => {                  
+                  this.stepsService.callSteps(true);
+                  this.enabledTabs = true;
+                  this.fetchingSteps = false;
+                })
+              );
+              this.store.dispatch( new UpdateModulesTotal );
+            }            
+          }
+        })
+      );
+
+      this.subscription.add(
+        this.user_id$.subscribe(res => {
+          if (res) this.user_id = res
+        })
+      );
+      this.subscription.add(
+        this.user_type$.subscribe(res => {
+          if (res) this.user_type = res
+        })
+      );
+
       this.subscription.add(
         this.project_steps$.subscribe(res => {    
-          this.project_id = pjId;
           if (res.steps.length>0) {
             this.fillCounter++;
             if(this.fillCounter==2){ // updating steps to be shown if case one of them got deleted in bds
@@ -149,13 +173,6 @@ export class StepsComponent implements OnInit, OnDestroy {
         })
       );
 
-      if (this.stepsService.getIsPageReloaded()) {
-        this.subscription.add(          
-          this.store.dispatch( new UpdateStepsProgress(pjId) ).subscribe(res => {
-            this.enabledTabs = true;
-          })
-        );
-      }
     }
     // });
   }
@@ -198,10 +215,7 @@ export class StepsComponent implements OnInit, OnDestroy {
   }
 
   goToModules() {
-    this.router.navigate([
-      "previous-steps/modules",
-      { idProject: this.project_id, userType: this.user_type, idUser: this.user_id }
-    ]);
+    this.router.navigate(["previous-steps/modules"]);
   }
 
 }
