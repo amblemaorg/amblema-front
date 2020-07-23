@@ -280,9 +280,9 @@ export class GlobalService {
   buttonDataUpdater(obj) {
     this.updateButtonDataEmitter.emit(obj);
   }
-  updateGenActButtonDataUpdater({reset, gaId, date, checklist, upload}:any) {
+  updateGenActButtonDataUpdater({isDate, gaId, date, checklist, upload}:any) {
     this.updateGenActButtonDataEmitter.emit({
-      reset,
+      isDate,
       gaId,
       date,
       checklist,

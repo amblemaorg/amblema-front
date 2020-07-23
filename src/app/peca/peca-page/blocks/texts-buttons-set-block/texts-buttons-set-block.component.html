@@ -240,11 +240,15 @@
                     (click)="takeAction(action.type, $event)"
                 >
                         <span *ngIf="isSending && ( 
-                            action.type==4 
+                            action.type==4 || action.type==7 || action.type==8 || action.type==9
                             || (settings.isDeleting 
                                 && action.type==1) 
                         )" class="spinner-grow spinner-grow-sm"></span>
-                        {{ isSending && action.type==4 ? 'Enviando' : action.name }}
+                        {{
+                            isSending && (action.type==4 || action.type==7 || action.type==8 || action.type==9) 
+                                ? (action.type==8 ? 'Guardando' : action.type==9 ? 'Cancelando' : 'Enviando') 
+                                : action.name 
+                        }}
                 </button>
 
                 <ng-container *ngIf="action.type==4 && settings.fetcherUrls && settings.fetcherUrls.cancel">

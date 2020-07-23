@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { GlobalService } from '../../../../services/global.service';
 
 @Component({
   selector: 'checklist-block',
@@ -25,10 +26,13 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
         recurso:string[];
         evaluacion:string[];
       };
-      title: string;
+      title: string;      
       isFromGenericActivity?: boolean;
+      genericActivityId?: string;
       checkList: {
+        id?: string;
         name: string;
+        checked?: boolean;
       }[];
       material: string;
       button: any;
@@ -39,7 +43,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
   activity_uneditable: boolean
 
-  constructor() {
+  constructor(private globals: GlobalService) {
     this.type = 'presentational';
     this.component = 'checkList';
   }
@@ -60,6 +64,25 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
       this.settings.infoContainer[0].title = data["title"] ? data.title : null;
       this.settings.infoContainer[0].checkList = data["checkList"] ? data.checkList : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
+      this.settings.infoContainer[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;   
+      
+      setTimeout(() => {
+        this.globals.updateGenActButtonDataUpdater({
+          gaId: this.settings.infoContainer[0].genericActivityId,
+          checklist: data["checkList"] ? this.settings.infoContainer[0].checkList : null,
+        });
+      });      
+    }
+  }
+
+  toggleCheck(checked: boolean, check: any, isGenAct) {
+    check.checked = checked;
+
+    if (isGenAct) { // if truty, this is for generic activity            
+      this.globals.updateGenActButtonDataUpdater({
+        gaId: this.settings.infoContainer[0].genericActivityId,
+        checklist: this.settings.infoContainer[0].checkList.length > 0 ? this.settings.infoContainer[0].checkList : null
+      });
     }
   }
 

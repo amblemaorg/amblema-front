@@ -57,8 +57,14 @@ export class TextsButtonsSetBlockComponent
       subtitles?: boolean;
     };
     isGenericActivity?: boolean;
+    genActSavingTypes?: {
+      hasDate?: boolean;
+      hasUpload?: boolean;
+      hasChecklist?: boolean;
+    };
     genericActivityId?: string;
     isGenericActivityBtnReceptor?: boolean;
+    btnApprovalType?: number;
     subtitles: {
       title?: string; // subtitle
       text: string; // paragraph
@@ -68,7 +74,7 @@ export class TextsButtonsSetBlockComponent
       /**
        * 1 guardar, 2 adjuntar fotos, 3 enviar, 
        * 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar, 
-       * (Para Actividad Generica) 7 Enviar/Guardar
+       * (Para Actividad Generica) 7-8 Enviar/Guardar, 9 cancelar solicitud AG
        */
       type: number;
       name: string; // text in the button
@@ -169,14 +175,10 @@ export class TextsButtonsSetBlockComponent
     this.subscription.add(
       this.globals.updateGenActButtonDataEmitter.subscribe((data) => {        
         if (this.settings.isGenericActivity && this.settings.isGenericActivityBtnReceptor && this.settings.genericActivityId == data.gaId) {
-          if (data['date']) this.dataGenAct.date = data.date;
+          if (data['date'] || data['isDate']) this.dataGenAct.date = data.date;
           if (data['checklist']) this.dataGenAct.checklist = data.checklist;
-          if (data['upload']) this.dataGenAct.upload = data.upload;  
-          
-          if (data.reset) {
-            Object.keys(this.dataGenAct).map( (item)=> this.dataGenAct[item] = null )
-          }
-          console.log("activity data to update",data);
+          if (data['upload']) this.dataGenAct.upload = data.upload;
+          console.log("activity data to update",this.dataGenAct);
         }
       })
     );
@@ -194,6 +196,11 @@ export class TextsButtonsSetBlockComponent
     this.dataTorF = {
       table: null,
       form: null,
+    };
+    this.dataGenAct = {
+      date: null,
+      checklist: null,
+      upload: null,
     };
     this.subscription.unsubscribe();
     this.sleepSend = null;
@@ -222,6 +229,12 @@ export class TextsButtonsSetBlockComponent
     this.settings.isGenericActivity = false;
 
     if (data["isGenericActivity"]) {
+      this.dataGenAct = {
+        date: null,
+        checklist: null,
+        upload: null,
+      };
+
       this.settings.isGenericActivity = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
       this.settings.download = data["download"] ? data.download : null;
@@ -233,6 +246,8 @@ export class TextsButtonsSetBlockComponent
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
       this.settings.genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
       this.settings.isGenericActivityBtnReceptor = data["isGenericActivityBtnReceptor"] ? data.isGenericActivityBtnReceptor : null;
+      this.settings.genActSavingTypes = data["genActSavingTypes"] ? data.genActSavingTypes : null;
+      this.settings.btnApprovalType = data["btnApprovalType"] ? data.btnApprovalType : 0;
 
       if (data["statusSelectorData"]) {
         this.statusForm.setValue({ status: data.statusSelectorData.status });
@@ -248,6 +263,24 @@ export class TextsButtonsSetBlockComponent
         this.showThisVideo = false;
         this.activity_video = null;
       }
+
+      if (!this.settings.isGenericActivityBtnReceptor) {
+        if (this.settings.genActSelectStatus) {
+          this.dataGenAct.date = data["dateOrtext"] && data["dateOrtext"].fields[0].value ? true : false;
+          this.dataGenAct.upload = data["upload"] ? true : false;
+        }
+        else {
+          console.log(data["dateOrtext"],data["upload"]);
+          setTimeout(() => {
+            this.globals.updateGenActButtonDataUpdater({
+              gaId: this.settings.genericActivityId,
+              date: data["dateOrtext"] && data["dateOrtext"].fields[0].value ? true : false,
+              upload: data["upload"] ? true : false,
+            });
+          });        
+        } 
+      }
+
     } 
     else {
       if (data["status"]) this.settings.status.subText = data.status.subText;     
@@ -268,7 +301,10 @@ export class TextsButtonsSetBlockComponent
   }
 
   disableThis(type: number) {
-    if (this.settings.receivesFromTableOrForm && (type == 1 || type == 3 || type == 4)) {
+    if (
+      this.settings.receivesFromTableOrForm && 
+      (type == 1 || type == 3 || type == 4)
+    ) {
       if (
         (this.settings.receivesFromTableOrForm == 'table' && !this.dataTorF.table) ||
         (this.settings.receivesFromTableOrForm == 'form' && !this.dataTorF.form) ||
@@ -276,7 +312,46 @@ export class TextsButtonsSetBlockComponent
           /* !this.dataTorF.table ||  */ !this.dataTorF.form)
       )
         return true;
-    } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel) return true; // when there's cancel request button
+    } 
+    else if (
+      type == 2 && 
+      this.settings.fetcherUrls && 
+      this.settings.fetcherUrls.cancel
+    ) 
+      return true; // when there's cancel request button
+    else if ( 
+      (type == 7 || type == 8) && 
+      this.settings.isGenericActivity 
+    ) {
+      let { date, upload, checklist } = { date: false, upload: false, checklist: false };
+      const conditions = [];
+
+      if (this.settings.genActSavingTypes.hasDate) {
+        date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
+        conditions.push(date);
+      }
+      if (this.settings.genActSavingTypes.hasUpload) {
+        upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
+        conditions.push(upload);
+      }
+      if (this.settings.genActSavingTypes.hasChecklist) {
+        if (this.settings.btnApprovalType === 2 || type == 7) {          
+          checklist = true;
+          
+          if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);
+        }
+        else checklist = typeof this.dataGenAct.checklist === "boolean" && this.dataGenAct.checklist ? false : this.dataGenAct.checklist ? false : true;
+        conditions.push(checklist);
+      }
+
+      const forSaveMode = type == 7 ? 0 
+        : conditions.reduce((acum,cond) => {
+          if (cond) acum++
+          return acum
+        },0);
+      
+      return type == 7 ? conditions.some(cond => cond) : (forSaveMode == conditions.length);
+    }
     return false;
   }
 
@@ -369,6 +444,8 @@ export class TextsButtonsSetBlockComponent
      * 4 solicitar aprobacion,
      * 5 ver estadisticas,
      * 6 agregar.
+     * 7-8 Enviar/Guardar (Para Actividad Generica)
+     * 9 cancelar solicitud AG
      */
     switch (type) {
       case 1:
@@ -485,6 +562,15 @@ export class TextsButtonsSetBlockComponent
             console.error(error);
           }
         );
+        break;
+      case 7:
+        console.log("Enviar",this.dataGenAct)
+        break;
+      case 8:
+        console.log("Guardar",this.dataGenAct)
+        break;
+      case 9:
+        console.log("Cancelando actividad generica")
         break;
 
       default:
@@ -610,14 +696,17 @@ export class TextsButtonsSetBlockComponent
   controlDateChange(e,dateOrder: string) {
     const isDateNotValid = this.globals.validateDate(e,dateOrder,true);
 
-    if (this.settings.isGenericActivity && !isDateNotValid && e && e.target) { // if truty, this is for generic activity            
+    if (this.settings.isGenericActivity && e && e.target) { // if truty, this is for generic activity            
       if (this.settings.genActSelectStatus) {
-        this.dataGenAct.date = this.globals.dateStringToISOString(e.target.value)
+        this.dataGenAct.date = e.target.value && e.target.value.length > 0 && !isDateNotValid 
+          ? this.globals.dateStringToISOString(e.target.value) : null;
       }
       else {
         this.globals.updateGenActButtonDataUpdater({
           gaId: this.settings.genericActivityId,
-          date: this.globals.dateStringToISOString(e.target.value)
+          isDate: true,
+          date: e.target.value && e.target.value.length > 0 && !isDateNotValid 
+            ? this.globals.dateStringToISOString(e.target.value) : null
         });
       }
     }
