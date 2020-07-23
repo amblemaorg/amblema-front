@@ -139,7 +139,6 @@ export class FormBlockComponent
 
     this.subscription.add(
       this.globals.passImageEmitter.subscribe(image => {
-        console.log("resp", image);
         this.imageUrl = image;
       })
     );
@@ -248,8 +247,6 @@ export class FormBlockComponent
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
-    console.log("Esto es lo que mando",this.componentForm.value);
-
   }
 
   setData(data: any) {
@@ -279,7 +276,9 @@ export class FormBlockComponent
           this.componentForm.patchValue({ 
             grades: this.settings.formsContent["grades"].options[0].id 
           });
-          this.setSchoolSections(true);          
+          setTimeout(() => {
+            this.setSchoolSections(true);
+          });          
         }
         
         setTimeout(() => {
@@ -611,7 +610,7 @@ export class FormBlockComponent
         'url: ', resourcePath,
         'body: ', body
       );
-//console log... comentar todo el fetcher antes de probar el put
+
        this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
@@ -646,6 +645,10 @@ export class FormBlockComponent
           }
         },
         error => {
+          const error_msg = (error.error && error.error instanceof ProgressEvent) 
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
@@ -670,7 +673,7 @@ export class FormBlockComponent
                   ? error.error["cardId"][0].msg 
                   : error.error && error.error["msg"] 
                     ? error.error["msg"]
-                    : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde",
+                    : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );
@@ -734,9 +737,6 @@ export class FormBlockComponent
   }
 
   disableBtn() {
-    Object.keys(this.componentForm.value).map(val =>{
-      //console.log(`${val}: `,this.componentForm.get(val).valid);
-    });
     return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 

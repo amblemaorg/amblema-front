@@ -5,6 +5,10 @@ export class UpdateStepsProgress {
   static readonly type = '[Steps] UpdateStepsProgress';
   constructor(public project_id: string) {}
 }
+export class UpdateStepsSelectedProject {
+  static readonly type = '[Steps] UpdateStepsSelectedProject';
+  constructor(public proj_id: string) {}
+}
 export class ClearStepsProgress {
   static readonly type = '[Steps] ClearStepsProgress';
 }
@@ -20,5 +24,6 @@ export interface StepStateModel {
     school: string;
     coordinator: string;
     steps: Step[];
+    project_id: string;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //
