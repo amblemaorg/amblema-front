@@ -33,6 +33,8 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   UrlLapse = "";
   routerSubscription: Subscription;
   teachersData:any;
+  teachersInfo:any;
+  allTeachers=[]
 
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
@@ -73,10 +75,16 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-         // this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
-          //console.log("esto es", data.activePecaContent.lapse1.annualPreparation.teachers)
-          console.log("esto es", data.activePecaContent.school.teachers)
+          let auxTeachers = [];
+          data.activePecaContent.school.teachers.forEach((teacher) => {
+            teacher.name = teacher.firstName;
+          });
+          auxTeachers = auxTeachers.concat(
+            data.activePecaContent.school.teachers
+          );
           this.idPeca = data.activePecaContent.id;
+          this.allTeachers=auxTeachers;
+          console.log("oj",this.allTeachers)
           if (!isNullOrUndefined(data)) {
             if (this.UrlLapse === "1") {
              this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
@@ -138,6 +146,9 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
     }
   }
   setPreparationData() {
+    this.teachersInfo = {
+      contentTeacherInfo: this.allTeachers
+    }
     this.preparationInfo = {
       text1: {
         content: this.description1,
@@ -157,7 +168,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
   updateDataToBlocks() {
     this.setBlockData("stepperAnnual", this.preparationInfo);
     this.setBlockData("teachersAnnualConventionTable", this.teachersData);
-
+    this.setBlockData("teachersAnnualConventionSelect", this.teachersInfo);
   }
   //2
   updateMethods() {

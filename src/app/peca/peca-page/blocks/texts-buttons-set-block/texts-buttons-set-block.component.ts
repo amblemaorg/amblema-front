@@ -185,10 +185,14 @@ export class TextsButtonsSetBlockComponent
       }
     } 
     else {
+      if (data["contentTeacherInfo"]) {
+        console.log("set",this.settings.selectStatus);
+        console.log("aja",data.contentTeacherInfo); 
+        this.settings.selectStatus.lista=data.contentTeacherInfo
+      }
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles.text = data.subtitles.text;
       if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
-      if (data["title"]) console.log("gool", this.settings);
       if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
       if (data["enviromentTitleLapse2"]) this.settings.title.text=data.enviromentTitleLapse2;
       if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3; 
