@@ -50,6 +50,16 @@ const authStrategies = [
         failure: null,
       },
     },
+    requestPass: {
+      endpoint: 'auth/passwordrecovery',
+      method: 'post',
+      redirect: {
+        success: '/auth/login',
+        failure: null,
+      },
+      defaultErrors: ['El correo electrónico ingresado no está registrado'],
+      defaultMessages: ['Su nueva contraseña ha sido enviada a su correo electrónico.'],
+    }
   }),
 ];
 
