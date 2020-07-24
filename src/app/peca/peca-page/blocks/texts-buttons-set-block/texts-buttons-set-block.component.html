@@ -1,6 +1,10 @@
 <div class="texts-buttons-wrapper">
     <div class="texts-wrapper" 
-        *ngIf="settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || settings.subtitles">
+        *ngIf="
+            settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || 
+            settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || 
+            settings.subtitles || settings.genActSelectStatus
+        ">
         <div class="date-download-status d-flex justify-content-between mt-1">
             <div *ngIf="settings.dateOrtext" class="left-side" [class.mr-auto]="settings.genActSelectStatus">
                 <h6 class="left-sided-content">
@@ -98,7 +102,7 @@
                         <label>Modificar estatus:</label>
                         <ng-select
                             class="form-control"  
-                            [class.readonly]="activity_uneditable"
+                            [class.readonly-activity-selector]="activity_uneditable || statusSelectorDisabler()"
                             [items]="statuses"
                             bindValue="id"
                             bindLabel="name"
@@ -109,8 +113,8 @@
                             [clearable]="false" 
                             [searchable]="false"  
                             [loading]="isSending"
-                            [readonly]="activity_uneditable"
-                            (change)="changeStatus()"         
+                            [readonly]="activity_uneditable || statusSelectorDisabler()"
+                            (change)="changeStatus()"        
                         >
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                                 <small>{{item.name}}</small>
