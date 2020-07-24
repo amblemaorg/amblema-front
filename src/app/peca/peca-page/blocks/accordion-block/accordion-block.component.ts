@@ -69,13 +69,15 @@ export class AccordionBlockComponent
 
   setData(data: any) {
     if (data["topics2"]) {
-      console.log(this.settings.items);
-      //  this.settings.items=data.topics2
+      //console.log("nnn",this.settings);
+     //   this.settings.items=data.topics2
+       // console.log("sssssssnnn",data.topics2)
+
     }
 
     if (data["topics3"]) {
-      console.log(this.settings.items);
-      //  this.settings.items=data.topics3
+      //console.log("nnn",this.settings.items);
+       // this.settings.items=data.topics3
     }
 
     if (data["topics1"]) {
@@ -83,8 +85,9 @@ export class AccordionBlockComponent
       // console.log(this.settings)
       this.prueba = data.topics1;
       //console.log(data)
+      //console.log("Settings",this.settings)
       for (let i = 0; i < data.topics1.length; i++) {
-        console.log("hola", this.settings.items[i].childBlocks[0]);
+        //console.log("hola", this.settings.items[i].childBlocks[0]);
 
         //Nombres de los acordeones
         this.settings.items[i].title = data.topics1[i].name;

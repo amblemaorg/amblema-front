@@ -281,11 +281,7 @@ export class TextsButtonsSetBlockComponent
 
     } 
     else {
-      if (data["contentTeacherInfo"]) {
-        console.log("set",this.settings.selectStatus);
-        console.log("aja",data.contentTeacherInfo); 
-        this.settings.selectStatus.lista=data.contentTeacherInfo
-      }
+      if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
       if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;

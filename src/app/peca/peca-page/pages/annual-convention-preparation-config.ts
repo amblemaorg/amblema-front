@@ -41,6 +41,7 @@ const preinscripcionDocente = {
 
 const btnGuardar = {
     component: 'textsbuttons',
+    name: 'saveButtonAnnualPreparation',
     settings: {
         action: [{
             type: 1,
@@ -48,6 +49,7 @@ const btnGuardar = {
         }],
         receivesFromTableOrForm: 'table',
         buttonCode: 'dataPreinscripcionDocente',
+        fetcherMethod: 'post'
     }
 }
 

@@ -190,6 +190,12 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
       "settings.dataFromRow.data.newData.id"
     );
   }
+  updateStaticFetchers() {
+    this.setBlockFetcherUrls('saveButtonAnnualPreparation', {
+        post: `pecaprojects/students/`,
+    });
+  }
+
   
   ///pecaprojects/annualpreparation/<string:pecaId>/<string:teacherId>
   ngAfterViewInit(): void {
