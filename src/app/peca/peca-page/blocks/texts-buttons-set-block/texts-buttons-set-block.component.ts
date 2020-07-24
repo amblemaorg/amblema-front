@@ -453,6 +453,8 @@ export class TextsButtonsSetBlockComponent
      */
     switch (type) {
       case 1:
+        console.log("AQUI SIGO EL LUNES")
+
         if (this.settings.isFromCustomTableActions && this.settings.modalCode) {
           const commonTasks = () => {
             this.globals.tableDataUpdater(this.settings.dataFromRow);
