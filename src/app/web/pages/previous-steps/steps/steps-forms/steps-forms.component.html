@@ -338,12 +338,12 @@
           [class.not-valid]="validate('birthdate')" 
           [class.not-empty]="isEmpty('birthdate')" 
           formControlName="birthdate"          
-          (change)="glbls.validateDate($event,'lower')" 
+          (change)="glbls.validateDate($event,'lower',false,false,18)" 
           [readonly]="disableThis()"
         />          
         <div class="field-alerts">
           <div class="field-empty">¡Debe llenar este campo!</div>
-          <div class="field-invalid">¡Debe tener una fecha valida, menor a la de hoy!</div>
+          <div class="field-invalid">¡Debe tener al menos 18 años de edad!</div>
         </div>
         <input 
           [class.d-none]="inputBirthDate.value.length > 0"
