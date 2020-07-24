@@ -750,8 +750,10 @@ export class FormBlockComponent
 
   // wrong date save button enabler/disabler
   checkDateOk(e, mode, f, notE: boolean = false) {
-    let value = !notE ? e.target.value === "" : e === "";
-    if (this.globals.validateDate(e, mode, true, notE) || value)
+    const value = !notE ? e.target.value === "" : e === "";
+    const years = this.settings.formsContent[f].validationPerYears ? 3 : 0;
+
+    if (this.globals.validateDate(e, mode, true, notE, years) || value)
       this.wrongDateDisabler[f] = false;
     else this.wrongDateDisabler[f] = true;
   }

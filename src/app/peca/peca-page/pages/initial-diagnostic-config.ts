@@ -140,11 +140,11 @@ const readingDiagnosticTable = {
         title: 'Fecha resultado de lectura',
         valuePrepareFunction: (row: any) => {
           if (row)
-            return parseDate(new Date(row));
+            return parseDate(new Date(row)).replace(/-/g, "/");
           else return "";
         },
         filterFunction: (cell?: any, search?: string) => {
-          let value: string = parseDate(new Date(cell));
+          let value: string = parseDate(new Date(cell)).replace(/-/g, "/");
           value = value.toUpperCase();
 
           if (value.includes(search.toUpperCase()) || search === "")
