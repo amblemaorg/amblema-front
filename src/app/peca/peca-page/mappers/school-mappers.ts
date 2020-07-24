@@ -12,6 +12,7 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     isInApproval,
     name,
     code,
+    phone,
     addressState,
     addressMunicipality,
     address,
@@ -34,50 +35,15 @@ export function schoolDataToSchoolFormMapper(schoolData) {
     twitter,
   } = schoolData_;
 
-  // const {
-  //   id,
-  //   pecaId,
-  //   name,
-  //   code,
-  //   addressState,
-  //   addressMunicipality,
-  //   address,
-  //   addressCity,
-  //   principalFirstName,
-  //   principalLastName,
-  //   principalPhone,
-  //   principalEmail,
-  //   subPrincipalFirstName,
-  //   subPrincipalLastName,
-  //   subPrincipalPhone,
-  //   subPrincipalEmail,
-  //   nTeachers,
-  //   nAdministrativeStaff,
-  //   nLaborStaff,
-  //   nStudents,
-  //   nGrades,
-  //   facebook,
-  //   instagram,
-  //   twitter,
-  // } = schoolData;
-
-  const principalName =
-    principalFirstName && principalLastName ? `${principalFirstName} ${principalLastName}` : null;
-
-  const subPrincipalName =
-    subPrincipalFirstName && subPrincipalLastName
-      ? `${subPrincipalFirstName} ${subPrincipalLastName}`
-      : null;
-
   return {
     id,
     pecaId,
     isInApproval,
     nameEscuela: name,
     codigoEscuela: code,
-    phoneEscuela: null,
-    addressState: addressState.id,
-    addressMunicipality: addressMunicipality.id,
+    phoneEscuela: phone,
+    addressState: typeof addressState === "string" ? addressState : addressState.id,
+    addressMunicipality: typeof addressMunicipality === "string" ? addressMunicipality : addressMunicipality.id,
     callesEscuela: address,
     ciudadEscuela: addressCity,
     // nameDirector: principalName,
