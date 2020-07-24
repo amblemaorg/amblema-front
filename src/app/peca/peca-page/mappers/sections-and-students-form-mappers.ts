@@ -43,7 +43,7 @@ export function sectionsAndStudentsDataToSectionsFormMapper(sections) {
             lastName,
             documentGroup: {
               prependInput: cardId,
-              prependSelect: cardType,
+              prependSelect: cardId? cardType : "1",
             },
             gender,
             age: birthdate,

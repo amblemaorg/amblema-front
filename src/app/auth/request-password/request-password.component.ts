@@ -6,5 +6,5 @@ import { NbRequestPasswordComponent } from '@nebular/auth';
   templateUrl: './request-password.component.html',
 })
 export class RequestPasswordComponent extends NbRequestPasswordComponent {
-
+  redirectDelay = 3000;
 }
