@@ -816,8 +816,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);
   }
 
-  controlDate() {   
-    return this.coordinatorForm.controls['birthdate'].value && this.coordinatorForm.controls['birthdate'].value.length>0;
+  controlDate() {    
+    return this.coordinatorForm.controls['birthdate'].value && this.coordinatorForm.controls['birthdate'].value.length>0 && 
+            !this.globals.validateDate(this.coordinatorForm.controls['birthdate'].value,'lower',true,true,18);
   }
 
   focusDatePicker(e) {
