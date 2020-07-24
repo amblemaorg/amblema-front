@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
 import { isNullOrUndefined } from "util";
 import { teacherTestimonyMapper } from "../mappers/teacher-testimony-mappers";
+import { gradesAndSectionsDataToSectionsFormMapper } from '../mappers/teachers-in-sections-form-mappers';
 @Component({
     selector: 'peca-teacher-testimony',
     templateUrl: '../peca-page.component.html',
@@ -31,6 +32,9 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
 
     //testimonio
     testimonyTeacherData: any;
+
+    //prueba
+    pruebaSelectDocentes: any;
 
     isInstanciated: boolean;
     loadedData: boolean;
@@ -59,6 +63,8 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
 
                     this.setTestimonyTeacherDataMapper(data.activePecaContent.school.teachersTestimonials.testimonials, teacherTestimonyMapper);
 
+                    this.setPruebaSelectDocentes(data.activePecaContent.school, gradesAndSectionsDataToSectionsFormMapper);
+
                     this.loadedData = true;
                     if (this.isInstanciated) this.updateMethods();
                 }
@@ -72,6 +78,8 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
     }
     updateDataToBlocks() {
         this.setBlockData("testimonyTable", this.testimonyTeacherData);
+        //PRUEBA
+        this.setBlockData("pruebaDocentes", this.pruebaSelectDocentes);
     }
 
     setTestimonyTeacherDataMapper(dataTestimony, _mapper?: Function) {
@@ -85,6 +93,25 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
         } else {
             this.testimonyTeacherData = dataTestimony;
             //console.log("este NO es el mapper de amblemoneda", this.pruebaData);
+        }
+    }
+
+    setPruebaSelectDocentes(dataDocentes, _mapper?: Function) {
+        if (_mapper) {
+            console.log(dataDocentes, 'datos')
+            const mapper = _mapper(dataDocentes);
+            this.pruebaSelectDocentes = {
+                setContent: true,
+                contentToSet: ["imageDocente"],
+                data: {
+                    imageGroup: {
+                        imageDocente: [mapper.teachers]
+                    }
+                }
+            };
+            console.log("este es el mapper de select", this.pruebaSelectDocentes);
+        } else {
+            this.pruebaSelectDocentes = dataDocentes.teachers;
         }
     }
 
