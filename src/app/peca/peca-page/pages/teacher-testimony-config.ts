@@ -1,6 +1,6 @@
 import { formTestimonioDocentes, formTestimonioDocentesModal, formTestimonioDocentesModalEdit } from '../blocks/form-block/all-forms'
 
-formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
+    formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
     { id: "2", name: "Sthepanie", lastName: 'Soteldo', addressState: '165146541654hjvjh' },
     { id: "3", name: "Manuel", lastName: 'Guerrero', addressState: '165146541654hjvjh' },
     { id: "4", name: "Gustavo", lastName: 'Castillo', addressState: '165146541654hjvjh' },
@@ -18,11 +18,13 @@ const statusGeneral = {
 };
 const formTestDoc = {
     component: 'form',
+    name:"pruebaDocentes",
     settings: {
         formsContent: formTestimonioDocentes,
         tableCode: 'dataTestimonioDocenteTabla',
         buttonCode: 'dataTestimonioDocenteTabla',
         alwaysValidations: true,
+        data: {},
     }
 }
 
