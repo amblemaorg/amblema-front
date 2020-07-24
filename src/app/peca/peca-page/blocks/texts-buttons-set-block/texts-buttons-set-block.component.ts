@@ -174,11 +174,17 @@ export class TextsButtonsSetBlockComponent
 
     this.subscription.add(
       this.globals.updateGenActButtonDataEmitter.subscribe((data) => {        
-        if (this.settings.isGenericActivity && this.settings.isGenericActivityBtnReceptor && this.settings.genericActivityId == data.gaId) {
+        if (
+          this.settings.isGenericActivity && 
+          (this.settings.isGenericActivityBtnReceptor || 
+           this.settings.btnApprovalType === 4 || 
+           this.settings.btnApprovalType === 1) && 
+          this.settings.genericActivityId == data.gaId
+        ) {
           if (data['date'] || data['isDate']) this.dataGenAct.date = data.date;
           if (data['checklist']) this.dataGenAct.checklist = data.checklist;
           if (data['upload']) this.dataGenAct.upload = data.upload;
-          // console.log("activity data to update",this.dataGenAct);
+          console.log("activity data to update",this.dataGenAct);
         }
       })
     );
@@ -325,7 +331,7 @@ export class TextsButtonsSetBlockComponent
       this.settings.isGenericActivity 
     ) {
       let { date, upload, checklist } = { date: false, upload: false, checklist: false };
-      const conditions = [];
+      const conditions = [];      
 
       if (this.settings.genActSavingTypes.hasDate) {
         date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
@@ -339,7 +345,10 @@ export class TextsButtonsSetBlockComponent
         if (this.settings.btnApprovalType === 2 || type == 7) {          
           checklist = true;
           
-          if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);
+          if (this.dataGenAct.checklist && type == 7) 
+            checklist = this.dataGenAct.checklist.some(check => !check.checked);
+          else if (this.dataGenAct.checklist && this.settings.btnApprovalType === 2)
+            checklist = !this.dataGenAct.checklist.some(check => check.checked);
         }
         else checklist = typeof this.dataGenAct.checklist === "boolean" && this.dataGenAct.checklist ? false : this.dataGenAct.checklist ? false : true;
         conditions.push(checklist);
@@ -691,6 +700,26 @@ export class TextsButtonsSetBlockComponent
   // FOR STATUS CHANGER
   changeStatus() {
     console.log("Status changer");
+  }
+  statusSelectorDisabler() {
+    let { date, upload, checklist } = { date: false, upload: false, checklist: false };
+    const conditions = [];
+
+    if (this.settings.genActSavingTypes.hasDate) {
+      date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
+      conditions.push(date);
+    }
+    if (this.settings.genActSavingTypes.hasUpload) {
+      upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
+      conditions.push(upload);
+    }
+    if (this.settings.genActSavingTypes.hasChecklist) {
+      checklist = true;
+      if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);        
+      conditions.push(checklist);
+    }
+
+    return conditions.some(cond => cond);
   }
 
   // FOR DATE FIELD

@@ -174,17 +174,10 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
             checklist: data.checklist
         };
 
-        // console.log(
-        //     "date",date,
-        //     "file",file,
-        //     "text",text,
-        //     "uploadedFile",uploadedFile,
-        //     "video",video,
-        //     "checklist",checklist
-        // );
-
-        this.g_a_status_selector = data.approvalType === "4" 
+        this.g_a_status_selector = data.approvalType === "4" || 
+            (data.approvalType === "1" && this.user_type && +this.user_type < 2)
             ? {
+                btnApprovalType: +data.approvalType,
                 statusSelectorData: {
                     genActSelectStatus: true,
                     status: data.status !== "1" ? "2" : "1",

@@ -365,8 +365,23 @@
         }
     }
     .ng-select {
+        &.readonly-activity-selector {
+            color: $dark-gray;
+        }
+
         .ng-dropdown-panel {
             z-index: 3;
+
+            .ng-dropdown-panel-items {
+                .ng-option {
+                  &.ng-option-marked {
+                    small, a {
+                      font-weight: bold;
+                    }
+                  }
+                }
+            }
+
             .scroll-host {
                 left: -0.75rem;
                 top: 0.35rem;
