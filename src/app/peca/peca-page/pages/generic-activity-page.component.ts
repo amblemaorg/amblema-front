@@ -24,15 +24,17 @@ import { GlobalService } from '../../../services/global.service';
 export class GenericActivityPageComponent extends PecaPageComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
 
-    @Select(PecaState.getActivePecaContent) pecaContentData$: Observable<any>;
+    @Select(PecaState.getPecaLapsesData) pecaLapseData$: Observable<any>;
     @Select(PecaState.getUserResume) userData$: Observable<any>;
 
-    pecaDataSubscription: Subscription;
+    pecaLapseSubscription: Subscription;
     userDataSubscription: Subscription;
     routerSubscription: Subscription;
     isInstanciated: boolean;
     loadedData: boolean;
     user_type: string = "0";
+    user_id: string;
+    peca_id: string;
 
     // generic activity content variables
     g_a_id: string;
@@ -76,6 +78,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
     ngOnInit() {
         this.userDataSubscription = this.userData$.subscribe(user => {
+            this.user_id = user.id;
             this.user_type = user.type;
         });
 
@@ -86,16 +89,13 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     setActivity(lapseId, activityId) {
-        this.pecaDataSubscription = this.pecaContentData$.subscribe(
-            (data) => {                
-                if (data.activePecaContent) {
-                    const lapse_id = lapseId;
-                    const activity_id = activityId;
-                    const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
-                        return activity.id === activity_id;
-                    });
-                    const activity: GenericActivity =  cloneDeep(data.activePecaContent[`lapse${lapse_id}`].activities[index]);
-                    
+        this.pecaLapseSubscription = this.pecaLapseData$.subscribe(
+            (data) => {
+                console.log(data);
+                if (data.lapses && data.lapses.pecaId) this.peca_id = data.pecaId;
+                if (data.lapses && data.lapses[`lapse${lapseId}`]) {    
+                    const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.id === activityId );
+
                     if (activity) {
                         this.changeComponentHeader(activity.name); 
 
@@ -290,6 +290,19 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
             };
     }
 
+    // /pecaprojects/activities/<string:pecaId>/<string:lapse>/<string:activityId>?userId=<string:userId>
+
+    // updateStaticFetchers(lapseN,activityId) {
+    //     // genericActivityActionButton
+    //     this.setBlockFetcherUrls("genericActivityFields", {
+    //       post: `pecaprojects/activities/${this.peca_id}/${lapseN}/${activityId}?userId=${this.user_id}`,
+    //       cancel: this.requestIdToCancel
+    //         ? `requestscontentapproval/${this.requestIdToCancel}`
+    //         : null
+    //     });
+    // }
+    
+
     ngAfterViewInit(): void {
         setTimeout(() => {
             this.instantiateBlocks(this.container);
@@ -300,7 +313,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     ngOnDestroy() {
         this.isInstanciated = false;
         this.loadedData = false;
-        this.pecaDataSubscription.unsubscribe();
+        this.pecaLapseSubscription.unsubscribe();
         this.userDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
     }

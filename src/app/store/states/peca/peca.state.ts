@@ -61,8 +61,9 @@ export class PecaState {
   }
 
   @Selector()
-  static getUserResume(state: any) {
-    return {      
+  static getUserResume(state: any) {    
+    return {
+      id: state.user.id,
       type: state.user.userType
     };
   }
@@ -97,4 +98,17 @@ export class PecaState {
       },
     };
   }
+
+  @Selector()
+  static getPecaLapsesData(state: any) {
+    return {
+      lapses: {
+        pecaId: state.content.id,
+        lapse1: state.content.lapse1,
+        lapse2: state.content.lapse2,
+        lapse3: state.content.lapse3        
+      },
+    };
+  }
+
 }
