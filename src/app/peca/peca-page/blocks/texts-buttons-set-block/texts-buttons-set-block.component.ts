@@ -342,11 +342,11 @@ export class TextsButtonsSetBlockComponent
         conditions.push(upload);
       }
       if (this.settings.genActSavingTypes.hasChecklist) {
-        if (this.settings.btnApprovalType === 2 || type == 7) {          
+        if (this.settings.btnApprovalType === 2 || type == 7) {     
           checklist = true;
           
           if (this.dataGenAct.checklist && type == 7) 
-            checklist = this.dataGenAct.checklist.some(check => !check.checked);
+            checklist = !this.dataGenAct.checklist.every(check => check.checked);
           else if (this.dataGenAct.checklist && this.settings.btnApprovalType === 2)
             checklist = !this.dataGenAct.checklist.some(check => check.checked);
         }
