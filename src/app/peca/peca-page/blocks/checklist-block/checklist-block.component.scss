@@ -81,12 +81,20 @@
           background-color: rgba(0, 0, 0, 0.16);
           border-color: $blue;
         }
+        &:hover.checked {
+          background-color: $blue;
+          border-color: $blue;
+        }
       }
 
       .native-input:enabled:focus + .custom-checkbox.checked {
         background-color: $blue;
         border-color: $blue;
       }
+      .native-input:disabled:checked + .custom-checkbox {
+        border-color: rgba(143, 155, 179, 0.24);
+      }
+      
     }
 
     &.in-generic-activity {
@@ -100,20 +108,22 @@
 
       .check-btn {
         flex: 100%;
-        text-align: justify;
-
-        &:nth-child(even) {
-          padding-right: 1rem;
-        }
-        &:last-child {
-          padding-right: 0;
-        }
+        text-align: justify;        
 
         @media screen and (orientation: portrait) and (min-width: 480px) {
           flex: 50%;
         }
         @include mediabreak(small,landscape,true,640px) {
           flex: 50%;
+        }
+
+        &:nth-child(even) {
+          @media screen and (orientation: portrait) and (min-width: 480px) { padding-right: 1rem; }
+          @include mediabreak(small,landscape,true,640px) { padding-right: 1rem; }
+        }
+        &:last-child {
+          @media screen and (orientation: portrait) and (min-width: 480px) { padding-right: 0; }
+          @include mediabreak(small,landscape,true,640px) { padding-right: 0; }          
         }
       }
     }

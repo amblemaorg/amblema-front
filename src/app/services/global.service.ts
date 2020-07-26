@@ -264,6 +264,7 @@ export class GlobalService {
   @Output() resetEditedEmitter: EventEmitter<any> = new EventEmitter();
   @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesTableRefresherEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() actionsSleeperEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesEmitter: EventEmitter<{
     blocks: Map<string, PageBlockComponent>;
     fromModal: boolean;
@@ -289,6 +290,9 @@ export class GlobalService {
       checklist,
       upload
     });    
+  }
+  actionsSleeperUpdater(bool) {
+    this.actionsSleeperEmitter.emit(bool);
   }
   ImageContainerShower(code: string) {
     this.showImageContainerEmitter.emit(code);

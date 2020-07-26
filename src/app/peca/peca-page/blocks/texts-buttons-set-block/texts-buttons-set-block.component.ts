@@ -96,6 +96,7 @@ export class TextsButtonsSetBlockComponent
       // patch: string;
       delete: string;
       cancel: string;
+      post: string;
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
@@ -190,6 +191,13 @@ export class TextsButtonsSetBlockComponent
     );
 
     this.subscription.add(
+      this.globals.actionsSleeperEmitter.subscribe((bool) => {
+        this.sleepSend = bool;
+        this.activity_uneditable = bool;
+      })
+    );
+
+    this.subscription.add(
       this.pecaId$.subscribe( peca_id => {
         this.pecaId = peca_id;
       })
@@ -240,6 +248,7 @@ export class TextsButtonsSetBlockComponent
         checklist: null,
         upload: null,
       };
+      console.log(data);
 
       this.settings.isGenericActivity = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
@@ -294,13 +303,16 @@ export class TextsButtonsSetBlockComponent
     }
   }
 
-  setFetcherUrls({ put, delete: deleteFn, cancel }) {
+  setFetcherUrls({ put, delete: deleteFn, cancel, post }) {
     this.settings.fetcherUrls = {
       put,
       delete: deleteFn,
-      cancel // when there's a cancel request button this can be used
+      cancel, // when there's a cancel request button this can be used
+      post // for generic activity
     };
     this.sleepSend = false;
+
+    console.log("porfis", this.settings.fetcherUrls);
   }
 
   focusDatePicker(e) {
@@ -326,42 +338,45 @@ export class TextsButtonsSetBlockComponent
       this.settings.fetcherUrls.cancel
     ) 
       return true; // when there's cancel request button
-    else if ( 
-      (type == 7 || type == 8) && 
-      this.settings.isGenericActivity 
-    ) {
-      let { date, upload, checklist } = { date: false, upload: false, checklist: false };
-      const conditions = [];      
+    // else if ( 
+    //   (type == 7 || type == 8) && 
+    //   this.settings.isGenericActivity 
+    // ) {
+    //   let { date, upload, checklist } = { date: false, upload: false, checklist: false };
+    //   const conditions = [];      
 
-      if (this.settings.genActSavingTypes.hasDate) {
-        date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
-        conditions.push(date);
-      }
-      if (this.settings.genActSavingTypes.hasUpload) {
-        upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
-        conditions.push(upload);
-      }
-      if (this.settings.genActSavingTypes.hasChecklist) {
-        if (this.settings.btnApprovalType === 2 || type == 7) {     
-          checklist = true;
+    //   if (this.settings.genActSavingTypes.hasDate) {
+    //     date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
+    //     conditions.push(date);
+    //   }
+    //   if (this.settings.genActSavingTypes.hasUpload) {
+    //     upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
+    //     conditions.push(upload);
+    //   }
+    //   if (this.settings.genActSavingTypes.hasChecklist) {
+    //     // if (this.settings.btnApprovalType === 2 || type == 7) {     
+    //     //   checklist = true;
           
-          if (this.dataGenAct.checklist && type == 7) 
-            checklist = !this.dataGenAct.checklist.every(check => check.checked);
-          else if (this.dataGenAct.checklist && this.settings.btnApprovalType === 2)
-            checklist = !this.dataGenAct.checklist.some(check => check.checked);
-        }
-        else checklist = typeof this.dataGenAct.checklist === "boolean" && this.dataGenAct.checklist ? false : this.dataGenAct.checklist ? false : true;
-        conditions.push(checklist);
-      }
+    //     //   if (this.dataGenAct.checklist && type == 7) 
+    //     //     checklist = !this.dataGenAct.checklist.every(check => check.checked);
+    //     //   else if (this.dataGenAct.checklist && this.settings.btnApprovalType === 2)
+    //     //     checklist = !this.dataGenAct.checklist.some(check => check.checked);
+    //     // }
+    //     /* else  */checklist = typeof this.dataGenAct.checklist === "boolean" && this.dataGenAct.checklist ? false : this.dataGenAct.checklist ? false : true;
+    //     conditions.push(checklist);
+    //   }
 
-      const forSaveMode = type == 7 ? 0 
-        : conditions.reduce((acum,cond) => {
-          if (cond) acum++
-          return acum
-        },0);
+    //   const forSaveMode = type == 7 ? 0 
+    //     : conditions.reduce((acum,cond) => {
+    //       if (cond) acum++
+    //       return acum
+    //     },0);
       
-      return type == 7 ? conditions.some(cond => cond) : (forSaveMode == conditions.length);
-    }
+    //   return type == 7 
+    //     ? conditions.some(cond => cond) 
+    //     : conditions.length > 0 
+    //         ? (forSaveMode == conditions.length) : false;
+    // }
     return false;
   }
 
@@ -574,12 +589,31 @@ export class TextsButtonsSetBlockComponent
         );
         break;
       case 7:
+        this.isSending = true;
+        this.globals.actionsSleeperUpdater(true);
+        console.log("post", this.settings.fetcherUrls.post);
+        setTimeout(() => {
+          this.isSending = false;
+          this.globals.actionsSleeperUpdater(false);
+        }, 3000);
         console.log("Enviar",this.dataGenAct)
         break;
       case 8:
+        this.isSending = true;
+        this.globals.actionsSleeperUpdater(true);
+        console.log("post", this.settings.fetcherUrls.post);
+        setTimeout(() => {
+          this.isSending = false;
+          this.globals.actionsSleeperUpdater(false);
+        }, 3000);
         console.log("Guardar",this.dataGenAct)
         break;
       case 9:
+        this.isSending = true;
+        console.log("cancel", this.settings.fetcherUrls.cancel);
+        setTimeout(() => {
+          this.isSending = false;
+        }, 3000);
         console.log("Cancelando actividad generica")
         break;
 
@@ -702,24 +736,27 @@ export class TextsButtonsSetBlockComponent
     console.log("Status changer");
   }
   statusSelectorDisabler() {
-    let { date, upload, checklist } = { date: false, upload: false, checklist: false };
-    const conditions = [];
+    if (this.isSending || this.sleepSend) return true;
+    else {
+      let { date, upload, checklist } = { date: false, upload: false, checklist: false };
+      const conditions = [];
 
-    if (this.settings.genActSavingTypes.hasDate) {
-      date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
-      conditions.push(date);
-    }
-    if (this.settings.genActSavingTypes.hasUpload) {
-      upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
-      conditions.push(upload);
-    }
-    if (this.settings.genActSavingTypes.hasChecklist) {
-      checklist = true;
-      if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);        
-      conditions.push(checklist);
-    }
+      if (this.settings.genActSavingTypes.hasDate) {
+        date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
+        conditions.push(date);
+      }
+      if (this.settings.genActSavingTypes.hasUpload) {
+        upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
+        conditions.push(upload);
+      }
+      if (this.settings.genActSavingTypes.hasChecklist) {
+        checklist = true;
+        if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);        
+        conditions.push(checklist);
+      }
 
-    return conditions.some(cond => cond);
+      return conditions.some(cond => cond);
+    }
   }
 
   // FOR DATE FIELD
@@ -740,6 +777,25 @@ export class TextsButtonsSetBlockComponent
         });
       }
     }
+  }
+
+  // FOR GENERIC ACTIVITY ACTION BUTTON NAME
+  setGenActBtnName() {
+    let { date, upload } = { date: false, upload: false };
+    const conditions = [];
+
+    if (this.settings.genActSavingTypes.hasDate) {
+      date = this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
+      conditions.push(date);
+    }
+    if (this.settings.genActSavingTypes.hasUpload) {
+      upload = this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
+      conditions.push(upload);
+    }
+
+    return conditions.some(cond => cond) 
+      ? (this.isSending ? "Enviando solicitud" : "Enviar solicitud") 
+      : (this.isSending ? "Guardando" : "Guardar");
   }
 
 }

@@ -105,7 +105,7 @@ export class PecaComponent implements OnInit, OnDestroy {
         lapseOptions.push({
           ...lapseActivity,
           title: activity.name,
-          link: `lapso/${i}/${lapseActivity.link}/${activity.id}`
+          link: `lapso/${i}/${lapseActivity.link}/${activity.devName}`
         });
       });
 
