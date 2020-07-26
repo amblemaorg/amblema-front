@@ -4,6 +4,7 @@ import {
   PresentationalBlockComponent 
 } from '../page-block.component';
 import { GlobalService } from '../../../../services/global.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "checklist-block",
@@ -64,16 +65,24 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 checks=[];
 
   activity_uneditable: boolean
+  private subscription: Subscription = new Subscription();
 
   constructor(private globals: GlobalService) {
     this.type = "presentational";
     this.component = "checkList";
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription.add(
+      this.globals.actionsSleeperEmitter.subscribe((bool) => {
+        this.activity_uneditable = bool;
+      })
+    );
+  }
 
   ngOnDestroy() {
     this.activity_uneditable = null;
+    this.subscription.unsubscribe();
   }
 
   setSettings(settings: any) {
@@ -81,16 +90,16 @@ checks=[];
   }
 
   setData(data: any) {
-    if (data["isGenericActivity"]) {      
-      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
-      this.settings.infoContainer[0].datosNivel[0].checkList = data["checkList"] ? data.checkList : null;
+    if (data["isGenericActivity"]) {    
+      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;      
+      this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"] ? data.checklist : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
       this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;   
       
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
             gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
-            checklist: data["checkList"] ? this.settings.infoContainer[0].datosNivel[0].checkList : null,
+            checklist: data["checklist"] ? this.settings.infoContainer[0].datosNivel[0].checkList : null,
         });
       });      
     }
@@ -106,7 +115,9 @@ checks=[];
     }
     else {
       this.flag = false;
-
+      if (data["isGenericActivity"]) {
+        this.flag = true;
+      }
     }
   }
 

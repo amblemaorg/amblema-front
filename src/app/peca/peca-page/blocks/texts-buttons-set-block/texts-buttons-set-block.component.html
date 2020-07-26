@@ -102,7 +102,7 @@
                         <label>Modificar estatus:</label>
                         <ng-select
                             class="form-control"  
-                            [class.readonly-activity-selector]="activity_uneditable || statusSelectorDisabler()"
+                            [class.readonly-activity-selector]="statusSelectorDisabler()"
                             [items]="statuses"
                             bindValue="id"
                             bindLabel="name"
@@ -113,7 +113,7 @@
                             [clearable]="false" 
                             [searchable]="false"  
                             [loading]="isSending"
-                            [readonly]="activity_uneditable || statusSelectorDisabler()"
+                            [readonly]="statusSelectorDisabler()"
                             (change)="changeStatus()"        
                         >
                             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
@@ -261,8 +261,10 @@
                         )" class="spinner-grow spinner-grow-sm"></span>
                         {{
                             isSending && (action.type==4 || action.type==7 || action.type==8 || action.type==9) 
-                                ? (action.type==8 ? 'Guardando' : action.type==9 ? 'Cancelando' : 'Enviando') 
-                                : action.name 
+                                ? ( action.type==8 ? 'Guardando' : action.type==9 ? 'Cancelando' : (
+                                    action.type==7 ? setGenActBtnName() : 'Enviando'
+                                   ) ) 
+                                : ( action.type==7 ? setGenActBtnName() : action.name) 
                         }}
                 </button>
 
