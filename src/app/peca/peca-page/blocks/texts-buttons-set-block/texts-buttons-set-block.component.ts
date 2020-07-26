@@ -185,7 +185,7 @@ export class TextsButtonsSetBlockComponent
           if (data['date'] || data['isDate']) this.dataGenAct.date = data.date;
           if (data['checklist']) this.dataGenAct.checklist = data.checklist;
           if (data['upload']) this.dataGenAct.upload = data.upload;
-          console.log("activity data to update",this.dataGenAct);
+          // console.log("activity data to update",this.dataGenAct);
         }
       })
     );
@@ -248,7 +248,6 @@ export class TextsButtonsSetBlockComponent
         checklist: null,
         upload: null,
       };
-      console.log(data);
 
       this.settings.isGenericActivity = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
@@ -311,8 +310,6 @@ export class TextsButtonsSetBlockComponent
       post // for generic activity
     };
     this.sleepSend = false;
-
-    console.log("porfis", this.settings.fetcherUrls);
   }
 
   focusDatePicker(e) {
@@ -591,29 +588,26 @@ export class TextsButtonsSetBlockComponent
       case 7:
         this.isSending = true;
         this.globals.actionsSleeperUpdater(true);
-        console.log("post", this.settings.fetcherUrls.post);
-        setTimeout(() => {
-          this.isSending = false;
-          this.globals.actionsSleeperUpdater(false);
-        }, 3000);
+        // setTimeout(() => {
+        //   this.isSending = false;
+        //   this.globals.actionsSleeperUpdater(false);
+        // }, 3000);
         console.log("Enviar",this.dataGenAct)
         break;
       case 8:
         this.isSending = true;
         this.globals.actionsSleeperUpdater(true);
-        console.log("post", this.settings.fetcherUrls.post);
-        setTimeout(() => {
-          this.isSending = false;
-          this.globals.actionsSleeperUpdater(false);
-        }, 3000);
+        // setTimeout(() => {
+        //   this.isSending = false;
+        //   this.globals.actionsSleeperUpdater(false);
+        // }, 3000);
         console.log("Guardar",this.dataGenAct)
         break;
       case 9:
         this.isSending = true;
-        console.log("cancel", this.settings.fetcherUrls.cancel);
-        setTimeout(() => {
-          this.isSending = false;
-        }, 3000);
+        // setTimeout(() => {
+        //   this.isSending = false;
+        // }, 3000);
         console.log("Cancelando actividad generica")
         break;
 
