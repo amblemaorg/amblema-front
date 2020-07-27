@@ -1,15 +1,11 @@
 import { parseDate } from '../functions/parse-date';
 import { GenericActivity } from '../../../models/peca/generic-activity.model';
 
-export function genericActivityMapper(data: GenericActivity, user_type) {
+export function genericActivityMapper(data: GenericActivity, user_id, user_type) {
     const at = "2"; // approval type, at '2' means Only Checklist is in the view   
-    const detail = data.approvalHistory.length > 0 && data.status === "2" && 
+    const activity_to_use = data.approvalHistory.length > 0 && data.status === "2" && 
         data.approvalHistory[data.approvalHistory.length-1].status === "1" 
-            ? data.approvalHistory[data.approvalHistory.length-1].detail : null; 
-
-    const activity_cancel_id = data.approvalHistory.length > 0 && data.status === "2" && 
-        data.approvalHistory[data.approvalHistory.length-1].status === "1" 
-            ? data.approvalHistory[data.approvalHistory.length-1].id : null;
+            ? data.approvalHistory[data.approvalHistory.length-1] : null;
 
     const {
         date,
@@ -21,12 +17,12 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
     } = data.approvalHistory.length > 0 && data.status === "2" && 
     data.approvalHistory[data.approvalHistory.length-1].status === "1" 
     ? {
-        date: detail.date ? detail.date : data.date,
-        file: detail.file ? detail.file : data.file,
-        text: detail.text ? detail.text : data.text,
-        uploadedFile: detail.uploadedFile ? detail.uploadedFile : data.uploadedFile,
-        video: detail.video ? detail.video : data.video,
-        checklist: detail.checklist ? detail.checklist : data.checklist
+        date: activity_to_use.detail.date ? activity_to_use.detail.date : data.date,
+        file: activity_to_use.detail.file ? activity_to_use.detail.file : data.file,
+        text: activity_to_use.detail.text ? activity_to_use.detail.text : data.text,
+        uploadedFile: activity_to_use.detail.uploadedFile ? activity_to_use.detail.uploadedFile : data.uploadedFile,
+        video: activity_to_use.detail.video ? activity_to_use.detail.video : data.video,
+        checklist: activity_to_use.detail.checklist ? activity_to_use.detail.checklist : data.checklist
     } 
     : {
         date: data.date,
@@ -131,7 +127,16 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
             (data.hasDate || data.hasUpload || data.hasChecklist)
             // && +data.approvalType > 1 && +data.approvalType < 4 
             ? ( 
-                +data.approvalType === 1 && user_type && +user_type > 1 
+                (
+                    (+data.approvalType === 1 && user_type && +user_type > 1) || 
+                    (
+                        +data.approvalType === 3 && 
+                        data.status === "2" && 
+                        user_id && 
+                        activity_to_use && 
+                        user_id !== activity_to_use.user.id
+                    )
+                )
                     ? null : [data.approvalType].reduce((btns,approvalType) => {
                         // if (approvalType === "3" && data.status === "1") 
                         //     btns.push({ type: 8, name: 'Guardar' });
@@ -159,7 +164,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         };
 
     return {
-        activity_cancel_id,
+        activity_cancel_id: activity_to_use ? activity_to_use.id : null,
         g_a_status_selector, 
         g_a_text, 
         g_a_date, 

@@ -148,7 +148,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.g_a_id = data.id;
         this.g_a_activity_uneditable = data.status === "1" ? false : true;        
 
-        const genActMapped = genericActivityMapper(data, this.user_type);
+        const genActMapped = genericActivityMapper(data, this.user_id, this.user_type);
 
         this.activity_cancel_id = genActMapped.activity_cancel_id;
 
@@ -168,9 +168,10 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     updateStaticFetchers() {
+        // console.log("user_id", this.user_id);
         // genericActivityActionButton
         this.setBlockFetcherUrls("genericActivityActionButton", {
-            post: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
+            put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
             cancel: this.activity_cancel_id
                 ? `requestscontentapproval/${this.activity_cancel_id}`
                 : null
@@ -178,7 +179,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
         // genericActivityFields
         this.setBlockFetcherUrls("genericActivityFields", {
-            post: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
+            put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
         });
     }
     
