@@ -75,7 +75,7 @@ checks=[];
   ngOnInit() {
     this.subscription.add(
       this.globals.actionsSleeperEmitter.subscribe((bool) => {
-        this.activity_uneditable = bool;
+        this.activity_uneditable = bool.activity_uneditable;
       })
     );
   }

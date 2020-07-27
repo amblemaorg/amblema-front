@@ -96,7 +96,6 @@ export class TextsButtonsSetBlockComponent
       // patch: string;
       delete: string;
       cancel: string;
-      post: string;
     };
     fetcherMethod?: 'get' | 'post' | 'put' | 'patch' | 'delete';
     makesNoRequest?: boolean; // if true, this form makes no request to api
@@ -124,8 +123,11 @@ export class TextsButtonsSetBlockComponent
     checklist: null,
     upload: null,
   };
+  reloadDate: boolean;
+  reloadUpload: boolean;
 
   sleepSend: boolean; // disables actions button meanwhile peca content gets updated
+  selectorSendingEstatus: boolean;
 
   showThisVideo: boolean;
   timesVideoSourceCalled: number = 0;
@@ -192,8 +194,8 @@ export class TextsButtonsSetBlockComponent
 
     this.subscription.add(
       this.globals.actionsSleeperEmitter.subscribe((bool) => {
-        this.sleepSend = bool;
-        this.activity_uneditable = bool;
+        this.sleepSend = bool.sleepSend;
+        this.activity_uneditable = bool.activity_uneditable;
       })
     );
 
@@ -250,11 +252,17 @@ export class TextsButtonsSetBlockComponent
       };
 
       this.settings.isGenericActivity = true;
+
+      this.reloadDate = true; this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
+      this.settings.upload = data["upload"] ? data.upload : null;
+      setTimeout(() => {
+        this.reloadDate = false; this.reloadUpload = false;
+      });
+      
       this.settings.download = data["download"] ? data.download : null;
       this.settings.subtitles = data["subtitles"] ? data.subtitles : null;
-      this.settings.addMT = data["addMT"] ? data.addMT : null;
-      this.settings.upload = data["upload"] ? data.upload : null;
+      this.settings.addMT = data["addMT"] ? data.addMT : null;      
       this.settings.action = data["action"] ? data.action : null;
       this.settings.genActSelectStatus = data["statusSelectorData"] ? data.statusSelectorData.genActSelectStatus : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
@@ -302,12 +310,11 @@ export class TextsButtonsSetBlockComponent
     }
   }
 
-  setFetcherUrls({ put, delete: deleteFn, cancel, post }) {
+  setFetcherUrls({ put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
       put,
       delete: deleteFn,
-      cancel, // when there's a cancel request button this can be used
-      post // for generic activity
+      cancel, // when there's a cancel request button this can be used      
     };
     this.sleepSend = false;
   }
@@ -335,6 +342,25 @@ export class TextsButtonsSetBlockComponent
       this.settings.fetcherUrls.cancel
     ) 
       return true; // when there's cancel request button
+    else if (
+      type == 7 && 
+      this.settings.isGenericActivity &&
+      !this.settings.genActSavingTypes.hasChecklist
+    ) {
+      let { date, upload } = { date: false, upload: false };
+      const conditions = [];
+  
+      if (this.settings.genActSavingTypes.hasDate) {
+        date = this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
+        conditions.push(date);
+      }
+      if (this.settings.genActSavingTypes.hasUpload) {
+        upload = this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
+        conditions.push(upload);
+      }
+  
+      return !conditions.some(cond => cond);
+    }
     // else if ( 
     //   (type == 7 || type == 8) && 
     //   this.settings.isGenericActivity 
@@ -586,34 +612,60 @@ export class TextsButtonsSetBlockComponent
         );
         break;
       case 7:
-        this.isSending = true;
-        this.globals.actionsSleeperUpdater(true);
-        // setTimeout(() => {
-        //   this.isSending = false;
-        //   this.globals.actionsSleeperUpdater(false);
-        // }, 3000);
-        console.log("Enviar",this.dataGenAct)
+        this.activityActioned(7);
         break;
       case 8:
-        this.isSending = true;
-        this.globals.actionsSleeperUpdater(true);
-        // setTimeout(() => {
-        //   this.isSending = false;
-        //   this.globals.actionsSleeperUpdater(false);
-        // }, 3000);
-        console.log("Guardar",this.dataGenAct)
-        break;
-      case 9:
-        this.isSending = true;
-        // setTimeout(() => {
-        //   this.isSending = false;
-        // }, 3000);
-        console.log("Cancelando actividad generica")
-        break;
+        this.activityActioned(8);
+        break;        
 
       default:
         break;
     }
+  }
+
+  activityActioned(case_type: number) {
+    const formData = new FormData();
+    // console.log(case_type === 7 ? "Enviar" : "Guardar",this.dataGenAct);
+    this.isSending = true;
+    this.globals.actionsSleeperUpdater(true,true);     
+
+    const fetcherMethod = this.settings.fetcherMethod || "put";
+    const url = this.settings.fetcherUrls[fetcherMethod];
+
+    if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
+    if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date); 
+    if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+    if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
+
+    this.fetcher[fetcherMethod](url, formData).subscribe(
+      response => {
+        console.log("activity response", response);
+        this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success(case_type === 7 ? "Solicitud enviada" : "Ha sido guardado exitosamente", "", {
+          positionClass: "toast-bottom-right"
+        });
+
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      error => {
+        const error_msg = (error.error && error.error instanceof ProgressEvent)
+          ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+          : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+        this.globals.actionsSleeperUpdater(false,false);
+        this.isSending = false;
+        this.toastr.error(
+          error.error && error.error["msg"]
+            ? error.error["msg"]
+            : error_msg,
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );
   }
 
   cancelRequest() {
@@ -624,6 +676,8 @@ export class TextsButtonsSetBlockComponent
     };
     const method = 'put';
     const url = this.settings.fetcherUrls['cancel'];
+
+    if (this.settings.isGenericActivity) this.globals.actionsSleeperUpdater(true,true);
 
     this.fetcher[method](url, body).subscribe(
       response => {
@@ -636,7 +690,8 @@ export class TextsButtonsSetBlockComponent
           positionClass: "toast-bottom-right"
         });
 
-        if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+        if (this.settings.buttonCode && !this.settings.isGenericActivity) 
+          this.globals.resetEdited(this.settings.buttonCode);
         this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
@@ -644,6 +699,9 @@ export class TextsButtonsSetBlockComponent
           ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
           : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
         this.isSending = false;
+
+        if (this.settings.isGenericActivity) this.globals.actionsSleeperUpdater(false,true);
+
         this.toastr.error(
           error.error && error.error["msg"]
             ? error.error["msg"]
@@ -726,11 +784,55 @@ export class TextsButtonsSetBlockComponent
   }
 
   // FOR STATUS CHANGER
-  changeStatus() {
-    console.log("Status changer");
+  changeStatus(e: any) {
+    if (e && e.id) {
+      const formData = new FormData();
+      this.isSending = true; this.selectorSendingEstatus = true;
+      this.globals.actionsSleeperUpdater(true,true);
+
+      const fetcherMethod = this.settings.fetcherMethod || "post";
+      const url = this.settings.fetcherUrls[fetcherMethod];
+
+      console.log("Status changer");
+      formData.append('status', e.id === "1" ? "1" : "3");
+      if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
+      if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date);
+      if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+      if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
+
+      this.fetcher[fetcherMethod](url, formData).subscribe(
+        response => {
+          console.log("activity response", response);
+          this.sleepSend = true;
+          this.isSending = false; this.selectorSendingEstatus = false;
+
+          this.toastr.success(e.id === "1" ? "Estatus de la actividad cambiado exitosamente" : "Actividad completada exitosamente", "", {
+            positionClass: "toast-bottom-right"
+          });
+
+          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        },
+        error => {
+          const error_msg = (error.error && error.error instanceof ProgressEvent)
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+          this.globals.actionsSleeperUpdater(false,false);
+          this.isSending = false; this.selectorSendingEstatus = false;
+          this.toastr.error(
+            error.error && error.error["msg"]
+              ? error.error["msg"]
+              : error_msg,
+            "",
+            { positionClass: "toast-bottom-right" }
+          );
+          console.error(error);
+        }
+      );
+    }            
   }
   statusSelectorDisabler() {
-    if (this.isSending || this.sleepSend) return true;
+    if (this.isSending || this.sleepSend || this.selectorSendingEstatus) return true;
     else {
       let { date, upload, checklist } = { date: false, upload: false, checklist: false };
       const conditions = [];
@@ -787,7 +889,7 @@ export class TextsButtonsSetBlockComponent
       conditions.push(upload);
     }
 
-    return conditions.some(cond => cond) 
+    return conditions.some(cond => cond) || !this.settings.genActSavingTypes.hasChecklist
       ? (this.isSending ? "Enviando solicitud" : "Enviar solicitud") 
       : (this.isSending ? "Guardando" : "Guardar");
   }
