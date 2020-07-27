@@ -1435,7 +1435,7 @@ export const formLecturaModal = {
     label: "Resultado",
     placeholder: "Resultado",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.numberAndRequired
   },
   index: {
     label: "Indice",
