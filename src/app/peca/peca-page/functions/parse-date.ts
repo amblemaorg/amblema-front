@@ -7,6 +7,6 @@ export function parseDate(dateSrc: Date) {
     ? `0${dateSrc.getDate()}`
     : dateSrc.getDate().toString();
   //return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-  return `${correctDate}-${correctMonth}-${dateSrc.getFullYear()}`;
+  return `${correctDate}/${correctMonth}/${dateSrc.getFullYear()}`;
 
 }
