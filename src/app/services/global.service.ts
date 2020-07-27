@@ -291,8 +291,11 @@ export class GlobalService {
       upload
     });    
   }
-  actionsSleeperUpdater(bool) {
-    this.actionsSleeperEmitter.emit(bool);
+  actionsSleeperUpdater(sleepSend: boolean, activity_uneditable: boolean) {
+    this.actionsSleeperEmitter.emit({
+      sleepSend,
+      activity_uneditable
+    });
   }
   ImageContainerShower(code: string) {
     this.showImageContainerEmitter.emit(code);
