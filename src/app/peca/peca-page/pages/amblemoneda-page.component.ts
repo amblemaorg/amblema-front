@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { PecaPageComponent } from '../peca-page.component';
 import { AMBLEMONEDA_CONFIG as config } from './amblemoneda-config';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
@@ -29,7 +29,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
 
   //subscripciones
   infoDataSubscription: Subscription;
-
+  routerSubscription: Subscription;
   //charla
   amblemonedaData: any
   text: string;
@@ -42,12 +42,19 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   img: string;
   descripcion: string;
 
-  response: any;
+  response1: any;
+  response2: any;
+  response3: any;
+  UrlLapse = "";
 
   isInstanciated: boolean;
   loadedData: boolean;
 
-  constructor(factoryResolver: ComponentFactoryResolver, router: Router, globals: GlobalService, private httpFetcherService: HttpFetcherService) {
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    private router: Router,
+    globals: GlobalService,
+    private httpFetcherService: HttpFetcherService, ) {
     super(factoryResolver);
 
     globals.blockIntancesEmitter.subscribe(data => {
@@ -62,8 +69,20 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     // TODO: change for a code that must reload only this page component
     // It reloads all components including PecaComponent, and it generates some bugs
     // router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.routerSubscription = this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.UrlLapse = event.url;
+        this.UrlLapse = this.router.url.substr(12, 1);
+        console.log("el ev", this.UrlLapse);
+        this.ngOnInit();
+      }
+    });
   }
   ngOnInit() {
+    this.getInfo();
+
+  }
+  getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
         if (data.activePecaContent) {
@@ -77,14 +96,22 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
           this.setAmblemonedasSlider(data);
           this.setAmblemonedasSliderData();
 
-          this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
+          if (this.UrlLapse === "1") {
+            this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
+          }
+          else if (this.UrlLapse === "2") {
+            this.setAmblemonedasMapper(data.activePecaContent.lapse2.ambleCoins.sections, amblemonedasTableMapper);
+          }
+          else {
+            this.setAmblemonedasMapper(data.activePecaContent.lapse3.ambleCoins.sections, amblemonedasTableMapper);
+          }
+
 
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
 
       }, er => { console.log(er) })
-
 
   }
 
@@ -113,7 +140,13 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   }
 
   setAmblemonedasCharla(data) {
-    this.text = data.activePecaContent.lapse1.ambleCoins.teachersMeetingDescription;
+    if (this.UrlLapse === "1") {
+      this.text = data.activePecaContent.lapse1.ambleCoins.teachersMeetingDescription;
+    } else if (this.UrlLapse === "2") {
+      this.text = data.activePecaContent.lapse2.ambleCoins.teachersMeetingDescription;
+    } else {
+      this.text = data.activePecaContent.lapse3.ambleCoins.teachersMeetingDescription;
+    }
     //console.log(this.text, "charla")
   }
 
@@ -128,19 +161,45 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   }
 
   setAmblemonedasSlider(data) {
-    this.response = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    if (this.UrlLapse === "1") {
+      this.response1 = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+      console.log(this.response1, "slideeeeeeeeeer111")
+    } else if (this.UrlLapse === "2") {
+      this.response2 = data.activePecaContent.lapse2.ambleCoins.piggyBankSlider;
+      console.log(this.response2, "slideeeeeeeeeer2222")
+    } else {
+      this.response3 = data.activePecaContent.lapse3.ambleCoins.piggyBankSlider;
+      console.log(this.response3, "slideeeeeeeeeer3333")
+    }
     //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
     //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-    console.log(this.response, "slideeeeeeeeeer")
+    
   }
 
   setAmblemonedasSliderData() {
-    this.sliderData = {
-      sliderImage: {
-        description: this.response,
-        //image: this.img
+    if (this.UrlLapse === "1") {
+      this.sliderData = {
+        sliderImage: {
+          description: this.response1,
+          //image: this.img
+        }
+      }
+    } else if (this.UrlLapse === "2") {
+      this.sliderData = {
+        sliderImage: {
+          description: this.response2,
+          //image: this.img
+        }
+      }
+    } else {
+      this.sliderData = {
+        sliderImage: {
+          description: this.response3,
+          //image: this.img
+        }
       }
     }
+    
   }
 
   ngAfterViewInit(): void {
