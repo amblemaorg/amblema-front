@@ -9,9 +9,12 @@ import {
 import { PecaPageComponent } from "../peca-page.component";
 import { ENVIRONMENTAL_PROJECT_CONFIG as config } from "./environmental-project-config";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { GlobalService } from "src/app/services/global.service";
 import { isNullOrUndefined } from "util";
+import { EnviromentalMapper} from '../mappers/enviromental-mapper';
+import { PecaState } from 'src/app/store/states/peca/peca.state';
+import { Select } from '@ngxs/store';
 
 @Component({
   selector: "peca-environmental-project",
@@ -29,6 +32,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   objectiveLapse2Data: any;
   objectiveLapse3Data: any;
   isInstanciated: boolean;
+  isInstantiating: boolean;
   topics1lapse = [];
   topics2lapse = [];
   topics3lapse = [];
@@ -37,19 +41,13 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   objetiveLapse3= "";
   loadedData: boolean;
   UrlLapse = "";
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
     private httpFetcherService: HttpFetcherService
   ) {
     super(factoryResolver);
-    globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
-      console.log(this.blockInstances, "bloques");
-      if (this.loadedData) this.updateMethods();
-    });
     this.instantiateComponent(config);
   }
 
@@ -57,27 +55,29 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     this.getInfo();
   }
 
-  getInfo() {
+/*   getInfo() {
+
+   
     const info = this.httpFetcherService
       .get(`pecasetting/environmentalproject`)
       .subscribe(
         (data) => {
-          if (!isNullOrUndefined(data)) {
+           if (!this.isInstantiating) {
              console.log("proyecto ambiental", data);
+             data.lapse1.topics.forEach((topic) => {
+              topic.nameTopic = topic.name;
+            });
             this.topics1lapse = data.lapse1.topics;
             this.topics2lapse = data.lapse2.topics;
             this.topics3lapse = data.lapse3.topics;
             this.objetiveLapse1=data.lapse1.generalObjective;
             this.objetiveLapse2=data.lapse2.generalObjective;
             this.objetiveLapse3=data.lapse3.generalObjective;
+            const configVista = EnviromentalMapper(data); //variable_que_almacenara_el_config_para_la_vista
+            this.instantiateComponent(configVista);
+            this.doInstantiateBlocks();
+            console.log("ajaja", configVista)
 
-          /*   console.log(this.topics1lapse);
-            console.log(this.topics2lapse);
-            console.log(this.topics3lapse); */
-
-            this.setEnviromentalProjectData();
-            this.loadedData = true;
-            if (this.isInstanciated) this.updateMethods();
           }
         },
         (error) => console.log(error),
@@ -85,7 +85,29 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
           info.unsubscribe();
         }
       );
+  } */
+
+  getInfo() {
+    this.infoDataSubscription = this.infoData$.subscribe(
+      (data) => {
+        if (!this.isInstantiating) {
+          if (data.activePecaContent) {
+         
+            console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
+            const configVista = EnviromentalMapper(data.activePecaContent.environmentalProject); //variable_que_almacenara_el_config_para_la_vista
+            this.instantiateComponent(configVista);
+            this.doInstantiateBlocks();
+            console.log("ajaja", configVista)
+          }
+        }
+        
+      },
+
+      (error) => console.error(error)
+    );
   }
+
+
   objectiveLapse4Data:any;
   setEnviromentalProjectData() {
 
@@ -126,16 +148,22 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     this.updateDataToBlocks();
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.instantiateBlocks(this.container);
-      this.isInstanciated = true;
-    });
-  }
+  ngAfterViewInit(): void {        
+    this.doInstantiateBlocks();
+}
 
   ngOnDestroy() {
     this.isInstanciated = false;
     this.loadedData = false;
-    //this.infoDataSubscription.unsubscribe();
+    this.infoDataSubscription.unsubscribe();
   }
+  doInstantiateBlocks() {
+    this.isInstanciated = false;
+    this.isInstantiating = true;
+    setTimeout(() => {
+        this.instantiateBlocks(this.container, true);
+        this.isInstanciated = true;
+        this.isInstantiating = false;
+    });
+}
 }

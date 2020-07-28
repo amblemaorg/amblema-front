@@ -65,6 +65,7 @@ export class AccordionBlockComponent
     }
 
     if (data["topics1"]) {
+      console.log("AAAA", data)
       this.flag = true;
       // console.log(this.settings)
       this.prueba = data.topics1;

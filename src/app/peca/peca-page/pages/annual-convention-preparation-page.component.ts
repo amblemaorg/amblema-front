@@ -84,7 +84,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
           );
           this.idPeca = data.activePecaContent.id;
           this.allTeachers=auxTeachers;
-          console.log("oj",this.allTeachers)
+         // console.log("oj",this.allTeachers)
           if (!isNullOrUndefined(data)) {
             if (this.UrlLapse === "1") {
              this.teachers= data.activePecaContent.lapse1.annualPreparation.teachers;
@@ -117,7 +117,7 @@ export class AnnualConventionPreparationPageComponent extends PecaPageComponent
               this.description4 =
                 data.activePecaContent.lapse3.annualPreparation.step4Description;
             }
-            console.log('docentes', this.teachers)
+          //  console.log('docentes', this.teachers)
             this.setTeachersTableData(
               this.teachers,
               teachersDataToTeachersTableAnnualConventionMapper
