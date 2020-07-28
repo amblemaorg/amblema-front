@@ -48,6 +48,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
         title: string;
         isFromGenericActivity?: boolean;
         genericActivityId?: string;
+        approvedAct?: boolean;
         checkList: {
           id?: string;
           name: string;
@@ -91,10 +92,11 @@ checks=[];
 
   setData(data: any) {
     if (data["isGenericActivity"]) {    
-      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;      
+      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
       this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"] ? data.checklist : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
-      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;   
+      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
+      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"] ? data.approvedAct : null;
       
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
