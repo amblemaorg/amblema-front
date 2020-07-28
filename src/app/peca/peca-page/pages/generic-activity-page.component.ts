@@ -157,7 +157,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
         // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
         this.g_a_id = data.id;
-        this.g_a_activity_uneditable = data.status === "1" ? false : true;        
+        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;        
 
         const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 

@@ -114,7 +114,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
                 checklistObj = {
                     ...checklistObj,
                     title: 'Los checklists',
-                    approvedAct: data.status === "3" ? true : false,
+                    approvedAct: data.status === "3" && data.approvalType !== "5" ? true : false,
                     checklist: checklist
                 }
             }
@@ -124,7 +124,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
     const g_a_action_btn = {
         isGenericActivityBtnReceptor: true,
         btnApprovalType: +data.approvalType,
-        action: (+data.status < 3) &&
+        action: (+data.status < 3 || +data.approvalType === 5) &&
             (data.hasDate || data.hasUpload || data.hasChecklist)
             // && +data.approvalType > 1 && +data.approvalType < 4 
             ? ( 
@@ -135,8 +135,8 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
                         // if (approvalType === "3" && data.status === "1") 
                         //     btns.push({ type: 8, name: 'Guardar' });
                         btns.push({
-                            type: data.status === "1" ? (data.approvalType === "3" ? 7 : 8) : 9,
-                            name: data.status === "1" 
+                            type: data.status === "1" || approvalType === "5" ? (approvalType === "3" ? 7 : 8) : 9,
+                            name: data.status === "1" || approvalType === "5"
                                 ? 'Guardar'/* (data.approvalType === "3" 
                                     ? 'Enviar' 
                                     : 'Guardar'
