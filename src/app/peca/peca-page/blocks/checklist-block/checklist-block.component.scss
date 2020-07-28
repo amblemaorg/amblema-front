@@ -104,6 +104,14 @@
       
     }
 
+    label {
+      align-items: baseline !important;
+
+      .custom-checkbox{
+        top: 0.35rem;
+      }
+    }
+
     &.in-generic-activity {
       display: flex;
       flex-wrap: wrap;
