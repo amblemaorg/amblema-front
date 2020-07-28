@@ -128,14 +128,14 @@ export class FormBlockComponent
       this.settings.formsContent["section"] &&
       this.settings.formsContent["section"].emmitSectionChange
     )
-    this.subscription.add(
-      this.componentForm.get("section").statusChanges.subscribe(val => {
-        if (val === "VALID" ) 
-          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,this.componentForm.get("section").value);
-        else 
-          this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName,null);
-      })
-    );
+      this.subscription.add(
+        this.componentForm.get("section").statusChanges.subscribe(val => {
+          if (val === "VALID")
+            this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, this.componentForm.get("section").value);
+          else
+            this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, null);
+        })
+      );
 
     this.subscription.add(
       this.globals.passImageEmitter.subscribe(image => {
@@ -181,17 +181,17 @@ export class FormBlockComponent
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
           if (
-            this.settings.buttonCode && 
+            this.settings.buttonCode &&
             this.settings.buttonCode == data.buttonCode
           )
-            this.isInApproval = data.setReadOnly;        
+            this.isInApproval = data.setReadOnly;
         } else {
           if (
-            this.settings.tableCode && 
+            this.settings.tableCode &&
             this.settings.tableCode == data.buttonCode
           )
-            this.isInApproval = data.setReadOnly;        
-        }    
+            this.isInApproval = data.setReadOnly;
+        }
       })
     );
 
@@ -251,51 +251,61 @@ export class FormBlockComponent
 
   setData(data: any) {
     if (data.setContent) {
+      
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
-        this.settings.formsContent[attr].options = data.data[attr];
+        //this.settings.formsContent[attr].options = data.data[attr];
+        let isTeacherSelector = false;
+
+        if (attr == "imageGroup" && 
+          this.settings.formsContent["imageGroup"].fields["imageDocente"]
+          ){
+          this.settings.formsContent["imageGroup"].fields["imageDocente"].options = data.data[attr].imageDocente;
+          }
+        else
+          this.settings.formsContent[attr].options = data.data[attr];
 
         if (
-          attr == "section" && 
+          attr == "section" &&
           this.settings.formsContent["section"] &&
-          this.settings.formsContent["section"].emmitSectionChange && 
+          this.settings.formsContent["section"].emmitSectionChange &&
           this.componentForm.controls["section"].value
-        ) 
+        )
           this.componentForm.patchValue({ section: "" });
 
         if (
-          attr == "grades" && 
+          attr == "grades" &&
           this.settings.formsContent["grades"] &&
-          this.settings.formsContent["grades"].isGrades && 
+          this.settings.formsContent["grades"].isGrades &&
           (
             this.componentForm.controls["grades"].value == "" ||
             !this.componentForm.dirty
           ) &&
           this.settings.formsContent[attr].options.length > 0
         ) {
-          this.componentForm.patchValue({ 
-            grades: this.settings.formsContent["grades"].options[0].id 
+          this.componentForm.patchValue({
+            grades: this.settings.formsContent["grades"].options[0].id
           });
           setTimeout(() => {
             this.setSchoolSections(true);
-          });          
+          });
         }
-        
+
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
       });
       // console.log(this.componentForm.dirty);
-    }  
+    }
 
     if (!this.isEdited) {
       if (!data.setContent) {
         this.settings.data = data;
         this.setAllFields(this.settings.data);
       }
-  
-      if ( this.isDirty() ) this.btnUpdater(this.componentForm.value);
-    }    
+
+      if (this.isDirty()) this.btnUpdater(this.componentForm.value);
+    }
   }
 
   setFetcherUrls({ post, put, patch }) {
@@ -398,8 +408,8 @@ export class FormBlockComponent
             isMainContent
               ? formControlName.parent
                 ? formContent[formControlName.parent].fields[
-                    formControlName.field
-                  ]
+                formControlName.field
+                ]
                 : formContent[formControlName.field]
               : formContent[formControlName]
           )
@@ -471,24 +481,24 @@ export class FormBlockComponent
     const errors: any = !specialCase
       ? this.componentForm.get(field).errors
       : !field2
-      ? this.componentForm.controls[field].get("prependInput").errors
-      : !fromImg
-      ? this.componentForm.get(field2).errors
-      : this.componentForm.controls["imageGroup"].get(field2).errors;
+        ? this.componentForm.controls[field].get("prependInput").errors
+        : !fromImg
+          ? this.componentForm.get(field2).errors
+          : this.componentForm.controls["imageGroup"].get(field2).errors;
     if (errors) {
       return errors.required
         ? MESSAGES.REQUIRED_MESSAGE
         : errors.pattern || errors.minlength || errors.maxlength
-        ? !specialCase
-          ? this.settings.formsContent[field].messages.pattern
-          : !field2
-          ? this.settings.formsContent[field].fields["prependInput"].messages
-              .pattern
-          : !fromImg
-          ? this.settings.formsContent[field].fields[field2].messages.pattern
-          : this.settings.formsContent["imageGroup"].fields[field2].messages
-              .pattern
-        : null;
+          ? !specialCase
+            ? this.settings.formsContent[field].messages.pattern
+            : !field2
+              ? this.settings.formsContent[field].fields["prependInput"].messages
+                .pattern
+              : !fromImg
+                ? this.settings.formsContent[field].fields[field2].messages.pattern
+                : this.settings.formsContent["imageGroup"].fields[field2].messages
+                  .pattern
+          : null;
     }
 
     return null;
@@ -592,31 +602,31 @@ export class FormBlockComponent
     };
 
     if (this.settings.makesNoRequest) commonTasks();
-    else {      
+    else {
       const method = this.settings.fetcherMethod || "post";
-      const resourcePath = this.settings.methodUrlPlus 
+      const resourcePath = this.settings.methodUrlPlus
         ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]}`
-        : this.settings.fetcherUrls[method];    
-        
+        : this.settings.fetcherUrls[method];
+
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
 
       if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
- 
+
       console.log(
         'method: ', method,
         'url: ', resourcePath,
         'body: ', body
       );
 
-       this.fetcher[method](resourcePath, body).subscribe(
+      this.fetcher[method](resourcePath, body).subscribe(
         response => {
           commonTasks();
           console.log("Form response", response);
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
-          
+
           this.toastr.success("Suministrado con éxito", "", {
             positionClass: "toast-bottom-right"
           });
@@ -645,9 +655,9 @@ export class FormBlockComponent
           }
         },
         error => {
-          const error_msg = (error.error && error.error instanceof ProgressEvent) 
-              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" 
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+          const error_msg = (error.error && error.error instanceof ProgressEvent)
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
           this.sendingForm = false;
           if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
@@ -662,16 +672,16 @@ export class FormBlockComponent
           //   errorType!="regular" && 
           //   this.settings.formType === "agregarGradoSeccion"
           // ) this.componentForm.get(errorType).setValue("");
-          
+
           this.toastr.error(
             // errorType!="regular" 
             error.error && error.error["name"] && error.error["name"][0]
-              ? error.error["name"][0].msg 
+              ? error.error["name"][0].msg
               : error.error && error.error["email"] && error.error["email"][0]
-                ? error.error["email"][0].msg 
+                ? error.error["email"][0].msg
                 : error.error && error.error["cardId"] && error.error["cardId"][0]
-                  ? error.error["cardId"][0].msg 
-                  : error.error && error.error["msg"] 
+                  ? error.error["cardId"][0].msg
+                  : error.error && error.error["msg"]
                     ? error.error["msg"]
                     : error_msg,
             "",
@@ -679,7 +689,7 @@ export class FormBlockComponent
           );
           console.error(error);
         }
-      );   
+      );
     }
   }
 
@@ -699,14 +709,14 @@ export class FormBlockComponent
     }
 
     this.componentForm.patchValue({ addressMunicipality: munId });
-  }  
+  }
   // UPDATES MUNICIPALITIES ACCORDING TO SELECTED STATE
   updateMuns(bool: boolean = true, munId: string = "") {
     if (bool) {
       let currStateId = "default";
       currStateId =
         this.componentForm.controls["addressState"].value &&
-        this.componentForm.controls["addressState"].value.length > 0
+          this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
       this.fillMunicipalities(currStateId, munId);
@@ -800,7 +810,7 @@ export class FormBlockComponent
             .value)) ||
       (this.componentForm.controls["imageGroup"].get("imageCargo") &&
         this.componentForm.controls["imageGroup"].get("imageCargo").value ===
-          "") ||
+        "") ||
       (this.componentForm.controls["imageGroup"].get("imageDescription") &&
         this.componentForm.controls["imageGroup"].get("imageDescription")
           .value === "") ||
@@ -829,7 +839,7 @@ export class FormBlockComponent
       default:
         return this.componentForm.controls["imageGroup"].value["imageSelected"]
           ? this.componentForm.controls["imageGroup"].get("imageSelected").value
-              .name
+            .name
           : "image";
     }
   }
@@ -863,44 +873,44 @@ export class FormBlockComponent
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: `auto-${Math.random()
-              .toString(36)
-              .substring(2)}`,
-            // image: imgGrp.get("imageSelected").value.name,
-            // image: imgGrp.get("imageSrc").value,
-            source: imgGrp.get("imageSrc").value,
-            imageSelected: imgGrp.get("imageSelected").value,
-            ...this.imageObjWithAvailableFields()
-          }
+          id: `auto-${Math.random()
+            .toString(36)
+            .substring(2)}`,
+          // image: imgGrp.get("imageSelected").value.name,
+          // image: imgGrp.get("imageSrc").value,
+          source: imgGrp.get("imageSrc").value,
+          imageSelected: imgGrp.get("imageSelected").value,
+          ...this.imageObjWithAvailableFields()
+        }
         : {
-            id: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options
-              .find(d => {
-                return d.id === imgGrp.get("imageDocente").value;
-              })
-              .id.toString(),
-            name: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options.find(d => {
+          id: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options
+            .find(d => {
               return d.id === imgGrp.get("imageDocente").value;
-            }).name,
-            lastName: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options.find(d => {
-              return d.id === imgGrp.get("imageDocente").value;
-            }).lastName,
-            cargo: imgGrp.get("imageCargo").value,
-            description: imgGrp.get("imageDescription").value,
-            addressState: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options.find(d => {
-              return d.id === imgGrp.get("imageDocente").value;
-            }).addressState,
-            // status: imgGrp.get("imageStatus").value,
-            source: imgGrp.get("imageSrc").value,
-            imageSelected: imgGrp.get("imageSelected").value
-          },
+            })
+            .id.toString(),
+          name: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options.find(d => {
+            return d.id === imgGrp.get("imageDocente").value;
+          }).name,
+          lastName: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options.find(d => {
+            return d.id === imgGrp.get("imageDocente").value;
+          }).lastName,
+          cargo: imgGrp.get("imageCargo").value,
+          description: imgGrp.get("imageDescription").value,
+          // addressState: this.settings.formsContent["imageGroup"].fields[
+          //   "imageDocente"
+          // ].options.find(d => {
+          //   return d.id === imgGrp.get("imageDocente").value;
+          // }).addressState,
+          // status: imgGrp.get("imageStatus").value,
+          source: imgGrp.get("imageSrc").value,
+          imageSelected: imgGrp.get("imageSelected").value
+        },
       action: "add"
     };
 
@@ -990,19 +1000,19 @@ export class FormBlockComponent
         if (key == "addressMunicipality") this.updateMuns(true, data[key]);
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
-          if (data[key]) { 
-          //console.log("key", data[key]) 
-          const dateKey = this.globals.getDateFormat(
-            new Date(data[key].replace("Z", ""))
-          );
-          this.componentForm.patchValue({ [key]: dateKey });
-          this.checkDateOk(
-            dateKey,
-            this.settings.formsContent[key]["lower"] ? "lower" : "greater",
-            key,
-            true
-          );
-        }
+          if (data[key]) {
+            //console.log("key", data[key]) 
+            const dateKey = this.globals.getDateFormat(
+              new Date(data[key].replace("Z", ""))
+            );
+            this.componentForm.patchValue({ [key]: dateKey });
+            this.checkDateOk(
+              dateKey,
+              this.settings.formsContent[key]["lower"] ? "lower" : "greater",
+              key,
+              true
+            );
+          }
         } else if (this.settings.formsContent[key].type === "double") {
           this.componentForm.patchValue({ ...data[key] });
         } else this.componentForm.patchValue({ [key]: data[key] });
@@ -1022,10 +1032,10 @@ export class FormBlockComponent
   disableSaveAndCancelButtons() {
     this.isEditing = false;
   }
-  
+
   // filling sections according to selected grade
   private fillSections(grade = null) {
-    if (!grade){
+    if (!grade) {
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
     }
@@ -1036,18 +1046,18 @@ export class FormBlockComponent
         return s.grade == grade;
       });
 
-      this.componentForm.patchValue({ 
-        section: this.sectionsArr[0].id 
-      }); 
-    }   
-  }  
+      this.componentForm.patchValue({
+        section: this.sectionsArr[0].id
+      });
+    }
+  }
   // managing sections depending on grades
   setSchoolSections(e) {
     if (e) {
       let currGrade = null;
       currGrade =
         this.componentForm.controls["grades"].value &&
-        this.componentForm.controls["grades"].value.length > 0
+          this.componentForm.controls["grades"].value.length > 0
           ? this.componentForm.controls["grades"].value
           : null;
 

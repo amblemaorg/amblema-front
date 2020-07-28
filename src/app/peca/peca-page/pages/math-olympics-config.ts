@@ -21,6 +21,18 @@ const datosOlimpiadas = {
     }
 }
 
+const btnGuardar = {
+    component: 'textsbuttons',
+    settings: {
+        action: [{
+            type: 1,
+            name: 'Guardar',
+        }],
+        receivesFromTableOrForm: 'table',
+        buttonCode: 'dataPreinscripcionDocente',
+    }
+}
+
 const selectEstudiantes = {
     component: 'textsbuttons',
     name: 'selectStudents',
@@ -218,6 +230,7 @@ export const MATH_OLYMPICS_CONFIG = {
                         childBlocks: [
                             { ...selectEstudiantes },
                             { ...resultadoEstudiante },
+                            { ...btnGuardar },
                             { ...modalResultadoEstudiante },
                         ]
                     }

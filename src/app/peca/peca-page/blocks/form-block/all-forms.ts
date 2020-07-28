@@ -337,6 +337,7 @@ export const formTestimonioDocentes = {
         label: "Seleccione el docente",
         placeholder: "Seleccione el docente",
         fullwidth: false,
+        shouldContentRefresh: true,
         ...controlProps.selectAndRequired,
         options: []
       },
@@ -422,13 +423,13 @@ export const formTestimonioDocentesModal = {
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
   },
-  addressState: {
+/*   addressState: {
     label: "Estado",
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: []
-  }
+  } */
   // status: {
   //   label: "Estatus",
   //   placeholder: "Estatus",
