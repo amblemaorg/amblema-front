@@ -488,7 +488,7 @@ const tituloObjetivoGeneralLapse3 = {
     }
 }
 
-export const ENVIRONMENTAL_PROJECT_CONFIG = {
+export const ENVIRONMENTAL_PROJECT_CONFIG_IIIII = {
     header: {
         title: "Proyecto ambiental",
     },
@@ -506,7 +506,16 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
                                     items: [
                                         {
                                             childBlocks: [
-                                                { ...tituloObjetivoGeneralLapse1 }
+                                                {
+                                                    component: 'textsbuttons',
+                                                    name: "objetivoProyectoAmbiental1",
+                                                    settings: {
+                                                        title: {
+                                                            aligning: 'left', // 'center' for center aligning, 'left' otherwise
+                                                            text: 'Geografia',
+                                                          }
+                                                    }
+                                                }
                                             ]
                                         },
                                         {
@@ -1290,3 +1299,56 @@ export const ENVIRONMENTAL_PROJECT_CONFIG = {
 }
 
  */
+
+
+
+
+
+
+export const ENVIRONMENTAL_PROJECT_CONFIG = {
+    header: {
+        title: "Proyecto ambiental",
+    },
+    blocks: [
+        {
+            component: 'tabs',
+            settings: {
+                items: [
+                    {
+                        title: "Lapso 1",
+                        childBlocks: [
+                            {
+                                component: 'profiles',
+                                settings: {
+                                    items: []
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        title: "Lapso 2",
+                        childBlocks: [
+                            {
+                                component: 'profiles',
+                                settings: {
+                                    items: []
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        title: "Lapso 3",
+                        childBlocks: [
+                            {
+                                component: 'profiles',
+                                settings: {
+                                    items: []
+                                }
+                            }
+                        ]
+                    },
+                ]
+            }
+        },
+    ],
+}

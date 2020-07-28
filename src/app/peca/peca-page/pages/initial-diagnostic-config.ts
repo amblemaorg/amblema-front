@@ -156,7 +156,7 @@ const readingDiagnosticTable = {
         title: "Resultado de lectura "
       },
       index: {
-        title: "Indice"
+        title: "Índice"
       }
     },
     modalCode: "initialDiagnosticConfigLectura",
@@ -336,13 +336,13 @@ const mathDiagnosticTable = {
   
       },
       resultLog: {
-        title: "Resultado de lógica matematica"
+        title: "Resultado de lógica matemática"
       },
       indexMul: {
-        title: "Indice de multiplicación"
+        title: "Índice de multiplicación"
       },
       indexLog: {
-        title: "Indice de lógica matematica"
+        title: "Índice de lógica matemática"
       }
     },
     modalCode: "initialDiagnosticConfigMatematica",
