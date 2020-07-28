@@ -1,7 +1,7 @@
 import { parseDate } from '../functions/parse-date';
 import { GenericActivity } from '../../../models/peca/generic-activity.model';
 
-export function genericActivityMapper(data: GenericActivity, user_id, user_type) {
+export function genericActivityMapper(data: GenericActivity, user_type) {
     const at = "2"; // approval type, at '2' means Only Checklist is in the view   
     const activity_to_use = data.approvalHistory.length > 0 && data.status === "2" && 
         data.approvalHistory[data.approvalHistory.length-1].status === "1" 
@@ -57,7 +57,7 @@ export function genericActivityMapper(data: GenericActivity, user_id, user_type)
                         placeholder: "Fecha de la actividad", 
                         fullwidth: false, 
                         type: "date",
-                        value: isThereDate ? parseDate( new Date(date), true ) : null,
+                        value: isThereDate ? parseDate( new Date( date.split("+").shift() ), true ) : null,
                         validations: { 
                             required: true, 
                         }, 
@@ -114,6 +114,7 @@ export function genericActivityMapper(data: GenericActivity, user_id, user_type)
                 checklistObj = {
                     ...checklistObj,
                     title: 'Los checklists',
+                    approvedAct: data.status === "3" ? true : false,
                     checklist: checklist
                 }
             }
@@ -128,14 +129,7 @@ export function genericActivityMapper(data: GenericActivity, user_id, user_type)
             // && +data.approvalType > 1 && +data.approvalType < 4 
             ? ( 
                 (
-                    (+data.approvalType === 1 && user_type && +user_type > 1) || 
-                    (
-                        +data.approvalType === 3 && 
-                        data.status === "2" && 
-                        user_id && 
-                        activity_to_use && 
-                        user_id !== activity_to_use.user.id
-                    )
+                    (+data.approvalType === 1 && user_type && +user_type > 1)
                 )
                     ? null : [data.approvalType].reduce((btns,approvalType) => {
                         // if (approvalType === "3" && data.status === "1") 

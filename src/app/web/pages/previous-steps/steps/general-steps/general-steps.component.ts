@@ -294,7 +294,7 @@ export class GeneralStepsComponent implements OnInit {
 
   getDateFrmt(step:Step) {
     let date = '';
-    if(step.date) date = this.globals.getDateFormat(new Date(step.date));
+    if(step.date) date = this.globals.getDateFormat(new Date( step.date.split("+").shift() ));
     return date;
   }
   controlDate(e, step:Step) {   
