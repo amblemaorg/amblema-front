@@ -249,7 +249,8 @@ export class TextsButtonsSetBlockComponent
         date: null,
         checklist: null,
         upload: null,
-      };
+      };      
+      this.isSending = null;
 
       this.settings.isGenericActivity = true;
 
@@ -257,7 +258,7 @@ export class TextsButtonsSetBlockComponent
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
       this.settings.upload = data["upload"] ? data.upload : null;
       setTimeout(() => {
-        this.reloadDate = false; this.reloadUpload = false;
+        this.reloadDate = false; this.reloadUpload = false;        
       });
       
       this.settings.download = data["download"] ? data.download : null;
@@ -316,7 +317,7 @@ export class TextsButtonsSetBlockComponent
       delete: deleteFn,
       cancel, // when there's a cancel request button this can be used      
     };
-    this.sleepSend = false;
+    if (!this.fetcher.isRequestingApi()) this.sleepSend = false;
   }
 
   focusDatePicker(e) {
@@ -539,7 +540,9 @@ export class TextsButtonsSetBlockComponent
                       ? `${error.error["msg"]}: ${error.error["entity"]}`
                       : error.error["msg"]
                   )
-                  : error_msg,
+                  : error.error && error.error["message"] 
+                      ? error.error["message"]
+                      : error_msg,
                 "",
                 { positionClass: "toast-bottom-right" }
               );
@@ -603,7 +606,9 @@ export class TextsButtonsSetBlockComponent
                     ? error.error["cardId"][0].msg
                     : error.error && error.error["msg"]
                       ? error.error["msg"]
-                      : error_msg,
+                      : error.error && error.error["message"] 
+                        ? error.error["message"]
+                        : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -612,7 +617,10 @@ export class TextsButtonsSetBlockComponent
         );
         break;
       case 7:
-        this.activityActioned(7);
+        const num_ = this.setGenActBtnName() == "Guardar" || 
+                     this.setGenActBtnName() == "Guardando" 
+                     ? 8 : 7;
+        this.activityActioned(num_);
         break;
       case 8:
         this.activityActioned(8);
@@ -625,7 +633,7 @@ export class TextsButtonsSetBlockComponent
 
   activityActioned(case_type: number) {
     const formData = new FormData();
-    // console.log(case_type === 7 ? "Enviar" : "Guardar",this.dataGenAct);
+    console.log(case_type === 7 ? "Enviar" : "Guardar",this.dataGenAct);
     this.isSending = true;
     this.globals.actionsSleeperUpdater(true,true);     
 
@@ -636,7 +644,7 @@ export class TextsButtonsSetBlockComponent
     if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date); 
     if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
     if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
-
+    
     this.fetcher[fetcherMethod](url, formData).subscribe(
       response => {
         console.log("activity response", response);
@@ -659,7 +667,9 @@ export class TextsButtonsSetBlockComponent
         this.toastr.error(
           error.error && error.error["msg"]
             ? error.error["msg"]
-            : error_msg,
+            : error.error && error.error["message"] 
+              ? error.error["message"]
+              : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
         );
@@ -705,7 +715,9 @@ export class TextsButtonsSetBlockComponent
         this.toastr.error(
           error.error && error.error["msg"]
             ? error.error["msg"]
-            : error_msg,
+            : error.error && error.error["message"] 
+              ? error.error["message"]
+              : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
         );
@@ -822,7 +834,9 @@ export class TextsButtonsSetBlockComponent
           this.toastr.error(
             error.error && error.error["msg"]
               ? error.error["msg"]
-              : error_msg,
+              : error.error && error.error["message"] 
+                ? error.error["message"]
+                : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );
