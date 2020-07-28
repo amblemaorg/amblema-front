@@ -831,6 +831,10 @@ export class TextsButtonsSetBlockComponent
 
           this.globals.actionsSleeperUpdater(false,false);
           this.isSending = false; this.selectorSendingEstatus = false;
+
+          this.statusForm.reset();
+          this.statusForm.setValue({ status: e.id === "1" ? "2" : "1" });          
+          
           this.toastr.error(
             error.error && error.error["msg"]
               ? error.error["msg"]
