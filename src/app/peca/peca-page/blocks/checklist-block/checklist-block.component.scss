@@ -94,6 +94,13 @@
       .native-input:disabled:checked + .custom-checkbox {
         border-color: rgba(143, 155, 179, 0.24);
       }
+
+      &.disabled-and-approved {
+        .native-input:disabled:checked + .custom-checkbox {
+          background-color: $blue;
+          border-color: $blue;
+        }
+      }
       
     }
 

@@ -26,11 +26,13 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
 
     @Select(PecaState.getPecaLapsesData) pecaLapseData$: Observable<any>;
+    // @Select(PecaState.isPecaContentRequesting) isPecaContentRequesting$: Observable<boolean>;
     @Select(PecaState.getUserResume) userData$: Observable<any>;
 
     pecaLapseSubscription: Subscription;
     userDataSubscription: Subscription;
     routerSubscription: Subscription;
+    // requestingSubscriptiom: Subscription;
     isInstanciated: boolean;
     loadedData: boolean;
     user_type: string = "0";
@@ -41,6 +43,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
     // generic activity content variables
     g_a_id: string;
+    // g_a_dev_name: string;
     g_a_text: any;
     g_a_date: any;
     g_a_download: any;
@@ -56,7 +59,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     constructor(
         factoryResolver: ComponentFactoryResolver, 
         private router: Router,
-        private globals: GlobalService
+        private globals: GlobalService,
     ) {
         super(factoryResolver);
 
@@ -71,7 +74,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.instantiateComponent(config);
 
         this.routerSubscription = this.router.events.subscribe((event: Event) => {
-            if (event instanceof NavigationEnd) {                
+            if (event instanceof NavigationEnd) {
                 const lapse_number = event.url.substring(1).split("/")[2];
                 const activity_devname = event.url.substring(1).split("/").pop();
                 this.setActivity(lapse_number, activity_devname);
@@ -91,11 +94,15 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         );
     }
 
-    setActivity(lapseId, activityDevName) {
+    setActivity(lapseId, activityDevName) {  
         this.pecaLapseSubscription = this.pecaLapseData$.subscribe(
-            (data) => {
-                if (data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
-                if (data.lapses && data.lapses[`lapse${lapseId}`]) {    
+            (data) => {                
+                if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
+                if (
+                    data && 
+                    data.lapses && 
+                    data.lapses[`lapse${lapseId}`]
+                ) {    
                     const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === activityDevName );
 
                     if (activity) {
@@ -106,7 +113,11 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                         this.setGenericActivityData(activity);
                         
                         this.loadedData = true;
-                        if (this.isInstanciated) this.updateMethods();   
+                        if (this.isInstanciated) {
+                            setTimeout(() => {
+                                this.updateMethods(); 
+                            });
+                        }
                     }                    
                 }                
             },
@@ -148,7 +159,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.g_a_id = data.id;
         this.g_a_activity_uneditable = data.status === "1" ? false : true;        
 
-        const genActMapped = genericActivityMapper(data, this.user_id, this.user_type);
+        const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 
         this.activity_cancel_id = genActMapped.activity_cancel_id;
 
@@ -168,7 +179,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     updateStaticFetchers() {
-        // console.log("user_id", this.user_id);
         // genericActivityActionButton
         this.setBlockFetcherUrls("genericActivityActionButton", {
             put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
@@ -197,5 +207,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.pecaLapseSubscription.unsubscribe();
         this.userDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
+        // this.requestingSubscriptiom.unsubscribe();
     }
 }
