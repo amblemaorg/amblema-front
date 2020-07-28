@@ -4,16 +4,19 @@ import {
   ClearPecaState,
   SetSelectedProject,
   FetchPecaContent,
+  SetUserPermissions,
 } from '../../actions/peca/peca.actions';
 import { PecaStateModel, PecaModel } from './peca.model';
-import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
-import { environment } from 'src/environments/environment';
+import { ApiWebContentService } from '../../../services/web/api-web-content.service';
+import { environment } from '../../../../environments/environment';
 
 @State<PecaStateModel>({
   name: 'peca',
   defaults: {
     selectedProject: null,
     content: null,
+    userPermissions: null,
+    pecaContentRequesting: false,
   },
 })
 export class PecaState {
@@ -33,18 +36,31 @@ export class PecaState {
   ) {
     patchState({ selectedProject: payload });
   }
+  
+  @Action(SetUserPermissions)
+  SetUserPermissions(
+    { patchState }: StateContext<PecaStateModel>,
+    { payload }: SetUserPermissions
+  ) {
+    patchState({ userPermissions: payload });
+  }
 
   @Action(FetchPecaContent)
   fetchPecaContent(
     { patchState, setState, getState }: StateContext<PecaStateModel>,
     { payload }: FetchPecaContent
   ) {
+    patchState({ pecaContentRequesting: true });
+
     this.apiService.setResourcePath('pecaprojects/' + payload);
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
         //const prevState = getState();
         const pecaContent: PecaModel = response;
-        patchState({ content: pecaContent });
+        patchState({ 
+          pecaContentRequesting: false,
+          content: pecaContent 
+        });        
         //setState({ ...prevState, content: pecaContent });
       }
     });
@@ -52,12 +68,28 @@ export class PecaState {
 
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
-    setState({ content: null, selectedProject: null });
+    setState({ 
+      content: null, 
+      selectedProject: null,
+      user: null,
+      userPermissions: null,
+      pecaContentRequesting: false,
+    });
+  }
+
+  @Selector()
+  static isPecaContentRequesting(state: PecaStateModel) {
+    return state.pecaContentRequesting;
   }
 
   @Selector()
   static getUser(state: any) {
     return state.user;
+  }
+
+  @Selector()
+  static getUserPermissions(state: any) {
+    return state.userPermissions;
   }
 
   @Selector()
