@@ -58,7 +58,7 @@
             </span>
         </div>
     </div>
-    <div *ngFor="let dato of info.datosNivel" class="style-checklist"  [class.in-generic-activity]="dato.isFromGenericActivity">
+    <div *ngFor="let dato of info.datosNivel" class="style-checklist"><!-- [class.in-generic-activity]="dato.isFromGenericActivity"> -->
         
         <ng-container *ngIf="flag;else other_content">
             <h6 *ngIf="dato.title">{{dato.title}}</h6>
