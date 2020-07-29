@@ -11,13 +11,10 @@
     clip: rect(1px 1px 1px 1px);
     clip: rect(1px, 1px, 1px, 1px);
   }
-  .container-form {
+  /* .container-form {
     width: 100%;
     padding: 10px 40px !important;
-    @media (max-width:768px) {
-      padding: 10px 10px !important;
-    }
-  }
+  } */
   .nb-theme-default {
     nb-checkbox .text:not(:empty) {
       padding-left: 1rem;
