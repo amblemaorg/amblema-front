@@ -17,6 +17,7 @@ import { ApiWebContentService } from "src/app/services/web/api-web-content.servi
 import { WebContentService } from "src/app/services/web/web-content.service";
 import { environment } from "src/environments/environment";
 import { DatePipe } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe("SchoolDetailComponent", () => {
   let component: SchoolDetailComponent;
@@ -331,6 +332,7 @@ describe("SchoolDetailComponent", () => {
         RouterTestingModule.withRoutes([]),
         BrowserAnimationsModule,
         SharedModule,
+        FontAwesomeModule,
         OwlModule,
         CarouselModule,
         ChartsSwitcherModule,
