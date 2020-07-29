@@ -96,7 +96,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
     setActivity(lapseId, activityDevName) {  
         this.pecaLapseSubscription = this.pecaLapseData$.subscribe(
-            (data) => {                
+            (data) => {
                 if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
                 if (
                     data && 

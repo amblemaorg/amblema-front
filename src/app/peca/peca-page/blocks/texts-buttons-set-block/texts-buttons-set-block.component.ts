@@ -644,7 +644,7 @@ export class TextsButtonsSetBlockComponent
     if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date); 
     if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
     if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
-    
+
     this.fetcher[fetcherMethod](url, formData).subscribe(
       response => {
         console.log("activity response", response);
