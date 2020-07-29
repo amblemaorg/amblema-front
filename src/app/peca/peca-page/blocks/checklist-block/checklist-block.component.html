@@ -6,20 +6,20 @@
         </div>
         <div class="style-principal-div">
             <h6>Objetivos:</h6>
-            <span *ngFor="let i of a.objetivo">
-                {{i.conObjetivo + ',' + ' '}}
+            <span *ngFor="let i of a.objetivo; let isLast=last">
+                {{i.conObjetivo}}{{isLast ? '' : ', '}}
             </span>
         </div>
         <div class="style-principal-div">
             <h6>Estrategias:</h6>
-            <span *ngFor="let i of a.estrategia">
-                {{i.contEstrategia + ',' + ' '}}
+            <span *ngFor="let i of a.estrategia; let isLast=last">
+                {{i.contEstrategia}}{{isLast ? '' : ', '}}
             </span>
         </div>
         <div class="style-principal-div">
             <h6>Contenidos:</h6>
-            <span *ngFor="let i of a.contenido">
-                {{i.contContenido + ',' + ' '}}
+            <span *ngFor="let i of a.contenido; let isLast=last">
+                {{i.contContenido}}{{isLast ? '' : ', '}}
             </span>
         </div>
     </div>
@@ -32,8 +32,8 @@
         </div>
         <div *ngIf="dato.week" class="style-nivel-div">
             <h6>Semanas:</h6>
-            <span *ngFor="let d of dato.week">
-                {{d.contWeek + ',' + ' '}}
+            <span *ngFor="let d of dato.week; let isLast=last">
+                {{d.contWeek}}{{isLast ? '' : ', '}}
             </span>
         </div>
         <div *ngIf="dato.time" class="style-nivel-div">
@@ -42,19 +42,20 @@
         </div>
         <div *ngIf="dato.tecnica" class="style-nivel-div">
             <h6>Técnicas:</h6>
-            <span *ngFor="let d of dato.tecnica">
-                {{d.contTecnica + ',' + ' '}}
+            <span *ngFor="let d of dato.tecnica; let isLast=last">
+                {{d.contTecnica}}{{isLast ? '' : ', '}}
             </span>
         </div>
         <div *ngIf="dato.recurso" class="style-nivel-div">
             <h6>Recursos:</h6>
-            <span *ngFor="let d of dato.recurso">
-                {{d.contRecurso + ',' + ' '}}</span>
+            <span *ngFor="let d of dato.recurso; let isLast=last">
+                {{d.contRecurso}}{{isLast ? '' : ', '}}
+            </span>
         </div>
         <div *ngIf="dato.evaluacion"class="style-nivel-div">
             <h6>Evaluaciones:</h6>
-            <span *ngFor="let d of dato.evaluacion">
-                {{d.contEvaluacion + ',' + ' '}}
+            <span *ngFor="let d of dato.evaluacion; let isLast=last">
+                {{d.contEvaluacion}}{{isLast ? '' : ', '}}
             </span>
         </div>
     </div>
@@ -88,9 +89,9 @@
     <div *ngFor="let dato of info.datosNivel" class="style-material" [class.d-none]="dato.isFromGenericActivity">
         <div *ngIf="dato.material">
         <h6>Materiales de apoyo:</h6>
-        <span *ngFor="let m of dato.material">
+        <span *ngFor="let m of dato.material; let isLast=last">
             <a href={{m.link}} target="_blank">
-                {{m.link + ',' + ''}}
+                {{m.link}}{{isLast ? '' : ', '}}
             </a>
         </span>
 
