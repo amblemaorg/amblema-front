@@ -128,6 +128,9 @@
               [placeholder]="
                 settings.formsContent[field].fields['prependInput'].placeholder
               "
+              [pattern]="
+                settings.formsContent[field].fields['prependInput'].validations.pattern
+              "
               [readonly]="
                 settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
               "
@@ -176,7 +179,10 @@
               <div class="date-error-message">
                 <strong>{{
                   settings.formsContent[field].lower
-                    ? "La fecha no debe ser mayor a la de hoy"
+                    ? ( settings.formsContent[field].validationPerYears 
+                          ? "Debe tener al menos 3 años de edad" 
+                          : "La fecha no debe ser mayor a la de hoy"
+                      )
                     : "La fecha debe ser mayor a la de hoy"
                 }}</strong>
               </div>

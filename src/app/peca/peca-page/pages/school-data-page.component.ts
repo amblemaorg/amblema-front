@@ -75,7 +75,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     globals.blockIntancesTableRefresherEmitter.subscribe(data => {
       if (data.tableName === "estudiantesTable") {
         this.currentStudentsGroup = data.id_string;
-        
+
         this.setStudentsFormData(this.studentsDataTemp, false, sectionsAndStudentsDataToSectionsFormMapper);
         this.setBlockData("estudiantesTable", this.studentsTableData);
       }      
@@ -347,7 +347,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
         ? mapper.sections.findIndex((s) => {
             return s.id === this.currentStudentsGroup
           }) 
-        : null;
+        : -1;
 
       this.studentsTableData = {
         data: this.currentStudentsGroup 
@@ -355,7 +355,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
           : [],
         hasTitle: {
           tableTitle: this.currentStudentsGroup 
-            ? `Estudiantes de ${mapper.grades[mapper.sections[section_name_index].grade].name}, sección ${mapper.sections[section_name_index].name}` 
+            ? section_name_index >= 0
+                ? `Estudiantes de ${mapper.grades[mapper.sections[section_name_index].grade].name}, sección ${mapper.sections[section_name_index].name}` 
+                : ""
             : "",
         },
         isEditable: true,

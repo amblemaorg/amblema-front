@@ -1145,7 +1145,7 @@ const tituloObjetivoGeneralLapse3 = {
 
 export const ENVIRONMENTAL_PROJECT_CONFIG = {
     header: {
-        title: "Proyecto ambiental",
+        title: "Temática ambiental",
     },
     blocks: [
         {

@@ -58,17 +58,19 @@
             </span>
         </div>
     </div>
-    <div *ngFor="let dato of info.datosNivel" class="style-checklist"  [class.in-generic-activity]="dato.isFromGenericActivity">
+    <div *ngFor="let dato of info.datosNivel" class="style-checklist"><!-- [class.in-generic-activity]="dato.isFromGenericActivity"> -->
         
         <ng-container *ngIf="flag;else other_content">
             <h6 *ngIf="dato.title">{{dato.title}}</h6>
             <div class="mt-3 mb-3 check-btn" *ngFor="let check of dato.checkList">
                 <nb-checkbox 
-                    class="prueba" 
+                    class="prueba"
+                    [class.disabled-and-approved]="activity_uneditable && dato.approvedAct"
                     status="basic"
+                    [checked]="check.checked"
                     [disabled]="activity_uneditable"
                     (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"
-                ><span class="descripcion">{{check.name}}</span>
+                ><span class="descripcion">{{ check.name }}</span>
                 </nb-checkbox>
             </div>
         </ng-container>

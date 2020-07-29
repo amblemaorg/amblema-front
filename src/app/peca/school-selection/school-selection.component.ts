@@ -4,12 +4,12 @@ import { Router } from "@angular/router";
 import { NbAuthService, decodeJwtPayload, NbAuthOAuth2Token } from "@nebular/auth";
 import { Location } from "@angular/common";
 import { Store } from "@ngxs/store";
-import { SetUser, SetSelectedProject } from "src/app/store/actions/peca/peca.actions";
-import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
-import { UpdateUserInfo, SetCurrentUser } from 'src/app/store/actions/e-learning/user.actions';
-import { UpdateStepsProgress, UpdateStepsSelectedProject } from 'src/app/store/actions/steps/project.actions';
-import { StepsService } from 'src/app/services/steps/steps.service';
-import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
+import { SetUser, SetSelectedProject, SetUserPermissions } from "../../store/actions/peca/peca.actions";
+import { UpdateModulesTotal } from '../../store/actions/e-learning/learning-modules.actions';
+import { UpdateUserInfo, SetCurrentUser } from '../../store/actions/e-learning/user.actions';
+import { UpdateStepsProgress, UpdateStepsSelectedProject } from '../../store/actions/steps/project.actions';
+import { StepsService } from '../../services/steps/steps.service';
+import { UpdateStates, UpdateMunicipalities } from '../../store/actions/steps/residence-info.actions';
 
 @Component({
   selector: "app-school-selection",
@@ -75,6 +75,7 @@ export class SchoolSelectionComponent implements OnInit {
   }; */
   userType: string;
   projects: any;
+  permissions: any;
   idUser: string;
   nameUser: string;
   emailUser: string;
@@ -100,11 +101,12 @@ export class SchoolSelectionComponent implements OnInit {
         response = decodeJwtPayload(tokens.access_token);
         this.store.dispatch([new SetUser(response.identity)]);
         this.projects = response.identity.projects;
+        this.permissions = response.identity.permissions;
         this.userType = response.identity.userType;
         this.idUser = response.identity.id;
         this.emailUser = response.identity.email;
         this.nameUser = response.identity.name;
-
+        
         if (this.projects.length === 1) {
           const projectPhase = parseInt(this.projects[0].phase);
           const projectId = this.projects[0].id;
@@ -127,7 +129,8 @@ export class SchoolSelectionComponent implements OnInit {
     }
 
     // Whether enters to peca or previous steps this has to be called
-    this.store.dispatch([new SetSelectedProject(this.projects[index])]);    
+    this.store.dispatch([new SetSelectedProject(this.projects[index])]);
+    this.store.dispatch([new SetUserPermissions(this.permissions)]);
     this.store.dispatch( new UpdateUserInfo( this.idUser, (+this.userType) ) );
     this.store.dispatch( new UpdateStepsSelectedProject(idProject) );
 

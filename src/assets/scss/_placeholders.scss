@@ -71,6 +71,12 @@ $z-index-higher: 4;
     background-color: $blue;
     color: #fff;
 
+    &.cancel-btn {
+        border-color: $cancel-gray;
+        background-color: $cancel-gray;
+        color: #fff;
+    }
+
     &:focus {
       box-shadow: none;
     }
@@ -78,5 +84,21 @@ $z-index-higher: 4;
     &:hover {
         background-color: #fff;
         color: $blue;
+
+        &.inactive, &[disabled] {
+            background-color: $blue;
+            color: #fff;
+            cursor: default;
+        }
+
+        &.cancel-btn {
+            background-color: #fff;
+            color: $cancel-gray;
+
+            &.inactive, &[disabled] {
+                background-color: $cancel-gray;
+                color: #fff;
+            }
+        }        
     }
 }
