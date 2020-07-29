@@ -11,6 +11,7 @@ import { Observable, Subscription } from "rxjs";
 import { first } from "rxjs/internal/operators/first";
 import { take } from "rxjs/internal/operators/take";
 import cloneDeep from "lodash/cloneDeep";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-peca",
@@ -36,7 +37,8 @@ export class PecaComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private iconLibraries: NbIconLibraries,
-    private sidebarService: NbSidebarService
+    private sidebarService: NbSidebarService,
+    private route: ActivatedRoute
   ) {
     this.iconLibraries.registerFontPack("amblemaicons", {
       iconClassPrefix: "icon"
@@ -53,7 +55,11 @@ export class PecaComponent implements OnInit, OnDestroy {
           this.store.dispatch([new FetchPecaContent(activePecaId)])
         else {
           console.error("No pudo obtenerse el PecaId activo");
-          this.noPecaModalLauncherBtn.nativeElement.click();
+          if ( 
+            !this.route.snapshot.params || 
+            (this.route.snapshot.params && !this.route.snapshot.params.comesFromPreviousSteps) 
+          ) 
+            this.noPecaModalLauncherBtn.nativeElement.click();
         }
       },
       error => console.error(error)
@@ -105,7 +111,7 @@ export class PecaComponent implements OnInit, OnDestroy {
         lapseOptions.push({
           ...lapseActivity,
           title: activity.name,
-          link: `lapso/${i}/${lapseActivity.link}/${activity.id}`
+          link: `lapso/${i}/${lapseActivity.link}/${activity.devName}`
         });
       });
 

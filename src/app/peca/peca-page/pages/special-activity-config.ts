@@ -29,7 +29,7 @@ const dateAndStatus = {
     settings: {
         dateOrtext: {
             text: 'Fecha de la actividad especial:',
-            fields: [{ label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired }],
+            fields: [{ label: "Input date", placeholder: "Fecha de la actividad", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         status: {
             text: 'Estatus',
@@ -55,13 +55,13 @@ const specialActivityTable = {
                 title: "Descripción"
             },
             cantidad: {
-                title: 'cantidad'
+                title: 'Cantidad'
             },
             price: {
                 title: 'Precio unitario'
             },
             impuesto: {
-                title: 'impuesto',
+                title: 'Impuesto',
                 valuePrepareFunction: ( row: any ) => {
                     if (row) return row.toString()+'%';
                     else return '';
@@ -75,7 +75,7 @@ const specialActivityTable = {
                   }
             },
             subtotal: {
-                title: 'subtotal'
+                title: 'Subtotal'
             },
         },
         modalCode: 'dataSpecialActivityTable',

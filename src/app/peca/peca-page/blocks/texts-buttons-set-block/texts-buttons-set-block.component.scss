@@ -8,7 +8,13 @@
                 font-size: 1.2rem;
             }
         }
+        @media (max-width: 768px){
+            h6 {
+                font-size: 1rem;
+            }
+        }
     }
+
     // .texts-buttons-wrapper {
         // padding: 2rem;
     // }
@@ -365,8 +371,23 @@
         }
     }
     .ng-select {
+        &.readonly-activity-selector {
+            color: $dark-gray;
+        }
+
         .ng-dropdown-panel {
             z-index: 3;
+
+            .ng-dropdown-panel-items {
+                .ng-option {
+                  &.ng-option-marked {
+                    small, a {
+                      font-weight: bold;
+                    }
+                  }
+                }
+            }
+
             .scroll-host {
                 left: -0.75rem;
                 top: 0.35rem;

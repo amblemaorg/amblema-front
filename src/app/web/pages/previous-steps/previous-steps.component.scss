@@ -27,6 +27,48 @@ p, button, a, li, label {
     background: map-get($color_map, blue);
     border-color: map-get($color_map, blue);
     width: 100%;         
+    color: #fff;
+    span {
+        color: #fff;
+    }
+
+    &.cancel-btn {
+        border-color: $cancel-gray;
+        background-color: $cancel-gray;
+        color: #fff;
+    }
+
+    &:focus {
+        box-shadow: none;
+    }
+    &:hover {
+        background: #fff;
+        color: map-get($color_map, blue);
+
+        span {
+            color: map-get($color_map, blue);
+        }
+
+        &.inactive, &[disabled] {
+            background-color: map-get($color_map, blue);
+            color: #fff;
+            cursor: default;
+
+            span {
+                color: #fff;
+            }
+        }
+
+        &.cancel-btn {
+            background-color: #fff;
+            color: $cancel-gray;
+
+            &.inactive, &[disabled] {
+                background-color: $cancel-gray;
+                color: #fff;
+            }
+        } 
+    }
             
     @include mediabreak(small,landscape,true,640px) { width: auto; }
     @include mediabreak(large,portrait) { width: auto; }

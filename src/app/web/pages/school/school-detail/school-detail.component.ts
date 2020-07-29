@@ -23,6 +23,11 @@ import { Subscription, fromEvent } from "rxjs";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { ChartsSwitcherComponent } from 'src/app/web/shared/charts-switcher/charts-switcher.component';
+import {
+  faTwitter as twitterIcon,
+  faInstagram as instagramIcon,
+  faFacebook as facebookIcon
+} from "@fortawesome/free-brands-svg-icons";
 
 @Component({
   selector: "app-school-detail",
@@ -39,6 +44,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("charts", { static: false }) charts: ElementRef;
   @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
   @ViewChild('chartSwitcher', { static: false }) chartSwitcher: ChartsSwitcherComponent;
+  instagramIcon = instagramIcon;
+  twitterIcon = twitterIcon;
+  facebookIcon = facebookIcon;
+
   scrollSubscription: Subscription;
   routerSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
@@ -259,7 +268,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           activity.date = this.pipe.transform(Date.parse(activity.date), 'd/M/y');
           return activity;
         }),
-        otherSchools: data.nearbySchools
+        otherSchools: data.nearbySchools,
+        facebook: data.facebook,
+        twitter: data.twitter,
+        instagram: data.instagram
       };
       
       this.staticSchoolService.getChartsTemplateJSON().subscribe((charts) => {
