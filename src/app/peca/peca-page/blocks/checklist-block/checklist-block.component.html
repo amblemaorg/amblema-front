@@ -41,7 +41,7 @@
             <span>{{dato.time}}</span>
         </div>
         <div *ngIf="dato.tecnica" class="style-nivel-div">
-            <h6>Técnica:</h6>
+            <h6>Técnicas:</h6>
             <span *ngFor="let d of dato.tecnica">
                 {{d.contTecnica + ',' + ' '}}
             </span>
@@ -52,7 +52,7 @@
                 {{d.contRecurso + ',' + ' '}}</span>
         </div>
         <div *ngIf="dato.evaluacion"class="style-nivel-div">
-            <h6>Evaluación:</h6>
+            <h6>Evaluaciones:</h6>
             <span *ngFor="let d of dato.evaluacion">
                 {{d.contEvaluacion + ',' + ' '}}
             </span>
@@ -87,7 +87,7 @@
 
     <div *ngFor="let dato of info.datosNivel" class="style-material" [class.d-none]="dato.isFromGenericActivity">
         <div *ngIf="dato.material">
-        <h6>Material de apoyo:</h6>
+        <h6>Materiales de apoyo:</h6>
         <span *ngFor="let m of dato.material">
             <a href={{m.link}} target="_blank">
                 {{m.link + ',' + ''}}
