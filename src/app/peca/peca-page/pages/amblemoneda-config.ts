@@ -59,8 +59,16 @@ const sliderAmblemoneda = {
             image: "../../../../../assets/images/background-pillar-lectura.jpg",
             description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
         },*/
+    }
+}
 
-
+const btnGuardarFechaSlider = {
+    component: 'textsbuttons',
+    settings: {
+        action: [{
+            type: 1,
+            name: 'Guardar',
+        }],
     }
 }
 
@@ -182,7 +190,7 @@ const charlaConDocentes = {
     settings: {
         dateOrtext: {
             text: 'Fecha de la reunión:',
-            fields: [{ label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.dateAndRequired }],
+            fields: [{ label: "Input date", placeholder: "Fecha de la reunión", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         download: {
             url: '#',
@@ -194,6 +202,15 @@ const charlaConDocentes = {
                 text: '',
             },
         ]
+    }
+}
+const btnGuardarFechaCharla = {
+    component: 'textsbuttons',
+    settings: {
+        action: [{
+            type: 1,
+            name: 'Guardar',
+        }],
     }
 }
 
@@ -209,13 +226,15 @@ export const AMBLEMONEDA_CONFIG = {
                     {
                         title: "Charla con los docentes",
                         childBlocks: [
-                            { ...charlaConDocentes }
+                            { ...charlaConDocentes },
+                            { ...btnGuardarFechaCharla }
                         ]
                     },
                     {
                         title: "Elaboración de alcancía",
                         childBlocks: [
-                            { ...sliderAmblemoneda }
+                            { ...sliderAmblemoneda },
+                            { ...btnGuardarFechaSlider}
                         ]
                     },
                     {
