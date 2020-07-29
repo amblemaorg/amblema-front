@@ -46,9 +46,10 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
         if (!this.isInstantiating) {
           if (data.activePecaContent) {
          
-           // console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
+            //console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
             const configVista = EnviromentalMapper(data.activePecaContent.environmentalProject); //variable_que_almacenara_el_config_para_la_vista
             this.instantiateComponent(configVista);
+           // console.log('mapper', configVista)
             this.doInstantiateBlocks();
           }
         }
