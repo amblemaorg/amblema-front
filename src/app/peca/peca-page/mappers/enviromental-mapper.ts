@@ -1,4 +1,8 @@
+import * as moment from 'moment';
+export default moment;
+
 export function EnviromentalMapper(EnviromentalData) {
+
   const ENVIRONMENTAL_PROJECT_CONFIG_TEST = {
     header: {
       title: EnviromentalData.name,
@@ -113,7 +117,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
-                                                            contWeek:w
+                                                            contWeek: moment(new Date(w)).format('DD/MM/YYYY, h:mm:ss a')
                                                         };
                                                     }),       
                                               ],
