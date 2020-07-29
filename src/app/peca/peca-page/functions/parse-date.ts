@@ -1,4 +1,4 @@
-export function parseDate(dateSrc: Date) {
+export function parseDate(dateSrc: Date, isUStype: boolean = false) {
   let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   let correctMonth = numbers.includes(dateSrc.getMonth() + 1)
     ? `0${dateSrc.getMonth() + 1}`
@@ -7,6 +7,8 @@ export function parseDate(dateSrc: Date) {
     ? `0${dateSrc.getDate()}`
     : dateSrc.getDate().toString();
   //return `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}`;
-  return `${correctDate}/${correctMonth}/${dateSrc.getFullYear()}`;
+  return isUStype 
+    ? `${dateSrc.getFullYear()}-${correctMonth}-${correctDate}` 
+    : `${correctDate}-${correctMonth}-${dateSrc.getFullYear()}`;
 
 }

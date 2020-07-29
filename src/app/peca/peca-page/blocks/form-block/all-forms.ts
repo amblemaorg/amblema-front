@@ -943,12 +943,13 @@ export const formTabsEstudiantes = {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberAndRequired
+        ...controlProps.number
       }
     }
   },
   age: {
     lower: true,
+    validationPerYears: true,
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,

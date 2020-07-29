@@ -4,7 +4,7 @@
     <div class="school-data-wrapper">
       <div class="school-data school-sponsor">
         <div class="icon"><img src="./assets/images/icon-sponsor.png" /></div>
-        {{ school.sponsor }}
+        Apadrinada por: {{ school.sponsor }}
       </div>
       <div class="school-data school-direction">
         <div class="icon"><img src="./assets/images/icon-school.png" /></div>
@@ -12,19 +12,33 @@
       </div>
       <div class="school-data school-staff">
         <div class="icon"><img src="./assets/images/icon-staff.png" /></div>
-        {{ school.staff }}
+        Cantidad de personal obrero, administrativo y otros: {{ school.staff }}
       </div>
       <div class="school-data school-coordinator">
         <div class="icon">
           <img src="./assets/images/icon-coodinator.png" />
         </div>
-        {{ school.coordinator }}
+        Coordinada por: {{ school.coordinator }}
       </div>
       <div class="school-data school-enrollment">
         <div class="icon">
           <img src="./assets/images/icon-enrollment.png" />
         </div>
-        {{ school.enrollment }}
+        Matrícula estudiantil: {{ school.enrollment }}
+      </div>
+      <div class="school-data row">
+        <div class="item" *ngIf="school.instagram">
+          <fa-icon class="social-icon" [icon]="instagramIcon"></fa-icon>
+          <span class="text">{{ school.instagram }}</span>
+        </div>
+        <div class="item" *ngIf="school.twitter">
+          <fa-icon class="social-icon" [icon]="twitterIcon"></fa-icon>
+          <span class="text">{{ school.twitter }}</span>
+        </div>
+        <div class="item" *ngIf="school.facebook">
+          <fa-icon class="social-icon" [icon]="facebookIcon"></fa-icon>
+          <span class="text">{{ school.facebook }}</span>
+        </div>
       </div>
     </div>
   </div>
