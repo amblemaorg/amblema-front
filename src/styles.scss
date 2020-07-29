@@ -327,6 +327,16 @@ section.pillars {
       top: 35%;
     }
   }
+  @media (min-width:400px) and (max-width: 576px) {
+    .owl-nav {
+      top: 50%;
+    }
+  }
+  @media (max-width: 399px) {
+    .owl-nav {
+      top: 60%;
+    }
+  }
   .owl-dots {
     text-align: left;
 
