@@ -50,13 +50,13 @@
     [nbButton].appearance-filled.status-primary:hover {
       background-color: #00809a78;
       border-color: #00809a78;
-      font-family: 'Montserrat';
+      font-family: "Montserrat";
     }
     [nbButton].appearance-filled.status-primary[disabled]:hover {
       background-color: rgba(143, 155, 179, 0.24);
       border-color: transparent;
       color: rgba(143, 155, 179, 0.48);
-      font-family: 'Montserrat';
+      font-family: "Montserrat";
     }
     p {
       color: $dark-gray !important;
@@ -66,19 +66,23 @@
   .nb-theme-default [nbButton].appearance-filled.status-primary:active {
     background-color: $blue;
     border-color: $blue;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
   }
   .nb-theme-default [nbButton].appearance-filled.status-primary {
     background-color: $blue;
     border-color: $blue;
     color: #ffffff;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
   }
 
-  @media (max-width: 576px){
+  @media (max-width: 576px) {
     .nb-theme-default nb-stepper.horizontal .header .step {
       width: 0rem;
       margin: 0 0rem;
+    }
   }
+
+  [nbButton].appearance-filled {
+    text-transform: capitalize !important;
   }
 }
