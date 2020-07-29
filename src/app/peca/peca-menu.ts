@@ -88,7 +88,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     link: 'estrategia-seguimiento',
   },
   {
-    title: 'Proyecto ambiental',
+    title: 'Temática ambiental',
     icon: 'venezuela',
     link: 'proyecto-ambiental',
   },
