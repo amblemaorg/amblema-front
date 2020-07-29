@@ -8,7 +8,13 @@
                 font-size: 1.2rem;
             }
         }
+        @media (max-width: 768px){
+            h6 {
+                font-size: 1rem;
+            }
+        }
     }
+
     // .texts-buttons-wrapper {
         // padding: 2rem;
     // }
