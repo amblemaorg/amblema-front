@@ -289,10 +289,6 @@
             }
             .btn {
                 @include btn-righted;
-                color: #fff;
-                span {
-                    color: #fff;
-                }
 
                 @include mediabreak(large,landscape) { margin-right: 0; }
 
@@ -309,18 +305,6 @@
 
                 &.hidebtn {
                     display: none;
-                }
-
-                &:focus {
-                    box-shadow: none;
-                }
-                &:hover {
-                    background: #fff;
-                    color: map-get($color_map, blue);
-
-                    span {
-                        color: map-get($color_map, blue);
-                    }
                 }
             }
             .attachfile {

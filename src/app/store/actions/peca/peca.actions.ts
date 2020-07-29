@@ -10,6 +10,10 @@ export class SetSelectedProject {
   constructor(public payload: PecaProjectModel) {}
 }
 
+export class SetUserPermissions {
+  static readonly type = '[peca] set UserPermissions';
+  constructor(public payload: any) {}
+}
 export class FetchPecaContent {
   static readonly type = '[peca] get PecaContent';
   constructor(public payload: string) {}
