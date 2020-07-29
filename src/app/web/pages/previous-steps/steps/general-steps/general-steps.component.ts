@@ -38,6 +38,7 @@ export class GeneralStepsComponent implements OnInit {
 
   showThisVideo: boolean;  
   timesVideoSourceCalled:number = 0;
+  video_: any;
 
   constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService, 
     private sanitizer: DomSanitizer, private stepsService: StepsService, private globals: GlobalService) {
@@ -93,12 +94,15 @@ export class GeneralStepsComponent implements OnInit {
     this.timesVideoSourceCalled = 0;
   }
 
-  getVideo(url) {  
+
+  getVideo(url) {
     if (this.showThisVideo && this.timesVideoSourceCalled < 10 ) {
       const video = this.embedService.embed(url);
       if (video) this.timesVideoSourceCalled++;
-      return video; 
-    }    
+      if (!this.video_) this.video_ = video;
+      return this.video_; 
+    } 
+    else if(this.video_) return this.video_;
   }
 
   sanitizeFile(url) {

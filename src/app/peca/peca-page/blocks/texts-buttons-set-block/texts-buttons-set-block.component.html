@@ -271,7 +271,7 @@
 
                 <ng-container *ngIf="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel">
                     <button                        
-                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
                         [disabled]="isSending || sleepSend"
                         (click)="cancelRequest()"
                     >
