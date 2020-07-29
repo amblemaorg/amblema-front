@@ -16,6 +16,7 @@ import { Observable, Subscription } from "rxjs";
 import cloneDeep from "lodash/cloneDeep";
 import { GenericActivity } from '../../../models/peca/generic-activity.model';
 import { GlobalService } from '../../../services/global.service';
+import { genericActivityMapper } from '../mappers/generic-activity-mappers';
 
 @Component({
     selector: 'peca-generic-activity',
@@ -24,18 +25,25 @@ import { GlobalService } from '../../../services/global.service';
 export class GenericActivityPageComponent extends PecaPageComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
 
-    @Select(PecaState.getActivePecaContent) pecaContentData$: Observable<any>;
+    @Select(PecaState.getPecaLapsesData) pecaLapseData$: Observable<any>;
+    // @Select(PecaState.isPecaContentRequesting) isPecaContentRequesting$: Observable<boolean>;
     @Select(PecaState.getUserResume) userData$: Observable<any>;
 
-    pecaDataSubscription: Subscription;
+    pecaLapseSubscription: Subscription;
     userDataSubscription: Subscription;
     routerSubscription: Subscription;
+    // requestingSubscriptiom: Subscription;
     isInstanciated: boolean;
     loadedData: boolean;
     user_type: string = "0";
+    user_id: string;
+    peca_id: string;
+    lapse_n: string;
+    activity_cancel_id: string;
 
     // generic activity content variables
     g_a_id: string;
+    // g_a_dev_name: string;
     g_a_text: any;
     g_a_date: any;
     g_a_download: any;
@@ -51,7 +59,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     constructor(
         factoryResolver: ComponentFactoryResolver, 
         private router: Router,
-        private globals: GlobalService
+        private globals: GlobalService,
     ) {
         super(factoryResolver);
 
@@ -66,16 +74,17 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.instantiateComponent(config);
 
         this.routerSubscription = this.router.events.subscribe((event: Event) => {
-            if (event instanceof NavigationEnd) {                
+            if (event instanceof NavigationEnd) {
                 const lapse_number = event.url.substring(1).split("/")[2];
-                const activity_id = event.url.substring(1).split("/").pop();
-                this.setActivity(lapse_number, activity_id);
+                const activity_devname = event.url.substring(1).split("/").pop();
+                this.setActivity(lapse_number, activity_devname);
             }
         });
     }
 
     ngOnInit() {
         this.userDataSubscription = this.userData$.subscribe(user => {
+            this.user_id = user.id;
             this.user_type = user.type;
         });
 
@@ -85,25 +94,30 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         );
     }
 
-    setActivity(lapseId, activityId) {
-        this.pecaDataSubscription = this.pecaContentData$.subscribe(
-            (data) => {                
-                if (data.activePecaContent) {
-                    const lapse_id = lapseId;
-                    const activity_id = activityId;
-                    const index = data.activePecaContent[`lapse${lapse_id}`].activities.findIndex((activity) => {
-                        return activity.id === activity_id;
-                    });
-                    const activity: GenericActivity =  cloneDeep(data.activePecaContent[`lapse${lapse_id}`].activities[index]);
-                    
+    setActivity(lapseId, activityDevName) {  
+        this.pecaLapseSubscription = this.pecaLapseData$.subscribe(
+            (data) => {
+                if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
+                if (
+                    data && 
+                    data.lapses && 
+                    data.lapses[`lapse${lapseId}`]
+                ) {    
+                    const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === activityDevName );
+
                     if (activity) {
-                        this.changeComponentHeader(activity.name); 
+                        this.changeComponentHeader(activity.name);
+                        this.lapse_n = lapseId;
 
                         console.log("Datos de la actividad",activity);
                         this.setGenericActivityData(activity);
                         
                         this.loadedData = true;
-                        if (this.isInstanciated) this.updateMethods();   
+                        if (this.isInstanciated) {
+                            setTimeout(() => {
+                                this.updateMethods(); 
+                            });
+                        }
                     }                    
                 }                
             },
@@ -113,7 +127,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
     updateMethods() {
         this.updateDataToBlocks();
-        // this.updateStaticFetchers();
+        this.updateStaticFetchers();
         // this.updateDynamicFetchers();
     }
 
@@ -142,160 +156,43 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     setGenericActivityData(data: GenericActivity) {
         // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
         // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
-        const at = "2"; // approval type, at '2' means Only Checklist is in the view   
-        const detail = data.approvalHistory.length > 0 ? data.approvalHistory[data.approvalHistory.length-1].detail : null; 
+        this.g_a_id = data.id;
+        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;        
 
-        this.g_a_id = `g-a-${data.id}`;
-        this.g_a_activity_uneditable = data.status === "1" ? false : true;
-        
-        const {
-            date,
-            file,
-            text,
-            uploadedFile,
-            video,
-            checklist
-        } = data.approvalHistory.length > 0 && 
-        data.approvalHistory[data.approvalHistory.length-1].status === "1" 
-        ? {
-            date: detail.date ? detail.date : data.date,
-            file: detail.file ? detail.file : data.file,
-            text: detail.text ? detail.text : data.text,
-            uploadedFile: detail.uploadedFile ? detail.uploadedFile : data.uploadedFile,
-            video: detail.video ? detail.video : data.video,
-            checklist: detail.checklist ? detail.checklist : data.checklist
-        } 
-        : {
-            date: data.date,
-            file: data.file,
-            text: data.text,
-            uploadedFile: data.uploadedFile,
-            video: data.video,
-            checklist: data.checklist
-        };
+        const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 
-        // console.log(
-        //     "date",date,
-        //     "file",file,
-        //     "text",text,
-        //     "uploadedFile",uploadedFile,
-        //     "video",video,
-        //     "checklist",checklist
-        // );
+        this.activity_cancel_id = genActMapped.activity_cancel_id;
 
-        this.g_a_status_selector = data.approvalType === "4" 
-            ? {
-                statusSelectorData: {
-                    genActSelectStatus: true,
-                    status: data.status !== "1" ? "2" : "1",
-                }
-            } : null;
-        this.g_a_text = data.hasText && data.approvalType !== at
-            ? {                
-                subtitles: [{ text: text }]
-            } : null;
-        this.g_a_date = data.hasDate && data.approvalType !== at
-            ? {
-                dateOrtext: {
-                    text: "Fecha de la actividad:",
-                    ...[date ? true : false].reduce((dateOtherData,isThereDate) => {
-                        dateOtherData["fields"] = [{ 
-                            placeholder: "Fecha de la actividad", 
-                            fullwidth: false, 
-                            type: "date",
-                            value: isThereDate ? this.globals.getDateFormat( new Date(date) ) : null,
-                            validations: { 
-                                required: true, 
-                            }, 
-                          }];
-
-                        return dateOtherData;
-                    },{})
-                }
-            } : null;
-        this.g_a_download = data.hasFile && data.approvalType !== at
-            ? {
-                download: file ? {
-                    url: file.url,
-                    name: file.name,
-                } : null,
-            } : null;
-        this.g_a_video = data.hasVideo && data.approvalType !== at
-            ? {
-                video: video ? {
-                    url: video.url,
-                    name: video.name,
-                } : null,
-            } : null;
-        this.g_a_addMT = data.hasText && 
-            (data.hasDate || data.hasFile) && 
-            data.approvalType !== at
-            ? {
-                addMT: {                    
-                    ...Object.keys(data).reduce((items,checker) => {
-                        if (checker.includes("has")) {
-                            const name = checker === "hasText" ? "subtitles" : null; 
-                            if (name) items[name] = true;
-                        }
-                        return items;
-                    },{}),
-                }
-            } : null;
-        this.g_a_upload = data.hasUpload && data.approvalType !== at
-            ? {
-                upload: uploadedFile ? {
-                    uploadEmpty: false,
-                    url: uploadedFile.url,
-                    name: uploadedFile.name,
-                } : { uploadEmpty: true },
-            } : null;
+        this.g_a_status_selector = genActMapped.g_a_status_selector;
+        this.g_a_text = genActMapped.g_a_text;
+        this.g_a_date = genActMapped.g_a_date;
+        this.g_a_download = genActMapped.g_a_download;
+        this.g_a_video = genActMapped.g_a_video;
+        this.g_a_addMT = genActMapped.g_a_addMT;
+        this.g_a_upload = genActMapped.g_a_upload;
         
         // CHECKLIST
-        this.g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
-                if (hasChecklist) {
-                    checklistObj = {
-                        ...checklistObj,
-                        title: 'Los checklists',
-                        checkList: checklist
-                    }
-                }
-                return checklistObj;
-            },{});
-        
-        this.g_a_action_btn = {
-            isGenericActivityBtnReceptor: true,
-            btnApprovalType: +data.approvalType,
-            action: (data.status === "1" || data.status === "2") &&
-                (data.hasDate || data.hasUpload || data.hasChecklist)
-                // && +data.approvalType > 1 && +data.approvalType < 4 
-                ? ( 
-                    +data.approvalType === 1 && this.user_type && +this.user_type > 1 
-                        ? null : [data.approvalType].reduce((btns,approvalType) => {
-                            if (approvalType === "3" && data.status === "1") 
-                                btns.push({ type: 8, name: 'Guardar' });
-                            btns.push({
-                                type: data.status === "1" ? (data.approvalType === "3" ? 7 : 8) : 9,
-                                name: data.status === "1" 
-                                    ? (data.approvalType === "3" 
-                                        ? 'Enviar' 
-                                        : 'Guardar'
-                                    ) 
-                                    : 'Cancelar solicitud'
-                            });
-                            return btns;
-                        },[]) 
-                  ) 
-                : null,
-            };
-
-        this.g_a_action_btn_validators = {
-                genActSavingTypes: data.hasDate || data.hasUpload || data.hasChecklist ? {
-                    hasDate: data.hasDate,
-                    hasUpload: data.hasUpload,
-                    hasChecklist: data.hasChecklist
-                } : null
-            };
+        this.g_a_checklist = genActMapped.g_a_checklist;
+        // Action buttons
+        this.g_a_action_btn = genActMapped.g_a_action_btn;
+        this.g_a_action_btn_validators = genActMapped.g_a_action_btn_validators;
     }
+
+    updateStaticFetchers() {
+        // genericActivityActionButton
+        this.setBlockFetcherUrls("genericActivityActionButton", {
+            put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
+            cancel: this.activity_cancel_id
+                ? `requestscontentapproval/${this.activity_cancel_id}`
+                : null
+        });
+
+        // genericActivityFields
+        this.setBlockFetcherUrls("genericActivityFields", {
+            put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
+        });
+    }
+    
 
     ngAfterViewInit(): void {
         setTimeout(() => {
@@ -307,8 +204,9 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     ngOnDestroy() {
         this.isInstanciated = false;
         this.loadedData = false;
-        this.pecaDataSubscription.unsubscribe();
+        this.pecaLapseSubscription.unsubscribe();
         this.userDataSubscription.unsubscribe();
         this.routerSubscription.unsubscribe();
+        // this.requestingSubscriptiom.unsubscribe();
     }
 }

@@ -40,4 +40,6 @@ export interface PecaStateModel {
   user?: PecaUserModel;
   content: PecaModel | null;
   selectedProject: PecaProjectModel | null;
+  userPermissions?: string[];
+  pecaContentRequesting?: boolean;
 }
