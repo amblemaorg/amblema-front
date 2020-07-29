@@ -61,7 +61,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
-      console.log(this.blockInstances, "bloques");
+      
       if (this.loadedData) this.updateMethods();
     });
 

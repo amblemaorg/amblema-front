@@ -9,6 +9,7 @@ const genericActivityFields = {
         addMT: {},
         upload: null,
         activityUneditable: null,
+        fetcherMethod: 'put',
     }
 }
 
@@ -29,6 +30,7 @@ const genericActivityActionButton = {
     name: 'genericActivityActionButton',
     settings: {
         action: null,
+        fetcherMethod: 'put',
     }
 }
 

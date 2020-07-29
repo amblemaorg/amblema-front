@@ -29,7 +29,7 @@ const btnGuardar = {
             name: 'Guardar',
         }],
         receivesFromTableOrForm: 'table',
-        buttonCode: 'dataPreinscripcionDocente',
+        buttonCode: 'dataResultadoEstudiante',
     }
 }
 

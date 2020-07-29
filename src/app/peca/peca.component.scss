@@ -161,6 +161,11 @@
       font-family: "Montserrat" !important;
       margin: 0;
     }
+    @media (min-width:768px) and (max-width:1200px) {
+      h1 {
+        font-size: 1.125rem;
+      }
+    }
     @media (max-width: 768px) {
       h1 {
         font-size: 1rem;

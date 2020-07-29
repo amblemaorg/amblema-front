@@ -231,7 +231,7 @@ form {
         &:focus, &:active:focus {
             box-shadow: none !important;
         }
-        &:active, &:hover {
+        &:active/* , &:hover */ {
             background: #fff !important;
             color: map-get($color_map, blue) !important;
         }
