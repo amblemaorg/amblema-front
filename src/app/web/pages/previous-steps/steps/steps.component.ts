@@ -15,7 +15,6 @@ import { StepsState } from '../../../../store/states/steps/project.state';
 import { UProject } from '../../../../models/steps/learning-modules.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenceInfoState } from 'src/app/store/states/steps/residence-info.state';
-import { UpdateStates, UpdateMunicipalities } from 'src/app/store/actions/steps/residence-info.actions';
 import { GeneralStepsComponent } from './general-steps/general-steps.component';
 import { UpdateModulesTotal } from 'src/app/store/actions/e-learning/learning-modules.actions';
 
@@ -30,7 +29,6 @@ export class StepsComponent implements OnInit, OnDestroy {
   >;
 
   fillCounter:number = 0;
-  // userCallsCounter:number = 0;
   isTest:boolean = false;
   activeStep = 0;
   curriculumPending = false;
@@ -61,7 +59,12 @@ export class StepsComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private stepsService: StepsService, private store: Store,private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private stepsService: StepsService, 
+    private store: Store,
+    private route: ActivatedRoute, 
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.subscription.add(

@@ -1,6 +1,7 @@
 ::ng-deep {
   [class^="icon-"]:before,
-  [class*=" icon-"]:before {
+  [class*=" icon-"]:before,
+  input[type="date"]:after {
     font-family: "amblemaicons";
     font-style: normal;
     font-weight: normal;
