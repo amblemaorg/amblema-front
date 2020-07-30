@@ -53,7 +53,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
               schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
             });  */
             console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
-            console.log("fechas", data.activePecaContent.schedule)
+            //console.log("active", data.activePecaContent)
             const configVista = EnviromentalMapper(data.activePecaContent.environmentalProject); //variable_que_almacenara_el_config_para_la_vista
             this.instantiateComponent(configVista);
            // console.log('mapper', configVista)
