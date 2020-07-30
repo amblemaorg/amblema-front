@@ -40,6 +40,8 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
     isInstanciated: boolean;
     loadedData: boolean;
 
+    schoolId: any;
+
     constructor(factoryResolver: ComponentFactoryResolver, router: Router, globals: GlobalService, private httpFetcherService: HttpFetcherService) {
         super(factoryResolver);
 
@@ -95,10 +97,10 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
         this.createAndSetBlockFetcherUrls(
             "testimonyModalForm",
             {
-                post: (schoolId, userId) =>
-                    `schools/teacherstestimonials/${schoolId}/${userId}`
+                post: (userId) =>
+                    `schools/teacherstestimonials/${this.schoolId}/${userId}`
             },
-            "settings.data.schoolId",
+            //"settings.data.schoolId",
             "settings.data.userId"
         );
         //Delete modal testimony

@@ -90,7 +90,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   {
     title: 'Temática ambiental',
     icon: 'venezuela',
-    link: 'proyecto-ambiental',
+    link: 'tematica-ambiental',
   },
   {
     title: 'Agenda de actividades',
