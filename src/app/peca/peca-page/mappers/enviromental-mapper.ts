@@ -281,6 +281,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                 },
                                 ...topic.levels.map((level) => {
                                    /* Inicio de configuracion de la duracion */
+                                /*    if (level.duration!='null'){
                                    const hours = level.duration.substr(0, 2);
                                    const minutes = level.duration.substr(2, 4);
                                    let context2;
@@ -296,6 +297,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                    else {
                                      context2 = `${hours} horas ${minutes} minutos`
                                    }
+                                  } */
                                     /* Fin de configuracion de la duracion */
  
                                      /* Inicio de configuracion del grado */
@@ -325,7 +327,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   return {
                                     datosNivel: [
 {
-                                            nivel: level.target[0].label,
+                                            nivel: completeGrade2,
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
@@ -450,6 +452,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                 },
                                 ...topic.levels.map((level) => {
                                    /* Inicio de configuracion de la duracion */
+                                /*    if (level.duration!='null'){
                                    const hours = level.duration.substr(0, 2);
                                    const minutes = level.duration.substr(2, 4);
                                    let context3;
@@ -465,6 +468,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                    else {
                                      context3 = `${hours} horas ${minutes} minutos`
                                    }
+                                  } */
                                     /* Fin de configuracion de la duracion */
  
                                      /* Inicio de configuracion del grado */
@@ -494,7 +498,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   return {
                                     datosNivel: [
 {
-                                            nivel: level.target[0].label,
+                                            nivel: completeGrade3,
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {

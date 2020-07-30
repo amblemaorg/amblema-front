@@ -417,8 +417,8 @@ export const formTestimonioDocentesModal = {
     ...controlProps.onlyLettersAndRequired
   },
   description: {
-    label: "Descripcion",
-    placeholder: "Descripcion",
+    label: "Descripción",
+    placeholder: "Descripción",
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
   },
@@ -1066,8 +1066,8 @@ export const formCoordinador = {
     ...controlProps.normalTextAndRequired
   },
   house: {
-    label: "casa / edificio",
-    placeholder: "casa / edificio",
+    label: "Casa / edificio",
+    placeholder: "Casa / edificio",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1145,8 +1145,8 @@ export const formPadrino = {
     ...controlProps.phoneAndRequired
   },
   emailContact: {
-    label: "Correo electronico",
-    placeholder: "Correo electronico",
+    label: "Correo electrónico",
+    placeholder: "Correo electrónico",
     fullwidth: false,
     ...controlProps.emailAndRequired
   },
@@ -1241,8 +1241,8 @@ export const formEscuela = {
     ]
   },
   address: {
-    label: "Direccion de la zona",
-    placeholder: "Direccion de la zona",
+    label: "Dirección de la zona",
+    placeholder: "Dirección de la zona",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
