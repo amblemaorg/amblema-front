@@ -110,10 +110,53 @@ export function EnviromentalMapper(EnviromentalData) {
                                   ],
                                 },
                                 ...topic.levels.map((level) => {
+                                  /* Inicio de configuracion de la duracion */
+                                  const hours = level.duration.substr(0, 2);
+                                  const minutes = level.duration.substr(2, 4);
+                                  let context1;
+                                  if (hours == '01' && minutes=='01'){
+                                    context1 = `${hours} hora ${minutes} minuto`
+                                  }
+                                  else if (hours == '01' && minutes!='01') {
+                                    context1 = `${hours} hora ${minutes} minutos`
+                                  }
+                                  else if (hours != '01' && minutes=='01') {
+                                    context1 = `${hours} horas ${minutes} minuto`
+                                  }
+                                  else {
+                                    context1 = `${hours} horas ${minutes} minutos`
+                                  }
+                                   /* Fin de configuracion de la duracion */
+
+                                    /* Inicio de configuracion del grado */
+                                    let completeGrade;
+                                    if (level.target[0].label=='0'){
+                                      completeGrade = 'Preescolar'
+                                    }
+                                    else if (level.target[0].label=='1'){
+                                      completeGrade = 'Primer grado'
+                                    }
+                                    else if (level.target[0].label=='2'){
+                                      completeGrade = 'Segundo grado'
+                                    }
+                                    else if (level.target[0].label=='3'){
+                                      completeGrade = 'Tercer grado'
+                                    }
+                                    else if (level.target[0].label=='4'){
+                                      completeGrade = 'Cuarto grado'
+                                    }
+                                    else if (level.target[0].label=='5'){
+                                      completeGrade = 'Quinto grado'
+                                    }
+                                    else {
+                                      completeGrade = 'Sexto grado'
+                                    }
+                                    /* Fin de configuracion del grado */
+
                                   return {
                                     datosNivel: [
 {
-                                            nivel: level.target[0].label,
+                                            nivel: completeGrade,
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
@@ -121,7 +164,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                                         };
                                                     }),       
                                               ],
-                                              time: level.duration,
+                                              time: context1,
                                               tecnica: [
                                                 ...level.techniques.map((tec) => {
                                                     return {
@@ -237,6 +280,48 @@ export function EnviromentalMapper(EnviromentalData) {
                                   ],
                                 },
                                 ...topic.levels.map((level) => {
+                                   /* Inicio de configuracion de la duracion */
+                                   const hours = level.duration.substr(0, 2);
+                                   const minutes = level.duration.substr(2, 4);
+                                   let context2;
+                                   if (hours == '01' && minutes=='01'){
+                                     context2 = `${hours} hora ${minutes} minuto`
+                                   }
+                                   else if (hours == '01' && minutes!='01') {
+                                     context2 = `${hours} hora ${minutes} minutos`
+                                   }
+                                   else if (hours != '01' && minutes=='01') {
+                                     context2 = `${hours} horas ${minutes} minuto`
+                                   }
+                                   else {
+                                     context2 = `${hours} horas ${minutes} minutos`
+                                   }
+                                    /* Fin de configuracion de la duracion */
+ 
+                                     /* Inicio de configuracion del grado */
+                                     let completeGrade2;
+                                     if (level.target[0].label=='0'){
+                                       completeGrade2 = 'Preescolar'
+                                     }
+                                     else if (level.target[0].label=='1'){
+                                       completeGrade2 = 'Primer grado'
+                                     }
+                                     else if (level.target[0].label=='2'){
+                                       completeGrade2 = 'Segundo grado'
+                                     }
+                                     else if (level.target[0].label=='3'){
+                                       completeGrade2 = 'Tercer grado'
+                                     }
+                                     else if (level.target[0].label=='4'){
+                                       completeGrade2 = 'Cuarto grado'
+                                     }
+                                     else if (level.target[0].label=='5'){
+                                       completeGrade2 = 'Quinto grado'
+                                     }
+                                     else {
+                                       completeGrade2 = 'Sexto grado'
+                                     }
+                                     /* Fin de configuracion del grado */
                                   return {
                                     datosNivel: [
 {
@@ -252,7 +337,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                               tecnica: [
                                                 ...level.techniques.map((tec) => {
                                                     return {
-                                                        contTecnica: tec
+                                                        contTecnica: tec 
                                                     };
                                                 }),     
                                               ],
@@ -364,6 +449,48 @@ export function EnviromentalMapper(EnviromentalData) {
                                   ],
                                 },
                                 ...topic.levels.map((level) => {
+                                   /* Inicio de configuracion de la duracion */
+                                   const hours = level.duration.substr(0, 2);
+                                   const minutes = level.duration.substr(2, 4);
+                                   let context3;
+                                   if (hours == '01' && minutes=='01'){
+                                     context3 = `${hours} hora ${minutes} minuto`
+                                   }
+                                   else if (hours == '01' && minutes!='01') {
+                                     context3 = `${hours} hora ${minutes} minutos`
+                                   }
+                                   else if (hours != '01' && minutes=='01') {
+                                     context3 = `${hours} horas ${minutes} minuto`
+                                   }
+                                   else {
+                                     context3 = `${hours} horas ${minutes} minutos`
+                                   }
+                                    /* Fin de configuracion de la duracion */
+ 
+                                     /* Inicio de configuracion del grado */
+                                     let completeGrade3;
+                                     if (level.target[0].label=='0'){
+                                       completeGrade3 = 'Preescolar'
+                                     }
+                                     else if (level.target[0].label=='1'){
+                                       completeGrade3 = 'Primer grado'
+                                     }
+                                     else if (level.target[0].label=='2'){
+                                       completeGrade3 = 'Segundo grado'
+                                     }
+                                     else if (level.target[0].label=='3'){
+                                       completeGrade3 = 'Tercer grado'
+                                     }
+                                     else if (level.target[0].label=='4'){
+                                       completeGrade3 = 'Cuarto grado'
+                                     }
+                                     else if (level.target[0].label=='5'){
+                                       completeGrade3 = 'Quinto grado'
+                                     }
+                                     else {
+                                       completeGrade3 = 'Sexto grado'
+                                     }
+                                     /* Fin de configuracion del grado */
                                   return {
                                     datosNivel: [
 {
