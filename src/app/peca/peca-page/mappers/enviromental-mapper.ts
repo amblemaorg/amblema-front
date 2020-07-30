@@ -117,7 +117,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
-                                                            contWeek: moment(new Date(w)).format('DD/MM/YYYY, h:mm:ss a')
+                                                            contWeek: moment(new Date(w)).format('DD/MM/YYYY')
                                                         };
                                                     }),       
                                               ],
@@ -244,7 +244,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
-                                                            contWeek:w
+                                                          contWeek: moment(new Date(w)).format('DD/MM/YYYY')
                                                         };
                                                     }),       
                                               ],
@@ -371,7 +371,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                             week: [
                                                     ...level.week.map((w) => {
                                                         return {
-                                                            contWeek:w
+                                                          contWeek: moment(new Date(w)).format('DD/MM/YYYY')
                                                         };
                                                     }),       
                                               ],
