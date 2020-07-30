@@ -33,7 +33,7 @@
         <div *ngIf="dato.week" class="style-nivel-div">
             <h6>Semanas:</h6>
             <span *ngFor="let d of dato.week; let isLast=last">
-                {{d.contWeek}}{{isLast ? '' : ', '}}
+                {{d.contWeek}}{{isLast ? '' : ' - '}}
             </span>
         </div>
         <div *ngIf="dato.time" class="style-nivel-div">
