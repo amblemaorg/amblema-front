@@ -319,7 +319,7 @@ const mathDiagnosticTable = {
         title: "Resultado de multiplicación"
       },
       dateLog: {
-        title: 'Fecha resultado de lógica matematica',
+        title: 'Fecha resultado de lógica matemática',
         valuePrepareFunction: (row: any) => {
           if (row)
             return parseDate(new Date(row));
