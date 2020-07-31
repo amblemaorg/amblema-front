@@ -193,25 +193,28 @@ const charlaConDocentes = {
             fields: [{ label: "Input date", placeholder: "Fecha de la reunión", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         download: {
-            url: '#',
-            name: 'hola.png',
+            
         },
         subtitles:
         [
             {
                 text: '',
             },
-        ]
+        ],
+       
     }
 }
 const btnGuardarFechaCharla = {
     component: 'textsbuttons',
+    name: 'btnEnviarSolicitud',
     settings: {
         action: [{
             type: 1,
             name: 'Guardar',
         }],
-    }
+         fetcherMethod: 'put',
+    },
+    
 }
 
 export const AMBLEMONEDA_CONFIG = {
