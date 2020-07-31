@@ -31,6 +31,9 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
 
     propuestaAmblemaData: any;
     text: string;
+    upFile: any;
+    url: string;
+    name: string;
     /////////////////
     UrlLapse = "";
     reunionAmblemaData: any;
@@ -102,14 +105,17 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     setPropuestaText(data) {
         if(this.UrlLapse === "1"){
             this.text = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;
-            //console.log(this.text, "descricion propuesta fundacion")
+            this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
+            //console.log(this.upFile, "descricion propuesta fundacion")
         }
         else if (this.UrlLapse === "2"){
             this.text = data.activePecaContent.lapse2.lapsePlanning.proposalFundationDescription;
+            this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
             //console.log(this.text, "descricion propuesta fundacion")
         }
         else {
             this.text = data.activePecaContent.lapse3.lapsePlanning.proposalFundationDescription;
+            this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
             //console.log(this.text, "descricion propuesta fundacion")
         }
        
@@ -121,7 +127,12 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
                 {
                     text: this.text
                 }
-            ]
+            ],
+            upload: this.upFile ? {
+                uploadEmpty: false,
+                url: this.upFile.url,
+                name: this.upFile.name,
+            } : { uploadEmpty: true },
         }
     }
 

@@ -9,8 +9,7 @@ const datosOlimpiadas = {
             date: '',
         },
         uploaddown: {
-            url: '#',
-            name: 'Descargar archivo',
+            
         },
         subtitles: 
             [
