@@ -19,7 +19,7 @@ export class PecaPageComponent {
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
-  protected isFromSteps: boolean;
+  isFromSteps: boolean;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver, 
