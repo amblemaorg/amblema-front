@@ -13,7 +13,6 @@ import { GlobalService } from "src/app/services/global.service";
 import { EnviromentalMapper} from '../mappers/enviromental-mapper';
 import { PecaState } from 'src/app/store/states/peca/peca.state';
 import { Select } from '@ngxs/store';
-import { DatePipe } from "@angular/common"
 
 @Component({
   selector: "peca-environmental-project",
@@ -28,7 +27,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   isInstantiating: boolean;
   loadedData: boolean;
   UrlLapse = "";
-  pipe = new DatePipe('en-US');
 
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
@@ -36,6 +34,7 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     private globals: GlobalService,
   ) {
     super(factoryResolver);
+    if (this.loadedData) this.updateMethods();
     this.instantiateComponent(config);
   }
 
@@ -56,8 +55,9 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
             //console.log("active", data.activePecaContent)
             const configVista = EnviromentalMapper(data.activePecaContent.environmentalProject); //variable_que_almacenara_el_config_para_la_vista
             this.instantiateComponent(configVista);
-           // console.log('mapper', configVista)
+            console.log('mapper', configVista)
             this.doInstantiateBlocks();
+            if (this.isInstanciated) this.updateMethods();
           }
         }
         
@@ -67,6 +67,14 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     );
   }
 
+  updateMethods() {
+    this.updateStaticFetchers();
+  }
+  updateStaticFetchers() {
+    this.setBlockFetcherUrls("AnnualConventionCheckLists", {
+      post: `pecasetting/annualconvention/${this.UrlLapse}`,
+    });
+  }
   ngAfterViewInit(): void {        
     this.doInstantiateBlocks();
 }
