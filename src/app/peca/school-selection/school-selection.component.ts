@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faSignOutAlt  } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
 import { NbAuthService, decodeJwtPayload, NbAuthOAuth2Token } from "@nebular/auth";
 import { Location } from "@angular/common";
@@ -18,6 +18,7 @@ import { UpdateStates, UpdateMunicipalities } from '../../store/actions/steps/re
 })
 export class SchoolSelectionComponent implements OnInit {
   backIcon = faArrowLeft;
+  closeIcon = faSignOutAlt;
   title = "Bienvenido a AmbleMa";
   description =
     " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quam pariatur hic dignissimos nam laborum expedita nostrum temporibus adipisci, amet quos neque animi, obcaecati, quisquam officia dolorum inventore deserunt! Officia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam sapiente placeat veritatis, reprehenderit accusantium, illo aspernatur qui, cupiditate magni quis provident! Quibusdam fugiat voluptatum doloribus fugit? Illum dolores dicta eveniet quos neque animi, illo aspernatur qui.";
@@ -84,7 +85,6 @@ export class SchoolSelectionComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: NbAuthService,
-    private location: Location,
     private store: Store,
     private stepsService: StepsService
   ) {}
@@ -135,10 +135,6 @@ export class SchoolSelectionComponent implements OnInit {
     this.store.dispatch( new UpdateStepsSelectedProject(idProject) );
 
     this.getResidenceInfo();
-  }
-
-  goBack() {
-    this.location.back();
   }
 
   getResidenceInfo() {
