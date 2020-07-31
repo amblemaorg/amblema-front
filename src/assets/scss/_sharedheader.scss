@@ -63,3 +63,21 @@
     @include mediabreak(larger,landscape,true,1600px) { font-size: 1.8rem; }
     @include mediabreak(larger,landscape,true,1900px) { font-size: 2rem; }
 }
+
+@mixin layout-header-btn-confs() {
+    min-width: 8rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-color: $blue;
+    background-color: $blue;
+    color: #fff;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:hover {
+        background-color: #fff;
+        color: $blue;
+    }
+}

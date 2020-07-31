@@ -1,10 +1,10 @@
 import { formTestimonioDocentes, formTestimonioDocentesModal, formTestimonioDocentesModalEdit } from '../blocks/form-block/all-forms'
 
-formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
+    /* formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
     { id: "2", name: "Sthepanie", lastName: 'Soteldo', addressState: '165146541654hjvjh' },
     { id: "3", name: "Manuel", lastName: 'Guerrero', addressState: '165146541654hjvjh' },
     { id: "4", name: "Gustavo", lastName: 'Castillo', addressState: '165146541654hjvjh' },
-];
+]; */
 
 const statusGeneral = {
     component: 'textsbuttons',
@@ -18,11 +18,13 @@ const statusGeneral = {
 };
 const formTestDoc = {
     component: 'form',
+    name:"pruebaDocentes",
     settings: {
         formsContent: formTestimonioDocentes,
         tableCode: 'dataTestimonioDocenteTabla',
         buttonCode: 'dataTestimonioDocenteTabla',
         alwaysValidations: true,
+        data: {},
     }
 }
 
@@ -66,16 +68,16 @@ const testimonioDocenteTabla = {
         buttonCode: 'dataTestimonioDocenteTabla',
         tableCode: 'dataTestimonioDocenteTabla',
         dataTestimonioDocenteTabla: [
-            {
-                id: '1',
-                name: 'Alfredo',
-                lastName: 'Valbuena',
-                cargo: 'profesor',
-                description: 'lorem ipsum dolor',
-                // status: '1',
-                source: null,
-                imageSelected: null,
-            },
+            // {
+            //     id: '1',
+            //     name: 'Alfredo',
+            //     lastName: 'Valbuena',
+            //     cargo: 'profesor',
+            //     description: 'lorem ipsum dolor',
+            //     // status: '1',
+            //     source: null,
+            //     imageSelected: null,
+            // },
         ],
         classes: {
             hideView: false,
@@ -100,6 +102,7 @@ const textsAndButtons = {
 //* MODAL ----------------------------------
 const formTestimonioDocenteTabla = {
     component: 'form',
+    name: 'testimonyModalForm',
     viewMode: 'edit',
     settings: {
         formsContent: formTestimonioDocentesModalEdit,
@@ -109,6 +112,7 @@ const formTestimonioDocenteTabla = {
         modalCode: 'dataTestimonioDocenteTabla',
         isFromCustomTableActions: true,
         alwaysValidations: true,
+        fetcherMethod: 'post',
     }
 }
 const formTestimonioDocenteTablaViewOnly = {
@@ -123,6 +127,7 @@ const formTestimonioDocenteTablaViewOnly = {
 }
 const textsAndButtonsTestimonioDocenteTabla = {
     component: 'textsbuttons',
+    name: 'testimonyDeleteModal',
     settings: {
       subtitles: [{
         text: '¿Desea eliminar este ítem?',

@@ -51,16 +51,22 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
       ({ activePeca }) => {
         activePecaId = activePeca.id;
+
+        const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
+          (
+            this.route.snapshot.children && this.route.snapshot.children.length>0 && 
+            this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+            this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
+          );
+
         if (activePecaId)
           this.store.dispatch([new FetchPecaContent(activePecaId)])
         else {
           console.error("No pudo obtenerse el PecaId activo");
-          if ( 
-            !this.route.snapshot.params || 
-            (this.route.snapshot.params && !this.route.snapshot.params.comesFromPreviousSteps) 
-          ) 
+          if (!comes_from_steps)
             this.noPecaModalLauncherBtn.nativeElement.click();
-        }
+        }        
+
       },
       error => console.error(error)
     );
@@ -71,7 +77,7 @@ export class PecaComponent implements OnInit, OnDestroy {
         ({ activePecaContent }) => {
           // console.log("peca content",activePecaContent);
           try {
-            if (activePecaContent) {
+            if (activePecaContent) {              
               this.createMenuOptions(activePecaContent);
             }
           } catch (error) {
@@ -88,6 +94,20 @@ export class PecaComponent implements OnInit, OnDestroy {
   }
 
   createMenuOptions(pecaContent) {
+    if (pecaContent.steps) {
+      const title = 'Ir a los pasos';
+      const menu_item_obj = {
+        title: title,
+        icon: 'list-numbered',
+        link: '/previous-steps',
+      };
+
+      if (this.menu[this.menu.length - 2].title === title)
+        this.menu.splice(-2, 1, menu_item_obj);
+      else
+        this.menu.splice(-1, 0, menu_item_obj);
+    }
+
     for (let i of [1, 2, 3]) {
       if (this.menu[i - 1].children.length > 0) 
         this.menu[i - 1].children.splice(i === 1 ? 2 : 1);
