@@ -9,6 +9,7 @@ export function gradesAndSectionsDataToSectionsFormMapper(schoolData) {
       return {
         id,
         name: `${firstName} ${lastName}`,
+        lastName: `${lastName}`
       };
     });
 

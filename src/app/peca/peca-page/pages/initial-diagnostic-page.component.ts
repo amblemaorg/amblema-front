@@ -97,7 +97,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
             );
           }
           this.students = auxStudents;
-          console.log(this.students);
+         // console.log(this.students);
           if (!isNullOrUndefined(data)) {
             this.setReadingTableData(
               this.students,
@@ -181,7 +181,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(readingTableData, number),
         isEditable: true,
       };
-      // console.log("este es el mapper de lectura", this.readingData.data);
+       //console.log("este es el mapper de lectura", this.readingData.data);
     } else {
       this.readingData = readingTableData;
     }

@@ -1,4 +1,4 @@
-import { formResenaHistorica, formPadrinoAnuario, formCoordinadorAnuario, formEscuelaAnuario, formActividades, formImgActividades } from '../blocks/form-block/all-forms';
+import { formAnalisisYResultados, formImagenEscuela,formResenaHistorica, formPadrinoAnuario, formCoordinadorAnuario, formEscuelaAnuario, formActividades, formImgActividades } from '../blocks/form-block/all-forms';
 import { settings } from 'cluster';
 
 //Contenido dropdown Resena Historica
@@ -76,6 +76,12 @@ const dataEscuela = {
         formsContent: formEscuelaAnuario,
     }
 }
+const imgSeccionEscuela = {
+    component: 'form',
+    settings: {
+        formsContent: formImagenEscuela,
+    }
+}
 
 
 //Lapsos
@@ -98,13 +104,13 @@ const tablaDiagnosticoLectura = {
                 title: "Grado",
             },
             section: {
-                title: "Seccion"
+                title: "Sección"
             },
             multi: {
-                title: "Multiplicacion",
+                title: "Multiplicación",
             },
             logic: {
-                title: "Logica Matematica"
+                title: "Lógica Matemática"
             },
         },
         tableCode: 'dataLectura',
@@ -134,7 +140,7 @@ const subGraficoLectura = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Gráfico estadistico de Lectura",
+            text: "Gráfico estadístico de Lectura",
             aligning: "left"
         }
     },
@@ -155,7 +161,7 @@ const subDiagnosticoMultiplicacion = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Diagnóstico de Multiplicacion",
+            text: "Diagnóstico de Multiplicación",
             aligning: "left"
         }
     },
@@ -169,13 +175,13 @@ const tablaDiagnosticoMultiplicacion = {
                 title: "Grado",
             },
             section: {
-                title: "Seccion"
+                title: "Sección"
             },
             multi: {
-                title: "Multiplicacion",
+                title: "Multiplicación",
             },
             logic: {
-                title: "Logica Matematica"
+                title: "Lógica Matematica"
             },
         },
         tableCode: 'dataLectura',
@@ -205,7 +211,7 @@ const subGraficoMultiplicacion = {
     component: 'textsbuttons',
     settings: {
         title: {
-            text: "Gráfico estadistico de Multiplicacion",
+            text: "Gráfico estadístico de Multiplicación",
             aligning: "left"
         }
     },
@@ -240,13 +246,13 @@ const tablaDiagnosticoLogicoMate = {
                 title: "Grado",
             },
             section: {
-                title: "Seccion"
+                title: "Sección"
             },
             multi: {
-                title: "Multiplicacion",
+                title: "Multiplicación",
             },
             logic: {
-                title: "Logica Matematica"
+                title: "Lógica Matematica"
             },
         },
         tableCode: 'dataLectura',
@@ -291,6 +297,21 @@ const graficosLogicoMate = {
         
     }
 }
+const subAnalisisResultados = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Análisis y resultados por diagnóstico",
+            aligning: "left"
+        }
+    },
+}
+const analisisYResultados = {
+    component: 'form',
+    settings: {
+        formsContent: formAnalisisYResultados,
+    }
+}
 
 const subtitleActividad = {
     component: 'checkList',
@@ -304,12 +325,23 @@ const subtitleActividad = {
     }
 }
 
+const separador = {
+    component: 'checkList',
+    settings: {
+        infoContainer: [
+            {
+                line: true,
+            }
+        ]
+    }
+}
+
 //----------------------------------------------------------------------
 const sections = [
     { title: 'Venezuela Megadiversa', id: 'dataTablaLapso1_1' },
-    { title: 'Otro titulo', id: 'dataTablaLapso1_2' },
-    { title: 'Titulo 3', id: 'dataTablaLapso1_3' },
-    { title: 'Ultimo titulo', id: 'dataTablaLapso1_4' }
+    { title: 'Otro título', id: 'dataTablaLapso1_2' },
+    { title: 'Título 3', id: 'dataTablaLapso1_3' },
+    { title: 'Ultimo título', id: 'dataTablaLapso1_4' }
 ].map(val => {
     let ActividadesLapso1 = {
         component: 'textsbuttons',
@@ -432,6 +464,42 @@ var sectionsObjects = (sections) => {
     });
     return objs
 };
+//---------------------------------------------------------------------
+
+const tablaImgSeccionEscuela= {
+    component: 'table',
+    settings: {
+        columns: {
+            img: {
+                title: "Imagen",
+            },
+            grade: {
+                title: "Grado"
+            },
+            seccion: {
+                title: 'Seccion'
+            },
+        },
+        dataTestimonioDocenteTabla: [
+            // {
+            //     id: '1',
+            //     name: 'Alfredo',
+            //     lastName: 'Valbuena',
+            //     cargo: 'profesor',
+            //     description: 'lorem ipsum dolor',
+            //     // status: '1',
+            //     source: null,
+            //     imageSelected: null,
+            // },
+        ],
+        classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+        },
+    }
+}
+
 //----------------------------------------------------------------------
 
 const btnEnviarSolicitud = {
@@ -488,7 +556,10 @@ export const YEARBOOK_CONFIG = {
                                             title: "Escuela",
                                             childBlocks: [
                                                 { ...btnAddImgEscuela },
-                                                { ...dataEscuela }
+                                                { ...dataEscuela },
+                                                { ...separador },
+                                                { ...imgSeccionEscuela },
+                                                { ...tablaImgSeccionEscuela },
                                             ]
                                         },
                                         {
@@ -499,16 +570,22 @@ export const YEARBOOK_CONFIG = {
                                                 { ...tablaDiagnosticoLectura },
                                                 { ...subGraficoLectura },
                                                 { ...graficosLectura },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 //Diagnostico Multiplicacion
                                                 { ...subDiagnosticoMultiplicacion },
                                                 { ...tablaDiagnosticoMultiplicacion },
                                                 { ...subGraficoMultiplicacion },
                                                 { ...graficosMultiplicacion },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 //Diagnostico Logico Matematica
                                                 { ...subDiagnosticoLogicoMate },
                                                 { ...tablaDiagnosticoLogicoMate },
                                                 { ...subGraficoLogicoMate },
                                                 { ...graficosLogicoMate },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 { ...subtitleActividad },
                                                 ...sectionsObjects(sections),
                                             ]

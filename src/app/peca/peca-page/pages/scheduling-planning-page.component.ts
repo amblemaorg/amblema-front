@@ -13,6 +13,7 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
 import { GlobalService } from "../../../services/global.service";
 import { isNullOrUndefined } from "util";
+import { Router, NavigationEnd, Event } from "@angular/router";
 
 @Component({
     selector: 'peca-scheduling-planning',
@@ -26,17 +27,22 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
 
     //subscripciones
     infoDataSubscription: Subscription;
+    routerSubscription: Subscription;
 
     propuestaAmblemaData: any;
     text: string;
     /////////////////
+    UrlLapse = "";
     reunionAmblemaData: any;
     reunion: string;
     //controla cuando la data es cargada
     isInstanciated: boolean;
     loadedData: boolean;
 
-    constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
+    constructor(
+        factoryResolver: ComponentFactoryResolver,
+        private router: Router,
+        globals: GlobalService) {
         super(factoryResolver);
 
         globals.blockIntancesEmitter.subscribe(data => {
@@ -48,23 +54,36 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
         });
 
         this.instantiateComponent(config);
+
+        this.routerSubscription = this.router.events.subscribe((event: Event) => {
+            if (event instanceof NavigationEnd) {
+                this.UrlLapse = event.url;
+                this.UrlLapse = this.router.url.substr(12, 1);
+                console.log("el ev", this.UrlLapse);
+                this.ngOnInit();
+            }
+        });
     }
 
     ngOnInit() {
+        this.getInfo();
+    }
+
+    getInfo() {
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
-                if (data.activePecaContent){
+                if (data.activePecaContent) {
                     if (!isNullOrUndefined(data)) {
                         console.log(data, "mostrando data de planificacion")
                     }
-    
+
                     this.setPropuestaText(data);
                     this.setPropuestaTextData();
-    
+
                     this.setReunionText(data);
                     this.setReunionTextData();
-    
-    
+
+
                     this.loadedData = true;
                     if (this.isInstanciated) this.updateMethods();
                 }
@@ -81,8 +100,19 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     }
 
     setPropuestaText(data) {
-        this.text = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;
-        console.log(this.text, "descricion propuesta fundacion")
+        if(this.UrlLapse === "1"){
+            this.text = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;
+            //console.log(this.text, "descricion propuesta fundacion")
+        }
+        else if (this.UrlLapse === "2"){
+            this.text = data.activePecaContent.lapse2.lapsePlanning.proposalFundationDescription;
+            //console.log(this.text, "descricion propuesta fundacion")
+        }
+        else {
+            this.text = data.activePecaContent.lapse3.lapsePlanning.proposalFundationDescription;
+            //console.log(this.text, "descricion propuesta fundacion")
+        }
+       
     }
 
     setPropuestaTextData() {
@@ -96,8 +126,19 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     }
 
     setReunionText(data) {
-        this.reunion = data.activePecaContent.lapse1.lapsePlanning.meetingDescription;
-        console.log(this.reunion, "descricion reunioon fundacion")
+        if(this.UrlLapse === "1"){
+            this.reunion = data.activePecaContent.lapse1.lapsePlanning.meetingDescription;
+            //console.log(this.reunion, "descricion reunioon fundacion")
+        }
+        else if (this.UrlLapse === "2") {
+            this.reunion = data.activePecaContent.lapse2.lapsePlanning.meetingDescription;
+            //console.log(this.reunion, "descricion reunioon fundacion")
+        }
+        else {
+            this.reunion = data.activePecaContent.lapse3.lapsePlanning.meetingDescription;
+            //console.log(this.reunion, "descricion reunioon fundacion")
+        }
+       
     }
 
     setReunionTextData() {

@@ -1,5 +1,6 @@
 const checkList = {
     component: 'checkList',
+    name: "AnnualConventionCheckLists",
     settings: {
         infoContainer: [
             {
@@ -7,16 +8,6 @@ const checkList = {
                     {
                         title: 'Convención anual',
                         checkList: [
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
-                            { name: 'Lorem, ipsum dolor.' },
                         ],
                     }
                 ],
