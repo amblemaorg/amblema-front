@@ -21,7 +21,6 @@ const datosOlimpiadas = {
     }
 }
 
-
 const btnGuardar = {
     component: 'textsbuttons',
     settings: {
