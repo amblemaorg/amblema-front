@@ -2,13 +2,14 @@ import { formPreinscripcionDocenteModal } from '../blocks/form-block/all-forms'
 
 const preinscripcionDocente = {
     component: 'textsbuttons',
+    name: "teachersAnnualConventionSelect",
     settings: {
         selectStatus:
         {
             placeholder: 'Selecciona el docente',
             lista: [
                 { 
-                    id: 1, name: 'Alfredo',
+                    id: 1, FirstName: 'Alfredo',
                     lastName: 'Valvuena',
                     phone: '156456465',
                     email: 'vfhgdygt@ddd.com', 
@@ -33,11 +34,14 @@ const preinscripcionDocente = {
         },
         buttonType: 'agregarDocentePreinscripcion',
         tableCode: 'dataPreinscripcionDocente',
+        data: {},
+
     }
 }
 
 const btnGuardar = {
     component: 'textsbuttons',
+    name: 'saveButtonAnnualPreparation',
     settings: {
         action: [{
             type: 1,
@@ -45,6 +49,7 @@ const btnGuardar = {
         }],
         receivesFromTableOrForm: 'table',
         buttonCode: 'dataPreinscripcionDocente',
+        fetcherMethod: 'post'
     }
 }
 

@@ -207,6 +207,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       break;
     case "agregarDocentePreinscripcion": // Agregar de la Preparacion anual view
       data.data = {
+        id: cf.get("id").value, //lo agrego jesus
         name: cf.get("name").value,
         lastName: cf.get("lastName").value,
         phone: cf.get("phone").value,

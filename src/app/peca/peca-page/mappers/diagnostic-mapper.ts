@@ -29,6 +29,7 @@ export function diagnosticDataToReadingFormMapper(
       date: readingDate,
       result: wordsPerMin,
       index: wordsPerMinIndex,
+      //index: (Math.round(wordsPerMinIndex * 100) / 100).toFixed(2),
       sectionId: idSection,
     };
   });
@@ -48,7 +49,14 @@ export function diagnosticDataToMathFormMapper(
       mathDate,
     } = student[`lapse${numberLapse}`]
       ? student[`lapse${numberLapse}`]
-      : { logicDate: null, multiplicationsPerMin: null, mathDate: null, operationsPerMin: null, multiplicationsPerMinIndex: null, operationsPerMinIndex:null }; //student[`lapse${numberLapse}`].readingDate ? student[`lapse${numberLapse}`].readingDate : null;
+      : {
+          logicDate: null,
+          multiplicationsPerMin: null,
+          mathDate: null,
+          operationsPerMin: null,
+          multiplicationsPerMinIndex: null,
+          operationsPerMinIndex: null,
+        }; //student[`lapse${numberLapse}`].readingDate ? student[`lapse${numberLapse}`].readingDate : null;
     const {
       id,
       firstName,
@@ -56,7 +64,6 @@ export function diagnosticDataToMathFormMapper(
       gender,
       grade,
       section: { name, idSection },
-     
     } = student;
 
     return {

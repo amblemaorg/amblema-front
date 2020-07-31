@@ -21,7 +21,6 @@ const datosOlimpiadas = {
     }
 }
 
-
 const btnGuardar = {
     component: 'textsbuttons',
     settings: {
@@ -154,7 +153,7 @@ const resultadoEstudiante = {
         ],
         classes: {
             hideView: false,
-            //hideEdit: false,
+            hideEdit: true,
             hideDelete: false,
         },
     }

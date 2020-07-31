@@ -59,9 +59,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               label: 'Num datos',
               data: [3, 15, 11],
               backgroundColor: [
-                '#fff',
-                '#fff',
-                '#fff',
+                '#EEE9E8',
+                '#EEE9E8',
+                '#EEE9E8',
               ],
               fill: false
             },

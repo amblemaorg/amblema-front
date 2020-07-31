@@ -72,7 +72,7 @@ const routes: Routes = [
         component: TeacherTestimonyPageComponent,
       },
       {
-        path: 'proyecto-ambiental',
+        path: 'tematica-ambiental',
         component: EnvironmentalProjectPageComponent,
       },
       {
