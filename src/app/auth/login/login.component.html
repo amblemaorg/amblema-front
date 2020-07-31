@@ -33,7 +33,7 @@
            [attr.aria-invalid]="email.invalid && email.touched ? true : null">
     <ng-container *ngIf="email.invalid && email.touched">
       <p class="caption status-danger" *ngIf="email.errors?.required">
-        ¡Correo electronico es requerido!
+        ¡Correo electrónico es requerido!
       </p>
       <p class="caption status-danger" *ngIf="email.errors?.pattern">
         ¡El correo electrónico debe ser el verdadero!

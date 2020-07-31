@@ -417,8 +417,8 @@ export const formTestimonioDocentesModal = {
     ...controlProps.onlyLettersAndRequired
   },
   description: {
-    label: "Descripcion",
-    placeholder: "Descripcion",
+    label: "Descripción",
+    placeholder: "Descripción",
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
   },
@@ -1066,8 +1066,8 @@ export const formCoordinador = {
     ...controlProps.normalTextAndRequired
   },
   house: {
-    label: "casa / edificio",
-    placeholder: "casa / edificio",
+    label: "Casa / edificio",
+    placeholder: "Casa / edificio",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1145,8 +1145,8 @@ export const formPadrino = {
     ...controlProps.phoneAndRequired
   },
   emailContact: {
-    label: "Correo electronico",
-    placeholder: "Correo electronico",
+    label: "Correo electrónico",
+    placeholder: "Correo electrónico",
     fullwidth: false,
     ...controlProps.emailAndRequired
   },
@@ -1241,8 +1241,8 @@ export const formEscuela = {
     ]
   },
   address: {
-    label: "Direccion de la zona",
-    placeholder: "Direccion de la zona",
+    label: "Dirección de la zona",
+    placeholder: "Dirección de la zona",
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
@@ -1252,7 +1252,7 @@ export const formEscuela = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "Manana" },
+      { id: "1", name: "Mañana" },
       { id: "2", name: "Tarde" },
       { id: "3", name: "Ambos" }
     ]
@@ -1436,11 +1436,11 @@ export const formLecturaModal = {
     label: "Resultado",
     placeholder: "Resultado",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.numberAndRequired
   },
   index: {
-    label: "Indice",
-    placeholder: "Indice",
+    label: "Índice",
+    placeholder: "Índice",
     fullwidth: false,
     readonly: true,
     ...controlProps.normalText
@@ -1503,8 +1503,8 @@ export const formMatematicaModal = {
     ...controlProps.dateAndRequired
   }, */
   resultMul: {
-    label: "Resultado de multiplicacion",
-    placeholder: "Resultado de multiplicacion",
+    label: "Resultado de multiplicación",
+    placeholder: "Resultado de multiplicación",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
@@ -1517,21 +1517,21 @@ export const formMatematicaModal = {
     ...controlProps.dateAndRequired
   }, */
   resultLog: {
-    label: "Resultado de logica matematica",
-    placeholder: "Resultado de logica matematica",
+    label: "Resultado de lógica matemática",
+    placeholder: "Resultado de lógica matemática",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
   indexMul: {
-    label: "Indice de multiplicacion",
-    placeholder: "Indice de multiplicacion",
+    label: "Índice de multiplicación",
+    placeholder: "Índice de multiplicación",
     fullwidth: false,
     readonly: true,
     ...controlProps.normalText
   },
   indexLog: {
-    label: "Indice de logica matematica",
-    placeholder: "Indice de logica matematica",
+    label: "Índice de lógica matemática",
+    placeholder: "Índice de lógica matemática",
     fullwidth: false,
     readonly: true,
     ...controlProps.normalText

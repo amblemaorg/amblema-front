@@ -36,7 +36,7 @@ const registroTallerInicial = {
   settings: {
     columns: {
       image: {
-        title: "Imágen"
+        title: "Imagen"
       },
       description: {
         title: "Descripción"
@@ -176,7 +176,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
             ]
           },
           {
-            title: "Registros inicial",
+            title: "Registro inicial",
             childBlocks: [   
               { ...formTaller2 },           
               { ...registroTallerInicial },

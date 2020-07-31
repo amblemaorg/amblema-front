@@ -28,7 +28,6 @@ export class PecaPageComponent {
   public changeComponentHeader(header) {
     this.header.title = header;
   }
-
   public instantiateBlocks(container: ViewContainerRef, reSet: boolean = false) {
     this.blocks.map((block, i) => {
       const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
@@ -50,7 +49,7 @@ export class PecaPageComponent {
         pageBlockComponent.instance
       );
     });
-  }
+}
 
   public setBlockData(blockName: string, blockData: any) {
     if (this.blockInstances.has(blockName)) {
