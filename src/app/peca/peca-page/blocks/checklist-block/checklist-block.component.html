@@ -74,6 +74,11 @@
                 ><span class="descripcion">{{ check.name }}</span>
                 </nb-checkbox>
             </div>
+            <div class="style-btn"> 
+            <button title="general" *ngIf="dato.isFromAnnualConvention"
+                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">Guardar
+            </button>
+        </div>
         </ng-container>
 
         <ng-template #other_content>
