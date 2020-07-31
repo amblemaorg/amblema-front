@@ -686,6 +686,8 @@ textarea.e-input::selection,
 
 input[type="date"] {
   &:after {
+    content: "v";
+    content: "\25BE";
     content: "\f073";
     z-index: 0;
     position: absolute;
