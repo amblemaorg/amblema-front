@@ -80,6 +80,10 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo1",
                       settings: {
+                        fetcherMethod: "post",
+                        fetcherUrls : {
+                          post: `pecasetting/annualconvention`     
+                           },
                         infoContainer: [
                           {
                             principal: [
@@ -183,7 +187,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act,
+                                        name: act
                                       };
                                     }),
                                   ],
@@ -204,7 +208,6 @@ export function EnviromentalMapper(EnviromentalData) {
                           }),
                         ],
                       },
-                      fetcherMethod: "post",
                     },
                   ],
                 };

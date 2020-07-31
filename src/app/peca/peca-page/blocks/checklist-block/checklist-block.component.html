@@ -105,6 +105,7 @@
         [class.no-margin]="info.isFromGenericActivity"
     >
         <button *ngIf="info.button" title="general"
+        (click)="sendChecks(info.datosNivel[0].checkList)"
             class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{info.button.name}}
         </button>
     </div>

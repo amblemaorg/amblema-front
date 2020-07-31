@@ -128,6 +128,7 @@ export class ChecklistBlockComponent
     this.settings.fetcherUrls = {
    post     
     };
+    console.log('aad', post)
   }
 
 
@@ -173,6 +174,7 @@ export class ChecklistBlockComponent
         this.flag = true;
       }
     }
+    console.log("ppppp",this.settings)
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {
@@ -230,5 +232,48 @@ console.log(resourcePath, method)
         console.error(error);
       }
     );   
+}
+
+sendChecks(checks){
+  const body = checks;
+  this.isSending = true;
+
+    const method = this.settings.fetcherMethod || "post";
+    const resourcePath = this.settings.fetcherUrls[method];
+    console.log(body)
+    console.log(method)
+    console.log(resourcePath);
+//console.log(resourcePath, method)
+   /*    this.fetcher[method](resourcePath, body).subscribe(
+      (response) => {
+        console.log("form response", response);
+        //this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success("Solicitud enviada", "", {
+          positionClass: "toast-bottom-right",
+        });
+
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      (error) => {
+        const error_msg =
+          error.error && error.error instanceof ProgressEvent
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+        this.isSending = false;
+        this.toastr.error(
+          error.error && error.error["msg"]
+            ? error.error["msg"]
+            : error.error && error.error["message"]
+            ? error.error["message"]
+            : error_msg,
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );   */
 }
   }
