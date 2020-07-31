@@ -34,7 +34,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     private globals: GlobalService,
   ) {
     super(factoryResolver);
-    if (this.loadedData) this.updateMethods();
     this.instantiateComponent(config);
   }
 
@@ -57,7 +56,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
             this.instantiateComponent(configVista);
             console.log('mapper', configVista)
             this.doInstantiateBlocks();
-            if (this.isInstanciated) this.updateMethods();
           }
         }
         
@@ -67,14 +65,8 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     );
   }
 
-  updateMethods() {
-    this.updateStaticFetchers();
-  }
-  updateStaticFetchers() {
-    this.setBlockFetcherUrls("AnnualConventionCheckLists", {
-      post: `pecasetting/annualconvention/${this.UrlLapse}`,
-    });
-  }
+  
+  
   ngAfterViewInit(): void {        
     this.doInstantiateBlocks();
 }
