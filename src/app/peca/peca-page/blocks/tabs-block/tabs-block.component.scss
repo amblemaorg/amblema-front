@@ -23,10 +23,7 @@
       @media (max-width: 768px) {
         .tab-link {
           font-size: 1rem;
-          padding: 1rem 0rem;
-        }
-        .tab-link span {
-          width: 250px;
+          padding: 1rem 1rem;
         }
       }
 
@@ -40,7 +37,7 @@
             margin: 0 1.5rem;
           }
           a {
-            width: 100%;
+            width: 130%;
           }
         }
       }
@@ -54,7 +51,7 @@
       @media (max-width: 405px) {
         .tabset {
           a {
-            width: 100%;
+            width: 150%;
           }
         }
       }
@@ -81,6 +78,9 @@
             background-color: $blue;
           }
         }
+      }
+      nb-tab {
+        padding: 1rem 1rem;
       }
     }
   }

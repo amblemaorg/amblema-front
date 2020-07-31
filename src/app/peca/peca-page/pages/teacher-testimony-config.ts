@@ -43,7 +43,7 @@ const testimonioDocenteTabla = {
                 title: 'Cargo'
             },
             description: {
-                title: 'Descripcion',
+                title: 'Descripción',
                 valuePrepareFunction: (row: any) => {
                     if (row) return row.substring(0,50) + '...';
                 },
