@@ -15,7 +15,8 @@ import { ModulesService } from '../../../services/steps/modules.service';
         school: '',
         coordinator: '',
         steps: [],
-        project_id: null
+        project_id: null,
+        has_peca: false,
     }
   })
 export class StepsState {
@@ -36,6 +37,7 @@ export class StepsState {
           school: state.school,
           coordinator: state.coordinator,
           steps: state.steps,
+          has_peca: state.has_peca,
         };
     }   
 
@@ -51,6 +53,15 @@ export class StepsState {
     UpdateStepsProgress(ctx: StateContext<StepStateModel>, action: UpdateStepsProgress) {
         return this.stepsService.getSteps(action.project_id).pipe(
           tap(proj => {
+            ctx.patchState({
+              has_peca: proj.phase === "2" && proj.schoolYears.some((sy) => (
+                  sy.schoolYear && 
+                  sy.schoolYear.status && 
+                  sy.schoolYear.status === "1"
+                ) 
+              )
+            });
+
             const state = ctx.getState();
             ctx.setState({
               ...state,
@@ -78,7 +89,8 @@ export class StepsState {
         school: '',
         coordinator: '',
         steps: [],
-        project_id: null
+        project_id: null,
+        has_peca: false,
       });
     }
     

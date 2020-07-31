@@ -5,6 +5,8 @@ import {
 } from "@angular/core";
 import { PageBlockFactory } from "./blocks/page-block-factory";
 import { PageBlockComponent } from "./blocks/page-block.component";
+import { Location } from "@angular/common"
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "peca-page",
@@ -17,7 +19,13 @@ export class PecaPageComponent {
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
-  constructor(protected factoryResolver: ComponentFactoryResolver) {}
+  protected isFromSteps: boolean;
+
+  constructor(
+    protected factoryResolver: ComponentFactoryResolver, 
+    protected location?: Location,
+    protected route?: ActivatedRoute
+  ) {}
 
   public instantiateComponent(config) {
     this.header = config.header;
@@ -113,5 +121,9 @@ export class PecaPageComponent {
     return properties.reduce((prevObj: any, prop) => {
       return prevObj.hasOwnProperty(prop) ? prevObj[prop] : null;
     }, object);
+  }
+
+  goToSteps() {
+    this.location.back();
   }
 }
