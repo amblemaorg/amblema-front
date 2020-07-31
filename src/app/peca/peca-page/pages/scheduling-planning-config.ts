@@ -65,10 +65,10 @@ const propuestaAmblema = {
             type: 3,
             name: 'Enviar',
         }],
-        uploaddown: {
-            url: "#",
+        upload: {
+            /* url: "#",
             name: 'Adjuntar archivo',
-            file: null,
+            file: null, */
         },
     }
 }

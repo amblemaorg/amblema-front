@@ -14,6 +14,13 @@
         padding: 1rem 3rem;
         text-transform: none;
         line-height: 1.3rem;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+          bottom: 2px !important;
+        }
       }
       @media (max-width: 992px) {
         .tab-link {
@@ -32,7 +39,7 @@
           overflow: auto;
           overflow-y: hidden;
           justify-content: start !important;
-          height: 60px;
+          //height: 60px;
           li {
             margin: 0 1.5rem;
           }

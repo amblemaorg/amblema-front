@@ -308,12 +308,14 @@ export class TextsButtonsSetBlockComponent
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;
-      if (data["dateOrtext"]) this.settings.dateOrtext= data.dateOrtext;
+      if (data["dateOrtext"]) this.settings.dateOrtext.date= data.dateOrtext.date;
       if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
       if (data["enviromentTitleLapse2"]) this.settings.title.text=data.enviromentTitleLapse2;
       if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3; 
       if (data["download"]) this.settings.download = data.download;
-      }
+      if (data["upload"]) this.settings.upload = data.upload;
+    }
+
   }
 
   setFetcherUrls({ put, delete: deleteFn, cancel }) {
