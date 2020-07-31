@@ -1,4 +1,4 @@
-import { formResenaHistorica, formPadrinoAnuario, formCoordinadorAnuario, formEscuelaAnuario, formActividades, formImgActividades } from '../blocks/form-block/all-forms';
+import { formAnalisisYResultados, formImagenEscuela,formResenaHistorica, formPadrinoAnuario, formCoordinadorAnuario, formEscuelaAnuario, formActividades, formImgActividades } from '../blocks/form-block/all-forms';
 import { settings } from 'cluster';
 
 //Contenido dropdown Resena Historica
@@ -74,6 +74,12 @@ const dataEscuela = {
     component: 'form',
     settings: {
         formsContent: formEscuelaAnuario,
+    }
+}
+const imgSeccionEscuela = {
+    component: 'form',
+    settings: {
+        formsContent: formImagenEscuela,
     }
 }
 
@@ -291,6 +297,21 @@ const graficosLogicoMate = {
         
     }
 }
+const subAnalisisResultados = {
+    component: 'textsbuttons',
+    settings: {
+        title: {
+            text: "Análisis y resultados por diagnóstico",
+            aligning: "left"
+        }
+    },
+}
+const analisisYResultados = {
+    component: 'form',
+    settings: {
+        formsContent: formAnalisisYResultados,
+    }
+}
 
 const subtitleActividad = {
     component: 'checkList',
@@ -299,6 +320,17 @@ const subtitleActividad = {
             {
                 line: true,
                 subtitle: "Actividades"
+            }
+        ]
+    }
+}
+
+const separador = {
+    component: 'checkList',
+    settings: {
+        infoContainer: [
+            {
+                line: true,
             }
         ]
     }
@@ -432,6 +464,42 @@ var sectionsObjects = (sections) => {
     });
     return objs
 };
+//---------------------------------------------------------------------
+
+const tablaImgSeccionEscuela= {
+    component: 'table',
+    settings: {
+        columns: {
+            img: {
+                title: "Imagen",
+            },
+            grade: {
+                title: "Grado"
+            },
+            seccion: {
+                title: 'Seccion'
+            },
+        },
+        dataTestimonioDocenteTabla: [
+            // {
+            //     id: '1',
+            //     name: 'Alfredo',
+            //     lastName: 'Valbuena',
+            //     cargo: 'profesor',
+            //     description: 'lorem ipsum dolor',
+            //     // status: '1',
+            //     source: null,
+            //     imageSelected: null,
+            // },
+        ],
+        classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+        },
+    }
+}
+
 //----------------------------------------------------------------------
 
 const btnEnviarSolicitud = {
@@ -488,7 +556,10 @@ export const YEARBOOK_CONFIG = {
                                             title: "Escuela",
                                             childBlocks: [
                                                 { ...btnAddImgEscuela },
-                                                { ...dataEscuela }
+                                                { ...dataEscuela },
+                                                { ...separador },
+                                                { ...imgSeccionEscuela },
+                                                { ...tablaImgSeccionEscuela },
                                             ]
                                         },
                                         {
@@ -499,16 +570,22 @@ export const YEARBOOK_CONFIG = {
                                                 { ...tablaDiagnosticoLectura },
                                                 { ...subGraficoLectura },
                                                 { ...graficosLectura },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 //Diagnostico Multiplicacion
                                                 { ...subDiagnosticoMultiplicacion },
                                                 { ...tablaDiagnosticoMultiplicacion },
                                                 { ...subGraficoMultiplicacion },
                                                 { ...graficosMultiplicacion },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 //Diagnostico Logico Matematica
                                                 { ...subDiagnosticoLogicoMate },
                                                 { ...tablaDiagnosticoLogicoMate },
                                                 { ...subGraficoLogicoMate },
                                                 { ...graficosLogicoMate },
+                                                { ...subAnalisisResultados },
+                                                { ...analisisYResultados},
                                                 { ...subtitleActividad },
                                                 ...sectionsObjects(sections),
                                             ]

@@ -337,6 +337,7 @@ export const formTestimonioDocentes = {
         label: "Seleccione el docente",
         placeholder: "Seleccione el docente",
         fullwidth: false,
+        shouldContentRefresh: true,
         ...controlProps.selectAndRequired,
         options: []
       },
@@ -422,13 +423,13 @@ export const formTestimonioDocentesModal = {
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
   },
-  addressState: {
+/*   addressState: {
     label: "Estado",
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: []
-  }
+  } */
   // status: {
   //   label: "Estatus",
   //   placeholder: "Estatus",
@@ -1322,6 +1323,38 @@ export const formEscuela = {
 };
 
 //ANUARIO-----------------------------------------------------
+//Imagen en escuela
+export const formImagenEscuela = {
+  imageGroup: {
+    type: "image",
+    fields: {
+      imageDocente: {
+        label: "Seleccione el grado",
+        placeholder: "Seleccione el grado",
+        fullwidth: false,
+        shouldContentRefresh: true,
+        ...controlProps.selectAndRequired,
+        options: []
+      },
+      imageCargo: {
+        label: "Seccion",
+        placeholder: "Seccion",
+        fullwidth: false,
+        ...controlProps.normalTextAndRequired
+      },
+      // imageStatus: {
+      //   label: "Estado de la imagen",
+      //   placeholder: "Estado de la imagen",
+      //   fullwidth: false,
+      //   ...controlProps.selectAndRequired,
+      //   options: [
+      //     { id: "1", name: "Activo" },
+      //     { id: "2", name: "Inactivo" }
+      //   ]
+      // }
+    }
+  }
+};
 //RESENA HISTORICA
 export const formResenaHistorica = {
   nameDescription: {
@@ -1371,6 +1404,14 @@ export const formImgActividades = {
   imageGroup: {
     type: "image",
     fields: {}
+  }
+};
+//ANALISIS Y RESULTADOS
+export const formAnalisisYResultados = {
+  nameDescription: {
+    placeholder: "Análisis y resultados del diagnóstico",
+    fullwidth: true,
+    ...controlProps.textareaNnormalText
   }
 };
 
