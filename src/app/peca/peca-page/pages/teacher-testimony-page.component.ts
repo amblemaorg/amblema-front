@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
 import { isNullOrUndefined } from "util";
 import { teacherTestimonyMapper } from "../mappers/teacher-testimony-mappers";
+import { gradesAndSectionsDataToSectionsFormMapper } from '../mappers/teachers-in-sections-form-mappers';
+import { settings } from 'cluster';
 @Component({
     selector: 'peca-teacher-testimony',
     templateUrl: '../peca-page.component.html',
@@ -32,8 +34,13 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
     //testimonio
     testimonyTeacherData: any;
 
+    //prueba
+    pruebaSelectDocentes: any;
+
     isInstanciated: boolean;
     loadedData: boolean;
+
+    schoolId: any;
 
     constructor(factoryResolver: ComponentFactoryResolver, router: Router, globals: GlobalService, private httpFetcherService: HttpFetcherService) {
         super(factoryResolver);
@@ -50,6 +57,10 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
     }
 
     ngOnInit() {
+        this.getInfo();
+    }
+
+    getInfo() {
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
                 if (data.activePecaContent) {
@@ -59,6 +70,8 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
 
                     this.setTestimonyTeacherDataMapper(data.activePecaContent.school.teachersTestimonials.testimonials, teacherTestimonyMapper);
 
+                    this.setPruebaSelectDocentes(data.activePecaContent.school, gradesAndSectionsDataToSectionsFormMapper);
+
                     this.loadedData = true;
                     if (this.isInstanciated) this.updateMethods();
                 }
@@ -67,11 +80,36 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
 
     }
 
-    updateMethods() {
-        this.updateDataToBlocks();
+    updateMethods(updateData: boolean = true) {
+        this.updateDataToBlocks(updateData);
+        this.updateDynamicFetchers();
     }
-    updateDataToBlocks() {
-        this.setBlockData("testimonyTable", this.testimonyTeacherData);
+    updateDataToBlocks(updateData: boolean) {
+        if (updateData) {
+            this.setBlockData("testimonyTable", this.testimonyTeacherData);
+            //PRUEBA
+            this.setBlockData("pruebaDocentes", this.pruebaSelectDocentes);
+        }
+    }
+
+    updateDynamicFetchers() {
+        //Update modal testimony
+        this.createAndSetBlockFetcherUrls(
+            "testimonyModalForm",
+            {
+                post: (userId) =>
+                    `schools/teacherstestimonials/${this.schoolId}/${userId}`
+            },
+            //"settings.data.schoolId",
+            "settings.data.userId"
+        );
+        //Delete modal testimony
+        /* this.createAndSetBlockFetcherUrls(
+            "testimonyDeleteModal",
+            {
+                delete: () => 
+            },
+        ) */
     }
 
     setTestimonyTeacherDataMapper(dataTestimony, _mapper?: Function) {
@@ -88,9 +126,35 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
         }
     }
 
+    setPruebaSelectDocentes(dataDocentes, _mapper?: Function) {
+        if (_mapper) {
+            console.log(dataDocentes, 'datos')
+            const mapper = _mapper(dataDocentes);
+            this.pruebaSelectDocentes = {
+                setContent: true,
+                contentToSet: ["imageGroup"],
+                data: {
+                    imageGroup: {
+                        imageDocente: mapper.teachers
+                    }
+                }
+            };
+            console.log("este es el mapper de select", this.pruebaSelectDocentes);
+        } else {
+            this.pruebaSelectDocentes = dataDocentes.teachers;
+        }
+    }
+
     ngAfterViewInit(): void {
         setTimeout(() => {
             this.instantiateBlocks(this.container);
+            this.isInstanciated = true;
         });
+    }
+
+    ngOnDestroy() {
+        this.isInstanciated = false;
+        this.loadedData = false;
+        this.infoDataSubscription.unsubscribe();
     }
 }

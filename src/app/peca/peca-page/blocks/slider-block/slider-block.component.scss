@@ -98,6 +98,10 @@
 .form-control {
 	color: $blue;
 
+	&.sb-date-picker {
+		position: relative;
+	}
+
 	&[readonly] {
 	cursor: default;
 	background-color: #fff;

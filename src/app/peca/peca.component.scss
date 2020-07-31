@@ -176,6 +176,33 @@
       nb-card {
         nb-card-body {
           padding: 1.25rem 2.5rem;
+          
+          &.header-title-and-button-container {
+            .btn-go-steps {
+              @include layout-header-btn-confs();
+              display: none;
+            }
+            &.comes-from-steps {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+        
+                .btn-go-steps {
+                    display: inline-block;
+                }
+
+                @media screen and (orientation: portrait) {
+                  flex-wrap: wrap;
+                  align-items: baseline; 
+
+                  .title-style {
+                    @media screen and (max-width: 374px) {
+                      margin-bottom: 1rem; 
+                    }                    
+                  }
+                }
+            }    
+          }
         }
         @media (max-width: 768px) {
           nb-card-body {

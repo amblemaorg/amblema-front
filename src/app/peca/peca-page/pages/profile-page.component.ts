@@ -20,6 +20,7 @@ import {
 } from "../mappers/profile-mappers";
 import { isNullOrUndefined } from "util";
 import { ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common"
 import { first } from "rxjs/internal/operators/first";
 import * as $ from 'jquery';
 declare var $: any;
@@ -47,14 +48,14 @@ export class ProfilePageComponent extends PecaPageComponent
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
-    private route: ActivatedRoute
+    route: ActivatedRoute,
+    location: Location,
   ) {
-    super(factoryResolver);
+    super(factoryResolver,location,route);
     globals.blockIntancesEmitter.subscribe(data => {
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
-      console.log(this.blockInstances);
       if (this.loadedData) this.updateMethods();
     });
   }
@@ -63,18 +64,30 @@ export class ProfilePageComponent extends PecaPageComponent
     this.loadForm();
     
     if (this.globals.isBrowser) {
-      if (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) {
+      const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
+              (
+                this.route.snapshot.children && this.route.snapshot.children.length>0 && 
+                this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+                this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
+              );
+
+      if (comes_from_steps) {
         this.activePecaSubs = this.actPeca$.pipe(first()).subscribe(
           ({ activePeca }) => {
             const activePecaId = activePeca.id;
+
             activePecaId
               ? $("nb-sidebar").removeClass("is-hidden")
               : $("nb-sidebar").addClass("is-hidden");
+
+            this.isFromSteps = true;                
+
           },
           error => console.error(error)
         );        
       } else {
         $("nb-sidebar").removeClass("is-hidden");
+        this.isFromSteps = false;
       } 
     }    
   }
@@ -95,7 +108,6 @@ export class ProfilePageComponent extends PecaPageComponent
       data => {
         this.userType = data.userType;
         if (!isNullOrUndefined(data)) {
-          console.log(data);
           if (this.userType === "4") {
             this.setUserFormData(data, profileDataToSchoolFormMapper);
             this.loadedData = true;
@@ -165,6 +177,7 @@ export class ProfilePageComponent extends PecaPageComponent
     });
   }
   ngOnDestroy() {
+    this.isFromSteps = null;
     this.isInstanciated = false;
     this.loadedData = false;
     this.userDataSubscription.unsubscribe();
