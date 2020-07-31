@@ -1,3 +1,7 @@
+export interface genericActivityPermissionsI {
+    activity_peca_view: boolean;
+    activity_peca_edit: boolean;
+}
 export const genericActivityPermissions = {
     name: "ActivityPeca",
     actions: [
@@ -6,16 +10,26 @@ export const genericActivityPermissions = {
     ]
 }
 
+export interface sliderActivitiesPermissionsI {
+    activities_slider_view: boolean;
+    activities_slider_create: boolean;
+    activities_slider_edit: boolean;
+    activities_slider_delete: boolean;
+}
 export const sliderActivitiesPermissions = {
     name: "ActivitiesSlider",
     actions: [
         "activities_slider_view",
-        "activities_slider_create",
-        "activities_slider_edit",
-        "activities_slider_delete"
+        // "activities_slider_create",
+        // "activities_slider_edit",
+        // "activities_slider_delete"
     ]
 }
 
+export interface amblecoinsPermissionsI {
+    amblecoins_peca_view: boolean;
+    amblecoins_peca_edit: boolean;
+}
 export const amblecoinsPermissions = {
     name: "AmblecoinsPeca",
     actions: [
@@ -24,6 +38,10 @@ export const amblecoinsPermissions = {
     ]
 }
 
+export interface annualConventionPermissionsI {
+    annual_convention_peca_view: boolean;
+    annual_convention_peca_edit: boolean;
+}
 export const annualConventionPermissions = {
     name: "AnnualConventionPeca",
     actions: [
@@ -32,6 +50,10 @@ export const annualConventionPermissions = {
     ]
 }
 
+export interface annualPreparationPermissionsI {
+    annual_preparation_peca_view: boolean;
+    annual_preparation_peca_edit: boolean;
+}
 export const annualPreparationPermissions = {
     name: "AnnualPreparationPeca",
     actions: [
@@ -40,6 +62,10 @@ export const annualPreparationPermissions = {
     ]
 }
 
+export interface initialWorkshopPermissionsI {
+    initial_workshop_peca_view: boolean;
+    initial_workshop_peca_edit: boolean;
+}
 export const initialWorkshopPermissions = {
     name: "InitialWorkshopPeca",
     actions: [
@@ -48,6 +74,10 @@ export const initialWorkshopPermissions = {
     ]
 }
 
+export interface lapsePlanningPermissionsI {
+    lapse_planning_peca_view: boolean;
+    lapse_planning_peca_edit: boolean;
+}
 export const lapsePlanningPermissions = {
     name: "LapsePlanningPeca",
     actions: [
@@ -56,6 +86,10 @@ export const lapsePlanningPermissions = {
     ]
 }
 
+export interface olympicsPermissionsI {
+    olympics_peca_view: boolean;
+    olympics_peca_edit: boolean;
+}
 export const olympicsPermissions = {
     name: "OlympicsPeca",
     actions: [
@@ -64,6 +98,10 @@ export const olympicsPermissions = {
     ]
 }
 
+export interface schoolPermissionsI {
+    school_peca_view: boolean;
+    school_peca_edit: boolean;
+}
 export const schoolPermissions = {
     name: "SchoolPeca",
     actions: [
@@ -72,6 +110,12 @@ export const schoolPermissions = {
     ]
 }
 
+export interface teacherPermissionsI {
+    teacher_view: boolean;
+    teacher_create: boolean;
+    teacher_edit: boolean;
+    teacher_delete: boolean;
+}
 export const teacherPermissions = {
     name: "Teacher",
     actions: [
@@ -82,6 +126,12 @@ export const teacherPermissions = {
     ]
 }
 
+export interface teacherTestimonialPermissionsI {
+    teacher_testimonial_view: boolean;
+    teacher_testimonial_create: boolean;
+    teacher_testimonial_edit: boolean;
+    teacher_testimonial_delete: boolean;
+}
 export const teacherTestimonialPermissions = {
     name: "TeacherTestimonial",
     actions: [
@@ -92,6 +142,12 @@ export const teacherTestimonialPermissions = {
     ]
 }
 
+export interface sectionPermissionsI {
+    section_view: boolean;
+    section_create: boolean;
+    section_edit: boolean;
+    section_delete: boolean;
+}
 export const sectionPermissions = {
     name: "Section",
     actions: [
@@ -102,6 +158,12 @@ export const sectionPermissions = {
     ]
 }
 
+export interface studentPermissionsI {
+    student_view: boolean;
+    student_create: boolean;
+    student_edit: boolean;
+    student_delete: boolean;
+}
 export const studentPermissions = {
     name: "Student",
     actions: [
@@ -112,6 +174,10 @@ export const studentPermissions = {
     ]
 }
 
+export interface yearbookPermissionsI {
+    yearbook_view: boolean;
+    yearbook_edit: boolean;
+}
 export const yearbookPermissions = {
     name: "Yearbook",
     actions: [
@@ -120,6 +186,10 @@ export const yearbookPermissions = {
     ]
 }
 
+export interface specialActivityPermissionsI {
+    special_activity_view: boolean;
+    special_activity_edit: boolean;
+}
 export const specialActivityPermissions = {
     name: "SpecialActivity",
     actions: [
@@ -128,6 +198,10 @@ export const specialActivityPermissions = {
     ]
 }
 
+export interface adminUserPermissionsI {
+    admin_view: boolean;
+    admin_edit: boolean;
+}
 export const adminUserPermissions = {
     name: "AdminUser",
     actions: [
@@ -136,6 +210,10 @@ export const adminUserPermissions = {
     ]
 }
 
+export interface coordinatorUserPermissionsI {
+    coordinator_user_view: boolean;
+    coordinator_user_edit: boolean;
+}
 export const coordinatorUserPermissions = {
     name: "CoordinatorUser",
     actions: [
@@ -144,6 +222,10 @@ export const coordinatorUserPermissions = {
     ]
 }
 
+export interface schoolUserPermissionsI {
+    school_user_view: boolean;
+    school_user_edit: boolean;
+}
 export const schoolUserPermissions = {
     name: "SchoolUser",
     actions: [
@@ -152,6 +234,10 @@ export const schoolUserPermissions = {
     ]
 }
 
+export interface sponsorUserPermissionsI {
+    sponsor_user_view: boolean;
+    sponsor_user_edit: boolean;
+}
 export const sponsorUserPermissions = {
     name: "SponsorUser",
     actions: [
@@ -160,6 +246,10 @@ export const sponsorUserPermissions = {
     ]
 }
 
+export interface environmentalProjectPermissionsI {
+    environmental_project_view: boolean;
+    environmental_project_edit: boolean;
+}
 export const environmentalProjectPermissions = {
     name: "EnvironmentalProject",
     actions: [
@@ -168,6 +258,10 @@ export const environmentalProjectPermissions = {
     ]
 }
 
+export interface monitoringActivityPermissionsI {
+    monitoring_activity_view: boolean;
+    monitoring_activity_edit: boolean;
+}
 export const monitoringActivityPermissions = {
     name: "MonitoringActivity",
     actions: [
