@@ -1,10 +1,14 @@
 <nb-card>
-  <nb-card-body>
+  <nb-card-body class="header-title-and-button-container" [class.comes-from-steps]="isFromSteps">
     <div [class.col-sm-6]="header.title && header.download" class="title-style">
       <h1>{{ header.title }}</h1>
     </div>
 
-    <div [class.col-sm-6]="header.download" class="style-btn-anuario">
+    <button (click)="goToSteps()" class="btn btn-primary text-decoration-none py-1 px-4 btn-go-steps">
+        Ir a los pasos
+    </button>
+
+    <div *ngIf="header.download" [class.col-sm-6]="header.download" class="style-btn-anuario">
       <button
         *ngIf="header.download"
         title="general"

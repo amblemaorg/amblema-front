@@ -25,5 +25,6 @@ export interface StepStateModel {
     coordinator: string;
     steps: Step[];
     project_id: string;
+    has_peca: boolean;
 }
 //? ---------- END MODEL CLASSES ----------------------------- //

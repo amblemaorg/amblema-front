@@ -31,7 +31,7 @@
             <div *ngIf="step.hasDate" class="form-group">
               <label for="datefill"> Fecha: </label>
               <input type="date" name="datefill" [class.not-enabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions" 
-              class="form-control" placeholder="Introduzca una fecha" [value]="getDateFrmt(step)" (change)="controlDate($event,step)" 
+              class="form-control calendar-date-icon" placeholder="Introduzca una fecha" [value]="getDateFrmt(step)" (change)="controlDate($event,step)" 
               [disabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions">
               <div class="field-alerts">
                 <div class="field-invalid">¡Debe tener una fecha valida, mayor a la de hoy!</div>

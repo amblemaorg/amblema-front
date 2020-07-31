@@ -1,4 +1,5 @@
-@import '../previous-steps.component.scss';
+@import "../previous-steps.component.scss";
+@import "fonts/amblema-icons/amblemaicons";
 
 .main-steps-view {
     @extend %padding-conts;
@@ -33,6 +34,18 @@
                 margin-bottom: 1.25rem !important;
                 margin-right: 0;
             }    
+
+            &.margin-with-peca {                
+                @media screen and (orientation: portrait) {                    
+                    margin-top: 1rem !important;
+                }
+                @media screen and (orientation: landscape) and (max-width: 639px) {
+                    margin-top: 1rem !important;
+                }
+                @media screen and (orientation: landscape) and (min-width: 640px) {
+                    margin-left: 1.5rem;
+                }
+            }
 
             &:focus {
                 box-shadow: none;
