@@ -35,7 +35,7 @@
             font-size: small;
             color: $red;
 
-            @include mediabreak(small,landscape,true,675px) {
+            @include mediabreak(small,landscape,true,640px) {
                 position: absolute;
             }
         }
@@ -305,6 +305,12 @@
     .form-control {
         color: $blue;
 
+        &.tb-date-picker:after {
+            @include mediabreak(small,landscape,true,640px) {
+                right: 2.75rem;
+            }            
+        }
+
         &.is-date-placeholder {
             cursor: default;
             background-color: #fff;
@@ -312,7 +318,7 @@
             top: 2px;
             left: 2px;
             border: none;
-            width: 80%;
+            width: 70%;
             padding-bottom: 0 !important;
             height: auto;
         }
