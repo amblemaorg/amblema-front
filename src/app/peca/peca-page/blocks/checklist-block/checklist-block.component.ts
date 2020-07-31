@@ -47,6 +47,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
         }[];
         title: string;
         isFromGenericActivity?: boolean;
+        isFromAnnualConvention?:boolean;
         genericActivityId?: string;
         approvedAct?: boolean;
         checkList: {
@@ -107,12 +108,8 @@ checks=[];
     }
   
     if (data["checkList"]) {
-     // this.prueba = data.checkList[0].description;
       this.flag = true;
-      /* for (let i = 0; i < this.prueba.length; i++) {
-        this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
-          data.checkList[0].description[i].name;
-      } */
+      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention=true;
       this.settings.infoContainer[0].datosNivel[0].checkList=data.checkList;
     }
     else {
