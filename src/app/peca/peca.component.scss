@@ -176,6 +176,11 @@
       nb-card {
         nb-card-body {
           padding: 1.25rem 2.5rem;
+
+          .welcome-text {
+            color: $blue;
+            font-family: "Montserrat" !important;
+          }
           
           &.header-title-and-button-container {
             .btn-go-steps {

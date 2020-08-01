@@ -11,8 +11,8 @@ import { Observable, Subscription } from "rxjs";
 import { first } from "rxjs/internal/operators/first";
 import { take } from "rxjs/internal/operators/take";
 import cloneDeep from "lodash/cloneDeep";
-import { ActivatedRoute } from "@angular/router";
-import { DOCUMENT } from "@angular/common";
+import { ActivatedRoute, Router, Event, NavigationEnd } from "@angular/router";
+import { DOCUMENT, Location } from "@angular/common";
 import { 
   genericActivityPermissionsI, 
   genericActivityPermissions, 
@@ -50,6 +50,8 @@ export class PecaComponent implements OnInit, OnDestroy {
                     monitoringActivityPermissionsI;
   private subscription: Subscription = new Subscription();  
 
+  showWelcome: boolean = true;
+
   activePecaSubscription: Subscription;
   activePecaContentSubscription: Subscription;
   globalsSubscription: Subscription;
@@ -62,12 +64,32 @@ export class PecaComponent implements OnInit, OnDestroy {
     private sidebarService: NbSidebarService,
     private route: ActivatedRoute,
     private menuService: NbMenuService,
+    private location: Location,
+    private router: Router,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.iconLibraries.registerFontPack("amblemaicons", {
       iconClassPrefix: "icon"
     });
     this.iconLibraries.setDefaultPack("amblemaicons");
+
+    this.subscription.add(
+      router.events.subscribe((event: Event) => {
+          if (event instanceof NavigationEnd) {
+              setTimeout(() => {
+                const path = event.url.split("/").pop();
+                if (path === "peca" || path === "perfil-usuario") {
+                  if (path === "peca") 
+                    this.showWelcome = true;
+                  else
+                    this.showWelcome = false;
+                  this.deselectAllExceptOf(null, this.menu);
+                }
+                else this.deselectAllExceptOf(path, this.menu, true);
+              });
+          }
+      })
+    );
   }
 
   ngOnInit() {    
@@ -119,6 +141,8 @@ export class PecaComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.menuService.onItemClick().subscribe((menu_item) => {
+        if (menu_item["item"]["link"] && menu_item["item"]["link"].length > 0) 
+          this.showWelcome = false;
         
         this.subscription.add(
           this.menuService.getSelectedItem().subscribe(previous =>{
@@ -151,7 +175,7 @@ export class PecaComponent implements OnInit, OnDestroy {
     arr.map((menuItem) => {
       if (menuItem["children"]) 
         this.deselectAllExceptOf(link, menuItem["children"], fromMenuCreator, forRemoval);
-      else if (menuItem["link"] !== link) 
+      else if (menuItem["link"] !== link || !link) 
         menuItem["selected"] = false;
       else if (fromMenuCreator && menuItem["link"] === link) {
         menuItem["selected"] = true;        
@@ -195,17 +219,22 @@ export class PecaComponent implements OnInit, OnDestroy {
       this.menu_permissions = permissions;
   }
 
-  createMenuOptions(pecaContent) {
-    const hasPath = this.route.snapshot.children && 
-      this.route.snapshot.children.length > 0 && 
-      this.route.snapshot.children[0].url.length > 0
+  createMenuOptions(pecaContent) {    
+    const path_arr = this.route.snapshot.url.length > 0 ? this.route.snapshot.url 
+      : (
+        this.route.snapshot.children && 
+        this.route.snapshot.children.length > 0 && 
+        this.route.snapshot.children[0].url.length > 0
+      ) ? this.route.snapshot.children[0].url : [];
 
-    const link = hasPath
-      ? this.route.snapshot.children[0].url.reduce((link_,u_s_) => {
+    const link = path_arr.length > 0
+      ? path_arr.reduce((link_,u_s_) => {
           link_ = link_.length > 0 ? `${link_}/${u_s_["path"]}` : u_s_["path"];
           return link_
         },"")
       : "";
+
+    if (link.length > 0) this.showWelcome = false;
 
     if (pecaContent.steps) {
       const title = 'Ir a los pasos';
