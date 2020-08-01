@@ -113,7 +113,7 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
                           lastName: data.data.oldData.lastName,
                           cargo: data.data.oldData.cargo,
                           description: data.data.oldData.description,
-                          addressState: data.data.oldData.addressState,
+                          // addressState: data.data.oldData.addressState,
                           // status: data.data.oldData.status,
                         }
                         : {
