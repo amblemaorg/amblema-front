@@ -106,6 +106,11 @@ export class TextsButtonsSetBlockComponent
     }
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
 
@@ -253,6 +258,7 @@ export class TextsButtonsSetBlockComponent
       this.isSending = null;
 
       this.settings.isGenericActivity = true;
+      this.userCanEdit = data["userCanEdit"];
 
       this.reloadDate = true; this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;

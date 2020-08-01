@@ -55,6 +55,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_activity_uneditable: boolean;
     g_a_status_selector: any;
     g_a_action_btn_validators: any;
+    g_a_user_can_edit: boolean;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -92,19 +93,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
             })
         );
 
-        this.subscription.add(
-            this.genericActivitiesPemissions$.subscribe(permissions => {
-                const permissions_ = genericActivityPermissions.actions.reduce(
-                    (permssionsObj,viewPermission) => {
-                        permssionsObj[viewPermission] = permissions.some(p => (p === viewPermission) );
-                        return permssionsObj
-                    },
-                {});
-
-                this.setPermissions(permissions_);
-            })
-        );
-
         this.setActivity(
             this.router.url.substring(1).split("/")[2],
             this.router.url.substring(1).split("/").pop()
@@ -128,6 +116,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                             this.lapse_n = lapseId;
     
                             console.log("Datos de la actividad",activity);
+                            this.managePermissions();
                             this.setGenericActivityData(activity);
                             
                             this.loadedData = true;
@@ -144,8 +133,24 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         );
     }
 
+    managePermissions() {
+        this.subscription.add(
+            this.genericActivitiesPemissions$.subscribe(permissions => {
+                const permissions_ = genericActivityPermissions.actions.reduce(
+                    (permssionsObj,viewPermission) => {
+                        permssionsObj[viewPermission] = permissions.some(p => (p === viewPermission) );
+                        return permssionsObj
+                    },
+                {});
+
+                this.setPermissions(permissions_);
+            })
+        );
+    }
     setPermissions(permissions: genericActivityPermissionsI | any) {
         this.g_a_view_permissions = permissions;
+
+        // console.log("los permisos", this.g_a_view_permissions);
     }
 
     updateMethods() {
@@ -158,7 +163,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         const genericActivity = { 
             isGenericActivity: true, 
             genericActivityId: this.g_a_id, 
-            activityUneditable: this.g_a_activity_uneditable 
+            activityUneditable: this.g_a_activity_uneditable,
+            userCanEdit: this.g_a_user_can_edit,
         };
 
         let genericActivityObj = { ...genericActivity };
@@ -180,7 +186,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
         // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
         this.g_a_id = data.id;
-        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;        
+        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;  
+        this.g_a_user_can_edit = this.g_a_view_permissions.activity_peca_edit;
 
         const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 

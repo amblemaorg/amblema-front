@@ -18,12 +18,12 @@
                             class="form-control is-date-input tb-date-picker"
                             [value]="settings.dateOrtext.fields[0].value"                            
                             (change)="controlDateChange($event,'greater')"
-                            [disabled]="activity_uneditable"
+                            [disabled]="activity_uneditable || !userCanEdit"
                         />
                         <input 
                             [class.d-none]="inputDate.value.length > 0"
                             class="form-control is-date-placeholder"
-                            [class.greyer]="activity_uneditable"
+                            [class.greyer]="activity_uneditable || !userCanEdit"
                             autocomplete='off'
                             type="text"
                             readonly
@@ -56,12 +56,16 @@
                     }}</span>
                 </h6>
 
-                <a *ngIf="settings.download && settings.download.url" title="Descargar" 
-                    [href]="settings.download.url" target="_blank" 
+                <a 
+                    *ngIf="settings.download && settings.download.url" 
+                    title="Descargar" 
+                    [href]="settings.download.url" 
+                    target="_blank" 
                     [download]="settings.download.name" 
                     class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-                    (click)="activity_uneditable? $event.preventDefault():null"
-                    [class.inactive]="activity_uneditable">Descargar</a>
+                    (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+                    [class.inactive]="activity_uneditable || !userCanEdit"
+                >Descargar</a>
             </div>
             <div
                 *ngIf="
@@ -96,7 +100,7 @@
                     >
                     </ng-select>
                     <div 
-                        *ngIf="settings.genActSelectStatus"
+                        *ngIf="settings.genActSelectStatus && userCanEdit"
                         class="form-group select-gen-act-control" 
                         [formGroup]="statusForm"
                     >
@@ -126,6 +130,7 @@
                         <button 
                             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
                             (click)="addToTable(true)"
+                            [disabled]="!userCanEdit"
                         >{{settings.btnGeneral.name}}
                         </button>
                     </ng-container>
@@ -135,7 +140,7 @@
                             title="general" 
                             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
                             (click)="addToTable()"
-                            [disabled]="!currentSelected"
+                            [disabled]="!currentSelected || !userCanEdit"
                         >{{settings.btnGeneral.name}}
                         </button>
                     </ng-template>                    
@@ -219,17 +224,21 @@
             <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
                 (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
                 class="btn btn-primary text-decoration-none py-1 px-4"
-                [disabled]="activity_uneditable">
+                [disabled]="activity_uneditable || !userCanEdit">
             {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
             </button>
         </div>
 
-        <a *ngIf="settings.uploaddown && settings.uploaddown.url" [title]="settings.uploaddown.name" 
-            [href]="settings.uploaddown.url" target="_blank" 
+        <a 
+            *ngIf="settings.uploaddown && settings.uploaddown.url" 
+            [title]="settings.uploaddown.name" 
+            [href]="settings.uploaddown.url" 
+            target="_blank" 
             [download]="settings.uploaddown.name" 
             class="btn btn-primary text-decoration-none py-1 px-4"
-            (click)="activity_uneditable? $event.preventDefault():null"
-            [class.inactive]="activity_uneditable">{{settings.uploaddown.name}}</a>
+            (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+            [class.inactive]="activity_uneditable || !userCanEdit"
+        >{{settings.uploaddown.name}}</a>
     <!-- 
         <a *ngIf="settings.download" title="Descargar" 
         [href]="settings.download.url" target="_blank" 
@@ -238,48 +247,50 @@
             <nb-icon icon="planificacion"></nb-icon>
         </a> 
     -->
-        <ng-container *ngFor="let action of settings.action">
-            <ng-container *ngIf="action.type==6 || action.type == 5; else notModal">
-                <button
-                    *ngIf="action.name"
-                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
-                    (click)="addToTable(true, action.type==6?false : true)"
-                >{{ action.name }}
-                </button>
-            </ng-container>
-            <ng-template #notModal>
-                <button
-                    *ngIf="action.name"
-                    [class.d-none]="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel"
-                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-                    [disabled]="disableThis(action.type) || isSending || sleepSend"
-                    (click)="takeAction(action.type, $event)"
-                >
-                        <span *ngIf="isSending && ( 
-                            action.type==4 || action.type==7 || action.type==8
-                            || (settings.isDeleting 
-                                && action.type==1) 
-                        )" class="spinner-grow spinner-grow-sm"></span>
-                        {{
-                            isSending && (action.type==4 || action.type==7 || action.type==8) 
-                                ? ( action.type==8 ? 'Guardando' : (
-                                    action.type==7 ? setGenActBtnName() : 'Enviando'
-                                   ) ) 
-                                : ( action.type==7 ? setGenActBtnName() : action.name) 
-                        }}
-                </button>
-
-                <ng-container *ngIf="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel">
-                    <button                        
-                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-                        [disabled]="isSending || sleepSend"
-                        (click)="cancelRequest()"
-                    >
-                        <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
-                        {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
+        <ng-container *ngIf="userCanEdit">
+            <ng-container *ngFor="let action of settings.action">
+                <ng-container *ngIf="action.type==6 || action.type == 5; else notModal">
+                    <button
+                        *ngIf="action.name"
+                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
+                        (click)="addToTable(true, action.type==6?false : true)"
+                    >{{ action.name }}
                     </button>
                 </ng-container>
-            </ng-template>
-        </ng-container>        
+                <ng-template #notModal>
+                    <button
+                        *ngIf="action.name"
+                        [class.d-none]="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel"
+                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+                        [disabled]="disableThis(action.type) || isSending || sleepSend"
+                        (click)="takeAction(action.type, $event)"
+                    >
+                            <span *ngIf="isSending && ( 
+                                action.type==4 || action.type==7 || action.type==8
+                                || (settings.isDeleting 
+                                    && action.type==1) 
+                            )" class="spinner-grow spinner-grow-sm"></span>
+                            {{
+                                isSending && (action.type==4 || action.type==7 || action.type==8) 
+                                    ? ( action.type==8 ? 'Guardando' : (
+                                        action.type==7 ? setGenActBtnName() : 'Enviando'
+                                    ) ) 
+                                    : ( action.type==7 ? setGenActBtnName() : action.name) 
+                            }}
+                    </button>
+
+                    <ng-container *ngIf="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel">
+                        <button                        
+                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+                            [disabled]="isSending || sleepSend"
+                            (click)="cancelRequest()"
+                        >
+                            <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
+                            {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
+                        </button>
+                    </ng-container>
+                </ng-template>
+            </ng-container>   
+        </ng-container>     
     </div>
 </div>

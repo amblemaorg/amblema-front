@@ -121,8 +121,9 @@ export class TableBlockComponent
             .find(data.data.dataToCompare)
             .then(value => {
               if (index != -1)
-                this.settings["dataCopy"][index] = data.data.newData;
-              this.source.update(data.data.dataToCompare, data.data.newData);
+                this.settings["dataCopy"][index] = data.data.newData;        
+              this.source.update(data.data.dataToCompare, data.data.newData)
+              .then(resp=>{}).catch(error=>{});
               this.source.refresh();
               if (this.settings.makesNoRequest && this.settings.buttonCode)
                 this.isEdited = true;
@@ -134,7 +135,8 @@ export class TableBlockComponent
           this.source
             .find(data.data.dataToCompare)
             .then(value => {
-              if (index != -1) this.settings["dataCopy"].splice(index, 1);
+              if (index != -1) 
+                this.settings["dataCopy"].splice(index, 1);
               this.source.remove(data.data.dataToCompare);
               this.source.refresh();
               if (this.settings.makesNoRequest && this.settings.buttonCode)
