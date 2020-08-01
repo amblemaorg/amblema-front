@@ -421,8 +421,10 @@
                 <label [class.label-image-status]="imgField == 'imageStatus'">{{
                   settings.formsContent[field].fields[imgField].label
                 }}</label>
+                  
                 <input
-                  *ngIf="imgField == 'imageDocente' && !showSelectTeacher"
+                  *ngIf="(imgField == 'imageDocente' && !showSelectTeacher) || 
+                  (settings.formsContent[field].fields[imgField].shouldContentRefresh && isContentRefreshing)"
                   class="form-control"
                   type="text"
                   [formControlName]="imgField"
@@ -434,6 +436,7 @@
                 <ng-select
                   *ngIf="
                     (imgField == 'imageDocente' && showSelectTeacher) ||
+                    (settings.formsContent[field].fields[imgField].shouldContentRefresh && !isContentRefreshing) ||
                     imgField == 'imageStatus'
                   "
                   class="form-control"

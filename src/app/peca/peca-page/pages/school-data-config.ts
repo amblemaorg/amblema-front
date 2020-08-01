@@ -58,7 +58,7 @@ const registroEscuela = {
     columns: {
       source: {
         type: 'html',
-        title: 'Imágen',
+        title: 'Imagen',
         valuePrepareFunction: 
           (img) => {
             return `<img src="${img}" alt="image" />` 
@@ -157,7 +157,7 @@ const tablaDocente = {
         title: 'Apellido',
       },
       documentGroup: {
-        title: 'Cedula',
+        title: 'Cédula',
         valuePrepareFunction: (row: any) => {
           if (row) return row.prependInput;
           else return '';
@@ -403,7 +403,7 @@ const tablaEstudiante = {
         title: 'Apellido',
       },
       documentGroup: {
-        title: 'Cedula',
+        title: 'Cédula',
         valuePrepareFunction: (row: any) => {
           if (row) return row.prependInput;
           else return '';

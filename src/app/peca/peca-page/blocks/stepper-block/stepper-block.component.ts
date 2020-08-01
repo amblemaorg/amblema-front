@@ -34,7 +34,6 @@ export class StepperBlockComponent implements PresentationalBlockComponent, OnIn
       content: string;
       aligning: string; // 'center' for center aligning, 'left' otherwise
     }
-
   };
   constructor() {
     this.type = 'presentational';
