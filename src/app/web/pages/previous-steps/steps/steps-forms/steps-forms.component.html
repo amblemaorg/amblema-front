@@ -328,12 +328,12 @@
       </div> 
     </div>
     <div class="form-group">   
-      <label>Fecha de nacimiento</label>     
+      <label>Fecha de nacimiento</label>
       <div class="date-container">
         <input
           #inputBirthDate
           type="date" 
-          class="form-control form-date-picker" 
+          class="form-control form-date-picker calendar-date-icon" 
           [class.not-enabled]="disableThis()" 
           [class.not-valid]="validate('birthdate')" 
           [class.not-empty]="isEmpty('birthdate')" 

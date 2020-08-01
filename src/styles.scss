@@ -683,3 +683,34 @@ textarea.e-input::selection,
     margin-top: 100px !important;
   }
 }
+
+input[type="date"] {
+  &:after {
+    content: "v";
+    content: "\25BE";
+    content: "\f073";
+    z-index: 0;
+    position: absolute;
+    right: 0;
+    top: .7rem;
+    color: #888585;
+
+    margin-right: 4% !important;
+    @media screen and (orientation: landscape) {
+      margin-right: 2.75% !important;
+    }
+    @media screen and (orientation: landscape) and (min-width: 1600px) {
+      margin-right: 2.25% !important;
+    }
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-clear-button {
+    display: none;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    z-index: 1;
+  }
+}  
