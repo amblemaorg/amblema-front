@@ -34,6 +34,8 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     upFile: any;
     url: string;
     name: string;
+    statusPropuestaAmblema: number;// 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
+
     /////////////////
     UrlLapse = "";
     reunionAmblemaData: any;
@@ -103,22 +105,31 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     }
 
     setPropuestaText(data) {
-        if(this.UrlLapse === "1"){
+        if (this.UrlLapse === "1") {
             this.text = data.activePecaContent.lapse1.lapsePlanning.proposalFundationDescription;
             this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
-            //console.log(this.upFile, "descricion propuesta fundacion")
+            //status lapso1
+            this.statusPropuestaAmblema = data.activePecaContent.lapse1.lapsePlanning.approvalHistory ? 1
+            : data.activePecaContent.lapse1.lapsePlanning.approvalHistory.length > 0
+                ? data.activePecaContent.lapse1.lapsePlanning.approvalHistory[data.activePecaContent.lapse1.lapsePlanning.approvalHistory.length - 1].status === "2" || data.activePecaContent.lapse1.lapsePlanning.approvalHistory[data.activePecaContent.lapse1.lapsePlanning.approvalHistory.length - 1].status === "3" ? +data.activePecaContent.lapse1.lapsePlanning.approvalHistory[data.activePecaContent.lapse1.lapsePlanning.approvalHistory - 1].status : 0 : 0;
         }
-        else if (this.UrlLapse === "2"){
+        else if (this.UrlLapse === "2") {
             this.text = data.activePecaContent.lapse2.lapsePlanning.proposalFundationDescription;
-            this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
-            //console.log(this.text, "descricion propuesta fundacion")
+            this.upFile = data.activePecaContent.lapse2.lapsePlanning.attachedFile;
+            //status lapso 2
+            this.statusPropuestaAmblema = data.activePecaContent.lapse2.lapsePlanning.approvalHistory ? 1
+        : data.activePecaContent.lapse2.lapsePlanning.approvalHistory.length > 0
+            ? data.activePecaContent.lapse2.lapsePlanning.approvalHistory[data.activePecaContent.lapse2.lapsePlanning.approvalHistory.length - 1].status === "2" || data.activePecaContent.lapse2.lapsePlanning.approvalHistory[data.activePecaContent.lapse2.lapsePlanning.approvalHistory.length - 1].status === "3" ? +data.activePecaContent.lapse2.lapsePlanning.approvalHistory[data.activePecaContent.lapse2.lapsePlanning.approvalHistory - 1].status : 0 : 0;
         }
         else {
             this.text = data.activePecaContent.lapse3.lapsePlanning.proposalFundationDescription;
-            this.upFile = data.activePecaContent.lapse1.lapsePlanning.attachedFile;
-            //console.log(this.text, "descricion propuesta fundacion")
+            this.upFile = data.activePecaContent.lapse3.lapsePlanning.attachedFile;
+            //status lapso 3
+            this.statusPropuestaAmblema = data.activePecaContent.lapse3.lapsePlanning.approvalHistory ? 1
+        : data.activePecaContent.lapse3.lapsePlanning.approvalHistory.length > 0
+            ? data.activePecaContent.lapse3.lapsePlanning.approvalHistory[data.activePecaContent.lapse3.lapsePlanning.approvalHistory.length - 1].status === "2" || data.activePecaContent.lapse3.lapsePlanning.approvalHistory[data.activePecaContent.lapse3.lapsePlanning.approvalHistory.length - 1].status === "3" ? +data.activePecaContent.lapse3.lapsePlanning.approvalHistory[data.activePecaContent.lapse3.lapsePlanning.approvalHistory - 1].status : 0 : 0;
         }
-       
+    console.log(this.statusPropuestaAmblema, "estatus propuesta fundacion x lapso")
     }
 
     setPropuestaTextData() {
@@ -133,11 +144,15 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
                 url: this.upFile.url,
                 name: this.upFile.name,
             } : { uploadEmpty: true },
+            status: {
+                subText: this.statusPropuestaAmblema
+            }
         }
+        //console.log(this.propuestaAmblemaData.status.subText, "estatusssss")
     }
 
     setReunionText(data) {
-        if(this.UrlLapse === "1"){
+        if (this.UrlLapse === "1") {
             this.reunion = data.activePecaContent.lapse1.lapsePlanning.meetingDescription;
             //console.log(this.reunion, "descricion reunioon fundacion")
         }
@@ -149,7 +164,7 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
             this.reunion = data.activePecaContent.lapse3.lapsePlanning.meetingDescription;
             //console.log(this.reunion, "descricion reunioon fundacion")
         }
-       
+
     }
 
     setReunionTextData() {
