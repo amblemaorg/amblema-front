@@ -34,6 +34,14 @@
   </nb-sidebar>
 
   <nb-layout-column>
+    <ng-container *ngIf="showWelcome">
+      <nb-card>
+        <nb-card-body class="d-flex flex-column align-items-center pt-4 pb-5">
+          <h4 class="welcome-text mb-5 text-center">¡Bienvenido al PECA de AmbLeMa!</h4>
+          <img class="img-fluid" src="../../assets/images/logo_amblema.png" alt="AmbLeMa">
+        </nb-card-body>
+      </nb-card>
+    </ng-container>
     <!-- <span *ngIf="loading">cargando</span>  -->
     <router-outlet></router-outlet>
   </nb-layout-column>
