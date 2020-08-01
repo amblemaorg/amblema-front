@@ -12,9 +12,9 @@ export const genericActivityPermissions = {
 
 export interface sliderActivitiesPermissionsI {
     activities_slider_view: boolean;
-    activities_slider_create: boolean;
-    activities_slider_edit: boolean;
-    activities_slider_delete: boolean;
+    // activities_slider_create: boolean;
+    // activities_slider_edit: boolean;
+    // activities_slider_delete: boolean;
 }
 export const sliderActivitiesPermissions = {
     name: "ActivitiesSlider",
