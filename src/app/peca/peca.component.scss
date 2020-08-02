@@ -181,6 +181,13 @@
             color: $blue;
             font-family: "Montserrat" !important;
           }
+          .welcome-image {
+            @media screen and (orientation: landscape) and (min-width: 640px) { max-width: 84%; }
+            @media screen and (orientation: landscape) and (min-width: 1024px) { max-width: 60%; }
+            @media screen and (orientation: landscape) and (min-width: 1600px) { max-width: 56%; }
+            @media screen and (orientation: landscape) and (min-width: 1900px) { max-width: 50%; }
+            @media screen and (orientation: landscape) and (min-width: 2000px) { max-width: 50rem; }
+          }
           
           &.header-title-and-button-container {
             .btn-go-steps {
