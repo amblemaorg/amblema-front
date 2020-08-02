@@ -11,7 +11,7 @@
       <h1 class="h1-amblema"><b>AmbLeMa</b></h1>
     </div>
     <div class="dropdown header-avatar-user">
-      <div class="avartar-container">
+      <div class="avartar-container" data-toggle="dropdown">
         <nb-user
           size="giant"
           [name]="nameUser"
@@ -22,9 +22,9 @@
         ></nb-user>
         <h4 class="mb-0 user-name font-weight-bold" [innerHTML]="getUserOneOrTwoLines(nameUser)"></h4>
       </div>
-      <div class="dropdown-content">
-        <a [routerLink]="['perfil-usuario']">Perfil</a>
-        <a [routerLink]="['/auth/logout']">Salir</a>
+      <div class="dropdown-menu dropdown-content">
+        <a class="dropdown-item" [routerLink]="['perfil-usuario']">Perfil</a>
+        <a class="dropdown-item" [routerLink]="['/auth/logout']">Salir</a>
       </div>
     </div>
   </nb-layout-header>
