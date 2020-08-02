@@ -537,7 +537,7 @@ export class TextsButtonsSetBlockComponent
               });
 
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+              if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
             }, (error) => {
               const error_msg = (error.error && error.error instanceof ProgressEvent)
                 ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
@@ -599,7 +599,7 @@ export class TextsButtonsSetBlockComponent
             });
 
             if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-            this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
             const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -666,7 +666,7 @@ export class TextsButtonsSetBlockComponent
           positionClass: "toast-bottom-right"
         });
 
-        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
         const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -713,7 +713,7 @@ export class TextsButtonsSetBlockComponent
 
         if (this.settings.buttonCode && !this.settings.isGenericActivity) 
           this.globals.resetEdited(this.settings.buttonCode);
-        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
         const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -833,7 +833,7 @@ export class TextsButtonsSetBlockComponent
             positionClass: "toast-bottom-right"
           });
 
-          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
         },
         error => {
           const error_msg = (error.error && error.error instanceof ProgressEvent)

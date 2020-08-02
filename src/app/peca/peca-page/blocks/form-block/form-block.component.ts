@@ -631,7 +631,7 @@ export class FormBlockComponent
             positionClass: "toast-bottom-right"
           });
 
-          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
 
           if (
             this.settings.formType === "actualizarCoordinador" ||
@@ -702,12 +702,14 @@ export class FormBlockComponent
       !this.settings.formsContent["addressMunicipality"]
     )
       this.municipalities = [];
-    else {
-      this.municipalities = this.settings.formsContent[
-        "addressMunicipality"
-      ].options.filter(m => {
-        return m.state.id == state_id;
-      });
+    else {      
+      setTimeout(() => {
+        this.municipalities = this.settings.formsContent[
+          "addressMunicipality"
+        ].options.filter(m => {
+          return m.state.id == state_id;
+        });
+      });      
     }
 
     this.componentForm.patchValue({ addressMunicipality: munId });
@@ -721,6 +723,7 @@ export class FormBlockComponent
           this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
+      
       this.fillMunicipalities(currStateId, munId);
     }
   }

@@ -77,15 +77,17 @@ export class PecaComponent implements OnInit, OnDestroy {
       router.events.subscribe((event: Event) => {
           if (event instanceof NavigationEnd) {
               setTimeout(() => {
-                const path = event.url.split("/").pop();
-                if (path === "peca" || path === "perfil-usuario") {
-                  if (path === "peca") 
+                const path_initial = event.url.split("/").pop();
+                const path_def = path_initial.includes(";") ? path_initial.split(";").shift() : path_initial;
+
+                if (path_def === "peca" || path_def === "perfil-usuario") {
+                  if (path_def === "peca") 
                     this.showWelcome = true;
                   else
                     this.showWelcome = false;
                   this.deselectAllExceptOf(null, this.menu);
                 }
-                else this.deselectAllExceptOf(path, this.menu, true);
+                else this.deselectAllExceptOf(path_def, this.menu, true);
               });
           }
       })
@@ -95,24 +97,25 @@ export class PecaComponent implements OnInit, OnDestroy {
   ngOnInit() {    
     let activePecaId = null;
     this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
-      ({ activePeca }) => {
-        activePecaId = activePeca.id;
+      (activePeca) => {
+        if (activePeca) {
+          activePecaId = activePeca.activePeca.id;
 
-        const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
-          (
-            this.route.snapshot.children && this.route.snapshot.children.length>0 && 
-            this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-            this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
-          );
+          const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
+            (
+              this.route.snapshot.children && this.route.snapshot.children.length>0 && 
+              this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+              this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
+            );
 
-        if (activePecaId)
-          this.store.dispatch([new FetchPecaContent(activePecaId)])
-        else {
-          console.error("No pudo obtenerse el PecaId activo");
-          if (!comes_from_steps)
-            this.noPecaModalLauncherBtn.nativeElement.click();
-        }        
-
+          if (activePecaId)
+            this.store.dispatch([new FetchPecaContent(activePecaId)])
+          else {
+            console.error("No pudo obtenerse el PecaId activo");
+            if (!comes_from_steps)
+              this.noPecaModalLauncherBtn.nativeElement.click();
+          } 
+        }
       },
       error => console.error(error)
     );
