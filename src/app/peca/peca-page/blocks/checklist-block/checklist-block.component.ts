@@ -63,7 +63,13 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
       subtitle: string;
     }[];
   };
-checks=[];
+
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
+  checks=[];
 
   activity_uneditable: boolean
   private subscription: Subscription = new Subscription();
@@ -91,7 +97,8 @@ checks=[];
   }
 
   setData(data: any) {
-    if (data["isGenericActivity"]) {    
+    if (data["isGenericActivity"]) {  
+      this.userCanEdit = data["userCanEdit"];  
       this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
       this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"] ? data.checklist : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;

@@ -22,11 +22,18 @@
         position: relative;
         width: 100%;
         padding-right: 0;        
-        margin-left: 10px;
+        // margin-left: 10px;
         display: inline-block;
 
         .is-date-placeholder.greyer {
             background: #e9ecef !important;
+        }
+
+        &.estilo-date-non-editable {
+            .is-date-input, .is-date-placeholder {
+                background-color: #fff;
+                background: #fff !important;
+            }
         }
 
         .date-error-message {
@@ -364,12 +371,12 @@
             }
         }
 
-        &[readonly] {
-            cursor: default;
-            &:not(.is-date-placeholder):focus {
-                // border: 1px solid map-get($color_map, form-gray) !important;
-            }
-        }
+        // &[readonly] {
+        //     cursor: default;
+        //     &:not(.is-date-placeholder):focus {
+        //         // border: 1px solid map-get($color_map, form-gray) !important;
+        //     }
+        // }
     
         &.ng-untouched {
             & ~ .error-message, & ~ .date-error-message {
