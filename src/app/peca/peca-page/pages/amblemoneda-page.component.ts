@@ -33,7 +33,8 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   //charla
   amblemonedaData: any
   text: string;
-
+  url: string;
+  name: string;
   //tabla
   pruebaData: any;
 
@@ -46,6 +47,10 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   response2: any;
   response3: any;
   UrlLapse = "";
+  peca_id: string;
+  lapse_n: string;
+  file: any;
+
 
   isInstanciated: boolean;
   loadedData: boolean;
@@ -61,7 +66,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
-      
+
       if (this.loadedData) this.updateMethods();
     });
 
@@ -86,6 +91,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     this.infoDataSubscription = this.infoData$.subscribe(
       data => {
         if (data.activePecaContent) {
+          this.peca_id = data.activePecaContent.id;
           if (!isNullOrUndefined(data)) {
             console.log(data, "data amblemonedas")
           }
@@ -117,6 +123,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
 
   updateMethods() {
     this.updateDataToBlocks();
+    this.updateStaticFetchers();
   }
   updateDataToBlocks() {
     this.setBlockData("amblemonedaTable", this.pruebaData);
@@ -142,12 +149,15 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   setAmblemonedasCharla(data) {
     if (this.UrlLapse === "1") {
       this.text = data.activePecaContent.lapse1.ambleCoins.teachersMeetingDescription;
+      this.file = data.activePecaContent.lapse1.ambleCoins.teachersMeetingFile;
     } else if (this.UrlLapse === "2") {
       this.text = data.activePecaContent.lapse2.ambleCoins.teachersMeetingDescription;
+      this.file = data.activePecaContent.lapse2.ambleCoins.teachersMeetingFile;
     } else {
       this.text = data.activePecaContent.lapse3.ambleCoins.teachersMeetingDescription;
+      this.file = data.activePecaContent.lapse3.ambleCoins.teachersMeetingFile;
     }
-    //console.log(this.text, "charla")
+    console.log(this.file, "CHARLAAAAAAAAAAAA")
   }
 
   setAmblemonedasCharlaData() {
@@ -156,8 +166,14 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
         {
           text: this.text
         }
-      ]
+      ],
+      download:
+      {
+        url: this.file.url,
+        name: this.file.name,
+      }
     }
+    console.log(this.amblemonedaData.download.url,this.amblemonedaData.download.name, "locoooooooooooo");
   }
 
   setAmblemonedasSlider(data) {
@@ -173,7 +189,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     }
     //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
     //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-    
+
   }
 
   setAmblemonedasSliderData() {
@@ -199,7 +215,16 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
         }
       }
     }
-    
+
+  }
+
+  updateStaticFetchers() {
+
+    // Descargar archivo
+    ///pecaprojects/amblecoins/<string:pecaId>/<string:lapse>
+    this.setBlockFetcherUrls("btnEnviarSolicitud", {
+      put: `pecaprojects/amblecoins/${this.peca_id}/${this.lapse_n}`,
+    });
   }
 
   ngAfterViewInit(): void {
