@@ -126,7 +126,9 @@ import {
   requiredAndOnlyLetters,
   onlyLetters,
   requiredAndOnlyLettersAndNumbers,
-  onlyLettersAndNumbers
+  onlyLettersAndNumbers,
+  requiredAndSocialNetwork,
+  socialNetwork
 } from "../../../../web/shared/forms/custom-validators";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 
@@ -217,6 +219,16 @@ const controlProps = {
   textareaNnormalText: {
     type: "textarea",
     validations: normalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+  },
+  socialNetworkAndRequired: {
+    type: "text",
+    validations: requiredAndSocialNetwork,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+  },
+  socialNetwork: {
+    type: "text",
+    validations: socialNetwork,
     messages: { pattern: MESSAGES.TEXT_MESSAGE }
   }
 };
@@ -694,7 +706,7 @@ export const formDatosEscuela = {
         label: "Facebook",
         placeholder: "Facebook",
         fullwidth2: true,
-        ...controlProps.normalText
+        ...controlProps.socialNetwork
       }
     }
   },
@@ -705,13 +717,13 @@ export const formDatosEscuela = {
         label: "Instagram",
         placeholder: "Instagram",
         fullwidth2: true,
-        ...controlProps.normalText
+        ...controlProps.socialNetwork
       },
       twitter: {
         label: "Twitter",
         placeholder: "Twitter",
         fullwidth2: true,
-        ...controlProps.normalText
+        ...controlProps.socialNetwork
       }
     }
   },
