@@ -652,8 +652,8 @@ export class TextsButtonsSetBlockComponent
     const url = this.settings.fetcherUrls[fetcherMethod];
 
     if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
-    if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date); 
-    if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+    if(this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") formData.append('date', this.dataGenAct.date); 
+    if(this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
     if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
 
     this.fetcher[fetcherMethod](url, formData).subscribe(
@@ -819,8 +819,8 @@ export class TextsButtonsSetBlockComponent
       console.log("Status changer");
       formData.append('status', e.id === "1" ? "1" : "3");
       if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
-      if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date);
-      if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+      if(this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") formData.append('date', this.dataGenAct.date);
+      if(this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
       if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
 
       this.fetcher[fetcherMethod](url, formData).subscribe(
