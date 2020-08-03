@@ -17,6 +17,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { GenericActivity } from '../../../models/peca/generic-activity.model';
 import { GlobalService } from '../../../services/global.service';
 import { genericActivityMapper } from '../mappers/generic-activity-mappers';
+import { genericActivityPermissions, genericActivityPermissionsI } from '../blocks/peca-permissology';
 
 @Component({
     selector: 'peca-generic-activity',
@@ -28,11 +29,9 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     @Select(PecaState.getPecaLapsesData) pecaLapseData$: Observable<any>;
     // @Select(PecaState.isPecaContentRequesting) isPecaContentRequesting$: Observable<boolean>;
     @Select(PecaState.getUserResume) userData$: Observable<any>;
+    @Select(PecaState.getUserPermissions) genericActivitiesPemissions$: Observable<any>;
 
-    pecaLapseSubscription: Subscription;
-    userDataSubscription: Subscription;
-    routerSubscription: Subscription;
-    // requestingSubscriptiom: Subscription;
+    private subscription: Subscription = new Subscription();
     isInstanciated: boolean;
     loadedData: boolean;
     user_type: string = "0";
@@ -44,6 +43,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     // generic activity content variables
     g_a_id: string;
     // g_a_dev_name: string;
+    g_a_view_permissions: genericActivityPermissionsI;
     g_a_text: any;
     g_a_date: any;
     g_a_download: any;
@@ -55,6 +55,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_activity_uneditable: boolean;
     g_a_status_selector: any;
     g_a_action_btn_validators: any;
+    g_a_user_can_edit: boolean;
+    g_a_status: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -73,20 +75,24 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
         this.instantiateComponent(config);
 
-        this.routerSubscription = this.router.events.subscribe((event: Event) => {
-            if (event instanceof NavigationEnd) {
-                const lapse_number = event.url.substring(1).split("/")[2];
-                const activity_devname = event.url.substring(1).split("/").pop();
-                this.setActivity(lapse_number, activity_devname);
-            }
-        });
+        this.subscription.add(
+            this.router.events.subscribe((event: Event) => {
+                if (event instanceof NavigationEnd) {
+                    const lapse_number = event.url.substring(1).split("/")[2];
+                    const activity_devname = event.url.substring(1).split("/").pop();
+                    this.setActivity(lapse_number, activity_devname);
+                }
+            })
+        );
     }
 
     ngOnInit() {
-        this.userDataSubscription = this.userData$.subscribe(user => {
-            this.user_id = user.id;
-            this.user_type = user.type;
-        });
+        this.subscription.add(
+            this.userData$.subscribe(user => {
+                this.user_id = user.id;
+                this.user_type = user.type;
+            })
+        );
 
         this.setActivity(
             this.router.url.substring(1).split("/")[2],
@@ -95,34 +101,57 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
 
     setActivity(lapseId, activityDevName) {  
-        this.pecaLapseSubscription = this.pecaLapseData$.subscribe(
-            (data) => {
-                if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
-                if (
-                    data && 
-                    data.lapses && 
-                    data.lapses[`lapse${lapseId}`]
-                ) {    
-                    const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === activityDevName );
-
-                    if (activity) {
-                        this.changeComponentHeader(activity.name);
-                        this.lapse_n = lapseId;
-
-                        console.log("Datos de la actividad",activity);
-                        this.setGenericActivityData(activity);
-                        
-                        this.loadedData = true;
-                        if (this.isInstanciated) {
-                            setTimeout(() => {
-                                this.updateMethods(); 
-                            });
-                        }
-                    }                    
-                }                
-            },
-            error => console.error(error)
+        this.subscription.add(
+            this.pecaLapseData$.subscribe(
+                (data) => {
+                    if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
+                    if (
+                        data && 
+                        data.lapses && 
+                        data.lapses[`lapse${lapseId}`]
+                    ) {    
+                        const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === activityDevName );
+    
+                        if (activity) {
+                            this.changeComponentHeader(activity.name);
+                            this.lapse_n = lapseId;
+    
+                            console.log("Datos de la actividad",activity);
+                            this.managePermissions();
+                            this.setGenericActivityData(activity);
+                            
+                            this.loadedData = true;
+                            if (this.isInstanciated) {
+                                setTimeout(() => {
+                                    this.updateMethods(); 
+                                });
+                            }
+                        }                    
+                    }                
+                },
+                error => console.error(error)
+            )
         );
+    }
+
+    managePermissions() {
+        this.subscription.add(
+            this.genericActivitiesPemissions$.subscribe(permissions => {
+                const permissions_ = genericActivityPermissions.actions.reduce(
+                    (permssionsObj,viewPermission) => {
+                        permssionsObj[viewPermission] = permissions.some(p => (p === viewPermission) );
+                        return permssionsObj
+                    },
+                {});
+
+                this.setPermissions(permissions_);
+            })
+        );
+    }
+    setPermissions(permissions: genericActivityPermissionsI | any) {
+        this.g_a_view_permissions = permissions;
+
+        // console.log("los permisos", this.g_a_view_permissions);
     }
 
     updateMethods() {
@@ -135,7 +164,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         const genericActivity = { 
             isGenericActivity: true, 
             genericActivityId: this.g_a_id, 
-            activityUneditable: this.g_a_activity_uneditable 
+            activityUneditable: this.g_a_activity_uneditable,
+            userCanEdit: this.g_a_user_can_edit,
         };
 
         let genericActivityObj = { ...genericActivity };
@@ -148,6 +178,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
         if (this.g_a_status_selector) genericActivityObj = { ...genericActivityObj, ...this.g_a_status_selector, ...this.g_a_action_btn_validators };
 
+        this.setBlockData("genericActivityStatus", this.g_a_status);
         this.setBlockData("genericActivityFields", genericActivityObj );
         this.setBlockData("genericActivityChecklist", { ...genericActivity, ...this.g_a_checklist });
         this.setBlockData("genericActivityActionButton", { ...genericActivity, ...this.g_a_action_btn, ...this.g_a_action_btn_validators });
@@ -157,11 +188,19 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
         // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
         this.g_a_id = data.id;
-        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;        
+        this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;  
+        this.g_a_user_can_edit = this.g_a_view_permissions.activity_peca_edit;
 
         const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 
         this.activity_cancel_id = genActMapped.activity_cancel_id;
+
+        this.g_a_status = {
+            status: {
+            text: 'Estatus',
+              subText: genActMapped.g_a_status
+            }
+        };
 
         this.g_a_status_selector = genActMapped.g_a_status_selector;
         this.g_a_text = genActMapped.g_a_text;
@@ -204,9 +243,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     ngOnDestroy() {
         this.isInstanciated = false;
         this.loadedData = false;
-        this.pecaLapseSubscription.unsubscribe();
-        this.userDataSubscription.unsubscribe();
-        this.routerSubscription.unsubscribe();
+        this.subscription.unsubscribe();
         // this.requestingSubscriptiom.unsubscribe();
     }
 }

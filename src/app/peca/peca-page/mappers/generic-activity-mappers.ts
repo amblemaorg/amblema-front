@@ -7,6 +7,17 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         data.approvalHistory[data.approvalHistory.length-1].status === "1" 
             ? data.approvalHistory[data.approvalHistory.length-1] : null;
 
+    // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
+    const g_a_status = data.status === "2"
+    ? 1
+        : data.approvalHistory.length > 0
+        ? data.approvalHistory[data.approvalHistory.length - 1].status === "2" ||
+          data.approvalHistory[data.approvalHistory.length - 1].status === "3"
+            ? +data.approvalHistory[data.approvalHistory.length - 1].status
+            : 0
+        : 0;
+    // const g_a_status = data.status === "2" ? 1 : 0;    
+
     const {
         date,
         file,
@@ -158,6 +169,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         };
 
     return {
+        g_a_status,
         activity_cancel_id: activity_to_use ? activity_to_use.id : null,
         g_a_status_selector, 
         g_a_text, 

@@ -106,6 +106,11 @@ export class TextsButtonsSetBlockComponent
     }
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
 
@@ -252,6 +257,7 @@ export class TextsButtonsSetBlockComponent
       this.isSending = null;
 
       this.settings.isGenericActivity = true;
+      this.userCanEdit = data["userCanEdit"];
 
       this.reloadDate = true; this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
@@ -305,7 +311,7 @@ export class TextsButtonsSetBlockComponent
     } 
     else {
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
-      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["status"]) this.settings.status = data.status;
       if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
       if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
       if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
@@ -531,7 +537,7 @@ export class TextsButtonsSetBlockComponent
               });
 
               if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+              if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
             }, (error) => {
               const error_msg = (error.error && error.error instanceof ProgressEvent)
                 ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
@@ -593,7 +599,7 @@ export class TextsButtonsSetBlockComponent
             });
 
             if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-            this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           error => {
             const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -646,8 +652,8 @@ export class TextsButtonsSetBlockComponent
     const url = this.settings.fetcherUrls[fetcherMethod];
 
     if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
-    if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date); 
-    if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+    if(this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") formData.append('date', this.dataGenAct.date); 
+    if(this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
     if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
 
     this.fetcher[fetcherMethod](url, formData).subscribe(
@@ -660,7 +666,7 @@ export class TextsButtonsSetBlockComponent
           positionClass: "toast-bottom-right"
         });
 
-        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
         const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -707,7 +713,7 @@ export class TextsButtonsSetBlockComponent
 
         if (this.settings.buttonCode && !this.settings.isGenericActivity) 
           this.globals.resetEdited(this.settings.buttonCode);
-        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       error => {
         const error_msg = (error.error && error.error instanceof ProgressEvent)
@@ -813,8 +819,8 @@ export class TextsButtonsSetBlockComponent
       console.log("Status changer");
       formData.append('status', e.id === "1" ? "1" : "3");
       if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
-      if(this.dataGenAct.date && typeof this.dataGenAct !== "boolean") formData.append('date', this.dataGenAct.date);
-      if(this.dataGenAct.upload && typeof this.dataGenAct !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
+      if(this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") formData.append('date', this.dataGenAct.date);
+      if(this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean") formData.append('uploadedFile', this.dataGenAct.upload);
       if(this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) formData.append('checklist', JSON.stringify(this.dataGenAct.checklist));
 
       this.fetcher[fetcherMethod](url, formData).subscribe(
@@ -827,7 +833,7 @@ export class TextsButtonsSetBlockComponent
             positionClass: "toast-bottom-right"
           });
 
-          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
         },
         error => {
           const error_msg = (error.error && error.error instanceof ProgressEvent)

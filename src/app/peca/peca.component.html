@@ -11,7 +11,7 @@
       <h1 class="h1-amblema"><b>AmbLeMa</b></h1>
     </div>
     <div class="dropdown header-avatar-user">
-      <div class="avartar-container">
+      <div class="avartar-container" data-toggle="dropdown">
         <nb-user
           size="giant"
           [name]="nameUser"
@@ -22,9 +22,9 @@
         ></nb-user>
         <h4 class="mb-0 user-name font-weight-bold" [innerHTML]="getUserOneOrTwoLines(nameUser)"></h4>
       </div>
-      <div class="dropdown-content">
-        <a [routerLink]="['perfil-usuario']">Perfil</a>
-        <a [routerLink]="['/auth/logout']">Salir</a>
+      <div class="dropdown-menu dropdown-content">
+        <a class="dropdown-item" [routerLink]="['perfil-usuario']">Perfil</a>
+        <a class="dropdown-item" [routerLink]="['/auth/logout']">Salir</a>
       </div>
     </div>
   </nb-layout-header>
@@ -34,6 +34,14 @@
   </nb-sidebar>
 
   <nb-layout-column>
+    <ng-container *ngIf="showWelcome">
+      <nb-card>
+        <nb-card-body class="d-flex flex-column align-items-center pt-5">
+          <h4 class="welcome-text text-center">¡Bienvenido al PECA de AmbLeMa!</h4>
+          <img class="img-fluid welcome-image" src="../../assets/images/logo_amblema.jpg" alt="AmbLeMa">
+        </nb-card-body>
+      </nb-card>
+    </ng-container>
     <!-- <span *ngIf="loading">cargando</span>  -->
     <router-outlet></router-outlet>
   </nb-layout-column>

@@ -336,8 +336,9 @@
                 }
             }            
             .checkbox {
-                @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 50%; }
-                @include mediabreak(small,portrait) { flex: 0 0 50%; }
+                flex: 100%;
+                // @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 50%; }
+                // @include mediabreak(small,portrait) { flex: 0 0 50%; }
                 /* Customize the label (the container) */
                 .check-container {
                     display: block;
@@ -367,14 +368,14 @@
                     /* Create a custom checkbox */
                     .checkmark {
                         position: absolute;
-                        top: -0.15rem;
+                        top: 0.25rem;
                         left: 0;
                         height: 1.75rem;
                         width: 1.75rem;
                         background-color: transparent;
                         border: 1px solid map-get($color_map, tab-gray);
 
-                        @include mediabreak(large,landscape) { top: -0.25rem; }
+                        // @include mediabreak(large,landscape) { top: -0.25rem; }
 
                         /* Create the checkmark/indicator (hidden when not checked) */
                         &:after {
