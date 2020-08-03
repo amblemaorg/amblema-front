@@ -38,6 +38,11 @@ export class TableBlockComponent
     tableTitle?: string; // to set a title for the table
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   // source: LocalDataSource | any;
   source: LocalDataSource;
   isEdited: boolean;

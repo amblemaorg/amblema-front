@@ -57,6 +57,11 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
     items: StructuralItem[];
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   private subscription: Subscription = new Subscription();
 
   isBrowser;
