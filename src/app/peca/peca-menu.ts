@@ -8,12 +8,12 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
   },
   olympics: {
     title: 'Olimpíadas de matemáticas',
-    icon: 'diagnostico',
+    icon: 'medal',
     link: 'olimpiadas-matematicas',
   },
   annualPreparation: {
     title: 'Preparación de la convención anual',
-    icon: 'convencion',
+    icon: 'users',
     link: 'preparacion-convencion-anual',
   },
   annualConvention: {
@@ -83,18 +83,18 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Estrategia de seguimiento para actividades extraordinarias',
-    icon: 'actividades',
+    title: 'Estrategias de seguimiento para actividades extraordinarias',
+    icon: 'bar-chart-o',
     link: 'estrategia-seguimiento',
   },
   {
     title: 'Temática ambiental',
-    icon: 'venezuela',
+    icon: 'leaf',
     link: 'tematica-ambiental',
   },
   {
     title: 'Agenda de actividades',
-    icon: 'calendar',
+    icon: 'book',
     link: 'agenda-page',
   },
   {
@@ -104,17 +104,12 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   },
   {
     title: 'Testimonio docentes',
-    icon: 'taller-inicial',
+    icon: 'icn-docentes',
     link: 'testimonio-docentes',
   },
   {
     title: 'Fotos de las actividades',
-    icon: 'anuario',
+    icon: 'photo',
     link: 'imagenes-escuela',
-  },
-  {
-    title: 'Salir',
-    icon: 'trash-empty',
-    link: '/auth/logout',
   },
 ];
