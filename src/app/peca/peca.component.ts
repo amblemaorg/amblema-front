@@ -161,8 +161,18 @@ export class PecaComponent implements OnInit, OnDestroy {
         if (this.document.documentElement.clientWidth < 1200) {
           if (this.document.documentElement.clientWidth >= 576) 
             this.menuService.collapseAll();
-          this.toggle();
-        } 
+  
+          if (
+            (
+              this.document.documentElement.clientWidth >= 576 && 
+              menu_item["item"]["parent"]
+            ) ||
+            this.document.documentElement.clientWidth < 576
+          ) 
+            this.toggle();
+
+        }
+
       })
     );
   }
@@ -266,7 +276,8 @@ export class PecaComponent implements OnInit, OnDestroy {
           const lapseOption = this.lapseOptionsConfig[key];
           lapseOptions.push({
             ...lapseOption,
-            link: `lapso/${i}/${lapseOption.link}`
+            link: `lapso/${i}/${lapseOption.link}`,
+            parent: this.menu[i - 1]
           });
         }
       });
@@ -277,15 +288,22 @@ export class PecaComponent implements OnInit, OnDestroy {
         lapseOptions.push({
           ...lapseActivity,
           title: activity.name,
-          link: `lapso/${i}/${lapseActivity.link}/${activity.devName}`
+          link: `lapso/${i}/${lapseActivity.link}/${activity.devName}`,
+          parent: this.menu[i - 1]
         });
       });
 
       this.menu[i - 1].children = lapseOptions;
     }
 
-    // ["generic_activity","activities_pictures"]
-    this.deselectAllExceptOf(link,this.menu,true);
+    const menu_items_to_hide = Object.keys(this.menu_permissions)
+      .reduce((removable_items,permission) => {
+        if (permission.includes("_view") && !this.menu_permissions[permission]) 
+          removable_items.push(permission);
+        return removable_items
+      },[]);
+
+    this.deselectAllExceptOf(link, this.menu, true, menu_items_to_hide);
   }
 
   ngOnDestroy() {
