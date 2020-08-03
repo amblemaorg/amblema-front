@@ -29,6 +29,13 @@
             background: #e9ecef !important;
         }
 
+        &.estilo-date-non-editable {
+            .is-date-input, .is-date-placeholder {
+                background-color: #fff;
+                background: #fff !important;
+            }
+        }
+
         .date-error-message {
             display: none;
             position: relative;

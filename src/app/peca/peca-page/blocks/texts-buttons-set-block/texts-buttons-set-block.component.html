@@ -11,7 +11,11 @@
                     <span *ngIf="settings.dateOrtext.text">{{ settings.dateOrtext.text }}</span>
                     <span [class.display-date]="settings.dateOrtext.date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"></span>
                     <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
-                    <span class="estilo-date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields && settings.dateOrtext.fields.length > 0">
+                    <span 
+                        *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields && settings.dateOrtext.fields.length > 0"
+                        class="estilo-date"
+                        [class.estilo-date-non-editable]="!userCanEdit"
+                    >
                         <input
                             #inputDate
                             type="date" 
@@ -57,7 +61,7 @@
                 </h6>
 
                 <a 
-                    *ngIf="settings.download && settings.download.url" 
+                    *ngIf="settings.download && settings.download.url && userCanEdit" 
                     title="Descargar" 
                     [href]="settings.download.url" 
                     target="_blank" 
@@ -218,14 +222,21 @@
         [class.text-center]="settings.isFromCustomTableActions"
         [class.py-3]="settings.isFromCustomTableActions"
     >
-        <div *ngIf="settings.upload && !reloadUpload" class="d-inline btn-in-wrapper" id="tb-upload-btn-container" #tbUploadFile>
+        <div 
+            *ngIf="settings.upload && !reloadUpload" 
+            class="btn-in-wrapper" 
+            id="tb-upload-btn-container" 
+            #tbUploadFile
+            [class.d-inline]="userCanEdit"
+            [class.d-none]="!userCanEdit && settings.upload && settings.upload.uploadEmpty"
+        >
             <input class="d-none tb-upload-btn-input-file" id="tb-upload-btn-input-file" (change)="fileMngr($event)" type="file"
                 accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
             <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
                 (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
                 class="btn btn-primary text-decoration-none py-1 px-4"
                 [disabled]="activity_uneditable || !userCanEdit">
-            {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
+                {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
             </button>
         </div>
 
