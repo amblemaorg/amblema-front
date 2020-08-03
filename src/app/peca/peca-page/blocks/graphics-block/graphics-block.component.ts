@@ -2,6 +2,10 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { Router, Event, NavigationEnd } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { PecaState } from 'src/app/store/states/peca/peca.state';
+import { Select } from '@ngxs/store';
 @Component({
   selector: 'app-graphics-block',
   templateUrl: './graphics-block.component.html',
@@ -17,13 +21,86 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   canvas: any;
   ctx: any;
   chart: any;
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
+  routerSubscription: Subscription;
+  infoDataSubscription: Subscription;
+  UrlLapse = "";
+  resultadoLectura: any;
+  indiceLectura: number;
+  resultadoMultiplicacion: number;
+  indiceMultiplicacion: number;
+  resultadoLogica: number;
+  indiceLogica: number;
 
-  constructor() {
+
+  constructor( private router: Router) {
     this.type = 'presentational';
     this.component = 'graphics';
+    this.routerSubscription = this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.UrlLapse = event.url;
+        this.UrlLapse = this.router.url.substr(12, 1);
+      }
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getInfo();
+  }
+
+  getInfo(){
+    this.UrlLapse=this.router.url.substr(12, 1)
+    this.infoDataSubscription = this.infoData$.subscribe(
+      (data) => {
+        if (data.activePecaContent) {
+          if (this.UrlLapse==='1'){
+          this.resultadoLectura= data.activePecaContent.school.sections[0].diagnostics.lapse1.wordsPerMin;
+          this.indiceLectura= data.activePecaContent.school.sections[0].diagnostics.lapse1.wordsPerMinIndex;
+          this.resultadoMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse1.multiplicationsPerMin;
+          this.indiceMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse1.multiplicationsPerMinIndex;
+          this.resultadoLogica= data.activePecaContent.school.sections[0].diagnostics.lapse1.operationsPerMin;
+          this.indiceLogica= data.activePecaContent.school.sections[0].diagnostics.lapse1.operationsPerMinIndex;
+          console.log('this.resultadoLectura',this.resultadoLectura);
+          console.log('this.indiceLectura',this.indiceLectura);
+          console.log('this.resultadoMultiplicacion',this.resultadoMultiplicacion);
+          console.log('this.resultadoLogica',this.resultadoLogica);
+          console.log('this.indiceLogica',this.indiceLogica);
+          console.log('indiceMultiplicacion', this.indiceMultiplicacion); 
+          }
+          else if (this.UrlLapse==='2') {
+            this.resultadoLectura= data.activePecaContent.school.sections[0].diagnostics.lapse2.wordsPerMin;
+            this.indiceLectura= data.activePecaContent.school.sections[0].diagnostics.lapse2.wordsPerMinIndex;
+            this.resultadoMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse2.multiplicationsPerMin;
+            this.indiceMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse2.multiplicationsPerMinIndex;
+            this.resultadoLogica= data.activePecaContent.school.sections[0].diagnostics.lapse2.operationsPerMin;
+            this.indiceLogica= data.activePecaContent.school.sections[0].diagnostics.lapse2.operationsPerMinIndex;
+             console.log('this.resultadoLectura',this.resultadoLectura);
+            console.log('this.indiceLectura',this.indiceLectura);
+            console.log('this.resultadoMultiplicacion',this.resultadoMultiplicacion);
+            console.log('this.resultadoLogica',this.resultadoLogica);
+            console.log('this.indiceLogica',this.indiceLogica);
+            console.log('indiceMultiplicacion', this.indiceMultiplicacion); 
+          }
+          else {
+            this.resultadoLectura= data.activePecaContent.school.sections[0].diagnostics.lapse3.wordsPerMin;
+            this.indiceLectura= data.activePecaContent.school.sections[0].diagnostics.lapse3.wordsPerMinIndex;
+            this.resultadoMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse3.multiplicationsPerMin;
+            this.indiceMultiplicacion= data.activePecaContent.school.sections[0].diagnostics.lapse3.multiplicationsPerMinIndex;
+            this.resultadoLogica= data.activePecaContent.school.sections[0].diagnostics.lapse3.operationsPerMin;
+            this.indiceLogica= data.activePecaContent.school.sections[0].diagnostics.lapse3.operationsPerMinIndex;
+             console.log('this.resultadoLectura',this.resultadoLectura);
+            console.log('this.indiceLectura',this.indiceLectura);
+            console.log('this.resultadoMultiplicacion',this.resultadoMultiplicacion);
+            console.log('this.resultadoLogica',this.resultadoLogica);
+            console.log('this.indiceLogica',this.indiceLogica);
+            console.log('indiceMultiplicacion', this.indiceMultiplicacion); 
+          }
+               }
+      },
+
+      (error) => console.error(error)
+    );
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -43,34 +120,52 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ['col1', 'col2', 'col3'],
+          labels: ['Primer grado C'],
           datasets: [
             {
-              label: 'Num datos',
-              data: [10, 9, 15],
+              label: 'Resultado de lectura',
+              data: [this.resultadoLectura],
               backgroundColor: [
-                '#81b03e',
-                '#81b03e',
                 '#81b03e',
               ],
               fill: false
             },
             {
-              label: 'Num datos',
-              data: [3, 15, 11],
+              label: 'Índice de lectura',
+              data: [this.indiceLectura],
               backgroundColor: [
-                '#EEE9E8',
-                '#EEE9E8',
                 '#EEE9E8',
               ],
               fill: false
             },
             {
-              label: 'Num datos',
-              data: [8, 5, 12],
+              label: 'Resultado de lógica matemática',
+              data: [this.resultadoLogica],
               backgroundColor: [
                 '#00353a',
+              ],
+              fill: false
+            },
+            {
+              label: 'Índice de lógica matemática',
+              data: [this.indiceLogica],
+              backgroundColor: [
                 '#00353a',
+              ],
+              fill: false
+            },
+            {
+              label: 'Resultado de multiplicación',
+              data: [this.resultadoMultiplicacion],
+              backgroundColor: [
+                '#00353a',
+              ],
+              fill: false
+            },
+            {
+              label: 'Índice de multiplicación',
+              data: [this.indiceMultiplicacion],
+              backgroundColor: [
                 '#00353a',
               ],
               fill: false
@@ -94,5 +189,8 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       })
     }
   }
-
+  ngOnDestroy() {
+    this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
+  }
 }
