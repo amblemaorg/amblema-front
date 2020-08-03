@@ -50,7 +50,7 @@ export class PecaComponent implements OnInit, OnDestroy {
                     monitoringActivityPermissionsI;
   private subscription: Subscription = new Subscription();  
 
-  showWelcome: boolean = true;
+  showWelcome: boolean = false;
 
   activePecaSubscription: Subscription;
   activePecaContentSubscription: Subscription;
@@ -77,17 +77,20 @@ export class PecaComponent implements OnInit, OnDestroy {
       router.events.subscribe((event: Event) => {
           if (event instanceof NavigationEnd) {
               setTimeout(() => {
-                const path_initial = event.url.split("/").pop();
+                const path_initial = event.url.replace("/peca","").substring(1);
                 const path_def = path_initial.includes(";") ? path_initial.split(";").shift() : path_initial;
 
-                if (path_def === "peca" || path_def === "perfil-usuario") {
-                  if (path_def === "peca") 
+                if (path_def.length === 0 || path_def === "perfil-usuario") {
+                  if (path_def.length === 0) 
                     this.showWelcome = true;
                   else
                     this.showWelcome = false;
                   this.deselectAllExceptOf(null, this.menu);
                 }
-                else this.deselectAllExceptOf(path_def, this.menu, true);
+                else {
+                  this.showWelcome = false;
+                  this.deselectAllExceptOf(path_def, this.menu, true);
+                }
               });
           }
       })
@@ -155,8 +158,6 @@ export class PecaComponent implements OnInit, OnDestroy {
           })
         );
 
-        menu_item["item"]["selected"] = true;
-        
         if (this.document.documentElement.clientWidth < 1200) {
           if (this.document.documentElement.clientWidth >= 576) 
             this.menuService.collapseAll();
