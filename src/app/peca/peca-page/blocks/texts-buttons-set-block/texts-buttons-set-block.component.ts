@@ -568,6 +568,10 @@ export class TextsButtonsSetBlockComponent
           e.target.classList.add('d-none');
         }
         break;
+      case 3:
+        this.isSending = true;
+        console.log('prueba')
+        break;
       case 4:
         this.isSending = true;
         if ( // if has a date
