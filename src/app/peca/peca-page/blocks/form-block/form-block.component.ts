@@ -58,6 +58,11 @@ export class FormBlockComponent
     tableRefreshName?: string; // to refresh table in the initial setter component
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
   @Select(ResidenceInfoState.get_states) states$: Observable<any>;

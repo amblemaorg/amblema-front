@@ -35,6 +35,11 @@ export class ProfileBlockComponent
     items: StructuralItem[];
   };
 
+  userCanCreate: boolean = true;
+  userCanEdit: boolean = true;
+  userCanDelete: boolean = true;
+  userCanView: boolean = true;
+
   url = "";
   name = "";
 
