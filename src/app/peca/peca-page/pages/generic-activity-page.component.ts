@@ -56,6 +56,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     g_a_status_selector: any;
     g_a_action_btn_validators: any;
     g_a_user_can_edit: boolean;
+    g_a_status: any;
 
     constructor(
         factoryResolver: ComponentFactoryResolver, 
@@ -177,6 +178,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
         if (this.g_a_status_selector) genericActivityObj = { ...genericActivityObj, ...this.g_a_status_selector, ...this.g_a_action_btn_validators };
 
+        this.setBlockData("genericActivityStatus", this.g_a_status);
         this.setBlockData("genericActivityFields", genericActivityObj );
         this.setBlockData("genericActivityChecklist", { ...genericActivity, ...this.g_a_checklist });
         this.setBlockData("genericActivityActionButton", { ...genericActivity, ...this.g_a_action_btn, ...this.g_a_action_btn_validators });
@@ -192,6 +194,12 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         const genActMapped = genericActivityMapper(data, /* this.user_id,  */this.user_type);
 
         this.activity_cancel_id = genActMapped.activity_cancel_id;
+
+        this.g_a_status = {
+            status: {
+              subText: genActMapped.g_a_status
+            }
+        };
 
         this.g_a_status_selector = genActMapped.g_a_status_selector;
         this.g_a_text = genActMapped.g_a_text;
