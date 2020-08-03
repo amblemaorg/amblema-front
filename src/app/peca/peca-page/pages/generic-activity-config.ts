@@ -1,3 +1,15 @@
+const genActStatus = {
+    component: 'textsbuttons',
+    name: 'genericActivityStatus',
+    settings: {
+      dateOrtext:{},
+      status: {
+        text: 'Estatus',
+        subText: 0
+      }
+    }
+  };
+
 const genericActivityFields = {
     component: 'textsbuttons',
     name: 'genericActivityFields',
@@ -46,6 +58,7 @@ export const GENERIC_ACTIVITY_CONFIG = {
                 items: [
                     {     
                         childBlocks: [
+                            { ...genActStatus },
                             { ...genericActivityFields },
                             { ...genericActivityChecklist },                         
                             { ...genericActivityActionButton },

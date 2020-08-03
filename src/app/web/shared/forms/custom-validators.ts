@@ -5,6 +5,7 @@ export const LETTERS_NUMBERS_PATTERN = '^[a-z A-Zá-úÁ-Ú0-9]*$';
 export const TEXT_PATTERN = /^[a-z A-Zá-úÁ-Ú0-9\W]*$/;
 export const NUMBER_PATTERN = /^[0-9]*$/;
 export const VIDEO_PATTERN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+export const SOCIAL_NETWORK_PATTERN = '^[a-z A-Z0-9@_]*$';
 
 export class CustomValidators extends Validators {
   static normalText = Validators.pattern(TEXT_PATTERN);
@@ -25,8 +26,10 @@ export const onlyLetters           = { pattern: LETTERS_PATTERN         };
 export const onlyLettersAndNumbers = { pattern: LETTERS_NUMBERS_PATTERN };
 export const naturalNumber         = { pattern: NUMBER_PATTERN          };
 export const email                 = { pattern: EMAIL_PATTERN           };
+export const socialNetwork         = { pattern: SOCIAL_NETWORK_PATTERN  };
 export const requiredAndNormalText            = { required: true, pattern: TEXT_PATTERN            };
 export const requiredAndOnlyLetters           = { required: true, pattern: LETTERS_PATTERN         };
 export const requiredAndOnlyLettersAndNumbers = { required: true, pattern: LETTERS_NUMBERS_PATTERN };
 export const requiredAndNaturalNumber         = { required: true, pattern: NUMBER_PATTERN          };
 export const requiredAndEmail                 = { required: true, pattern: EMAIL_PATTERN           };
+export const requiredAndSocialNetwork         = { required: true, pattern: SOCIAL_NETWORK_PATTERN  };
