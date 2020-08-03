@@ -264,6 +264,10 @@
       &.is-hidden {
         display: none;
       }
+
+      &.compacted nb-menu .menu-item a.active::before {
+        background: transparent;
+      }
     }
     
     /*DROPDOWN PRUEBA*/
