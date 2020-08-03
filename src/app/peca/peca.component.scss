@@ -19,10 +19,10 @@
       // Menu theme variables
         menu-text-color: #ffffff,
       menu-item-icon-color: #ffffff,
-      menu-item-hover-text-color: $green,
-      menu-item-icon-hover-color: $green,
-      menu-item-active-text-color: $green,
-      menu-item-icon-active-color: $green,
+      menu-item-hover-text-color: #01474e,
+      menu-item-icon-hover-color: #01474e,
+      menu-item-active-text-color: #00353a,
+      menu-item-icon-active-color: #00353a,
       menu-item-divider-width: 2px,
       menu-item-divider-color: #367a92,
       // General theme variables
@@ -79,13 +79,13 @@
   }
   //COLOROES DEL MENU
   .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:hover {
-    color: #00353a;
+    color: #01474e;
   }
   .nb-theme-default nb-menu .menu-item a:hover {
-    color: #00353a;
+    color: #01474e;
   }
   .nb-theme-default nb-menu .menu-item a:hover .menu-icon {
-    color: #00353a !important;
+    color: #01474e !important;
   }
   .nb-theme-default nb-menu .menu-item > .menu-items > .menu-item a:focus {
     color: #00353a;
