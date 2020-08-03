@@ -279,6 +279,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
   setSchoolFormStatusData() {
     this.schoolFormStatusData = {
       status: {
+        text: 'Estatus',
         subText: this.schoolDataStatus
       }
     };

@@ -197,6 +197,7 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
 
         this.g_a_status = {
             status: {
+            text: 'Estatus',
               subText: genActMapped.g_a_status
             }
         };
