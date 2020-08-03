@@ -311,7 +311,7 @@ export class TextsButtonsSetBlockComponent
     } 
     else {
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
-      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["status"]) this.settings.status = data.status;
       if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
       if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
       if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;

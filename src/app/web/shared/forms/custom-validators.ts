@@ -5,7 +5,7 @@ export const LETTERS_NUMBERS_PATTERN = '^[a-z A-Zá-úÁ-Ú0-9]*$';
 export const TEXT_PATTERN = /^[a-z A-Zá-úÁ-Ú0-9\W]*$/;
 export const NUMBER_PATTERN = /^[0-9]*$/;
 export const VIDEO_PATTERN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-export const SOCIAL_NETWORK_PATTERN = '^[a-zA-Z0-9@_]*$';
+export const SOCIAL_NETWORK_PATTERN = '^[a-z A-Z0-9@_]*$';
 
 export class CustomValidators extends Validators {
   static normalText = Validators.pattern(TEXT_PATTERN);
