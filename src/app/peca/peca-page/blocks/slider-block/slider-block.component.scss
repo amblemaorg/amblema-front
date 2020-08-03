@@ -377,3 +377,18 @@
 		}
 	}
 }
+
+::ng-deep .slider-component {
+	@media (max-width: 768px) {
+		.owl-carousel .owl-nav {
+			top: 15rem;
+		}
+	}
+	@media (max-width: 576px) and (min-width: 400px) {
+		.owl-carousel .owl-nav {
+			top: 17rem;
+		}
+	}
+
+	
+}
