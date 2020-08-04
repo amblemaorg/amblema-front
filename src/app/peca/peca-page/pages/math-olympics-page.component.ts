@@ -34,6 +34,9 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     omlimpiadasData: any;
     text: string;
     date: string;
+    url: string;
+    name: string;
+    file: any;
 
     studentsTableData: any;
     //studentsSelectData: any;
@@ -118,11 +121,11 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
                             students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
                                 students.lastName = students.name.split(' ').slice(-1).join(' ');
                         });
-    
+
                         auxName = auxName.concat(data.activePecaContent.lapse3.olympics.students)
-    
+
                         this.prueba = auxName;
-    
+
                         this.setStudentTableData(this.prueba, studentsOlympicMapper);
                     }
 
@@ -173,17 +176,20 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
             this.text = data.activePecaContent.lapse1.olympics.description;
             console.log(this.text, "descricion olimpiadas 1 ")
             this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse1.olympics.date), 'dd/MM/yyyy , h:mm');
+            this.file = data.activePecaContent.lapse1.olympics.file;
         }
         else if (this.UrlLapse === "2") {
             this.text = data.activePecaContent.lapse2.olympics.description;
             console.log(this.text, "descricion olimpiadas 2 ")
             this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse2.olympics.date), 'dd/MM/yyyy , h:mm');
+            this.file = data.activePecaContent.lapse1.olympics.file;
         } else {
             this.text = data.activePecaContent.lapse3.olympics.description;
             console.log(this.text, "descricion olimpiadas 3 ")
             this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse3.olympics.date), 'dd/MM/yyyy , h:mm');
+            this.file = data.activePecaContent.lapse1.olympics.file;
         }
-
+        console.log(this.date, 'fileeeeeeeeeeeeeeeee')
     }
 
     setOLimpiadasData() {
@@ -195,7 +201,12 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
                 {
                     text: this.text
                 }
-            ]
+            ],
+            download:
+            {
+                url: this.file.url,
+                name: this.file.name,
+            }
         }
     }
 

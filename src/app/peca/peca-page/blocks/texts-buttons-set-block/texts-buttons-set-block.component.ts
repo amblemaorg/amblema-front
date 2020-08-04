@@ -310,14 +310,18 @@ export class TextsButtonsSetBlockComponent
 
     } 
     else {
+      console.log(data ,' hoaaaaaaa')
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
-      if (data["status"]) this.settings.status = data.status;
-      if (data["subtitles"]) this.settings.subtitles[0].text = data.subtitles[0].text;
-      if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
+      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["subtitles"]) this.settings.subtitles = data.subtitles;
+      if (data["dateOrtext"]) this.settings.dateOrtext.date= data.dateOrtext.date;
       if (data["enviromentTitleLapse1"]) this.settings.title.text=data.enviromentTitleLapse1;
       if (data["enviromentTitleLapse2"]) this.settings.title.text=data.enviromentTitleLapse2;
       if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3; 
-       }    
+      if (data["download"]) this.settings.download = data.download;
+      if (data["upload"]) this.settings.upload = data.upload;
+    }
+
   }
 
   setFetcherUrls({ put, delete: deleteFn, cancel }) {
@@ -569,6 +573,10 @@ export class TextsButtonsSetBlockComponent
           this.globals.ImageContainerShower(this.settings.buttonCode);
           e.target.classList.add('d-none');
         }
+        break;
+      case 3:
+        this.isSending = true;
+        console.log('prueba')
         break;
       case 4:
         this.isSending = true;

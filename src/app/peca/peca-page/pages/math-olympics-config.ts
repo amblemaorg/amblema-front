@@ -9,8 +9,7 @@ const datosOlimpiadas = {
             date: '',
         },
         uploaddown: {
-            url: '#',
-            name: 'Descargar archivo',
+            
         },
         subtitles: 
             [
@@ -153,7 +152,7 @@ const resultadoEstudiante = {
         ],
         classes: {
             hideView: false,
-            hideEdit: true,
+            hideEdit: false,
             hideDelete: false,
         },
     }
@@ -212,7 +211,7 @@ const formResultadoEstudiante = {
 
 export const MATH_OLYMPICS_CONFIG = {
     header: {
-        title: "Olimpiadas de matemáticas"
+        title: "Olimpíadas de matemáticas"
     },
     blocks: [
         {
