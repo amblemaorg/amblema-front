@@ -126,7 +126,7 @@ export class PecaPageComponent {
     this.location.back();
   }
 
-  protected generatePDF() {
+  public generatePDF() {
     
   }
 }
