@@ -190,11 +190,14 @@
           }
           
           &.header-title-and-button-container {
+            .btn-go-steps, .btn-download-yearbook {
+              @include layout-header-btn-confs();              
+            }
             .btn-go-steps {
-              @include layout-header-btn-confs();
               display: none;
             }
-            &.comes-from-steps {
+
+            &.comes-from-steps, &.has-yearbook {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -314,7 +317,7 @@
         margin-left: -50px;
       }
     }
-    .style-btn-anuario {
+    .style-btn-anuario {      
       text-align: right;
       display: inline-block;
     }
