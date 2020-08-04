@@ -3,6 +3,8 @@ export default moment;
 
 export function EnviromentalMapper(EnviromentalData) {
 
+  const viewName = "environmental-project-tab";
+
   const ENVIRONMENTAL_PROJECT_CONFIG_TEST = {
     header: {
       title: EnviromentalData.name,
@@ -14,6 +16,7 @@ export function EnviromentalMapper(EnviromentalData) {
           items: [
             {
               title: "Lapso 1",
+              viewName: viewName,
               childBlocks: [
                 {
                   component: "profiles",
@@ -25,6 +28,7 @@ export function EnviromentalMapper(EnviromentalData) {
             },
             {
               title: "Lapso 2",
+              viewName: viewName,
               childBlocks: [
                 {
                   component: "profiles",
@@ -36,6 +40,7 @@ export function EnviromentalMapper(EnviromentalData) {
             },
             {
               title: "Lapso 3",
+              viewName: viewName,
               childBlocks: [
                 {
                   component: "profiles",

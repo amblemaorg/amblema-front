@@ -1,6 +1,6 @@
 export interface PageBlockComponent {
   type: 'structural' | 'presentational';
-  name?: string;
+  name?: string;  
   component: string;
   viewMode?: string; // view, edit, both
   settings: any;
@@ -23,7 +23,8 @@ export interface StructuralItem {
   childBlocks: PageBlockComponent[];
   icon?: string;
   description?: string;
-  image?: string;
+  image?: string;  
+  viewName?: string;
 }
 
 export interface PresentationalBlockComponent extends PageBlockComponent {

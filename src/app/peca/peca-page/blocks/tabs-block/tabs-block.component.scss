@@ -1,4 +1,5 @@
 @import "scss/variables";
+@import "scss/responsive";
 
 ::ng-deep {
   .nb-theme-default {
@@ -81,6 +82,46 @@
       }
       nb-tab {
         padding: 1rem 1rem;
+
+        &.environmental-project {
+          padding: 1rem 0.5rem !important;
+
+          @include mediabreak(medium,landscape,true,800px) {
+            padding: 1rem 0rem !important;
+          }
+
+          .profile-wrapper:first-child {
+            .container-form{
+              padding-bottom: 0;
+
+              h5 {
+                font-size: 1rem;
+                line-height: 1.2;
+
+                @include mediabreak(large,landscape) {
+                  font-size: 1.125rem;
+                }
+                @include mediabreak(larger,landscape) {
+                  font-size: 1.6rem;
+                }
+              }
+
+              .line-breaker {
+                display: none;
+              }
+            }
+          }
+
+          .profile-wrapper:nth-child(2) {
+            nb-accordion {
+              nb-accordion-item-body {
+                .item-body {
+                  padding: 1.25rem 0;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

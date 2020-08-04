@@ -776,15 +776,15 @@ export const formDatosEscuelaModal = {
 
 /*TABS DOCENTE*/
 export const formTabsDocente = {
-  titleName: { label: "Datos del Docente", type: "title" },
+  titleName: { label: "Datos del docente", type: "title" },
   name: {
-    label: "Nombre del Docente",
+    label: "Nombre del docente",
     placeholder: "Nombre",
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
-    label: "Apellido del Docente",
+    label: "Apellido del docente",
     placeholder: "Apellido",
     fullwidth: false,
     ...controlProps.onlyLettersAndRequired
