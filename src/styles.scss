@@ -29,23 +29,18 @@
   font-style: normal;
   src: url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
 }
-/*
 @font-face {
-  font-family: "amblemaicons";
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356");
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?46373356#iefix")
-      format("embedded-opentype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff2?46373356")
-      format("woff2"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff?46373356")
-      format("woff"),
-    url("./assets/fonts/amblema-icons/amblemaicons.ttf?46373356")
-      format("truetype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.svg?46373356#amblemaicons")
-      format("svg");
+  font-family: 'amblemaicons';
+  src:  url('./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx');
+  src:  url('./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx#iefix') format('embedded-opentype'),
+    url('./assets/fonts/amblema-icons/amblemaicons.ttf?l7zsfx') format('truetype'),
+    url('./assets/fonts/amblema-icons/amblemaicons.woff?l7zsfx') format('woff'),
+    url('./assets/fonts/amblema-icons/amblemaicons.svg?l7zsfx#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
-}*/
+  font-display: block;
+}
+/* 
 @font-face {
   font-family: "amblemaicons";
   src: url("./assets/fonts/amblema-icons/amblemaicons.eot?gupyn8");
@@ -59,7 +54,7 @@
   font-weight: normal;
   font-style: normal;
   font-display: block;
-}
+} */
 @font-face {
   font-family: "arrows";
   src: url("./assets/fonts/arrows.eot");
@@ -327,7 +322,7 @@ section.pillars {
       top: 35%;
     }
   }
-  @media (min-width:400px) and (max-width: 576px) {
+  @media (min-width: 400px) and (max-width: 576px) {
     .owl-nav {
       top: 50%;
     }
@@ -674,6 +669,24 @@ textarea.e-input::selection,
   background-color: #00809a;
 }
 
+.e-quick-popup-wrapper
+  .e-event-popup
+  .e-popup-header
+  .e-header-icon-wrapper
+  .e-delete:disabled
+  > .e-delete-icon {
+  display: none;
+}
+
+.e-quick-popup-wrapper
+  .e-event-popup
+  .e-popup-header
+  .e-header-icon-wrapper
+  .e-edit:disabled
+  > .e-edit-icon {
+  display: none;
+}
+
 /* .nb-theme-default * {
   font-family: "Montserrat" !important;
 } */
@@ -692,7 +705,7 @@ input[type="date"] {
     z-index: 0;
     position: absolute;
     right: 0;
-    top: .7rem;
+    top: 0.7rem;
     color: #888585;
 
     margin-right: 4% !important;
@@ -713,4 +726,4 @@ input[type="date"] {
     opacity: 0;
     z-index: 1;
   }
-}  
+}
