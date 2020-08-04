@@ -1,22 +1,28 @@
 <nb-card>
-  <nb-card-body class="header-title-and-button-container" [class.comes-from-steps]="isFromSteps">
+  <nb-card-body 
+    class="header-title-and-button-container" 
+    [class.comes-from-steps]="isFromSteps"
+    [class.has-yearbook]="header.download"  
+  >
     <div [class.col-sm-6]="header.title && header.download" class="title-style">
       <h1>{{ header.title }}</h1>
     </div>
 
-    <button (click)="goToSteps()" class="btn btn-primary text-decoration-none py-1 px-4 btn-go-steps">
+    <button 
+      *ngIf="!header.download"
+      (click)="goToSteps()" 
+      class="btn btn-primary text-decoration-none py-1 px-4 btn-go-steps">
         Ir a los pasos
     </button>
 
-    <div *ngIf="header.download" [class.col-sm-6]="header.download" class="style-btn-anuario">
-      <button
-        *ngIf="header.download"
-        title="general"
-        class="btn btn-primary text-decoration-none p-1 btn-in-wrapper"
-      >
-        {{ header.download.name }}
-      </button>
-    </div>
+    <button
+      *ngIf="header.download"
+      title="general"
+      class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
+      (click)="generatePDF()"
+    >
+      {{ header.download.name }}
+    </button>
   </nb-card-body>
 </nb-card>
 

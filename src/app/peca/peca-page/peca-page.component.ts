@@ -125,4 +125,8 @@ export class PecaPageComponent {
   goToSteps() {
     this.location.back();
   }
+
+  protected generatePDF() {
+    
+  }
 }
