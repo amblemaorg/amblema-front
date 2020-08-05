@@ -1,6 +1,9 @@
 ::ng-deep {
     .color {
         background-color: #00809a;
+        @media (min-width: 768px) {
+            width: 150%;
+        }
     }
     .modal {
         &.show {
