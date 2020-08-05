@@ -32,6 +32,7 @@ export class GraphicsBlockComponent
   color: any;
   arraySections = [];
   dataChart = [];
+  nombreEscuela: string;
   constructor(private router: Router) {
     this.type = "presentational";
     this.component = "graphics";
@@ -55,6 +56,7 @@ export class GraphicsBlockComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
+        this.nombreEscuela=data.activePecaContent.school.name
           this.arraySections = data.activePecaContent.school.sections;
           console.log("secciones", this.arraySections);
           if (this.UrlLapse === "1") {
@@ -120,7 +122,7 @@ export class GraphicsBlockComponent
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ["Escuela Santa Maria"],
+          labels: [ this.nombreEscuela],
           datasets: this.dataChart,
         },
         options: {
