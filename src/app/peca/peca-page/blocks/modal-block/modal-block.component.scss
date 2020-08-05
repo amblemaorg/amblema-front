@@ -1,31 +1,35 @@
 ::ng-deep {
-    .color {
-        background-color: #00809a;
+  .color {
+    background-color: #00809a;
+    @media (min-width: 768px) {
+      width: 150%;
     }
-    .modal {
-        &.show {
-            background: rgba(0,0,0,0.5);
+    background-color: #00809a;
+  }
+  .modal {
+    &.show {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      .modal-header {
+        padding: 1rem 1rem 0;
+        border-bottom: none;
+
+        .close {
+          &:focus {
+            outline: none;
+          }
         }
-        
-        .modal-content {
-            .modal-header {
-                padding: 1rem 1rem 0;
-                border-bottom: none;
+      }
 
-                .close {
-                    &:focus {
-                        outline: none;
-                    }
-                }
-            }
+      .modal-body {
+        padding: 1rem 1.75rem;
 
-            .modal-body {
-                padding: 1rem 1.75rem;
-
-                input[type="date"]:after {
-                    right: 0.4rem;
-                }
-            }
-        }            
+        input[type="date"]:after {
+          right: 0.4rem;
+        }
+      }
     }
+  }
 }
