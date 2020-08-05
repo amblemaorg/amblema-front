@@ -19,6 +19,7 @@ export class YearbookPageComponent extends PecaPageComponent implements AfterVie
     constructor(factoryResolver: ComponentFactoryResolver) {
         super(factoryResolver);
         this.instantiateComponent(config);
+        this.setPdfData("here goes pdf data"); //* NEW
     }
 
     ngAfterViewInit(): void {
