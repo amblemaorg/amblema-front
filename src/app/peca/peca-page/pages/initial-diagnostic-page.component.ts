@@ -76,7 +76,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          console.log("resp necesaria", data);
+          //console.log("resp necesaria", data);
           this.idPeca = data.activePecaContent.id;
           this.response = data.activePecaContent.school;
            console.log(this.response.sections);
