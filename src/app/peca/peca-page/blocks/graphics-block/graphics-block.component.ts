@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-graphics-block',
   templateUrl: './graphics-block.component.html',
@@ -17,13 +18,18 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   canvas: any;
   ctx: any;
   chart: any;
+  color: any;
 
-  constructor() {
+  constructor(private router: Router) {
     this.type = 'presentational';
     this.component = 'graphics';
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.router.url.substring(14,33) == 'diagnostico-inicial'){
+      this.color = '#FFF'
+    }else this.color = "#111"
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -43,34 +49,55 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ['col1', 'col2', 'col3'],
+          labels: ['Escuela Santa Maria'],
           datasets: [
             {
-              label: 'Num datos',
-              data: [10, 9, 15],
+              label: '1ER',
+              data: [8],
               backgroundColor: [
                 '#81b03e',
-                '#81b03e',
+
+              ],
+              fill: true
+            },
+            {
+              label: '3 c',
+              data: [9],
+              backgroundColor: [
+                '#EEE9E8',
+
+              ],
+              fill: false
+            },
+            {
+              label: '5 a',
+              data: [6],
+              backgroundColor: [
+                '#00353a',
+
+              ],
+              fill: false
+            },
+            {
+              label: '2 B',
+              data: [8],
+              backgroundColor: [
                 '#81b03e',
               ],
               fill: false
             },
             {
-              label: 'Num datos',
-              data: [3, 15, 11],
+              label: '4 b',
+              data: [4],
               backgroundColor: [
-                '#EEE9E8',
-                '#EEE9E8',
                 '#EEE9E8',
               ],
               fill: false
             },
             {
-              label: 'Num datos',
-              data: [8, 5, 12],
+              label: '5 a',
+              data: [6],
               backgroundColor: [
-                '#00353a',
-                '#00353a',
                 '#00353a',
               ],
               fill: false
@@ -80,15 +107,27 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
         options: {
           title: {
             //text: "BAR CHART",
-            display: true
+            display: true,
           },
           scales: {
             yAxes: [{
               ticks: {
+                fontColor: this.color,
+                beginAtZero: true
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                fontColor: this.color,
                 beginAtZero: true
               }
             }]
-          }
+          },
+          legend: {
+            labels: {
+              fontColor: this.color,
+            },
+          },
   
         }
       })
