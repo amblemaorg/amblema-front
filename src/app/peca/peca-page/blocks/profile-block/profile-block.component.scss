@@ -1,65 +1,89 @@
-.bloque {
-  width: 100%;
-  padding: 50px !important;
-  display: contents !important;
-}
-.bloque1 {
-  text-align: center;
-  width: 35%;
-  display: inline-block;
-  img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
-  .text-hover {
-    position: relative;
-    h6 {
-      position: absolute;
-      top: 90px;
-      right: 0;
-      left: 0;
-      display: none;
-    }
-  }
-  .text-hover:hover {
-    img {
-      cursor: pointer;
-      opacity: 0.5;
-    }
-    h6 {
-      display: initial;
-    }
-  }
-}
+@import "scss/variables";
 
-.bloque2 {
-  text-align: center;
-  width: 50%;
-  display: inline-block;
-  vertical-align: middle;
-  h1 {
-    color: #00809a;
+::ng-deep {
+  .bloque {
+    width: 100%;
+    padding: 50px !important;
+    display: contents !important;
   }
-}
-
-.container-form {
-  width: 100%;
-  padding: 50px;
-}
-@media (max-width: 768px) {
-  .container-form  {
-    padding: 1rem;
-  }
-}
-@media (max-width: 768px) {
   .bloque1 {
-    width: 100%;
-  }
-  .bloque1 img {
+    text-align: center;
     width: 35%;
+    display: inline-block;
+    img {
+      width: 11rem;
+      height: 11rem;
+      border-radius: 50%;
+      top: 1rem;
+      position: relative;
+      margin-bottom: 2.5rem;
+      object-fit: cover;
+    }
+    fa-icon {
+      vertical-align: middle;
+      svg {
+        font-size: 8rem;
+        color: $blue;
+        position: relative;
+        top: 1.5rem;
+        margin-bottom: 3rem;
+
+        @media screen and (orientation: landscape) and (min-width: 1920px) {
+          font-size: 9rem;
+        }
+      }
+    }
+    .text-hover {
+      position: relative;
+      h6 {
+        position: absolute;
+        cursor: pointer;
+        top: 90px;
+        right: 0;
+        left: 0;
+        display: none;
+
+        @media screen and (orientation: landscape) and (min-width: 800px) {
+          font-size: 1rem !important;
+        }
+      }
+    }
+    .text-hover:hover {
+      img, fa-icon svg {
+        cursor: pointer;
+        opacity: 0.5;
+      }
+      h6 {
+        display: initial;
+      }
+    }
   }
+  
   .bloque2 {
+    text-align: center;
+    width: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    h1 {
+      color: #00809a;
+    }
+  }
+  
+  .container-form {
     width: 100%;
+    padding: 50px;
+  }
+  @media (max-width: 768px) {
+    .container-form  {
+      padding: 1rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .bloque1 {
+      width: 100%;
+    }
+    .bloque2 {
+      width: 100%;
+    }
   }
 }
