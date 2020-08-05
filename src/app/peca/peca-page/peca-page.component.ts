@@ -7,6 +7,8 @@ import { PageBlockFactory } from "./blocks/page-block-factory";
 import { PageBlockComponent } from "./blocks/page-block.component";
 import { Location } from "@angular/common"
 import { ActivatedRoute } from "@angular/router";
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import pdfFonts from "pdfmake/build/vfs_fonts";
 
 @Component({
   selector: "peca-page",
@@ -20,6 +22,8 @@ export class PecaPageComponent {
   blockInstances = new Map<string, PageBlockComponent>();
 
   isFromSteps: boolean;
+  fontsInstantiated: boolean;
+  pdfData: any;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver, 
@@ -126,7 +130,37 @@ export class PecaPageComponent {
     this.location.back();
   }
 
-  public generatePDF() {
-    
+  public setPdfData(pdfData: any) {
+    this.pdfData = pdfData;
   }
+  
+  private instantiatePdfFonts() {
+    if (!this.fontsInstantiated) {
+      PdfMakeWrapper.setFonts(pdfFonts);
+      this.fontsInstantiated = true;
+    }
+  }
+  
+  public generatePDF() {
+    this.instantiatePdfFonts();
+
+    console.log("pdf data",this.pdfData);
+
+    const pdf = new PdfMakeWrapper();
+
+    pdf.info({
+        title: 'AmbLeMario',
+        author: 'AmbLeMa',
+        subject: 'Anuario',
+    });
+
+    pdf.pageSize('LETTER');
+    pdf.pageOrientation('landscape');
+    
+    pdf.add('pedf works!');
+    
+    pdf.create().open();
+    // pdf.create().download('AmbLeMario');
+  }
+
 }
