@@ -8,7 +8,9 @@ import { PageBlockComponent } from "./blocks/page-block.component";
 import { Location } from "@angular/common"
 import { ActivatedRoute } from "@angular/router";
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import pdfFonts from "pdfmake/build/vfs_fonts";
+// import pdfFonts from "pdfmake/build/vfs_fonts";
+import pdfFonts from "./pdf-fonts/custom-fonts"
+import { Txt } from 'pdfmake-wrapper';
 
 @Component({
   selector: "peca-page",
@@ -136,7 +138,17 @@ export class PecaPageComponent {
   
   private instantiatePdfFonts() {
     if (!this.fontsInstantiated) {
-      PdfMakeWrapper.setFonts(pdfFonts);
+      // PdfMakeWrapper.setFonts(pdfFonts); // with default pdf font
+      PdfMakeWrapper.setFonts(pdfFonts, { // with custom fonts -----
+          montserrat: {
+            normal: 'Montserrat-Regular.ttf',
+            bold: 'Montserrat-ExtraBold.ttf',
+            italics: 'Montserrat-Regular.ttf',
+            bolditalics: 'Montserrat-Medium.ttf'
+          }
+      });
+      PdfMakeWrapper.useFont('montserrat'); // ----------------------
+      
       this.fontsInstantiated = true;
     }
   }
@@ -157,10 +169,30 @@ export class PecaPageComponent {
     pdf.pageSize('LETTER');
     pdf.pageOrientation('landscape');
     
-    pdf.add('pedf works!');
+    pdf.add(new Txt('pdf works!').bold().end);
     
     pdf.create().open();
     // pdf.create().download('AmbLeMario');
   }
 
 }
+
+// TO USE CUSTOM FONT, do the following:
+//
+// - npm install pdfmake-font-generator --save-dev
+// - pdfmakefg /path/of/your/custom/fonts /path/of/the/output/file.js , i.e: 
+//      - pdfmakefg ./my-fonts ./pdf/fonts/custom-fonts.js
+// - import pdfFonts from "./pdf/fonts/custom-fonts"; // The path of your custom fonts
+//
+// ----------------------------------------
+// PdfMakeWrapper.setFonts(pdfFonts, {
+//   montserrat: {
+//     normal: 'Montserrat-Regular.ttf',
+//     bold: 'Montserrat-ExtraBold.ttf',
+//     italics: 'Montserrat-Regular.ttf',
+//     bolditalics: 'Montserrat-Medium.ttf'
+//   }
+// });
+// PdfMakeWrapper.useFont('montserrat');
+// ----------------------------------------
+//
