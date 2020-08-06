@@ -64,7 +64,7 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
               `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
             );
             this.arrayColors.push(
-              "#81B03E"
+              "#EEE9E8"
             );
           }
           if (this.UrlLapse === "1") {
