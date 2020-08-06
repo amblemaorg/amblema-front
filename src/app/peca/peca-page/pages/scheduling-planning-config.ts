@@ -44,6 +44,17 @@ const reunionAprobacionSet = {
         ]
     }
 }
+const btnGuardarReunion = {
+    component: 'textsbuttons',
+    settings: {
+        action: [{
+            type: 1,
+            name: 'Guardar',
+        }],
+         fetcherMethod: 'put',
+    },
+    
+}
 
 const propuestaAmblema = {
     component: 'textsbuttons',
@@ -54,7 +65,7 @@ const propuestaAmblema = {
         },
         status: {
             text: 'Estatus',
-            subText: 1
+            //subText: 1
         },
         subtitles:  [
             {
@@ -65,10 +76,10 @@ const propuestaAmblema = {
             type: 3,
             name: 'Enviar',
         }],
-        uploaddown: {
-            url: "#",
+        upload: {
+            /* url: "#",
             name: 'Adjuntar archivo',
-            file: null,
+            file: null, */
         },
     }
 }
@@ -91,7 +102,8 @@ export const SCHEDULING_PLANNING_CONFIG = {
                     {
                         title: "Reunión y aprobación de la escuela",
                         childBlocks: [
-                            { ...reunionAprobacionSet }
+                            { ...reunionAprobacionSet },
+                            { ...btnGuardarReunion }
                         ]
                     },
                     

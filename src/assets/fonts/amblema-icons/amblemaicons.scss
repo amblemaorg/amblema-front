@@ -52,6 +52,36 @@
     content: "3";
   }
 
+  .icon-medal:before {
+    content: "\e900";
+  }
+  .icon-amblemonedas:before {
+    content: "\e901";
+  }
+  .icon-anuario:before {
+    content: "\e902";
+  }
+  .icon-convencion:before {
+    content: "\e903";
+  }
+  .icon-diagnostico:before {
+    content: "\e904";
+  }
+  .icon-icn-docentes:before {
+    content: "\e905";
+  }
+  .icon-planificacion:before {
+    content: "\e906";
+  }
+  .icon-taller-inicial:before {
+    content: "\e907";
+  }
+  .icon-venezuela:before {
+    content: "\e908";
+  }
+  .icon-actividades:before {
+    content: "\e909";
+  }
   .icon-trash-empty:before {
     content: "\f014";
   }
@@ -73,44 +103,37 @@
   .icon-bars:before {
     content: "\f0c9";
   }
-  .icon-navicon:before {
-    content: "\f0c9";
-  }
-  .icon-reorder:before {
-    content: "\f0c9";
-  }
   .icon-list-numbered:before {
     content: "\f0cb";
   }
   .icon-trash:before {
     content: "\f1f8";
   }
-  .icon-amblemoneda:before {
-    content: "\e900";
+  .icon-book:before {
+    content: "\f02d";
   }
-  .icon-anuario:before {
-    content: "\e901";
+  .icon-image:before {
+    content: "\f03e";
   }
-  .icon-convencion:before {
-    content: "\e902";
+  .icon-photo:before {
+    content: "\f03e";
   }
-  .icon-diagnostico:before {
-    content: "\e903";
+  .icon-picture-o:before {
+    content: "\f03e";
   }
-  .icon-icn-docentes:before {
-    content: "\e904";
+  .icon-leaf:before {
+    content: "\f06c";
   }
-  .icon-planificacion:before {
-    content: "\e905";
+  .icon-bar-chart:before {
+    content: "\f080";
   }
-  .icon-taller-inicial:before {
-    content: "\e906";
+  .icon-bar-chart-o:before {
+    content: "\f080";
   }
-  .icon-venezuela:before {
-    content: "\e907";
-
+  .icon-group:before {
+    content: "\f0c0";
   }
-  .icon-actividades:before {
-    content: "\e908";
+  .icon-users:before {
+    content: "\f0c0";
   }
 }

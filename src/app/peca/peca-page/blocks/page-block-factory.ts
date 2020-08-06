@@ -17,6 +17,8 @@ import { ScheduleBlockComponent } from './schedule-block/schedule-block.componen
 import { ModalBlockComponent } from './modal-block/modal-block.component';
 import { GraphicsBlockComponent } from './graphics-block/graphics-block.component';
 import { GenericActivityBlockComponent } from './generic-activity-block/generic-activity-block.component';
+import { GraphicsMatheBlockComponent } from './graphics-mathe-block/graphics-mathe-block.component';
+import { GraphicsLogicComponent } from './graphics-logic/graphics-logic.component';
 export class PageBlockFactory {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
@@ -49,6 +51,10 @@ export class PageBlockFactory {
         return this.componentFactoryResolver.resolveComponentFactory(GraphicsBlockComponent);
       case 'genericactivity':
         return this.componentFactoryResolver.resolveComponentFactory(GenericActivityBlockComponent);
+      case 'graphics-mathe':
+        return this.componentFactoryResolver.resolveComponentFactory(GraphicsMatheBlockComponent);
+      case 'graphics-logic':
+        return this.componentFactoryResolver.resolveComponentFactory(GraphicsLogicComponent);
       default:
         throw Error('PageBlockTypeException: invalid page block type');
     }

@@ -3,12 +3,13 @@ import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { Router } from '@angular/router';
+
 @Component({
-  selector: 'app-graphics-block',
-  templateUrl: './graphics-block.component.html',
-  styleUrls: ['./graphics-block.component.scss']
+  selector: 'app-graphics-mathe-block',
+  templateUrl: './graphics-mathe-block.component.html',
+  styleUrls: ['./graphics-mathe-block.component.scss']
 })
-export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
+export class GraphicsMatheBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
   type: 'presentational';
   component: string;
   settings: {
@@ -19,63 +20,70 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   ctx: any;
   chart: any;
   color: any;
-  constructor(private router: Router) {
+
+    constructor(private router: Router) {
     this.type = 'presentational';
-    this.component = 'graphics';
+    this.component = 'graphics-mathe';
   }
+
   ngOnInit() {
     if(this.router.url.substring(14,33) == 'diagnostico-inicial'){
       this.color = '#FFF'
     }else this.color = "#111"
   }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.loadChart();
     });
   }
+
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
-  loadChart() {
+
+  loadChart() {    
     if(document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
       this.ctx = this.canvas.getContext('2d');
+  
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ["1A", "2A", "2B", "3C"],
+          labels: ['Escuela Divina Pastora'],
           datasets: [
             {
-              label: 'Secciones Escuela Santa Maria',
-              data: [8, 4,5 , 7],
+              label: '1ER',
+              data: [8],
               backgroundColor: [
-                '#81B03E',
-                '#ee1',
-                '#00353A',
+                '#ee2',
+
               ],
               fill: true
             },
-            /* {
-              label: 'Secciones Escuela Santa Maria',
+            {
+              label: '3 c',
               data: [9],
               backgroundColor: [
                 '#EEE9E8',
+
               ],
               fill: false
             },
             {
-              label: 'Secciones Escuela Santa Maria',
+              label: '5 a',
               data: [6],
               backgroundColor: [
-                '#00353A',
+                '#00353a',
+
               ],
               fill: false
             },
             {
-              label: 'Secciones Escuela Santa Maria',
+              label: '2 B',
               data: [8],
               backgroundColor: [
-                '#81B03E',
+                '#81b03e',
               ],
               fill: false
             },
@@ -91,10 +99,10 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               label: '5 a',
               data: [6],
               backgroundColor: [
-                '#00353A',
+                '#00353a',
               ],
               fill: false
-            } */
+            }
           ]
         },
         options: {
@@ -121,8 +129,10 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               fontColor: this.color,
             },
           },
+  
         }
       })
     }
   }
+
 }
