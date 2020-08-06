@@ -67,6 +67,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
                   fill: false,
                 },
               ) */
+              this.dataLabel.push(
+                `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
+              )
             }           
           } else if (this.UrlLapse === "2") {
            
@@ -116,7 +119,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ["1A", "2A", "2B"],
+          labels: this.dataLabel,
           datasets: [
             {
               label: `Grados y secciones de ${this.nombreEscuela}`,
