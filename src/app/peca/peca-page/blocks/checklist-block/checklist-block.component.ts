@@ -236,7 +236,9 @@ console.log(resourcePath, method)
 }
 
 sendChecks(checks){
-  const body = checks;
+  const body = {};
+
+  body['activities'] = checks;  
   this.isSending = true;
 
     const method = this.settings.fetcherMethod || "post";

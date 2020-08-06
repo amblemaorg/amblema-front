@@ -82,7 +82,7 @@ export function EnviromentalMapper(EnviromentalData) {
                       settings: {
                         fetcherMethod: "post",
                         fetcherUrls : {
-                          post: `pecasetting/annualconvention`     
+                          post: `/pecaprojects/environmentalproject/idpeca`     
                            },
                         infoContainer: [
                           {
@@ -249,6 +249,10 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo2",
                       settings: {
+                        fetcherMethod: "post",
+                        fetcherUrls : {
+                          post: `/pecaprojects/environmentalproject/idpeca`     
+                           },
                         infoContainer: [
                           {
                             principal: [
@@ -373,7 +377,6 @@ export function EnviromentalMapper(EnviromentalData) {
                             };
                           }),
                         ],
-                        fetcherMethod: "post",
                       },
                     },
                   ],
@@ -416,6 +419,10 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo3",
                       settings: {
+                        fetcherMethod: "post",
+                        fetcherUrls : {
+                          post: `/pecaprojects/environmentalproject/idpeca`     
+                           },
                         infoContainer: [
                           {
                             principal: [
@@ -546,7 +553,6 @@ export function EnviromentalMapper(EnviromentalData) {
                 };
               }),
             ],
-            fetcherMethod: "post",
           },
         },
       ],
