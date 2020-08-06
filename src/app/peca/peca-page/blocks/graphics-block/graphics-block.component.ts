@@ -59,14 +59,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
           if (this.UrlLapse === "1") {
           
             for (let i=0; i<this.arraySections.length;i++){
-          /*     this.dataChart.push(
-                {
-                  label: `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}` ,
-                  data: [data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex],
-                  backgroundColor: ["#81b03e"],
-                  fill: false,
-                },
-              ) */
+              this.dataChart.push(     
+              data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex
+              ) 
               this.dataLabel.push(
                 `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
               )
@@ -123,7 +118,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
           datasets: [
             {
               label: `Grados y secciones de ${this.nombreEscuela}`,
-              data: [8, 4, 5],
+              data: this.dataChart,
               backgroundColor: [
                 '#81B03E',
                 '#ee1',
