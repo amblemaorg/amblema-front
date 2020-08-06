@@ -106,9 +106,10 @@ export class AnnualConventionPageComponent extends PecaPageComponent
 
   updateStaticFetchers() {
     this.setBlockFetcherUrls("AnnualConventionCheckLists", {
-      post: `pecasetting/annualconvention/${this.UrlLapse}`,
+      post: `pecaprojects/annualconvention/${this.pecaId}`,
     });
   }
+//      post: `pecasetting/annualconvention/${this.UrlLapse}`,
 
   ngAfterViewInit(): void {
     setTimeout(() => {
