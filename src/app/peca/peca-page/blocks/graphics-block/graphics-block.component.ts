@@ -59,7 +59,7 @@ export class GraphicsBlockComponent
         if (data.activePecaContent) {
           this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
-          console.log("secciones", this.arraySections);
+          //console.log("secciones", this.arraySections);
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
