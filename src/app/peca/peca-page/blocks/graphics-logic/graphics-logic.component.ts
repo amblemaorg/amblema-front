@@ -72,21 +72,21 @@ export class GraphicsLogicComponent implements PresentationalBlockComponent, OnI
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .wordsPerMinIndex
+                  .operationsPerMinIndex
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .wordsPerMinIndex
+                  .operationsPerMinIndex
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .wordsPerMinIndex
+                  .operationsPerMinIndex
               );
             }
           }

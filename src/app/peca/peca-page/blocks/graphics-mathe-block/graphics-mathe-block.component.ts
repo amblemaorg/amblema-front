@@ -71,21 +71,21 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .wordsPerMinIndex
+                  .multiplicationsPerMinIndex
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .wordsPerMinIndex
+                  .multiplicationsPerMinIndex
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .wordsPerMinIndex
+                  .multiplicationsPerMinIndex
               );
             }
           }
