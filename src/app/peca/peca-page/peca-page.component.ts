@@ -1,16 +1,16 @@
 import {
   Component,
   ViewContainerRef,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  Inject
 } from "@angular/core";
 import { PageBlockFactory } from "./blocks/page-block-factory";
 import { PageBlockComponent } from "./blocks/page-block.component";
-import { Location } from "@angular/common"
+import { Location, DOCUMENT } from "@angular/common"
 import { ActivatedRoute } from "@angular/router";
-import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import { PdfMakeWrapper, Txt, Img } from 'pdfmake-wrapper';
 // import pdfFonts from "pdfmake/build/vfs_fonts";
 import pdfFonts from "./pdf-fonts/custom-fonts"
-import { Txt } from 'pdfmake-wrapper';
 
 @Component({
   selector: "peca-page",
@@ -30,7 +30,8 @@ export class PecaPageComponent {
   constructor(
     protected factoryResolver: ComponentFactoryResolver, 
     protected location?: Location,
-    protected route?: ActivatedRoute
+    protected route?: ActivatedRoute,
+    @Inject(DOCUMENT) protected document?: Document
   ) {}
 
   public instantiateComponent(config) {
@@ -79,7 +80,7 @@ export class PecaPageComponent {
     }
   }
 
-  /*
+  /**
    * @param {string} blockName - block name property
    * @param {object} urlGenerators - Object with functions to generate url for each http method
    * @param {function} urlGenerators.get
@@ -153,7 +154,7 @@ export class PecaPageComponent {
     }
   }
   
-  public generatePDF() {
+  public async generatePDF() {
     this.instantiatePdfFonts();
 
     console.log("pdf data",this.pdfData);
@@ -170,9 +171,46 @@ export class PecaPageComponent {
     pdf.pageOrientation('landscape');
     
     pdf.add(new Txt('pdf works!').bold().end);
+
+    pdf.add(await new Img('http://157.245.131.248:10506/resources/images/sponsors/5f05f560da299af23c853ce1.jpe').build());
     
+    const img_ = await this.getBase64FromImg("../../../assets/images/profile2.png");
+    if (img_) pdf.add(await new Img(img_).build());
+
     pdf.create().open();
     // pdf.create().download('AmbLeMario');
+  }
+
+  /**
+   * transform an image file into base 64 format
+   * 
+   * @param imgSrc source of the image to be transformed into base 64 format
+   */
+  private async getBase64FromImg(imgSrc): Promise<any> {
+    return new Promise<any>((resolve,reject)=>{
+      let dataURL = null;
+      try {
+        let canvas = this.document.createElement("canvas");
+        const img = this.document.createElement("img");
+        const ctx = canvas.getContext('2d');
+
+        img.src = imgSrc;      
+
+        img.onload = () => {
+          canvas.height = img.height;
+          canvas.width = img.width;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+          dataURL = canvas.toDataURL('image/png');        
+          canvas = null;
+          resolve(dataURL)
+        }
+
+      }catch (e) {
+        console.log('error while processing base64 conversion', e);
+        resolve(dataURL)
+      }
+    });    
   }
 
 }
