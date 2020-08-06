@@ -1,23 +1,27 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
-import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
-import { Router, NavigationEnd, Event } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { PecaState } from 'src/app/store/states/peca/peca.state';
-import { Select } from '@ngxs/store';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { Label } from "ng2-charts";
+import {
+  PageBlockComponent,
+  PresentationalBlockComponent,
+} from "../page-block.component";
+import { Router, NavigationEnd, Event } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { Select } from "@ngxs/store";
 @Component({
-  selector: 'app-graphics-block',
-  templateUrl: './graphics-block.component.html',
-  styleUrls: ['./graphics-block.component.scss']
+  selector: "app-graphics-block",
+  templateUrl: "./graphics-block.component.html",
+  styleUrls: ["./graphics-block.component.scss"],
 })
-export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
-  type: 'presentational';
+export class GraphicsBlockComponent
+  implements PresentationalBlockComponent, OnInit, AfterViewInit {
+  type: "presentational";
   component: string;
   settings: {
     chartId?: string;
     items: any[];
-  }
+  };
   canvas: any;
   ctx: any;
   chart: any;
@@ -26,13 +30,14 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   routerSubscription: Subscription;
   infoDataSubscription: Subscription;
   arraySections = [];
+  arrayColors=[];
   dataChart = [];
-  dataLabel=[];
+  dataLabel = [];
   nombreEscuela: string;
   UrlLapse = "";
   constructor(private router: Router) {
-    this.type = 'presentational';
-    this.component = 'graphics';
+    this.type = "presentational";
+    this.component = "graphics";
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
@@ -41,10 +46,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     });
   }
   ngOnInit() {
-    if(this.router.url.substring(14,33) == 'diagnostico-inicial'){
-      this.color = '#FFF'
-    }
-    else this.color = "#111";
+    if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
+      this.color = "#FFF";
+    } else this.color = "#111";
     this.getInfo();
   }
 
@@ -53,52 +57,47 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-        this.nombreEscuela=data.activePecaContent.school.name
+          this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
           console.log("secciones", this.arraySections);
-          if (this.UrlLapse === "1") {
-          
-            for (let i=0; i<this.arraySections.length;i++){
-              this.dataChart.push(     
-              data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex
-              ) 
-              this.dataLabel.push(
-                `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
-              )
-            }           
-          } else if (this.UrlLapse === "2") {
-           
-            for (let i=0; i<this.arraySections.length;i++){
-            /*   this.dataChart.push(
-                {
-                  label: `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}` ,
-                  data: [data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex],
-                  backgroundColor: ["#81b03e"],
-                  fill: false,
-                },
-              ) */
-            }          
-          } else {
-        
-            for (let i=0; i<this.arraySections.length;i++){
-          /*     this.dataChart.push(
-                {
-                  label: `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}` ,
-                  data: [data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex],
-                  backgroundColor: ["#81b03e"],
-                  fill: false,
-                },
-              ) */
-            }            
+
+          for (let i = 0; i < this.arraySections.length; i++) {
+            this.dataLabel.push(
+              `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
+            );
+            this.arrayColors.push(
+              "#81B03E"
+            );
           }
-      
+          if (this.UrlLapse === "1") {
+            for (let i = 0; i < this.arraySections.length; i++) {
+              this.dataChart.push(
+                data.activePecaContent.school.sections[i].diagnostics.lapse1
+                  .wordsPerMinIndex
+              );
+            }
+          } else if (this.UrlLapse === "2") {
+            for (let i = 0; i < this.arraySections.length; i++) {
+              this.dataChart.push(
+                data.activePecaContent.school.sections[i].diagnostics.lapse2
+                  .wordsPerMinIndex
+              );
+            }
+          } else {
+            for (let i = 0; i < this.arraySections.length; i++) {
+              this.dataChart.push(
+                data.activePecaContent.school.sections[i].diagnostics.lapse3
+                  .wordsPerMinIndex
+              );
+            }
+          }
         }
       },
 
       (error) => console.error(error)
     );
   }
-  
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.loadChart();
@@ -108,9 +107,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     this.settings = { ...settings };
   }
   loadChart() {
-    if(document.getElementById(this.settings.chartId)) {
+    if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
-      this.ctx = this.canvas.getContext('2d');
+      this.ctx = this.canvas.getContext("2d");
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
@@ -119,14 +118,10 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
             {
               label: `Grados y secciones de ${this.nombreEscuela}`,
               data: this.dataChart,
-              backgroundColor: [
-                '#81B03E',
-                '#ee1',
-                '#00353A',
-              ],
-              fill: true
+              backgroundColor: this.arrayColors,
+              fill: true,
             },
-          ]
+          ],
         },
         options: {
           title: {
@@ -134,26 +129,30 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
             display: true,
           },
           scales: {
-            yAxes: [{
-              ticks: {
-                fontColor: this.color,
-                beginAtZero: true
-              }
-            }],
-            xAxes: [{
-              ticks: {
-                fontColor: this.color,
-                beginAtZero: true
-              }
-            }]
+            yAxes: [
+              {
+                ticks: {
+                  fontColor: this.color,
+                  beginAtZero: true,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: this.color,
+                  beginAtZero: true,
+                },
+              },
+            ],
           },
           legend: {
             labels: {
               fontColor: this.color,
             },
           },
-        }
-      })
+        },
+      });
     }
   }
   ngOnDestroy() {
