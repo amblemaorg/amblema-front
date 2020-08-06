@@ -191,17 +191,18 @@ export class ChecklistBlockComponent
       });
     }
   }
-
   sendAnnualConvention(checklLists) {
-    const body = checklLists;
+    const body = {};
+
+      body['checklist'] = checklLists;
    
-console.log(body)
+console.log("BODY", body)
      this.isSending = true;
 
     const method = this.settings.fetcherMethod || "post";
     const resourcePath = this.settings.fetcherUrls[method];
 console.log(resourcePath, method)
-      this.fetcher[method](resourcePath, body).subscribe(
+       this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         console.log("form response", response);
         //this.sleepSend = true;
@@ -231,7 +232,7 @@ console.log(resourcePath, method)
         );
         console.error(error);
       }
-    );   
+    );    
 }
 
 sendChecks(checks){
@@ -240,7 +241,7 @@ sendChecks(checks){
 
     const method = this.settings.fetcherMethod || "post";
     const resourcePath = this.settings.fetcherUrls[method];
-    console.log(body)
+    console.log("body:",body)
     console.log(method)
     console.log(resourcePath);
 //console.log(resourcePath, method)
