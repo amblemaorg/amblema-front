@@ -8,6 +8,11 @@
                 font-size: 1.2rem;
             }
         }
+        p{
+            @media (max-width:768px) {
+                font-size: 0.8rem;
+            }
+        }
         @media (max-width: 768px){
             h6 {
                 font-size: 1rem;
@@ -311,6 +316,7 @@
     
     .form-control {
         color: $blue;
+        font-size: 0.8rem;
 
         &.tb-date-picker:after {
             @include mediabreak(small,landscape,true,640px) {

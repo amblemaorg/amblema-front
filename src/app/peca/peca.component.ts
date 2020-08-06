@@ -257,11 +257,12 @@ export class PecaComponent implements OnInit, OnDestroy {
         icon: 'list-numbered',
         link: '/previous-steps',
       };
-
-      if (this.menu[this.menu.length - 2].title === title)
-        this.menu.splice(-2, 1, menu_item_obj);
-      else
-        this.menu.splice(-1, 0, menu_item_obj);
+      // todo: commented lines in this block are for creating 'go to steps' button when there is 'sign out' button present.
+      //if (this.menu[this.menu.length - 2].title === title)
+      if (this.menu[this.menu.length - 1].title === title) //this.menu.splice(-2, 1, menu_item_obj);
+      this.menu.splice(-1, 1, menu_item_obj);
+      else //this.menu.splice(-1, 0, menu_item_obj);
+        this.menu.push(menu_item_obj);
     }
 
     for (let i of [1, 2, 3]) {
