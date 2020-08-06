@@ -94,6 +94,7 @@
 }
 .image-desc{
 	color: $blue !important;
+	//font-size: 0.8rem;
 }
 .form-control {
 	color: $blue;
@@ -162,8 +163,9 @@
 }
 @media (min-width:576px) and (max-width:768px){
 	.form-control{
-		top: 3px !important;
-    	left: 316px !important;
+/* 		top: 3px !important;
+		left: 316px !important; */
+		display: inline-block;
 	}
 }
 @media (max-width: 576px){
