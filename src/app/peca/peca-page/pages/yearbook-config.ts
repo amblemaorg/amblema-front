@@ -514,7 +514,7 @@ const btnEnviarSolicitud = {
 
 export const YEARBOOK_CONFIG = {
     header: {
-        title: "Anuario",
+        title: "AmbLeMario",
         download: {
             url: '#',
             name: 'Descargar',

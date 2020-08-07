@@ -3,7 +3,7 @@ import { NbMenuItem } from '@nebular/theme';
 export const PECA_LAPSE_OPTIONS_CONFIG = {
   ambleCoins: {
     title: 'AmbLeMonedas',
-    icon: 'amblemoneda',
+    icon: 'amblemonedas',
     link: 'amblemoneda-page',
     data: 'amblecoins_peca_view',
   },
@@ -113,7 +113,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     data: 'activities_schedule',
   },
   {
-    title: 'Anuario',
+    title: 'AmbLeMario',
     icon: 'anuario',
     link: 'anuario-page',
     data: 'yearbook_view',
