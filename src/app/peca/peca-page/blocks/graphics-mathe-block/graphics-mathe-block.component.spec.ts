@@ -6,6 +6,10 @@ import { PageBlockFactory } from '../page-block-factory';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { PecaState } from 'src/app/store/states/peca/peca.state';
+import { NgxsModule } from '@ngxs/store';
+import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 describe('GraphicsMatheBlockComponent', () => {
   let component: GraphicsMatheBlockComponent;
@@ -31,6 +35,16 @@ describe('GraphicsMatheBlockComponent', () => {
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
+        NgSelectModule,
+        HttpClientModule,
+        NgxsModule.forRoot( [
+          PecaState,
+        ],{
+          compatibility: {
+            strictContentSecurityPolicy: true
+          },
+          developmentMode: false
+        }),
       ]
     })
 
