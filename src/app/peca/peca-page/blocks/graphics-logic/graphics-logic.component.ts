@@ -65,7 +65,7 @@ export class GraphicsLogicComponent implements PresentationalBlockComponent, OnI
               `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
             );
             this.arrayColors.push(
-              "#81B03E"
+              "#00353A"
             );
           }
           if (this.UrlLapse === "1") {
