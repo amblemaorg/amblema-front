@@ -20,6 +20,7 @@
       title="Descargar AmbLeMario"
       class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
       (click)="generatePDF()"
+      [disabled]="creatingPdf"
     >
       {{ header.download.name }}
     </button>

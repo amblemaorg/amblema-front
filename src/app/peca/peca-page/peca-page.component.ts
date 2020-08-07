@@ -35,6 +35,7 @@ export class PecaPageComponent {
   isFromSteps: boolean;
   fontsInstantiated: boolean;
   pdfData: any;
+  creatingPdf: boolean;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver, 
@@ -165,6 +166,8 @@ export class PecaPageComponent {
   
   //#region Generate PDF
   public async generatePDF() {
+    this.creatingPdf = true;
+
     this.instantiatePdfFonts(); // instantianting pdf font family
     const pdf = new PdfMakeWrapper(); // pdf document definition instance
     const pdfPageSizes = {
@@ -266,6 +269,8 @@ export class PecaPageComponent {
     // PDF saving methods --
     pdf.create().open();
     // pdf.create().download('AmbLeMario');
+
+    this.creatingPdf = false;
   }
   //#endregion
 
