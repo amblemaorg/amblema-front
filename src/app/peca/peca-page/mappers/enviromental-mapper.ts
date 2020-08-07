@@ -82,7 +82,7 @@ export function EnviromentalMapper(EnviromentalData) {
                       settings: {
                         fetcherMethod: "post",
                         fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
+                          post: `pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
                            },
                         infoContainer: [
                           {
