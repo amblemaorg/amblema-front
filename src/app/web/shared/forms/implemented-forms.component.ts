@@ -34,6 +34,8 @@ import { isNullOrUndefined } from "util";
         *ngSwitchCase="'sponsorForm'"
         class="sponsor-form-wizard"
         [formsContent]="sponsorStepItems"
+        [isSchoolForm]="true"
+        [isSponsorForm]="true"
         (submit)="submitContactForm('sponsor', $event)"
       >
       </web-form-wizard>
