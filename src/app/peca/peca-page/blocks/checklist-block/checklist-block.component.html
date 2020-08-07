@@ -23,7 +23,8 @@
             </span>
         </div>
     </div>
-    <div *ngFor="let dato of info.datosNivel" class="style-nivel" [class.d-flex]="!dato.isFromGenericActivity" [class.d-none]="dato.isFromGenericActivity">
+    <div *ngFor="let dato of info.datosNivel" class="style-nivel" [class.d-flex]="!dato.isFromGenericActivity"
+        [class.d-none]="dato.isFromGenericActivity">
         <div *ngIf="dato.nivel" class="style-nivel-div">
             <h6>Nivel:</h6>
             <span>
@@ -52,63 +53,58 @@
                 {{d.contRecurso}}{{isLast ? '' : ', '}}
             </span>
         </div>
-        <div *ngIf="dato.evaluacion"class="style-nivel-div">
+        <div *ngIf="dato.evaluacion" class="style-nivel-div">
             <h6>Evaluaciones:</h6>
             <span *ngFor="let d of dato.evaluacion; let isLast=last">
                 {{d.contEvaluacion}}{{isLast ? '' : ', '}}
             </span>
         </div>
     </div>
-    <div *ngFor="let dato of info.datosNivel" class="style-checklist"><!-- [class.in-generic-activity]="dato.isFromGenericActivity"> -->
-        
+    <div *ngFor="let dato of info.datosNivel" class="style-checklist">
+        <!-- [class.in-generic-activity]="dato.isFromGenericActivity"> -->
+
         <ng-container *ngIf="flag;else other_content">
             <h6 *ngIf="dato.title">{{dato.title}}</h6>
             <div class="mt-3 mb-3 check-btn" *ngFor="let check of dato.checkList">
-                <nb-checkbox 
-                    class="prueba"
-                    [class.disabled-and-approved]="activity_uneditable && dato.approvedAct"
-                    status="basic"
-                    [checked]="check.checked"
-                    [disabled]="activity_uneditable"
-                    (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"
-                ><span class="descripcion">{{ check.name }}</span>
+                <nb-checkbox class="prueba" [class.disabled-and-approved]="activity_uneditable && dato.approvedAct"
+                    status="basic" [checked]="check.checked" [disabled]="activity_uneditable"
+                    (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"><span
+                        class="descripcion">{{ check.name }}</span>
                 </nb-checkbox>
             </div>
-            <div class="style-btn"> 
-            <button title="general" *ngIf="dato.isFromAnnualConvention"
-                class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4" (click)="sendAnnualConvention(dato.checkList)">Guardar
-            </button>
-        </div>
+            <div class="style-btn">
+                <button title="general" *ngIf="dato.isFromAnnualConvention"
+                    class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
+                    (click)="sendAnnualConvention(dato.checkList)">Guardar
+                </button>
+            </div>
         </ng-container>
 
         <ng-template #other_content>
             <h6 *ngIf="dato.title">{{dato.title}}</h6>
             <div class="mt-3 mb-3" *ngFor="let check of dato.checkList">
-                <nb-checkbox class="prueba" status="basic"><span class="descripcion">{{check.name}}</span>
+                <nb-checkbox class="prueba" [class.disabled-and-approved]="activity_uneditable && dato.approvedAct"
+                    status="basic" [checked]="check.checked" [disabled]="activity_uneditable" (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"><span class="descripcion">{{check.name}}</span>
                 </nb-checkbox>
             </div>
         </ng-template>
-        
+
     </div>
 
     <div *ngFor="let dato of info.datosNivel" class="style-material" [class.d-none]="dato.isFromGenericActivity">
         <div *ngIf="dato.material">
-        <h6>Materiales de apoyo:</h6>
-        <span *ngFor="let m of dato.material; let isLast=last">
-            <a href={{m.link}} target="_blank">
-                {{m.link}}{{isLast ? '' : ', '}}
-            </a>
-        </span>
+            <h6>Materiales de apoyo:</h6>
+            <span *ngFor="let m of dato.material; let isLast=last">
+                <a href={{m.link}} target="_blank">
+                    {{m.link}}{{isLast ? '' : ', '}}
+                </a>
+            </span>
 
-    <div 
-        class="style-btn"
-        [class.no-margin]="info.isFromGenericActivity"
-    >
-        <button *ngIf="info.button" title="general"
-        (click)="sendChecks(info.datosNivel[0].checkList)"
-            class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{info.button.name}}
-        </button>
-    </div>
-    <h5 *ngIf="info.subtitle">{{info.subtitle}}</h5>
-    <hr [class.mt-0]="info.subtitle" *ngIf="info.line">
-</div>
+            <div class="style-btn" [class.no-margin]="info.isFromGenericActivity">
+                <button *ngIf="info.button" title="general" (click)="sendChecks(info.datosNivel[0].checkList)"
+                    class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4">{{info.button.name}}
+                </button>
+            </div>
+            <h5 *ngIf="info.subtitle">{{info.subtitle}}</h5>
+            <hr [class.mt-0]="info.subtitle" *ngIf="info.line">
+        </div>

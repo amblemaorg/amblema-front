@@ -82,7 +82,7 @@ export function EnviromentalMapper(EnviromentalData) {
                       settings: {
                         fetcherMethod: "post",
                         fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/idpeca`     
+                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
                            },
                         infoContainer: [
                           {
@@ -187,7 +187,11 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act
+                                        name: act.name,
+                                        id: act.id,
+                                        checked: act.checked,
+
+
                                       };
                                     }),
                                   ],
@@ -251,7 +255,7 @@ export function EnviromentalMapper(EnviromentalData) {
                       settings: {
                         fetcherMethod: "post",
                         fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/idpeca`     
+                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
                            },
                         infoContainer: [
                           {
@@ -357,7 +361,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act,
+                                        name: act.name
                                       };
                                     }),
                                   ],
@@ -421,7 +425,7 @@ export function EnviromentalMapper(EnviromentalData) {
                       settings: {
                         fetcherMethod: "post",
                         fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/idpeca`     
+                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
                            },
                         infoContainer: [
                           {
@@ -527,7 +531,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act,
+                                        name: act.name
                                       };
                                     }),
                                   ],
