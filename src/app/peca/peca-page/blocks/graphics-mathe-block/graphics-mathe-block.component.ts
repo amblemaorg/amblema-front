@@ -3,12 +3,13 @@ import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { Router } from '@angular/router';
+
 @Component({
-  selector: 'app-graphics-block',
-  templateUrl: './graphics-block.component.html',
-  styleUrls: ['./graphics-block.component.scss']
+  selector: 'app-graphics-mathe-block',
+  templateUrl: './graphics-mathe-block.component.html',
+  styleUrls: ['./graphics-mathe-block.component.scss']
 })
-export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
+export class GraphicsMatheBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
   type: 'presentational';
   component: string;
   settings: {
@@ -20,9 +21,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   chart: any;
   color: any;
 
-  constructor(private router: Router) {
+    constructor(private router: Router) {
     this.type = 'presentational';
-    this.component = 'graphics';
+    this.component = 'graphics-mathe';
   }
 
   ngOnInit() {
@@ -49,22 +50,19 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.chart = new Chart(this.ctx, {
         type: "bar",
         data: {
-          labels: ["1A", "2A", "2B", "3C"],
+          labels: ['Escuela Divina Pastora'],
           datasets: [
             {
-              label: 'Secciones Escuela Santa Maria',
-              data: [8, 4,5 , 7],
+              label: '1ER',
+              data: [8],
               backgroundColor: [
-                '#81b03e',
-                '#ee1',
-                '#00353a',
-
+                '#ee2',
 
               ],
               fill: true
             },
-            /* {
-              label: 'Secciones Escuela Santa Maria',
+            {
+              label: '3 c',
               data: [9],
               backgroundColor: [
                 '#EEE9E8',
@@ -73,7 +71,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               fill: false
             },
             {
-              label: 'Secciones Escuela Santa Maria',
+              label: '5 a',
               data: [6],
               backgroundColor: [
                 '#00353a',
@@ -82,7 +80,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               fill: false
             },
             {
-              label: 'Secciones Escuela Santa Maria',
+              label: '2 B',
               data: [8],
               backgroundColor: [
                 '#81b03e',
@@ -104,7 +102,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
                 '#00353a',
               ],
               fill: false
-            } */
+            }
           ]
         },
         options: {

@@ -49,12 +49,24 @@ const botonEstadisticaMatematica = {
         name: "Ver estadísticas"
       }
     ],
-    modalCode: "dataModalEstadisticasMatematica"
+    modalCode: "dataModalEstadisticasMatematica",
+  }
+};
+/***************************** */
+
+const prueba2 = {
+  component: "graphics-logic",
+  settings: {
+    chartId: "estadisticaLogica",
+    items: []
   }
 };
 
+/******************************** */
+
+
 const estadisticaMatematica = {
-  component: "graphics",
+  component: "graphics-mathe",
   settings: {
     chartId: "estadisticaMatematica",
     items: []
@@ -68,7 +80,7 @@ const modalEstadisticasMatematica = {
     isNotTableEditing: true,
     items: [
       {
-        childBlocks: [{ ...estadisticaMatematica }]
+        childBlocks: [{ ...estadisticaMatematica },{...prueba2}]
       }
     ]
   }
@@ -464,7 +476,7 @@ const modalMathDiagnosticTable = {
               { ...botonEstadisticaMatematica },
               { ...mathDiagnosticTable },
               { ...modalMathDiagnosticTable },
-              { ...modalEstadisticasMatematica }
+              { ...modalEstadisticasMatematica },
             ]
           }
         ]

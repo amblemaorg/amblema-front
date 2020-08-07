@@ -1,16 +1,16 @@
-import { 
-  Component, 
-  OnInit, 
-  EventEmitter, 
-  Output, 
-  Input, 
-  OnDestroy, 
-  PLATFORM_ID, 
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  Input,
+  OnDestroy,
+  PLATFORM_ID,
   Inject,
   ViewChild,
-  ElementRef 
+  ElementRef,
 } from "@angular/core";
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from "@angular/common";
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { ToastrService } from "ngx-toastr";
@@ -59,8 +59,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service,
-    @Inject(PLATFORM_ID) private platformId,
-    // private fetcher: HttpFetcherService,
+    @Inject(PLATFORM_ID) private platformId // private fetcher: HttpFetcherService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
@@ -71,21 +70,21 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       const initMap = () => {
         if (google) {
           clearInterval(interval);
-          this.mapSettings(this.lat, this.lng,7);
-        }        
+          this.mapSettings(this.lat, this.lng, 7);
+        }
       };
       let interval = null;
 
-      try {                
+      try {
         initMap();
       } catch (error) {
-        interval = setInterval(()=> {      
-          try {            
+        interval = setInterval(() => {
+          try {
             initMap();
           } catch (error) {
             // TODO --
           }
-        }, 2000); 
+        }, 2000);
       }
     }
   }
@@ -100,89 +99,85 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       const index = this.appendStepContent(this.stepItems[i]["data"]);
       const formGroupBuilt = this.buildFormGroupStep(this.stepsContent[index]);
       this.formWizard.push(formGroupBuilt);
-    });    
+    });
     this.lastStepIndex = this.getLastStepIndex();
     this.subscribeDependentFields();
+    this.subscribeDependentSelects();
 
     // MAP -----------------------------------------------------------------
-    if (this.isBrowser && this.isSchoolForm) {    
+    if (this.isBrowser && this.isSchoolForm) {
       const initMap = () => {
         if (google) {
           clearInterval(interval);
           setTimeout(() => {
-            if (this.googleMap)
-              this.mapInitializer();            
+            if (this.googleMap) this.mapInitializer();
           });
-        }        
+        }
       };
       let interval = null;
 
-      try {                
+      try {
         initMap();
       } catch (error) {
-        interval = setInterval(()=> {      
-          try {            
+        interval = setInterval(() => {
+          try {
             initMap();
           } catch (error) {
             // TODO --
           }
-        }, 2000); 
+        }, 2000);
       }
     }
     //----------------------------------------------------------------------
 
     if (this.isSchoolForm) {
-      this.formWizard[0].get('name').statusChanges.subscribe( res => {
+      this.formWizard[0].get("name").statusChanges.subscribe((res) => {
         if (
-          this.currentMarker 
-          && this.formWizard[0].get('name').value 
-          && this.formWizard[0].get('name').value.length > 0
+          this.currentMarker &&
+          this.formWizard[0].get("name").value &&
+          this.formWizard[0].get("name").value.length > 0
         ) {
           this.loadAllMarkers({
-            name: this.formWizard[0].get('name').value,
-            coordinate: this.formWizard[0].get('coordinate').value
+            name: this.formWizard[0].get("name").value,
+            coordinate: this.formWizard[0].get("coordinate").value,
           });
         }
       });
-      
-      this.formWizard[0].get('addressMunicipality').statusChanges.subscribe( res => {
+
+      this.formWizard[0].get("addressMunicipality").statusChanges.subscribe((res) => {
         if (
-          this.formWizard[0].get('addressMunicipality').value &&
-          this.formWizard[0].get('addressMunicipality').value.length > 0
-        ) {       
-          const addressData = this.stepsContent[0]['addressMunicipality'].options.filter(s=>{
-              return s.id===this.formWizard[0].get('addressMunicipality').value
-            });
+          this.formWizard[0].get("addressMunicipality").value &&
+          this.formWizard[0].get("addressMunicipality").value.length > 0
+        ) {
+          const addressData = this.stepsContent[0]["addressMunicipality"].options.filter((s) => {
+            return s.id === this.formWizard[0].get("addressMunicipality").value;
+          });
           if (addressData.length > 0) {
-            this.mapPositioner(
-              addressData[0].state.name,
-              addressData[0].name
-            ); 
-          }          
-        } 
-        else {
+            this.mapPositioner(addressData[0].state.name, addressData[0].name);
+          }
+        } else {
           if (this.googleMap) {
             const initMap = () => {
               if (google) {
-                  clearInterval(interval);
-                  this.mapSettings(this.lat,this.lng,7);
-                  this.mapInitializer(); 
-              }        
+                clearInterval(interval);
+                this.mapSettings(this.lat, this.lng, 7);
+                this.mapInitializer();
+              }
             };
             let interval = null;
-            
-            try {                
-                initMap();
+
+            try {
+              initMap();
             } catch (error) {
-                interval = setInterval(()=> {      
-                    try {            
-                    initMap();
-                    } catch (error) {
-                    // TODO --
-                    }
-                }, 2000); 
+              interval = setInterval(() => {
+                try {
+                  initMap();
+                } catch (error) {
+                  // TODO --
+                }
+              }, 2000);
             }
-          }          
+          }
         }
       });
     }
@@ -198,13 +193,13 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // MAP CONFS -------------------------------------------------------------------------------------------
-  mapSettings(lat,lng,zoom) {    
+  mapSettings(lat, lng, zoom) {
     if (google) {
       this.googleLoaded = true;
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
-        zoom: zoom,      
+        zoom: zoom,
       };
       this.mapOptions = mapOps;
     }
@@ -215,14 +210,14 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
     google.maps.event.addListener(this.map, "click", (e) => {
       this.loadAllMarkers({
-        name: this.formWizard[0].get('name').value 
-          && this.formWizard[0].get('name').value.length > 0 
-            ? this.formWizard[0].get('name').value 
+        name:
+          this.formWizard[0].get("name").value && this.formWizard[0].get("name").value.length > 0
+            ? this.formWizard[0].get("name").value
             : "Escuela",
         coordinate: {
           latitude: e.latLng.lat(),
-          longitude: e.latLng.lng()
-        }
+          longitude: e.latLng.lng(),
+        },
       });
     });
 
@@ -241,12 +236,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       map: this.map,
       position: new google.maps.LatLng(data.coordinate.latitude, data.coordinate.longitude),
       label: data.name.substring(0, 1).toUpperCase(),
-      title: data.name.toLowerCase() == "escuela" 
-        ? data.name 
-        : `Escuela: ${data.name}`,
+      title: data.name.toLowerCase() == "escuela" ? data.name : `Escuela: ${data.name}`,
     });
 
-    this.formWizard[0].get('coordinate').setValue(data.coordinate);
+    this.formWizard[0].get("coordinate").setValue(data.coordinate);
 
     this.currentMarker.setMap(this.map);
   }
@@ -255,13 +248,17 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     // google maps geocoding
     const initMap = () => {
       if (google) {
-          clearInterval(interval);
+        clearInterval(interval);
 
-          this.geocoder.geocode({ componentRestrictions: {
-            country: 'Venezuela',
-            administrativeArea: state,
-            locality: county
-          } }, (results, status) => {
+        this.geocoder.geocode(
+          {
+            componentRestrictions: {
+              country: "Venezuela",
+              administrativeArea: state,
+              locality: county,
+            },
+          },
+          (results, status) => {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results.length > 0)
                 this.mapSettings(
@@ -269,44 +266,43 @@ export class FormWizardComponent implements OnInit, OnDestroy {
                   results[0].geometry.location.lng(),
                   11
                 );
-              else           
-                this.mapSettings(this.lat, this.lng, 7);
-            } 
-            else {
+              else this.mapSettings(this.lat, this.lng, 7);
+            } else {
               switch (status) {
-                case 'ZERO_RESULTS':
-                  console.log('None result found, showing default map options');
+                case "ZERO_RESULTS":
+                  console.log("None result found, showing default map options");
                   break;
-                case 'OVER_QUERY_LIMIT':
-                  console.error('You are over your quota');
+                case "OVER_QUERY_LIMIT":
+                  console.error("You are over your quota");
                   break;
-                case 'REQUEST_DENIED':
-                  console.error('Your site is unavailable to use geocoder');
+                case "REQUEST_DENIED":
+                  console.error("Your site is unavailable to use geocoder");
                   break;
                 default:
-                  console.error('Unknown server error');
+                  console.error("Unknown server error");
                   break;
               }
-              this.mapSettings(this.lat,this.lng,7);          
+              this.mapSettings(this.lat, this.lng, 7);
             }
             this.mapInitializer();
-          });
-      }        
+          }
+        );
+      }
     };
     let interval = null;
-    
-    try {                
-        initMap();
+
+    try {
+      initMap();
     } catch (error) {
-        interval = setInterval(()=> {      
-            try {            
-            initMap();
-            } catch (error) {
-            // TODO --
-            }
-        }, 2000); 
+      interval = setInterval(() => {
+        try {
+          initMap();
+        } catch (error) {
+          // TODO --
+        }
+      }, 2000);
     }
-    
+
     // OpenStreetMap
     // https://nominatim.openstreetmap.org/search?country=Venezuela&state=Lara&county=Iribarren&format=json&limit=1
     /* this.fetcher.geoCodeGet(
@@ -320,11 +316,11 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       (res) => {
         if (res.length > 0)
           this.mapSettings(+res[0].lat,+res[0].lon,11);
-        else 
+        else
           this.mapSettings(this.lat,this.lng,7);
       },
       (error) => {
-        this.mapSettings(this.lat,this.lng,7);                
+        this.mapSettings(this.lat,this.lng,7);
         console.error(error);
       },
       () => {
@@ -391,15 +387,14 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     if (!isNullOrUndefined(params.value)) {
       defaultValue = params.value;
     }
-    if (name === "coordinate" && this.isSchoolForm) 
-      return { 
-        [name] : this.fb.group({
+    if (name === "coordinate" && this.isSchoolForm)
+      return {
+        [name]: this.fb.group({
           latitude: [defaultValue, this.getValidators(params.validations)],
-          longitude: [defaultValue, this.getValidators(params.validations)]
-        })
-      }
-    else 
-      return { [name]: [defaultValue, this.getValidators(params.validations)] }
+          longitude: [defaultValue, this.getValidators(params.validations)],
+        }),
+      };
+    else return { [name]: [defaultValue, this.getValidators(params.validations)] };
   }
 
   private getValidators(validations: object): Validators {
@@ -533,6 +528,33 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     });
   }
 
+  private subscribeDependentSelects() {
+    this.stepsContent.map((stepContent, i) => {
+      Object.keys(stepContent).map((prop) => {
+        const { type, isDependent, dependsOn, optionPropertyCondition } = stepContent[prop];
+        if (type === "select" && isDependent === true && dependsOn) {
+          let dependsOnSelect = this.getFormControlInFormWizard(dependsOn);
+          let dependentSelect = this.getFormControlInFormWizard(prop);
+          dependsOnSelect.valueChanges.subscribe((currentValue) => {
+            dependentSelect.reset();
+            const propArrayPath = optionPropertyCondition.split(".");
+            const dependentSelectOptions = this.formsContent[i].data[prop].options;
+            stepContent[prop].options = dependentSelectOptions.filter((op) => {
+              const optionConditionValue = this.accessPropertyByArrayPath(op, propArrayPath);
+              return optionConditionValue == currentValue;
+            });
+          });
+        }
+      });
+    });
+  }
+
+  private accessPropertyByArrayPath(object, properties: string[]): any {
+    return properties.reduce((prevObj: any, prop) => {
+      return prevObj.hasOwnProperty(prop) ? prevObj[prop] : null;
+    }, object);
+  }
+
   private getFormControlInFormWizard(name: string): FormControl {
     let formControl = null;
     this.formWizard.map((formStep) => {
@@ -581,34 +603,34 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public clear(): void {
     if (this.isBrowser && this.isSchoolForm) {
       if (this.currentMarker) this.currentMarker.setMap(null);
-      
+
       const reinitMap = () => {
         if (google) {
-            clearInterval(interval);
-            setTimeout(() => {
-              if (this.googleMap){
-                if (this.currentMarker) this.currentMarker.setMap(null);
-                this.currentMarker = null;  
-                this.mapSettings(this.lat,this.lng,7);
-                this.mapInitializer();
-              }            
-            });  
-        }        
+          clearInterval(interval);
+          setTimeout(() => {
+            if (this.googleMap) {
+              if (this.currentMarker) this.currentMarker.setMap(null);
+              this.currentMarker = null;
+              this.mapSettings(this.lat, this.lng, 7);
+              this.mapInitializer();
+            }
+          });
+        }
       };
       let interval = null;
-      
-      try {                
-          reinitMap();
+
+      try {
+        reinitMap();
       } catch (error) {
-          interval = setInterval(()=> {      
-              try {            
-              reinitMap();
-              } catch (error) {
-              // TODO --
-              }
-          }, 2000); 
-      }             
-    }       
+        interval = setInterval(() => {
+          try {
+            reinitMap();
+          } catch (error) {
+            // TODO --
+          }
+        }, 2000);
+      }
+    }
     this.formWizard.map((wizardFormStep: FormGroup) => {
       wizardFormStep.reset(this.getFormControlsWithDefaultValue());
     });
