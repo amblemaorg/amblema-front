@@ -70,6 +70,14 @@
                     status="basic" [checked]="check.checked" [disabled]="activity_uneditable"
                     (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"><span
                         class="descripcion">{{ check.name }}</span>
+                <nb-checkbox 
+                    class="prueba"
+                    [class.disabled-and-approved]="(activity_uneditable && dato.approvedAct) || !userCanEdit"
+                    status="basic"
+                    [checked]="check.checked"
+                    [disabled]="activity_uneditable || !userCanEdit"
+                    (checkedChange)="toggleCheck($event,check,dato.isFromGenericActivity)"
+                ><span class="descripcion">{{ check.name }}</span>
                 </nb-checkbox>
             </div>
             <div class="style-btn">

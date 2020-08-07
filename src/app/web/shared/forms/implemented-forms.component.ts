@@ -125,7 +125,13 @@ export class ImplementedFormsComponent implements OnInit {
     email: { label: "Correo electrónico", ...this.controlProps.email },
     phone: { label: "Número de teléfono", ...this.controlProps.phone },
     addressState: { label: "Estado", ...this.controlProps.select },
-    addressMunicipality: { label: "Municipio", ...this.controlProps.select },
+    addressMunicipality: {
+      label: "Municipio",
+      isDependent: true,
+      dependsOn: "addressState",
+      optionPropertyCondition: "state.id",
+      ...this.controlProps.select,
+    },
     address: { label: "Calles / Carreras", ...this.controlProps.normalText },
     addressCity: { label: "Ciudad", ...this.controlProps.onlyLetters },
     zone: {
@@ -154,12 +160,12 @@ export class ImplementedFormsComponent implements OnInit {
       button: "Abrir mapa",
       header: "Selecciona la ubicación de la escuela",
       type: "googlemap",
-      validations: { 
-        required: true, 
-        pattern: null 
+      validations: {
+        required: true,
+        pattern: null,
       },
       messages: {},
-    }
+    },
   };
 
   schoolStep2 = {
@@ -255,7 +261,13 @@ export class ImplementedFormsComponent implements OnInit {
     email: { label: "Correo electrónico", ...this.controlProps.email },
     companyPhone: { label: "Número de teléfono", ...this.controlProps.phone },
     addressState: { label: "Estado", ...this.controlProps.select },
-    addressMunicipality: { label: "Municipio", ...this.controlProps.select },
+    addressMunicipality: {
+      label: "Municipio",
+      isDependent: true,
+      dependsOn: "addressState",
+      optionPropertyCondition: "state.id",
+      ...this.controlProps.select,
+    },
     address: { label: "Calles / Carreras", ...this.controlProps.normalText },
     addressCity: { label: "Ciudad", ...this.controlProps.onlyLetters },
   };
@@ -348,7 +360,13 @@ export class ImplementedFormsComponent implements OnInit {
     homePhone: { label: "Teléfono de habitación", ...this.controlProps.phone },
     birthdate: { label: "Fecha de nacimiento", ...this.controlProps.date },
     addressState: { label: "Estado", ...this.controlProps.select },
-    addressMunicipality: { label: "Municipio", ...this.controlProps.select },
+    addressMunicipality: {
+      label: "Municipio",
+      isDependent: true,
+      dependsOn: "addressState",
+      optionPropertyCondition: "state.id",
+      ...this.controlProps.select,
+    },
   };
 
   coordinatorStep2 = {
@@ -468,7 +486,11 @@ export class ImplementedFormsComponent implements OnInit {
   getMunicipalitiesData() {
     this.contactService.getMunicipalities().subscribe((data) => {
       this.schoolStep1.addressMunicipality.options = data.records;
+      // @ts-ignore
+      this.schoolStepItems[4].data.sponsorAddressMunicipality.options = data.records;
       this.sponsorStep1.addressMunicipality.options = data.records;
+      // @ts-ignore
+      this.sponsorStepItems[3].data.schoolAddressMunicipality.options = data.records;
       this.coordinatorStep1.addressMunicipality.options = data.records;
     });
   }
@@ -518,6 +540,15 @@ export class ImplementedFormsComponent implements OnInit {
             newPropValue.subfields[subfieldName]["name"] = subfieldNamePrefixed;
           }
         });
+      }
+      if (
+        newPropValue.type == "select" &&
+        newPropValue.isDependent === true &&
+        newPropValue.dependsOn !== ""
+      ) {
+        newPropValue = cloneDeep(propValue);
+        const dependsOnPrefixed = prefix + this.toCapitalizedString(newPropValue.dependsOn);
+        newPropValue.dependsOn = dependsOnPrefixed;
       }
       if (!isNullOrUndefined(newPropValue.condition)) {
         newPropValue = cloneDeep(propValue);

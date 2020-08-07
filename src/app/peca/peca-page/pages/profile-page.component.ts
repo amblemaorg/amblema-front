@@ -73,19 +73,23 @@ export class ProfilePageComponent extends PecaPageComponent
 
       if (comes_from_steps) {
         this.activePecaSubs = this.actPeca$.pipe(first()).subscribe(
-          ({ activePeca }) => {
-            const activePecaId = activePeca.id;
+          (activePeca) => {
+            if (activePeca) {
+              const activePecaId = activePeca.activePeca.id;
 
-            activePecaId
-              ? $("nb-sidebar").removeClass("is-hidden")
-              : $("nb-sidebar").addClass("is-hidden");
-
-            this.isFromSteps = true;                
-
+              activePecaId
+                ? $("nb-sidebar").removeClass("is-hidden")
+                : $("nb-sidebar").addClass("is-hidden");   
+            }
+            else {
+              $("nb-sidebar").addClass("is-hidden");
+            }
           },
           error => console.error(error)
-        );        
-      } else {
+        ); 
+        this.isFromSteps = true;        
+      } 
+      else {
         $("nb-sidebar").removeClass("is-hidden");
         this.isFromSteps = false;
       } 
