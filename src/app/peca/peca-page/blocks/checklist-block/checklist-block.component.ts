@@ -247,7 +247,7 @@ sendChecks(checks){
     console.log(method)
     console.log(resourcePath);
 //console.log(resourcePath, method)
-   /*    this.fetcher[method](resourcePath, body).subscribe(
+     /*  this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         console.log("form response", response);
         //this.sleepSend = true;
@@ -277,6 +277,6 @@ sendChecks(checks){
         );
         console.error(error);
       }
-    );   */
+    );    */
 }
   }

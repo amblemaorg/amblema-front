@@ -79,7 +79,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
           // console.log("resp necesaria", data);
           this.idPeca = data.activePecaContent.id;
           this.response = data.activePecaContent.school;
-          //  console.log(this.response.sections);
+           console.log(this.response.sections);
           let auxStudents = [];
           for (let i = 0; i < this.response.sections.length; i++) {
             this.grade = this.response.sections[i].grade;
