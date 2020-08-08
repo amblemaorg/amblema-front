@@ -16,6 +16,7 @@ import { GlobalService } from "src/app/services/global.service";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { ClassGetter } from "@angular/compiler/src/output/output_ast";
 
 @Component({
@@ -42,6 +43,8 @@ export class ProfileBlockComponent
 
   url = "";
   name = "";
+
+  faUser = faUserAlt;
 
   @Select(PecaState.getUser) userInfo$: Observable<any>;
   userSubscription: Subscription;

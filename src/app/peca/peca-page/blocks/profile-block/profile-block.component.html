@@ -6,11 +6,13 @@
       </div>
       <div class="text-hover">
         <img
-          [src]="url ? url : '../../../../assets/images/profile2.png'"
+          *ngIf="url"
+          [src]="url"
           [alt]="name"
           (click)="uploadImageCaller(imagenPerfil)"
         />
-        <h6>Actualizar Imagen</h6>
+        <fa-icon *ngIf="!url" [icon]="faUser" (click)="uploadImageCaller(imagenPerfil)"></fa-icon>
+        <h6 (click)="uploadImageCaller(imagenPerfil)">Actualizar Imagen</h6>        
       </div>
     </div>
     <div class="bloque2">
