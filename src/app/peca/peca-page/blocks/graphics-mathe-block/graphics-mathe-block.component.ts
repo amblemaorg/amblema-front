@@ -70,22 +70,22 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
           if (this.UrlLapse === "1") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .multiplicationsPerMinIndex
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1
+                  .multiplicationsPerMinIndex).toFixed(2)
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .multiplicationsPerMinIndex
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2
+                  .multiplicationsPerMinIndex).toFixed(2)
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .multiplicationsPerMinIndex
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3
+                  .multiplicationsPerMinIndex).toFixed(2)
               );
             }
           }
