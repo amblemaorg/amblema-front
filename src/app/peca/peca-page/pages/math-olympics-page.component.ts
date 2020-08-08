@@ -44,6 +44,7 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     prueba: any;
 
     UrlLapse = "";
+    peca_id: any;
 
     isInstanciated: boolean;
     loadedData: boolean;
@@ -82,6 +83,7 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
                 if (data.activePecaContent) {
+                    this.peca_id = data.activePecaContent.id;
                     if (!isNullOrUndefined(data)) {
                         console.log(data, "data olimpiadas")
                     }
@@ -91,52 +93,65 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
 
                     //data para llenar la tabla
                     if (this.UrlLapse === "1") {
-                        let auxName = [];
-                        data.activePecaContent.lapse1.olympics.students.forEach((students) => {
-                            students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
-                                students.lastName = students.name.split(' ').slice(-1).join(' ');
-                        });
-
-                        auxName = auxName.concat(data.activePecaContent.lapse1.olympics.students)
-
-                        this.prueba = auxName;
-
-                        this.setStudentTableData(this.prueba, studentsOlympicMapper);
-
+                        if (data.activePecaContent.lapse1.olympics.students !=null){
+                            let auxName = [];
+                            data.activePecaContent.lapse1.olympics.students.forEach((students) => {
+                                students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
+                                    students.lastName = students.name.split(' ').slice(-1).join(' ');
+                            });
+    
+                            auxName = auxName.concat(data.activePecaContent.lapse1.olympics.students)
+    
+                            this.prueba = auxName;
+    
+                            this.setStudentTableData(this.prueba, studentsOlympicMapper);
+                        }
+                        else {
+                            this.prueba = "";
+                        }
+                        
                     } else if (this.UrlLapse === "2") {
-                        let auxName = [];
-                        data.activePecaContent.lapse2.olympics.students.forEach((students) => {
-                            students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
-                                students.lastName = students.name.split(' ').slice(-1).join(' ');
-                        });
-
-                        auxName = auxName.concat(data.activePecaContent.lapse2.olympics.students)
-
-                        this.prueba = auxName;
-
-                        this.setStudentTableData(this.prueba, studentsOlympicMapper);
+                        if (data.activePecaContent.lapse2.olympics.students !=null){
+                            let auxName = [];
+                            data.activePecaContent.lapse2.olympics.students.forEach((students) => {
+                                students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
+                                    students.lastName = students.name.split(' ').slice(-1).join(' ');
+                            });
+    
+                            auxName = auxName.concat(data.activePecaContent.lapse2.olympics.students)
+    
+                            this.prueba = auxName;
+    
+                            this.setStudentTableData(this.prueba, studentsOlympicMapper);
+                        }
+                        else {
+                            this.prueba = "";
+                        }
+                        
                     } else {
-                        let auxName = [];
-                        data.activePecaContent.lapse3.olympics.students.forEach((students) => {
-                            students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
-                                students.lastName = students.name.split(' ').slice(-1).join(' ');
-                        });
-
-                        auxName = auxName.concat(data.activePecaContent.lapse3.olympics.students)
-
-                        this.prueba = auxName;
-
-                        this.setStudentTableData(this.prueba, studentsOlympicMapper);
+                        if (data.activePecaContent.lapse2.olympics.students !=null){
+                            let auxName = [];
+                            data.activePecaContent.lapse3.olympics.students.forEach((students) => {
+                                students.fisrtName = students.name.split(' ').slice(0, -1).join(' '),
+                                    students.lastName = students.name.split(' ').slice(-1).join(' ');
+                            });
+    
+                            auxName = auxName.concat(data.activePecaContent.lapse3.olympics.students)
+    
+                            this.prueba = auxName;
+    
+                            this.setStudentTableData(this.prueba, studentsOlympicMapper);
+                        }
+                        else {
+                            this.prueba = "";
+                        }
                     }
-
-
                     //data para llenar el select con estudiantes
                     //this.setStudentsSelectData(data.school, sectionsAndStudentsDataToSectionsFormMapper)
 
                     this.loadedData = true;
                     if (this.isInstanciated) this.updateMethods();
                 }
-
             }, er => { console.log(er) })
     }
 
@@ -173,23 +188,46 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
 
     setOlimpiadas(data) {
         if (this.UrlLapse === "1") {
-            this.text = data.activePecaContent.lapse1.olympics.description;
-            console.log(this.text, "descricion olimpiadas 1 ")
-            this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse1.olympics.date), 'dd/MM/yyyy , h:mm');
-            this.file = data.activePecaContent.lapse1.olympics.file;
+            if (data.activePecaContent.lapse1.olympics !=null) {
+                this.text = data.activePecaContent.lapse1.olympics.description;
+                //console.log(this.text, "descricion olimpiadas 1 ")
+                this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse1.olympics.date), 'dd/MM/yyyy , h:mm');
+                this.file = data.activePecaContent.lapse1.olympics.file;
+            }
+            else {
+                this.text = "";
+                this.date = "";
+                this.file = "";
+            }
         }
         else if (this.UrlLapse === "2") {
-            this.text = data.activePecaContent.lapse2.olympics.description;
-            console.log(this.text, "descricion olimpiadas 2 ")
-            this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse2.olympics.date), 'dd/MM/yyyy , h:mm');
-            this.file = data.activePecaContent.lapse1.olympics.file;
+            if (data.activePecaContent.lapse2.olympics !=null) {
+                this.text = data.activePecaContent.lapse2.olympics.description;
+                console.log(this.text, "descricion olimpiadas 2 ")
+                this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse2.olympics.date), 'dd/MM/yyyy , h:mm');
+                this.file = data.activePecaContent.lapse1.olympics.file;
+            }
+            else {
+                this.text = "";
+                this.date = "";
+                this.file = "";
+            }
+            
         } else {
-            this.text = data.activePecaContent.lapse3.olympics.description;
-            console.log(this.text, "descricion olimpiadas 3 ")
-            this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse3.olympics.date), 'dd/MM/yyyy , h:mm');
-            this.file = data.activePecaContent.lapse1.olympics.file;
+            if (data.activePecaContent.lapse3.olympics !=null) {
+                this.text = data.activePecaContent.lapse3.olympics.description;
+                console.log(this.text, "descricion olimpiadas 3 ")
+                this.date = this.pipe.transform(Date.parse(data.activePecaContent.lapse3.olympics.date), 'dd/MM/yyyy , h:mm');
+                this.file = data.activePecaContent.lapse1.olympics.file;
+            }
+            else {
+                this.text = "";
+                this.date = "";
+                this.file = "";
+            }
+            
         }
-        console.log(this.date, 'fileeeeeeeeeeeeeeeee')
+        //console.log(this.date, 'fileeeeeeeeeeeeeeeee')
     }
 
     setOLimpiadasData() {
@@ -213,7 +251,20 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     updateMethods() {
         this.updateDataToBlocks();
         //this.updateStaticFetchers();
-        //this.updateDynamicFetchers();
+        this.updateDynamicFetchers();
+    }
+
+    updateDynamicFetchers() {
+        //update
+        //pecaprojects/olympics/<string:pecaId>/<string:lapse>/<string:studentId> | PUT Actualizar
+        this.createAndSetBlockFetcherUrls(
+            "resultadoEstudianteModal",
+            {
+                put: (id_studente) =>
+                    `pecaprojects/olympics/${this.peca_id}/${this.UrlLapse}/${id_studente}`,
+            },
+            "settings.data.id",
+        );
     }
 
     updateDataToBlocks() {

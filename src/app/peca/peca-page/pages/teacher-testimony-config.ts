@@ -91,11 +91,12 @@ const textsAndButtons = {
     component: 'textsbuttons',
     settings: {
         action: [{
-            type: 3,
+            type: 1,
             name: 'Enviar Solicitud',
         }],
         receivesFromTableOrForm: 'table',
         buttonCode: 'dataTestimonioDocenteTabla',
+        fetcherMethod: 'post',
     }
 }
 

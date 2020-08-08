@@ -34,6 +34,9 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
     isInstanciated: boolean;
     loadedData: boolean;
 
+    yearbookData: any;
+    title: string;
+
     constructor(
         factoryResolver: ComponentFactoryResolver, 
         @Inject(DOCUMENT) document: Document,
@@ -58,8 +61,11 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
                 data => {                    
                     if (data && data.activePecaContent) {    
                         this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
-
+                        console.log(data, "ANUARIO")
                         this.setPdfData(this.pecaData);
+
+                        this.setYearbook(data);
+                        this.setYearbookData();
 
                         this.loadedData = true;
                         if (this.isInstanciated) this.updateMethods();
@@ -78,6 +84,7 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
     updateDataToBlocks() {
         // this.setBlockData("schoolForm", this.schoolFormData);
+        this.setBlockData("titleYearbook", this.yearbookData);
     }
 
     updateStaticFetchers() {
@@ -86,6 +93,23 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
     
     updateDynamicFetchers() {
         //
+    }
+
+    setYearbook(data) {
+        this.title = data.activePecaContent.yearbook.lapse1.activities[0].name;
+        console.log(this.title, "nombre")
+    }
+
+    setYearbookData() {
+        this.yearbookData = {
+            inputAndBtns: [
+                {
+                    titleInput: this.title
+                },
+
+            ],
+        }
+        console.log(this.yearbookData, "aqui titulo")
     }
 
     setAmblemarioData(pecaData, _mapper?: Function) {

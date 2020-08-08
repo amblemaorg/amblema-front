@@ -1,3 +1,4 @@
+
 export function amblemarioMapper(pecaData) {
     // console.log("amblemario mapper data",pecaData);
     const {
@@ -18,5 +19,27 @@ export function amblemarioMapper(pecaData) {
         sponsorLogo: sponsor.image ? sponsor.image : null,
         schoolName: school.name ? school.name : null,
         schoolCity: schoolData.city,
-    };    
+    };
 }
+
+export function amblemarioDataMapper(pecaData) {
+
+    const AMBLEMARIO_CONFIG_TEST = {
+        header: {
+            title: "AmbLeMario",
+            download: {
+                url: '#',
+                name: 'Descargar',
+            }
+        },
+        blocks: [
+            {
+                component: 'profiles',
+                settings: {
+                    
+                }
+            }
+        ]
+    }
+}
+
