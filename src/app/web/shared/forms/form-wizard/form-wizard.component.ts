@@ -27,9 +27,12 @@ import { Subscription } from "rxjs";
 export class FormWizardComponent implements OnInit, OnDestroy {
   @ViewChild("googleMap", { read: ElementRef, static: false })
   googleMap: ElementRef;
+  @ViewChild("googleMapSp", { read: ElementRef, static: false })
+  googleMapSp: ElementRef;
 
   @Input() formsContent: any;
   @Input() isSchoolForm: boolean = false;
+  @Input() isSponsorForm: boolean = false;
   @Input() recaptchaAction: string = "form_wizard";
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
   stepItems: Array<any>;
@@ -131,26 +134,26 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     //----------------------------------------------------------------------
 
     if (this.isSchoolForm) {
-      this.formWizard[0].get("name").statusChanges.subscribe((res) => {
+      this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).statusChanges.subscribe((res) => {
         if (
           this.currentMarker &&
-          this.formWizard[0].get("name").value &&
-          this.formWizard[0].get("name").value.length > 0
+          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value &&
+          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value.length > 0
         ) {
           this.loadAllMarkers({
-            name: this.formWizard[0].get("name").value,
-            coordinate: this.formWizard[0].get("coordinate").value,
+            name: this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value,
+            coordinate: this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("coordinate")).value,
           });
         }
       });
 
-      this.formWizard[0].get("addressMunicipality").statusChanges.subscribe((res) => {
+      this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).statusChanges.subscribe((res) => {
         if (
-          this.formWizard[0].get("addressMunicipality").value &&
-          this.formWizard[0].get("addressMunicipality").value.length > 0
+          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value &&
+          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value.length > 0
         ) {
-          const addressData = this.stepsContent[0]["addressMunicipality"].options.filter((s) => {
-            return s.id === this.formWizard[0].get("addressMunicipality").value;
+          const addressData = this.stepsContent[this.getFormMapContainerIndex()][this.toCapitalizedString("addressMunicipality")].options.filter((s) => {
+            return s.id === this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value;
           });
           if (addressData.length > 0) {
             this.mapPositioner(addressData[0].state.name, addressData[0].name);
@@ -211,8 +214,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     google.maps.event.addListener(this.map, "click", (e) => {
       this.loadAllMarkers({
         name:
-          this.formWizard[0].get("name").value && this.formWizard[0].get("name").value.length > 0
-            ? this.formWizard[0].get("name").value
+          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value && this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value.length > 0
+            ? this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value
             : "Escuela",
         coordinate: {
           latitude: e.latLng.lat(),
@@ -239,7 +242,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       title: data.name.toLowerCase() == "escuela" ? data.name : `Escuela: ${data.name}`,
     });
 
-    this.formWizard[0].get("coordinate").setValue(data.coordinate);
+    this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("coordinate")).setValue(data.coordinate);
 
     this.currentMarker.setMap(this.map);
   }
@@ -383,11 +386,11 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     name: string,
     params: { value: any; validations: object }
   ): object {
-    let defaultValue = name === "coordinate" ? null : "";
+    let defaultValue = name === this.toCapitalizedString("coordinate") ? null : "";
     if (!isNullOrUndefined(params.value)) {
       defaultValue = params.value;
     }
-    if (name === "coordinate" && this.isSchoolForm)
+    if (name === this.toCapitalizedString("coordinate") && this.isSchoolForm)
       return {
         [name]: this.fb.group({
           latitude: [defaultValue, this.getValidators(params.validations)],
@@ -564,12 +567,22 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   public goToStep(step: number): void {
+    const initMap = () => { if (google) { clearInterval(interval);setTimeout(() => {
+      if (this.googleMap) { if (this.currentMarker) this.currentMarker.setMap(null);
+        this.currentMarker = null; this.mapSettings(this.lat, this.lng, 7); this.mapInitializer();
+      } }); }};
+    let interval = null;
+    if (this.isSponsorForm && this.activeStepIndex === 2) {
+      try { initMap(); } catch (error) {
+      interval = setInterval(() => { try { initMap(); } catch (error) { /** TODO --*/ } }, 1000);
+    }}        
+
     this.updateDataToSubmit();
     step = this.validateStep(step);
     if (this.isStepWriteable(step)) {
       this.activeStepIndex = step;
     } else {
-      if (this.stepMovement(step) == "next") {
+      if (this.stepMovement(step) == "next") {        
         this.goToStep(step + 1);
       } else if (this.stepMovement(step) == "prev") {
         this.goToStep(step - 1);
@@ -661,4 +674,13 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   trackByFn(index: number): number {
     return index;
   }
+
+  getFormMapContainerIndex() {
+    return this.isSponsorForm ? 3 : 0;
+  }
+
+  toCapitalizedString(value: string) {
+    return this.isSponsorForm ? "school" + value.slice(0, 1).toUpperCase() + value.slice(1, value.length) : value;
+  }
+
 }
