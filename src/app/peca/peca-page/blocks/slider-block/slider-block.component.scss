@@ -18,6 +18,9 @@
 }
 .h6-responsive{
 	display: inline-block;
+	@media (max-width: 768px) {
+		margin-left: 2rem;
+	}
 }
 .carousel-1,
 .carousel-2,
@@ -94,10 +97,14 @@
 }
 .image-desc{
 	color: $blue !important;
+	@media (max-width: 768px) {
+		margin-left: 2rem;
+	}
 	//font-size: 0.8rem;
 }
 .form-control {
 	color: $blue;
+    width: 85%;
 
 	&.sb-date-picker {
 		position: relative;
@@ -171,6 +178,9 @@
 @media (max-width: 576px){
 	.input-responsive{
 		margin-bottom: 1rem;
+	}
+	.form-control{
+		margin-left: 2rem;
 	}
 }
 
