@@ -48,6 +48,13 @@ export class PdfYearbookService {
           height: 612
         };
 
+        const colors = {
+            blue: '#00809A',
+            green: '#81B03E',
+            white: '#fff',
+            darkGreen: '#337550',
+        };
+
         const pdfData = pdf_data ? pdf_data : {};
   
         // pdf metadata
@@ -70,8 +77,10 @@ export class PdfYearbookService {
   
           if (currentPage === 1) 
             return new Canvas([
-              new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color('#00809A').end
+              new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color(colors.blue).end
             ]).end
+          else if (currentPage > 2)
+            return new Txt(this.getPageNumberFormated(`${currentPage-2}`)).bold().absolutePosition(20,pdfPageSizes.height-46).color(colors.darkGreen).end;
   
           return null
         });
@@ -95,15 +104,22 @@ export class PdfYearbookService {
         // loading images for pdf footer use
         // const cover_footer = open_book ? await new Img('openBook', true).width(990).margin([-105,-258,0,0]).build() : null;
         const cover_footer = open_book ? await new Img('openBook', true).width(pdfPageSizes.width+180).margin([-80,-255,0,0]).build() : null;
-  
+        const footer_amble_logo = amble_logo ? await new Img('ambleLogo', true).fit([42,42]).relativePosition(pdfPageSizes.width-60,-33).build() : null;
+        const footer_sponsor_logo = pdfData["sponsorLogo"] ? await new Img('sponsorLogo', true).fit([65,40]).relativePosition(pdfPageSizes.width-146,-29).build() : null;
         /**
          * pdf footer, when cover page opened book appears
          */
         pdf.footer((currentPage, pageSize) => {
           if (currentPage === 1) 
             return cover_footer;
-  
-          return null
+          else 
+            return new Stack([
+                footer_amble_logo,
+                footer_sponsor_logo,
+                new Canvas([
+                    new Rect(0, [pdfPageSizes.width, 24]).color(colors.green).end
+                ]).relativePosition(0,16).end
+            ]).end;
         });
   
         //* PDF CONTENT blocks --------------------------------------------------
@@ -113,9 +129,9 @@ export class PdfYearbookService {
         ]).alignment('center').relativePosition(0,-20).style('coverHeader').bold().end);
   
         if (amble_logo) pdf.add(new Canvas([new Polyline([{ x: 0, y: 0 },{ x: 0, y: 90 },{ x: 41, y: 115 },{ x: 45, y: 116 },{ x: 49, y: 115 },{ x: 90, y: 90 },{ x: 90, y: 0 }])
-          .closePath().color('#fff').end]).absolutePosition(45,0).end);
+          .closePath().color(colors.white).end]).absolutePosition(45,0).end);
         if (pdfData["sponsorLogo"]) pdf.add(new Canvas([new Polyline([{ x: 0, y: 0 },{ x: 0, y: 90 },{ x: 41, y: 115 },{ x: 45, y: 116 },{ x: 49, y: 115 },{ x: 90, y: 90 },{ x: 90, y: 0 }])
-          .closePath().color('#fff').end]).absolutePosition(pdfPageSizes.width-135,0).end);
+          .closePath().color(colors.white).end]).absolutePosition(pdfPageSizes.width-135,0).end);
   
         if (amble_logo) pdf.add(await new Img('ambleLogo', true).fit([72,72]).absolutePosition(54,15).build());
         if (pdfData["sponsorLogo"]) pdf.add(await new Img('sponsorLogo', true).fit([72,72]).absolutePosition(pdfPageSizes.width-126,15).build());
@@ -124,24 +140,26 @@ export class PdfYearbookService {
           new Txt('AmbLeMario').bold().fontSize(62).end, 
           pdfData["schoolName"] ? new Txt(pdfData.schoolName).bold().fontSize(16).end : null, 
           pdfData["schoolName"] ? new Canvas([
-            new Rect(0, [ (185 * pdfData.schoolName.length) / 21 , 1]).color('#81b03e').end
+            new Rect(0, [ (185 * pdfData.schoolName.length) / 21 , 1]).color(colors.green).end
           ]).end : null,
           pdfData["schoolCity"] ? new Txt(pdfData.schoolCity).bold().margin([0,4]).end : null, 
         ])
-        .alignment('center').margin([0,135,0,0]).color('#fff').end);
+        .alignment('center').margin([0,135,0,0]).color(colors.white).end);
         
         pdf.add(new Txt('Indice').pageBreak('before').end);
+        pdf.add(new Txt('Otra pagina').pageBreak('before').end);
+        pdf.add(new Txt('Ultima pagina').pageBreak('before').end);
         //* endOf PDF CONTENT blocks --------------------------------------------
   
         pdf.styles({
           coverHeader: {
             fontSize: 16,
-            color: '#fff',
+            color: colors.white,
           },
           headerSchoolName: {
             fontSize: 16,
             decoration: 'underline',
-            decorationColor: '#81b03e',
+            decorationColor: colors.green,
           },
           subtitle: {
             fontSize: 16,
@@ -212,6 +230,10 @@ export class PdfYearbookService {
         resolve(dataURL)
       }
     });    
+  }
+
+  private getPageNumberFormated(number: string): string {
+    return number.length > 1 ? number : `0${number}`
   }
 
 }
