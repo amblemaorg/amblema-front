@@ -498,9 +498,20 @@ export class ImplementedFormsComponent implements OnInit {
   }
 
   submitContactForm(form: string, data: any) {
+    let fieldsData = {};
+    switch (form) {
+      case "coordinator":
+        this.coordinatorStepItems.map((step) => (fieldsData = { ...fieldsData, ...step.data }));
+        break;
+      case "sponsor":
+        this.sponsorStepItems.map((step) => (fieldsData = { ...fieldsData, ...step.data }));
+        break;
+      case "school":
+        this.schoolStepItems.map((step) => (fieldsData = { ...fieldsData, ...step.data}));
+        break;
+    }
     this.contactService.sendContactForm(form, data).subscribe({
       next: (data) => {
-        console.log(data);
         this.displayMessage("Formulario enviado satisfactoriamente", "success");
         this.formWizard.clear();
         this.formWizard.setIsSubmitting(false);
@@ -508,7 +519,7 @@ export class ImplementedFormsComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        this.displayMessage("No pudo enviarse el formulario, intenta más tarde", "error");
+        this.displayMessage(this.handleMessageError(error.error, fieldsData), "error");
         this.formWizard.setIsSubmitting(false);
       },
     });
@@ -525,6 +536,46 @@ export class ImplementedFormsComponent implements OnInit {
         break;
       default:
         this.toastr.info(message, "", options);
+    }
+  }
+
+  handleMessageError(error, fields) {
+    const errorFields = Object.keys(error);
+    const errorLabel = fields[errorFields[0]].label; // Take first field
+    const errorStatus = error[errorFields[0]][0].status; // Take first status error
+    switch (errorStatus) {
+      case "1":
+        return `${errorLabel} es invalido`;
+      case "2":
+        return `${errorLabel} es requerido`;
+      case "3":
+        return `${errorLabel} no puede ser nulo`;
+      case "4":
+        return `${errorLabel}, error de validacion`;
+      case "5":
+        return `${errorLabel} ya está registrado`;
+      case "6":
+        return `${errorLabel} no se encontró registro`;
+      case "7":
+        return `${errorLabel} admite solo letras`;
+      case "8":
+        return `${errorLabel} admite solo numeros`;
+      case "9":
+        return `${errorLabel}, la imagen es inválida`;
+      case "10":
+        return `${errorLabel}, la URL es inválida`;
+      case "11":
+        return `${errorLabel}, opción inválida`;
+      case "12":
+        return `${errorLabel} está fuera de rango`;
+      case "13":
+        return `${errorLabel} el texto es muy largo`;
+      case "14":
+        return `${errorLabel}, no coinciden las contraseñas`;
+      case "15":
+        return `${errorLabel}, No autorizado`;
+      default:
+        return "No pudo enviarse el formulario, intenta más tarde";
     }
   }
 
@@ -560,7 +611,7 @@ export class ImplementedFormsComponent implements OnInit {
           newPropValue.condition.formControlName = formControlPrefixed;
         }
       }
-      if (!propName.startsWith(prefix)) {
+      if (!propName.startsWith(prefix) && newPropValue.type !== "googlemap") {
         let propNameCapitalized = this.toCapitalizedString(propName);
         newObj[prefix + propNameCapitalized] = newPropValue;
       } else {
