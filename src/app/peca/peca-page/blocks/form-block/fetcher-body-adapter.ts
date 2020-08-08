@@ -84,7 +84,19 @@ export function adaptBody(formType: string, body: any) {
           body_adapted[key === "resultLog" ? "operationsPerMin" : key === "resultMul" ? "multiplicationsPerMin" : key] = body[key];
       });
       break;
+
+      case 'tablaConfirmacionDocente':
+        Object.keys(body).map((key) => {
+          if (
+            key != "grade" &&
+            key != "section" 
+          )
+          body_adapted[key === "confirmation" ? "status" : key] = body[key];
+        });
+        break;
+
       
+
     default:
       Object.keys(body).map((key) => {
         body_adapted[key] = body[key];

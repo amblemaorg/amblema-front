@@ -135,6 +135,7 @@ const ConfirmacionDocente = {
 //* MODAL CONFIRMACION DOCENTE ----------------------------------
 const formConfirmacionDocente = {
     component: 'form',
+    name: 'confirmacionDocenteModal',
     viewMode: 'both',
     settings: {
         formsContent: formConfirmacionDocenteModal,
@@ -143,6 +144,7 @@ const formConfirmacionDocente = {
         tableCode: 'amblemonedaConfigConfirmacionDocente',
         modalCode: 'amblemonedaConfigConfirmacionDocente',
         isFromCustomTableActions: true,
+        fetcherMethod: 'put',
     }
 }
 const textsAndButtonsConfirmacionDocente = {
@@ -213,6 +215,7 @@ const btnGuardarFechaCharla = {
             name: 'Guardar',
         }],
          fetcherMethod: 'put',
+         buttonCode: 'enviarDataCharla'
     },
     
 }

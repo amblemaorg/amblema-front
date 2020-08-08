@@ -64,6 +64,7 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
         this.infoDataSubscription = this.infoData$.subscribe(
             data => {
                 if (data.activePecaContent) {
+                    this.schoolId = data.activePecaContent.school.code
                     if (!isNullOrUndefined(data)) {
                         console.log(data, "data testimonio")
                     }
@@ -75,7 +76,6 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
                     this.loadedData = true;
                     if (this.isInstanciated) this.updateMethods();
                 }
-
             }, er => { console.log(er) })
 
     }
@@ -97,11 +97,12 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
         this.createAndSetBlockFetcherUrls(
             "testimonyModalForm",
             {
-                post: (userId) =>
-                    `schools/teacherstestimonials/${this.schoolId}/${userId}`
+                //schools/teacherstestimonials/<string:schoolId>?userId=<string:id>
+                put: (userId) =>
+                    `schools/teacherstestimonials/${this.schoolId}/5f0738b39b2ed636ffb3e6fb`,
             },
-            //"settings.data.schoolId",
-            "settings.data.userId"
+            "settings.data.id"
+           
         );
         //Delete modal testimony
         /* this.createAndSetBlockFetcherUrls(
@@ -110,6 +111,7 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
                 delete: () => 
             },
         ) */
+
     }
 
     setTestimonyTeacherDataMapper(dataTestimony, _mapper?: Function) {
