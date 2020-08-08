@@ -311,7 +311,7 @@ const mathDiagnosticTable = {
       },
 
       date: {
-        title: 'Fecha resultado de lectura',
+        title: 'Fecha resultado de multiplicación',
         valuePrepareFunction: (row: any) => {
           if (row)
             return parseDate(new Date(row));
