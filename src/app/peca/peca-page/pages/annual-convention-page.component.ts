@@ -30,6 +30,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
   loadedData: boolean;
   UrlLapse = "";
   routerSubscription: Subscription;
+  pecaId = "";
 
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
@@ -42,7 +43,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       data.blocks.forEach((block, name) =>
         this.blockInstances.set(name, block)
       );
-      console.log(this.blockInstances, "bloques");
+      //console.log(this.blockInstances, "bloques");
       if (this.loadedData) this.updateMethods();
     });
     this.instantiateComponent(config);
@@ -52,7 +53,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-        console.log("el ev", this.UrlLapse);
+        //console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
     });
@@ -65,6 +66,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       (data) => {
         if (data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
+            this.pecaId = data.activePecaContent.id;
             if (this.UrlLapse === "1") {
               this.response =
                 data.activePecaContent.lapse1.annualConvention.checklist;
@@ -72,7 +74,8 @@ export class AnnualConventionPageComponent extends PecaPageComponent
               this.response =
                 data.activePecaContent.lapse2.annualConvention.checklist;
             } else {
-              this.response = data.activePecaContent.lapse3.annualConvention.checklist;
+              this.response =
+                data.activePecaContent.lapse3.annualConvention.checklist;
             }
             console.log(this.response);
             this.setAnnualConventionData();
@@ -88,7 +91,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
 
   setAnnualConventionData() {
     this.AnnualConventionInfo = {
-      checkList: this.response
+      checkList: this.response,
     };
   }
 
@@ -98,7 +101,15 @@ export class AnnualConventionPageComponent extends PecaPageComponent
 
   updateMethods() {
     this.updateDataToBlocks();
+    this.updateStaticFetchers();
   }
+
+  updateStaticFetchers() {
+    this.setBlockFetcherUrls("AnnualConventionCheckLists", {
+      post: `pecaprojects/annualconvention/${this.pecaId}`,
+    });
+  }
+//      post: `pecasetting/annualconvention/${this.UrlLapse}`,
 
   ngAfterViewInit(): void {
     setTimeout(() => {
