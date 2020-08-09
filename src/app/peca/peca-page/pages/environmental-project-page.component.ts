@@ -13,7 +13,6 @@ import { GlobalService } from "src/app/services/global.service";
 import { EnviromentalMapper} from '../mappers/enviromental-mapper';
 import { PecaState } from 'src/app/store/states/peca/peca.state';
 import { Select } from '@ngxs/store';
-import { DatePipe } from "@angular/common"
 
 @Component({
   selector: "peca-environmental-project",
@@ -28,7 +27,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
   isInstantiating: boolean;
   loadedData: boolean;
   UrlLapse = "";
-  pipe = new DatePipe('en-US');
 
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
@@ -52,11 +50,12 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
               schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
               schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
             });  */
-            //console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
+            console.log("proyecto ambiental", data.activePecaContent.environmentalProject)
+            console.log("peca", data.activePecaContent)
             //console.log("active", data.activePecaContent)
             const configVista = EnviromentalMapper(data.activePecaContent.environmentalProject); //variable_que_almacenara_el_config_para_la_vista
             this.instantiateComponent(configVista);
-           // console.log('mapper', configVista)
+           //console.log('mapper', configVista)
             this.doInstantiateBlocks();
           }
         }
@@ -67,6 +66,8 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent
     );
   }
 
+  
+  
   ngAfterViewInit(): void {        
     this.doInstantiateBlocks();
 }
