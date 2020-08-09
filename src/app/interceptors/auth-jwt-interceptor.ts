@@ -23,7 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(
     private authService: NbAuthService,
     private http: HttpClient
-    ) {}
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -37,12 +37,12 @@ export class JwtInterceptor implements HttpInterceptor {
             if (url === 'auth/refresh')
                 request = this.addToken(request, tokens.refresh_token);
             else request = this.addToken(request, tokens.access_token);
-        }    
+        }
     });
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 422)) {
           return this.handle401Error(request, next);
         } else {
           return throwError(error);
@@ -66,7 +66,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
       return this.http.post<any>(`${environment.baseUrl}auth/refresh`, {}, {}).pipe(
         switchMap((tokens: any) => {
-          console.log(tokens);
           this.isRefreshing = false;
           let auth_app_token = JSON.parse(localStorage.getItem('auth_app_token'));
           let oldToken = JSON.parse(auth_app_token.value);
@@ -77,14 +76,12 @@ export class JwtInterceptor implements HttpInterceptor {
           return next.handle(this.addToken(request, tokens.access_token));
         })
       );
-        
-    } else {
+    }
+    else {
       return this.refreshTokenSubject.pipe(
         filter(token => token != null),
         take(1),
         switchMap(jwt => {
-          console.log('else');
-          console.log(jwt);
           return next.handle(this.addToken(request, jwt));
         })
       );
