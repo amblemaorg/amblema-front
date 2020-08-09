@@ -78,6 +78,7 @@ const specialActivityTable = {
                 title: 'Subtotal'
             },
         },
+        makesNoRequest: true,
         modalCode: 'dataSpecialActivityTable',
         buttonCode: 'dataSpecialActivityTable',
         tableCode: 'dataSpecialActivityTable',
@@ -121,6 +122,7 @@ const formSpecialActivityTable = {
       tableCode: 'dataSpecialActivityTable',
       modalCode: 'dataSpecialActivityTable',
       isFromCustomTableActions: true,
+      makesNoRequest: true,
     }
   }
   const textsAndButtonsSpecialActivityTable = {
