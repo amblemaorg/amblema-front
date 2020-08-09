@@ -62,17 +62,17 @@ const specialActivityTable = {
             },
             impuesto: {
                 title: 'Impuesto',
-                valuePrepareFunction: ( row: any ) => {
-                    if (row) return row.toString()+'%';
+                valuePrepareFunction: (row: any) => {
+                    if (row) return row.toString() + '%';
                     else return '';
-                  },
-                  filterFunction: (cell?: any, search?: string) => {
-                      let value: string = cell.toString()+'%';
-                      value = value.toUpperCase();
-                      
-                      if (value.includes(search.toUpperCase()) || search === '') return true;
-                      else return false;
-                  }
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = cell.toString() + '%';
+                    value = value.toUpperCase();
+
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
             subtotal: {
                 title: 'Subtotal'
@@ -107,7 +107,7 @@ const specialActivityTable = {
             hideEdit: false,
             hideDelete: false,
         },
-        total:1000
+        total: 1000
     }
 }
 
@@ -116,51 +116,52 @@ const formSpecialActivityTable = {
     component: 'form',
     viewMode: 'both',
     settings: {
-      formsContent: formSpecialActivityTableModal,
-      buttons: ['guardar'],
-      formType: 'agregarActividadEspecial',
-      tableCode: 'dataSpecialActivityTable',
-      modalCode: 'dataSpecialActivityTable',
-      isFromCustomTableActions: true,
-      makesNoRequest: true,
+        formsContent: formSpecialActivityTableModal,
+        buttons: ['guardar'],
+        formType: 'agregarActividadEspecial',
+        tableCode: 'dataSpecialActivityTable',
+        modalCode: 'dataSpecialActivityTable',
+        isFromCustomTableActions: true,
+        makesNoRequest: true,
     }
-  }
-  const textsAndButtonsSpecialActivityTable = {
+}
+const textsAndButtonsSpecialActivityTable = {
     component: 'textsbuttons',
     settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'dataSpecialActivityTable',
-      isFromCustomTableActions: true,
-      isDeleting: true,
+        subtitles: [{
+            text: '¿Desea eliminar este ítem?',
+        }],
+        action: [
+            {
+                type: 1,
+                name: 'Si',
+            },
+            {
+                type: 2,
+                name: 'No',
+            },
+        ],
+        modalCode: 'dataSpecialActivityTable',
+        isFromCustomTableActions: true,
+        isDeleting: true,
+        makesNoRequest: true,
     }
-  }
-  const modalSpecialActivityTable = {
+}
+const modalSpecialActivityTable = {
     component: 'modal',
     settings: {
-      modalCode: 'dataSpecialActivityTable',
-      items: [
-        {        
-          childBlocks: [
-            { ...formSpecialActivityTable },
-            { ...textsAndButtonsSpecialActivityTable },
-          ]
-        }
-      ]
+        modalCode: 'dataSpecialActivityTable',
+        items: [
+            {
+                childBlocks: [
+                    { ...formSpecialActivityTable },
+                    { ...textsAndButtonsSpecialActivityTable },
+                ]
+            }
+        ]
     }
-  }
-  //* ------------------------------------------
+}
+//* ------------------------------------------
 
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
@@ -169,11 +170,11 @@ export const SPECIAL_ACTIVITY_CONFIG = {
     blocks: [
         {
             component: 'profiles',
-            settings: {                
+            settings: {
                 items: [
-                    {     
+                    {
                         childBlocks: [
-                            { ...dateAndStatus },                            
+                            { ...dateAndStatus },
                             { ...specialActivityTable },
                             { ...textsAndButtons },
                             { ...modalSpecialActivityTable },
