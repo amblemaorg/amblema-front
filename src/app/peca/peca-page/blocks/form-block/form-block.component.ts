@@ -95,6 +95,8 @@ export class FormBlockComponent
   // currentGrade: string; // for grades selector only
   sectionsArr: any[] = [];
 
+  canTableSendFormData: boolean = true;
+
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -124,7 +126,7 @@ export class FormBlockComponent
           if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
         } else {
-          this.btnUpdater(this.componentForm.value);
+          this.btnUpdater(this.componentForm.value, true);
         }
       })
     );
@@ -175,6 +177,13 @@ export class FormBlockComponent
       );
 
     this.subscription.add(
+      this.globals.sendFormDataToBtnEmitter.subscribe(code => {
+        if (this.settings.buttonCode && this.settings.buttonCode == code && this.canTableSendFormData) 
+          this.btnUpdater(this.componentForm.value);     
+      })
+    );
+
+    this.subscription.add(
       this.globals.resetEditedEmitter.subscribe(btnCode => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
@@ -182,6 +191,7 @@ export class FormBlockComponent
         }
       })
     );
+
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
@@ -204,24 +214,25 @@ export class FormBlockComponent
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    [
-      "isEdited",
-      "isInApproval",
-      "isEditing",
-      "sendNull",
-      "someImgAdded",
-      "imageUrl"
-    ].map((attr, i) => {
-      this[attr] = [null, null, false, true, null, null][i];
-    });
+    this.isEdited = null;
+    this.isInApproval = null;
+    this.isEditing = false;
+    this.sendNull = true;
+    this.someImgAdded = null;
+    this.imageUrl = null;
+    this.canTableSendFormData = true;
   }
 
-  btnUpdater(val) {
+  btnUpdater(val,isEdited = false) {
     if (this.settings.buttonCode)
+      if (isEdited) 
+        this.canTableSendFormData = false;
+
       this.globals.buttonDataUpdater({
         code: this.settings.buttonCode,
         whichData: "form",
-        form: val
+        form: val,
+        formEdited: !this.canTableSendFormData ? true : false,
       });
   }
 
