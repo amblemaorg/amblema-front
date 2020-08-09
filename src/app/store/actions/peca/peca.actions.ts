@@ -19,6 +19,11 @@ export class FetchPecaContent {
   constructor(public payload: string) {}
 }
 
+export class FetchProject {
+  static readonly type = "[peca] get Project";
+  constructor(public payload: any) {}
+}
+
 export class ClearPecaState {
   static readonly type = '[peca] clear PecaState';
   constructor() {}
