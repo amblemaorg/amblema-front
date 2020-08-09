@@ -117,7 +117,7 @@ export class PecaComponent implements OnInit, OnDestroy {
             console.error("No pudo obtenerse el PecaId activo");
             if (!comes_from_steps)
               this.noPecaModalLauncherBtn.nativeElement.click();
-          } 
+          }
         }
       },
       error => console.error(error)
