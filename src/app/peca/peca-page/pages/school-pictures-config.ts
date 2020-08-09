@@ -56,6 +56,7 @@ const tablaImagenesActivity = {
                 imageSelected: null,
             },
         ],
+        makesNoRequest: true,
         classes: {
             hideView: false,
             hideEdit: false,
@@ -75,6 +76,7 @@ const formTablaImagenesActivity = {
         tableCode: 'dataTablaImagenesActividad',
         modalCode: 'dataTablaImagenesActividad',
         isFromCustomTableActions: true,
+        makesNoRequest: true,
     }
 }
 const textsAndButtonsTablaImagenesActivity = {
