@@ -1,5 +1,7 @@
 export function amblemarioMapper(pecaData) {
     console.log("amblemario mapper data",pecaData);
+    const grades = {};
+
     const {
         schoolYearName,
         yearbook: {
@@ -7,6 +9,9 @@ export function amblemarioMapper(pecaData) {
             school,
             coordinator,
             historicalReview,
+            lapse1,
+            lapse2,
+            lapse3
         },
     } = pecaData;
 
@@ -14,6 +19,24 @@ export function amblemarioMapper(pecaData) {
         city: pecaData.school && pecaData.school.addressCity ? pecaData.school.addressCity : null,
     };
 
+    for (const grade of Array(7).keys()) {
+        grades[`${grade}`] = grade === 0 
+            ? 'Preescolar' 
+            : grade === 1 || grade === 3
+                ? `${grade}er Grado`
+                : grade === 2 
+                    ? `${grade}do Grado` 
+                    : grade > 3 && grade < 7
+                        ? `${grade}to Grado` 
+                        : grade === 8 
+                            ? `${grade}vo Grado` 
+                            : grade === 9 
+                                ? `${grade}no Grado` 
+                                : `${grade}mo Grado`;
+    }
+
+    console.log(grades);
+    
     const schoolSections = pecaData.school && pecaData.school.sections && pecaData.school.sections.length > 0 
         ? pecaData.school.sections.map((section) => {
                 const {
@@ -21,14 +44,6 @@ export function amblemarioMapper(pecaData) {
                     image,
                     name
                 } = section;
-
-                const sectionName = grade === "0" 
-                    ? `Preescolar, sección: ${name.toUpperCase()}` 
-                    : grade === "1" || grade === "3"
-                        ? `${grade}er Grado, sección: ${name.toUpperCase()}`
-                        : grade === "2" 
-                            ? `${grade}do Grado, sección: ${name.toUpperCase()}` 
-                            : `${grade}to Grado, sección: ${name.toUpperCase()}`;
 
                 const sectionStudents = section.students && section.students.length > 0 
                     ? section.students.map((student) => {
@@ -42,12 +57,77 @@ export function amblemarioMapper(pecaData) {
                     : null;
 
                 return {
-                    sectionName,
+                    sectionName: `${grades[grade]}, sección: ${name.toUpperCase()}`,
                     sectionImg: image ? image : null,
                     sectionStudents
                 }
             }) 
         : null;
+
+    const lapses = [ lapse1, lapse2, lapse3 ].map( (lapse, i) => {
+        const {
+            diagnosticAnalysis,
+            diagnosticSummary,
+            activities
+        } = lapse;
+
+        const tables = diagnosticSummary.reduce((tables, data, i) => {
+            if (i === 0) {
+                tables.table1.push(
+                    [ 'Grado', 'Sección', 'Palabras por minutos', 'Indice de las palabras por minutos' ],
+                    [ grades[data.grade], data.name.toUpperCase(), data.wordsPerMin, data.wordsPerMinIndex ]
+                );
+                tables.table2.push(
+                    [ 'Grado', 'Sección', 'Multiplicaciones por minutos', 'Indice de las multiplicaciones por minutos' ],
+                    [ grades[data.grade], data.name.toUpperCase(), data.multiplicationsPerMin, data.multiplicationsPerMinIndex ]
+                );
+                tables.table3.push(
+                    [ 'Grado', 'Sección', 'Operaciones por minutos', 'Indice de las operaciones por minutos' ],
+                    [ grades[data.grade], data.name.toUpperCase(), data.operationsPerMin, data.operationsPerMinIndex ]
+                );
+            }
+            else {
+                tables.table1.push( [ grades[data.grade], data.name.toUpperCase(), data.wordsPerMin, data.wordsPerMinIndex ] );
+                tables.table2.push( [ grades[data.grade], data.name.toUpperCase(), data.multiplicationsPerMin, data.multiplicationsPerMinIndex ] );
+                tables.table3.push( [ grades[data.grade], data.name.toUpperCase(), data.operationsPerMin, data.operationsPerMinIndex ] );
+            }
+            return tables
+        }, { table1: [], table2: [], table3: [] });
+
+        const lapseActivities = activities.map(activity => {
+            const {
+                name,
+                images,
+                description
+            } = activity;
+
+            return {
+                name: name ? name : null,
+                description: description ? description : null,
+                images: images && images.length > 0 ? images : null
+            }
+        });
+
+        return {
+            lapseName: i === 0 ? "Primer lapso" : i === 1 ? "Segundo lapso" : "Tercer lapso",
+            diagnosticReading: {
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table1,
+                diagnosticGraphic: null
+            },
+            diagnosticMath: {
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table1,
+                diagnosticGraphic: null
+            },
+            diagnosticLogic: {
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table3,
+                diagnosticGraphic: null
+            },
+            activities: lapseActivities
+        }
+    });
 
     return {
         schoolYear: schoolYearName ? schoolYearName.split("lar").pop().trim() : null,
@@ -65,5 +145,6 @@ export function amblemarioMapper(pecaData) {
         historicalReviewText: historicalReview && historicalReview.content ? historicalReview.content : null,
         historicalReviewImg: historicalReview && historicalReview.image ? historicalReview.image : null,
         schoolSections,
+        lapses
     };    
 }

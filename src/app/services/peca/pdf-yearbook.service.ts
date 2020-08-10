@@ -315,6 +315,19 @@ export class PdfYearbookService {
         await sectionsPromise;    
         //? END SCHOOL REVIEW ...........................................................................................................................................
 
+        //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
+        if (pdfData["lapses"]) {
+          pdfData.lapses.map((lapse, i) => {
+            pdf.add(
+              new TocItem(
+                new Txt(lapse["lapseName"]).style(['highlight','heading']).pageBreak('before').end
+              ).tocStyle({ bold: true, italics: true })
+               .tocMargin([0,0,0,menu_item_margin]).end
+            );
+          });
+        }
+        //! END LAPSES ------------------------------------------------------------------------------------------------------------------------------------
+
         //------------------        
         pdf.add(
           new Stack(
