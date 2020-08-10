@@ -1,8 +1,7 @@
 import * as moment from "moment";
 export default moment;
 
-export function EnviromentalMapper(EnviromentalData) {
-
+export function EnviromentalMapper(EnviromentalData, pecaId) {
   const viewName = "environmental-project-tab";
 
   const ENVIRONMENTAL_PROJECT_CONFIG_TEST = {
@@ -78,7 +77,7 @@ export function EnviromentalMapper(EnviromentalData) {
           name: "lapse1Enviromental",
           settings: {
             items: [
-              ...EnviromentalData.lapse1.topics.map((topic) => {
+              ...EnviromentalData.lapse1.topics.map((topic, i) => {
                 return {
                   title: topic.name,
                   childBlocks: [
@@ -86,10 +85,15 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo1",
                       settings: {
+                        extraData: {
+                          environmentalData: EnviromentalData,
+                          lapse: "lapse1",
+                          topicIndex: i,
+                        },
                         fetcherMethod: "post",
-                        fetcherUrls : {
-                          post: `pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
-                           },
+                        fetcherUrls: {
+                          post: `pecaprojects/environmentalproject/${pecaId}`,
+                        },
                         infoContainer: [
                           {
                             principal: [
@@ -119,7 +123,7 @@ export function EnviromentalMapper(EnviromentalData) {
                               },
                             ],
                           },
-                          ...topic.levels.map((level) => {
+                          ...topic.levels.map((level, i) => {
                             /* Inicio de configuracion de la duracion */
                             const hours = level.duration.substr(0, 2);
                             const minutes = level.duration.substr(2, 4);
@@ -157,13 +161,12 @@ export function EnviromentalMapper(EnviromentalData) {
                             return {
                               datosNivel: [
                                 {
+                                  index: i,
                                   nivel: completeGrade,
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],
@@ -196,8 +199,6 @@ export function EnviromentalMapper(EnviromentalData) {
                                         name: act.name,
                                         id: act.id,
                                         checked: act.checked,
-
-
                                       };
                                     }),
                                   ],
@@ -251,7 +252,7 @@ export function EnviromentalMapper(EnviromentalData) {
           name: "lapse2Enviromental",
           settings: {
             items: [
-              ...EnviromentalData.lapse2.topics.map((topic) => {
+              ...EnviromentalData.lapse2.topics.map((topic, i) => {
                 return {
                   title: topic.name,
                   childBlocks: [
@@ -259,10 +260,15 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo2",
                       settings: {
+                        extraData: {
+                          environmentalData: EnviromentalData,
+                          lapse: "lapse2",
+                          topicIndex: i,
+                        },
                         fetcherMethod: "post",
-                        fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
-                           },
+                        fetcherUrls: {
+                          post: `/pecaprojects/environmentalproject/${pecaId}`,
+                        },
                         infoContainer: [
                           {
                             principal: [
@@ -292,7 +298,7 @@ export function EnviromentalMapper(EnviromentalData) {
                               },
                             ],
                           },
-                          ...topic.levels.map((level) => {
+                          ...topic.levels.map((level, i) => {
                             /* Inicio de configuracion de la duracion */
 
                             const hours = level.duration.substr(0, 2);
@@ -331,13 +337,12 @@ export function EnviromentalMapper(EnviromentalData) {
                             return {
                               datosNivel: [
                                 {
+                                  index: i,
                                   nivel: completeGrade2,
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],
@@ -367,7 +372,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act.name
+                                        name: act.name,
                                       };
                                     }),
                                   ],
@@ -421,7 +426,7 @@ export function EnviromentalMapper(EnviromentalData) {
           name: "lapse3Enviromental",
           settings: {
             items: [
-              ...EnviromentalData.lapse3.topics.map((topic) => {
+              ...EnviromentalData.lapse3.topics.map((topic, i) => {
                 return {
                   title: topic.name,
                   childBlocks: [
@@ -429,10 +434,15 @@ export function EnviromentalMapper(EnviromentalData) {
                       component: "checkList",
                       name: "ArrayInfo3",
                       settings: {
+                        extraData: {
+                          environmentalData: EnviromentalData,
+                          lapse: "lapse3",
+                          topicIndex: i,
+                        },
                         fetcherMethod: "post",
-                        fetcherUrls : {
-                          post: `/pecaprojects/environmentalproject/5ed6b7e9073310fdc86ea305`     
-                           },
+                        fetcherUrls: {
+                          post: `/pecaprojects/environmentalproject/${pecaId}`,
+                        },
                         infoContainer: [
                           {
                             principal: [
@@ -462,7 +472,7 @@ export function EnviromentalMapper(EnviromentalData) {
                               },
                             ],
                           },
-                          ...topic.levels.map((level) => {
+                          ...topic.levels.map((level, i) => {
                             /* Inicio de configuracion de la duracion */
 
                             const hours = level.duration.substr(0, 2);
@@ -501,13 +511,12 @@ export function EnviromentalMapper(EnviromentalData) {
                             return {
                               datosNivel: [
                                 {
+                                  index: i,
                                   nivel: completeGrade3,
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],
@@ -537,7 +546,7 @@ export function EnviromentalMapper(EnviromentalData) {
                                   checkList: [
                                     ...level.activities.map((act) => {
                                       return {
-                                        name: act.name
+                                        name: act.name,
                                       };
                                     }),
                                   ],

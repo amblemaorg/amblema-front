@@ -1,27 +1,27 @@
-import { Component, OnInit, HostListener, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { OwlCarousel } from 'ngx-owl-carousel';
-import { WebContentService } from 'src/app/services/web/web-content.service';
-import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
-import { StaticWebContentService } from 'src/app/services/web/static-web-content.service';
-import { SponsorPage } from '../../../models/web/web-sponsor.model';
-import { environment } from 'src/environments/environment';
-import { SPONSOR_CONTENT } from './sponsor-static-content';
-import { Subscription, fromEvent } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { METADATA } from '../../web-pages-metadata';
-import { SetIsLoadingPage } from 'src/app/store/actions/web/web.actions';
-import { Store } from '@ngxs/store';
+import { Component, OnInit, HostListener, ViewChild, NgZone, ElementRef } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { OwlCarousel } from "ngx-owl-carousel";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { StaticWebContentService } from "src/app/services/web/static-web-content.service";
+import { SponsorPage } from "../../../models/web/web-sponsor.model";
+import { environment } from "src/environments/environment";
+import { SPONSOR_CONTENT } from "./sponsor-static-content";
+import { Subscription, fromEvent } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { METADATA } from "../../web-pages-metadata";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
+import { Store } from "@ngxs/store";
 
 @Component({
-  selector: 'app-sponsors',
-  templateUrl: './sponsors.component.html',
-  styleUrls: ['./sponsors.component.scss'],
+  selector: "app-sponsors",
+  templateUrl: "./sponsors.component.html",
+  styleUrls: ["./sponsors.component.scss"],
 })
 export class SponsorsComponent implements OnInit {
-  @ViewChild('sponsorsCarousel', { static: false }) sponsorsCarousel: OwlCarousel;
-  @ViewChild('listSteps', { static: true }) listSteps: ElementRef;
+  @ViewChild("sponsorsCarousel", { static: false }) sponsorsCarousel: OwlCarousel;
+  @ViewChild("listSteps", { static: true }) listSteps: ElementRef;
   scrollSubscription: Subscription;
   landscape = window.innerWidth > window.innerHeight;
 
@@ -43,13 +43,13 @@ export class SponsorsComponent implements OnInit {
 
   sponsorsOptions: OwlOptions = {
     autoplay: false,
-    loop: true,
+    loop: false,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
@@ -70,12 +70,12 @@ export class SponsorsComponent implements OnInit {
       sponsorPage: true,
     },
     slides: [],
-    title: '¿Quién es un Padrino AmbLeMa?',
+    title: "¿Quién es un Padrino AmbLeMa?",
     description:
-      'El padrino AmbLeMa, es un grupo empresarial y/o familiar que apoya económicamente la aplicación del método AmbLeMa en una o más escuelas de sus comunidades vecinas a lo largo de cada año escolar.',
+      "El padrino AmbLeMa, es un grupo empresarial y/o familiar que apoya económicamente la aplicación del método AmbLeMa en una o más escuelas de sus comunidades vecinas a lo largo de cada año escolar.",
   };
   sponsorsPageData: SponsorPage = {
-    backgroundImage: '',
+    backgroundImage: "",
     testimonials: [],
     steps: [],
     sponsors: [],
@@ -83,7 +83,7 @@ export class SponsorsComponent implements OnInit {
   stepsList1 = [];
   stepsList2 = [];
   sponsorService: WebContentService;
-  SPONSOR_PATH = 'webcontent?page=sponsorPage';
+  SPONSOR_PATH = "webcontent?page=sponsorPage";
 
   constructor(
     private http: HttpClient,
@@ -100,7 +100,7 @@ export class SponsorsComponent implements OnInit {
     this.setApiService();
     this.getSponsorsData();
     this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, 'scroll').subscribe((event) => {
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
         this.onScroll(event);
       });
     });
@@ -120,8 +120,6 @@ export class SponsorsComponent implements OnInit {
 
   getSponsorsData() {
     this.sponsorService.getWebContent().subscribe((data) => {
-      data.sponsorPage.sponsors = SPONSOR_CONTENT.sponsorPage.sponsors;
-      // console.log(data);
       const stepsLength = data.sponsorPage.steps.length;
       this.stepsList1 = data.sponsorPage.steps.slice(0, (stepsLength + 1) / 2);
       this.stepsList2 = data.sponsorPage.steps.slice((stepsLength + 1) / 2, stepsLength);
@@ -146,12 +144,12 @@ export class SponsorsComponent implements OnInit {
       if (this.scrollSubscription) {
         this.scrollSubscription.unsubscribe();
       }
-      this.listSteps.nativeElement.classList.add('animation-finish');
-      this.listSteps.nativeElement.classList.remove('animation-init');
+      this.listSteps.nativeElement.classList.add("animation-finish");
+      this.listSteps.nativeElement.classList.remove("animation-init");
     }
   }
 
-  @HostListener('window:resize', [''])
+  @HostListener("window:resize", [""])
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
