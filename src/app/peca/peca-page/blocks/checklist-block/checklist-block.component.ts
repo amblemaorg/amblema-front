@@ -1,24 +1,20 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import {
-  PageBlockComponent,
-  PresentationalBlockComponent,
-} from "../page-block.component";
+import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
 import { GlobalService } from "../../../../services/global.service";
 import { Subscription, Observable } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
-import { FetchPecaContent } from '../../../../store/actions/peca/peca.actions';
-import { Store, Select } from '@ngxs/store';
-import { PecaState } from 'src/app/store/states/peca/peca.state';
-import { NavigationEnd, Router, Event } from '@angular/router';
+import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
+import { Store, Select } from "@ngxs/store";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { NavigationEnd, Router, Event } from "@angular/router";
 
 @Component({
   selector: "checklist-block",
   templateUrl: "./checklist-block.component.html",
   styleUrls: ["./checklist-block.component.scss"],
 })
-export class ChecklistBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class ChecklistBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   prueba: any;
@@ -84,6 +80,11 @@ export class ChecklistBlockComponent
       //cancel: string;
     };
     fetcherMethod?: "get" | "post" | "put" | "patch" | "delete";
+    extraData: {
+      environmentalData: any;
+      lapse: string;
+      topicIndex: number;
+    };
   };
 
   userCanCreate: boolean = true;
@@ -91,7 +92,7 @@ export class ChecklistBlockComponent
   userCanDelete: boolean = true;
   userCanView: boolean = true;
 
-  checks=[];
+  checks = [];
 
   activity_uneditable: boolean;
   private subscription: Subscription = new Subscription();
@@ -100,7 +101,7 @@ export class ChecklistBlockComponent
     private globals: GlobalService,
     private toastr: ToastrService,
     private fetcher: HttpFetcherService,
-    private store: Store,
+    private store: Store
   ) {
     this.type = "presentational";
     this.component = "checkList";
@@ -114,11 +115,10 @@ export class ChecklistBlockComponent
     );
 
     this.subscription.add(
-      this.pecaId$.subscribe( peca_id => {
+      this.pecaId$.subscribe((peca_id) => {
         this.pecaId = peca_id;
       })
     );
-    
   }
 
   ngOnDestroy() {
@@ -130,23 +130,28 @@ export class ChecklistBlockComponent
     this.settings = { ...settings };
   }
 
-  setFetcherUrls({post }) {
+  setFetcherUrls({ post }) {
     this.settings.fetcherUrls = {
-   post     
+      post,
     };
-    console.log('aad', post)
+    console.log("aad", post);
   }
 
-
   setData(data: any) {
-    if (data["isGenericActivity"]) {  
-      this.userCanEdit = data["userCanEdit"];  
+    if (data["isGenericActivity"]) {
+      this.userCanEdit = data["userCanEdit"];
       this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
-      this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"] ? data.checklist : null;
+      this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"]
+        ? data.checklist
+        : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
-      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
-      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"] ? data.approvedAct : null;
-      
+      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"]
+        ? data.genericActivityId
+        : null;
+      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"]
+        ? data.approvedAct
+        : null;
+
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
           gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
@@ -167,7 +172,7 @@ export class ChecklistBlockComponent
         this.flag = true;
       }
     }
-    console.log("ppppp",this.settings)
+    console.log("ppppp", this.settings);
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {
@@ -187,15 +192,15 @@ export class ChecklistBlockComponent
   sendAnnualConvention(checklLists) {
     const body = {};
 
-      body['checklist'] = checklLists;
-   
-console.log("BODY", body)
-     this.isSending = true;
+    body["checklist"] = checklLists;
+
+    console.log("BODY", body);
+    this.isSending = true;
 
     const method = this.settings.fetcherMethod || "post";
     const resourcePath = this.settings.fetcherUrls[method];
-console.log(resourcePath, method)
-       this.fetcher[method](resourcePath, body).subscribe(
+    console.log(resourcePath, method);
+    this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         console.log("form response", response);
         //this.sleepSend = true;
@@ -225,51 +230,48 @@ console.log(resourcePath, method)
         );
         console.error(error);
       }
-    );    
-}
-
-sendChecks(checks){
-  const body = {};
-
-  body['activities'] = checks;  
-  this.isSending = true;
-
-    const method = this.settings.fetcherMethod || "post";
-    const resourcePath = this.settings.fetcherUrls[method];
-    console.log("body:",body)
-    console.log(method)
-    console.log(resourcePath);
-//console.log(resourcePath, method)
-       this.fetcher[method](resourcePath, body).subscribe(
-      (response) => {
-        console.log("form response", response);
-        //this.sleepSend = true;
-        this.isSending = false;
-
-        this.toastr.success("Solicitud enviada", "", {
-          positionClass: "toast-bottom-right",
-        });
-
-        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
-      },
-      (error) => {
-        const error_msg =
-          error.error && error.error instanceof ProgressEvent
-            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
-
-        this.isSending = false;
-        this.toastr.error(
-          error.error && error.error["msg"]
-            ? error.error["msg"]
-            : error.error && error.error["message"]
-            ? error.error["message"]
-            : error_msg,
-          "",
-          { positionClass: "toast-bottom-right" }
-        );
-        console.error(error);
-      }
-    );    
-}
+    );
   }
+
+  sendChecks(checks, levelIndex) {
+    const { environmentalData, lapse, topicIndex } = this.settings.extraData;
+    environmentalData[lapse].topics[topicIndex].levels[levelIndex].activities = checks;
+    const body = {
+      ...environmentalData,
+    };
+    this.isSending = true;
+    const method = this.settings.fetcherMethod || "post";
+    const resourcePath = this.settings.fetcherUrls[method];
+    this.fetcher[method](resourcePath, body).subscribe(
+      (response) => {
+        console.log("form response", response);
+        //this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success("Solicitud enviada", "", {
+          positionClass: "toast-bottom-right",
+        });
+
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      (error) => {
+        const error_msg =
+          error.error && error.error instanceof ProgressEvent
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+        this.isSending = false;
+        this.toastr.error(
+          error.error && error.error["msg"]
+            ? error.error["msg"]
+            : error.error && error.error["message"]
+            ? error.error["message"]
+            : error_msg,
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );
+  }
+}

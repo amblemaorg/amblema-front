@@ -55,7 +55,6 @@
             <ng-container
               *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsors[i - 1] }"
             ></ng-container>
-
             <ng-container
               *ngTemplateOutlet="sponsorTemplate; context: { sponsor: sponsor }"
             ></ng-container>
@@ -68,16 +67,16 @@
 
 <!-- Angular Template for sponsors -->
 <ng-template #sponsorTemplate let-sponsor="sponsor">
-  <div class="sponsor" (click)="onSponsorClick(sponsor.pageUrl)">
+  <div class="sponsor" (click)="onSponsorClick(sponsor.webSite)">
     <div class="image-wrapper">
       <img
         *ngIf="sponsor.image"
         class="image"
         [src]="sponsor.image"
-        [alt]="sponsor.fullName + ' logo'"
+        [alt]="sponsor.name + ' logo'"
       />
     </div>
-    <p *ngIf="sponsor.fullName" class="title">{{ sponsor.fullName }}</p>
+    <p *ngIf="sponsor.name" class="title">{{ sponsor.name }}</p>
     <p *ngIf="sponsor.description" class="description">
       {{ sponsor.description }}
     </p>
