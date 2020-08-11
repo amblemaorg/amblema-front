@@ -11,6 +11,7 @@ import {
     TocItem,
     Stack,
     Columns,
+    Table,
   } from 'pdfmake-wrapper';
   // import pdfFonts from "pdfmake/build/vfs_fonts";
   import pdfFonts from "../../peca/peca-page/pdf-fonts/custom-fonts"
@@ -20,6 +21,13 @@ import {
 })
 export class PdfYearbookService {
   fontsInstantiated: boolean;
+  colors = {
+      blue: '#00809A',
+      green: '#81B03E',
+      white: '#FFF',
+      darkGreen: '#337550',
+      rowGray: '#EBEFF5',
+  };
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
@@ -49,13 +57,6 @@ export class PdfYearbookService {
         const pdfPageSizes = {
           width: 792,
           height: 612
-        };
-
-        const colors = {
-            blue: '#00809A',
-            green: '#81B03E',
-            white: '#fff',
-            darkGreen: '#337550',
         };
 
         const pdfData = pdf_data ? pdf_data : {};
@@ -98,10 +99,10 @@ export class PdfYearbookService {
   
           if (currentPage === 1) 
             return new Canvas([
-              new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color(colors.blue).end
+              new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color(this.colors.blue).end
             ]).end
           else if (currentPage > 2)
-              return new Txt(this.getPageNumberFormated(`${currentPage}`)).bold().absolutePosition(20,pdfPageSizes.height-46).color(colors.darkGreen).end;
+              return new Txt(this.getPageNumberFormated(`${currentPage}`)).bold().absolutePosition(20,pdfPageSizes.height-46).color(this.colors.darkGreen).end;
   
           return null
         });
@@ -122,7 +123,7 @@ export class PdfYearbookService {
                 footer_amble_logo,
                 footer_sponsor_logo,
                 new Canvas([
-                    new Rect(0, [pdfPageSizes.width, 24]).color(colors.green).end
+                    new Rect(0, [pdfPageSizes.width, 24]).color(this.colors.green).end
                 ]).relativePosition(0,36).end
             ]).end;
         });        
@@ -139,9 +140,9 @@ export class PdfYearbookService {
         );
   
         if (amble_logo) pdf.add(new Canvas([new Polyline([{ x: 0, y: 0 },{ x: 0, y: 90 },{ x: 41, y: 115 },{ x: 45, y: 116 },{ x: 49, y: 115 },{ x: 90, y: 90 },{ x: 90, y: 0 }])
-          .closePath().color(colors.white).end]).absolutePosition(45,0).end);
+          .closePath().color(this.colors.white).end]).absolutePosition(45,0).end);
         if (pdfData["sponsorLogo"]) pdf.add(new Canvas([new Polyline([{ x: 0, y: 0 },{ x: 0, y: 90 },{ x: 41, y: 115 },{ x: 45, y: 116 },{ x: 49, y: 115 },{ x: 90, y: 90 },{ x: 90, y: 0 }])
-          .closePath().color(colors.white).end]).absolutePosition(pdfPageSizes.width-135,0).end);
+          .closePath().color(this.colors.white).end]).absolutePosition(pdfPageSizes.width-135,0).end);
   
         if (amble_logo) pdf.add(await new Img('ambleLogo', true).fit([72,72]).absolutePosition(54,15).build());
         if (pdfData["sponsorLogo"]) pdf.add(await new Img('sponsorLogo', true).fit([72,72]).absolutePosition(pdfPageSizes.width-126,15).build());
@@ -151,12 +152,12 @@ export class PdfYearbookService {
             new Txt('AmbLeMario').bold().fontSize(62).end, 
             pdfData["schoolName"] ? new Txt(pdfData.schoolName).bold().fontSize(16).end : null, 
             pdfData["schoolName"] ? new Canvas([
-              new Rect(0, [ (185 * pdfData.schoolName.length) / 21 , 1]).color(colors.green).end
+              new Rect(0, [ (185 * pdfData.schoolName.length) / 21 , 1]).color(this.colors.green).end
             ]).end : null,
             pdfData["schoolCity"] ? new Txt(pdfData.schoolCity).bold().margin([0,4]).end : null, 
           ]).alignment('center')
             .margin([0,135,0,0])
-            .color(colors.white).end
+            .color(this.colors.white).end
         );
 
         //* INDEX ----------------------------------------------------------------------------
@@ -169,7 +170,7 @@ export class PdfYearbookService {
         );
 
         //? PDF CONTENT VARIABLES -----------------------------------------------
-        const menu_item_margin = 6;
+        const menu_item_margin = { left: 10, bottom: 6 };
         const column_split_1 = 1135;
         const column_split_2 = 997;
         const column_gap = 70;
@@ -188,7 +189,7 @@ export class PdfYearbookService {
                                                    .margin([0,0,0,10])
                                                    .pageBreak('before').end
             ).tocStyle({ bold: true, italics: true })
-             .tocMargin([0,0,0,menu_item_margin]).end
+             .tocMargin([0,0,0,menu_item_margin.bottom]).end
           );
 
           if (pdfData["historicalReviewText"]) pdf.add(
@@ -207,11 +208,11 @@ export class PdfYearbookService {
             new Stack(
               [
                 new TocItem(
-                  new Txt('Padrino').color(colors.blue)
+                  new Txt('Padrino').color(this.colors.blue)
                                     .style('subHeading')
                                     .italics().end
                 ).tocStyle({ bold: true, italics: true })
-                 .tocMargin([0,0,0,menu_item_margin]).end,
+                 .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.sponsorName, u_name_relpos)
               ]).margin([0,0,0,u_name_margin])
                 .pageBreak('before').end
@@ -232,11 +233,11 @@ export class PdfYearbookService {
             new Stack(
               [
                 new TocItem(
-                  new Txt('Coordinador').color(colors.blue)
+                  new Txt('Coordinador').color(this.colors.blue)
                                         .style('subHeading')
                                         .italics().end
                 ).tocStyle({ bold: true, italics: true })
-                 .tocMargin([0,0,0,menu_item_margin]).end,
+                 .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.coordinatorName, u_name_relpos)
               ]
             ).margin([0,0,0,u_name_margin])
@@ -259,11 +260,11 @@ export class PdfYearbookService {
             new Stack(
               [
                 new TocItem(
-                  new Txt('Escuela').color(colors.blue)
+                  new Txt('Escuela').color(this.colors.blue)
                                     .style('subHeading')
                                     .italics().end
                 ).tocStyle({ bold: true, italics: true })
-                 .tocMargin([0,0,0,menu_item_margin]).end,
+                 .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.schoolName, u_name_relpos)
               ]
             ).margin([0,0,0,u_name_margin])
@@ -291,14 +292,14 @@ export class PdfYearbookService {
                 pdf.add(
                   new TocItem(
                     new Txt(section.sectionName).style('highlight').margin([0,(section["sectionImg"]) ? 205 : 190,0,15]).pageBreak('before').end
-                  ).tocMargin([10,0,0,menu_item_margin]).end
+                  ).tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
                 );
 
                 if (section["sectionStudents"]) {
                   pdf.add(
                     new Columns(
                       this.getStudents(section.sectionStudents)
-                    ).color(colors.blue).bold().italics().end
+                    ).color(this.colors.blue).bold().italics().end
                   );
                 }
                 
@@ -317,13 +318,48 @@ export class PdfYearbookService {
 
         //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
         if (pdfData["lapses"]) {
-          pdfData.lapses.map((lapse, i) => {
-            pdf.add(
-              new TocItem(
-                new Txt(lapse["lapseName"]).style(['highlight','heading']).pageBreak('before').end
-              ).tocStyle({ bold: true, italics: true })
-               .tocMargin([0,0,0,menu_item_margin]).end
-            );
+          pdfData.lapses.map((lapse) => {
+            [ lapse["diagnosticReading"], lapse["diagnosticMath"], lapse["diagnosticLogic"] ].map((skill,index) => {
+              if (skill) {
+                pdf.add(
+                  new Stack(
+                    [
+                      index === 0 
+                      ? new TocItem(
+                          new Txt(lapse.lapseName).style(['highlight','heading']).end
+                        ).tocStyle({ bold: true, italics: true })
+                        .tocMargin([0,0,0,menu_item_margin.bottom]).end
+                      : new Txt(lapse.lapseName).style(['highlight','heading']).end
+                    ]
+                  ).color(this.colors.blue)
+                   .margin([0,0,0,35])
+                   .pageBreak('before').end
+                );
+
+                pdf.add(
+                  new TocItem(
+                    new Txt(skill.diagnosticText).style('highlight')
+                                                    .margin([0,20]).end
+                  ).tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                );
+                if (skill["diagnosticTable"]) pdf.add(
+                  new Table(
+                    this.getTableRows(skill.diagnosticTable)
+                  ).widths([ 75, 75, '*', '*' ])
+                  .layout({
+                    fillColor: (rowIndex) => (rowIndex !== 0 && rowIndex % 2 === 0) ? this.colors.rowGray : null,
+                    paddingLeft: (rowIndex) => rowIndex === 0 ? 25 : 15,
+                    paddingTop: (rowIndex) => rowIndex === 0 ? 10 : 7,
+                    paddingRight: (rowIndex, node) => (rowIndex === node.table.widths.length - 1) ? 25 : 15,
+                    paddingBottom: (rowIndex) => rowIndex === 0 ? 10 : 7,
+                    hLineColor: (rowIndex, node) => rowIndex === 0 || rowIndex === 1 || (rowIndex === node.table.body.length) ? this.colors.blue : null,
+                    vLineColor: () => this.colors.blue,
+                    hLineWidth: (rowIndex, node) => rowIndex > 1 && (rowIndex !== node.table.body.length) ? 0 : 1,
+                  }).end
+                ); 
+              }
+            });
+
           });
         }
         //! END LAPSES ------------------------------------------------------------------------------------------------------------------------------------
@@ -333,11 +369,11 @@ export class PdfYearbookService {
           new Stack(
             [
               new TocItem(
-                new Txt('Otra pagina').color(colors.blue)
+                new Txt('Otra pagina').color(this.colors.blue)
                                       .style('subHeading')
                                       .italics().end
               ).tocStyle({ bold: true, italics: true })
-               .tocMargin([0,0,0,menu_item_margin]).end,
+               .tocMargin([0,0,0,menu_item_margin.bottom]).end,
               new Txt('User Name').style(['highlight','userName'])
                                   .relativePosition(u_name_relpos.x, u_name_relpos.y).end
             ]
@@ -364,10 +400,10 @@ export class PdfYearbookService {
               new TocItem(
                 new Txt('Ultima pagina').style(['highlight','heading']).end
               ).tocStyle({ bold: true, italics: true })
-              .tocMargin([0,0,0,menu_item_margin]).end,
+              .tocMargin([0,0,0,menu_item_margin.bottom]).end,
               (true) 
                 ? new Canvas([
-                    new Rect(0, [195, 1]).color(colors.blue).end
+                    new Rect(0, [195, 1]).color(this.colors.blue).end
                   ]).alignment('center')
                     .relativePosition(0,3).end 
                 : null,
@@ -376,7 +412,7 @@ export class PdfYearbookService {
                                                   .relativePosition(0,8).end 
                 : null
             ]
-          ).color(colors.blue)
+          ).color(this.colors.blue)
            .margin([0,0,0,(true) ? 53 : 35])
            .pageBreak('before').end
         );
@@ -394,16 +430,16 @@ export class PdfYearbookService {
         pdf.styles({
           coverHeader: {
             fontSize: 16,
-            color: colors.white,
+            color: this.colors.white,
           },
           headerSchoolName: {
             fontSize: 16,
             decoration: 'underline',
-            decorationColor: colors.green,
+            decorationColor: this.colors.green,
           },
           highlight: {
             fontSize: 18,
-            color: colors.blue,
+            color: this.colors.blue,
             bold: true,
           },
           userName: {
@@ -557,6 +593,20 @@ export class PdfYearbookService {
     if (students.length > 27) cols_.push( new Stack( cols.four ).end );
 
     return cols_
+  }
+
+  private getTableRows(body: string[][]): any[][] {
+    const body_ = body.reduce((body_:any[], row) => {
+      const row_ = row.map(col => {
+        return new Txt(col).fontSize(10).bold().italics().color(this.colors.blue).end
+      });
+
+      body_.push(row_);
+
+      return body_
+    }, []);
+
+    return body_
   }
 
 }
