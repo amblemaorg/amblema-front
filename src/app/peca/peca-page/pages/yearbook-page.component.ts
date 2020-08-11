@@ -10,13 +10,13 @@ import {
     OnDestroy
 } from '@angular/core';
 import { Select } from "@ngxs/store";
-import { DOCUMENT } from "@angular/common";
 import { PecaPageComponent } from '../peca-page.component';
 import { YEARBOOK_CONFIG as config } from './yearbook-config';
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from 'rxjs';
 import { GlobalService } from "../../../services/global.service";
 import { amblemarioMapper } from '../mappers/amblemario-mapper';
+import { PdfYearbookService } from '../../../services/peca/pdf-yearbook.service';
 
 @Component({
     selector: 'peca-yearbook',
@@ -38,11 +38,11 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
     title: string;
 
     constructor(
-        factoryResolver: ComponentFactoryResolver, 
-        @Inject(DOCUMENT) document: Document,
+        factoryResolver: ComponentFactoryResolver,
+        pdfYearbookService: PdfYearbookService,
         globals: GlobalService
     ) {
-        super(factoryResolver,null,null,document);
+        super(factoryResolver,null,null,pdfYearbookService);
 
         globals.blockIntancesEmitter.subscribe(data => {
             data.blocks.forEach((block, name) =>

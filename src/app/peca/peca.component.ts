@@ -13,17 +13,17 @@ import { take } from "rxjs/internal/operators/take";
 import cloneDeep from "lodash/cloneDeep";
 import { ActivatedRoute, Router, Event, NavigationEnd } from "@angular/router";
 import { DOCUMENT, Location } from "@angular/common";
-import { 
-  genericActivityPermissionsI, 
-  genericActivityPermissions, 
-  teacherTestimonialPermissionsI, 
-  teacherTestimonialPermissions, 
-  yearbookPermissionsI, 
-  yearbookPermissions, 
-  environmentalProjectPermissionsI, 
-  environmentalProjectPermissions, 
-  monitoringActivityPermissionsI, 
-  monitoringActivityPermissions 
+import {
+  genericActivityPermissionsI,
+  genericActivityPermissions,
+  teacherTestimonialPermissionsI,
+  teacherTestimonialPermissions,
+  yearbookPermissionsI,
+  yearbookPermissions,
+  environmentalProjectPermissionsI,
+  environmentalProjectPermissions,
+  monitoringActivityPermissionsI,
+  monitoringActivityPermissions
 } from './peca-page/blocks/peca-permissology';
 
 @Component({
@@ -43,12 +43,12 @@ export class PecaComponent implements OnInit, OnDestroy {
   @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
   @Select(PecaState.getUserPermissions) permissions$: Observable<any>;
 
-  menu_permissions: genericActivityPermissionsI & 
+  menu_permissions: genericActivityPermissionsI &
                     teacherTestimonialPermissionsI &
                     yearbookPermissionsI &
                     environmentalProjectPermissionsI &
                     monitoringActivityPermissionsI;
-  private subscription: Subscription = new Subscription();  
+  private subscription: Subscription = new Subscription();
 
   showWelcome: boolean = false;
 
@@ -81,7 +81,7 @@ export class PecaComponent implements OnInit, OnDestroy {
                 const path_def = path_initial.includes(";") ? path_initial.split(";").shift() : path_initial;
 
                 if (path_def.length === 0 || path_def === "perfil-usuario") {
-                  if (path_def.length === 0) 
+                  if (path_def.length === 0)
                     this.showWelcome = true;
                   else
                     this.showWelcome = false;
@@ -97,17 +97,17 @@ export class PecaComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     let activePecaId = null;
     this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
-      (activePeca) => {
+      ({ activePeca }) => {
         if (activePeca) {
-          activePecaId = activePeca.activePeca.id;
+          activePecaId = activePeca.id;
 
-          const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
+          const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) ||
             (
-              this.route.snapshot.children && this.route.snapshot.children.length>0 && 
-              this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
+              this.route.snapshot.children && this.route.snapshot.children.length>0 &&
+              this.route.snapshot.children[this.route.snapshot.children.length-1].params &&
               this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
             );
 
@@ -117,7 +117,7 @@ export class PecaComponent implements OnInit, OnDestroy {
             console.error("No pudo obtenerse el PecaId activo");
             if (!comes_from_steps)
               this.noPecaModalLauncherBtn.nativeElement.click();
-          } 
+          }
         }
       },
       error => console.error(error)
@@ -127,14 +127,13 @@ export class PecaComponent implements OnInit, OnDestroy {
       .pipe(take(2))
       .subscribe(
         ({ activePecaContent }) => {
-          // console.log("peca content",activePecaContent);
           try {
-            if (activePecaContent) {   
-              this.managePermissions();           
+            if (activePecaContent) {
+              this.managePermissions();
               this.createMenuOptions(activePecaContent);
             }
           } catch (error) {
-            // console.error('Menú no pudo crearse');
+            console.error('Menú no pudo crearse');
           }
         },
         error => console.error(error)
@@ -143,13 +142,13 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userInfo$.subscribe(res => {
       this.imageUser=res.image;
       this.nameUser=res.name
-    }); 
+    });
 
     this.subscription.add(
       this.menuService.onItemClick().subscribe((menu_item) => {
-        if (menu_item["item"]["link"] && menu_item["item"]["link"].length > 0) 
+        if (menu_item["item"]["link"] && menu_item["item"]["link"].length > 0)
           this.showWelcome = false;
-        
+
         this.subscription.add(
           this.menuService.getSelectedItem().subscribe(previous =>{
             if (previous["item"] && previous["item"]["link"] !== menu_item["item"]["link"])
@@ -159,16 +158,16 @@ export class PecaComponent implements OnInit, OnDestroy {
         );
 
         if (this.document.documentElement.clientWidth < 1200) {
-          if (this.document.documentElement.clientWidth >= 576) 
+          if (this.document.documentElement.clientWidth >= 576)
             this.menuService.collapseAll();
-  
+
           if (
             (
-              this.document.documentElement.clientWidth >= 576 && 
+              this.document.documentElement.clientWidth >= 576 &&
               menu_item["item"]["parent"]
             ) ||
             this.document.documentElement.clientWidth < 576
-          ) 
+          )
             this.toggle();
 
         }
@@ -179,7 +178,7 @@ export class PecaComponent implements OnInit, OnDestroy {
 
   /**
    * TODO: set selected false on all menu items, except of given
-   * 
+   *
    * @param link item to be ignored from false menu item setting
    * @param arr menu or child menu array
    * @param fromMenuCreator indicates if set as selected link passed
@@ -187,12 +186,12 @@ export class PecaComponent implements OnInit, OnDestroy {
    */
   deselectAllExceptOf(link, arr, fromMenuCreator: boolean = false, forRemoval: string[] = []) {
     arr.map((menuItem) => {
-      if (menuItem["children"]) 
+      if (menuItem["children"])
         this.deselectAllExceptOf(link, menuItem["children"], fromMenuCreator, forRemoval);
-      else if (menuItem["link"] !== link || !link) 
+      else if (menuItem["link"] !== link || !link)
         menuItem["selected"] = false;
       else if (fromMenuCreator && menuItem["link"] === link) {
-        menuItem["selected"] = true;        
+        menuItem["selected"] = true;
       }
 
       if (forRemoval.some(m_i_ => m_i_ === menuItem["data"]))
@@ -216,14 +215,14 @@ export class PecaComponent implements OnInit, OnDestroy {
                       return permssionsObj
                   },
               {});
-            
+
             this.setPermissions(permissions_);
         })
     );
   }
   setPermissions(
     permissions: (
-      genericActivityPermissionsI & 
+      genericActivityPermissionsI &
       teacherTestimonialPermissionsI &
       yearbookPermissionsI &
       environmentalProjectPermissionsI &
@@ -233,11 +232,11 @@ export class PecaComponent implements OnInit, OnDestroy {
       this.menu_permissions = permissions;
   }
 
-  createMenuOptions(pecaContent) {    
-    const path_arr = this.route.snapshot.url.length > 0 ? this.route.snapshot.url 
+  createMenuOptions(pecaContent) {
+    const path_arr = this.route.snapshot.url.length > 0 ? this.route.snapshot.url
       : (
-        this.route.snapshot.children && 
-        this.route.snapshot.children.length > 0 && 
+        this.route.snapshot.children &&
+        this.route.snapshot.children.length > 0 &&
         this.route.snapshot.children[0].url.length > 0
       ) ? this.route.snapshot.children[0].url : [];
 
@@ -266,12 +265,12 @@ export class PecaComponent implements OnInit, OnDestroy {
     }
 
     for (let i of [1, 2, 3]) {
-      if (this.menu[i - 1].children.length > 0) 
+      if (this.menu[i - 1].children.length > 0)
         this.menu[i - 1].children.splice(i === 1 ? 2 : 1);
-      
+
       const lapse = pecaContent[`lapse${i}`];
       const lapseOptions = this.menu[i - 1].children;
-      
+
       Object.entries(lapse).map(({ 0: key, 1: value }) => {
         if (key !== "activities" && value) {
           const lapseOption = this.lapseOptionsConfig[key];
@@ -299,7 +298,7 @@ export class PecaComponent implements OnInit, OnDestroy {
 
     const menu_items_to_hide = Object.keys(this.menu_permissions)
       .reduce((removable_items,permission) => {
-        if (permission.includes("_view") && !this.menu_permissions[permission]) 
+        if (permission.includes("_view") && !this.menu_permissions[permission])
           removable_items.push(permission);
         return removable_items
       },[]);
@@ -319,6 +318,10 @@ export class PecaComponent implements OnInit, OnDestroy {
   }
 
   getUserOneOrTwoLines(name) {
+    if (!name) {
+      return '<span></span>';
+    }
+
     const name_obj = [name].reduce((nameObj,name) => {
       name.split(" ").map((nameI,i,name_arr) => {
         const half = parseInt(`${name_arr.length / 2}`);
