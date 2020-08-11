@@ -170,7 +170,7 @@ export class PdfYearbookService {
         );
 
         //? PDF CONTENT VARIABLES -----------------------------------------------
-        const menu_item_margin = { left: 10, bottom: 6 };
+        const menu_item_margin = { left: 16, bottom: 6 };
         const column_split_1 = 1135;
         const column_split_2 = 997;
         const column_gap = 70;
@@ -188,7 +188,7 @@ export class PdfYearbookService {
               new Txt(pdfData.historicalReviewName).style('highlight')
                                                    .margin([0,0,0,10])
                                                    .pageBreak('before').end
-            ).tocStyle({ bold: true, italics: true })
+            ).tocStyle({ bold: true, italics: true, fontSize: 13 })
              .tocMargin([0,0,0,menu_item_margin.bottom]).end
           );
 
@@ -211,7 +211,7 @@ export class PdfYearbookService {
                   new Txt('Padrino').color(this.colors.blue)
                                     .style('subHeading')
                                     .italics().end
-                ).tocStyle({ bold: true, italics: true })
+                ).tocStyle({ bold: true, italics: true, fontSize: 13 })
                  .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.sponsorName, u_name_relpos)
               ]).margin([0,0,0,u_name_margin])
@@ -236,7 +236,7 @@ export class PdfYearbookService {
                   new Txt('Coordinador').color(this.colors.blue)
                                         .style('subHeading')
                                         .italics().end
-                ).tocStyle({ bold: true, italics: true })
+                ).tocStyle({ bold: true, italics: true, fontSize: 13 })
                  .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.coordinatorName, u_name_relpos)
               ]
@@ -263,7 +263,7 @@ export class PdfYearbookService {
                   new Txt('Escuela').color(this.colors.blue)
                                     .style('subHeading')
                                     .italics().end
-                ).tocStyle({ bold: true, italics: true })
+                ).tocStyle({ bold: true, italics: true, fontSize: 13 })
                  .tocMargin([0,0,0,menu_item_margin.bottom]).end,
                 ...this.getUserNameOneOrTwoLines(pdfData.schoolName, u_name_relpos)
               ]
@@ -292,7 +292,8 @@ export class PdfYearbookService {
                 pdf.add(
                   new TocItem(
                     new Txt(section.sectionName).style('highlight').margin([0,(section["sectionImg"]) ? 205 : 190,0,15]).pageBreak('before').end
-                  ).tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                  ).tocStyle({ bold: true, italics: true })
+                   .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
                 );
 
                 if (section["sectionStudents"]) {
@@ -319,7 +320,7 @@ export class PdfYearbookService {
         //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
         if (pdfData["lapses"]) {
           pdfData.lapses.map((lapse) => {
-            [ lapse["diagnosticReading"], lapse["diagnosticMath"], lapse["diagnosticLogic"] ].map((skill,index) => {
+            [ lapse["diagnosticReading"], lapse["diagnosticMath"], lapse["diagnosticLogic"] ].map((skill, index, arr) => {
               if (skill) {
                 pdf.add(
                   new Stack(
@@ -327,7 +328,7 @@ export class PdfYearbookService {
                       index === 0 
                       ? new TocItem(
                           new Txt(lapse.lapseName).style(['highlight','heading']).end
-                        ).tocStyle({ bold: true, italics: true })
+                        ).tocStyle({ bold: true, italics: true, fontSize: 13 })
                         .tocMargin([0,0,0,menu_item_margin.bottom]).end
                       : new Txt(lapse.lapseName).style(['highlight','heading']).end
                     ]
@@ -339,8 +340,14 @@ export class PdfYearbookService {
                 pdf.add(
                   new TocItem(
                     new Txt(skill.diagnosticText).style('highlight')
-                                                    .margin([0,20]).end
-                  ).tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                                                 .margin([0,20]).end
+                  ).tocStyle({ bold: true, italics: true })
+                   .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                );
+                pdf.add(
+                  new TocItem(
+                    new Txt('Tabla de diagnóstico').fontSize(0).opacity(0).end
+                  ).tocMargin([menu_item_margin.left*2,0,0,menu_item_margin.bottom]).end
                 );
                 if (skill["diagnosticTable"]) pdf.add(
                   new Table(
@@ -357,6 +364,35 @@ export class PdfYearbookService {
                     hLineWidth: (rowIndex, node) => rowIndex > 1 && (rowIndex !== node.table.body.length) ? 0 : 1,
                   }).end
                 ); 
+
+                //
+                if (skill["diagnosticTableAnalysis"]) {
+                  pdf.add(
+                    new Stack(
+                      [
+                        new Txt(skill.diagnosticText).style(['highlight','heading']).end,
+                        new Canvas([
+                          new Rect(0, [195, 1]).color(this.colors.blue).end
+                        ]).alignment('center')
+                          .relativePosition(0,3).end,
+                        new TocItem(
+                          new Txt('Análisis y resultados').style(['heading','subHeading'])
+                                                        .relativePosition(0,8).end
+                        ).tocMargin([menu_item_margin.left*2,0,0,menu_item_margin.bottom]).end                      
+                      ]
+                    ).color(this.colors.blue)
+                     .margin([0,0,0,(index === arr.length - 1) ? 35 : 53])
+                     .pageBreak('before').end
+                  );
+                  
+                  pdf.add(
+                    new Columns(
+                      this.getColums(skill.diagnosticTableAnalysis, column_split_2, pdf)
+                    ).columnGap(column_gap)
+                     .style(column_style).end
+                  ); 
+                }                
+
               }
             });
 
@@ -372,7 +408,7 @@ export class PdfYearbookService {
                 new Txt('Otra pagina').color(this.colors.blue)
                                       .style('subHeading')
                                       .italics().end
-              ).tocStyle({ bold: true, italics: true })
+              ).tocStyle({ bold: true, italics: true, fontSize: 13 })
                .tocMargin([0,0,0,menu_item_margin.bottom]).end,
               new Txt('User Name').style(['highlight','userName'])
                                   .relativePosition(u_name_relpos.x, u_name_relpos.y).end
@@ -399,7 +435,7 @@ export class PdfYearbookService {
             [
               new TocItem(
                 new Txt('Ultima pagina').style(['highlight','heading']).end
-              ).tocStyle({ bold: true, italics: true })
+              ).tocStyle({ bold: true, italics: true, fontSize: 13 })
               .tocMargin([0,0,0,menu_item_margin.bottom]).end,
               (true) 
                 ? new Canvas([
@@ -535,21 +571,27 @@ export class PdfYearbookService {
     let counter = 0;
     const index = text_.split("").reduce((pos,ch,i)=>{    	
     	if (!ch.match(/\n|\r/)) counter++;
-      if (counter === splitAt) pos = i;
+      if (counter == splitAt) pos = i;
       return pos
     },-1);
     
     let half1 = index !== -1 ? text_.slice(0,index) : text_;
     let half2 = index !== -1 ? text_.slice(index) : '';
 
-    const h1Macth = !half1.substring(half1.length-1).match(/[a-z]/i) ? false : true;
-    const h2Macth = !half2.substring(0,1).match(/[a-z]/i) ? false : true;
+    const h1Macth = !half1.slice(-1).match(/[a-z]/i) ? false : true;
+    const h2Macth = !half2.slice(0, 1).match(/[a-z]/i) ? false : true;
 
-    if (h1Macth && h2Macth) half1 = half1 + '-'; 
-    else if (h1Macth && half2.substring(0,1)==='.') {
-      half1 = half1 + '.';
-      half2 = half2.replace('.', '');
+    // if (h1Macth && h2Macth) half1 = half1 + '-'; 
+    if (h1Macth && h2Macth) {  
+      const indx = half2.indexOf(" ");
+      const word = half2.slice(0,indx+1);
+      half1 += word;
+      half2 = half2.replace(word,""); 
     }
+    // else if (h1Macth && half2.substring(0,1)==='.') {
+    //   half1 = half1 + '.';
+    //   half2 = half2.replace('.', '');
+    // }
 
     return half2.length === 0 && !hasImg
       ? [ new Stack(this.getParagraph(half1, pdf)).end ] 
@@ -557,7 +599,7 @@ export class PdfYearbookService {
         new Stack(this.getParagraph(half1, pdf)).end, 
         half2 && half2.length > 0 ? new Stack(this.getParagraph(
           half2.length === 1 
-            ? (half2.match(/[a-z]/i) 
+            ? (half2.replace(/\n|\r/, "").length > 0 
                 ? half2 : '') 
             : half2
           , pdf)

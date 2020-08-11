@@ -66,10 +66,15 @@ export function amblemarioMapper(pecaData) {
 
     const lapses = [ lapse1, lapse2, lapse3 ].map( (lapse, i) => {
         const {
-            diagnosticAnalysis,
+            // diagnosticAnalysis,
             diagnosticSummary,
             activities
         } = lapse;
+
+        const diagnosticAnalysis = `Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemolestie consequat, vel illum dolore eufeugiat nulla facilisis at vero eros et accumsanet iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore tefeugait nulla facilisi.
+        Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor inh. endrerit in vulputate velit essemo. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemo`;
 
         const tables = diagnosticSummary.reduce((tables, data, i) => {
             if (i === 0) {
