@@ -172,7 +172,11 @@
                     @media screen and (orientation:portrait) and (min-width:480px) {
                         width: auto;
                         margin-left: 1rem;  
-                    }              
+                    }    
+                    
+                    &.date-in-step {
+                        position: relative;
+                    }
                 }
         
                 .field-invalid{
@@ -410,6 +414,15 @@
                 }
             }
 
+            .severals-btn {
+                width: 100%;
+                text-align: right;
+                margin-top: 1.2rem !important;
+
+                @include mediabreak(large, landscape) {
+                    margin-top: -0.5rem !important;
+                }
+            }
 
             // forms
             .has-form {

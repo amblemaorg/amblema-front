@@ -79,6 +79,12 @@
     &:hover {
         background-color: #fff;
         color: $blue;
+
+        &[disabled] {
+            background-color: $blue;
+            color: #fff;
+            cursor: default;
+        }
     }
 }
 

@@ -1,21 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { 
-  PageBlockComponent, 
-  PresentationalBlockComponent 
-} from '../page-block.component';
-import { GlobalService } from '../../../../services/global.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
+import { GlobalService } from "../../../../services/global.service";
+import { Subscription, Observable } from "rxjs";
+import { ToastrService } from "ngx-toastr";
+import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
+import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
+import { Store, Select } from "@ngxs/store";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { NavigationEnd, Router, Event } from "@angular/router";
 
 @Component({
   selector: "checklist-block",
   templateUrl: "./checklist-block.component.html",
-  styleUrls: ["./checklist-block.component.scss"]
+  styleUrls: ["./checklist-block.component.scss"],
 })
 export class ChecklistBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   prueba: any;
   flag = false;
+  isSending: boolean;
+  routerSubscription: Subscription;
+  pecaId: string;
+  UrlLapse = "";
+  @Select(PecaState.getPecaId) pecaId$: Observable<string>;
   settings: {
     infoContainer: {
       principal: {
@@ -47,6 +55,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
         }[];
         title: string;
         isFromGenericActivity?: boolean;
+        isFromAnnualConvention?: boolean;
         genericActivityId?: string;
         approvedAct?: boolean;
         checkList: {
@@ -62,6 +71,20 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
       line: boolean;
       subtitle: string;
     }[];
+    fetcherUrls: {
+      // get: string;
+      post: string;
+      //put: string;
+      // patch: string;
+      //delete: string;
+      //cancel: string;
+    };
+    fetcherMethod?: "get" | "post" | "put" | "patch" | "delete";
+    extraData: {
+      environmentalData: any;
+      lapse: string;
+      topicIndex: number;
+    };
   };
 
   userCanCreate: boolean = true;
@@ -69,12 +92,17 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
   userCanDelete: boolean = true;
   userCanView: boolean = true;
 
-  checks=[];
+  checks = [];
 
-  activity_uneditable: boolean
+  activity_uneditable: boolean;
   private subscription: Subscription = new Subscription();
 
-  constructor(private globals: GlobalService) {
+  constructor(
+    private globals: GlobalService,
+    private toastr: ToastrService,
+    private fetcher: HttpFetcherService,
+    private store: Store
+  ) {
     this.type = "presentational";
     this.component = "checkList";
   }
@@ -83,6 +111,12 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     this.subscription.add(
       this.globals.actionsSleeperEmitter.subscribe((bool) => {
         this.activity_uneditable = bool.activity_uneditable;
+      })
+    );
+
+    this.subscription.add(
+      this.pecaId$.subscribe((peca_id) => {
+        this.pecaId = peca_id;
       })
     );
   }
@@ -96,50 +130,148 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     this.settings = { ...settings };
   }
 
+  setFetcherUrls({ post }) {
+    this.settings.fetcherUrls = {
+      post,
+    };
+    console.log("aad", post);
+  }
+
   setData(data: any) {
-    if (data["isGenericActivity"]) {  
-      this.userCanEdit = data["userCanEdit"];  
+    if (data["isGenericActivity"]) {
+      this.userCanEdit = data["userCanEdit"];
       this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
-      this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"] ? data.checklist : null;
+      this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"]
+        ? data.checklist
+        : null;
       this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
-      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
-      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"] ? data.approvedAct : null;
-      
+      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"]
+        ? data.genericActivityId
+        : null;
+      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"]
+        ? data.approvedAct
+        : null;
+
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
-            gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
-            checklist: data["checklist"] ? this.settings.infoContainer[0].datosNivel[0].checkList : null,
+          gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
+          checklist: data["checklist"]
+            ? this.settings.infoContainer[0].datosNivel[0].checkList
+            : null,
         });
-      });      
+      });
     }
-  
+
     if (data["checkList"]) {
-     // this.prueba = data.checkList[0].description;
       this.flag = true;
-      /* for (let i = 0; i < this.prueba.length; i++) {
-        this.settings.infoContainer[0].datosNivel[0].checkList[i].description =
-          data.checkList[0].description[i].name;
-      } */
-      this.settings.infoContainer[0].datosNivel[0].checkList=data.checkList;
-    }
-    else {
+      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention = true;
+      this.settings.infoContainer[0].datosNivel[0].checkList = data.checkList;
+    } else {
       this.flag = false;
       if (data["isGenericActivity"]) {
         this.flag = true;
       }
     }
+    console.log("ppppp", this.settings);
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {
     check.checked = checked;
 
-    if (isGenAct) { // if truty, this is for generic activity            
+    if (isGenAct) {
+      // if truty, this is for generic activity
       this.globals.updateGenActButtonDataUpdater({
         gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
-        checklist: this.settings.infoContainer[0].datosNivel[0].checkList.length > 0 
-          ? this.settings.infoContainer[0].datosNivel[0].checkList : null
+        checklist:
+          this.settings.infoContainer[0].datosNivel[0].checkList.length > 0
+            ? this.settings.infoContainer[0].datosNivel[0].checkList
+            : null,
       });
     }
   }
-  
+  sendAnnualConvention(checklLists) {
+    const body = {};
+
+    body["checklist"] = checklLists;
+
+    console.log("BODY", body);
+    this.isSending = true;
+
+    const method = this.settings.fetcherMethod || "post";
+    const resourcePath = this.settings.fetcherUrls[method];
+    console.log(resourcePath, method);
+    this.fetcher[method](resourcePath, body).subscribe(
+      (response) => {
+        console.log("form response", response);
+        //this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success("Solicitud enviada", "", {
+          positionClass: "toast-bottom-right",
+        });
+
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      (error) => {
+        const error_msg =
+          error.error && error.error instanceof ProgressEvent
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+        this.isSending = false;
+        this.toastr.error(
+          error.error && error.error["msg"]
+            ? error.error["msg"]
+            : error.error && error.error["message"]
+            ? error.error["message"]
+            : error_msg,
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );
+  }
+
+  sendChecks(checks, levelIndex) {
+    const { environmentalData, lapse, topicIndex } = this.settings.extraData;
+    environmentalData[lapse].topics[topicIndex].levels[levelIndex].activities = checks;
+    const body = {
+      ...environmentalData,
+    };
+    this.isSending = true;
+    const method = this.settings.fetcherMethod || "post";
+    const resourcePath = this.settings.fetcherUrls[method];
+    this.fetcher[method](resourcePath, body).subscribe(
+      (response) => {
+        console.log("form response", response);
+        //this.sleepSend = true;
+        this.isSending = false;
+
+        this.toastr.success("Solicitud enviada", "", {
+          positionClass: "toast-bottom-right",
+        });
+
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+      },
+      (error) => {
+        const error_msg =
+          error.error && error.error instanceof ProgressEvent
+            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+        this.isSending = false;
+        this.toastr.error(
+          error.error && error.error["msg"]
+            ? error.error["msg"]
+            : error.error && error.error["message"]
+            ? error.error["message"]
+            : error_msg,
+          "",
+          { positionClass: "toast-bottom-right" }
+        );
+        console.error(error);
+      }
+    );
+  }
 }

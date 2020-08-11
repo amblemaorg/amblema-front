@@ -16,6 +16,8 @@ const checkList = {
                 },
             }
         ]
+    ,
+    fetcherMethod: "post",
     }
 }
 export const ANNUAL_CONVENTION_CONFIG = {
