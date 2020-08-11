@@ -4,6 +4,7 @@ import {
   ClearPecaState,
   SetSelectedProject,
   FetchPecaContent,
+  FetchProject,
   SetUserPermissions,
 } from '../../actions/peca/peca.actions';
 import { PecaStateModel, PecaModel } from './peca.model';
@@ -36,7 +37,7 @@ export class PecaState {
   ) {
     patchState({ selectedProject: payload });
   }
-  
+
   @Action(SetUserPermissions)
   SetUserPermissions(
     { patchState }: StateContext<PecaStateModel>,
@@ -45,22 +46,51 @@ export class PecaState {
     patchState({ userPermissions: payload });
   }
 
+  @Action(FetchProject)
+  async fetchProject(
+    { patchState }: StateContext<PecaStateModel>,
+    { payload }: FetchProject
+  ) {
+    const { projectId, schoolYearId } = payload;
+    this.apiService.setResourcePath("projects/" + projectId);
+    const response = await this.apiService.getWebContent().toPromise();
+    if (response) {
+      const activePeca = response.schoolYears.reduce(
+        (prevPeca, peca) => (peca.schoolYear.id === schoolYearId ? peca : prevPeca),
+        {}
+      );
+      const peca = {
+        id: activePeca.pecaId,
+        schoolYear: {
+          id: schoolYearId,
+        },
+      };
+      const project = {
+        id: projectId,
+        pecas: [peca],
+      };
+      patchState({
+        selectedProject: project,
+        content: { id: activePeca.pecaId }
+      });
+    }
+  }
+
   @Action(FetchPecaContent)
   fetchPecaContent(
     { patchState, setState, getState }: StateContext<PecaStateModel>,
     { payload }: FetchPecaContent
   ) {
     patchState({ pecaContentRequesting: true });
-
     this.apiService.setResourcePath('pecaprojects/' + payload);
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
         //const prevState = getState();
         const pecaContent: PecaModel = response;
-        patchState({ 
+        patchState({
           pecaContentRequesting: false,
-          content: pecaContent 
-        });        
+          content: pecaContent
+        });
         //setState({ ...prevState, content: pecaContent });
       }
     });
@@ -68,8 +98,8 @@ export class PecaState {
 
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
-    setState({ 
-      content: null, 
+    setState({
+      content: null,
       selectedProject: null,
       user: null,
       userPermissions: null,
@@ -93,7 +123,7 @@ export class PecaState {
   }
 
   @Selector()
-  static getUserResume(state: any) {    
+  static getUserResume(state: any) {
     return {
       id: state.user.id,
       type: state.user.userType
@@ -138,9 +168,8 @@ export class PecaState {
         pecaId: state.content.id,
         lapse1: state.content.lapse1,
         lapse2: state.content.lapse2,
-        lapse3: state.content.lapse3        
+        lapse3: state.content.lapse3
       },
     };
   }
-
 }

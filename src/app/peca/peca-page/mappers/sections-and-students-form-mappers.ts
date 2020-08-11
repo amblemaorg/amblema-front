@@ -24,7 +24,7 @@ export function sectionsAndStudentsDataToSectionsFormMapper(sections) {
             ? { id: grade, name: `${grade}er Grado` } 
             : grade === "2" 
                 ? { id: grade, name: `${grade}do Grado` } 
-                : { id: grade, name: `${grade}to Grado` } ;
+                : { id: grade, name: `${grade}to Grado` };
  
       all_students[id] = students.map((student) => {
           const student_id = student.id;
