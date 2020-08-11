@@ -620,6 +620,33 @@ const btnEnviarSolicitud = {
  * @author Franklin Perdomo
  */
 
+// -- Struct component review form
+
+const FORM_REVIEW_COMPONENT = {
+  component: "form-review",
+  settings: {
+    fields: {
+      description: {
+        label: "Descripción de la reseña",
+        placeholder: "Descripción de la reseña",
+      },
+      inputImg: {
+        label: "Cargar imagen",
+      },
+      button: {
+        text: "Guardar información",
+      },
+    },
+  },
+};
+
+// -- Struc component review info
+
+const SUMMARY_INFO_COMPONENT = {
+  
+}
+
+
 // -- Page's structure component --
 
 const YEARBOOK_CONFIG = {
@@ -647,7 +674,7 @@ const YEARBOOK_CONFIG = {
                     {
                       title: "Reseña histórica",
                       childBlocks: [
-                       
+
                       ],
                     },
 
@@ -728,6 +755,9 @@ export const MapperYearBookWeb = (yearBookData: any): any => {
 
   // -- Sponsor yearbook set data
 
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1]
+    .childBlocks[0].settings;
+
   YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].title =
     yearBookData.sponsor.name;
   YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage =
@@ -752,6 +782,9 @@ export const MapperYearBookWeb = (yearBookData: any): any => {
     yearBookData.school.image;
   YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.text =
     yearBookData.school.content;
+
+
+    
 
   return YEARBOOK_CONFIG;
 };
