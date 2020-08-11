@@ -37,7 +37,6 @@ export class GraphicsBlockComponent
   arrayColors=[];
   dataChart = [];
   dataLabel = [];
-  nombreEscuela: string;
   UrlLapse = "";
 
   private subscription: Subscription = new Subscription();
@@ -74,7 +73,6 @@ export class GraphicsBlockComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
           //console.log("secciones", this.arraySections);
 
@@ -133,7 +131,7 @@ export class GraphicsBlockComponent
           labels: this.dataLabel,
           datasets: [
             {
-              label: `Grados y secciones de ${this.nombreEscuela}`,
+              label: 'Diagnóstico de lectura',
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,

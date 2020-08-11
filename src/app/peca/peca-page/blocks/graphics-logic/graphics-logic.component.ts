@@ -32,7 +32,6 @@ export class GraphicsLogicComponent implements PresentationalBlockComponent, OnI
   arrayColors=[];
   dataChart = [];
   dataLabel = [];
-  nombreEscuela: string;
   UrlLapse = "";
   constructor(private router: Router) {
     this.type = "presentational";
@@ -56,7 +55,6 @@ export class GraphicsLogicComponent implements PresentationalBlockComponent, OnI
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
           //console.log("secciones", this.arraySections);
 
@@ -115,7 +113,7 @@ export class GraphicsLogicComponent implements PresentationalBlockComponent, OnI
           labels: this.dataLabel,
           datasets: [
             {
-              label: `Grados y secciones de ${this.nombreEscuela}`,
+              label: 'Diagnóstico de lógica matemática',
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,
