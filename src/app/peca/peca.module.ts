@@ -144,6 +144,7 @@ import { FormReviewComponent } from './peca-page/blocks/franklin-dev-component/f
     FormBlockComponent,
     ProfileBlockComponent,
     SliderBlockComponent,
+    FormReviewComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
     ScheduleBlockComponent,

@@ -13,18 +13,18 @@ export class FormReviewComponent
   component: string;
   settings: {
     fields?: {
-      descripcion?:
+      description?:
         | {
             label?: string;
             placeholder?: string;
-            formControl?: AbstractControl;
+            value?: any
           }
         | false;
       inputImg?:
         | {
             label?: string;
             placeholder?: string;
-            formControl?: AbstractControl;
+            value?: any
           }
         | false;
       button?:
@@ -39,11 +39,11 @@ export class FormReviewComponent
 
   ngOnInit() {
     /**
-     *
+     * The format of the object that is of type image is prepared
      */
   }
 
-  setSettings(settings: any): void {
+  public setSettings(settings: any): void {
     this.settings = { ...settings };
   }
 
