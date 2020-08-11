@@ -78,24 +78,14 @@ export function amblemarioMapper(pecaData) {
 
         const tables = diagnosticSummary.reduce((tables, data, i) => {
             if (i === 0) {
-                tables.table1.push(
-                    [ 'Grado', 'Sección', 'Palabras por minutos', 'Indice de las palabras por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ]
-                );
-                tables.table2.push(
-                    [ 'Grado', 'Sección', 'Multiplicaciones por minutos', 'Indice de las multiplicaciones por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ]
-                );
-                tables.table3.push(
-                    [ 'Grado', 'Sección', 'Operaciones por minutos', 'Indice de las operaciones por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ]
-                );
+                tables.table1.push( [ 'Grado', 'Sección', 'Palabras por minutos', 'Indice de las palabras por minutos' ] );
+                tables.table2.push( [ 'Grado', 'Sección', 'Multiplicaciones por minutos', 'Indice de las multiplicaciones por minutos' ] );
+                tables.table3.push( [ 'Grado', 'Sección', 'Operaciones por minutos', 'Indice de las operaciones por minutos' ] );
             }
-            else {
-                tables.table1.push( [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ] );
-                tables.table2.push( [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ] );
-                tables.table3.push( [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ] );
-            }
+            if (data.wordsPerMin !== 0/*  && false */) tables.table1.push( [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ] );
+            if (data.multiplicationsPerMin !== 0/*  && false */) tables.table2.push( [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ] );
+            if (data.operationsPerMin !== 0/*  && false */) tables.table3.push( [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ] );
+
             return tables
         }, { table1: [], table2: [], table3: [] });
 
@@ -115,29 +105,26 @@ export function amblemarioMapper(pecaData) {
 
         return {
             lapseName: i === 0 ? "Primer lapso" : i === 1 ? "Segundo lapso" : "Tercer lapso",
-            diagnosticReading: diagnosticAnalysis || tables.table1.length > 0 ? {                
+            diagnosticReading: diagnosticAnalysis || tables.table1.length > 1 ? {                
                 diagnosticText: "Diagnóstico de lectura",
-                diagnosticTable: tables.table1.length > 0 ? tables.table1 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table1.length > 1 ? tables.table1 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de lectura",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
-            diagnosticMath: diagnosticAnalysis || tables.table2.length > 0 ? {
+            diagnosticMath: diagnosticAnalysis || tables.table2.length > 1 ? {
                 diagnosticText: "Diagnóstico de multiplicación",
-                diagnosticTable: tables.table2.length > 0 ? tables.table2 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table2.length > 1 ? tables.table2 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de multiplicación",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
-            diagnosticLogic: diagnosticAnalysis || tables.table3.length > 0 ? {
+            diagnosticLogic: diagnosticAnalysis || tables.table3.length > 1 ? {
                 diagnosticText: "Diagnóstico de razonamiento lógico - matemático",
-                diagnosticTable: tables.table3.length > 0 ? tables.table3 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table3.length > 1 ? tables.table3 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de razonamiento lógico - matemático",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
             activities: lapseActivities
         }
