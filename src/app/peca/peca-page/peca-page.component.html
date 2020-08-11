@@ -22,7 +22,11 @@
       (click)="generatePDF()"
       [disabled]="disablePdfDownload() || creatingPdf"
     >
-      {{ header.download.name }}
+      <span
+        *ngIf="creatingPdf"
+        class="spinner-grow spinner-grow-sm"
+      ></span>
+      {{ creatingPdf ? 'Preparando descarga' : header.download.name }}
     </button>
   </nb-card-body>
 </nb-card>
