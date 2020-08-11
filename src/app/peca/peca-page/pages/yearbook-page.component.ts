@@ -12,10 +12,7 @@ import {
 import { Select } from "@ngxs/store";
 import { DOCUMENT } from "@angular/common";
 import { PecaPageComponent } from "../peca-page.component";
-import {
-  YEARBOOK_CONFIG as config,
-  MapperYearBookWeb,
-} from "./yearbook-config";
+import { MapperYearBookWeb } from "./yearbook-config";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { GlobalService } from "../../../services/global.service";
@@ -57,7 +54,7 @@ export class YearbookPageComponent extends PecaPageComponent
       if (this.loadedData) this.updateMethods();
     });
 
-    this.instantiateComponent(config);
+    //this.instantiateComponent(config);
   }
 
   ngOnInit() {
@@ -75,9 +72,13 @@ export class YearbookPageComponent extends PecaPageComponent
              * @author Franklin Perdomo
              */
 
-            MapperYearBookWeb(data.activePecaContent.yearbook);
+             console.log( data )
+            this.instantiateComponent(
+              MapperYearBookWeb(data.activePecaContent.yearbook)
+            );
 
-            // -- End
+            // -- End Franklin's code
+            // =============================================
 
             this.loadedData = true;
             if (this.isInstanciated) this.updateMethods();

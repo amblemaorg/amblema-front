@@ -65,7 +65,8 @@ import { GraphicsBlockComponent } from './peca-page/blocks/graphics-block/graphi
 import { GenericActivityBlockComponent } from './peca-page/blocks/generic-activity-block/generic-activity-block.component';
 import { GraphicsMatheBlockComponent } from './peca-page/blocks/graphics-mathe-block/graphics-mathe-block.component';
 import { GraphicsLogicComponent } from './peca-page/blocks/graphics-logic/graphics-logic.component';
-import { SummaryBlockComponent } from './peca-page/blocks/summary-block/summary-block.component';
+import { SummaryBlockComponent } from './peca-page/blocks/franklin-dev-component/summary-block/summary-block.component';
+import { FormReviewComponent } from './peca-page/blocks/franklin-dev-component/form-review/form-review.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { SummaryBlockComponent } from './peca-page/blocks/summary-block/summary-
     GraphicsMatheBlockComponent,
     GraphicsLogicComponent,
     SummaryBlockComponent,
+    FormReviewComponent,
   ],
   imports: [
     CommonModule,
@@ -150,7 +152,7 @@ import { SummaryBlockComponent } from './peca-page/blocks/summary-block/summary-
     GenericActivityBlockComponent,
     GraphicsMatheBlockComponent,
     GraphicsLogicComponent,
-    SummaryBlockComponent
+    SummaryBlockComponent,
   ],
   providers: [{ provide: NbTokenStorage, useClass: NbTokenLocalStorage }],
 })

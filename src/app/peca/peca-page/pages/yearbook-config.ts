@@ -620,7 +620,9 @@ const btnEnviarSolicitud = {
  * @author Franklin Perdomo
  */
 
-export const YEARBOOK_CONFIG = {
+// -- Page's structure component --
+
+const YEARBOOK_CONFIG = {
   header: {
     title: "AmbLeMario",
     download: {
@@ -645,7 +647,7 @@ export const YEARBOOK_CONFIG = {
                     {
                       title: "Reseña histórica",
                       childBlocks: [
-                        
+                       
                       ],
                     },
 
@@ -657,8 +659,8 @@ export const YEARBOOK_CONFIG = {
                         {
                           component: "summary",
                           settings: {
-                            urlImage:'',
-                            text: ''
+                            urlImage: "",
+                            text: "",
                           },
                         },
                       ],
@@ -668,14 +670,30 @@ export const YEARBOOK_CONFIG = {
 
                     {
                       title: "Coordinador",
-                      childBlocks: [],
+                      childBlocks: [
+                        {
+                          component: "summary",
+                          settings: {
+                            urlImage: "",
+                            text: "",
+                          },
+                        },
+                      ],
                     },
 
                     // -- School
 
                     {
                       title: "Escuela",
-                      childBlocks: [],
+                      childBlocks: [
+                        {
+                          component: "summary",
+                          settings: {
+                            urlImage: "",
+                            text: "",
+                          },
+                        },
+                      ],
                     },
 
                     // -- Lapse 1
@@ -694,10 +712,49 @@ export const YEARBOOK_CONFIG = {
   ],
 };
 
-export const MapperYearBookWeb = ( yearBookData: any ) : void => {
+// -- End page's structure component --
 
-  console.log(  yearBookData )
+/**
+ *
+ * @function MapperYearBookWeb
+ *
+ * This function receives all the data as a parameter,
+ * and the components are recreated according
+ * to the data.
+ */
 
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.text = yearBookData.sponsor.content;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage = yearBookData.sponsor.image;
-}
+export const MapperYearBookWeb = (yearBookData: any): any => {
+  console.log(yearBookData);
+
+  // -- Sponsor yearbook set data
+
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].title =
+    yearBookData.sponsor.name;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage =
+    yearBookData.sponsor.image;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.text =
+    yearBookData.sponsor.content;
+
+  // -- Coordinator yearbook set data
+
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].title =
+    yearBookData.coordinator.name;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.urlImage =
+    yearBookData.coordinator.image;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.text =
+    yearBookData.coordinator.content;
+
+  // -- School yearbook set data
+
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].title =
+    yearBookData.school.name;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.urlImage =
+    yearBookData.school.image;
+  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.text =
+    yearBookData.school.content;
+
+  return YEARBOOK_CONFIG;
+};
+
+// -- End Franklin's code
+// =============================================

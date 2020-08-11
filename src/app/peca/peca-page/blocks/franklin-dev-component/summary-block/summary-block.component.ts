@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PresentationalBlockComponent } from '../page-block.component';
+import { PresentationalBlockComponent } from '../../page-block.component';
 
 @Component({
   selector: 'app-summary-block',
