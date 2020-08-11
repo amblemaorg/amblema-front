@@ -149,6 +149,8 @@ const graficosLectura = {
     component: 'graphics',
     settings: {
         chartId: 'graficosLectura',
+        sendGraphicToPdf: 'diagnosticReading',
+        lapseN: 1,
         items: [
 
         ],
@@ -220,6 +222,8 @@ const graficosMultiplicacion = {
     component: 'graphics',
     settings: {
         chartId: 'graficosMultiplicacion',
+        sendGraphicToPdf: 'diagnosticMath',
+        lapseN: 1,
         items: [
 
         ],
@@ -291,6 +295,8 @@ const graficosLogicoMate = {
     component: 'graphics',
     settings: {
         chartId: 'graficosLogicoMate',
+        sendGraphicToPdf: 'diagnosticLogic',
+        lapseN: 1,
         items: [
 
         ],

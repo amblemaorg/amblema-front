@@ -1,4 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
+import { 
+  Injectable, 
+  Inject,
+  Output,
+  EventEmitter 
+} from '@angular/core';
 import { DOCUMENT } from "@angular/common"
 import { 
     PdfMakeWrapper,
@@ -20,8 +25,9 @@ import {
   providedIn: 'root',
 })
 export class PdfYearbookService {
-  fontsInstantiated: boolean;
-  colors = {
+  private fontsInstantiated: boolean;
+
+  private colors = {
       blue: '#00809A',
       green: '#81B03E',
       white: '#FFF',
@@ -29,7 +35,39 @@ export class PdfYearbookService {
       rowGray: '#EBEFF5',
   };
 
+  private graphics = {
+    lapse1: {
+      diagnosticReading: null,
+      diagnosticMath: null,
+      diagnosticLogic: null
+    },
+    lapse2: {
+      diagnosticReading: null,
+      diagnosticMath: null,
+      diagnosticLogic: null
+    },
+    lapse3: {
+      diagnosticReading: null,
+      diagnosticMath: null,
+      diagnosticLogic: null
+    },
+  };
+
+  @Output() callGraphicBase64ImgEmitter: EventEmitter<any> = new EventEmitter();
+
   constructor(@Inject(DOCUMENT) private document: Document) {}
+
+  public setGraphics(lapse: string, graphic: string, img: string) {
+    this.graphics[lapse][graphic] = img;
+  }
+
+  private clearGraphics() {
+    Object.keys(this.graphics).map(lapse => {
+      Object.keys(this.graphics[lapse]).map(diagnostic => {
+        this.graphics[lapse][diagnostic] = null;
+      });
+    });
+  }
 
   private instantiatePdfFonts() {
     if (!this.fontsInstantiated) {
@@ -50,6 +88,8 @@ export class PdfYearbookService {
 
   generateYearbookPdf(pdf_data: any): boolean {
     console.log("pdf Data", pdf_data);
+    this.callGraphicBase64ImgEmitter.emit();
+
     const generateThisPdf = async () => {
         clearInterval(interval);
         this.instantiatePdfFonts(); // instantianting pdf font family
@@ -90,7 +130,7 @@ export class PdfYearbookService {
           openBook: open_book ? await new Img(open_book).build() : null,
           ambleLogo: amble_logo ? await new Img(amble_logo).build() : null,
           blueSymbols: symbols ? await new Img(symbols).build() : null,
-        });        
+        });
         
         //? pdf background, when cover page the background is blue------------------------
         pdf.background((currentPage, pageSize) => {
@@ -295,14 +335,12 @@ export class PdfYearbookService {
                   ).tocStyle({ bold: true, italics: true })
                    .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
                 );
-
-                // if (section["sectionStudents"]) {
-                  pdf.add(
-                    new Columns(
-                      this.getStudents(section.sectionStudents)
-                    ).color(this.colors.blue).bold().italics().end
-                  );
-                // }
+                
+                pdf.add(
+                  new Columns(
+                    this.getStudents(section.sectionStudents)
+                  ).color(this.colors.blue).bold().italics().end
+                );
                 
                 if (symbolsCoverImg) pdf.add(symbolsCoverImg);
                 if (section_img) pdf.add(section_img);                
@@ -317,13 +355,33 @@ export class PdfYearbookService {
         await sectionsPromise;    
         //? END SCHOOL REVIEW ...........................................................................................................................................
 
+        // LAPSES' GRAPHICS IMAGES ------------------------------------------------------------------------
+        const graphicsPromise = new Promise(resolve => {
+          Object.keys(this.graphics).map(async (lapse, i, arrP) => {
+            const graphicsPromiseC = new Promise(resolve => {
+              Object.keys(this.graphics[lapse]).map(async (diagnostic, j, arrC) => {
+                if (this.graphics[lapse][diagnostic]) {
+                  const graphimg = await new Img(this.graphics[lapse][diagnostic]).fit([pdfPageSizes.width-140, 321]).alignment('center').build();
+                  this.graphics[lapse][diagnostic] = graphimg; 
+                }              
+                if (
+                  j === arrC.length - 1 &&
+                  i === arrP.length - 1
+                ) resolve(null);
+              });
+            });
+            await graphicsPromiseC;    
+            if (i === arrP.length - 1) resolve(null);
+          });
+        });        
+        await graphicsPromise;
         //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
         if (pdfData["lapses"]) {
-          pdfData.lapses.map((lapse) => {
+          pdfData.lapses.map((lapse, indx) => {
             let lapseWasReferenced = false;
             [ lapse["diagnosticReading"], lapse["diagnosticMath"], lapse["diagnosticLogic"] ].map((skill, index, arr) => {
               if (skill) { 
-                let diagnosticWasReferenced = false;               
+                let diagnosticWasReferenced = false;
                 if (skill["diagnosticTable"]) {
                   lapseWasReferenced = true;
                   pdf.add(
@@ -372,8 +430,9 @@ export class PdfYearbookService {
                   ); 
                 }
 
-                //
-                if (skill["diagnosticAnalysis"]) {
+                // GRAPHICS
+                const skillName = index === 0 ? "diagnosticReading" : index === 1 ? "diagnosticMath" : "diagnosticLogic";
+                if (this.graphics[`lapse${indx+1}`][skillName]) {
                   if (!lapseWasReferenced) {
                     pdf.add(
                       new Stack(
@@ -388,6 +447,50 @@ export class PdfYearbookService {
                   }
 
                   if (!diagnosticWasReferenced) {
+                    pdf.add(
+                      new TocItem(
+                        new Txt(skill.diagnosticText).fontSize(0).opacity(0).pageBreak(lapseWasReferenced ? 'before' : null).end
+                      ).tocStyle({ bold: true, italics: true })
+                       .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                    );                    
+                  }
+
+                  pdf.add(                    
+                    new Stack(
+                      [ new Txt(lapse.lapseName).style(['highlight','heading']).end ]
+                    ).color(this.colors.blue)
+                     .margin([0,0,0,35])
+                     .pageBreak(!lapseWasReferenced || !diagnosticWasReferenced ? null : 'before').end
+                  );
+                  if (!lapseWasReferenced) lapseWasReferenced = true;
+                  if (!diagnosticWasReferenced) diagnosticWasReferenced = true;
+
+                  pdf.add(
+                    new TocItem(
+                      new Txt(skill.diagnosticGraphicText).style('highlight')
+                                                   .margin([0,0]).end
+                    ).tocMargin([menu_item_margin.left*2,0,0,menu_item_margin.bottom]).end
+                  );
+
+                  pdf.add(this.graphics[`lapse${indx+1}`][skillName]);
+                }
+
+                // ANALYSIS        
+                if (skill["diagnosticAnalysis"]) {
+                  if (!lapseWasReferenced) {
+                    pdf.add(
+                      new Stack(
+                        [
+                          new TocItem(
+                            new Txt(lapse.lapseName).fontSize(0).opacity(0).end
+                          ).tocStyle({ bold: true, italics: true, fontSize: 13 })
+                           .tocMargin([0,0,0,menu_item_margin.bottom]).end
+                        ]
+                      ).pageBreak('before').end
+                    );
+                  }
+
+                  if (!diagnosticWasReferenced) {                    
                     pdf.add(
                       new TocItem(
                         new Txt(skill.diagnosticText).fontSize(0).opacity(0).pageBreak(lapseWasReferenced ? 'before' : null).end
@@ -422,10 +525,14 @@ export class PdfYearbookService {
                     ).columnGap(column_gap)
                      .style(column_style).end
                   ); 
-                }                
+                }         
 
               }
             });
+
+            if (lapse["activities"]) {
+              
+            }
 
           });
         }
@@ -532,6 +639,8 @@ export class PdfYearbookService {
         const window = pdf.create();
         window.open();
         // pdf.create().download('AmbLeMario');
+
+        this.clearGraphics();
       };
   
       let interval = null;
