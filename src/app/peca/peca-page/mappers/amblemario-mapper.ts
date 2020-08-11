@@ -98,8 +98,8 @@ export function amblemarioMapper(pecaData) {
 
             return {
                 name: name ? name : null,
-                description: description ? description : null,
-                images: images && images.length > 0 ? images : null
+                description: diagnosticAnalysis,//description ? description : null,
+                images: [sponsor.image, sponsor.image, sponsor.image, sponsor.image]//images && images.length > 0 ? images : null
             }
         });
 
