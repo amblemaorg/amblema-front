@@ -51,6 +51,9 @@ export class TableBlockComponent
 
   private subscription: Subscription = new Subscription();
 
+  canTableSendFormDataToBtn: boolean = true;
+  isTableContentEdited: boolean;
+
   constructor(private globals: GlobalService) {
     this.type = "presentational";
     this.component = "table";
@@ -103,6 +106,8 @@ export class TableBlockComponent
     this.source = null;
     this.isEdited = null;
     this.isEditable = true;
+    this.canTableSendFormDataToBtn = true;
+    this.isTableContentEdited = null;
     this.subscription.unsubscribe();
   }
 
@@ -172,6 +177,7 @@ export class TableBlockComponent
           break;
       }
 
+      this.isTableContentEdited = true;
       this.sendTableData();
     }
   }
@@ -179,18 +185,23 @@ export class TableBlockComponent
   sendTableData() {
     //updating textAndButton button data
     if (this.settings.buttonCode) {
+      if (this.canTableSendFormDataToBtn) 
+        this.globals.sendFormDataToBtn(this.settings.buttonCode);
+      
       if (this.settings.isFromImgContainer) {
         this.globals.buttonDataUpdater({
           code: this.settings.buttonCode,
           whichData: "table",
-          table: this.settings["dataCopy"]
+          table: this.settings["dataCopy"],
+          tableEdited: this.isTableContentEdited
         });
       } else {
         this.source.getAll().then(value => {
           this.globals.buttonDataUpdater({
             code: this.settings.buttonCode,
             whichData: "table",
-            table: value
+            table: value,
+            tableEdited: this.isTableContentEdited
           });
         });
       }

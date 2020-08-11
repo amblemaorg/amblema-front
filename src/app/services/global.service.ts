@@ -265,6 +265,7 @@ export class GlobalService {
   @Output() setReadonlyEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesTableRefresherEmitter: EventEmitter<any> = new EventEmitter();
   @Output() actionsSleeperEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() sendFormDataToBtnEmitter: EventEmitter<any> = new EventEmitter();
   @Output() blockIntancesEmitter: EventEmitter<{
     blocks: Map<string, PageBlockComponent>;
     fromModal: boolean;
@@ -278,6 +279,9 @@ export class GlobalService {
 
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
+  }
+  sendFormDataToBtn(code) {
+    this.sendFormDataToBtnEmitter.emit(code);
   }
   buttonDataUpdater(obj) {
     this.updateButtonDataEmitter.emit(obj);

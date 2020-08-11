@@ -165,7 +165,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
       this.file = data.activePecaContent.lapse3.ambleCoins.teachersMeetingFile;
       this.date = data.activePecaContent.lapse3.ambleCoins.meetingDate;
     }
-    console.log(this.date, "CHARLAAAAAAAAAAAA")
+    //console.log(this.date, "CHARLAAAAAAAAAAAA")
   }
 
   setAmblemonedasCharlaData() {
@@ -236,7 +236,8 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
       "confirmacionDocenteModal",
       {
         put: () =>
-          `pecaprojects/amblecoins/${this.peca_id}/${this.UrlLapse}`,
+        //pecaprojects/amblecoins/section/<pecaId>/<lapse>
+          `pecaprojects/amblecoins/section/${this.peca_id}/${this.UrlLapse}`,
       },
     );
 

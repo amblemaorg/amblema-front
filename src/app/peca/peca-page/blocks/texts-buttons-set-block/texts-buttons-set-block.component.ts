@@ -167,12 +167,21 @@ export class TextsButtonsSetBlockComponent
     status: ['1']
   });
 
+  isTableEdited: boolean = true;
+  isFormEdited: boolean = true;
+
   ngOnInit() {
     this.subscription.add(
       this.globals.updateButtonDataEmitter.subscribe((data) => {
         if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
-          if (data.whichData == 'table') this.dataTorF.table = data.table;
-          if (data.whichData == 'form') this.dataTorF.form = data.form;
+          if (data.whichData == 'table') {
+            this.dataTorF.table = data.table;
+            this.isTableEdited = data.tableEdited;
+          }
+          if (data.whichData == 'form') {
+            this.dataTorF.form = data.form;
+            this.isFormEdited = data.formEdited;            
+          }
 
           // console.log(this.dataTorF);
         }
@@ -229,6 +238,8 @@ export class TextsButtonsSetBlockComponent
     this.timesVideoSourceCalled = 0;
     this.activity_video = null;
     this.activity_uneditable = null;
+    this.isTableEdited = true;
+    this.isFormEdited = true;
   }
 
   private setId() {
@@ -310,7 +321,6 @@ export class TextsButtonsSetBlockComponent
 
     } 
     else {
-      console.log(data ,' hoaaaaaaa')
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista=data.contentTeacherInfo;
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;
@@ -344,10 +354,10 @@ export class TextsButtonsSetBlockComponent
       (type == 1 || type == 3 || type == 4)
     ) {
       if (
-        (this.settings.receivesFromTableOrForm == 'table' && !this.dataTorF.table) ||
-        (this.settings.receivesFromTableOrForm == 'form' && !this.dataTorF.form) ||
+        (this.settings.receivesFromTableOrForm == 'table' && (!this.dataTorF.table || this.dataTorF.table.length == 0 || !this.isTableEdited) ) ||
+        (this.settings.receivesFromTableOrForm == 'form' && (!this.dataTorF.form || !this.isFormEdited) ) ||
         (this.settings.receivesFromTableOrForm == 'both' &&
-          /* !this.dataTorF.table ||  */ !this.dataTorF.form)
+         (!this.dataTorF.table || this.dataTorF.table.length == 0 || !this.isTableEdited) && (!this.dataTorF.form || !this.isFormEdited) )
       )
         return true;
     } 
@@ -626,7 +636,7 @@ export class TextsButtonsSetBlockComponent
         break;
       case 3:
         this.isSending = true;
-        console.log('prueba')
+        // console.log('prueba')
         break;
       case 4:
         this.isSending = true;
@@ -874,7 +884,6 @@ export class TextsButtonsSetBlockComponent
       const fetcherMethod = this.settings.fetcherMethod || "post";
       const url = this.settings.fetcherUrls[fetcherMethod];
 
-      console.log("Status changer");
       formData.append('status', e.id === "1" ? "1" : "3");
       if(this.settings.genericActivityId && this.settings.genericActivityId.length > 0) formData.append('id', this.settings.genericActivityId);
       if(this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") formData.append('date', this.dataGenAct.date);
@@ -924,15 +933,15 @@ export class TextsButtonsSetBlockComponent
       let { date, upload, checklist } = { date: false, upload: false, checklist: false };
       const conditions = [];
 
-      if (this.settings.genActSavingTypes.hasDate) {
+      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasDate) {
         date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
         conditions.push(date);
       }
-      if (this.settings.genActSavingTypes.hasUpload) {
+      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasUpload) {
         upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
         conditions.push(upload);
       }
-      if (this.settings.genActSavingTypes.hasChecklist) {
+      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasChecklist) {
         checklist = true;
         if (this.dataGenAct.checklist) checklist = this.dataGenAct.checklist.some(check => !check.checked);        
         conditions.push(checklist);
