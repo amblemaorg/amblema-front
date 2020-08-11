@@ -345,12 +345,12 @@ export class PdfYearbookService {
                 if (skill["diagnosticTable"]) pdf.add(
                   new Table(
                     this.getTableRows(skill.diagnosticTable)
-                  ).widths([ 75, 75, '*', '*' ])
+                  ).widths([ 75, 75, '*', 'auto' ])
                   .layout({
                     fillColor: (rowIndex) => (rowIndex !== 0 && rowIndex % 2 === 0) ? this.colors.rowGray : null,
                     paddingLeft: (rowIndex) => rowIndex === 0 ? 25 : 15,
                     paddingTop: (rowIndex) => rowIndex === 0 ? 10 : 7,
-                    paddingRight: (rowIndex, node) => (rowIndex === node.table.widths.length - 1) ? 25 : 15,
+                    paddingRight: () => 15,
                     paddingBottom: (rowIndex) => rowIndex === 0 ? 10 : 7,
                     hLineColor: (rowIndex, node) => rowIndex === 0 || rowIndex === 1 || (rowIndex === node.table.body.length) ? this.colors.blue : null,
                     vLineColor: () => this.colors.blue,
