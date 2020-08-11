@@ -286,7 +286,7 @@ export class PdfYearbookService {
         const sectionsPromise = new Promise(resolve => {
           if (pdfData["schoolSections"]) {          
             pdfData.schoolSections.map(async (section, i, arr) => {
-              if (section["sectionName"]) {
+              if (section["sectionName"] && section["sectionStudents"]) {
                 const section_img = section["sectionImg"] ? await new Img('sponsorLogo', true).fit([pdfPageSizes.width-140, 190]).absolutePosition(70,60).alignment('center').build() : null;
 
                 pdf.add(
@@ -296,13 +296,13 @@ export class PdfYearbookService {
                    .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
                 );
 
-                if (section["sectionStudents"]) {
+                // if (section["sectionStudents"]) {
                   pdf.add(
                     new Columns(
                       this.getStudents(section.sectionStudents)
                     ).color(this.colors.blue).bold().italics().end
                   );
-                }
+                // }
                 
                 if (symbolsCoverImg) pdf.add(symbolsCoverImg);
                 if (section_img) pdf.add(section_img);                
@@ -320,53 +320,82 @@ export class PdfYearbookService {
         //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
         if (pdfData["lapses"]) {
           pdfData.lapses.map((lapse) => {
+            let lapseWasReferenced = false;
             [ lapse["diagnosticReading"], lapse["diagnosticMath"], lapse["diagnosticLogic"] ].map((skill, index, arr) => {
-              if (skill) {
-                pdf.add(
-                  new Stack(
-                    [
-                      index === 0 
-                      ? new TocItem(
-                          new Txt(lapse.lapseName).style(['highlight','heading']).end
-                        ).tocStyle({ bold: true, italics: true, fontSize: 13 })
-                        .tocMargin([0,0,0,menu_item_margin.bottom]).end
-                      : new Txt(lapse.lapseName).style(['highlight','heading']).end
-                    ]
-                  ).color(this.colors.blue)
-                   .margin([0,0,0,35])
-                   .pageBreak('before').end
-                );
-
-                pdf.add(
-                  new TocItem(
-                    new Txt(skill.diagnosticText).style('highlight')
-                                                 .margin([0,20]).end
-                  ).tocStyle({ bold: true, italics: true })
-                   .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
-                );
-                pdf.add(
-                  new TocItem(
-                    new Txt('Tabla de diagnóstico').fontSize(0).opacity(0).end
-                  ).tocMargin([menu_item_margin.left*2,0,0,menu_item_margin.bottom]).end
-                );
-                if (skill["diagnosticTable"]) pdf.add(
-                  new Table(
-                    this.getTableRows(skill.diagnosticTable)
-                  ).widths([ 75, 75, '*', 'auto' ])
-                  .layout({
-                    fillColor: (rowIndex) => (rowIndex !== 0 && rowIndex % 2 === 0) ? this.colors.rowGray : null,
-                    paddingLeft: (rowIndex) => rowIndex === 0 ? 25 : 15,
-                    paddingTop: (rowIndex) => rowIndex === 0 ? 10 : 7,
-                    paddingRight: () => 15,
-                    paddingBottom: (rowIndex) => rowIndex === 0 ? 10 : 7,
-                    hLineColor: (rowIndex, node) => rowIndex === 0 || rowIndex === 1 || (rowIndex === node.table.body.length) ? this.colors.blue : null,
-                    vLineColor: () => this.colors.blue,
-                    hLineWidth: (rowIndex, node) => rowIndex > 1 && (rowIndex !== node.table.body.length) ? 0 : 1,
-                  }).end
-                ); 
+              if (skill) { 
+                let diagnosticWasReferenced = false;               
+                if (skill["diagnosticTable"]) {
+                  lapseWasReferenced = true;
+                  pdf.add(
+                    new Stack(
+                      [
+                        index === 0 
+                        ? new TocItem(
+                            new Txt(lapse.lapseName).style(['highlight','heading']).end
+                          ).tocStyle({ bold: true, italics: true, fontSize: 13 })
+                          .tocMargin([0,0,0,menu_item_margin.bottom]).end
+                        : new Txt(lapse.lapseName).style(['highlight','heading']).end
+                      ]
+                    ).color(this.colors.blue)
+                     .margin([0,0,0,35])
+                     .pageBreak('before').end
+                  );
+  
+                  pdf.add(
+                    new TocItem(
+                      new Txt(skill.diagnosticText).style('highlight')
+                                                   .margin([0,20]).end
+                    ).tocStyle({ bold: true, italics: true })
+                     .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                  );
+                  diagnosticWasReferenced = true;
+                  pdf.add(
+                    new TocItem(
+                      new Txt('Tabla de diagnóstico').fontSize(0).opacity(0).end
+                    ).tocMargin([menu_item_margin.left*2,0,0,menu_item_margin.bottom]).end
+                  );
+                  
+                  pdf.add(
+                    new Table(
+                      this.getTableRows(skill.diagnosticTable)
+                    ).widths([ 75, 75, '*', 'auto' ])
+                    .layout({
+                      fillColor: (rowIndex) => (rowIndex !== 0 && rowIndex % 2 === 0) ? this.colors.rowGray : null,
+                      paddingLeft: (rowIndex) => rowIndex === 0 ? 25 : 15,
+                      paddingTop: (rowIndex) => rowIndex === 0 ? 10 : 7,
+                      paddingRight: () => 15,
+                      paddingBottom: (rowIndex) => rowIndex === 0 ? 10 : 7,
+                      hLineColor: (rowIndex, node) => rowIndex === 0 || rowIndex === 1 || (rowIndex === node.table.body.length) ? this.colors.blue : null,
+                      vLineColor: () => this.colors.blue,
+                      hLineWidth: (rowIndex, node) => rowIndex > 1 && (rowIndex !== node.table.body.length) ? 0 : 1,
+                    }).end
+                  ); 
+                }
 
                 //
-                if (skill["diagnosticTableAnalysis"]) {
+                if (skill["diagnosticAnalysis"]) {
+                  if (!lapseWasReferenced) {
+                    pdf.add(
+                      new Stack(
+                        [
+                          new TocItem(
+                            new Txt(lapse.lapseName).fontSize(0).opacity(0).end
+                          ).tocStyle({ bold: true, italics: true, fontSize: 13 })
+                           .tocMargin([0,0,0,menu_item_margin.bottom]).end
+                        ]
+                      ).pageBreak('before').end
+                    );
+                  }
+
+                  if (!diagnosticWasReferenced) {
+                    pdf.add(
+                      new TocItem(
+                        new Txt(skill.diagnosticText).fontSize(0).opacity(0).pageBreak(lapseWasReferenced ? 'before' : null).end
+                      ).tocStyle({ bold: true, italics: true })
+                       .tocMargin([menu_item_margin.left,0,0,menu_item_margin.bottom]).end
+                    );                    
+                  }
+
                   pdf.add(
                     new Stack(
                       [
@@ -382,12 +411,14 @@ export class PdfYearbookService {
                       ]
                     ).color(this.colors.blue)
                      .margin([0,0,0,(index === arr.length - 1) ? 35 : 53])
-                     .pageBreak('before').end
+                     .pageBreak(!lapseWasReferenced || !diagnosticWasReferenced ? null : 'before').end
                   );
-                  
+                  if (!lapseWasReferenced) lapseWasReferenced = true;
+                  if (!diagnosticWasReferenced) diagnosticWasReferenced = true;
+
                   pdf.add(
                     new Columns(
-                      this.getColums(skill.diagnosticTableAnalysis, column_split_2, pdf)
+                      this.getColums(skill.diagnosticAnalysis, column_split_2, pdf)
                     ).columnGap(column_gap)
                      .style(column_style).end
                   ); 
