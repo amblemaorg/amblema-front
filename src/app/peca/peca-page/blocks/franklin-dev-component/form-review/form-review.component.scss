@@ -1,0 +1,56 @@
+.btn-normal {
+  background-color: #00809a !important;
+  border-color: #00809a !important;
+}
+
+#btn-delete {
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  opacity: .8;
+  &:hover { opacity: 1; }
+}
+
+.btn-tertiary {
+  color: #00809a;
+  padding: 0;
+  line-height: 40px;
+  width: 100%;
+  display: block;
+  border: 2px solid #00809a;
+
+  @media (min-width: 992px) {
+    width: 300px;
+  }
+
+  &:hover,
+  &:focus {
+    color: lighten(#00809a, 20%);
+    border-color: lighten(#00809a, 20%);
+  }
+}
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+  + .js-labelFile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+    cursor: pointer;
+    .icon:before {
+      content: "\f093";
+    }
+    &.has-file {
+      .icon:before {
+        content: "\f00c";
+        color: #5aac7b;
+      }
+    }
+  }
+}

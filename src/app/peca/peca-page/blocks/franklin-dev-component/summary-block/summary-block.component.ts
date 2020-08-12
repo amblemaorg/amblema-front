@@ -12,12 +12,13 @@ export class SummaryBlockComponent implements OnInit, PresentationalBlockCompone
   component: string;
   settings: {
     urlImage?: string, 
-    text?: string
+    text?: string,
   };   
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {  
+
   }
 
   setSettings(settings: any ) : void {

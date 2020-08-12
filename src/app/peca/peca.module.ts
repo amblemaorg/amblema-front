@@ -18,6 +18,7 @@ import {
   NbStepperModule,
   NbButtonModule,
   NbCheckboxModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PecaRoutingModule } from './peca-routing.module';
@@ -112,6 +113,7 @@ import { FormReviewComponent } from './peca-page/blocks/franklin-dev-component/f
   imports: [
     CommonModule,
     PecaRoutingModule,
+    NbAlertModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbLayoutModule,
     NbEvaIconsModule,
@@ -144,6 +146,7 @@ import { FormReviewComponent } from './peca-page/blocks/franklin-dev-component/f
     FormBlockComponent,
     ProfileBlockComponent,
     SliderBlockComponent,
+    FormReviewComponent,
     StepperBlockComponent,
     ChecklistBlockComponent,
     ScheduleBlockComponent,
