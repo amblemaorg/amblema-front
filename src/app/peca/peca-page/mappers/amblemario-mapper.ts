@@ -34,8 +34,6 @@ export function amblemarioMapper(pecaData) {
                                 ? `${grade}no Grado` 
                                 : `${grade}mo Grado`;
     }
-
-    console.log(grades);
     
     const schoolSections = pecaData.school && pecaData.school.sections && pecaData.school.sections.length > 0 
         ? pecaData.school.sections.map((section) => {
@@ -74,6 +72,10 @@ export function amblemarioMapper(pecaData) {
         const diagnosticAnalysis = `Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemolestie consequat, vel illum dolore eufeugiat nulla facilisis at vero eros et accumsanet iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore tefeugait nulla facilisi.
         Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor inh. endrerit in vulputate velit essemo. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemo
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemolestie consequat, vel illum dolore eufeugiat nulla facilisis at vero eros et accumsanet iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore tefeugait nulla facilisi.
+        Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor inh. endrerit in vulputate velit essemo. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemo`;
 
         const tables = diagnosticSummary.reduce((tables, data, i) => {
@@ -89,19 +91,21 @@ export function amblemarioMapper(pecaData) {
             return tables
         }, { table1: [], table2: [], table3: [] });
 
-        const lapseActivities = activities.map(activity => {
-            const {
-                name,
-                images,
-                description
-            } = activity;
+        const lapseActivities = activities && activities.length > 0 
+            ? activities.map(activity => {
+                    const {
+                        name,
+                        images,
+                        description
+                    } = activity;
 
-            return {
-                name: name ? name : null,
-                description: diagnosticAnalysis,//description ? description : null,
-                images: [sponsor.image, sponsor.image, sponsor.image, sponsor.image]//images && images.length > 0 ? images : null
-            }
-        });
+                    return {
+                        name: name ? name : null,
+                        description: diagnosticAnalysis,//description ? description : null,
+                        images: [sponsor.image, sponsor.image, sponsor.image, sponsor.image, sponsor.image, sponsor.image, sponsor.image, sponsor.image]//images && images.length > 0 ? images : null
+                    }
+                }) 
+            : null;
 
         return {
             lapseName: i === 0 ? "Primer lapso" : i === 1 ? "Segundo lapso" : "Tercer lapso",
