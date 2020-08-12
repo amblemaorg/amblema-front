@@ -17,6 +17,7 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { GlobalService } from "../../../services/global.service";
 import { amblemarioMapper } from "../mappers/amblemario-mapper";
+import { PdfYearbookService } from 'src/app/services/peca/pdf-yearbook.service';
 
 @Component({
   selector: "peca-yearbook",
@@ -41,10 +42,10 @@ export class YearbookPageComponent extends PecaPageComponent
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    @Inject(DOCUMENT) document: Document,
+    pdfYearbookService: PdfYearbookService,
     globals: GlobalService
-  ) {
-    super(factoryResolver, null, null, document);
+) {
+    super(factoryResolver,null,null,pdfYearbookService);
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>
@@ -71,8 +72,7 @@ export class YearbookPageComponent extends PecaPageComponent
             /**
              * @author Franklin Perdomo
              */
-
-             console.log( data )
+            
             this.instantiateComponent(
               MapperYearBookWeb(data.activePecaContent.yearbook)
             );

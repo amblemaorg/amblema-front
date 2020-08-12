@@ -620,34 +620,54 @@ const btnEnviarSolicitud = {
  * @author Franklin Perdomo
  */
 
-// -- Struct component review form
-
-const FORM_REVIEW_COMPONENT = {
-  component: "form-review",
-  settings: {
-    fields: {
-      description: {
-        label: "Descripción de la reseña",
-        placeholder: "Descripción de la reseña",
-      },
-      inputImg: {
-        label: "Cargar imagen",
-      },
-      button: {
-        text: "Guardar información",
-      },
-    },
-  },
-};
-
-// -- Struc component review info
-
-const SUMMARY_INFO_COMPONENT = {
-  
-}
-
-
 // -- Page's structure component --
+
+
+// -- End page's structure component --
+
+/**
+ *
+ * @function MapperYearBookWeb
+ *
+ * This function receives all the data as a parameter,
+ * and the components are recreated according
+ * to the data.
+ */
+
+export const MapperYearBookWeb = (yearBookData: any): any => {
+  console.log(yearBookData);
+
+  // -- Sponsor yearbook set data
+
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1]
+  //   .childBlocks[0].settings;
+
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].title =
+  //   yearBookData.sponsor.name;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage =
+  //   yearBookData.sponsor.image;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.text =
+  //   yearBookData.sponsor.content;
+
+  // // -- Coordinator yearbook set data
+
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].title =
+  //   yearBookData.coordinator.name;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.urlImage =
+  //   yearBookData.coordinator.image;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.text =
+  //   yearBookData.coordinator.content;
+
+  // // -- School yearbook set data
+
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].title =
+  //   yearBookData.school.name;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.urlImage =
+  //   yearBookData.school.image;
+  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.text =
+  //   yearBookData.school.content;
+
+
 
 const YEARBOOK_CONFIG = {
   header: {
@@ -674,20 +694,20 @@ const YEARBOOK_CONFIG = {
                     {
                       title: "Reseña histórica",
                       childBlocks: [
-
+                        
                       ],
                     },
 
                     // -- Sponsor
 
                     {
-                      title: "Padrino",
+                      title: yearBookData.sponsor.name,
                       childBlocks: [
                         {
                           component: "summary",
                           settings: {
-                            urlImage: "",
-                            text: "",
+                            urlImage: yearBookData.sponsor.image,
+                            text: yearBookData.sponsor.content,
                           },
                         },
                       ],
@@ -739,52 +759,6 @@ const YEARBOOK_CONFIG = {
   ],
 };
 
-// -- End page's structure component --
-
-/**
- *
- * @function MapperYearBookWeb
- *
- * This function receives all the data as a parameter,
- * and the components are recreated according
- * to the data.
- */
-
-export const MapperYearBookWeb = (yearBookData: any): any => {
-  console.log(yearBookData);
-
-  // -- Sponsor yearbook set data
-
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1]
-    .childBlocks[0].settings;
-
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].title =
-    yearBookData.sponsor.name;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage =
-    yearBookData.sponsor.image;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.text =
-    yearBookData.sponsor.content;
-
-  // -- Coordinator yearbook set data
-
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].title =
-    yearBookData.coordinator.name;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.urlImage =
-    yearBookData.coordinator.image;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.text =
-    yearBookData.coordinator.content;
-
-  // -- School yearbook set data
-
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].title =
-    yearBookData.school.name;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.urlImage =
-    yearBookData.school.image;
-  YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.text =
-    yearBookData.school.content;
-
-
-    
 
   return YEARBOOK_CONFIG;
 };
