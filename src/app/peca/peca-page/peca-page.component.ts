@@ -142,7 +142,9 @@ export class PecaPageComponent {
   
   public generatePDF() {
     this.creatingPdf = true;
-    this.creatingPdf = this.pdfYearbookService.generateYearbookPdf(this.pdfData); 
+    this.pdfYearbookService.generateYearbookPdf(this.pdfData).then(res => {
+      this.creatingPdf = res
+    }).catch(e=>{this.creatingPdf = e}); 
   }
 
 }
