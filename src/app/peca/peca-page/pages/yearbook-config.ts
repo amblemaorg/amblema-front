@@ -620,11 +620,6 @@ const btnEnviarSolicitud = {
  * @author Franklin Perdomo
  */
 
-// -- Page's structure component --
-
-
-// -- End page's structure component --
-
 /**
  *
  * @function MapperYearBookWeb
@@ -694,7 +689,23 @@ const YEARBOOK_CONFIG = {
                     {
                       title: "Reseña histórica",
                       childBlocks: [
-                        
+                        {
+                          component: "form-review",
+                          settings: {
+                            fields: {
+                              inputImg: {
+                                label: 'Carga de imagen',
+                              },
+                              description: {
+                                label: 'Descripción reseña histórica',
+                                placeholder: 'Descripción reseña histórica', 
+                              },
+                              button: {
+                                text: 'Guardar cambios'
+                              }
+                            }
+                          },
+                        },  
                       ],
                     },
 
@@ -716,13 +727,13 @@ const YEARBOOK_CONFIG = {
                     // -- Coordinator
 
                     {
-                      title: "Coordinador",
+                      title: yearBookData.coordinator.name,
                       childBlocks: [
                         {
                           component: "summary",
                           settings: {
-                            urlImage: "",
-                            text: "",
+                            urlImage: yearBookData.coordinator.image,
+                            text: yearBookData.coordinator.content,
                           },
                         },
                       ],
@@ -731,13 +742,13 @@ const YEARBOOK_CONFIG = {
                     // -- School
 
                     {
-                      title: "Escuela",
+                      title: yearBookData.school.name,
                       childBlocks: [
                         {
                           component: "summary",
                           settings: {
-                            urlImage: "",
-                            text: "",
+                            urlImage: yearBookData.school.image,
+                            text: yearBookData.school.content,
                           },
                         },
                       ],
