@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PresentationalBlockComponent } from "../../page-block.component";
-import { AbstractControl } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-form-review",
@@ -9,6 +9,11 @@ import { AbstractControl } from "@angular/forms";
 })
 export class FormReviewComponent
   implements OnInit, PresentationalBlockComponent {
+  // To validate the file
+  readonly pattern = /image-*/;
+
+  public msgErrorFile:boolean = false;
+
   type: "presentational";
   component: string;
   settings: {
@@ -17,14 +22,14 @@ export class FormReviewComponent
         | {
             label?: string;
             placeholder?: string;
-            value?: any
+            value?: any;
           }
         | false;
       inputImg?:
         | {
             label?: string;
             placeholder?: string;
-            value?: any
+            value?: any;
           }
         | false;
       button?:
@@ -34,6 +39,11 @@ export class FormReviewComponent
         | false;
     };
   };
+
+  public form = new FormGroup({
+    description: new FormControl(""),
+    inputImg: new FormControl(""),
+  });
 
   constructor() {}
 
@@ -47,5 +57,58 @@ export class FormReviewComponent
     this.settings = { ...settings };
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    console.log(this.form.value);
+  }
+
+  onUploadImage(event: any) {
+    // Get file
+    const file = event.dataTransfer
+      ? event.dataTransfer.files[0]
+      : event.target.files[0];
+
+    // Instance reader
+    const reader = new FileReader();
+
+    if (file) {
+      if (!this.isValidImage(file)) {
+        
+        this.msgErrorFile = true;
+
+        setTimeout(() => {
+          this.msgErrorFile = false;
+        }, 10000);
+
+        return false;
+      }
+
+      // Convert binary file
+      reader.onload = this.convertLoad.bind(this);
+
+      // Read the binary
+      reader.readAsDataURL(file);
+
+      return true;
+    }
+  }
+
+  convertLoad(event) {
+    // Get target
+    const reader = event.target;
+    // Instance a object of type image
+    const img = new Image();
+
+    // Save on the source
+    img.src = reader.result;
+
+    img.onload = () => {
+      //  Set base 64
+      this.form.controls.inputImg.setValue(reader.result as string);
+      return true;
+    };
+  }
+
+  isValidImage(file): boolean {
+    return file.type.match(this.pattern) ? true : false;
+  }
 }
