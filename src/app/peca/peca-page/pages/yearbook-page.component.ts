@@ -9,7 +9,7 @@ import {
   OnInit,
   OnDestroy,
 } from "@angular/core";
-import { Select } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { DOCUMENT } from "@angular/common";
 import { PecaPageComponent } from "../peca-page.component";
 import { MapperYearBookWeb } from "./yearbook-config";
@@ -17,7 +17,8 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { GlobalService } from "../../../services/global.service";
 import { amblemarioMapper } from "../mappers/amblemario-mapper";
-import { PdfYearbookService } from 'src/app/services/peca/pdf-yearbook.service';
+import { PdfYearbookService } from "src/app/services/peca/pdf-yearbook.service";
+import { SetYearBook } from "src/app/store/yearbook/yearbook.action";
 
 @Component({
   selector: "peca-yearbook",
@@ -41,11 +42,12 @@ export class YearbookPageComponent extends PecaPageComponent
   title: string;
 
   constructor(
+    private store: Store,
     factoryResolver: ComponentFactoryResolver,
     pdfYearbookService: PdfYearbookService,
     globals: GlobalService
-) {
-    super(factoryResolver,null,null,pdfYearbookService);
+  ) {
+    super(factoryResolver, null, null, pdfYearbookService);
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>
@@ -72,7 +74,12 @@ export class YearbookPageComponent extends PecaPageComponent
             /**
              * @author Franklin Perdomo
              */
-            
+
+            // -- Save Year Book State
+            this.store.dispatch(
+              new SetYearBook(data.activePecaContent.yearbook)
+            );
+
             this.instantiateComponent(
               MapperYearBookWeb(data.activePecaContent.yearbook)
             );
