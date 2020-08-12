@@ -40,6 +40,7 @@ export class SetYearBook {
 @Injectable()
 export class YearBookState {
 
+    
     @Action(SetYearBook)
     setYearBook( ctx: StateContext<YearBook>, action: SetYearBook ) {
         ctx.setState( action.payload );
