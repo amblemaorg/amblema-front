@@ -26,6 +26,7 @@ const textsAndButtons = {
 
 const dateAndStatus = {
     component: 'textsbuttons',
+    name: 'statusYDate',
     settings: {
         dateOrtext: {
             text: 'Fecha de la actividad especial:',
@@ -46,6 +47,7 @@ const dateAndStatus = {
 }
 const specialActivityTable = {
     component: 'table',
+    name: 'tableActividadEspecial',
     settings: {
         columns: {
             item: {
@@ -78,13 +80,13 @@ const specialActivityTable = {
                 title: 'Subtotal'
             },
         },
-        makesNoRequest: true,
+        //makesNoRequest: true,
         modalCode: 'dataSpecialActivityTable',
         buttonCode: 'dataSpecialActivityTable',
         tableCode: 'dataSpecialActivityTable',
         dataSpecialActivityTable: [
             {
-                id: '1sdfsdfsdfsd',
+               /*  id: '1sdfsdfsdfsd',
                 item: 1,
                 description: 'cosa',
                 cantidad: 34,
@@ -99,7 +101,7 @@ const specialActivityTable = {
                 cantidad: 34,
                 price: 444,
                 impuesto: 20,
-                subtotal: 500,
+                subtotal: 500, */
             },
         ],
         classes: {
@@ -114,6 +116,7 @@ const specialActivityTable = {
 //* MODAL ACTIVIDAD ESPECIAL ----------------------------------
 const formSpecialActivityTable = {
     component: 'form',
+    name: 'modalActividadEspecial',
     viewMode: 'both',
     settings: {
         formsContent: formSpecialActivityTableModal,
@@ -122,11 +125,13 @@ const formSpecialActivityTable = {
         tableCode: 'dataSpecialActivityTable',
         modalCode: 'dataSpecialActivityTable',
         isFromCustomTableActions: true,
-        makesNoRequest: true,
+        //makesNoRequest: true,
+        fetcherMethod: 'put',
     }
 }
 const textsAndButtonsSpecialActivityTable = {
     component: 'textsbuttons',
+    name: 'specialDeleteModal',
     settings: {
         subtitles: [{
             text: '¿Desea eliminar este ítem?',
@@ -144,7 +149,7 @@ const textsAndButtonsSpecialActivityTable = {
         modalCode: 'dataSpecialActivityTable',
         isFromCustomTableActions: true,
         isDeleting: true,
-        makesNoRequest: true,
+        //makesNoRequest: true,
     }
 }
 const modalSpecialActivityTable = {

@@ -9,10 +9,10 @@ export function adaptBody(formType: string, body: any) {
             key === "city"
               ? "addressCity"
               : key === "name"
-              ? "firstName"
-              : key === "street"
-              ? "address"
-              : key
+                ? "firstName"
+                : key === "street"
+                  ? "address"
+                  : key
           ] = body[key];
         else if (key === "documentGroup") {
           body_adapted["cardType"] = body[key]["prependSelect"];
@@ -42,7 +42,7 @@ export function adaptBody(formType: string, body: any) {
             key === "name" ? "firstName" : key === "age" ? "birthdate" : key
           ] = body[key];
         else if (
-          key === "documentGroup" && 
+          key === "documentGroup" &&
           body[key]["prependInput"].length > 0
         ) {
           body_adapted["cardType"] = body[key]["prependSelect"];
@@ -53,7 +53,7 @@ export function adaptBody(formType: string, body: any) {
 
     case 'tablaLectura':
       Object.keys(body).map((key) => {
-          
+
         if (
           key != "date" &&
           key != "gender" &&
@@ -67,9 +67,9 @@ export function adaptBody(formType: string, body: any) {
       });
       break;
 
-      case 'tablaMatematica':
+    case 'tablaMatematica':
       Object.keys(body).map((key) => {
-        
+
         if (
           key != "date" &&
           key != "dateLog" &&
@@ -85,18 +85,28 @@ export function adaptBody(formType: string, body: any) {
       });
       break;
 
-      case 'tablaConfirmacionDocente':
-        Object.keys(body).map((key) => {
-          if (
-            key != "grade" &&
-            key != "section" 
-          )
+    case 'tablaConfirmacionDocente':
+      Object.keys(body).map((key) => {
+        if (
+          key != "grade" &&
+          key != "section"
+        )
           body_adapted[key === "confirmation" ? "status" : key] = body[key];
-        });
-        break;
+      });
+      break;
 
+    case 'agregarActividadEspecial':
+      Object.keys(body).map((key) => {
+        if (
+          key !="id" &&
+          key != "subtotal" &&
+          key != "description" &&
+          key != "item"
+        )
+          body_adapted[key === "impuesto" ? "tax" : key === "cantidad" ? "quantity" : key === "price" ? "unitPrice" : key] = body[key];
+      });
+      break;
       
-
     default:
       Object.keys(body).map((key) => {
         body_adapted[key] = body[key];
