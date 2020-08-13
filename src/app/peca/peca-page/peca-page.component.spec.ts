@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { PecaPageComponent } from './peca-page.component';
 import { NbCardModule, NbTabsetModule } from '@nebular/theme';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -45,10 +45,12 @@ describe('PecaPageComponent', () => {
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
+        ToastrModule.forRoot(),
         NbCardModule,
         NbTabsetModule,
         Ng2SmartTableModule
-      ]
+      ],
+      providers: [{ provide: ToastrService, useClass: ToastrService }],
     })
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
