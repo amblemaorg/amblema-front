@@ -1,3 +1,7 @@
+/**
+ * @author Franklin Perdomo
+ */
+
 export interface YearBook {
   historicalReview?: HistoricalReview;
   sponsor?: UserContentReview;

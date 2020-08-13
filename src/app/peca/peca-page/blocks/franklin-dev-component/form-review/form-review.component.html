@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="settings.onSubmit( form.value )">
     
     <!-- Input file image -->
     <div class="form-group" *ngIf="settings.fields.inputImg">

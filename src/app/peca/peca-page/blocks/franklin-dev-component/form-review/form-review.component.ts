@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { PresentationalBlockComponent } from "../../page-block.component";
 import { FormGroup, FormControl } from "@angular/forms";
 
@@ -17,6 +17,10 @@ export class FormReviewComponent
   type: "presentational";
   component: string;
   settings: {
+    // -- Event
+    onSubmit: ( values: any ) => void; 
+
+    // -- Properties
     fields?: {
       description?:
         | {
@@ -55,10 +59,6 @@ export class FormReviewComponent
 
   public setSettings(settings: any): void {
     this.settings = { ...settings };
-  }
-
-  onSubmit(): void {
-    console.log(this.form.value);
   }
 
   onUploadImage(event: any) {

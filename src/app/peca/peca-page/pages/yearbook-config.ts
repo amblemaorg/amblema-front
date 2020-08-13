@@ -9,6 +9,8 @@ import {
   formImgActividades,
 } from "../blocks/form-block/all-forms";
 import { settings } from "cluster";
+import { Store } from "@ngxs/store";
+import { SetHistoricalReview, YearBookState } from "src/app/store/yearbook/yearbook.action";
 
 //Contenido dropdown Resena Historica
 const dataResenaHistorica = {
@@ -630,146 +632,117 @@ const btnEnviarSolicitud = {
  */
 
 export const MapperYearBookWeb = (yearBookData: any): any => {
-  console.log(yearBookData);
-
-  // -- Sponsor yearbook set data
-
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1]
-  //   .childBlocks[0].settings;
-
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].title =
-  //   yearBookData.sponsor.name;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.urlImage =
-  //   yearBookData.sponsor.image;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[1].childBlocks[0].settings.text =
-  //   yearBookData.sponsor.content;
-
-  // // -- Coordinator yearbook set data
-
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].title =
-  //   yearBookData.coordinator.name;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.urlImage =
-  //   yearBookData.coordinator.image;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[2].childBlocks[0].settings.text =
-  //   yearBookData.coordinator.content;
-
-  // // -- School yearbook set data
-
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].title =
-  //   yearBookData.school.name;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.urlImage =
-  //   yearBookData.school.image;
-  // YEARBOOK_CONFIG.blocks[0].settings.items[0].childBlocks[0].settings.items[3].childBlocks[0].settings.text =
-  //   yearBookData.school.content;
-
-
-
-const YEARBOOK_CONFIG = {
-  header: {
-    title: "AmbLeMario",
-    download: {
-      url: "#",
-      name: "Descargar",
-    },
-  },
-
-  blocks: [
-    {
-      component: "profiles",
-      settings: {
-        items: [
-          {
-            childBlocks: [
-              {
-                component: "accordion",
-                settings: {
-                  items: [
-                    // -- Historical
-
-                    {
-                      title: "Reseña histórica",
-                      childBlocks: [
-                        {
-                          component: "form-review",
-                          settings: {
-                            fields: {
-                              inputImg: {
-                                label: 'Carga de imagen',
-                              },
-                              description: {
-                                label: 'Descripción reseña histórica',
-                                placeholder: 'Descripción reseña histórica', 
-                              },
-                              button: {
-                                text: 'Guardar cambios'
-                              }
-                            }
-                          },
-                        },  
-                      ],
-                    },
-
-                    // -- Sponsor
-
-                    {
-                      title: yearBookData.sponsor.name,
-                      childBlocks: [
-                        {
-                          component: "summary",
-                          settings: {
-                            urlImage: yearBookData.sponsor.image,
-                            text: yearBookData.sponsor.content,
-                          },
-                        },
-                      ],
-                    },
-
-                    // -- Coordinator
-
-                    {
-                      title: yearBookData.coordinator.name,
-                      childBlocks: [
-                        {
-                          component: "summary",
-                          settings: {
-                            urlImage: yearBookData.coordinator.image,
-                            text: yearBookData.coordinator.content,
-                          },
-                        },
-                      ],
-                    },
-
-                    // -- School
-
-                    {
-                      title: yearBookData.school.name,
-                      childBlocks: [
-                        {
-                          component: "summary",
-                          settings: {
-                            urlImage: yearBookData.school.image,
-                            text: yearBookData.school.content,
-                          },
-                        },
-                      ],
-                    },
-
-                    // -- Lapse 1
-
-                    {
-                      title: "Lapso 1",
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        ],
+  const YEARBOOK_CONFIG = {
+    header: {
+      title: "AmbLeMario",
+      download: {
+        url: "#",
+        name: "Descargar",
       },
     },
-  ],
-};
 
+    blocks: [
+      {
+        component: "profiles",
+        settings: {
+          items: [
+            {
+              childBlocks: [
+                {
+                  component: "accordion",
+                  settings: {
+                    items: [
+                      // -- Historical
+
+                      {
+                        title: "Reseña histórica",
+                        childBlocks: [
+                          {
+                            component: "form-review",
+                            settings: {
+                              onSubmit: (values: any) => {
+
+                                // -- 
+                                
+
+                              },
+                              fields: {
+                                inputImg: {
+                                  label: "Carga de imagen",
+                                },
+                                description: {
+                                  label: "Descripción reseña histórica",
+                                  placeholder: "Descripción reseña histórica",
+                                },
+                                button: {
+                                  text: "Guardar cambios",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+
+                      // -- Sponsor
+
+                      {
+                        title: yearBookData.sponsor.name,
+                        childBlocks: [
+                          {
+                            component: "summary",
+                            settings: {
+                              urlImage: yearBookData.sponsor.image,
+                              text: yearBookData.sponsor.content,
+                            },
+                          },
+                        ],
+                      },
+
+                      // -- Coordinator
+
+                      {
+                        title: yearBookData.coordinator.name,
+                        childBlocks: [
+                          {
+                            component: "summary",
+                            settings: {
+                              urlImage: yearBookData.coordinator.image,
+                              text: yearBookData.coordinator.content,
+                            },
+                          },
+                        ],
+                      },
+
+                      // -- School
+
+                      {
+                        title: yearBookData.school.name,
+                        childBlocks: [
+                          {
+                            component: "summary",
+                            settings: {
+                              urlImage: yearBookData.school.image,
+                              text: yearBookData.school.content,
+                            },
+                          },
+                        ],
+                      },
+
+                      // -- Lapse 1
+
+                      {
+                        title: "Lapso 1",
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  };
 
   return YEARBOOK_CONFIG;
 };
