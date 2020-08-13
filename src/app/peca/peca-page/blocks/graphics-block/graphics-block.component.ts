@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import { Label } from "ng2-charts";
 import {
@@ -7,19 +7,23 @@ import {
 } from "../page-block.component";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
-import { PecaState } from "src/app/store/states/peca/peca.state";
+import { PecaState } from "../../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
+import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.service';
+
 @Component({
   selector: "app-graphics-block",
   templateUrl: "./graphics-block.component.html",
   styleUrls: ["./graphics-block.component.scss"],
 })
 export class GraphicsBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit {
+  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
   type: "presentational";
   component: string;
   settings: {
     chartId?: string;
+    sendGraphicToPdf?: string;
+    lapseN?: number;
     items: any[];
   };
   canvas: any;
@@ -34,7 +38,13 @@ export class GraphicsBlockComponent
   dataChart = [];
   dataLabel = [];
   UrlLapse = "";
-  constructor(private router: Router) {
+
+  private subscription: Subscription = new Subscription();
+
+  constructor(
+    private router: Router, 
+    private pdfYearbookService: PdfYearbookService
+  ) {
     this.type = "presentational";
     this.component = "graphics";
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -44,11 +54,21 @@ export class GraphicsBlockComponent
       }
     });
   }
+
   ngOnInit() {
     if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
       this.color = "#FFF";
     } else this.color = "#111";
     this.getInfo();
+
+    this.subscription.add(
+      this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe(res => {
+        if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
+          const imgB64 = this.chart ? this.chart.toBase64Image() : null;
+          this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`,this.settings.sendGraphicToPdf,imgB64); 
+        }        
+      })
+    );
   }
 
   getInfo() {
@@ -151,10 +171,14 @@ export class GraphicsBlockComponent
           },
         },
       });
+
     }
   }
+
   ngOnDestroy() {
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
+
 }
