@@ -788,8 +788,8 @@ export class PdfYearbookService {
         // PDF saving methods --
         // pdf.create().open();
         const window = pdf.create();
-        window.open();
-        // window.download('AmbLeMario');
+        // window.open();
+        window.download('AmbLeMario');
         // pdf.create().download('AmbLeMario');
 
         this.clearGraphics();
