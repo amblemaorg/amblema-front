@@ -288,7 +288,7 @@ export class PdfYearbookService {
 
         //* PDF CONTENT blocks ------------------------------------------------------------------------------------------------------------
         // HISTORICAL REVIEW ...................................................
-        if (pdfData["historicalReviewText"] || pdfData["historicalReviewImg"]) {
+        if (pdfData["historicalReviewText"]) {
           pdf.add(
             new TocItem(
               new Txt(pdfData.historicalReviewName)
@@ -317,7 +317,7 @@ export class PdfYearbookService {
         }
 
         // SPONSOR ..............................................................
-        if (pdfData["sponsorName"] && (pdfData["sponsorLogo"] || pdfData["sponsorText"]) ) {
+        if (pdfData["sponsorName"] && pdfData["sponsorText"]) {
           pdf.add(
             new Stack(
               [
@@ -355,7 +355,7 @@ export class PdfYearbookService {
         }
 
         // COORDINATOR REVIEW ...................................................
-        if (pdfData["coordinatorName"] && (pdfData["coordinatorImg"] || pdfData["coordinatorText"]) ) {
+        if (pdfData["coordinatorName"] && pdfData["coordinatorText"]) {
           pdf.add(
             new Stack(
               [
@@ -395,7 +395,7 @@ export class PdfYearbookService {
         }
 
         //? SCHOOL REVIEW ...............................................................................................................................................
-        if (pdfData["schoolName"] && (pdfData["schoolImg"] || pdfData["schoolText"]) ) {
+        if (pdfData["schoolName"] && pdfData["schoolText"]) {
           pdf.add(
             new Stack(
               [
@@ -788,8 +788,8 @@ export class PdfYearbookService {
         // PDF saving methods --
         // pdf.create().open();
         const window = pdf.create();
-        // window.open();
-        window.download('AmbLeMario');
+        window.open();
+        // window.download('AmbLeMario');
         // pdf.create().download('AmbLeMario');
 
         this.clearGraphics();
