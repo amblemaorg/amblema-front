@@ -7,7 +7,7 @@ import {
 } from "../page-block.component";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
-import { PecaState } from "src/app/store/states/peca/peca.state";
+import { PecaState } from "../../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
 import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.service';
 
@@ -41,7 +41,10 @@ export class GraphicsBlockComponent
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private router: Router, private pdfYearbookService: PdfYearbookService) {
+  constructor(
+    private router: Router, 
+    private pdfYearbookService: PdfYearbookService
+  ) {
     this.type = "presentational";
     this.component = "graphics";
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
