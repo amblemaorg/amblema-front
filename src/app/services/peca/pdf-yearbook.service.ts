@@ -789,29 +789,27 @@ export class PdfYearbookService {
         // pdf.create().open();
         const window = pdf.create();
         // window.open();
-        window.download('AmbLeMario');
-        // pdf.create().download('AmbLeMario');
-
-        this.clearGraphics();
+        return new Promise<any>((resolve,reject)=>{
+          window.download('AmbLeMario', () => {
+            this.clearGraphics();
+            resolve(false);
+          });          
+        });        
+        // pdf.create().download('AmbLeMario');        
       };
   
       let interval = null;
   
       try {
-        generateThisPdf();
-        return new Promise<any>((resolve)=>{
-          resolve(false);
-        });        
+        return generateThisPdf();      
       } catch (error) {
         interval = setInterval(() => {
           try {
-            generateThisPdf();
-            return new Promise<any>((resolve)=>{
-              resolve(false);
-            });
+            return generateThisPdf();
           } catch (error) {
             //* --
             return new Promise<any>((resolve,reject)=>{
+              this.clearGraphics();
               reject(false);
             });
           }
