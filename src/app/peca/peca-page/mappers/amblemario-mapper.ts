@@ -1,5 +1,4 @@
 export function amblemarioMapper(pecaData) {
-    console.log("amblemario mapper data",pecaData);
     const grades = {};
 
     const {
@@ -34,8 +33,6 @@ export function amblemarioMapper(pecaData) {
                                 ? `${grade}no Grado` 
                                 : `${grade}mo Grado`;
     }
-
-    console.log(grades);
     
     const schoolSections = pecaData.school && pecaData.school.sections && pecaData.school.sections.length > 0 
         ? pecaData.school.sections.map((section) => {
@@ -66,78 +63,63 @@ export function amblemarioMapper(pecaData) {
 
     const lapses = [ lapse1, lapse2, lapse3 ].map( (lapse, i) => {
         const {
-            // diagnosticAnalysis,
+            diagnosticAnalysis,
             diagnosticSummary,
             activities
         } = lapse;
 
-        const diagnosticAnalysis = `Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemolestie consequat, vel illum dolore eufeugiat nulla facilisis at vero eros et accumsanet iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore tefeugait nulla facilisi.
-        Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor inh. endrerit in vulputate velit essemo. Ut wisi enim ad minimveniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat. Duis autem vel eumiriure dolor in hendrerit in vulputate velit essemo`;
-
-        const tables = diagnosticSummary.reduce((tables, data, i) => {
+        const tables = diagnosticSummary && diagnosticSummary.length > 0 
+        ? diagnosticSummary.reduce((tables, data, i) => {
             if (i === 0) {
-                tables.table1.push(
-                    [ 'Grado', 'Sección', 'Palabras por minutos', 'Indice de las palabras por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ]
-                );
-                tables.table2.push(
-                    [ 'Grado', 'Sección', 'Multiplicaciones por minutos', 'Indice de las multiplicaciones por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ]
-                );
-                tables.table3.push(
-                    [ 'Grado', 'Sección', 'Operaciones por minutos', 'Indice de las operaciones por minutos' ],
-                    [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ]
-                );
+                tables.table1.push( [ 'Grado', 'Sección', 'Palabras por minutos', 'Indice de las palabras por minutos' ] );
+                tables.table2.push( [ 'Grado', 'Sección', 'Multiplicaciones por minutos', 'Indice de las multiplicaciones por minutos' ] );
+                tables.table3.push( [ 'Grado', 'Sección', 'Operaciones por minutos', 'Indice de las operaciones por minutos' ] );
             }
-            else {
-                tables.table1.push( [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ] );
-                tables.table2.push( [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ] );
-                tables.table3.push( [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ] );
-            }
+            if (data.wordsPerMin !== 0) tables.table1.push( [ grades[data.grade], data.name.toUpperCase(), `${data.wordsPerMin}`, `${data.wordsPerMinIndex}` ] );
+            if (data.multiplicationsPerMin !== 0) tables.table2.push( [ grades[data.grade], data.name.toUpperCase(), `${data.multiplicationsPerMin}`, `${data.multiplicationsPerMinIndex}` ] );
+            if (data.operationsPerMin !== 0) tables.table3.push( [ grades[data.grade], data.name.toUpperCase(), `${data.operationsPerMin}`, `${data.operationsPerMinIndex}` ] );
+
             return tables
-        }, { table1: [], table2: [], table3: [] });
+        }, { table1: [], table2: [], table3: [] }) : null;
 
-        const lapseActivities = activities.map(activity => {
-            const {
-                name,
-                images,
-                description
-            } = activity;
+        const lapseActivities = activities && activities.length > 0 
+            ? activities.map(activity => {
+                    const {
+                        name,
+                        images,
+                        description
+                    } = activity;
 
-            return {
-                name: name ? name : null,
-                description: description ? description : null,
-                images: images && images.length > 0 ? images : null
-            }
-        });
+                    return {
+                        name: name ? name : null,
+                        description: description ? description : null,
+                        images: images && images.length > 0 ? images : null
+                    }
+                }) 
+            : null;
 
-        return {
+        return { //! EDITAR diagnosticAnalysis, DEBE SER UNO PARA CADA TIPO DE DIAGNOSTICO
             lapseName: i === 0 ? "Primer lapso" : i === 1 ? "Segundo lapso" : "Tercer lapso",
-            diagnosticReading: diagnosticAnalysis || tables.table1.length > 0 ? {                
+            diagnosticReading:  diagnosticAnalysis || (tables && tables.table1.length > 1) ? { //!            
                 diagnosticText: "Diagnóstico de lectura",
-                diagnosticTable: tables.table1.length > 0 ? tables.table1 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table1.length > 1 ? tables.table1 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de lectura",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
-            diagnosticMath: diagnosticAnalysis || tables.table2.length > 0 ? {
+            diagnosticMath: diagnosticAnalysis || (tables && tables.table2.length > 1) ? { //!
                 diagnosticText: "Diagnóstico de multiplicación",
-                diagnosticTable: tables.table2.length > 0 ? tables.table2 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table2.length > 1 ? tables.table2 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de multiplicación",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
-            diagnosticLogic: diagnosticAnalysis || tables.table3.length > 0 ? {
+            diagnosticLogic: diagnosticAnalysis || (tables && tables.table3.length > 1) ? {//!
                 diagnosticText: "Diagnóstico de razonamiento lógico - matemático",
-                diagnosticTable: tables.table3.length > 0 ? tables.table3 : null,
-                diagnosticTableAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticTable: tables.table3.length > 1 ? tables.table3 : null,
+                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de razonamiento lógico - matemático",
-                diagnosticGraphic: null,
-                diagnosticGraphicAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null,
+                diagnosticGraphic: null
             } : null,
             activities: lapseActivities
         }

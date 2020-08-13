@@ -67,13 +67,16 @@
 @mixin layout-header-btn-confs() {
     min-width: 8rem;
     font-size: 1rem;
-    line-height: 1.5;
-    border-color: $blue;
-    background-color: $blue;
-    color: #fff;
+    line-height: 1.5;    
+    
+    &, &:active {
+        background-color: $blue;
+        color: #fff;
+        border-color: $blue;
+    }
 
-    &:focus {
-      box-shadow: none;
+    &:focus, &:not(:disabled):not(.disabled):active:focus {
+        box-shadow: none;
     }
 
     &:hover {

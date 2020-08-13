@@ -17,6 +17,7 @@ import { Observable, Subscription } from 'rxjs';
 import { GlobalService } from "../../../services/global.service";
 import { amblemarioMapper } from '../mappers/amblemario-mapper';
 import { PdfYearbookService } from '../../../services/peca/pdf-yearbook.service';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: 'peca-yearbook',
@@ -37,9 +38,10 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
     constructor(
         factoryResolver: ComponentFactoryResolver,
         pdfYearbookService: PdfYearbookService,
-        globals: GlobalService
+        globals: GlobalService,
+        toastr: ToastrService
     ) {
-        super(factoryResolver,null,null,pdfYearbookService);
+        super(factoryResolver,null,null,pdfYearbookService,toastr);
 
         globals.blockIntancesEmitter.subscribe(data => {
             data.blocks.forEach((block, name) =>
