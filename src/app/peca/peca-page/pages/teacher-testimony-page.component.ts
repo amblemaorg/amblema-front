@@ -98,7 +98,7 @@ export class TeacherTestimonyPageComponent extends PecaPageComponent implements 
             "testimonyModalForm",
             {
                 //schools/teacherstestimonials/<string:schoolId>?userId=<string:id>
-                put: (userId) =>
+                post: (userId) =>
                     `schools/teacherstestimonials/${this.schoolId}/5f0738b39b2ed636ffb3e6fb`,
             },
             "settings.data.id"

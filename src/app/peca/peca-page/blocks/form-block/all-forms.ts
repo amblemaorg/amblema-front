@@ -1681,8 +1681,8 @@ export const formSpecialActivityTableModal = {
     ...controlProps.numberAndRequired
   },
   impuesto: {
-    label: "Impuesto",
-    placeholder: "Impuesto",
+    label: "% Impuesto",
+    placeholder: "% Impuesto",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
