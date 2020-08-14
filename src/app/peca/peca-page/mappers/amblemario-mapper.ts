@@ -63,7 +63,9 @@ export function amblemarioMapper(pecaData) {
 
     const lapses = [ lapse1, lapse2, lapse3 ].map( (lapse, i) => {
         const {
-            diagnosticAnalysis,
+            readingDiagnosticAnalysis,
+            mathDiagnosticAnalysis,
+            logicDiagnosticAnalysis,
             diagnosticSummary,
             activities
         } = lapse;
@@ -98,26 +100,26 @@ export function amblemarioMapper(pecaData) {
                 }) 
             : null;
 
-        return { //! EDITAR diagnosticAnalysis, DEBE SER UNO PARA CADA TIPO DE DIAGNOSTICO
+        return {
             lapseName: i === 0 ? "Primer lapso" : i === 1 ? "Segundo lapso" : "Tercer lapso",
-            diagnosticReading:  diagnosticAnalysis || (tables && tables.table1.length > 1) ? { //!            
+            diagnosticReading:  readingDiagnosticAnalysis || (tables && tables.table1.length > 1) ? {         
                 diagnosticText: "Diagnóstico de lectura",
                 diagnosticTable: tables.table1.length > 1 ? tables.table1 : null,
-                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
+                diagnosticAnalysis: readingDiagnosticAnalysis ? readingDiagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de lectura",
                 diagnosticGraphic: null
             } : null,
-            diagnosticMath: diagnosticAnalysis || (tables && tables.table2.length > 1) ? { //!
+            diagnosticMath: mathDiagnosticAnalysis || (tables && tables.table2.length > 1) ? {
                 diagnosticText: "Diagnóstico de multiplicación",
                 diagnosticTable: tables.table2.length > 1 ? tables.table2 : null,
-                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
+                diagnosticAnalysis: mathDiagnosticAnalysis ? mathDiagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de multiplicación",
                 diagnosticGraphic: null
             } : null,
-            diagnosticLogic: diagnosticAnalysis || (tables && tables.table3.length > 1) ? {//!
+            diagnosticLogic: logicDiagnosticAnalysis || (tables && tables.table3.length > 1) ? {
                 diagnosticText: "Diagnóstico de razonamiento lógico - matemático",
                 diagnosticTable: tables.table3.length > 1 ? tables.table3 : null,
-                diagnosticAnalysis: diagnosticAnalysis ? diagnosticAnalysis : null, //!
+                diagnosticAnalysis: logicDiagnosticAnalysis ? logicDiagnosticAnalysis : null,
                 diagnosticGraphicText: "Gráficos estadísticos del diagnóstico de razonamiento lógico - matemático",
                 diagnosticGraphic: null
             } : null,
