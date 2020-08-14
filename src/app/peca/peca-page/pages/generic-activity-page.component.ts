@@ -116,7 +116,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                             this.changeComponentHeader(activity.name);
                             this.lapse_n = lapseId;
     
-                            console.log("Datos de la actividad",activity);
                             this.managePermissions();
                             this.setGenericActivityData(activity);
                             
@@ -150,14 +149,11 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
     }
     setPermissions(permissions: genericActivityPermissionsI | any) {
         this.g_a_view_permissions = permissions;
-
-        // console.log("los permisos", this.g_a_view_permissions);
     }
 
     updateMethods() {
         this.updateDataToBlocks();
         this.updateStaticFetchers();
-        // this.updateDynamicFetchers();
     }
 
     updateDataToBlocks() {
@@ -244,6 +240,5 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
         this.isInstanciated = false;
         this.loadedData = false;
         this.subscription.unsubscribe();
-        // this.requestingSubscriptiom.unsubscribe();
     }
 }
