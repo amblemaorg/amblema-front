@@ -116,7 +116,6 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                             this.changeComponentHeader(activity.name);
                             this.lapse_n = lapseId;
     
-                            console.log("Datos de la actividad",activity);
                             this.managePermissions();
                             this.setGenericActivityData(activity);
                             
