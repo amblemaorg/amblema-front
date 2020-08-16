@@ -118,15 +118,12 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         } : null;
     
     // CHECKLIST    
+    const all_checked = checklist.every(ch => ch.checked);
     const g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
             if (hasChecklist) {
                 checklistObj = {
                     ...checklistObj,
-                    title: data.status === "3" 
-                        ? (data.approvalType === "5" 
-                            ? 'Completa los siguientes ítems:' 
-                            : 'Has completado los siguientes items:') 
-                        : 'Completa los siguientes ítems:',
+                    title: all_checked ? 'Has completado los siguientes items:' : 'Completa los siguientes ítems:',
                     approvedAct: data.status === "3" && data.approvalType !== "5" ? true : false,
                     checklist: checklist
                 }
