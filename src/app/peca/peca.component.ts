@@ -79,9 +79,10 @@ export class PecaComponent implements OnInit, OnDestroy {
               setTimeout(() => {
                 const path_initial = event.url.replace("/peca","").substring(1);
                 const path_def = path_initial.includes(";") ? path_initial.split(";").shift() : path_initial;
+                const pathDefDecoded = decodeURI(path_def);
 
-                if (path_def.length === 0 || path_def === "perfil-usuario") {
-                  if (path_def.length === 0)
+                if (pathDefDecoded.length === 0 || pathDefDecoded === "perfil-usuario") {
+                  if (pathDefDecoded.length === 0)
                     this.showWelcome = true;
                   else
                     this.showWelcome = false;
@@ -89,7 +90,7 @@ export class PecaComponent implements OnInit, OnDestroy {
                 }
                 else {
                   this.showWelcome = false;
-                  this.deselectAllExceptOf(path_def, this.menu, true);
+                  this.deselectAllExceptOf(pathDefDecoded, this.menu, true);
                 }
               });
           }
