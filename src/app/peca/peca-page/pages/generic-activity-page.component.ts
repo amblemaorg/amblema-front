@@ -110,7 +110,8 @@ export class GenericActivityPageComponent extends PecaPageComponent implements O
                         data.lapses && 
                         data.lapses[`lapse${lapseId}`]
                     ) {    
-                        const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === activityDevName );
+                        const actDevNameDecoded = decodeURI(activityDevName);
+                        const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find((activity) => activity.devName === actDevNameDecoded );
     
                         if (activity) {
                             this.changeComponentHeader(activity.name);
