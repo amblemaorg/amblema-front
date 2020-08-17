@@ -16,7 +16,6 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
             ? +data.approvalHistory[data.approvalHistory.length - 1].status
             : 0
         : 0;
-    // const g_a_status = data.status === "2" ? 1 : 0;    
 
     const {
         date,
@@ -54,7 +53,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
             }
         } : null;
         
-    const g_a_text = data.hasText && data.approvalType !== at
+    const g_a_text = data.hasText
         ? {                
             subtitles: [{ text: text }]
         } : null;
@@ -79,7 +78,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
             }
         } : null;
         
-    const g_a_download = data.hasFile && data.approvalType !== at
+    const g_a_download = data.hasFile
         ? {
             download: file ? {
                 url: file.url,
@@ -87,7 +86,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
             } : null,
         } : null;
         
-    const g_a_video = data.hasVideo && data.approvalType !== at
+    const g_a_video = data.hasVideo
         ? {
             video: video ? {
                 url: video.url,
@@ -96,8 +95,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         } : null;
         
     const g_a_addMT = data.hasText && 
-        (data.hasDate || data.hasFile) && 
-        data.approvalType !== at
+        (data.hasDate || data.hasFile)
         ? {
             addMT: {                    
                 ...Object.keys(data).reduce((items,checker) => {
@@ -120,11 +118,12 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         } : null;
     
     // CHECKLIST    
+    const all_checked = checklist.every(ch => ch.checked);
     const g_a_checklist = [data.hasChecklist].reduce((checklistObj,hasChecklist) => {
             if (hasChecklist) {
                 checklistObj = {
                     ...checklistObj,
-                    title: 'Los checklists',
+                    title: all_checked ? 'Has completado los siguientes items:' : 'Completa los siguientes ítems:',
                     approvedAct: data.status === "3" && data.approvalType !== "5" ? true : false,
                     checklist: checklist
                 }
@@ -137,21 +136,15 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
         btnApprovalType: +data.approvalType,
         action: (+data.status < 3 || +data.approvalType === 5) &&
             (data.hasDate || data.hasUpload || data.hasChecklist)
-            // && +data.approvalType > 1 && +data.approvalType < 4 
             ? ( 
                 (
                     (+data.approvalType === 1 && user_type && +user_type > 1)
                 )
                     ? null : [data.approvalType].reduce((btns,approvalType) => {
-                        // if (approvalType === "3" && data.status === "1") 
-                        //     btns.push({ type: 8, name: 'Guardar' });
                         btns.push({
                             type: data.status === "1" || approvalType === "5" ? (approvalType === "3" ? 7 : 8) : 9,
                             name: data.status === "1" || approvalType === "5"
-                                ? 'Guardar'/* (data.approvalType === "3" 
-                                    ? 'Enviar' 
-                                    : 'Guardar'
-                                ) */ 
+                                ? 'Guardar'
                                 : 'Cancelar solicitud'
                         });
                         return btns;
