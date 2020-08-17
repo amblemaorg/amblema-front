@@ -1,10 +1,7 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import { Label } from "ng2-charts";
-import {
-  PageBlockComponent,
-  PresentationalBlockComponent,
-} from "../page-block.component";
+import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
@@ -14,13 +11,14 @@ import { Select } from "@ngxs/store";
   templateUrl: "./graphics-block.component.html",
   styleUrls: ["./graphics-block.component.scss"],
 })
-export class GraphicsBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit {
+export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
   type: "presentational";
   component: string;
   settings: {
     chartId?: string;
+    labels: string[];
     items: any[];
+    legendName: string;
   };
   canvas: any;
   ctx: any;
@@ -30,7 +28,7 @@ export class GraphicsBlockComponent
   routerSubscription: Subscription;
   infoDataSubscription: Subscription;
   arraySections = [];
-  arrayColors=[];
+  arrayColors = [];
   dataChart = [];
   dataLabel = [];
   nombreEscuela: string;
@@ -46,6 +44,14 @@ export class GraphicsBlockComponent
     });
   }
   ngOnInit() {
+    const routePathArray = this.router.url.split("/");
+    if (routePathArray[2] == "anuario-page") {
+      this.nombreEscuela = this.settings.legendName;
+      this.dataLabel = this.settings.labels;
+      this.arrayColors = this.settings.labels.map(() => "#81B03E");
+      this.dataChart = this.settings.items;
+      return;
+    }
     if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
       this.color = "#FFF";
     } else this.color = "#111";
@@ -59,35 +65,35 @@ export class GraphicsBlockComponent
         if (data.activePecaContent) {
           this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
-          //console.log("secciones", this.arraySections);
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
               `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
             );
-            this.arrayColors.push(
-              "#81B03E"
-            );
+            this.arrayColors.push("#81B03E");
           }
           if (this.UrlLapse === "1") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           }
@@ -156,7 +162,11 @@ export class GraphicsBlockComponent
     }
   }
   ngOnDestroy() {
-    this.infoDataSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
+    if (this.infoDataSubscription) {
+      this.infoDataSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

@@ -29,6 +29,8 @@ interface Activity {
 
 interface Section {
   id?: string;
+  grade?: string;
+  name?: string;
   image?: string;
 }
 

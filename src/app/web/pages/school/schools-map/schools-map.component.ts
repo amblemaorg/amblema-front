@@ -50,7 +50,6 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     private modalService: ModalService,
     private http: HttpClient,
     private store: Store
-
   ) {}
 
   ngAfterViewInit() {
@@ -121,8 +120,8 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
           slug: school.slug,
           name: school.name,
           lat: school.coordinate.latitude,
-          lng: school.coordinate.longitude
-        }
+          lng: school.coordinate.longitude,
+        };
       });
       this.loadAllMarkers();
       this.store.dispatch([new SetIsLoadingPage(false)]);
