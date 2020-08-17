@@ -1,3 +1,4 @@
+
 export function amblemarioMapper(pecaData) {
     const grades = {};
 

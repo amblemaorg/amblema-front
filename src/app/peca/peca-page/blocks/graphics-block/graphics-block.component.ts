@@ -1,15 +1,12 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import { Label } from "ng2-charts";
-import {
-  PageBlockComponent,
-  PresentationalBlockComponent,
-} from "../page-block.component";
+import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
-import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.service';
+import { PdfYearbookService } from "../../../../services/peca/pdf-yearbook.service";
 
 @Component({
   selector: "app-graphics-block",
@@ -22,9 +19,11 @@ export class GraphicsBlockComponent
   component: string;
   settings: {
     chartId?: string;
+    labels: string[];
     sendGraphicToPdf?: string;
     lapseN?: number;
     items: any[];
+    legendName: string;
   };
   canvas: any;
   ctx: any;
@@ -34,17 +33,14 @@ export class GraphicsBlockComponent
   routerSubscription: Subscription;
   infoDataSubscription: Subscription;
   arraySections = [];
-  arrayColors=[];
+  arrayColors = [];
   dataChart = [];
   dataLabel = [];
   UrlLapse = "";
 
   private subscription: Subscription = new Subscription();
 
-  constructor(
-    private router: Router, 
-    private pdfYearbookService: PdfYearbookService
-  ) {
+  constructor(private router: Router, private pdfYearbookService: PdfYearbookService) {
     this.type = "presentational";
     this.component = "graphics";
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -56,17 +52,29 @@ export class GraphicsBlockComponent
   }
 
   ngOnInit() {
+    const routePathArray = this.router.url.split("/");
+    if (routePathArray[2] == "anuario-page") {
+      //this.nombreEscuela = this.settings.legendName;
+      this.dataLabel = this.settings.labels;
+      this.arrayColors = this.settings.labels.map(() => "#81B03E");
+      this.dataChart = this.settings.items;
+      return;
+    }
     if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
       this.color = "#FFF";
     } else this.color = "#111";
     this.getInfo();
 
     this.subscription.add(
-      this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe(res => {
+      this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
         if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
           const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-          this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`,this.settings.sendGraphicToPdf,imgB64); 
-        }        
+          this.pdfYearbookService.setGraphics(
+            `lapse${this.settings.lapseN}`,
+            this.settings.sendGraphicToPdf,
+            imgB64
+          );
+        }
       })
     );
   }
@@ -77,35 +85,35 @@ export class GraphicsBlockComponent
       (data) => {
         if (data.activePecaContent) {
           this.arraySections = data.activePecaContent.school.sections;
-          //console.log("secciones", this.arraySections);
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
               `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
             );
-            this.arrayColors.push(
-              "#81B03E"
-            );
+            this.arrayColors.push("#81B03E");
           }
           if (this.UrlLapse === "1") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .wordsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex
+                ).toFixed(2)
               );
             }
           }
@@ -134,7 +142,7 @@ export class GraphicsBlockComponent
           labels: this.dataLabel,
           datasets: [
             {
-              label: 'Diagnóstico de lectura',
+              label: "Diagnóstico de lectura",
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,
@@ -171,14 +179,18 @@ export class GraphicsBlockComponent
           },
         },
       });
-
     }
   }
 
   ngOnDestroy() {
-    this.infoDataSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
-    this.subscription.unsubscribe();
+    if (this.infoDataSubscription) {
+      this.infoDataSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
-
 }

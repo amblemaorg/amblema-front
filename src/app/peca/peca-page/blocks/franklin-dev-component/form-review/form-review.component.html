@@ -1,0 +1,102 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="settings.onSubmit(form.value)">
+    <!-- Input file image -->
+    <div class="form-group" *ngIf="settings.fields.inputImg">
+      <label class="label">{{ settings.fields.inputImg.label }}</label>
+
+      <!-- Display image -->
+      <div
+        id="wrapper-image"
+        *ngIf="!settings.fields.inputImg.multiple && form.get('inputImg').value"
+        class="position-relative form-group"
+      >
+        <img [src]="form.get('inputImg').value" class="img-fluid" />
+        <button
+          (click)="form.get('inputImg').setValue(null)"
+          nbButton
+          status="danger"
+          id="btn-delete"
+          [disabled]="settings.fields.inputImg.disabled"
+        >
+          Quitar
+        </button>
+      </div>
+
+      <nb-alert *ngIf="msgErrorFile" closable (close)="msgErrorFile = false" status="danger">
+        El archivo no es una imagen.
+      </nb-alert>
+
+      <div class="form-group text-left" *ngIf="settings.fields.inputImg">
+        <input
+          (change)="onUploadImage($event)"
+          type="file"
+          [name]="settings.fields.inputImg.name"
+          [id]="settings.fields.inputImg.name"
+          class="input-file"
+          [disabled]="settings.fields.inputImg.disabled"
+          [readonly]="settings.fields.inputImg.disabled"
+        />
+        <label [for]="settings.fields.inputImg.name" class="btn btn-tertiary js-labelFile">
+          <span class="js-fileName">
+            <span *ngIf="!form.get('inputImg').value">
+              Carga de imagen
+            </span>
+            <span *ngIf="form.get('inputImg').value">
+              Archivo cargado
+            </span>
+          </span>
+        </label>
+      </div>
+      <ng2-smart-table
+        *ngIf="settings.fields.inputImg.multiple"
+        [settings]="tableImages"
+        [source]="source"
+        (custom)="onTableActions($event)"
+      >
+        <!-- [ngClass]="{
+          'hide-delete': settings.fields.inputImg.disabled,
+        }" -->
+      </ng2-smart-table>
+    </div>
+
+    <!-- Input description -->
+    <div class="form-group" *ngIf="settings.fields.description">
+      <label class="label">
+        {{ settings.fields.description.label }}
+      </label>
+      <textarea
+        nbInput
+        class="form-control"
+        formControlName="description"
+        [placeholder]="settings.fields.description.placeholder"
+        rows="8"
+        [disabled]="settings.fields.description.disabled"
+        [readonly]="settings.fields.description.disabled"
+      >
+      </textarea>
+    </div>
+    <!-- Button -->
+    <div class="text-right">
+      <button
+        type="button"
+        *ngIf="settings.fields.cancelButton && !settings.fields.cancelButton.hidden"
+        nbButton
+        status="danger"
+        class="btn btn-danger col-12 col-lg-auto btn-cancel"
+        [disabled]="settings.fields.cancelButton.disabled"
+        (click)="settings.onCancel($event)"
+      >
+        {{ settings.fields.cancelButton.text }}
+      </button>
+      <button
+        type="submit"
+        *ngIf="settings.fields.button && !settings.fields.button.hidden"
+        nbButton
+        class="btn btn-primary col-12 col-lg-auto btn-normal"
+        [disabled]="settings.fields.button.disabled"
+      >
+        {{ settings.fields.button.text }}
+      </button>
+    </div>
+  </form>
+</div>

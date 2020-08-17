@@ -35,6 +35,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   text: string;
   url: string;
   name: string;
+  date: any;
   //tabla
   pruebaData: any;
 
@@ -121,12 +122,16 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
 
   }
 
-  updateMethods() {
-    this.updateDataToBlocks();
+  updateMethods(updateData: boolean = true) {
+    this.updateDataToBlocks(updateData);
+    this.updateDynamicFetchers();
     this.updateStaticFetchers();
   }
-  updateDataToBlocks() {
-    this.setBlockData("amblemonedaTable", this.pruebaData);
+  updateDataToBlocks(updateData: boolean) {
+    if (updateData) {
+      this.setBlockData("amblemonedaTable", this.pruebaData);
+    }
+    
     this.setBlockData("amblemonedaCharla", this.amblemonedaData);
     this.setBlockData("sliderAmblemaData", this.sliderData);
 
@@ -150,18 +155,24 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     if (this.UrlLapse === "1") {
       this.text = data.activePecaContent.lapse1.ambleCoins.teachersMeetingDescription;
       this.file = data.activePecaContent.lapse1.ambleCoins.teachersMeetingFile;
+      this.date = data.activePecaContent.lapse1.ambleCoins.meetingDate;
     } else if (this.UrlLapse === "2") {
       this.text = data.activePecaContent.lapse2.ambleCoins.teachersMeetingDescription;
       this.file = data.activePecaContent.lapse2.ambleCoins.teachersMeetingFile;
+      this.date = data.activePecaContent.lapse2.ambleCoins.meetingDate;
     } else {
       this.text = data.activePecaContent.lapse3.ambleCoins.teachersMeetingDescription;
       this.file = data.activePecaContent.lapse3.ambleCoins.teachersMeetingFile;
+      this.date = data.activePecaContent.lapse3.ambleCoins.meetingDate;
     }
-    console.log(this.file, "CHARLAAAAAAAAAAAA")
+    //console.log(this.date, "CHARLAAAAAAAAAAAA")
   }
 
   setAmblemonedasCharlaData() {
     this.amblemonedaData = {
+     /*  dateOrtext: {
+        fields: this.date
+    }, */
       subtitles: [
         {
           text: this.text
@@ -173,19 +184,19 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
         name: this.file.name,
       }
     }
-    console.log(this.amblemonedaData.download.url,this.amblemonedaData.download.name, "locoooooooooooo");
+    //console.log(this.amblemonedaData.download.url,this.amblemonedaData.download.name, "locoooooooooooo");
   }
 
   setAmblemonedasSlider(data) {
     if (this.UrlLapse === "1") {
       this.response1 = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-      console.log(this.response1, "slideeeeeeeeeer111")
+      //console.log(this.response1, "slideeeeeeeeeer111")
     } else if (this.UrlLapse === "2") {
       this.response2 = data.activePecaContent.lapse2.ambleCoins.piggyBankSlider;
-      console.log(this.response2, "slideeeeeeeeeer2222")
+      //console.log(this.response2, "slideeeeeeeeeer2222")
     } else {
       this.response3 = data.activePecaContent.lapse3.ambleCoins.piggyBankSlider;
-      console.log(this.response3, "slideeeeeeeeeer3333")
+      //console.log(this.response3, "slideeeeeeeeeer3333")
     }
     //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
     //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
@@ -218,12 +229,29 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
 
   }
 
-  updateStaticFetchers() {
+  updateDynamicFetchers() {
+    //update
+    //pecaprojects/amblecoins/<string:pecaId>/<string:lapse>
+    this.createAndSetBlockFetcherUrls(
+      "confirmacionDocenteModal",
+      {
+        put: () =>
+        //pecaprojects/amblecoins/section/<pecaId>/<lapse>
+          `pecaprojects/amblecoins/section/${this.peca_id}/${this.UrlLapse}`,
+      },
+    );
 
-    // Descargar archivo
+
+    // enviar solicitud
     ///pecaprojects/amblecoins/<string:pecaId>/<string:lapse>
-    this.setBlockFetcherUrls("btnEnviarSolicitud", {
-      put: `pecaprojects/amblecoins/${this.peca_id}/${this.lapse_n}`,
+    
+  }
+
+  updateStaticFetchers(){
+    this.setBlockFetcherUrls(
+      "btnEnviarSolicitud", 
+      {
+      put:`pecaprojects/amblecoins/${this.peca_id}/${this.UrlLapse}`,
     });
   }
 

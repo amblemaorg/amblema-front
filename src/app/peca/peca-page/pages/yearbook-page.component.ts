@@ -1,113 +1,243 @@
 import {
-    Component,
-    AfterViewInit,
-    Injector,
-    ComponentFactoryResolver,
-    ViewContainerRef,
-    ViewChild,
-    Inject,
-    OnInit,
-    OnDestroy
-} from '@angular/core';
-import { Select } from "@ngxs/store";
-import { PecaPageComponent } from '../peca-page.component';
-import { YEARBOOK_CONFIG as config } from './yearbook-config';
+  Component,
+  AfterViewInit,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from "@angular/core";
+import { Select, Store } from "@ngxs/store";
+import { PecaPageComponent } from "../peca-page.component";
+import { MapperYearBookWeb } from "./yearbook-config";
 import { PecaState } from "../../../store/states/peca/peca.state";
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from "rxjs";
 import { GlobalService } from "../../../services/global.service";
-import { amblemarioMapper } from '../mappers/amblemario-mapper';
-import { PdfYearbookService } from '../../../services/peca/pdf-yearbook.service';
+import { amblemarioMapper } from "../mappers/amblemario-mapper";
+import { PdfYearbookService } from "src/app/services/peca/pdf-yearbook.service";
+import { SetYearBook } from "src/app/store/yearbook/yearbook.action";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
-    selector: 'peca-yearbook',
-    templateUrl: '../peca-page.component.html',
+  selector: "peca-yearbook",
+  templateUrl: "../peca-page.component.html",
 })
-export class YearbookPageComponent extends PecaPageComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
+export class YearbookPageComponent extends PecaPageComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
+  container: ViewContainerRef;
 
-    @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
+  @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
 
-    subscription: Subscription = new Subscription();
+  subscription: Subscription = new Subscription();
 
-    pecaData: any;
+  pecaData: any;
 
-    isInstanciated: boolean;
-    loadedData: boolean;
+  isInstanciated: boolean;
+  isInstantiating: boolean;
+  loadedData: boolean;
 
-    constructor(
-        factoryResolver: ComponentFactoryResolver,
-        pdfYearbookService: PdfYearbookService,
-        globals: GlobalService,
-        toastr: ToastrService
-    ) {
-        super(factoryResolver,null,null,pdfYearbookService,toastr);
+  yearbookData: any;
+  title: string;
 
-        globals.blockIntancesEmitter.subscribe(data => {
-            data.blocks.forEach((block, name) =>
-              this.blockInstances.set(name, block)
-            );
+  constructor(
+    private store: Store,
+    private toastr: ToastrService,
+    factoryResolver: ComponentFactoryResolver,
+    pdfYearbookService: PdfYearbookService,
+    globals: GlobalService
+  ) {
+    super(factoryResolver, null, null, pdfYearbookService);
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      if (this.loadedData) this.updateMethods();
+    });
+    //this.instantiateComponent(config);
+  }
 
-            if (this.loadedData) this.updateMethods();
-        });
+  ngOnInit() {
+    this.subscription = this.pecaData$.subscribe(
+      (data) => {
+        if (!this.isInstantiating) {
+          if (data && data.activePecaContent) {
+            let newYearBook;
+            const currentYearBook = {
+              ...data.activePecaContent.yearbook,
+              sections: data.activePecaContent.school.sections,
+              userId: data.user.id,
+              pecaId: data.activePecaContent.id,
+            };
+            const { approvalHistory, isInApproval, pecaId, userId } = currentYearBook;
+            const yearbookHasNotApprovedRequest = !isInApproval && approvalHistory.length > 0;
 
-        this.instantiateComponent(config);             
-    }
-
-    ngOnInit() {
-        this.subscription.add(
-            this.pecaData$.subscribe(
-                data => {                    
-                    if (data && data.activePecaContent) {    
-                        this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
-
-                        this.setPdfData(this.pecaData);
-
-                        this.loadedData = true;
-                        if (this.isInstanciated) this.updateMethods();
-                    }
+            if (isInApproval || yearbookHasNotApprovedRequest) {
+              const lastYearBookRequest = approvalHistory[approvalHistory.length - 1].detail;
+              // Merge data from last yearbook in approval with updated yearbook data
+              newYearBook = {
+                pecaId,
+                userId,
+                isInApproval: currentYearBook.isInApproval,
+                approvalHistory: lastYearBookRequest.approvalHistory,
+                sponsor: {
+                  ...currentYearBook.sponsor,
+                  image: lastYearBookRequest.sponsor.image,
+                  content: lastYearBookRequest.sponsor.content,
                 },
-                error => console.error(error)
-            )
-        );
-    }
+                coordinator: {
+                  ...currentYearBook.coordinator,
+                  image: lastYearBookRequest.coordinator.image,
+                  content: lastYearBookRequest.coordinator.content,
+                },
+                school: {
+                  ...currentYearBook.school,
+                  image: lastYearBookRequest.school.image,
+                  content: lastYearBookRequest.school.content,
+                },
+                historicalReview: {
+                  ...currentYearBook.historicalReview,
+                  name: lastYearBookRequest.historicalReview.name,
+                  image: lastYearBookRequest.historicalReview.image,
+                  content: lastYearBookRequest.historicalReview.content,
+                },
+                lapse1: {
+                  ...currentYearBook.lapse1,
+                  activities: currentYearBook.lapse1.activities.map((activity) => {
+                    const activityRequested = lastYearBookRequest.lapse1.activities.filter(
+                      ({ id }) => activity.id === id
+                    );
+                    return {
+                      ...activity,
+                      description:
+                        activityRequested.length > 0 ? activityRequested[0].description : "",
+                      images: activityRequested.length > 0 ? activityRequested[0].images : [],
+                    };
+                  }),
+                  logicDiagnosticAnalysis: lastYearBookRequest.lapse1.logicDiagnosticAnalysis,
+                  mathDiagnosticAnalysis: lastYearBookRequest.lapse1.mathDiagnosticAnalysis,
+                  readingDiagnosticAnalysis: lastYearBookRequest.lapse1.readingDiagnosticAnalysis,
+                },
+                lapse2: {
+                  ...currentYearBook.lapse2,
+                  activities: currentYearBook.lapse2.activities.map((activity) => {
+                    const activityRequested = lastYearBookRequest.lapse2.activities.filter(
+                      ({ id }) => activity.id === id
+                    );
+                    return {
+                      ...activity,
+                      description:
+                        activityRequested.length > 0 ? activityRequested[0].description : "",
+                      images: activityRequested.length > 0 ? activityRequested[0].images : [],
+                    };
+                  }),
+                  logicDiagnosticAnalysis: lastYearBookRequest.lapse2.logicDiagnosticAnalysis,
+                  mathDiagnosticAnalysis: lastYearBookRequest.lapse2.mathDiagnosticAnalysis,
+                  readingDiagnosticAnalysis: lastYearBookRequest.lapse2.readingDiagnosticAnalysis,
+                },
+                lapse3: {
+                  ...currentYearBook.lapse3,
+                  activities: currentYearBook.lapse3.activities.map((activity) => {
+                    const activityRequested = lastYearBookRequest.lapse3.activities.filter(
+                      ({ id }) => activity.id === id
+                    );
+                    return {
+                      ...activity,
+                      description:
+                        activityRequested.length > 0 ? activityRequested[0].description : "",
+                      images: activityRequested.length > 0 ? activityRequested[0].images : [],
+                    };
+                  }),
+                  logicDiagnosticAnalysis: lastYearBookRequest.lapse3.logicDiagnosticAnalysis,
+                  mathDiagnosticAnalysis: lastYearBookRequest.lapse3.mathDiagnosticAnalysis,
+                  readingDiagnosticAnalysis: lastYearBookRequest.lapse3.readingDiagnosticAnalysis,
+                },
+                sections: currentYearBook.sections.map((section) => {
+                  const sectionRequested = lastYearBookRequest.sections.filter(
+                    ({ id }) => section.id === id
+                  );
+                  return {
+                    ...section,
+                    image: sectionRequested.length > 0 ? sectionRequested[0].image : "",
+                  };
+                }),
+              };
+            }
+            this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
+            this.setPdfData(this.pecaData);
 
-    updateMethods() {
-        this.updateDataToBlocks();
-        // this.updateStaticFetchers();
-        // this.updateDynamicFetchers();
-    }
+            //this.setYearbook(data);
+            //this.setYearbookData();
+            this.store.dispatch(new SetYearBook(newYearBook));
 
-    updateDataToBlocks() {
-        // this.setBlockData("schoolForm", this.schoolFormData);
-    }
+            const yearBookConfig = MapperYearBookWeb(newYearBook, this.store, this.toastr);
+            this.instantiateComponent(yearBookConfig);
+            this.doInstantiateBlocks();
 
-    updateStaticFetchers() {
-        //
-    }
-    
-    updateDynamicFetchers() {
-        //
-    }
-
-    setAmblemarioData(pecaData, _mapper?: Function) {
-        if (_mapper) {
-            this.pecaData = _mapper(pecaData);
-        } else {
-            this.pecaData = pecaData;
+            this.loadedData = true;
+            //if (this.isInstanciated) this.updateMethods();
+          }
         }
-    }
+      },
+      (error) => console.error(error)
+    );
+  }
 
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.instantiateBlocks(this.container);
-            this.isInstanciated = true;
-        });
-    }
+  updateMethods() {
+    this.updateDataToBlocks();
+  }
 
-    ngOnDestroy() {
-        this.isInstanciated = false;
-        this.loadedData = false;
-        this.subscription.unsubscribe();
+  updateDataToBlocks() {
+    this.setBlockData("titleYearbook", this.yearbookData);
+  }
+
+  updateStaticFetchers() {
+    //
+  }
+
+  updateDynamicFetchers() {
+    //
+  }
+
+  setYearbook(data) {
+    this.title = data.activePecaContent.yearBook.lapse1.activities[0].name;
+    console.log(this.title, "nombre");
+  }
+
+  setYearbookData() {
+    this.yearbookData = {
+      inputAndBtns: [
+        {
+          titleInput: this.title,
+        },
+      ],
+    };
+    console.log(this.yearbookData, "aqui titulo");
+  }
+
+  setAmblemarioData(pecaData, _mapper?: Function) {
+    if (_mapper) {
+      this.pecaData = _mapper(pecaData);
+    } else {
+      this.pecaData = pecaData;
     }
+  }
+
+  ngAfterViewInit(): void {
+    //this.doInstantiateBlocks();
+  }
+
+  ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
+    this.subscription.unsubscribe();
+  }
+
+  doInstantiateBlocks() {
+    this.isInstanciated = false;
+    this.isInstantiating = true;
+    setTimeout(() => {
+      this.instantiateBlocks(this.container, true);
+      this.isInstanciated = true;
+      this.isInstantiating = false;
+    });
+  }
 }

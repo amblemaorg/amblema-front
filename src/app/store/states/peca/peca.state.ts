@@ -1,4 +1,4 @@
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from "@ngxs/store";
 import {
   SetUser,
   ClearPecaState,
@@ -6,13 +6,13 @@ import {
   FetchPecaContent,
   FetchProject,
   SetUserPermissions,
-} from '../../actions/peca/peca.actions';
-import { PecaStateModel, PecaModel } from './peca.model';
-import { ApiWebContentService } from '../../../services/web/api-web-content.service';
-import { environment } from '../../../../environments/environment';
+} from "../../actions/peca/peca.actions";
+import { PecaStateModel, PecaModel } from "./peca.model";
+import { ApiWebContentService } from "../../../services/web/api-web-content.service";
+import { environment } from "../../../../environments/environment";
 
 @State<PecaStateModel>({
-  name: 'peca',
+  name: "peca",
   defaults: {
     selectedProject: null,
     content: null,
@@ -47,10 +47,7 @@ export class PecaState {
   }
 
   @Action(FetchProject)
-  async fetchProject(
-    { patchState }: StateContext<PecaStateModel>,
-    { payload }: FetchProject
-  ) {
+  async fetchProject({ patchState }: StateContext<PecaStateModel>, { payload }: FetchProject) {
     const { projectId, schoolYearId } = payload;
     this.apiService.setResourcePath("projects/" + projectId);
     const response = await this.apiService.getWebContent().toPromise();
@@ -71,7 +68,7 @@ export class PecaState {
       };
       patchState({
         selectedProject: project,
-        content: { id: activePeca.pecaId }
+        content: { id: activePeca.pecaId },
       });
     }
   }
@@ -82,14 +79,14 @@ export class PecaState {
     { payload }: FetchPecaContent
   ) {
     patchState({ pecaContentRequesting: true });
-    this.apiService.setResourcePath('pecaprojects/' + payload);
+    this.apiService.setResourcePath("pecaprojects/" + payload);
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
         //const prevState = getState();
         const pecaContent: PecaModel = response;
         patchState({
           pecaContentRequesting: false,
-          content: pecaContent
+          content: pecaContent,
         });
         //setState({ ...prevState, content: pecaContent });
       }
@@ -126,7 +123,7 @@ export class PecaState {
   static getUserResume(state: any) {
     return {
       id: state.user.id,
-      type: state.user.userType
+      type: state.user.userType,
     };
   }
 
@@ -142,7 +139,7 @@ export class PecaState {
 
   @Selector()
   static getActivePecaContent(state: any) {
-    return { activePecaContent: state.content };
+    return { activePecaContent: state.content, user: state.user };
   }
 
   @Selector()
@@ -168,7 +165,7 @@ export class PecaState {
         pecaId: state.content.id,
         lapse1: state.content.lapse1,
         lapse2: state.content.lapse2,
-        lapse3: state.content.lapse3
+        lapse3: state.content.lapse3,
       },
     };
   }

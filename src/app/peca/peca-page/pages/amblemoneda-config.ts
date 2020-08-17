@@ -21,26 +21,26 @@ const sliderAmblemoneda = {
                 {
                     text: "Fecha de la actividad:",
                     fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                    image: "../../../../../assets/images/profile-leena.jpg",
-                    description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                    image: "",
+                    description: ""
                 },
                 {
                     text: "Fecha de la actividad:",
                     fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                    image: "../../../../../assets/images/profile-oscar.jpg",
-                    description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                    image: "",
+                    description: ""
                 },
                 {
                     text: "Fecha de la actividad:",
                     fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                    image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                    description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                    image: "",
+                    description: ""
                 },
                 {
                     text: "Fecha de la actividad:",
                     fields: { label: "Input date", placeholder: "Input date", fullwidth: false, ...controlProps.date },
-                    image: "../../../../../assets/images/background-pillar-matematica.jpg",
-                    description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
+                    image: "",
+                    description: ""
                 },
                 /*{
                     text: "Fecha de la actividad:",
@@ -128,13 +128,14 @@ const ConfirmacionDocente = {
         classes: {
             hideView: false,
             hideEdit: false,
-            hideDelete: false,
+            hideDelete: true,
         },
     }
 }
 //* MODAL CONFIRMACION DOCENTE ----------------------------------
 const formConfirmacionDocente = {
     component: 'form',
+    name: 'confirmacionDocenteModal',
     viewMode: 'both',
     settings: {
         formsContent: formConfirmacionDocenteModal,
@@ -143,6 +144,7 @@ const formConfirmacionDocente = {
         tableCode: 'amblemonedaConfigConfirmacionDocente',
         modalCode: 'amblemonedaConfigConfirmacionDocente',
         isFromCustomTableActions: true,
+        fetcherMethod: 'put',
     }
 }
 const textsAndButtonsConfirmacionDocente = {
@@ -193,16 +195,19 @@ const charlaConDocentes = {
             fields: [{ label: "Input date", placeholder: "Fecha de la reunión", fullwidth: false, ...controlProps.dateAndRequired }],
         },
         download: {
-            
+
         },
         subtitles:
-        [
-            {
-                text: '',
-            },
-        ],
-       
-    }
+            [
+                {
+                    text: '',
+                },
+            ],
+
+    },
+    modalCode: 'enviarDataCharla',
+    buttonCode: 'enviarDataCharla',
+    tableCode: 'enviarDataCharla',
 }
 const btnGuardarFechaCharla = {
     component: 'textsbuttons',
@@ -212,9 +217,9 @@ const btnGuardarFechaCharla = {
             type: 1,
             name: 'Guardar',
         }],
-         fetcherMethod: 'put',
+        fetcherMethod: 'put',
     },
-    
+
 }
 
 export const AMBLEMONEDA_CONFIG = {
@@ -237,7 +242,7 @@ export const AMBLEMONEDA_CONFIG = {
                         title: "Elaboración de alcancía",
                         childBlocks: [
                             { ...sliderAmblemoneda },
-                            { ...btnGuardarFechaSlider}
+                            { ...btnGuardarFechaSlider }
                         ]
                     },
                     {

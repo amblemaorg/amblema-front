@@ -2,22 +2,26 @@ import { sampleFormData,formRegistroInicial, formPreparacionTallerInicial, formR
 
 const textsAndButtons = {
   component: 'textsbuttons',
+  name: 'btnRegistroEnviarSolicitud',
   settings: {
     action: [{
-      type: 3,
+      type: 1,
       name: 'Enviar Solicitud',
     }],    
     receivesFromTableOrForm: 'both',
     buttonCode: 'initialWorkshopConfigRegistroTallerInicial',
+    fetcherMethod: 'post',
   }
 }
 
 const formTaller1 = {
   component: 'form',
+  name: 'btnSolicitudPreparacionTallerInicial',
   settings: {
     formsContent: formPreparacionTallerInicial,
     buttons: ['guardar'],
     formType: 'initialWorkshopConfigPreparacionTaller',
+    fetcherMethod: 'post',
   }
 }
 
@@ -101,6 +105,7 @@ const registroTallerInicial = {
         imageSelected: null,
       },
     ],
+    makesNoRequest: true,
     classes: {
       hideView: true,
       hideEdit: false,
@@ -113,6 +118,7 @@ const registroTallerInicial = {
 //* MODAL ----------------------------------
 const formRegistroTallerInicial = {
   component: 'form',
+  name:'tallerInicialForm',
   settings: {
     formsContent: formRegistroInicialModal,
     buttons: ['guardar'],
@@ -120,6 +126,8 @@ const formRegistroTallerInicial = {
     tableCode: 'initialWorkshopConfigRegistroTallerInicial',
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
+    makesNoRequest: true,
+    fetcherMethod: 'post',
   }
 }
 const textsAndButtonsRegistroTallerInicial = {
@@ -141,6 +149,7 @@ const textsAndButtonsRegistroTallerInicial = {
     modalCode: 'initialWorkshopConfigRegistroTallerInicial',
     isFromCustomTableActions: true,
     isDeleting: true,
+    makesNoRequest: true,
   }
 }
 const modalRegistroTallerInicial = {
