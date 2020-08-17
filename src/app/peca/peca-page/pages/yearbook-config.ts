@@ -1,3 +1,4 @@
+import { SetLapseActivity, SetSectionImage } from "./../../../store/yearbook/yearbook.action";
 import {
   formAnalisisYResultados,
   formImagenEscuela,
@@ -8,9 +9,21 @@ import {
   formActividades,
   formImgActividades,
 } from "../blocks/form-block/all-forms";
-import { settings } from "cluster";
 import { Store } from "@ngxs/store";
-import { SetHistoricalReview, YearBookState } from "src/app/store/yearbook/yearbook.action";
+import {
+  SetHistoricalReview,
+  SetSchool,
+  SetCoordinator,
+  SetSponsor,
+  SetLapseReadingAnalysis,
+  SetLapseMathAnalysis,
+  SetLapseLogicAnalysis,
+  UpdateYearBookRequest,
+  CancelYearBookRequest,
+  SetYearBook,
+} from "src/app/store/yearbook/yearbook.action";
+import { ToastrService } from "ngx-toastr";
+import { FetchPecaContent } from "src/app/store/actions/peca/peca.actions";
 
 //Contenido dropdown Resena Historica
 const dataResenaHistorica = {
@@ -438,10 +451,7 @@ const sections = [
       isFromImgContainer: true,
       items: [
         {
-          childBlocks: [
-            { ...formTablaLapso1 },
-            { ...textsAndButtonsTablaLapso1 },
-          ],
+          childBlocks: [{ ...formTablaLapso1 }, { ...textsAndButtonsTablaLapso1 }],
         },
       ],
     },
@@ -630,8 +640,363 @@ const btnEnviarSolicitud = {
  * and the components are recreated according
  * to the data.
  */
+export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: ToastrService): any => {
+  const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections);
+  const lapse1Config = createLapseBlocksConfig("1", yearBookData);
+  const lapse2Config = createLapseBlocksConfig("2", yearBookData);
+  const lapse3Config = createLapseBlocksConfig("3", yearBookData);
 
-export const MapperYearBookWeb = (yearBookData: any): any => {
+  function createSectionsBlocksConfig(schoolSections) {
+    return schoolSections.reduce((sectionsArray, section) => {
+      const { id, grade, name } = section;
+      const gradeName = `${determineGradeString(grade)}, sección ${name}`;
+      return [
+        ...sectionsArray,
+        createTitleComponent(gradeName),
+        {
+          component: "form-review",
+          name: `grade${grade}-section${name}-form`,
+          settings: {
+            onSubmit: (values: any) => {
+              const data = {
+                sectionId: id,
+                sectionGrade: grade,
+                sectionName: name,
+                image: values.inputImg,
+              };
+              store.dispatch(new SetSectionImage(data));
+            },
+            fields: {
+              inputImg: {
+                name: `grade${grade}-section${name}-image`,
+                label: "Carga de imagen",
+                value: section.image,
+                disabled: yearBookData.isInApproval,
+              },
+              button: {
+                text: "Guardar cambios",
+                hidden: yearBookData.isInApproval,
+              },
+            },
+          },
+        },
+        {
+          component: "table",
+          settings: {
+            actions: false,
+            columns: {
+              name: { title: "Estudiante", filter: false },
+            },
+            tableCode: `grade${grade}-section${name}-table`,
+            [`grade${grade}-section${name}-table`]: section.students.map((student) => {
+              return {
+                name: `${student.firstName} ${student.lastName}`,
+              };
+            }),
+            classes: {
+              hideView: false,
+              hideEdit: false,
+              hideDelete: false,
+            },
+          },
+        },
+      ];
+    }, []); // Initial sectionsArray
+  }
+
+  function createLapseBlocksConfig(lapseNumber, yearBookData) {
+    const lapseName = `lapse${lapseNumber}`;
+    const lapseData = yearBookData[lapseName];
+    return [
+      createTitleComponent("Tabla de diagnóstico de lectura"),
+      {
+        component: "table",
+        settings: {
+          actions: false,
+          columns: {
+            grade: { title: "Grado" },
+            section: { title: "Sección" },
+            words: { title: "Palabras por minuto" },
+            wordsIndex: { title: "Índice de palabras por minuto" },
+          },
+          tableCode: "readingTable",
+          readingTable: lapseData.diagnosticSummary.map((diagnostic) => {
+            return {
+              grade: determineGradeString(diagnostic.grade),
+              section: diagnostic.name,
+              words: diagnostic.wordsPerMin,
+              wordsIndex: diagnostic.wordsPerMinIndex,
+            };
+          }),
+          classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+          },
+        },
+      },
+      createTitleComponent("Gráfica de diagnóstico de lectura"),
+      {
+        component: "graphics",
+        settings: {
+          chartId: `${lapseName}-reading-graphic`,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.map((diagnostic) => {
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
+          }),
+          items: lapseData.diagnosticSummary.map((diagnostic) => {
+            return parseFloat(diagnostic.wordsPerMinIndex).toFixed(2);
+          }),
+        },
+      },
+      createTitleComponent("Análisis y resultado del diagnóstico de lectura"),
+      {
+        component: "form-review",
+        name: "reading-analysis-form",
+        settings: {
+          onSubmit: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+            };
+            store.dispatch(new SetLapseReadingAnalysis(data));
+          },
+          fields: {
+            description: {
+              label: "Análisis del diagnóstico de lectura",
+              placeholder: "Análisis del diagnóstico de lectura",
+              value: lapseData.readingDiagnosticAnalysis,
+              disabled: yearBookData.isInApproval,
+            },
+            button: {
+              text: "Guardar cambios",
+              hidden: yearBookData.isInApproval,
+            },
+          },
+        },
+      },
+      createTitleComponent("Tabla de diagnóstico de multiplicación"),
+      {
+        component: "table",
+        settings: {
+          actions: false,
+          columns: {
+            grade: { title: "Grado" },
+            section: { title: "Sección" },
+            multiplications: { title: "Multiplicaciones por minuto" },
+            multiplicationsIndex: {
+              title: "Índice de multiplicaciones por minuto",
+            },
+          },
+          tableCode: "mathTable",
+          mathTable: lapseData.diagnosticSummary.map((diagnostic) => {
+            return {
+              grade: determineGradeString(diagnostic.grade),
+              section: diagnostic.name,
+              multiplications: diagnostic.multiplicationsPerMin,
+              multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
+            };
+          }),
+          classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+          },
+        },
+      },
+      createTitleComponent("Gráfica de diagnóstico de multiplicación"),
+      {
+        component: "graphics",
+        settings: {
+          chartId: `${lapseName}-math-graphic`,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.map((diagnostic) => {
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
+          }),
+          items: lapseData.diagnosticSummary.map((diagnostic) => {
+            return parseFloat(diagnostic.multiplicationsPerMinIndex).toFixed(2);
+          }),
+        },
+      },
+      createTitleComponent("Análisis y resultado del diagnóstico de multiplicación"),
+      {
+        component: "form-review",
+        name: "math-analysis-form",
+        settings: {
+          onSubmit: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+            };
+            store.dispatch(new SetLapseMathAnalysis(data));
+          },
+          fields: {
+            description: {
+              label: "Análisis del diagnóstico de matemática",
+              placeholder: "Análisis del diagnóstico de matemática",
+              value: lapseData.mathDiagnosticAnalysis,
+              disabled: yearBookData.isInApproval,
+            },
+            button: {
+              text: "Guardar cambios",
+              hidden: yearBookData.isInApproval,
+            },
+          },
+        },
+      },
+      createTitleComponent("Tabla de diagnóstico de lógica matemática"),
+      {
+        component: "table",
+        settings: {
+          actions: false,
+          columns: {
+            grade: { title: "Grado" },
+            section: { title: "Sección" },
+            operations: { title: "Operaciones por minuto" },
+            operationsIndex: {
+              title: "Índice de operaciones por minuto",
+            },
+          },
+          tableCode: "logicTable",
+          logicTable: lapseData.diagnosticSummary.map((diagnostic) => {
+            return {
+              grade: determineGradeString(diagnostic.grade),
+              section: diagnostic.name,
+              operations: diagnostic.operationsPerMin,
+              operationsIndex: diagnostic.operationsPerMinIndex,
+            };
+          }),
+          classes: {
+            hideView: false,
+            hideEdit: false,
+            hideDelete: false,
+          },
+        },
+      },
+      createTitleComponent("Gráfica de diagnóstico de lógica matemática"),
+      {
+        component: "graphics",
+        settings: {
+          chartId: `${lapseName}-logic-graphic`,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.map((diagnostic) => {
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
+          }),
+          items: lapseData.diagnosticSummary.map((diagnostic) => {
+            return parseFloat(diagnostic.operationsPerMinIndex).toFixed(2);
+          }),
+        },
+      },
+      createTitleComponent("Análisis y resultado del diagnóstico de lógica matemática"),
+      {
+        component: "form-review",
+        name: "logic-analysis-form",
+        settings: {
+          onSubmit: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+            };
+            store.dispatch(new SetLapseLogicAnalysis(data));
+          },
+          fields: {
+            description: {
+              label: "Análisis del diagnóstico de lógica",
+              placeholder: "Análisis del diagnóstico de lógica",
+              value: lapseData.logicDiagnosticAnalysis,
+              disabled: yearBookData.isInApproval,
+            },
+            button: {
+              text: "Guardar cambios",
+              hidden: yearBookData.isInApproval,
+            },
+          },
+        },
+      },
+      ...createActivitiesComponents(lapseData.activities, lapseNumber),
+    ];
+  }
+
+  function createTitleComponent(title) {
+    return {
+      component: "textsbuttons",
+      settings: {
+        title: {
+          text: title,
+          aligning: "left",
+        },
+      },
+    };
+  }
+
+  function createActivitiesComponents(activities: any[], lapseNumber) {
+    const lapseName = `lapse${lapseNumber}`;
+
+    return activities.reduce((activitiesArray, activity) => {
+      const { id, name, images, description } = activity;
+      return [
+        ...activitiesArray,
+        createTitleComponent(name),
+        {
+          component: "form-review",
+          name: `${id}-form`,
+          settings: {
+            onSubmit: (values: any) => {
+              const data = {
+                lapse: lapseNumber,
+                activityId: id,
+                description: values.description,
+                images: values.inputImg,
+              };
+              store.dispatch(new SetLapseActivity(data));
+            },
+            fields: {
+              inputImg: {
+                name: `${lapseName}-${id}-images`,
+                label: `Cargar de imágenes de ${name}`,
+                disabled: yearBookData.isInApproval,
+                value: images,
+                multiple: true,
+              },
+              description: {
+                label: `Descripción de ${name}`,
+                placeholder: `Descripción de ${name}`,
+                disabled: yearBookData.isInApproval,
+                value: description,
+              },
+              button: {
+                text: "Guardar cambios",
+                hidden: yearBookData.isInApproval,
+              },
+            },
+          },
+        },
+      ];
+    }, []);
+  }
+
+  function determineGradeString(grade) {
+    switch (grade) {
+      case "1":
+        return "1er Grado";
+      case "2":
+        return "2do Grado";
+      case "3":
+        return "3er Grado";
+      case "4":
+        return "4to Grado";
+      case "5":
+        return "5to Grado";
+      case "6":
+        return "6to Grado";
+      default:
+        return `${grade} Grado`;
+    }
+  }
+
   const YEARBOOK_CONFIG = {
     header: {
       title: "AmbLeMario",
@@ -640,7 +1005,6 @@ export const MapperYearBookWeb = (yearBookData: any): any => {
         name: "Descargar",
       },
     },
-
     blocks: [
       {
         component: "profiles",
@@ -652,88 +1016,225 @@ export const MapperYearBookWeb = (yearBookData: any): any => {
                   component: "accordion",
                   settings: {
                     items: [
-                      // -- Historical
-
                       {
+                        // -- Historical
                         title: "Reseña histórica",
+                        childBlocks: [
+                          {
+                            component: "form-review",
+                            name: "historical-review-form",
+                            settings: {
+                              onSubmit: (values: any) => {
+                                const data = {
+                                  image: values.inputImg,
+                                  content: values.description,
+                                };
+                                store.dispatch(new SetHistoricalReview(data));
+                              },
+                              fields: {
+                                inputImg: {
+                                  name: "historical-review-image",
+                                  label: "Carga de imagen",
+                                  value: yearBookData.historicalReview.image,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                description: {
+                                  label: "Descripción reseña histórica",
+                                  placeholder: "Descripción reseña histórica",
+                                  value: yearBookData.historicalReview.content,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                button: {
+                                  text: "Guardar cambios",
+                                  hidden: yearBookData.isInApproval,
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        // -- Sponsor
+                        title: yearBookData.sponsor.name,
+                        childBlocks: [
+                          {
+                            component: "form-review",
+                            name: "sponsor-form",
+                            settings: {
+                              onSubmit: (values: any) => {
+                                const data = {
+                                  image: values.inputImg,
+                                  content: values.description,
+                                };
+                                store.dispatch(new SetSponsor(data));
+                              },
+                              fields: {
+                                inputImg: {
+                                  name: "sponsor-image",
+                                  label: "Carga de imagen",
+                                  value: yearBookData.sponsor.image,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                description: {
+                                  label: "Descripción de padrino",
+                                  placeholder: "Descripción de padrino",
+                                  value: yearBookData.sponsor.content,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                button: {
+                                  text: "Guardar cambios",
+                                  hidden: yearBookData.isInApproval,
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        // -- Coordinator
+                        title: yearBookData.coordinator.name,
+                        childBlocks: [
+                          {
+                            component: "form-review",
+                            name: "coordinator-form",
+                            settings: {
+                              onSubmit: (values: any) => {
+                                const data = {
+                                  image: values.inputImg,
+                                  content: values.description,
+                                };
+                                store.dispatch(new SetCoordinator(data));
+                              },
+                              fields: {
+                                inputImg: {
+                                  name: "coordinator-image",
+                                  label: "Carga de imagen",
+                                  value: yearBookData.coordinator.image,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                description: {
+                                  label: "Descripción de coordinador",
+                                  placeholder: "Descripción de coordinador",
+                                  value: yearBookData.coordinator.content,
+                                  disabled: yearBookData.isInApproval,
+                                },
+                                button: {
+                                  text: "Guardar cambios",
+                                  hidden: yearBookData.isInApproval,
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        // -- School
+                        title: yearBookData.school.name,
                         childBlocks: [
                           {
                             component: "form-review",
                             settings: {
                               onSubmit: (values: any) => {
-
-                                // -- 
-                                
-
+                                const data = {
+                                  image: values.inputImg,
+                                  content: values.description,
+                                };
+                                store.dispatch(new SetSchool(data));
                               },
                               fields: {
                                 inputImg: {
+                                  name: "school-image",
                                   label: "Carga de imagen",
+                                  value: yearBookData.school.image,
+                                  disabled: yearBookData.isInApproval,
                                 },
                                 description: {
-                                  label: "Descripción reseña histórica",
-                                  placeholder: "Descripción reseña histórica",
+                                  label: "Descripción de escuela",
+                                  placeholder: "Descripción de escuela",
+                                  value: yearBookData.school.content,
+                                  disabled: yearBookData.isInApproval,
                                 },
                                 button: {
                                   text: "Guardar cambios",
+                                  hidden: yearBookData.isInApproval,
                                 },
                               },
                             },
                           },
+                          ...schoolSectionsConfig,
                         ],
                       },
-
-                      // -- Sponsor
-
                       {
-                        title: yearBookData.sponsor.name,
-                        childBlocks: [
-                          {
-                            component: "summary",
-                            settings: {
-                              urlImage: yearBookData.sponsor.image,
-                              text: yearBookData.sponsor.content,
-                            },
-                          },
-                        ],
-                      },
-
-                      // -- Coordinator
-
-                      {
-                        title: yearBookData.coordinator.name,
-                        childBlocks: [
-                          {
-                            component: "summary",
-                            settings: {
-                              urlImage: yearBookData.coordinator.image,
-                              text: yearBookData.coordinator.content,
-                            },
-                          },
-                        ],
-                      },
-
-                      // -- School
-
-                      {
-                        title: yearBookData.school.name,
-                        childBlocks: [
-                          {
-                            component: "summary",
-                            settings: {
-                              urlImage: yearBookData.school.image,
-                              text: yearBookData.school.content,
-                            },
-                          },
-                        ],
-                      },
-
-                      // -- Lapse 1
-
-                      {
+                        // -- Lapse 1
                         title: "Lapso 1",
+                        childBlocks: lapse1Config,
+                      },
+                      {
+                        // -- Lapse 2
+                        title: "Lapso 2",
+                        childBlocks: lapse2Config,
+                      },
+                      {
+                        // -- Lapse 3
+                        title: "Lapso 3",
+                        childBlocks: lapse3Config,
                       },
                     ],
+                  },
+                },
+                {
+                  component: "form-review",
+                  settings: {
+                    onSubmit: (values: any) => {
+                      console.log("yearbook onSubmit");
+
+                      const data = {
+                        pecaId: yearBookData.pecaId,
+                        userId: yearBookData.userId,
+                      };
+                      toastr.success("Enviando solicitud, espere por favor", "", {
+                        positionClass: "toast-bottom-right",
+                      });
+                      store.dispatch(new UpdateYearBookRequest(data)).subscribe(
+                        (updatedYearBook) => {
+                          toastr.success("Solicitud enviada, espere por su aprobación", "", {
+                            positionClass: "toast-bottom-right",
+                          });
+                        },
+                        (error) => {
+                          toastr.error("Ha ocurrido un error", "", {
+                            positionClass: "toast-bottom-right",
+                          });
+                        }
+                      );
+                    },
+                    onCancel: () => {
+                      console.log("yearbook onCancel");
+                      store
+                        .dispatch(new CancelYearBookRequest({ pecaId: yearBookData.pecaId }))
+                        .subscribe(
+                          (data) => {
+                            toastr.success("Solicitud de aprobación cancelada", "", {
+                              positionClass: "toast-bottom-right",
+                            });
+                          },
+                          (error) => {
+                            toastr.error("Ha ocurrido un error", "", {
+                              positionClass: "toast-bottom-right",
+                            });
+                          }
+                        );
+                    },
+                    fields: {
+                      button: {
+                        text: "Enviar Solicitud",
+                        hidden: yearBookData.isInApproval,
+                      },
+                      cancelButton: {
+                        text: "Cancelar Solicitud Previa",
+                        hidden: !yearBookData.isInApproval,
+                      },
+                    },
                   },
                 },
               ],

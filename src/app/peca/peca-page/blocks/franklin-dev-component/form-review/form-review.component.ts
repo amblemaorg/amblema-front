@@ -1,25 +1,26 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { PresentationalBlockComponent } from "../../page-block.component";
 import { FormGroup, FormControl } from "@angular/forms";
+import smartTableImageConfig from "./table-images-config.js";
+import { LocalDataSource } from "ng2-smart-table";
 
 @Component({
   selector: "app-form-review",
   templateUrl: "./form-review.component.html",
   styleUrls: ["./form-review.component.scss"],
 })
-export class FormReviewComponent
-  implements OnInit, PresentationalBlockComponent {
+export class FormReviewComponent implements OnInit, PresentationalBlockComponent {
   // To validate the file
-  readonly pattern = /image-*/;
-
-  public msgErrorFile:boolean = false;
+  readonly pattern = /image*/;
+  public msgErrorFile: boolean = false;
 
   type: "presentational";
+  name: string;
   component: string;
   settings: {
     // -- Event
-    onSubmit: ( values: any ) => void; 
-
+    onSubmit: (values: any) => void;
+    onCancel: (values: any) => void;
     // -- Properties
     fields?: {
       description?:
@@ -27,27 +28,36 @@ export class FormReviewComponent
             label?: string;
             placeholder?: string;
             value?: any;
+            disabled?: boolean;
           }
         | false;
       inputImg?:
         | {
+            name?: string;
             label?: string;
             placeholder?: string;
             value?: any;
+            multiple?: boolean;
+            disabled?: boolean;
           }
         | false;
       button?:
         | {
             text?: string;
+            hidden?: boolean;
+          }
+        | false;
+      cancelButton?:
+        | {
+            text?: string;
+            hidden?: boolean;
           }
         | false;
     };
   };
-
-  public form = new FormGroup({
-    description: new FormControl(""),
-    inputImg: new FormControl(""),
-  });
+  form: FormGroup;
+  tableImages: any = smartTableImageConfig;
+  source: LocalDataSource = new LocalDataSource();
 
   constructor() {}
 
@@ -59,20 +69,49 @@ export class FormReviewComponent
 
   public setSettings(settings: any): void {
     this.settings = { ...settings };
+    const { fields } = settings;
+    let descriptionValue: string;
+    let inputImgValue: string | string[];
+
+    if (fields.description) {
+      descriptionValue = fields.description.value ? fields.description.value : "";
+    }
+    if (fields.inputImg) {
+      const defaultImageValue = fields.inputImg.multiple ? [] : "";
+      inputImgValue = fields.inputImg.value ? fields.inputImg.value : defaultImageValue;
+      if (inputImgValue instanceof Array) {
+        this.source.load(
+          inputImgValue.map((image) => {
+            return { image };
+          })
+        );
+      }
+    }
+
+    this.form = new FormGroup({
+      description: new FormControl(descriptionValue),
+      inputImg: new FormControl(inputImgValue),
+    });
   }
 
-  onUploadImage(event: any) {
+  onTableActions = (event: any) => {
+    if (event.action === "DELETE") {
+      const images = this.form.get("inputImg").value;
+      const newImages = images.filter((image) => image !== event.data.image);
+      this.form.get("inputImg").setValue(newImages);
+      this.source.remove(event.data);
+    }
+  };
+
+  onUploadImage = (event: any) => {
     // Get file
-    const file = event.dataTransfer
-      ? event.dataTransfer.files[0]
-      : event.target.files[0];
+    const file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
 
     // Instance reader
-    const reader = new FileReader();
+    const reader: FileReader = new FileReader();
 
     if (file) {
       if (!this.isValidImage(file)) {
-        
         this.msgErrorFile = true;
 
         setTimeout(() => {
@@ -83,27 +122,39 @@ export class FormReviewComponent
       }
 
       // Convert binary file
-      reader.onload = this.convertLoad.bind(this);
+      reader.onload = (event) => this.convertLoad(event);
+      //.bind(this);
 
       // Read the binary
       reader.readAsDataURL(file);
 
       return true;
     }
-  }
+  };
 
   convertLoad(event) {
     // Get target
-    const reader = event.target;
+    const reader = <FileReader>event.target;
+
     // Instance a object of type image
     const img = new Image();
 
     // Save on the source
-    img.src = reader.result;
+    img.src = <string>reader.result;
 
     img.onload = () => {
       //  Set base 64
-      this.form.controls.inputImg.setValue(reader.result as string);
+      // @ts-ignore
+      if (this.settings.fields.inputImg.multiple) {
+        let images = this.form.get("inputImg").value;
+        images = images instanceof Array ? images : [];
+        images.push(reader.result as string);
+        this.form.get("inputImg").setValue(images);
+        this.source.add({ image: reader.result as string });
+        this.source.refresh();
+      } else {
+        this.form.get("inputImg").setValue(reader.result as string);
+      }
       return true;
     };
   }
