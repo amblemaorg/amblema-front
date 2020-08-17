@@ -1,3 +1,4 @@
+import { ToastrService } from "ngx-toastr";
 import { State, Action, StateContext, Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { YearBook } from "./yearbook.model";
@@ -115,7 +116,11 @@ export class SetSectionImage {
 })
 @Injectable()
 export class YearBookState {
-  constructor(private fetcher: HttpFetcherService, private store: Store) {}
+  constructor(
+    private fetcher: HttpFetcherService,
+    private store: Store,
+    private toastr: ToastrService
+  ) {}
 
   @Action(SetYearBook)
   setYearBook(ctx: StateContext<YearBook>, action: SetYearBook) {
@@ -125,29 +130,57 @@ export class YearBookState {
   }
 
   @Action(UpdateYearBookRequest)
-  updateYearkBookRequest(ctx: StateContext<YearBook>, action: UpdateYearBookRequest) {
+  async updateYearkBookRequest(ctx: StateContext<YearBook>, action: UpdateYearBookRequest) {
     const { pecaId, userId } = action.payload;
-    const yearBookData = ctx.getState();
-    return this.fetcher
-      .post(`pecaprojects/yearbook/${pecaId}?userId=${userId}`, yearBookData)
-      .subscribe(() => {
-        //store.dispatch(new SetYearBook(data.detail));
-        this.store.dispatch([new FetchPecaContent(pecaId)]);
+    const yearBookData = {
+      ...ctx.getState(),
+      approvalHistory: [],
+    };
+    const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
+    console.log("yearbook data", yearBookData);
+    try {
+      const data = await this.fetcher.post(url, yearBookData).toPromise();
+      this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
+        positionClass: "toast-bottom-right",
       });
+      this.store.dispatch([new FetchPecaContent(pecaId)]);
+    } catch (error) {
+      console.error(error);
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    //this.store.dispatch(new SetYearBook(data.detail));
+    //.subscribe(() => {
+    //});
   }
 
   @Action(CancelYearBookRequest)
-  cancelYearkBookRequest(ctx: StateContext<YearBook>, action: CancelYearBookRequest) {
+  async cancelYearkBookRequest(ctx: StateContext<YearBook>, action: CancelYearBookRequest) {
+    debugger;
     const { approvalHistory } = ctx.getState();
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
-    return this.fetcher
-      .put(`requestscontentapproval/${recentApprovalRequest.id}`, {
-        status: "4",
-      })
-      .subscribe(() => {
-        //store.dispatch(new SetYearBook(data.detail));
-        this.store.dispatch([new FetchPecaContent(action.payload.pecaId)]);
+    const url = `requestscontentapproval/${recentApprovalRequest.id}`;
+    try {
+      const data = await this.fetcher
+        .put(url, {
+          status: "4",
+        })
+        .toPromise();
+      this.store.dispatch([new FetchPecaContent(action.payload.pecaId)]);
+      this.toastr.success("Solicitud de aprobación cancelada", "", {
+        positionClass: "toast-bottom-right",
       });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    //this.store.dispatch(new SetYearBook(data.detail));
+    //.subscribe(() => {
+    //});
   }
 
   @Action(SetHistoricalReview)

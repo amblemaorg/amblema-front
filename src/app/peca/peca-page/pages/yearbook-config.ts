@@ -1192,44 +1192,14 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
                   component: "form-review",
                   settings: {
                     onSubmit: (values: any) => {
-                      console.log("yearbook onSubmit");
-
                       const data = {
                         pecaId: yearBookData.pecaId,
                         userId: yearBookData.userId,
                       };
-                      toastr.success("Enviando solicitud, espere por favor", "", {
-                        positionClass: "toast-bottom-right",
-                      });
-                      store.dispatch(new UpdateYearBookRequest(data)).subscribe(
-                        (updatedYearBook) => {
-                          toastr.success("Solicitud enviada, espere por su aprobación", "", {
-                            positionClass: "toast-bottom-right",
-                          });
-                        },
-                        (error) => {
-                          toastr.error("Ha ocurrido un error", "", {
-                            positionClass: "toast-bottom-right",
-                          });
-                        }
-                      );
+                      store.dispatch(new UpdateYearBookRequest(data));
                     },
                     onCancel: () => {
-                      console.log("yearbook onCancel");
-                      store
-                        .dispatch(new CancelYearBookRequest({ pecaId: yearBookData.pecaId }))
-                        .subscribe(
-                          (data) => {
-                            toastr.success("Solicitud de aprobación cancelada", "", {
-                              positionClass: "toast-bottom-right",
-                            });
-                          },
-                          (error) => {
-                            toastr.error("Ha ocurrido un error", "", {
-                              positionClass: "toast-bottom-right",
-                            });
-                          }
-                        );
+                      store.dispatch(new CancelYearBookRequest({ pecaId: yearBookData.pecaId }));
                     },
                     fields: {
                       button: {
