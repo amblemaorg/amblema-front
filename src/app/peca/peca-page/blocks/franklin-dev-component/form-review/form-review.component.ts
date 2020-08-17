@@ -45,12 +45,14 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
         | {
             text?: string;
             hidden?: boolean;
+            disabled?: boolean;
           }
         | false;
       cancelButton?:
         | {
             text?: string;
             hidden?: boolean;
+            disabled?: boolean;
           }
         | false;
     };
