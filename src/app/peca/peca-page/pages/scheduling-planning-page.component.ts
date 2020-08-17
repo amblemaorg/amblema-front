@@ -182,7 +182,7 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     updateStaticFetchers() {
         //pecaprojects/lapseplanning/<string:pecaId>/<string:lapse> | POST - contentType: formData - Actualizar
         this.setBlockFetcherUrls("propuestaAmblema", {
-            post: `pecaprojects/lapseplanning/${this.peca_id}/1`,
+            post: `pecaprojects/lapseplanning/${this.peca_id}/${this.UrlLapse}`,
         });
         console.log(this.UrlLapse, "lapso")
     }

@@ -330,6 +330,7 @@ export class TextsButtonsSetBlockComponent
       if (data["enviromentTitleLapse3"]) this.settings.title.text=data.enviromentTitleLapse3; 
       if (data["download"]) this.settings.download = data.download;
       if (data["upload"]) this.settings.upload = data.upload;
+      if (data["inputAndBtns"]) this.settings.inputAndBtns = data.inputAndBtns;
     }
 
   }
@@ -572,6 +573,57 @@ export class TextsButtonsSetBlockComponent
               console.error(error);
             });
           }
+        }else {
+          console.log("AQUI SIGO EL LUNES 4")
+          ;
+          
+        const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
+        const method = this.settings.fetcherMethod || "post";
+        const resourcePath = this.settings.fetcherUrls[method];
+
+        console.log(
+          "method: ",
+          method,
+          "url: ",
+          resourcePath,
+          "body: ",
+          body
+        );
+
+        if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
+
+        this.fetcher[method](resourcePath, body).subscribe(
+          response => {
+            console.log("form response", response);
+            this.sleepSend = true;
+            this.isSending = false;
+
+            this.toastr.success("Solicitud enviada", "", {
+              positionClass: "toast-bottom-right"
+            });
+
+            if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
+            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          },
+          error => {
+            const error_msg = (error.error && error.error instanceof ProgressEvent)
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+            if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, false);
+            this.isSending = false;
+            this.toastr.error(
+              error.error && error.error["msg"]
+                ? error.error["msg"]
+                : error.error && error.error["message"]
+                ? error.error["message"]
+                : error_msg,
+              "",
+              { positionClass: "toast-bottom-right" }
+            );
+            console.error(error);
+          }
+        );
         }
         break;
       case 2:

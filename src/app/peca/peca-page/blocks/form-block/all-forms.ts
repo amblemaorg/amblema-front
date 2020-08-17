@@ -1594,8 +1594,9 @@ export const formMatematicaModal = {
 // AMBLEMONEDAS
 export const formConfirmacionDocenteModal = {
   grade: {
-    label: "Input select sex",
+    label: "Grados",
     placeholder: "Grados",
+    readonly: true,
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1608,14 +1609,16 @@ export const formConfirmacionDocenteModal = {
     ]
   },
   section: {
-    label: "Input normal text",
+    label: "Sección",
     placeholder: "Sección",
+    readonly: true,
     fullwidth: false,
     ...controlProps.normalTextAndRequired
   },
   confirmation: {
-    label: "Input select confirmacion",
-    placeholder: "Confirmacion",
+    label: "Confirmación",
+    placeholder: "Confirmación",
+    readonly: false,
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
@@ -1678,8 +1681,8 @@ export const formSpecialActivityTableModal = {
     ...controlProps.numberAndRequired
   },
   impuesto: {
-    label: "Impuesto",
-    placeholder: "Impuesto",
+    label: "% Impuesto",
+    placeholder: "% Impuesto",
     fullwidth: false,
     ...controlProps.numberAndRequired
   },
@@ -1696,18 +1699,21 @@ export const formResultadoEstudianteModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
+    readonly: false,
     ...controlProps.onlyLettersAndRequired
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
+    readonly: false,
     ...controlProps.onlyLettersAndRequired
   },
   grade: {
     label: "Grados",
     placeholder: "Grados",
     fullwidth: false,
+    readonly: false,
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "1er grado" },
@@ -1722,6 +1728,7 @@ export const formResultadoEstudianteModal = {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
+    readonly: false,
     ...controlProps.normalTextAndRequired
   },
   status: {
@@ -1738,7 +1745,12 @@ export const formResultadoEstudianteModal = {
     label: "Resultado",
     placeholder: "Resultado",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Oro" },
+      { id: "2", name: "Plata" },
+      { id: "3", name: "Bronce" }
+    ]
   }
 };
 // FOTOS DE LA ACTIVIDAD

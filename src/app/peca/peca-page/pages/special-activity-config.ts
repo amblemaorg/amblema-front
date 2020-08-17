@@ -26,6 +26,7 @@ const textsAndButtons = {
 
 const dateAndStatus = {
     component: 'textsbuttons',
+    name: 'statusYDate',
     settings: {
         dateOrtext: {
             text: 'Fecha de la actividad especial:',
@@ -46,6 +47,7 @@ const dateAndStatus = {
 }
 const specialActivityTable = {
     component: 'table',
+    name: 'tableActividadEspecial',
     settings: {
         columns: {
             item: {
@@ -62,28 +64,29 @@ const specialActivityTable = {
             },
             impuesto: {
                 title: 'Impuesto',
-                valuePrepareFunction: ( row: any ) => {
-                    if (row) return row.toString()+'%';
+                valuePrepareFunction: (row: any) => {
+                    if (row) return row.toString() + '%';
                     else return '';
-                  },
-                  filterFunction: (cell?: any, search?: string) => {
-                      let value: string = cell.toString()+'%';
-                      value = value.toUpperCase();
-                      
-                      if (value.includes(search.toUpperCase()) || search === '') return true;
-                      else return false;
-                  }
+                },
+                filterFunction: (cell?: any, search?: string) => {
+                    let value: string = cell.toString() + '%';
+                    value = value.toUpperCase();
+
+                    if (value.includes(search.toUpperCase()) || search === '') return true;
+                    else return false;
+                }
             },
             subtotal: {
                 title: 'Subtotal'
             },
         },
+        //makesNoRequest: true,
         modalCode: 'dataSpecialActivityTable',
         buttonCode: 'dataSpecialActivityTable',
         tableCode: 'dataSpecialActivityTable',
         dataSpecialActivityTable: [
             {
-                id: '1sdfsdfsdfsd',
+               /*  id: '1sdfsdfsdfsd',
                 item: 1,
                 description: 'cosa',
                 cantidad: 34,
@@ -98,7 +101,7 @@ const specialActivityTable = {
                 cantidad: 34,
                 price: 444,
                 impuesto: 20,
-                subtotal: 500,
+                subtotal: 500, */
             },
         ],
         classes: {
@@ -106,59 +109,64 @@ const specialActivityTable = {
             hideEdit: false,
             hideDelete: false,
         },
-        total:1000
+        total: 1000
     }
 }
 
 //* MODAL ACTIVIDAD ESPECIAL ----------------------------------
 const formSpecialActivityTable = {
     component: 'form',
+    name: 'modalActividadEspecial',
     viewMode: 'both',
     settings: {
-      formsContent: formSpecialActivityTableModal,
-      buttons: ['guardar'],
-      formType: 'agregarActividadEspecial',
-      tableCode: 'dataSpecialActivityTable',
-      modalCode: 'dataSpecialActivityTable',
-      isFromCustomTableActions: true,
+        formsContent: formSpecialActivityTableModal,
+        buttons: ['guardar'],
+        formType: 'agregarActividadEspecial',
+        tableCode: 'dataSpecialActivityTable',
+        modalCode: 'dataSpecialActivityTable',
+        isFromCustomTableActions: true,
+        //makesNoRequest: true,
+        fetcherMethod: 'put',
     }
-  }
-  const textsAndButtonsSpecialActivityTable = {
+}
+const textsAndButtonsSpecialActivityTable = {
     component: 'textsbuttons',
+    name: 'specialDeleteModal',
     settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'dataSpecialActivityTable',
-      isFromCustomTableActions: true,
-      isDeleting: true,
+        subtitles: [{
+            text: '¿Desea eliminar este ítem?',
+        }],
+        action: [
+            {
+                type: 1,
+                name: 'Si',
+            },
+            {
+                type: 2,
+                name: 'No',
+            },
+        ],
+        modalCode: 'dataSpecialActivityTable',
+        isFromCustomTableActions: true,
+        isDeleting: true,
+        //makesNoRequest: true,
     }
-  }
-  const modalSpecialActivityTable = {
+}
+const modalSpecialActivityTable = {
     component: 'modal',
     settings: {
-      modalCode: 'dataSpecialActivityTable',
-      items: [
-        {        
-          childBlocks: [
-            { ...formSpecialActivityTable },
-            { ...textsAndButtonsSpecialActivityTable },
-          ]
-        }
-      ]
+        modalCode: 'dataSpecialActivityTable',
+        items: [
+            {
+                childBlocks: [
+                    { ...formSpecialActivityTable },
+                    { ...textsAndButtonsSpecialActivityTable },
+                ]
+            }
+        ]
     }
-  }
-  //* ------------------------------------------
+}
+//* ------------------------------------------
 
 export const SPECIAL_ACTIVITY_CONFIG = {
     header: {
@@ -167,11 +175,11 @@ export const SPECIAL_ACTIVITY_CONFIG = {
     blocks: [
         {
             component: 'profiles',
-            settings: {                
+            settings: {
                 items: [
-                    {     
+                    {
                         childBlocks: [
-                            { ...dateAndStatus },                            
+                            { ...dateAndStatus },
                             { ...specialActivityTable },
                             { ...textsAndButtons },
                             { ...modalSpecialActivityTable },

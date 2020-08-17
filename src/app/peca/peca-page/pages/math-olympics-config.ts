@@ -137,7 +137,7 @@ const resultadoEstudiante = {
         tableCode: 'dataResultadoEstudiante',
         dataResultadoEstudiante: [
             {
-                id: '1dvbdjvjd',
+               /*  id: '1dvbdjvjd',
                 name: 'Jhon',
                 lastName: 'Week',
                 grade: '5',
@@ -147,7 +147,7 @@ const resultadoEstudiante = {
                     section: 'B',
                 },
                 status: '2',
-                result: 'Oro',
+                result: 'Oro', */
             },
         ],
         classes: {
@@ -160,6 +160,7 @@ const resultadoEstudiante = {
 //* MODAL RESULTADOS OLIMPIADAS ----------------------------------
 const formResultadoEstudiante = {
     component: 'form',
+    name: 'resultadoEstudianteModal',
     viewMode: 'both',
     settings: {
       formsContent: formResultadoEstudianteModal,
@@ -168,6 +169,7 @@ const formResultadoEstudiante = {
       tableCode: 'dataResultadoEstudiante',
       modalCode: 'dataResultadoEstudiante',
       isFromCustomTableActions: true,
+      fetcherMethod: 'put',
     }
   }
   const textsAndButtonsResultadoEstudiante = {
