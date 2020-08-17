@@ -9,6 +9,7 @@ import { PageBlockComponent } from "./blocks/page-block.component";
 import { Location, DOCUMENT } from "@angular/common"
 import { ActivatedRoute } from "@angular/router";
 import { PdfYearbookService } from '../../services/peca/pdf-yearbook.service';
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "peca-page",
@@ -30,7 +31,8 @@ export class PecaPageComponent {
     protected factoryResolver: ComponentFactoryResolver, 
     protected location?: Location,
     protected route?: ActivatedRoute,
-    protected pdfYearbookService?: PdfYearbookService
+    protected pdfYearbookService?: PdfYearbookService,
+    protected toastr?: ToastrService
   ) {}
 
   public instantiateComponent(config) {
@@ -140,9 +142,29 @@ export class PecaPageComponent {
     return this.pdfData ? false : true;
   }
   
+  pdfToasterCalledTimes: number = 0;
   public generatePDF() {
+    this.pdfToasterCalledTimes = 0;
     this.creatingPdf = true;
-    this.creatingPdf = this.pdfYearbookService.generateYearbookPdf(this.pdfData); 
+
+    this.pdfYearbookService.generateYearbookPdf(this.pdfData)
+      .then(res => {
+        this.creatingPdf = res;
+        if (this.pdfToasterCalledTimes === 0) 
+          this.toastr.success("La descarga del PDF comenzará en breve", "", {
+            positionClass: "toast-bottom-right"
+          });
+      })
+      .catch(e => {
+        this.creatingPdf = e;
+        if (this.pdfToasterCalledTimes === 0) 
+          this.toastr.error("Algo salió mal al procesar el PDF", "",
+            { positionClass: "toast-bottom-right" }
+          );      
+      })
+      .finally(() => {
+        this.pdfToasterCalledTimes++;
+      }); 
   }
 
 }

@@ -1,16 +1,13 @@
 import {
   Component,
   AfterViewInit,
-  Injector,
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
-  Inject,
   OnInit,
   OnDestroy,
 } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { DOCUMENT } from "@angular/common";
 import { PecaPageComponent } from "../peca-page.component";
 import { MapperYearBookWeb } from "./yearbook-config";
 import { PecaState } from "../../../store/states/peca/peca.state";
@@ -51,13 +48,10 @@ export class YearbookPageComponent extends PecaPageComponent
     globals: GlobalService
   ) {
     super(factoryResolver, null, null, pdfYearbookService);
-
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-
       if (this.loadedData) this.updateMethods();
     });
-
     //this.instantiateComponent(config);
   }
 

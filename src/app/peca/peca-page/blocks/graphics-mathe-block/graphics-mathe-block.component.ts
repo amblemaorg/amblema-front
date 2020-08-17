@@ -31,7 +31,6 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
   arrayColors=[];
   dataChart = [];
   dataLabel = [];
-  nombreEscuela: string;
   UrlLapse = "";
   constructor(private router: Router) {
     this.type = "presentational";
@@ -55,7 +54,6 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          this.nombreEscuela = data.activePecaContent.school.name;
           this.arraySections = data.activePecaContent.school.sections;
           //console.log("secciones", this.arraySections);
 
@@ -64,7 +62,7 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
               `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
             );
             this.arrayColors.push(
-              "#81B03E"
+              "#FFF"
             );
           }
           if (this.UrlLapse === "1") {
@@ -114,7 +112,7 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
           labels: this.dataLabel,
           datasets: [
             {
-              label: `Grados y secciones de ${this.nombreEscuela}`,
+              label: 'Diagnóstico de matemática​',
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,
