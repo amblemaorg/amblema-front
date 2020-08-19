@@ -70,13 +70,13 @@ export class YearbookPageComponent extends PecaPageComponent
         (data) => {
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
-              let newYearBook;
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
                 sections: data.activePecaContent.school.sections,
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
+              let newYearBook = currentYearBook;
               const { approvalHistory, isInApproval, pecaId, userId } = currentYearBook;
               const yearbookHasNotApprovedRequest = !isInApproval && approvalHistory.length > 0;
 
