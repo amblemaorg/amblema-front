@@ -36,10 +36,18 @@ export interface PecaModel {
   updatedAt?: string;
 }
 
+// Data models for request to backend
+export interface PecaLapsePlanningRequest {
+  attachedFile: string;
+  meetingDate: string;
+  status: string;
+}
+
 export interface PecaStateModel {
   user?: PecaUserModel;
   content: PecaModel | null;
   selectedProject: PecaProjectModel | null;
   userPermissions?: string[];
   pecaContentRequesting?: boolean;
+  lapsePlanningRequest: PecaLapsePlanningRequest;
 }

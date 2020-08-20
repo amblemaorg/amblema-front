@@ -1,193 +1,234 @@
 <div class="texts-buttons-wrapper">
-    <div class="texts-wrapper" 
+  <div
+    class="texts-wrapper"
+    *ngIf="
+      settings.dateOrtext ||
+      settings.download ||
+      settings.status ||
+      settings.selectGeneralStatus ||
+      settings.selectStatus ||
+      settings.btnGeneral ||
+      settings.inputAndBtns ||
+      settings.title ||
+      settings.subtitles ||
+      settings.genActSelectStatus
+    "
+  >
+    <div class="date-download-status d-flex justify-content-between mt-1">
+      <div
+        *ngIf="settings.dateOrtext && !reloadDate"
+        class="left-side"
+        [class.mr-auto]="settings.genActSelectStatus"
+      >
+        <h6 class="left-sided-content">
+          <span *ngIf="settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text }}</span>
+          <span
+            [class.display-date]="settings.dateOrtext.date"
+            *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"
+          ></span>
+          <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
+          <span
+            *ngIf="
+              settings.dateOrtext.text &&
+              settings.dateOrtext.fields &&
+              settings.dateOrtext.fields.length > 0
+            "
+            class="estilo-date"
+            [class.estilo-date-non-editable]="!userCanEdit"
+          >
+            <input
+              #inputDate
+              type="date"
+              class="form-control is-date-input tb-date-picker"
+              [value]="settings.dateOrtext.fields[0].value"
+              (change)="controlDateChange($event, 'greater')"
+              [disabled]="activity_uneditable || !userCanEdit"
+            />
+            <input
+              [class.d-none]="inputDate.value.length > 0"
+              class="form-control is-date-placeholder"
+              [class.greyer]="activity_uneditable || !userCanEdit"
+              autocomplete="off"
+              type="text"
+              readonly
+              [placeholder]="settings.dateOrtext.fields[0].placeholder"
+              (click)="focusDatePicker(inputDate)"
+            />
+            <div class="date-error-message">
+              <strong>La fecha debe ser mayor a la de hoy</strong>
+            </div>
+          </span>
+        </h6>
+      </div>
+      <div *ngIf="settings.download || settings.status" class="right-side">
+        <h6 *ngIf="settings.status && settings.status.subText != 0" class="status ml-4">
+          <span>{{ settings.status.text }}:&nbsp;</span>
+          <span
+            class="rounded-circle"
+            [ngClass]="{
+              yellow: settings.status.subText === 1,
+              green: settings.status.subText === 2,
+              red: settings.status.subText === 3 || settings.status.subText === 4
+            }"
+          ></span>
+          &nbsp;
+          <span class="font-weight-normal">{{
+            settings.status.subText === 1
+              ? "Pendiente"
+              : settings.status.subText === 2
+              ? "Aprobado"
+              : settings.status.subText === 3
+              ? "Rechazado"
+              : "Cancelado"
+          }}</span>
+        </h6>
+
+        <a
+          *ngIf="settings.download && settings.download.url && userCanEdit"
+          title="Descargar"
+          [href]="settings.download.url"
+          target="_blank"
+          [download]="settings.download.name"
+          class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper"
+          [class.ml-4]="!settings.isGenericActivity"
+          (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+          [class.inactive]="activity_uneditable || !userCanEdit"
+          >Descargar</a
+        >
+      </div>
+      <div
         *ngIf="
-            settings.dateOrtext || settings.download || settings.status || settings.selectGeneralStatus || 
-            settings.selectStatus || settings.btnGeneral || settings.inputAndBtns || settings.title || 
-            settings.subtitles || settings.genActSelectStatus
-        ">
-        <div class="date-download-status d-flex justify-content-between mt-1">
-            <div *ngIf="settings.dateOrtext && !reloadDate" class="left-side" [class.mr-auto]="settings.genActSelectStatus">
-                <h6 class="left-sided-content">
-                    <span *ngIf="settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text }}</span>
-                    <span [class.display-date]="settings.dateOrtext.date" *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"></span>
-                    <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
-                    <span 
-                        *ngIf="settings.dateOrtext.text && settings.dateOrtext.fields && settings.dateOrtext.fields.length > 0"
-                        class="estilo-date"
-                        [class.estilo-date-non-editable]="!userCanEdit"
-                    >
-                        <input
-                            #inputDate
-                            type="date" 
-                            class="form-control is-date-input tb-date-picker"
-                            [value]="settings.dateOrtext.fields[0].value"                            
-                            (change)="controlDateChange($event,'greater')"
-                            [disabled]="activity_uneditable || !userCanEdit"
-                        />
-                        <input 
-                            [class.d-none]="inputDate.value.length > 0"
-                            class="form-control is-date-placeholder"
-                            [class.greyer]="activity_uneditable || !userCanEdit"
-                            autocomplete='off'
-                            type="text"
-                            readonly
-                            [placeholder]="settings.dateOrtext.fields[0].placeholder"    
-                            (click)="focusDatePicker(inputDate)"
-                        />                        
-                        <div class="date-error-message">
-                          <strong>La fecha debe ser mayor a la de hoy</strong>
-                        </div>                       
-                    </span>
-                </h6>
-            </div>
-            <div *ngIf="settings.download || settings.status" class="right-side">
-                <h6 *ngIf="settings.status && settings.status.subText != 0" class="status ml-4">
-                    <span>{{settings.status.text}}:&nbsp;</span>
-                    <span 
-                        class="rounded-circle"
-                        [ngClass]="{
-                            'yellow': settings.status.subText === 1,
-                            'green': settings.status.subText === 2,
-                            'red': settings.status.subText === 3
-                        }"
-                    ></span>&nbsp;
-                    <span class="font-weight-normal">{{
-                        settings.status.subText === 1 
-                        ? 'Pendiente' 
-                        : settings.status.subText === 2 
-                        ? 'Aprobado'
-                        : 'Rechazado'
-                    }}</span>
-                </h6>
+          settings.selectStatus ||
+          settings.btnGeneral ||
+          settings.selectGeneralStatus ||
+          settings.genActSelectStatus
+        "
+        class="right-side select-estatus-width"
+        [class.select-gen-act]="settings.genActSelectStatus"
+        [class.ml-auto]="!settings.download && settings.genActSelectStatus"
+      >
+        <h6 *ngIf="settings.selectGeneralStatus" class="h6-select">
+          <span>{{ settings.selectGeneralStatus.text }}</span>
+        </h6>
+        <ng-select
+          *ngIf="settings.selectGeneralStatus"
+          class="form-control select-general"
+          [items]="settings.selectGeneralStatus.lista"
+          [(ngModel)]="currentSelected"
+          bindValue="id"
+          bindLabel="name"
+          [placeholder]="settings.selectGeneralStatus.placeholder"
+          (change)="settings.onStatusChange($event)"
+        >
+        </ng-select>
+        <ng-select
+          *ngIf="settings.selectStatus"
+          class="form-control select-estatus"
+          [items]="settings.selectStatus.lista"
+          [(ngModel)]="currentSelected"
+          bindValue="id"
+          bindLabel="name"
+          [placeholder]="settings.selectStatus.placeholder"
+        >
+        </ng-select>
+        <div
+          *ngIf="settings.genActSelectStatus && userCanEdit"
+          class="form-group select-gen-act-control"
+          [formGroup]="statusForm"
+        >
+          <label>Modificar estatus:</label>
+          <ng-select
+            class="form-control"
+            [class.readonly-activity-selector]="statusSelectorDisabler()"
+            [items]="statuses"
+            bindValue="id"
+            bindLabel="name"
+            [labelForId]="getId('status-changer')"
+            formControlName="status"
+            [virtualScroll]="true"
+            [id]="getId('status-changer')"
+            [clearable]="false"
+            [searchable]="false"
+            [loading]="selectorSendingEstatus"
+            [readonly]="statusSelectorDisabler()"
+            (change)="changeStatus($event)"
+          >
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <small>{{ item.name }}</small>
+            </ng-template>
+          </ng-select>
+        </div>
+        <ng-container
+          *ngIf="settings.btnGeneral && settings.btnGeneral.addToTable; else regularGeneral"
+        >
+          <button
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+            (click)="addToTable(true)"
+            [disabled]="!userCanEdit"
+          >
+            {{ settings.btnGeneral.name }}
+          </button>
+        </ng-container>
+        <ng-template #regularGeneral>
+          <button
+            *ngIf="settings.btnGeneral"
+            title="general"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+            (click)="addToTable()"
+            [disabled]="!currentSelected || !userCanEdit"
+          >
+            {{ settings.btnGeneral.name }}
+          </button>
+        </ng-template>
+      </div>
 
-                <a 
-                    *ngIf="settings.download && settings.download.url && userCanEdit" 
-                    title="Descargar" 
-                    [href]="settings.download.url" 
-                    target="_blank" 
-                    [download]="settings.download.name" 
-                    class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper"
-                    [class.ml-4]="!settings.isGenericActivity"
-                    (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
-                    [class.inactive]="activity_uneditable || !userCanEdit"
-                >Descargar</a>
-            </div>
-            <div
-                *ngIf="
-                    settings.selectStatus || 
-                    settings.btnGeneral || 
-                    settings.selectGeneralStatus || 
-                    settings.genActSelectStatus
-                " 
-                class="right-side select-estatus-width"
-                [class.select-gen-act]="settings.genActSelectStatus"
-                [class.ml-auto]="!settings.download && settings.genActSelectStatus"
-            >
-                <h6 *ngIf="settings.selectGeneralStatus" class="h6-select">
-                    <span>{{settings.selectGeneralStatus.text}}</span>
-                </h6>
-                    <ng-select *ngIf="settings.selectGeneralStatus"
-                        class="form-control select-general"
-                        [items]="settings.selectGeneralStatus.lista"
-                        [(ngModel)]="currentSelected"
-                        bindValue="id"
-                        bindLabel="name"
-                        [placeholder]="settings.selectGeneralStatus.placeholder"
-                    >
-                    </ng-select>
-                    <ng-select *ngIf="settings.selectStatus"
-                        class="form-control select-estatus"
-                        [items]="settings.selectStatus.lista"
-                        [(ngModel)]="currentSelected"
-                        bindValue="id"
-                        bindLabel="name"
-                        [placeholder]="settings.selectStatus.placeholder"
-                    >
-                    </ng-select>
-                    <div 
-                        *ngIf="settings.genActSelectStatus && userCanEdit"
-                        class="form-group select-gen-act-control" 
-                        [formGroup]="statusForm"
-                    >
-                        <label>Modificar estatus:</label>
-                        <ng-select
-                            class="form-control"  
-                            [class.readonly-activity-selector]="statusSelectorDisabler()"
-                            [items]="statuses"
-                            bindValue="id"
-                            bindLabel="name"
-                            [labelForId]="getId('status-changer')"
-                            formControlName="status"
-                            [virtualScroll]="true"
-                            [id]="getId('status-changer')"  
-                            [clearable]="false" 
-                            [searchable]="false"  
-                            [loading]="selectorSendingEstatus"
-                            [readonly]="statusSelectorDisabler()"
-                            (change)="changeStatus($event)"        
-                        >
-                            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
-                                <small>{{item.name}}</small>
-                            </ng-template>
-                        </ng-select>
-                    </div>
-                    <ng-container *ngIf="settings.btnGeneral && settings.btnGeneral.addToTable; else regularGeneral">
-                        <button 
-                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-                            (click)="addToTable(true)"
-                            [disabled]="!userCanEdit"
-                        >{{settings.btnGeneral.name}}
-                        </button>
-                    </ng-container>
-                    <ng-template #regularGeneral>
-                        <button 
-                            *ngIf="settings.btnGeneral"
-                            title="general" 
-                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-                            (click)="addToTable()"
-                            [disabled]="!currentSelected || !userCanEdit"
-                        >{{settings.btnGeneral.name}}
-                        </button>
-                    </ng-template>                    
-            </div>
-
-            <!--Input y boton para el anuario-->
-            <div *ngIf="settings.inputAndBtns" class="containerInputAndBtn buttons-wrapper">
-                <div *ngFor="let prueba of settings.inputAndBtns" class="" >
-                    <h6 class="text-left" *ngIf="prueba.titleInput" [class.mb-negativo]="prueba.titleInput">{{prueba.titleInput}}</h6>
-                    <input *ngIf="prueba.input"
-                    class="form-control style-input"
-                    type="text"
-                    placeholder="{{prueba.input}}"
-                    />
-                    <button *ngIf="prueba.btn"
-                    title="general" 
-                    type="button"
-                    class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn"
-                    (click)="addToTable()"
-                    >{{prueba.btn}}
-                    </button>
-                    <!--<textarea *ngIf="prueba.textDesc"
+      <!--Input y boton para el anuario-->
+      <div *ngIf="settings.inputAndBtns" class="containerInputAndBtn buttons-wrapper">
+        <div *ngFor="let prueba of settings.inputAndBtns" class="">
+          <h6 class="text-left" *ngIf="prueba.titleInput" [class.mb-negativo]="prueba.titleInput">
+            {{ prueba.titleInput }}
+          </h6>
+          <input
+            *ngIf="prueba.input"
+            class="form-control style-input"
+            type="text"
+            placeholder="{{ prueba.input }}"
+          />
+          <button
+            *ngIf="prueba.btn"
+            title="general"
+            type="button"
+            class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn"
+            (click)="addToTable()"
+          >
+            {{ prueba.btn }}
+          </button>
+          <!--<textarea *ngIf="prueba.textDesc"
                     class="form-control mt-3 style-textarea"
                     type="text"
                     placeholder="{{prueba.textDesc}}"
                     ></textarea>-->
-                </div>
-            <!--------------------------------------->
-
-            </div>
         </div>
+        <!--------------------------------------->
+      </div>
+    </div>
 
-        <!-- <ng-container *ngFor="let text of settings.texts"> -->
-            <h5 *ngIf="settings.title" class="title" 
-            [class.mt-4]="settings.dateOrtext || settings.download || settings.status || settings.selectStatus"
-            [class.text-left]="settings.title.aligning == 'left'" 
-            [class.text-center]="settings.title.aligning == 'center'">
-                {{ settings.title.text }}
-            </h5> <br class="line-breaker" *ngIf="settings.title">
-    
-           <!--  <div 
-                class="sub-titles mb-2" 
+    <!-- <ng-container *ngFor="let text of settings.texts"> -->
+    <h5
+      *ngIf="settings.title"
+      class="title"
+      [class.mt-4]="
+        settings.dateOrtext || settings.download || settings.status || settings.selectStatus
+      "
+      [class.text-left]="settings.title.aligning == 'left'"
+      [class.text-center]="settings.title.aligning == 'center'"
+    >
+      {{ settings.title.text }}
+    </h5>
+    <br class="line-breaker" *ngIf="settings.title" />
+
+    <!--  <div
+                class="sub-titles mb-2"
                 *ngIf="settings.subtitles"
                 [class.text-center]="settings.isFromCustomTableActions"
                 [class.text-incremented]="settings.isFromCustomTableActions"
@@ -197,112 +238,143 @@
                 <p [class.text-justify]="settings.isGenericActivity">{{ settings.subtitles.text }}</p>
             </div> -->
 
-            <div 
-                class="sub-titles mb-2" 
-                *ngFor="let subtitle of settings.subtitles"
-                [class.text-center]="settings.isFromCustomTableActions"
-                [class.text-incremented]="settings.isFromCustomTableActions"
-                [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
-            >
-                <h6 class="sub-title">{{ subtitle.title }}</h6>
-                <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>
-            </div>
-        <!-- </ng-container> -->
-    </div>
-
-    <!-- VIDEO SECTION -->
-    <div *ngIf="showThisVideo" class="video-section">
-        <div *ngIf="settings.video && settings.video.url" class="activity-video-container">
-            <div class="activity-video" [innerHTML]="getVideo(settings.video.url)"></div>              
-        </div>  
-    </div>
-
-    <div 
-        *ngIf="(settings.action && settings.action.length>0) || settings.upload || settings.uploaddown" 
-        class="d-inline-block buttons-wrapper"
-        [class.text-center]="settings.isFromCustomTableActions"
-        [class.py-3]="settings.isFromCustomTableActions"
+    <div
+      class="sub-titles mb-2"
+      *ngFor="let subtitle of settings.subtitles"
+      [class.text-center]="settings.isFromCustomTableActions"
+      [class.text-incremented]="settings.isFromCustomTableActions"
+      [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
     >
-        <div 
-            *ngIf="settings.upload && !reloadUpload" 
-            class="btn-in-wrapper" 
-            id="tb-upload-btn-container" 
-            #tbUploadFile
-            [class.d-inline]="userCanEdit"
-            [class.d-none]="!userCanEdit && settings.upload && settings.upload.uploadEmpty"
-        >
-            <input class="d-none tb-upload-btn-input-file" id="tb-upload-btn-input-file" (change)="fileMngr($event)" type="file"
-                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
-            <button id="tb-upload-btn"  [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
-                (click)="clickUpload(tbUploadFile); $event.preventDefault()" 
-                class="btn btn-primary text-decoration-none py-1 px-4"
-                [disabled]="activity_uneditable || !userCanEdit">
-                {{ settings.upload.uploadEmpty ? 'Adjuntar archivo' : shortenName(settings.upload.name) }}
-            </button>
-        </div>
+      <h6 class="sub-title">{{ subtitle.title }}</h6>
+      <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>
+    </div>
+    <!-- </ng-container> -->
+  </div>
 
-        <a 
-            *ngIf="settings.uploaddown && settings.uploaddown.url" 
-            [title]="settings.uploaddown.name" 
-            [href]="settings.uploaddown.url" 
-            target="_blank" 
-            [download]="settings.uploaddown.name" 
-            class="btn btn-primary text-decoration-none py-1 px-4"
-            (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
-            [class.inactive]="activity_uneditable || !userCanEdit"
-        >{{settings.uploaddown.name}}</a>
-    <!-- 
-        <a *ngIf="settings.download" title="Descargar" 
-        [href]="settings.download.url" target="_blank" 
-        [download]="settings.download.name" 
+  <!-- VIDEO SECTION -->
+  <div *ngIf="showThisVideo" class="video-section">
+    <div *ngIf="settings.video && settings.video.url" class="activity-video-container">
+      <div class="activity-video" [innerHTML]="getVideo(settings.video.url)"></div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      (settings.action && settings.action.length > 0) || settings.upload || settings.uploaddown
+    "
+    class="d-inline-block buttons-wrapper"
+    [class.text-center]="settings.isFromCustomTableActions"
+    [class.py-3]="settings.isFromCustomTableActions"
+  >
+    <div
+      *ngIf="settings.upload && !reloadUpload"
+      class="btn-in-wrapper"
+      id="tb-upload-btn-container"
+      #tbUploadFile
+      [class.d-inline]="userCanEdit"
+      [class.d-none]="!userCanEdit && settings.upload && settings.upload.uploadEmpty"
+    >
+      <input
+        class="d-none tb-upload-btn-input-file"
+        id="tb-upload-btn-input-file"
+        (change)="fileMngr($event)"
+        type="file"
+        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint"
+      />
+      <button
+        id="tb-upload-btn"
+        [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
+        (click)="clickUpload(tbUploadFile); $event.preventDefault()"
+        class="btn btn-primary text-decoration-none py-1 px-4"
+        [disabled]="activity_uneditable || !userCanEdit"
+      >
+        {{ settings.upload.uploadEmpty ? "Adjuntar archivo" : shortenName(settings.upload.name) }}
+      </button>
+    </div>
+
+    <a
+      *ngIf="settings.uploaddown && settings.uploaddown.url"
+      [title]="settings.uploaddown.name"
+      [href]="settings.uploaddown.url"
+      target="_blank"
+      [download]="settings.uploaddown.name"
+      class="btn btn-primary text-decoration-none py-1 px-4"
+      (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+      [class.inactive]="activity_uneditable || !userCanEdit"
+      >{{ settings.uploaddown.name }}</a
+    >
+    <!--
+        <a *ngIf="settings.download" title="Descargar"
+        [href]="settings.download.url" target="_blank"
+        [download]="settings.download.name"
         class="btn btn-primary text-decoration-none p-1 btn-in-wrapper">
             <nb-icon icon="planificacion"></nb-icon>
-        </a> 
+        </a>
     -->
-        <ng-container *ngIf="userCanEdit">
-            <ng-container *ngFor="let action of settings.action">
-                <ng-container *ngIf="action.type==6 || action.type == 5; else notModal">
-                    <button
-                        *ngIf="action.name"
-                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"                    
-                        (click)="addToTable(true, action.type==6?false : true)"
-                    >{{ action.name }}
-                    </button>
-                </ng-container>
-                <ng-template #notModal>
-                    <button
-                        *ngIf="action.name"
-                        [class.d-none]="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel"
-                        class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-                        [disabled]="disableThis(action.type) || isSending || sleepSend"
-                        (click)="takeAction(action.type, $event)"
-                    >
-                            <span *ngIf="isSending && ( 
-                                action.type==4 || action.type==7 || action.type==8
-                                || (settings.isDeleting 
-                                    && action.type==1) 
-                            )" class="spinner-grow spinner-grow-sm"></span>
-                            {{
-                                isSending && (action.type==4 || action.type==7 || action.type==8) 
-                                    ? ( action.type==8 ? 'Guardando' : (
-                                        action.type==7 ? setGenActBtnName() : 'Enviando'
-                                    ) ) 
-                                    : ( action.type==7 ? setGenActBtnName() : action.name) 
-                            }}
-                    </button>
+    <ng-container *ngIf="userCanEdit">
+      <ng-container *ngFor="let action of settings.action">
+        <ng-container *ngIf="action.type == 6 || action.type == 5; else notModal">
+          <button
+            *ngIf="action.name"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="addToTable(true, action.type == 6 ? false : true)"
+          >
+            {{ action.name }}
+          </button>
+        </ng-container>
+        <ng-template #notModal>
+          <button
+            *ngIf="action.name"
+            [class.d-none]="
+              (action.type === 4 || action.type === 9) &&
+              settings.fetcherUrls &&
+              settings.fetcherUrls.cancel
+            "
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            [disabled]="disableThis(action.type) || isSending || sleepSend"
+            (click)="takeAction(action.type, $event)"
+          >
+            <span
+              *ngIf="
+                isSending &&
+                (action.type == 4 ||
+                  action.type == 7 ||
+                  action.type == 8 ||
+                  (settings.isDeleting && action.type == 1))
+              "
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            {{
+              isSending && (action.type == 4 || action.type == 7 || action.type == 8)
+                ? action.type == 8
+                  ? "Guardando"
+                  : action.type == 7
+                  ? setGenActBtnName()
+                  : "Enviando"
+                : action.type == 7
+                ? setGenActBtnName()
+                : action.name
+            }}
+          </button>
 
-                    <ng-container *ngIf="(action.type === 4 || action.type === 9) && settings.fetcherUrls && settings.fetcherUrls.cancel">
-                        <button                        
-                            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-                            [disabled]="isSending || sleepSend"
-                            (click)="cancelRequest()"
-                        >
-                            <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
-                            {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
-                        </button>
-                    </ng-container>
-                </ng-template>
-            </ng-container>   
-        </ng-container>     
-    </div>
+          <ng-container
+            *ngIf="
+              (action.type === 4 || action.type === 9) &&
+              settings.fetcherUrls &&
+              settings.fetcherUrls.cancel
+            "
+          >
+            <button
+              class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+              [disabled]="isSending || sleepSend"
+              (click)="cancelRequest()"
+            >
+              <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
+              {{ isSending ? "Cancelando solicitud" : "Cancelar solicitud" }}
+            </button>
+          </ng-container>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+  </div>
 </div>
