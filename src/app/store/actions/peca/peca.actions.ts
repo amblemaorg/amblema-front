@@ -1,21 +1,21 @@
-import { PecaProjectModel } from '../../states/peca/peca.model';
+import { PecaProjectModel } from "../../states/peca/peca.model";
 
 export class SetUser {
-  static readonly type = '[peca] set PecaUser';
+  static readonly type = "[peca] set PecaUser";
   constructor(public payload: any) {}
 }
 
 export class SetSelectedProject {
-  static readonly type = '[peca] set SelectedProject';
+  static readonly type = "[peca] set SelectedProject";
   constructor(public payload: PecaProjectModel) {}
 }
 
 export class SetUserPermissions {
-  static readonly type = '[peca] set UserPermissions';
+  static readonly type = "[peca] set UserPermissions";
   constructor(public payload: any) {}
 }
 export class FetchPecaContent {
-  static readonly type = '[peca] get PecaContent';
+  static readonly type = "[peca] get PecaContent";
   constructor(public payload: string) {}
 }
 
@@ -25,6 +25,44 @@ export class FetchProject {
 }
 
 export class ClearPecaState {
-  static readonly type = '[peca] clear PecaState';
+  static readonly type = "[peca] clear PecaState";
   constructor() {}
+}
+
+export class SetLapsePlanningRequestData {
+  static readonly type = "[peca] Set LapsePlanning Data To Send Request";
+  constructor(public payload: { file?: string; date?: string; status?: string }) {}
+}
+
+export class UpdateLapsePlanningFile {
+  static readonly type = "[peca] Update Lapse PLanning File";
+  constructor(
+    public payload: {
+      file?: any;
+      lapseNumber: string;
+    }
+  ) {}
+}
+
+export class CancelLapsePlanningFile {
+  static readonly type = "[peca] Cancel Lapse Planning File ";
+  constructor(
+    public payload: {
+      lapseNumber: string;
+    }
+  ) {}
+}
+
+export class UpdateLapsePlanningDateAndStatus {
+  static readonly type = "[peca] Update Lapse PLannig Date and Status";
+  constructor(
+    public payload: {
+      lapseNumber: string;
+    }
+  ) {}
+}
+
+export class UpdateInitialWorkshop {
+  static readonly type = "[peca] Update Initial Workshop";
+  constructor(public payload: any) {}
 }
