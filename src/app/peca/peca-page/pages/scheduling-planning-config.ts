@@ -105,13 +105,17 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
 
   const meetingDateFormatted = meetingDate ? meetingDate.split("T")[0] : null;
   const meetingStatus = status ? +status : 1;
-  let currentFileStatus = 1;
   let currentAttachedFile = attachedFile;
+  let currentFileStatus = 1;
+  approvalHistory.map((request) => {
+    if (request.detail.attachedFile.name === attachedFile.name) {
+      currentFileStatus = +request.status;
+    }
+  });
   if (isInApproval && approvalHistory.length > 0) {
-    currentAttachedFile = approvalHistory[approvalHistory.length - 1].detail.attachedFile;
-    currentFileStatus = currentAttachedFile.status
-      ? +currentAttachedFile.status
-      : currentFileStatus;
+    const lastFileRequest = approvalHistory[approvalHistory.length - 1];
+    currentAttachedFile = lastFileRequest.detail.attachedFile;
+    currentFileStatus = lastFileRequest.status ? +lastFileRequest.status : currentFileStatus;
   }
 
   const proposal = {
@@ -181,12 +185,11 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
       selectGeneralStatus: {
         text: "Modificar estatus:",
         lista: [
-          { id: 1, name: "Pendiente" },
-          { id: 2, name: "Aprobado" },
-          { id: 3, name: "Rechazado" },
+          { id: 1, name: "Por completar" },
+          { id: 2, name: "Completado" },
         ],
         value: meetingStatus,
-        placeholder: "Pendiente",
+        placeholder: "Por completar",
       },
       subtitles: [
         {
