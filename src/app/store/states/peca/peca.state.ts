@@ -1,7 +1,6 @@
 import { ToastrService } from "ngx-toastr";
-import { patch } from "@ngxs/store/operators";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
-import { State, Action, StateContext, Selector } from "@ngxs/store";
+import { State, Action, StateContext, Selector, Store } from "@ngxs/store";
 import {
   SetUser,
   ClearPecaState,
@@ -35,6 +34,7 @@ import { environment } from "../../../../environments/environment";
 })
 export class PecaState {
   constructor(
+    private store: Store,
     private apiService: ApiWebContentService,
     private fetcher: HttpFetcherService,
     private toastr: ToastrService
@@ -123,6 +123,9 @@ export class PecaState {
     if (file) {
       formData.append("attachedFile", file);
     }
+    this.toastr.info("Guardando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
     try {
       const response = await this.fetcher.post(url, formData).toPromise();
       patchState({
@@ -149,29 +152,22 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: CancelLapsePlanningFile
   ) {
-    const state = getState();
-    const userId = state.user.id;
-    const pecaId = state.content.id;
+    const { content: pecaContent } = getState();
     const { lapseNumber } = payload;
     const lapseName = `lapse${lapseNumber}`;
-    const url = `pecaprojects/lapseplanning/${pecaId}/${lapseNumber}?userId=${userId}`;
-    const formData = new FormData();
-    formData.append("attachedFile", null);
+    const { approvalHistory } = pecaContent[lapseName].lapsePlanning;
+    const lastLapsePlanningFileRequest = approvalHistory[approvalHistory.length - 1];
+    const url = `requestscontentapproval/${lastLapsePlanningFileRequest.id}`;
+    const data = {
+      status: "4",
+    };
 
+    this.toastr.info("Cancelando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
     try {
-      this.toastr.info("Cancelando, espere por favor...", "", {
-        positionClass: "toast-bottom-right",
-      });
-      const response = await this.fetcher.post(url, formData).toPromise();
-      patchState({
-        content: {
-          ...state.content,
-          [lapseName]: {
-            ...state.content[lapseName],
-            lapsePlanning: response,
-          },
-        },
-      });
+      const response = await this.fetcher.put(url, data).toPromise();
+      this.store.dispatch([new FetchPecaContent(pecaContent.id)]);
       this.toastr.success("Solicitud cancelada", "", {
         positionClass: "toast-bottom-right",
       });
@@ -196,10 +192,10 @@ export class PecaState {
     const formData = new FormData();
     formData.append("meetingDate", state.lapsePlanningRequest.meetingDate);
     formData.append("status", state.lapsePlanningRequest.status);
+    this.toastr.info("Guardando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
     try {
-      this.toastr.info("Guardando, espere por favor...", "", {
-        positionClass: "toast-bottom-right",
-      });
       const response = await this.fetcher.post(url, formData).toPromise();
       patchState({
         content: {
