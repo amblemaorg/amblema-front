@@ -714,7 +714,7 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
     return [
-      createTitleComponent("Tabla de diagnóstico de lectura"),
+      createTitleComponent("Diagnóstico de lectura"),
       {
         component: "table",
         settings: {
@@ -722,8 +722,8 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           columns: {
             grade: { title: "Grado" },
             section: { title: "Sección" },
-            words: { title: "Palabras por minuto" },
-            wordsIndex: { title: "Índice de palabras por minuto" },
+            words: { title: "Resultado de lectura" },
+            wordsIndex: { title: "Índice de lectura" },
           },
           tableCode: "readingTable",
           readingTable: lapseData.diagnosticSummary.map((diagnostic) => {
@@ -741,11 +741,13 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
         },
       },
-      createTitleComponent("Gráfica de diagnóstico de lectura"),
+      createTitleComponent("Gráfico estadístico del diagnóstico de lectura"),
       {
         component: "graphics",
         settings: {
           chartId: `${lapseName}-reading-graphic`,
+          sendGraphicToPdf: "diagnosticReading",
+          lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
@@ -782,7 +784,7 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
         },
       },
-      createTitleComponent("Tabla de diagnóstico de multiplicación"),
+      createTitleComponent("Diagnóstico de multiplicación"),
       {
         component: "table",
         settings: {
@@ -790,9 +792,9 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           columns: {
             grade: { title: "Grado" },
             section: { title: "Sección" },
-            multiplications: { title: "Multiplicaciones por minuto" },
+            multiplications: { title: "Resultado de multiplicación" },
             multiplicationsIndex: {
-              title: "Índice de multiplicaciones por minuto",
+              title: "Índice de multiplicación",
             },
           },
           tableCode: "mathTable",
@@ -811,11 +813,13 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
         },
       },
-      createTitleComponent("Gráfica de diagnóstico de multiplicación"),
+      createTitleComponent("Gráfico estadístico del diagnóstico de multiplicación"),
       {
         component: "graphics",
         settings: {
           chartId: `${lapseName}-math-graphic`,
+          sendGraphicToPdf: "diagnosticMath",
+          lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
@@ -840,8 +844,8 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
           fields: {
             description: {
-              label: "Análisis del diagnóstico de matemática",
-              placeholder: "Análisis del diagnóstico de matemática",
+              label: "Análisis del diagnóstico de multiplicación",
+              placeholder: "Análisis del diagnóstico de multiplicación",
               value: lapseData.mathDiagnosticAnalysis,
               disabled: yearBookData.isInApproval,
             },
@@ -852,7 +856,7 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
         },
       },
-      createTitleComponent("Tabla de diagnóstico de lógica matemática"),
+      createTitleComponent("Diagnóstico de lógica matemática"),
       {
         component: "table",
         settings: {
@@ -860,9 +864,9 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           columns: {
             grade: { title: "Grado" },
             section: { title: "Sección" },
-            operations: { title: "Operaciones por minuto" },
+            operations: { title: "Resultado de lógica matemática" },
             operationsIndex: {
-              title: "Índice de operaciones por minuto",
+              title: "Índice de lógica matemática",
             },
           },
           tableCode: "logicTable",
@@ -881,11 +885,13 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
         },
       },
-      createTitleComponent("Gráfica de diagnóstico de lógica matemática"),
+      createTitleComponent("Gráfico estadístico del diagnóstico de lógica matemática"),
       {
         component: "graphics",
         settings: {
           chartId: `${lapseName}-logic-graphic`,
+          sendGraphicToPdf: "diagnosticLogic",
+          lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
@@ -910,8 +916,8 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           },
           fields: {
             description: {
-              label: "Análisis del diagnóstico de lógica",
-              placeholder: "Análisis del diagnóstico de lógica",
+              label: "Análisis del diagnóstico de lógica matemática",
+              placeholder: "Análisis del diagnóstico de lógica matemática",
               value: lapseData.logicDiagnosticAnalysis,
               disabled: yearBookData.isInApproval,
             },
