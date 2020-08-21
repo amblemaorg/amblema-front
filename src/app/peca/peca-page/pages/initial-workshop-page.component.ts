@@ -5,22 +5,28 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { INITIAL_WORKSHOP_CONFIG as config } from './initial-workshop-config';
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import {
+  INITIAL_WORKSHOP_CONFIG as config,
+  initialWorkshopConfigMapper,
+} from "./initial-workshop-config";
 import { Router, NavigationEnd, Event } from "@angular/router";
-import { Observable, Subscription } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Select } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
+import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
+import { ClearInitialWorkshopRequestData } from "src/app/store/actions/peca/peca.actions";
+import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 @Component({
-  selector: 'peca-initial-workshop',
-  templateUrl: '../peca-page.component.html',
+  selector: "peca-initial-workshop",
+  templateUrl: "../peca-page.component.html",
 })
 export class InitialWorkshopPageComponent extends PecaPageComponent implements AfterViewInit {
-  @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
+  container: ViewContainerRef;
 
   //Selectores
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
@@ -33,28 +39,28 @@ export class InitialWorkshopPageComponent extends PecaPageComponent implements A
   peca_id: string;
 
   isInstanciated: boolean;
+  isInstantiating: boolean;
   loadedData: boolean;
 
-  constructor(factoryResolver: ComponentFactoryResolver,
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
     private router: Router,
-    globals: GlobalService, ) {
+    private store: Store,
+    globals: GlobalService
+  ) {
     super(factoryResolver);
 
-    globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      //this.instantiateBlocks(this.container, true);
 
       if (this.loadedData) this.updateMethods();
     });
-
-    this.instantiateComponent(config);
 
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-        console.log("el ev", this.UrlLapse);
         this.ngOnInit();
       }
     });
@@ -62,60 +68,83 @@ export class InitialWorkshopPageComponent extends PecaPageComponent implements A
 
   ngOnInit() {
     this.getInfo();
+    this.store.dispatch(new ClearInitialWorkshopRequestData({}));
   }
 
   getInfo() {
-    this.infoDataSubscription = this.infoData$.subscribe(
-      data => {
-        if (data.activePecaContent) {
-          this.peca_id = data.activePecaContent.id;
-          if (!isNullOrUndefined(data)) {
-            console.log(data, "data taller inicial")
+    this.infoDataSubscription = this.infoData$
+      .pipe(
+        distinctUntilChanged(
+          (prev, curr) =>
+            JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].initialWorkshop) ===
+            JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].initialWorkshop)
+        )
+      )
+      .subscribe((data) => {
+        if (!this.isInstantiating) {
+          if (data.activePecaContent) {
+            this.peca_id = data.activePecaContent.id;
+            if (!isNullOrUndefined(data)) {
+              console.log(data, "data taller inicial");
+            }
+
+            const lapseName = `lapse${this.UrlLapse}`;
+            const { initialWorkshop } = data.activePecaContent[lapseName];
+            const newConfig = initialWorkshopConfigMapper(
+              initialWorkshop,
+              this.UrlLapse,
+              this.store
+            );
+            this.instantiateComponent(newConfig);
+            this.doInstantiateBlocks();
           }
         }
-      }
-    )
+      });
   }
 
-  updateMethods(){
+  updateMethods() {
     this.updateDataToBlocks();
     this.updateDynamicFetchers();
     this.updateStaticFetchers();
   }
 
-  updateDataToBlocks() {
-  }
+  updateDataToBlocks() {}
 
   updateDynamicFetchers() {
-    this.createAndSetBlockFetcherUrls(
-      "tallerInicialForm",
-      {
-        post: () =>
-        `pecaprojects/initialworkshop/${this.peca_id}/${this.UrlLapse}`,
-      }
-    );
-  }
-
-  updateStaticFetchers(){
-    //pecaprojects/initialworkshop/<string:pecaId>/<string:lapse>
-    //POST - contentType: application/json - Actualizar
-    this.setBlockFetcherUrls(
-      "btnRegistroEnviarSolicitud",{
-        post: `pecaprojects/initialworkshop/${this.peca_id}/${this.UrlLapse}`
-      }
-    )
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.instantiateBlocks(this.container);
-      this.isInstanciated = true;
+    this.createAndSetBlockFetcherUrls("tallerInicialForm", {
+      post: () => `pecaprojects/initialworkshop/${this.peca_id}/${this.UrlLapse}`,
     });
   }
 
+  updateStaticFetchers() {
+    //pecaprojects/initialworkshop/<string:pecaId>/<string:lapse>
+    //POST - contentType: application/json - Actualizar
+    this.setBlockFetcherUrls("btnRegistroEnviarSolicitud", {
+      post: `pecaprojects/initialworkshop/${this.peca_id}/${this.UrlLapse}`,
+    });
+  }
+
+  ngAfterViewInit(): void {
+    /*     setTimeout(() => {
+      this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
+    }); */
+  }
+
   ngOnDestroy() {
+    this.store.dispatch(new ClearInitialWorkshopRequestData({}));
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+  }
+
+  doInstantiateBlocks() {
+    this.isInstanciated = false;
+    this.isInstantiating = true;
+    setTimeout(() => {
+      this.instantiateBlocks(this.container, true);
+      this.isInstanciated = true;
+      this.isInstantiating = false;
+    });
   }
 }

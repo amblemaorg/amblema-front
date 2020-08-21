@@ -1,4 +1,3 @@
-import { ToastrService } from "ngx-toastr";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import { State, Action, StateContext, Selector, Store } from "@ngxs/store";
 import {
@@ -13,10 +12,17 @@ import {
   UpdateLapsePlanningDateAndStatus,
   UpdateLapsePlanningFile,
   CancelLapsePlanningFile,
+  SetInitialWorkshopRequestData,
+  RemoveImageFromInitialWorkshopRequestData,
+  AddImageToInitialWorkshopRequestData,
+  ClearInitialWorkshopRequestData,
+  UpdateInitialWorkshopImages,
+  CancelInitialWorkshopImages,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
 import { environment } from "../../../../environments/environment";
+import { ToastrService } from "ngx-toastr";
 
 @State<PecaStateModel>({
   name: "peca",
@@ -30,13 +36,17 @@ import { environment } from "../../../../environments/environment";
       meetingDate: "",
       status: "1",
     },
+    initialWorkshopImagesRequest: {
+      description: "",
+      images: [],
+    },
   },
 })
 export class PecaState {
   constructor(
-    private store: Store,
     private apiService: ApiWebContentService,
     private fetcher: HttpFetcherService,
+    private store: Store,
     private toastr: ToastrService
   ) {
     this.apiService.setBaseUrl(environment.baseUrl);
@@ -233,6 +243,73 @@ export class PecaState {
     const response = await this.fetcher.post(url, data).toPromise();
   }
 
+  @Action(UpdateInitialWorkshopImages)
+  async updateInitialWorkshopImages(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateInitialWorkshopImages
+  ) {
+    const state = getState();
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const { lapseNumber } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const url = `pecaprojects/initialworkshop/${pecaId}/${lapseNumber}?userId=${userId}`;
+    const { initialWorkshopImagesRequest } = state;
+    this.toastr.info("Enviando solicitud, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.post(url, initialWorkshopImagesRequest).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            initialWorkshop: response,
+          },
+        },
+      });
+      this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(CancelInitialWorkshopImages)
+  async cancelInitialWorkshopImages(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: CancelInitialWorkshopImages
+  ) {
+    const { content: pecaContent } = getState();
+    const { lapseNumber } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const { approvalHistory } = pecaContent[lapseName].initialWorkshop;
+    const lastInitialWorkshopImagesRequest = approvalHistory[approvalHistory.length - 1];
+    const url = `requestscontentapproval/${lastInitialWorkshopImagesRequest.id}`;
+    const data = {
+      status: "4",
+    };
+
+    this.toastr.info("Cancelando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.put(url, data).toPromise();
+      this.store.dispatch([new FetchPecaContent(pecaContent.id)]);
+      this.toastr.success("Solicitud cancelada", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
   @Action(SetLapsePlanningRequestData)
   setLapsePlanningRequestData(
     { patchState, getState }: StateContext<PecaStateModel>,
@@ -249,6 +326,67 @@ export class PecaState {
     });
   }
 
+  @Action(SetInitialWorkshopRequestData)
+  setInitialWorkshopRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: SetInitialWorkshopRequestData
+  ) {
+    const { description } = payload;
+    const { initialWorkshopImagesRequest } = getState();
+    patchState({
+      initialWorkshopImagesRequest: {
+        ...initialWorkshopImagesRequest,
+        description: description ? description : initialWorkshopImagesRequest.description,
+      },
+    });
+  }
+
+  @Action(AddImageToInitialWorkshopRequestData)
+  addImageToInitialWorkshopRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: AddImageToInitialWorkshopRequestData
+  ) {
+    const { initialWorkshopImagesRequest } = getState();
+    const newImages = [...initialWorkshopImagesRequest.images, payload];
+    patchState({
+      initialWorkshopImagesRequest: {
+        ...initialWorkshopImagesRequest,
+        images: newImages,
+      },
+    });
+  }
+
+  @Action(RemoveImageFromInitialWorkshopRequestData)
+  removeImageFromInitialWorkshopRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: RemoveImageFromInitialWorkshopRequestData
+  ) {
+    const { imageSource } = payload;
+    const { initialWorkshopImagesRequest } = getState();
+    const newImages = initialWorkshopImagesRequest.images.filter(
+      (image) => image.image !== imageSource
+    );
+    patchState({
+      initialWorkshopImagesRequest: {
+        ...initialWorkshopImagesRequest,
+        images: newImages,
+      },
+    });
+  }
+
+  @Action(ClearInitialWorkshopRequestData)
+  clearInitialWorkshopRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: ClearInitialWorkshopRequestData
+  ) {
+    patchState({
+      initialWorkshopImagesRequest: {
+        description: "",
+        images: [],
+      },
+    });
+  }
+
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
     setState({
@@ -261,6 +399,10 @@ export class PecaState {
         attachedFile: "",
         meetingDate: "",
         status: "1",
+      },
+      initialWorkshopImagesRequest: {
+        description: "",
+        images: [],
       },
     });
   }

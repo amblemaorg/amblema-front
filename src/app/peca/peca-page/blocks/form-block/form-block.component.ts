@@ -13,19 +13,15 @@ import { Subscription, Observable } from "rxjs";
 import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
-import {
-  FetchPecaContent,
-  SetUser
-} from "../../../../store/actions/peca/peca.actions";
+import { FetchPecaContent, SetUser } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 
 @Component({
   selector: "form-block",
   templateUrl: "./form-block.component.html",
-  styleUrls: ["./form-block.component.scss"]
+  styleUrls: ["./form-block.component.scss"],
 })
-export class FormBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class FormBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   settings: {
@@ -56,6 +52,9 @@ export class FormBlockComponent
     makesNoRequest?: boolean; // if true, this form makes no request to api
     methodUrlPlus?: string; // if fetcher method url cannot be set in the initial component use this prop, to complete it
     tableRefreshName?: string; // to refresh table in the initial setter component
+    onSubmit?: Function | null;
+    onAddImage?: Function | null;
+    onBlur?: (event) => void;
   };
 
   userCanCreate: boolean = true;
@@ -66,9 +65,7 @@ export class FormBlockComponent
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
   @Select(ResidenceInfoState.get_states) states$: Observable<any>;
-  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<
-    any
-  >;
+  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
 
   private subscription: Subscription = new Subscription();
 
@@ -112,17 +109,14 @@ export class FormBlockComponent
 
   ngOnInit() {
     this.subscription.add(
-      this.pecaId$.subscribe(peca_id => {
+      this.pecaId$.subscribe((peca_id) => {
         this.pecaId = peca_id;
       })
     );
 
     this.subscription.add(
-      this.componentForm.statusChanges.subscribe(val => {
-        if (
-          !this.someImgAdded &&
-          (val === "INVALID" || this.isDateNotOk() || !this.isDirty())
-        ) {
+      this.componentForm.statusChanges.subscribe((val) => {
+        if (!this.someImgAdded && (val === "INVALID" || this.isDateNotOk() || !this.isDirty())) {
           if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
         } else {
@@ -136,21 +130,23 @@ export class FormBlockComponent
       this.settings.formsContent["section"].emmitSectionChange
     )
       this.subscription.add(
-        this.componentForm.get("section").statusChanges.subscribe(val => {
+        this.componentForm.get("section").statusChanges.subscribe((val) => {
           if (val === "VALID")
-            this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, this.componentForm.get("section").value);
-          else
-            this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, null);
+            this.globals.emitStudentsTableRefresh(
+              this.settings.tableRefreshName,
+              this.componentForm.get("section").value
+            );
+          else this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, null);
         })
       );
 
     this.subscription.add(
-      this.globals.passImageEmitter.subscribe(image => {
+      this.globals.passImageEmitter.subscribe((image) => {
         this.imageUrl = image;
       })
     );
     this.subscription.add(
-      this.globals.showImageContainerEmitter.subscribe(code => {
+      this.globals.showImageContainerEmitter.subscribe((code) => {
         if (this.settings.buttonCode && this.settings.buttonCode == code)
           this.settings.hideImgContainer = false;
       })
@@ -158,7 +154,7 @@ export class FormBlockComponent
 
     if (this.settings.formsContent["addressState"])
       this.subscription.add(
-        this.states$.subscribe(states => {
+        this.states$.subscribe((states) => {
           this.showSelectState = false;
           this.settings.formsContent["addressState"].options = states;
           setTimeout(() => {
@@ -169,22 +165,24 @@ export class FormBlockComponent
 
     if (this.settings.formsContent["addressMunicipality"])
       this.subscription.add(
-        this.municipalities$.subscribe(municipalities => {
-          this.settings.formsContent[
-            "addressMunicipality"
-          ].options = municipalities;
+        this.municipalities$.subscribe((municipalities) => {
+          this.settings.formsContent["addressMunicipality"].options = municipalities;
         })
       );
 
     this.subscription.add(
-      this.globals.sendFormDataToBtnEmitter.subscribe(code => {
-        if (this.settings.buttonCode && this.settings.buttonCode == code && this.canTableSendFormData) 
-          this.btnUpdater(this.componentForm.value);     
+      this.globals.sendFormDataToBtnEmitter.subscribe((code) => {
+        if (
+          this.settings.buttonCode &&
+          this.settings.buttonCode == code &&
+          this.canTableSendFormData
+        )
+          this.btnUpdater(this.componentForm.value);
       })
     );
 
     this.subscription.add(
-      this.globals.resetEditedEmitter.subscribe(btnCode => {
+      this.globals.resetEditedEmitter.subscribe((btnCode) => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
           this.isInApproval = true;
@@ -195,16 +193,10 @@ export class FormBlockComponent
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
-          if (
-            this.settings.buttonCode &&
-            this.settings.buttonCode == data.buttonCode
-          )
+          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
             this.isInApproval = data.setReadOnly;
         } else {
-          if (
-            this.settings.tableCode &&
-            this.settings.tableCode == data.buttonCode
-          )
+          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
             this.isInApproval = data.setReadOnly;
         }
       })
@@ -223,33 +215,28 @@ export class FormBlockComponent
     this.canTableSendFormData = true;
   }
 
-  btnUpdater(val,isEdited = false) {
-    if (this.settings.buttonCode)
-      if (isEdited) 
-        this.canTableSendFormData = false;
+  btnUpdater(val, isEdited = false) {
+    if (this.settings.buttonCode) if (isEdited) this.canTableSendFormData = false;
 
-      this.globals.buttonDataUpdater({
-        code: this.settings.buttonCode,
-        whichData: "form",
-        form: val,
-        formEdited: !this.canTableSendFormData ? true : false,
-      });
+    this.globals.buttonDataUpdater({
+      code: this.settings.buttonCode,
+      whichData: "form",
+      form: val,
+      formEdited: !this.canTableSendFormData ? true : false,
+    });
   }
 
   formInModalBtnConditioner() {
     if (this.settings.isFromCustomTableActions) {
-      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn)
-        return true;
+      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn) return true;
       else return false;
     } else return true;
   }
 
   isDirty(): boolean {
     const keys = Object.keys(this.componentForm.value);
-    return keys.some(key => {
-      return key === "imageGroup"
-        ? false
-        : this.componentForm.controls[key].dirty;
+    return keys.some((key) => {
+      return key === "imageGroup" ? false : this.componentForm.controls[key].dirty;
     });
     // return this.componentForm.dirty
   }
@@ -267,19 +254,18 @@ export class FormBlockComponent
 
   setData(data: any) {
     if (data.setContent) {
-      
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
         //this.settings.formsContent[attr].options = data.data[attr];
         let isTeacherSelector = false;
 
-        if (attr == "imageGroup" && 
+        if (
+          attr == "imageGroup" &&
           this.settings.formsContent["imageGroup"].fields["imageDocente"]
-          ){
-          this.settings.formsContent["imageGroup"].fields["imageDocente"].options = data.data[attr].imageDocente;
-          }
-        else
-          this.settings.formsContent[attr].options = data.data[attr];
+        ) {
+          this.settings.formsContent["imageGroup"].fields["imageDocente"].options =
+            data.data[attr].imageDocente;
+        } else this.settings.formsContent[attr].options = data.data[attr];
 
         if (
           attr == "section" &&
@@ -293,14 +279,11 @@ export class FormBlockComponent
           attr == "grades" &&
           this.settings.formsContent["grades"] &&
           this.settings.formsContent["grades"].isGrades &&
-          (
-            this.componentForm.controls["grades"].value == "" ||
-            !this.componentForm.dirty
-          ) &&
+          (this.componentForm.controls["grades"].value == "" || !this.componentForm.dirty) &&
           this.settings.formsContent[attr].options.length > 0
         ) {
           this.componentForm.patchValue({
-            grades: this.settings.formsContent["grades"].options[0].id
+            grades: this.settings.formsContent["grades"].options[0].id,
           });
           setTimeout(() => {
             this.setSchoolSections(true);
@@ -328,16 +311,13 @@ export class FormBlockComponent
     this.settings.fetcherUrls = {
       post,
       put,
-      patch
+      patch,
     };
   }
 
   // for assigning unique id to this component instance -------------
   private setId() {
-    if (!this.id_)
-      this.id_ = Math.random()
-        .toString(36)
-        .substring(2);
+    if (!this.id_) this.id_ = Math.random().toString(36).substring(2);
   }
 
   getId(field) {
@@ -347,15 +327,9 @@ export class FormBlockComponent
 
   private loadGroupedInfo(settings) {
     if (settings.formsContent["imageGroup"])
-      this.componentForm.addControl(
-        "imageGroup",
-        this.buildGroupControl("imageGroup")
-      );
+      this.componentForm.addControl("imageGroup", this.buildGroupControl("imageGroup"));
     if (settings.formsContent["documentGroup"])
-      this.componentForm.addControl(
-        "documentGroup",
-        this.buildGroupControl("documentGroup")
-      );
+      this.componentForm.addControl("documentGroup", this.buildGroupControl("documentGroup"));
   }
 
   private buildFormGroup(formContent: any): FormGroup {
@@ -373,7 +347,7 @@ export class FormBlockComponent
     this.fields = Object.keys(formContent); // fields array to be looped for printing fields or titles
 
     let formContentNoTitles = [];
-    this.fields.map(f => {
+    this.fields.map((f) => {
       if (
         formContent[f].type != "title" &&
         formContent[f].type != "image" &&
@@ -382,10 +356,10 @@ export class FormBlockComponent
         if (formContent[f].type === "double") {
           let fieldsArr = Object.keys(formContent[f].fields);
           formContentNoTitles.push(
-            ...fieldsArr.map(field => {
+            ...fieldsArr.map((field) => {
               return {
                 field: field,
-                parent: f
+                parent: f,
               };
             })
           );
@@ -394,27 +368,19 @@ export class FormBlockComponent
           if (formContent[f].type === "date") this.wrongDateDisabler[f] = false;
           formContentNoTitles.push({
             field: f,
-            parent: null // means that this field is not a doubleFields field
+            parent: null, // means that this field is not a doubleFields field
           });
         }
       }
     });
 
-    const formControls = this.reduceFormControls(
-      formContentNoTitles,
-      formContent,
-      true
-    );
+    const formControls = this.reduceFormControls(formContentNoTitles, formContent, true);
 
     return formControls;
   }
 
   // RETURNS A FORMCONTROL OBJECT TO BE USED IN FORMGROUP
-  private reduceFormControls(
-    formContentFields,
-    formContent,
-    isMainContent = false
-  ): Object {
+  private reduceFormControls(formContentFields, formContent, isMainContent = false): Object {
     let formReduced = formContentFields.reduce(
       (formControlsObj, formControlName) => {
         return {
@@ -423,12 +389,10 @@ export class FormBlockComponent
             isMainContent ? formControlName.field : formControlName,
             isMainContent
               ? formControlName.parent
-                ? formContent[formControlName.parent].fields[
-                formControlName.field
-                ]
+                ? formContent[formControlName.parent].fields[formControlName.field]
                 : formContent[formControlName.field]
               : formContent[formControlName]
-          )
+          ),
         };
       },
       {} // This is the initial formControlsObj
@@ -441,19 +405,15 @@ export class FormBlockComponent
     name: string,
     params: { value: any; validations: object } = {
       value: null,
-      validations: null
+      validations: null,
     }
   ): object {
-    let defaultValue =
-      name === "imageSelected" || name === "imageSrc" ? null : "";
+    let defaultValue = name === "imageSelected" || name === "imageSrc" ? null : "";
 
     // adding form control to Image or Document Group, when the form has images or Identification document to be added
     if (name === "imageGroup" || name === "documentGroup") {
-      let itemGroupContent = Object.keys(
-        this.settings.formsContent[name].fields
-      );
-      if (name === "imageGroup")
-        itemGroupContent.push(...["imageSelected", "imageSrc"]);
+      let itemGroupContent = Object.keys(this.settings.formsContent[name].fields);
+      if (name === "imageGroup") itemGroupContent.push(...["imageSelected", "imageSrc"]);
       let formControls = this.reduceFormControls(
         itemGroupContent,
         this.settings.formsContent[name].fields
@@ -464,19 +424,18 @@ export class FormBlockComponent
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
       if (
         isNullOrUndefined(params.validations) ||
-        (Object.keys(params.validations).length === 1 &&
-          !params.validations["required"])
+        (Object.keys(params.validations).length === 1 && !params.validations["required"])
       )
         return { [name]: [defaultValue] };
       else
         return {
-          [name]: [defaultValue, this.getValidators(params.validations)]
+          [name]: [defaultValue, this.getValidators(params.validations)],
         };
     }
   }
 
   private getValidators(validations: object): Validators {
-    const fieldValidators = Object.keys(validations).map(validator => {
+    const fieldValidators = Object.keys(validations).map((validator) => {
       if (validator === "required") return Validators[validator];
       else return Validators[validator](validations[validator]);
     });
@@ -497,24 +456,22 @@ export class FormBlockComponent
     const errors: any = !specialCase
       ? this.componentForm.get(field).errors
       : !field2
-        ? this.componentForm.controls[field].get("prependInput").errors
-        : !fromImg
-          ? this.componentForm.get(field2).errors
-          : this.componentForm.controls["imageGroup"].get(field2).errors;
+      ? this.componentForm.controls[field].get("prependInput").errors
+      : !fromImg
+      ? this.componentForm.get(field2).errors
+      : this.componentForm.controls["imageGroup"].get(field2).errors;
     if (errors) {
       return errors.required
         ? MESSAGES.REQUIRED_MESSAGE
         : errors.pattern || errors.minlength || errors.maxlength
-          ? !specialCase
-            ? this.settings.formsContent[field].messages.pattern
-            : !field2
-              ? this.settings.formsContent[field].fields["prependInput"].messages
-                .pattern
-              : !fromImg
-                ? this.settings.formsContent[field].fields[field2].messages.pattern
-                : this.settings.formsContent["imageGroup"].fields[field2].messages
-                  .pattern
-          : null;
+        ? !specialCase
+          ? this.settings.formsContent[field].messages.pattern
+          : !field2
+          ? this.settings.formsContent[field].fields["prependInput"].messages.pattern
+          : !fromImg
+          ? this.settings.formsContent[field].fields[field2].messages.pattern
+          : this.settings.formsContent["imageGroup"].fields[field2].messages.pattern
+        : null;
     }
 
     return null;
@@ -534,50 +491,44 @@ export class FormBlockComponent
   onSubmitForm(cf: FormGroup) {
     //cf: component form
     this.sendingForm = true;
-    console.log("submitting form");
+    let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
-    let manageData = structureData(
-      this.settings.formType,
-      this.settings.formsContent,
-      cf
-    );
-    if (this.settings.formType === "buscarEstudiante")
-      manageData.data["age"] = this.globals.dateStringToISOString(
-        cf.get("age").value
-      );
+    if (this.settings.formType === "preparingWorkshopForm") {
+      manageData.data["workshopDate"] = this.globals.dateStringToISOString(cf.get("date").value);
+    }
+
+    if (this.settings.formType === "buscarEstudiante") {
+      manageData.data["age"] = this.globals.dateStringToISOString(cf.get("age").value);
+    }
+
     if (this.settings.formType === "actualizarCoordinador") {
-      manageData.data["birthdate"] = this.globals.dateStringToISOString(
-        cf.get("date").value
-      );
+      manageData.data["birthdate"] = this.globals.dateStringToISOString(cf.get("date").value);
       if (this.imageUrl) manageData.data["image"] = this.imageUrl;
     }
-    if (this.settings.formType === "actualizarPadrino")
-      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
 
-    if (this.settings.formType === "actualizarEscuela")
+    if (this.settings.formType === "actualizarPadrino") {
       if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+    }
 
-    const assignId = () =>
-      Math.random()
-        .toString(36)
-        .substring(2);
+    if (this.settings.formType === "actualizarEscuela") {
+      if (this.imageUrl) manageData.data["image"] = this.imageUrl;
+    }
+
+    const assignId = () => Math.random().toString(36).substring(2);
     if (this.settings.isFromCustomTableActions) {
       if (this.settings.data) {
         this.settings.dataFromRow.data.newData = {
           ...this.settings.dataFromRow.data.newData,
-          ...manageData.data
+          ...manageData.data,
         };
-        this.settings.dataFromRow.data.newData[
-          "id"
-        ] = this.settings.dataFromRow.data.oldData["id"];
+        this.settings.dataFromRow.data.newData["id"] = this.settings.dataFromRow.data.oldData["id"];
       } else {
         // is for adding in modal view
         this.settings.dataFromRow["data"] = manageData.data;
         this.settings.dataFromRow["data"]["id"] = `auto-${assignId()}`;
       }
     } else {
-      if (!this.settings.notGenerateId)
-        manageData.data["id"] = `auto-${assignId()}`;
+      if (!this.settings.notGenerateId) manageData.data["id"] = `auto-${assignId()}`;
     }
 
     let obj = {
@@ -591,7 +542,7 @@ export class FormBlockComponent
         ? this.settings.data
           ? "edit"
           : "add"
-        : "set"
+        : "set",
     };
 
     const commonTasks = () => {
@@ -599,16 +550,15 @@ export class FormBlockComponent
 
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
 
-      if (this.settings.modalCode)
-        this.globals.ModalHider(this.settings.modalCode);
+      if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
 
       // initializers
       if (!this.settings.notResetForm) {
         cf.reset();
-        if (this.settings.formsContent['documentGroup'])
+        if (this.settings.formsContent["documentGroup"])
           cf.controls["documentGroup"].get("prependSelect").setValue("1");
         this.municipalities = [];
-        Object.keys(this.wrongDateDisabler).map(f => {
+        Object.keys(this.wrongDateDisabler).map((f) => {
           this.wrongDateDisabler[f] = false;
         });
       }
@@ -619,32 +569,33 @@ export class FormBlockComponent
 
     if (this.settings.makesNoRequest) commonTasks();
     else {
+      if (this.settings.onSubmit instanceof Function) {
+        const body = this.settings.isFromCustomTableActions ? obj.data.newData : obj.data;
+        this.settings.onSubmit(body);
+        return (this.sendingForm = false);
+      }
+
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
         ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]}`
         : this.settings.fetcherUrls[method];
 
+      if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-
-      if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
-
-      console.log(
-        'method: ', method,
-        'url: ', resourcePath,
-        'body: ', body
-      );
+      console.log("method: ", method, "url: ", resourcePath, "body: ", body);
 
       this.fetcher[method](resourcePath, body).subscribe(
-        response => {
+        (response) => {
           commonTasks();
           console.log("Form response", response);
-          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+          if (this.settings.tableCode)
+            this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
           this.toastr.success("Suministrado con éxito", "", {
-            positionClass: "toast-bottom-right"
+            positionClass: "toast-bottom-right",
           });
 
           if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
@@ -656,52 +607,52 @@ export class FormBlockComponent
           ) {
             //Do the consult to the endpoint which bring me the data of specific user
             this.fetcher
-              .get(
-                `users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`
-              )
+              .get(`users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`)
               .subscribe(
-                respuesta => {
+                (respuesta) => {
                   // within the answer I send the content to the SetUser::
                   this.store.dispatch([new SetUser(respuesta)]);
                 },
-                error => {
+                (error) => {
                   console.log(error);
                 }
               );
           }
         },
-        error => {
-          const error_msg = (error.error && error.error instanceof ProgressEvent)
-            ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+        (error) => {
+          const error_msg =
+            error.error && error.error instanceof ProgressEvent
+              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
           this.sendingForm = false;
-          if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+          if (this.settings.tableCode)
+            this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
           // const errorType = (error.error && error.error["name"])
-          //   ? (this.settings.formType === "agregarGradoSeccion" 
-          //     ? "section" 
-          //     : "name") 
+          //   ? (this.settings.formType === "agregarGradoSeccion"
+          //     ? "section"
+          //     : "name")
           //   : "regular";
 
           // if (
-          //   errorType!="regular" && 
+          //   errorType!="regular" &&
           //   this.settings.formType === "agregarGradoSeccion"
           // ) this.componentForm.get(errorType).setValue("");
 
           this.toastr.error(
-            // errorType!="regular" 
+            // errorType!="regular"
             error.error && error.error["name"] && error.error["name"][0]
               ? error.error["name"][0].msg
               : error.error && error.error["email"] && error.error["email"][0]
-                ? error.error["email"][0].msg
-                : error.error && error.error["cardId"] && error.error["cardId"][0]
-                  ? error.error["cardId"][0].msg
-                  : error.error && error.error["msg"]
-                    ? error.error["msg"]
-                    : error.error && error.error["message"] 
-                      ? error.error["message"]
-                      : error_msg,
+              ? error.error["email"][0].msg
+              : error.error && error.error["cardId"] && error.error["cardId"][0]
+              ? error.error["cardId"][0].msg
+              : error.error && error.error["msg"]
+              ? error.error["msg"]
+              : error.error && error.error["message"]
+              ? error.error["message"]
+              : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );
@@ -713,19 +664,16 @@ export class FormBlockComponent
 
   // filling municipalities according to selected state
   private fillMunicipalities(state_id = "default", munId = "") {
-    if (
-      state_id == "default" ||
-      !this.settings.formsContent["addressMunicipality"]
-    )
+    if (state_id == "default" || !this.settings.formsContent["addressMunicipality"])
       this.municipalities = [];
-    else {      
+    else {
       setTimeout(() => {
-        this.municipalities = this.settings.formsContent[
-          "addressMunicipality"
-        ].options.filter(m => {
-          return m.state.id == state_id;
-        });
-      });      
+        this.municipalities = this.settings.formsContent["addressMunicipality"].options.filter(
+          (m) => {
+            return m.state.id == state_id;
+          }
+        );
+      });
     }
 
     this.componentForm.patchValue({ addressMunicipality: munId });
@@ -736,10 +684,10 @@ export class FormBlockComponent
       let currStateId = "default";
       currStateId =
         this.componentForm.controls["addressState"].value &&
-          this.componentForm.controls["addressState"].value.length > 0
+        this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
-      
+
       this.fillMunicipalities(currStateId, munId);
     }
   }
@@ -749,10 +697,7 @@ export class FormBlockComponent
       if (e.id == "0") {
         this.componentForm.setControl(
           "companyOtherType",
-          this.fb.control(
-            this.componentForm.get("companyOtherType").value,
-            Validators.required
-          )
+          this.fb.control(this.componentForm.get("companyOtherType").value, Validators.required)
         );
       } else {
         this.componentForm.setControl(
@@ -792,7 +737,7 @@ export class FormBlockComponent
   isDateNotOk() {
     // for button specifically
     let bool = false;
-    Object.keys(this.wrongDateDisabler).map(f => {
+    Object.keys(this.wrongDateDisabler).map((f) => {
       if (!this.wrongDateDisabler[f]) bool = true;
     });
     if (bool) return true;
@@ -809,11 +754,11 @@ export class FormBlockComponent
   fileManager(e) {
     let reader = new FileReader();
     reader.readAsDataURL(<File>e.target.files[0]);
-    reader.onload = _event => {
+    reader.onload = (_event) => {
       this.sendNull = false;
       this.componentForm.get("imageGroup").patchValue({
         imageSelected: <File>e.target.files[0],
-        imageSrc: reader.result
+        imageSrc: reader.result,
       });
       setTimeout(() => {
         this.sendNull = true;
@@ -825,21 +770,15 @@ export class FormBlockComponent
   disableAddImgBtn() {
     return (
       (this.componentForm.controls["imageGroup"].get("imageDocente") &&
-        (this.componentForm.controls["imageGroup"].get("imageDocente").value ===
-          "" ||
-          !this.componentForm.controls["imageGroup"].get("imageDocente")
-            .value)) ||
+        (this.componentForm.controls["imageGroup"].get("imageDocente").value === "" ||
+          !this.componentForm.controls["imageGroup"].get("imageDocente").value)) ||
       (this.componentForm.controls["imageGroup"].get("imageCargo") &&
-        this.componentForm.controls["imageGroup"].get("imageCargo").value ===
-        "") ||
+        this.componentForm.controls["imageGroup"].get("imageCargo").value === "") ||
       (this.componentForm.controls["imageGroup"].get("imageDescription") &&
-        this.componentForm.controls["imageGroup"].get("imageDescription")
-          .value === "") ||
+        this.componentForm.controls["imageGroup"].get("imageDescription").value === "") ||
       (this.componentForm.controls["imageGroup"].get("imageStatus") &&
-        (this.componentForm.controls["imageGroup"].get("imageStatus").value ===
-          "" ||
-          !this.componentForm.controls["imageGroup"].get("imageStatus")
-            .value)) ||
+        (this.componentForm.controls["imageGroup"].get("imageStatus").value === "" ||
+          !this.componentForm.controls["imageGroup"].get("imageStatus").value)) ||
       (this.componentForm.controls["imageGroup"].get("imageSelected") &&
         !this.componentForm.controls["imageGroup"].get("imageSelected").value)
     );
@@ -849,8 +788,7 @@ export class FormBlockComponent
     switch (option) {
       case 1:
         return (
-          this.componentForm.controls["imageGroup"].get("imageSelected")
-            .value ||
+          this.componentForm.controls["imageGroup"].get("imageSelected").value ||
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       case 2:
@@ -859,8 +797,7 @@ export class FormBlockComponent
         );
       default:
         return this.componentForm.controls["imageGroup"].value["imageSelected"]
-          ? this.componentForm.controls["imageGroup"].get("imageSelected").value
-            .name
+          ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
           : "image";
     }
   }
@@ -875,8 +812,7 @@ export class FormBlockComponent
 
     let obj = {};
 
-    if (imgGrp.get("imageDescription"))
-      obj["description"] = imgGrp.get("imageDescription").value;
+    if (imgGrp.get("imageDescription")) obj["description"] = imgGrp.get("imageDescription").value;
     if (imgGrp.get("imageStatus")) {
       obj["state"] = imgGrp.get("imageStatus").value;
       obj["status"] = "En espera";
@@ -888,51 +824,59 @@ export class FormBlockComponent
   addImage(addImg: boolean = true) {
     const imgGrp = this.componentForm.controls["imageGroup"];
 
+    if (this.settings.onAddImage instanceof Function) {
+      const image = {
+        id: `auto-${Math.random().toString(36).substring(2)}`,
+        // image: imgGrp.get("imageSelected").value.name,
+        // image: imgGrp.get("imageSrc").value,
+        source: imgGrp.get("imageSrc").value,
+        imageSelected: imgGrp.get("imageSelected").value,
+        ...this.imageObjWithAvailableFields(),
+      };
+      this.settings.onAddImage(image);
+    }
+
     if (!addImg) this.showSelectTeacher = false;
 
     let imageObj = {
       code: this.settings.tableCode,
       data: addImg
         ? {
-          id: `auto-${Math.random()
-            .toString(36)
-            .substring(2)}`,
-          // image: imgGrp.get("imageSelected").value.name,
-          // image: imgGrp.get("imageSrc").value,
-          source: imgGrp.get("imageSrc").value,
-          imageSelected: imgGrp.get("imageSelected").value,
-          ...this.imageObjWithAvailableFields()
-        }
+            id: `auto-${Math.random().toString(36).substring(2)}`,
+            // image: imgGrp.get("imageSelected").value.name,
+            image: imgGrp.get("imageSrc").value,
+            source: imgGrp.get("imageSrc").value,
+            imageSelected: imgGrp.get("imageSelected").value,
+            ...this.imageObjWithAvailableFields(),
+          }
         : {
-          id: this.settings.formsContent["imageGroup"].fields[
-            "imageDocente"
-          ].options
-            .find(d => {
-              return d.id === imgGrp.get("imageDocente").value;
-            })
-            .id.toString(),
-          name: this.settings.formsContent["imageGroup"].fields[
-            "imageDocente"
-          ].options.find(d => {
-            return d.id === imgGrp.get("imageDocente").value;
-          }).name,
-          lastName: this.settings.formsContent["imageGroup"].fields[
-            "imageDocente"
-          ].options.find(d => {
-            return d.id === imgGrp.get("imageDocente").value;
-          }).lastName,
-          cargo: imgGrp.get("imageCargo").value,
-          description: imgGrp.get("imageDescription").value,
-          // addressState: this.settings.formsContent["imageGroup"].fields[
-          //   "imageDocente"
-          // ].options.find(d => {
-          //   return d.id === imgGrp.get("imageDocente").value;
-          // }).addressState,
-          // status: imgGrp.get("imageStatus").value,
-          source: imgGrp.get("imageSrc").value,
-          imageSelected: imgGrp.get("imageSelected").value
-        },
-      action: "add"
+            id: this.settings.formsContent["imageGroup"].fields["imageDocente"].options
+              .find((d) => {
+                return d.id === imgGrp.get("imageDocente").value;
+              })
+              .id.toString(),
+            name: this.settings.formsContent["imageGroup"].fields["imageDocente"].options.find(
+              (d) => {
+                return d.id === imgGrp.get("imageDocente").value;
+              }
+            ).name,
+            lastName: this.settings.formsContent["imageGroup"].fields["imageDocente"].options.find(
+              (d) => {
+                return d.id === imgGrp.get("imageDocente").value;
+              }
+            ).lastName,
+            cargo: imgGrp.get("imageCargo").value,
+            description: imgGrp.get("imageDescription").value,
+            // addressState: this.settings.formsContent["imageGroup"].fields[
+            //   "imageDocente"
+            // ].options.find(d => {
+            //   return d.id === imgGrp.get("imageDocente").value;
+            // }).addressState,
+            // status: imgGrp.get("imageStatus").value,
+            source: imgGrp.get("imageSrc").value,
+            imageSelected: imgGrp.get("imageSelected").value,
+          },
+      action: "add",
     };
 
     this.globals.tableDataUpdater(imageObj);
@@ -944,15 +888,13 @@ export class FormBlockComponent
       //   this.sendNull = true;
       // });
     } else {
-      const inx = this.settings.formsContent["imageGroup"].fields[
-        "imageDocente"
-      ].options.findIndex(d => {
-        return d.id === imgGrp.get("imageDocente").value;
-      });
+      const inx = this.settings.formsContent["imageGroup"].fields["imageDocente"].options.findIndex(
+        (d) => {
+          return d.id === imgGrp.get("imageDocente").value;
+        }
+      );
       if (inx != -1)
-        this.settings.formsContent["imageGroup"].fields[
-          "imageDocente"
-        ].options.splice(inx, 1);
+        this.settings.formsContent["imageGroup"].fields["imageDocente"].options.splice(inx, 1);
       this.componentForm.reset();
       setTimeout(() => {
         this.showSelectTeacher = true;
@@ -1011,7 +953,7 @@ export class FormBlockComponent
     if (data.isInApproval) this.isInApproval = data.isInApproval;
     else this.isInApproval = false;
 
-    dataKeys.map(key => {
+    dataKeys.map((key) => {
       if (
         (key == "imageGroup" && this.settings.formsContent["imageGroup"]) ||
         (key == "documentGroup" && this.settings.formsContent["documentGroup"])
@@ -1022,10 +964,8 @@ export class FormBlockComponent
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
           if (data[key]) {
-            //console.log("key", data[key]) 
-            const dateKey = this.globals.getDateFormat(
-              new Date(data[key].replace("Z", ""))
-            );
+            //console.log("key", data[key])
+            const dateKey = this.globals.getDateFormat(new Date(data[key].replace("Z", "")));
             this.componentForm.patchValue({ [key]: dateKey });
             this.checkDateOk(
               dateKey,
@@ -1059,16 +999,13 @@ export class FormBlockComponent
     if (!grade) {
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
-    }
-    else {
-      this.sectionsArr = this.settings.formsContent[
-        "section"
-      ].options.filter(s => {
+    } else {
+      this.sectionsArr = this.settings.formsContent["section"].options.filter((s) => {
         return s.grade == grade;
       });
 
       this.componentForm.patchValue({
-        section: this.sectionsArr[0].id
+        section: this.sectionsArr[0].id,
       });
     }
   }
@@ -1078,12 +1015,11 @@ export class FormBlockComponent
       let currGrade = null;
       currGrade =
         this.componentForm.controls["grades"].value &&
-          this.componentForm.controls["grades"].value.length > 0
+        this.componentForm.controls["grades"].value.length > 0
           ? this.componentForm.controls["grades"].value
           : null;
 
       this.fillSections(currGrade);
     } else this.fillSections();
   }
-
 }

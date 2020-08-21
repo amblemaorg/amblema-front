@@ -43,6 +43,11 @@ export interface PecaLapsePlanningRequest {
   status: string;
 }
 
+export interface PecaInitialWorkshopRequest {
+  description: string;
+  images: { id: string; description: string; image: string }[];
+}
+
 export interface PecaStateModel {
   user?: PecaUserModel;
   content: PecaModel | null;
@@ -50,4 +55,5 @@ export interface PecaStateModel {
   userPermissions?: string[];
   pecaContentRequesting?: boolean;
   lapsePlanningRequest: PecaLapsePlanningRequest;
+  initialWorkshopImagesRequest: PecaInitialWorkshopRequest;
 }
