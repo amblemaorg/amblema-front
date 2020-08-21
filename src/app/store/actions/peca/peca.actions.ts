@@ -66,3 +66,37 @@ export class UpdateInitialWorkshop {
   static readonly type = "[peca] Update Initial Workshop";
   constructor(public payload: any) {}
 }
+
+export class UpdateInitialWorkshopImages {
+  static readonly type = "[peca] Update Initial Workshop Images";
+  constructor(public payload: any) {}
+}
+
+export class CancelInitialWorkshopImages {
+  static readonly type = "[peca] Cancel Initial Workshop Images";
+  constructor(
+    public payload: {
+      lapseNumber: string;
+    }
+  ) {}
+}
+
+export class SetInitialWorkshopRequestData {
+  static readonly type = "[peca] Set Initial Workshop Request Data";
+  constructor(public payload: any) {}
+}
+
+export class AddImageToInitialWorkshopRequestData {
+  static readonly type = "[peca] Add Image To Initial Workshop Request Data";
+  constructor(public payload: { id: string; description: string; image: string }) {}
+}
+
+export class RemoveImageFromInitialWorkshopRequestData {
+  static readonly type = "[peca] Remove Image From Initial Workshop Request Data";
+  constructor(public payload: { imageSource: string }) {}
+}
+
+export class ClearInitialWorkshopRequestData {
+  static readonly type = "[peca] Clear Initial Workshop Request Data";
+  constructor(public payload: any) {}
+}

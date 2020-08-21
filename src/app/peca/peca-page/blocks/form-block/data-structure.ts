@@ -3,7 +3,7 @@ import { FormGroup } from "@angular/forms";
 export function structureData(formType: string, formsContent, cf: FormGroup) {
   const data = {
     isThereTable: true,
-    data: {}
+    data: {},
   };
 
   switch (formType) {
@@ -11,9 +11,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       data.data = {
         grades: cf.get("grades").value,
         section: cf.get("section").value.toUpperCase(),
-        docente: formsContent["docente"].options.find(d => {
+        docente: formsContent["docente"].options.find((d) => {
           return d.id === cf.get("docente").value;
-        }).id
+        }).id,
       };
       break;
 
@@ -35,7 +35,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
-        address: cf.get("street").value
+        address: cf.get("street").value,
       };
       break;
     case "actualizarEscuela": // for Perfil de usuario view and escuelas form
@@ -61,7 +61,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
-        address: cf.get("street").value
+        address: cf.get("street").value,
       };
       break;
     case "actualizarCoordinador": // for Perfil de usuario view and coordinadores form
@@ -83,7 +83,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
-        address: cf.get("street").value
+        address: cf.get("street").value,
       };
       break;
     case "agregarDocente": // for Datos de la Escuela view and Docentes section
@@ -93,16 +93,15 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         email: cf.get("email").value,
         status: cf.get("status").value,
         documentGroup: {
-          prependSelect: cf.controls["documentGroup"].get("prependSelect")
-            .value,
-          prependInput: cf.controls["documentGroup"].get("prependInput").value
+          prependSelect: cf.controls["documentGroup"].get("prependSelect").value,
+          prependInput: cf.controls["documentGroup"].get("prependInput").value,
         },
         phone: cf.get("phone").value,
         addressState: cf.get("addressState").value,
         addressMunicipality: cf.get("addressMunicipality").value,
         street: cf.get("street").value,
         city: cf.get("city").value,
-        gender: cf.get("gender").value
+        gender: cf.get("gender").value,
       };
       break;
     case "buscarEstudiante": // for Datos de la Escuela view and Estudiantes section
@@ -110,20 +109,21 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         name: cf.get("name").value,
         lastName: cf.get("lastName").value,
         documentGroup: {
-          prependSelect: cf.controls["documentGroup"].get("prependSelect")
-            .value,
-          prependInput: cf.controls["documentGroup"].get("prependInput").value
+          prependSelect: cf.controls["documentGroup"].get("prependSelect").value,
+          prependInput: cf.controls["documentGroup"].get("prependInput").value,
         },
-        gender: cf.get("gender").value, 
+        gender: cf.get("gender").value,
       };
-      if (formsContent["grades"]) 
-        data.data["grades"] = cf.get("grades").value;
-      if (formsContent["section"]) 
-        data.data["section"] = cf.get("section").value;
+      if (formsContent["grades"]) data.data["grades"] = cf.get("grades").value;
+      if (formsContent["section"]) data.data["section"] = cf.get("section").value;
       break;
-    case "initialWorkshopConfigPreparacionTaller": // for Taller Inicial view and Preparacion del Taller section
+    case "preparingWorkshopForm":
+      // for Taller Inicial view and Preparacion del Taller section
       data.isThereTable = false;
-      console.log(cf.value);
+      data.data = {
+        workshopPlace: cf.get("letterNumber").value,
+        workshopDate: cf.get("date").value,
+      };
       break;
     case "tablaLectura": // for Diagnostico Inicial view and Lectura tab table
       data.data = {
@@ -134,7 +134,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         section: cf.get("section").value,
         //date: cf.get("date").value,
         result: cf.get("result").value,
-        index: cf.get("index").value
+        index: cf.get("index").value,
       };
       break;
     case "tablaMatematica": // for Diagnostico Inicial view and Matematica tab table
@@ -146,17 +146,17 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         section: cf.get("section").value,
         //date: cf.get("date").value,
         resultMul: cf.get("resultMul").value,
-       // dateLog: cf.get("dateLog").value,
+        // dateLog: cf.get("dateLog").value,
         resultLog: cf.get("resultLog").value,
         indexMul: cf.get("indexMul").value,
-        indexLog: cf.get("indexLog").value
+        indexLog: cf.get("indexLog").value,
       };
       break;
     case "tablaConfirmacionDocente": // for Amblemonedas view and Confirmacion Docente tab table
       data.data = {
         grade: cf.get("grade").value,
         section: cf.get("section").value,
-        confirmation: cf.get("confirmation").value
+        confirmation: cf.get("confirmation").value,
       };
       break;
     case "imageContainerFormType": // for Taller Inicial view and Registro Inicial modal and for Datos de la Escuela view and Slider principal de la escuela modal
@@ -175,7 +175,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           : null,
         imageSelected: cf.controls["imageGroup"].get("imageSelected").value
           ? cf.controls["imageGroup"].get("imageSelected").value
-          : null
+          : null,
         /**
              image: cf.controls['imageGroup'].get('imageSelected').value
           ? cf.controls['imageGroup'].get('imageSelected').value.name
@@ -202,7 +202,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           : null,
         imageSelected: cf.controls["imageGroup"].get("imageSelected").value
           ? cf.controls["imageGroup"].get("imageSelected").value
-          : null
+          : null,
       };
       break;
     case "agregarDocentePreinscripcion": // Agregar de la Preparacion anual view
@@ -211,7 +211,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         name: cf.get("name").value,
         lastName: cf.get("lastName").value,
         phone: cf.get("phone").value,
-        email: cf.get("email").value
+        email: cf.get("email").value,
       };
       break;
     case "agregarResultadoEstudiante": // Agregar del Olimpiadas de matematicas
@@ -222,10 +222,10 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         section: cf.get("section").value,
         gradeAndSection: {
           grade: cf.get("grade").value,
-          section: cf.get("section").value
+          section: cf.get("section").value,
         },
         status: cf.get("status").value,
-        result: cf.get("result").value
+        result: cf.get("result").value,
       };
       break;
     case "agregarActividadEspecial": // for Actividad Especial view and table
@@ -235,7 +235,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         cantidad: cf.get("cantidad").value,
         price: cf.get("price").value,
         impuesto: cf.get("impuesto").value,
-        subtotal: cf.get("subtotal").value
+        subtotal: cf.get("subtotal").value,
       };
       break;
     case "docenteTestimonioUpdate": // for Testimonio Docente view table
@@ -248,7 +248,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           : null,
         imageSelected: cf.controls["imageGroup"].get("imageSelected").value
           ? cf.controls["imageGroup"].get("imageSelected").value
-          : null
+          : null,
         /**
              source: cf.controls['imageGroup'].get('imageSrc').value
           ? cf.controls['imageGroup'].get('imageSrc').value
@@ -257,19 +257,19 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
           ? cf.controls['imageGroup'].get('imageSelected').value
           : null,
              */
-          };
-          break;
-    case 'agregarImagenActividad': // for Agregar Fotos Actividad view
+      };
+      break;
+    case "agregarImagenActividad": // for Agregar Fotos Actividad view
       data.data = {
-        image: cf.controls['imageGroup'].get('imageSelected').value
-          ? cf.controls['imageGroup'].get('imageSelected').value.name 
+        image: cf.controls["imageGroup"].get("imageSelected").value
+          ? cf.controls["imageGroup"].get("imageSelected").value.name
           : null,
         //description: cf.controls['imageGroup'].get('imageDescription').value,
-        source: cf.controls['imageGroup'].get('imageSrc').value
-          ? cf.controls['imageGroup'].get('imageSrc').value 
+        source: cf.controls["imageGroup"].get("imageSrc").value
+          ? cf.controls["imageGroup"].get("imageSrc").value
           : null,
-        imageSelected: cf.controls['imageGroup'].get('imageSelected').value
-          ? cf.controls['imageGroup'].get('imageSelected').value 
+        imageSelected: cf.controls["imageGroup"].get("imageSelected").value
+          ? cf.controls["imageGroup"].get("imageSelected").value
           : null,
         /**
         image: cf.controls['imageGroup'].get('imageSelected').value
