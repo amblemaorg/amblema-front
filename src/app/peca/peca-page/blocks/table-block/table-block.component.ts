@@ -1,8 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import {
-  PageBlockComponent,
-  PresentationalBlockComponent
-} from "../page-block.component";
+import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
 import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from "./ng2-smart-table-default-settings";
 import { LocalDataSource } from "ng2-smart-table";
 import { GlobalService } from "src/app/services/global.service";
@@ -12,10 +9,9 @@ import cloneDeep from "lodash/cloneDeep";
 @Component({
   selector: "table-block",
   templateUrl: "./ng2-smart-table-template.html",
-  styleUrls: ["./table-block.component.scss"]
+  styleUrls: ["./table-block.component.scss"],
 })
-export class TableBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class TableBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   name: string;
   component: string;
@@ -36,6 +32,7 @@ export class TableBlockComponent
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
     tableTitle?: string; // to set a title for the table
+    onDelete: Function | null;
   };
 
   userCanCreate: boolean = true;
@@ -62,20 +59,20 @@ export class TableBlockComponent
   ngOnInit() {
     this.subscription.add(
       // data actions (data.action): set, add, edit, delete, view
-      this.globals.updateTableDataEmitter.subscribe(data => {
+      this.globals.updateTableDataEmitter.subscribe((data) => {
         this.confsOnTable(data);
       })
     );
 
     this.subscription.add(
-      this.globals.showImageContainerEmitter.subscribe(code => {
+      this.globals.showImageContainerEmitter.subscribe((code) => {
         if (this.settings.buttonCode && this.settings.buttonCode == code)
           this.settings.hideImgContainer = false;
       })
     );
 
     this.subscription.add(
-      this.globals.resetEditedEmitter.subscribe(btnCode => {
+      this.globals.resetEditedEmitter.subscribe((btnCode) => {
         if (this.settings.buttonCode && this.settings.buttonCode == btnCode) {
           this.isEdited = false;
           this.isEditable = false;
@@ -84,20 +81,14 @@ export class TableBlockComponent
     );
 
     this.subscription.add(
-      this.globals.setReadonlyEmitter.subscribe((data) => {        
+      this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
-          if (
-            this.settings.buttonCode && 
-            this.settings.buttonCode == data.buttonCode
-          )
+          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
             this.isEditable = !data.setReadOnly;
         } else {
-          if (
-            this.settings.tableCode && 
-            this.settings.tableCode == data.buttonCode
-          )
-            this.isEditable = !data.setReadOnly;      
-        } 
+          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+            this.isEditable = !data.setReadOnly;
+        }
       })
     );
   }
@@ -115,12 +106,8 @@ export class TableBlockComponent
     if (this.settings[data.code]) {
       let index = -1; //initial
 
-      if (
-        data.action != "add" &&
-        data.action != "set" &&
-        this.settings.isFromImgContainer
-      ) {
-        index = this.settings["dataCopy"].findIndex(obj => {
+      if (data.action != "add" && data.action != "set" && this.settings.isFromImgContainer) {
+        index = this.settings["dataCopy"].findIndex((obj) => {
           return obj.id === data.data.oldData.id;
         });
       }
@@ -129,30 +116,28 @@ export class TableBlockComponent
         case "edit":
           this.source
             .find(data.data.dataToCompare)
-            .then(value => {
-              if (index != -1)
-                this.settings["dataCopy"][index] = data.data.newData;        
-              this.source.update(data.data.dataToCompare, data.data.newData)
-              .then(resp=>{}).catch(error=>{});
+            .then((value) => {
+              if (index != -1) this.settings["dataCopy"][index] = data.data.newData;
+              this.source
+                .update(data.data.dataToCompare, data.data.newData)
+                .then((resp) => {})
+                .catch((error) => {});
               this.source.refresh();
-              if (this.settings.makesNoRequest && this.settings.buttonCode)
-                this.isEdited = true;
+              if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
             })
-            .catch(error => {});
+            .catch((error) => {});
           break;
 
         case "delete":
           this.source
             .find(data.data.dataToCompare)
-            .then(value => {
-              if (index != -1) 
-                this.settings["dataCopy"].splice(index, 1);
+            .then((value) => {
+              if (index != -1) this.settings["dataCopy"].splice(index, 1);
               this.source.remove(data.data.dataToCompare);
               this.source.refresh();
-              if (this.settings.makesNoRequest && this.settings.buttonCode)
-                this.isEdited = true;
+              if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
             })
-            .catch(error => {});
+            .catch((error) => {});
           break;
 
         case "view":
@@ -166,8 +151,7 @@ export class TableBlockComponent
               this.settings["dataCopy"] = [...this.settings[data.code]];
             this.source = new LocalDataSource(this.settings[data.code]);
           } else {
-            if (this.settings.isFromImgContainer)
-              this.settings["dataCopy"].push(data.data);
+            if (this.settings.isFromImgContainer) this.settings["dataCopy"].push(data.data);
             if (this.settings.isFromImgContainer)
               this.settings[data.code] = [...this.settings["dataCopy"]];
             this.source.add(data.data);
@@ -185,23 +169,22 @@ export class TableBlockComponent
   sendTableData() {
     //updating textAndButton button data
     if (this.settings.buttonCode) {
-      if (this.canTableSendFormDataToBtn) 
-        this.globals.sendFormDataToBtn(this.settings.buttonCode);
-      
+      if (this.canTableSendFormDataToBtn) this.globals.sendFormDataToBtn(this.settings.buttonCode);
+
       if (this.settings.isFromImgContainer) {
         this.globals.buttonDataUpdater({
           code: this.settings.buttonCode,
           whichData: "table",
           table: this.settings["dataCopy"],
-          tableEdited: this.isTableContentEdited
+          tableEdited: this.isTableContentEdited,
         });
       } else {
-        this.source.getAll().then(value => {
+        this.source.getAll().then((value) => {
           this.globals.buttonDataUpdater({
             code: this.settings.buttonCode,
             whichData: "table",
             table: value,
-            tableEdited: this.isTableContentEdited
+            tableEdited: this.isTableContentEdited,
           });
         });
       }
@@ -217,26 +200,25 @@ export class TableBlockComponent
 
   setData(data: any) {
     if (!this.isEdited) {
-      if (this.settings.isFromImgContainer)
-        this.settings["dataCopy"] = [...data.data];
+      if (this.settings.isFromImgContainer) this.settings["dataCopy"] = [...data.data];
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
-      
+
       if (data.hasTitle) {
         this.isContentRefreshing = true;
-        this.settings['tableTitle'] = data.hasTitle.tableTitle;
+        this.settings["tableTitle"] = data.hasTitle.tableTitle;
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
       }
-      
+
       this.sendTableData();
     }
   }
 
   onCustomActions(e) {
     let index = this.settings.isFromImgContainer
-      ? this.settings["dataCopy"].findIndex(obj => {
+      ? this.settings["dataCopy"].findIndex((obj) => {
           return obj.id === e.data.id;
         })
       : -1;
@@ -248,11 +230,11 @@ export class TableBlockComponent
         dataCopyData: index != -1 ? this.settings["dataCopy"][index] : e.data,
         dataToCompare: e.data,
         oldData: cloneDeep(e.data),
-        newData: cloneDeep(e.data)
+        newData: cloneDeep(e.data),
       },
       action: e.action.toLowerCase(),
       showBtn: false,
-      component: "form"
+      component: "form",
     };
 
     switch (e.action) {
@@ -268,6 +250,9 @@ export class TableBlockComponent
         break;
 
       case "DELETE":
+        if (this.settings.onDelete) {
+          this.settings.onDelete(obj);
+        }
         if (this.isEditable) {
           obj.component = "textsbuttons";
           this.globals.ModalShower(obj);

@@ -21,10 +21,10 @@
             'full-width':
               settings.formsContent[field].type != 'double' &&
               settings.formsContent[field].fullwidth,
-            'input-group': 
-              settings.formsContent[field].type === 'prepend' 
-              || (settings.formsContent[field].type === 'double' 
-                  && settings.formsContent[field].isInputGroup),
+            'input-group':
+              settings.formsContent[field].type === 'prepend' ||
+              (settings.formsContent[field].type === 'double' &&
+                settings.formsContent[field].isInputGroup),
             'two-wrapper': settings.formsContent[field].type === 'double',
             'one-row-form-form-group': settings.isOneRow,
             'full-width2': settings.formsContent[field].fullwidth2
@@ -48,15 +48,15 @@
               *ngIf="
                 (field == 'addressState' && showSelectState) ||
                 (settings.formsContent[field].shouldContentRefresh && !isContentRefreshing) ||
-                field != 'addressState' 
+                field != 'addressState'
               "
               class="form-control"
               [class.is-in-modal]="settings.isFromCustomTableActions"
               notFoundText="Elementos no encontrados"
               [items]="
-                settings.formsContent[field].emmitSectionChange 
-                ? sectionsArr
-                : field != 'addressMunicipality'
+                settings.formsContent[field].emmitSectionChange
+                  ? sectionsArr
+                  : field != 'addressMunicipality'
                   ? settings.formsContent[field].options
                   : municipalities
               "
@@ -68,37 +68,27 @@
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
               (change)="
-                settings.formsContent[field].isGrades 
+                settings.formsContent[field].isGrades
                   ? setSchoolSections($event)
-                  : settings.formsContent[field].isFactoryType 
-                    ? requiredOtherCompany($event)
-                    : updateMuns(field === 'addressState' ? true : false)
+                  : settings.formsContent[field].isFactoryType
+                  ? requiredOtherCompany($event)
+                  : updateMuns(field === 'addressState' ? true : false)
               "
-              [readonly]="
-                settings.formsContent[field].readonly || isReadOnly()
-              "
+              [readonly]="settings.formsContent[field].readonly || isReadOnly()"
             >
-              <ng-template
-                ng-option-tmp
-                let-item="item"
-                let-search="searchTerm"
-              >
+              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                 <small>{{ item.name }}</small>
               </ng-template>
             </ng-select>
           </ng-container>
 
           <ng-container *ngSwitchCase="'prepend'" [formGroupName]="field">
-            <label>{{
-              settings.formsContent[field].fields["prependInput"].label
-            }}</label>
+            <label>{{ settings.formsContent[field].fields["prependInput"].label }}</label>
             <div class="input-group-prepend">
               <ng-select
                 class="form-control"
                 notFoundText="Elementos no encontrados"
-                [items]="
-                  settings.formsContent[field].fields['prependSelect'].options
-                "
+                [items]="settings.formsContent[field].fields['prependSelect'].options"
                 bindValue="id"
                 bindLabel="name"
                 [labelForId]="getId('prependSelect')"
@@ -110,11 +100,7 @@
                   settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
                 "
               >
-                <ng-template
-                  ng-option-tmp
-                  let-item="item"
-                  let-search="searchTerm"
-                >
+                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                   <small>{{ item.name }}</small>
                 </ng-template>
               </ng-select>
@@ -125,18 +111,15 @@
               type="text"
               formControlName="prependInput"
               [id]="getId('prependInput')"
-              [placeholder]="
-                settings.formsContent[field].fields['prependInput'].placeholder
-              "
-              [pattern]="
-                settings.formsContent[field].fields['prependInput'].validations.pattern
-              "
+              [placeholder]="settings.formsContent[field].fields['prependInput'].placeholder"
+              [pattern]="settings.formsContent[field].fields['prependInput'].validations.pattern"
               [readonly]="
                 settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
               "
-              [maxlength]="settings.formsContent[field].fields['prependInput'].maxlength 
-                ? settings.formsContent[field].fields['prependInput'].maxlength
-                : 'default'
+              [maxlength]="
+                settings.formsContent[field].fields['prependInput'].maxlength
+                  ? settings.formsContent[field].fields['prependInput'].maxlength
+                  : 'default'
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -162,9 +145,7 @@
                     field
                   )
                 "
-                [readonly]="
-                  settings.formsContent[field].readonly || isReadOnly()
-                "
+                [readonly]="settings.formsContent[field].readonly || isReadOnly()"
               />
               <input
                 [class.d-none]="inputDate.value.length > 0"
@@ -179,10 +160,9 @@
               <div class="date-error-message">
                 <strong>{{
                   settings.formsContent[field].lower
-                    ? ( settings.formsContent[field].validationPerYears 
-                          ? "Debe tener al menos 3 años de edad" 
-                          : "La fecha no debe ser mayor a la de hoy"
-                      )
+                    ? settings.formsContent[field].validationPerYears
+                      ? "Debe tener al menos 3 años de edad"
+                      : "La fecha no debe ser mayor a la de hoy"
                     : "La fecha debe ser mayor a la de hoy"
                 }}</strong>
               </div>
@@ -198,13 +178,8 @@
             <label *ngIf="settings.formsContent[field].isInputGroup">{{
               settings.formsContent[field].label
             }}</label>
-            <ng-container
-              *ngFor="
-                let doublefield of doubleFields[field];
-                index as ig
-              "
-            >              
-              <ng-container *ngIf="settings.formsContent[field].isInputGroup; else regularDouble">               
+            <ng-container *ngFor="let doublefield of doubleFields[field]; index as ig">
+              <ng-container *ngIf="settings.formsContent[field].isInputGroup; else regularDouble">
                 <input
                   class="form-control"
                   [class.sibling-one]="ig == 0"
@@ -213,45 +188,38 @@
                   [type]="settings.formsContent[field].fields[doublefield].type"
                   [formControlName]="doublefield"
                   [id]="getId(doublefield)"
-                  [placeholder]="
-                    settings.formsContent[field].fields[doublefield].placeholder
-                  "
+                  [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
                   [readonly]="
                     settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
                   "
                   [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
-                  [maxlength]="settings.formsContent[field].fields[doublefield].maxlength 
-                    ? settings.formsContent[field].fields[doublefield].maxlength
-                    : 'default'
+                  [maxlength]="
+                    settings.formsContent[field].fields[doublefield].maxlength
+                      ? settings.formsContent[field].fields[doublefield].maxlength
+                      : 'default'
                   "
-                />                
+                />
               </ng-container>
               <ng-template #regularDouble>
                 <div
-                  [class]="
-                    'form-group ' +
-                    settings.formsContent[field].fields[doublefield].type
-                  "
+                  [class]="'form-group ' + settings.formsContent[field].fields[doublefield].type"
                 >
-                  <label>{{
-                    settings.formsContent[field].fields[doublefield].label
-                  }}</label>
+                  <label>{{ settings.formsContent[field].fields[doublefield].label }}</label>
                   <input
                     class="form-control"
                     autocomplete="off"
                     [type]="settings.formsContent[field].fields[doublefield].type"
                     [formControlName]="doublefield"
                     [id]="getId(doublefield)"
-                    [placeholder]="
-                      settings.formsContent[field].fields[doublefield].placeholder
-                    "
+                    [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
                     [readonly]="
                       settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
                     "
                     [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
-                    [maxlength]="settings.formsContent[field].fields[doublefield].maxlength 
-                      ? settings.formsContent[field].fields[doublefield].maxlength
-                      : 'default'
+                    [maxlength]="
+                      settings.formsContent[field].fields[doublefield].maxlength
+                        ? settings.formsContent[field].fields[doublefield].maxlength
+                        : 'default'
                     "
                   />
                   <ng-container *ngIf="hasErrors(field, true, doublefield)">
@@ -260,25 +228,20 @@
                     </div>
                   </ng-container>
                 </div>
-              </ng-template>        
+              </ng-template>
             </ng-container>
             <ng-container *ngIf="settings.formsContent[field].isInputGroup">
-              <ng-container 
-                *ngFor="
-                  let doublefield2 of doubleFields[field];
-                  index as ige
-                "
-              >
+              <ng-container *ngFor="let doublefield2 of doubleFields[field]; index as ige">
                 <div
-                  *ngIf="hasErrors(field, true, doublefield2)" 
+                  *ngIf="hasErrors(field, true, doublefield2)"
                   class="error-message"
                   [class.sibling-error-one]="ige == 0"
                   [class.sibling-error-two]="ige == 1"
                 >
                   <strong>{{ hasErrors(field, true, doublefield2) }}</strong>
                 </div>
-              </ng-container>                
-            </ng-container> 
+              </ng-container>
+            </ng-container>
           </ng-container>
 
           <ng-container *ngSwitchCase="'textarea'">
@@ -289,9 +252,7 @@
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="
-                settings.formsContent[field].readonly || isReadOnly()
-              "
+              [readonly]="settings.formsContent[field].readonly || isReadOnly()"
             ></textarea>
           </ng-container>
 
@@ -299,19 +260,19 @@
             <label>{{ settings.formsContent[field].label }}</label>
             <input
               class="form-control"
-              autocomplete='off'
+              autocomplete="off"
               [type]="settings.formsContent[field].type"
               [formControlName]="field"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
-              [readonly]="
-                settings.formsContent[field].readonly || isReadOnly()
-              "
+              [readonly]="settings.formsContent[field].readonly || isReadOnly()"
               [pattern]="settings.formsContent[field].validations.pattern"
-              [maxlength]="settings.formsContent[field].maxlength 
-                ? settings.formsContent[field].maxlength
-                : 'default'
+              [maxlength]="
+                settings.formsContent[field].maxlength
+                  ? settings.formsContent[field].maxlength
+                  : 'default'
               "
+              (blur)="settings.onBlur($event)"
             />
           </ng-container>
 
@@ -331,13 +292,10 @@
       </ng-container>
 
       <ng-template #titleLabel>
-        <ng-container
-          *ngIf="settings.formsContent[field].type === 'title'; else imageGroup"
-        >
+        <ng-container *ngIf="settings.formsContent[field].type === 'title'; else imageGroup">
           <h6
             [class.d-none]="
-              settings.formsContent[field].hideImgContainer &&
-              settings.hideImgContainer
+              settings.formsContent[field].hideImgContainer && settings.hideImgContainer
             "
           >
             {{ settings.formsContent[field].label }}
@@ -392,101 +350,82 @@
           </div>
 
           <div
-            *ngIf="
-              imageFieldsArr(settings.formsContent[field].fields).length > 0
-            "
+            *ngIf="imageFieldsArr(settings.formsContent[field].fields).length > 0"
             class="image-fields d-flex"
             [ngClass]="{
               'flex-column justify-content-center': !settings.alwaysValidations,
-              'flex-wrap justify-content-between general-container':
-                settings.alwaysValidations,
+              'flex-wrap justify-content-between general-container': settings.alwaysValidations,
               'inside-modal': settings.isFromCustomTableActions,
               'extra-fields-modal': settings.alwaysValidations
             }"
           >
             <ng-container
-              *ngFor="
-                let imgField of imageFieldsArr(
-                  settings.formsContent[field].fields
-                )
-              "
+              *ngFor="let imgField of imageFieldsArr(settings.formsContent[field].fields)"
             >
-              <div 
+              <div
                 class="input-container"
                 [class.expand-wide]="
-                  imgField == 'imageDescription' && 
+                  imgField == 'imageDescription' &&
                   !settings.formsContent[field].fields['imageStatus']
-                "  
+                "
               >
                 <label [class.label-image-status]="imgField == 'imageStatus'">{{
                   settings.formsContent[field].fields[imgField].label
                 }}</label>
-                  
+
                 <input
-                  *ngIf="(imgField == 'imageDocente' && !showSelectTeacher) || 
-                  (settings.formsContent[field].fields[imgField].shouldContentRefresh && isContentRefreshing)"
+                  *ngIf="
+                    (imgField == 'imageDocente' && !showSelectTeacher) ||
+                    (settings.formsContent[field].fields[imgField].shouldContentRefresh &&
+                      isContentRefreshing)
+                  "
                   class="form-control"
                   type="text"
                   [formControlName]="imgField"
                   [id]="getId(imgField)"
-                  [placeholder]="
-                    settings.formsContent[field].fields[imgField].placeholder
-                  "
+                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
                 />
                 <ng-select
                   *ngIf="
                     (imgField == 'imageDocente' && showSelectTeacher) ||
-                    (settings.formsContent[field].fields[imgField].shouldContentRefresh && !isContentRefreshing) ||
+                    (settings.formsContent[field].fields[imgField].shouldContentRefresh &&
+                      !isContentRefreshing) ||
                     imgField == 'imageStatus'
                   "
                   class="form-control"
                   [ngClass]="{
-                    'image-status': 
-                      !settings.isFromCustomTableActions &&
-                      !settings.alwaysValidations,
+                    'image-status':
+                      !settings.isFromCustomTableActions && !settings.alwaysValidations,
                     'is-in-modal': settings.isFromCustomTableActions
                   }"
                   notFoundText="Elementos no encontrados"
-                  [items]="
-                    settings.formsContent[field].fields[imgField].options
-                  "
+                  [items]="settings.formsContent[field].fields[imgField].options"
                   bindValue="id"
                   bindLabel="name"
                   [labelForId]="getId(imgField)"
                   [formControlName]="imgField"
                   [virtualScroll]="true"
                   [id]="getId(imgField)"
-                  [placeholder]="
-                    settings.formsContent[field].fields[imgField].placeholder
-                  "
+                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
                   [readonly]="
                     settings.formsContent[field].fields[imgField].readonly || isReadOnly()
                   "
                 >
-                  <ng-template
-                    ng-option-tmp
-                    let-item="item"
-                    let-search="searchTerm"
-                  >
+                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                     <small>{{ item.name }}</small>
                   </ng-template>
                 </ng-select>
                 <input
-                  *ngIf="
-                    imgField == 'imageCargo' || imgField == 'imageDescription'
-                  "
-                  class="form-control"                  
-                  [class.image-description]=" 
-                    !settings.isFromCustomTableActions &&
-                    !settings.alwaysValidations
+                  *ngIf="imgField == 'imageCargo' || imgField == 'imageDescription'"
+                  class="form-control"
+                  [class.image-description]="
+                    !settings.isFromCustomTableActions && !settings.alwaysValidations
                   "
                   autocomplete="off"
                   type="text"
                   [formControlName]="imgField"
                   [id]="getId(imgField)"
-                  [placeholder]="
-                    settings.formsContent[field].fields[imgField].placeholder
-                  "
+                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
                   [readonly]="
                     settings.formsContent[field].fields[imgField].readonly || isReadOnly()
                   "
@@ -494,14 +433,11 @@
                 <ng-container
                   *ngIf="
                     hasErrors(field, true, imgField, true) &&
-                    (settings.isFromCustomTableActions ||
-                      settings.alwaysValidations)
+                    (settings.isFromCustomTableActions || settings.alwaysValidations)
                   "
                 >
                   <div class="error-message">
-                    <strong>{{
-                      hasErrors(field, true, imgField, true)
-                    }}</strong>
+                    <strong>{{ hasErrors(field, true, imgField, true) }}</strong>
                   </div>
                 </ng-container>
               </div>
@@ -511,15 +447,10 @@
           <div
             *ngIf="!settings.isFromCustomTableActions"
             class="add-img-btn"
-            [class.no-fields]="
-              imageFieldsArr(settings.formsContent[field].fields).length == 0
-            "
+            [class.no-fields]="imageFieldsArr(settings.formsContent[field].fields).length == 0"
           >
             <ng-container
-              *ngIf="
-                !settings.formsContent[field].fields['imageDocente'];
-                else notAddImg
-              "
+              *ngIf="!settings.formsContent[field].fields['imageDocente']; else notAddImg"
             >
               <button
                 type="button"
@@ -562,10 +493,7 @@
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
             [disabled]="!componentForm.valid || sendingForm"
           >
-            <span
-              *ngIf="sendingForm"
-              class="spinner-grow spinner-grow-sm"
-            ></span>
+            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Cargar imagenes" : "Cargando.." }}
           </button>
         </ng-container>
@@ -577,10 +505,7 @@
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             [disabled]="disableBtn()"
           >
-            <span
-              *ngIf="sendingForm"
-              class="spinner-grow spinner-grow-sm"
-            ></span>
+            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Guardar" : "Guardando.." }}
           </button>
         </ng-container>
@@ -591,10 +516,7 @@
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
           >
-            <span
-              *ngIf="sendingForm"
-              class="spinner-grow spinner-grow-sm"
-            ></span>
+            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Agregar" : "Agregando.." }}
           </button>
         </ng-container>
