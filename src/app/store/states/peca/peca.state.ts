@@ -1,4 +1,6 @@
-import { State, Action, StateContext, Selector } from "@ngxs/store";
+import { ToastrService } from "ngx-toastr";
+import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
+import { State, Action, StateContext, Selector, Store } from "@ngxs/store";
 import {
   SetUser,
   ClearPecaState,
@@ -6,6 +8,11 @@ import {
   FetchPecaContent,
   FetchProject,
   SetUserPermissions,
+  SetLapsePlanningRequestData,
+  UpdateInitialWorkshop,
+  UpdateLapsePlanningDateAndStatus,
+  UpdateLapsePlanningFile,
+  CancelLapsePlanningFile,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -18,10 +25,20 @@ import { environment } from "../../../../environments/environment";
     content: null,
     userPermissions: null,
     pecaContentRequesting: false,
+    lapsePlanningRequest: {
+      attachedFile: "",
+      meetingDate: "",
+      status: "1",
+    },
   },
 })
 export class PecaState {
-  constructor(private apiService: ApiWebContentService) {
+  constructor(
+    private store: Store,
+    private apiService: ApiWebContentService,
+    private fetcher: HttpFetcherService,
+    private toastr: ToastrService
+  ) {
     this.apiService.setBaseUrl(environment.baseUrl);
   }
 
@@ -82,14 +99,153 @@ export class PecaState {
     this.apiService.setResourcePath("pecaprojects/" + payload);
     return this.apiService.getWebContent().subscribe((response) => {
       if (response) {
-        //const prevState = getState();
         const pecaContent: PecaModel = response;
         patchState({
           pecaContentRequesting: false,
           content: pecaContent,
         });
-        //setState({ ...prevState, content: pecaContent });
       }
+    });
+  }
+
+  @Action(UpdateLapsePlanningFile)
+  async updateLapsePlanning(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateLapsePlanningFile
+  ) {
+    const state = getState();
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const { file, lapseNumber } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const url = `pecaprojects/lapseplanning/${pecaId}/${lapseNumber}?userId=${userId}`;
+    const formData = new FormData();
+    if (file) {
+      formData.append("attachedFile", file);
+    }
+    this.toastr.info("Guardando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.post(url, formData).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            lapsePlanning: response,
+          },
+        },
+      });
+      this.toastr.success("Guardado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(CancelLapsePlanningFile)
+  async cancelLapsePlanning(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: CancelLapsePlanningFile
+  ) {
+    const { content: pecaContent } = getState();
+    const { lapseNumber } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const { approvalHistory } = pecaContent[lapseName].lapsePlanning;
+    const lastLapsePlanningFileRequest = approvalHistory[approvalHistory.length - 1];
+    const url = `requestscontentapproval/${lastLapsePlanningFileRequest.id}`;
+    const data = {
+      status: "4",
+    };
+
+    this.toastr.info("Cancelando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.put(url, data).toPromise();
+      this.store.dispatch([new FetchPecaContent(pecaContent.id)]);
+      this.toastr.success("Solicitud cancelada", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(UpdateLapsePlanningDateAndStatus)
+  async updateLapsePlanningDateAndStatus(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateLapsePlanningDateAndStatus
+  ) {
+    const state = getState();
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const { lapseNumber } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const url = `pecaprojects/lapseplanning/${pecaId}/${lapseNumber}?userId=${userId}`;
+    const formData = new FormData();
+    formData.append("meetingDate", state.lapsePlanningRequest.meetingDate);
+    formData.append("status", state.lapsePlanningRequest.status);
+    this.toastr.info("Guardando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.post(url, formData).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            lapsePlanning: response,
+          },
+        },
+      });
+      this.toastr.success("Guardado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(UpdateInitialWorkshop)
+  async updateInitialWorkshop(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateInitialWorkshop
+  ) {
+    const state = getState();
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const { lapseNumber, workshopPlace, workshopDate } = payload;
+    const url = `pecaprojects/initialworkshop/${pecaId}/${lapseNumber}?userId=${userId}`;
+    const data = {
+      workshopPlace,
+      workshopDate,
+    };
+    const response = await this.fetcher.post(url, data).toPromise();
+  }
+
+  @Action(SetLapsePlanningRequestData)
+  setLapsePlanningRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: SetLapsePlanningRequestData
+  ) {
+    const { file, date, status } = payload;
+    const { lapsePlanningRequest } = getState();
+    patchState({
+      lapsePlanningRequest: {
+        attachedFile: file ? file : lapsePlanningRequest.attachedFile,
+        meetingDate: date ? date : lapsePlanningRequest.meetingDate,
+        status: status ? status : lapsePlanningRequest.status,
+      },
     });
   }
 
@@ -101,6 +257,11 @@ export class PecaState {
       user: null,
       userPermissions: null,
       pecaContentRequesting: false,
+      lapsePlanningRequest: {
+        attachedFile: "",
+        meetingDate: "",
+        status: "1",
+      },
     });
   }
 

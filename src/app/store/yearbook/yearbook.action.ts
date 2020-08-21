@@ -158,7 +158,6 @@ export class YearBookState {
 
   @Action(CancelYearBookRequest)
   async cancelYearkBookRequest(ctx: StateContext<YearBook>, action: CancelYearBookRequest) {
-    debugger;
     const { approvalHistory } = ctx.getState();
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${recentApprovalRequest.id}`;
@@ -177,10 +176,6 @@ export class YearBookState {
         positionClass: "toast-bottom-right",
       });
     }
-
-    //this.store.dispatch(new SetYearBook(data.detail));
-    //.subscribe(() => {
-    //});
   }
 
   @Action(SetHistoricalReview)
