@@ -58,8 +58,8 @@ export class GraphicsBlockComponent
       this.dataLabel = this.settings.labels;
       this.arrayColors = this.settings.labels.map(() => "#81B03E");
       this.dataChart = this.settings.items;
-      return;
     }
+
     if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
       this.color = "#FFF";
     } else this.color = "#111";
