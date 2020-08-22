@@ -48,6 +48,10 @@ export interface PecaInitialWorkshopRequest {
   images: { id: string; description: string; image: string }[];
 }
 
+export interface PecaSchoolActivitiesImagesRequest {
+  images: { description?: string; image: string }[];
+}
+
 export interface PecaStateModel {
   user?: PecaUserModel;
   content: PecaModel | null;
@@ -56,4 +60,5 @@ export interface PecaStateModel {
   pecaContentRequesting?: boolean;
   lapsePlanningRequest: PecaLapsePlanningRequest;
   initialWorkshopImagesRequest: PecaInitialWorkshopRequest;
+  schoolActivitiesImagesRequest: PecaSchoolActivitiesImagesRequest;
 }
