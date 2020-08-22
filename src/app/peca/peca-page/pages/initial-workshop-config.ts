@@ -371,6 +371,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
       columns: {
         image: {
           title: "Imagen",
+          filter: false,
           type: "html",
           valuePrepareFunction: (img) => {
             return `<img src="${img}" width="50" height="50" />`;

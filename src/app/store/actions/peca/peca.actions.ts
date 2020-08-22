@@ -100,3 +100,28 @@ export class ClearInitialWorkshopRequestData {
   static readonly type = "[peca] Clear Initial Workshop Request Data";
   constructor(public payload: any) {}
 }
+
+export class AddImageToSchoolActivitiesRequestData {
+  static readonly type = "[peca] Add Image To School Activities Request Data";
+  constructor(public payload: { description?: string; image: string }) {}
+}
+
+export class RemoveImageFromSchoolActivitiesRequestData {
+  static readonly type = "[peca] Remove Image From School Activities Request Data";
+  constructor(public payload: { imageSource: string }) {}
+}
+
+export class ClearSchoolActivitiesRequestData {
+  static readonly type = "[peca] Clear School Activities Request Data";
+  constructor(public payload: any) {}
+}
+
+export class CancelSchoolActivitiesRequest {
+  static readonly type = "[peca] Cancel School Activities Request";
+  constructor() {}
+}
+
+export class UpdateSchoolActivitiesRequest {
+  static readonly type = "[peca] Update School Activities Request";
+  constructor() {}
+}

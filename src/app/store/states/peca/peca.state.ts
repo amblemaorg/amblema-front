@@ -18,6 +18,11 @@ import {
   ClearInitialWorkshopRequestData,
   UpdateInitialWorkshopImages,
   CancelInitialWorkshopImages,
+  AddImageToSchoolActivitiesRequestData,
+  RemoveImageFromSchoolActivitiesRequestData,
+  ClearSchoolActivitiesRequestData,
+  CancelSchoolActivitiesRequest,
+  UpdateSchoolActivitiesRequest,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -38,6 +43,9 @@ import { ToastrService } from "ngx-toastr";
     },
     initialWorkshopImagesRequest: {
       description: "",
+      images: [],
+    },
+    schoolActivitiesImagesRequest: {
       images: [],
     },
   },
@@ -310,6 +318,73 @@ export class PecaState {
     }
   }
 
+  @Action(UpdateSchoolActivitiesRequest)
+  async updateSchoolActivitiesImages(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    {}: UpdateSchoolActivitiesRequest
+  ) {
+    const state = getState();
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const url = `pecaprojects/activitiesslider/${pecaId}?userId=${userId}`;
+    const { schoolActivitiesImagesRequest } = state;
+    const data = {
+      slider: schoolActivitiesImagesRequest.images.map((image) => image.image),
+    };
+    this.toastr.info("Enviando solicitud, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.put(url, data).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          school: {
+            ...state.content.school,
+            activitiesSlider: response,
+          },
+        },
+      });
+      this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(CancelSchoolActivitiesRequest)
+  async cancelSchoolActivitiesRequest(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    {}: CancelSchoolActivitiesRequest
+  ) {
+    const { content: pecaContent } = getState();
+    //@ts-ignore
+    const { approvalHistory } = pecaContent.school.activitiesSlider;
+    const lastActivitiesImagesRequest = approvalHistory[approvalHistory.length - 1];
+    const url = `requestscontentapproval/${lastActivitiesImagesRequest.id}`;
+    const data = {
+      status: "4",
+    };
+
+    this.toastr.info("Cancelando, espere por favor...", "", {
+      positionClass: "toast-bottom-right",
+    });
+    try {
+      const response = await this.fetcher.put(url, data).toPromise();
+      this.store.dispatch([new FetchPecaContent(pecaContent.id)]);
+      this.toastr.success("Solicitud cancelada", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
   @Action(SetLapsePlanningRequestData)
   setLapsePlanningRequestData(
     { patchState, getState }: StateContext<PecaStateModel>,
@@ -387,6 +462,49 @@ export class PecaState {
     });
   }
 
+  @Action(AddImageToSchoolActivitiesRequestData)
+  addImageToSchoolActivitiesRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: AddImageToSchoolActivitiesRequestData
+  ) {
+    const { schoolActivitiesImagesRequest } = getState();
+    const newImages = [...schoolActivitiesImagesRequest.images, payload];
+    patchState({
+      schoolActivitiesImagesRequest: {
+        images: newImages,
+      },
+    });
+  }
+
+  @Action(RemoveImageFromSchoolActivitiesRequestData)
+  removeImageFromSchoolActivitiesRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: RemoveImageFromSchoolActivitiesRequestData
+  ) {
+    const { imageSource } = payload;
+    const { schoolActivitiesImagesRequest } = getState();
+    const newImages = schoolActivitiesImagesRequest.images.filter(
+      (image) => image.image !== imageSource
+    );
+    patchState({
+      schoolActivitiesImagesRequest: {
+        images: newImages,
+      },
+    });
+  }
+
+  @Action(ClearSchoolActivitiesRequestData)
+  clearSchoolActivitiesRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: ClearSchoolActivitiesRequestData
+  ) {
+    patchState({
+      schoolActivitiesImagesRequest: {
+        images: [],
+      },
+    });
+  }
+
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
     setState({
@@ -402,6 +520,9 @@ export class PecaState {
       },
       initialWorkshopImagesRequest: {
         description: "",
+        images: [],
+      },
+      schoolActivitiesImagesRequest: {
         images: [],
       },
     });
