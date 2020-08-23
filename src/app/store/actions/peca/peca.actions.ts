@@ -125,3 +125,17 @@ export class UpdateSchoolActivitiesRequest {
   static readonly type = "[peca] Update School Activities Request";
   constructor() {}
 }
+export class RegisterStudentMathOlympics {
+  static readonly type = "[peca] Register Student Math Olympics";
+  constructor(public payload: any) {}
+}
+
+export class UpdateStudentMathOlympics {
+  static readonly type = "[peca] Update Student Math Olympics";
+  constructor(public payload: any) {}
+}
+
+export class DeleteStudentMathOlympics {
+  static readonly type = "[peca] Delete Student Math Olympics";
+  constructor(public payload: any) {}
+}
