@@ -1,4 +1,7 @@
-import { UpdateStudentMathOlympics } from "./../../../store/actions/peca/peca.actions";
+import {
+  UpdateStudentMathOlympics,
+  RemoveStudentMathOlympics,
+} from "./../../../store/actions/peca/peca.actions";
 import { formResultadoEstudianteModal } from "../blocks/form-block/all-forms";
 import { RegisterStudentMathOlympics } from "src/app/store/actions/peca/peca.actions";
 import {
@@ -553,13 +556,43 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
     },
   };
 
+  const studentsDelete = {
+    component: "textsbuttons",
+    settings: {
+      subtitles: [
+        {
+          text: "¿Desea eliminar este estudiante?",
+        },
+      ],
+      action: [
+        {
+          type: 1,
+          name: "Si",
+        },
+        {
+          type: 2,
+          name: "No",
+        },
+      ],
+      onSubmit: (values) => {
+        console.log("math olympic delete", values);
+        const data = { lapseNumber, studentId: values.data.newData.id };
+        store.dispatch(new RemoveStudentMathOlympics(data));
+      },
+      makesNoRequest: true,
+      modalCode: "dataResultadoEstudiante",
+      isFromCustomTableActions: true,
+      isDeleting: true,
+    },
+  };
+
   const studentModal = {
     component: "modal",
     settings: {
       modalCode: "dataResultadoEstudiante",
       items: [
         {
-          childBlocks: [{ ...studentForm }, { ...textsAndButtonsResultadoEstudiante }],
+          childBlocks: [{ ...studentForm }, { ...studentsDelete }],
         },
       ],
     },

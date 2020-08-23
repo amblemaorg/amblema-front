@@ -25,6 +25,7 @@ import {
   UpdateSchoolActivitiesRequest,
   RegisterStudentMathOlympics,
   UpdateStudentMathOlympics,
+  RemoveStudentMathOlympics,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -583,6 +584,42 @@ export class PecaState {
         },
       });
       this.toastr.success("Estudiante actualizado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(RemoveStudentMathOlympics)
+  async removeStudentMathOlympics(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: RemoveStudentMathOlympics
+  ) {
+    const { lapseNumber, studentId } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const state = getState();
+    const pecaId = state.content.id;
+    const url = `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}`;
+    try {
+      const response = await this.fetcher.delete(url).toPromise();
+      const students = state.content[lapseName].olympics.students;
+      const updatedStudents = students.filter((student) => student.id !== studentId);
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            olympics: {
+              ...state.content[lapseName].olympics,
+              students: updatedStudents,
+            },
+          },
+        },
+      });
+      this.toastr.success("Estudiante eliminado satisfactoriamente", "", {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
