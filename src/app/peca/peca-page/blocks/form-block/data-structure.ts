@@ -217,7 +217,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     case "agregarResultadoEstudiante": // Agregar del Olimpiadas de matematicas
       data.data = {
         name: cf.get("name").value,
-        lastName: cf.get("lastName").value,
+        //lastName: cf.get("lastName").value,
         grade: cf.get("grade").value,
         section: cf.get("section").value,
         gradeAndSection: {
