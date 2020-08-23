@@ -1,143 +1,194 @@
-import { formResultadoEstudianteModal } from '../blocks/form-block/all-forms';
+import { UpdateStudentMathOlympics } from "./../../../store/actions/peca/peca.actions";
+import { formResultadoEstudianteModal } from "../blocks/form-block/all-forms";
+import { RegisterStudentMathOlympics } from "src/app/store/actions/peca/peca.actions";
+import {
+  requiredAndOnlyLetters,
+  requiredAndNormalText,
+} from "src/app/web/shared/forms/custom-validators";
+import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
+import { DatePipe } from "@angular/common";
+
+const controlProps = {
+  onlyLettersAndRequired: {
+    type: "text",
+    validations: requiredAndOnlyLetters,
+    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE },
+  },
+  normalTextAndRequired: {
+    type: "text",
+    validations: requiredAndNormalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
+  },
+  dateAndRequired: {
+    type: "date",
+    validations: { required: true },
+  },
+  date: {
+    type: "date",
+    validations: { required: false },
+  },
+  selectAndRequired: {
+    type: "select",
+    options: [],
+    validations: { required: true },
+  },
+  select: {
+    type: "select",
+    options: [],
+    validations: { required: false },
+  },
+};
 
 const datosOlimpiadas = {
-    component: 'textsbuttons',
-    name: 'olimpiadasDateText',
-    settings: {
-        dateOrtext: {
-            text: 'Fecha de la prueba:',
-            date: '',
-        },
-        uploaddown: {
-            
-        },
-        subtitles: 
-            [
-                {
-                    text: '',
-                },
-            ]
-    }
-}
+  component: "textsbuttons",
+  name: "olimpiadasDateText",
+  settings: {
+    dateOrtext: {
+      text: "Fecha de la prueba:",
+      date: "",
+    },
+    uploaddown: {},
+    subtitles: [
+      {
+        text: "",
+      },
+    ],
+  },
+};
 
 const btnGuardar = {
-    component: 'textsbuttons',
-    settings: {
-        action: [{
-            type: 1,
-            name: 'Guardar',
-        }],
-        receivesFromTableOrForm: 'table',
-        buttonCode: 'dataResultadoEstudiante',
-    }
-}
+  component: "textsbuttons",
+  settings: {
+    action: [
+      {
+        type: 1,
+        name: "Guardar",
+      },
+    ],
+    receivesFromTableOrForm: "table",
+    buttonCode: "dataResultadoEstudiante",
+  },
+};
 
 const selectEstudiantes = {
-    component: 'textsbuttons',
-    name: 'selectStudents',
-    settings: {
-        selectStatus:
+  component: "textsbuttons",
+  name: "selectStudents",
+  settings: {
+    selectStatus: {
+      placeholder: "Selecciona el estudiante",
+      lista: [
         {
-            placeholder: 'Selecciona el estudiante',
-            lista: [
-                { 
-                    id: 1, name: 'Alfredo',
-                    lastName: 'Valvuena',
-                    status: '2',
-                    result: 'Plata',
-                    grade: '5',
-                    section: 'B',
-                },
-                { 
-                    id: 2, name: 'Yanior',
-                    lastName: 'Zambrano',
-                    status: '1',
-                    result: 'Bronce',
-                    grade: '6',
-                    section: 'A',
-                },
-                { 
-                    id: 3, name: 'Jose',
-                    lastName: 'Guerrero',
-                    status: '1',
-                    result: 'Oro',
-                    grade: '4',
-                    section: 'C',
-                },
-            ]
+          id: 1,
+          name: "Alfredo",
+          lastName: "Valvuena",
+          status: "2",
+          result: "Plata",
+          grade: "5",
+          section: "B",
         },
-        btnGeneral:
         {
-            name: 'Agregar'
+          id: 2,
+          name: "Yanior",
+          lastName: "Zambrano",
+          status: "1",
+          result: "Bronce",
+          grade: "6",
+          section: "A",
         },
-        buttonType: 'agregarResultadoEstudiante',
-        tableCode: 'dataResultadoEstudiante',
-    }
-}
+        {
+          id: 3,
+          name: "Jose",
+          lastName: "Guerrero",
+          status: "1",
+          result: "Oro",
+          grade: "4",
+          section: "C",
+        },
+      ],
+    },
+    btnGeneral: {
+      name: "Agregar",
+    },
+    buttonType: "agregarResultadoEstudiante",
+    tableCode: "dataResultadoEstudiante",
+  },
+};
 
 const resultadoEstudiante = {
-    component: 'table',
-    name: 'resultadoTabla',
-    settings: {
-        columns: {
-            name: {
-                title: "Nombre"
-            },
-            lastName: {
-                title: "Apellido"
-            },
-            gradeAndSection: {
-                title: "Grado y sección",
-                valuePrepareFunction: ( row: any ) => {          
-                    if (row) return formResultadoEstudianteModal.grade.options.find(d=>{return d.id===row.grade}).name + ' ' + row.name;
-                    else return '';
-                },
-                filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formResultadoEstudianteModal.grade.options.find(d=>{return d.id===cell.grade}).name + ' ' + cell.name;
-                    value = value.toUpperCase();
-                    
-                    if (value.includes(search.toUpperCase()) || search === '') return true;
-                    else return false;
-                }
-            },
-            /*addressState: {
+  component: "table",
+  name: "resultadoTabla",
+  settings: {
+    columns: {
+      name: {
+        title: "Nombre",
+      },
+      lastName: {
+        title: "Apellido",
+      },
+      gradeAndSection: {
+        title: "Grado y sección",
+        valuePrepareFunction: (row: any) => {
+          if (row)
+            return (
+              formResultadoEstudianteModal.grade.options.find((d) => {
+                return d.id === row.grade;
+              }).name +
+              " " +
+              row.name
+            );
+          else return "";
+        },
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string =
+            formResultadoEstudianteModal.grade.options.find((d) => {
+              return d.id === cell.grade;
+            }).name +
+            " " +
+            cell.name;
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "") return true;
+          else return false;
+        },
+      },
+      /*addressState: {
                 title: "Estado",
-                valuePrepareFunction: ( row: any ) => {          
+                valuePrepareFunction: ( row: any ) => {
                     if (row) return formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===row}).name;
                     else return '';
                 },
                 filterFunction: (cell?: any, search?: string) => {
                     let value: string = formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===cell}).name;
                     value = value.toUpperCase();
-                    
+
                     if (value.includes(search.toUpperCase()) || search === '') return true;
                     else return false;
                 }
             },*/
-            status: {
-                title: 'Estatus',
-                valuePrepareFunction: ( row: any ) => {
-                    if (row) return row == "1" ? 'Registrado':'Calificado';
-                    else return '';
-                },
-                filterFunction: (cell?: any, search?: string) => {
-                    let value: string = cell == "1" ? 'Registrado':'Calificado';
-                    value = value.toUpperCase();
-                    
-                    if (value.includes(search.toUpperCase()) || search === '') return true;
-                    else return false;
-                }
-            },
-            result: {
-                title: 'Resultado'
-            },
+      status: {
+        title: "Estatus",
+        valuePrepareFunction: (row: any) => {
+          if (row) return row == "1" ? "Registrado" : "Calificado";
+          else return "";
         },
-        modalCode: 'dataResultadoEstudiante',
-        buttonCode: 'dataResultadoEstudiante',
-        tableCode: 'dataResultadoEstudiante',
-        dataResultadoEstudiante: [
-            {
-               /*  id: '1dvbdjvjd',
+        filterFunction: (cell?: any, search?: string) => {
+          let value: string = cell == "1" ? "Registrado" : "Calificado";
+          value = value.toUpperCase();
+
+          if (value.includes(search.toUpperCase()) || search === "") return true;
+          else return false;
+        },
+      },
+      result: {
+        title: "Resultado",
+      },
+    },
+    modalCode: "dataResultadoEstudiante",
+    buttonCode: "dataResultadoEstudiante",
+    tableCode: "dataResultadoEstudiante",
+    dataResultadoEstudiante: [
+      {
+        /*  id: '1dvbdjvjd',
                 name: 'Jhon',
                 lastName: 'Week',
                 grade: '5',
@@ -148,95 +199,392 @@ const resultadoEstudiante = {
                 },
                 status: '2',
                 result: 'Oro', */
-            },
-        ],
-        classes: {
-            hideView: false,
-            hideEdit: false,
-            hideDelete: false,
-        },
-    }
-}
+      },
+    ],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  },
+};
 //* MODAL RESULTADOS OLIMPIADAS ----------------------------------
 const formResultadoEstudiante = {
-    component: 'form',
-    name: 'resultadoEstudianteModal',
-    viewMode: 'both',
-    settings: {
-      formsContent: formResultadoEstudianteModal,
-      buttons: ['guardar'],
-      formType: 'agregarResultadoEstudiante',
-      tableCode: 'dataResultadoEstudiante',
-      modalCode: 'dataResultadoEstudiante',
-      isFromCustomTableActions: true,
-      fetcherMethod: 'put',
-    }
-  }
-  const textsAndButtonsResultadoEstudiante = {
-    component: 'textsbuttons',
-    settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'dataResultadoEstudiante',
-      isFromCustomTableActions: true,
-      isDeleting: true,
-    }
-  }
-  const modalResultadoEstudiante = {
-    component: 'modal',
-    settings: {
-      modalCode: 'dataResultadoEstudiante',
-      items: [
-        {        
-          childBlocks: [
-            { ...formResultadoEstudiante },
-            { ...textsAndButtonsResultadoEstudiante },
-          ]
-        }
-      ]
-    }
-  }
-  //* ------------------------------------------
+  component: "form",
+  name: "resultadoEstudianteModal",
+  viewMode: "both",
+  settings: {
+    formsContent: formResultadoEstudianteModal,
+    buttons: ["guardar"],
+    formType: "agregarResultadoEstudiante",
+    tableCode: "dataResultadoEstudiante",
+    modalCode: "dataResultadoEstudiante",
+    isFromCustomTableActions: true,
+    fetcherMethod: "put",
+  },
+};
 
-
+const textsAndButtonsResultadoEstudiante = {
+  component: "textsbuttons",
+  settings: {
+    subtitles: [
+      {
+        text: "¿Desea eliminar este ítem?",
+      },
+    ],
+    action: [
+      {
+        type: 1,
+        name: "Si",
+      },
+      {
+        type: 2,
+        name: "No",
+      },
+    ],
+    onSubmit: (values) => {
+      console.log("math olympic delete", values);
+      //const data = {}
+    },
+    modalCode: "dataResultadoEstudiante",
+    isFromCustomTableActions: true,
+    isDeleting: true,
+  },
+};
+const modalResultadoEstudiante = {
+  component: "modal",
+  settings: {
+    modalCode: "dataResultadoEstudiante",
+    items: [
+      {
+        childBlocks: [{ ...formResultadoEstudiante }, { ...textsAndButtonsResultadoEstudiante }],
+      },
+    ],
+  },
+};
+//* ------------------------------------------
 
 export const MATH_OLYMPICS_CONFIG = {
+  header: {
+    title: "Olimpíadas de matemáticas",
+  },
+  blocks: [
+    {
+      component: "tabs",
+      settings: {
+        items: [
+          {
+            title: "Proceso de inscripción",
+            childBlocks: [{ ...datosOlimpiadas }],
+          },
+          {
+            title: "Resultados",
+            childBlocks: [
+              { ...selectEstudiantes },
+              { ...resultadoEstudiante },
+              { ...btnGuardar },
+              { ...modalResultadoEstudiante },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+};
+
+export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
+  // Processing data
+  const datePipe = new DatePipe("en-US");
+  const lapseName = `lapse${lapseNumber}`;
+  const mathOlympics = pecaData[lapseName].olympics;
+  const { students: olympicStudents, date, file, description } = mathOlympics;
+  const dateFormatted = datePipe.transform(Date.parse(date), "dd/MM/yyyy");
+  let downloadFile = {};
+  if (file && file.url) {
+    downloadFile = {
+      url: file.url,
+      name: file ? file.name : "",
+    };
+  }
+  const olympicStudentsId = olympicStudents.map((student) => student.id);
+  const schoolStudents = pecaData.school.sections.reduce((studentsArray, section) => {
+    const students = section.students.map((student) => {
+      return {
+        ...student,
+        sectionId: section.id,
+        section: section.name,
+        grade: section.grade,
+      };
+    });
+    return [...studentsArray, ...students];
+  }, []);
+  const studentsNotInOlympics = schoolStudents.filter(({ id }) => !olympicStudentsId.includes(id));
+
+  // Block components
+  const olympicsSignIn = {
+    component: "textsbuttons",
+    name: "olimpiadasDateText",
+    settings: {
+      dateOrtext: {
+        text: "Fecha de la prueba:",
+        date: dateFormatted,
+      },
+      download: downloadFile,
+      subtitles: [
+        {
+          text: description ? description : "",
+        },
+      ],
+    },
+  };
+  const studentsSelect = {
+    component: "textsbuttons",
+    name: "selectStudents",
+    settings: {
+      selectStatus: {
+        placeholder: "Selecciona el estudiante",
+        lista: studentsNotInOlympics.map((student) => {
+          const { id, firstName, lastName, sectionId, section, grade } = student;
+          return {
+            id,
+            name: `${firstName} ${lastName}`,
+            status: null,
+            result: null,
+            sectionId,
+            grade,
+            section,
+          };
+        }),
+      },
+      btnGeneral: {
+        name: "Agregar",
+      },
+      onAddTable: (row) => {
+        console.log("on add table students", row);
+        const data = {
+          lapseNumber,
+          studentId: row.id,
+          sectionId: row.sectionId,
+        };
+        store.dispatch(new RegisterStudentMathOlympics(data));
+      },
+      buttonType: "agregarResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+    },
+  };
+
+  const studentForm = {
+    component: "form",
+    name: "resultadoEstudianteModal",
+    viewMode: "both",
+    settings: {
+      formsContent: {
+        name: {
+          label: "Nombre y Apellido",
+          placeholder: "Nombre y Apellido",
+          fullwidth: true,
+          readonly: true,
+          ...controlProps.onlyLettersAndRequired,
+        },
+        grade: {
+          label: "Grados",
+          placeholder: "Grados",
+          fullwidth: false,
+          readonly: true,
+          ...controlProps.selectAndRequired,
+          options: [
+            { id: "1", name: "1er grado" },
+            { id: "2", name: "2do grado" },
+            { id: "3", name: "3er grado" },
+            { id: "4", name: "4to grado" },
+            { id: "5", name: "5to grado" },
+            { id: "6", name: "6to grado" },
+          ],
+        },
+        section: {
+          label: "Sección",
+          placeholder: "Sección",
+          fullwidth: false,
+          readonly: true,
+          ...controlProps.normalTextAndRequired,
+        },
+        status: {
+          label: "Estatus",
+          placeholder: "Estatus",
+          fullwidth: false,
+          ...controlProps.selectAndRequired,
+          options: [
+            { id: "1", name: "Registrado" },
+            { id: "2", name: "Calificado" },
+          ],
+        },
+        result: {
+          label: "Resultado",
+          placeholder: "Resultado",
+          fullwidth: false,
+          ...controlProps.selectAndRequired,
+          options: [
+            { id: "1", name: "Oro" },
+            { id: "2", name: "Plata" },
+            { id: "3", name: "Bronce" },
+          ],
+        },
+      },
+      buttons: ["guardar"],
+      formType: "agregarResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+      modalCode: "dataResultadoEstudiante",
+      isFromCustomTableActions: true,
+      fetcherMethod: "put",
+      onSubmit: (values) => {
+        console.log("math olympics form edit", values);
+        const data = {
+          lapseNumber,
+          studentId: values.id,
+          result: values.result,
+          status: values.status,
+        };
+        store.dispatch(new UpdateStudentMathOlympics(data));
+      },
+    },
+  };
+
+  const studentsTable = {
+    component: "table",
+    name: "resultadoTabla",
+    settings: {
+      columns: {
+        name: {
+          title: "Nombre y Apellido",
+        },
+        grade: {
+          title: "Grado",
+          valuePrepareFunction: (row: any) => {
+            const grade = formResultadoEstudianteModal.grade.options.find((d) => {
+              return d.id === row;
+            });
+            if (row) {
+              return `${grade ? grade.name : ""}`;
+            } else {
+              return "";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = formResultadoEstudianteModal.grade.options.find((d) => {
+              return d.id === cell;
+            }).name;
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "") return true;
+            else return false;
+          },
+        },
+        section: {
+          title: "Sección",
+        },
+        status: {
+          title: "Estatus",
+          valuePrepareFunction: (row: any) => {
+            if (row) return row == "1" ? "Registrado" : "Calificado";
+            else return "";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Registrado" : "Calificado";
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "") return true;
+            else return false;
+          },
+        },
+        result: {
+          title: "Resultado",
+          valuePrepareFunction: (row: any) => {
+            switch (row) {
+              case "1":
+                return "Oro";
+              case "2":
+                return "Plata";
+              case "3":
+                return "Bronce";
+              default:
+                return "";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string;
+            switch (cell) {
+              case "1":
+                value = "Oro";
+                break;
+              case "2":
+                value = "Plata";
+                break;
+              case "3":
+                value = "Bronce";
+                break;
+              default:
+                value = "";
+            }
+            value = value.toUpperCase();
+            if (value.includes(search.toUpperCase()) || search === "") return true;
+            else return false;
+          },
+        },
+      },
+      modalCode: "dataResultadoEstudiante",
+      buttonCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+      dataResultadoEstudiante: olympicStudents.map((student) => {
+        const { id, name, section, result, status } = student;
+        return {
+          id,
+          name,
+          section: section.name,
+          grade: section.grade,
+          result: result,
+          status: status,
+        };
+      }),
+      classes: {
+        hideView: false,
+        hideEdit: false,
+        hideDelete: false,
+      },
+    },
+  };
+
+  const studentModal = {
+    component: "modal",
+    settings: {
+      modalCode: "dataResultadoEstudiante",
+      items: [
+        {
+          childBlocks: [{ ...studentForm }, { ...textsAndButtonsResultadoEstudiante }],
+        },
+      ],
+    },
+  };
+
+  return {
     header: {
-        title: "Olimpíadas de matemáticas"
+      title: "Olimpíadas de matemáticas",
     },
     blocks: [
-        {
-            component: 'tabs',
-            settings: {
-                items: [
-                    {
-                        title: "Proceso de inscripción",
-                        childBlocks: [
-                            { ...datosOlimpiadas }
-                        ]
-                    },
-                    {
-                        title: "Resultados",
-                        childBlocks: [
-                            { ...selectEstudiantes },
-                            { ...resultadoEstudiante },
-                            { ...btnGuardar },
-                            { ...modalResultadoEstudiante },
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
+      {
+        component: "tabs",
+        settings: {
+          items: [
+            {
+              title: "Proceso de inscripción",
+              childBlocks: [{ ...olympicsSignIn }],
+            },
+            {
+              title: "Resultados",
+              childBlocks: [{ ...studentsSelect }, { ...studentsTable }, { ...studentModal }],
+            },
+          ],
+        },
+      },
+    ],
+  };
 }

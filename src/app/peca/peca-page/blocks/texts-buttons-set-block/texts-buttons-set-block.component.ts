@@ -112,6 +112,7 @@ export class TextsButtonsSetBlockComponent
     onDateChange: (date) => void;
     onStatusChange: (status) => void;
     onFileUpload: (file) => void;
+    onAddTable: (data) => void | null;
     dateForSubmit?: string;
     textForSubmit?: string;
     statusForSubmit?: string;
@@ -445,6 +446,13 @@ export class TextsButtonsSetBlockComponent
   }
 
   addToTable(usingModal: boolean = false, isNotFromTable: boolean = false) {
+    if (this.settings.onAddTable) {
+      const data = this.settings.selectStatus["lista"].find((d) => {
+        return d.id === this.currentSelected;
+      });
+      this.settings.onAddTable(data);
+    }
+
     let obj = !usingModal
       ? {
           code: this.settings.tableCode,
@@ -546,8 +554,12 @@ export class TextsButtonsSetBlockComponent
             this.globals.ModalHider(this.settings.modalCode);
           };
 
-          if (this.settings.makesNoRequest) commonTasks();
-          else {
+          if (this.settings.makesNoRequest) {
+            commonTasks();
+            if (this.settings.onSubmit) {
+              this.settings.onSubmit(this.settings.dataFromRow);
+            }
+          } else {
             this.isSending = true;
             const method = this.settings.fetcherMethod || "delete";
             const url = this.settings.fetcherUrls[method];

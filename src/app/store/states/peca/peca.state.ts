@@ -23,6 +23,8 @@ import {
   ClearSchoolActivitiesRequestData,
   CancelSchoolActivitiesRequest,
   UpdateSchoolActivitiesRequest,
+  RegisterStudentMathOlympics,
+  UpdateStudentMathOlympics,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -503,6 +505,91 @@ export class PecaState {
         images: [],
       },
     });
+  }
+
+  @Action(RegisterStudentMathOlympics)
+  async registerStudentMathOlympics(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: RegisterStudentMathOlympics
+  ) {
+    const { lapseNumber, sectionId, studentId } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const state = getState();
+    const pecaId = state.content.id;
+    const url = `pecaprojects/olympics/${pecaId}/${lapseNumber}`;
+    const data = {
+      section: sectionId,
+      student: studentId,
+    };
+    try {
+      const newStudent = await this.fetcher.post(url, data).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            olympics: {
+              ...state.content[lapseName].olympics,
+              students: [...state.content[lapseName].olympics.students, newStudent],
+            },
+          },
+        },
+      });
+      this.toastr.success("Estudiante registrado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(UpdateStudentMathOlympics)
+  async updateStudentMathOlympics(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateStudentMathOlympics
+  ) {
+    const { lapseNumber, studentId, status, result } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const state = getState();
+    const pecaId = state.content.id;
+    const url = `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}`;
+    const data = {
+      status,
+      result,
+    };
+    try {
+      const updatedStudent = await this.fetcher.put(url, data).toPromise();
+      const students = state.content[lapseName].olympics.students;
+      const updatedStudents = students.map((student) => {
+        if (student.id === updatedStudent.id) {
+          return updatedStudent;
+        } else {
+          return student;
+        }
+      });
+
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            olympics: {
+              ...state.content[lapseName].olympics,
+              students: updatedStudents,
+            },
+          },
+        },
+      });
+      this.toastr.success("Estudiante actualizado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
   }
 
   @Action(ClearPecaState)
