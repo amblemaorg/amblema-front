@@ -108,7 +108,11 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
   let currentAttachedFile = attachedFile;
   let currentFileStatus = 1;
   approvalHistory.map((request) => {
-    if (request.detail.attachedFile.name === attachedFile.name) {
+    if (
+      request.detail.attachedFile &&
+      attachedFile &&
+      request.detail.attachedFile.name === attachedFile.name
+    ) {
       currentFileStatus = +request.status;
     }
   });
