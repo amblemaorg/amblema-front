@@ -135,7 +135,7 @@ export class UpdateStudentMathOlympics {
   constructor(public payload: any) {}
 }
 
-export class DeleteStudentMathOlympics {
-  static readonly type = "[peca] Delete Student Math Olympics";
+export class RemoveStudentMathOlympics {
+  static readonly type = "[peca] Remove Student Math Olympics";
   constructor(public payload: any) {}
 }
