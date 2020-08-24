@@ -26,6 +26,8 @@ import {
   RegisterStudentMathOlympics,
   UpdateStudentMathOlympics,
   RemoveStudentMathOlympics,
+  AddTeacherInAnnualConvention,
+  RemoveTeacherInAnnualConvention,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -620,6 +622,86 @@ export class PecaState {
         },
       });
       this.toastr.success("Estudiante eliminado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(AddTeacherInAnnualConvention)
+  async addTeacherInAnnualConvention(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: AddTeacherInAnnualConvention
+  ) {
+    const { teacherId } = payload;
+    const state = getState();
+    const pecaId = state.content.id;
+    const url = `pecaprojects/annualpreparation/${pecaId}`;
+    // @ts-ignore
+    const teachersIds = state.content.lapse3.annualPreparation.teachers.map(({ id }) => id);
+    const data = {
+      teachersIds: [...teachersIds, teacherId],
+    };
+    try {
+      const response = await this.fetcher.post(url, data).toPromise();
+
+      patchState({
+        content: {
+          ...state.content,
+          lapse3: {
+            ...state.content.lapse3,
+            annualPreparation: {
+              // @ts-ignore
+              ...state.content.lapse3.annualPreparation,
+              teachers: response,
+            },
+          },
+        },
+      });
+      this.toastr.success("Docentes actualizados satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(RemoveTeacherInAnnualConvention)
+  async removeTeacherInAnnualConvention(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: RemoveTeacherInAnnualConvention
+  ) {
+    const { teacherId } = payload;
+    const state = getState();
+    const pecaId = state.content.id;
+    const url = `pecaprojects/annualpreparation/${pecaId}`;
+    // @ts-ignore
+    const teachersIds = state.content.lapse3.annualPreparation.teachers.map(({ id }) => id);
+    const data = {
+      teachersIds: teachersIds.filter((id) => id !== teacherId),
+    };
+    try {
+      const response = await this.fetcher.post(url, data).toPromise();
+
+      patchState({
+        content: {
+          ...state.content,
+          lapse3: {
+            ...state.content.lapse3,
+            annualPreparation: {
+              // @ts-ignore
+              ...state.content.lapse3.annualPreparation,
+              teachers: response,
+            },
+          },
+        },
+      });
+      this.toastr.success("Docentes actualizados satisfactoriamente", "", {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
