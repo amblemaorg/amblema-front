@@ -418,7 +418,7 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
           ...controlProps.selectAndRequired,
           options: [
             { id: "1", name: "Registrado" },
-            { id: "2", name: "Calificado" },
+            { id: "2", name: "Clasificado" },
           ],
         },
         result: {
@@ -488,11 +488,11 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
         status: {
           title: "Estatus",
           valuePrepareFunction: (row: any) => {
-            if (row) return row == "1" ? "Registrado" : "Calificado";
+            if (row) return row == "1" ? "Registrado" : "Clasificado";
             else return "";
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = cell == "1" ? "Registrado" : "Calificado";
+            let value: string = cell == "1" ? "Registrado" : "Clasificado";
             value = value.toUpperCase();
 
             if (value.includes(search.toUpperCase()) || search === "") return true;
