@@ -1,192 +1,396 @@
-import { formTestimonioDocentes, formTestimonioDocentesModal, formTestimonioDocentesModalEdit } from '../blocks/form-block/all-forms'
+import {
+  formTestimonioDocentes,
+  formTestimonioDocentesModal,
+  formTestimonioDocentesModalEdit,
+} from "../blocks/form-block/all-forms";
+import {
+  requiredAndOnlyLetters,
+  requiredAndNormalText,
+} from "src/app/web/shared/forms/custom-validators";
+import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 
-    /* formTestimonioDocentes.imageGroup.fields.imageDocente.options = [
-    { id: "2", name: "Sthepanie", lastName: 'Soteldo', addressState: '165146541654hjvjh' },
-    { id: "3", name: "Manuel", lastName: 'Guerrero', addressState: '165146541654hjvjh' },
-    { id: "4", name: "Gustavo", lastName: 'Castillo', addressState: '165146541654hjvjh' },
-]; */
+const controlProps = {
+  onlyLettersAndRequired: {
+    type: "text",
+    validations: requiredAndOnlyLetters,
+    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE },
+  },
+  normalTextAndRequired: {
+    type: "text",
+    validations: requiredAndNormalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
+  },
+  selectAndRequired: {
+    type: "select",
+    options: [],
+    validations: { required: true },
+  },
+};
 
 const statusGeneral = {
-    component: 'textsbuttons',
-    settings: {
-        dateOrtext: {},
-        status: {
-            text: 'Estatus',
-            subText: 1
-        },
-    }
+  component: "textsbuttons",
+  settings: {
+    dateOrtext: {},
+    status: {
+      text: "Estatus",
+      subText: 1,
+    },
+  },
 };
 const formTestDoc = {
-    component: 'form',
-    name:"pruebaDocentes",
-    settings: {
-        formsContent: formTestimonioDocentes,
-        tableCode: 'dataTestimonioDocenteTabla',
-        buttonCode: 'dataTestimonioDocenteTabla',
-        alwaysValidations: true,
-        data: {},
-    }
-}
+  component: "form",
+  name: "pruebaDocentes",
+  settings: {
+    formsContent: formTestimonioDocentes,
+    tableCode: "dataTestimonioDocenteTabla",
+    buttonCode: "dataTestimonioDocenteTabla",
+    alwaysValidations: true,
+    data: {},
+  },
+};
 
 const testimonioDocenteTabla = {
-    component: 'table',
-    name: 'testimonyTable',
-    settings: {
-        columns: {
-            name: {
-                title: "Nombre",
-            },
-            lastName: {
-                title: "Apellido"
-            },
-            cargo: {
-                title: 'Cargo'
-            },
-            description: {
-                title: 'Descripción',
-                valuePrepareFunction: (row: any) => {
-                    if (row) return row.substring(0,50) + '...';
-                },
-            },
-            // status: {
-            //     title: 'Estatus',
-            //     valuePrepareFunction: ( row: any ) => {
-            //         if (row) return row == "1" ? 'Activo':'Inactivo';
-            //         else return '';
-            //     },
-            //     filterFunction: (cell?: any, search?: string) => {
-            //         let value: string = cell == "1" ? 'Activo':'Inactivo';
-            //         value = value.toUpperCase();
+  component: "table",
+  name: "testimonyTable",
+  settings: {
+    columns: {
+      name: {
+        title: "Nombre",
+      },
+      lastName: {
+        title: "Apellido",
+      },
+      cargo: {
+        title: "Cargo",
+      },
+      description: {
+        title: "Descripción",
+        valuePrepareFunction: (row: any) => {
+          if (row) return row.substring(0, 50) + "...";
+        },
+      },
+      // status: {
+      //     title: 'Estatus',
+      //     valuePrepareFunction: ( row: any ) => {
+      //         if (row) return row == "1" ? 'Activo':'Inactivo';
+      //         else return '';
+      //     },
+      //     filterFunction: (cell?: any, search?: string) => {
+      //         let value: string = cell == "1" ? 'Activo':'Inactivo';
+      //         value = value.toUpperCase();
 
-            //         if (value.includes(search.toUpperCase()) || search === '') return true;
-            //         else return false;
-            //     }
-            // },
-        },
-        isFromImgContainer: true,
-        modalCode: 'dataTestimonioDocenteTabla',
-        buttonCode: 'dataTestimonioDocenteTabla',
-        tableCode: 'dataTestimonioDocenteTabla',
-        dataTestimonioDocenteTabla: [
-            // {
-            //     id: '1',
-            //     name: 'Alfredo',
-            //     lastName: 'Valbuena',
-            //     cargo: 'profesor',
-            //     description: 'lorem ipsum dolor',
-            //     // status: '1',
-            //     source: null,
-            //     imageSelected: null,
-            // },
-        ],
-        classes: {
-            hideView: false,
-            hideEdit: false,
-            hideDelete: false,
-        },
-    }
-}
+      //         if (value.includes(search.toUpperCase()) || search === '') return true;
+      //         else return false;
+      //     }
+      // },
+    },
+    isFromImgContainer: true,
+    modalCode: "dataTestimonioDocenteTabla",
+    buttonCode: "dataTestimonioDocenteTabla",
+    tableCode: "dataTestimonioDocenteTabla",
+    dataTestimonioDocenteTabla: [
+      // {
+      //     id: '1',
+      //     name: 'Alfredo',
+      //     lastName: 'Valbuena',
+      //     cargo: 'profesor',
+      //     description: 'lorem ipsum dolor',
+      //     // status: '1',
+      //     source: null,
+      //     imageSelected: null,
+      // },
+    ],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  },
+};
 
 const textsAndButtons = {
-    component: 'textsbuttons',
-    settings: {
-        action: [{
-            type: 1,
-            name: 'Enviar Solicitud',
-        }],
-        receivesFromTableOrForm: 'table',
-        buttonCode: 'dataTestimonioDocenteTabla',
-        fetcherMethod: 'post',
-    }
-}
+  component: "textsbuttons",
+  name: "sendTestimoniesRequest",
+  settings: {
+    action: [
+      {
+        type: 1,
+        name: "Enviar Solicitud",
+      },
+    ],
+    receivesFromTableOrForm: "table",
+    buttonCode: "dataTestimonioDocenteTabla",
+    fetcherMethod: "post",
+  },
+};
 
 //* MODAL ----------------------------------
 const formTestimonioDocenteTabla = {
-    component: 'form',
-    name: 'testimonyModalForm',
-    viewMode: 'edit',
-    settings: {
-        formsContent: formTestimonioDocentesModalEdit,
-        buttons: ['guardar'],
-        formType: 'docenteTestimonioUpdate',
-        tableCode: 'dataTestimonioDocenteTabla',
-        modalCode: 'dataTestimonioDocenteTabla',
-        isFromCustomTableActions: true,
-        alwaysValidations: true,
-        fetcherMethod: 'post',
-    }
-}
+  component: "form",
+  name: "testimonyModalForm",
+  viewMode: "edit",
+  settings: {
+    formsContent: formTestimonioDocentesModalEdit,
+    buttons: ["guardar"],
+    formType: "docenteTestimonioUpdate",
+    tableCode: "dataTestimonioDocenteTabla",
+    modalCode: "dataTestimonioDocenteTabla",
+    isFromCustomTableActions: true,
+    makesNoRequest: true,
+    alwaysValidations: true,
+  },
+};
 const formTestimonioDocenteTablaViewOnly = {
-    component: 'form',
-    viewMode: 'view',
-    settings: {
-        formsContent: formTestimonioDocentesModal,
-        tableCode: 'dataTestimonioDocenteTabla',
-        modalCode: 'dataTestimonioDocenteTabla',
-        isFromCustomTableActions: true,
-    }
-}
+  component: "form",
+  viewMode: "view",
+  settings: {
+    formsContent: formTestimonioDocentesModal,
+    tableCode: "dataTestimonioDocenteTabla",
+    modalCode: "dataTestimonioDocenteTabla",
+    isFromCustomTableActions: true,
+  },
+};
 const textsAndButtonsTestimonioDocenteTabla = {
-    component: 'textsbuttons',
-    name: 'testimonyDeleteModal',
-    settings: {
-      subtitles: [{
-        text: '¿Desea eliminar este ítem?',
-      }],
-      action: [
-        {
-            type: 1,
-            name: 'Si',
-        },
-        {
-            type: 2,
-            name: 'No',
-        },
-      ],
-      modalCode: 'dataTestimonioDocenteTabla',
-      isFromCustomTableActions: true,
-      isDeleting: true,
-    }
-}
+  component: "textsbuttons",
+  name: "testimonyDeleteModal",
+  settings: {
+    subtitles: [
+      {
+        text: "¿Desea eliminar este ítem?",
+      },
+    ],
+    action: [
+      {
+        type: 1,
+        name: "Si",
+      },
+      {
+        type: 2,
+        name: "No",
+      },
+    ],
+    modalCode: "dataTestimonioDocenteTabla",
+    makesNoRequest: true,
+    isFromCustomTableActions: true,
+    isDeleting: true,
+  },
+};
 const modalTestimonioDocenteTabla = {
-    component: 'modal',
-    settings: {
-        modalCode: 'dataTestimonioDocenteTabla',
-        isFromImgPlusContainer: true,
-        items: [
-            {
-                childBlocks: [
-                    { ...formTestimonioDocenteTabla },
-                    { ...formTestimonioDocenteTablaViewOnly },
-                    { ...textsAndButtonsTestimonioDocenteTabla },
-                ]
-            }
-        ]
-    }
-}
+  component: "modal",
+  settings: {
+    modalCode: "dataTestimonioDocenteTabla",
+    isFromImgPlusContainer: true,
+    items: [
+      {
+        childBlocks: [
+          { ...formTestimonioDocenteTabla },
+          { ...formTestimonioDocenteTablaViewOnly },
+          { ...textsAndButtonsTestimonioDocenteTabla },
+        ],
+      },
+    ],
+  },
+};
 //* ------------------------------------------
 
 export const TEACHER_TESTIMONY_CONFIG = {
+  header: {
+    title: "Testimonio de docentes",
+  },
+  blocks: [
+    {
+      component: "profiles",
+      settings: {
+        items: [
+          {
+            childBlocks: [
+              { ...statusGeneral },
+              { ...formTestDoc },
+              { ...testimonioDocenteTabla },
+              { ...textsAndButtons },
+              { ...modalTestimonioDocenteTabla },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+};
+
+export function teacherTestimoniesConfigMapper(pecaContent, userId, store) {
+  const schoolId = pecaContent.project.school.id;
+  const schoolTeachers = pecaContent.school.teachers;
+  const teachersTestimonies = pecaContent.school.teachersTestimonials;
+  const { approvalHistory, isInApproval, testimonials } = teachersTestimonies;
+  let currentTestimonies = testimonials;
+  let currentStatus = testimonials.length > 0 ? 2 : 1;
+  let lastTestimoniesRequest = null;
+  if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
+    lastTestimoniesRequest = approvalHistory[approvalHistory.length - 1];
+    currentTestimonies = lastTestimoniesRequest.detail.testimonials;
+    currentStatus = +lastTestimoniesRequest.status < 4 ? +lastTestimoniesRequest.status : 1;
+  }
+
+  const teacherTestimoniesStatus = {
+    component: "textsbuttons",
+    settings: {
+      dateOrtext: {},
+      status: {
+        text: "Estatus",
+        subText: currentStatus,
+      },
+    },
+  };
+
+  const teacherTestimonyForm = {
+    component: "form",
+    name: "pruebaDocentes",
+    settings: {
+      formsContent: {
+        imageGroup: {
+          type: "image",
+          fields: {
+            imageDocente: {
+              label: "Seleccione el docente",
+              placeholder: "Seleccione el docente",
+              fullwidth: false,
+              shouldContentRefresh: true,
+              ...controlProps.selectAndRequired,
+              options: schoolTeachers.map((teacher) => {
+                const { id, firstName, lastName } = teacher;
+                return {
+                  id,
+                  name: `${firstName} ${lastName}`,
+                  lastName: `${lastName}`,
+                };
+              }),
+            },
+            imageCargo: {
+              label: "Cargo",
+              placeholder: "Cargo",
+              fullwidth: false,
+              ...controlProps.normalTextAndRequired,
+            },
+            imageDescription: {
+              label: "Descripción de la imagen",
+              placeholder: "Descripción de la imagen",
+              fullwidth: false,
+              ...controlProps.normalTextAndRequired,
+            },
+          },
+        },
+      },
+      tableCode: "dataTestimonioDocenteTabla",
+      buttonCode: "dataTestimonioDocenteTabla",
+      alwaysValidations: true,
+    },
+  };
+
+  const teacherTestimoniesTable = {
+    component: "table",
+    name: "testimonyTable",
+    settings: {
+      columns: {
+        name: {
+          title: "Nombre",
+        },
+        lastName: {
+          title: "Apellido",
+        },
+        cargo: {
+          title: "Cargo",
+        },
+        description: {
+          title: "Descripción",
+          valuePrepareFunction: (row: any) => {
+            if (row) return row.substring(0, 50) + "...";
+          },
+        },
+      },
+      isFromImgContainer: true,
+      modalCode: "dataTestimonioDocenteTabla",
+      buttonCode: "dataTestimonioDocenteTabla",
+      tableCode: "dataTestimonioDocenteTabla",
+      dataTestimonioDocenteTabla: currentTestimonies.map((testimony) => {
+        const { id, teacherId, firstName, lastName, position, description, image } = testimony;
+        return {
+          id: teacherId,
+          name: firstName,
+          lastName,
+          cargo: position,
+          description,
+          source: image,
+          imageSelected: null,
+        };
+      }),
+      classes: {
+        hideView: false,
+        hideEdit: false,
+        hideDelete: false,
+      },
+    },
+  };
+
+  const teachersTestimonyTableModal = {
+    component: "modal",
+    settings: {
+      modalCode: "dataTestimonioDocenteTabla",
+      isFromImgPlusContainer: true,
+      items: [
+        {
+          childBlocks: [
+            { ...formTestimonioDocenteTabla },
+            { ...formTestimonioDocenteTablaViewOnly },
+            { ...textsAndButtonsTestimonioDocenteTabla },
+          ],
+        },
+      ],
+    },
+  };
+
+  const sendTeacherTestimoniesRequest = {
+    component: "textsbuttons",
+    name: "sendTestimoniesRequest",
+    settings: {
+      action: [
+        {
+          type: isInApproval ? 9 : 1,
+          name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
+        },
+      ],
+      receivesFromTableOrForm: "table",
+      buttonCode: "dataTestimonioDocenteTabla",
+      fetcherMethod: "post",
+      fetcherUrls: {
+        post: `schools/teacherstestimonials/${schoolId}?userId=${userId}`,
+        cancel: `requestscontentapproval/${
+          lastTestimoniesRequest ? lastTestimoniesRequest.id : ""
+        }`,
+      },
+    },
+  };
+
+  return {
     header: {
-        title: "Testimonio de docentes"
+      title: "Testimonio de docentes",
     },
     blocks: [
-        {
-            component: 'profiles',
-            settings: {
-                items: [
-                    {
-                        childBlocks: [
-                            { ...statusGeneral },
-                            { ...formTestDoc },
-                            { ...testimonioDocenteTabla },
-                            { ...textsAndButtons },
-                            { ...modalTestimonioDocenteTabla },
-                        ]
-                    },
-
-                ]
-            }
-        }
-    ]
+      {
+        component: "profiles",
+        settings: {
+          items: [
+            {
+              childBlocks: [
+                { ...teacherTestimoniesStatus },
+                { ...teacherTestimonyForm },
+                { ...teacherTestimoniesTable },
+                { ...sendTeacherTestimoniesRequest },
+                { ...modalTestimonioDocenteTabla },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  };
 }
