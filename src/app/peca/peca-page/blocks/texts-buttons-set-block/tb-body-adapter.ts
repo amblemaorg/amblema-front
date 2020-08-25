@@ -71,6 +71,22 @@ export function textsAndButtonsAdaptBody(
         testimonials,
       };
       break;
+    case "dataSpecialActivityTable":
+      const itemsActivities = tAndFData.table.map((item) => {
+        const { id, item: name, description, price, cantidad, impuesto, subtotal } = item;
+        return {
+          name,
+          description,
+          quantity: cantidad,
+          unitPrice: price,
+          tax: impuesto,
+          subtotal,
+        };
+      });
+      body_adapted = {
+        itemsActivities,
+      };
+      break;
     default:
       break;
   }
