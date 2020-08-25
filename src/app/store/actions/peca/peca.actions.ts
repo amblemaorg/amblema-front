@@ -149,3 +149,13 @@ export class RemoveTeacherInAnnualConvention {
   static readonly type = "[peca] Remove Teacher In Annual Convention";
   constructor(public payload: any) {}
 }
+
+export class SetSpecialActivityRequestData {
+  static readonly type = "[peca] Set Special Activity Request Data";
+  constructor(public payload: any) {}
+}
+
+export class UpdateSpecialActivity {
+  static readonly type = "[peca] Update Special Activity";
+  constructor(public payload: any) {}
+}

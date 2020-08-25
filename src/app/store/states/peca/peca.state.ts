@@ -28,6 +28,8 @@ import {
   RemoveStudentMathOlympics,
   AddTeacherInAnnualConvention,
   RemoveTeacherInAnnualConvention,
+  SetSpecialActivityRequestData,
+  UpdateSpecialActivity,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -52,6 +54,11 @@ import { ToastrService } from "ngx-toastr";
     },
     schoolActivitiesImagesRequest: {
       images: [],
+    },
+    specialActivityRequest: {
+      activityDate: "",
+      total: 0,
+      itemsActivities: [],
     },
   },
 })
@@ -711,6 +718,59 @@ export class PecaState {
     }
   }
 
+  @Action(SetSpecialActivityRequestData)
+  setSpecialActivityRequestData(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: SetSpecialActivityRequestData
+  ) {
+    const { specialActivityRequest } = getState();
+    patchState({
+      specialActivityRequest: {
+        ...specialActivityRequest,
+        ...payload,
+      },
+    });
+  }
+
+  @Action(UpdateSpecialActivity)
+  async updateSpecialActivity(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateSpecialActivity
+  ) {
+    const { itemsActivities, lapseNumber } = payload;
+    const { specialActivityRequest } = getState();
+    const state = getState();
+    const lapseName = `lapse${lapseNumber}`;
+    const userId = state.user.id;
+    const pecaId = state.content.id;
+    const url = `pecaprojects/specialsactivities/${pecaId}/${lapseNumber}?userId=${userId}`;
+    const data = {
+      ...specialActivityRequest,
+      itemsActivities,
+    };
+    try {
+      const response = await this.fetcher.post(url, data).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            specialActivity: {
+              ...response,
+            },
+          },
+        },
+      });
+      this.toastr.success("Solicitud enviada", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
   @Action(ClearPecaState)
   clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
     setState({
@@ -730,6 +790,11 @@ export class PecaState {
       },
       schoolActivitiesImagesRequest: {
         images: [],
+      },
+      specialActivityRequest: {
+        activityDate: "",
+        total: 0,
+        itemsActivities: [],
       },
     });
   }

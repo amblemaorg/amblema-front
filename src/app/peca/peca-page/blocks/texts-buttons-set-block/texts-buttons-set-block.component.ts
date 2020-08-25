@@ -565,8 +565,6 @@ export class TextsButtonsSetBlockComponent
             const method = this.settings.fetcherMethod || "delete";
             const url = this.settings.fetcherUrls[method];
 
-            console.log("method: ", method, "url: ", url);
-
             this.fetcher[method](url).subscribe(
               (data) => {
                 console.log(data);
@@ -604,8 +602,6 @@ export class TextsButtonsSetBlockComponent
             );
           }
         } else {
-          console.log("AQUI SIGO EL LUNES 4");
-
           const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
           const method = this.settings.fetcherMethod || "post";
           const resourcePath = this.settings.fetcherUrls[method];
@@ -730,10 +726,12 @@ export class TextsButtonsSetBlockComponent
         this.activityActioned(8);
         break;
       default:
+        const data = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
         const values = {
           file: this.settings.upload ? this.settings.upload.file : null,
           date: this.settings.dateForSubmit,
           status: this.settings.statusForSubmit,
+          data,
         };
         this.settings.onSubmit(values);
         break;
