@@ -94,7 +94,7 @@ export class TextsButtonsSetBlockComponent
     }[];
     fetcherUrls: {
       // get: string;
-      // post: string;
+      post: string;
       put: string;
       // patch: string;
       delete: string;
@@ -356,8 +356,9 @@ export class TextsButtonsSetBlockComponent
     }
   }
 
-  setFetcherUrls({ put, delete: deleteFn, cancel }) {
+  setFetcherUrls({ post, put, delete: deleteFn, cancel }) {
     this.settings.fetcherUrls = {
+      post,
       put,
       delete: deleteFn,
       cancel, // when there's a cancel request button this can be used
