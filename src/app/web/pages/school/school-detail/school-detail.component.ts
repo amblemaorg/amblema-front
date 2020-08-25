@@ -243,7 +243,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         name: data.name,
         sponsor: data.sponsor,
         direction: data.address,
-        staff: data.nAdministrativeStaff,
+        staff: (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
         coordinator: data.coordinator,
         enrollment: data.nStudents,
         images: data.slider.map((slide) => { return slide.image}),
@@ -268,7 +268,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           activity.date = this.pipe.transform(Date.parse(activity.date), 'd/M/y');
           return activity;
         }),
-        otherSchools: data.nearbySchools,
+        otherSchools: data.nearbySchools.map((school)=> {
+          school.image = school.image ? school.image : './assets/images/profile2.png';
+          return school;
+        }),
         facebook: data.facebook,
         twitter: data.twitter,
         instagram: data.instagram
