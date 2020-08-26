@@ -737,7 +737,7 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: UpdateSpecialActivity
   ) {
-    const { itemsActivities, lapseNumber } = payload;
+    const { itemsActivities, total, lapseNumber } = payload;
     const { specialActivityRequest } = getState();
     const state = getState();
     const lapseName = `lapse${lapseNumber}`;
@@ -747,6 +747,7 @@ export class PecaState {
     const data = {
       ...specialActivityRequest,
       itemsActivities,
+      total,
     };
     try {
       const response = await this.fetcher.post(url, data).toPromise();
