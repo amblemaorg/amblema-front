@@ -5,49 +5,56 @@ import {
   ViewContainerRef,
   QueryList,
   ViewChildren,
-} from '@angular/core';
+} from "@angular/core";
 import {
   PageBlockComponent,
   StructuralBlockComponent,
   StructuralItem,
-} from '../page-block.component';
-import { PageBlockFactory } from '../page-block-factory';
-import { GlobalService } from 'src/app/services/global.service';
+} from "../page-block.component";
+import { PageBlockFactory } from "../page-block-factory";
+import { GlobalService } from "src/app/services/global.service";
 
 @Component({
-  selector: 'peca-tabs-block',
+  selector: "peca-tabs-block",
   template: `
     <nb-tabset fullWidth>
-      <nb-tab 
-        [class.tabs-padding-escuela]="item.title === 'Docentes' || item.title === 'Grado y secciones' || item.title === 'Estudiantes'" 
-        [tabTitle]="item.title" 
-        [class.environmental-project]="item.viewName && item.viewName.length > 0 && item.viewName === 'environmental-project-tab'"
+      <nb-tab
+        [class.tabs-padding-escuela]="
+          item.title === 'Docentes' ||
+          item.title === 'Grado y secciones' ||
+          item.title === 'Estudiantes'
+        "
+        [tabTitle]="item.title"
+        [class.environmental-project]="
+          item.viewName && item.viewName.length > 0 && item.viewName === 'environmental-project-tab'
+        "
         *ngFor="let item of settings.items; index as i"
+        [active]="item.active"
       >
         <ng-template #tabContainer></ng-template>
       </nb-tab>
     </nb-tabset>
   `,
-  styleUrls: ['./tabs-block.component.scss'],
+  styleUrls: ["./tabs-block.component.scss"],
 })
 export class TabsBlockComponent implements StructuralBlockComponent, OnInit, AfterViewInit {
-  @ViewChildren('tabContainer', { read: ViewContainerRef }) tabContainer: QueryList<
+  @ViewChildren("tabContainer", { read: ViewContainerRef }) tabContainer: QueryList<
     ViewContainerRef
   >;
   factory: PageBlockFactory;
 
-  type: 'structural';
+  type: "structural";
   component: string;
   settings: {
     items: StructuralItem[];
   };
 
   constructor(private globals: GlobalService) {
-    this.type = 'structural';
-    this.component = 'tabs';
+    this.type = "structural";
+    this.component = "tabs";
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -67,11 +74,11 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
       const container = this.tabContainer.toArray()[i];
       item.childBlocks.map((block, j) => {
         let settings = block.settings;
-        if (block.component == 'modal')
+        if (block.component == "modal")
           settings = { settings: block.settings, factory: this.factory };
-        if (block.component == 'accordion')
+        if (block.component == "accordion")
           settings = { settings: block.settings, factory: this.factory };
-        if (block.component == 'profiles')
+        if (block.component == "profiles")
           settings = { settings: block.settings, factory: this.factory };
 
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
