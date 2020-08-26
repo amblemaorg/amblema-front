@@ -289,6 +289,11 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
         },
         subtotal: {
           title: "Subtotal",
+          valuePrepareFunction: (cell: any, row: any) => {
+            const subtotal = calculateSubtotal(row);
+            return subtotal.toLocaleString();
+            //return (+row.price * +row.cantidad) * (1 + (+row.impuesto / 100));
+          },
         },
       },
       makesNoRequest: true,
@@ -304,7 +309,6 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
           cantidad: quantity,
           price: unitPrice,
           impuesto: tax,
-          subtotal,
         };
       }),
       classes: {
@@ -312,9 +316,22 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
         hideEdit: false,
         hideDelete: false,
       },
-      //total: 1000,
+      total: currentItems.reduce((accumTotal, item) => {
+        return +accumTotal + +item.subtotal;
+      }, 0),
+      updateTotal: (data) => {
+        return data.reduce((accumTotal, item) => {
+          const currSubtotal = calculateSubtotal(item);
+          return accumTotal + +currSubtotal;
+        }, 0);
+      },
     },
   };
+
+  function calculateSubtotal({ price, cantidad, impuesto }): number {
+    const calc = +price * +cantidad * (1 + +impuesto / 100);
+    return +calc.toFixed(2);
+  }
 
   const sendSpecialActivityRequest = {
     component: "textsbuttons",
@@ -336,8 +353,20 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
       onSubmit: isInApproval
         ? () => {}
         : (values) => {
-            console.log("specialActivity submit", values);
-            store.dispatch(new UpdateSpecialActivity({ lapseNumber, ...values.data }));
+            let total = 0;
+            const itemsActivities = values.data.itemsActivities.map((item) => {
+              const subtotal = calculateSubtotal(item);
+              total += subtotal;
+              return {
+                ...item,
+                subtotal,
+              };
+            });
+            function calculateSubtotal({ unitPrice, quantity, tax }): number {
+              const calc = +unitPrice * +quantity * (1 + +tax / 100);
+              return +calc.toFixed(2);
+            }
+            store.dispatch(new UpdateSpecialActivity({ lapseNumber, itemsActivities, total }));
           },
     },
   };

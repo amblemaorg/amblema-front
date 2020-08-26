@@ -77,9 +77,9 @@ export function textsAndButtonsAdaptBody(
         return {
           name,
           description,
-          quantity: cantidad,
-          unitPrice: price,
-          tax: impuesto,
+          quantity: +cantidad,
+          unitPrice: +price,
+          tax: +impuesto,
           subtotal,
         };
       });
