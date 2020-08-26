@@ -295,7 +295,7 @@ export const MATH_OLYMPICS_CONFIG = {
   ],
 };
 
-export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
+export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents, store) {
   // Processing data
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
@@ -613,6 +613,7 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, store) {
             },
             {
               title: "Resultados",
+              active: updatedStudents ? true : false,
               childBlocks: [{ ...studentsSelect }, { ...studentsTable }, { ...studentModal }],
             },
           ],

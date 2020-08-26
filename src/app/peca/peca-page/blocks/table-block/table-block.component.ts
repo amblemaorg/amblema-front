@@ -106,7 +106,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     this.subscription.unsubscribe();
   }
 
-  confsOnTable(data) {
+  async confsOnTable(data) {
     if (this.settings[data.code]) {
       let index = -1; //initial
 
@@ -126,7 +126,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
                 .update(data.data.dataToCompare, data.data.newData)
                 .then((resp) => {})
                 .catch((error) => {});
-              if (this.settings.total && this.settings.updateTotal) {
+              if (this.settings.updateTotal) {
                 const tableData = await this.source.getAll();
                 this.settings.total = this.settings.updateTotal(tableData);
               }
@@ -142,7 +142,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             .then(async (value) => {
               if (index != -1) this.settings["dataCopy"].splice(index, 1);
               this.source.remove(data.data.dataToCompare);
-              if (this.settings.total && this.settings.updateTotal) {
+              if (this.settings.updateTotal) {
                 const tableData = await this.source.getAll();
                 this.settings.total = this.settings.updateTotal(tableData);
               }
@@ -167,6 +167,10 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             if (this.settings.isFromImgContainer)
               this.settings[data.code] = [...this.settings["dataCopy"]];
             this.source.add(data.data);
+            if (this.settings.updateTotal) {
+              const tableData = await this.source.getAll();
+              this.settings.total = this.settings.updateTotal(tableData);
+            }
             this.source.refresh();
           }
           // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);

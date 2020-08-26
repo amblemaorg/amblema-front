@@ -210,7 +210,12 @@ export const ANNUAL_CONVENTION_PREPARATION_CONFIG = {
   ],
 };
 
-export function annualConventionPreparationConfigMapper(pecaContent, lapseNumber, store) {
+export function annualConventionPreparationConfigMapper(
+  pecaContent,
+  lapseNumber,
+  updatedTeachers,
+  store
+) {
   const lapseName = `lapse${lapseNumber}`;
   const { annualPreparation } = pecaContent[lapseName];
   const { teachers: schoolTeachers } = pecaContent.school;
@@ -383,6 +388,7 @@ export function annualConventionPreparationConfigMapper(pecaContent, lapseNumber
             },
             {
               title: "Preinscripción de docentes",
+              active: updatedTeachers ? true : false,
               childBlocks: [{ ...teachersSelect }, { ...teachersTable }, { ...teachersModal }],
             },
           ],
