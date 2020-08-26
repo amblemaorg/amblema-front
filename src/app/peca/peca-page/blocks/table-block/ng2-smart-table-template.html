@@ -1,8 +1,6 @@
 <div class="table-container">
   <h6 *ngIf="settings.tableTitle && !isContentRefreshing" class="table-title">
-    {{
-      settings.tableTitle
-    }}
+    {{ settings.tableTitle }}
   </h6>
   <ng2-smart-table
     [settings]="settings"
@@ -18,6 +16,6 @@
   ></ng2-smart-table>
 
   <div *ngIf="settings.total" class="estilo-total">
-    <h5>Total: <span>{{settings.total}}</span></h5>
+    <h5>Total: <span>{{ settings.total | number:'1.0':'es-ES' }}</span></h5>
   </div>
 </div>

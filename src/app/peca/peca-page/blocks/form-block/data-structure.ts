@@ -235,7 +235,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         cantidad: cf.get("cantidad").value,
         price: cf.get("price").value,
         impuesto: cf.get("impuesto").value,
-        subtotal: cf.get("subtotal").value,
       };
       break;
     case "docenteTestimonioUpdate": // for Testimonio Docente view table

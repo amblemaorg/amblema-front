@@ -1687,12 +1687,6 @@ export const formSpecialActivityTableModal = {
     fullwidth: false,
     ...controlProps.numberAndRequired,
   },
-  subtotal: {
-    label: "Subtotal",
-    placeholder: "Subtotal",
-    fullwidth: false,
-    ...controlProps.numberAndRequired,
-  },
 };
 // OLIMPIADAS DE MATEMATICA
 export const formResultadoEstudianteModal = {

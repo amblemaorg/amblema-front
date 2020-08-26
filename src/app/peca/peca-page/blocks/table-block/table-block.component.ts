@@ -5,6 +5,9 @@ import { LocalDataSource } from "ng2-smart-table";
 import { GlobalService } from "src/app/services/global.service";
 import { Subscription } from "rxjs";
 import cloneDeep from "lodash/cloneDeep";
+import localeEs from "@angular/common/locales/es-VE";
+import { registerLocaleData } from "@angular/common";
+registerLocaleData(localeEs, "es");
 
 @Component({
   selector: "table-block",
@@ -29,6 +32,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       hideDelete: boolean;
     };
     total?: number;
+    updateTotal: (rows) => number;
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
     tableTitle?: string; // to set a title for the table
@@ -116,12 +120,16 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         case "edit":
           this.source
             .find(data.data.dataToCompare)
-            .then((value) => {
+            .then(async (value) => {
               if (index != -1) this.settings["dataCopy"][index] = data.data.newData;
               this.source
                 .update(data.data.dataToCompare, data.data.newData)
                 .then((resp) => {})
                 .catch((error) => {});
+              if (this.settings.total && this.settings.updateTotal) {
+                const tableData = await this.source.getAll();
+                this.settings.total = this.settings.updateTotal(tableData);
+              }
               this.source.refresh();
               if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
             })
@@ -131,9 +139,13 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         case "delete":
           this.source
             .find(data.data.dataToCompare)
-            .then((value) => {
+            .then(async (value) => {
               if (index != -1) this.settings["dataCopy"].splice(index, 1);
               this.source.remove(data.data.dataToCompare);
+              if (this.settings.total && this.settings.updateTotal) {
+                const tableData = await this.source.getAll();
+                this.settings.total = this.settings.updateTotal(tableData);
+              }
               this.source.refresh();
               if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
             })
