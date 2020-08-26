@@ -52,6 +52,12 @@ export interface PecaSchoolActivitiesImagesRequest {
   images: { description?: string; image: string }[];
 }
 
+export interface PecaSpecialActivityRequest {
+  activityDate: string;
+  total: number;
+  itemsActivities: any[];
+}
+
 export interface PecaStateModel {
   user?: PecaUserModel;
   content: PecaModel | null;
@@ -61,4 +67,5 @@ export interface PecaStateModel {
   lapsePlanningRequest: PecaLapsePlanningRequest;
   initialWorkshopImagesRequest: PecaInitialWorkshopRequest;
   schoolActivitiesImagesRequest: PecaSchoolActivitiesImagesRequest;
+  specialActivityRequest: PecaSpecialActivityRequest;
 }
