@@ -291,7 +291,7 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
           title: "Subtotal",
           valuePrepareFunction: (cell: any, row: any) => {
             const subtotal = calculateSubtotal(row);
-            return subtotal.toLocaleString();
+            return subtotal.toLocaleString("es-VE");
             //return (+row.price * +row.cantidad) * (1 + (+row.impuesto / 100));
           },
         },

@@ -17,6 +17,7 @@ import { DatePipe } from "@angular/common";
 import { studentsOlympicMapper } from "../mappers/students-olym-mappers";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
+import { scan } from "rxjs/internal/operators/scan";
 //import { sectionsAndStudentsDataToSectionsFormMapper } from '../mappers/sections-and-students-form-mappers';
 @Component({
   selector: "peca-maths-olympics",
@@ -86,6 +87,23 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
           (prev, curr) =>
             JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].olympics) ===
             JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].olympics)
+        ),
+        scan(
+          (prev, curr) => {
+            let updatedStudents = false;
+            if (prev.activePecaContent) {
+              const prevStudents =
+                prev.activePecaContent[`lapse${this.UrlLapse}`]["olympics"]["students"];
+              const currStudents =
+                curr.activePecaContent[`lapse${this.UrlLapse}`]["olympics"]["students"];
+              updatedStudents = JSON.stringify(prevStudents) !== JSON.stringify(currStudents);
+            }
+            return {
+              ...curr,
+              updatedStudents,
+            };
+          },
+          { activePecaContent: null, user: null, updatedStudents: false }
         )
       )
       .subscribe(
@@ -97,14 +115,11 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
               if (!isNullOrUndefined(data)) {
                 console.log(data, "data olimpiadas");
               }
-
               const lapseName = `lapse${this.UrlLapse}`;
-              //data de las olimpiadas
-              //this.setOlimpiadas(data);
-              //this.setOLimpiadasData();
               const config = mathOlympicsConfigMapper(
                 data.activePecaContent,
                 this.UrlLapse,
+                data.updatedStudents,
                 this.store
               );
               this.instantiateComponent(config);
