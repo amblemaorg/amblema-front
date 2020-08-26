@@ -2,7 +2,7 @@
 ? INFO:
 
   (I) for adding titles to the form data::
-  --> i.e; 
+  --> i.e;
     title_sample: { label: "Title_label", type: "title"},
 
   (II) for adding an add image container to the form data::
@@ -93,12 +93,12 @@
       }
     },
 
-  (V) to make a field 'Read Only', 'Max length', 'Refreshable', 'Grades sections refreshable', 'Section change emmitter'; set 
-    'readonly', 
+  (V) to make a field 'Read Only', 'Max length', 'Refreshable', 'Grades sections refreshable', 'Section change emmitter'; set
+    'readonly',
     'maxlength',
     'shouldContentRefresh',
     'isGrades',
-    'emmitSectionChange'; 
+    'emmitSectionChange';
     property as following::
   -->
     field_name: {
@@ -128,7 +128,7 @@ import {
   requiredAndOnlyLettersAndNumbers,
   onlyLettersAndNumbers,
   requiredAndSocialNetwork,
-  socialNetwork
+  socialNetwork,
 } from "../../../../web/shared/forms/custom-validators";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 
@@ -136,101 +136,101 @@ const controlProps = {
   onlyLettersAndRequired: {
     type: "text",
     validations: requiredAndOnlyLetters,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
+    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE },
   },
   onlyLetters: {
     type: "text",
     validations: onlyLetters,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE }
+    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE },
   },
   onlyLettersNumbersAndRequired: {
     type: "text",
     validations: requiredAndOnlyLettersAndNumbers,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE }
+    messages: { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE },
   },
   onlyLettersNumbers: {
     type: "text",
     validations: onlyLettersAndNumbers,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE }
+    messages: { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE },
   },
   normalTextAndRequired: {
     type: "text",
     validations: requiredAndNormalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
   normalText: {
     type: "text",
     validations: normalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
   emailAndRequired: {
     type: "email",
     validations: requiredAndEmail,
-    messages: { pattern: MESSAGES.EMAIL_MESSAGE }
+    messages: { pattern: MESSAGES.EMAIL_MESSAGE },
   },
   email: {
     type: "email",
     validations: email,
-    messages: { pattern: MESSAGES.EMAIL_MESSAGE }
+    messages: { pattern: MESSAGES.EMAIL_MESSAGE },
   },
   numberAndRequired: {
     type: "number",
     validations: requiredAndNaturalNumber,
-    messages: { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE }
+    messages: { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE },
   },
   number: {
     type: "number",
     validations: naturalNumber,
-    messages: { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE }
+    messages: { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE },
   },
   phoneAndRequired: {
     type: "tel",
     validations: requiredAndNaturalNumber,
-    messages: { pattern: MESSAGES.PHONE_MESSAGE }
+    messages: { pattern: MESSAGES.PHONE_MESSAGE },
   },
   phone: {
     type: "tel",
     validations: naturalNumber,
-    messages: { pattern: MESSAGES.PHONE_MESSAGE }
+    messages: { pattern: MESSAGES.PHONE_MESSAGE },
   },
   dateAndRequired: {
     type: "date",
-    validations: { required: true }
+    validations: { required: true },
   },
   date: {
     type: "date",
-    validations: { required: false }
+    validations: { required: false },
   },
   selectAndRequired: {
     type: "select",
     options: [],
-    validations: { required: true }
+    validations: { required: true },
   },
   select: {
     type: "select",
     options: [],
-    validations: { required: false }
+    validations: { required: false },
   },
   textareaNormalTextAndRequired: {
     type: "textarea",
     validations: requiredAndNormalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
   textareaNnormalText: {
     type: "textarea",
     validations: normalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
   socialNetworkAndRequired: {
     type: "text",
     validations: requiredAndSocialNetwork,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
   socialNetwork: {
     type: "text",
     validations: socialNetwork,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE }
-  }
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
+  },
 };
 
 export const sampleFormData = {
@@ -239,59 +239,59 @@ export const sampleFormData = {
     label: "Input letter text",
     placeholder: "Input letter text",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   letterNumber: {
     label: "Input letters and numbers text",
     placeholder: "Input letters and numbers text",
     fullwidth: false,
-    ...controlProps.onlyLettersNumbersAndRequired
+    ...controlProps.onlyLettersNumbersAndRequired,
   },
   normal: {
     label: "Input normal text",
     placeholder: "Input normal text",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   title2: { label: "Fecha y Direccion", type: "title" },
   date: {
     label: "Input date",
     placeholder: "Input date",
     fullwidth: false,
-    ...controlProps.dateAndRequired
+    ...controlProps.dateAndRequired,
   },
   addressState: {
     label: "Input select state",
     placeholder: "Input select state",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Input select municipality",
     placeholder: "Input select municipality",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   title3: { label: "Otros campos", type: "title" },
   email: {
     label: "Input email text",
     placeholder: "Input email text",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   number: {
     label: "Input number text",
     placeholder: "Input number text",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   phone: {
     label: "Input phone text",
     placeholder: "Input phone text",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   title4: { label: "Imagen aca", type: "title" },
   imageGroup: {
@@ -301,7 +301,7 @@ export const sampleFormData = {
         label: "Input image description",
         placeholder: "Input image description",
         fullwidth: false,
-        ...controlProps.normalText
+        ...controlProps.normalText,
       },
       imageStatus: {
         label: "Input image status",
@@ -310,10 +310,10 @@ export const sampleFormData = {
         ...controlProps.select,
         options: [
           { id: "1", name: "Visible" },
-          { id: "2", name: "No visible" }
-        ]
-      }
-    }
+          { id: "2", name: "No visible" },
+        ],
+      },
+    },
   },
   documentGroup: {
     type: "prepend",
@@ -327,17 +327,17 @@ export const sampleFormData = {
         options: [
           { id: "1", name: "V" },
           { id: "2", name: "J" },
-          { id: "3", name: "E" }
-        ]
+          { id: "3", name: "E" },
+        ],
       },
       prependInput: {
         label: "Input group description",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberAndRequired
-      }
-    }
-  }
+        ...controlProps.numberAndRequired,
+      },
+    },
+  },
 };
 
 /*TESTIMONIO DE DOCENTES*/
@@ -351,20 +351,20 @@ export const formTestimonioDocentes = {
         fullwidth: false,
         shouldContentRefresh: true,
         ...controlProps.selectAndRequired,
-        options: []
+        options: [],
       },
       imageCargo: {
         label: "Cargo",
         placeholder: "Cargo",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
+        ...controlProps.normalTextAndRequired,
       },
       imageDescription: {
         label: "Descripción de la imagen",
         placeholder: "Descripción de la imagen",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
+        ...controlProps.normalTextAndRequired,
+      },
       // imageStatus: {
       //   label: "Estado de la imagen",
       //   placeholder: "Estado de la imagen",
@@ -375,8 +375,8 @@ export const formTestimonioDocentes = {
       //     { id: "2", name: "Inactivo" }
       //   ]
       // }
-    }
-  }
+    },
+  },
 };
 //* TESTIMONIO DOCENTES MODAL
 //modal edit
@@ -388,14 +388,14 @@ export const formTestimonioDocentesModalEdit = {
         label: "Cargo",
         placeholder: "Cargo",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
+        ...controlProps.normalTextAndRequired,
       },
       imageDescription: {
         label: "Descripción",
         placeholder: "Descripción",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
+        ...controlProps.normalTextAndRequired,
+      },
       // imageStatus: {
       //   label: "Estatus",
       //   placeholder: "Estatus",
@@ -406,8 +406,8 @@ export const formTestimonioDocentesModalEdit = {
       //     { id: "2", name: "Inactivo" }
       //   ]
       // }
-    }
-  }
+    },
+  },
 };
 //modal view
 export const formTestimonioDocentesModal = {
@@ -415,27 +415,27 @@ export const formTestimonioDocentesModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   cargo: {
     label: "Cargo",
     placeholder: "Cargo",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   description: {
     label: "Descripción",
     placeholder: "Descripción",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
-/*   addressState: {
+  /*   addressState: {
     label: "Estado",
     placeholder: "Estado",
     fullwidth: false,
@@ -460,14 +460,14 @@ export const formPreparacionTallerInicial = {
     label: "Registro del lugar de taller",
     placeholder: "Registro del lugar de taller",
     fullwidth: false,
-    ...controlProps.onlyLettersNumbersAndRequired
+    ...controlProps.onlyLettersNumbersAndRequired,
   },
   date: {
     label: "Fecha del taller",
     placeholder: "Fecha del taller",
     fullwidth: false,
-    ...controlProps.dateAndRequired
-  }
+    ...controlProps.dateAndRequired,
+  },
 };
 export const formRegistroInicial = {
   title1: { label: "Resumen del taller inicial", type: "title" },
@@ -475,7 +475,7 @@ export const formRegistroInicial = {
     label: "Descripción del taller inicial",
     placeholder: "Descripción del taller inicial",
     fullwidth: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   title4: { label: "Imágenes del taller inicial", type: "title" },
   imageGroup: {
@@ -485,8 +485,8 @@ export const formRegistroInicial = {
         label: "Descripción de la imagen",
         placeholder: "Descripción de la imagen",
         fullwidth: false,
-        ...controlProps.normalText
-      }
+        ...controlProps.normalText,
+      },
       // imageStatus: {
       //   label: 'Estado de la imagen',
       //   placeholder: 'Estado de la imagen',
@@ -497,8 +497,8 @@ export const formRegistroInicial = {
       //     { id: '2', name: 'No visible' },
       //   ],
       // },
-    }
-  }
+    },
+  },
 };
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
 export const formRegistroInicialModal = {
@@ -509,8 +509,8 @@ export const formRegistroInicialModal = {
         label: "Descripción de la imagen",
         placeholder: "Descripción de la imagen",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
+        ...controlProps.normalTextAndRequired,
+      },
       // imageStatus: {
       //   label: 'Estado de la imagen',
       //   placeholder: 'Estado de la imagen',
@@ -521,8 +521,8 @@ export const formRegistroInicialModal = {
       //     { id: '2', name: 'No visible' },
       //   ],
       // },
-    }
-  }
+    },
+  },
 };
 /*DATOS DE LA ESCUELA*/
 export const formDatosEscuela = {
@@ -532,21 +532,21 @@ export const formDatosEscuela = {
     placeholder: "Nombre de la escuela",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers
+    ...controlProps.onlyLettersNumbers,
   },
   codigoEscuela: {
     label: "Código del plantel",
     placeholder: "Código del plantel",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers
+    ...controlProps.onlyLettersNumbers,
   },
   phoneEscuela: {
     label: "Teléfono",
     placeholder: "Teléfono",
     fullwidth: false,
     readonly: true,
-    ...controlProps.phone
+    ...controlProps.phone,
   },
   addressState: {
     label: "Seleccione el estado",
@@ -554,7 +554,7 @@ export const formDatosEscuela = {
     fullwidth: false,
     readonly: true,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
@@ -562,21 +562,21 @@ export const formDatosEscuela = {
     fullwidth: false,
     readonly: true,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   callesEscuela: {
     label: "Calles / carreras",
     placeholder: "Calles / carreras",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers
+    ...controlProps.onlyLettersNumbers,
   },
   ciudadEscuela: {
     label: "Ciudad",
     placeholder: "Ciudad",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers
+    ...controlProps.onlyLettersNumbers,
   },
   /*DATOS DIRECTOR*/
   title2: { label: "Datos del director", type: "title" },
@@ -588,14 +588,14 @@ export const formDatosEscuela = {
       nameDirector: {
         placeholder: "Nombre",
         fullwidth: false,
-        ...controlProps.onlyLetters
+        ...controlProps.onlyLetters,
       },
       lastnameDirector: {
         placeholder: "Apellido",
         fullwidth: false,
-        ...controlProps.onlyLetters
-      }
-    }
+        ...controlProps.onlyLetters,
+      },
+    },
   },
   // nameDirector: {
   //   label: "Nombre del director o directora",
@@ -607,13 +607,13 @@ export const formDatosEscuela = {
     label: "Número de teléfono del director",
     placeholder: "Número de teléfono del director",
     fullwidth: false,
-    ...controlProps.phone
+    ...controlProps.phone,
   },
   emailDirector: {
     label: "Correo electrónico del director",
     placeholder: "Correo electrónico del director",
     fullwidth: false,
-    ...controlProps.email
+    ...controlProps.email,
   },
   /*DATOS SUB-DIRECTOR*/
   title3: { label: "Datos del subdirector", type: "title" },
@@ -625,14 +625,14 @@ export const formDatosEscuela = {
       nameSubDirector: {
         placeholder: "Nombre",
         fullwidth: false,
-        ...controlProps.onlyLetters
+        ...controlProps.onlyLetters,
       },
       lastnameSubDirector: {
         placeholder: "Apellido",
         fullwidth: false,
-        ...controlProps.onlyLetters
-      }
-    }
+        ...controlProps.onlyLetters,
+      },
+    },
   },
   // nameSubDirector: {
   //   label: "Nombre del subdirector o subdirectora",
@@ -644,13 +644,13 @@ export const formDatosEscuela = {
     label: "Número de teléfono del subdirector",
     placeholder: "Número de teléfono del subdirector",
     fullwidth: false,
-    ...controlProps.phone
+    ...controlProps.phone,
   },
   emailSubDirector: {
     label: "Correo electrónico del subdirector",
     placeholder: "Correo electrónico del subdirector",
     fullwidth: false,
-    ...controlProps.email
+    ...controlProps.email,
   },
   /*Información adicional*/
   title4: { label: "Información adicional", type: "title" },
@@ -662,16 +662,16 @@ export const formDatosEscuela = {
         placeholder: "Cantidad de docentes",
         readonly: true,
         fullwidth2: true,
-        ...controlProps.number
+        ...controlProps.number,
       },
       number2: {
         label: "Cantidad de personal administrativo",
         placeholder: "Cantidad de personal administrativo",
         readonly: true,
         fullwidth2: true,
-        ...controlProps.number
-      }
-    }
+        ...controlProps.number,
+      },
+    },
   },
   doubleFields2: {
     type: "double",
@@ -681,16 +681,16 @@ export const formDatosEscuela = {
         placeholder: "Cantidad de personal obrero",
         readonly: true,
         fullwidth2: true,
-        ...controlProps.number
+        ...controlProps.number,
       },
       number4: {
         label: "Cantidad de estudiantes",
         placeholder: "Cantidad de estudiantes",
         readonly: true,
         fullwidth2: true,
-        ...controlProps.number
-      }
-    }
+        ...controlProps.number,
+      },
+    },
   },
   doubleFields3: {
     type: "double",
@@ -700,15 +700,15 @@ export const formDatosEscuela = {
         placeholder: "Cantidad de grados",
         readonly: true,
         fullwidth2: true,
-        ...controlProps.number
+        ...controlProps.number,
       },
       facebook: {
         label: "Facebook",
         placeholder: "Facebook",
         fullwidth2: true,
-        ...controlProps.socialNetwork
-      }
-    }
+        ...controlProps.socialNetwork,
+      },
+    },
   },
   doubleFields4: {
     type: "double",
@@ -717,15 +717,15 @@ export const formDatosEscuela = {
         label: "Instagram",
         placeholder: "Instagram",
         fullwidth2: true,
-        ...controlProps.socialNetwork
+        ...controlProps.socialNetwork,
       },
       twitter: {
         label: "Twitter",
         placeholder: "Twitter",
         fullwidth2: true,
-        ...controlProps.socialNetwork
-      }
-    }
+        ...controlProps.socialNetwork,
+      },
+    },
   },
   imageGroup: {
     type: "image",
@@ -734,8 +734,8 @@ export const formDatosEscuela = {
         label: "Descripción de la imagen",
         placeholder: "Descripción de la imagen",
         fullwidth: false,
-        ...controlProps.normalText
-      }
+        ...controlProps.normalText,
+      },
       // imageStatus: {
       //   label: 'Estado de la imagen',
       //   placeholder: 'Estado de la imagen',
@@ -746,8 +746,8 @@ export const formDatosEscuela = {
       //     { id: '2', name: 'No visible' },
       //   ],
       // },
-    }
-  }
+    },
+  },
 };
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DE DATOS DE LA ESCUELA
 export const formDatosEscuelaModal = {
@@ -758,8 +758,8 @@ export const formDatosEscuelaModal = {
         label: "Descripción de la imagen",
         placeholder: "Descripción de la imagen",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
-      }
+        ...controlProps.normalTextAndRequired,
+      },
       // imageStatus: {
       //   label: 'Estado de la imagen',
       //   placeholder: 'Estado de la imagen',
@@ -770,8 +770,8 @@ export const formDatosEscuelaModal = {
       //     { id: '2', name: 'No visible' },
       //   ],
       // },
-    }
-  }
+    },
+  },
 };
 
 /*TABS DOCENTE*/
@@ -781,13 +781,13 @@ export const formTabsDocente = {
     label: "Nombre del docente",
     placeholder: "Nombre",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido del docente",
     placeholder: "Apellido",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   documentGroup: {
     type: "prepend",
@@ -800,16 +800,16 @@ export const formTabsDocente = {
         ...controlProps.select,
         options: [
           { id: "1", name: "V" },
-          { id: "2", name: "E" }
-        ]
+          { id: "2", name: "E" },
+        ],
       },
       prependInput: {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberAndRequired
-      }
-    }
+        ...controlProps.numberAndRequired,
+      },
+    },
   },
   gender: {
     label: "Género",
@@ -817,46 +817,46 @@ export const formTabsDocente = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
-      { id: "2", name: "Masculino" }
-    ]
+      { id: "2", name: "Masculino" },
+    ],
   },
   phone: {
     label: "Teléfono",
     placeholder: "Teléfono",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   email: {
     label: "Correo",
     placeholder: "Correo",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   addressState: {
     label: "Seleccione el estado",
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
     placeholder: "Municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   street: {
     label: "Calles / carreras",
     placeholder: "Calles / carreras",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   city: {
     label: "Ciudad",
     placeholder: "Ciudad",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   status: {
     label: "Estatus",
@@ -865,9 +865,9 @@ export const formTabsDocente = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Activo" },
-      { id: "2", name: "Inactivo" }
-    ]
-  }
+      { id: "2", name: "Inactivo" },
+    ],
+  },
 };
 /*TABS GRADOS Y SECCIONES*/
 export const formGradosSecciones = {
@@ -883,15 +883,15 @@ export const formGradosSecciones = {
       { id: "3", name: "3er Grado" },
       { id: "4", name: "4to Grado" },
       { id: "5", name: "5to Grado" },
-      { id: "6", name: "6to Grado" }
-    ]
+      { id: "6", name: "6to Grado" },
+    ],
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
     maxlength: "1",
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   docente: {
     label: "Seleccione el docente",
@@ -903,8 +903,8 @@ export const formGradosSecciones = {
       // { id: "1", name: "Alfredo" },
       // { id: "2", name: "Yanior" },
       // { id: "3", name: "Stephanie" }
-    ]
-  }
+    ],
+  },
 };
 /*Tabs Estudiantes*/
 export const formTabsEstudiantesGradesSections = {
@@ -914,7 +914,7 @@ export const formTabsEstudiantesGradesSections = {
     fullwidth: false,
     isGrades: true,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   section: {
     label: "Seleccione la sección",
@@ -922,21 +922,21 @@ export const formTabsEstudiantesGradesSections = {
     fullwidth: false,
     emmitSectionChange: true,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
-}
-export const formTabsEstudiantes = {  
+};
+export const formTabsEstudiantes = {
   name: {
     label: "Nombre estudiante",
     placeholder: "Nombre",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido estudiante",
     placeholder: "Apellido",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   documentGroup: {
     type: "prepend",
@@ -950,15 +950,15 @@ export const formTabsEstudiantes = {
         options: [
           { id: "1", name: "V" },
           { id: "2", name: "E" },
-        ]
+        ],
       },
       prependInput: {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.number
-      }
-    }
+        ...controlProps.number,
+      },
+    },
   },
   age: {
     lower: true,
@@ -966,7 +966,7 @@ export const formTabsEstudiantes = {
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,
-    ...controlProps.dateAndRequired
+    ...controlProps.dateAndRequired,
   },
   gender: {
     label: "Género",
@@ -975,9 +975,9 @@ export const formTabsEstudiantes = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
-      { id: "2", name: "Masculino" }
-    ]
-  }
+      { id: "2", name: "Masculino" },
+    ],
+  },
 };
 /* PERFIL DE USUARIO COORDINADOR*/
 export const formCoordinador = {
@@ -986,13 +986,13 @@ export const formCoordinador = {
     label: "Nombre del coordinador",
     placeholder: "Nombre del coordinador",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastNameLetter: {
     label: "Apellido del coordinador",
     placeholder: "Apellido del coordinador",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   documentGroup: {
     type: "prepend",
@@ -1006,41 +1006,41 @@ export const formCoordinador = {
         options: [
           { id: "1", name: "V" },
           { id: "2", name: "J" },
-          { id: "3", name: "E" }
-        ]
+          { id: "3", name: "E" },
+        ],
       },
       prependInput: {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberAndRequired
-      }
-    }
+        ...controlProps.numberAndRequired,
+      },
+    },
   },
   email: {
     label: "Correo",
     placeholder: "Correo",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   phoneMovil: {
     label: "Teléfono móvil",
     placeholder: "Teléfono móvil",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   phone: {
     label: "Teléfono de habitación",
     placeholder: "Teléfono de habitación",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   date: {
     lower: true,
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,
-    ...controlProps.dateAndRequired
+    ...controlProps.dateAndRequired,
   },
   sexo: {
     label: "Género",
@@ -1049,47 +1049,47 @@ export const formCoordinador = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
-      { id: "2", name: "Masculino" }
-    ]
+      { id: "2", name: "Masculino" },
+    ],
   },
   addressState: {
     label: "Seleccione el estado",
     placeholder: "Seleccione el estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
     placeholder: "Seleccione el municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   city: {
     label: "Ciudad",
     placeholder: "Ciudad",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   street: {
     label: "Calles / carreras",
     placeholder: "Calles / carreras",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   house: {
     label: "Casa / edificio",
     placeholder: "Casa / edificio",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   proffesion: {
     label: "Profesión",
     placeholder: "Profesión",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
-  }
+    ...controlProps.normalTextAndRequired,
+  },
 };
 /* PERFIL DE USUARIO PADRINO*/
 export const formPadrino = {
@@ -1098,25 +1098,25 @@ export const formPadrino = {
     label: "Nombre de la empresa",
     placeholder: "Nombre de la empresa",
     fullwidth: false,
-    ...controlProps.onlyLettersNumbersAndRequired
+    ...controlProps.onlyLettersNumbersAndRequired,
   },
   rif: {
     label: "Rif",
     placeholder: "Rif",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   phone: {
     label: "Teléfono",
     placeholder: "Teléfono",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   email: {
     label: "Correo",
     placeholder: "Correo",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   tipoEmpresa: {
     label: "Tipo de empresa",
@@ -1128,67 +1128,67 @@ export const formPadrino = {
       { id: "2", name: "Tienda" },
       { id: "3", name: "Negocio Personal" },
       { id: "4", name: "Hacienda" },
-      { id: "0", name: "Otro" }
+      { id: "0", name: "Otro" },
     ],
-    isFactoryType: true
+    isFactoryType: true,
   },
   companyOtherType: {
     label: "Otro tipo de empresa",
     placeholder: "Otro tipo de empresa ",
     fullwidth: false,
-    ...controlProps.onlyLetters
+    ...controlProps.onlyLetters,
   },
   titleName2: { label: "Datos de la persona de contacto", type: "title" },
   letterName: {
     label: "Nombre de la persona de contacto",
     placeholder: "Nombre de la persona de contacto",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   letterLastName: {
     label: "Apellido de la persona de contacto",
     placeholder: "Apellido de la persona de contacto",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   phoneContact: {
     label: "Teléfono de la persona de contacto",
     placeholder: "Teléfono de la persona de contacto",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   emailContact: {
     label: "Correo electrónico",
     placeholder: "Correo electrónico",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   addressState: {
     label: "Seleccione el estado",
     placeholder: "Estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
     placeholder: "Municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   city: {
     label: "Ciudad",
     placeholder: "Ciudad",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   street: {
     label: "Calles / carreras",
     placeholder: "Calles / carreras",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
-  }
+    ...controlProps.normalTextAndRequired,
+  },
 };
 /* PERFIL DE USUARIO ESCUELA*/
 export const formEscuela = {
@@ -1197,50 +1197,51 @@ export const formEscuela = {
     label: "Nombre de la escuela",
     placeholder: "Nombre de la escuela",
     fullwidth: false,
-    ...controlProps.onlyLettersNumbersAndRequired  },
+    ...controlProps.onlyLettersNumbersAndRequired,
+  },
   code: {
     label: "Código del plantel",
     placeholder: "Código del plantel",
     fullwidth: false,
-    ...controlProps.onlyLettersNumbersAndRequired
+    ...controlProps.onlyLettersNumbersAndRequired,
   },
   email: {
     label: "Correo",
     placeholder: "Correo",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
   phone: {
     label: "Teléfono",
     placeholder: "Teléfono",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   addressState: {
     label: "Seleccione el estado",
     placeholder: "Seleccione el estado",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   addressMunicipality: {
     label: "Seleccione el municipio",
     placeholder: "Seleccione el municipio",
     fullwidth: false,
     ...controlProps.selectAndRequired,
-    options: []
+    options: [],
   },
   city: {
     label: "Ciudad",
     placeholder: "Ciudad",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   street: {
     label: "Calles / carreras",
     placeholder: "Calles / carreras",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   zone: {
     label: "Tipo de zona",
@@ -1250,14 +1251,14 @@ export const formEscuela = {
     options: [
       { id: "1", name: "Sector" },
       { id: "2", name: "Barrio" },
-      { id: "3", name: "Cacerio" }
-    ]
+      { id: "3", name: "Cacerio" },
+    ],
   },
   address: {
     label: "Dirección de la zona",
     placeholder: "Dirección de la zona",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   turno: {
     label: "Turno de clases",
@@ -1267,8 +1268,8 @@ export const formEscuela = {
     options: [
       { id: "1", name: "Mañana" },
       { id: "2", name: "Tarde" },
-      { id: "3", name: "Ambos" }
-    ]
+      { id: "3", name: "Ambos" },
+    ],
   },
   typeEscuela: {
     label: "Tipo de escuela",
@@ -1278,33 +1279,33 @@ export const formEscuela = {
     options: [
       { id: "1", name: "Nacional" },
       { id: "2", name: "Estadal" },
-      { id: "3", name: "Municipal" }
-    ]
+      { id: "3", name: "Municipal" },
+    ],
   },
   titleDirector: { label: "Datos del director", type: "title" },
   letterName: {
     label: "Nombre del director",
     placeholder: "Nombre del director",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   letterLastName: {
     label: "Apellido del director",
     placeholder: "Apellido del director",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   phoneContact: {
     label: "Teléfono del director",
     placeholder: "Teléfono del director",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   emailContact: {
     label: "Correo del director",
     placeholder: "Correo del director",
     fullwidth: false,
-    ...controlProps.emailAndRequired
+    ...controlProps.emailAndRequired,
   },
 
   titleSubDirector: { label: "Datos del subdirector", type: "title" },
@@ -1312,26 +1313,26 @@ export const formEscuela = {
     label: "Nombre del subdirector",
     placeholder: "Nombre del subdirector",
     fullwidth: false,
-    ...controlProps.onlyLetters
+    ...controlProps.onlyLetters,
   },
   letterLastName2: {
     label: "Apellido del subdirector",
     placeholder: "Apellido del subdirector",
     fullwidth: false,
-    ...controlProps.onlyLetters
+    ...controlProps.onlyLetters,
   },
   phoneContact2: {
     label: "Teléfono del subdirector",
     placeholder: "Teléfono del subdirector",
     fullwidth: false,
-    ...controlProps.phone
+    ...controlProps.phone,
   },
   emailContact2: {
     label: "Correo del subdirector",
     placeholder: "Correo del subdirector",
     fullwidth: false,
-    ...controlProps.email
-  }
+    ...controlProps.email,
+  },
 };
 
 //ANUARIO-----------------------------------------------------
@@ -1346,13 +1347,13 @@ export const formImagenEscuela = {
         fullwidth: false,
         shouldContentRefresh: true,
         ...controlProps.selectAndRequired,
-        options: []
+        options: [],
       },
       imageCargo: {
         label: "Seccion",
         placeholder: "Seccion",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired
+        ...controlProps.normalTextAndRequired,
       },
       // imageStatus: {
       //   label: "Estado de la imagen",
@@ -1364,16 +1365,16 @@ export const formImagenEscuela = {
       //     { id: "2", name: "Inactivo" }
       //   ]
       // }
-    }
-  }
+    },
+  },
 };
 //RESENA HISTORICA
 export const formResenaHistorica = {
   nameDescription: {
     placeholder: "Descripción de la reseña histórica ",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
-  }
+    ...controlProps.textareaNnormalText,
+  },
 };
 //PADRINO
 export const formPadrinoAnuario = {
@@ -1381,50 +1382,50 @@ export const formPadrinoAnuario = {
   nameDescription: {
     placeholder: "Descripción del padrino",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
-  }
+    ...controlProps.textareaNnormalText,
+  },
 };
 //Coordinador
 export const formCoordinadorAnuario = {
   nameDescription: {
     placeholder: "Descripción del coordinador",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
-  }
+    ...controlProps.textareaNnormalText,
+  },
 };
 //escuela
 export const formEscuelaAnuario = {
   nameDescription: {
     placeholder: "Descripción del escuela",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
-  }
+    ...controlProps.textareaNnormalText,
+  },
 };
 //Actividades
 export const formActividades = {
   nameDescription: {
     placeholder: "Descripción de la actividad",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
+    ...controlProps.textareaNnormalText,
   },
   imageGroup: {
     type: "image",
-    fields: {}
-  }
+    fields: {},
+  },
 };
 export const formImgActividades = {
   imageGroup: {
     type: "image",
-    fields: {}
-  }
+    fields: {},
+  },
 };
 //ANALISIS Y RESULTADOS
 export const formAnalisisYResultados = {
   nameDescription: {
     placeholder: "Análisis y resultados del diagnóstico",
     fullwidth: true,
-    ...controlProps.textareaNnormalText
-  }
+    ...controlProps.textareaNnormalText,
+  },
 };
 
 //? -- MODALES -----------------------------------------------
@@ -1435,14 +1436,14 @@ export const formLecturaModal = {
     placeholder: "Nombre",
     fullwidth: false,
     readonly: true,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
     readonly: true,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   grade: {
     label: "Grado",
@@ -1456,15 +1457,15 @@ export const formLecturaModal = {
       { id: "3", name: "3er grado" },
       { id: "4", name: "4to grado" },
       { id: "5", name: "5to grado" },
-      { id: "6", name: "6to grado" }
-    ]
+      { id: "6", name: "6to grado" },
+    ],
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   gender: {
     label: "Género",
@@ -1474,10 +1475,10 @@ export const formLecturaModal = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
-      { id: "2", name: "Masculino" }
-    ]
-  }, 
- /*  date: {
+      { id: "2", name: "Masculino" },
+    ],
+  },
+  /*  date: {
     label: "Fecha del diagnostico",
     placeholder: "Fecha del diagnostico",
     fullwidth: false,
@@ -1489,15 +1490,15 @@ export const formLecturaModal = {
     label: "Resultado",
     placeholder: "Resultado",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   index: {
     label: "Índice",
     placeholder: "Índice",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalText
-  }
+    ...controlProps.normalText,
+  },
 };
 export const formMatematicaModal = {
   name: {
@@ -1505,14 +1506,14 @@ export const formMatematicaModal = {
     placeholder: "Nombre",
     fullwidth: false,
     readonly: true,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
     readonly: true,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   grade: {
     label: "Grados",
@@ -1526,15 +1527,15 @@ export const formMatematicaModal = {
       { id: "3", name: "3er grado" },
       { id: "4", name: "4to grado" },
       { id: "5", name: "5to grado" },
-      { id: "6", name: "6to grado" }
-    ]
+      { id: "6", name: "6to grado" },
+    ],
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   gender: {
     label: "Género",
@@ -1544,10 +1545,10 @@ export const formMatematicaModal = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Femenino" },
-      { id: "2", name: "Masculino" }
-    ]
+      { id: "2", name: "Masculino" },
+    ],
   },
-/*   date: {
+  /*   date: {
     label: "Fecha del resultado de multiplicacion",
     placeholder: "Fecha del resultado de multiplicacion",
     fullwidth: false,
@@ -1559,7 +1560,7 @@ export const formMatematicaModal = {
     label: "Resultado de multiplicación",
     placeholder: "Resultado de multiplicación",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   /* dateLog: {
     label: "Fecha del resultado logica matematica",
@@ -1573,22 +1574,22 @@ export const formMatematicaModal = {
     label: "Resultado de lógica matemática",
     placeholder: "Resultado de lógica matemática",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   indexMul: {
     label: "Índice de multiplicación",
     placeholder: "Índice de multiplicación",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalText
+    ...controlProps.normalText,
   },
   indexLog: {
     label: "Índice de lógica matemática",
     placeholder: "Índice de lógica matemática",
     fullwidth: false,
     readonly: true,
-    ...controlProps.normalText
-  }
+    ...controlProps.normalText,
+  },
 };
 
 // AMBLEMONEDAS
@@ -1605,15 +1606,15 @@ export const formConfirmacionDocenteModal = {
       { id: "3", name: "3er grado" },
       { id: "4", name: "4to grado" },
       { id: "5", name: "5to grado" },
-      { id: "6", name: "6to grado" }
-    ]
+      { id: "6", name: "6to grado" },
+    ],
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     readonly: true,
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   confirmation: {
     label: "Confirmación",
@@ -1623,9 +1624,9 @@ export const formConfirmacionDocenteModal = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Confirmado" },
-      { id: "2", name: "Por confirmar" }
-    ]
-  }
+      { id: "2", name: "Por confirmar" },
+    ],
+  },
 };
 // PREPARACION DE LA CONVENCION ANUAL
 export const formPreinscripcionDocenteModal = {
@@ -1633,26 +1634,26 @@ export const formPreinscripcionDocenteModal = {
     label: "Nombre",
     placeholder: "Nombre",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   phone: {
     label: "Telefono",
     placeholder: "Telefono",
     fullwidth: false,
-    ...controlProps.phoneAndRequired
+    ...controlProps.phoneAndRequired,
   },
   email: {
     label: "Correo",
     placeholder: "Correo",
     fullwidth: false,
-    ...controlProps.emailAndRequired
-  }
+    ...controlProps.emailAndRequired,
+  },
 };
 // ACTIVIDAD ESPECIAL
 export const formSpecialActivityTableModal = {
@@ -1660,38 +1661,38 @@ export const formSpecialActivityTableModal = {
     label: "Item",
     placeholder: "Item",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   description: {
     label: "Description",
     placeholder: "Description",
     fullwidth: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   cantidad: {
     label: "Cantidad",
     placeholder: "Cantidad",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   price: {
     label: "Precio unitario",
     placeholder: "Precio unitario",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   impuesto: {
     label: "% Impuesto",
     placeholder: "% Impuesto",
     fullwidth: false,
-    ...controlProps.numberAndRequired
+    ...controlProps.numberAndRequired,
   },
   subtotal: {
     label: "Subtotal",
     placeholder: "Subtotal",
     fullwidth: false,
-    ...controlProps.numberAndRequired
-  }
+    ...controlProps.numberAndRequired,
+  },
 };
 // OLIMPIADAS DE MATEMATICA
 export const formResultadoEstudianteModal = {
@@ -1700,14 +1701,14 @@ export const formResultadoEstudianteModal = {
     placeholder: "Nombre",
     fullwidth: false,
     readonly: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   lastName: {
     label: "Apellido",
     placeholder: "Apellido",
     fullwidth: false,
     readonly: false,
-    ...controlProps.onlyLettersAndRequired
+    ...controlProps.onlyLettersAndRequired,
   },
   grade: {
     label: "Grados",
@@ -1721,15 +1722,15 @@ export const formResultadoEstudianteModal = {
       { id: "3", name: "3er grado" },
       { id: "4", name: "4to grado" },
       { id: "5", name: "5to grado" },
-      { id: "6", name: "6to grado" }
-    ]
+      { id: "6", name: "6to grado" },
+    ],
   },
   section: {
     label: "Sección",
     placeholder: "Sección",
     fullwidth: false,
     readonly: false,
-    ...controlProps.normalTextAndRequired
+    ...controlProps.normalTextAndRequired,
   },
   status: {
     label: "Estatus",
@@ -1738,8 +1739,8 @@ export const formResultadoEstudianteModal = {
     ...controlProps.selectAndRequired,
     options: [
       { id: "1", name: "Registrado" },
-      { id: "2", name: "Calificado" }
-    ]
+      { id: "2", name: "Calificado" },
+    ],
   },
   result: {
     label: "Resultado",
@@ -1749,9 +1750,9 @@ export const formResultadoEstudianteModal = {
     options: [
       { id: "1", name: "Oro" },
       { id: "2", name: "Plata" },
-      { id: "3", name: "Bronce" }
-    ]
-  }
+      { id: "3", name: "Bronce" },
+    ],
+  },
 };
 // FOTOS DE LA ACTIVIDAD
 //* MODAL PARA LAS ACCIONES DE LA TABLA DE IMAGENES DEL TALLER INICIAL
