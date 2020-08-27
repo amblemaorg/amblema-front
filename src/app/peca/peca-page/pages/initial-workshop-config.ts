@@ -4,6 +4,7 @@ import {
   AddImageToInitialWorkshopRequestData,
   UpdateInitialWorkshopImages,
   CancelInitialWorkshopImages,
+  ClearInitialWorkshopRequestData,
 } from "./../../../store/actions/peca/peca.actions";
 import { Store } from "@ngxs/store";
 import { UpdateInitialWorkshop } from "src/app/store/actions/peca/peca.actions";
@@ -278,11 +279,19 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
   } = initialWorkshop;
   let currentImages = images;
   let currentDescription = description;
-  if (isInApproval && approvalHistory.length > 0) {
+  let currentStatus = description && currentImages.length > 0 ? 2 : 1;
+  if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastInApprovalRequest = approvalHistory[approvalHistory.length - 1];
     currentImages = lastInApprovalRequest.detail.images;
     currentDescription = lastInApprovalRequest.detail.description;
+    currentStatus = +lastInApprovalRequest.status;
   }
+
+  store.dispatch(new ClearInitialWorkshopRequestData({}));
+  store.dispatch(
+    new SetInitialWorkshopRequestData({ description: currentDescription, images: currentImages })
+  );
+
   const preparingWorkshopForm = {
     component: "form",
     name: "preparingWorkshopForm",
@@ -320,6 +329,16 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
     },
   };
 
+  const workshopContentStatus = {
+    component: "textsbuttons",
+    settings: {
+      dateOrtext: {},
+      status: {
+        text: "Estatus",
+        subText: currentStatus,
+      },
+    },
+  };
   const workshopContentForm = {
     component: "form",
     settings: {
@@ -382,7 +401,9 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
         },
       },
       onDelete: (row) => {
-        const imageSource = row.data.newData.source;
+        const imageSource = row.data.newData.source
+          ? row.data.newData.source
+          : row.data.newData.image;
         store.dispatch(new RemoveImageFromInitialWorkshopRequestData({ imageSource }));
       },
       isFromImgContainer: true,
@@ -445,18 +466,11 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
             {
               title: "Registro inicial",
               childBlocks: [
-                {
-                  ...workshopContentForm,
-                },
-                {
-                  ...workshopImagesTable,
-                },
-                {
-                  ...submitInitialWorkshopRequest,
-                },
-                {
-                  ...modalRegistroTallerInicial,
-                },
+                workshopContentStatus,
+                workshopContentForm,
+                workshopImagesTable,
+                submitInitialWorkshopRequest,
+                modalRegistroTallerInicial,
               ],
             },
           ],

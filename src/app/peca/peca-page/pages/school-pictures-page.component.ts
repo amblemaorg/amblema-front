@@ -22,8 +22,7 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   selector: "peca-school-pictures",
   templateUrl: "../peca-page.component.html",
 })
-export class SchoolPicturesPageComponent extends PecaPageComponent
-  implements AfterViewInit, OnDestroy {
+export class SchoolPicturesPageComponent extends PecaPageComponent implements OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
@@ -53,7 +52,6 @@ export class SchoolPicturesPageComponent extends PecaPageComponent
               const newConfig = schoolActivitiesPicturesConfigMapper(activitiesSlider, this.store);
               this.instantiateComponent(newConfig);
               this.doInstantiateBlocks();
-              this.store.dispatch(new ClearSchoolActivitiesRequestData({}));
             }
           }
         },
@@ -61,12 +59,6 @@ export class SchoolPicturesPageComponent extends PecaPageComponent
           console.log(er);
         }
       );
-  }
-
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   this.instantiateBlocks(this.container);
-    // });
   }
 
   doInstantiateBlocks() {

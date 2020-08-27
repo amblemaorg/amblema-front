@@ -24,7 +24,8 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   templateUrl: "../peca-page.component.html",
 })
 // @ts-ignore
-export class YearbookPageComponent extends PecaPageComponent
+export class YearbookPageComponent
+  extends PecaPageComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
@@ -76,16 +77,23 @@ export class YearbookPageComponent extends PecaPageComponent
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
-              let newYearBook = currentYearBook;
               const { approvalHistory, isInApproval, pecaId, userId } = currentYearBook;
               const yearbookHasNotApprovedRequest = !isInApproval && approvalHistory.length > 0;
+              const lastRequest =
+                approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1] : null;
+              let currentStatus = lastRequest ? +lastRequest.status : 1;
+              let newYearBook = {
+                ...currentYearBook,
+                status: currentStatus,
+              };
 
               if (isInApproval || yearbookHasNotApprovedRequest) {
-                const lastYearBookRequest = approvalHistory[approvalHistory.length - 1].detail;
+                const lastYearBookRequest = lastRequest.detail;
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
                   pecaId,
                   userId,
+                  status: currentStatus,
                   isInApproval: currentYearBook.isInApproval,
                   approvalHistory: approvalHistory,
                   sponsor: {

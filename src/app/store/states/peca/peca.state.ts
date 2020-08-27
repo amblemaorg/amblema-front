@@ -418,12 +418,16 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: SetInitialWorkshopRequestData
   ) {
-    const { description } = payload;
+    const { description, images } = payload;
     const { initialWorkshopImagesRequest } = getState();
     patchState({
       initialWorkshopImagesRequest: {
         ...initialWorkshopImagesRequest,
         description: description ? description : initialWorkshopImagesRequest.description,
+        images:
+          images instanceof Array && images.length > 0
+            ? images
+            : initialWorkshopImagesRequest.images,
       },
     });
   }

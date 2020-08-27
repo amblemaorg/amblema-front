@@ -6,6 +6,7 @@ import {
   RemoveImageFromSchoolActivitiesRequestData,
   CancelSchoolActivitiesRequest,
   UpdateSchoolActivitiesRequest,
+  ClearSchoolActivitiesRequestData,
 } from "src/app/store/actions/peca/peca.actions";
 import {
   requiredAndNormalText,
@@ -196,11 +197,16 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
   const { isInApproval, approvalHistory, slider, status } = activitiesPictures;
   let currentSlider = slider;
   let currentStatus = currentSlider.length > 0 ? 2 : 1;
-  if (isInApproval && approvalHistory.length > 0) {
+  if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastActivitiesPicturesRequest = approvalHistory[approvalHistory.length - 1];
     currentSlider = lastActivitiesPicturesRequest.detail.slider;
     currentStatus = +lastActivitiesPicturesRequest.status;
   }
+
+  store.dispatch(new ClearSchoolActivitiesRequestData({}));
+  currentSlider.map((image) => {
+    store.dispatch(new AddImageToSchoolActivitiesRequestData({ image }));
+  });
 
   const activityPicturesStatus = {
     component: "textsbuttons",

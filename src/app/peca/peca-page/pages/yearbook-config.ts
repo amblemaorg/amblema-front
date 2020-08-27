@@ -1009,6 +1009,17 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
     }
   }
 
+  const yearbookStatus = {
+    component: "textsbuttons",
+    settings: {
+      dateOrtext: {},
+      status: {
+        text: "Estatus",
+        subText: yearBookData.status,
+      },
+    },
+  };
+
   const YEARBOOK_CONFIG = {
     header: {
       title: "AmbLeMario",
@@ -1024,6 +1035,7 @@ export const MapperYearBookWeb = (yearBookData: any, store: Store, toastr: Toast
           items: [
             {
               childBlocks: [
+                yearbookStatus,
                 {
                   component: "accordion",
                   settings: {
