@@ -68,7 +68,6 @@ export class InitialWorkshopPageComponent extends PecaPageComponent implements A
 
   ngOnInit() {
     this.getInfo();
-    this.store.dispatch(new ClearInitialWorkshopRequestData({}));
   }
 
   getInfo() {

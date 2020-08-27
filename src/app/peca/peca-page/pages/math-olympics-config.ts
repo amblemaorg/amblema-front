@@ -425,8 +425,9 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
           label: "Resultado",
           placeholder: "Resultado",
           fullwidth: false,
-          ...controlProps.selectAndRequired,
+          ...controlProps.select,
           options: [
+            { id: "", name: "Sin Resultado" },
             { id: "1", name: "Oro" },
             { id: "2", name: "Plata" },
             { id: "3", name: "Bronce" },
@@ -510,7 +511,7 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
               case "3":
                 return "Bronce";
               default:
-                return "";
+                return "Sin Resultado";
             }
           },
           filterFunction: (cell?: any, search?: string) => {

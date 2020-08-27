@@ -106,17 +106,8 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
   const meetingDateFormatted = meetingDate ? meetingDate.split("T")[0] : null;
   const meetingStatus = status ? +status : 1;
   let currentAttachedFile = attachedFile;
-  let currentFileStatus = 1;
-  approvalHistory.map((request) => {
-    if (
-      request.detail.attachedFile &&
-      attachedFile &&
-      request.detail.attachedFile.name === attachedFile.name
-    ) {
-      currentFileStatus = +request.status;
-    }
-  });
-  if (isInApproval && approvalHistory.length > 0) {
+  let currentFileStatus = attachedFile ? 2 : 1;
+  if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastFileRequest = approvalHistory[approvalHistory.length - 1];
     currentAttachedFile = lastFileRequest.detail.attachedFile;
     currentFileStatus = lastFileRequest.status ? +lastFileRequest.status : currentFileStatus;
