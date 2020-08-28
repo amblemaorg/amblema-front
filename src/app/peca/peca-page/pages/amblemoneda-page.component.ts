@@ -4,24 +4,24 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { AMBLEMONEDA_CONFIG as config } from './amblemoneda-config';
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import { AMBLEMONEDA_CONFIG as config, amblecoinsConfigMapper } from "./amblemoneda-config";
 import { Router, NavigationEnd, Event } from "@angular/router";
-import { Observable, Subscription } from 'rxjs';
-import { GlobalService } from 'src/app/services/global.service';
-import { HttpFetcherService } from 'src/app/services/peca/http-fetcher.service';
-import { Select } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { GlobalService } from "src/app/services/global.service";
+import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
-import { amblemonedasTableMapper } from '../mappers/amblemoneda-mappers';
+import { amblemonedasTableMapper } from "../mappers/amblemoneda-mappers";
+import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 
 @Component({
-  selector: 'peca-amblemoneda',
-  templateUrl: '../peca-page.component.html',
+  selector: "peca-amblemoneda",
+  templateUrl: "../peca-page.component.html",
 })
 export class AmblemonedaPageComponent extends PecaPageComponent implements AfterViewInit {
-  @ViewChild('blocksContainer', { read: ViewContainerRef, static: false })
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
   //Selectores
@@ -31,7 +31,7 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   infoDataSubscription: Subscription;
   routerSubscription: Subscription;
   //charla
-  amblemonedaData: any
+  amblemonedaData: any;
   text: string;
   url: string;
   name: string;
@@ -52,51 +52,58 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
   lapse_n: string;
   file: any;
 
-
   isInstanciated: boolean;
+  isInstantiating: boolean;
   loadedData: boolean;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private router: Router,
     globals: GlobalService,
-    private httpFetcherService: HttpFetcherService, ) {
+    private store: Store
+  ) {
     super(factoryResolver);
 
-    globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
 
       if (this.loadedData) this.updateMethods();
     });
 
-    this.instantiateComponent(config);
-    // TODO: change for a code that must reload only this page component
-    // It reloads all components including PecaComponent, and it generates some bugs
-    // router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-        console.log("el ev", this.UrlLapse);
         this.ngOnInit();
       }
     });
   }
+
   ngOnInit() {
     this.getInfo();
-
   }
-  getInfo() {
-    this.infoDataSubscription = this.infoData$.subscribe(
-      data => {
-        if (data.activePecaContent) {
-          this.peca_id = data.activePecaContent.id;
-          if (!isNullOrUndefined(data)) {
-            console.log(data, "data amblemonedas")
-          }
 
+  getInfo() {
+    this.infoDataSubscription = this.infoData$
+      .pipe(
+        distinctUntilChanged(
+          (prev, curr) =>
+            JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].ambleCoins) ===
+            JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].ambleCoins)
+        )
+      )
+      .subscribe(
+        (data) => {
+          if (data.activePecaContent) {
+            this.peca_id = data.activePecaContent.id;
+            const config = amblecoinsConfigMapper(
+              data.activePecaContent,
+              this.UrlLapse,
+              this.store
+            );
+            this.instantiateComponent(config);
+            this.doInstantiateBlocks();
+            /*
           this.setAmblemonedasCharla(data);
           this.setAmblemonedasCharlaData();
 
@@ -104,22 +111,31 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
           this.setAmblemonedasSliderData();
 
           if (this.UrlLapse === "1") {
-            this.setAmblemonedasMapper(data.activePecaContent.lapse1.ambleCoins.sections, amblemonedasTableMapper);
+            this.setAmblemonedasMapper(
+              data.activePecaContent.lapse1.ambleCoins.sections,
+              amblemonedasTableMapper
+            );
+          } else if (this.UrlLapse === "2") {
+            this.setAmblemonedasMapper(
+              data.activePecaContent.lapse2.ambleCoins.sections,
+              amblemonedasTableMapper
+            );
+          } else {
+            this.setAmblemonedasMapper(
+              data.activePecaContent.lapse3.ambleCoins.sections,
+              amblemonedasTableMapper
+            );
           }
-          else if (this.UrlLapse === "2") {
-            this.setAmblemonedasMapper(data.activePecaContent.lapse2.ambleCoins.sections, amblemonedasTableMapper);
-          }
-          else {
-            this.setAmblemonedasMapper(data.activePecaContent.lapse3.ambleCoins.sections, amblemonedasTableMapper);
-          }
-
 
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
+          */
+          }
+        },
+        (er) => {
+          console.log(er);
         }
-
-      }, er => { console.log(er) })
-
+      );
   }
 
   updateMethods(updateData: boolean = true) {
@@ -131,23 +147,19 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     if (updateData) {
       this.setBlockData("amblemonedaTable", this.pruebaData);
     }
-    
+
     this.setBlockData("amblemonedaCharla", this.amblemonedaData);
     this.setBlockData("sliderAmblemaData", this.sliderData);
-
   }
 
   setAmblemonedasMapper(dataAmblema, _mapper?: Function) {
     if (_mapper) {
-      //console.log(dataAmblema, 'asdasdasdasdasdasd')
       this.pruebaData = {
         data: _mapper(dataAmblema),
         isEditable: true,
       };
-      //console.log("este es el mapper de amblemoneda", this.pruebaData);
     } else {
       this.pruebaData = dataAmblema;
-      //console.log("este NO es el mapper de amblemoneda", this.pruebaData);
     }
   }
 
@@ -165,42 +177,35 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
       this.file = data.activePecaContent.lapse3.ambleCoins.teachersMeetingFile;
       this.date = data.activePecaContent.lapse3.ambleCoins.meetingDate;
     }
-    //console.log(this.date, "CHARLAAAAAAAAAAAA")
   }
 
   setAmblemonedasCharlaData() {
     this.amblemonedaData = {
-     /*  dateOrtext: {
+      /*  dateOrtext: {
         fields: this.date
     }, */
       subtitles: [
         {
-          text: this.text
-        }
+          text: this.text,
+        },
       ],
-      download:
-      {
-        url: this.file.url,
-        name: this.file.name,
-      }
-    }
-    //console.log(this.amblemonedaData.download.url,this.amblemonedaData.download.name, "locoooooooooooo");
+      download: {
+        url: this.file ? this.file.url : "",
+        name: this.file ? this.file.name : "",
+      },
+    };
   }
 
   setAmblemonedasSlider(data) {
     if (this.UrlLapse === "1") {
       this.response1 = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-      //console.log(this.response1, "slideeeeeeeeeer111")
     } else if (this.UrlLapse === "2") {
       this.response2 = data.activePecaContent.lapse2.ambleCoins.piggyBankSlider;
-      //console.log(this.response2, "slideeeeeeeeeer2222")
     } else {
       this.response3 = data.activePecaContent.lapse3.ambleCoins.piggyBankSlider;
-      //console.log(this.response3, "slideeeeeeeeeer3333")
     }
     //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
     //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-
   }
 
   setAmblemonedasSliderData() {
@@ -209,55 +214,57 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
         sliderImage: {
           description: this.response1,
           //image: this.img
-        }
-      }
+        },
+      };
     } else if (this.UrlLapse === "2") {
       this.sliderData = {
         sliderImage: {
           description: this.response2,
           //image: this.img
-        }
-      }
+        },
+      };
     } else {
       this.sliderData = {
         sliderImage: {
           description: this.response3,
           //image: this.img
-        }
-      }
+        },
+      };
     }
-
   }
 
   updateDynamicFetchers() {
     //update
-    //pecaprojects/amblecoins/<string:pecaId>/<string:lapse>
-    this.createAndSetBlockFetcherUrls(
-      "confirmacionDocenteModal",
-      {
-        put: () =>
+    this.createAndSetBlockFetcherUrls("confirmacionDocenteModal", {
+      put: () =>
         //pecaprojects/amblecoins/section/<pecaId>/<lapse>
-          `pecaprojects/amblecoins/section/${this.peca_id}/${this.UrlLapse}`,
-      },
-    );
-
-
-    // enviar solicitud
-    ///pecaprojects/amblecoins/<string:pecaId>/<string:lapse>
-    
+        `pecaprojects/amblecoins/section/${this.peca_id}/${this.UrlLapse}`,
+    });
   }
 
-  updateStaticFetchers(){
-    this.setBlockFetcherUrls(
-      "btnEnviarSolicitud", 
-      {
-      put:`pecaprojects/amblecoins/${this.peca_id}/${this.UrlLapse}`,
+  updateStaticFetchers() {
+    this.setBlockFetcherUrls("btnEnviarSolicitud", {
+      put: `pecaprojects/amblecoins/${this.peca_id}/${this.UrlLapse}`,
+    });
+
+    this.setBlockFetcherUrls("amblemonedaCharla", {
+      put: `pecaprojects/amblecoins/${this.peca_id}/${this.UrlLapse}`,
     });
   }
 
   ngAfterViewInit(): void {
+    //setTimeout(() => {
+    //  this.instantiateBlocks(this.container);
+    //  this.isInstanciated = true;
+    //});
+  }
+
+  doInstantiateBlocks() {
+    this.isInstantiating = true;
+    this.isInstanciated = false;
     setTimeout(() => {
-      this.instantiateBlocks(this.container);
+      this.instantiateBlocks(this.container, true);
+      this.isInstantiating = false;
       this.isInstanciated = true;
     });
   }
