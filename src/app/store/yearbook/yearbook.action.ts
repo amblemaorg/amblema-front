@@ -134,8 +134,8 @@ export class YearBookState {
     const { pecaId, userId } = action.payload;
     const yearBookData = {
       ...ctx.getState(),
-      approvalHistory: [],
     };
+    delete yearBookData.approvalHistory;
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
     console.log("yearbook data", yearBookData);
     try {
@@ -150,10 +150,6 @@ export class YearBookState {
         positionClass: "toast-bottom-right",
       });
     }
-
-    //this.store.dispatch(new SetYearBook(data.detail));
-    //.subscribe(() => {
-    //});
   }
 
   @Action(CancelYearBookRequest)
