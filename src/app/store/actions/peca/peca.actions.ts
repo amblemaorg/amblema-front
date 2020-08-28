@@ -159,3 +159,13 @@ export class UpdateSpecialActivity {
   static readonly type = "[peca] Update Special Activity";
   constructor(public payload: any) {}
 }
+
+export class UpdateAmblecoins {
+  static readonly type = "[peca] Update Amblecoins";
+  constructor(public payload: any) {}
+}
+
+export class UpdateAmblecoinsSections {
+  static readonly type = "[peca] Update Amblecoins Sections";
+  constructor(public payload: any) {}
+}

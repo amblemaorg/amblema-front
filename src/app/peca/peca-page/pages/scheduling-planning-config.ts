@@ -95,6 +95,7 @@ export const SCHEDULING_PLANNING_CONFIG = {
 export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, store: Store) {
   const {
     proposalFundationDescription,
+    proposalFundationFile,
     meetingDate,
     meetingDescription,
     status,
@@ -132,6 +133,10 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
           name: isInApproval ? "Cancelar solicitud" : "Enviar",
         },
       ],
+      download: {
+        url: proposalFundationFile ? proposalFundationFile.url : "",
+        name: proposalFundationFile ? proposalFundationFile.name : "",
+      },
       upload: currentAttachedFile
         ? {
             name: currentAttachedFile.name,

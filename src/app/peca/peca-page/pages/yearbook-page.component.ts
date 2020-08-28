@@ -94,8 +94,8 @@ export class YearbookPageComponent
                   pecaId,
                   userId,
                   status: currentStatus,
+                  approvalHistory: currentYearBook.approvalHistory,
                   isInApproval: currentYearBook.isInApproval,
-                  approvalHistory: approvalHistory,
                   sponsor: {
                     ...currentYearBook.sponsor,
                     image: lastYearBookRequest.sponsor.image,

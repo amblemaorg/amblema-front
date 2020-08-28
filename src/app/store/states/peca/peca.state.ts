@@ -30,6 +30,8 @@ import {
   RemoveTeacherInAnnualConvention,
   SetSpecialActivityRequestData,
   UpdateSpecialActivity,
+  UpdateAmblecoins,
+  UpdateAmblecoinsSections,
 } from "../../actions/peca/peca.actions";
 import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
@@ -647,12 +649,13 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: AddTeacherInAnnualConvention
   ) {
-    const { teacherId } = payload;
+    const { teacherId, lapseNumber } = payload;
     const state = getState();
+    const lapseName = `lapse${lapseNumber}`;
     const pecaId = state.content.id;
     const url = `pecaprojects/annualpreparation/${pecaId}`;
     // @ts-ignore
-    const teachersIds = state.content.lapse3.annualPreparation.teachers.map(({ id }) => id);
+    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(({ id }) => id);
     const data = {
       teachersIds: [...teachersIds, teacherId],
     };
@@ -662,11 +665,11 @@ export class PecaState {
       patchState({
         content: {
           ...state.content,
-          lapse3: {
-            ...state.content.lapse3,
+          [lapseName]: {
+            ...state.content[lapseName],
             annualPreparation: {
               // @ts-ignore
-              ...state.content.lapse3.annualPreparation,
+              ...state.content[lapseName].annualPreparation,
               teachers: response,
             },
           },
@@ -687,12 +690,13 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: RemoveTeacherInAnnualConvention
   ) {
-    const { teacherId } = payload;
+    const { teacherId, lapseNumber } = payload;
     const state = getState();
+    const lapseName = `lapse${lapseNumber}`;
     const pecaId = state.content.id;
     const url = `pecaprojects/annualpreparation/${pecaId}`;
     // @ts-ignore
-    const teachersIds = state.content.lapse3.annualPreparation.teachers.map(({ id }) => id);
+    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(({ id }) => id);
     const data = {
       teachersIds: teachersIds.filter((id) => id !== teacherId),
     };
@@ -702,11 +706,11 @@ export class PecaState {
       patchState({
         content: {
           ...state.content,
-          lapse3: {
-            ...state.content.lapse3,
+          [lapseName]: {
+            ...state.content[lapseName],
             annualPreparation: {
               // @ts-ignore
-              ...state.content.lapse3.annualPreparation,
+              ...state.content[lapseName].annualPreparation,
               teachers: response,
             },
           },
@@ -767,6 +771,85 @@ export class PecaState {
         },
       });
       this.toastr.success("Solicitud enviada", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(UpdateAmblecoins)
+  async updateAmblecoins(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateAmblecoins
+  ) {
+    const { lapseNumber } = payload;
+    const state = getState();
+    const lapseName = `lapse${lapseNumber}`;
+    const pecaId = state.content.id;
+    const url = `pecaprojects/amblecoins/${pecaId}/${lapseNumber}`;
+
+    try {
+      this.toastr.info("Guardando, por favor espere...", "", {
+        positionClass: "toast-bottom-right",
+      });
+      const response = await this.fetcher.put(url, payload).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            ambleCoins: {
+              ...response,
+            },
+          },
+        },
+      });
+      this.toastr.success("Guardado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  @Action(UpdateAmblecoinsSections)
+  async updateAmblecoinsSections(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateAmblecoinsSections
+  ) {
+    const { section: updatedSection, lapseNumber } = payload;
+    const state = getState();
+    const lapseName = `lapse${lapseNumber}`;
+    const pecaId = state.content.id;
+    const url = `pecaprojects/amblecoins/${pecaId}/${lapseNumber}`;
+    const sections = state.content[lapseName].ambleCoins.sections.map((section) => {
+      if (section.id === updatedSection.id) {
+        return updatedSection;
+      }
+      return section;
+    });
+    try {
+      this.toastr.info("Guardando, por favor espere...", "", {
+        positionClass: "toast-bottom-right",
+      });
+      const response = await this.fetcher.put(url, { sections }).toPromise();
+      patchState({
+        content: {
+          ...state.content,
+          [lapseName]: {
+            ...state.content[lapseName],
+            ambleCoins: {
+              ...response,
+            },
+          },
+        },
+      });
+      this.toastr.success("Guardado satisfactoriamente", "", {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
