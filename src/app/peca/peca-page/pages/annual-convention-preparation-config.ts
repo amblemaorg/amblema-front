@@ -280,7 +280,7 @@ export function annualConventionPreparationConfigMapper(
         }),
       },
       onAddTable: (values) => {
-        const data = { teacherId: values.id };
+        const data = { teacherId: values.id, lapseNumber };
         store.dispatch(new AddTeacherInAnnualConvention(data));
       },
       btnGeneral: {
@@ -351,7 +351,7 @@ export function annualConventionPreparationConfigMapper(
         },
       ],
       onSubmit: (values) => {
-        const data = { teacherId: values.data.newData.id };
+        const data = { teacherId: values.data.newData.id, lapseNumber };
         store.dispatch(new RemoveTeacherInAnnualConvention(data));
       },
       makesNoRequest: true,
