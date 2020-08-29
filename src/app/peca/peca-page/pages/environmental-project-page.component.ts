@@ -5,6 +5,7 @@ import {
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { ENVIRONMENTAL_PROJECT_CONFIG as config } from "./environmental-project-config";
@@ -18,7 +19,9 @@ import { Select } from "@ngxs/store";
   selector: "peca-environmental-project",
   templateUrl: "../peca-page.component.html",
 })
-export class EnvironmentalProjectPageComponent extends PecaPageComponent implements AfterViewInit {
+export class EnvironmentalProjectPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
@@ -42,12 +45,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent impleme
       (data) => {
         if (!this.isInstantiating) {
           if (data.activePecaContent) {
-            /*
-            data.activePecaContent.environmentalProject.lapse1.topics.levels.week.forEach((schedule) => {
-              schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
-              schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
-            });
-            */
             const { environmentalProject, id } = data.activePecaContent;
             const configVista = EnviromentalMapper(environmentalProject, id);
             //variable_que_almacenara_el_config_para_la_vista
@@ -65,11 +62,6 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent impleme
     this.doInstantiateBlocks();
   }
 
-  ngOnDestroy() {
-    this.isInstanciated = false;
-    this.loadedData = false;
-    this.infoDataSubscription.unsubscribe();
-  }
   doInstantiateBlocks() {
     this.isInstanciated = false;
     this.isInstantiating = true;
@@ -78,5 +70,11 @@ export class EnvironmentalProjectPageComponent extends PecaPageComponent impleme
       this.isInstanciated = true;
       this.isInstantiating = false;
     });
+  }
+
+  ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
+    this.infoDataSubscription.unsubscribe();
   }
 }

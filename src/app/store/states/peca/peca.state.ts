@@ -922,7 +922,11 @@ export class PecaState {
 
   @Selector()
   static getActivePecaContent(state: any) {
-    return { activePecaContent: state.content, user: state.user };
+    return {
+      activePecaContent: state.content,
+      selectedProject: state.selectedProject,
+      user: state.user,
+    };
   }
 
   @Selector()

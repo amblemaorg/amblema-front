@@ -4,6 +4,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { AMBLEMONEDA_CONFIG as config, amblecoinsConfigMapper } from "./amblemoneda-config";
@@ -20,7 +21,9 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   selector: "peca-amblemoneda",
   templateUrl: "../peca-page.component.html",
 })
-export class AmblemonedaPageComponent extends PecaPageComponent implements AfterViewInit {
+export class AmblemonedaPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -273,5 +276,6 @@ export class AmblemonedaPageComponent extends PecaPageComponent implements After
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

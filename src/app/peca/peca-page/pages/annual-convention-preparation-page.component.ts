@@ -53,7 +53,6 @@ export class AnnualConventionPreparationPageComponent
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      console.log(this.blockInstances, "bloques");
       if (this.loadedData) this.updateMethods();
     });
 
