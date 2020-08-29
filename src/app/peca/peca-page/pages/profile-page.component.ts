@@ -3,7 +3,8 @@ import {
   AfterViewInit,
   ViewChild,
   ViewContainerRef,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { PROFILE_CONFIG_PADRINO as configPadrino } from "./profile-config";
@@ -16,21 +17,20 @@ import { GlobalService } from "src/app/services/global.service";
 import {
   profileDataToSponsorFormMapper,
   profileDataToCordinatorFormMapper,
-  profileDataToSchoolFormMapper
+  profileDataToSchoolFormMapper,
 } from "../mappers/profile-mappers";
 import { isNullOrUndefined } from "util";
 import { ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common"
+import { Location } from "@angular/common";
 import { first } from "rxjs/internal/operators/first";
-import * as $ from 'jquery';
+import * as $ from "jquery";
 declare var $: any;
 
 @Component({
   selector: "peca-profile",
-  templateUrl: "../peca-page.component.html"
+  templateUrl: "../peca-page.component.html",
 })
-export class ProfilePageComponent extends PecaPageComponent
-  implements AfterViewInit {
+export class ProfilePageComponent extends PecaPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -49,27 +49,26 @@ export class ProfilePageComponent extends PecaPageComponent
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
     route: ActivatedRoute,
-    location: Location,
+    location: Location
   ) {
-    super(factoryResolver,location,route);
-    globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
+    super(factoryResolver, location, route);
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       if (this.loadedData) this.updateMethods();
     });
   }
   ngOnInit() {
     this.getUser();
     this.loadForm();
-    
+
     if (this.globals.isBrowser) {
-      const comes_from_steps = (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) || 
-              (
-                this.route.snapshot.children && this.route.snapshot.children.length>0 && 
-                this.route.snapshot.children[this.route.snapshot.children.length-1].params && 
-                this.route.snapshot.children[this.route.snapshot.children.length-1].params.comesFromPreviousSteps
-              );
+      const comes_from_steps =
+        (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) ||
+        (this.route.snapshot.children &&
+          this.route.snapshot.children.length > 0 &&
+          this.route.snapshot.children[this.route.snapshot.children.length - 1].params &&
+          this.route.snapshot.children[this.route.snapshot.children.length - 1].params
+            .comesFromPreviousSteps);
 
       if (comes_from_steps) {
         this.activePecaSubs = this.actPeca$.pipe(first()).subscribe(
@@ -79,21 +78,19 @@ export class ProfilePageComponent extends PecaPageComponent
 
               activePecaId
                 ? $("nb-sidebar").removeClass("is-hidden")
-                : $("nb-sidebar").addClass("is-hidden");   
-            }
-            else {
+                : $("nb-sidebar").addClass("is-hidden");
+            } else {
               $("nb-sidebar").addClass("is-hidden");
             }
           },
-          error => console.error(error)
-        ); 
-        this.isFromSteps = true;        
-      } 
-      else {
+          (error) => console.error(error)
+        );
+        this.isFromSteps = true;
+      } else {
         $("nb-sidebar").removeClass("is-hidden");
         this.isFromSteps = false;
-      } 
-    }    
+      }
+    }
   }
 
   loadForm() {
@@ -109,7 +106,7 @@ export class ProfilePageComponent extends PecaPageComponent
   }
   getUser() {
     this.userDataSubscription = this.userData$.subscribe(
-      data => {
+      (data) => {
         this.userType = data.userType;
         if (!isNullOrUndefined(data)) {
           if (this.userType === "4") {
@@ -129,7 +126,7 @@ export class ProfilePageComponent extends PecaPageComponent
           }
         }
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
 
@@ -151,17 +148,17 @@ export class ProfilePageComponent extends PecaPageComponent
   updateStaticFetchers() {
     if (this.userType === "4") {
       this.setBlockFetcherUrls("userSchoolForm", {
-        put: `users/${this.userFormData.id}?userType=4`
+        put: `users/${this.userFormData.id}?userType=4`,
       });
     }
     if (this.userType === "3") {
       this.setBlockFetcherUrls("userSponsorForm", {
-        put: `users/${this.userFormData.id}?userType=3`
+        put: `users/${this.userFormData.id}?userType=3`,
       });
     }
     if (this.userType === "2") {
       this.setBlockFetcherUrls("userCordinatorForm", {
-        put: `users/${this.userFormData.id}?userType=2`
+        put: `users/${this.userFormData.id}?userType=2`,
       });
     }
   }

@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import {
@@ -26,7 +27,9 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   selector: "peca-teacher-testimony",
   templateUrl: "../peca-page.component.html",
 })
-export class TeacherTestimonyPageComponent extends PecaPageComponent implements AfterViewInit {
+export class TeacherTestimonyPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 

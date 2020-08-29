@@ -4,6 +4,7 @@ import {
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
 import { Router, Event, NavigationEnd } from "@angular/router";
 import { PecaPageComponent } from "../peca-page.component";
@@ -21,8 +22,9 @@ import {
   selector: "peca-initial-diagnostic",
   templateUrl: "../peca-page.component.html",
 })
-export class InitialDiagnosticPageComponent extends PecaPageComponent
-  implements AfterViewInit {
+export class InitialDiagnosticPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
@@ -47,9 +49,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
     super(factoryResolver);
     //this.instantiateComponent(config);
     globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       //  console.log(this.blockInstances);
 
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
@@ -78,7 +78,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         if (data.activePecaContent) {
           this.idPeca = data.activePecaContent.id;
           this.response = data.activePecaContent.school;
-           console.log("secciones ts",this.response.sections);
+          console.log("secciones ts", this.response.sections);
           let auxStudents = [];
           for (let i = 0; i < this.response.sections.length; i++) {
             this.grade = this.response.sections[i].grade;
@@ -91,23 +91,17 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
               student.grade = this.grade;
               student.section = this.section;
             });
-            auxStudents = auxStudents.concat(
-              this.response.sections[i].students
-            );
+            auxStudents = auxStudents.concat(this.response.sections[i].students);
           }
           this.students = auxStudents;
-         // console.log(this.students);
+          // console.log(this.students);
           if (!isNullOrUndefined(data)) {
             this.setReadingTableData(
               this.students,
               this.UrlLapse,
               diagnosticDataToReadingFormMapper
             );
-            this.setMathTableData(
-              this.students,
-              this.UrlLapse,
-              diagnosticDataToMathFormMapper
-            );
+            this.setMathTableData(this.students, this.UrlLapse, diagnosticDataToMathFormMapper);
 
             this.loadedData = true;
             if (this.isInstanciated) this.updateMethods();
@@ -180,7 +174,7 @@ export class InitialDiagnosticPageComponent extends PecaPageComponent
         data: _mapper(readingTableData, number),
         isEditable: true,
       };
-       //console.log("este es el mapper de lectura", this.readingData.data);
+      //console.log("este es el mapper de lectura", this.readingData.data);
     } else {
       this.readingData = readingTableData;
     }
