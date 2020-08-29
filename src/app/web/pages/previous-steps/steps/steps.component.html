@@ -1,116 +1,152 @@
 <div class="main-steps-view">
-    <div class="description-info d-flex flex-column align-items-center mb-5">
-        <h1 class="font-weight-bold mb-4">Pasos para formar parte de AmbLeMa</h1>
-        <div class="below-desc-info">
-            <p class="text-center">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-        </div>
-        <button 
-            *ngIf="(project_steps$ | async).has_peca" 
-            type="button" 
-            class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1"
-            (click)="goToPECA()" 
-        >Ir al PECA</button>
-        <button 
-            *ngIf="enablingModsBtn()" 
-            type="button" 
-            [class]="'btn btn-primary ' + 
-                ( (project_steps$ | async).has_peca 
-                    ? 'margin-with-peca' : 'ml-auto'
-                ) + 
-                ' text-decoration-none 
-                py-2 px-4 mt-1'" 
-            (click)="goToModules()" 
-            [disabled]="curriculumPending && (user_type$ | async) == '2'" 
-            [title]="(curriculumPending && (user_type$ | async) == '2')? 'Aún no has aprobado el paso de curriculo':''"
-        >Módulos</button>
-    </div>    
-
-    <div class="tabs-container" [class.mt-add]="!enablingModsBtn()">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#general" (click)="switchStep(0,$event)">Generales</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#sponsor" (click)="switchStep(1,$event)">Padrino</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#coordinator" (click)="switchStep(2,$event)">Coordinador</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#school" (click)="switchStep(3,$event)">Escuela</a>
-            </li>
-        </ul>
-
-        <div class="steps-progress-bar">
-            <h6>Progreso de los pasos</h6>
-            <div class="progress" [title]="fetchingSteps ? 'Cargando' : (stepsProgress[activeStep]+'%')">
-                <div 
-                    class="progress-bar"
-                    [ngClass]="{
-                        'progress-bar-striped': fetchingSteps,
-                        'progress-bar-animated': fetchingSteps
-                    }" 
-                    [style.width.%]="fetchingSteps ? 100 : stepsProgress[activeStep]"
-                ></div>
-            </div>
-        </div>
-        
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div id="general" class="container tab-pane active"><br>
-                <app-general-steps #generalStep
-                    [mode]="1" 
-                    [steps]="generalSteps" 
-                    [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" 
-                    [project_id]="project_id" 
-                    [user_type]="(user_type$ | async)" 
-                    (callUpdate)="updateSteps($event)" 
-                    [confirmable]="canOrganizationConfirm" 
-                    [enableActions]="enabledTabs"
-                ></app-general-steps>
-            </div>
-            <div id="sponsor" class="container tab-pane fade"><br>
-                <app-general-steps #generalStep
-                    [mode]="3" 
-                    [steps]="sponsorSteps" 
-                    [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" 
-                    [project_id]="project_id" 
-                    [user_type]="(user_type$ | async)" 
-                    (callUpdate)="updateSteps($event)" 
-                    [setStates]="(states$ | async)" 
-                    [setMuns]="(municipalities$ | async)" 
-                    [enableActions]="enabledTabs"
-                    [user_id]="(user_id$ | async)"
-                ></app-general-steps>
-            </div>
-            <div id="coordinator" class="container tab-pane fade"><br>
-                <app-general-steps #generalStep
-                    [mode]="2" 
-                    [steps]="coordinatorSteps" 
-                    [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" 
-                    [project_id]="project_id" 
-                    [user_type]="(user_type$ | async)" 
-                    (callUpdate)="updateSteps($event)" 
-                    [setStates]="(states$ | async)" 
-                    [setMuns]="(municipalities$ | async)" 
-                    [enableActions]="enabledTabs"
-                    [user_id]="(user_id$ | async)"
-                ></app-general-steps>
-            </div>
-            <div id="school" class="container tab-pane fade"><br>
-                <app-general-steps #generalStep
-                    [mode]="4" 
-                    [steps]="schoolSteps" 
-                    [curriculumPending]="curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'" 
-                    [project_id]="project_id" 
-                    [user_type]="(user_type$ | async)" 
-                    (callUpdate)="updateSteps($event)" 
-                    [setStates]="(states$ | async)" 
-                    [setMuns]="(municipalities$ | async)" 
-                    [enableActions]="enabledTabs"
-                    [user_id]="(user_id$ | async)"
-                ></app-general-steps>
-            </div>
-        </div>
+  <div class="description-info d-flex flex-column align-items-center mb-5">
+    <h1 class="font-weight-bold mb-4">Pasos para formar parte de AmbLeMa</h1>
+    <div class="below-desc-info">
+      <p class="text-center">
+        Cada uno de los actores que conforman el Sistema AmbLeMa: Padrino, Coordinador o Escuela,
+        deben seguir una serie de pasos para asumir el compromiso en la aplicación de la Herramienta
+        educativa.
+      </p>
     </div>
+    <button
+      *ngIf="(project_steps$ | async).has_peca"
+      type="button"
+      class="btn btn-primary ml-auto text-decoration-none py-2 px-4 mt-1"
+      (click)="goToPECA()"
+    >
+      Ir al PECA
+    </button>
+    <button
+      *ngIf="enablingModsBtn()"
+      type="button"
+      [class]="
+        'btn btn-primary ' +
+        ((project_steps$ | async).has_peca ? 'margin-with-peca' : 'ml-auto') +
+        ' text-decoration-none 
+                py-2 px-4 mt-1'
+      "
+      (click)="goToModules()"
+      [disabled]="curriculumPending && (user_type$ | async) == '2'"
+      [title]="
+        curriculumPending && (user_type$ | async) == '2'
+          ? 'Aún no has aprobado el paso de curriculo'
+          : ''
+      "
+    >
+      Módulos
+    </button>
+  </div>
+
+  <div class="tabs-container" [class.mt-add]="!enablingModsBtn()">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#general" (click)="switchStep(0, $event)"
+          >Generales</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#sponsor" (click)="switchStep(1, $event)"
+          >Padrino</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#coordinator" (click)="switchStep(2, $event)"
+          >Coordinador</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#school" (click)="switchStep(3, $event)"
+          >Escuela</a
+        >
+      </li>
+    </ul>
+
+    <div class="steps-progress-bar">
+      <h6>Progreso de los pasos</h6>
+      <div class="progress" [title]="fetchingSteps ? 'Cargando' : stepsProgress[activeStep] + '%'">
+        <div
+          class="progress-bar"
+          [ngClass]="{
+            'progress-bar-striped': fetchingSteps,
+            'progress-bar-animated': fetchingSteps
+          }"
+          [style.width.%]="fetchingSteps ? 100 : stepsProgress[activeStep]"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="general" class="container tab-pane active">
+        <br />
+        <app-general-steps
+          #generalStep
+          [mode]="1"
+          [steps]="generalSteps"
+          [curriculumPending]="
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
+          "
+          [project_id]="project_id"
+          [user_type]="user_type$ | async"
+          (callUpdate)="updateSteps($event)"
+          [confirmable]="canOrganizationConfirm"
+          [enableActions]="enabledTabs"
+        ></app-general-steps>
+      </div>
+      <div id="sponsor" class="container tab-pane fade">
+        <br />
+        <app-general-steps
+          #generalStep
+          [mode]="3"
+          [steps]="sponsorSteps"
+          [curriculumPending]="
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
+          "
+          [project_id]="project_id"
+          [user_type]="user_type$ | async"
+          (callUpdate)="updateSteps($event)"
+          [setStates]="states$ | async"
+          [setMuns]="municipalities$ | async"
+          [enableActions]="enabledTabs"
+          [user_id]="user_id$ | async"
+        ></app-general-steps>
+      </div>
+      <div id="coordinator" class="container tab-pane fade">
+        <br />
+        <app-general-steps
+          #generalStep
+          [mode]="2"
+          [steps]="coordinatorSteps"
+          [curriculumPending]="
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
+          "
+          [project_id]="project_id"
+          [user_type]="user_type$ | async"
+          (callUpdate)="updateSteps($event)"
+          [setStates]="states$ | async"
+          [setMuns]="municipalities$ | async"
+          [enableActions]="enabledTabs"
+          [user_id]="user_id$ | async"
+        ></app-general-steps>
+      </div>
+      <div id="school" class="container tab-pane fade">
+        <br />
+        <app-general-steps
+          #generalStep
+          [mode]="4"
+          [steps]="schoolSteps"
+          [curriculumPending]="
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
+          "
+          [project_id]="project_id"
+          [user_type]="user_type$ | async"
+          (callUpdate)="updateSteps($event)"
+          [setStates]="states$ | async"
+          [setMuns]="municipalities$ | async"
+          [enableActions]="enabledTabs"
+          [user_id]="user_id$ | async"
+        ></app-general-steps>
+      </div>
+    </div>
+  </div>
 </div>

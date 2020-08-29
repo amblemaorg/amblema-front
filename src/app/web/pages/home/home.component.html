@@ -146,6 +146,23 @@
         </span>
         <span class="statistic-label">Padrinos</span>
       </div>
+      <div
+        class="statistic statistic-coordinators"
+        *ngIf="homePageData.statistics.totalCoordinators"
+      >
+        <span
+          class="statistic-count"
+          counto
+          [step]="1"
+          [countTo]="homePageData.statistics.totalCoordinators"
+          [countFrom]="0"
+          [duration]="0.5"
+          (countoChange)="this.finalStatistics.totalCoordinators = $event"
+        >
+          {{ this.finalStatistics.totalCoordinators | number: "1.0-0" }}
+        </span>
+        <span class="statistic-label">Coordinadores</span>
+      </div>
     </div>
   </div>
   <charts-switcher
