@@ -16,6 +16,7 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
 import { amblemonedasTableMapper } from "../mappers/amblemoneda-mappers";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
+import { scan } from "rxjs/internal/operators/scan";
 
 @Component({
   selector: "peca-amblemoneda",
@@ -93,6 +94,34 @@ export class AmblemonedaPageComponent
           (prev, curr) =>
             JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].ambleCoins) ===
             JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].ambleCoins)
+        ),
+        scan(
+          (prev, curr) => {
+            let updatedSections = false;
+            let updatedElaborationDate = false;
+            const lapseName = `lapse${this.UrlLapse}`;
+            if (prev.activePecaContent) {
+              const prevSections = prev.activePecaContent[lapseName]["ambleCoins"]["sections"];
+              const currSections = curr.activePecaContent[lapseName]["ambleCoins"]["sections"];
+              const prevElaborationDate =
+                prev.activePecaContent[lapseName]["ambleCoins"]["elaborationDate"];
+              const currElaborationDate =
+                curr.activePecaContent[lapseName]["ambleCoins"]["elaborationDate"];
+              updatedSections = JSON.stringify(prevSections) !== JSON.stringify(currSections);
+              updatedElaborationDate = prevElaborationDate !== currElaborationDate;
+            }
+            return {
+              ...curr,
+              updatedSections,
+              updatedElaborationDate,
+            };
+          },
+          {
+            activePecaContent: null,
+            user: null,
+            updatedSections: false,
+            updatedElaborationDate: false,
+          }
         )
       )
       .subscribe(
@@ -102,37 +131,12 @@ export class AmblemonedaPageComponent
             const config = amblecoinsConfigMapper(
               data.activePecaContent,
               this.UrlLapse,
+              data.updatedElaborationDate,
+              data.updatedSections,
               this.store
             );
             this.instantiateComponent(config);
             this.doInstantiateBlocks();
-            /*
-          this.setAmblemonedasCharla(data);
-          this.setAmblemonedasCharlaData();
-
-          this.setAmblemonedasSlider(data);
-          this.setAmblemonedasSliderData();
-
-          if (this.UrlLapse === "1") {
-            this.setAmblemonedasMapper(
-              data.activePecaContent.lapse1.ambleCoins.sections,
-              amblemonedasTableMapper
-            );
-          } else if (this.UrlLapse === "2") {
-            this.setAmblemonedasMapper(
-              data.activePecaContent.lapse2.ambleCoins.sections,
-              amblemonedasTableMapper
-            );
-          } else {
-            this.setAmblemonedasMapper(
-              data.activePecaContent.lapse3.ambleCoins.sections,
-              amblemonedasTableMapper
-            );
-          }
-
-          this.loadedData = true;
-          if (this.isInstanciated) this.updateMethods();
-          */
           }
         },
         (er) => {
