@@ -28,16 +28,19 @@
       </div>
       <div class="school-data row">
         <div class="item" *ngIf="school.instagram">
-          <fa-icon class="social-icon" [icon]="instagramIcon"></fa-icon>
-          <span class="text">{{ school.instagram }}</span>
+          <a [href]="school.instagram" rel="noopener noreferrer" target="_blank">
+            <fa-icon class="social-icon" [icon]="instagramIcon"></fa-icon>
+          </a>
         </div>
         <div class="item" *ngIf="school.twitter">
-          <fa-icon class="social-icon" [icon]="twitterIcon"></fa-icon>
-          <span class="text">{{ school.twitter }}</span>
+          <a [href]="school.twitter" rel="noopener noreferrer" target="_blank">
+            <fa-icon class="social-icon" [icon]="twitterIcon"></fa-icon>
+          </a>
         </div>
         <div class="item" *ngIf="school.facebook">
-          <fa-icon class="social-icon" [icon]="facebookIcon"></fa-icon>
-          <span class="text">{{ school.facebook }}</span>
+          <a [href]="school.facebook" rel="noopener noreferrer" target="_blank">
+            <fa-icon class="social-icon" [icon]="facebookIcon"></fa-icon>
+          </a>
         </div>
       </div>
     </div>
@@ -51,9 +54,10 @@
       [carouselClasses]="['']"
       *ngIf="school.images && school.images.length"
     >
-      <ng-container *ngFor="let image of school.images; index as i">
+      <ng-container *ngFor="let slide of school.images; index as i">
         <div class="image-wrapper">
-          <img [src]="image" [alt]="school.name + ' imagen ' + i" />
+          <img [src]="slide.image" [alt]="school.name + ' imagen ' + i" />
+          <p class="image-description">{{ slide.description }}</p>
         </div>
       </ng-container>
     </owl-carousel>
@@ -70,10 +74,11 @@
     >
     </charts-switcher>
   </div>
-  <div 
+  <div
     #chartTestimonial
     class="chart-testimonial slide-right-animation animation-init"
-    *ngIf="school.charts.length > 0">
+    *ngIf="school.charts.length > 0"
+  >
     <web-testimonial-card
       [testimonial]="school.charts[activeChartIndex].testimonial"
       *ngIf="school.charts[activeChartIndex].testimonial"
@@ -83,11 +88,13 @@
 </section>
 <section class="math-olympics">
   <div class="heading">
-    <h2>Olimpíadas de matemática</h2>
+    <h2>Olimpíadas Recreativas de Matemática</h2>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem minus laudantium quibusdam.
-      Voluptate quis non quos dolores iure officia, nobis vel necessitatibus labore voluptas nam?
-      Cumque quisquam vel debitis cum.
+      Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para que inscriban a los
+      estudiantes de 1er a 6to grado en las Olimpíadas de Matemáticas, que organiza la Fundación
+      para el Desarrollo de Competencias Matemáticas (FUNDECOM); siguiendo las tres fases:
+      Preliminar, Regional y Nacional. De acuerdo al sistema que ellos propongan, registrando a los
+      estudiantes inscritos y clasificados en cada fase.
     </p>
   </div>
   <div class="result-summary">
@@ -155,10 +162,7 @@
         </div>
       </owl-carousel>
     </div>
-    <div 
-      class="activity-details"
-      *ngIf="school.activities[selectedActivitiesType].length > 0"
-    >
+    <div class="activity-details" *ngIf="school.activities[selectedActivitiesType].length > 0">
       <div class="activity-info">
         <span class="activity-name">
           {{ school.activities[selectedActivitiesType][activeActivityIndex].name }}
@@ -175,13 +179,7 @@
           [carouselClasses]="['']"
           *ngIf="school.activitiesSlider.length"
         >
-          <div
-            class="image-wrapper"
-            *ngFor="
-              let image of school.activitiesSlider;
-              index as i
-            "
-          >
+          <div class="image-wrapper" *ngFor="let image of school.activitiesSlider; index as i">
             <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
           </div>
         </owl-carousel>

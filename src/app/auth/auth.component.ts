@@ -12,7 +12,6 @@ import { NbAuthComponent, NbAuthService } from "@nebular/auth";
           <nb-card-header>
             <nav class="navigation">
               <a href="#" (click)="back()" class="link arrow-back" aria-label="Back">
-                <!-- <nb-icon icon="arrow-back-outline"></nb-icon> -->
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
               </a>
             </nav>

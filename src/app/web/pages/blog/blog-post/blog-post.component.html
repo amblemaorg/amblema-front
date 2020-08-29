@@ -9,7 +9,7 @@
       </div>
       <div class="post">
         <h1 class="post-title">{{ post.title }}</h1>
-        <p class="post-content">{{ post.content }}</p>
+        <p class="post-content" [innerHTML]="post.content"></p>
       </div>
     </div>
     <social-sharing></social-sharing>

@@ -243,7 +243,13 @@ export const AMBLEMONEDA_CONFIG = {
   ],
 };
 
-export function amblecoinsConfigMapper(pecaData, lapseNumber, store) {
+export function amblecoinsConfigMapper(
+  pecaData,
+  lapseNumber,
+  updatedElaborationDate,
+  updatedSections,
+  store
+) {
   const lapseName = `lapse${lapseNumber}`;
   const {
     meetingDate,
@@ -452,10 +458,12 @@ export function amblecoinsConfigMapper(pecaData, lapseNumber, store) {
             },
             {
               title: "Elaboración de alcancía",
+              active: updatedElaborationDate && !updatedSections ? true : false,
               childBlocks: [piggyBankElaboration, piggyBankSliderComponent],
             },
             {
               title: "Entrega de AmbLeMonedas",
+              active: updatedSections ? true : false,
               childBlocks: [sectionsTable, sectionModal],
             },
           ],

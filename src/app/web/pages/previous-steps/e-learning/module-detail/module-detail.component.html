@@ -1,163 +1,264 @@
 <div class="module-detail-container">
-    <div class="go-back-btn">
-        <button type="button" class="btn btn-primary text-decoration-none py-2 px-4" (click)="goToMods()"><fa-icon [icon]="faArrowLeft"></fa-icon> Volver</button>
+  <div class="go-back-btn">
+    <button
+      type="button"
+      class="btn btn-primary text-decoration-none py-2 px-4"
+      (click)="goToMods()"
+    >
+      <fa-icon [icon]="faArrowLeft"></fa-icon> Volver
+    </button>
+  </div>
+  <section class="main-info d-flex flex-wrap">
+    <div class="col-lg-12 px-0 mb-3 module-title">
+      <h1 class="text-uppercase">Módulo {{ moduleNum }}</h1>
+      <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div>
+      <h3 *ngIf="moduleInfo.name">{{ moduleInfo.name }}</h3>
     </div>
-    <section class="main-info d-flex flex-wrap">
-        <div class="col-lg-12 px-0 mb-3 module-title">
-            <h1 class="text-uppercase">Módulo {{moduleNum}}</h1> <div *ngIf="moduleInfo.name" class="bar mx-3 d-inline"></div> <h3 *ngIf="moduleInfo.name">{{moduleInfo.name}}</h3>
-        </div>
-        <section class="col-lg-5 px-0 estimate">
-            <h4 class="mb-4">
-                <!-- Estimación de tiempo: 5 min -->
-                Estimación de tiempo: {{getEstimate(moduleInfo.duration)}}
-            </h4>
-    
-            <h4>Objetivos del módulo</h4>
-            <ul class="pl-4 mb-4">
-                <li *ngFor="let objective of moduleInfo.objectives">{{objective}}</li>
-            </ul>
-        </section>
-        <section class="col-lg-7 px-0 mt-2 mb-4 initial-learning">
-            <h4 class="mb-3">{{moduleInfo.title}}</h4>
-            <p>
-                {{moduleInfo.description}}
-            </p>
-        </section>
+    <section class="col-lg-5 px-0 estimate">
+      <h4 class="mb-4">
+        <!-- Estimación de tiempo: 5 min -->
+        Estimación de tiempo: {{ getEstimate(moduleInfo.duration) }}
+      </h4>
+
+      <h4>Objetivos del módulo</h4>
+      <ul class="pl-4 mb-4">
+        <li *ngFor="let objective of moduleInfo.objectives">{{ objective }}</li>
+      </ul>
     </section>
-    
-    <div class="gallery d-flex flex-wrap mb-4">
-        <div class="carousel col-sm-9 px-0" [class.margin-both-auto]="imgvid && imgvid.length<2">
-            <owl-carousel #owlElement
-                [options]="carouselOps"
-                [items]="imgvid"
-                [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-                <div *ngFor="let img of imgvid; index as i">
-                    <img *ngIf="img.type=='1'" [src]="img.url" [alt]="img.description">  
-                    <a *ngIf="img.type=='2'" class="owl-video" [href]="img.url"></a>
-                    <h6 class="my-4">{{ img.description }}</h6>     
-                </div>
-            </owl-carousel>
-        </div>
-    
-        <div class="images col-sm-3 px-0" [class.d-none]="imgvid && imgvid.length<2">
-            <owl-carousel #imgsElement
-                [options]="carouselOpsImgs"
-                [items]="imgvid"
-                [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-                <div class="image-item mb-3" *ngFor="let img of imgvid; index as i" (click)="goToImg(i)">
-                    <img *ngIf="img.type=='1'" [src]="img.url" [alt]="img.description">
-                    <div class="over-video" *ngIf="img.type=='2'"></div> 
-                    <a *ngIf="img.type=='2'" class="owl-video" [href]="img.url"></a>
-                    <p class="ml-3"><small>{{ img.description }}</small></p>    
-                </div>
-            </owl-carousel>           
-        </div>
-    </div>
-    <div class="image-desc-container d-flex">
-        <h6 [class.margin-both-auto]="imgvid && imgvid.length<2" class="mb-4 image-desc" *ngFor="let img of imgvid; index as i" [class.hidden]="i!=shown">{{ img.description }}</h6>
-    </div>
-    
-    <section class="description">
-        <h4 class="mb-4">{{moduleInfo.secondaryTitle}}</h4>
-        <p>
-            {{moduleInfo.secondaryDescription}}         
-        </p>
+    <section class="col-lg-7 px-0 mt-2 mb-4 initial-learning">
+      <h4 class="mb-3">{{ moduleInfo.title }}</h4>
+      <p>
+        {{ moduleInfo.description }}
+      </p>
     </section>
+  </section>
+
+  <div class="gallery d-flex flex-wrap mb-4">
+    <div class="carousel col-sm-9 px-0" [class.margin-both-auto]="imgvid && imgvid.length < 2">
+      <owl-carousel
+        #owlElement
+        [options]="carouselOps"
+        [items]="imgvid"
+        [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']"
+      >
+        <div *ngFor="let img of imgvid; index as i">
+          <img *ngIf="img.type == '1'" [src]="img.url" [alt]="img.description" />
+          <a *ngIf="img.type == '2'" class="owl-video" [href]="img.url"></a>
+          <h6 class="my-4">{{ img.description }}</h6>
+        </div>
+      </owl-carousel>
+    </div>
+
+    <div class="images col-sm-3 px-0" [class.d-none]="imgvid && imgvid.length < 2">
+      <owl-carousel
+        #imgsElement
+        [options]="carouselOpsImgs"
+        [items]="imgvid"
+        [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']"
+      >
+        <div class="image-item mb-3" *ngFor="let img of imgvid; index as i" (click)="goToImg(i)">
+          <img *ngIf="img.type == '1'" [src]="img.url" [alt]="img.description" />
+          <div class="over-video" *ngIf="img.type == '2'"></div>
+          <a *ngIf="img.type == '2'" class="owl-video" [href]="img.url"></a>
+          <p class="ml-3">
+            <small>{{ img.description }}</small>
+          </p>
+        </div>
+      </owl-carousel>
+    </div>
+  </div>
+  <div class="image-desc-container d-flex">
+    <h6
+      [class.margin-both-auto]="imgvid && imgvid.length < 2"
+      class="mb-4 image-desc"
+      *ngFor="let img of imgvid; index as i"
+      [class.hidden]="i != shown"
+    >
+      {{ img.description }}
+    </h6>
+  </div>
+
+  <section class="description">
+    <h4 class="mb-4">{{ moduleInfo.secondaryTitle }}</h4>
+    <p>
+      {{ moduleInfo.secondaryDescription }}
+    </p>
+  </section>
 </div>
 
-<div class="images-stack">    
-    <owl-carousel #stackElement
-        [options]="stackOps"
-        [items]="img_strip"
-        [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']">
-        <img [src]="img.image" [alt]="img.description" *ngFor="let img of img_strip" (click)="fillImage(img)" data-toggle="modal" data-target="#image-modal">
-    </owl-carousel>
+<div class="images-stack">
+  <owl-carousel
+    #stackElement
+    [options]="stackOps"
+    [items]="img_strip"
+    [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']"
+  >
+    <img
+      [src]="img.image"
+      [alt]="img.description"
+      *ngFor="let img of img_strip"
+      (click)="fillImage(img)"
+      data-toggle="modal"
+      data-target="#image-modal"
+    />
+  </owl-carousel>
 </div>
 
 <section class="quizz mt-5">
-    <div class="top-title d-flex flex-wrap mb-2">
-        <h2 class="mr-3">QUIZZ</h2>
-        <h4>Seleccione la respuesta correcta</h4>
-    </div>
+  <div class="top-title d-flex flex-wrap mb-2">
+    <h2 class="mr-3">QUIZZ</h2>
+    <h4>Seleccione la respuesta correcta</h4>
+  </div>
 
-    <div class="questions">        
-        <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
-            <h3 class="col-sm-12 px-0 mt-2 mb-4"><span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span></h3>           
-            <div class="col-sm-6 mb-4 px-0 option-answer" *ngFor="let option of optionsLetters; index as j">
-                <a class="text-decoration-none d-flex" href="javascript:void(0)" [class.selected]="!forAdminSetFalse?false:(completedModule? question.correctOption===option:selectedQuestions[i]===option)" [class.incorrect]="incorrectOnes[i]===option" (click)="selectAnswer(i,option)">
-                    <div class="col-2 mr-2"><span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span></div>
-                    <div class="col-10 text-left">{{ getOption(j,question) }}</div>
-                </a>                
-            </div>
-        </div>
+  <div class="questions">
+    <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
+      <h3 class="col-sm-12 px-0 mt-2 mb-4">
+        <span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span>
+      </h3>
+      <div
+        class="col-sm-6 mb-4 px-0 option-answer"
+        *ngFor="let option of optionsLetters; index as j"
+      >
+        <a
+          class="text-decoration-none d-flex"
+          href="javascript:void(0)"
+          [class.selected]="
+            !forAdminSetFalse
+              ? false
+              : completedModule
+              ? question.correctOption === option
+              : selectedQuestions[i] === option
+          "
+          [class.incorrect]="incorrectOnes[i] === option"
+          (click)="selectAnswer(i, option)"
+        >
+          <div class="col-2 mr-2">
+            <span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span>
+          </div>
+          <div class="col-10 text-left">{{ getOption(j, question) }}</div>
+        </a>
+      </div>
     </div>
+  </div>
 
-    <br *ngIf="completedModule || !forAdminSetFalse" />
-    <div *ngIf="forAdminSetFalse" class="validate-btn text-center">
-        <button *ngIf="!completedModule" type="button" class="btn btn-outline-primary text-decoration-none mb-4 d-inline" (click)="showModal(modalOpener)" [disabled]="isValidating">
-                <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span>{{ isValidating ? 'Validando..' : ('Validar &times; '+(moduleCoins>1? (moduleCoins+' puntos'):(moduleCoins+' punto') ) ) }}
-        </button>
-        <!-- <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p> -->
-        <p *ngIf="completedModule" class="d-inline green">Ganaste {{moduleCoins > 1 ? (moduleCoins+' puntos.') : (moduleCoins+' punto.')}}</p>
-        <button #modalOpener class="d-none" type="button" data-toggle="modal" data-target="#completed-message"></button>
-        <button #warningOpener class="d-none" type="button" data-toggle="modal" data-target="#warning-message"></button>
-    </div>
-    <br *ngIf="completedModule || !forAdminSetFalse" />
+  <br *ngIf="completedModule || !forAdminSetFalse" />
+  <div *ngIf="forAdminSetFalse" class="validate-btn text-center">
+    <button
+      *ngIf="!completedModule"
+      type="button"
+      class="btn btn-outline-primary text-decoration-none mb-4 d-inline"
+      (click)="showModal(modalOpener)"
+      [disabled]="isValidating"
+    >
+      <span *ngIf="isValidating" class="spinner-grow spinner-grow-sm"></span
+      >{{
+        isValidating
+          ? "Validando.."
+          : "Validar &times; " +
+            (moduleCoins > 1 ? moduleCoins + " puntos" : moduleCoins + " punto")
+      }}
+    </button>
+    <!-- <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p> -->
+    <p *ngIf="completedModule" class="d-inline green">
+      Ganaste {{ moduleCoins > 1 ? moduleCoins + " puntos." : moduleCoins + " punto." }}
+    </p>
+    <button
+      #modalOpener
+      class="d-none"
+      type="button"
+      data-toggle="modal"
+      data-target="#completed-message"
+    ></button>
+    <button
+      #warningOpener
+      class="d-none"
+      type="button"
+      data-toggle="modal"
+      data-target="#warning-message"
+    ></button>
+  </div>
+  <br *ngIf="completedModule || !forAdminSetFalse" />
 </section>
-
 
 <!-- The Modals -->
 <div class="modal fade" id="completed-message">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-        
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button type="button" class="close ml-0 px-0" data-dismiss="modal"><fa-icon [icon]="faArrowLeft"></fa-icon></button>
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body d-flex flex-column justify-content-center">
-                <h2 class="font-weight-bold text-center mt-4 mb-4">MODULO COMPLETADO</h2>
-                <p class="text-center mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close ml-0 px-0" data-dismiss="modal">
+          <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </button>
+      </div>
 
-                <div class="text-center btns-modal" [class.onlyone]="!nextModuleId">
-                    <button *ngIf="nextModuleId" type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" (click)="refreshComp()" data-dismiss="modal">Siguiente módulo</button>
-                    <button type="button" class="btn btn-primary text-decoration-none mt-2 mb-3" [routerLink]="['/previous-steps/modules']" data-dismiss="modal">Volver al listado</button>
-                </div>
-            </div>    
-        
+      <!-- Modal body -->
+      <div class="modal-body d-flex flex-column justify-content-center">
+        <h2 class="font-weight-bold text-center mt-4 mb-4">MODULO COMPLETADO</h2>
+        <p class="text-center mb-4">Gracias por querer formar parte del equipo AmbLeMa.</p>
+        <p class="text-center mb-4">
+          Cada módulo dentro del AmblePENSUM permitirá conocer mejor el perfil y las atribuciones de
+          un Coordinador para lograr la eficaz aplicación de la Herramienta educativa en cada
+          escuela.
+        </p>
+        <p class="text-center mb-4">
+          Es parte de nuestra manera de lograr la calidad en cada proceso
+        </p>
+        <p class="text-center mb-4">HQS: Hagamos que suceda</p>
+        <div class="text-center btns-modal" [class.onlyone]="!nextModuleId">
+          <button
+            *ngIf="nextModuleId"
+            type="button"
+            class="btn btn-primary text-decoration-none mt-2 mb-3"
+            (click)="refreshComp()"
+            data-dismiss="modal"
+          >
+            Siguiente módulo
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary text-decoration-none mt-2 mb-3"
+            [routerLink]="['/previous-steps/modules']"
+            data-dismiss="modal"
+          >
+            Volver al listado
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="modal fade" id="warning-message">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>
-                {{ showFillAll==0 ? '¡Debes responder todas las preguntas del Quizz!': showFillAll==1 ? '¡Tienes respuestas incorrectas!':'¡Ocurrieron problemas al conectar con el servidor!' }}                                        
-                </p>
-            </div>    
-        </div>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          {{
+            showFillAll == 0
+              ? "¡Debes responder todas las preguntas del Quizz!"
+              : showFillAll == 1
+              ? "¡Tienes respuestas incorrectas!"
+              : "¡Ocurrieron problemas al conectar con el servidor!"
+          }}
+        </p>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="modal fade" id="image-modal">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img [src]="current.image" [alt]="current.description">
-                <h5 class="font-weight-bold text-left mt-3">{{current.description}}</h5>
-            </div>    
-        </div>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img [src]="current.image" [alt]="current.description" />
+        <h5 class="font-weight-bold text-left mt-3">{{ current.description }}</h5>
+      </div>
     </div>
+  </div>
 </div>
