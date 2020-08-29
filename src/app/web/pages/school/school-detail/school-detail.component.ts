@@ -18,15 +18,15 @@ import { ApiWebContentService } from "src/app/services/web/api-web-content.servi
 import { WebContentService } from "src/app/services/web/web-content.service";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { DatePipe } from "@angular/common"
+import { DatePipe } from "@angular/common";
 import { Subscription, fromEvent } from "rxjs";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
-import { ChartsSwitcherComponent } from 'src/app/web/shared/charts-switcher/charts-switcher.component';
+import { ChartsSwitcherComponent } from "src/app/web/shared/charts-switcher/charts-switcher.component";
 import {
   faTwitter as twitterIcon,
   faInstagram as instagramIcon,
-  faFacebook as facebookIcon
+  faFacebook as facebookIcon,
 } from "@fortawesome/free-brands-svg-icons";
 
 @Component({
@@ -43,7 +43,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("otherSchoolsCarousel", { static: true }) otherSchoolsCarousel: OwlCarousel;
   @ViewChild("charts", { static: false }) charts: ElementRef;
   @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
-  @ViewChild('chartSwitcher', { static: false }) chartSwitcher: ChartsSwitcherComponent;
+  @ViewChild("chartSwitcher", { static: false }) chartSwitcher: ChartsSwitcherComponent;
   instagramIcon = instagramIcon;
   twitterIcon = twitterIcon;
   facebookIcon = facebookIcon;
@@ -178,13 +178,13 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     },
     activities: {
       [this.ACTIVITIES.WITH_TEACHERS]: [],
-      [this.ACTIVITIES.SPECIALS]: []
+      [this.ACTIVITIES.SPECIALS]: [],
     },
     activitiesSlider: [],
     testimonials: [],
     nextActivities: [],
     otherSchools: [],
-    charts: []
+    charts: [],
   };
 
   SCHOOLS_PATH = "schoolspage";
@@ -192,7 +192,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   activeChartIndex: number = 0;
   isBrowser: boolean;
   slug: string;
-  pipe = new DatePipe('en-US');
+  pipe = new DatePipe("en-US");
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -201,7 +201,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private chartService: ChartService,
     private zone: NgZone,
     private store: Store,
-    private http: HttpClient,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -235,9 +235,8 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.routerSubscription.unsubscribe();
     }
   }
-  
+
   getSchoolDetail() {
-    
     this.schoolService.getWebContent().subscribe((data) => {
       this.school = {
         name: data.name,
@@ -246,7 +245,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         staff: data.nAdministrativeStaff,
         coordinator: data.coordinator,
         enrollment: data.nStudents,
-        images: data.slider.map((slide) => { return slide.image}),
+        images: data.slider,
         mathOlympics: {
           enrolled: data.olympicsSummary.inscribed,
           classified: data.olympicsSummary.classified,
@@ -255,8 +254,8 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           bronzeMedal: data.olympicsSummary.medalsBronze,
         },
         activities: {
-          [this.ACTIVITIES.WITH_TEACHERS] : [],
-          [this.ACTIVITIES.SPECIALS]: data.activities
+          [this.ACTIVITIES.WITH_TEACHERS]: [],
+          [this.ACTIVITIES.SPECIALS]: data.activities,
         },
         activitiesSlider: data.activitiesSlider,
         testimonials: data.teachersTestimonials.testimonials.map((testimonial) => {
@@ -265,15 +264,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
         nextActivities: data.nextActivities.map((activity) => {
           activity.title = activity.name;
-          activity.date = this.pipe.transform(Date.parse(activity.date), 'd/M/y');
+          activity.date = this.pipe.transform(Date.parse(activity.date), "d/M/y");
           return activity;
         }),
         otherSchools: data.nearbySchools,
         facebook: data.facebook,
         twitter: data.twitter,
-        instagram: data.instagram
+        instagram: data.instagram,
       };
-      
+
       this.staticSchoolService.getChartsTemplateJSON().subscribe((charts) => {
         this.school.charts = charts.map((chart) => {
           chart.data = data.diagnostics[chart.id];
@@ -282,7 +281,6 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
           this.school.charts
         );
-        
       });
       this.reinitCarousels();
       this.chartSwitcher && this.chartSwitcher.switchChart(0);
@@ -350,11 +348,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   setActiveActivity(index: number) {
     try {
       this.activeActivityIndex = index;
-      //this.activityImageCarousel.reInit();  
+      //this.activityImageCarousel.reInit();
     } catch (error) {
       console.log(error);
     }
-    
   }
 
   setApiService(slug) {
