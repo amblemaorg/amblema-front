@@ -1,6 +1,6 @@
-@import 'scss/responsive';
-@import 'scss/variables';
-@import 'scss/elements/headings';
+@import "scss/responsive";
+@import "scss/variables";
+@import "scss/elements/headings";
 
 web-schools-map {
   display: block;
@@ -42,11 +42,6 @@ section.school-details {
         flex: 0 0 55%;
         width: 55%;
       }
-
-      //&:last-child {
-      //  flex: 0 0 100%;
-      //  width: 100%;
-      //}
     }
 
     @include breakpoint(medium) {
@@ -57,8 +52,8 @@ section.school-details {
       }
 
       &:nth-child(2) {
-        flex: 0 0 55%;
-        width: 55%;
+        flex: 0 0 40%;
+        width: 40%;
       }
     }
   }
@@ -113,8 +108,25 @@ section.school-details {
         }
         .item {
           margin-right: 1vw;
+
           .social-icon {
-            margin-right: 0.5vw;
+            font-size: 10vw;
+            margin: 0 2vw;
+
+            @include breakpoint(small, landscape) {
+              font-size: 5vw;
+              margin: 0 1vw;
+            }
+
+            @include breakpoint(medium) {
+              font-size: 5vw;
+              margin: 0 1vw;
+            }
+
+            @include breakpoint(large) {
+              font-size: 2.5vw;
+              margin: 0 0.5vw;
+            }
           }
         }
       }
@@ -127,13 +139,35 @@ section.school-details {
   .school-images {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+
+    .image-description {
+      background-color: $blue;
+      color: white;
+      margin: auto;
+      padding: 2% 10%;
+      position: relative;
+      text-align: center;
+      height: 10vw;
+      width: 100%;
+      font-size: 3vw;
+
+      @include breakpoint(small, landscape) {
+        height: 4vw;
+        font-size: 1.1vw;
+      }
+
+      @include breakpoint(medium) {
+        height: 4vw;
+        font-size: 1.1vw;
+      }
+    }
   }
 }
 
-@import 'scss/animations';
+@import "scss/animations";
 .symbols-container {
-  background-image: url('../../../../../assets/images/cover-blue-simbolos.png');
+  background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
   background-repeat: no-repeat;
   background-size: 240vw;
   background-position-y: 102.5%;
@@ -174,24 +208,41 @@ section.school-details {
 ::ng-deep {
   owl-carousel.school-image-carousel {
     .owl-carousel {
+      .owl-stage {
+        .owl-item {
+          .image-wrapper {
+            img {
+              height: 80vw;
+              margin: auto;
+              max-width: 100%;
+              width: auto;
+              @include breakpoint(small, landscape) {
+                height: 25vw;
+              }
+
+              @include breakpoint(medium) {
+                height: 25vw;
+              }
+            }
+          }
+        }
+      }
+
       .owl-nav {
-        background-color: $blue;
         height: 10vw;
         margin: auto;
         position: relative;
-        top: -5vw;
-        width: 90%;
+        top: -10vw;
+        width: 100%;
 
         @include breakpoint(small, landscape) {
           height: 4vw;
-          top: -2vw;
-          width: 80%;
+          top: -4vw;
         }
 
         @include breakpoint(medium) {
           height: 4vw;
-          top: -2vw;
-          width: 80%;
+          top: -4vw;
         }
 
         .owl-next,
@@ -268,7 +319,7 @@ section.charts {
     }
   }
 
-  @import 'scss/animations';
+  @import "scss/animations";
   .chart-testimonial {
     position: relative;
     margin: 5vw 0;
@@ -680,7 +731,7 @@ section.activities {
 }
 
 section.teachers {
-  background-image: url('../../../../../assets/images/background-trees-movil.png');
+  background-image: url("../../../../../assets/images/background-trees-movil.png");
   background-color: $white;
   background-size: cover;
   background-repeat: no-repeat;
@@ -691,12 +742,12 @@ section.teachers {
   z-index: 10;
 
   @include breakpoint(small, landscape) {
-    background-image: url('../../../../../assets/images/background-trees.png');
+    background-image: url("../../../../../assets/images/background-trees.png");
     min-height: 56vw;
   }
 
   @include breakpoint(medium) {
-    background-image: url('../../../../../assets/images/background-trees.png');
+    background-image: url("../../../../../assets/images/background-trees.png");
     min-height: 56vw;
   }
 

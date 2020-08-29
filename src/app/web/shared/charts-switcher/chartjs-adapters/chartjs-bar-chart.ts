@@ -125,8 +125,8 @@ export class ChartJSBarChart extends BarChartComponent {
         },
         ticks: {
           display: this.yaxis.ticks || false,
-          min: 0,
           ...this.calculateNumericAxisRange("y", this.yaxis.edgeSpace),
+          min: 0,
           fontColor: this.yaxis.color || "#FFF",
           padding: 20,
         },
@@ -161,14 +161,16 @@ export class ChartJSBarChart extends BarChartComponent {
       };
     });
     this.barChartOptions.annotation = { annotations };
+    /*
     this.barChartOptions.scales.yAxes = this.barChartOptions.scales.yAxes.map((yaxis) => {
       return {
         ...yaxis,
         ticks: {
-          ...yaxis.ticks,
           ...this.calculateNumericAxisRange("y", this.yaxis.edgeSpace),
+          ...yaxis.ticks,
         },
       };
     });
+    */
   }
 }

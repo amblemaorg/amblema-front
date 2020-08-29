@@ -11,12 +11,12 @@ const charts = [
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
     testimonial: {
-      firstName: "Oscar A.",
-      lastName: "Pietri Pacheco",
+      firstName: "Óscar A.",
+      lastName: "Pietri P.",
       image: "./assets/images/profile-oscar.jpg",
-      function: "Docente de Matemática",
+      function: "Presidente y Co-Fundador",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+        "¿Tienen lectura fluida? Primer paso para facilitar la compresión lectora. Hacemos el diagnóstico del número de palabras leídas por minuto y presentamos el promedio del curso, obteniendo el índice en base a la meta de cada nivel, según estándares internacionales.",
     },
   },
   {
@@ -28,12 +28,12 @@ const charts = [
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
     testimonial: {
-      firstName: "Oscar A.",
-      lastName: "Pietri Pacheco",
-      image: "./assets/images/profile-oscar.jpg",
-      function: "Docente de Matemática",
+      firstName: "Tomás J.",
+      lastName: "Linares B.",
+      image: "./assets/images/profile-tomas.jpg",
+      function: "Vice-Presidente y Co-Fundador",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+        "¿Cuántas multiplicaciones de una cifra responden correctamente en dos minutos? ¿La meta?: 30 en esos 2 minutos. Dominar las operaciones básicas ayudan a tener mayor agilidad y facilidad para afrontar problemas de razonamiento y lógica. Con la práctica diaria y  juegos creativos de sus docentes se puede lograr el objetivo.",
     },
   },
   {
@@ -45,12 +45,12 @@ const charts = [
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
     testimonial: {
-      firstName: "Oscar A.",
-      lastName: "Pietri Pacheco",
+      firstName: "Óscar A.",
+      lastName: "Pietri P.",
       image: "./assets/images/profile-oscar.jpg",
-      function: "Docente de Matemática",
+      function: "Presidente y Co-Fundador",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.",
+        "Es todo un reto lograr resolver correctamente problemas de razonamiento lógico-matemáticas en 30 minutos. ¿Cuántos de esos problemas, adecuados a sus edades, pueden resolver los niños? La meta es llegar al menos a 15. Con el apoyo de sus docentes lo podrán lograr.",
     },
   },
 ];
