@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import {
@@ -23,7 +24,9 @@ import { distinctUntilChanged } from "rxjs/operators";
   selector: "peca-scheduling-planning",
   templateUrl: "../peca-page.component.html",
 })
-export class SchedulingPlanningPageComponent extends PecaPageComponent implements AfterViewInit {
+export class SchedulingPlanningPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -214,6 +217,7 @@ export class SchedulingPlanningPageComponent extends PecaPageComponent implement
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 
   doInstantiateBlocks() {

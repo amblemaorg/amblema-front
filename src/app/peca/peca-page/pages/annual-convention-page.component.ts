@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { ANNUAL_CONVENTION_CONFIG as config } from "./annual-convention-config";
@@ -19,8 +20,9 @@ import { NavigationEnd, Router, Event } from "@angular/router";
   selector: "peca-annual-convention",
   templateUrl: "../peca-page.component.html",
 })
-export class AnnualConventionPageComponent extends PecaPageComponent
-  implements AfterViewInit {
+export class AnnualConventionPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
@@ -40,10 +42,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
   ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
-      //console.log(this.blockInstances, "bloques");
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       if (this.loadedData) this.updateMethods();
     });
     this.instantiateComponent(config);
@@ -53,7 +52,6 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
-        //console.log("el ev", this.UrlLapse);
         this.getInfo();
       }
     });
@@ -68,14 +66,11 @@ export class AnnualConventionPageComponent extends PecaPageComponent
           if (!isNullOrUndefined(data)) {
             this.pecaId = data.activePecaContent.id;
             if (this.UrlLapse === "1") {
-              this.response =
-                data.activePecaContent.lapse1.annualConvention.checklist;
+              this.response = data.activePecaContent.lapse1.annualConvention.checklist;
             } else if (this.UrlLapse === "2") {
-              this.response =
-                data.activePecaContent.lapse2.annualConvention.checklist;
+              this.response = data.activePecaContent.lapse2.annualConvention.checklist;
             } else {
-              this.response =
-                data.activePecaContent.lapse3.annualConvention.checklist;
+              this.response = data.activePecaContent.lapse3.annualConvention.checklist;
             }
             console.log(this.response);
             this.setAnnualConventionData();
@@ -109,7 +104,6 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       post: `pecaprojects/annualconvention/${this.pecaId}`,
     });
   }
-//      post: `pecasetting/annualconvention/${this.UrlLapse}`,
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -117,6 +111,7 @@ export class AnnualConventionPageComponent extends PecaPageComponent
       this.isInstanciated = true;
     });
   }
+
   ngOnDestroy() {
     this.isInstanciated = false;
     this.loadedData = false;
