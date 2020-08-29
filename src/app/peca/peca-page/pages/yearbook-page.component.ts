@@ -55,7 +55,6 @@ export class YearbookPageComponent
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
       if (this.loadedData) this.updateMethods();
     });
-    //this.instantiateComponent(config);
   }
 
   ngOnInit() {

@@ -5,6 +5,7 @@ import {
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import {
@@ -24,7 +25,9 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   selector: "peca-special-activity",
   templateUrl: "../peca-page.component.html",
 })
-export class SpecialActivityPageComponent extends PecaPageComponent implements AfterViewInit {
+export class SpecialActivityPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -106,22 +109,6 @@ export class SpecialActivityPageComponent extends PecaPageComponent implements A
             );
             this.instantiateComponent(config);
             this.doInstantiateBlocks();
-            /*
-                    this.setActividadEspecialStatus(data);
-                    this.setActividadEspecialStatusData();
-
-                    if (this.UrlLapse === "1") {
-                        this.setSpecialActivityMapper(data.activePecaContent.lapse1.specialActivity.approvalHistory[0].detail.itemsActivities, specialActivityTableMapper);
-                    }
-                    else if (this.UrlLapse === "2") {
-                        this.setSpecialActivityMapper(data.activePecaContent.lapse2.specialActivity.approvalHistory[0].detail.itemsActivities, specialActivityTableMapper);
-                    }
-                    else {
-                        this.setSpecialActivityMapper(data.activePecaContent.lapse3.specialActivity.approvalHistory[0].detail.itemsActivities, specialActivityTableMapper);
-                    }
-                    this.loadedData = true;
-                    if (this.isInstanciated) this.updateMethods();
-                    */
           }
         }
       });
@@ -203,5 +190,6 @@ export class SpecialActivityPageComponent extends PecaPageComponent implements A
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

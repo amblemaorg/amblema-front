@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import {
@@ -24,7 +25,9 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
   selector: "peca-initial-workshop",
   templateUrl: "../peca-page.component.html",
 })
-export class InitialWorkshopPageComponent extends PecaPageComponent implements AfterViewInit {
+export class InitialWorkshopPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -130,13 +133,6 @@ export class InitialWorkshopPageComponent extends PecaPageComponent implements A
     }); */
   }
 
-  ngOnDestroy() {
-    this.store.dispatch(new ClearInitialWorkshopRequestData({}));
-    this.isInstanciated = false;
-    this.loadedData = false;
-    this.infoDataSubscription.unsubscribe();
-  }
-
   doInstantiateBlocks() {
     this.isInstanciated = false;
     this.isInstantiating = true;
@@ -145,5 +141,13 @@ export class InitialWorkshopPageComponent extends PecaPageComponent implements A
       this.isInstanciated = true;
       this.isInstantiating = false;
     });
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new ClearInitialWorkshopRequestData({}));
+    this.isInstanciated = false;
+    this.loadedData = false;
+    this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

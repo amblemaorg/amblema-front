@@ -1,151 +1,155 @@
 import {
-    Component,
-    AfterViewInit,
-    Injector,
-    ComponentFactoryResolver,
-    ViewContainerRef,
-    ViewChild,
-} from '@angular/core';
-import { PecaPageComponent } from '../peca-page.component';
-import { MONITORING_STRATEGY_CONFIG as config } from './monitoring-strategy-config';
-import { Observable, Subscription } from 'rxjs';
+  Component,
+  AfterViewInit,
+  Injector,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+  OnDestroy,
+} from "@angular/core";
+import { PecaPageComponent } from "../peca-page.component";
+import { MONITORING_STRATEGY_CONFIG as config } from "./monitoring-strategy-config";
+import { Observable, Subscription } from "rxjs";
 import { Select } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
-import { GlobalService } from 'src/app/services/global.service';
+import { GlobalService } from "src/app/services/global.service";
 
 @Component({
-    selector: 'peca-initial-diagnostic',
-    templateUrl: '../peca-page.component.html',
+  selector: "peca-initial-diagnostic",
+  templateUrl: "../peca-page.component.html",
 })
-export class MonitoringStrategyPageComponent extends PecaPageComponent implements AfterViewInit {
-    @ViewChild('blocksContainer', { read: ViewContainerRef, static: false }) container: ViewContainerRef;
+export class MonitoringStrategyPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
+  container: ViewContainerRef;
 
-    //Selectores
-    @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
+  //Selectores
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
 
-    //subscripciones
-    infoDataSubscription: Subscription;
+  //subscripciones
+  infoDataSubscription: Subscription;
 
-    //slider ambiente
-    sliderSeguimientoAmbiente: any;
-    responseAmbiente: any;
+  //slider ambiente
+  sliderSeguimientoAmbiente: any;
+  responseAmbiente: any;
 
-    //slider Lectura
-    sliderSeguimientoLectura: any;
-    responseLectura: any;
+  //slider Lectura
+  sliderSeguimientoLectura: any;
+  responseLectura: any;
 
-    //slider Matematica
-    sliderSeguimientoMatematica: any;
-    responseMatematica: any;
+  //slider Matematica
+  sliderSeguimientoMatematica: any;
+  responseMatematica: any;
 
+  isInstanciated: boolean;
+  loadedData: boolean;
 
-    isInstanciated: boolean;
-    loadedData: boolean;
+  constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
+    super(factoryResolver);
 
-    constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService, ) {
-        super(factoryResolver);
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      console.log(this.blockInstances, "bloques");
+      if (this.loadedData) this.updateMethods();
+    });
 
-        globals.blockIntancesEmitter.subscribe(data => {
-            data.blocks.forEach((block, name) =>
-                this.blockInstances.set(name, block)
-            );
-            console.log(this.blockInstances, "bloques");
-            if (this.loadedData) this.updateMethods();
-        });
+    this.instantiateComponent(config);
+  }
 
-        this.instantiateComponent(config);
-    }
+  ngOnInit() {
+    this.infoDataSubscription = this.infoData$.subscribe(
+      (data) => {
+        if (data.activePecaContent) {
+          if (!isNullOrUndefined(data)) {
+            console.log(data, "data seguimiento actividades");
+          }
+          this.setAmbienteSlider(data);
+          this.setAmbienteSliderData();
 
-    ngOnInit() {
-        this.infoDataSubscription = this.infoData$.subscribe(
-            data => {
-                if (data.activePecaContent) {
-                    if (!isNullOrUndefined(data)) {
-                        console.log(data, "data seguimiento actividades")
-                    }
-                    this.setAmbienteSlider(data);
-                    this.setAmbienteSliderData();
+          this.setLecturaSlider(data);
+          this.setLecturaSliderData();
 
-                    this.setLecturaSlider(data);
-                    this.setLecturaSliderData();
+          this.setMatematicaSlider(data);
+          this.setMatematicaSliderData();
 
-                    this.setMatematicaSlider(data);
-                    this.setMatematicaSliderData();
-
-                    this.loadedData = true;
-                    if (this.isInstanciated) this.updateMethods();
-                }
-            }, er => { console.log(er) })
-
-    }
-
-    updateMethods() {
-        this.updateDataToBlocks();
-    }
-    updateDataToBlocks() {
-        this.setBlockData("sliderAmbienteData", this.sliderSeguimientoAmbiente);
-        this.setBlockData("sliderLecturaData", this.sliderSeguimientoLectura);
-        this.setBlockData("sliderMatematicaData", this.sliderSeguimientoMatematica);
-    }
-
-    //slider ambiente
-    setAmbienteSlider(data) {
-        this.responseAmbiente = data.activePecaContent.monitoringActivities.environmentActivities;
-        //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-        //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-        console.log(this.responseAmbiente, "slider ambiente")
-    }
-
-    setAmbienteSliderData() {
-        this.sliderSeguimientoAmbiente = {
-            sliderImage: {
-                description: this.responseAmbiente,
-                //image: this.img
-            }
+          this.loadedData = true;
+          if (this.isInstanciated) this.updateMethods();
         }
-    }
+      },
+      (er) => {
+        console.log(er);
+      }
+    );
+  }
 
-    //slider lectura
-    setLecturaSlider(data) {
-        this.responseLectura = data.activePecaContent.monitoringActivities.readingActivities;
-        console.log(this.responseLectura, "slider Lectura")
-    }
+  updateMethods() {
+    this.updateDataToBlocks();
+  }
+  updateDataToBlocks() {
+    this.setBlockData("sliderAmbienteData", this.sliderSeguimientoAmbiente);
+    this.setBlockData("sliderLecturaData", this.sliderSeguimientoLectura);
+    this.setBlockData("sliderMatematicaData", this.sliderSeguimientoMatematica);
+  }
 
-    setLecturaSliderData() {
-        this.sliderSeguimientoLectura = {
-            sliderImage: {
-                description: this.responseLectura,
-                //image: this.img
-            }
-        }
-    }
+  //slider ambiente
+  setAmbienteSlider(data) {
+    this.responseAmbiente = data.activePecaContent.monitoringActivities.environmentActivities;
+    //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
+    console.log(this.responseAmbiente, "slider ambiente");
+  }
 
-    //slider matematica
-    setMatematicaSlider(data) {
-        this.responseMatematica = data.activePecaContent.monitoringActivities.mathActivities;
-        console.log(this.responseMatematica, "slider Matematica")
-    }
+  setAmbienteSliderData() {
+    this.sliderSeguimientoAmbiente = {
+      sliderImage: {
+        description: this.responseAmbiente,
+        //image: this.img
+      },
+    };
+  }
 
-    setMatematicaSliderData() {
-        this.sliderSeguimientoMatematica = {
-            sliderImage: {
-                description: this.responseMatematica,
-                //image: this.img
-            }
-        }
-    }
+  //slider lectura
+  setLecturaSlider(data) {
+    this.responseLectura = data.activePecaContent.monitoringActivities.readingActivities;
+    console.log(this.responseLectura, "slider Lectura");
+  }
 
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.instantiateBlocks(this.container);
-            this.isInstanciated = true;
-        });
-    }
+  setLecturaSliderData() {
+    this.sliderSeguimientoLectura = {
+      sliderImage: {
+        description: this.responseLectura,
+        //image: this.img
+      },
+    };
+  }
 
-    ngOnDestroy() {
-        this.isInstanciated = false;
-        this.loadedData = false;
-        this.infoDataSubscription.unsubscribe();
-    }
+  //slider matematica
+  setMatematicaSlider(data) {
+    this.responseMatematica = data.activePecaContent.monitoringActivities.mathActivities;
+    console.log(this.responseMatematica, "slider Matematica");
+  }
+
+  setMatematicaSliderData() {
+    this.sliderSeguimientoMatematica = {
+      sliderImage: {
+        description: this.responseMatematica,
+        //image: this.img
+      },
+    };
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.instantiateBlocks(this.container);
+      this.isInstanciated = true;
+    });
+  }
+
+  ngOnDestroy() {
+    this.isInstanciated = false;
+    this.loadedData = false;
+    this.infoDataSubscription.unsubscribe();
+  }
 }

@@ -24,7 +24,7 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { AllowAuthenticatedGuard } from "./guards/allow-authenticated.guard";
 import { DenyAuthenticatedGuard } from "./guards/deny-authenticated.guard";
 import { JwtInterceptor } from "./interceptors/auth-jwt-interceptor";
-import { YearBookState } from './store/yearbook/yearbook.action';
+import { YearBookState } from "./store/yearbook/yearbook.action";
 
 @NgModule({
   declarations: [AppComponent],

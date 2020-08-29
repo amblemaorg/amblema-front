@@ -5,7 +5,7 @@ import {
   ViewContainerRef,
   ComponentFactoryResolver,
   OnInit,
-  OnDestroy
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
@@ -17,22 +17,23 @@ import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
 import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
 import { schoolPicturesSliderDataToSchoolPicturesTableMapper } from "../mappers/school-prictures-slider-mappers";
 import { isNullOrUndefined } from "util";
-import { UserState } from '../../../store/states/e-learning/user.state';
-import { gradesAndSectionsDataToSectionsFormMapper } from '../mappers/teachers-in-sections-form-mappers';
-import { sectionsAndStudentsDataToSectionsFormMapper } from '../mappers/sections-and-students-form-mappers';
+import { UserState } from "../../../store/states/e-learning/user.state";
+import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
+import { sectionsAndStudentsDataToSectionsFormMapper } from "../mappers/sections-and-students-form-mappers";
 
 @Component({
   selector: "peca-school-data",
-  templateUrl: "../peca-page.component.html"
+  templateUrl: "../peca-page.component.html",
 })
-export class SchoolDataPageComponent extends PecaPageComponent
+export class SchoolDataPageComponent
+  extends PecaPageComponent
   implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
-  @Select(PecaState.getPecaSchoolData) schoolData$: Observable<any>;
+  @Select(PecaState.getActivePecaContent) schoolData$: Observable<any>;
   @Select(UserState.user_id) userId$: Observable<string>;
-  
+
   schoolDataSubscription: Subscription;
   userIdSubscription: Subscription;
 
@@ -56,29 +57,27 @@ export class SchoolDataPageComponent extends PecaPageComponent
   isInstanciated: boolean;
   loadedData: boolean;
 
-  constructor(
-    factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService
-  ) {
+  constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
     super(factoryResolver);
 
-    globals.blockIntancesEmitter.subscribe(data => {
-      data.blocks.forEach((block, name) =>
-        this.blockInstances.set(name, block)
-      );
-      //console.log(this.blockInstances);
+    globals.blockIntancesEmitter.subscribe((data) => {
+      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
 
       // if an action from a modal gets click then this view components' data don't get updated
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
 
-    globals.blockIntancesTableRefresherEmitter.subscribe(data => {
+    globals.blockIntancesTableRefresherEmitter.subscribe((data) => {
       if (data.tableName === "estudiantesTable") {
         this.currentStudentsGroup = data.id_string;
 
-        this.setStudentsFormData(this.studentsDataTemp, false, sectionsAndStudentsDataToSectionsFormMapper);
+        this.setStudentsFormData(
+          this.studentsDataTemp,
+          false,
+          sectionsAndStudentsDataToSectionsFormMapper
+        );
         this.setBlockData("estudiantesTable", this.studentsTableData);
-      }      
+      }
     });
 
     this.instantiateComponent(config);
@@ -86,52 +85,56 @@ export class SchoolDataPageComponent extends PecaPageComponent
 
   ngOnInit() {
     this.schoolDataSubscription = this.schoolData$.subscribe(
-      data => {
-        if (!isNullOrUndefined(data)) {
-          console.log(data,"mostrando data de escuela");
+      (peca) => {
+        if (!isNullOrUndefined(peca)) {
+          console.log(peca, "mostrando data de escuela");
+          const data = {
+            school: {
+              ...peca.activePecaContent.school,
+              pecaId: peca.activePecaContent.id,
+            },
+          };
 
-          if (data.school.isInApproval)
-            this.setCancelRequest(data.school.approvalHistory);
+          if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
           else this.unsetCancelRequest();
 
           this.setSchoolStatus(data.school); // sets current school status number
 
           this.setSchoolFormStatusData();
           this.setSchoolFormData(data.school, schoolDataToSchoolFormMapper);
-          
-          this.setTeachersTableData(
-            data.school.teachers,
-            teachersDataToTeachersTableMapper
-          );
+
+          this.setTeachersTableData(data.school.teachers, teachersDataToTeachersTableMapper);
 
           this.setSchoolPicturesTableData(
             data.school.isInApproval
               ? data.school.approvalHistory.length > 0
-                ? data.school.approvalHistory[
-                    data.school.approvalHistory.length - 1
-                  ].detail.slider
+                ? data.school.approvalHistory[data.school.approvalHistory.length - 1].detail.slider
                 : []
               : data.school.slider,
             schoolPicturesSliderDataToSchoolPicturesTableMapper
-          );    
-          
+          );
+
           this.setGradesAndSectionsFormData(data.school, gradesAndSectionsDataToSectionsFormMapper);
 
-          this.setStudentsFormData(data.school.sections, true, sectionsAndStudentsDataToSectionsFormMapper);
+          this.setStudentsFormData(
+            data.school.sections,
+            true,
+            sectionsAndStudentsDataToSectionsFormMapper
+          );
 
           this.userIdSubscription = this.userId$.subscribe(
-            user_id => {
+            (user_id) => {
               this.currentUserId = user_id;
               this.loadedData = true;
 
               if (this.isInstanciated) this.updateMethods();
             },
-            error => console.error(error)
+            (error) => console.error(error)
           );
         }
         // this.updateDataToBlocks();
       },
-      error => console.error(error)
+      (error) => console.error(error)
     );
   }
 
@@ -148,14 +151,14 @@ export class SchoolDataPageComponent extends PecaPageComponent
       this.setBlockData("schoolForm", this.schoolFormData);
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
       // Teachers data
-      this.setBlockData("teachersTable", this.teachersTableData); 
-      // Grades and Sections data      
+      this.setBlockData("teachersTable", this.teachersTableData);
+      // Grades and Sections data
       this.setBlockData("gradosYSeccionesPostForm", this.gradesAndSectionsFormData);
       this.setBlockData("gradosYSeccionesTable", this.gradesAndSectionsTableData);
       //Students data
       this.setBlockData("estudiantesPostForm", this.studentsFormData);
       this.setBlockData("estudiantesTable", this.studentsTableData);
-    }    
+    }
   }
 
   setCancelRequest(approvalHistory: any[]) {
@@ -171,8 +174,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.schoolDataStatus = school.isInApproval
       ? 1
       : school.approvalHistory.length > 0
-      ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-          "2" ||
+      ? school.approvalHistory[school.approvalHistory.length - 1].status === "2" ||
         school.approvalHistory[school.approvalHistory.length - 1].status === "3"
         ? +school.approvalHistory[school.approvalHistory.length - 1].status
         : 0
@@ -184,24 +186,22 @@ export class SchoolDataPageComponent extends PecaPageComponent
     // send and cancel school update request
     this.setBlockFetcherUrls("schoolFormButton", {
       put: `pecaprojects/school/${this.schoolFormData.pecaId}?userId=${this.currentUserId}`,
-      cancel: this.requestIdToCancel
-        ? `requestscontentapproval/${this.requestIdToCancel}`
-        : null
+      cancel: this.requestIdToCancel ? `requestscontentapproval/${this.requestIdToCancel}` : null,
     });
-    
+
     // create school teacher
     this.setBlockFetcherUrls("teacherForm", {
-      post: `schools/teachers/${this.schoolFormData.id}`
+      post: `schools/teachers/${this.schoolFormData.id}`,
     });
 
     // create school section
-    this.setBlockFetcherUrls('gradosYSeccionesPostForm', {
+    this.setBlockFetcherUrls("gradosYSeccionesPostForm", {
       post: `pecaprojects/sections/${this.schoolFormData.pecaId}`,
-    });        
+    });
 
     // create school student
-    this.setBlockFetcherUrls('estudiantesPostForm', {
-        post: `pecaprojects/students/${this.schoolFormData.pecaId}`,
+    this.setBlockFetcherUrls("estudiantesPostForm", {
+      post: `pecaprojects/students/${this.schoolFormData.pecaId}`,
     });
   }
 
@@ -210,8 +210,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "teacherModalForm",
       {
-        put: teacherId =>
-          `schools/teachers/${this.schoolFormData.id}/${teacherId}`
+        put: (teacherId) => `schools/teachers/${this.schoolFormData.id}/${teacherId}`,
       },
       "settings.data.id"
     );
@@ -219,8 +218,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "teacherDeleteModal",
       {
-        delete: teacherId =>
-          `schools/teachers/${this.schoolFormData.id}/${teacherId}`
+        delete: (teacherId) => `schools/teachers/${this.schoolFormData.id}/${teacherId}`,
       },
       "settings.dataFromRow.data.newData.id"
     );
@@ -230,8 +228,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "gradesAndSectionsModalForm",
       {
-        put: sectionId =>
-          `pecaprojects/sections/${this.schoolFormData.pecaId}/${sectionId}`
+        put: (sectionId) => `pecaprojects/sections/${this.schoolFormData.pecaId}/${sectionId}`,
       },
       "settings.data.id"
     );
@@ -239,8 +236,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     this.createAndSetBlockFetcherUrls(
       "gradesAndSectionsDeleteModal",
       {
-        delete: sectionId =>
-          `pecaprojects/sections/${this.schoolFormData.pecaId}/${sectionId}`
+        delete: (sectionId) => `pecaprojects/sections/${this.schoolFormData.pecaId}/${sectionId}`,
       },
       "settings.dataFromRow.data.newData.id"
     );
@@ -251,7 +247,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
       "estudiantesModalForm",
       {
         put: (sectionId, studentId) =>
-          `pecaprojects/students/${this.schoolFormData.pecaId}/${sectionId}/${studentId}`
+          `pecaprojects/students/${this.schoolFormData.pecaId}/${sectionId}/${studentId}`,
       },
       "settings.data.section",
       "settings.data.id"
@@ -261,7 +257,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
       "estudiantesDeleteModal",
       {
         delete: (sectionId, studentId) =>
-          `pecaprojects/students/${this.schoolFormData.pecaId}/${sectionId}/${studentId}`
+          `pecaprojects/students/${this.schoolFormData.pecaId}/${sectionId}/${studentId}`,
       },
       "settings.dataFromRow.data.newData.section",
       "settings.dataFromRow.data.newData.id"
@@ -279,9 +275,9 @@ export class SchoolDataPageComponent extends PecaPageComponent
   setSchoolFormStatusData() {
     this.schoolFormStatusData = {
       status: {
-        text: 'Estatus',
-        subText: this.schoolDataStatus
-      }
+        text: "Estatus",
+        subText: this.schoolDataStatus,
+      },
     };
   }
 
@@ -289,7 +285,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     if (_mapper) {
       this.teachersTableData = {
         data: _mapper(teachersData),
-        isEditable: true
+        isEditable: true,
       };
     } else {
       this.teachersTableData = teachersData;
@@ -300,7 +296,7 @@ export class SchoolDataPageComponent extends PecaPageComponent
     if (_mapper) {
       this.sliderPicturesData = {
         data: _mapper(sliderData),
-        isEditable: this.requestIdToCancel ? false : true
+        isEditable: this.requestIdToCancel ? false : true,
       };
     } else {
       this.sliderPicturesData = sliderData;
@@ -314,8 +310,8 @@ export class SchoolDataPageComponent extends PecaPageComponent
         setContent: true,
         contentToSet: ["docente"],
         data: {
-          docente: mapper.teachers,          
-        }
+          docente: mapper.teachers,
+        },
       };
       this.gradesAndSectionsTableData = {
         data: mapper.sections,
@@ -334,31 +330,31 @@ export class SchoolDataPageComponent extends PecaPageComponent
       if (both) {
         this.studentsFormData = {
           setContent: true,
-          contentToSet: [ "section", "grades" ],
-          data: {            
+          contentToSet: ["section", "grades"],
+          data: {
             section: mapper.sections,
             grades: Object.keys(mapper.grades).map((grade) => {
-                  return mapper.grades[grade]
-              }),
-          }
+              return mapper.grades[grade];
+            }),
+          },
         };
       }
-      
-      const section_name_index = this.currentStudentsGroup 
+
+      const section_name_index = this.currentStudentsGroup
         ? mapper.sections.findIndex((s) => {
-            return s.id === this.currentStudentsGroup
-          }) 
+            return s.id === this.currentStudentsGroup;
+          })
         : -1;
 
       this.studentsTableData = {
-        data: this.currentStudentsGroup 
-          ? mapper.allStudents[this.currentStudentsGroup] 
-          : [],
+        data: this.currentStudentsGroup ? mapper.allStudents[this.currentStudentsGroup] : [],
         hasTitle: {
-          tableTitle: this.currentStudentsGroup 
+          tableTitle: this.currentStudentsGroup
             ? section_name_index >= 0
-                ? `Estudiantes de ${mapper.grades[mapper.sections[section_name_index].grade].name}, sección ${mapper.sections[section_name_index].name}` 
-                : ""
+              ? `Estudiantes de ${
+                  mapper.grades[mapper.sections[section_name_index].grade].name
+                }, sección ${mapper.sections[section_name_index].name}`
+              : ""
             : "",
         },
         isEditable: true,

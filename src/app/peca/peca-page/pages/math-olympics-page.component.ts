@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
+  OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import { MATH_OLYMPICS_CONFIG as config, mathOlympicsConfigMapper } from "./math-olympics-config";
@@ -23,13 +24,14 @@ import { scan } from "rxjs/internal/operators/scan";
   selector: "peca-maths-olympics",
   templateUrl: "../peca-page.component.html",
 })
-export class MathOlympicsPageComponent extends PecaPageComponent implements AfterViewInit {
+export class MathOlympicsPageComponent
+  extends PecaPageComponent
+  implements AfterViewInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
   //Selectores
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
-  //@Select(PecaState.getPecaSchoolData) schoolData$: Observable<any>;
   //subscripciones
   infoDataSubscription: Subscription;
   routerSubscription: Subscription;
@@ -258,5 +260,6 @@ export class MathOlympicsPageComponent extends PecaPageComponent implements Afte
     this.isInstanciated = false;
     this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }
