@@ -105,6 +105,7 @@ export class AppRoutingModule {
           // Whether enters to peca or phas to be called
           const user = {
             id: userId,
+            userType,
             activeSchoolYear: {
               id: schoolYearId,
             },
