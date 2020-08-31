@@ -1,3 +1,4 @@
+import { SetSelectedProject } from './../../../store/actions/peca/peca.actions';
 import {
   Component,
   AfterViewInit,
@@ -91,6 +92,7 @@ export class SchoolDataPageComponent
           const data = {
             school: {
               ...peca.activePecaContent.school,
+              id: peca.selectedProject.school.id ? peca.selectedProject.school.id : "",
               pecaId: peca.activePecaContent.id,
             },
           };
