@@ -67,7 +67,10 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
           link: string;
         }[];
       }[];
-      button: any;
+      button: {
+        name: string;
+        hidden?: boolean;
+      };
       line: boolean;
       subtitle: string;
     }[];
@@ -134,10 +137,17 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     this.settings.fetcherUrls = {
       post,
     };
-    console.log("aad", post);
   }
 
   setData(data: any) {
+    if (data["button"]) {
+      if (data["button"]["name"]) {
+        this.settings.infoContainer[0].button.name = data["button"]["name"];
+      }
+      if (data["button"]["hidden"]) {
+        this.settings.infoContainer[0].button.hidden = data["button"]["hidden"];
+      }
+    }
     if (data["isGenericActivity"]) {
       this.userCanEdit = data["userCanEdit"];
       this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
@@ -172,7 +182,6 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
         this.flag = true;
       }
     }
-    console.log("ppppp", this.settings);
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {

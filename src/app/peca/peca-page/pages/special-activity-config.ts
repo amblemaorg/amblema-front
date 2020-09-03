@@ -1,3 +1,4 @@
+import { specialActivityPermissionsI } from './../blocks/peca-permissology';
 import { formSpecialActivityTableModal } from "../blocks/form-block/all-forms";
 import {
   UpdateSpecialActivity,
@@ -15,119 +16,6 @@ const controlProps = {
   },
 };
 
-const textsAndButtons = {
-  component: "textsbuttons",
-  settings: {
-    action: [
-      {
-        type: 3,
-        name: "Enviar Solicitud",
-      },
-    ],
-    receivesFromTableOrForm: "table",
-    buttonCode: "dataSpecialActivityTable",
-  },
-};
-
-const dateAndStatus = {
-  component: "textsbuttons",
-  name: "statusYDate",
-  settings: {
-    dateOrtext: {
-      text: "Fecha de la actividad especial:",
-      fields: [
-        {
-          label: "Input date",
-          placeholder: "Fecha de la actividad",
-          fullwidth: false,
-          ...controlProps.dateAndRequired,
-        },
-      ],
-    },
-    status: {
-      text: "Estatus",
-      subText: 1,
-    },
-    action: [
-      {
-        type: 6,
-        name: "Agregar Nuevo",
-      },
-    ],
-    modalCode: "dataSpecialActivityTable",
-  },
-};
-const specialActivityTable = {
-  component: "table",
-  name: "tableActividadEspecial",
-  settings: {
-    columns: {
-      item: {
-        title: "Item",
-      },
-      description: {
-        title: "Descripción",
-      },
-      cantidad: {
-        title: "Cantidad",
-      },
-      price: {
-        title: "Precio unitario",
-      },
-      impuesto: {
-        title: "Impuesto",
-        valuePrepareFunction: (row: any) => {
-          if (row) return row.toString() + "%";
-          else return "";
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = cell.toString() + "%";
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") return true;
-          else return false;
-        },
-      },
-      subtotal: {
-        title: "Subtotal",
-      },
-    },
-    makesNoRequest: true,
-    modalCode: "dataSpecialActivityTable",
-    buttonCode: "dataSpecialActivityTable",
-    tableCode: "dataSpecialActivityTable",
-    dataSpecialActivityTable: [
-      /*
-      {
-        id: '1sdfsdfsdfsd',
-        item: 1,
-        description: 'cosa',
-        cantidad: 34,
-        price: 444,
-        impuesto: 20,
-        subtotal: 500,
-      },
-      {
-        id: '2sdfsdfsdfsd',
-        item: 1,
-        description: 'cosa',
-        cantidad: 34,
-        price: 444,
-        impuesto: 20,
-        subtotal: 500,
-      },
-      */
-    ],
-    classes: {
-      hideView: false,
-      hideEdit: false,
-      hideDelete: false,
-    },
-    total: 1000,
-  },
-};
-
-//* MODAL ACTIVIDAD ESPECIAL ----------------------------------
 const formSpecialActivityTable = {
   component: "form",
   name: "modalActividadEspecial",
@@ -140,9 +28,9 @@ const formSpecialActivityTable = {
     modalCode: "dataSpecialActivityTable",
     isFromCustomTableActions: true,
     makesNoRequest: true,
-    //fetcherMethod: "put",
   },
 };
+
 const textsAndButtonsSpecialActivityTable = {
   component: "textsbuttons",
   name: "specialDeleteModal",
@@ -168,43 +56,31 @@ const textsAndButtonsSpecialActivityTable = {
     makesNoRequest: true,
   },
 };
+
 const modalSpecialActivityTable = {
   component: "modal",
   settings: {
     modalCode: "dataSpecialActivityTable",
     items: [
       {
-        childBlocks: [{ ...formSpecialActivityTable }, { ...textsAndButtonsSpecialActivityTable }],
+        childBlocks: [
+          formSpecialActivityTable,
+          textsAndButtonsSpecialActivityTable
+        ],
       },
     ],
   },
 };
-//* ------------------------------------------
 
-export const SPECIAL_ACTIVITY_CONFIG = {
-  header: {
-    title: "Actividad especial",
-  },
-  blocks: [
-    {
-      component: "profiles",
-      settings: {
-        items: [
-          {
-            childBlocks: [
-              { ...dateAndStatus },
-              { ...specialActivityTable },
-              { ...textsAndButtons },
-              { ...modalSpecialActivityTable },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId, userId, store) {
+export function specialActivityConfigMapper(
+  specialActivity,
+  lapseNumber,
+  pecaId,
+  userId,
+  permissions: specialActivityPermissionsI,
+  store
+) {
+  const { special_activity_edit, special_activity_delete } = permissions
   const { approvalHistory, isInApproval, activityDate, itemsActivities } = specialActivity;
   let currentDateFormatted = activityDate ? activityDate.split("T")[0] : null;
   let currentItems = itemsActivities;
@@ -338,6 +214,7 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
     settings: {
       action: [
         {
+          hidden: isInApproval ? !special_activity_delete : !special_activity_edit,
           type: isInApproval ? 9 : 0,
           name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
         },
@@ -382,10 +259,10 @@ export function specialActivityConfigMapper(specialActivity, lapseNumber, pecaId
           items: [
             {
               childBlocks: [
-                { ...dateAndStatus },
-                { ...specialActivityTable },
-                { ...sendSpecialActivityRequest },
-                { ...modalSpecialActivityTable },
+                dateAndStatus,
+                specialActivityTable,
+                sendSpecialActivityRequest,
+                modalSpecialActivityTable,
               ],
             },
           ],

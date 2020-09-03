@@ -9,10 +9,9 @@ import { FetchPecaContent } from "../store/actions/peca/peca.actions";
 import { PecaState } from "../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { first } from "rxjs/internal/operators/first";
-import { take } from "rxjs/internal/operators/take";
 import cloneDeep from "lodash/cloneDeep";
 import { ActivatedRoute, Router, Event, NavigationEnd } from "@angular/router";
-import { DOCUMENT, Location } from "@angular/common";
+import { DOCUMENT } from "@angular/common";
 import {
   genericActivityPermissionsI,
   genericActivityPermissions,
@@ -23,7 +22,35 @@ import {
   environmentalProjectPermissionsI,
   environmentalProjectPermissions,
   monitoringActivityPermissionsI,
-  monitoringActivityPermissions
+  monitoringActivityPermissions,
+  sliderActivitiesPermissions,
+  sliderActivitiesPermissionsI,
+  olympicsPermissionsI,
+  olympicsPermissions,
+  amblecoinsPermissions,
+  annualPreparationPermissions,
+  annualConventionPermissions,
+  lapsePlanningPermissions,
+  initialWorkshopPermissions,
+  specialActivityPermissions,
+  schoolPermissions,
+  teacherPermissions,
+  sectionPermissions,
+  studentPermissions,
+  diagnosticsPermissions,
+  schedulePermissions,
+  schoolPermissionsI,
+  teacherPermissionsI,
+  sectionPermissionsI,
+  studentPermissionsI,
+  diagnosticsPermissionsI,
+  amblecoinsPermissionsI,
+  annualPreparationPermissionsI,
+  annualConventionPermissionsI,
+  lapsePlanningPermissionsI,
+  initialWorkshopPermissionsI,
+  specialActivityPermissionsI,
+  schedulePermissionsI
 } from './peca-page/blocks/peca-permissology';
 
 @Component({
@@ -43,11 +70,25 @@ export class PecaComponent implements OnInit, OnDestroy {
   @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
   @Select(PecaState.getUserPermissions) permissions$: Observable<any>;
 
-  menu_permissions: genericActivityPermissionsI &
-                    teacherTestimonialPermissionsI &
-                    yearbookPermissionsI &
+  menu_permissions: schoolPermissionsI &
+                    teacherPermissionsI &
+                    sectionPermissionsI &
+                    studentPermissionsI &
+                    diagnosticsPermissionsI &
+                    amblecoinsPermissionsI &
+                    olympicsPermissionsI &
+                    annualPreparationPermissionsI &
+                    annualConventionPermissionsI &
+                    lapsePlanningPermissionsI &
+                    initialWorkshopPermissionsI &
+                    specialActivityPermissionsI &
+                    genericActivityPermissionsI &
+                    monitoringActivityPermissionsI &
                     environmentalProjectPermissionsI &
-                    monitoringActivityPermissionsI;
+                    schedulePermissionsI &
+                    teacherTestimonialPermissionsI &
+                    sliderActivitiesPermissionsI &
+                    yearbookPermissionsI;
   private subscription: Subscription = new Subscription();
 
   showWelcome: boolean = false;
@@ -64,7 +105,6 @@ export class PecaComponent implements OnInit, OnDestroy {
     private sidebarService: NbSidebarService,
     private route: ActivatedRoute,
     private menuService: NbMenuService,
-    private location: Location,
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
   ) {
@@ -74,7 +114,7 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.iconLibraries.setDefaultPack("amblemaicons");
 
     this.subscription.add(
-      router.events.subscribe((event: Event) => {
+      this.router.events.subscribe((event: Event) => {
           if (event instanceof NavigationEnd) {
               setTimeout(() => {
                 const path_initial = event.url.replace("/peca","").substring(1);
@@ -98,10 +138,13 @@ export class PecaComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     let activePecaId = null;
-    this.activePecaSubscription = this.activePeca$.pipe(first()).subscribe(
-      ({ activePeca }) => {
+    //this.activePecaSubscription = this.activePeca$.pipe(first());
+    const { activePeca } = await this.activePeca$.pipe(first()).toPromise();
+
+    //.subscribe(
+    //  ({ activePeca }) => {
         if (activePeca) {
           activePecaId = activePeca.id;
 
@@ -113,21 +156,24 @@ export class PecaComponent implements OnInit, OnDestroy {
             );
 
           if (activePecaId)
-            this.store.dispatch([new FetchPecaContent(activePecaId)])
+            await this.store.dispatch([new FetchPecaContent(activePecaId)]).toPromise();
           else {
             console.error("No pudo obtenerse el PecaId activo");
             if (!comes_from_steps)
               this.noPecaModalLauncherBtn.nativeElement.click();
           }
         }
-      },
-      error => console.error(error)
-    );
+    //  },
+    //  error => console.error(error)
+    //);
 
-    this.activePecaContentSubscription = this.activePecaContent$
-      .pipe(take(2))
-      .subscribe(
-        ({ activePecaContent }) => {
+    //this.activePecaContentSubscription = this.activePecaContent$
+    const { activePecaContent } = await this.activePecaContent$
+      //.pipe(take(2))
+      .pipe(first())
+      .toPromise();
+      //.subscribe(
+      //  ({ activePecaContent }) => {
           try {
             if (activePecaContent) {
               this.managePermissions();
@@ -135,10 +181,11 @@ export class PecaComponent implements OnInit, OnDestroy {
             }
           } catch (error) {
             console.error('Menú no pudo crearse');
+            console.error(error);
           }
-        },
-        error => console.error(error)
-      );
+      //  },
+      //  error => console.error(error)
+      //);
 
     this.userSubscription = this.userInfo$.subscribe(res => {
       this.imageUser=res.image;
@@ -204,11 +251,25 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.subscription.add(
         this.permissions$.subscribe(permissions => {
             const permissions_ = [
+                ...schoolPermissions.actions,
+                ...teacherPermissions.actions,
+                ...sectionPermissions.actions,
+                ...studentPermissions.actions,
+                ...diagnosticsPermissions.actions,
+                ...amblecoinsPermissions.actions,
+                ...olympicsPermissions.actions,
+                ...annualPreparationPermissions.actions,
+                ...annualConventionPermissions.actions,
+                ...lapsePlanningPermissions.actions,
+                ...initialWorkshopPermissions.actions,
+                ...specialActivityPermissions.actions,
                 ...genericActivityPermissions.actions,
-                ...teacherTestimonialPermissions.actions,
-                ...yearbookPermissions.actions,
+                ...monitoringActivityPermissions.actions,
                 ...environmentalProjectPermissions.actions,
-                ...monitoringActivityPermissions.actions
+                ...schedulePermissions.actions,
+                ...teacherTestimonialPermissions.actions,
+                ...sliderActivitiesPermissions.actions,
+                ...yearbookPermissions.actions
               ]
               .reduce(
                   (permssionsObj,viewPermission) => {
@@ -216,18 +277,32 @@ export class PecaComponent implements OnInit, OnDestroy {
                       return permssionsObj
                   },
               {});
-
+            console.log('permisions', permissions_)
             this.setPermissions(permissions_);
         })
     );
   }
   setPermissions(
     permissions: (
+      schoolPermissionsI &
+      teacherPermissionsI &
+      sectionPermissionsI &
+      studentPermissionsI &
+      diagnosticsPermissionsI &
+      amblecoinsPermissionsI &
+      olympicsPermissionsI &
+      annualPreparationPermissionsI &
+      annualConventionPermissionsI &
+      lapsePlanningPermissionsI &
+      initialWorkshopPermissionsI &
+      specialActivityPermissionsI &
       genericActivityPermissionsI &
-      teacherTestimonialPermissionsI &
-      yearbookPermissionsI &
+      monitoringActivityPermissionsI &
       environmentalProjectPermissionsI &
-      monitoringActivityPermissionsI
+      schedulePermissionsI &
+      teacherTestimonialPermissionsI &
+      sliderActivitiesPermissionsI &
+      yearbookPermissionsI
     ) | any
   ) {
       this.menu_permissions = permissions;
@@ -308,8 +383,8 @@ export class PecaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.activePecaSubscription.unsubscribe();
-    this.activePecaContentSubscription.unsubscribe();
+    //this.activePecaSubscription.unsubscribe();
+    //this.activePecaContentSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
     this.subscription.unsubscribe();
   }

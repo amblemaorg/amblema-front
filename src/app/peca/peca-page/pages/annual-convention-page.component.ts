@@ -1,3 +1,4 @@
+import { annualConventionPermissions } from './../blocks/peca-permissology';
 import {
   Component,
   AfterViewInit,
@@ -65,6 +66,11 @@ export class AnnualConventionPageComponent
         if (data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
             this.pecaId = data.activePecaContent.id;
+            const lapseName = `lapse${this.UrlLapse}`;
+            let { permissions } = data.user;
+            permissions = this.managePermissions(permissions);
+            const checklist = data.activePecaContent[lapseName].annualConvention.checklist;
+            /*
             if (this.UrlLapse === "1") {
               this.response = data.activePecaContent.lapse1.annualConvention.checklist;
             } else if (this.UrlLapse === "2") {
@@ -72,8 +78,8 @@ export class AnnualConventionPageComponent
             } else {
               this.response = data.activePecaContent.lapse3.annualConvention.checklist;
             }
-            console.log(this.response);
-            this.setAnnualConventionData();
+            */
+            this.setAnnualConventionData(checklist, permissions);
             this.loadedData = true;
             if (this.isInstanciated) this.updateMethods();
           }
@@ -84,9 +90,23 @@ export class AnnualConventionPageComponent
     );
   }
 
-  setAnnualConventionData() {
+  managePermissions(permissionsArray) {
+    return annualConventionPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
+      },
+      {}
+    );
+  }
+
+  setAnnualConventionData(checklist, permissions) {
+    const { annual_convention_peca_edit } = permissions
     this.AnnualConventionInfo = {
-      checkList: this.response,
+      checkList: checklist,
+      button: {
+        hidden: !annual_convention_peca_edit,
+      }
     };
   }
 

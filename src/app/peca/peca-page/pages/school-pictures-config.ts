@@ -1,5 +1,3 @@
-import { ApprovalHistory } from "./../../../models/peca/generic-activity.model";
-import { tablaImagenesActividadModal } from "../blocks/form-block/all-forms";
 import { Store } from "@ngxs/store";
 import {
   AddImageToSchoolActivitiesRequestData,
@@ -8,193 +6,14 @@ import {
   UpdateSchoolActivitiesRequest,
   ClearSchoolActivitiesRequestData,
 } from "src/app/store/actions/peca/peca.actions";
-import {
-  requiredAndNormalText,
-  normalText,
-  requiredAndOnlyLettersAndNumbers,
-} from "src/app/web/shared/forms/custom-validators";
-import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 
-const controlProps = {
-  normalTextAndRequired: {
-    type: "text",
-    validations: requiredAndNormalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE },
-  },
-  normalText: {
-    type: "text",
-    validations: normalText,
-    messages: { pattern: MESSAGES.TEXT_MESSAGE },
-  },
-  onlyLettersNumbersAndRequired: {
-    type: "text",
-    validations: requiredAndOnlyLettersAndNumbers,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_NUMBERS_MESSAGE },
-  },
-  dateAndRequired: {
-    type: "date",
-    validations: { required: true },
-  },
-};
-
-const selectEstatusActivity = {
-  component: "textsbuttons",
-  settings: {
-    dateOrtext: {},
-    status: {
-      text: "Estatus",
-      subText: 1,
-    },
-    btnGeneral: {
-      addToTable: true,
-      name: "Adjuntar foto",
-    },
-    modalCode: "dataTablaImagenesActividad",
-  },
-};
-const botonAprobacionActivity = {
-  component: "textsbuttons",
-  settings: {
-    action: [
-      {
-        type: 3,
-        name: "Enviar solicitud",
-      },
-    ],
-    receivesFromTableOrForm: "table",
-    buttonCode: "dataTablaImagenesActividad",
-  },
-};
-
-const tablaImagenesActivity = {
-  component: "table",
-  settings: {
-    columns: {
-      image: {
-        title: "Imagen",
-      },
-    },
-    isFromImgContainer: true,
-    modalCode: "dataTablaImagenesActividad",
-    buttonCode: "dataTablaImagenesActividad",
-    tableCode: "dataTablaImagenesActividad",
-    dataTablaImagenesActividad: [
-      {
-        id: "1efwef",
-        image: "imagen",
-        source: null,
-        imageSelected: null,
-      },
-      {
-        id: "2efwef",
-        image: "imagen",
-        source: null,
-        imageSelected: null,
-      },
-    ],
-    makesNoRequest: true,
-    classes: {
-      hideView: false,
-      hideEdit: false,
-      hideDelete: false,
-    },
-  },
-};
-
-//* MODAL FOTOS DE LA Activiadad ----------------------------------
-const formTablaImagenesActivity = {
-  component: "form",
-  viewMode: "both",
-  settings: {
-    formsContent: {
-      imageGroup: {
-        type: "image",
-        fields: {
-          /*imageDescription: {
-            label: 'Descripción',
-            placeholder: 'Descripción',
-            fullwidth: false,
-            ...controlProps.normalTextAndRequired,
-          }
-          */
-        },
-      },
-    },
-    buttons: ["guardar"],
-    formType: "agregarImagenActividad",
-    tableCode: "dataTablaImagenesActividad",
-    modalCode: "dataTablaImagenesActividad",
-    isFromCustomTableActions: true,
-    makesNoRequest: true,
-  },
-};
-
-const textsAndButtonsTablaImagenesActivity = {
-  component: "textsbuttons",
-  settings: {
-    subtitles: [
-      {
-        text: "¿Desea eliminar este ítem?",
-      },
-    ],
-    action: [
-      {
-        type: 1,
-        name: "Si",
-      },
-      {
-        type: 2,
-        name: "No",
-      },
-    ],
-    modalCode: "dataTablaImagenesActividad",
-    isFromCustomTableActions: true,
-    isDeleting: true,
-    makesNoRequest: true,
-  },
-};
-const modalTablaImagenesActivity = {
-  component: "modal",
-  settings: {
-    modalCode: "dataTablaImagenesActividad",
-    isFromImgContainer: true,
-    items: [
-      {
-        childBlocks: [
-          { ...formTablaImagenesActivity },
-          { ...textsAndButtonsTablaImagenesActivity },
-        ],
-      },
-    ],
-  },
-};
-//* ------------------------------------------
-
-export const SCHOOL_PICTURES_CONFIG = {
-  header: {
-    title: "Fotos de las actividades",
-  },
-  blocks: [
-    {
-      component: "profiles",
-      settings: {
-        items: [
-          {
-            childBlocks: [
-              { ...selectEstatusActivity },
-              { ...tablaImagenesActivity },
-              { ...botonAprobacionActivity },
-              { ...modalTablaImagenesActivity },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: Store) {
+export function schoolActivitiesPicturesConfigMapper(
+  activitiesPictures,
+  permissions,
+  store: Store
+) {
   const { isInApproval, approvalHistory, slider, status } = activitiesPictures;
+  const { activities_slider_edit, activities_slider_delete } = permissions;
   let currentSlider = slider;
   let currentStatus = currentSlider.length > 0 ? 2 : 1;
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
@@ -226,18 +45,19 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
 
   const activityPictureForm = {
     component: "form",
-    //viewMode: "both",
     settings: {
       formsContent: {
         imageGroup: {
           type: "image",
           fields: {
-            /* imageDescription: {
+            /*
+            imageDescription: {
               label: "Descripción",
               placeholder: "Descripción",
               fullwidth: false,
               ...controlProps.normalTextAndRequired,
-            }, */
+            },
+            */
           },
         },
       },
@@ -248,12 +68,35 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
         };
         store.dispatch(new AddImageToSchoolActivitiesRequestData(data));
       },
-      //buttons: ["guardar"],
-      //formType: "agregarImagenActividad",
       tableCode: "dataTablaImagenesActividad",
       modalCode: "dataTablaImagenesActividad",
       //isFromCustomTableActions: true,
       //makesNoRequest: true,
+    },
+  };
+
+  const activityPictureDeleteModal = {
+    component: "textsbuttons",
+    settings: {
+      subtitles: [
+        {
+          text: "¿Desea eliminar esta imágen?",
+        },
+      ],
+      action: [
+        {
+          type: 1,
+          name: "Si",
+        },
+        {
+          type: 2,
+          name: "No",
+        },
+      ],
+      modalCode: "dataTablaImagenesActividad",
+      isFromCustomTableActions: true,
+      isDeleting: true,
+      makesNoRequest: true,
     },
   };
 
@@ -264,7 +107,7 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
       isFromImgContainer: true,
       items: [
         {
-          childBlocks: [{ ...activityPictureForm }, { ...textsAndButtonsTablaImagenesActivity }],
+          childBlocks: [activityPictureForm, activityPictureDeleteModal],
         },
       ],
     },
@@ -291,7 +134,9 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
         return { image };
       }),
       onDelete: (row) => {
-        const imageSource = row.data.newData.source;
+        const imageSource = row.data.newData.image
+          ? row.data.newData.image
+          : row.data.newData.source;
         store.dispatch(new RemoveImageFromSchoolActivitiesRequestData({ imageSource }));
       },
       makesNoRequest: true,
@@ -308,6 +153,7 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
     settings: {
       action: [
         {
+          hidden: isInApproval ? !activities_slider_delete : !activities_slider_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar solicitud",
         },
       ],
@@ -333,10 +179,10 @@ export function schoolActivitiesPicturesConfigMapper(activitiesPictures, store: 
           items: [
             {
               childBlocks: [
-                { ...activityPicturesStatus },
-                { ...activitiesPicturesTable },
-                { ...sendActivitiesPicturesRequest },
-                { ...activityPictureModal },
+                activityPicturesStatus,
+                activitiesPicturesTable,
+                sendActivitiesPicturesRequest,
+                activityPictureModal,
               ],
             },
           ],
