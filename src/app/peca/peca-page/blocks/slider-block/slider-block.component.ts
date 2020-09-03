@@ -73,23 +73,15 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   prueba:any;
   flags= false;
   setData(data: any) {
-    this.prueba= data.sliderImage.description;
-    this.flags=true;
+    //this.prueba= data.sliderImage.description;
+    this.flags = true;
     if (data["sliderImage"]) {
-      for (let i = 0; i < data.sliderImage.description.length; i++) {
-        console.log("posicion i", data.sliderImage.description[i]);
-
-        this.settings.sliderImage[i].description = data.sliderImage.description[i].description;
-
-        this.settings.sliderImage[i].image = data.sliderImage.description[i].image;
+      for (let i = 0; i < data.sliderImage.length; i++) {
+        this.settings.sliderImage.push(data.sliderImage[i]);
+        //this.settings.sliderImage[i].description = data.sliderImage[i].description;
+        //this.settings.sliderImage[i].image = data.sliderImage[i].image;
       }
-
-      //this.settings.sliderImage.description = data.sliderImage.description;
-      //this.settings.sliderImage.image = data.sliderImage.image;
     }
-    console.log(this.settings.sliderImage, "imagenes")
-    //console.log("checkkk",data);
-    console.log("toda la data", data.sliderImage.description);
   }
 
   focusDatePicker(e) {
