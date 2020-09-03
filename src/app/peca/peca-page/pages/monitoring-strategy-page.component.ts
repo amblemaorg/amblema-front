@@ -96,17 +96,12 @@ export class MonitoringStrategyPageComponent
   //slider ambiente
   setAmbienteSlider(data) {
     this.responseAmbiente = data.activePecaContent.monitoringActivities.environmentActivities;
-    //this.descripcion = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
-    //this.img = data.activePecaContent.lapse1.ambleCoins.piggyBankSlider;
     console.log(this.responseAmbiente, "slider ambiente");
   }
 
   setAmbienteSliderData() {
     this.sliderSeguimientoAmbiente = {
-      sliderImage: {
-        description: this.responseAmbiente,
-        //image: this.img
-      },
+      sliderImage: this.responseAmbiente
     };
   }
 
@@ -118,10 +113,7 @@ export class MonitoringStrategyPageComponent
 
   setLecturaSliderData() {
     this.sliderSeguimientoLectura = {
-      sliderImage: {
-        description: this.responseLectura,
-        //image: this.img
-      },
+      sliderImage: this.responseLectura
     };
   }
 
@@ -133,10 +125,7 @@ export class MonitoringStrategyPageComponent
 
   setMatematicaSliderData() {
     this.sliderSeguimientoMatematica = {
-      sliderImage: {
-        description: this.responseMatematica,
-        //image: this.img
-      },
+      sliderImage: this.responseMatematica
     };
   }
 
