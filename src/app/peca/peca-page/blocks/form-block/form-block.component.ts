@@ -307,9 +307,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       if (this.isDirty()) this.btnUpdater(this.componentForm.value);
     }
 
-    if (data["hiddenButton"]) {
-      this.settings.hiddenButton = data["hiddenButton"];
-    }
+    this.settings.hiddenButton = data["hiddenButton"];
   }
 
   setFetcherUrls({ post, put, patch }) {
