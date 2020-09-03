@@ -219,6 +219,7 @@ const formReadingDiagnosticTable = {
     fetcherMethod: 'post',
   }
 };
+
 const textsAndButtonsReadingDiagnosticTable = {
   component: "textsbuttons",
   name: 'readingDeleteModal',
@@ -345,7 +346,7 @@ const mathDiagnosticTable = {
             return true;
           else return false;
         }
-  
+
       },
       resultLog: {
         title: "Resultado de lógica matemática"
@@ -483,4 +484,4 @@ const modalMathDiagnosticTable = {
       }
     }
   ]
-}; 
+};

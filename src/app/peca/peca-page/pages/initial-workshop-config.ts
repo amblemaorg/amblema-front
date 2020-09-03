@@ -268,7 +268,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
   ],
 };
 
-export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store: Store) {
+export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, permissions, store: Store) {
   const {
     isInApproval,
     approvalHistory,
@@ -277,6 +277,10 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
     workshopPlace,
     workshopDate,
   } = initialWorkshop;
+  const {
+    initial_workshop_edit,
+    initial_workshop_delete
+  } = permissions;
   let currentImages = images;
   let currentDescription = description;
   let currentStatus = description && currentImages.length > 0 ? 2 : 1;
@@ -317,6 +321,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
         date: workshopDate,
       },
       buttons: ["guardar"],
+      hiddenButton: !initial_workshop_edit,
       formType: "preparingWorkshopForm",
       fetcherMethod: "post",
       onSubmit: (values) => {
@@ -431,6 +436,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
     settings: {
       action: [
         {
+          hidden: isInApproval ? !initial_workshop_delete : !initial_workshop_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar solicitud",
         },
       ],
@@ -458,9 +464,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, store:
             {
               title: "Preparación del taller",
               childBlocks: [
-                {
-                  ...preparingWorkshopForm,
-                },
+                preparingWorkshopForm,
               ],
             },
             {

@@ -79,6 +79,7 @@ export class TextsButtonsSetBlockComponent
        * 4 solicitar aprobacion, 5 ver estadisticas, 6 agregar,
        * (Para Actividad Generica) 7-8 Enviar/Guardar, 9 cancelar solicitud AG
        */
+      hidden?: boolean;
       type: number;
       name: string; // text in the button
     }[];
@@ -343,6 +344,7 @@ export class TextsButtonsSetBlockComponent
         }
       }
     } else {
+      if (data["action"]) this.settings.action = data.action;
       if (data["contentTeacherInfo"]) this.settings.selectStatus.lista = data.contentTeacherInfo;
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;

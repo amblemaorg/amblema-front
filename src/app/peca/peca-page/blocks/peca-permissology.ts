@@ -12,18 +12,34 @@ export const genericActivityPermissions = {
 
 export interface sliderActivitiesPermissionsI {
     activities_slider_view: boolean;
-    // activities_slider_create: boolean;
+    activities_slider_create: boolean;
     // activities_slider_edit: boolean;
-    // activities_slider_delete: boolean;
+    activities_slider_delete: boolean;
 }
 export const sliderActivitiesPermissions = {
     name: "ActivitiesSlider",
     actions: [
         "activities_slider_view",
-        // "activities_slider_create",
+        "activities_slider_create",
         // "activities_slider_edit",
-        // "activities_slider_delete"
+        "activities_slider_delete"
     ]
+}
+
+export interface diagnosticsPermissionsI {
+  diagnostics_peca_view: boolean;
+  diagnostics_peca_create: boolean;
+  diagnostics_peca_edit: boolean;
+  diagnostics_peca_delete: boolean;
+}
+export const diagnosticsPermissions = {
+  name: "Diagnostics",
+  actions: [
+      "diagnostics_peca_view",
+      "diagnostics_peca_create",
+      "diagnostics_peca_edit",
+      "diagnostics_peca_delete"
+  ]
 }
 
 export interface amblecoinsPermissionsI {
@@ -52,49 +68,61 @@ export const annualConventionPermissions = {
 
 export interface annualPreparationPermissionsI {
     annual_preparation_peca_view: boolean;
+    annual_preparation_peca_create: boolean;
     annual_preparation_peca_edit: boolean;
+    annual_preparation_peca_delete: boolean;
 }
 export const annualPreparationPermissions = {
     name: "AnnualPreparationPeca",
     actions: [
         "annual_preparation_peca_view",
-        "annual_preparation_peca_edit"
+        "annual_preparation_peca_create",
+        "annual_preparation_peca_edit",
+        "annual_preparation_peca_delete"
     ]
 }
 
 export interface initialWorkshopPermissionsI {
-    initial_workshop_peca_view: boolean;
-    initial_workshop_peca_edit: boolean;
+    initial_workshop_view: boolean;
+    initial_workshop_edit: boolean;
+    initial_workshop_delete: boolean;
 }
 export const initialWorkshopPermissions = {
     name: "InitialWorkshopPeca",
     actions: [
-        "initial_workshop_peca_view",
-        "initial_workshop_peca_edit"
+        "initial_workshop_view",
+        "initial_workshop_edit",
+        "initial_workshop_delete"
     ]
 }
 
 export interface lapsePlanningPermissionsI {
     lapse_planning_peca_view: boolean;
     lapse_planning_peca_edit: boolean;
+    lapse_planning_peca_delete: boolean;
 }
 export const lapsePlanningPermissions = {
     name: "LapsePlanningPeca",
     actions: [
         "lapse_planning_peca_view",
-        "lapse_planning_peca_edit"
+        "lapse_planning_peca_edit",
+        "lapse_planning_peca_delete"
     ]
 }
 
 export interface olympicsPermissionsI {
     olympics_peca_view: boolean;
+    olympics_peca_create: boolean;
     olympics_peca_edit: boolean;
+    olympics_peca_delete: boolean;
 }
 export const olympicsPermissions = {
     name: "OlympicsPeca",
     actions: [
         "olympics_peca_view",
-        "olympics_peca_edit"
+        "olympics_peca_create",
+        "olympics_peca_edit",
+        "olympics_peca_delete"
     ]
 }
 
@@ -174,27 +202,43 @@ export const studentPermissions = {
     ]
 }
 
+export interface schedulePermissionsI {
+  schedule_peca_view: boolean;
+}
+export const schedulePermissions = {
+  name: "Schedule",
+  actions: [
+      "schedule_peca_view",
+  ]
+}
+
 export interface yearbookPermissionsI {
     yearbook_view: boolean;
     yearbook_edit: boolean;
+    yearbook_delete: boolean;
 }
 export const yearbookPermissions = {
     name: "Yearbook",
     actions: [
         "yearbook_view",
-        "yearbook_edit"
+        "yearbook_edit",
+        "yearbook_delete"
     ]
 }
 
 export interface specialActivityPermissionsI {
     special_activity_view: boolean;
+    special_activity_create: boolean;
     special_activity_edit: boolean;
+    special_activity_delete: boolean;
 }
 export const specialActivityPermissions = {
     name: "SpecialActivity",
     actions: [
         "special_activity_view",
-        "special_activity_edit"
+        "special_activity_create",
+        "special_activity_edit",
+        "special_activity_delete"
     ]
 }
 
@@ -247,25 +291,23 @@ export const sponsorUserPermissions = {
 }
 
 export interface environmentalProjectPermissionsI {
-    environmental_project_view: boolean;
-    environmental_project_edit: boolean;
+    environmental_project_peca_view: boolean;
+    environmental_project_peca_edit: boolean;
 }
 export const environmentalProjectPermissions = {
-    name: "EnvironmentalProject",
+    name: "EnvironmentalProjectPeca",
     actions: [
-        "environmental_project_view",
-        "environmental_project_edit"
+        "environmental_project_peca_view",
+        "environmental_project_peca_edit"
     ]
 }
 
 export interface monitoringActivityPermissionsI {
-    monitoring_activity_view: boolean;
-    monitoring_activity_edit: boolean;
+  monitoring_activity_peca_view: boolean;
 }
 export const monitoringActivityPermissions = {
-    name: "MonitoringActivity",
+    name: "MonitoringActivityPeca",
     actions: [
-        "monitoring_activity_view",
-        "monitoring_activity_edit"
+        "monitoring_activity_peca_view",
     ]
 }

@@ -1,8 +1,9 @@
 import * as moment from "moment";
 export default moment;
 
-export function EnviromentalMapper(EnviromentalData, pecaId) {
+export function EnviromentalMapper(EnviromentalData, pecaId, permissions) {
   const viewName = "environmental-project-tab";
+  const { environmental_project_peca_edit } = permissions;
 
   const ENVIRONMENTAL_PROJECT_CONFIG_TEST = {
     header: {
@@ -55,7 +56,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
     ],
   };
 
-  //----------------------------------------------------------LAPSO 1 ----------------------------------------------------------------------------------------
+  // LAPSO 1
   ENVIRONMENTAL_PROJECT_CONFIG_TEST.blocks[0].settings.items[0].childBlocks[0].settings.items.push(
     {
       childBlocks: [
@@ -212,6 +213,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
                                 },
                               ],
                               button: {
+                                hidden: !environmental_project_peca_edit,
                                 name: "Guardar",
                               },
                               line: true,
@@ -230,7 +232,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
     }
   );
 
-  //----------------------------------------------------------LAPSO 2 ----------------------------------------------------------------------------------------
+  // LAPSO 2
   ENVIRONMENTAL_PROJECT_CONFIG_TEST.blocks[0].settings.items[1].childBlocks[0].settings.items.push(
     {
       childBlocks: [
@@ -386,6 +388,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
                                 },
                               ],
                               button: {
+                                hidden: !environmental_project_peca_edit,
                                 name: "Guardar",
                               },
                               line: true,
@@ -404,7 +407,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
     }
   );
 
-  //----------------------------------------------------------LAPSO 3 ----------------------------------------------------------------------------------------
+  // LAPSO 3
   ENVIRONMENTAL_PROJECT_CONFIG_TEST.blocks[0].settings.items[2].childBlocks[0].settings.items.push(
     {
       childBlocks: [
@@ -560,6 +563,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId) {
                                 },
                               ],
                               button: {
+                                hidden: !environmental_project_peca_edit,
                                 name: "Guardar",
                               },
                               line: true,

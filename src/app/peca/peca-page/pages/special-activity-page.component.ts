@@ -1,25 +1,19 @@
 import {
   Component,
-  AfterViewInit,
-  Injector,
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import {
-  SPECIAL_ACTIVITY_CONFIG as config,
-  specialActivityConfigMapper,
-} from "./special-activity-config";
-
+import { specialActivityConfigMapper } from "./special-activity-config";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
-import { GlobalService } from "src/app/services/global.service";
 import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
+import { specialActivityPermissions } from '../blocks/peca-permissology';
 
 @Component({
   selector: "peca-special-activity",
@@ -27,7 +21,7 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
 })
 export class SpecialActivityPageComponent
   extends PecaPageComponent
-  implements AfterViewInit, OnDestroy {
+  implements OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -37,35 +31,16 @@ export class SpecialActivityPageComponent
   //subscripciones
   infoDataSubscription: Subscription;
   routerSubscription: Subscription;
-
   UrlLapse = "";
   peca_id: string;
-
-  //tabla
-  datosTablaActividad: any;
-
-  //variable
-  status: any;
-  datosStatus: any;
-  date: any;
-
-  isInstanciated: boolean;
-  loadedData: boolean;
   isInstantiating: boolean;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private router: Router,
-    globals: GlobalService,
     private store: Store
   ) {
     super(factoryResolver);
-
-    globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      //if (this.loadedData) this.updateMethods();
-    });
-
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
@@ -99,12 +74,15 @@ export class SpecialActivityPageComponent
             if (!isNullOrUndefined(data)) {
               console.log(data, "actividad especial");
             }
+            let {permissions} = data.user;
+            permissions = this.managePermissions(permissions);
 
             const config = specialActivityConfigMapper(
               specialActivity,
               this.UrlLapse,
               this.peca_id,
               userId,
+              permissions,
               this.store
             );
             this.instantiateComponent(config);
@@ -114,81 +92,25 @@ export class SpecialActivityPageComponent
       });
   }
 
-  setActividadEspecialStatus(data) {
-    if (this.UrlLapse === "1") {
-      this.status = data.activePecaContent.lapse1.specialActivity.approvalHistory[0].status;
-      this.date = data.activePecaContent.lapse1.specialActivity.approvalHistory[0].createdAt;
-    } else if (this.UrlLapse === "2") {
-      this.status = data.activePecaContent.lapse2.specialActivity.approvalHistory[0].status;
-    } else {
-      this.status = data.activePecaContent.lapse3.specialActivity.approvalHistory[0].status;
-    }
-  }
-
-  setActividadEspecialStatusData() {
-    this.datosStatus = {
-      status: {
-        subText: this.status,
+  managePermissions(permissionsArray) {
+    return specialActivityPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
       },
-    };
-  }
-
-  updateMethods() {
-    this.updateDataToBlocks();
-    this.updateDynamicFetchers();
-  }
-
-  updateDataToBlocks() {
-    this.setBlockData("tableActividadEspecial", this.datosTablaActividad);
-    this.setBlockData("statusYDate", this.datosStatus);
-  }
-
-  updateDynamicFetchers() {
-    this.createAndSetBlockFetcherUrls("modalActividadEspecial", {
-      put: () =>
-        //pecaprojects/lapses/specialsactivities/<string:pecaId>/<string:lapse>
-        `pecaprojects/lapses/specialsactivities/${this.peca_id}/${this.UrlLapse}`,
-    });
-
-    this.createAndSetBlockFetcherUrls("specialDeleteModal", {
-      delete: () => `pecaprojects/lapses/specialsactivities/${this.peca_id}/${this.UrlLapse}`,
-    });
-  }
-
-  setSpecialActivityMapper(dataSpecialActivity, _mapper?: Function) {
-    if (_mapper) {
-      console.log(dataSpecialActivity, "ACTIVIDAD ESPECIAL");
-      this.datosTablaActividad = {
-        data: _mapper(dataSpecialActivity),
-        isEditable: true,
-      };
-      console.log("este es el mapper de ACTIVIDAD ESPECIAL", this.datosTablaActividad);
-    } else {
-      this.datosTablaActividad = dataSpecialActivity;
-      console.log("este NO es el mapper de ACTIVIDAD ESPECIAL", this.datosTablaActividad);
-    }
-  }
-
-  ngAfterViewInit(): void {
-    //setTimeout(() => {
-    //  this.instantiateBlocks(this.container);
-    //  this.isInstanciated = true;
-    //});
+      {}
+    );
   }
 
   doInstantiateBlocks() {
     this.isInstantiating = true;
-    this.isInstanciated = false;
     setTimeout(() => {
       this.instantiateBlocks(this.container, true);
       this.isInstantiating = false;
-      this.isInstanciated = true;
     });
   }
 
   ngOnDestroy() {
-    this.isInstanciated = false;
-    this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }

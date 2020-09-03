@@ -165,13 +165,14 @@
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
             (click)="addToTable(true)"
             [disabled]="!userCanEdit"
+            *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
           >
             {{ settings.btnGeneral.name }}
           </button>
         </ng-container>
         <ng-template #regularGeneral>
           <button
-            *ngIf="settings.btnGeneral"
+            *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
             title="general"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
             (click)="addToTable()"
@@ -315,7 +316,7 @@
       <ng-container *ngFor="let action of settings.action">
         <ng-container *ngIf="action.type == 6 || action.type == 5; else notModal">
           <button
-            *ngIf="action.name"
+            *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
             (click)="addToTable(true, action.type == 6 ? false : true)"
           >
@@ -324,7 +325,7 @@
         </ng-container>
         <ng-template #notModal>
           <button
-            *ngIf="action.name"
+            *ngIf="action.name && !action.hidden"
             [class.d-none]="
               (action.type === 4 || action.type === 9) &&
               settings.fetcherUrls &&
@@ -359,9 +360,10 @@
 
           <ng-container
             *ngIf="
-              (action.type === 4 || action.type === 9) &&
-              settings.fetcherUrls &&
-              settings.fetcherUrls.cancel
+              (action.type === 4 || action.type === 9)
+              && !action.hidden
+              && settings.fetcherUrls
+              && settings.fetcherUrls.cancel
             "
           >
             <button

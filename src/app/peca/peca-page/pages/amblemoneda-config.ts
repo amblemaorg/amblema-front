@@ -15,241 +15,15 @@ const controlProps = {
   },
 };
 
-const sliderAmblemoneda = {
-  component: "slider",
-  name: "sliderAmblemaData",
-  settings: {
-    sliderImage: [
-      {
-        image: "",
-        description: "",
-      },
-      {
-        image: "",
-        description: "",
-      },
-      {
-        image: "",
-        description: "",
-      },
-      {
-        image: "",
-        description: "",
-      },
-    ],
-  },
-};
-
-const btnGuardarFechaSlider = {
-  component: "textsbuttons",
-  settings: {
-    action: [
-      {
-        type: 1,
-        name: "Guardar",
-      },
-    ],
-  },
-};
-
-const ConfirmacionDocente = {
-  component: "table",
-  name: "amblemonedaTable",
-  settings: {
-    columns: {
-      grade: {
-        title: "Grado",
-        valuePrepareFunction: (row: any) => {
-          if (row)
-            return formConfirmacionDocenteModal.grade.options.find((d) => {
-              return d.id === row;
-            }).name;
-          else return "";
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = formConfirmacionDocenteModal.grade.options.find((d) => {
-            return d.id === cell;
-          }).name;
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") return true;
-          else return false;
-        },
-      },
-      section: {
-        title: "Sección",
-      },
-      confirmation: {
-        title: "Confirmación",
-        valuePrepareFunction: (row: any) => {
-          if (row) return row == "1" ? "Confirmado" : "Por confirmar";
-          else return "";
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = cell == "1" ? "Confirmado" : "Por confirmar";
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") return true;
-          else return false;
-        },
-      },
-    },
-    modalCode: "amblemonedaConfigConfirmacionDocente",
-    tableCode: "amblemonedaConfigConfirmacionDocente",
-    amblemonedaConfigConfirmacionDocente: [
-      /*{
-                id: '1abcdefghijk',
-                grade: '5',
-                section: 'B',
-                confirmation: '1',
-            },
-            {
-                id: '2abcdefghijk',
-                grade: '4',
-                section: 'A',
-                confirmation: '2',
-            }*/
-    ],
-    classes: {
-      hideView: false,
-      hideEdit: false,
-      hideDelete: true,
-    },
-  },
-};
-//* MODAL CONFIRMACION DOCENTE ----------------------------------
-const formConfirmacionDocente = {
-  component: "form",
-  name: "confirmacionDocenteModal",
-  viewMode: "both",
-  settings: {
-    formsContent: formConfirmacionDocenteModal,
-    buttons: ["guardar"],
-    formType: "tablaConfirmacionDocente",
-    tableCode: "amblemonedaConfigConfirmacionDocente",
-    modalCode: "amblemonedaConfigConfirmacionDocente",
-    isFromCustomTableActions: true,
-    fetcherMethod: "put",
-  },
-};
-const textsAndButtonsConfirmacionDocente = {
-  component: "textsbuttons",
-  settings: {
-    subtitles: [
-      {
-        text: "¿Desea eliminar este ítem?",
-      },
-    ],
-    action: [
-      {
-        type: 1,
-        name: "Si",
-      },
-      {
-        type: 2,
-        name: "No",
-      },
-    ],
-    modalCode: "amblemonedaConfigConfirmacionDocente",
-    isFromCustomTableActions: true,
-    isDeleting: true,
-  },
-};
-const modalConfirmacionDocente = {
-  component: "modal",
-  settings: {
-    modalCode: "amblemonedaConfigConfirmacionDocente",
-    items: [
-      {
-        childBlocks: [{ ...formConfirmacionDocente }, { ...textsAndButtonsConfirmacionDocente }],
-      },
-    ],
-  },
-};
-//* ------------------------------------------
-
-const charlaConDocentes = {
-  component: "textsbuttons",
-  name: "amblemonedaCharla",
-  settings: {
-    dateOrtext: {
-      text: "Fecha de la reunión:",
-      fields: [
-        {
-          label: "Input date",
-          placeholder: "Fecha de la reunión",
-          fullwidth: false,
-          ...controlProps.dateAndRequired,
-        },
-      ],
-    },
-    download: {},
-    subtitles: [
-      {
-        text: "",
-      },
-    ],
-    action: [
-      {
-        type: 1,
-        name: "Guardar",
-      },
-    ],
-    fetcherMethod: "put",
-  },
-  modalCode: "enviarDataCharla",
-  buttonCode: "enviarDataCharla",
-  tableCode: "enviarDataCharla",
-};
-
-const btnGuardarFechaCharla = {
-  component: "textsbuttons",
-  name: "btnEnviarSolicitud",
-  settings: {
-    action: [
-      {
-        type: 1,
-        name: "Guardar",
-      },
-    ],
-    fetcherMethod: "put",
-  },
-};
-
-export const AMBLEMONEDA_CONFIG = {
-  header: {
-    title: "AmbLeMonedas",
-  },
-  blocks: [
-    {
-      component: "tabs",
-      settings: {
-        items: [
-          {
-            title: "Charla con los docentes",
-            childBlocks: [{ ...charlaConDocentes }, { ...btnGuardarFechaCharla }],
-          },
-          {
-            title: "Elaboración de alcancía",
-            childBlocks: [{ ...sliderAmblemoneda }, { ...btnGuardarFechaSlider }],
-          },
-          {
-            title: "Entrega de AmbLeMonedas",
-            childBlocks: [{ ...ConfirmacionDocente }, { ...modalConfirmacionDocente }],
-          },
-        ],
-      },
-    },
-  ],
-};
-
 export function amblecoinsConfigMapper(
   pecaData,
   lapseNumber,
   updatedElaborationDate,
   updatedSections,
+  permissions,
   store
 ) {
+  const { amblecoins_peca_edit } = permissions;
   const lapseName = `lapse${lapseNumber}`;
   const {
     meetingDate,
@@ -287,6 +61,7 @@ export function amblecoinsConfigMapper(
       ],
       action: [
         {
+          hidden: !amblecoins_peca_edit,
           name: "Guardar",
         },
       ],
@@ -321,6 +96,7 @@ export function amblecoinsConfigMapper(
       },
       action: [
         {
+          hidden: !amblecoins_peca_edit,
           name: "Guardar",
         },
       ],
@@ -397,7 +173,7 @@ export function amblecoinsConfigMapper(
       }),
       classes: {
         hideView: false,
-        hideEdit: false,
+        hideEdit: !amblecoins_peca_edit,
         hideDelete: true,
       },
     },
@@ -410,6 +186,7 @@ export function amblecoinsConfigMapper(
     settings: {
       formsContent: formConfirmacionDocenteModal,
       buttons: ["guardar"],
+      hiddenButton: !amblecoins_peca_edit,
       formType: "tablaConfirmacionDocente",
       tableCode: "amblemonedaConfigConfirmacionDocente",
       modalCode: "amblemonedaConfigConfirmacionDocente",
@@ -431,13 +208,37 @@ export function amblecoinsConfigMapper(
     },
   };
 
+  const sectionDeleteForm = {
+    component: "textsbuttons",
+    settings: {
+      subtitles: [
+        {
+          text: "¿Desea eliminar este ítem?",
+        },
+      ],
+      action: [
+        {
+          type: 1,
+          name: "Si",
+        },
+        {
+          type: 2,
+          name: "No",
+        },
+      ],
+      modalCode: "amblemonedaConfigConfirmacionDocente",
+      isFromCustomTableActions: true,
+      isDeleting: true,
+    },
+  };
+
   const sectionModal = {
     component: "modal",
     settings: {
       modalCode: "amblemonedaConfigConfirmacionDocente",
       items: [
         {
-          childBlocks: [sectionForm, textsAndButtonsConfirmacionDocente],
+          childBlocks: [sectionForm, sectionDeleteForm],
         },
       ],
     },
