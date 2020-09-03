@@ -123,13 +123,14 @@ export class PecaState {
   }
 
   @Action(FetchPecaContent)
-  fetchPecaContent(
+  async fetchPecaContent(
     { patchState, setState, getState }: StateContext<PecaStateModel>,
     { payload }: FetchPecaContent
   ) {
     patchState({ pecaContentRequesting: true });
     this.apiService.setResourcePath("pecaprojects/" + payload);
-    return this.apiService.getWebContent().subscribe((response) => {
+    const response = await this.apiService.getWebContent().toPromise();
+    //.subscribe((response) => {
       if (response) {
         const pecaContent: PecaModel = response;
         patchState({
@@ -137,7 +138,7 @@ export class PecaState {
           content: pecaContent,
         });
       }
-    });
+    //});
   }
 
   @Action(UpdateLapsePlanningFile)

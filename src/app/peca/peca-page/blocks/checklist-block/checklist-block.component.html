@@ -82,7 +82,7 @@
       <div class="style-btn">
         <button
           title="general"
-          *ngIf="dato.isFromAnnualConvention"
+          *ngIf="dato.isFromAnnualConvention && (info.button && !info.button.hidden)"
           class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
           (click)="sendAnnualConvention(dato.checkList)"
         >
@@ -117,7 +117,7 @@
       </span>
       <div class="style-btn" [class.no-margin]="info.isFromGenericActivity">
         <button
-          *ngIf="info.button"
+          *ngIf="info.button && !info.button.hidden"
           title="general"
           class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
           (click)="sendChecks(info.datosNivel[0].checkList, info.datosNivel[0].index)"

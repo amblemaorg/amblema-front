@@ -1,6 +1,6 @@
+import { annualPreparationPermissions } from './../blocks/peca-permissology';
 import {
   Component,
-  AfterViewInit,
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
@@ -11,51 +11,32 @@ import { annualConventionPreparationConfigMapper } from "./annual-convention-pre
 import { Subscription, Observable } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
 import { Select, Store } from "@ngxs/store";
-import { GlobalService } from "src/app/services/global.service";
 import { Router, NavigationEnd, Event } from "@angular/router";
-import { teachersDataToTeachersTableAnnualConventionMapper } from "../mappers/teacher-mappers";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 import { scan } from "rxjs/internal/operators/scan";
+
 @Component({
   selector: "peca-annual-convention",
   templateUrl: "../peca-page.component.html",
 })
 export class AnnualConventionPreparationPageComponent
   extends PecaPageComponent
-  implements AfterViewInit, OnDestroy {
-  teachers = [];
-  isInstanciated: boolean;
-  isInstantiating: boolean;
-  description1 = "";
-  description2 = "";
-  description3 = "";
-  description4 = "";
+  implements OnDestroy {
   idPeca = "";
-  loadedData: boolean;
-  preparationInfo: any;
   UrlLapse = "";
   routerSubscription: Subscription;
-  teachersData: any;
-  teachersInfo: any;
-  allTeachers = [];
+  isInstantiating: boolean;
 
-  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
-  container: ViewContainerRef;
-  infoDataSubscription: Subscription;
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false }) container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
+  infoDataSubscription: Subscription;
+
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService,
     private router: Router,
     private store: Store
   ) {
     super(factoryResolver);
-
-    globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      if (this.loadedData) this.updateMethods();
-    });
-
     //To know if the url change
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -100,10 +81,13 @@ export class AnnualConventionPreparationPageComponent
         (data) => {
           if (!this.isInstantiating) {
             if (data.activePecaContent) {
+              let { permissions } = data.user;
+              permissions = this.managePermissions(permissions);
               const config = annualConventionPreparationConfigMapper(
                 data.activePecaContent,
                 this.UrlLapse,
                 data.updatedTeachers,
+                permissions,
                 this.store
               );
               this.instantiateComponent(config);
@@ -116,83 +100,25 @@ export class AnnualConventionPreparationPageComponent
       );
   }
 
-  setTeachersTableData(teachersAnnualConventionTable, _mapper?: Function) {
-    if (_mapper) {
-      this.teachersData = {
-        data: _mapper(teachersAnnualConventionTable),
-        isEditable: true,
-      };
-    } else {
-      this.teachersData = teachersAnnualConventionTable;
-    }
-  }
-  setPreparationData() {
-    this.teachersInfo = {
-      contentTeacherInfo: this.allTeachers,
-    };
-    this.preparationInfo = {
-      text1: {
-        content: this.description1,
+  managePermissions(permissionsArray) {
+    return annualPreparationPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
       },
-      text2: {
-        content: this.description2,
-      },
-      text3: {
-        content: this.description3,
-      },
-      text4: {
-        content: this.description4,
-      },
-    };
-  }
-  //1
-  updateDataToBlocks() {
-    this.setBlockData("stepperAnnual", this.preparationInfo);
-    this.setBlockData("teachersAnnualConventionTable", this.teachersData);
-    this.setBlockData("teachersAnnualConventionSelect", this.teachersInfo);
-  }
-  //2
-  updateMethods() {
-    this.updateDataToBlocks();
-    this.updateDynamicFetchers();
-  }
-
-  updateDynamicFetchers() {
-    //Delete math modal
-    this.createAndSetBlockFetcherUrls(
-      "annualConventionDeleteModal",
-      {
-        delete: (teacherId) => `pecaprojects/annualpreparation/${this.idPeca}/${teacherId}`,
-      },
-      "settings.dataFromRow.data.newData.id"
+      {}
     );
-  }
-  updateStaticFetchers() {
-    this.setBlockFetcherUrls("saveButtonAnnualPreparation", {
-      post: `pecaprojects/students/`,
-    });
   }
 
   doInstantiateBlocks() {
-    this.isInstanciated = false;
     this.isInstantiating = true;
     setTimeout(() => {
       this.instantiateBlocks(this.container, true);
-      this.isInstanciated = true;
       this.isInstantiating = false;
     });
   }
 
-  ngAfterViewInit(): void {
-    /*     setTimeout(() => {
-      this.instantiateBlocks(this.container);
-      this.isInstanciated = true;
-    }); */
-  }
-
   ngOnDestroy() {
-    this.isInstanciated = false;
-    this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }

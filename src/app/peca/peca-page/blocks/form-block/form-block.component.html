@@ -492,6 +492,7 @@
             type="button"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
             [disabled]="!componentForm.valid || sendingForm"
+            *ngIf="!settings.hiddenButton"
           >
             <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Cargar imagenes" : "Cargando.." }}
@@ -504,6 +505,7 @@
             type="submit"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             [disabled]="disableBtn()"
+            *ngIf="!settings.hiddenButton"
           >
             <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Guardar" : "Guardando.." }}
@@ -515,6 +517,7 @@
             type="submit"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+            *ngIf="!settings.hiddenButton"
           >
             <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
             {{ !sendingForm ? "Agregar" : "Agregando.." }}
@@ -540,6 +543,7 @@
           <button
             [class.d-none]="settings.isEditable && isEditing"
             type="button"
+            *ngIf="!settings.hiddenButton"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             (click)="enableSaveAndCancelButtons()"
           >
@@ -551,6 +555,7 @@
           <button
             [class.d-none]="settings.isEditable && !isEditing"
             type="button"
+            *ngIf="!settings.hiddenButton"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             (click)="disableSaveAndCancelButtons()"
           >

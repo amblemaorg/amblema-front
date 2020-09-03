@@ -1,3 +1,4 @@
+import { environmentalProjectPermissions } from './../blocks/peca-permissology';
 import {
   Component,
   AfterViewInit,
@@ -46,8 +47,9 @@ export class EnvironmentalProjectPageComponent
         if (!this.isInstantiating) {
           if (data.activePecaContent) {
             const { environmentalProject, id } = data.activePecaContent;
-            const configVista = EnviromentalMapper(environmentalProject, id);
-            //variable_que_almacenara_el_config_para_la_vista
+            const { permissions } = data.user;
+            const permissionsObj = this.managePermissions(permissions);
+            const configVista = EnviromentalMapper(environmentalProject, id, permissionsObj);
             this.instantiateComponent(configVista);
             this.doInstantiateBlocks();
           }
@@ -60,6 +62,16 @@ export class EnvironmentalProjectPageComponent
 
   ngAfterViewInit(): void {
     this.doInstantiateBlocks();
+  }
+
+  managePermissions(permissionsArray) {
+    return environmentalProjectPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
+      },
+      {}
+    );
   }
 
   doInstantiateBlocks() {

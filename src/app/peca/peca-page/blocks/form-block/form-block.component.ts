@@ -27,6 +27,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   settings: {
     formsContent: any;
     buttons: string[];
+    hiddenButton?: boolean;
     images: any[];
     tableCode?: string; // to know which table to update
     formType?: string; // to specify what action to take on the submit button
@@ -304,6 +305,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       }
 
       if (this.isDirty()) this.btnUpdater(this.componentForm.value);
+    }
+
+    if (data["hiddenButton"]) {
+      this.settings.hiddenButton = data["hiddenButton"];
     }
   }
 

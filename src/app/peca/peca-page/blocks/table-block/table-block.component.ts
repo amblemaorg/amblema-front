@@ -215,6 +215,9 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   setData(data: any) {
+    if (data["classes"]) {
+      this.settings.classes = data["classes"];
+    }
     if (!this.isEdited) {
       if (this.settings.isFromImgContainer) this.settings["dataCopy"] = [...data.data];
       this.source = new LocalDataSource(data.data);
