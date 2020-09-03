@@ -1,121 +1,49 @@
 const sliderAmbiente = {
-    component: 'slider',
-    name: 'sliderAmbienteData',
-    settings: {
-        sliderImage: [
-            {
-                image: "../../../../../assets/images/profile-leena.jpg",
-                description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/profile-oscar.jpg",
-                description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-matematica.jpg",
-                description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            /*{
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
-            },*/
-
-        ],
-    }
+  component: 'slider',
+  name: 'sliderAmbienteData',
+  settings: {
+    sliderImage: [],
+  }
 }
 const sliderLectura = {
-    component: 'slider',
-    name: 'sliderLecturaData',
-    settings: {
-        sliderImage: [
-            {
-                image: "../../../../../assets/images/profile-leena.jpg",
-                description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/profile-oscar.jpg",
-                description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-matematica.jpg",
-                description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            /*{
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
-            },*/
-
-        ],
-    }
+  component: 'slider',
+  name: 'sliderLecturaData',
+  settings: {
+    sliderImage: [],
+  }
 }
 
 const sliderMatematica = {
-    component: 'slider',
-    name: 'sliderMatematicaData',
-    settings: {
-        sliderImage: [
-            {
-                image: "../../../../../assets/images/profile-leena.jpg",
-                description: "foto numero 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/profile-oscar.jpg",
-                description: "foto numero 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            {
-                image: "../../../../../assets/images/background-pillar-matematica.jpg",
-                description: "foto numero 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod provident hic placeat nisi in quaerat debitis minima impedit tempore asperiores dicta, at, doloribus ducimus perferendis aliquam, incidunt quia praesentium beatae."
-            },
-            /*{
-                image: "../../../../../assets/images/background-pillar-lectura.jpg",
-                description: "foto numero 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus dolorum quo animi velit accusantium alias, quis esse inventore, vero veritatis aperiam corporis quos, iusto aliquid quam. Maxime doloremque repellat perferendis?"
-            },*/
-
-        ],
-    }
+  component: 'slider',
+  name: 'sliderMatematicaData',
+  settings: {
+    sliderImage: [],
+  }
 }
 
 export const MONITORING_STRATEGY_CONFIG = {
-    header: {
-        title: "Estrategias para seguimiento de actividades ordinarias"
+  header: {
+    title: "Estrategias para seguimiento de actividades ordinarias"
+  },
+  blocks: [
+    {
+      component: 'tabs',
+      settings: {
+        items: [
+          {
+            title: "Ambiente",
+            childBlocks: [sliderAmbiente]
+          },
+          {
+            title: "Lectura",
+            childBlocks: [sliderLectura]
+          },
+          {
+            title: "Matemática",
+            childBlocks: [sliderMatematica]
+          }
+        ],
+      },
     },
-    blocks: [
-        {
-            component: 'tabs',
-            settings: {
-                items: [
-                    {
-                        title: "Ambiente",
-                        childBlocks: [
-                            { ...sliderAmbiente }
-                        ]
-                    },
-                    {
-                        title: "Lectura",
-                        childBlocks: [
-                            { ...sliderLectura }
-                        ]
-                    },
-                    {
-                        title: "Matemática",
-                        childBlocks: [
-                            { ...sliderMatematica }
-                        ]
-                    }
-                ],
-            },
-        },
-    ]
+  ]
 }

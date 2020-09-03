@@ -52,31 +52,35 @@ export class GraphicsBlockComponent
   }
 
   ngOnInit() {
+    if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
+      this.color = "#FFF";
+    }
+    else {
+      this.color = "#111";
+    }
+
     const routePathArray = this.router.url.split("/");
     if (routePathArray[2] == "anuario-page") {
       //this.nombreEscuela = this.settings.legendName;
       this.dataLabel = this.settings.labels;
       this.arrayColors = this.settings.labels.map(() => "#81B03E");
       this.dataChart = this.settings.items;
+      this.subscription.add(
+        this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
+          if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
+            const imgB64 = this.chart ? this.chart.toBase64Image() : null;
+            this.pdfYearbookService.setGraphics(
+              `lapse${this.settings.lapseN}`,
+              this.settings.sendGraphicToPdf,
+              imgB64
+            );
+          }
+        })
+      );
+      return;
     }
 
-    if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
-      this.color = "#FFF";
-    } else this.color = "#111";
     this.getInfo();
-
-    this.subscription.add(
-      this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
-        if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
-          const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-          this.pdfYearbookService.setGraphics(
-            `lapse${this.settings.lapseN}`,
-            this.settings.sendGraphicToPdf,
-            imgB64
-          );
-        }
-      })
-    );
   }
 
   getInfo() {
