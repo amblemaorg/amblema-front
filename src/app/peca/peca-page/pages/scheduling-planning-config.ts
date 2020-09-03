@@ -1,3 +1,4 @@
+import { lapsePlanningPermissionsI } from './../blocks/peca-permissology';
 import { Store } from "@ngxs/store";
 import {
   SetLapsePlanningRequestData,
@@ -27,72 +28,12 @@ const controlProps = {
   },
 };
 
-const btnGuardarReunion = {
-  component: "textsbuttons",
-  settings: {
-    action: [
-      {
-        type: 1,
-        name: "Guardar",
-      },
-    ],
-  },
-};
-
-const propuestaAmblema = {
-  component: "textsbuttons",
-  name: "propuestaAmblema",
-  settings: {
-    dateOrtext: {},
-    status: {
-      text: "Estatus",
-      //subText: 1
-    },
-    subtitles: [
-      {
-        text: "",
-      },
-    ],
-    action: [
-      {
-        type: 3,
-        name: "Enviar",
-      },
-    ],
-    upload: {
-      /* url: "#",
-            name: 'Adjuntar archivo',
-            file: null, */
-    },
-  },
-};
-
-export const SCHEDULING_PLANNING_CONFIG = {
-  header: {
-    title: "Planificación del lapso",
-  },
-  blocks: [
-    {
-      component: "tabs",
-      settings: {
-        items: [
-          {
-            title: "Propuesta a fundación AmbLeMa",
-            childBlocks: [{ ...propuestaAmblema }],
-          },
-          {
-            title: "Reunión y aprobación de la escuela",
-            childBlocks: [
-              /* { ...reunionAprobacionSet }, { ...btnGuardarReunion } */
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, store: Store) {
+export function schedulingPlanningConfigMapper(
+  schedulingPlanning,
+  lapseNumber,
+  permissions,
+  store: Store
+) {
   const {
     proposalFundationDescription,
     proposalFundationFile,
@@ -103,7 +44,7 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
     isInApproval,
     approvalHistory,
   } = schedulingPlanning;
-
+  const { lapse_planning_peca_edit, lapse_planning_peca_delete } = permissions;
   const meetingDateFormatted = meetingDate ? meetingDate.split("T")[0] : null;
   const meetingStatus = status ? +status : 1;
   let currentAttachedFile = attachedFile;
@@ -130,6 +71,7 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
       ],
       action: [
         {
+          hidden: isInApproval ? !lapse_planning_peca_delete : !lapse_planning_peca_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar",
         },
       ],
@@ -204,6 +146,7 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
     settings: {
       action: [
         {
+          hidden: !lapse_planning_peca_edit,
           name: "Guardar",
         },
       ],
@@ -224,11 +167,11 @@ export function schedulingPlanningConfigMapper(schedulingPlanning, lapseNumber, 
           items: [
             {
               title: "Propuesta a fundación AmbLeMa",
-              childBlocks: [{ ...proposal }],
+              childBlocks: [proposal],
             },
             {
               title: "Reunión y aprobación de la escuela",
-              childBlocks: [{ ...reunionAprobacionSet }, { ...btnGuardarReunion }],
+              childBlocks: [reunionAprobacionSet, btnGuardarReunion],
             },
           ],
         },

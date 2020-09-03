@@ -1,6 +1,6 @@
+import { yearbookPermissions } from './../blocks/peca-permissology';
 import {
   Component,
-  AfterViewInit,
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
@@ -12,7 +12,6 @@ import { PecaPageComponent } from "../peca-page.component";
 import { MapperYearBookWeb } from "./yearbook-config";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
-import { GlobalService } from "../../../services/global.service";
 import { amblemarioMapper } from "../mappers/amblemario-mapper";
 import { PdfYearbookService } from "src/app/services/peca/pdf-yearbook.service";
 import { SetYearBook } from "src/app/store/yearbook/yearbook.action";
@@ -26,35 +25,25 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
 // @ts-ignore
 export class YearbookPageComponent
   extends PecaPageComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, OnDestroy {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
-
   @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
-
   subscription: Subscription = new Subscription();
 
   pecaData: any;
-
-  isInstanciated: boolean;
-  isInstantiating: boolean;
-  loadedData: boolean;
-
   yearbookData: any;
   title: string;
+
+  isInstantiating: boolean;
 
   constructor(
     private store: Store,
     toastr: ToastrService,
     factoryResolver: ComponentFactoryResolver,
     pdfYearbookService: PdfYearbookService,
-    globals: GlobalService
   ) {
     super(factoryResolver, null, null, pdfYearbookService, toastr);
-    globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      if (this.loadedData) this.updateMethods();
-    });
   }
 
   ngOnInit() {
@@ -179,55 +168,19 @@ export class YearbookPageComponent
                 };
               }
 
+              const { permissions } = data.user;
+              const permissionsObj = this.managePermissions(permissions)
               this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
               this.setPdfData(this.pecaData);
-              //this.setYearbook(data);
-              //this.setYearbookData();
               this.store.dispatch(new SetYearBook(newYearBook));
-
-              const yearBookConfig = MapperYearBookWeb(newYearBook, this.store, this.toastr);
+              const yearBookConfig = MapperYearBookWeb(newYearBook, permissionsObj, this.store);
               this.instantiateComponent(yearBookConfig);
               this.doInstantiateBlocks();
-
-              this.loadedData = true;
-              //if (this.isInstanciated) this.updateMethods();
             }
           }
         },
         (error) => console.error(error)
       );
-  }
-
-  updateMethods() {
-    this.updateDataToBlocks();
-  }
-
-  updateDataToBlocks() {
-    this.setBlockData("titleYearbook", this.yearbookData);
-  }
-
-  updateStaticFetchers() {
-    //
-  }
-
-  updateDynamicFetchers() {
-    //
-  }
-
-  setYearbook(data) {
-    this.title = data.activePecaContent.yearBook.lapse1.activities[0].name;
-    console.log(this.title, "nombre");
-  }
-
-  setYearbookData() {
-    this.yearbookData = {
-      inputAndBtns: [
-        {
-          titleInput: this.title,
-        },
-      ],
-    };
-    console.log(this.yearbookData, "aqui titulo");
   }
 
   setAmblemarioData(pecaData, _mapper?: Function) {
@@ -238,23 +191,26 @@ export class YearbookPageComponent
     }
   }
 
-  ngAfterViewInit(): void {
-    //this.doInstantiateBlocks();
-  }
-
-  ngOnDestroy() {
-    this.isInstanciated = false;
-    this.loadedData = false;
-    this.subscription.unsubscribe();
+  managePermissions(permissionsArray) {
+    return yearbookPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
+      },
+      {}
+    );
   }
 
   doInstantiateBlocks() {
-    this.isInstanciated = false;
     this.isInstantiating = true;
     setTimeout(() => {
       this.instantiateBlocks(this.container, true);
-      this.isInstanciated = true;
       this.isInstantiating = false;
     });
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

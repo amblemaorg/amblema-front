@@ -10,6 +10,7 @@ import {
 } from "src/app/web/shared/forms/custom-validators";
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 import { DatePipe } from "@angular/common";
+import { Store } from '@ngxs/store';
 
 const controlProps = {
   onlyLettersAndRequired: {
@@ -42,261 +43,15 @@ const controlProps = {
   },
 };
 
-const datosOlimpiadas = {
-  component: "textsbuttons",
-  name: "olimpiadasDateText",
-  settings: {
-    dateOrtext: {
-      text: "Fecha de la prueba:",
-      date: "",
-    },
-    uploaddown: {},
-    subtitles: [
-      {
-        text: "",
-      },
-    ],
-  },
-};
-
-const btnGuardar = {
-  component: "textsbuttons",
-  settings: {
-    action: [
-      {
-        type: 1,
-        name: "Guardar",
-      },
-    ],
-    receivesFromTableOrForm: "table",
-    buttonCode: "dataResultadoEstudiante",
-  },
-};
-
-const selectEstudiantes = {
-  component: "textsbuttons",
-  name: "selectStudents",
-  settings: {
-    selectStatus: {
-      placeholder: "Selecciona el estudiante",
-      lista: [
-        {
-          id: 1,
-          name: "Alfredo",
-          lastName: "Valvuena",
-          status: "2",
-          result: "Plata",
-          grade: "5",
-          section: "B",
-        },
-        {
-          id: 2,
-          name: "Yanior",
-          lastName: "Zambrano",
-          status: "1",
-          result: "Bronce",
-          grade: "6",
-          section: "A",
-        },
-        {
-          id: 3,
-          name: "Jose",
-          lastName: "Guerrero",
-          status: "1",
-          result: "Oro",
-          grade: "4",
-          section: "C",
-        },
-      ],
-    },
-    btnGeneral: {
-      name: "Agregar",
-    },
-    buttonType: "agregarResultadoEstudiante",
-    tableCode: "dataResultadoEstudiante",
-  },
-};
-
-const resultadoEstudiante = {
-  component: "table",
-  name: "resultadoTabla",
-  settings: {
-    columns: {
-      name: {
-        title: "Nombre",
-      },
-      lastName: {
-        title: "Apellido",
-      },
-      gradeAndSection: {
-        title: "Grado y sección",
-        valuePrepareFunction: (row: any) => {
-          if (row)
-            return (
-              formResultadoEstudianteModal.grade.options.find((d) => {
-                return d.id === row.grade;
-              }).name +
-              " " +
-              row.name
-            );
-          else return "";
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string =
-            formResultadoEstudianteModal.grade.options.find((d) => {
-              return d.id === cell.grade;
-            }).name +
-            " " +
-            cell.name;
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") return true;
-          else return false;
-        },
-      },
-      /*addressState: {
-                title: "Estado",
-                valuePrepareFunction: ( row: any ) => {
-                    if (row) return formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===row}).name;
-                    else return '';
-                },
-                filterFunction: (cell?: any, search?: string) => {
-                    let value: string = formResultadoEstudianteModal.addressState.options.find(d=>{return d.id===cell}).name;
-                    value = value.toUpperCase();
-
-                    if (value.includes(search.toUpperCase()) || search === '') return true;
-                    else return false;
-                }
-            },*/
-      status: {
-        title: "Estatus",
-        valuePrepareFunction: (row: any) => {
-          if (row) return row == "1" ? "Registrado" : "Calificado";
-          else return "";
-        },
-        filterFunction: (cell?: any, search?: string) => {
-          let value: string = cell == "1" ? "Registrado" : "Calificado";
-          value = value.toUpperCase();
-
-          if (value.includes(search.toUpperCase()) || search === "") return true;
-          else return false;
-        },
-      },
-      result: {
-        title: "Resultado",
-      },
-    },
-    modalCode: "dataResultadoEstudiante",
-    buttonCode: "dataResultadoEstudiante",
-    tableCode: "dataResultadoEstudiante",
-    dataResultadoEstudiante: [
-      {
-        /*  id: '1dvbdjvjd',
-                name: 'Jhon',
-                lastName: 'Week',
-                grade: '5',
-                section: 'B',
-                gradeAndSection: {
-                    grade: '5',
-                    section: 'B',
-                },
-                status: '2',
-                result: 'Oro', */
-      },
-    ],
-    classes: {
-      hideView: false,
-      hideEdit: false,
-      hideDelete: false,
-    },
-  },
-};
-//* MODAL RESULTADOS OLIMPIADAS ----------------------------------
-const formResultadoEstudiante = {
-  component: "form",
-  name: "resultadoEstudianteModal",
-  viewMode: "both",
-  settings: {
-    formsContent: formResultadoEstudianteModal,
-    buttons: ["guardar"],
-    formType: "agregarResultadoEstudiante",
-    tableCode: "dataResultadoEstudiante",
-    modalCode: "dataResultadoEstudiante",
-    isFromCustomTableActions: true,
-    fetcherMethod: "put",
-  },
-};
-
-const textsAndButtonsResultadoEstudiante = {
-  component: "textsbuttons",
-  settings: {
-    subtitles: [
-      {
-        text: "¿Desea eliminar este ítem?",
-      },
-    ],
-    action: [
-      {
-        type: 1,
-        name: "Si",
-      },
-      {
-        type: 2,
-        name: "No",
-      },
-    ],
-    onSubmit: (values) => {
-      console.log("math olympic delete", values);
-      //const data = {}
-    },
-    modalCode: "dataResultadoEstudiante",
-    isFromCustomTableActions: true,
-    isDeleting: true,
-  },
-};
-const modalResultadoEstudiante = {
-  component: "modal",
-  settings: {
-    modalCode: "dataResultadoEstudiante",
-    items: [
-      {
-        childBlocks: [{ ...formResultadoEstudiante }, { ...textsAndButtonsResultadoEstudiante }],
-      },
-    ],
-  },
-};
-//* ------------------------------------------
-
-export const MATH_OLYMPICS_CONFIG = {
-  header: {
-    title: "Olimpíadas de matemáticas",
-  },
-  blocks: [
-    {
-      component: "tabs",
-      settings: {
-        items: [
-          {
-            title: "Proceso de inscripción",
-            childBlocks: [{ ...datosOlimpiadas }],
-          },
-          {
-            title: "Resultados",
-            childBlocks: [
-              { ...selectEstudiantes },
-              { ...resultadoEstudiante },
-              { ...btnGuardar },
-              { ...modalResultadoEstudiante },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents, store) {
+export function mathOlympicsConfigMapper(
+  pecaData,
+  lapseNumber,
+  updatedStudents,
+  permissions,
+  store: Store
+) {
   // Processing data
+  const { olympics_peca_create, olympics_peca_edit, olympics_peca_delete } = permissions;
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
   const mathOlympics = pecaData[lapseName].olympics;
@@ -360,7 +115,8 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
         }),
       },
       btnGeneral: {
-        name: "Agregar",
+        name: "Agregar estudiante",
+        hidden: !olympics_peca_create
       },
       onAddTable: (row) => {
         console.log("on add table students", row);
@@ -551,8 +307,8 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
       }),
       classes: {
         hideView: false,
-        hideEdit: false,
-        hideDelete: false,
+        hideEdit: !olympics_peca_edit,
+        hideDelete: !olympics_peca_delete,
       },
     },
   };
@@ -567,6 +323,7 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
       ],
       action: [
         {
+          hidden: !olympics_peca_delete,
           type: 1,
           name: "Si",
         },
@@ -593,7 +350,7 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
       modalCode: "dataResultadoEstudiante",
       items: [
         {
-          childBlocks: [{ ...studentForm }, { ...studentsDelete }],
+          childBlocks: [studentForm, studentsDelete],
         },
       ],
     },
@@ -610,12 +367,12 @@ export function mathOlympicsConfigMapper(pecaData, lapseNumber, updatedStudents,
           items: [
             {
               title: "Proceso de inscripción",
-              childBlocks: [{ ...olympicsSignIn }],
+              childBlocks: [olympicsSignIn],
             },
             {
               title: "Resultados",
               active: updatedStudents ? true : false,
-              childBlocks: [{ ...studentsSelect }, { ...studentsTable }, { ...studentModal }],
+              childBlocks: [studentsSelect, studentsTable, studentModal],
             },
           ],
         },

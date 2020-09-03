@@ -1,20 +1,13 @@
 import {
-  formTestimonioDocentes,
   formTestimonioDocentesModal,
   formTestimonioDocentesModalEdit,
 } from "../blocks/form-block/all-forms";
 import {
-  requiredAndOnlyLetters,
   requiredAndNormalText,
 } from "src/app/web/shared/forms/custom-validators";
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 
 const controlProps = {
-  onlyLettersAndRequired: {
-    type: "text",
-    validations: requiredAndOnlyLetters,
-    messages: { pattern: MESSAGES.ONLY_LETTERS_MESSAGE },
-  },
   normalTextAndRequired: {
     type: "text",
     validations: requiredAndNormalText,
@@ -24,103 +17,6 @@ const controlProps = {
     type: "select",
     options: [],
     validations: { required: true },
-  },
-};
-
-const statusGeneral = {
-  component: "textsbuttons",
-  settings: {
-    dateOrtext: {},
-    status: {
-      text: "Estatus",
-      subText: 1,
-    },
-  },
-};
-const formTestDoc = {
-  component: "form",
-  name: "pruebaDocentes",
-  settings: {
-    formsContent: formTestimonioDocentes,
-    tableCode: "dataTestimonioDocenteTabla",
-    buttonCode: "dataTestimonioDocenteTabla",
-    alwaysValidations: true,
-    data: {},
-  },
-};
-
-const testimonioDocenteTabla = {
-  component: "table",
-  name: "testimonyTable",
-  settings: {
-    columns: {
-      name: {
-        title: "Nombre",
-      },
-      lastName: {
-        title: "Apellido",
-      },
-      cargo: {
-        title: "Cargo",
-      },
-      description: {
-        title: "Descripción",
-        valuePrepareFunction: (row: any) => {
-          if (row) return row.substring(0, 50) + "...";
-        },
-      },
-      // status: {
-      //     title: 'Estatus',
-      //     valuePrepareFunction: ( row: any ) => {
-      //         if (row) return row == "1" ? 'Activo':'Inactivo';
-      //         else return '';
-      //     },
-      //     filterFunction: (cell?: any, search?: string) => {
-      //         let value: string = cell == "1" ? 'Activo':'Inactivo';
-      //         value = value.toUpperCase();
-
-      //         if (value.includes(search.toUpperCase()) || search === '') return true;
-      //         else return false;
-      //     }
-      // },
-    },
-    isFromImgContainer: true,
-    modalCode: "dataTestimonioDocenteTabla",
-    buttonCode: "dataTestimonioDocenteTabla",
-    tableCode: "dataTestimonioDocenteTabla",
-    dataTestimonioDocenteTabla: [
-      // {
-      //     id: '1',
-      //     name: 'Alfredo',
-      //     lastName: 'Valbuena',
-      //     cargo: 'profesor',
-      //     description: 'lorem ipsum dolor',
-      //     // status: '1',
-      //     source: null,
-      //     imageSelected: null,
-      // },
-    ],
-    classes: {
-      hideView: false,
-      hideEdit: false,
-      hideDelete: false,
-    },
-  },
-};
-
-const textsAndButtons = {
-  component: "textsbuttons",
-  name: "sendTestimoniesRequest",
-  settings: {
-    action: [
-      {
-        type: 1,
-        name: "Enviar Solicitud",
-      },
-    ],
-    receivesFromTableOrForm: "table",
-    buttonCode: "dataTestimonioDocenteTabla",
-    fetcherMethod: "post",
   },
 };
 
@@ -191,37 +87,14 @@ const modalTestimonioDocenteTabla = {
     ],
   },
 };
-//* ------------------------------------------
 
-export const TEACHER_TESTIMONY_CONFIG = {
-  header: {
-    title: "Testimonio de docentes",
-  },
-  blocks: [
-    {
-      component: "profiles",
-      settings: {
-        items: [
-          {
-            childBlocks: [
-              { ...statusGeneral },
-              { ...formTestDoc },
-              { ...testimonioDocenteTabla },
-              { ...textsAndButtons },
-              { ...modalTestimonioDocenteTabla },
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export function teacherTestimoniesConfigMapper(pecaContent, userId, store) {
+export function teacherTestimoniesConfigMapper(pecaContent, userId, permissions, store) {
   const schoolId = pecaContent.project.school.id;
   const schoolTeachers = pecaContent.school.teachers;
   const teachersTestimonies = pecaContent.school.teachersTestimonials;
   const { approvalHistory, isInApproval, testimonials } = teachersTestimonies;
+  const { teacher_testimonial_edit, teacher_testimonial_delete } = permissions;
+  console.log('teacherTestimoniesConfigMapper', permissions)
   let currentTestimonies = testimonials;
   let currentStatus = testimonials.length > 0 ? 2 : 1;
   let lastTestimoniesRequest = null;
@@ -339,9 +212,9 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, store) {
       items: [
         {
           childBlocks: [
-            { ...formTestimonioDocenteTabla },
-            { ...formTestimonioDocenteTablaViewOnly },
-            { ...textsAndButtonsTestimonioDocenteTabla },
+            formTestimonioDocenteTabla,
+            formTestimonioDocenteTablaViewOnly,
+            textsAndButtonsTestimonioDocenteTabla,
           ],
         },
       ],
@@ -354,6 +227,7 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, store) {
     settings: {
       action: [
         {
+          hidden: isInApproval ? !teacher_testimonial_delete : !teacher_testimonial_edit,
           type: isInApproval ? 9 : 1,
           name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
         },
@@ -381,11 +255,11 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, store) {
           items: [
             {
               childBlocks: [
-                { ...teacherTestimoniesStatus },
-                { ...teacherTestimonyForm },
-                { ...teacherTestimoniesTable },
-                { ...sendTeacherTestimoniesRequest },
-                { ...modalTestimonioDocenteTabla },
+                teacherTestimoniesStatus,
+                teacherTestimonyForm,
+                teacherTestimoniesTable,
+                sendTeacherTestimoniesRequest,
+                modalTestimonioDocenteTabla,
               ],
             },
           ],

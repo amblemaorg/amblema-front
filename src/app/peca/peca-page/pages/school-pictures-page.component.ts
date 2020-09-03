@@ -1,16 +1,14 @@
+import { sliderActivitiesPermissions, sliderActivitiesPermissionsI } from './../blocks/peca-permissology';
 import { ClearSchoolActivitiesRequestData } from "./../../../store/actions/peca/peca.actions";
 import {
   Component,
-  AfterViewInit,
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
-  OnInit,
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
 import {
-  SCHOOL_PICTURES_CONFIG as config,
   schoolActivitiesPicturesConfigMapper,
 } from "./school-pictures-config";
 import { Select, Store } from "@ngxs/store";
@@ -26,7 +24,6 @@ export class SchoolPicturesPageComponent extends PecaPageComponent implements On
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
-  isInstanciated: boolean;
   isInstantiating: boolean;
   subscription: Subscription;
 
@@ -49,7 +46,13 @@ export class SchoolPicturesPageComponent extends PecaPageComponent implements On
           if (!this.isInstantiating) {
             if (data.activePecaContent) {
               const { activitiesSlider } = data.activePecaContent.school;
-              const newConfig = schoolActivitiesPicturesConfigMapper(activitiesSlider, this.store);
+              const { permissions } = data.user;
+              const permissionsObj = this.managePermissions(permissions);
+              const newConfig = schoolActivitiesPicturesConfigMapper(
+                activitiesSlider,
+                permissionsObj,
+                this.store
+              );
               this.instantiateComponent(newConfig);
               this.doInstantiateBlocks();
             }
@@ -61,18 +64,25 @@ export class SchoolPicturesPageComponent extends PecaPageComponent implements On
       );
   }
 
+  managePermissions(permissionsArray) {
+    return sliderActivitiesPermissions.actions.reduce(
+      (permissionsObj, permission) => {
+        permissionsObj[permission] = permissionsArray.includes(permission);
+        return permissionsObj;
+      },
+      {}
+    );
+  }
+
   doInstantiateBlocks() {
-    this.isInstanciated = false;
     this.isInstantiating = true;
     setTimeout(() => {
       this.instantiateBlocks(this.container, true);
-      this.isInstanciated = true;
       this.isInstantiating = false;
     });
   }
 
   ngOnDestroy() {
-    this.isInstanciated = false;
     this.subscription.unsubscribe();
     this.store.dispatch(new ClearSchoolActivitiesRequestData({}));
   }
