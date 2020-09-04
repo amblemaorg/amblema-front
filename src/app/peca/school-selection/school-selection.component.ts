@@ -19,60 +19,10 @@ import { UpdateStates, UpdateMunicipalities } from '../../store/actions/steps/re
 export class SchoolSelectionComponent implements OnInit {
   backIcon = faArrowLeft;
   closeIcon = faSignOutAlt;
-  title = "Bienvenido a AmbleMa";
+  title = "Bienvenido a AmbLeMa";
   description =
-    " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quam pariatur hic dignissimos nam laborum expedita nostrum temporibus adipisci, amet quos neque animi, obcaecati, quisquam officia dolorum inventore deserunt! Officia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam sapiente placeat veritatis, reprehenderit accusantium, illo aspernatur qui, cupiditate magni quis provident! Quibusdam fugiat voluptatum doloribus fugit? Illum dolores dicta eveniet quos neque animi, illo aspernatur qui.";
- /*  escuela1 = {
-    name: "Escuela 1",
-    addres: "",
-    phase: "1"
-  };
-  escuela2 = {
-    name: "Escuela 2",
-    phase: "1"
-  };
-  escuela3 = {
-    name: "Escuela 3",
-    phase: "2"
-  };
-  escuela4 = {
-    name: "Escuela 1",
-    addres: "",
-    phase: "1"
-  };
-  escuela5 = {
-    name: "Escuela 2",
-    phase: "1"
-  };
-  escuela6 = {
-    name: "Escuela 3",
-    phase: "2"
-  };
-  escuela7 = {
-    name: "Escuela 1",
-    addres: "",
-    phase: "1"
-  };
-  escuela8 = {
-    name: "Escuela 2",
-    phase: "1"
-  };
-  escuela10 = {
-    name: "Escuela 3",
-    phase: "2"
-  };
-  escuela11 = {
-    name: "Escuela 3",
-    phase: "2"
-  };
-  escuela12 = {
-    name: "Escuela 3",
-    phase: "2"
-  };
-  escuela9 = {
-    name: "Escuela 3",
-    phase: "2"
-  }; */
+    "AmbLeMa es la conjunción de tres actores esenciales: Coordinadores, Escuelas y Padrinos; que le dan vida a un sistema armónico para alcanzar la meta de una educación de calidad que queremos aportar a miles de niños en Venezuela. Bienvenidos a esta maravillosa aventura donde el aporte de cada uno suma para lograr lo que nos mueve en AmbLeMa: el HQS (Hagamos que Suceda).";
+
   userType: string;
   projects: any;
   permissions: any;
@@ -80,8 +30,6 @@ export class SchoolSelectionComponent implements OnInit {
   nameUser: string;
   emailUser: string;
 
-/*   schools = [this.escuela1, this.escuela2, this.escuela3, this.escuela4, this.escuela5, this.escuela5, this.escuela6, this.escuela7, this.escuela8, this.escuela10, this.escuela11, this.escuela12, this.escuela9];
- */
   constructor(
     private router: Router,
     private authService: NbAuthService,
@@ -106,7 +54,7 @@ export class SchoolSelectionComponent implements OnInit {
         this.idUser = response.identity.id;
         this.emailUser = response.identity.email;
         this.nameUser = response.identity.name;
-        
+
         if (this.projects.length === 1) {
           const projectPhase = parseInt(this.projects[0].phase);
           const projectId = this.projects[0].id;
@@ -120,11 +68,11 @@ export class SchoolSelectionComponent implements OnInit {
     let phaseProject = phase;
     let idProject = id;
     if (phaseProject == 1) {
-      this.router.navigate(["previous-steps"]);      
+      this.router.navigate(["previous-steps"]);
       this.stepsService.callSteps(false);
-      
+
     } else {
-      this.router.navigate(["peca"]);      
+      this.router.navigate(["peca"]);
       this.store.dispatch( new SetCurrentUser( this.idUser, (+this.userType) ) );
     }
 
@@ -141,5 +89,5 @@ export class SchoolSelectionComponent implements OnInit {
     this.store.dispatch(new UpdateStates);
     this.store.dispatch(new UpdateMunicipalities);
   }
-  
+
 }
