@@ -82,11 +82,11 @@
       <div class="style-btn">
         <button
           title="general"
-          *ngIf="dato.isFromAnnualConvention && (info.button && !info.button.hidden)"
+          *ngIf="dato.isFromAnnualConvention && info.button && !info.button.hidden"
           class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
           (click)="sendAnnualConvention(dato.checkList)"
         >
-          Guardar
+        {{ info.button.name }}
         </button>
       </div>
     </ng-container>
