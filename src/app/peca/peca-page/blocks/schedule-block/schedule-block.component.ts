@@ -1,14 +1,12 @@
-import { Component, OnInit, AfterViewInit, ViewContainerRef, ViewChild, QueryList, ViewChildren } from '@angular/core';
-import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { Component, OnInit, ViewContainerRef, QueryList, ViewChildren } from '@angular/core';
+import { PresentationalBlockComponent } from '../page-block.component';
 import { PageBlockFactory } from '../page-block-factory';
 import { DayService, WeekService, WorkWeekService, MonthService, AgendaService, View, EventSettingsModel } from '@syncfusion/ej2-angular-schedule';
 import { Internationalization, L10n, loadCldr } from '@syncfusion/ej2-base';
-import { DataManager, ODataV4Adaptor, Query } from '@syncfusion/ej2-data';
 import * as  numberingSystems from 'cldr-data/supplemental/numberingSystems.json';
 import * as  gregorian from 'cldr-data/main/es/ca-gregorian.json';
 import * as  numbers from 'cldr-data/main/es/numbers.json';
 import * as  timeZoneNames from 'cldr-data/main/es/timeZoneNames.json';
-import { extend } from '@syncfusion/ej2-base';
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { Select } from "@ngxs/store";
@@ -52,9 +50,6 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
     this.component = 'agendas';
   }
 
-
-  /*************************************** */
-
   //Selectores
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
 
@@ -63,23 +58,11 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
 
   isInstanciated: boolean;
   loadedData: boolean;
-  /*************************************** */
-
-
-
-  /*Ejemplo Consumo remoto*/
-  /* private dataManager: DataManager = new DataManager({
-    url: 'https://js.syncfusion.com/demos/ejservices/api/Schedule/LoadData', 
-    adaptor: new ODataV4Adaptor,
-    crossDomain: true
-  });
-  private dataQuery: Query = new Query().from("Events");
-
-  public eventSettings: EventSettingsModel = { dataSource: this.dataManager }; */
   /*--------------------------------------------------------*/
 
-  /*COnsumo Local*/
-  /* public data: object[] = [{
+  /*Consumo Local*/
+  /*
+  public data: object[] = [{
     Id: 1,
     Subject: 'Meeting',
     StartTime: new Date(2020, 5, 15),
@@ -94,12 +77,9 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
     StartTime: new Date(2020, 5, 30, 9, 0),
     EndTime: new Date(2020, 5, 30, 10, 30),
     Description: 'Meeting time changed based on team activities.',
-  }]; */
-  public eventSettings: EventSettingsModel ;/* = {
-    dataSource: this.data
-  } */
-  /*-------------------------------------------------------*/
-
+  }];
+  */
+  public eventSettings: EventSettingsModel;
   public allowVirtualScroll: boolean = true;
   public currentView: View = 'Month';
   private instance: Internationalization = new Internationalization();
@@ -107,7 +87,6 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
     return this.instance.formatDate(value, { skeleton: 'hm' });
   };
   public isReadOnly: boolean = true;
-
 
   ngOnInit() {
     this.infoDataSubscription = this.infoData$.subscribe(
@@ -118,18 +97,17 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
           }
           let auxSchedule = [];
           data.activePecaContent.schedule.forEach((schedule) => {
-            schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
-            schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
+            // Change "-" for "/" in date string to instantiate valid dates in iOS and OSX
+            schedule.StartTime = new Date(schedule.StartTime.replace(/-/g, "/"));
+            schedule.EndTime = new Date(schedule.EndTime.replace(/-/g, "/"));
+            //schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
+            //schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
           });
-
           auxSchedule = auxSchedule.concat(data.activePecaContent.schedule)
-
           this.schedules = auxSchedule;
-         /*  activity = this.pipe.transform(Date.parse(activity), 'yyyy/MM/dd'); */
           this.eventSettings = {
             dataSource: this.schedules
-          } 
-          
+          }
           this.loadedData = true;
           if (this.isInstanciated) this.updateMethods();
         }
