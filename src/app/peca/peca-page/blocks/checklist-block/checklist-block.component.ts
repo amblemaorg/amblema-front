@@ -131,6 +131,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
   setSettings(settings: any) {
     this.settings = { ...settings };
+    this.flag = settings.flag ? true : false;
   }
 
   setFetcherUrls({ post }) {
@@ -141,11 +142,9 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
   setData(data: any) {
     if (data["button"]) {
-      if (data["button"]["name"]) {
-        this.settings.infoContainer[0].button.name = data["button"]["name"];
-      }
-      if (data["button"]["hidden"]) {
-        this.settings.infoContainer[0].button.hidden = data["button"]["hidden"];
+      this.settings.infoContainer[0].button = {
+        ...this.settings.infoContainer[0].button,
+        ...data["button"]
       }
     }
     if (data["isGenericActivity"]) {

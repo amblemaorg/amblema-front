@@ -1,21 +1,18 @@
-import { annualConventionPermissions } from './../blocks/peca-permissology';
 import {
   Component,
-  AfterViewInit,
-  Injector,
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import { ANNUAL_CONVENTION_CONFIG as config } from "./annual-convention-config";
+import { annualConventionConfigMapper } from "./annual-convention-config";
 import { Subscription, Observable } from "rxjs";
 import { Select } from "@ngxs/store";
 import { PecaState } from "src/app/store/states/peca/peca.state";
-import { GlobalService } from "src/app/services/global.service";
-import { isNullOrUndefined } from "util";
 import { NavigationEnd, Router, Event } from "@angular/router";
+import { distinctUntilChanged } from 'rxjs/operators';
+import { annualConventionPermissions } from './../blocks/peca-permissology';
 
 @Component({
   selector: "peca-annual-convention",
@@ -23,31 +20,22 @@ import { NavigationEnd, Router, Event } from "@angular/router";
 })
 export class AnnualConventionPageComponent
   extends PecaPageComponent
-  implements AfterViewInit, OnDestroy {
-  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
-  container: ViewContainerRef;
+  implements OnDestroy {
+  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false }) container: ViewContainerRef;
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   infoDataSubscription: Subscription;
   AnnualConventionInfo: any;
-  isInstanciated: boolean;
   response = [];
-  loadedData: boolean;
   UrlLapse = "";
   routerSubscription: Subscription;
   pecaId = "";
+  isInstantiating: boolean;
 
-  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService,
     private router: Router
   ) {
     super(factoryResolver);
-    globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      if (this.loadedData) this.updateMethods();
-    });
-    this.instantiateComponent(config);
-
     //To know if the url change
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -57,31 +45,34 @@ export class AnnualConventionPageComponent
       }
     });
   }
+
   ngOnInit() {
     this.getInfo();
   }
+
   getInfo() {
-    this.infoDataSubscription = this.infoData$.subscribe(
+    this.infoDataSubscription = this.infoData$
+    .pipe(
+      distinctUntilChanged(
+        (prev, curr) =>
+          JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].annualConvention) ===
+          JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].annualConvention)
+      )
+    )
+    .subscribe(
       (data) => {
-        if (data.activePecaContent) {
-          if (!isNullOrUndefined(data)) {
-            this.pecaId = data.activePecaContent.id;
-            const lapseName = `lapse${this.UrlLapse}`;
-            let { permissions } = data.user;
-            permissions = this.managePermissions(permissions);
-            const checklist = data.activePecaContent[lapseName].annualConvention.checklist;
-            /*
-            if (this.UrlLapse === "1") {
-              this.response = data.activePecaContent.lapse1.annualConvention.checklist;
-            } else if (this.UrlLapse === "2") {
-              this.response = data.activePecaContent.lapse2.annualConvention.checklist;
-            } else {
-              this.response = data.activePecaContent.lapse3.annualConvention.checklist;
-            }
-            */
-            this.setAnnualConventionData(checklist, permissions);
-            this.loadedData = true;
-            if (this.isInstanciated) this.updateMethods();
+        if (!this.isInstantiating) {
+          if (data.activePecaContent) {
+              this.pecaId = data.activePecaContent.id;
+              let { permissions } = data.user;
+              permissions = this.managePermissions(permissions);
+              const config = annualConventionConfigMapper(
+                data.activePecaContent,
+                this.UrlLapse,
+                permissions
+              );
+              this.instantiateComponent(config);
+              this.doInstantiateBlocks();
           }
         }
       },
@@ -100,41 +91,15 @@ export class AnnualConventionPageComponent
     );
   }
 
-  setAnnualConventionData(checklist, permissions) {
-    const { annual_convention_peca_edit } = permissions
-    this.AnnualConventionInfo = {
-      checkList: checklist,
-      button: {
-        hidden: !annual_convention_peca_edit,
-      }
-    };
-  }
-
-  updateDataToBlocks() {
-    this.setBlockData("AnnualConventionCheckLists", this.AnnualConventionInfo);
-  }
-
-  updateMethods() {
-    this.updateDataToBlocks();
-    this.updateStaticFetchers();
-  }
-
-  updateStaticFetchers() {
-    this.setBlockFetcherUrls("AnnualConventionCheckLists", {
-      post: `pecaprojects/annualconvention/${this.pecaId}`,
-    });
-  }
-
-  ngAfterViewInit(): void {
+  doInstantiateBlocks() {
+    this.isInstantiating = true;
     setTimeout(() => {
-      this.instantiateBlocks(this.container);
-      this.isInstanciated = true;
+      this.instantiateBlocks(this.container, true);
+      this.isInstantiating = false;
     });
   }
 
   ngOnDestroy() {
-    this.isInstanciated = false;
-    this.loadedData = false;
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
