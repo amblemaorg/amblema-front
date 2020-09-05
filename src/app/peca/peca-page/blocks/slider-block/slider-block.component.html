@@ -23,9 +23,22 @@
       *ngFor="let image of settings.sliderImage; index as i" [class.hidden]="i!=shown">
       <h6 class="mb-4 image-desc">{{image.text}}</h6>
       <span *ngIf="image.fields">
-        <input #inputDate type="date" class="form-control sb-date-picker" (change)="glbls.validateDate($event,'greater')" />
-        <input [class.d-none]="inputDate.value.length > 0" class="form-control" autocomplete='off' type="text" readonly
-          (click)="focusDatePicker(inputDate)" />
+        <input
+          #inputDate
+          type="date"
+          data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
+          placeholder="dd/mm/yyyy"
+          class="form-control sb-date-picker"
+          (change)="glbls.validateDate($event,'greater')"
+        />
+        <input
+          [class.d-none]="inputDate.value.length > 0"
+          class="form-control"
+          autocomplete='off'
+          type="text"
+          readonly
+          (click)="focusDatePicker(inputDate)"
+        />
       </span>
       <p class="mb-4 mt-4 image-desc">{{ image.description }}</p>
     </div>
