@@ -135,6 +135,8 @@
               <input
                 #inputDate
                 type="date"
+                data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
+                placeholder="dd/mm/yyyy"
                 class="form-control"
                 [formControlName]="field"
                 [id]="getId('datepicker-' + field)"
