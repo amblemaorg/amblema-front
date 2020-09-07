@@ -39,6 +39,8 @@
             <input
               #inputDate
               type="date"
+              data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
+              placeholder="dd/mm/yyyy"
               class="form-control is-date-input tb-date-picker"
               [value]="settings.dateOrtext.fields[0].value"
               (change)="controlDateChange($event, 'greater')"

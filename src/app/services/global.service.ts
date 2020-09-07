@@ -8,6 +8,7 @@ import {
 import { isPlatformBrowser, Location } from "@angular/common";
 import { Title, Meta } from "@angular/platform-browser";
 import * as $ from "jquery";
+import * as moment from "moment";
 import { PageBlockComponent } from "../peca/peca-page/blocks/page-block.component";
 
 @Injectable({
@@ -230,8 +231,9 @@ export class GlobalService {
 
   validateDate(e, cond, bool = false, notE: boolean = false,years: number = 0) {
     let value = !notE ? e.target.value : e;
-    let today = this.getDateFormat(new Date(),years);
-
+    let today: any = this.getDateFormat(new Date(),years);
+    value = this.makeDateFromString(value, "DD/MM/YYYY");
+    today = new Date(today);
     if (value != "") {
       if (
         (cond == "lower" && value > today) ||
@@ -250,10 +252,19 @@ export class GlobalService {
     if (typeof value !== "string" || value === "") {
       return "";
     }
-    const newDate = new Date(value);
+    let newDate = this.makeDateFromString(value, "DD/MM/YYYY");
     return newDate.toISOString();
   }
 
+  makeDateFromString(dateString, format = "DD/MM/YYYY") {
+    const timestamp = Date.parse(dateString);
+    if (isNaN(timestamp)) {
+      return moment(dateString, format).toDate();
+    }
+    else {
+      return new Date(dateString);
+    }
+  }
   //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
@@ -293,7 +304,7 @@ export class GlobalService {
       date,
       checklist,
       upload
-    });    
+    });
   }
   actionsSleeperUpdater(sleepSend: boolean, activity_uneditable: boolean) {
     this.actionsSleeperEmitter.emit({
@@ -333,7 +344,7 @@ export class GlobalService {
 
   emitStudentsTableRefresh(tableName: string, id_string: string) {
     this.blockIntancesTableRefresherEmitter.emit({
-      tableName, 
+      tableName,
       id_string
     });
   }

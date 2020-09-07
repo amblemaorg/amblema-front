@@ -147,7 +147,7 @@
     nb-tabset nb-tab,
     p,
     nb-checkbox .text,
-    a,    
+    a,
     nb-user .user-name {
       font-family: "Montserrat" !important;
     }
@@ -176,6 +176,7 @@
       nb-card {
         nb-card-body {
           padding: 1.25rem 2.5rem;
+          overflow: visible;
 
           .welcome-text {
             color: $blue;
@@ -188,10 +189,10 @@
             @media screen and (orientation: landscape) and (min-width: 1900px) { max-width: 50%; }
             @media screen and (orientation: landscape) and (min-width: 2000px) { max-width: 50rem; }
           }
-          
+
           &.header-title-and-button-container {
             .btn-go-steps, .btn-download-yearbook {
-              @include layout-header-btn-confs();              
+              @include layout-header-btn-confs();
             }
             .btn-go-steps {
               display: none;
@@ -201,22 +202,22 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-        
+
                 .btn-go-steps {
                     display: inline-block;
                 }
 
                 @media screen and (orientation: portrait) {
                   flex-wrap: wrap;
-                  align-items: baseline; 
+                  align-items: baseline;
 
                   .title-style {
                     @media screen and (max-width: 374px) {
-                      margin-bottom: 1rem; 
-                    }                    
+                      margin-bottom: 1rem;
+                    }
                   }
                 }
-            }    
+            }
           }
         }
         @media (max-width: 768px) {
@@ -253,7 +254,7 @@
         @media screen and (orientation: landscape){
           margin-left: 0.5rem;
         }
-        @include mediabreak(small,landscape,true,640px) { 
+        @include mediabreak(small,landscape,true,640px) {
           margin-left: 0;
         }
 
@@ -272,7 +273,7 @@
         background: transparent;
       }
     }
-    
+
     /*DROPDOWN PRUEBA*/
     .dropdown {
       .dropdown-menu {
@@ -285,13 +286,13 @@
           }
       }
     }
-    
+
     // .nb-theme-default nb-user.size-giant .user-name {
     //   font-size: 1.5rem;
     //   line-height: 1.25rem;
     //   font-weight: bold;
     // }
-    
+
     nb-user .user-picture {
       border: none;
       @include shared-user-image-confs();
@@ -303,7 +304,7 @@
 
       .user-name {
         @include shared-user-name-confs();
-        
+
         ::ng-deep {
           span {
               display: block;
@@ -317,7 +318,7 @@
         margin-left: -50px;
       }
     }
-    .style-btn-anuario {      
+    .style-btn-anuario {
       text-align: right;
       display: inline-block;
     }
@@ -363,17 +364,17 @@
 
 
 #no-peca-modal {
-  background: rgba(0, 0, 0, 0.25);  
+  background: rgba(0, 0, 0, 0.25);
   .modal-content {
       .modal-header {
           border-bottom: none;
           padding: 1rem 1rem;
           .close:focus { outline: none; }
       }
-      .modal-body { 
-        color: $blue; 
+      .modal-body {
+        color: $blue;
         text-align: justify;
-        padding: 0 2rem 3rem 2rem; 
+        padding: 0 2rem 3rem 2rem;
       }
   }
 }
