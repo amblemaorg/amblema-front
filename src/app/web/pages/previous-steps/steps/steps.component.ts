@@ -1,5 +1,5 @@
-import { 
-  Component, 
+import {
+  Component,
   OnInit,
   QueryList,
   ViewChildren,
@@ -60,9 +60,9 @@ export class StepsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private stepsService: StepsService, 
+    private stepsService: StepsService,
     private store: Store,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -81,19 +81,19 @@ export class StepsComponent implements OnInit, OnDestroy {
     if (!this.isTest) {
       this.subscription.add(
         this.selected_project_id$.subscribe(res => {
-          if (res) {            
+          if (res) {
             this.project_id = res;
             if ( !this.stepsService.areStepsCalled() ) {
               this.fetchingSteps = true;
-              this.subscription.add(          
-                this.store.dispatch( new UpdateStepsProgress(this.project_id) ).subscribe(res => {                  
+              this.subscription.add(
+                this.store.dispatch( new UpdateStepsProgress(this.project_id) ).subscribe(res => {
                   this.stepsService.callSteps(true);
                   this.enabledTabs = true;
                   this.fetchingSteps = false;
                 })
               );
               this.store.dispatch( new UpdateModulesTotal );
-            }            
+            }
           }
         })
       );
@@ -110,7 +110,7 @@ export class StepsComponent implements OnInit, OnDestroy {
       );
 
       this.subscription.add(
-        this.project_steps$.subscribe(res => {    
+        this.project_steps$.subscribe(res => {
           if (res.steps.length>0) {
             this.fillCounter++;
             if(this.fillCounter==2){ // updating steps to be shown if case one of them got deleted in bds
@@ -119,16 +119,31 @@ export class StepsComponent implements OnInit, OnDestroy {
               this.coordinatorSteps = [];
               this.schoolSteps = [];
             }
-            
-            res.steps.forEach(record => {                 
+
+            res.steps.forEach(record => {
               let step_:Step = {
                 ...record,
-                checklist: this.getChecks(record.checklist), 
-                sending: false,               
+                checklist: this.getChecks(record.checklist),
+                sending: false,
               };
+              const stepRequireApproval = step_.approvalType === "3";
+              const stepIsNotApproved = step_.status !== "3";
+              if (stepRequireApproval && stepIsNotApproved) {
+                const { approvalHistory, hasDate, hasChecklist, hasUpload } = step_;
+                if (approvalHistory.length > 0) {
+                  const { stepDate, stepChecklist, stepUploadedFile } = approvalHistory[approvalHistory.length - 1].data;
+                  step_ = {
+                    ...step_,
+                    date: hasDate && stepDate ? stepDate : null,
+                    checklist: hasChecklist && stepChecklist ? stepChecklist : [],
+                    uploadedFile: hasUpload && stepUploadedFile && stepUploadedFile.url ? stepUploadedFile : null,
+                  }
+                }
+              }
+
               step_.isForm = (step_.devName.toLowerCase().includes("fill") && step_.devName.toLowerCase().includes("form"))? true:false;
 
-              if (step_.isForm) {                
+              if (step_.isForm) {
                 if (step_.devName=="sponsorFillCoordinatorForm" || step_.devName=="schoolFillCoordinatorForm") step_.type = 2;
                 else if (step_.devName=="coordinatorFillSponsorForm" || step_.devName=="schoolFillSponsorForm") step_.type = 3;
                 else step_.type = 4;
@@ -142,9 +157,9 @@ export class StepsComponent implements OnInit, OnDestroy {
               if (step_.status!="3" && step_.devName!="amblemaConfirmation") {
                 this.canOrganizationConfirm = false;
               }
-        
+
               switch (step_.tag) {
-                case "2":                  
+                case "2":
                   let ind2 = this.coordinatorSteps.findIndex(st => {return st.id === step_.id});
                   if (ind2>=0) this.coordinatorSteps[ind2] = step_;
                   else this.coordinatorSteps.push(step_);
@@ -164,7 +179,7 @@ export class StepsComponent implements OnInit, OnDestroy {
                   if (ind1>=0) this.generalSteps[ind1] = step_;
                   else this.generalSteps.push(step_);
                   break;
-              }                    
+              }
             });
 
             //Setting progress bar
@@ -172,7 +187,7 @@ export class StepsComponent implements OnInit, OnDestroy {
             this.stepsProgress[1]= +res.sponsor;
             this.stepsProgress[2]= +res.coordinator;
             this.stepsProgress[3]= +res.school;
-          }        
+          }
         })
       );
 
@@ -184,7 +199,7 @@ export class StepsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  updateSteps(p_i) {    
+  updateSteps(p_i) {
     this.store.dispatch(new UpdateStepsProgress(p_i)).subscribe(res=>{
       this.enabledTabs = true;
     });
