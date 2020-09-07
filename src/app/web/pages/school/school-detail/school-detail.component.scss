@@ -36,23 +36,27 @@ section.school-details {
         flex: 0 0 40%;
         width: 40%;
         margin-bottom: 0;
+        max-width: 40%;
       }
 
       &:nth-child(2) {
         flex: 0 0 55%;
         width: 55%;
+        max-width: 55%;
       }
     }
 
     @include breakpoint(medium) {
       &:first-child {
         flex: 0 0 40%;
-        width: 40%;
         margin-bottom: 0;
+        max-width: 40%;
+        width: 40%;
       }
 
       &:nth-child(2) {
         flex: 0 0 40%;
+        max-width: 40%;
         width: 40%;
       }
     }
