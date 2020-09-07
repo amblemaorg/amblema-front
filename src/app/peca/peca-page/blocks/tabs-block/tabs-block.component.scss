@@ -2,6 +2,7 @@
 @import "scss/responsive";
 
 ::ng-deep {
+
   .nb-theme-default {
     nb-tabset {
       @media (max-width: 768px) {
@@ -89,7 +90,9 @@
       }
       nb-tab {
         padding: 1rem 1rem;
-
+        &.content-active {
+          overflow: visible;
+        }
         &.environmental-project {
           padding: 1rem 0.5rem !important;
 
