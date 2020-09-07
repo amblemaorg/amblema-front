@@ -46,7 +46,10 @@
               </div>
             </div>
             <div *ngIf="step.hasVideo && showThisVideo" class="video-container">
-              <div class="video" [innerHTML]="getVideo(step.video.url)"></div>
+              <div *ngIf="step.video && step.video.url"
+                class="video"
+                [innerHTML]="getVideo(step.video.url)">
+              </div>
             </div>
 
             <!-- todo: APPROVE BUTTON FOR ADMIN ------------------------------------------------>
@@ -70,11 +73,21 @@
               Descargar archivo
             </a>
             <div *ngIf="step.hasUpload" class="d-inline" [id]="'upload-btn-'+i+'-'+mode" #uploadFile>
-              <input class="hide-upload-btn" [id]="uploadFile.id+'0'" (change)="fileMngr($event,i)" type="file"
-              accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint">
-              <button [id]="uploadFile.id+'1'" (click)="clickUpload(uploadFile); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile"
-              [class.has-several]="(isAdmin() && step.approvalType=='1') || step.hasFile" [class.hidebtn]="step.status=='2'"
-              [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableActions">
+              <input
+                class="hide-upload-btn"
+                [id]="uploadFile.id+'0'"
+                (change)="fileMngr($event,i)"
+                type="file"
+                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint"
+              >
+              <button
+                [id]="uploadFile.id+'1'"
+                (click)="clickUpload(uploadFile); $event.preventDefault()"
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile"
+                [class.has-several]="(isAdmin() && step.approvalType=='1') || step.hasFile"
+                [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableActions"
+              >
+                <!-- [class.hidebtn]="step.status=='2'" -->
                 {{ step.uploadedFile && step.uploadedFile.name.length>0 ? shortenName(step.uploadedFile.name) : 'Adjuntar archivo' }}
               </button>
               <button [class.d-none]="!canUserSee(step)" [id]="uploadFile.id+'2'" (click)="approvalMethod(step,i,mode); $event.preventDefault()" class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several"
