@@ -31,16 +31,16 @@ export class GeneralStepsComponent implements OnInit {
   @Input() setStates = [];
   @Input() setMuns = [];
 
-  @Output() callUpdate:EventEmitter<string> = new EventEmitter();  
+  @Output() callUpdate:EventEmitter<string> = new EventEmitter();
 
   isBrowser;
   glbls:any;
 
-  showThisVideo: boolean;  
+  showThisVideo: boolean;
   timesVideoSourceCalled:number = 0;
   video_: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService, 
+  constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService,
     private sanitizer: DomSanitizer, private stepsService: StepsService, private globals: GlobalService) {
       this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -80,13 +80,13 @@ export class GeneralStepsComponent implements OnInit {
   // METHOD THAT ALLOWS THE SENDER USER TO SEE THE CANCEL BUTTON FROM REQUEST STEP
   canUserSee(step:Step) {
     if(step.approvalHistory.length>0) {
-      let bool = step.approvalHistory[step.approvalHistory.length-1].data? 
-                (step.approvalHistory[step.approvalHistory.length-1].data.user? 
-                true : false) : false;      
-      if(bool) return step.status == "1" || step.approvalHistory[step.approvalHistory.length-1].status == "4" || 
+      let bool = step.approvalHistory[step.approvalHistory.length-1].data?
+                (step.approvalHistory[step.approvalHistory.length-1].data.user?
+                true : false) : false;
+      if(bool) return step.status == "1" || step.approvalHistory[step.approvalHistory.length-1].status == "4" ||
         (step.status!="1" && step.approvalHistory[step.approvalHistory.length-1].data.user.id==this.user_id);
       else return false;
-    } 
+    }
     else return true;
   }
 
@@ -100,8 +100,8 @@ export class GeneralStepsComponent implements OnInit {
       const video = this.embedService.embed(url);
       if (video) this.timesVideoSourceCalled++;
       if (!this.video_) this.video_ = video;
-      return this.video_; 
-    } 
+      return this.video_;
+    }
     else if(this.video_) return this.video_;
   }
 
@@ -117,8 +117,8 @@ export class GeneralStepsComponent implements OnInit {
     this.steps[item].checklist[pos].checked = e.target.checked;
   }
 
-  enableChecksBtn(step:Step,bool=false) { 
-    let enable = bool;   
+  enableChecksBtn(step:Step,bool=false) {
+    let enable = bool;
     for (let i = 0; i < step.checklist.length; i++) {
       if (step.checklist[i].checked==(!bool) ) {
         enable = !bool;
@@ -130,7 +130,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   fileMngr(e,i) {
-    this.steps[i].uploadedFile = {  
+    this.steps[i].uploadedFile = {
       name: <File>e.target.files[0].name,
       file: <File>e.target.files[0],
       url: ''
@@ -151,42 +151,42 @@ export class GeneralStepsComponent implements OnInit {
   }
   approvalMethod(step:Step,indd?,modd?,status?) {
     step.sending = true;
-    let formData = new FormData();       
+    let formData = new FormData();
 
     let getPosting = () => {
-      if (step.hasChecklist && step.approvalType!="3") {        
+      if (step.hasChecklist && step.approvalType!="3") {
         formData.append('status', !this.enableChecksBtn(step,true)?"1":"2");
       } else if (step.approvalType!="3" && step.approvalType!="4") {
         formData.append('status', step.status=="1"?"3":"1");
       }
-      if (step.approvalType=="4") formData.append('status', status=="1"?"1":"3");      
+      if (step.approvalType=="4") formData.append('status', status=="1"?"1":"3");
       formData.append(step.approvalType=="3"?'stepId':'id', step.id);
       if(step.approvalType=="3") {
         formData.append('project', this.project_id);
         formData.append('user', this.user_id);
       }
-      if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date); 
+      if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date);
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
-    }     
+    }
 
     if( (step.status=="1" && step.approvalHistory && step.approvalHistory.length==0) || step.approvalType!="3") {
       getPosting();
-         
+
       if(step.approvalType=="3") this.postAR(formData,step,indd,modd); // approval request
       else this.postSA(formData,step,indd,modd,this.project_id); // step approval
-    } 
+    }
     else { // when a register of this approval request already exists
       let rqstApv = step.approvalHistory.length>0? step.approvalHistory[step.approvalHistory.length-1].status : "0"; // approval request Status; located in the last item of the approval history.
       //posting
-      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4" || rqstApv=="1") ) || // I added 1 for it to work to send request 
+      if( (step.hasUpload && (rqstApv=="3" || rqstApv=="4" || rqstApv=="1") ) || // I added 1 for it to work to send request
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) { getPosting(); } // updating
       //putting
-      if(step.hasUpload && rqstApv=="1" && step.status!="1")  // I added 1 for it to work to send request 
+      if(step.hasUpload && rqstApv=="1" && step.status!="1")  // I added 1 for it to work to send request
         formData.append('status', '4'); // cancels approval request // this is not reached by checklist btn
-      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3") 
+      if(step.hasChecklist && rqstApv=="1" && step.approvalType=="3")
         formData.append('stepChecklist', JSON.stringify(step.checklist));
-      
+
       //endpoint callers
       if ((step.hasUpload && (rqstApv=="3" || rqstApv=="4") ) ||
           (step.hasChecklist && (rqstApv=="3" || step.approvalType!="3") ) ) this.postAR(formData,step,indd,modd);
@@ -203,7 +203,7 @@ export class GeneralStepsComponent implements OnInit {
     step.sending = false;
     this.callUpdate.emit(this.project_id);
     this.setCurrentAccItem(indd,modd);
-  }   
+  }
   updateEmitterFromForm(e) {
     this.callUpdate.emit(e.project_id);
     this.setCurrentAccItem(e.indd,e.modd);
@@ -214,7 +214,7 @@ export class GeneralStepsComponent implements OnInit {
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
-      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+      const error_msg = (error.error && error.error instanceof ProgressEvent)
         ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
       this.toasterMeth(indd,modd,error_msg);
@@ -226,20 +226,20 @@ export class GeneralStepsComponent implements OnInit {
       this.updatingEmitting(step,indd,modd);
 
     },(error)=>{
-      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+      const error_msg = (error.error && error.error instanceof ProgressEvent)
         ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
       this.toasterMeth(indd,modd,error_msg);
     });
   }
   putAR(formData,step:Step,indd,modd,id) {
-    // let formDataStatus = new FormData(); 
+    // let formDataStatus = new FormData();
     let jsonDataStatus = { status: null};
     let isCancel = false;
     if (step.status!="1" && step.approvalType=="3") {
       // formDataStatus.append('status', '4');
-      jsonDataStatus.status = '4';   
-      isCancel = true;   
+      jsonDataStatus.status = '4';
+      isCancel = true;
     }
 
     // this.stepsService.updateRequestApproval(id,isCancel?formDataStatus:formData,isCancel).subscribe(res=>{
@@ -249,8 +249,8 @@ export class GeneralStepsComponent implements OnInit {
 
       this.updatingEmitting(step,indd,modd);
 
-    },(error)=>{      
-      const error_msg = (error.error && error.error instanceof ProgressEvent) 
+    },(error)=>{
+      const error_msg = (error.error && error.error instanceof ProgressEvent)
         ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente" : null;
       step.sending = false;
       this.toasterMeth(indd,modd,error_msg);
@@ -301,9 +301,11 @@ export class GeneralStepsComponent implements OnInit {
     if(step.date) date = this.globals.getDateFormat(new Date( step.date.split("+").shift() ));
     return date;
   }
-  controlDate(e, step:Step) {   
+  controlDate(e, step:Step) {
     // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
-    if (!this.globals.validateDate(e,'greater',true)) step.date = this.globals.dateStringToISOString(e.target.value);
+    if (!this.globals.validateDate(e,'greater',true)) {
+      step.date = this.globals.dateStringToISOString(`${e.target.value}T00:00:00.00`);
+    }
     else step.date = null;
   }
 
@@ -311,7 +313,7 @@ export class GeneralStepsComponent implements OnInit {
     this.stepsService.goToModules();
   }
 
-  // For videos  
+  // For videos
   videoShower(step:Step) {
     this.showThisVideo = false;
     if (step.hasVideo) {
@@ -331,7 +333,7 @@ export class GeneralStepsComponent implements OnInit {
     <div class="form-group" [formGroup]="statusForm">
     <label [for]="step.devName">Modificar estatus:</label>
       <ng-select
-        class="form-control"  
+        class="form-control"
         [class.readonly]="isReadOnly"
         [items]="statuses"
         bindValue="id"
@@ -339,17 +341,17 @@ export class GeneralStepsComponent implements OnInit {
         [labelForId]="step.devName"
         formControlName="status"
         [virtualScroll]="true"
-        [id]="step.devName"  
-        [clearable]="false" 
-        [searchable]="false"  
+        [id]="step.devName"
+        [clearable]="false"
+        [searchable]="false"
         [loading]="step.sending"
         [readonly]="shouldReadonly()"
-        (change)="changeStatus()"         
+        (change)="changeStatus()"
       >
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <small>{{item.name}}</small>
         </ng-template>
-        
+
       </ng-select>
     </div>
   `,
