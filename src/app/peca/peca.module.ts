@@ -20,6 +20,7 @@ import {
   NbCheckboxModule,
   NbAlertModule,
 } from "@nebular/theme";
+import { NgDatepickerModule } from 'ng2-datepicker';
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { PecaRoutingModule } from "./peca-routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -137,6 +138,7 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     NbCheckboxModule,
     ScheduleModule,
     FontAwesomeModule,
+    NgDatepickerModule
   ],
   entryComponents: [
     TabsBlockComponent,
