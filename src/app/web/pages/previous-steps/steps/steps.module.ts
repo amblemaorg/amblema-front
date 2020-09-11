@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { TransferHttpCacheModule } from '@nguniversal/common';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
     NgSelectModule,
     BrowserTransferStateModule,
     TransferHttpCacheModule,
+    NgDatepickerModule
   ]
 })
 export class StepsModule { }

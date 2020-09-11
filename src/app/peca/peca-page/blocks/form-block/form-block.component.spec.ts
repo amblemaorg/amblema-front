@@ -17,6 +17,7 @@ import { ModulesState } from '../../../../store/states/e-learning/learning-modul
 import { UserState } from '../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 describe('FormBlockComponent', () => {
   let component: FormBlockComponent;
@@ -55,6 +56,7 @@ describe('FormBlockComponent', () => {
         NbIconModule,
         ToastrModule.forRoot(),
         HttpClientModule,
+        NgDatepickerModule,
         NgxsModule.forRoot( [
           ModulesState,
           UserState,

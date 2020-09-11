@@ -5,6 +5,7 @@ import { GlobalService } from '../../../../../services/global.service';
 import { StepsService } from '../../../../../services/steps/steps.service';
 import { isNullOrUndefined } from "util";
 import { Subscription } from "rxjs";
+import { DatepickerOptions } from 'ng2-datepicker';
 
 export const EMAIL_PTTRN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 export const LETTERS_PTTRN = /^[a-z A-Zá-úÁ-Ú]*$/;
@@ -52,14 +53,31 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   currentMarker: any;
   // END-MAPA--------------------------------------------------
 
-  sendingForm: boolean;  
+  sendingForm: boolean;
   disableOther: boolean = true;
+
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1950,
+    maxYear: 2050,
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    //minDate: new Date(Date.now()),
+    maxDate: new Date(Date.now()),
+    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
+    placeholder: 'Seleccione una fecha',
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
 
   doc_type = [
     {id:'1',name:'J'},
     // {name:'V'},
-  ]; 
-  
+  ];
+
   addressZoneTypes = [
     {id:'1',name:'Sector'},
     {id:'2',name:'Barrio'},
@@ -74,7 +92,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     {id:'1',name:'Fábrica'},
     {id:'2',name:'Tienda'},
     {id:'3',name:'Negocio personal'},
-    {id:'4',name:'Hacienda'},    
+    {id:'4',name:'Hacienda'},
   ];
 
   genders = [
@@ -106,8 +124,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     addressState: ['', [Validators.required]],
     addressMunicipality: ['', [Validators.required]],
     addressStreet: ['', [Validators.required]],
-    addressCity: ['', [Validators.required]],  
-    phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], 
+    addressCity: ['', [Validators.required]],
+    phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]],
     companyType: ['', [Validators.required]],
     companyOtherType: ['', [Validators.pattern(LETTERS_PTTRN)]],
     contactFirstName: ['', [Validators.required, Validators.pattern(LETTERS_PTTRN)]],
@@ -125,13 +143,13 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     cardId: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(8), Validators.pattern(NUMBER_PTTRN)]], //str solo numeros,
     homePhone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str(solo numeros),
     addressState: ['', [Validators.required]], //str stateID,
-    addressMunicipality: ['', [Validators.required]], //str municipalityID, 
+    addressMunicipality: ['', [Validators.required]], //str municipalityID,
     addressStreet: ['', [Validators.required]],
     addressCity: ['', [Validators.required]], //str,
     addressHome: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.pattern(EMAIL_PTTRN)]], //str,
-    phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str solo numeros, 
-    profession: ['', [Validators.required]], //str,  
+    phone: ['', [Validators.required, Validators.pattern(NUMBER_PTTRN)]], //str solo numeros,
+    profession: ['', [Validators.required]], //str,
   });
 
   schoolForm = this.fb.group({
@@ -182,21 +200,21 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       const initMap = () => {
         if (google) {
           clearInterval(interval);
-          this.mapSettings(this.lat, this.lng, 7); 
-        }        
+          this.mapSettings(this.lat, this.lng, 7);
+        }
       };
       let interval = null;
 
-      try {                
+      try {
         initMap();
       } catch (error) {
-        interval = setInterval(()=> {      
-          try {            
+        interval = setInterval(()=> {
+          try {
             initMap();
           } catch (error) {
             // TODO --
           }
-        }, 2000); 
+        }, 2000);
       }
 
     }
@@ -206,21 +224,21 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     this.fillStates();
     this.fillMunicipalities();
 
-    this.glbls = this.globals;    
-    
+    this.glbls = this.globals;
+
     if (this.who === "coordinator") {
       this.subscription.add(
-        this.coordinatorForm.get("cardType").statusChanges.subscribe( res => {        
+        this.coordinatorForm.get("cardType").statusChanges.subscribe( res => {
           this.setLength('cardId','cardType');
         })
       );
-    } 
-    
+    }
+
     if (this.who === "sponsor") {
       this.subscription.add(
-        this.sponsorForm.get("companyType").statusChanges.subscribe( res => {        
+        this.sponsorForm.get("companyType").statusChanges.subscribe( res => {
           if (
-            this.sponsorForm.get("companyType").value && 
+            this.sponsorForm.get("companyType").value &&
             this.sponsorForm.get("companyType").value === "0"
           ) {
             this.sponsorForm.setControl(
@@ -228,7 +246,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
                 this.fb.control(
                   this.sponsorForm.get("companyOtherType").value,
                   [
-                    Validators.required, 
+                    Validators.required,
                     Validators.pattern(LETTERS_PTTRN)
                   ]
                 )
@@ -245,19 +263,19 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
             );
             this.sponsorForm.get("companyOtherType").reset();
             this.disableOther = true;
-          }            
+          }
         })
       );
     }
 
     this.fillForm();
 
-    if (this.who === "school") {      
+    if (this.who === "school") {
       this.subscription.add(
         this.schoolForm.get('name').statusChanges.subscribe( res => {
           if (
-            this.currentMarker 
-            && this.schoolForm.get('name').value 
+            this.currentMarker
+            && this.schoolForm.get('name').value
             && this.schoolForm.get('name').value.length > 0
           ) {
             this.loadAllMarkers({
@@ -273,7 +291,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           if (
             this.schoolForm.get('addressMunicipality').value &&
             this.schoolForm.get('addressMunicipality').value.length > 0
-          ) {     
+          ) {
             const addressData = this.municipalitiesData.filter(s=>{
                 return s.id===this.schoolForm.get('addressMunicipality').value
               });
@@ -281,35 +299,35 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
               this.mapPositioner(
                 addressData[0].state.name,
                 addressData[0].name
-              ); 
-            }          
-          } 
+              );
+            }
+          }
           else {
             if (this.schoolmap && this.mapOptions) {
-              if (this.mapOptions.zoom != 7) {                
+              if (this.mapOptions.zoom != 7) {
                 const initMap = () => {
                   if (google) {
                     clearInterval(interval);
                     this.mapSettings(this.lat,this.lng,7);
-                    this.mapInitializer();   
-                  }           
+                    this.mapInitializer();
+                  }
                 };
                 let interval = null;
-        
-                try {                      
+
+                try {
                   initMap();
                 } catch (error) {
                   interval = setInterval(()=> {
-                    try {         
-                      initMap();               
+                    try {
+                      initMap();
                     } catch (error) {
                       // TODO --
                     }
-                  }, 2000); 
+                  }, 2000);
                 }
 
-              }            
-            }          
+              }
+            }
           }
         })
       );
@@ -328,20 +346,20 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       this.coordinates = new google.maps.LatLng(lat, lng);
       const mapOps: google.maps.MapOptions = {
         center: this.coordinates,
-        zoom: zoom,      
+        zoom: zoom,
       };
       this.mapOptions = mapOps;
     }
   }
-  
-  mapInitializer(disabled: boolean = false) {    
+
+  mapInitializer(disabled: boolean = false) {
     if (disabled) {
       this.mapOptions["disableDefaultUI"] = true;
       this.mapOptions["gestureHandling"] = 'none';
     } else {
-      if (this.mapOptions["disableDefaultUI"]) 
+      if (this.mapOptions["disableDefaultUI"])
         this.mapOptions["disableDefaultUI"] = false;
-      if (this.mapOptions["gestureHandling"])        
+      if (this.mapOptions["gestureHandling"])
         this.mapOptions["gestureHandling"] = 'cooperative';
     }
 
@@ -350,9 +368,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     if (!disabled) {
       google.maps.event.addListener(this.map, "click", (e) => {
         this.loadAllMarkers({
-          name: this.schoolForm.get('name').value 
-            && this.schoolForm.get('name').value.length > 0 
-              ? this.schoolForm.get('name').value 
+          name: this.schoolForm.get('name').value
+            && this.schoolForm.get('name').value.length > 0
+              ? this.schoolForm.get('name').value
               : "Escuela",
           coordinate: {
             latitude: e.latLng.lat(),
@@ -377,8 +395,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       map: this.map,
       position: new google.maps.LatLng(data.coordinate.latitude, data.coordinate.longitude),
       label: data.name.substring(0, 1).toUpperCase(),
-      title: data.name.toLowerCase() == "escuela" 
-        ? data.name 
+      title: data.name.toLowerCase() == "escuela"
+        ? data.name
         : `Escuela: ${data.name}`,
     });
 
@@ -388,7 +406,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   }
 
   mapPositioner(state: string, county: string) {
-    // google maps geocoding    
+    // google maps geocoding
     const initMap = () => {
       if (google) {
         clearInterval(interval);
@@ -404,9 +422,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
                 results[0].geometry.location.lng(),
                 11
               );
-            else           
+            else
               this.mapSettings(this.lat, this.lng, 7);
-          } 
+          }
           else {
             switch (status) {
               case 'ZERO_RESULTS':
@@ -422,24 +440,24 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
                 console.error('Unknown server error');
                 break;
             }
-            this.mapSettings(this.lat,this.lng,7);          
+            this.mapSettings(this.lat,this.lng,7);
           }
           this.mapInitializer();
         });
-      }           
+      }
     };
     let interval = null;
 
-    try {                      
+    try {
       initMap();
     } catch (error) {
       interval = setInterval(()=> {
-        try {         
-          initMap();               
+        try {
+          initMap();
         } catch (error) {
           // TODO --
         }
-      }, 2000); 
+      }, 2000);
     }
 
     // OpenStreetMap
@@ -456,11 +474,11 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
         console.log('openStreet map',res);
         if (res.length > 0)
           this.mapSettings(+res[0].lat,+res[0].lon,11);
-        else 
+        else
           this.mapSettings(this.lat,this.lng,7);
       },
       (error) => {
-        this.mapSettings(this.lat,this.lng,7);                
+        this.mapSettings(this.lat,this.lng,7);
         console.error(error);
       },
       () => {
@@ -473,14 +491,14 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   private fillForm() {
     if (this.approvalHistory.length > 0 && this.approvalHistory[this.approvalHistory.length-1].status!=3) {
       let data = this.approvalHistory[this.approvalHistory.length-1].data;
-      
+
       switch (this.who) {
         case 'sponsor':
           this.fillSponsor(data);
-          break; 
+          break;
         case 'coordinator':
           this.fillCoordinator(data);
-          break;     
+          break;
         default:
           this.fillSchool(data);
           break;
@@ -494,8 +512,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               if (this.schoolmap)
                 this.mapInitializer(this.disable);
-            }); 
-          }           
+            });
+          }
         };
         let interval = null;
         let num = 0;
@@ -505,11 +523,11 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
         } catch (error) {
           interval = setInterval(()=> {
             try {
-              initMap();               
+              initMap();
             } catch (error) {
               // TODO --
             }
-          }, 2000); 
+          }, 2000);
         }
 
       }
@@ -517,11 +535,11 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   }
 
   disableThis() {
-    return this.disable || this.status=='3' || 
+    return this.disable || this.status=='3' ||
     (this.approvalHistory.length>0 && this.approvalHistory[this.approvalHistory.length-1].status!="3");
   }
   showSendBtn() {
-    return this.status!='3' && (this.approvalHistory.length==0 || (this.approvalHistory.length>0 && 
+    return this.status!='3' && (this.approvalHistory.length==0 || (this.approvalHistory.length>0 &&
             this.approvalHistory[this.approvalHistory.length-1].status=="3") );
   }
 
@@ -532,8 +550,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     if(this.setMuns && this.setMuns.length>0) {
       if (state_id=="default") this.municipalitiesData = [];
       else {
-        this.municipalitiesData = this.setMuns.filter(m => {return m.state.id == state_id}); 
-      }   
+        this.municipalitiesData = this.setMuns.filter(m => {return m.state.id == state_id});
+      }
       if (this.who=='sponsor') this.sponsorForm.patchValue({addressMunicipality:munId});
       else if(this.who=='coordinator') this.coordinatorForm.patchValue({addressMunicipality:munId});
       else if(this.who=='school') this.schoolForm.patchValue({addressMunicipality:munId});
@@ -542,20 +560,20 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   updateMuns(){
     let currStateId = "default";
 
-    if (this.who=='sponsor') currStateId = this.sponsorForm.controls['addressState'].value && this.sponsorForm.controls['addressState'].value.length>0? this.sponsorForm.controls['addressState'].value:"default";      
-    else if(this.who=='coordinator') currStateId = this.coordinatorForm.controls['addressState'].value && this.coordinatorForm.controls['addressState'].value.length>0? this.coordinatorForm.controls['addressState'].value:"default";      
-    else if(this.who=='school') currStateId = this.schoolForm.controls['addressState'].value && this.schoolForm.controls['addressState'].value.length>0? this.schoolForm.controls['addressState'].value:"default";      
-  
+    if (this.who=='sponsor') currStateId = this.sponsorForm.controls['addressState'].value && this.sponsorForm.controls['addressState'].value.length>0? this.sponsorForm.controls['addressState'].value:"default";
+    else if(this.who=='coordinator') currStateId = this.coordinatorForm.controls['addressState'].value && this.coordinatorForm.controls['addressState'].value.length>0? this.coordinatorForm.controls['addressState'].value:"default";
+    else if(this.who=='school') currStateId = this.schoolForm.controls['addressState'].value && this.schoolForm.controls['addressState'].value.length>0? this.schoolForm.controls['addressState'].value:"default";
+
     this.fillMunicipalities(currStateId);
   }
 
   onSubmitSponsor(fo) { //fo: form object
     this.sendingForm = true;
-    const solicitudBodyReduced = Object.keys(this.sponsorForm.value).reduce((solicitudBody, controlName) => { 
+    const solicitudBodyReduced = Object.keys(this.sponsorForm.value).reduce((solicitudBody, controlName) => {
       if (controlName === "addressStreet") solicitudBody["address"] = this.sponsorForm.controls[controlName].value;
-      else if (controlName === "phone") solicitudBody["companyPhone"] = this.sponsorForm.controls[controlName].value;      
+      else if (controlName === "phone") solicitudBody["companyPhone"] = this.sponsorForm.controls[controlName].value;
       else solicitudBody[controlName] = this.sponsorForm.controls[controlName].value;
-      
+
       return solicitudBody;
     }, {
       user: this.user_id,
@@ -567,11 +585,13 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
 
   onSubmitCoordinator(fo) { //fo: form object
     this.sendingForm = true;
-    const solicitudBodyReduced = Object.keys(this.coordinatorForm.value).reduce((solicitudBody, controlName) => { 
-      if (controlName === "addressStreet") solicitudBody["address"] = this.coordinatorForm.controls[controlName].value;
-      else if (controlName === "birthdate") solicitudBody[controlName] = this.globals.dateStringToISOString(this.coordinatorForm.controls[controlName].value);      
-      else solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value;
-      
+    const solicitudBodyReduced = Object.keys(this.coordinatorForm.value).reduce((solicitudBody, controlName) => {
+      if (controlName === "addressStreet")
+        solicitudBody["address"] = this.coordinatorForm.controls[controlName].value;
+      else if (controlName === "birthdate")
+        solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value.toISOString();
+      else
+        solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value;
       return solicitudBody;
     }, {
       user: this.user_id,
@@ -583,16 +603,16 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
 
   onSubmitschool(fo) { //fo: form object
       this.sendingForm = true;
-      const solicitudBodyReduced = Object.keys(this.schoolForm.value).reduce((solicitudBody, controlName) => { 
+      const solicitudBodyReduced = Object.keys(this.schoolForm.value).reduce((solicitudBody, controlName) => {
         if (controlName === "addressStreet") solicitudBody["address"] = this.schoolForm.controls[controlName].value;
         else if (controlName === "coordinate")
-          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.latitude 
+          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.latitude
           && this.schoolForm.controls[controlName].value.longitude
-            ? this.schoolForm.controls[controlName].value 
+            ? this.schoolForm.controls[controlName].value
             : null;
         else if (controlName === "subPrincipalEmail")
-          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.length > 0 
-            ? this.schoolForm.controls[controlName].value 
+          solicitudBody[controlName] = this.schoolForm.controls[controlName].value.length > 0
+            ? this.schoolForm.controls[controlName].value
             : null;
         else if (
           controlName === "nTeachers" ||
@@ -603,7 +623,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           controlName === "nSections"
         ) solicitudBody[controlName] = +this.schoolForm.controls[controlName].value;
         else solicitudBody[controlName] = this.schoolForm.controls[controlName].value;
-        
+
         return solicitudBody;
       }, {
         user: this.user_id,
@@ -615,40 +635,40 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
 
   private postForm(solicitudBody, fo, type) {
     this.stepsService.requestsFind(type,solicitudBody).subscribe(res => {
-      this.sendingForm = false; 
+      this.sendingForm = false;
       fo.reset();
 
       const reinitMap = () => {
-        if (this.who == "school" && google ) {    
-          clearInterval(interval); 
+        if (this.who == "school" && google ) {
+          clearInterval(interval);
           if (this.schoolmap){
             this.mapSettings(this.lat,this.lng,7);
             this.mapInitializer(true);
-          } 
+          }
         }
       };
       let interval = null;
 
-      try {                      
+      try {
         reinitMap();
       } catch (error) {
         interval = setInterval(()=> {
-          try {         
-            reinitMap();               
+          try {
+            reinitMap();
           } catch (error) {
             // TODO --
           }
-        }, 2000); 
+        }, 2000);
       }
-        
+
       this.emitUpdate.emit({
         project_id: this.project_id,
         indd: this.index,
         modd:this.mode,
       });
-    }, (error) => {      
+    }, (error) => {
       let errorType = (error.error && error.error['code'])? 'code':
-                      (error.error && error.error['email'])? 'email': 'regular';      
+                      (error.error && error.error['email'])? 'email': 'regular';
       this.sendingForm = false;
       switch (type) {
         case 1:
@@ -662,28 +682,28 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           break;
       }
       this.emitMessage.emit({i:this.index,m:this.mode,messageType:errorType});
-    }, ()=>{});  
+    }, ()=>{});
   }
 
   prevDef(e){
     if (e.target.tagName.toLowerCase()!==("textarea") && e.target.tagName.toLowerCase()!==("button")) {
-      e.preventDefault() 
-    }    
+      e.preventDefault()
+    }
   }
 
   validate(op){
     if(!this.disableThis()) {
       switch (this.who) {
         case 'sponsor':
-          return this.sponsorForm.controls[op].status === 'INVALID' && this.sponsorForm.controls[op].dirty ? true:false;   
+          return this.sponsorForm.controls[op].status === 'INVALID' && this.sponsorForm.controls[op].dirty ? true:false;
         case 'coordinator':
-          return this.coordinatorForm.controls[op].status === 'INVALID' && this.coordinatorForm.controls[op].dirty ? true:false;   
+          return this.coordinatorForm.controls[op].status === 'INVALID' && this.coordinatorForm.controls[op].dirty ? true:false;
         case 'school':
-          return this.schoolForm.controls[op].status === 'INVALID' && this.schoolForm.controls[op].dirty ? true:false;   
+          return this.schoolForm.controls[op].status === 'INVALID' && this.schoolForm.controls[op].dirty ? true:false;
       }
-    }    
+    }
   }
-  
+
   isEmpty(op){
     if(!this.disableThis()) {
       switch (this.who) {
@@ -694,7 +714,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
         case 'school':
           return !this.schoolForm.controls[op].value || this.schoolForm.controls[op].value === "" ? false:true;
       }
-    }    
+    }
   }
 
   private fillSponsor(res){
@@ -784,8 +804,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             if (this.schoolmap) {
               this.mapSettings(
-                res.coordinate.latitude, 
-                res.coordinate.longitude, 
+                res.coordinate.latitude,
+                res.coordinate.longitude,
                 11
               );
               this.mapInitializer(true);
@@ -793,22 +813,22 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
                 name: res.name,
                 coordinate: res.coordinate
               });
-            }        
+            }
           });
         }
       };
       let interval = null;
 
-      try {                      
+      try {
         initMap();
       } catch (error) {
         interval = setInterval(()=> {
-          try {         
-            initMap();               
+          try {
+            initMap();
           } catch (error) {
             // TODO --
           }
-        }, 2000); 
+        }, 2000);
       }
 
     } else this.showMap = false;
@@ -816,30 +836,42 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     this.fillMunicipalities(res.addressState.id,res.addressMunicipality.id);
   }
 
-  controlDate() {    
-    return this.coordinatorForm.controls['birthdate'].value && this.coordinatorForm.controls['birthdate'].value.length>0 && 
-            !this.globals.validateDate(this.coordinatorForm.controls['birthdate'].value,'lower',true,true,18);
+  controlDate() {
+    return this.coordinatorForm.controls['birthdate'].value
+    && !this.isNotValidDate(this.coordinatorForm.controls['birthdate'].value);
+  }
+
+  isNotValidDate(date) {
+    if (date instanceof Date) {
+      const dateString = date.toISOString().split('T')[0];
+      const isValid = this.globals.validateDate(dateString, 'lower',true, true, 18);
+      return isValid;
+    }
+    if (date instanceof String) {
+      return this.globals.validateDate(date, 'lower',true, true, 18);
+    }
+    return false
   }
 
   focusDatePicker(e) {
     if (!this.disableThis()) {
       e.focus();
-    }    
+    }
   }
 
   setMaxLen(controlName: string) {
     const ct = this[this.who==="coordinator"
       ? "coordinatorForm"
       : "sponsorForm"]
-      .get(controlName).value; // 1: V, 2: J, 3: E      
-    return ct === "1" ? 8 : 9;   
+      .get(controlName).value; // 1: V, 2: J, 3: E
+    return ct === "1" ? 8 : 9;
   }
   setMinLen(controlName: string) {
     const ct = this[this.who==="coordinator"
       ? "coordinatorForm"
       : "sponsorForm"]
-      .get(controlName).value; // 1: V, 2: J, 3: E    
-    return ct === "1" ? 7 : ct === "2" ? 8 : 9; 
+      .get(controlName).value; // 1: V, 2: J, 3: E
+    return ct === "1" ? 7 : ct === "2" ? 8 : 9;
   }
 
   setLength(controlName: string, controlCardType: string) {
@@ -852,9 +884,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           ? "coordinatorForm"
           : "sponsorForm"].get(controlName).value,
           [
-            Validators.required, 
-            Validators.minLength(this.setMinLen(controlCardType)), 
-            Validators.maxLength(this.setMaxLen(controlCardType)), 
+            Validators.required,
+            Validators.minLength(this.setMinLen(controlCardType)),
+            Validators.maxLength(this.setMaxLen(controlCardType)),
             Validators.pattern(NUMBER_PTTRN)
           ]
         )
@@ -866,10 +898,10 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
 
       // const fieldVal = this[this.who==="coordinator"
       //   ? "coordinatorForm"
-      //   : "sponsorForm"].get(controlName).value;      
+      //   : "sponsorForm"].get(controlName).value;
   }
 
-  isMaxLenOver(controlName: string, controlCardType: string) {    
+  isMaxLenOver(controlName: string, controlCardType: string) {
     const ctrlNameVal = this[this.who==="coordinator"
       ? "coordinatorForm"
       : "sponsorForm"]
@@ -877,7 +909,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     if (ctrlNameVal)
       return ctrlNameVal.length > this.setMaxLen(controlCardType)
         && ctrlNameVal.length > 0;
-    else 
+    else
       return false
   }
   isMinLenUnder(controlName: string, controlCardType: string) {
@@ -886,12 +918,12 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       : "sponsorForm"]
       .controls[controlName].value;
     if (ctrlNameVal)
-      return ctrlNameVal.length < this.setMinLen(controlCardType) 
+      return ctrlNameVal.length < this.setMinLen(controlCardType)
         && ctrlNameVal.length > 0;
-    else 
+    else
       return false
   }
-  hasMaxOrMin(controlName: string, controlCardType: string) {    
+  hasMaxOrMin(controlName: string, controlCardType: string) {
     return this.isMaxLenOver(controlName,controlCardType) || this.isMinLenUnder(controlName,controlCardType);
   }
 

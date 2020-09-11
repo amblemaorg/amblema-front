@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { PresentationalBlockComponent } from "../page-block.component";
 import { GlobalService } from "../../../../services/global.service";
 import { HttpFetcherService } from "../../../../services/peca/http-fetcher.service";
@@ -10,6 +10,7 @@ import { PecaState } from "../../../../store/states/peca/peca.state";
 import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
 import { FormBuilder } from "@angular/forms";
+import { DatepickerOptions, NgDatepickerComponent } from 'ng2-datepicker';
 
 @Component({
   selector: "buttons-set-block",
@@ -123,7 +124,23 @@ export class TextsButtonsSetBlockComponent
   userCanEdit: boolean = true;
   userCanDelete: boolean = true;
   userCanView: boolean = true;
-
+  @ViewChild('inputDate', { static: false }) inputDate: NgDatepickerComponent;
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1950,
+    maxYear: 2050,
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    minDate: new Date(Date.now()),
+    // maxDate: new Date(Date.now()),
+    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
+    placeholder: 'Seleccione una fecha',
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
 
@@ -274,6 +291,14 @@ export class TextsButtonsSetBlockComponent
       const { value } = selectGeneralStatus;
       this.currentSelected = value ? value : null;
     }
+    setTimeout(() => {
+      if (this.settings.dateOrtext.fields[0]) {
+        this.inputDate.registerOnChange((value: Date) => {
+          const event = { target: { value: value.toISOString().split('T')[0] } }
+          this.controlDateChange(event, 'greater')
+        });
+      }
+    })
   }
 
   setData(data: any) {
@@ -1019,7 +1044,8 @@ export class TextsButtonsSetBlockComponent
 
   // FOR DATE FIELD
   controlDateChange(e, dateOrder: string) {
-    const isDateNotValid = this.globals.validateDate(e, dateOrder, true);
+    console.log('controlDateChange', e);
+    const isDateNotValid = this.globals.validateDate(e.target.value, dateOrder, true, true);
     if (e && e.target) {
       const date =
         e.target.value && e.target.value.length > 0 && !isDateNotValid
@@ -1049,6 +1075,7 @@ export class TextsButtonsSetBlockComponent
         });
       }
     }
+    return e.target.value
   }
 
   // FOR GENERIC ACTIVITY ACTION BUTTON NAME

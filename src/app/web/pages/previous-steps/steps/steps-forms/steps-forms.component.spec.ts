@@ -9,6 +9,7 @@ import { ModulesState } from '../../../../../store/states/e-learning/learning-mo
 import { UserState } from '../../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../../store/states/steps/project.state';
 import { ResidenceInfoState } from '../../../../../store/states/steps/residence-info.state';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 describe('StepsFormsComponent', () => {
   let component: StepsFormsComponent;
@@ -18,6 +19,8 @@ describe('StepsFormsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ StepsFormsComponent ],
       imports: [FormsModule,ReactiveFormsModule,NgSelectModule,HttpClientModule,RouterTestingModule,
+        NgDatepickerModule,
+
         NgxsModule.forRoot( [
           ModulesState,
           UserState,

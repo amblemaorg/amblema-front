@@ -132,11 +132,26 @@
           <ng-container *ngSwitchCase="'date'">
             <label>{{ settings.formsContent[field].label }}</label>
             <div class="date-container">
+            <ng-datepicker #inputDate
+              [id]="getId('datepicker-' + field)"
+              class="datepicker-control"
+              [formControlName]="field"
+              [options]="settings.formsContent[field].pickerOptions"
+              [(ngModel)]="componentForm.get(field).value"
+              [class.date-not-valid]="
+                checkDateOk(
+                  componentForm.get(field).value,
+                  settings.formsContent[field].lower ? 'lower' : 'greater',
+                  field,
+                  true
+                )
+              "
+            >
+            </ng-datepicker>
+            <!--
               <input
                 #inputDate
                 type="date"
-                data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
-                placeholder="dd/mm/yyyy"
                 class="form-control"
                 [formControlName]="field"
                 [id]="getId('datepicker-' + field)"
@@ -159,6 +174,7 @@
                 readonly
                 (click)="focusDatePicker(inputDate)"
               />
+            -->
               <div class="date-error-message">
                 <strong>{{
                   settings.formsContent[field].lower

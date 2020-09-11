@@ -13,6 +13,7 @@ import { ModulesState } from '../../../../store/states/e-learning/learning-modul
 import { UserState } from '../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 describe('StepsComponent', () => {
   let component: StepsComponent;
@@ -23,6 +24,8 @@ describe('StepsComponent', () => {
       declarations: [ StepsComponent,GeneralStepsComponent,StepsFormsComponent,StatusSelectorComponent ],
       imports: [
         FontAwesomeModule,RouterTestingModule,HttpClientModule,FormsModule,ReactiveFormsModule,
+        NgDatepickerModule,
+
         NgSelectModule,
         NgxsModule.forRoot( [
           ModulesState,
@@ -54,32 +57,32 @@ describe('StepsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('font family should be Montserrat', () => { 
+  it('font family should be Montserrat', () => {
     let fontStyle = fixture.nativeElement.querySelectorAll('.description-info h1').item(0).style.fontFamily;
     expect(fontStyle).toContain('Montserrat');
   });
 
-  it("'AmbLeMa' word must be well-written", () => { 
+  it("'AmbLeMa' word must be well-written", () => {
     let word = fixture.nativeElement.querySelectorAll('.description-info h1').item(0).textContent;
     expect(word).toContain('AmbLeMa');
   });
 
-  it("'Generales' word must be well-written", () => { 
+  it("'Generales' word must be well-written", () => {
     let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:first-child a').item(0).textContent.toLowerCase();
     expect(word).toBe('generales');
   });
 
-  it("'Padrino' word must be well-written", () => { 
+  it("'Padrino' word must be well-written", () => {
     let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:nth-child(2) a').item(0).textContent.toLowerCase();
     expect(word).toBe('padrino');
   });
 
-  it("'Coordinador' word must be well-written", () => { 
+  it("'Coordinador' word must be well-written", () => {
     let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:nth-child(3) a').item(0).textContent.toLowerCase();
     expect(word).toBe('coordinador');
   });
 
-  it("'Escuela' word must be well-written", () => { 
+  it("'Escuela' word must be well-written", () => {
     let word = fixture.nativeElement.querySelectorAll('.tabs-container .nav-tabs .nav-item:last-child a').item(0).textContent.toLowerCase();
     expect(word).toBe('escuela');
   });
