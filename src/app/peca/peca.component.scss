@@ -379,8 +379,12 @@
   }
 }
 
+
 ::ng-deep {
   // ng-datepicker
+  .ngx-datepicker-container .ngx-datepicker-input {
+    width: 100% !important;
+  }
   .ngx-datepicker-container .ngx-datepicker-calendar-container {
     z-index: 1000;
   }

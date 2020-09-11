@@ -3,6 +3,7 @@ import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { DOCUMENT } from "@angular/common";
 import { GlobalService } from '../../../../services/global.service';
+import { DatepickerOptions } from 'ng2-datepicker';
 
 @Component({
   selector: 'slider-block',
@@ -52,8 +53,22 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
     responsiveClass: true,
   }
 
-
-
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1950,
+    maxYear: 2050,
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    minDate: new Date(Date.now()),
+    // maxDate: new Date(Date.now()),
+    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
+    placeholder: 'Seleccione una fecha',
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
 
   shown = 0;
 
