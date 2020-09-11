@@ -15,6 +15,7 @@ import { UserState } from '../../../../store/states/e-learning/user.state';
 import { StepsState } from '../../../../store/states/steps/project.state';
 import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
 import { EmbedVideoService } from 'ngx-embed-video';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 describe('TextsButtonsSetBlockComponent', () => {
   let component: TextsButtonsSetBlockComponent;
@@ -66,6 +67,7 @@ describe('TextsButtonsSetBlockComponent', () => {
         RouterTestingModule.withRoutes([]),
         ToastrModule.forRoot(),
         HttpClientModule,
+        NgDatepickerModule,
         NgxsModule.forRoot( [
           ModulesState,
           UserState,
