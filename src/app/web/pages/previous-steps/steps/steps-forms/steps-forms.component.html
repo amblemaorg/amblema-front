@@ -339,7 +339,6 @@
           [class.not-empty]="isEmpty('birthdate')"
           [class.date-not-valid]="isNotValidDate(coordinatorForm.get('birthdate').value)"
           formControlName="birthdate"
-          [(ngModel)]="coordinatorForm.get('birthdate').value"
         >
         </ng-datepicker>
         <!--

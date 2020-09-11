@@ -137,7 +137,6 @@
               class="datepicker-control"
               [formControlName]="field"
               [options]="settings.formsContent[field].pickerOptions"
-              [(ngModel)]="componentForm.get(field).value"
               [class.date-not-valid]="
                 checkDateOk(
                   componentForm.get(field).value,
