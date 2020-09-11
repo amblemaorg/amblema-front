@@ -7,6 +7,7 @@ import { PageBlockFactory } from '../page-block-factory';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 
 describe('SliderBlockComponent', () => {
@@ -41,6 +42,8 @@ describe('SliderBlockComponent', () => {
             RouterTestingModule.withRoutes([]),
             OwlModule,
             CarouselModule,
+        NgDatepickerModule,
+
         ]
     })
     TestBed.overrideModule(BrowserDynamicTestingModule, {
