@@ -7,6 +7,7 @@ import { EmbedVideoService } from 'ngx-embed-video';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 describe('GeneralStepsComponent', () => {
   let component: GeneralStepsComponent;
@@ -15,7 +16,8 @@ describe('GeneralStepsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GeneralStepsComponent,StepsFormsComponent, StatusSelectorComponent ],
-      imports: [RouterTestingModule, FontAwesomeModule, HttpClientModule, FormsModule, 
+      imports: [RouterTestingModule, FontAwesomeModule, HttpClientModule, FormsModule,
+        NgDatepickerModule,
         ReactiveFormsModule, NgSelectModule],
       providers: [EmbedVideoService]
     })

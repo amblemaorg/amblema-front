@@ -30,17 +30,34 @@
           <ng-container *ngIf="!step.isForm; else formOpt">
             <div *ngIf="step.hasDate" class="form-group">
               <label for="datefill"> Fecha: </label>
-              <input
-                type="date"
-                data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
-                name="datefill"
-                [class.not-enabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
-                class="form-control calendar-date-icon date-in-step"
-                placeholder="Introduzca una fecha"
-                [value]="getDateFrmt(step)"
-                (change)="controlDate($event,step)"
-                [disabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
-              />
+              <div class="date-container">
+                <ng-datepicker
+                  name="datefill"
+                  [options]="datePickerOptions"
+                  [class.not-enabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
+                  class="calendar-date-icon date-in-step"
+                  [(ngModel)]="step.date"
+                  (ngModelChange)="controlDate($event,step)"
+                  >
+                  <!--
+                    [value]="getDateFrmt(step)"
+                    [disabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
+                  -->
+                </ng-datepicker>
+                <!--
+                  <input
+                    type="date"
+                    data-format='{"day":"numeric","month":"numeric","year":"numeric"}'
+                    name="datefill"
+                    [class.not-enabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
+                    class="form-control calendar-date-icon date-in-step"
+                    placeholder="Introduzca una fecha"
+                    [value]="getDateFrmt(step)"
+                    (change)="controlDate($event,step)"
+                    [disabled]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions"
+                  />
+                -->
+              </div>
               <div class="field-alerts">
                 <div class="field-invalid">¡Debe tener una fecha valida, mayor a la de hoy!</div>
               </div>
@@ -121,9 +138,12 @@
               </div>
 
               <div class="checks-btn-container">
-                <button *ngIf="step.hasChecklist && step.checklist.length>0 && !showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step) || !enableActions || step.status=='8'">
-                  <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? 'Guardar':'Guardando..' }}
+                <button
+                  *ngIf="step.hasChecklist && step.checklist.length>0 && !showSeveralsButton(step)" class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+                  [disabled]="(compareMode() && !isAdmin() ) || step.sending || step.status=='3' || !enableChecksBtn(step) || !enableActions || step.status=='8'"
+                >
+                  <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>
+                  {{ !step.sending? 'Guardar':'Guardando..' }}
                 </button>
               </div>
             </form>

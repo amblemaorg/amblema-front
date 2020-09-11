@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy } from "@angular/core";
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -15,6 +15,7 @@ import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
 import { FetchPecaContent, SetUser } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
+import { NgDatepickerComponent, DatepickerOptions } from 'ng2-datepicker';
 
 @Component({
   selector: "form-block",
@@ -89,7 +90,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   sendNull: boolean = true; // to avoid send form data null when uploading images
   someImgAdded: boolean; // to avoid send form null when images are saved in table
   imageUrl: string; //to can upload the image in profile component
-
+  @ViewChild('inputDate', { static: false }) inputDate: NgDatepickerComponent;
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1950,
+    maxYear: 2050,
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    minDate: new Date(Date.now()),
+    maxDate: new Date(Date.now()),
+    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
+    placeholder: 'Seleccione una fecha',
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
   // currentGrade: string; // for grades selector only
   sectionsArr: any[] = [];
 
@@ -247,11 +264,38 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
 
   setSettings(settings: any) {
+    settings.formsContent = this.addDatePickerConfigToFormsContent(settings.formsContent);
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
     if (this.settings.data) this.setAllFields(this.settings.data);
   }
+
+  addDatePickerConfigToFormsContent(formsContent: object) {
+    return Object.keys(formsContent).reduce((prevObj, field) => {
+      const fieldConfig = formsContent[field]
+      if (fieldConfig.type === "date") {
+        const pickerOptions = { ...this.datePickerOptions };
+        if (fieldConfig.lower) {
+          delete pickerOptions.minDate;
+        }
+        else {
+          delete pickerOptions.maxDate;
+        }
+        return {
+          ...prevObj,
+          [field]: {
+            ...fieldConfig,
+            pickerOptions
+          }
+        }
+      }
+      return {
+        ...prevObj,
+        [field]: fieldConfig
+      };
+    }, {})
+  };
 
   setData(data: any) {
     if (data.setContent) {
@@ -497,15 +541,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
     if (this.settings.formType === "preparingWorkshopForm") {
-      manageData.data["workshopDate"] = this.globals.dateStringToISOString(cf.get("date").value);
+      const dateString:Date = cf.get("date").value.toISOString().split('T')[0];
+      manageData.data["workshopDate"] = this.globals.dateStringToISOString(dateString);
     }
 
     if (this.settings.formType === "buscarEstudiante") {
-      manageData.data["age"] = this.globals.dateStringToISOString(cf.get("age").value);
+      const dateString = cf.get("age").value.toISOString().split('T')[0];
+      manageData.data["age"] = this.globals.dateStringToISOString(dateString);
     }
 
     if (this.settings.formType === "actualizarCoordinador") {
-      manageData.data["birthdate"] = this.globals.dateStringToISOString(cf.get("date").value);
+      const dateString = cf.get("date").value.toISOString().split('T')[0];
+      manageData.data["birthdate"] = this.globals.dateStringToISOString(dateString);
       if (this.imageUrl) manageData.data["image"] = this.imageUrl;
     }
 
@@ -732,9 +779,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     const value = !notE ? e.target.value === "" : e === "";
     const years = this.settings.formsContent[f].validationPerYears ? 3 : 0;
 
-    if (this.globals.validateDate(e, mode, true, notE, years) || value)
+    if (e instanceof Date) {
+      e = e.toISOString().split('T')[0]
+    }
+    const isNotValidDate = this.globals.validateDate(e, mode, true, notE, years)
+    if (isNotValidDate || value)
       this.wrongDateDisabler[f] = false;
-    else this.wrongDateDisabler[f] = true;
+    else
+      this.wrongDateDisabler[f] = true;
+    return isNotValidDate
   }
 
   isDateNotOk() {

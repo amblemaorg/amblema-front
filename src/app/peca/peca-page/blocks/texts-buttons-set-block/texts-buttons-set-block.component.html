@@ -36,6 +36,14 @@
             class="estilo-date"
             [class.estilo-date-non-editable]="!userCanEdit"
           >
+          <ng-datepicker
+            #inputDate
+            *ngIf="settings.dateOrtext.fields[0]"
+            [(ngModel)]="settings.dateOrtext.fields[0].value"
+            [options]="datePickerOptions"
+          >
+          </ng-datepicker>
+          <!--
             <input
               #inputDate
               type="date"
@@ -55,7 +63,7 @@
               readonly
               [placeholder]="settings.dateOrtext.fields[0].placeholder"
               (click)="focusDatePicker(inputDate)"
-            />
+            /> -->
             <div class="date-error-message">
               <strong>La fecha debe ser mayor a la de hoy</strong>
             </div>
