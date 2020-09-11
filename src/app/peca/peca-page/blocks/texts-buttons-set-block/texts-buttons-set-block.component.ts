@@ -126,8 +126,8 @@ export class TextsButtonsSetBlockComponent
   userCanView: boolean = true;
   @ViewChild('inputDate', { static: false }) inputDate: NgDatepickerComponent;
   datePickerOptions: DatepickerOptions = {
-    minYear: 1970,
-    maxYear: 2030,
+    minYear: 1950,
+    maxYear: 2050,
     displayFormat: 'DD/MM/YYYY',
     barTitleFormat: 'MMMM YYYY',
     dayNamesFormat: 'dd',
@@ -292,12 +292,12 @@ export class TextsButtonsSetBlockComponent
       this.currentSelected = value ? value : null;
     }
     setTimeout(() => {
-      this.inputDate.registerOnChange((value: Date) => {
-        console.log('registerOnChange', value)
-        console.log('registerOnChange', value.toISOString())
-        const event = { target: { value: value.toISOString().split('T')[0] } }
-        this.controlDateChange(event, 'greater')
-      });
+      if (this.settings.dateOrtext.fields[0]) {
+        this.inputDate.registerOnChange((value: Date) => {
+          const event = { target: { value: value.toISOString().split('T')[0] } }
+          this.controlDateChange(event, 'greater')
+        });
+      }
     })
   }
 

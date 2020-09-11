@@ -8,6 +8,7 @@ import { Step } from '../../../../../models/steps/previous-steps.model';
 import { StepsService } from '../../../../../services/steps/steps.service';
 import * as $ from 'jquery';
 import { GlobalService } from '../../../../../services/global.service';
+import { DatepickerOptions } from 'ng2-datepicker';
 declare var $:any;
 
 @Component({
@@ -39,6 +40,22 @@ export class GeneralStepsComponent implements OnInit {
   showThisVideo: boolean;
   timesVideoSourceCalled:number = 0;
   video_: any;
+  datePickerOptions: DatepickerOptions = {
+    minYear: 1900,
+    maxYear: 2050,
+    displayFormat: 'DD/MM/YYYY',
+    barTitleFormat: 'MMMM YYYY',
+    dayNamesFormat: 'dd',
+    firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
+    minDate: new Date(Date.now()),
+    // maxDate: new Date(Date.now()),
+    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
+    placeholder: 'Seleccione una fecha',
+    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
+    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
+  };
 
   constructor(@Inject(PLATFORM_ID) private platformId, private embedService: EmbedVideoService,
     private sanitizer: DomSanitizer, private stepsService: StepsService, private globals: GlobalService) {
@@ -165,7 +182,10 @@ export class GeneralStepsComponent implements OnInit {
         formData.append('project', this.project_id);
         formData.append('user', this.user_id);
       }
-      if(step.hasDate && step.date) formData.append( step.approvalType=="3"?'stepDate':'date', step.date);
+      if(step.hasDate && step.date) {
+        const dateString = step.date.toISOString();
+        formData.append( step.approvalType == "3" ? 'stepDate' : 'date', dateString );
+      }
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
       if(step.hasChecklist) formData.append(step.approvalType=="3"?'stepChecklist':'checklist', JSON.stringify(step.checklist));
     }
@@ -303,8 +323,9 @@ export class GeneralStepsComponent implements OnInit {
   }
   controlDate(e, step:Step) {
     // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
-    if (!this.globals.validateDate(e,'greater',true)) {
-      step.date = this.globals.dateStringToISOString(`${e.target.value}T00:00:00.00`);
+    if (!this.globals.validateDate(e.toISOString().split('T')[0],'greater',true, true)) {
+      //step.date = this.globals.dateStringToISOString(`${e.target.value}T00:00:00.00`);
+      step.date = e;
     }
     else step.date = null;
   }

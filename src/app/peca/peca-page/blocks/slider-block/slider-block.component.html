@@ -23,6 +23,13 @@
       *ngFor="let image of settings.sliderImage; index as i" [class.hidden]="i!=shown">
       <h6 class="mb-4 image-desc">{{image.text}}</h6>
       <span *ngIf="image.fields">
+        <ng-datepicker
+          #inputDate
+          [options]="datePickerOptions"
+          (ngModelChange)="glbls.validateDate($event,'greater', true, true)"
+        >
+        </ng-datepicker>
+        <!--
         <input
           #inputDate
           type="date"
@@ -39,6 +46,7 @@
           readonly
           (click)="focusDatePicker(inputDate)"
         />
+        -->
       </span>
       <p class="mb-4 mt-4 image-desc">{{ image.description }}</p>
     </div>
@@ -51,9 +59,27 @@
       <div class="item" *ngFor="let image of settings.sliderImage;index as i">
         <h6 class="mb-4 image-desc h6-responsive">{{image.text}}</h6>
         <span *ngIf="image.fields">
-          <input #inputDate type="date" class="form-control sb-date-picker" (change)="glbls.validateDate($event,'greater')" />
-          <input [class.d-none]="inputDate.value.length > 0" class="form-control" autocomplete='off' type="text" readonly
-            (click)="focusDatePicker(inputDate)" />
+          <ng-datepicker
+            #inputDate
+            [options]="datePickerOptions"
+            (ngModelChange)="glbls.validateDate($event,'greater', true, true)"
+          >
+          </ng-datepicker>
+          <!--
+          <input #inputDate
+            type="date"
+            class="form-control sb-date-picker"
+            (change)="glbls.validateDate($event,'greater')"
+            />
+            <input
+            [class.d-none]="inputDate.value.length > 0"
+            class="form-control"
+            autocomplete='off'
+            type="text"
+            readonly
+            (click)="focusDatePicker(inputDate)"
+          />
+          -->
         </span>
         <img class="slide-image" src="{{image.image}}">
         <div class="slide-text">

@@ -12,7 +12,7 @@
 
     .card {
         border: none;
-        
+
         .card-header {
             border: none;
             background: transparent;
@@ -27,7 +27,7 @@
                 @media screen and (orientation:landscape) and (min-width:640px) {
                     padding: 0 0.5rem 0 0.75rem;
                 }
-        
+
                 .texts {
                     flex: 1;
 
@@ -39,8 +39,8 @@
                 }
                 .bar {
                     display: none;
-                    // display: block;            
-                    border-left: 2px solid;         
+                    // display: block;
+                    border-left: 2px solid;
                     height: 1.5rem;
                     margin-bottom: 0.25rem;
 
@@ -121,7 +121,7 @@
 
                 @include mediabreak(large,landscape) { max-width: 30rem; }
 
-                button {                    
+                button {
                     color: $red;
 
                     &:focus {
@@ -161,42 +161,43 @@
 
             .form-group {
                 width: 100%;
-                
-                input {                    
+
+                input {
                     display: inline-block !important;
                     width: 100%;
                     @media screen and (orientation:landscape) {
                         width: auto;
-                        margin-left: 1rem;   
+                        margin-left: 1rem;
                     }
                     @media screen and (orientation:portrait) and (min-width:480px) {
                         width: auto;
-                        margin-left: 1rem;  
-                    }    
-                    
+                        margin-left: 1rem;
+                    }
+
                     &.date-in-step {
                         position: relative;
                     }
                 }
-        
+
                 .field-invalid{
                     font-size: smaller;
                     margin-block-start: 0.45rem;
                     color: map-get($color_map, red);
                     display: none;
-        
+
                     @include mediabreak(small,portrait) { font-size: medium; }
-                    @include mediabreak(large,portrait) { font-size: larger; }            
+                    @include mediabreak(large,portrait) { font-size: larger; }
                 }
                 .not-enabled {
                     color: #6c757d;
+                    pointer-events: none;
                 }
-        
+
                 .form-control:focus{
                     box-shadow: none;
                     border-color: map-get($color_map, blue);
                 }
-        
+
                 .date-not-valid {
                     border-color: map-get($color_map, red);
                     color: map-get($color_map, red);
@@ -204,7 +205,7 @@
 
                 .date-not-valid + .field-alerts .field-invalid{
                     display: inline-block;
-                }                
+                }
             }
 
             status-selector {
@@ -234,27 +235,27 @@
 
                     .ng-dropdown-panel {
                       z-index: 3;
-              
+
                       .scroll-host {
                           left: -0.75rem;
                           top: 0.35rem;
                           background: #fff;
                           border: solid map-get($color_map, blue);
                           border-width: 0 1px 1px;
-              
+
                           .scrollable-content{
                               padding: 0 1rem;
                           }
                       }
                     }
-          
+
                     &.ng-select-opened .ng-select-container {
-                        z-index: 3;           
-                    }     
-          
+                        z-index: 3;
+                    }
+
                     .ng-arrow-wrapper {
                         width: 1rem;
-          
+
                         .ng-arrow {
                             height: 0.5rem;
                             width: 0.5rem;
@@ -265,13 +266,13 @@
                             transform: rotate(45deg);
                             top: -0.15rem;
                         }
-                    } 
+                    }
 
                     &.readonly {
                         opacity: .65;
                     }
                 }
-            }             
+            }
 
             .video-container {
                 margin-bottom: 1rem;
@@ -338,7 +339,7 @@
                 &.has-siblings {
                     margin-top: 2rem;
                 }
-            }            
+            }
             .checkbox {
                 flex: 100%;
                 // @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 50%; }
@@ -405,7 +406,7 @@
                     // &:hover input ~ .checkmark {
                     //     background-color: map-get($color_map, tab-gray);
                     // }
-                    
+
                     /* When the checkbox is checked, add a blue background */
                     & input:checked ~ .checkmark {
                         background-color: map-get($color_map, blue);
@@ -430,4 +431,11 @@
             }
         }
     }
+}
+
+::ng-deep {
+  // ng-datepicker
+  .ngx-datepicker-container .ngx-datepicker-calendar-container {
+    z-index: 1000;
+  }
 }

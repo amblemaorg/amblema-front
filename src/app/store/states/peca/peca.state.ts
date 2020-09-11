@@ -263,7 +263,19 @@ export class PecaState {
       workshopPlace,
       workshopDate,
     };
-    const response = await this.fetcher.post(url, data).toPromise();
+    try {
+      this.toastr.success("Guardando, espere por favor...", "", {
+        positionClass: "toast-bottom-right",
+      });
+      const response = await this.fetcher.post(url, data).toPromise();
+      this.toastr.success("Guardado satisfactoriamente", "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.toastr.error("Ha ocurrido un error", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
   }
 
   @Action(UpdateInitialWorkshopImages)
