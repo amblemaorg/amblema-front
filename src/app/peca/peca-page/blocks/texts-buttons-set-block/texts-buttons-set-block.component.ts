@@ -297,6 +297,7 @@ export class TextsButtonsSetBlockComponent
         && this.settings.dateOrtext.fields
         && this.settings.dateOrtext.fields[0]
       ) {
+        console.log('registerOnChange')
         this.inputDate.registerOnChange((value: Date) => {
           const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
           this.controlDateChange(event, 'greater');
