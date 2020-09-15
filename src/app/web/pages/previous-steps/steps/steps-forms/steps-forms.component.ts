@@ -589,7 +589,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       if (controlName === "addressStreet")
         solicitudBody["address"] = this.coordinatorForm.controls[controlName].value;
       else if (controlName === "birthdate")
-        solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value.toISOString();
+        solicitudBody[controlName] = this.globals.dateToISOString(this.coordinatorForm.controls[controlName].value);
       else
         solicitudBody[controlName] = this.coordinatorForm.controls[controlName].value;
       return solicitudBody;
