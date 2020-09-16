@@ -248,6 +248,16 @@ export class GlobalService {
     }
   }
 
+  dateToISOString(value: Date): string {
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const day = value.getDate()
+    const formatDay = numbers.includes(day) ? `0${day}` : day;
+    const month = value.getMonth() + 1;
+    const formatMonth = numbers.includes(month) ? `0${month}` : month;
+    const year = value.getFullYear();
+    return `${year}-${formatMonth}-${formatDay}T00:00:00.000Z`;
+  }
+
   dateStringToISOString(value: any): string {
     if (typeof value !== "string" || value === "") {
       return "";

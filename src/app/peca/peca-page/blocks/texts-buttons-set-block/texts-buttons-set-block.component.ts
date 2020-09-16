@@ -292,10 +292,15 @@ export class TextsButtonsSetBlockComponent
       this.currentSelected = value ? value : null;
     }
     setTimeout(() => {
-      if (this.settings.dateOrtext.fields[0]) {
+      if (
+        this.settings.dateOrtext
+        && this.settings.dateOrtext.fields
+        && this.settings.dateOrtext.fields[0]
+      ) {
+        console.log('registerOnChange')
         this.inputDate.registerOnChange((value: Date) => {
-          const event = { target: { value: value.toISOString().split('T')[0] } }
-          this.controlDateChange(event, 'greater')
+          const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
+          this.controlDateChange(event, 'greater');
         });
       }
     })
@@ -1044,7 +1049,6 @@ export class TextsButtonsSetBlockComponent
 
   // FOR DATE FIELD
   controlDateChange(e, dateOrder: string) {
-    console.log('controlDateChange', e);
     const isDateNotValid = this.globals.validateDate(e.target.value, dateOrder, true, true);
     if (e && e.target) {
       const date =
