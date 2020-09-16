@@ -388,4 +388,11 @@
   .ngx-datepicker-container .ngx-datepicker-calendar-container {
     z-index: 1000;
   }
+  // Allow overflow for ng-datepicker inside modals
+  .modal-dialog-scrollable .modal-content {
+    overflow: visible;
+  }
+  .modal-dialog-scrollable .modal-body {
+    overflow-y: visible;
+  }
 }

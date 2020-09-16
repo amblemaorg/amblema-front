@@ -183,7 +183,14 @@ export class GeneralStepsComponent implements OnInit {
         formData.append('user', this.user_id);
       }
       if(step.hasDate && step.date) {
-        const dateString = step.date.toISOString();
+        let dateString = "";
+        if (step.date instanceof Date) {
+          dateString = this.globals.dateToISOString(step.date);
+        }
+        else if (typeof step.date === "string") {
+          const date = step.date.split("T")[0].replace(/-/g, "/")
+          dateString = this.globals.dateToISOString(new Date(date));
+        }
         formData.append( step.approvalType == "3" ? 'stepDate' : 'date', dateString );
       }
       if(step.hasUpload && step.uploadedFile && step.uploadedFile.url.length==0) formData.append(step.approvalType=="3"?'stepUploadedFile':'uploadedFile', step.uploadedFile.file);
@@ -322,7 +329,6 @@ export class GeneralStepsComponent implements OnInit {
     return date;
   }
   controlDate(e, step:Step) {
-    // if (!this.globals.validateDate(e,'greater',true)) step.date = `${e.target.value}T00:00:00.00`;
     if (!this.globals.validateDate(e.toISOString().split('T')[0],'greater',true, true)) {
       //step.date = this.globals.dateStringToISOString(`${e.target.value}T00:00:00.00`);
       step.date = e;

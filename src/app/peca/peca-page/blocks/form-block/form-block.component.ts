@@ -541,18 +541,36 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
     if (this.settings.formType === "preparingWorkshopForm") {
-      const dateString:Date = cf.get("date").value.toISOString().split('T')[0];
-      manageData.data["workshopDate"] = this.globals.dateStringToISOString(dateString);
+      let date = cf.get("date").value;
+      if (date instanceof Date) {
+        manageData.data["workshopDate"] = this.globals.dateToISOString(date);
+      }
+      else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/")
+        manageData.data["workshopDate"] = this.globals.dateToISOString(new Date(date));
+      }
     }
 
     if (this.settings.formType === "buscarEstudiante") {
-      const dateString = cf.get("age").value.toISOString().split('T')[0];
-      manageData.data["age"] = this.globals.dateStringToISOString(dateString);
+      let date = cf.get("age").value;
+      if (date instanceof Date) {
+        manageData.data["age"] = this.globals.dateToISOString(date);
+      }
+      else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/")
+        manageData.data["age"] = this.globals.dateToISOString(new Date(date));
+      }
     }
 
     if (this.settings.formType === "actualizarCoordinador") {
-      const dateString = cf.get("date").value.toISOString().split('T')[0];
-      manageData.data["birthdate"] = this.globals.dateStringToISOString(dateString);
+      let date = cf.get("date").value;
+      if (date instanceof Date) {
+        manageData.data["birthdate"] = this.globals.dateToISOString(date);
+      }
+      else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/")
+        manageData.data["birthdate"] = this.globals.dateToISOString(new Date(date));
+      }
       if (this.imageUrl) manageData.data["image"] = this.imageUrl;
     }
 
