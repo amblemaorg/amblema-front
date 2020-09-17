@@ -2,11 +2,11 @@ import { Injectable, PLATFORM_ID, Inject, Output, EventEmitter } from '@angular/
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { CoordinatorModule, Module, UserData } from '../../models/steps/learning-modules.model';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 
+  headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
 };
@@ -22,7 +22,7 @@ export class ModulesService {
   approved_modules:CoordinatorModule[] = [];
   all_modules:Module[] = [];
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) { 
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
@@ -48,9 +48,9 @@ export class ModulesService {
   answerModule(module_id, dataJson): Observable<any> {
     return this.http.post<any>(this.baseUrl + `answerlearningmodule/${module_id}`, dataJson)
   }
-  
+
   // USING STATES
-  checkApprove(id){    
+  checkApprove(id){
     let isApproved = this.approved_modules.find(m => { return m.moduleId == id });
     return isApproved
   }
@@ -70,7 +70,7 @@ export class ModulesService {
     if (gotResult) {
       let prevMod = this.checkApprove(gotResult.id);
       return prevMod ? (prevMod.status=="3" ? false:true) : true;
-    } 
+    }
     else return false;
   }
 }
