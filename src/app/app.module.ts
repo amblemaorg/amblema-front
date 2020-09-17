@@ -8,7 +8,7 @@ import { AppComponent } from "./app.component";
 
 import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
 import { NgxsModule } from "@ngxs/store";
-import { environment } from "../environments/environment.prod";
+import { environment } from "../environments/environment";
 
 // states
 import { ModulesState } from "./store/states/e-learning/learning-modules.state";

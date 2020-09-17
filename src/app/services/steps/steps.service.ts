@@ -1,11 +1,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { Project, StatesRecord, MunicipalitiesRecord } from '../../models/steps/previous-steps.model';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 
+  headers: new HttpHeaders({
     'Content-Type': 'application/json'
   })
 };
@@ -63,8 +63,8 @@ export class StepsService {
 
 
   requestsFind(type,data): Observable<any> {
-    let requestType = (type === 1) ? 'requestsfindsponsor' : 
-                      (type === 2) ? 'requestsfindcoordinator' : 
+    let requestType = (type === 1) ? 'requestsfindsponsor' :
+                      (type === 2) ? 'requestsfindcoordinator' :
                                      'requestsfindschool';
     return this.http.post<any>(this.baseUrl+requestType,data);
   }
@@ -76,7 +76,7 @@ export class StepsService {
   getFindSchool (id): Observable<any> {
     return this.http.get<any>(this.baseUrl+`requestsfindschool/${id}`)
   }
-    
+
   updateFindCoordinator (id,coordinator): Observable<any> {
     return this.http.put<any>(this.baseUrl+`requestsfindcoordinator/${id}`,coordinator)
   }
