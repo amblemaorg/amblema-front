@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 --host 0.0.0.0",
-    "build": "ng build --prod",
+    "build": "ng build --configuration=staging",
+    "build:prod": "ng build --prod",
     "test": "ng test --watch=false",
     "test-coverage": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
@@ -12,8 +13,11 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run amblema-web:server:production",
-    "build:client-and-server-all-bundles": "ng build --prod && ng run amblema-web:server:production --bundleDependencies all"
+    "build:client-and-server-bundles": "ng build --configuration=staging && ng run amblema-web:server:production",
+    "build:client-and-server-all-bundles": "ng build --configuration=staging && ng run amblema-web:server:production --bundleDependencies all",
+    "build:prod:ssr": "npm run build:prod:client-and-server-bundles && npm run compile:server",
+    "build:prod:client-and-server-bundles": "ng build --prod && ng run amblema-web:server:production",
+    "build:prod:client-and-server-all-bundles": "ng build --prod && ng run amblema-web:server:production --bundleDependencies all"
   },
   "private": true,
   "dependencies": {
