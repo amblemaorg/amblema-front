@@ -33,7 +33,7 @@ export class ChartComponentFactory {
     containerRef: ViewContainerRef,
     chartOptions: ChartComponent
   ): ChartComponent {
-    containerRef.clear();
+    containerRef && containerRef.clear();
     const concreteChartFactory = this.createNewChartFactory(chartOptions);
     const chartComponent = containerRef.createComponent(concreteChartFactory);
     this.setChartComponentAttributes(chartComponent, chartOptions);
