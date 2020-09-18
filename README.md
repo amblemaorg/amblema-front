@@ -1,27 +1,33 @@
-# AmblemaWeb
+# AmbLeMa Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.25.
 
-## Development server
+## Despliegue a producción
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Build docker images
 
-## Code scaffolding
+1. Verificar que las variables en el archivo `src/environments/environmets.prod.ts` son las correctas para producción
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Crear archivo .env.prod con el siguiente contenido para la creación de variables de entorno en el build
+  ```
+    export NGINX_HOST=127.0.0.1
+    export NGINX_PORT=80
+    export NGINX_ROOT=/usr/share/nginx/html
+    export SSR_HOST=
+    export SSR_PORT=
+    export G_MAPS_ID=
+    export G_ANALYTICS_ID=
+  ```
 
-## Build
+3. Agregar credenciales de un usuario gitlab en el comando `docker login` en el archivo `build.sh` para poder subir imagenes al container registry del repositorio
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+4. Ejecutar el script `build.sh`
 
-## Running unit tests
+  NOTA: Los pasos 2, 3 se pueden reimplementar a través de variables de CI/CD y un pipeline
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Deploy
 
-## Running end-to-end tests
+1. Agregar credenciales de un usuario gitlab en el comando `docker login` en el archivo `build.sh` para poder subir imagenes al container registry del repositorio
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+2. Ejecutar el script `deploy.sh` en el servidor para recrear los contenedores
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
