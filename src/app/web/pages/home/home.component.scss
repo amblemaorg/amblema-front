@@ -229,11 +229,11 @@ section.social-impact {
   padding: 18vw 9vw 0;
 
   @include breakpoint(small, landscape) {
-    padding: 6vw 9vw 0;
+    padding: 6vw 9vw 2vw;
   }
 
   @include breakpoint(medium) {
-    padding: 6vw 9vw 0;
+    padding: 6vw 9vw 2vw;
   }
 
   .heading-wrapper {
