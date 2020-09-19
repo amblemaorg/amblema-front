@@ -33,27 +33,30 @@ export class ChartComponentFactory {
     containerRef: ViewContainerRef,
     chartOptions: ChartComponent
   ): ChartComponent {
-    containerRef && containerRef.clear();
-    const concreteChartFactory = this.createNewChartFactory(chartOptions);
-    const chartComponent = containerRef.createComponent(concreteChartFactory);
-    this.setChartComponentAttributes(chartComponent, chartOptions);
+    if (containerRef && chartOptions && chartOptions.type) {
+      containerRef.clear();
+      const concreteChartFactory = this.createNewChartFactory(chartOptions);
+      const chartComponent = containerRef.createComponent(concreteChartFactory);
+      this.setChartComponentAttributes(chartComponent, chartOptions);
 
-    switch (chartOptions.type) {
-      case "line":
-        const lineChartInstance = <LineChartComponent>chartComponent.instance;
-        const lineChartOptions = <LineChartComponent>chartOptions;
-        lineChartInstance.asymptotes = lineChartOptions.asymptotes;
-        lineChartInstance.configAsymptotes();
-        return lineChartInstance;
-      case "bar":
-        const barChartInstance = <BarChartComponent>chartComponent.instance;
-        const barChartOptions = <BarChartComponent>chartOptions;
-        barChartInstance.asymptotes = barChartOptions.asymptotes;
-        barChartInstance.configAsymptotes();
-        return barChartInstance;
-      default:
-        return <ChartComponent>chartComponent.instance;
+      switch (chartOptions.type) {
+        case "line":
+          const lineChartInstance = <LineChartComponent>chartComponent.instance;
+          const lineChartOptions = <LineChartComponent>chartOptions;
+          lineChartInstance.asymptotes = lineChartOptions.asymptotes;
+          lineChartInstance.configAsymptotes();
+          return lineChartInstance;
+        case "bar":
+          const barChartInstance = <BarChartComponent>chartComponent.instance;
+          const barChartOptions = <BarChartComponent>chartOptions;
+          barChartInstance.asymptotes = barChartOptions.asymptotes;
+          barChartInstance.configAsymptotes();
+          return barChartInstance;
+        default:
+          return <ChartComponent>chartComponent.instance;
+      }
     }
+    return null;
   }
 
   public setChartComponentAttributes(
