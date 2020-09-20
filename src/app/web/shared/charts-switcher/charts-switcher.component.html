@@ -1,5 +1,6 @@
 <div
   class="charts-switcher"
+  *ngIf="charts.length"
   [ngClass]="{
     'd-row': direction == 'row',
     'd-column': direction != 'row'
@@ -15,14 +16,14 @@
         active: activeChartIndex == i
       }"
       type="button"
-      *ngFor="let chart of options.charts; index as i"
+      *ngFor="let chart of charts; index as i"
       (click)="switchChart(i)"
     >
       {{ chart.title }}
     </button>
   </div>
   <div class="chart-wrapper">
-    <p *ngIf="options.charts.length && options.charts[activeChartIndex].description">
+    <p *ngIf="charts.length && charts[activeChartIndex].description">
       {{ charts[activeChartIndex].description }}
     </p>
     <ng-template #chartHost></ng-template>
