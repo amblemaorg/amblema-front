@@ -31,15 +31,17 @@ export class ChartsSwitcherComponent implements OnInit {
 ​
   ngOnInit() {
     this.chartFactory = new ChartComponentFactory(this.resolver);
-    this.charts = this.options.charts;
+    this.charts = this.options.charts.filter((chart) => {
+      return chart.data && chart.data.length > 0;
+    });
     this.buttonsDescription = this.options.buttonsDescription;
     this.direction = this.options.direction || 'row';
     this.loadChartComponent();
   }
 ​
   loadChartComponent() {
-    if (this.options.charts.length > 0) {
-      const activeChart = this.options.charts[this.activeChartIndex];
+    if (this.charts.length > 0) {
+      const activeChart = this.charts[this.activeChartIndex];
       this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
     }
   }
