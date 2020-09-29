@@ -6,7 +6,7 @@ Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-
 
 ### Build docker images
 
-1. Verificar que las variables en el archivo `src/environments/environmets.prod.ts` son las correctas para producción
+1. Verificar que las variables en el archivo `src/environments/environmets.prod.ts` son las correctas para producción 
 
 2. Crear archivo .env.prod con el siguiente contenido para la creación de variables de entorno en el build
   ```
