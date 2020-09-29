@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   recaptchaKey: "6LcB7OsUAAAAADp1Ja9obo2HXVmb2r1Gl0Dqlsgj",
-  baseUrl: "http://167.71.187.213/api/"
+  baseUrl: "https://amblema.org/api/"
 };
