@@ -25,4 +25,8 @@ export class PostCardComponent implements OnInit {
       $clamp(this.excerpt.nativeElement, { clamp: 6 });
     }
   }
+
+  getExcerpt() {
+    return `${this.post.content.slice(0, 180)}...`;
+  }
 }
