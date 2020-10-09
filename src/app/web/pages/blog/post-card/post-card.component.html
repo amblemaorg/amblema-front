@@ -6,8 +6,8 @@
     </span>
   </div>
   <div class="post-content">
-    <h2 class="post-title" #title>{{ post.title }}</h2>
-    <p class="post-excerpt" #excerpt>{{ post.content }}</p>
+    <h2 #title class="post-title">{{ post.title }}</h2>
+    <p #excerpt class="post-excerpt" [innerHTML]="getExcerpt()"></p>
     <a class="read-more d-flex align-items-center" [routerLink]="['/blog/post', post.slug]">
       Leer Más
     </a>
