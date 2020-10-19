@@ -396,15 +396,15 @@ export class ImplementedFormsComponent implements OnInit {
   // Step Items to create each form wizard
   schoolStepItems = [
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.schoolStep1,
     },
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.schoolStep2,
     },
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.schoolStep3,
     },
     {
@@ -444,17 +444,17 @@ export class ImplementedFormsComponent implements OnInit {
       data: this.sponsorStep3,
     },
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep1),
       condition: { formControlName: "hasSchool", value: true },
     },
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep2),
       condition: { formControlName: "hasSchool", value: true },
     },
     {
-      title: "Datos de la escuela:",
+      title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep3),
       condition: { formControlName: "hasSchool", value: true },
     },
