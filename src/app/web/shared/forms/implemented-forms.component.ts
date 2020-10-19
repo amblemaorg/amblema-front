@@ -413,12 +413,12 @@ export class ImplementedFormsComponent implements OnInit {
       data: this.schoolStep4,
     },
     {
-      title: "Datos del padrino: ",
+      title: "Datos del Padrino: ",
       data: this.addPrefixToObjectProperties("sponsor", this.sponsorStep1),
       condition: { formControlName: "hasSponsor", value: true },
     },
     {
-      title: "Datos del padrino: ",
+      title: "Datos del Padrino: ",
       data: this.addPrefixToObjectProperties("sponsor", this.sponsorStep2),
       condition: { formControlName: "hasSponsor", value: true },
     },
@@ -431,11 +431,11 @@ export class ImplementedFormsComponent implements OnInit {
 
   sponsorStepItems = [
     {
-      title: "Datos del padrino:",
+      title: "Datos del Padrino:",
       data: this.sponsorStep1,
     },
     {
-      title: "Datos del padrino:",
+      title: "Datos del Padrino:",
       data: this.sponsorStep2,
     },
     {
@@ -466,8 +466,8 @@ export class ImplementedFormsComponent implements OnInit {
   ];
 
   coordinatorStepItems = [
-    { title: "Datos del coordinador:", data: this.coordinatorStep1 },
-    { title: "Datos del coordinador:", data: this.coordinatorStep2 },
+    { title: "Datos del Coordinador:", data: this.coordinatorStep1 },
+    { title: "Datos del Coordinador:", data: this.coordinatorStep2 },
   ];
 
   constructor(private contactService: ContactService, private toastr: ToastrService) {}

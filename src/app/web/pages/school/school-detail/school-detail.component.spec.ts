@@ -267,7 +267,7 @@ describe("SchoolDetailComponent", () => {
       title: "Diagnóstico de lectura",
       id: "wordsPerMinIndex",
       description:
-        "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+        "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
       type: "bar",
       data: [],
       goals: [{ label: "Valor esperado", value: 1 }],
@@ -281,7 +281,7 @@ describe("SchoolDetailComponent", () => {
       },
     },
     {
-      title: "Diagnóstico de multiplicación",
+      title: "Diagnóstico de Multiplicación",
       id: "multiplicationsPerMinIndex",
       description:
         "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
@@ -298,7 +298,7 @@ describe("SchoolDetailComponent", () => {
       },
     },
     {
-      title: "Diagnóstico de razonamiento Lógico - Matemático",
+      title: "Diagnóstico de Razonamiento Lógico - Matemático",
       id: "operationsPerMinIndex",
       description:
         "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",

@@ -74,7 +74,7 @@ describe("CoordinatorsComponent", () => {
   it('should have a h2 tag in steps section with content "¿Cómo ser un coordinador?"', () => {
     el = fixture.nativeElement.querySelector("section.steps h2");
     const h2Text = el.textContent;
-    expect(h2Text).toBe("¿Cómo ser un coordinador?");
+    expect(h2Text).toBe("¿Cómo ser un Coordinador?");
   });
 
   it(`should have meta title tag with content ${METADATA.coordinatorsPage.title}`, () => {

@@ -76,7 +76,7 @@ describe("AboutComponent", () => {
   it('should have a h2 tag in three pillars section with content "Tenemos tres pilares fundamentales"', () => {
     el = fixture.nativeElement.querySelector("section.pillars h2");
     const h2Text = el.textContent;
-    expect(h2Text).toBe("Tenemos tres pilares fundamentales");
+    expect(h2Text).toBe("Tenemos Tres Pilares Fundamentales");
   });
 
   it("should have a h2 tag in awards section", () => {
@@ -87,7 +87,7 @@ describe("AboutComponent", () => {
   it('should have a h2 tag in awards section with content "Premios y reconocimientos"', () => {
     el = fixture.nativeElement.querySelector("section.awards h2");
     const h2Text = el.textContent;
-    expect(h2Text).toBe("Premios y reconocimientos");
+    expect(h2Text).toBe("Premios y Reconocimientos");
   });
 
   it(`should have meta title tag with content ${METADATA.aboutUsPage.title}`, () => {

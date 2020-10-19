@@ -62,7 +62,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   chartSwitcherOptions = {
     direction: "column",
     buttonsDescription:
-      "Medimos el impacto de la aplicación de la herramienta educativa en cada escuela",
+      "Medimos el impacto de la aplicación de la Herramienta Educativa en cada escuela",
     charts: [],
   };
 

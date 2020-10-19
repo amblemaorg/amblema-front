@@ -15,7 +15,7 @@ describe('ChartsSwitcherComponent', () => {
       direction: 'column',
       charts: [
         {
-          title: 'Diagnóstico de lectura',
+          title: 'Diagnóstico de Lectura',
           type: 'line',
           data: [
             { label: 'Lapso 2 (2017-2018)', value: 10 },

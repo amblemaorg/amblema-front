@@ -26,9 +26,9 @@ export const HOME_CONTENT = {
       charts: [
         {
           id: "wordsPerMinIndex",
-          title: "Diagnóstico de lectura",
+          title: "Diagnóstico de Lectura",
           description:
-            "Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo.",
+            "Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.8 },
@@ -59,7 +59,7 @@ export const HOME_CONTENT = {
         },
         {
           id: "multiplicationsPerMinIndex",
-          title: "Diagnóstico de multiplicación",
+          title: "Diagnóstico de Multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
           type: "bar",
@@ -92,7 +92,7 @@ export const HOME_CONTENT = {
         },
         {
           id: "operationsPerMinIndex",
-          title: "Diagnóstico de razonamiento Lógico - Matemático",
+          title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo.",
           type: "bar",
