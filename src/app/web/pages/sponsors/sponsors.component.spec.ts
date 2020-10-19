@@ -75,7 +75,7 @@ describe("SponsorsComponent", () => {
   it('should have a h2 tag in steps section with content "¿Cómo ser un padrino?"', () => {
     el = fixture.nativeElement.querySelector("section.steps h2");
     const h2Text = el.textContent;
-    expect(h2Text).toBe("¿Cómo ser un padrino?");
+    expect(h2Text).toBe("¿Cómo ser un Padrino?");
   });
 
   it("should have a h2 tag in sponsors section", () => {
@@ -86,7 +86,7 @@ describe("SponsorsComponent", () => {
   it('should have a h2 tag in sponsors section with content "Nuestros padrinos"', () => {
     el = fixture.nativeElement.querySelector("section.sponsors h2");
     const h2Text = el.textContent;
-    expect(h2Text).toBe("Nuestros padrinos");
+    expect(h2Text).toBe("Nuestros Padrinos");
   });
 
   it(`should have meta title tag with content ${METADATA.sponsorsPage.title}`, () => {
