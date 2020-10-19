@@ -158,7 +158,7 @@ export function schedulingPlanningConfigMapper(
 
   return {
     header: {
-      title: "Planificación del lapso",
+      title: "Planificación de Lapso",
     },
     blocks: [
       {

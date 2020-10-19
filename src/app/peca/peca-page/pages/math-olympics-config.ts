@@ -358,7 +358,7 @@ export function mathOlympicsConfigMapper(
 
   return {
     header: {
-      title: "Olimpíadas de matemáticas",
+      title: "Olimpíada de Matemática",
     },
     blocks: [
       {

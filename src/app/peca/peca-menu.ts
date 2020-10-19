@@ -8,13 +8,13 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'amblecoins_peca_view',
   },
   olympics: {
-    title: 'Olimpíadas de matemática',
+    title: 'Olimpíada de Matemática',
     icon: 'medal',
     link: 'olimpiadas-matematicas',
     data: 'olympics_peca_view',
   },
   annualPreparation: {
-    title: 'Preparación de la convención anual',
+    title: 'Preparación Anual',
     icon: 'users',
     link: 'preparacion-convencion-anual',
     data: 'annual_preparation_peca_view',
@@ -26,13 +26,13 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'annual_convention_peca_view',
   },
   lapsePlanning: {
-    title: 'Planificación del lapso',
+    title: 'Planificación de Lapso',
     icon: 'planificacion',
     link: 'planificacion-lapso',
     data: 'lapse_planning_peca_view',
   },
   initialWorkshop: {
-    title: 'Taller inicial',
+    title: 'Taller Inicial',
     icon: 'taller-inicial',
     link: 'taller-inicial',
     data: 'initial_workshop_view',

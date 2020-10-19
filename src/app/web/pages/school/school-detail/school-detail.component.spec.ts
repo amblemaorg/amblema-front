@@ -32,7 +32,7 @@ describe("SchoolDetailComponent", () => {
     "activities": [
       {
         "description": "",
-        "name": "Taller inicial"
+        "name": "Taller Inicial"
       },
       {
         "description": "",
@@ -44,7 +44,7 @@ describe("SchoolDetailComponent", () => {
       },
       {
         "description": "Descripcion para el contenido web",
-        "name": "Olimpíadas matemáticas"
+        "name": "Olimpíada de Matemática"
       },
       {
         "description": "dwadaw",
@@ -148,7 +148,7 @@ describe("SchoolDetailComponent", () => {
       {
         "date": "2020-07-16T08:00:00.000Z",
         "description": "Descripcion para el contenido web",
-        "name": "Olimpíadas matemáticas"
+        "name": "Olimpíada de Matemática"
       }
     ],
     "olympicsSummary": {

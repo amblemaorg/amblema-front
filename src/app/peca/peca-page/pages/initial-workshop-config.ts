@@ -242,7 +242,7 @@ const modalRegistroTallerInicial = {
 
 export const INITIAL_WORKSHOP_CONFIG = {
   header: {
-    title: "Taller inicial",
+    title: "Taller Inicial",
   },
   blocks: [
     {
@@ -454,7 +454,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, permis
 
   return {
     header: {
-      title: "Taller inicial",
+      title: "Taller Inicial",
     },
     blocks: [
       {
