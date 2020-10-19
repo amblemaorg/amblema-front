@@ -64,7 +64,7 @@ xdescribe('ChecklistBlockComponent', () => {
                             { id: 3, name: 'Rechazado' },
                         ]
                     },
-                    title: 'Convención anual',
+                    title: 'Convención Anual',
                     checkList: [
                         { name: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                         { name: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },

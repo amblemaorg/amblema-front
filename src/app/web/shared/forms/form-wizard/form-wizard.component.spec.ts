@@ -102,11 +102,11 @@ describe('FormWizardComponent', () => {
 
   const schoolStepItems = [
     {
-      title: 'Datos de la escuela:',
+      title: 'Datos de la Escuela:',
       data: schoolStep1
     },
     {
-      title: 'Datos de la escuela:',
+      title: 'Datos de la Escuela:',
       data: schoolStep2
     }
   ]

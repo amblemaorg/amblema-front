@@ -40,7 +40,7 @@ describe("SchoolDetailComponent", () => {
       },
       {
         "description": "",
-        "name": "Convención anual"
+        "name": "Convención Anual"
       },
       {
         "description": "Descripcion para el contenido web",
@@ -48,7 +48,7 @@ describe("SchoolDetailComponent", () => {
       },
       {
         "description": "dwadaw",
-        "name": "Actividad especial de lapso"
+        "name": "Actividad Especial de Lapso"
       },
       {
         "description": "dwadwadwa",

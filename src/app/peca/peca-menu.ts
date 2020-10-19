@@ -8,7 +8,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'amblecoins_peca_view',
   },
   olympics: {
-    title: 'Olimpíadas de matemáticas',
+    title: 'Olimpíadas de matemática',
     icon: 'medal',
     link: 'olimpiadas-matematicas',
     data: 'olympics_peca_view',
@@ -20,7 +20,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'annual_preparation_peca_view',
   },
   annualConvention: {
-    title: 'Convención anual',
+    title: 'Convención Anual',
     icon: 'convencion',
     link: 'convencion-anual',
     data: 'annual_convention_peca_view',
@@ -38,7 +38,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'initial_workshop_view',
   },
   specialActivity: {
-    title: 'Actividad especial de lapso',
+    title: 'Actividad Especial de Lapso',
     icon: 'actividades',
     link: 'actividad-especial',
     data: 'special_activity_view',
@@ -57,7 +57,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     icon: 'one',
     children: [
       {
-        title: 'Datos de la escuela',
+        title: 'Datos de la Escuela',
         icon: 'folder-open',
         link: 'datos-escuela',
         data: 'school_peca_view',

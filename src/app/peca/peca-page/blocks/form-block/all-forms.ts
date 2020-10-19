@@ -1192,10 +1192,10 @@ export const formPadrino = {
 };
 /* PERFIL DE USUARIO ESCUELA*/
 export const formEscuela = {
-  titleName: { label: "Datos de la escuela", type: "title" },
+  titleName: { label: "Datos de la Escuela", type: "title" },
   name: {
-    label: "Nombre de la escuela",
-    placeholder: "Nombre de la escuela",
+    label: "Nombre de la Escuela",
+    placeholder: "Nombre de la Escuela",
     fullwidth: false,
     ...controlProps.onlyLettersNumbersAndRequired,
   },
