@@ -34,6 +34,7 @@ export class SponsorsComponent implements OnInit {
     dots: true,
     nav: false,
     navSpeed: 1000,
+    autoplayTimeout: 12000,
     responsive: {
       0: {
         items: 1,
