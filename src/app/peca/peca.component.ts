@@ -277,7 +277,7 @@ export class PecaComponent implements OnInit, OnDestroy {
                       return permssionsObj
                   },
               {});
-            console.log('permisions', permissions_)
+
             this.setPermissions(permissions_);
         })
     );
@@ -347,9 +347,9 @@ export class PecaComponent implements OnInit, OnDestroy {
       const lapse = pecaContent[`lapse${i}`];
       const lapseOptions = this.menu[i - 1].children;
 
-      Object.entries(lapse).map(({ 0: key, 1: value }) => {
-        if (key !== "activities" && value) {
-          const lapseOption = this.lapseOptionsConfig[key];
+      Object.keys(this.lapseOptionsConfig).map((lapsOpt) => {
+        if (lapsOpt !== "activities" && lapse[lapsOpt]) {
+          const lapseOption = this.lapseOptionsConfig[lapsOpt];
           lapseOptions.push({
             ...lapseOption,
             link: `lapso/${i}/${lapseOption.link}`,
@@ -359,7 +359,7 @@ export class PecaComponent implements OnInit, OnDestroy {
       });
 
       lapse.activities.map(activity => {
-        const { activity: lapseActivity } = this.lapseOptionsConfig;
+        const { activities: lapseActivity } = this.lapseOptionsConfig;
 
         lapseOptions.push({
           ...lapseActivity,

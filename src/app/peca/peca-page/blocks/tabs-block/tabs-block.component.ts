@@ -65,7 +65,6 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
   public setSettings(settings: any) {
     this.settings = settings.settings;
     this.factory = settings.factory ? settings.factory : {};
-    console.log(settings);
   }
 
   public instantiateChildBlocks() {
