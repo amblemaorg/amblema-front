@@ -163,7 +163,7 @@ export function MapperYearBookWeb(
           },
         },
       },
-      createTitleComponent("Diagnóstico de multiplicación"),
+      createTitleComponent("Diagnóstico de Multiplicación"),
       {
         component: "table",
         settings: {

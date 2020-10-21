@@ -513,7 +513,7 @@ const modalTablaEstudiante = {
 
 export const SCHOOL_DATA_CONFIG = {
   header: {
-    title: 'Datos de la escuela',
+    title: 'Datos de la Escuela',
   },
   blocks: [
     {

@@ -17,7 +17,7 @@ export function annualConventionConfigMapper(pecaContent, lapseNumber, permissio
         {
           datosNivel: [
             {
-              title: 'Convención anual',
+              title: 'Convención Anual',
               isFromAnnualConvention: true,
               checkList: checklist,
             }
@@ -33,7 +33,7 @@ export function annualConventionConfigMapper(pecaContent, lapseNumber, permissio
 
   return {
     header: {
-        title: "Convención anual"
+        title: "Convención Anual"
     },
     blocks: [
       {
