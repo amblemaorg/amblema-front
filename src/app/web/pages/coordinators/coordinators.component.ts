@@ -31,6 +31,7 @@ export class CoordinatorsComponent implements OnInit {
     dots: true,
     nav: false,
     navSpeed: 3000,
+    autoplayTimeout: 12000,
     responsive: {
       0: {
         items: 1,
@@ -46,7 +47,7 @@ export class CoordinatorsComponent implements OnInit {
     slides: [],
     title: "¿Quién es el Coordinador AmbLeMa?",
     description:
-      "El coordinador AmbLeMa es la persona encargada de colaborar para la aplicación del método AmbLeMa en una escuela de su comunidad. Es el puente entre la fundación AmbLeMa, el padrino y la escuela. Su función es Hacer Que Suceda (HQS)",
+      "El coordinador AmbLeMa es la persona encargada de colaborar para la aplicación del método AmbLeMa en una escuela de su comunidad. Es el puente entre la Fundación AmbLeMa, el Padrino y la Escuela. Su función es Hacer Que Suceda (HQS)",
   };
   coordinatorsPageData: CoordinatorPage = {
     backgroundImage: "",

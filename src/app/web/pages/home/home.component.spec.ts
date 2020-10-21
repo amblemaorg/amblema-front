@@ -81,7 +81,7 @@ describe("HomeComponent", () => {
     testHelpers.testSelectorHasContent(
       fixture.nativeElement,
       selector + " " + tag,
-      "Tenemos tres pilares fundamentales"
+      "Tenemos Tres Pilares Fundamentales"
     );
   });
 
@@ -93,7 +93,7 @@ describe("HomeComponent", () => {
     testHelpers.testSelectorHasContent(
       fixture.nativeElement,
       selector + " " + tag,
-      "Indicadores clave"
+      "Indicadores Clave"
     );
   });
 

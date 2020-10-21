@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   chartSwitcherOptions = {
     direction: "row",
     buttonsDescription:
-      "Medimos el impacto de la aplicación de la herramienta educativa en cada escuela",
+      "Medimos el impacto de la aplicación de la Herramienta Educativa en cada escuela",
     charts: [],
   };
 

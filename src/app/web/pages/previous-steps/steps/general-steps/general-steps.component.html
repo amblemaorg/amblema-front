@@ -118,7 +118,7 @@
             [class.has-several]="step.hasFile || step.hasUpload" (click)="approvalMethod(step,i,mode)"
             [disabled]="(compareMode() && !isAdmin() ) || (!step.uploadedFile && step.status=='1') || step.sending || !enableActions"
             [class.cancel-btn]="step.status!='1'">
-              <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar curriculum':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
+              <span *ngIf="step.sending" class="spinner-grow spinner-grow-sm"></span>{{ !step.sending? (step.status=="1"? 'Enviar currículum Vitae':'Cancelar solicitud') : (step.status=="1"? 'Enviando..':'Cancelando..') }}
             </button>
 
             <!-- ? GO LEARNING MODULES BUTTON -->

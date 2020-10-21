@@ -3,10 +3,10 @@ import { Observable, of } from "rxjs";
 
 const charts = [
   {
-    title: "Diagnóstico de lectura",
+    title: "Diagnóstico de Lectura",
     id: "wordsPerMinIndex",
     description:
-      "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+      "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
     type: "bar",
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
@@ -20,7 +20,7 @@ const charts = [
     },
   },
   {
-    title: "Diagnóstico de multiplicación",
+    title: "Diagnóstico de Multiplicación",
     id: "multiplicationsPerMinIndex",
     description:
       "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
@@ -37,7 +37,7 @@ const charts = [
     },
   },
   {
-    title: "Diagnóstico de razonamiento Lógico - Matemático",
+    title: "Diagnóstico de Razonamiento Lógico - Matemático",
     id: "operationsPerMinIndex",
     description:
       "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
@@ -75,9 +75,9 @@ const schoolsList = {
       ],
       charts: [
         {
-          title: "Diagnóstico de lectura",
+          title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.8 },
@@ -107,7 +107,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de multiplicación",
+          title: "Diagnóstico de Multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
           type: "bar",
@@ -139,7 +139,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de razonamiento Lógico - Matemático",
+          title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
           type: "bar",
@@ -386,9 +386,9 @@ const schoolsList = {
       ],
       charts: [
         {
-          title: "Diagnóstico de lectura",
+          title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
@@ -418,7 +418,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de multiplicación",
+          title: "Diagnóstico de Multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
           type: "bar",
@@ -450,7 +450,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de razonamiento Lógico - Matemático",
+          title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
           type: "bar",
@@ -697,9 +697,9 @@ const schoolsList = {
       ],
       charts: [
         {
-          title: "Diagnóstico de lectura",
+          title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
@@ -729,7 +729,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de multiplicación",
+          title: "Diagnóstico de Multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
           type: "bar",
@@ -761,7 +761,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de razonamiento Lógico - Matemático",
+          title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
           type: "bar",
@@ -1008,9 +1008,9 @@ const schoolsList = {
       ],
       charts: [
         {
-          title: "Diagnóstico de lectura",
+          title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leidas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
@@ -1040,7 +1040,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de multiplicación",
+          title: "Diagnóstico de Multiplicación",
           description:
             "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
           type: "bar",
@@ -1072,7 +1072,7 @@ const schoolsList = {
           },
         },
         {
-          title: "Diagnóstico de razonamiento Lógico - Matemático",
+          title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
             "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
           type: "bar",
