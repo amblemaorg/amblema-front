@@ -6,7 +6,7 @@ const charts = [
     title: "Diagnóstico de Lectura",
     id: "wordsPerMinIndex",
     description:
-      "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+      "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
     type: "bar",
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
@@ -77,7 +77,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.8 },
@@ -388,7 +388,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
@@ -699,7 +699,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
@@ -1010,7 +1010,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Lectura",
           description:
-            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+            "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 40 },
