@@ -28,7 +28,7 @@ export const HOME_CONTENT = {
           id: "wordsPerMinIndex",
           title: "Diagnóstico de Lectura",
           description:
-            "Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo.",
+            "Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.8 },
