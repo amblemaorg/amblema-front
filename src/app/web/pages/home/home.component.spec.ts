@@ -93,7 +93,7 @@ describe("HomeComponent", () => {
     testHelpers.testSelectorHasContent(
       fixture.nativeElement,
       selector + " " + tag,
-      "Indicadores Clave"
+      "Indicadores Claves"
     );
   });
 
@@ -102,7 +102,7 @@ describe("HomeComponent", () => {
     const tag = "h2";
 
     testHelpers.testIsUniqueTagInSelector(fixture.nativeElement, selector, tag);
-    testHelpers.testSelectorHasContent(fixture.nativeElement, selector + " " + tag, "Fundadores");
+    testHelpers.testSelectorHasContent(fixture.nativeElement, selector + " " + tag, "Testimonio de los Fundadores");
   });
 
   it(`should have meta title tag with content ${METADATA.homePage.title}`, () => {

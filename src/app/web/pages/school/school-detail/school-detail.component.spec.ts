@@ -267,7 +267,7 @@ describe("SchoolDetailComponent", () => {
       title: "Diagnóstico de lectura",
       id: "wordsPerMinIndex",
       description:
-        "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La grágica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
+        "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
       type: "bar",
       data: [],
       goals: [{ label: "Valor esperado", value: 1 }],
