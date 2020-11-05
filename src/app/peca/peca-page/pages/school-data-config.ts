@@ -202,6 +202,7 @@ const tablaDocente = {
 const formTablaDocente = {
   component: 'form',
   name: 'teacherModalForm',
+  viewMode: "both",
   settings: {
     formsContent: formTabsDocente,
     buttons: ['guardar'],
@@ -328,6 +329,7 @@ const tablaGradosSecciones = {
 const formTablaGradosSecciones = {
   component: 'form',
   name: 'gradesAndSectionsModalForm',
+  viewMode: "both",
   settings: {
     formsContent: formGradosSecciones,
     buttons: ['guardar'],
@@ -463,6 +465,7 @@ const tablaEstudiante = {
 const formTablaEstudiante = {
   component: 'form',
   name: 'estudiantesModalForm',
+  viewMode: "both",
   settings: {
     formsContent: formTabsEstudiantes,
     buttons: ['guardar'],
