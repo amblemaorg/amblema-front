@@ -99,6 +99,7 @@ export class PecaComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   imageUser="";
   nameUser="";
+  userType="";
   constructor(
     private store: Store,
     private iconLibraries: NbIconLibraries,
@@ -189,7 +190,8 @@ export class PecaComponent implements OnInit, OnDestroy {
 
     this.userSubscription = this.userInfo$.subscribe(res => {
       this.imageUser=res.image;
-      this.nameUser=res.name
+      this.nameUser=res.name;
+      this.userType=res.userType;
     });
 
     this.subscription.add(

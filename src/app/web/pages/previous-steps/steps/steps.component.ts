@@ -237,7 +237,12 @@ export class StepsComponent implements OnInit, OnDestroy {
   }
 
   goToPECA() {
-    this.router.navigate(["peca/datos-escuela"]);
+    this.router.navigate([
+      "peca/datos-escuela",
+      { 
+        comesFromPreviousSteps: true
+      }
+    ]);
   }
 
 }
