@@ -113,6 +113,7 @@ export class PecaState {
       };
       const project = {
         id: projectId,
+        school: response.school ? response.school : null,
         pecas: [peca],
       };
       patchState({

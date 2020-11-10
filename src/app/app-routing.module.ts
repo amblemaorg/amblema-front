@@ -109,6 +109,7 @@ export class AppRoutingModule {
             activeSchoolYear: {
               id: schoolYearId,
             },
+            permissions
           };
           this.store.dispatch(new SetUser(user));
           this.store.dispatch(new SetUserPermissions(permissions));

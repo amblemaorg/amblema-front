@@ -289,7 +289,7 @@
                   ? settings.formsContent[field].maxlength
                   : 'default'
               "
-              (blur)="settings.onBlur($event)"
+              (blur)="settings.onBlur ? settings.onBlur($event) : null"
             />
           </ng-container>
 
