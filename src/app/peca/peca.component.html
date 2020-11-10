@@ -23,7 +23,7 @@
         <h4 class="mb-0 user-name font-weight-bold" [innerHTML]="getUserOneOrTwoLines(nameUser)"></h4>
       </div>
       <div class="dropdown-menu dropdown-content">
-        <a class="dropdown-item" [routerLink]="['perfil-usuario']">Perfil</a>
+        <a *ngIf="userType !== '0' && userType !== '1'" class="dropdown-item" [routerLink]="['perfil-usuario']">Perfil</a>
         <a class="dropdown-item" [routerLink]="['/auth/logout']">Salir</a>
       </div>
     </div>

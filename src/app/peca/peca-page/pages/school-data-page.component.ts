@@ -19,6 +19,8 @@ import { schoolDataToSchoolFormMapper } from "../mappers/school-mappers";
 import { teachersDataToTeachersTableMapper } from "../mappers/teacher-mappers";
 import { schoolPicturesSliderDataToSchoolPicturesTableMapper } from "../mappers/school-prictures-slider-mappers";
 import { isNullOrUndefined } from "util";
+import { ActivatedRoute } from "@angular/router";
+import { Location } from "@angular/common";
 import { UserState } from "../../../store/states/e-learning/user.state";
 import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
 import { sectionsAndStudentsDataToSectionsFormMapper } from "../mappers/sections-and-students-form-mappers";
@@ -62,8 +64,13 @@ export class SchoolDataPageComponent
   teachersFormData: { hiddenButton: boolean; };
   schoolFormButton: { action: ({ type: number; name: string; hidden?: undefined; } | { hidden: boolean; type: number; name: string; })[]; };
 
-  constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
-    super(factoryResolver);
+  constructor(
+    factoryResolver: ComponentFactoryResolver, 
+    private globals: GlobalService,
+    route: ActivatedRoute,
+    location: Location
+  ) {
+    super(factoryResolver, location, route);
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
@@ -90,6 +97,21 @@ export class SchoolDataPageComponent
   }
 
   ngOnInit() {
+    if (this.globals.isBrowser) {
+      const comes_from_steps =
+        (this.route.snapshot.params && this.route.snapshot.params.comesFromPreviousSteps) ||
+        (this.route.snapshot.children &&
+          this.route.snapshot.children.length > 0 &&
+          this.route.snapshot.children[this.route.snapshot.children.length - 1].params &&
+          this.route.snapshot.children[this.route.snapshot.children.length - 1].params
+            .comesFromPreviousSteps);
+
+      if (comes_from_steps) 
+        this.isFromSteps = true;
+      else
+        this.isFromSteps = false;
+    }
+    
     this.schoolDataSubscription = this.schoolData$.subscribe(
       (peca) => {
         if (!isNullOrUndefined(peca)) {
@@ -444,6 +466,7 @@ export class SchoolDataPageComponent
   }
 
   ngOnDestroy() {
+    this.isFromSteps = null;
     this.isInstanciated = false;
     this.loadedData = false;
     this.schoolDataSubscription.unsubscribe();
