@@ -101,14 +101,17 @@ export class AppRoutingModule {
           const decodedAccessToken = decodeJwtPayload(response.access_token);
           const permissions = decodedAccessToken.identity.permissions;
           const userType = decodedAccessToken.identity.userType;
+          const userName = decodedAccessToken.identity.name;
 
           // Whether enters to peca or phas to be called
           const user = {
             id: userId,
             userType,
+            name: userName,
             activeSchoolYear: {
               id: schoolYearId,
             },
+            permissions
           };
           this.store.dispatch(new SetUser(user));
           this.store.dispatch(new SetUserPermissions(permissions));
