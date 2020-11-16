@@ -11,7 +11,7 @@ export class BlogComponent implements OnInit {
   coverData = {
     slides: [
       {
-        image: "./assets/images/background-blog.jpg",
+        image: "./assets/images/background-blog2.png",
       },
     ],
   };
