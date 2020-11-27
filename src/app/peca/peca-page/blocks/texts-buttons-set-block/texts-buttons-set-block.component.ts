@@ -904,7 +904,7 @@ export class TextsButtonsSetBlockComponent
   // FOR UPLOAD
   fileMngr(e) {
     if (e && e.target && e.target.files && e.target.files.length > 0) {
-      this.settings.onFileUpload(<File>e.target.files[0]);
+      if (this.settings.onFileUpload) this.settings.onFileUpload(<File>e.target.files[0]);
       this.settings.upload = this.settings.upload
         ? {
             ...this.settings.upload,
