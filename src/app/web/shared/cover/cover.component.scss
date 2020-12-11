@@ -32,11 +32,13 @@
     @include breakpoint(small, landscape) {
       right: 0;
       width: 45%;
+      bottom: -6vw;
     }
 
     @include breakpoint(medium) {
       right: 0;
       width: 45%;
+      bottom: -6vw;
     }
   }
 
@@ -82,7 +84,7 @@
       margin-right: 5vw;
       right: 0;
       width: 45vw;
-      bottom: 20vw;
+      bottom: 14vw;
     }
 
     @include breakpoint(medium) {
@@ -90,7 +92,7 @@
       margin-right: 5vw;
       right: 0;
       width: 45vw;
-      bottom: 20vw;
+      bottom: 14vw;
     }
 
     &--sponsor-page,
