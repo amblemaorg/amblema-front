@@ -231,7 +231,6 @@ export class TextsButtonsSetBlockComponent
           if (data["date"] || data["isDate"]) this.dataGenAct.date = data.date;
           if (data["checklist"]) this.dataGenAct.checklist = data.checklist;
           if (data["upload"]) this.dataGenAct.upload = data.upload;
-          // console.log("activity data to update",this.dataGenAct);
         }
       })
     );
@@ -293,7 +292,8 @@ export class TextsButtonsSetBlockComponent
     }
     setTimeout(() => {
       if (
-        this.settings.dateOrtext
+        !this.settings.isGenericActivity
+        && this.settings.dateOrtext
         && this.settings.dateOrtext.fields
         && this.settings.dateOrtext.fields[0]
       ) {
@@ -320,12 +320,28 @@ export class TextsButtonsSetBlockComponent
       this.settings.isGenericActivity = true;
       this.userCanEdit = data["userCanEdit"];
 
-      this.reloadDate = true;
+      // this.reloadDate = true;
       this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
+      setTimeout(() => {
+        if (
+          this.settings.dateOrtext
+          && this.settings.dateOrtext.fields
+          && this.settings.dateOrtext.fields[0]
+        ) {
+          if (!this.settings.dateOrtext.fields[0].value) this.inputDate.reset();
+          if (this.inputDate) {
+            this.inputDate.registerOnChange((value: Date) => {
+              const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
+              this.controlDateChange(event, 'greater');
+            }); 
+          }
+        }
+      });
+
       this.settings.upload = data["upload"] ? data.upload : null;
       setTimeout(() => {
-        this.reloadDate = false;
+        // this.reloadDate = false;
         this.reloadUpload = false;
       });
 
@@ -639,8 +655,6 @@ export class TextsButtonsSetBlockComponent
           const method = this.settings.fetcherMethod || "post";
           const resourcePath = this.settings.fetcherUrls[method];
 
-          console.log("method: ", method, "url: ", resourcePath, "body: ", body);
-
           if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
 
           this.fetcher[method](resourcePath, body).subscribe(
@@ -689,7 +703,6 @@ export class TextsButtonsSetBlockComponent
         break;
       case 3:
         this.isSending = true;
-        // console.log('prueba')
         break;
       case 4:
         this.isSending = true;
@@ -773,7 +786,6 @@ export class TextsButtonsSetBlockComponent
 
   activityActioned(case_type: number) {
     const formData = new FormData();
-    console.log(case_type === 7 ? "Enviar" : "Guardar", this.dataGenAct);
     this.isSending = true;
     this.globals.actionsSleeperUpdater(true, true);
 
