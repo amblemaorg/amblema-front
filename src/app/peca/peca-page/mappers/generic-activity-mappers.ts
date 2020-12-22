@@ -67,7 +67,8 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
                         placeholder: "Fecha de la actividad", 
                         fullwidth: false, 
                         type: "date",
-                        value: isThereDate ? parseDate( new Date( date.split("+").shift() ), true ) : null,
+                        // value: isThereDate ? parseDate( new Date( date.split("+").shift() ), true ) : null,
+                        value: isThereDate ? date.split("T")[0] : null,
                         validations: { 
                             required: true, 
                         }, 

@@ -123,7 +123,6 @@ export function specialActivityConfigMapper(
       ],
       modalCode: "dataSpecialActivityTable",
       onDateChange: (value) => {
-        console.log("special activity date", value);
         const data = {
           activityDate: value,
         };
