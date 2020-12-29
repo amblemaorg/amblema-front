@@ -37,6 +37,7 @@ import { PecaStateModel, PecaModel } from "./peca.model";
 import { ApiWebContentService } from "../../../services/web/api-web-content.service";
 import { environment } from "../../../../environments/environment";
 import { ToastrService } from "ngx-toastr";
+import { Injectable } from "@angular/core";
 
 @State<PecaStateModel>({
   name: "peca",
@@ -64,6 +65,7 @@ import { ToastrService } from "ngx-toastr";
     },
   },
 })
+@Injectable()
 export class PecaState {
   constructor(
     private apiService: ApiWebContentService,

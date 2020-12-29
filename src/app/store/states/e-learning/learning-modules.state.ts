@@ -2,6 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { ModuleStateModel, UpdateModulesTotal, ClearModulesTotal } from '../../actions/e-learning/learning-modules.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
+import { Injectable } from '@angular/core';
 
 @State<ModuleStateModel>({
     name: 'moduleinfo',
@@ -10,6 +11,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
       modules: [],
     }
   })
+  @Injectable()
   export class ModulesState {
     // SELECTORS
     @Selector()
