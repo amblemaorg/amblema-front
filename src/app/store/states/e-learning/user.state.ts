@@ -2,6 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { UserStateModel, UpdateUserInfo, ClearUserInfo, SetCurrentUser } from '../../actions/e-learning/user.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
+import { Injectable } from '@angular/core';
 
 @State<UserStateModel>({
     name: 'coordinatorinfo',
@@ -17,6 +18,7 @@ import { ModulesService } from '../../../services/steps/modules.service';
       userType: '',
     }
   })
+  @Injectable()
   export class UserState {
     // SELECTORS
     @Selector()

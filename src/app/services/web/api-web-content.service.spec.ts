@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, waitForAsync } from "@angular/core/testing";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { ApiWebContentService } from "./api-web-content.service";
 import { environment } from "src/environments/environment";

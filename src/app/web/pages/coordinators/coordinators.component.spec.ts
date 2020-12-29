@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
+import { ComponentFixture, TestBed, inject, waitForAsync } from "@angular/core/testing";
 
 import { CoordinatorsComponent } from "./coordinators.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -18,7 +18,7 @@ describe("CoordinatorsComponent", () => {
   let fixture: ComponentFixture<CoordinatorsComponent>;
   let el: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CoordinatorsComponent],
       imports: [
