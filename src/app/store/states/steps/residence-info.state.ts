@@ -2,6 +2,7 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { ResidenceInfoStateModel, UpdateStates, UpdateMunicipalities } from '../../actions/steps/residence-info.actions';
 import { StepsService } from '../../../services/steps/steps.service';
+import { Injectable } from '@angular/core';
 
 @State<ResidenceInfoStateModel>({
     name: 'residenceinfo',
@@ -10,6 +11,8 @@ import { StepsService } from '../../../services/steps/steps.service';
       municipalities: [],
     }
   })
+
+  @Injectable()
   export class ResidenceInfoState {
     // SELECTORS
     @Selector()

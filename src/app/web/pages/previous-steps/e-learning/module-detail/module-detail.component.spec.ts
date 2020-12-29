@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ModuleDetailComponent } from './module-detail.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -16,7 +16,7 @@ describe('ModuleDetailComponent', () => {
   let component: ModuleDetailComponent;
   let fixture: ComponentFixture<ModuleDetailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ModuleDetailComponent, EheaderComponent ],
       imports: [OwlModule, FontAwesomeModule,HttpClientModule,RouterTestingModule,

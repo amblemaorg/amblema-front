@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { EheaderComponent } from '../../layout/eheader/eheader.component';
@@ -13,7 +13,7 @@ describe('PreviousStepsComponent', () => {
   let component: PreviousStepsComponent;
   let fixture: ComponentFixture<PreviousStepsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PreviousStepsComponent, EheaderComponent ],
       imports: [

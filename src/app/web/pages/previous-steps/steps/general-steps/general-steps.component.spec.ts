@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GeneralStepsComponent, StatusSelectorComponent } from './general-steps.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,7 +13,7 @@ describe('GeneralStepsComponent', () => {
   let component: GeneralStepsComponent;
   let fixture: ComponentFixture<GeneralStepsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ GeneralStepsComponent,StepsFormsComponent, StatusSelectorComponent ],
       imports: [RouterTestingModule, FontAwesomeModule, HttpClientModule, FormsModule,

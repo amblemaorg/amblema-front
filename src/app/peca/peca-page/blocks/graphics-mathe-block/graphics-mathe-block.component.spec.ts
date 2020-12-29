@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { GraphicsMatheBlockComponent } from "./graphics-mathe-block.component";
 import { RouterTestingModule } from "@angular/router/testing";

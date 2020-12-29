@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BlogPostComponent } from "./blog-post.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "src/app/web/shared/shared.module";
@@ -41,7 +41,7 @@ describe("BlogPostComponent", () => {
     records: [post, post],
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     httpSpy = jasmine.createSpyObj("HttpClient", ["get"]);
     httpSpy.get.and.returnValue(of(response));
     blogService = new ApiWebContentService(<any>httpSpy);
