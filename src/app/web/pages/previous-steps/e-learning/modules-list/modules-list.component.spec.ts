@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { JwPaginationComponent } from '../../../../shared/jw-angular-pagination'; //! SOLVENTANDO PROBLEMA DE COMPILADO AOT
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModulesListComponent } from './modules-list.component';
@@ -14,7 +14,7 @@ describe('ModulesListComponent', () => {
   let component: ModulesListComponent;
   let fixture: ComponentFixture<ModulesListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ModulesListComponent, JwPaginationComponent ],
       imports: [

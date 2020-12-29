@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
+import { ComponentFixture, TestBed, inject, waitForAsync } from "@angular/core/testing";
 import { AboutComponent } from "./about.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "../../shared/shared.module";

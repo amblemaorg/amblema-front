@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { SchoolSelectionComponent } from "./school-selection.component";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -11,7 +11,7 @@ xdescribe("SchoolSelectionComponent", () => {
   let component: SchoolSelectionComponent;
   let fixture: ComponentFixture<SchoolSelectionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SchoolSelectionComponent],
       imports: [

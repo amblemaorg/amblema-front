@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
 import { PageBlockComponent } from '../page-block.component';
 import { ScheduleBlockComponent } from './schedule-block.component';

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { SponsorsComponent } from "./sponsors.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -19,7 +19,7 @@ describe("SponsorsComponent", () => {
   let fixture: ComponentFixture<SponsorsComponent>;
   let el: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SponsorsComponent],
       imports: [
