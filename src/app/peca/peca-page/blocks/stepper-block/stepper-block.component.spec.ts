@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StepperBlockComponent } from './stepper-block.component';
 import { NbStepperModule } from '@nebular/theme';

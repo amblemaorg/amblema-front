@@ -56,7 +56,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [RedirectionComponent],
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled" })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled", relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {

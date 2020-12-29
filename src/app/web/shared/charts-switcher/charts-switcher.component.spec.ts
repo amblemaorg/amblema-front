@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ChartsSwitcherComponent } from './charts-switcher.component';
 import { Component } from '@angular/core';
@@ -130,7 +130,7 @@ describe('ChartsSwitcherComponent', () => {
   let component: ChartsSwitcherComponent;
   let fixture: ComponentFixture<ChartsSwitcherComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         ChartsSwitcherHostComponent

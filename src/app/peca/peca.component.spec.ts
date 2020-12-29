@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { PecaComponent } from "./peca.component";
 import {
@@ -19,7 +19,7 @@ xdescribe("PecaComponent", () => {
   let component: PecaComponent;
   let fixture: ComponentFixture<PecaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PecaComponent],
       imports: [

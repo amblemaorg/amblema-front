@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { PecaPageComponent } from './peca-page.component';
 import { NbCardModule, NbTabsetModule } from '@nebular/theme';
