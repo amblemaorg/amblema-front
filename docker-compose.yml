@@ -1,5 +1,15 @@
 version: "3.5"
 services:
+  support:
+    container_name: amblema-front-support
+    image: devbinaural/nginx-angular:latest
+    tty: true
+    ports:
+      - 10514:10514
+    volumes:
+      - ${PWD}:/home/amblema
+    networks:
+      - default
   web:
     container_name: amblema_web
     image: devbinaural/nginx-angular:latest
@@ -37,7 +47,6 @@ networks:
   default:
     external:
       name: amblema_db_db_network
-
 #USO-LOCAL
 # version: '3.3'
 
