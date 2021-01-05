@@ -36,9 +36,6 @@ export class ChartsSwitcherComponent implements OnInit {
     });
     this.buttonsDescription = this.options.buttonsDescription;
     this.direction = this.options.direction || 'row';
-    
-    console.log("VER CHARTS 1", this.options.charts);
-    console.log("VER CHARTS 2", this.charts);
 
     setTimeout(() => {
       this.loadChartComponent();

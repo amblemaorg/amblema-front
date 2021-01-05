@@ -208,7 +208,6 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isBrowser = this.globalService.isBrowser;
     this.route.paramMap.subscribe((params) => {
       this.slug = params.get("schoolSlug");
-      console.log("HEY",this.slug);
       if (this.school && this.school.charts) this.school.charts = [];
       this.setApiService(params.get("schoolSlug"));
       this.getSchoolDetail();
