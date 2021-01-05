@@ -23,7 +23,7 @@
     </button>
   </div>
   <div class="chart-wrapper">
-    <p *ngIf="charts.length && charts[activeChartIndex].description">
+    <p *ngIf="charts.length > 0 && charts[activeChartIndex].description">
       {{ charts[activeChartIndex].description }}
     </p>
     <ng-template #chartHost></ng-template>
