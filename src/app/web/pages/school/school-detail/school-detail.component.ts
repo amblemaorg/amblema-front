@@ -208,6 +208,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isBrowser = this.globalService.isBrowser;
     this.route.paramMap.subscribe((params) => {
       this.slug = params.get("schoolSlug");
+      if (this.school && this.school.charts) this.school.charts = [];
       this.setApiService(params.get("schoolSlug"));
       this.getSchoolDetail();
     });
@@ -287,6 +288,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.reinitCarousels();
       this.chartSwitcher && this.chartSwitcher.switchChart(0);
+      this.setActiveChart(0);
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
@@ -329,10 +331,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (chartsPosition / scrollPosition <= 0.8) {
       if (this.scrollSubscription) {
-        this.scrollSubscription.unsubscribe();
+        if (this.chartTestimonial) this.scrollSubscription.unsubscribe();
       }
-      this.chartTestimonial.nativeElement.classList.add("animation-finish");
-      this.chartTestimonial.nativeElement.classList.remove("animation-init");
+      if (this.chartTestimonial) {
+        this.chartTestimonial.nativeElement.classList.add("animation-finish");
+        this.chartTestimonial.nativeElement.classList.remove("animation-init");
+      }
     }
   }
 
