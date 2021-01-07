@@ -76,6 +76,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   doubleFields = {};
   sendingForm: boolean;
   glbls: any;
+  showDatePicker: boolean = true;
 
   id_: string;
   wrongDateDisabler = {};
@@ -628,6 +629,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.municipalities = [];
         Object.keys(this.wrongDateDisabler).map((f) => {
           this.wrongDateDisabler[f] = false;
+        });
+        this.showDatePicker = false;
+        setTimeout(() => {
+          this.showDatePicker = true;
         });
       }
       //
