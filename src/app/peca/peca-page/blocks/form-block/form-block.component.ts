@@ -76,6 +76,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   doubleFields = {};
   sendingForm: boolean;
   glbls: any;
+  showDatePicker: boolean = true;
+  max_len: number;
 
   id_: string;
   wrongDateDisabler = {};
@@ -231,6 +233,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.someImgAdded = null;
     this.imageUrl = null;
     this.canTableSendFormData = true;
+    this.max_len = null;
   }
 
   btnUpdater(val, isEdited = false) {
@@ -484,6 +487,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   private getValidators(validations: object): Validators {
     const fieldValidators = Object.keys(validations).map((validator) => {
       if (validator === "required") return Validators[validator];
+      if (validator === "maxLength") {
+        this.max_len = validations[validator][0];
+        return Validators[validator](validations[validator][0]);
+      }
       else return Validators[validator](validations[validator]);
     });
 
@@ -514,7 +521,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         ? !specialCase
           ? this.settings.formsContent[field].messages.pattern
           : !field2
-          ? this.settings.formsContent[field].fields["prependInput"].messages.pattern
+          ? (errors.maxlength ? this.settings.formsContent[field].fields["prependInput"].messages.maxLength : this.settings.formsContent[field].fields["prependInput"].messages.pattern)
           : !fromImg
           ? this.settings.formsContent[field].fields[field2].messages.pattern
           : this.settings.formsContent["imageGroup"].fields[field2].messages.pattern
@@ -628,6 +635,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.municipalities = [];
         Object.keys(this.wrongDateDisabler).map((f) => {
           this.wrongDateDisabler[f] = false;
+        });
+        this.showDatePicker = false;
+        setTimeout(() => {
+          this.showDatePicker = true;
         });
       }
       //
@@ -773,6 +784,27 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.fb.control(this.componentForm.get("companyOtherType").value)
         );
       }
+    }
+  }
+
+  maxLenChanger(e: any, validts: any, field: string, subField: string) {
+    if (e && validts && validts.maxLength) {
+      //
+      const updateCF = (pos) => {
+        this.max_len = validts.maxLength[pos];
+        const prependInputValidators = Object.keys(validts).map((validator) => {
+          if (validator === "required") return Validators[validator];
+          if (validator === "maxLength") return Validators[validator](validts[validator][pos]);
+          else return Validators[validator](validts[validator]);
+        });
+
+        this.componentForm.controls[field].get(subField).clearValidators();
+        this.componentForm.controls[field].get(subField).setValidators(prependInputValidators);
+        this.componentForm.controls[field].get(subField).updateValueAndValidity();
+      };
+      //
+      if (e.id == "1") updateCF(0);
+      else updateCF(1);
     }
   }
 
