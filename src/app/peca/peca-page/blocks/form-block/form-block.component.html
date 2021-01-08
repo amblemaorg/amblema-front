@@ -99,6 +99,7 @@
                 [readonly]="
                   settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
                 "
+                (change)="maxLenChanger($event,settings.formsContent[field].fields['prependInput'].validations,field,'prependInput')"
               >
                 <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
                   <small>{{ item.name }}</small>
@@ -119,7 +120,9 @@
               [maxlength]="
                 settings.formsContent[field].fields['prependInput'].maxlength
                   ? settings.formsContent[field].fields['prependInput'].maxlength
-                  : 'default'
+                  : settings.formsContent[field].fields['prependInput'].validations.maxLength 
+                    ? (max_len ? max_len : settings.formsContent[field].fields['prependInput'].validations.maxLength[0])
+                    : 'default'
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -131,7 +134,7 @@
 
           <ng-container *ngSwitchCase="'date'">
             <label>{{ settings.formsContent[field].label }}</label>
-            <div class="date-container">
+            <div *ngIf="showDatePicker" class="date-container">
             <ng-datepicker #inputDate
               [id]="getId('datepicker-' + field)"
               class="datepicker-control"
