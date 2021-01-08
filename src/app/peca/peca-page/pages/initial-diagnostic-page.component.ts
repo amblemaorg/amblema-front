@@ -83,11 +83,16 @@ export class InitialDiagnosticPageComponent
               name: this.response.sections[i].name,
               idSection: this.response.sections[i].id,
             };
-            this.response.sections[i].students.forEach((student) => {
-              student.grade = this.grade;
-              student.section = this.section;
-            });
-            auxStudents = auxStudents.concat(this.response.sections[i].students);
+            const studentsWithGradeAndSection = this.grade === "0" ? [] :
+              this.response.sections[i].students.map((student) => {
+                const student_ = {
+                  ...student,
+                  grade: this.grade,
+                  section: this.section
+                };
+                return student_;
+              });
+            auxStudents = auxStudents.concat(studentsWithGradeAndSection);
           }
           this.students = auxStudents;
           if (!isNullOrUndefined(data)) {

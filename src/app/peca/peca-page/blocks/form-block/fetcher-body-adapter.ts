@@ -43,6 +43,7 @@ export function adaptBody(formType: string, body: any) {
           ] = body[key];
         else if (
           key === "documentGroup" &&
+          body[key]["prependInput"] && 
           body[key]["prependInput"].length > 0
         ) {
           body_adapted["cardType"] = body[key]["prependSelect"];
