@@ -20,14 +20,15 @@
         [class.mr-auto]="settings.genActSelectStatus"
       >
         <h6 class="left-sided-content">
-          <span *ngIf="settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text }}</span>
+          <span *ngIf="settings.dateOrtext && settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text }}</span>
           <span
-            [class.display-date]="settings.dateOrtext.date"
-            *ngIf="settings.dateOrtext.text && settings.dateOrtext.date"
+            [class.display-date]="settings.dateOrtext && settings.dateOrtext.date"
+            *ngIf="settings.dateOrtext && settings.dateOrtext.text && settings.dateOrtext.date"
           ></span>
-          <span *ngIf="settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
+          <span *ngIf="settings.dateOrtext && settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
           <span
             *ngIf="
+              settings.dateOrtext &&
               settings.dateOrtext.text &&
               settings.dateOrtext.fields &&
               settings.dateOrtext.fields.length > 0
