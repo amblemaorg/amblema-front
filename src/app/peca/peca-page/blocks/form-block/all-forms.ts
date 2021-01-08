@@ -1623,6 +1623,7 @@ export const formConfirmacionDocenteModal = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
+      { id: "0", name: "Preescolar" },
       { id: "1", name: "1er grado" },
       { id: "2", name: "2do grado" },
       { id: "3", name: "3er grado" },
