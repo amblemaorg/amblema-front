@@ -19,7 +19,7 @@ import { ChartComponentFactory } from './chart-component-factory';
 export class ChartsSwitcherComponent implements OnInit {
   @Input() options: ChartsSwitcherOptions;
   @Output() switch: EventEmitter<number> = new EventEmitter<number>();
-  @ViewChild('chartHost', { read: ViewContainerRef, static: true })
+  @ViewChild('chartHost', { read: ViewContainerRef, static: false })
   chartHostRef: ViewContainerRef;
   direction: string;
   buttonsDescription: string;
@@ -36,7 +36,10 @@ export class ChartsSwitcherComponent implements OnInit {
     });
     this.buttonsDescription = this.options.buttonsDescription;
     this.direction = this.options.direction || 'row';
-    this.loadChartComponent();
+
+    setTimeout(() => {
+      this.loadChartComponent();
+    });
   }
 ​
   loadChartComponent() {

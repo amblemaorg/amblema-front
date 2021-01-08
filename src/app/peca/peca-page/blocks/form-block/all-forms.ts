@@ -183,6 +183,28 @@ const controlProps = {
     validations: naturalNumber,
     messages: { pattern: MESSAGES.NATURAL_NUMBER_MESSAGE },
   },
+  numberMaxAndRequired: {
+    type: "number",
+    validations: {
+      ...requiredAndNaturalNumber,
+      maxLength: [8,10]
+    },
+    messages: { 
+      pattern: MESSAGES.NATURAL_NUMBER_MESSAGE,
+      maxLength: "ha superado el máximo caracteres permitidos"
+    },
+  },
+  numberMax: {
+    type: "number",
+    validations: {
+      ...naturalNumber,
+      maxLength: [8,10]
+    },
+    messages: { 
+      pattern: MESSAGES.NATURAL_NUMBER_MESSAGE,
+      maxLength: "ha superado el máximo caracteres permitidos"
+    },
+  },
   phoneAndRequired: {
     type: "tel",
     validations: requiredAndNaturalNumber,
@@ -807,7 +829,7 @@ export const formTabsDocente = {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberAndRequired,
+        ...controlProps.numberMaxAndRequired,
       },
     },
   },
@@ -956,7 +978,7 @@ export const formTabsEstudiantes = {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.number,
+        ...controlProps.numberMax,
       },
     },
   },
