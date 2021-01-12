@@ -1,5 +1,5 @@
 #!/bin/bash
-export REGISTRY=dev.binaural.com.ve:5050
+export REGISTRY=gitlab.binauraldev.com:5050
 
 export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 
@@ -15,7 +15,7 @@ export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 # export G_ANALYTICS_ID=
 source .env.prod
 
-docker login ${REGISTRY} -u joseaguerrero -p password
+docker login ${REGISTRY} -u joseaguerrero -p aa047acgit
 
 docker build \
   -f prod.Dockerfile \
