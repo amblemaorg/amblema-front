@@ -45,6 +45,7 @@ export function amblemarioMapper(pecaData) {
             sectionName: `${grades[grade]}, sección: ${name.toUpperCase()}`,
             sectionImg: image ? image : null,
             sectionStudents,
+            sectionGrade: grade,
           };
         })
       : null;

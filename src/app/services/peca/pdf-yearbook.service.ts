@@ -467,8 +467,16 @@ export class PdfYearbookService {
               .tocStyle({ bold: true, italics: true, fontSize: 13 })
               .tocMargin([0, 0, 0, menu_item_margin.bottom]).end
           );
+          
+          const sortedSections = pdfData.schoolSections.sort((curr, next) => {
+            const currentGrade = curr.sectionGrade.toLowerCase();
+            const nextGrade = next.sectionGrade.toLowerCase();
+            if (currentGrade < nextGrade) return -1;
+            if (currentGrade > nextGrade) return 1;
+            return 0;
+          });
 
-          pdfData.schoolSections.map(async (section, i, arr) => {
+          sortedSections.map(async (section, i, arr) => {
             if (section["sectionName"] && section["sectionStudents"]) {
               const section_img = section["sectionImg"]
                 ? await new Img(section.sectionImg)
@@ -489,15 +497,15 @@ export class PdfYearbookService {
                   .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end
               );
 
+              if (symbolsCoverImg) pdf.add(symbolsCoverImg);
+              if (section_img) pdf.add(section_img);
+
               pdf.add(
                 new Columns(this.getStudents(section.sectionStudents))
                   .color(this.colors.blue)
                   .bold()
                   .italics().end
               );
-
-              if (symbolsCoverImg) pdf.add(symbolsCoverImg);
-              if (section_img) pdf.add(section_img);
             }
 
             if (i === arr.length - 1) resolve(null);
