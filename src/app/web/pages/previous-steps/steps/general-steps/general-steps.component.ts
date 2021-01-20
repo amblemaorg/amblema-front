@@ -39,7 +39,7 @@ export class GeneralStepsComponent implements OnInit {
 
   showThisVideo: boolean;
   timesVideoSourceCalled:number = 0;
-  video_: any;
+  video_: object = {};
   datePickerOptions: DatepickerOptions = {
     minYear: 1900,
     maxYear: 2050,
@@ -112,14 +112,14 @@ export class GeneralStepsComponent implements OnInit {
   }
 
 
-  getVideo(url) {
+  getVideo(url, stepId) {
     if (this.showThisVideo && this.timesVideoSourceCalled < 10 ) {
       const video = this.embedService.embed(url);
       if (video) this.timesVideoSourceCalled++;
-      if (!this.video_) this.video_ = video;
-      return this.video_;
+      if (!this.video_[stepId]) this.video_[stepId] = video;
+      return this.video_[stepId];
     }
-    else if(this.video_) return this.video_;
+    else if(this.video_[stepId]) return this.video_[stepId];
   }
 
   sanitizeFile(url) {
