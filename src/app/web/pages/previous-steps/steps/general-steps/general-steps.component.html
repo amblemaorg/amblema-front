@@ -65,7 +65,7 @@
             <div *ngIf="step.hasVideo && showThisVideo" class="video-container">
               <div *ngIf="step.video && step.video.url"
                 class="video"
-                [innerHTML]="getVideo(step.video.url)">
+                [innerHTML]="getVideo(step.video.url,step.id)">
               </div>
             </div>
 
