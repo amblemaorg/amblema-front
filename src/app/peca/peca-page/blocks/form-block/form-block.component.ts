@@ -237,7 +237,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
 
   btnUpdater(val, isEdited = false) {
-    if (this.settings.buttonCode) if (isEdited) this.canTableSendFormData = false;
+    if (this.settings.buttonCode && isEdited) this.canTableSendFormData = false;
 
     this.globals.buttonDataUpdater({
       code: this.settings.buttonCode,
