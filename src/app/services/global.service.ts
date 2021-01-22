@@ -301,8 +301,8 @@ export class GlobalService {
   tableDataUpdater(obj) {
     this.updateTableDataEmitter.emit(obj);
   }
-  sendFormDataToBtn(code) {
-    this.sendFormDataToBtnEmitter.emit(code);
+  sendFormDataToBtn(code,canSend) {
+    this.sendFormDataToBtnEmitter.emit([code,canSend]);
   }
   buttonDataUpdater(obj) {
     this.updateButtonDataEmitter.emit(obj);

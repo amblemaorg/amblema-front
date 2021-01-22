@@ -55,6 +55,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   canTableSendFormDataToBtn: boolean = true;
   isTableContentEdited: boolean;
 
+  tableInitialData: object = {};
+
   constructor(private globals: GlobalService) {
     this.type = "presentational";
     this.component = "table";
@@ -116,66 +118,74 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         });
       }
 
-      switch (data.action) {
-        case "edit":
-          this.source
-            .find(data.data.dataToCompare)
-            .then(async (value) => {
-              if (index != -1) this.settings["dataCopy"][index] = data.data.newData;
-              this.source
-                .update(data.data.dataToCompare, data.data.newData)
-                .then((resp) => {})
-                .catch((error) => {});
+      const actionsOTablePromise = new Promise(async (resolve) => {
+        switch (data.action) {
+          case "edit":
+            this.source
+              .find(data.data.dataToCompare)
+              .then(async (value) => {
+                if (index != -1) this.settings["dataCopy"][index] = data.data.newData;
+                this.source
+                  .update(data.data.dataToCompare, data.data.newData)
+                  .then((resp) => {})
+                  .catch((error) => {});
+                if (this.settings.updateTotal) {
+                  const tableData = await this.source.getAll();
+                  this.settings.total = this.settings.updateTotal(tableData);
+                }
+                this.source.refresh();
+                if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
+                resolve(null)
+              })
+              .catch((error) => {resolve(null)});
+            break;
+  
+          case "delete":
+            this.source
+              .find(data.data.dataToCompare)
+              .then(async (value) => {
+                if (index != -1) this.settings["dataCopy"].splice(index, 1);
+                this.source.remove(data.data.dataToCompare);
+                if (this.settings.updateTotal) {
+                  const tableData = await this.source.getAll();
+                  this.settings.total = this.settings.updateTotal(tableData);
+                }
+                this.source.refresh();
+                if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
+                resolve(null)
+              })
+              .catch((error) => {resolve(null)});
+            break;
+  
+          case "view":
+            resolve(null)
+            break;
+  
+          default:
+            // add or set
+            if (data.resetData) {
+              this.settings[data.code] = data.dataArr;
+              if (this.settings.isFromImgContainer)
+                this.settings["dataCopy"] = [...this.settings[data.code]];
+              this.source = new LocalDataSource(this.settings[data.code]);
+            } else {
+              if (this.settings.isFromImgContainer) this.settings["dataCopy"].push(data.data);
+              if (this.settings.isFromImgContainer)
+                this.settings[data.code] = [...this.settings["dataCopy"]];
+              this.source.add(data.data);
               if (this.settings.updateTotal) {
                 const tableData = await this.source.getAll();
                 this.settings.total = this.settings.updateTotal(tableData);
               }
               this.source.refresh();
-              if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
-            })
-            .catch((error) => {});
-          break;
-
-        case "delete":
-          this.source
-            .find(data.data.dataToCompare)
-            .then(async (value) => {
-              if (index != -1) this.settings["dataCopy"].splice(index, 1);
-              this.source.remove(data.data.dataToCompare);
-              if (this.settings.updateTotal) {
-                const tableData = await this.source.getAll();
-                this.settings.total = this.settings.updateTotal(tableData);
-              }
-              this.source.refresh();
-              if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
-            })
-            .catch((error) => {});
-          break;
-
-        case "view":
-          break;
-
-        default:
-          // add or set
-          if (data.resetData) {
-            this.settings[data.code] = data.dataArr;
-            if (this.settings.isFromImgContainer)
-              this.settings["dataCopy"] = [...this.settings[data.code]];
-            this.source = new LocalDataSource(this.settings[data.code]);
-          } else {
-            if (this.settings.isFromImgContainer) this.settings["dataCopy"].push(data.data);
-            if (this.settings.isFromImgContainer)
-              this.settings[data.code] = [...this.settings["dataCopy"]];
-            this.source.add(data.data);
-            if (this.settings.updateTotal) {
-              const tableData = await this.source.getAll();
-              this.settings.total = this.settings.updateTotal(tableData);
             }
-            this.source.refresh();
-          }
-          // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);
-          break;
-      }
+            resolve(null)
+            // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);
+            break;
+        }
+      });
+
+      await actionsOTablePromise;
 
       this.isTableContentEdited = true;
       this.sendTableData();
@@ -185,13 +195,29 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   sendTableData() {
     //updating textAndButton button data
     if (this.settings.buttonCode) {
-      if (this.canTableSendFormDataToBtn) this.globals.sendFormDataToBtn(this.settings.buttonCode);
+      let sendFormDataToBtn_ = false;
+
+      if (this.settings.isFromImgContainer && this.canTableSendFormDataToBtn) {
+        if (!this.tableInitialData[this.settings.buttonCode] && !this.isTableContentEdited) this.tableInitialData[this.settings.buttonCode] = [...this.settings["dataCopy"]];
+        if (this.tableInitialData[this.settings.buttonCode] && this.isTableContentEdited) {
+          if (
+            this.settings.buttonCode !== "schoolDataConfigRegistroEscuela" || 
+            this.tableInitialData[this.settings.buttonCode].length !== this.settings["dataCopy"].length || 
+            this.settings["dataCopy"].reverse().some(tableEl => tableEl.source ? tableEl.source.includes(";base64,") : true) || 
+            !this.settings["dataCopy"].every((tableEl,inx) => tableEl.description === this.tableInitialData[this.settings.buttonCode][inx].description)
+          ) sendFormDataToBtn_ = true;
+        }
+      }
+      else if (this.canTableSendFormDataToBtn) sendFormDataToBtn_ = true;
+
+      this.globals.sendFormDataToBtn(this.settings.buttonCode,sendFormDataToBtn_);
 
       if (this.settings.isFromImgContainer) {
         this.globals.buttonDataUpdater({
           code: this.settings.buttonCode,
           whichData: "table",
           table: this.settings["dataCopy"],
+          wasEdited: sendFormDataToBtn_ ? true : false,
           tableEdited: this.isTableContentEdited,
         });
       } else {
@@ -200,6 +226,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             code: this.settings.buttonCode,
             whichData: "table",
             table: value,
+            wasEdited: true,
             tableEdited: this.isTableContentEdited,
           });
         });
