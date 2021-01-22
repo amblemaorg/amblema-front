@@ -197,14 +197,15 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     if (this.settings.buttonCode) {
       let sendFormDataToBtn_ = false;
 
+      if (!this.globals.getTableImgsCopy(this.settings.buttonCode) && !this.isTableContentEdited) this.globals.setTableImgsCopy(this.settings.buttonCode,this.settings["dataCopy"]);
+
       if (this.settings.isFromImgContainer && this.canTableSendFormDataToBtn) {
-        if (!this.tableInitialData[this.settings.buttonCode] && !this.isTableContentEdited) this.tableInitialData[this.settings.buttonCode] = [...this.settings["dataCopy"]];
-        if (this.tableInitialData[this.settings.buttonCode] && this.isTableContentEdited) {
+        if (this.globals.getTableImgsCopy(this.settings.buttonCode) && this.isTableContentEdited) {
           if (
             this.settings.buttonCode !== "schoolDataConfigRegistroEscuela" || 
-            this.tableInitialData[this.settings.buttonCode].length !== this.settings["dataCopy"].length || 
+            this.globals.getTableImgsCopy(this.settings.buttonCode).length !== this.settings["dataCopy"].length || 
             this.settings["dataCopy"].reverse().some(tableEl => tableEl.source ? tableEl.source.includes(";base64,") : true) || 
-            !this.settings["dataCopy"].every((tableEl,inx) => tableEl.description === this.tableInitialData[this.settings.buttonCode][inx].description)
+            !this.settings["dataCopy"].every((tableEl,inx) => tableEl.description === this.globals.getTableImgsCopy(this.settings.buttonCode)[inx].description)
           ) sendFormDataToBtn_ = true;
         }
       }
