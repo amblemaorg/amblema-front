@@ -114,6 +114,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   canTableSendFormData: boolean = true;
 
+  formInitialVals: object = {};
+
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -136,11 +138,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     this.subscription.add(
       this.componentForm.statusChanges.subscribe((val) => {
-        if (!this.someImgAdded && (val === "INVALID" || this.isDateNotOk() || !this.isDirty())) {
+        const comparer = this.initialVsFinalFormDataComparer();
+        const isEqual = comparer[0] || comparer[1];
+
+        if (!this.someImgAdded && (val === "INVALID" || isEqual || this.isDateNotOk() || !this.isDirty())) {
           if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
         } else {
-          this.btnUpdater(this.componentForm.value, true);
+          this.btnUpdater(isEqual ? null : this.componentForm.value, !isEqual);
         }
       })
     );
@@ -191,13 +196,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       );
 
     this.subscription.add(
-      this.globals.sendFormDataToBtnEmitter.subscribe((code) => {
+      this.globals.sendFormDataToBtnEmitter.subscribe((arr) => {
         if (
           this.settings.buttonCode &&
-          this.settings.buttonCode == code &&
+          this.settings.buttonCode == arr[0] &&
           this.canTableSendFormData
         )
-          this.btnUpdater(this.componentForm.value);
+          this.btnUpdater(arr[1] ? this.componentForm.value : null);
+
+        const comparer = this.initialVsFinalFormDataComparer();
+        if (comparer[1]) this.btnUpdater(arr[1] ? this.componentForm.value : null);
       })
     );
 
@@ -242,9 +250,35 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.globals.buttonDataUpdater({
       code: this.settings.buttonCode,
       whichData: "form",
+      wasEdited: val ? true : false,
       form: val,
       formEdited: !this.canTableSendFormData ? true : false,
     });
+  }
+
+  /**
+   * @returns [has form initial values boolean] and [is initial and final form object equal boolean]
+   */
+  private initialVsFinalFormDataComparer(): boolean[] {
+    if (
+      this.settings && this.settings.formsContent && this.settings.buttonCode && 
+      this.componentForm && this.componentForm.value && 
+      Object.keys(this.componentForm.value).some(cf_k => this.settings.formsContent[cf_k]) && 
+      !this.formInitialVals[this.settings.buttonCode]
+    ) this.formInitialVals[this.settings.buttonCode] = {...this.componentForm.value};
+
+    const isEqual = this.settings && this.settings.buttonCode && this.settings.buttonCode === "schoolDataConfigRegistroEscuela" && 
+          this.formInitialVals[this.settings.buttonCode] && this.componentForm && this.componentForm.value 
+            ? Object.keys(this.formInitialVals[this.settings.buttonCode])
+              .every(iv_k => !this.componentForm.value[iv_k] || typeof this.componentForm.value[iv_k] === "object" 
+                                ? true 
+                                : this.componentForm.value[iv_k] && this.componentForm.value[iv_k] === this.formInitialVals[this.settings.buttonCode][iv_k]
+              ) 
+            : false;
+
+    const fi_v = this.settings && this.settings.buttonCode ? !this.formInitialVals[this.settings.buttonCode] : false;
+
+    return [ fi_v, isEqual ];
   }
 
   formInModalBtnConditioner() {
@@ -990,6 +1024,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       // this.sendNull = false;
       this.someImgAdded = true;
       this.componentForm.get("imageGroup").reset();
+      this.componentForm.get("imageGroup").get("imageDescription").setValue("");
       // setTimeout(() => {
       //   this.sendNull = true;
       // });

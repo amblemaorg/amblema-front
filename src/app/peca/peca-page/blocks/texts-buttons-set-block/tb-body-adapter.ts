@@ -6,7 +6,6 @@ export function textsAndButtonsAdaptBody(
 
   switch (buttonCode) {
     case "schoolDataConfigRegistroEscuela":
-      console.log(tAndFData);
       Object.keys(tAndFData.form).map((key) => {
         if (tAndFData.form[key] && key != "imageGroup")
           body_adapted[
@@ -90,6 +89,6 @@ export function textsAndButtonsAdaptBody(
     default:
       break;
   }
-  console.log(body_adapted);
+
   return body_adapted;
 }
