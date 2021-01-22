@@ -338,9 +338,10 @@
           <button
             *ngIf="action.name && !action.hidden"
             [class.d-none]="
-              (action.type === 4 || action.type === 9) &&
+              ((action.type === 4 || action.type === 9) &&
               settings.fetcherUrls &&
-              settings.fetcherUrls.cancel
+              settings.fetcherUrls.cancel) ||
+              (action.type === 2 && !this.settings.modalCode && isImgsTableShown)
             "
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
             [disabled]="disableThis(action.type) || isSending || sleepSend"
