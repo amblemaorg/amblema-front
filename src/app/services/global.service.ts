@@ -276,6 +276,7 @@ export class GlobalService {
     }
   }
   //? THIS CODE IS MEANT TO BE PASTED ON PECA SERVICE -----------------------
+  tableImgsCopy: object = {};
   @Output() updateTableDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateButtonDataEmitter: EventEmitter<any> = new EventEmitter();
   @Output() updateGenActButtonDataEmitter: EventEmitter<any> = new EventEmitter();
@@ -293,6 +294,13 @@ export class GlobalService {
   }> = new EventEmitter();
   //Send image data from formblock to profile component
   @Output() passImageEmitter: EventEmitter<any> = new EventEmitter();
+
+  setTableImgsCopy(code: string, copy) {
+    this.tableImgsCopy[code] = [...copy];
+  }
+  getTableImgsCopy(code: string) {
+    return this.tableImgsCopy[code];
+  }
 
   formWithImage(image: string) {
     this.passImageEmitter.emit(image);
