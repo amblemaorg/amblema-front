@@ -151,6 +151,10 @@ export class TextsButtonsSetBlockComponent
     table: null,
     form: null,
   };
+  dataTorFWasEdited = {
+    table: false,
+    form: false,
+  };
 
   // generic activity managing data.
   dataGenAct = {
@@ -168,6 +172,8 @@ export class TextsButtonsSetBlockComponent
   timesVideoSourceCalled: number = 0;
   activity_video: any;
   activity_uneditable: boolean;
+
+  isImgsTableShown: boolean;
 
   constructor(
     private globals: GlobalService,
@@ -206,10 +212,12 @@ export class TextsButtonsSetBlockComponent
         if (this.settings.buttonCode && this.settings.buttonCode == data.code) {
           if (data.whichData == "table") {
             this.dataTorF.table = data.table;
+            this.dataTorFWasEdited.table = data.wasEdited;
             this.isTableEdited = data.tableEdited;
           }
           if (data.whichData == "form") {
             this.dataTorF.form = data.form;
+            this.dataTorFWasEdited.form = data.wasEdited;
             this.isFormEdited = data.formEdited;
           }
 
@@ -269,6 +277,7 @@ export class TextsButtonsSetBlockComponent
     this.activity_uneditable = null;
     this.isTableEdited = true;
     this.isFormEdited = true;
+    this.isImgsTableShown = null;
   }
 
   private setId() {
@@ -427,8 +436,8 @@ export class TextsButtonsSetBlockComponent
         (this.settings.receivesFromTableOrForm == "form" &&
           (!this.dataTorF.form || !this.isFormEdited)) ||
         (this.settings.receivesFromTableOrForm == "both" &&
-          (!this.dataTorF.table || this.dataTorF.table.length == 0 || !this.isTableEdited) &&
-          (!this.dataTorF.form || !this.isFormEdited))
+          (!this.dataTorF.table || !this.isTableEdited || !this.dataTorFWasEdited.table) &&
+          (!this.dataTorF.form || !this.isFormEdited || !this.dataTorFWasEdited.form))
       )
         return true;
     } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel)
@@ -699,6 +708,7 @@ export class TextsButtonsSetBlockComponent
         else {
           this.globals.ImageContainerShower(this.settings.buttonCode);
           e.target.classList.add("d-none");
+          this.isImgsTableShown = true;
         }
         break;
       case 3:

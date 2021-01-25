@@ -591,7 +591,7 @@ export const formDatosEscuela = {
     placeholder: "Calles / carreras",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers,
+    ...controlProps.normalText,
   },
   ciudadEscuela: {
     label: "Ciudad",
