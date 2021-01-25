@@ -3,6 +3,7 @@ import { tap } from 'rxjs/operators';
 import { StepsService } from '../../../services/steps/steps.service';
 import { StepStateModel, UpdateStepsProgress, ClearStepsProgress, UpdateStepsSelectedProject } from '../../actions/steps/project.actions';
 import { ModulesService } from '../../../services/steps/modules.service';
+import { Injectable } from '@angular/core';
 
 @State<StepStateModel>({
     name: 'stepsinfo',
@@ -19,6 +20,8 @@ import { ModulesService } from '../../../services/steps/modules.service';
         has_peca: false,
     }
   })
+
+  @Injectable()
 export class StepsState {
     // SELECTORS
     @Selector()

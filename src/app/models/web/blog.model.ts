@@ -4,7 +4,7 @@ export interface Post {
   slug: String;
   title: String;
   content: String;
-  date: String;
+  date: Date;
   tags: String[];
   status: String;
 }

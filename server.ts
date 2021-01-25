@@ -17,7 +17,7 @@
 "use strict";
 import "zone.js/dist/zone-node";
 
-import * as express from "express";
+import express from "express";
 import { join } from "path";
 
 // Express server
@@ -50,13 +50,8 @@ global["HTMLElement"] = win.HTMLElement;
 global["navigator"] = win.navigator;
 global["localStorage"] = localStorage;
 global["sessionStorage"] = sessionStorage;
-global["getComputedStyle"] = () => {
-  return {
-    getPropertyValue() {
-      return "";
-    },
-  };
-};
+
+global["getComputedStyle"] = win.getComputedStyle;
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine(
