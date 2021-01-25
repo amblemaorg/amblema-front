@@ -1,4 +1,5 @@
-import * as moment from "moment";
+import moment from "moment";
+
 export default moment;
 
 export function EnviromentalMapper(EnviromentalData, pecaId, permissions) {
