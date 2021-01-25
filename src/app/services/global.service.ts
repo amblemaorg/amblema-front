@@ -8,7 +8,7 @@ import {
 import { isPlatformBrowser, Location } from "@angular/common";
 import { Title, Meta } from "@angular/platform-browser";
 import * as $ from "jquery";
-import * as moment from "moment";
+import moment from "moment";
 import { PageBlockComponent } from "../peca/peca-page/blocks/page-block.component";
 
 @Injectable({
