@@ -483,7 +483,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         if (fieldProp.toLowerCase().includes("subprincipalemail") && fieldValue == "") {
           formDataValues[fieldProp] = null;
         } else {
-          formDataValues[fieldProp] = fieldValue;
+          formDataValues[fieldProp] = ( fieldProp === "code" && typeof fieldValue === "string" && fieldValue.replace(/\s/g,"") ) || fieldValue;
         }
       }
     });

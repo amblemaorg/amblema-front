@@ -622,7 +622,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           controlName === "nGrades" ||
           controlName === "nSections"
         ) solicitudBody[controlName] = +this.schoolForm.controls[controlName].value;
-        else solicitudBody[controlName] = this.schoolForm.controls[controlName].value;
+        else solicitudBody[controlName] = ( controlName === "code" && typeof this.schoolForm.controls[controlName].value === "string" && this.schoolForm.controls[controlName].value.replace(/\s/g,"") ) || this.schoolForm.controls[controlName].value;
 
         return solicitudBody;
       }, {
