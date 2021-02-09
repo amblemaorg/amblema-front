@@ -630,6 +630,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
         project: this.project_id,
       });
 
+      console.log("Datos del formulario:", solicitudBodyReduced);
       this.postForm(solicitudBodyReduced,fo,3);
   }
 
