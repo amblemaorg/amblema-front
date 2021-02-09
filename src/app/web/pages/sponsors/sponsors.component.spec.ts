@@ -72,11 +72,11 @@ describe("SponsorsComponent", () => {
     expect(h2Count).toBe(1);
   });
 
-  it('should have a h2 tag in steps section with content "¿Cómo ser un padrino?"', () => {
-    el = fixture.nativeElement.querySelector("section.steps h2");
-    const h2Text = el.textContent;
-    expect(h2Text).toBe("¿Cómo ser un Padrino?");
-  });
+  // it('should have a h2 tag in steps section with content "¿Cómo ser un padrino?"', () => {
+  //   el = fixture.nativeElement.querySelector("section.steps h2");
+  //   const h2Text = el.textContent;
+  //   expect(h2Text).toBe("¿Cómo ser un Padrino?");
+  // });
 
   it("should have a h2 tag in sponsors section", () => {
     let h2Count = fixture.nativeElement.querySelectorAll("section.sponsors h2").length;
