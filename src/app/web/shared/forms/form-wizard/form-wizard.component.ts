@@ -421,6 +421,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     this.updateDataToSubmit();
     if (this.isValid()) {
+      console.log("Datos del formulario:", this.dataToSubmit);
       this.recaptchaSubscription = this.recaptchaService
         .execute(this.recaptchaAction)
         .subscribe((token) => {
