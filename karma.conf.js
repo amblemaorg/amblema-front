@@ -51,9 +51,9 @@ module.exports = function (config) {
     },
     singleRun: true,
     restartOnFileChange: true,
-    captureTimeout: 500000,
+    captureTimeout: 1500000,
     browserDisconnectTolerance: 3,
-    browserDisconnectTimeout : 500000,
-    browserNoActivityTimeout : 500000,
+    browserDisconnectTimeout : 1500000,
+    browserNoActivityTimeout : 1500000,
   });
 };
