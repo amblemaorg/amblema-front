@@ -15,7 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormConfirmationComponent } from '../elements/form-confirmation.component';
 import { FormValidationComponent } from '../elements/form-validation.component';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
-import { ReCaptchaV3Service, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { ReCaptchaV3Service, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_NONCE } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
 
 describe('FormWizardComponent', () => {
@@ -130,6 +130,7 @@ describe('FormWizardComponent', () => {
         FormBuilder,
         ReCaptchaV3Service,
         { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaKey },
+        { provide: RECAPTCHA_NONCE, useValue: environment.recaptchaNonce },
         { provide: ToastrService, useClass: ToastrService }
       ]
     })
