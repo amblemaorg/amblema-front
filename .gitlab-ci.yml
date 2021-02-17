@@ -22,8 +22,8 @@ variables:
 # Jobs for Staging environment
 .teststagingscript: &test
   script:
-    - git config user.email "jose.guerrero@binauraldev.com"
-    - git config user.name "Jose Guerrero"
+    - git config user.email "$GITLAB_USER_EMAIL"
+    - git config user.name "$GITLAB_USER_NAME"
     - if [ -z "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" ]; then
     - git pull $CI_REPOSITORY_URL $CI_COMMIT_REF_NAME
     - else
@@ -54,8 +54,8 @@ staging-update:
     - git clone -b master --single-branch $CI_REPOSITORY_URL .
     - else
     - cd $PATH_PROJECT_STAGING
-    - git config user.email "jose.guerrero@binauraldev.com"
-    - git config user.name "joseaguerrero"
+    - git config user.email "$GITLAB_USER_EMAIL"
+    - git config user.name "$GITLAB_USER_NAME"
     - git stash drop || echo "Nothing to drop in stash"
     - git add .
     - git stash
