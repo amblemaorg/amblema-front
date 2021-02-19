@@ -2,7 +2,7 @@
 export REGISTRY=gitlab.binauraldev.com:5050
 export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 
-docker login ${REGISTRY} -u joseaguerrero -p aa047acgit
+docker login ${REGISTRY} -u serh -p VqvYjUD6h88Yask4aZtV
 
 docker network create --subnet 172.20.0.0/16 --ip-range 172.20.240.0/24 amblema-network
 
