@@ -1,6 +1,7 @@
 <div [class]="'form-step-' + activeStepIndex">
   <span class="form-heading">{{ stepItems[activeStepIndex].title }}</span>
 
+  
   <ng-container
     *ngFor="let form of formWizard; let i = index; trackBy: trackByFn"
   >

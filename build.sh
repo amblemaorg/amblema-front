@@ -15,7 +15,7 @@ export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 # export G_ANALYTICS_ID=
 source .env.prod
 
-docker login ${REGISTRY} -u joseaguerrero -p aa047acgit
+docker login ${REGISTRY} -u serh -p VqvYjUD6h88Yask4aZtV
 
 docker build \
   -f prod.Dockerfile \
