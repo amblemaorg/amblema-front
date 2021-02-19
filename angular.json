@@ -44,7 +44,10 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/assets/."]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "chartjs-plugin-annotation"
+            ]
           },
           "configurations": {
             "staging": {
