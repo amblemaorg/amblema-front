@@ -554,14 +554,14 @@ export const formDatosEscuela = {
     placeholder: "Nombre de la escuela",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers,
+    ...controlProps.normalText,
   },
   codigoEscuela: {
     label: "Código del plantel",
     placeholder: "Código del plantel",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers,
+    ...controlProps.normalText,
   },
   phoneEscuela: {
     label: "Teléfono",
@@ -598,7 +598,7 @@ export const formDatosEscuela = {
     placeholder: "Ciudad",
     readonly: true,
     fullwidth: false,
-    ...controlProps.onlyLettersNumbers,
+    ...controlProps.normalText,
   },
   /*DATOS DIRECTOR*/
   title2: { label: "Datos del director", type: "title" },
@@ -656,12 +656,6 @@ export const formDatosEscuela = {
       },
     },
   },
-  // nameSubDirector: {
-  //   label: "Nombre del subdirector o subdirectora",
-  //   placeholder: "Nombre del subdirector o subdirectora",
-  //   fullwidth: false,
-  //   ...controlProps.normalText,
-  // },
   phoneSubDirector: {
     label: "Número de teléfono del subdirector",
     placeholder: "Número de teléfono del subdirector",
