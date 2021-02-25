@@ -246,7 +246,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         staff: (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
         coordinator: data.coordinator,
         enrollment: data.nStudents,
-        images: data.slider,
+        images: /* data.slider */null,
         mathOlympics: {
           enrolled: data.olympicsSummary.inscribed,
           classified: data.olympicsSummary.classified,
@@ -285,6 +285,9 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
           this.school.charts
         );
+      });
+      setTimeout(() => {
+        this.school.images = data.slider; 
       });
       this.reinitCarousels();
       this.chartSwitcher && this.chartSwitcher.switchChart(0);
@@ -372,31 +375,31 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
-      this.activitiesIndexCarousel.options.responsive[0].items = 5;
-      this.activityImageCarousel.options.responsive[0].items = 5;
-      this.activitiesCarousel.options.responsive[0].items = 3;
-      this.otherSchoolsCarousel.options.responsive[0].items = 3;
+      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 5;
+      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 5;
+      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 3;
+      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 3;
       this.refreshCarousels();
     } else {
-      this.activitiesIndexCarousel.options.responsive[0].items = 2;
-      this.activityImageCarousel.options.responsive[0].items = 3;
-      this.activitiesCarousel.options.responsive[0].items = 1;
-      this.otherSchoolsCarousel.options.responsive[0].items = 1;
+      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 2;
+      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 3;
+      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 1;
+      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 1;
       this.refreshCarousels();
     }
   }
 
   reinitCarousels() {
-    this.activitiesIndexCarousel.reInit();
-    //this.activityImageCarousel.reInit();
-    this.activitiesCarousel.reInit();
-    this.otherSchoolsCarousel.reInit();
+    if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.reInit();
+    if (this.activityImageCarousel) this.activityImageCarousel.reInit();
+    if (this.activitiesCarousel) this.activitiesCarousel.reInit();
+    if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.reInit();
   }
 
   refreshCarousels() {
-    this.activitiesIndexCarousel.refresh();
-    this.activityImageCarousel.refresh();
-    this.activitiesCarousel.refresh();
-    this.otherSchoolsCarousel.refresh();
+    if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.refresh();
+    if (this.activityImageCarousel) this.activityImageCarousel.refresh();
+    if (this.activitiesCarousel) this.activitiesCarousel.refresh();
+    if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.refresh();
   }
 }
