@@ -3,6 +3,7 @@ import { PresentationalBlockComponent } from "../../page-block.component";
 import { FormGroup, FormControl } from "@angular/forms";
 import smartTableImageConfig from "./table-images-config.js";
 import { LocalDataSource } from "ng2-smart-table";
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: "app-form-review",
@@ -61,12 +62,56 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
   tableImages: any = smartTableImageConfig;
   source: LocalDataSource = new LocalDataSource();
 
-  constructor() {}
+  imgResultBeforeCompress: string;
+  sizeBeforeCompress: number;
+  imgResultAfterCompress: string;
+  sizeAfterCompress: number;
+
+  constructor(private imageCompress: NgxImageCompressService) {}
 
   ngOnInit() {
     /**
      * The format of the object that is of type image is prepared
      */
+  }
+
+  async compressFile(image, orientation = -2) {
+  
+    // this.imageCompress.uploadFile().then(async ({ image, orientation }) => {
+      this.imgResultBeforeCompress = image;
+      this.sizeBeforeCompress = this.imageCompress.byteCount(image);
+      // console.warn("Size in bytes was:", this.sizeBeforeCompress);
+
+      const s_count = this.sizeBeforeCompress;
+      if (s_count > 800000) await this.fileCompresser(image, orientation, s_count);
+      else {
+        this.imgResultAfterCompress = image;
+        this.sizeAfterCompress = this.imageCompress.byteCount(image);
+        // console.warn("Size in bytes is now:", this.sizeAfterCompress);
+      }
+    // });
+    
+  }
+
+  async fileCompresser(image, orientation, sizeBCompress) {
+    
+    const res = await this.imageCompress.compressFile(
+      image,
+      orientation,
+      75,
+      50
+    );
+    if (res && typeof res === "string") {
+      this.sizeAfterCompress = this.imageCompress.byteCount(res);
+      const s_count = this.sizeAfterCompress;
+      if (s_count > 800000 && s_count !== sizeBCompress) await this.fileCompresser(res, orientation, s_count);
+      else {
+        this.imgResultAfterCompress = res;
+        this.sizeAfterCompress = this.imageCompress.byteCount(res);
+        // console.warn("Size in bytes is now:", this.sizeAfterCompress);
+      }
+    }
+
   }
 
   public setSettings(settings: any): void {
@@ -104,6 +149,11 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       this.source.remove(event.data);
     }
   };
+
+  async onSubmitAction( values: any ) {
+    if (values && values.inputImg) await this.compressFile(values.inputImg);
+    this.settings.onSubmit(values.inputImg && values.description ? {...values, inputImg: this.imgResultAfterCompress} : values);
+  }
 
   onUploadImage = (event: any) => {
     // Get file
@@ -163,5 +213,10 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
 
   isValidImage(file): boolean {
     return file.type.match(this.pattern) ? true : false;
+  }
+
+  setNullFormImg() {
+    this.form.get('inputImg').setValue(null);
+    this.settings.onSubmit({...this.form.value, inputImg: null});
   }
 }

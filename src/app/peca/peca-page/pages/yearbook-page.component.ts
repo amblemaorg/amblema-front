@@ -14,7 +14,7 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
 import { amblemarioMapper } from "../mappers/amblemario-mapper";
 import { PdfYearbookService } from "src/app/services/peca/pdf-yearbook.service";
-import { SetYearBook } from "src/app/store/yearbook/yearbook.action";
+import { SetYearBook, YearBookState } from "src/app/store/yearbook/yearbook.action";
 import { ToastrService } from "ngx-toastr";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 
@@ -29,7 +29,9 @@ export class YearbookPageComponent
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
+  @Select(YearBookState.yearbookState) ybState$: Observable<any>;
   subscription: Subscription = new Subscription();
+  ybSubscription: Subscription = new Subscription();
 
   pecaData: any;
   yearbookData: any;
@@ -47,18 +49,20 @@ export class YearbookPageComponent
   }
 
   ngOnInit() {
-    this.subscription = this.pecaData$
-      .pipe(
-        distinctUntilChanged(
-          (prev, curr) =>
-            JSON.stringify(prev.activePecaContent.yearbook) ===
-            JSON.stringify(curr.activePecaContent.yearbook)
+    this.ybSubscription = this.ybState$.subscribe( ybData => {
+      // console.log("ybData", ybData);
+      this.subscription = this.pecaData$
+        .pipe(
+          distinctUntilChanged(
+            (prev, curr) =>
+              JSON.stringify(prev.activePecaContent.yearbook) === JSON.stringify(curr.activePecaContent.yearbook)
+          )
         )
-      )
       .subscribe(
         (data) => {
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
+              // console.log("pecaData", data.activePecaContent);
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
                 sections: data.activePecaContent.school.sections,
@@ -96,7 +100,7 @@ export class YearbookPageComponent
                   },
                   school: {
                     ...currentYearBook.school,
-                    image: lastYearBookRequest.school.image,
+                    image: ybData.school.image || lastYearBookRequest.school.image,
                     content: lastYearBookRequest.school.content,
                   },
                   historicalReview: {
@@ -181,6 +185,7 @@ export class YearbookPageComponent
         },
         (error) => console.error(error)
       );
+    });
   }
 
   setAmblemarioData(pecaData, _mapper?: Function) {
@@ -211,6 +216,7 @@ export class YearbookPageComponent
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.ybSubscription.unsubscribe();
   }
 
 }
