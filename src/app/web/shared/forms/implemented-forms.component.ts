@@ -359,7 +359,7 @@ export class ImplementedFormsComponent implements OnInit {
         },
       },
     },
-    homePhone: { label: "Teléfono de habitación", ...this.controlProps.phone },
+    homePhone: { label: "Teléfono de contacto", ...this.controlProps.phone },
     birthdate: { label: "Fecha de nacimiento", ...this.controlProps.date },
     addressState: { label: "Estado", ...this.controlProps.select },
     addressMunicipality: {

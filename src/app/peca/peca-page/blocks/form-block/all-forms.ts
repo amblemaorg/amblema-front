@@ -1046,8 +1046,8 @@ export const formCoordinador = {
     ...controlProps.phoneAndRequired,
   },
   phone: {
-    label: "Teléfono de habitación",
-    placeholder: "Teléfono de habitación",
+    label: "Teléfono de contacto",
+    placeholder: "Teléfono de contacto",
     fullwidth: false,
     ...controlProps.phoneAndRequired,
   },

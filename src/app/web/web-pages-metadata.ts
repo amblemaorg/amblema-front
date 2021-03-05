@@ -15,7 +15,7 @@ export const METADATA = {
       {
         name: "description",
         content:
-          "Damos herramientas eficaces que motivan a los docentes de calidad para mejorar los indicadores claves de gestión docente con actividades diarias y actividades especiales, a lo largo del año escolar.",
+          "Damos herramientas eficaces que motivan a los docentes de calidad para mejorar los indicadores clave de gestión docente con actividades diarias y actividades especiales, a lo largo del año escolar.",
       },
     ],
   },
