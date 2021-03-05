@@ -365,7 +365,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.settings.formsContent[attr].options.length > 0
         ) {
           this.componentForm.patchValue({
-            grades: this.settings.formsContent["grades"].options[0].id,
+            // grades: this.settings.formsContent["grades"].options[0].id,
+            grades: "", //! NEW
           });
           setTimeout(() => {
             this.setSchoolSections(true);
