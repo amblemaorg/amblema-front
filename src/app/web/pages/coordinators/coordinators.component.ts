@@ -31,7 +31,7 @@ export class CoordinatorsComponent implements OnInit {
     dots: true,
     nav: false,
     navSpeed: 3000,
-    autoplayTimeout: 12000,
+    autoplayTimeout: 15000,
     responsive: {
       0: {
         items: 1,

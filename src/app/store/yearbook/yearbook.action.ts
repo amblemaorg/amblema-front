@@ -1,5 +1,5 @@
 import { ToastrService } from "ngx-toastr";
-import { State, Action, StateContext, Store } from "@ngxs/store";
+import { State, Action, StateContext, Store, Selector } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { YearBook } from "./yearbook.model";
 import { patch } from "@ngxs/store/operators";
@@ -122,11 +122,41 @@ export class YearBookState {
     private toastr: ToastrService
   ) {}
 
+  @Selector()
+  static yearbookState(state: YearBook) {
+    return state;
+  }
+
   @Action(SetYearBook)
   setYearBook(ctx: StateContext<YearBook>, action: SetYearBook) {
     const state = ctx.getState();
     const sections = state.sections ? state.sections : [];
-    ctx.setState({ sections, ...action.payload });
+    const oldValues = {
+      // historicalReview: {
+      //   image: "",
+      //   content: "",
+      // },
+      // sponsor: {
+      //   name: "",
+      //   content: "",
+      //   image: "",
+      // },
+      school: {
+        name: action.payload.school?.name,
+        content: action.payload.school?.content ? action.payload.school.content : state.school.content,
+        image: action.payload.school?.image ? action.payload.school.image : state.school.image,
+      },
+      // coordinator: {
+      //   name: "",
+      //   content: "",
+      //   image: "",
+      // },
+      // sections: [],
+      // lapse1: { activities: [], diagnosticAnalysis: "" },
+      // lapse2: { activities: [], diagnosticAnalysis: "" },
+      // lapse3: { activities: [], diagnosticAnalysis: "" },
+    };
+    ctx.setState({ sections, ...action.payload, ...oldValues });
   }
 
   @Action(UpdateYearBookRequest)
@@ -324,5 +354,6 @@ export class YearBookState {
         sections: sectionsUpdated,
       })
     );
+    const nweee =  ctx.getState();
   }
 }
