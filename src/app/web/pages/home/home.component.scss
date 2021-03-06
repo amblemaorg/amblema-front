@@ -293,17 +293,36 @@ section.social-impact {
         flex-direction: column;
         text-align: center;
 
+        &:first-child {
+            margin-left: -1rem;
+
+            @include breakpoint(small, landscape) {
+              margin-left: 0;
+            }
+  
+            @include breakpoint(medium) {
+              margin-left: 0;
+            }
+        }
+
+        &:not(:last-child) {
+            margin-right: 1rem;
+        }
+
         .statistic-count {
-          font-size: 9vw;
+          // font-size: 9vw;
+          font-size: 6.5vw;
           font-weight: bold;
           line-height: 1;
 
           @include breakpoint(small, landscape) {
-            font-size: 6vw;
+            // font-size: 6vw;
+            font-size: 4vw;
           }
 
           @include breakpoint(medium) {
-            font-size: 6vw;
+            // font-size: 6vw;
+            font-size: 4vw;
           }
         }
 
@@ -311,11 +330,13 @@ section.social-impact {
           font-size: 2.8vw;
 
           @include breakpoint(small, landscape) {
-            font-size: 1.8vw;
+            // font-size: 1.8vw;
+            font-size: 1.25vw;
           }
 
           @include breakpoint(medium) {
-            font-size: 1.8vw;
+            // font-size: 1.8vw;
+            font-size: 1.25vw;
           }
         }
       }
@@ -400,23 +421,39 @@ section.founders {
       bottom: 20vw;
       display: block;
       left: 12vw;
-      width: 130%;
+      // width: 130%;
+      width: 180%;
 
       @include breakpoint(small, landscape) {
         bottom: 10vw;
         left: 35vw;
-        width: 80%;
+        // width: 80%;
+        width: 65%;
       }
 
       @include breakpoint(medium) {
         bottom: 10vw;
         left: 35vw;
-        width: 80%;
+        // width: 80%;
+        width: 65%;
+      }
+
+      .owl-nav.disabled {
+          display: inline-block !important;
       }
 
       web-testimonial-card {
         .testimonial-card {
-          width: 90%;
+          // width: 90%;
+          width: 85%;
+
+          @include breakpoint(small, landscape) {
+            width: 90%;
+          }
+    
+          @include breakpoint(medium) {
+            width: 90%;
+          }
         }
       }
     }

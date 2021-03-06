@@ -29,6 +29,7 @@ import { CarouselModule } from "ngx-owl-carousel-o";
 import { OwlModule } from "ngx-owl-carousel";
 import { ScheduleModule } from "@syncfusion/ej2-angular-schedule";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { NgxImageCompressService } from 'ngx-image-compress';
 // COMPONENTS
 import { PecaComponent } from "./peca.component";
 import { PecaPageComponent } from "./peca-page/peca-page.component";
@@ -159,6 +160,9 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     GraphicsLogicComponent,
     SummaryBlockComponent,
   ],
-  providers: [{ provide: NbTokenStorage, useClass: NbTokenLocalStorage }],
+  providers: [
+    { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
+    NgxImageCompressService
+  ],
 })
 export class PecaModule {}

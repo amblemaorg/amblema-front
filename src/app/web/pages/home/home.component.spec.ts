@@ -93,7 +93,7 @@ describe("HomeComponent", () => {
     testHelpers.testSelectorHasContent(
       fixture.nativeElement,
       selector + " " + tag,
-      "Indicadores Claves"
+      "Indicadores Clave"
     );
   });
 

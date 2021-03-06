@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="form" (ngSubmit)="settings.onSubmit(form.value)">
+  <form [formGroup]="form" (ngSubmit)="onSubmitAction(form.value)">
     <!-- Input file image -->
     <div class="form-group" *ngIf="settings.fields.inputImg">
       <label class="label">{{ settings.fields.inputImg.label }}</label>
@@ -12,7 +12,7 @@
       >
         <img [src]="form.get('inputImg').value" class="img-fluid" />
         <button
-          (click)="form.get('inputImg').setValue(null)"
+          (click)="setNullFormImg()"
           nbButton
           status="danger"
           id="btn-delete"
