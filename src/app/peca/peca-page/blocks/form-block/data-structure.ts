@@ -19,7 +19,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
 
     case "actualizarPadrino": // for Perfil de usuario view and padrinos form
       data.isThereTable = false;
-      console.log("le has dado clic" + JSON.stringify(cf.value));
 
       data.data = {
         name: cf.get("letter").value,
@@ -40,7 +39,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       break;
     case "actualizarEscuela": // for Perfil de usuario view and escuelas form
       data.isThereTable = false;
-      console.log("le has dado clic" + JSON.stringify(cf.value));
+
       data.data = {
         name: cf.get("name").value,
         code: cf.get("code").value,
@@ -66,7 +65,6 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
       break;
     case "actualizarCoordinador": // for Perfil de usuario view and coordinadores form
       data.isThereTable = false;
-      console.log("le has dado clic" + JSON.stringify(cf.value));
 
       data.data = {
         firstName: cf.get("letter").value,

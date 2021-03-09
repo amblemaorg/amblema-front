@@ -1,21 +1,35 @@
 <!-- CAMBIAR LAS VARIABLEAS DEL FOR POR PRUEBA POR SETTINGS.SLIDERiMAGE -->
-<div class="gallery d-flex flex-wrap slider-component">
-  <div class="carousel-1 images carousel col-sm-2"
+<div *ngIf="showSlider && sliderName" class="gallery d-flex flex-wrap slider-component">
+  <div [class]="'carousel-1 images images'+sliderName+' carousel col-sm-2'"
     [class.d-none]="settings.sliderImage && settings.sliderImage.length<2">
     <owl-carousel #imgsElement [options]="myCarouselOptions" [carouselClasses]="['owl-theme', 'row', 'sliding']">
       <div class="image-item mb-3" *ngFor="let image of settings.sliderImage;index as i" (click)="goToImg(i)">
         <img class="slide-image" src="{{image.image}}">
-
       </div>
     </owl-carousel>
   </div>
-  <div class="carousel-2 carousel col-sm-7"
-    [class.margin-both-auto]="settings.sliderImage && settings.sliderImage.length<2">
-    <owl-carousel #owlElement [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'row', 'sliding']">
-      <div class="item" *ngFor="let image of settings.sliderImage;index as i">
-        <img class="slide-image" src="{{image.image}}">
-      </div>
-    </owl-carousel>
+  <div 
+    class="carousel-2 carousel col-sm-7"
+    [class.margin-both-auto]="settings.sliderImage && settings.sliderImage.length<2"
+    [ngSwitch]="sliderName"
+  >
+    <ng-container *ngSwitchCase="'2'">
+      <owl-carousel #owlElement2 [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+        <ng-container *ngTemplateOutlet="sliderImagesTemplate; context: { sliderimagearr: settings.sliderImage }"></ng-container>
+      </owl-carousel>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'3'">
+      <owl-carousel #owlElement3 [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+        <ng-container *ngTemplateOutlet="sliderImagesTemplate; context: { sliderimagearr: settings.sliderImage }"></ng-container>
+      </owl-carousel>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <owl-carousel #owlElement1 [options]="mySlideOptions" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+        <ng-container *ngTemplateOutlet="sliderImagesTemplate; context: { sliderimagearr: settings.sliderImage }"></ng-container>
+      </owl-carousel>
+    </ng-container>
   </div>
 
   <div class="carousel-text image-desc-container d-flex col-sm-3">
@@ -89,3 +103,11 @@
     </owl-carousel>
   </div>
 </div>
+
+
+<!-- Slider Images Template -->
+<ng-template #sliderImagesTemplate let-sliderimagearr="sliderimagearr">
+  <div class="item" *ngFor="let image of sliderimagearr; index as i">
+    <img class="slide-image" src="{{image.image}}">
+  </div>
+</ng-template>

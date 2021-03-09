@@ -700,7 +700,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      console.log("method: ", method, "url: ", resourcePath, "body: ", body);
+      // console.log("method: ", method, "url: ", resourcePath, "body: ", body);
 
       this.fetcher[method](resourcePath, body).subscribe(
         (response) => {

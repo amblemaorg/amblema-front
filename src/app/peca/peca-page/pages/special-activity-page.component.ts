@@ -72,7 +72,7 @@ export class SpecialActivityPageComponent
             const { specialActivity } = data.activePecaContent[lapseName];
 
             if (!isNullOrUndefined(data)) {
-              console.log(data, "actividad especial");
+              // console.log(data, "actividad especial");
             }
             let {permissions} = data.user;
             permissions = this.managePermissions(permissions);

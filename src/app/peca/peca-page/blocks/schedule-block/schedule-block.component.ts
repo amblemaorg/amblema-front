@@ -93,7 +93,7 @@ export class ScheduleBlockComponent implements PresentationalBlockComponent, OnI
       data => {
         if (data && data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
-            console.log(data, "data schedule")
+            // console.log(data, "data schedule")
           }
           let auxSchedule = [];
           data.activePecaContent.schedule.forEach((schedule) => {
