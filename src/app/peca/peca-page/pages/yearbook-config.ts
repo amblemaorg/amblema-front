@@ -371,6 +371,8 @@ export function MapperYearBookWeb(
 
   function determineGradeString(grade) {
     switch (grade) {
+      case "0":
+        return "Preescolar";
       case "1":
         return "1er Grado";
       case "2":

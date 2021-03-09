@@ -403,6 +403,7 @@ const formMathDiagnosticTable = {
   name: 'mathModalForm',
   viewMode: "both",
   settings: {
+    specialValidateSaveButton: true,
     formsContent: formMatematicaModal,
     buttons: ["guardar"],
     formType: "tablaMatematica",

@@ -185,7 +185,8 @@ export class InitialDiagnosticPageComponent
         classes: {
           hideEdit: !permissions.diagnostics_peca_edit || false,
           hideDelete: !permissions.diagnostics_peca_delete || false,
-        }
+        },
+        lapse: number
       };
       //console.log("este es el mapper de lectura", this.readingData.data);
     } else {
@@ -201,7 +202,8 @@ export class InitialDiagnosticPageComponent
         classes: {
           hideEdit: !permissions.diagnostics_peca_edit || false,
           hideDelete: !permissions.diagnostics_peca_delete || false,
-        }
+        },
+        lapse: number
       };
     } else {
       this.mathData = mathTableData;

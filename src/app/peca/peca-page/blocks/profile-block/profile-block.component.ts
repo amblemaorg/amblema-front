@@ -117,6 +117,6 @@ export class ProfileBlockComponent
     this.globals.createdBlockInstances(blockInstances);
   }
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    if (this.userSubscription) this.userSubscription.unsubscribe();
   }
 }
