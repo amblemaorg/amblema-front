@@ -18,6 +18,7 @@ export class GraphicsBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    hideChart?: boolean;
     chartId?: string;
     labels: string[];
     sendGraphicToPdf?: string;

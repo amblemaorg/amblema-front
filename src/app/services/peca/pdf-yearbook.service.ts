@@ -905,39 +905,46 @@ export class PdfYearbookService {
     const cols = students.reduce(
       (cols, student, i, arr) => {
         const student_name = new Txt(student).margin([0, 0, 0, 10]).end;
-        if (arr.length <= 27) {
-          if (count === 1) {
-            cols.one.push(student_name);
-            count++;
-          } else if (count === 2) {
-            cols.two.push(student_name);
-            count++;
-          } else {
-            cols.three.push(student_name);
-            count = 1;
-          }
+        if (count === 1) {
+          cols.one.push(student_name);
+          count++;
         } else {
-          if (count === 1) {
-            cols.one.push(student_name);
-            count++;
-          } else if (count === 2) {
-            cols.two.push(student_name);
-            count++;
-          } else if (count === 3) {
-            cols.three.push(student_name);
-            count++;
-          } else {
-            cols.four.push(student_name);
-            count = 1;
-          }
+          cols.two.push(student_name);
+          count = 1;
         }
+        // if (arr.length <= 27) {
+        //   if (count === 1) {
+        //     cols.one.push(student_name);
+        //     count++;
+        //   } else if (count === 2) {
+        //     cols.two.push(student_name);
+        //     count++;
+        //   } else {
+        //     cols.three.push(student_name);
+        //     count = 1;
+        //   }
+        // } else {
+        //   if (count === 1) {
+        //     cols.one.push(student_name);
+        //     count++;
+        //   } else if (count === 2) {
+        //     cols.two.push(student_name);
+        //     count++;
+        //   } else if (count === 3) {
+        //     cols.three.push(student_name);
+        //     count++;
+        //   } else {
+        //     cols.four.push(student_name);
+        //     count = 1;
+        //   }
+        // }
         return cols;
       },
-      { one: [], two: [], three: [], four: [] }
+      { one: [], two: []/* , three: [], four: [] */ }
     );
 
-    const cols_ = [new Stack(cols.one).end, new Stack(cols.two).end, new Stack(cols.three).end];
-    if (students.length > 27) cols_.push(new Stack(cols.four).end);
+    const cols_ = [new Stack(cols.one).end, new Stack(cols.two).end/* , new Stack(cols.three).end */];
+    // if (students.length > 27) cols_.push(new Stack(cols.four).end);
 
     return cols_;
   }
