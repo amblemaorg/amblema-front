@@ -293,13 +293,15 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
         const { filters, page } = this.tableStates[`${this.settings.tableCode}${this.thisLapse}`];
         if (filters && filters.length) this.source.setFilter([...filters]);
         setTimeout(() => {
-          this.source.getFilteredAndSorted().then( data => {
-            const decs = `${data.length  / 5}`;
-            const decs_splitted = decs.split(".");
-            let pages = parseInt(decs);
-            if (decs_splitted.length > 1) pages++;
-            if (page) this.source.setPage(page <= pages ? page : pages);
-          });
+          if (this.settings["pager"]) {
+            this.source.getFilteredAndSorted().then( data => {
+              const decs = `${data.length  / this.settings["pager"].perPage}`;
+              const decs_splitted = decs.split(".");
+              let pages = parseInt(decs);
+              if (decs_splitted.length > 1) pages++;
+              if (page) this.source.setPage(page <= pages ? page : pages);
+            }); 
+          }
         });
       }
     }
