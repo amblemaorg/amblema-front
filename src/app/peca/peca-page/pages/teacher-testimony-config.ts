@@ -94,7 +94,7 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, permissions,
   const teachersTestimonies = pecaContent.school.teachersTestimonials;
   const { approvalHistory, isInApproval, testimonials } = teachersTestimonies;
   const { teacher_testimonial_edit, teacher_testimonial_delete } = permissions;
-  console.log('teacherTestimoniesConfigMapper', permissions)
+  
   let currentTestimonies = testimonials;
   let currentStatus = testimonials.length > 0 ? 2 : 1;
   let lastTestimoniesRequest = null;

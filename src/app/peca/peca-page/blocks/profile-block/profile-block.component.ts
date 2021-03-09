@@ -61,7 +61,7 @@ export class ProfileBlockComponent
         //To send data to profile component
         this.globals.formWithImage(this.url);
       };
-      console.log("evebt", (event.target.filess = [0]));
+
       reader.readAsDataURL(event.target.files[0]);
     }
   }

@@ -193,7 +193,6 @@ export function amblecoinsConfigMapper(
       isFromCustomTableActions: true,
       //fetcherMethod: "put",
       onSubmit: (values) => {
-        console.log("section table", values);
         const data = {
           lapseNumber,
           section: {

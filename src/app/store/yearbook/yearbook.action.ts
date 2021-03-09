@@ -167,7 +167,7 @@ export class YearBookState {
     };
     delete yearBookData.approvalHistory;
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
-    console.log("yearbook data", yearBookData);
+    // console.log("yearbook data", yearBookData);
     try {
       const data = await this.fetcher.post(url, yearBookData).toPromise();
       this.toastr.success("Solicitud enviada, espere por su aprobación", "", {

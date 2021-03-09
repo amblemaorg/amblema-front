@@ -12,7 +12,9 @@ import { DatepickerOptions } from 'ng2-datepicker';
 })
 
 export class SliderBlockComponent implements PresentationalBlockComponent, OnInit {
-  @ViewChild('owlElement', { static: false }) owlEl: OwlCarousel;
+  @ViewChild('owlElement1', { static: false }) owlEl1: OwlCarousel;
+  @ViewChild('owlElement2', { static: false }) owlEl2: OwlCarousel;
+  @ViewChild('owlElement3', { static: false }) owlEl3: OwlCarousel;
   type: 'presentational';
   component: string;
   settings: {
@@ -23,6 +25,9 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
       fields: string[];
     }[];
   };
+
+  showSlider: boolean = true;
+  sliderName: string = "1";
 
   glbls: any;
   constructor(@Inject(DOCUMENT) private document: Document, private globals: GlobalService) {
@@ -73,12 +78,14 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   shown = 0;
 
   goToImg(i) {
-    this.owlEl.to([i]);
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(this.shown).setAttribute('style', 'display:block');
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(i).setAttribute('style', 'display:none');
-    this.shown = i;
-    // to stop playing video
-    this.owlEl.reInit();
+    if (this.sliderName) {
+      this[`owlEl${this.sliderName}`].to([i]);
+      this.document.querySelectorAll(`.images${this.sliderName} .owl-carousel .owl-stage .owl-item`).item(this.shown).setAttribute('style', 'display:block');
+      this.document.querySelectorAll(`.images${this.sliderName} .owl-carousel .owl-stage .owl-item`).item(i).setAttribute('style', 'display:none');
+      this.shown = i;
+      // to stop playing video
+      this[`owlEl${this.sliderName}`].reInit(); 
+    }
   }
 
   setSettings(settings: any) {
@@ -88,14 +95,20 @@ export class SliderBlockComponent implements PresentationalBlockComponent, OnIni
   prueba:any;
   flags= false;
   setData(data: any) {
+    if (data.sliderName) this.sliderName = data.sliderName;
     //this.prueba= data.sliderImage.description;
     this.flags = true;
     if (data["sliderImage"]) {
+      this.settings.sliderImage = [];
       for (let i = 0; i < data.sliderImage.length; i++) {
         this.settings.sliderImage.push(data.sliderImage[i]);
         //this.settings.sliderImage[i].description = data.sliderImage[i].description;
         //this.settings.sliderImage[i].image = data.sliderImage[i].image;
       }
+      this.showSlider = false;
+      setTimeout(() => {
+        this.showSlider = true; 
+      });
     }
   }
 

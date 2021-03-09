@@ -119,7 +119,7 @@ export function mathOlympicsConfigMapper(
         hidden: !olympics_peca_create
       },
       onAddTable: (row) => {
-        console.log("on add table students", row);
+        // console.log("on add table students", row);
         const data = {
           lapseNumber,
           studentId: row.id,
@@ -197,7 +197,7 @@ export function mathOlympicsConfigMapper(
       isFromCustomTableActions: true,
       fetcherMethod: "put",
       onSubmit: (values) => {
-        console.log("math olympics form edit", values);
+        // console.log("math olympics form edit", values);
         const data = {
           lapseNumber,
           studentId: values.id,
@@ -333,7 +333,7 @@ export function mathOlympicsConfigMapper(
         },
       ],
       onSubmit: (values) => {
-        console.log("math olympic delete", values);
+        // console.log("math olympic delete", values);
         const data = { lapseNumber, studentId: values.data.newData.id };
         store.dispatch(new RemoveStudentMathOlympics(data));
       },
