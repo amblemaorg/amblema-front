@@ -111,7 +111,6 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     this.subscription.unsubscribe();
   }
   ngDoCheck() {
-    console.log(this.tableStates);
     if (
       this.thisLapse &&
       (
