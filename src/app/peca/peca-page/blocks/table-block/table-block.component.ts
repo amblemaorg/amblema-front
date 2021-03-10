@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, DoCheck } from "@angular/core";
 import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
 import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from "./ng2-smart-table-default-settings";
 import { LocalDataSource } from "ng2-smart-table";
@@ -14,7 +14,7 @@ registerLocaleData(localeEs, "es");
   templateUrl: "./ng2-smart-table-template.html",
   styleUrls: ["./table-block.component.scss"],
 })
-export class TableBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class TableBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy, DoCheck {
   type: "presentational";
   name: string;
   component: string;
@@ -38,6 +38,9 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     tableTitle?: string; // to set a title for the table
     onDelete: Function | null;
   };
+
+  tableStates: any = {};
+  thisLapse: string;
 
   userCanCreate: boolean = true;
   userCanEdit: boolean = true;
@@ -106,6 +109,17 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     this.canTableSendFormDataToBtn = true;
     this.isTableContentEdited = null;
     this.subscription.unsubscribe();
+  }
+  ngDoCheck() {
+    if (
+      this.thisLapse &&
+      (
+        this.settings.tableCode === "initialDiagnosticConfigLectura" ||
+        this.settings.tableCode === "initialDiagnosticConfigMatematica"
+      )
+    ) {
+      this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] = { ...this.source.getFilter(), ...this.source.getPaging() };
+    }
   }
 
   async confsOnTable(data) {
@@ -260,6 +274,36 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       }
 
       this.sendTableData();
+
+      if (
+        this.settings.tableCode === "initialDiagnosticConfigLectura" ||
+        this.settings.tableCode === "initialDiagnosticConfigMatematica"
+      ) {
+        this.thisLapse = data.lapse;
+      }
+
+      if (
+        this.settings.tableCode && 
+        this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] && 
+        (
+          this.settings.tableCode === "initialDiagnosticConfigLectura" ||
+          this.settings.tableCode === "initialDiagnosticConfigMatematica"
+        ) 
+      ) {
+        const { filters, page } = this.tableStates[`${this.settings.tableCode}${this.thisLapse}`];
+        if (filters && filters.length) this.source.setFilter([...filters]);
+        setTimeout(() => {
+          if (this.settings["pager"]) {
+            this.source.getFilteredAndSorted().then( data => {
+              const decs = `${data.length  / this.settings["pager"].perPage}`;
+              const decs_splitted = decs.split(".");
+              let pages = parseInt(decs);
+              if (decs_splitted.length > 1) pages++;
+              if (page) this.source.setPage(page <= pages ? page : pages);
+            }); 
+          }
+        });
+      }
     }
   }
 

@@ -51,7 +51,6 @@ export class MonitoringStrategyPageComponent
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
-      console.log(this.blockInstances, "bloques");
       if (this.loadedData) this.updateMethods();
     });
 
@@ -63,7 +62,7 @@ export class MonitoringStrategyPageComponent
       (data) => {
         if (data.activePecaContent) {
           if (!isNullOrUndefined(data)) {
-            console.log(data, "data seguimiento actividades");
+            // console.log(data, "data seguimiento actividades");
           }
           this.setAmbienteSlider(data);
           this.setAmbienteSliderData();
@@ -96,36 +95,39 @@ export class MonitoringStrategyPageComponent
   //slider ambiente
   setAmbienteSlider(data) {
     this.responseAmbiente = data.activePecaContent.monitoringActivities.environmentActivities;
-    console.log(this.responseAmbiente, "slider ambiente");
+    // console.log(this.responseAmbiente, "slider ambiente");
   }
 
   setAmbienteSliderData() {
     this.sliderSeguimientoAmbiente = {
-      sliderImage: this.responseAmbiente
+      sliderImage: this.responseAmbiente,
+      sliderName: "1"
     };
   }
 
   //slider lectura
   setLecturaSlider(data) {
     this.responseLectura = data.activePecaContent.monitoringActivities.readingActivities;
-    console.log(this.responseLectura, "slider Lectura");
+    // console.log(this.responseLectura, "slider Lectura");
   }
 
   setLecturaSliderData() {
     this.sliderSeguimientoLectura = {
-      sliderImage: this.responseLectura
+      sliderImage: this.responseLectura,
+      sliderName: "2"
     };
   }
 
   //slider matematica
   setMatematicaSlider(data) {
     this.responseMatematica = data.activePecaContent.monitoringActivities.mathActivities;
-    console.log(this.responseMatematica, "slider Matematica");
+    // console.log(this.responseMatematica, "slider Matematica");
   }
 
   setMatematicaSliderData() {
     this.sliderSeguimientoMatematica = {
-      sliderImage: this.responseMatematica
+      sliderImage: this.responseMatematica,
+      sliderName: "3"
     };
   }
 

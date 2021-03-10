@@ -82,7 +82,18 @@ export function adaptBody(formType: string, body: any) {
           key != "indexMul" &&
           key != "section"
         )
-          body_adapted[key === "resultLog" ? "operationsPerMin" : key === "resultMul" ? "multiplicationsPerMin" : key] = body[key];
+          body_adapted[key === "resultLog" ? "operationsPerMin" : key === "resultMul" ? "multiplicationsPerMin" : key] = 
+            key === "resultMul" || key === "resultLog" 
+              ? ( 
+                  !body[key] || 
+                  (
+                    typeof body[key] === "string" && 
+                    !body[key].length
+                  ) 
+                    ? null 
+                    : body[key]
+                ) 
+              : body[key];
       });
       break;
 

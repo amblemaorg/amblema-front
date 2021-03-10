@@ -68,7 +68,7 @@ const formTaller1 = {
     formType: "initialWorkshopConfigPreparacionTaller",
     fetcherMethod: "post",
     onSubmit: (data) => {
-      console.log("formPreparacionTallerInicial onSubmit", data);
+      // console.log("formPreparacionTallerInicial onSubmit", data);
     },
   },
 };

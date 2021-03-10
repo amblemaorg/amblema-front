@@ -26,6 +26,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   type: "presentational";
   component: string;
   settings: {
+    specialValidateSaveButton?: boolean;
     formsContent: any;
     buttons: string[];
     hiddenButton?: boolean;
@@ -699,7 +700,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      console.log("method: ", method, "url: ", resourcePath, "body: ", body);
+      // console.log("method: ", method, "url: ", resourcePath, "body: ", body);
 
       this.fetcher[method](resourcePath, body).subscribe(
         (response) => {
@@ -848,7 +849,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
 
   disableBtn() {
-    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
+    let disMathTableFormEdit = null;
+    let shouldDis = false;
+
+    if (this.settings.specialValidateSaveButton) {
+      disMathTableFormEdit = 
+        this.componentForm.controls["resultMul"].value || 
+        this.componentForm.controls["resultLog"].value;
+      if (
+        !disMathTableFormEdit || 
+        (
+          typeof disMathTableFormEdit === "string" && 
+          !disMathTableFormEdit.length
+        ) 
+      ) shouldDis = true;
+    }
+
+    return shouldDis || !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
   // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE

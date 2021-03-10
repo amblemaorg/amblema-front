@@ -62,7 +62,7 @@ export function schoolActivitiesPicturesConfigMapper(
         },
       },
       onAddImage: (image) => {
-        console.log("school-pictures", image);
+        // console.log("school-pictures", image);
         const data = {
           image: image.source,
         };
