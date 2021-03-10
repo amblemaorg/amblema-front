@@ -6,6 +6,7 @@ import { ClearPecaState } from "../../store/actions/peca/peca.actions";
 import { ClearUserInfo } from '../../store/actions/e-learning/user.actions';
 import { ClearStepsProgress } from '../../store/actions/steps/project.actions';
 import { ClearModulesTotal } from '../../store/actions/e-learning/learning-modules.actions';
+import { ClearYearBook } from '../../store/yearbook/yearbook.action';
 
 @Component({
   selector: "app-logout",
@@ -28,6 +29,7 @@ export class LogoutComponent extends NbLogoutComponent implements OnInit {
   }
 
   clearStepsData() {
+    this.store.dispatch([new ClearYearBook()]);
     this.store.dispatch([new ClearUserInfo()]);
     this.store.dispatch([new ClearStepsProgress()]);
     this.store.dispatch([new ClearModulesTotal()]);
