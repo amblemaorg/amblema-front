@@ -1576,7 +1576,7 @@ export const formMatematicaModal = {
     label: "Resultado de multiplicación",
     placeholder: "Resultado de multiplicación",
     fullwidth: false,
-    ...controlProps.numberAndRequired,
+    ...controlProps.number/* AndRequired */,
   },
   /* dateLog: {
     label: "Fecha del resultado logica matematica",
@@ -1590,7 +1590,7 @@ export const formMatematicaModal = {
     label: "Resultado de lógica matemática",
     placeholder: "Resultado de lógica matemática",
     fullwidth: false,
-    ...controlProps.numberAndRequired,
+    ...controlProps.number/* AndRequired */,
   },
   indexMul: {
     label: "Índice de multiplicación",

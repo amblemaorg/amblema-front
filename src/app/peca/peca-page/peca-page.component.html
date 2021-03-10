@@ -2,21 +2,21 @@
   <nb-card-body 
     class="header-title-and-button-container" 
     [class.comes-from-steps]="isFromSteps"
-    [class.has-yearbook]="header.download"  
+    [class.has-yearbook]="header && header.download"  
   >
-    <div [class.col-sm-6]="header.title && header.download" class="title-style">
-      <h1>{{ header.title }}</h1>
+    <div [class.col-sm-6]="header && header.title && header.download" class="title-style">
+      <h1>{{ header?.title }}</h1>
     </div>
 
     <button 
-      *ngIf="!header.download"
+      *ngIf="header && !header.download"
       (click)="goToSteps()" 
       class="btn btn-primary text-decoration-none py-1 px-4 btn-go-steps">
         Ir a los pasos
     </button>
 
     <button
-      *ngIf="header.download"
+      *ngIf="header && header.download"
       [title]="disablePdfDownload() ? 'Cargando informacion del AmbLeMario' : 'Descargar AmbLeMario'"
       class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
       (click)="generatePDF()"
@@ -26,7 +26,7 @@
         *ngIf="creatingPdf"
         class="spinner-grow spinner-grow-sm"
       ></span>
-      {{ creatingPdf ? 'Preparando descarga' : header.download.name }}
+      {{ creatingPdf ? 'Preparando descarga' : header?.download?.name }}
     </button>
   </nb-card-body>
 </nb-card>

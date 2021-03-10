@@ -202,12 +202,11 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
     body["checklist"] = checklLists;
 
-    console.log("BODY", body);
     this.isSending = true;
 
     const method = this.settings.fetcherMethod || "post";
     const resourcePath = this.settings.fetcherUrls[method];
-    console.log(resourcePath, method);
+
     this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
         console.log("form response", response);

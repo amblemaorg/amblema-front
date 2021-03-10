@@ -47,7 +47,7 @@ export function MapperYearBookWeb(
                 sectionId: id,
                 sectionGrade: grade,
                 sectionName: name,
-                image: values.inputImg,
+                image: values.inputImg && values.inputImg.length ? values.inputImg : null,
               };
               store.dispatch(new SetSectionImage(data));
             },
@@ -124,8 +124,8 @@ export function MapperYearBookWeb(
       {
         component: "graphics",
         settings: {
-          chartId: `${lapseName}-reading-graphic`,
-          sendGraphicToPdf: "diagnosticReading",
+          chartId: `${lapseName}-reading-graphic-not-pdf`,
+          sendGraphicToPdf: null,
           lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
@@ -135,6 +135,28 @@ export function MapperYearBookWeb(
           items: lapseData.diagnosticSummary.map((diagnostic) => {
             return parseFloat(diagnostic.wordsPerMinIndex).toFixed(2);
           }),
+        },
+      },
+      // Graphic not shown on page, for pdf rendering purpose only
+      {
+        component: "graphics",
+        settings: {
+          hideChart: true,
+          chartId: `${lapseName}-reading-graphic`,
+          sendGraphicToPdf: "diagnosticReading",
+          lapseN: +lapseNumber,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const { grade, name, wordsPerMinIndex } = diagnostic;
+            const realN = parseFloat(wordsPerMinIndex);
+            if (realN) diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+            return diagnosticFinal;
+          },[]),
+          items: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const realN = parseFloat(diagnostic.wordsPerMinIndex);
+            if (realN) diagnosticFinal.push(realN.toFixed(2));
+            return diagnosticFinal;
+          },[]),
         },
       },
       createTitleComponent("Análisis y resultado del diagnóstico de lectura"),
@@ -196,8 +218,8 @@ export function MapperYearBookWeb(
       {
         component: "graphics",
         settings: {
-          chartId: `${lapseName}-math-graphic`,
-          sendGraphicToPdf: "diagnosticMath",
+          chartId: `${lapseName}-math-graphic-not-pdf`,
+          sendGraphicToPdf: null,
           lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
@@ -207,6 +229,28 @@ export function MapperYearBookWeb(
           items: lapseData.diagnosticSummary.map((diagnostic) => {
             return parseFloat(diagnostic.multiplicationsPerMinIndex).toFixed(2);
           }),
+        },
+      },
+      // Graphic not shown on page, for pdf rendering purpose only
+      {
+        component: "graphics",
+        settings: {
+          hideChart: true,
+          chartId: `${lapseName}-math-graphic`,
+          sendGraphicToPdf: "diagnosticMath",
+          lapseN: +lapseNumber,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const { grade, name, multiplicationsPerMinIndex } = diagnostic;
+            const realN = parseFloat(multiplicationsPerMinIndex);
+            if (realN) diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+            return diagnosticFinal;
+          },[]),
+          items: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const realN = parseFloat(diagnostic.multiplicationsPerMinIndex);
+            if (realN) diagnosticFinal.push(realN.toFixed(2));
+            return diagnosticFinal;
+          },[]),
         },
       },
       createTitleComponent("Análisis y resultado del diagnóstico de multiplicación"),
@@ -268,8 +312,8 @@ export function MapperYearBookWeb(
       {
         component: "graphics",
         settings: {
-          chartId: `${lapseName}-logic-graphic`,
-          sendGraphicToPdf: "diagnosticLogic",
+          chartId: `${lapseName}-logic-graphic-not-pdf`,
+          sendGraphicToPdf: null,
           lapseN: +lapseNumber,
           legendName: yearBookData.school.name,
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
@@ -279,6 +323,28 @@ export function MapperYearBookWeb(
           items: lapseData.diagnosticSummary.map((diagnostic) => {
             return parseFloat(diagnostic.operationsPerMinIndex).toFixed(2);
           }),
+        },
+      },
+      // Graphic not shown on page, for pdf rendering purpose only
+      {
+        component: "graphics",
+        settings: {
+          hideChart: true,
+          chartId: `${lapseName}-logic-graphic`,
+          sendGraphicToPdf: "diagnosticLogic",
+          lapseN: +lapseNumber,
+          legendName: yearBookData.school.name,
+          labels: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const { grade, name, operationsPerMinIndex } = diagnostic;
+            const realN = parseFloat(operationsPerMinIndex);
+            if (realN) diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+            return diagnosticFinal;
+          },[]),
+          items: lapseData.diagnosticSummary.reduce((diagnosticFinal,diagnostic) => {
+            const realN = parseFloat(diagnostic.operationsPerMinIndex);
+            if (realN) diagnosticFinal.push(realN.toFixed(2));
+            return diagnosticFinal;
+          },[]),
         },
       },
       createTitleComponent("Análisis y resultado del diagnóstico de lógica matemática"),
@@ -371,6 +437,8 @@ export function MapperYearBookWeb(
 
   function determineGradeString(grade) {
     switch (grade) {
+      case "0":
+        return "Preescolar";
       case "1":
         return "1er Grado";
       case "2":
@@ -429,7 +497,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetHistoricalReview(data));
@@ -466,7 +534,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetSponsor(data));
@@ -503,7 +571,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetCoordinator(data));
@@ -539,7 +607,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetSchool(data));

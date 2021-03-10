@@ -18,6 +18,7 @@ export class GraphicsBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    hideChart?: boolean;
     chartId?: string;
     labels: string[];
     sendGraphicToPdf?: string;
@@ -83,6 +84,27 @@ export class GraphicsBlockComponent
     this.getInfo();
   }
 
+  parseGradeName(grade, name): string {
+    switch (grade) {
+      case "0":
+        return `Preescolar ${name}`;
+      case "1":
+        return `1er Grado ${name}`;
+      case "2":
+        return `2do Grado ${name}`;
+      case "3":
+        return `3er Grado ${name}`;
+      case "4":
+        return `4to Grado ${name}`;
+      case "5":
+        return `5to Grado ${name}`;
+      case "6":
+        return `6to Grado ${name}`;
+      default:
+        return `${grade} Grado ${name}`;
+    }
+  }
+
   getInfo() {
     this.UrlLapse = this.router.url.substr(12, 1);
     this.infoDataSubscription = this.infoData$.subscribe(
@@ -92,7 +114,7 @@ export class GraphicsBlockComponent
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
-              `${data.activePecaContent.school.sections[i].grade} grado ${data.activePecaContent.school.sections[i].name}`
+              this.parseGradeName(data.activePecaContent.school.sections[i].grade, data.activePecaContent.school.sections[i].name)
             );
             this.arrayColors.push("#81B03E");
           }

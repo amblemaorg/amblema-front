@@ -50,12 +50,14 @@ export class YearbookPageComponent
 
   ngOnInit() {
     this.ybSubscription = this.ybState$.subscribe( ybData => {
-      // console.log("ybData", ybData);
+      console.log("ybData", ybData);
       this.subscription = this.pecaData$
         .pipe(
           distinctUntilChanged(
             (prev, curr) =>
-              JSON.stringify(prev.activePecaContent.yearbook) === JSON.stringify(curr.activePecaContent.yearbook)
+            prev && curr && prev.activePecaContent && curr.activePecaContent
+              ? JSON.stringify(prev.activePecaContent.yearbook) === JSON.stringify(curr.activePecaContent.yearbook) 
+              : false
           )
         )
       .subscribe(
@@ -81,6 +83,12 @@ export class YearbookPageComponent
 
               if (isInApproval || yearbookHasNotApprovedRequest) {
                 const lastYearBookRequest = lastRequest.detail;
+
+                const theSections = ybData.sections.reduce( (sections, section) => {
+                  sections[section.id] = {...section};
+                  return sections;
+                }, {});
+
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
                   pecaId,
@@ -88,26 +96,26 @@ export class YearbookPageComponent
                   status: currentStatus,
                   approvalHistory: currentYearBook.approvalHistory,
                   isInApproval: currentYearBook.isInApproval,
-                  sponsor: {
+                  sponsor: { //todo: DONE
                     ...currentYearBook.sponsor,
-                    image: lastYearBookRequest.sponsor.image,
-                    content: lastYearBookRequest.sponsor.content,
+                    image: (ybData.sponsor.image && ybData.sponsor.image.length ? ybData.sponsor.image : false) || lastYearBookRequest.sponsor.image,
+                    content: (ybData.sponsor.content && ybData.sponsor.content.length ? ybData.sponsor.content : false) || lastYearBookRequest.sponsor.content,
                   },
-                  coordinator: {
+                  coordinator: { //todo: DONE
                     ...currentYearBook.coordinator,
-                    image: lastYearBookRequest.coordinator.image,
-                    content: lastYearBookRequest.coordinator.content,
+                    image: (ybData.coordinator.image && ybData.coordinator.image.length ? ybData.coordinator.image : false) || lastYearBookRequest.coordinator.image,
+                    content: (ybData.coordinator.content && ybData.coordinator.content.length ? ybData.coordinator.content : false) || lastYearBookRequest.coordinator.content,
                   },
-                  school: {
+                  school: { //todo: DONE
                     ...currentYearBook.school,
-                    image: ybData.school.image || lastYearBookRequest.school.image,
-                    content: lastYearBookRequest.school.content,
+                    image: (ybData.school.image && ybData.school.image.length ? ybData.school.image : false) || lastYearBookRequest.school.image,
+                    content: (ybData.school.content && ybData.school.content.length ? ybData.school.content : false) || lastYearBookRequest.school.content,
                   },
-                  historicalReview: {
+                  historicalReview: { //todo: DONE
                     ...currentYearBook.historicalReview,
                     name: lastYearBookRequest.historicalReview.name,
-                    image: lastYearBookRequest.historicalReview.image,
-                    content: lastYearBookRequest.historicalReview.content,
+                    image: (ybData.historicalReview.image && ybData.historicalReview.image.length ? ybData.historicalReview.image : false) || lastYearBookRequest.historicalReview.image,
+                    content: (ybData.historicalReview.content && ybData.historicalReview.content.length ? ybData.historicalReview.content : false) || lastYearBookRequest.historicalReview.content,
                   },
                   lapse1: {
                     ...currentYearBook.lapse1,
@@ -160,13 +168,15 @@ export class YearbookPageComponent
                     mathDiagnosticAnalysis: lastYearBookRequest.lapse3.mathDiagnosticAnalysis,
                     readingDiagnosticAnalysis: lastYearBookRequest.lapse3.readingDiagnosticAnalysis,
                   },
+                  //todo: DONE
                   sections: currentYearBook.sections.map((section) => {
                     const sectionRequested = lastYearBookRequest.sections.filter(
                       ({ id }) => section.id === id
                     );
+                    const returnValue = sectionRequested.length > 0 ? sectionRequested[0].image : "";
                     return {
                       ...section,
-                      image: sectionRequested.length > 0 ? sectionRequested[0].image : "",
+                      image: (theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) || returnValue,
                     };
                   }),
                 };
