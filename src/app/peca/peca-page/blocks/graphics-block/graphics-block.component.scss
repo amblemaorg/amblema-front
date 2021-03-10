@@ -1,6 +1,14 @@
-.hide-chart {
-    opacity: 0;
-    height: 0;
-    position: relative;
-    z-index: -1;
+.chart-graphics {
+    &.hide-chart {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        width: 100%;
+        margin-left: -10%;
+    
+        @media screen and (orientation: landscape) {
+            margin-left: -5%;
+        }
+    }
 }

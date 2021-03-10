@@ -6,10 +6,6 @@ import { patch } from "@ngxs/store/operators";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import { FetchPecaContent } from "../actions/peca/peca.actions";
 
-/**
- * @author Franklin Perdomo
- */
-
 export class SetYearBook {
   static readonly type = "[YearBook] Set YearBook";
   constructor(public payload: any) {}
@@ -89,9 +85,15 @@ export class ClearYearBook {
   constructor() {}
 }
 
+export class SetFalseMakingAction {
+  static readonly type = "[YearBook] Set false makingAction attribute in YearBook";
+  constructor() {}
+}
+
 @State<YearBook>({
   name: "yearbooks",
   defaults: {
+    makingAction: false,
     historicalReview: {
       image: "",
       content: "",
@@ -114,9 +116,24 @@ export class ClearYearBook {
     isInApproval: false,
     approvalHistory: [],
     sections: [],
-    lapse1: { activities: [], diagnosticAnalysis: "" },
-    lapse2: { activities: [], diagnosticAnalysis: "" },
-    lapse3: { activities: [], diagnosticAnalysis: "" },
+    lapse1: { 
+      activities: [], 
+      logicDiagnosticAnalysis: "",
+      mathDiagnosticAnalysis: "",
+      readingDiagnosticAnalysis: "" 
+    },
+    lapse2: { 
+      activities: [], 
+      logicDiagnosticAnalysis: "",
+      mathDiagnosticAnalysis: "",
+      readingDiagnosticAnalysis: "" 
+    },
+    lapse3: { 
+      activities: [], 
+      logicDiagnosticAnalysis: "",
+      mathDiagnosticAnalysis: "",
+      readingDiagnosticAnalysis: "" 
+    },
   },
 })
 @Injectable()
@@ -129,12 +146,20 @@ export class YearBookState {
 
   @Selector()
   static yearbookState(state: YearBook) {
-    return state;
+    const state_ = {...state};
+    delete state_["makingAction"];
+    return state_;
+  }
+
+  @Selector()
+  static isMakingAction(state: YearBook) {
+    return { makingAction: state.makingAction };
   }
 
   @Action(ClearYearBook)
   clearYearBook(ctx: StateContext<YearBook>) {
     ctx.setState({
+      makingAction: false,
       historicalReview: {
         image: "",
         content: "",
@@ -157,60 +182,163 @@ export class YearBookState {
       isInApproval: false,
       approvalHistory: [],
       sections: [],
-      lapse1: { activities: [], diagnosticAnalysis: "" },
-      lapse2: { activities: [], diagnosticAnalysis: "" },
-      lapse3: { activities: [], diagnosticAnalysis: "" },
+      lapse1: { 
+        activities: [], 
+        logicDiagnosticAnalysis: "",
+        mathDiagnosticAnalysis: "",
+        readingDiagnosticAnalysis: "" 
+      },
+      lapse2: { 
+        activities: [], 
+        logicDiagnosticAnalysis: "",
+        mathDiagnosticAnalysis: "",
+        readingDiagnosticAnalysis: "" 
+      },
+      lapse3: { 
+        activities: [], 
+        logicDiagnosticAnalysis: "",
+        mathDiagnosticAnalysis: "",
+        readingDiagnosticAnalysis: "" 
+      },
     });
   }
 
   @Action(SetYearBook)
   setYearBook(ctx: StateContext<YearBook>, action: SetYearBook) {
     const state = ctx.getState();
-    const sections = state.sections ? state.sections : [];
-    console.log("HYL", action.payload);
+    const sections = state.sections && state.sections.length ? state.sections : [];
+    const activities = {
+      lapse1: state.lapse1.activities && state.lapse1.activities.length ? state.lapse1.activities : [],
+      lapse2: state.lapse2.activities && state.lapse2.activities.length ? state.lapse2.activities : [],
+      lapse3: state.lapse3.activities && state.lapse3.activities.length ? state.lapse3.activities : []
+    };
+    const actPayl = action.payload;
+    // console.log("HYL", actPayl);
 
     const theSections = {};
     sections.map( section => {
       theSections[section.id] = {...section};
     });
-    if (action.payload.sections && action.payload.sections.length) {
-      action.payload.sections.map( section_unit => {
+    if (actPayl.sections && actPayl.sections.length) {
+      actPayl.sections.map( section_unit => {
         const { id: sectionId, image } = section_unit;
         theSections[sectionId] = {
           ...section_unit,
-          image: image && image.length ? image : (theSections[sectionId] ? theSections[sectionId].image : "")
+          image: image && image.length 
+            ? image 
+            : (theSections[sectionId] && theSections[sectionId].image && theSections[sectionId].image.length 
+                ? theSections[sectionId].image 
+                : ""
+              )
         };
       });
     }
 
     const sections_ = Object.keys(theSections).map( section_u => theSections[section_u] );
 
+    const determineImgs = (imgs, savedImgs) => {
+      const finalImgs = imgs.reduce( (theImgs, img) => {
+        if (!theImgs.includes(img)) theImgs.push(img);
+        return theImgs;
+      }, [...savedImgs]);
+      return finalImgs;
+    };
+
+    const theActivities = {
+      lapse1: {},
+      lapse2: {},
+      lapse3: {}
+    };
+    Object.keys(activities).map( lapseActivities => {
+      activities[lapseActivities].map( activity => {
+        theActivities[lapseActivities][activity.id] = {...activity};
+      });
+
+      if (actPayl[lapseActivities].activities && actPayl[lapseActivities].activities.length) {
+        actPayl[lapseActivities].activities.map( activity_unit => {
+          const { id: activityId, images } = activity_unit;
+          theActivities[lapseActivities][activityId] = {
+            ...activity_unit,
+            description: activity_unit.description && 
+                         activity_unit.description.length 
+                          ? activity_unit.description 
+                          : (
+                              theActivities[lapseActivities][activityId] && 
+                              theActivities[lapseActivities][activityId].description 
+                                ? theActivities[lapseActivities][activityId].description 
+                                : ""
+                            ),
+            images: theActivities[lapseActivities][activityId] && 
+                    theActivities[lapseActivities][activityId].images && 
+                    theActivities[lapseActivities][activityId].images.length 
+                      ? (
+                          images && images.length 
+                            ? determineImgs(images, theActivities[lapseActivities][activityId].images) 
+                            : theActivities[lapseActivities][activityId].images
+                        ) 
+                      : (images && images.length ? images : [])
+          };
+        });
+      }
+    });
+
+    const { 
+      lapse1Activities,
+      lapse2Activities,
+      lapse3Activities 
+    } = Object.keys(theActivities).reduce( (lapsesActivities, lapseName) => {
+      lapsesActivities[`${lapseName}Activities`] = Object.keys(theActivities[lapseName]).map( activity_u => theActivities[lapseName][activity_u] );
+      return lapsesActivities;
+    }, { lapse1Activities: [], lapse2Activities: [], lapse3Activities: [] });
+
     const oldValues = {
       historicalReview: {
-        image: action.payload.historicalReview?.image ? action.payload.historicalReview.image : state.historicalReview.image,
-        content: action.payload.historicalReview?.content ? action.payload.historicalReview.content : state.historicalReview.content,
+        image: actPayl.historicalReview?.image && actPayl.historicalReview?.image.length ? actPayl.historicalReview.image : state.historicalReview.image,
+        content: actPayl.historicalReview?.content && actPayl.historicalReview?.content.length ? actPayl.historicalReview.content : state.historicalReview.content,
       },
       sponsor: {
-        name: action.payload.sponsor?.name,
-        content: action.payload.sponsor?.content ? action.payload.sponsor.content : state.sponsor.content,
-        image: action.payload.sponsor?.image ? action.payload.sponsor.image : state.sponsor.image,
+        name: actPayl.sponsor?.name,
+        content: actPayl.sponsor?.content && actPayl.sponsor?.content.length ? actPayl.sponsor.content : state.sponsor.content,
+        image: actPayl.sponsor?.image && actPayl.sponsor?.image.length ? actPayl.sponsor.image : state.sponsor.image,
       },
       school: {
-        name: action.payload.school?.name,
-        content: action.payload.school?.content ? action.payload.school.content : state.school.content,
-        image: action.payload.school?.image ? action.payload.school.image : state.school.image,
+        name: actPayl.school?.name,
+        content: actPayl.school?.content && actPayl.school?.content.length ? actPayl.school.content : state.school.content,
+        image: actPayl.school?.image && actPayl.school?.image.length ? actPayl.school.image : state.school.image,
       },
       coordinator: {
-        name: action.payload.coordinator?.name,
-        content: action.payload.coordinator?.content ? action.payload.coordinator.content : state.coordinator.content,
-        image: action.payload.coordinator?.image ? action.payload.coordinator.image : state.coordinator.image,
+        name: actPayl.coordinator?.name,
+        content: actPayl.coordinator?.content && actPayl.coordinator?.content.length ? actPayl.coordinator.content : state.coordinator.content,
+        image: actPayl.coordinator?.image && actPayl.coordinator?.image.length ? actPayl.coordinator.image : state.coordinator.image,
       },
       sections: sections_,
-      // lapse1: { activities: [], diagnosticAnalysis: "" },
-      // lapse2: { activities: [], diagnosticAnalysis: "" },
-      // lapse3: { activities: [], diagnosticAnalysis: "" },
+      lapse1: { 
+        activities: lapse1Activities, 
+        logicDiagnosticAnalysis: actPayl.lapse1?.logicDiagnosticAnalysis && actPayl.lapse1?.logicDiagnosticAnalysis.length ? actPayl.lapse1.logicDiagnosticAnalysis : state.lapse1.logicDiagnosticAnalysis,
+        mathDiagnosticAnalysis: actPayl.lapse1?.mathDiagnosticAnalysis && actPayl.lapse1?.mathDiagnosticAnalysis.length ? actPayl.lapse1.mathDiagnosticAnalysis : state.lapse1.mathDiagnosticAnalysis,
+        readingDiagnosticAnalysis: actPayl.lapse1?.readingDiagnosticAnalysis && actPayl.lapse1?.readingDiagnosticAnalysis.length ? actPayl.lapse1.readingDiagnosticAnalysis : state.lapse1.readingDiagnosticAnalysis 
+      },
+      lapse2: { 
+        activities: lapse2Activities, 
+        logicDiagnosticAnalysis: actPayl.lapse2?.logicDiagnosticAnalysis && actPayl.lapse2?.logicDiagnosticAnalysis.length ? actPayl.lapse2.logicDiagnosticAnalysis : state.lapse2.logicDiagnosticAnalysis,
+        mathDiagnosticAnalysis: actPayl.lapse2?.mathDiagnosticAnalysis && actPayl.lapse2?.mathDiagnosticAnalysis.length ? actPayl.lapse2.mathDiagnosticAnalysis : state.lapse2.mathDiagnosticAnalysis,
+        readingDiagnosticAnalysis: actPayl.lapse2?.readingDiagnosticAnalysis && actPayl.lapse2?.readingDiagnosticAnalysis.length ? actPayl.lapse2.readingDiagnosticAnalysis : state.lapse2.readingDiagnosticAnalysis  
+      },
+      lapse3: { 
+        activities: lapse3Activities, 
+        logicDiagnosticAnalysis: actPayl.lapse3?.logicDiagnosticAnalysis && actPayl.lapse3?.logicDiagnosticAnalysis.length ? actPayl.lapse3.logicDiagnosticAnalysis : state.lapse3.logicDiagnosticAnalysis,
+        mathDiagnosticAnalysis: actPayl.lapse3?.mathDiagnosticAnalysis && actPayl.lapse3?.mathDiagnosticAnalysis.length ? actPayl.lapse3.mathDiagnosticAnalysis : state.lapse3.mathDiagnosticAnalysis,
+        readingDiagnosticAnalysis: actPayl.lapse3?.readingDiagnosticAnalysis && actPayl.lapse3?.readingDiagnosticAnalysis.length ? actPayl.lapse3.readingDiagnosticAnalysis : state.lapse3.readingDiagnosticAnalysis 
+      },
     };
-    ctx.setState({ /* sections,  */...action.payload, ...oldValues });
+    ctx.setState({ ...actPayl, ...oldValues, makingAction: state.makingAction });
+  }
+
+  @Action(SetFalseMakingAction)
+  setFalseMakingAction(ctx: StateContext<YearBook>) {
+    ctx.patchState({
+      makingAction: false,
+    });    
   }
 
   @Action(UpdateYearBookRequest)
@@ -219,7 +347,13 @@ export class YearBookState {
     const yearBookData = {
       ...ctx.getState(),
     };
+
+    ctx.patchState({
+      makingAction: true,
+    });
+
     delete yearBookData.approvalHistory;
+    delete yearBookData["makingAction"];
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
     // console.log("yearbook data", yearBookData);
     try {
@@ -230,6 +364,9 @@ export class YearBookState {
       this.store.dispatch([new FetchPecaContent(pecaId)]);
     } catch (error) {
       console.error(error);
+      ctx.patchState({
+        makingAction: false,
+      });
       this.toastr.error("Ha ocurrido un error", "", {
         positionClass: "toast-bottom-right",
       });
@@ -239,6 +376,9 @@ export class YearBookState {
   @Action(CancelYearBookRequest)
   async cancelYearkBookRequest(ctx: StateContext<YearBook>, action: CancelYearBookRequest) {
     const { approvalHistory } = ctx.getState();
+    ctx.patchState({
+      makingAction: true,
+    });
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${recentApprovalRequest.id}`;
     try {
@@ -252,6 +392,9 @@ export class YearBookState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
+      ctx.patchState({
+        makingAction: false,
+      });
       this.toastr.error("Ha ocurrido un error", "", {
         positionClass: "toast-bottom-right",
       });
