@@ -47,7 +47,7 @@ export function MapperYearBookWeb(
                 sectionId: id,
                 sectionGrade: grade,
                 sectionName: name,
-                image: values.inputImg,
+                image: values.inputImg && values.inputImg.length ? values.inputImg : null,
               };
               store.dispatch(new SetSectionImage(data));
             },
@@ -497,7 +497,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetHistoricalReview(data));
@@ -534,7 +534,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetSponsor(data));
@@ -571,7 +571,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetCoordinator(data));
@@ -607,7 +607,7 @@ export function MapperYearBookWeb(
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg,
+                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
                                 store.dispatch(new SetSchool(data));

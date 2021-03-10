@@ -84,6 +84,11 @@ export class SetSectionImage {
   ) {}
 }
 
+export class ClearYearBook {
+  static readonly type = "[YearBook] Clear YearBook";
+  constructor() {}
+}
+
 @State<YearBook>({
   name: "yearbooks",
   defaults: {
@@ -127,36 +132,85 @@ export class YearBookState {
     return state;
   }
 
+  @Action(ClearYearBook)
+  clearYearBook(ctx: StateContext<YearBook>) {
+    ctx.setState({
+      historicalReview: {
+        image: "",
+        content: "",
+      },
+      sponsor: {
+        name: "",
+        content: "",
+        image: "",
+      },
+      school: {
+        name: "",
+        content: "",
+        image: "",
+      },
+      coordinator: {
+        name: "",
+        content: "",
+        image: "",
+      },
+      isInApproval: false,
+      approvalHistory: [],
+      sections: [],
+      lapse1: { activities: [], diagnosticAnalysis: "" },
+      lapse2: { activities: [], diagnosticAnalysis: "" },
+      lapse3: { activities: [], diagnosticAnalysis: "" },
+    });
+  }
+
   @Action(SetYearBook)
   setYearBook(ctx: StateContext<YearBook>, action: SetYearBook) {
     const state = ctx.getState();
     const sections = state.sections ? state.sections : [];
+    console.log("HYL", action.payload);
+
+    const theSections = {};
+    sections.map( section => {
+      theSections[section.id] = {...section};
+    });
+    if (action.payload.sections && action.payload.sections.length) {
+      action.payload.sections.map( section_unit => {
+        const { id: sectionId, image } = section_unit;
+        theSections[sectionId] = {
+          ...section_unit,
+          image: image && image.length ? image : (theSections[sectionId] ? theSections[sectionId].image : "")
+        };
+      });
+    }
+
+    const sections_ = Object.keys(theSections).map( section_u => theSections[section_u] );
+
     const oldValues = {
-      // historicalReview: {
-      //   image: "",
-      //   content: "",
-      // },
-      // sponsor: {
-      //   name: "",
-      //   content: "",
-      //   image: "",
-      // },
+      historicalReview: {
+        image: action.payload.historicalReview?.image ? action.payload.historicalReview.image : state.historicalReview.image,
+        content: action.payload.historicalReview?.content ? action.payload.historicalReview.content : state.historicalReview.content,
+      },
+      sponsor: {
+        name: action.payload.sponsor?.name,
+        content: action.payload.sponsor?.content ? action.payload.sponsor.content : state.sponsor.content,
+        image: action.payload.sponsor?.image ? action.payload.sponsor.image : state.sponsor.image,
+      },
       school: {
         name: action.payload.school?.name,
         content: action.payload.school?.content ? action.payload.school.content : state.school.content,
         image: action.payload.school?.image ? action.payload.school.image : state.school.image,
       },
-      // coordinator: {
-      //   name: "",
-      //   content: "",
-      //   image: "",
-      // },
-      // sections: [],
+      coordinator: {
+        name: action.payload.coordinator?.name,
+        content: action.payload.coordinator?.content ? action.payload.coordinator.content : state.coordinator.content,
+        image: action.payload.coordinator?.image ? action.payload.coordinator.image : state.coordinator.image,
+      },
+      sections: sections_,
       // lapse1: { activities: [], diagnosticAnalysis: "" },
       // lapse2: { activities: [], diagnosticAnalysis: "" },
       // lapse3: { activities: [], diagnosticAnalysis: "" },
     };
-    ctx.setState({ sections, ...action.payload, ...oldValues });
+    ctx.setState({ /* sections,  */...action.payload, ...oldValues });
   }
 
   @Action(UpdateYearBookRequest)
@@ -354,6 +408,5 @@ export class YearBookState {
         sections: sectionsUpdated,
       })
     );
-    const nweee =  ctx.getState();
   }
 }
