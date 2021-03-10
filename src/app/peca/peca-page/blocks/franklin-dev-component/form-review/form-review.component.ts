@@ -4,6 +4,9 @@ import { FormGroup, FormControl } from "@angular/forms";
 import smartTableImageConfig from "./table-images-config.js";
 import { LocalDataSource } from "ng2-smart-table";
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { Select } from "@ngxs/store";
+import { YearBookState } from '../../../../../store/yearbook/yearbook.action';
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-form-review",
@@ -14,6 +17,8 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
   // To validate the file
   readonly pattern = /image*/;
   public msgErrorFile: boolean = false;
+
+  @Select(YearBookState.isMakingAction) makingActionSubs$: Observable<any>;
 
   type: "presentational";
   name: string;
@@ -45,6 +50,8 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       button?:
         | {
             text?: string;
+            ingAction?: string;
+            isMainBtn?: boolean;
             hidden?: boolean;
             disabled?: boolean;
           }
@@ -52,6 +59,8 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       cancelButton?:
         | {
             text?: string;
+            ingAction?: string;
+            isMainBtn?: boolean;
             hidden?: boolean;
             disabled?: boolean;
           }
@@ -62,10 +71,12 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
   tableImages: any = smartTableImageConfig;
   source: LocalDataSource = new LocalDataSource();
 
-  imgResultBeforeCompress: string;
-  sizeBeforeCompress: number;
-  imgResultAfterCompress: string;
-  sizeAfterCompress: number;
+  imgResultBeforeCompress: string | Object;
+  sizeBeforeCompress: number | Object;
+  imgResultAfterCompress: string | Object;
+  sizeAfterCompress: number | Object;
+
+  isSaving: boolean = false;
 
   constructor(private imageCompress: NgxImageCompressService) {}
 
@@ -75,26 +86,42 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
      */
   }
 
-  async compressFile(image, orientation = -2) {
-  
+  async compressFile({image, orientation = -2, isArray = false, position = 0}) {
+    const isB64 = image && image.length && image.includes(";base64,");
     // this.imageCompress.uploadFile().then(async ({ image, orientation }) => {
-      this.imgResultBeforeCompress = image;
-      this.sizeBeforeCompress = this.imageCompress.byteCount(image);
+      if (isArray) {
+        if (!this.imgResultBeforeCompress) this.imgResultBeforeCompress = {};
+        if (!this.sizeBeforeCompress) this.sizeBeforeCompress = {};
+        if (!this.imgResultAfterCompress) this.imgResultAfterCompress = {};
+        if (!this.sizeAfterCompress) this.sizeAfterCompress = {};
+
+        this.imgResultBeforeCompress[`${position}`] = image;
+        this.sizeBeforeCompress[`${position}`] = isB64 ? this.imageCompress.byteCount(image) : 0;
+      } 
+      else {
+        this.imgResultBeforeCompress = image;
+        this.sizeBeforeCompress = isB64 ? this.imageCompress.byteCount(image) : 0;
+      }
       // console.warn("Size in bytes was:", this.sizeBeforeCompress);
 
-      const s_count = this.sizeBeforeCompress;
-      if (s_count > 800000) await this.fileCompresser(image, orientation, s_count);
+      const s_count = isArray ? this.sizeBeforeCompress[`${position}`] : this.sizeBeforeCompress;
+
+      if (s_count > 800000) await this.fileCompresser({image, orientation, sizeBCompress: s_count, isArray, position, isBase64: isB64});
       else {
-        this.imgResultAfterCompress = image;
-        this.sizeAfterCompress = this.imageCompress.byteCount(image);
+        if (isArray) {
+          this.imgResultAfterCompress[`${position}`] = image;
+          this.sizeAfterCompress[`${position}`] = isB64 ? this.imageCompress.byteCount(image) : 0;
+        } 
+        else {
+          this.imgResultAfterCompress = image;
+          this.sizeAfterCompress = isB64 ? this.imageCompress.byteCount(image) : 0;
+        }
         // console.warn("Size in bytes is now:", this.sizeAfterCompress);
       }
     // });
-    
   }
 
-  async fileCompresser(image, orientation, sizeBCompress) {
-    
+  async fileCompresser({image, orientation, sizeBCompress, isArray, position, isBase64}) {
     const res = await this.imageCompress.compressFile(
       image,
       orientation,
@@ -102,16 +129,26 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       50
     );
     if (res && typeof res === "string") {
-      this.sizeAfterCompress = this.imageCompress.byteCount(res);
-      const s_count = this.sizeAfterCompress;
-      if (s_count > 800000 && s_count !== sizeBCompress) await this.fileCompresser(res, orientation, s_count);
+      if (isArray) {
+        this.sizeAfterCompress[`${position}`] = isBase64 ? this.imageCompress.byteCount(res) : 0;
+      } else {
+        this.sizeAfterCompress = isBase64 ? this.imageCompress.byteCount(res) : 0;
+      }
+      
+      const s_count = isArray ? this.sizeAfterCompress[`${position}`] : this.sizeAfterCompress;
+
+      if (s_count > 800000 && s_count !== sizeBCompress) await this.fileCompresser({image: res, orientation, sizeBCompress: s_count, isArray, position, isBase64});
       else {
-        this.imgResultAfterCompress = res;
-        this.sizeAfterCompress = this.imageCompress.byteCount(res);
+        if (isArray) {
+          this.imgResultAfterCompress[`${position}`] = res;
+          this.sizeAfterCompress[`${position}`] = isBase64 ? this.imageCompress.byteCount(res) : 0;
+        } else {
+          this.imgResultAfterCompress = res;
+          this.sizeAfterCompress = isBase64 ? this.imageCompress.byteCount(res) : 0;
+        }
         // console.warn("Size in bytes is now:", this.sizeAfterCompress);
       }
     }
-
   }
 
   public setSettings(settings: any): void {
@@ -151,8 +188,35 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
   };
 
   async onSubmitAction( values: any ) {
-    if (values && values.inputImg) await this.compressFile(values.inputImg);
-    this.settings.onSubmit(values.inputImg && values.description ? {...values, inputImg: this.imgResultAfterCompress} : values);
+    // console.log("Submit values", values);
+    this.isSaving = true;
+    let doTheArray = false;
+
+    if (values && values.inputImg) {
+      if (values.inputImg instanceof Array) {
+        doTheArray = true;
+        if (values.inputImg.length) {
+          const compressions = values.inputImg.map( async (image_, i) => await this.compressFile({image: image_, isArray: true, position: i}) );
+          await Promise.all(compressions); 
+        }
+      }
+      else if (typeof values.inputImg === "string") await this.compressFile({image: values.inputImg});
+    }
+    if (doTheArray) {
+      const theImages = this.imgResultAfterCompress && typeof this.imgResultAfterCompress ==="object" 
+        ? Object.keys(this.imgResultAfterCompress).map( img => this.imgResultAfterCompress[img] ) 
+        : [];
+
+      this.settings.onSubmit(values.inputImg && values.description ? {...values, inputImg: [...theImages]} : values);
+    }
+    else this.settings.onSubmit(
+        values.inputImg && values.description && this.imgResultAfterCompress &&
+        typeof this.imgResultAfterCompress === "string" 
+          ? {...values, inputImg: this.imgResultAfterCompress} 
+          : values
+      );
+
+    this.isSaving = false;
   }
 
   onUploadImage = (event: any) => {
@@ -198,7 +262,7 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       //  Set base 64
       // @ts-ignore
       if (this.settings.fields.inputImg.multiple) {
-        let images = this.form.get("inputImg").value;
+        let images = [...this.form.get("inputImg").value];
         images = images instanceof Array ? images : [];
         images.push(reader.result as string);
         this.form.get("inputImg").setValue(images);

@@ -1,4 +1,4 @@
-<div *ngIf="settings.chartId" [class.hide-chart]="settings.hideChart">
+<div *ngIf="settings.chartId" class="chart-graphics" [class.hide-chart]="settings.hideChart">
     <canvas [id]="settings.chartId">
         {{chart}}
     </canvas>
