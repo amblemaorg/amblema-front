@@ -1,6 +1,7 @@
-import { SetLapseActivity, SetSectionImage } from "./../../../store/yearbook/yearbook.action";
 import { Store } from "@ngxs/store";
 import {
+  SetLapseActivity, 
+  SetSectionImage,
   SetHistoricalReview,
   SetSchool,
   SetCoordinator,
@@ -10,7 +11,7 @@ import {
   SetLapseLogicAnalysis,
   UpdateYearBookRequest,
   CancelYearBookRequest,
-} from "src/app/store/yearbook/yearbook.action";
+} from "../../../store/yearbook/yearbook.action";
 
 /**
  *
@@ -32,11 +33,10 @@ export function MapperYearBookWeb(
   const lapse3Config = createLapseBlocksConfig("3", yearBookData);
 
   function createSectionsBlocksConfig(schoolSections) {
-    return schoolSections.reduce((sectionsArray, section) => {
+    const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
       const { id, grade, name } = section;
       const gradeName = `${determineGradeString(grade)}, sección ${name}`;
-      return [
-        ...sectionsArray,
+      sectionsArray[`${grade}-${name}-${id}`] = [
         createTitleComponent(gradeName),
         {
           component: "form-review",
@@ -60,6 +60,7 @@ export function MapperYearBookWeb(
               },
               button: {
                 text: "Guardar cambios",
+                ingAction: "Guardando...",
                 hidden: yearBookData.isInApproval,
               },
             },
@@ -86,7 +87,15 @@ export function MapperYearBookWeb(
           },
         },
       ];
-    }, []); // Initial sectionsArray
+      return sectionsArray;
+    }, {}); // Initial sectionsArray
+
+    const sectionsReduced = Object.keys(sectionsOrdered).sort().reduce( (theSections, section) => {
+      theSections = [ ...theSections, ...sectionsOrdered[section] ];
+      return theSections;
+    }, []);
+    
+    return sectionsReduced;
   }
 
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
@@ -180,6 +189,7 @@ export function MapperYearBookWeb(
             },
             button: {
               text: "Guardar cambios",
+              ingAction: "Guardando...",
               hidden: yearBookData.isInApproval,
             },
           },
@@ -274,6 +284,7 @@ export function MapperYearBookWeb(
             },
             button: {
               text: "Guardar cambios",
+              ingAction: "Guardando...",
               hidden: yearBookData.isInApproval,
             },
           },
@@ -368,6 +379,7 @@ export function MapperYearBookWeb(
             },
             button: {
               text: "Guardar cambios",
+              ingAction: "Guardando...",
               hidden: yearBookData.isInApproval,
             },
           },
@@ -406,7 +418,7 @@ export function MapperYearBookWeb(
                 lapse: lapseNumber,
                 activityId: id,
                 description: values.description,
-                images: values.inputImg,
+                images: values.inputImg && values.inputImg.length ? values.inputImg : [],
               };
               store.dispatch(new SetLapseActivity(data));
             },
@@ -426,6 +438,7 @@ export function MapperYearBookWeb(
               },
               button: {
                 text: "Guardar cambios",
+                ingAction: "Guardando...",
                 hidden: yearBookData.isInApproval,
               },
             },
@@ -517,6 +530,7 @@ export function MapperYearBookWeb(
                                 },
                                 button: {
                                   text: "Guardar cambios",
+                                  ingAction: "Guardando...",
                                   hidden: yearBookData.isInApproval,
                                 },
                               },
@@ -554,6 +568,7 @@ export function MapperYearBookWeb(
                                 },
                                 button: {
                                   text: "Guardar cambios",
+                                  ingAction: "Guardando...",
                                   hidden: yearBookData.isInApproval,
                                 },
                               },
@@ -591,6 +606,7 @@ export function MapperYearBookWeb(
                                 },
                                 button: {
                                   text: "Guardar cambios",
+                                  ingAction: "Guardando...",
                                   hidden: yearBookData.isInApproval,
                                 },
                               },
@@ -627,6 +643,7 @@ export function MapperYearBookWeb(
                                 },
                                 button: {
                                   text: "Guardar cambios",
+                                  ingAction: "Guardando...",
                                   hidden: yearBookData.isInApproval,
                                 },
                               },
@@ -666,10 +683,14 @@ export function MapperYearBookWeb(
                     fields: {
                       button: {
                         text: "Enviar Solicitud",
+                        ingAction: "Enviando...",
+                        isMainBtn: true,
                         hidden: yearBookData.isInApproval || !yearbook_edit,
                       },
                       cancelButton: {
                         text: "Cancelar Solicitud Previa",
+                        ingAction: "Cancelando...",
+                        isMainBtn: true,
                         hidden: !yearBookData.isInApproval || !yearbook_delete,
                       },
                     },

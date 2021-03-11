@@ -1,8 +1,5 @@
-/**
- * @author Franklin Perdomo
- */
-
 export interface YearBook {
+  makingAction?: boolean;
   historicalReview?: HistoricalReview;
   sponsor?: UserContentReview;
   school?: UserContentReview;
@@ -17,7 +14,10 @@ export interface YearBook {
 
 interface Lapse {
   activities?: Activity[];
-  diagnosticAnalysis?: string;
+  diagnosticSummary?: any[];
+  logicDiagnosticAnalysis?: string;
+  mathDiagnosticAnalysis?: string;
+  readingDiagnosticAnalysis?: string; 
 }
 
 interface Activity {
