@@ -33,11 +33,10 @@ export function MapperYearBookWeb(
   const lapse3Config = createLapseBlocksConfig("3", yearBookData);
 
   function createSectionsBlocksConfig(schoolSections) {
-    return schoolSections.reduce((sectionsArray, section) => {
+    const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
       const { id, grade, name } = section;
       const gradeName = `${determineGradeString(grade)}, sección ${name}`;
-      return [
-        ...sectionsArray,
+      sectionsArray[`${grade}-${name}-${id}`] = [
         createTitleComponent(gradeName),
         {
           component: "form-review",
@@ -88,7 +87,15 @@ export function MapperYearBookWeb(
           },
         },
       ];
-    }, []); // Initial sectionsArray
+      return sectionsArray;
+    }, {}); // Initial sectionsArray
+
+    const sectionsReduced = Object.keys(sectionsOrdered).sort().reduce( (theSections, section) => {
+      theSections = [ ...theSections, ...sectionsOrdered[section] ];
+      return theSections;
+    }, []);
+    
+    return sectionsReduced;
   }
 
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
