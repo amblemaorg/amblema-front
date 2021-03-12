@@ -123,7 +123,7 @@ export class SchoolDataPageComponent
             },
           };
           let { permissions } = peca.user;
-          this.permissions = this.managePermissions(permissions);
+          if (permissions) this.permissions = this.managePermissions(permissions);
 
           if (data.school.isInApproval) this.setCancelRequest(data.school.approvalHistory);
           else this.unsetCancelRequest();

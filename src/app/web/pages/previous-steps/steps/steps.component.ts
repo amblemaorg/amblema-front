@@ -47,6 +47,8 @@ export class StepsComponent implements OnInit, OnDestroy {
   theStates: any;
   // @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
   theMunicialities: any;
+  statesLoaded: boolean = false;
+  munsLoaded: boolean = false;
 
   stepsProgress = [0,0,0,0]; // general, sponsor, coordinator, school
   enabledTabs = false;
@@ -69,23 +71,18 @@ export class StepsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription.add(
-      this.stepsService.getStates().subscribe(({ records: res }) => {
-        this.theStates = null;
-        setTimeout(() => {
-          this.theStates = res; 
-        });
-      })
-    );
-    this.subscription.add(
-      this.stepsService.getMunicipalities().subscribe(({ records: res }) => {
-        this.theMunicialities = res;
-        const theStates_ = this.theStates && this.theStates.length ? [...this.theStates] : null;
-        setTimeout(() => {
-          this.theStates = theStates_; 
-        });
-      })
-    );
+    if (!this.munsLoaded)
+      this.subscription.add(
+        this.stepsService.getMunicipalities().subscribe(({ records: res }) => {
+          this.theMunicialities = res;
+          this.munsLoaded = true;
+          // const theStates_ = /* this.theStates && this.theStates.length ? [...this.theStates] :  */null;
+          // setTimeout(() => {
+          //   this.theStates = theStates_; 
+          // });
+          this.callStates();
+        })
+      );
     
     this.subscription.add(
       this.stepsService.enableTab.subscribe(res => {
@@ -219,6 +216,25 @@ export class StepsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.theStates = null;
     this.theMunicialities = null;
+  }
+
+  callStates() {
+    if (!this.statesLoaded)
+      this.subscription.add(
+        this.stepsService.getStates().subscribe(({ records: res }) => {
+          this.theStates = null;
+          setTimeout(() => {
+            this.theStates = res; 
+            this.statesLoaded = true;
+            this.generalStepsRef.toArray().map(tab => {
+              tab.fillResidenceInfo({
+                states: [...this.theStates],
+                municipalities: [...this.theMunicialities]
+              });
+            });
+          });
+        })
+      );
   }
 
   updateSteps(p_i) {

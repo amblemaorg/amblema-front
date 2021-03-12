@@ -87,6 +87,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   municipalities: MunicipalityInfo[] = [];
   showSelectTeacher: boolean = true;
   showSelectState: boolean = true;
+  statesLoaded: boolean = false;
+  munsLoaded: boolean = false;
   isContentRefreshing: boolean = false;
   isEditing: boolean = false;
   isInApproval: boolean; // sets to true when a request has been sent and requires approval
@@ -180,25 +182,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       })
     );
 
-    if (this.settings.formsContent["addressState"])
-      this.subscription.add(
-        /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
-          this.showSelectState = false;
-          this.settings.formsContent["addressState"].options = states;
-          setTimeout(() => {
-            this.showSelectState = true;
-          });
-        })
-      );
-
-    if (this.settings.formsContent["addressMunicipality"])
+    if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded)
       this.subscription.add(
         /* this.municipalities$ */this.stepsService.getMunicipalities().subscribe(({ records: municipalities }) => {
-          this.showSelectState = false;
+          console.log("Hey municipalities", municipalities.length);
           this.settings.formsContent["addressMunicipality"].options = municipalities;
-          setTimeout(() => {
-            this.showSelectState = true;
-          });
+          this.munsLoaded = true;
+          this.callStates();
         })
       );
 
@@ -249,6 +239,25 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.imageUrl = null;
     this.canTableSendFormData = true;
     this.max_len = null;
+  }
+
+  callStates() {
+    if (
+      this.settings.formsContent["addressState"] && !this.statesLoaded && this.componentForm && 
+      this.componentForm.value["addressMunicipality"] && this.componentForm.value["addressMunicipality"].length
+    )
+      this.subscription.add(
+        /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
+          console.log("Hey states", states.length);
+          this.showSelectState = false;
+          this.settings.formsContent["addressState"].options = states;
+          setTimeout(() => {
+            this.showSelectState = true;
+            this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
+            this.statesLoaded = true;
+          });
+        })
+      );
   }
 
   btnUpdater(val, isEdited = false) {
@@ -586,6 +595,14 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // submitting forms
   onSubmitForm(cf: FormGroup) {
     //cf: component form
+    const showErrorPassword = false/* this.settings.formType === "actualizarPadrino" || this.settings.formType === "actualizarEscuela" || this.settings.formType === "actualizarCoordinador" 
+      ? (
+          cf.value.newPassword.length || cf.value.confirmPassword.length 
+            ? (cf.value.newPassword === cf.value.confirmPassword ? false : true) 
+            : false
+        )
+      : false */;
+
     this.sendingForm = true;
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
 
@@ -708,78 +725,85 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       );
       // console.log("method: ", method, "url: ", resourcePath, "body: ", body);
 
-      this.fetcher[method](resourcePath, body).subscribe(
-        (response) => {
-          commonTasks();
-          console.log("Form response", response);
-          if (this.settings.tableCode)
-            this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+      if (showErrorPassword) {
+        this.sendingForm = false;
+        this.toastr.error("La confirmación de la contraseña no coincide", "", {
+          positionClass: "toast-bottom-right",
+        });
+      }
+      else 
+        this.fetcher[method](resourcePath, body).subscribe(
+          (response) => {
+            commonTasks();
+            console.log("Form response", response);
+            if (this.settings.tableCode)
+              this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
-          this.toastr.success("Suministrado con éxito", "", {
-            positionClass: "toast-bottom-right",
-          });
+            this.toastr.success("Suministrado con éxito", "", {
+              positionClass: "toast-bottom-right",
+            });
 
-          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
 
-          if (
-            this.settings.formType === "actualizarCoordinador" ||
-            this.settings.formType === "actualizarEscuela" ||
-            this.settings.formType === "actualizarPadrino"
-          ) {
-            //Do the consult to the endpoint which bring me the data of specific user
-            this.fetcher
-              .get(`users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`)
-              .subscribe(
-                (respuesta) => {
-                  // within the answer I send the content to the SetUser::
-                  this.store.dispatch([new SetUser(respuesta)]);
-                },
-                (error) => {
-                  console.log(error);
-                }
-              );
+            if (
+              this.settings.formType === "actualizarCoordinador" ||
+              this.settings.formType === "actualizarEscuela" ||
+              this.settings.formType === "actualizarPadrino"
+            ) {
+              //Do the consult to the endpoint which bring me the data of specific user
+              this.fetcher
+                .get(`users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`)
+                .subscribe(
+                  (respuesta) => {
+                    // within the answer I send the content to the SetUser::
+                    this.store.dispatch([new SetUser(respuesta)]);
+                  },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+            }
+          },
+          (error) => {
+            const error_msg =
+              error.error && error.error instanceof ProgressEvent
+                ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+
+            this.sendingForm = false;
+            if (this.settings.tableCode)
+              this.globals.setAsReadOnly(this.settings.tableCode, false, false);
+
+            // const errorType = (error.error && error.error["name"])
+            //   ? (this.settings.formType === "agregarGradoSeccion"
+            //     ? "section"
+            //     : "name")
+            //   : "regular";
+
+            // if (
+            //   errorType!="regular" &&
+            //   this.settings.formType === "agregarGradoSeccion"
+            // ) this.componentForm.get(errorType).setValue("");
+
+            this.toastr.error(
+              // errorType!="regular"
+              error.error && error.error["name"] && error.error["name"][0]
+                ? error.error["name"][0].msg
+                : error.error && error.error["email"] && error.error["email"][0]
+                ? error.error["email"][0].msg
+                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                ? error.error["cardId"][0].msg
+                : error.error && error.error["msg"]
+                ? error.error["msg"]
+                : error.error && error.error["message"]
+                ? error.error["message"]
+                : error_msg,
+              "",
+              { positionClass: "toast-bottom-right" }
+            );
+            console.error(error);
           }
-        },
-        (error) => {
-          const error_msg =
-            error.error && error.error instanceof ProgressEvent
-              ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
-
-          this.sendingForm = false;
-          if (this.settings.tableCode)
-            this.globals.setAsReadOnly(this.settings.tableCode, false, false);
-
-          // const errorType = (error.error && error.error["name"])
-          //   ? (this.settings.formType === "agregarGradoSeccion"
-          //     ? "section"
-          //     : "name")
-          //   : "regular";
-
-          // if (
-          //   errorType!="regular" &&
-          //   this.settings.formType === "agregarGradoSeccion"
-          // ) this.componentForm.get(errorType).setValue("");
-
-          this.toastr.error(
-            // errorType!="regular"
-            error.error && error.error["name"] && error.error["name"][0]
-              ? error.error["name"][0].msg
-              : error.error && error.error["email"] && error.error["email"][0]
-              ? error.error["email"][0].msg
-              : error.error && error.error["cardId"] && error.error["cardId"][0]
-              ? error.error["cardId"][0].msg
-              : error.error && error.error["msg"]
-              ? error.error["msg"]
-              : error.error && error.error["message"]
-              ? error.error["message"]
-              : error_msg,
-            "",
-            { positionClass: "toast-bottom-right" }
-          );
-          console.error(error);
-        }
-      );
+        );
     }
   }
 

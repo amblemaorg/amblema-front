@@ -1,12 +1,10 @@
-import { formCoordinador } from "../blocks/form-block/all-forms";
-import { formPadrino } from "../blocks/form-block/all-forms";
-import { formEscuela } from "../blocks/form-block/all-forms";
+import { formCoordinador, passwordConfs, formPadrino, formEscuela } from "../blocks/form-block/all-forms";
 
 const formSetCoordinador = {
   component: "form",
   name: "userCordinatorForm",
   settings: {
-    formsContent: formCoordinador,
+    formsContent: {...formCoordinador, ...passwordConfs},
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarCoordinador",
@@ -20,7 +18,7 @@ const formSetEscuela = {
   component: "form",
   name: "userSchoolForm",
   settings: {
-    formsContent: formEscuela,
+    formsContent: {...formEscuela, ...passwordConfs},
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarEscuela",
@@ -34,7 +32,7 @@ const formSetPadrino = {
   component: "form",
   name: "userSponsorForm",
   settings: {
-    formsContent: formPadrino,
+    formsContent: {...formPadrino, ...passwordConfs},
     buttons: ["guardar", "editar", "cancelar"],
     data: {},
     formType: "actualizarPadrino",
