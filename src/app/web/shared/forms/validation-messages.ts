@@ -6,4 +6,5 @@ export const MESSAGES = {
   NATURAL_NUMBER_MESSAGE : 'Campo inválido, ingrese sólo números positivos',
   EMAIL_MESSAGE : 'Correo electrónico inválido, ingrese formato correcto',
   PHONE_MESSAGE : 'Número telefónico inválido, ingrese sólo números',
+  PASSWORD_MESSAGE : 'No se permiten espacios, ingrese formato de contraseña correcto',
 }

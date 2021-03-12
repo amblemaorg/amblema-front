@@ -1,4 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input, 
+  Output, 
+  EventEmitter, 
+  PLATFORM_ID, 
+  Inject, 
+  ViewChildren,
+  QueryList
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { EmbedVideoService } from 'ngx-embed-video';
 import { FormBuilder } from '@angular/forms';
@@ -9,6 +19,7 @@ import { StepsService } from '../../../../../services/steps/steps.service';
 import * as $ from 'jquery';
 import { GlobalService } from '../../../../../services/global.service';
 import { DatepickerOptions } from 'ng2-datepicker';
+import { StepsFormsComponent } from '../steps-forms/steps-forms.component';
 declare var $:any;
 
 @Component({
@@ -17,6 +28,10 @@ declare var $:any;
   styleUrls: ['./general-steps.component.scss']
 })
 export class GeneralStepsComponent implements OnInit {
+  @ViewChildren('stepFormTemplate', { read: StepsFormsComponent }) stepFormTemplateRef: QueryList<
+  StepsFormsComponent
+  >;
+
   arrow = faChevronDown;
   curriculumDone:boolean;
   currentA = ''; //to set current and open accordion item
@@ -111,6 +126,11 @@ export class GeneralStepsComponent implements OnInit {
     this.timesVideoSourceCalled = 0;
   }
 
+  fillResidenceInfo(params) {
+    this.stepFormTemplateRef.toArray().map(stepForm => {
+      stepForm.setResidencialInfo(params);
+    });
+  }
 
   getVideo(url, stepId) {
     if (this.showThisVideo && this.timesVideoSourceCalled < 10 ) {

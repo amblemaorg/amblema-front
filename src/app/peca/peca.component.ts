@@ -144,7 +144,8 @@ export class PecaComponent implements OnInit, OnDestroy {
     this.store.dispatch([new UpdateStates()]);
     let activePecaId = null;
     //this.activePecaSubscription = this.activePeca$.pipe(first());
-    const { activePeca } = await this.activePeca$.pipe(first()).toPromise();
+    const forActivePeca = await this.activePeca$.pipe(first()).toPromise();
+    const { activePeca = null } = forActivePeca || {};
 
     //.subscribe(
     //  ({ activePeca }) => {
@@ -171,10 +172,12 @@ export class PecaComponent implements OnInit, OnDestroy {
     //);
 
     //this.activePecaContentSubscription = this.activePecaContent$
-    const { activePecaContent } = await this.activePecaContent$
+    const forActivePecaContent = await this.activePecaContent$
       //.pipe(take(2))
       .pipe(first())
       .toPromise();
+
+      const { activePecaContent = null } = forActivePecaContent || {};
       //.subscribe(
       //  ({ activePecaContent }) => {
           try {
