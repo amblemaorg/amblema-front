@@ -29,28 +29,32 @@ import { Injectable } from '@angular/core';
     // ACTIONS
     @Action(UpdateStates)
     UpdateStates(ctx: StateContext<ResidenceInfoStateModel>) {
-      return this.stepsService.getStates().pipe(
-        tap(res => {
-          const state = ctx.getState();
+      // return this.stepsService.getStates().pipe(
+      //   tap(res => {
+      //     const state = ctx.getState();
           ctx.setState({
-            ...state,
-            states: res.records
+            // ...state,
+            // states: res.records
+            municipalities: [],
+            states: []
           });
-        })
-      );
+      //   })
+      // );
     }
 
     @Action(UpdateMunicipalities)
     UpdateMunicipalities(ctx: StateContext<ResidenceInfoStateModel>) {
-      return this.stepsService.getMunicipalities().pipe(
-        tap(res => {
-          const state = ctx.getState();
+      // return this.stepsService.getMunicipalities().pipe(
+      //   tap(res => {
+      //     const state = ctx.getState();
           ctx.setState({
-            ...state,
-            municipalities: res.records
+            // ...state,
+            // municipalities: res.records
+            municipalities: [],
+            states: []
           });
-        })
-      );
+      //   })
+      // );
     }
 
   }

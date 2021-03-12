@@ -43,8 +43,10 @@ export class StepsComponent implements OnInit, OnDestroy {
   @Select(UserState.user_id) user_id$: Observable<string>;
   @Select(StepsState.selected_proj_id) selected_project_id$: Observable<string>;
   @Select(StepsState.all_needed) project_steps$: Observable<any>;
-  @Select(ResidenceInfoState.get_states) states$: Observable<any>;
-  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
+  // @Select(ResidenceInfoState.get_states) states$: Observable<any>;
+  theStates: any;
+  // @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
+  theMunicialities: any;
 
   stepsProgress = [0,0,0,0]; // general, sponsor, coordinator, school
   enabledTabs = false;
@@ -67,6 +69,24 @@ export class StepsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.subscription.add(
+      this.stepsService.getStates().subscribe(({ records: res }) => {
+        this.theStates = null;
+        setTimeout(() => {
+          this.theStates = res; 
+        });
+      })
+    );
+    this.subscription.add(
+      this.stepsService.getMunicipalities().subscribe(({ records: res }) => {
+        this.theMunicialities = res;
+        const theStates_ = this.theStates && this.theStates.length ? [...this.theStates] : null;
+        setTimeout(() => {
+          this.theStates = theStates_; 
+        });
+      })
+    );
+    
     this.subscription.add(
       this.stepsService.enableTab.subscribe(res => {
         this.enabledTabs = res;
@@ -197,6 +217,8 @@ export class StepsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.theStates = null;
+    this.theMunicialities = null;
   }
 
   updateSteps(p_i) {
