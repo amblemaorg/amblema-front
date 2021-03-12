@@ -159,6 +159,7 @@
           <ng-template #formOpt>
             <div *ngIf="step.type==2" class="has-form">
               <app-steps-forms
+                #stepFormTemplate
                 [who]="'coordinator'"
                 [project_id]="project_id"
                 [status]="step.status"
@@ -175,6 +176,7 @@
             </div>
             <div *ngIf="step.type==3" class="has-form">
               <app-steps-forms
+                #stepFormTemplate
                 [who]="'sponsor'"
                 [project_id]="project_id"
                 [status]="step.status"
@@ -191,6 +193,7 @@
             </div>
             <div *ngIf="step.type==4" class="has-form">
               <app-steps-forms
+                #stepFormTemplate
                 [who]="'school'"
                 [project_id]="project_id"
                 [status]="step.status"

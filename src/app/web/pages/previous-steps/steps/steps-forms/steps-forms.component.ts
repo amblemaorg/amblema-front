@@ -543,6 +543,20 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
             this.approvalHistory[this.approvalHistory.length-1].status=="3") );
   }
 
+  setResidencialInfo(params) {
+    if (params && params.states && params.states.length) {
+      this.setStates = params.states;
+      this.fillStates();
+    } 
+    if (params && params.municipalities && params.municipalities.length) {
+      this.setMuns = [];
+      setTimeout(() => {
+        this.setMuns = params.municipalities;
+        this.updateMuns(true);
+      });
+    }
+  }
+
   private fillStates() {
     this.statesData = this.setStates;
   }
@@ -557,14 +571,25 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       else if(this.who=='school') this.schoolForm.patchValue({addressMunicipality:munId});
     }
   }
-  updateMuns(){
+  updateMuns(findMunId = false){
     let currStateId = "default";
+    let currMunId = "";
 
-    if (this.who=='sponsor') currStateId = this.sponsorForm.controls['addressState'].value && this.sponsorForm.controls['addressState'].value.length>0? this.sponsorForm.controls['addressState'].value:"default";
-    else if(this.who=='coordinator') currStateId = this.coordinatorForm.controls['addressState'].value && this.coordinatorForm.controls['addressState'].value.length>0? this.coordinatorForm.controls['addressState'].value:"default";
-    else if(this.who=='school') currStateId = this.schoolForm.controls['addressState'].value && this.schoolForm.controls['addressState'].value.length>0? this.schoolForm.controls['addressState'].value:"default";
+    if (this.who=='sponsor') {
+      currStateId = this.sponsorForm.controls['addressState'].value && this.sponsorForm.controls['addressState'].value.length>0? this.sponsorForm.controls['addressState'].value:"default";
+      if (findMunId) currMunId = this.sponsorForm.controls['addressMunicipality'].value && this.sponsorForm.controls['addressMunicipality'].value.length>0? this.sponsorForm.controls['addressMunicipality'].value:"";
+    }
+    else if(this.who=='coordinator') {
+      currStateId = this.coordinatorForm.controls['addressState'].value && this.coordinatorForm.controls['addressState'].value.length>0? this.coordinatorForm.controls['addressState'].value:"default";
+      if (findMunId) currMunId = this.coordinatorForm.controls['addressMunicipality'].value && this.coordinatorForm.controls['addressMunicipality'].value.length>0? this.coordinatorForm.controls['addressMunicipality'].value:"";
+    }
+    else if(this.who=='school') {
+      currStateId = this.schoolForm.controls['addressState'].value && this.schoolForm.controls['addressState'].value.length>0? this.schoolForm.controls['addressState'].value:"default";
+      if (findMunId) currMunId = this.schoolForm.controls['addressMunicipality'].value && this.schoolForm.controls['addressMunicipality'].value.length>0? this.schoolForm.controls['addressMunicipality'].value:"";
+    }
 
-    this.fillMunicipalities(currStateId);
+    if (findMunId) this.fillMunicipalities(currStateId, currMunId);
+    else this.fillMunicipalities(currStateId);
   }
 
   onSubmitSponsor(fo) { //fo: form object
