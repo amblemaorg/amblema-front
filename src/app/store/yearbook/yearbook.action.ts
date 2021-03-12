@@ -2,7 +2,6 @@ import { ToastrService } from "ngx-toastr";
 import { State, Action, StateContext, Store, Selector } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { YearBook } from "./yearbook.model";
-import { patch } from "@ngxs/store/operators";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import { FetchPecaContent } from "../actions/peca/peca.actions";
 
@@ -157,8 +156,8 @@ export class YearBookState {
   }
 
   @Action(ClearYearBook)
-  clearYearBook(ctx: StateContext<YearBook>) {
-    ctx.setState({
+  clearYearBook({setState}: StateContext<YearBook>) {
+    setState({
       makingAction: false,
       historicalReview: {
         image: "",
@@ -204,8 +203,8 @@ export class YearBookState {
   }
 
   @Action(SetYearBook)
-  setYearBook(ctx: StateContext<YearBook>, action: SetYearBook) {
-    const state = ctx.getState();
+  setYearBook({patchState, getState}: StateContext<YearBook>, action: SetYearBook) {
+    const state = getState();
     const sections = state.sections && state.sections.length ? state.sections : [];
     const activities = {
       lapse1: state.lapse1.activities && state.lapse1.activities.length ? state.lapse1.activities : [],
@@ -331,24 +330,24 @@ export class YearBookState {
         readingDiagnosticAnalysis: actPayl.lapse3?.readingDiagnosticAnalysis && actPayl.lapse3?.readingDiagnosticAnalysis.length ? actPayl.lapse3.readingDiagnosticAnalysis : state.lapse3.readingDiagnosticAnalysis 
       },
     };
-    ctx.setState({ ...actPayl, ...oldValues, makingAction: state.makingAction });
+    patchState({ ...actPayl, ...oldValues, makingAction: state.makingAction });
   }
 
   @Action(SetFalseMakingAction)
-  setFalseMakingAction(ctx: StateContext<YearBook>) {
-    ctx.patchState({
+  setFalseMakingAction({patchState}: StateContext<YearBook>) {
+    patchState({
       makingAction: false,
     });    
   }
 
   @Action(UpdateYearBookRequest)
-  async updateYearkBookRequest(ctx: StateContext<YearBook>, action: UpdateYearBookRequest) {
+  async updateYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: UpdateYearBookRequest) {
     const { pecaId, userId } = action.payload;
     const yearBookData = {
-      ...ctx.getState(),
+      ...getState(),
     };
 
-    ctx.patchState({
+    patchState({
       makingAction: true,
     });
 
@@ -364,7 +363,7 @@ export class YearBookState {
       this.store.dispatch([new FetchPecaContent(pecaId)]);
     } catch (error) {
       console.error(error);
-      ctx.patchState({
+      patchState({
         makingAction: false,
       });
       this.toastr.error("Ha ocurrido un error", "", {
@@ -374,9 +373,9 @@ export class YearBookState {
   }
 
   @Action(CancelYearBookRequest)
-  async cancelYearkBookRequest(ctx: StateContext<YearBook>, action: CancelYearBookRequest) {
-    const { approvalHistory } = ctx.getState();
-    ctx.patchState({
+  async cancelYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: CancelYearBookRequest) {
+    const { approvalHistory } = getState();
+    patchState({
       makingAction: true,
     });
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
@@ -392,7 +391,7 @@ export class YearBookState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      ctx.patchState({
+      patchState({
         makingAction: false,
       });
       this.toastr.error("Ha ocurrido un error", "", {
@@ -402,112 +401,112 @@ export class YearBookState {
   }
 
   @Action(SetHistoricalReview)
-  setHistoricalReview(ctx: StateContext<YearBook>, action: SetHistoricalReview) {
-    const state = ctx.getState();
-    ctx.setState(
-      patch({
+  setHistoricalReview({patchState, getState}: StateContext<YearBook>, action: SetHistoricalReview) {
+    const state = getState();
+    // ctx.setState(
+      patchState({
         ...state,
         historicalReview: {
           ...state.historicalReview,
           ...action.payload,
         }, // <-- Save historical review
       })
-    );
+    // );
   }
 
   @Action(SetSponsor)
-  setSponsor(ctx: StateContext<YearBook>, action: SetSponsor) {
-    const state = ctx.getState();
-    ctx.setState(
-      patch({
+  setSponsor({patchState, getState}: StateContext<YearBook>, action: SetSponsor) {
+    const state = getState();
+    // ctx.setState(
+      patchState({
         ...state,
         sponsor: {
           ...state.sponsor,
           ...action.payload,
         },
       })
-    );
+    // );
   }
 
   @Action(SetCoordinator)
-  setCoordinator(ctx: StateContext<YearBook>, action: SetCoordinator) {
-    const state = ctx.getState();
-    ctx.setState(
-      patch({
+  setCoordinator({patchState, getState}: StateContext<YearBook>, action: SetCoordinator) {
+    const state = getState();
+    // ctx.setState(
+      patchState({
         ...state,
         coordinator: {
           ...state.coordinator,
           ...action.payload,
         },
       })
-    );
+    // );
   }
 
   @Action(SetSchool)
-  setSchool(ctx: StateContext<YearBook>, action: SetSchool) {
-    const state = ctx.getState();
-    ctx.setState(
-      patch({
+  setSchool({patchState, getState}: StateContext<YearBook>, action: SetSchool) {
+    const state = getState();
+    // ctx.setState(
+      patchState({
         ...state,
         school: {
           ...state.school,
           ...action.payload,
         },
       })
-    );
+    // );
   }
 
   @Action(SetLapseReadingAnalysis)
-  setLapseReadingAnalysis(ctx: StateContext<YearBook>, action: SetLapseReadingAnalysis) {
-    const state = ctx.getState();
+  setLapseReadingAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseReadingAnalysis) {
+    const state = getState();
     const { lapse, analysis } = action.payload;
     const lapseName = `lapse${lapse}`;
-    ctx.setState(
-      patch({
+    // ctx.setState(
+      patchState({
         ...state,
         [lapseName]: {
           ...state[lapseName],
           readingDiagnosticAnalysis: analysis,
         },
       })
-    );
+    // );
   }
 
   @Action(SetLapseMathAnalysis)
-  setLapseMathAnalysis(ctx: StateContext<YearBook>, action: SetLapseMathAnalysis) {
-    const state = ctx.getState();
+  setLapseMathAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseMathAnalysis) {
+    const state = getState();
     const { lapse, analysis } = action.payload;
     const lapseName = `lapse${lapse}`;
-    ctx.setState(
-      patch({
+    // ctx.setState(
+      patchState({
         ...state,
         [lapseName]: {
           ...state[lapseName],
           mathDiagnosticAnalysis: analysis,
         },
       })
-    );
+    // );
   }
 
   @Action(SetLapseLogicAnalysis)
-  setLapseLogicAnalysis(ctx: StateContext<YearBook>, action: SetLapseLogicAnalysis) {
-    const state = ctx.getState();
+  setLapseLogicAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseLogicAnalysis) {
+    const state = getState();
     const { lapse, analysis } = action.payload;
     const lapseName = `lapse${lapse}`;
-    ctx.setState(
-      patch({
+    // ctx.setState(
+      patchState({
         ...state,
         [lapseName]: {
           ...state[lapseName],
           logicDiagnosticAnalysis: analysis,
         },
       })
-    );
+    // );
   }
 
   @Action(SetLapseActivity)
-  setLapseActivity(ctx: StateContext<YearBook>, action: SetLapseActivity) {
-    const state = ctx.getState();
+  setLapseActivity({patchState, getState}: StateContext<YearBook>, action: SetLapseActivity) {
+    const state = getState();
     const { lapse, activityId, description, images } = action.payload;
     const lapseName = `lapse${lapse}`;
     const lapseActivitiesUpdated = state[lapseName].activities.map((activity) => {
@@ -520,20 +519,20 @@ export class YearBookState {
       }
       return activity;
     });
-    ctx.setState(
-      patch({
+    // ctx.setState(
+      patchState({
         ...state,
         [lapseName]: {
           ...state[lapseName],
           activities: lapseActivitiesUpdated,
         },
       })
-    );
+    // );
   }
 
   @Action(SetSectionImage)
-  setSectionImage(ctx: StateContext<YearBook>, action: SetSectionImage) {
-    const state = ctx.getState();
+  setSectionImage({patchState, getState}: StateContext<YearBook>, action: SetSectionImage) {
+    const state = getState();
     const { sectionId, sectionGrade, sectionName, image } = action.payload;
     const sectionsUpdated = state.sections.map((section) => {
       const { id, grade, name } = section;
@@ -545,11 +544,11 @@ export class YearBookState {
       }
       return section;
     });
-    ctx.setState(
-      patch({
+    // ctx.setState(
+      patchState({
         ...state,
         sections: sectionsUpdated,
       })
-    );
+    // );
   }
 }

@@ -52,6 +52,7 @@ import {
   specialActivityPermissionsI,
   schedulePermissionsI
 } from './peca-page/blocks/peca-permissology';
+import { UpdateStates } from '../store/actions/steps/residence-info.actions';
 
 @Component({
   selector: "app-peca",
@@ -140,6 +141,7 @@ export class PecaComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.store.dispatch([new UpdateStates()]);
     let activePecaId = null;
     //this.activePecaSubscription = this.activePeca$.pipe(first());
     const { activePeca } = await this.activePeca$.pipe(first()).toPromise();

@@ -95,6 +95,7 @@
       </div>
       <div id="sponsor" class="container tab-pane fade">
         <br />
+        <!-- states$ | async  municipalities$ | async -->
         <app-general-steps
           #generalStep
           [mode]="3"
@@ -105,14 +106,15 @@
           [project_id]="project_id"
           [user_type]="user_type$ | async"
           (callUpdate)="updateSteps($event)"
-          [setStates]="states$ | async"
-          [setMuns]="municipalities$ | async"
+          [setStates]="theStates"
+          [setMuns]="theMunicialities"
           [enableActions]="enabledTabs"
           [user_id]="user_id$ | async"
         ></app-general-steps>
       </div>
       <div id="coordinator" class="container tab-pane fade">
         <br />
+        <!-- states$ | async municipalities$ | async -->
         <app-general-steps
           #generalStep
           [mode]="2"
@@ -123,14 +125,15 @@
           [project_id]="project_id"
           [user_type]="user_type$ | async"
           (callUpdate)="updateSteps($event)"
-          [setStates]="states$ | async"
-          [setMuns]="municipalities$ | async"
+          [setStates]="theStates"
+          [setMuns]="theMunicialities"
           [enableActions]="enabledTabs"
           [user_id]="user_id$ | async"
         ></app-general-steps>
       </div>
       <div id="school" class="container tab-pane fade">
         <br />
+        <!-- states$ | async municipalities$ | async -->
         <app-general-steps
           #generalStep
           [mode]="4"
@@ -141,8 +144,8 @@
           [project_id]="project_id"
           [user_type]="user_type$ | async"
           (callUpdate)="updateSteps($event)"
-          [setStates]="states$ | async"
-          [setMuns]="municipalities$ | async"
+          [setStates]="theStates"
+          [setMuns]="theMunicialities"
           [enableActions]="enabledTabs"
           [user_id]="user_id$ | async"
         ></app-general-steps>
