@@ -16,6 +16,7 @@ import { ResidenceInfoState } from "../../../../store/states/steps/residence-inf
 import { FetchPecaContent, SetUser } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { NgDatepickerComponent, DatepickerOptions } from 'ng2-datepicker';
+import { StepsService } from '../../../../services/steps/steps.service';
 
 @Component({
   selector: "form-block",
@@ -67,8 +68,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
-  @Select(ResidenceInfoState.get_states) states$: Observable<any>;
-  @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
+  // @Select(ResidenceInfoState.get_states) states$: Observable<any>;
+  // @Select(ResidenceInfoState.get_municipalities) municipalities$: Observable<any>;
 
   private subscription: Subscription = new Subscription();
 
@@ -123,6 +124,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     private toastr: ToastrService,
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
+    private stepsService: StepsService,
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer
   ) {
     this.type = "presentational";
@@ -180,7 +182,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     if (this.settings.formsContent["addressState"])
       this.subscription.add(
-        this.states$.subscribe((states) => {
+        /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
           this.showSelectState = false;
           this.settings.formsContent["addressState"].options = states;
           setTimeout(() => {
@@ -191,8 +193,12 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     if (this.settings.formsContent["addressMunicipality"])
       this.subscription.add(
-        this.municipalities$.subscribe((municipalities) => {
+        /* this.municipalities$ */this.stepsService.getMunicipalities().subscribe(({ records: municipalities }) => {
+          this.showSelectState = false;
           this.settings.formsContent["addressMunicipality"].options = municipalities;
+          setTimeout(() => {
+            this.showSelectState = true;
+          });
         })
       );
 
