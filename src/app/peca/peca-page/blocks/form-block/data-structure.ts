@@ -6,6 +6,14 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     data: {},
   };
 
+  const shouldAddPasswordToData = false/* formType === "actualizarPadrino" || formType === "actualizarEscuela" || formType === "actualizarCoordinador" 
+    ? (
+        cf.value.newPassword.length || cf.value.confirmPassword.length 
+          ? (cf.value.newPassword === cf.value.confirmPassword ? true : false) 
+          : false
+      )
+    : false */;
+
   switch (formType) {
     case "agregarGradoSeccion": // for Datos de la Escuela view and Grados y Secciones section
       data.data = {
@@ -35,6 +43,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
+        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
       };
       break;
     case "actualizarEscuela": // for Perfil de usuario view and escuelas form
@@ -61,6 +70,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
+        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
       };
       break;
     case "actualizarCoordinador": // for Perfil de usuario view and coordinadores form
@@ -82,6 +92,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
+        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
       };
       break;
     case "agregarDocente": // for Datos de la Escuela view and Docentes section

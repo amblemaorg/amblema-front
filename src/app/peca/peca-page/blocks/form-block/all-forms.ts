@@ -129,10 +129,22 @@ import {
   onlyLettersAndNumbers,
   requiredAndSocialNetwork,
   socialNetwork,
+  password,
+  requiredAndPassword
 } from "../../../../web/shared/forms/custom-validators";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 
 const controlProps = {
+  passwordAndRequired: {
+    type: "password",
+    validations: requiredAndPassword,
+    messages: { pattern: MESSAGES.PASSWORD_MESSAGE },
+  },
+  password: {
+    type: "password",
+    validations: password,
+    messages: { pattern: MESSAGES.PASSWORD_MESSAGE },
+  },
   onlyLettersAndRequired: {
     type: "text",
     validations: requiredAndOnlyLetters,
@@ -995,6 +1007,22 @@ export const formTabsEstudiantes = {
     ],
   },
 };
+/* PASSWORD CONFS FORM */
+export const passwordConfs = {}/* {
+  titlePasswordConfs: { label: "Configuración de contraseña", type: "title" },
+  newPassword: {
+    label: "Nueva contraseña",
+    placeholder: "Nueva contraseña",
+    fullwidth: false,
+    ...controlProps.password,
+  },
+  confirmPassword: {
+    label: "Confirmación de contraseña",
+    placeholder: "Confirmación de contraseña",
+    fullwidth: false,
+    ...controlProps.password,
+  }
+} */;
 /* PERFIL DE USUARIO COORDINADOR*/
 export const formCoordinador = {
   titleName: { label: "Datos del coordinador", type: "title" },
