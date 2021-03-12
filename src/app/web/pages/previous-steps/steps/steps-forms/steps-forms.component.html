@@ -79,10 +79,11 @@
       </div>
     </div>
     <div class="form-group">
-      <!-- <input type="text" class="form-control" placeholder="Estado"> -->
       <!-- (change)="updateDataToSubmit()" -->
       <label>Estado</label>
+      <input *ngIf="setMuns && !setMuns.length" type="text" class="form-control" formControlName="addressState" [id]="mode+'-'+index+'-'+2" placeholder="Estado">
       <ng-select
+        *ngIf="setMuns && setMuns.length"
         class="form-control"
         notFoundText="Elementos no encontrados"
         [items]="statesData"
@@ -457,7 +458,9 @@
     </div>
     <div class="form-group">
       <label>Estado</label>
+      <input *ngIf="setMuns && !setMuns.length" type="text" class="form-control" formControlName="addressState" [id]="mode+'-'+index+'-'+3" placeholder="Estado">
       <ng-select
+        *ngIf="setMuns && setMuns.length"
         class="form-control"
         notFoundText="Elementos no encontrados"
         [items]="statesData"
@@ -666,10 +669,11 @@
       </div>
     </div> -->
     <div class="form-group">
-      <!-- <input type="text" class="form-control" placeholder="Estado"> -->
       <!-- (change)="updateDataToSubmit()" -->
       <label>Estado</label>
+      <input *ngIf="setMuns && !setMuns.length" type="text" class="form-control" formControlName="addressState" [id]="mode+'-'+index+'-'+1" placeholder="Estado">
       <ng-select
+        *ngIf="setMuns && setMuns.length"
         class="form-control"
         notFoundText="Elementos no encontrados"
         [items]="statesData"
