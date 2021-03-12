@@ -185,7 +185,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded)
       this.subscription.add(
         /* this.municipalities$ */this.stepsService.getMunicipalities().subscribe(({ records: municipalities }) => {
-          console.log("Hey municipalities", municipalities.length);
           this.settings.formsContent["addressMunicipality"].options = municipalities;
           this.munsLoaded = true;
           this.callStates();
@@ -248,7 +247,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     )
       this.subscription.add(
         /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
-          console.log("Hey states", states.length);
           this.showSelectState = false;
           this.settings.formsContent["addressState"].options = states;
           setTimeout(() => {
