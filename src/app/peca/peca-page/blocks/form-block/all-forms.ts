@@ -1008,7 +1008,7 @@ export const formTabsEstudiantes = {
   },
 };
 /* PASSWORD CONFS FORM */
-export const passwordConfs = {}/* {
+export const passwordConfs = {
   titlePasswordConfs: { label: "Configuración de contraseña", type: "title" },
   newPassword: {
     label: "Nueva contraseña",
@@ -1022,7 +1022,7 @@ export const passwordConfs = {}/* {
     fullwidth: false,
     ...controlProps.password,
   }
-} */;
+};
 /* PERFIL DE USUARIO COORDINADOR*/
 export const formCoordinador = {
   titleName: { label: "Datos del coordinador", type: "title" },

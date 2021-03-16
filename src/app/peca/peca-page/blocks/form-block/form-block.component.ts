@@ -593,13 +593,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // submitting forms
   onSubmitForm(cf: FormGroup) {
     //cf: component form
-    const showErrorPassword = false/* this.settings.formType === "actualizarPadrino" || this.settings.formType === "actualizarEscuela" || this.settings.formType === "actualizarCoordinador" 
+    const showErrorPassword = this.settings.formType === "actualizarPadrino" || this.settings.formType === "actualizarEscuela" || this.settings.formType === "actualizarCoordinador" 
       ? (
           cf.value.newPassword.length || cf.value.confirmPassword.length 
             ? (cf.value.newPassword === cf.value.confirmPassword ? false : true) 
             : false
         )
-      : false */;
+      : false;
 
     this.sendingForm = true;
     let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
