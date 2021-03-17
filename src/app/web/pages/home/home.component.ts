@@ -227,6 +227,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  commaRemover(leNumero) {
+    return `${leNumero}`.replace(/,/g, ".");
+  }
+
   @HostListener("window:resize", [""])
   onResize() {
     if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
