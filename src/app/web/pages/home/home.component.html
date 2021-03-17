@@ -100,7 +100,7 @@
           [duration]="0.5"
           (countoChange)="this.finalStatistics.totalSchools = $event"
         >
-          {{ this.finalStatistics.totalSchools | number: "1.0-0" }}
+          {{ commaRemover(this.finalStatistics.totalSchools | number: "1.0-0") }}
         </span>
         <span class="statistic-label">Escuelas</span>
       </div>
@@ -114,7 +114,7 @@
           [duration]="0.5"
           (countoChange)="this.finalStatistics.totalTeachers = $event"
         >
-          {{ this.finalStatistics.totalTeachers | number: "1.0-0" }}
+          {{ commaRemover(this.finalStatistics.totalTeachers | number: "1.0-0") }}
         </span>
         <span class="statistic-label">Docentes</span>
       </div>
@@ -128,7 +128,7 @@
           [duration]="0.5"
           (countoChange)="this.finalStatistics.totalStudents = $event"
         >
-          {{ this.finalStatistics.totalStudents | number: "1.0-0" }}
+          {{ commaRemover(this.finalStatistics.totalStudents | number: "1.0-0") }}
         </span>
         <span class="statistic-label">Estudiantes</span>
       </div>
@@ -142,7 +142,7 @@
           [duration]="0.5"
           (countoChange)="this.finalStatistics.totalSponsors = $event"
         >
-          {{ this.finalStatistics.totalSponsors | number: "1.0-0" }}
+          {{ commaRemover(this.finalStatistics.totalSponsors | number: "1.0-0") }}
         </span>
         <span class="statistic-label">Padrinos</span>
       </div>
@@ -159,7 +159,7 @@
           [duration]="0.5"
           (countoChange)="this.finalStatistics.totalCoordinators = $event"
         >
-          {{ this.finalStatistics.totalCoordinators | number: "1.0-0" }}
+          {{ commaRemover(this.finalStatistics.totalCoordinators | number: "1.0-0") }}
         </span>
         <span class="statistic-label">Coordinadores</span>
       </div>
