@@ -15,7 +15,11 @@
 
   span {
     color: #fff;
-    font-size: 1.5vw;
+    font-size: 4vw;
     text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+
+    @media screen and (orientation: landscape) {
+      font-size: 1.5vw;
+    }
   }
 }
