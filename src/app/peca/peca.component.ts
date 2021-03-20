@@ -280,7 +280,7 @@ export class PecaComponent implements OnInit, OnDestroy {
               ]
               .reduce(
                   (permssionsObj,viewPermission) => {
-                      permssionsObj[viewPermission] = permissions.some(p => (p === viewPermission) );
+                      if (permissions) permssionsObj[viewPermission] = permissions.some(p => (p === viewPermission) );
                       return permssionsObj
                   },
               {});
