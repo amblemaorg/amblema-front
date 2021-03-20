@@ -108,13 +108,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     maxDate: new Date(Date.now()),
     barTitleIfEmpty: 'Haga click para seleccionar una fecha',
     placeholder: 'Seleccione una fecha',
-    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addClass: 'form-control date-picker-custom', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
   // currentGrade: string; // for grades selector only
   sectionsArr: any[] = [];
+
+  isBeingUsedDateContr: boolean = false;
 
   canTableSendFormData: boolean = true;
 
@@ -169,6 +171,34 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           else this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, null);
         })
       );
+
+    if ( this.specialDateContr().makeListen ) {
+      const key_ = this.specialDateContr().key;
+
+      this.subscription.add(
+        this.componentForm.get(key_).statusChanges.subscribe((val) => {
+          if (!this.isBeingUsedDateContr) this.setDateFunc(key_);
+        })
+      );
+
+      this.subscription.add(
+        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).statusChanges.subscribe((val) => {
+          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "day");
+        })
+      );
+
+      this.subscription.add(
+        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).statusChanges.subscribe((val) => {
+          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "month");
+        })
+      );
+
+      this.subscription.add(
+        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).statusChanges.subscribe((val) => {
+          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "year");
+        })
+      );
+    }
 
     this.subscription.add(
       this.globals.passImageEmitter.subscribe((image) => {
@@ -238,6 +268,155 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.imageUrl = null;
     this.canTableSendFormData = true;
     this.max_len = null;
+    this.isBeingUsedDateContr = false;
+  }
+
+  specialDateContr(): { makeListen: boolean; key: string; } {
+    let k_= "";
+    const mL = ["date","age","dateLog"].some( key => {
+      if (this.settings.formsContent[key] && this.settings.formsContent[key]["specialDateForm"]) {
+        k_ = key;
+        return true;
+      }
+      return false;
+    });
+
+    return {
+      makeListen: mL,
+      key: k_
+    }
+  }
+
+  addZero(dN, isYear = false) {
+    const dNlen = `${dN}`.length;
+    if (isYear && dNlen < 4) {
+      const yearStrArr = `${dN}`.split("").reverse();
+      const second = yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
+      const third = yearStrArr.length > 1 ? yearStrArr[1] : "0";
+      const fourth = yearStrArr[0];
+      return "0" + second + third + fourth;
+    }
+    return dNlen > 1 ? `${dN}` : `0${dN}`;
+  };
+
+  getDates(key_) {
+    return {
+      day: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Day`].value,
+      month: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Month`].value,
+      year: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Year`].value
+    }
+  }
+
+  isValidDay(day, month, year) {
+    const now = new Date();
+    const d = new Date(`${this.addZero(year,true)}-${this.addZero(month)}-${this.addZero(day)}`);
+    const validDate = d instanceof Date && !isNaN( d.getTime() );
+    const dateChecker = validDate && new Date( `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]}` );
+    
+    return dateChecker && (dateChecker.getMonth() + 1 === month);
+  };
+
+  /**
+   * @param type string --> calendar, day, month, year
+   * @param key_ string --> the form control key
+   */
+  setDateFunc(key_, type = "calendar") {
+    this.isBeingUsedDateContr = true;
+
+    const theDate = type === "calendar" ? new Date(this.componentForm.controls[key_].value) : new Date();
+    const { day, month, year } = {
+      day: theDate.getDate(),
+      month: theDate.getMonth() + 1,
+      year: theDate.getFullYear()
+    };
+
+    const {
+      day: theDay,
+      month: theMonth,
+      year: theYear
+    } = this.getDates(key_);
+
+    if (type !== "day" && day && (type === "calendar" || !theDay) ) 
+      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(day);
+
+    if (type !== "month" && month && (type === "calendar" || !theMonth) ) 
+      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(month);
+
+    if (type !== "year" && year && (type === "calendar" || !theYear) ) 
+      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).setValue(year);
+
+    if (type !== "calendar") {
+      const {
+        day: tDay,
+        month: tMonth,
+        year: tYear
+      } = this.getDates(key_);
+      
+      let isValid = this.isValidDay(tDay, tMonth, tYear);
+
+      const theWholeDate: string = `${this.addZero(tYear,true)}-${this.addZero(isValid ? tMonth : (tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) ) )}-${this.addZero(isValid ? tDay : 1)}`;
+
+      this.componentForm.get(key_).setValue(theWholeDate);
+
+      if (!isValid) {
+        if (tMonth && tDay) this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(1);
+        if (tDay && tMonth) this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) );
+      }
+    }
+    
+    this.isBeingUsedDateContr = false;
+  }
+
+  dateOnBlur(e, datePart: string) {
+    if (
+      !e || 
+      (
+        e && 
+        (
+          !e.target || 
+          (e.target && !e.target.value) || 
+          (e.target && e.target.value && !e.target.value.length) 
+        ) 
+      ) 
+    ) {
+      this.isBeingUsedDateContr = true;
+
+      const key_ = this.specialDateContr().key;
+  
+      const {
+        day: fDay,
+        month: fMonth,
+        year: fYear
+      } = this.getDates(key_);
+  
+      let isValid = this.isValidDay(fDay, fMonth, fYear);
+      console.log("1", isValid);
+  
+      if (!isValid) {
+        if (datePart === "day") this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(1);
+        if (datePart === "month") this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(1);
+      }
+
+      if (datePart === "year") {
+        const now = new Date();
+        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).setValue( now.getFullYear() );
+      }
+
+      const {
+        day: lDay,
+        month: lMonth,
+        year: lYear
+      } = this.getDates(key_);
+
+      isValid = this.isValidDay(lDay, lMonth, lYear);
+
+      if (isValid) {
+        const theWholeDate: string = `${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
+        this.componentForm.get(key_).setValue(theWholeDate);
+      }
+
+      this.isBeingUsedDateContr = false; 
+    }
   }
 
   callStates() {
@@ -508,7 +687,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     }
   ): object {
     let defaultValue = name === "imageSelected" || name === "imageSrc" ? null : "";
-
     // adding form control to Image or Document Group, when the form has images or Identification document to be added
     if (name === "imageGroup" || name === "documentGroup") {
       let itemGroupContent = Object.keys(this.settings.formsContent[name].fields);
@@ -520,16 +698,26 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
       return formControls;
     } else {
+      const isSpecialDate = params && params["specialDateForm"];
+      let formControlStruct = {};
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
       if (
         isNullOrUndefined(params.validations) ||
         (Object.keys(params.validations).length === 1 && !params.validations["required"])
       )
-        return { [name]: [defaultValue] };
+        formControlStruct = { [name]: [defaultValue] };
       else
-        return {
-          [name]: [defaultValue, this.getValidators(params.validations)],
-        };
+        formControlStruct = { [name]: [defaultValue, this.getValidators(params.validations)] };
+
+      return {
+        ...formControlStruct,
+        ...(isSpecialDate ? {
+          [isSpecialDate+"Day"]: [null],
+          [isSpecialDate+"Month"]: [null],
+          [isSpecialDate+"Year"]: [null],
+          [isSpecialDate+"InactiveInput"]: [null],
+        } : {})
+      };
     }
   }
 
@@ -896,6 +1084,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     return shouldDis || !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
   }
 
+  disableBtnWithDate() {
+    return !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
+  }
+
   // CHECKS IF THE CURRENT FORMcONTENT ITEM IS FOR PRINTING A FIELD (TRUE), FALSE --> IMAGE_GROUP || TITLE
   isField(field) {
     return (
@@ -1090,49 +1282,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
   //? -----------------------------------------------------------------------------------
 
-  // searchAndFillTable() {
-  //   let obj = {
-  //     code: this.settings.tableCode,
-  //     dataArr: [],
-  //     resetData: true,
-  //     action: "add"
-  //   };
-
-  //   switch (this.settings.formType) {
-  //     case "buscarEstudiante":
-  //       obj.dataArr = [
-  //         {
-  //           name: "Name 1",
-  //           lastName: "Lastname 1",
-  //           doc: "123456789",
-  //           sex: "Femenino",
-  //           age: "11"
-  //         },
-  //         {
-  //           name: "Name 2",
-  //           lastName: "Lastname 2",
-  //           doc: "123456789",
-  //           sex: "Masculino",
-  //           age: "13"
-  //         },
-  //         {
-  //           name: "Name 3",
-  //           lastName: "Lastname 3",
-  //           doc: "123456789",
-  //           sex: "Femenino",
-  //           age: "12"
-  //         }
-  //       ];
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  //   this.globals.tableDataUpdater(obj);
-  //   this.componentForm.reset();
-  // }
-
   // setting inputs data
   setAllFields(data) {
     const dataKeys = Object.keys(data);
@@ -1152,8 +1301,20 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           // if 'Z' comes in the date format it gets removed
           if (data[key]) {
             //console.log("key", data[key])
+            const isSpecialDate = this.settings.formsContent && this.settings.formsContent[key] && this.settings.formsContent[key]["specialDateForm"];
             const dateKey = this.globals.getDateFormat(new Date(data[key].replace("Z", "")));
-            this.componentForm.patchValue({ [key]: dateKey });
+            const dNow = new Date();
+            const theDate = new Date(`${dateKey}T${dNow.toISOString().split("T")[1]}`);
+
+            this.componentForm.patchValue({ 
+              [key]: dateKey,
+              ...(isSpecialDate ? {
+                [isSpecialDate+"Day"]: theDate.getDate(),
+                [isSpecialDate+"Month"]: theDate.getMonth() + 1,
+                [isSpecialDate+"Year"]: theDate.getFullYear(),
+                [isSpecialDate+"InactiveInput"]: `${this.addZero(theDate.getDate())}-${this.addZero(theDate.getMonth() + 1)}-${theDate.getFullYear()}`,
+              } : {})
+            });
             this.checkDateOk(
               dateKey,
               this.settings.formsContent[key]["lower"] ? "lower" : "greater",
