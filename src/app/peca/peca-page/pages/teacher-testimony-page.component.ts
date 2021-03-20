@@ -80,7 +80,7 @@ export class TeacherTestimonyPageComponent
   managePermissions(permissionsArray) {
     return teacherTestimonialPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

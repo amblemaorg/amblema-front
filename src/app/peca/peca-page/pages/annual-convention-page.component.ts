@@ -84,7 +84,7 @@ export class AnnualConventionPageComponent
   managePermissions(permissionsArray) {
     return annualConventionPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

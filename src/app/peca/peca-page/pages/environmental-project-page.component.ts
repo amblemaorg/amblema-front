@@ -67,7 +67,7 @@ export class EnvironmentalProjectPageComponent
   managePermissions(permissionsArray) {
     return environmentalProjectPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}
