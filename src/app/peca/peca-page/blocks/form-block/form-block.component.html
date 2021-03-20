@@ -135,7 +135,61 @@
           <ng-container *ngSwitchCase="'date'">
             <label>{{ settings.formsContent[field].label }}</label>
             <div *ngIf="showDatePicker" class="date-container">
+              <div class="date-part-container" style="
+                  display: flex;
+                  align-items: center;
+              ">
+                  <ng-container *ngIf="!sendingForm && (settings.formsContent[field].readonly || isReadOnly()); else newDateInputs">
+                    <div class="inactive-wrapper">
+                      <input
+                      [formControlName]="settings.formsContent[field].specialDateForm+'InactiveInput'"
+                      class="form-control" 
+                      [placeholder]="settings.formsContent[field].placeholder" 
+                      autocomplete="off" 
+                      type="text" 
+                      [id]="getId(field+'-part-inactive')"
+                      readonly
+                    />
+                    </div>
+                  </ng-container>
+                  <ng-template #newDateInputs>
+                    <input 
+                      [formControlName]="settings.formsContent[field].specialDateForm+'Day'"
+                      class="form-control day" placeholder="Día" autocomplete="off" type="number" [id]="getId(field+'-part-day')" max="31" min="1"
+                      (blur)="dateOnBlur($event,'day')"
+                      [readonly]="
+                        settings.formsContent[field].readonly || isReadOnly()
+                      "
+                    />
+                    <input 
+                      [formControlName]="settings.formsContent[field].specialDateForm+'Month'"
+                      class="form-control month" placeholder="Mes" autocomplete="off" type="number" [id]="getId(field+'-part-month')" max="12" min="1"
+                      (blur)="dateOnBlur($event,'month')"
+                      [readonly]="
+                        settings.formsContent[field].readonly || isReadOnly()
+                      "
+                    />
+                    <input 
+                      [formControlName]="settings.formsContent[field].specialDateForm+'Year'"
+                      class="form-control year" placeholder="Año" autocomplete="off" type="number" [id]="getId(field+'-part-year')" min="1"
+                      (blur)="dateOnBlur($event,'year')"
+                      [readonly]="
+                        settings.formsContent[field].readonly || isReadOnly()
+                      "
+                    />
+                    <div class="calendaricon">
+                      <nb-icon
+                        icon="calendar"
+                        style="font-size: 1.5rem;"
+                      ></nb-icon>
+                    </div>
+                  </ng-template>
+              </div>
             <ng-datepicker #inputDate
+              [headless]="
+                settings.formsContent[field].readonly || isReadOnly()
+              "
+              position="bottom-left"
               [id]="getId('datepicker-' + field)"
               class="datepicker-control"
               [formControlName]="field"
@@ -536,7 +590,7 @@
           <button
             type="submit"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
-            [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
+            [disabled]="disableBtnWithDate()"
             *ngIf="!settings.hiddenButton"
           >
             <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>

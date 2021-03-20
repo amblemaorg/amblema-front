@@ -96,6 +96,7 @@ export class InitialDiagnosticPageComponent
           }
           this.students = auxStudents;
           if (!isNullOrUndefined(data)) {
+            console.log(data.user);
             let { permissions } = data.user;
             permissions = this.managePermissions(permissions);
             this.setReadingTableData(
@@ -213,7 +214,7 @@ export class InitialDiagnosticPageComponent
   managePermissions(permissionsArray) {
     return diagnosticsPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

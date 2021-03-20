@@ -13,9 +13,11 @@ import { ModalService } from "src/app/services/modal.service";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { WebContentService } from "src/app/services/web/web-content.service";
 import { environment } from "src/environments/environment";
-import { Store } from "@ngxs/store";
+import { Store, Select } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
+import { WebState } from '../../../../store/states/web/web.state';
+import { Observable } from "rxjs";
 const DISMISS = "0";
 const ACCEPT = "1";
 
@@ -29,6 +31,8 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   modal: TemplateRef<any>;
   @ViewChild("mapWrapper", { read: ElementRef, static: false })
   gmap: ElementRef;
+
+  @Select(WebState.getIsLoadingSchoolMarkers) isItLoading$: Observable<any>;
 
   map: google.maps.Map;
   lat = 8.14893; // Venezuela's middle latitude
@@ -113,6 +117,7 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   }
 
   getSchoolsPageData() {
+    this.store.dispatch([new SetIsLoadingPage("true")]);
     this.schoolService.getWebContent().subscribe((data) => {
       //console.log(data);
       this.schoolsList = data.records.map((school) => {
@@ -124,7 +129,7 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
         };
       });
       this.loadAllMarkers();
-      this.store.dispatch([new SetIsLoadingPage(false)]);
+      this.store.dispatch([new SetIsLoadingPage("false")]);
     });
   }
 }

@@ -6,13 +6,13 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     data: {},
   };
 
-  const shouldAddPasswordToData = false/* formType === "actualizarPadrino" || formType === "actualizarEscuela" || formType === "actualizarCoordinador" 
+  const shouldAddPasswordToData = formType === "actualizarPadrino" || formType === "actualizarEscuela" || formType === "actualizarCoordinador" 
     ? (
         cf.value.newPassword.length || cf.value.confirmPassword.length 
           ? (cf.value.newPassword === cf.value.confirmPassword ? true : false) 
           : false
       )
-    : false */;
+    : false;
 
   switch (formType) {
     case "agregarGradoSeccion": // for Datos de la Escuela view and Grados y Secciones section

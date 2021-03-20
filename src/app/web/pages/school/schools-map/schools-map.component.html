@@ -1,4 +1,7 @@
 <div #mapWrapper id="map"></div>
+<div *ngIf="(isItLoading$ | async) && !hadNotAcceptedModal()" id="school-overlay-loading">
+  <span>Cargando información de escuelas...</span>
+</div>
 <ng-template #content let-modal>
   <div class="modal-header">
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">

@@ -244,6 +244,23 @@
         .date-container {
             width: 100%;
             position: relative;
+
+            .date-part-container {
+              display: flex;
+              align-items: center;
+
+              .inactive-wrapper {
+                width: 100%;
+              }
+
+              .calendaricon {
+                margin-left: 0.5rem;
+
+                .icon-calendar:before {
+                  color: $blue;
+                }
+              }
+            }
         }
 
         .error-message, .date-error-message {
@@ -302,6 +319,33 @@
       .datepicker-control {
         color: #615a5a;
         font-size: 0.8rem;
+
+        &.datepicker-control {
+          position: absolute;
+          top: 0;
+          overflow-y: hidden;
+          overflow: visible;
+          right: -5px;
+          width: 1.5rem;
+
+          .date-picker-custom {
+            opacity: 0;
+          }
+        }
+        &.day {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-right: 0;
+        }
+        &.month {
+          border-radius: 0;
+        }
+        &.year {
+          width: 150%;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-left: 0;
+        }
 
         // &[readonly].form-control-date {
         &.is-date-input-placeholder.form-control-date {

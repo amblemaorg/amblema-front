@@ -292,6 +292,7 @@ export const sampleFormData = {
     label: "Input date",
     placeholder: "Input date",
     fullwidth: false,
+    specialDateForm: "dateForSample",
     ...controlProps.dateAndRequired,
   },
   addressState: {
@@ -500,6 +501,7 @@ export const formPreparacionTallerInicial = {
     label: "Fecha del taller",
     placeholder: "Fecha del taller",
     fullwidth: false,
+    specialDateForm: "dateForInitialWorkshop",
     ...controlProps.dateAndRequired,
   },
 };
@@ -994,6 +996,7 @@ export const formTabsEstudiantes = {
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,
+    specialDateForm: "dateForStudent",
     ...controlProps.dateAndRequired,
   },
   gender: {
@@ -1008,7 +1011,7 @@ export const formTabsEstudiantes = {
   },
 };
 /* PASSWORD CONFS FORM */
-export const passwordConfs = {}/* {
+export const passwordConfs = {
   titlePasswordConfs: { label: "Configuración de contraseña", type: "title" },
   newPassword: {
     label: "Nueva contraseña",
@@ -1022,7 +1025,7 @@ export const passwordConfs = {}/* {
     fullwidth: false,
     ...controlProps.password,
   }
-} */;
+};
 /* PERFIL DE USUARIO COORDINADOR*/
 export const formCoordinador = {
   titleName: { label: "Datos del coordinador", type: "title" },
@@ -1084,6 +1087,7 @@ export const formCoordinador = {
     label: "Fecha de nacimiento",
     placeholder: "Fecha de nacimiento",
     fullwidth: false,
+    specialDateForm: "dateForUserCoordinator",
     ...controlProps.dateAndRequired,
   },
   sexo: {
@@ -1528,6 +1532,7 @@ export const formLecturaModal = {
     fullwidth: false,
     readonly: true,
     lower: true,
+    specialDateForm: "dateForInitialDiagnostic",
     ...controlProps.date
   }, */
   result: {
@@ -1598,6 +1603,7 @@ export const formMatematicaModal = {
     fullwidth: false,
     readonly: true,
     lower: true,
+    specialDateForm: "dateForMathModal",
     ...controlProps.dateAndRequired
   }, */
   resultMul: {
@@ -1612,6 +1618,7 @@ export const formMatematicaModal = {
     fullwidth: false,
     readonly: true,
     lower: true,
+    specialDateForm: "dateForMathModalLog",
     ...controlProps.dateAndRequired
   }, */
   resultLog: {
