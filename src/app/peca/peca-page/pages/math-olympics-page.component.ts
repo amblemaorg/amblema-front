@@ -112,7 +112,7 @@ export class MathOlympicsPageComponent
   managePermissions(permissionsArray) {
     return olympicsPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

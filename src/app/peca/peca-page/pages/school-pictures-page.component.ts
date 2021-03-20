@@ -67,7 +67,7 @@ export class SchoolPicturesPageComponent extends PecaPageComponent implements On
   managePermissions(permissionsArray) {
     return sliderActivitiesPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}
