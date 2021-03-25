@@ -29,8 +29,8 @@ export function teachersDataToTeachersTableMapper(teachersData) {
         prependInput: cardId,
       },
       phone,
-      addressState: addressState.id,
-     addressMunicipality: addressMunicipality.id,
+      addressState: typeof addressState === "string" ? addressState : addressState.id,
+      addressMunicipality: typeof addressMunicipality === "string" ? addressMunicipality : addressMunicipality.id,
       street: address,
       city: addressCity,
     };

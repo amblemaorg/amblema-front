@@ -78,6 +78,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   doubleFields = {};
   sendingForm: boolean;
   glbls: any;
+  stps: any;
   showDatePicker: boolean = true;
   max_len: number;
 
@@ -117,7 +118,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   sectionsArr: any[] = [];
 
   isBeingUsedDateContr: boolean = false;
-
+  // fetchingResidenceInfo: boolean = false;
   canTableSendFormData: boolean = true;
 
   formInitialVals: object = {};
@@ -134,12 +135,34 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.type = "presentational";
     this.component = "form";
     this.glbls = globals;
+    this.stps = stepsService;
   }
 
   ngOnInit() {
     this.subscription.add(
       this.pecaId$.subscribe((peca_id) => {
         this.pecaId = peca_id;
+      })
+    );
+
+    this.subscription.add(
+      this.stepsService.residenceInfoEmitter.subscribe((bool) => {
+        if (
+          bool && 
+          this.settings.formsContent["addressMunicipality"] && 
+          this.settings.formsContent["addressState"]
+        ) {
+          this.showSelectState = false;
+          this.settings.formsContent["addressMunicipality"].options = this.stepsService.getResidenceMuns();
+          this.settings.formsContent["addressState"].options = this.stepsService.getResidenceStates();
+          
+          setTimeout(() => {
+            this.showSelectState = true; 
+            this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
+            this.munsLoaded = true;
+            this.statesLoaded = true;
+          });
+        }
       })
     );
 
@@ -212,14 +235,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       })
     );
 
-    if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded)
-      this.subscription.add(
-        /* this.municipalities$ */this.stepsService.getMunicipalities().subscribe(({ records: municipalities }) => {
-          this.settings.formsContent["addressMunicipality"].options = municipalities;
-          this.munsLoaded = true;
-          this.callStates();
-        })
-      );
+    // if (!this.stepsService.getIsCallingM()/* !this.fetchingResidenceInfo */ && this.settings.formsContent["addressMunicipality"] && !this.munsLoaded) 
+    //   this.callMuns();
+    if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded) 
+      this.stepsService.callMuns();
 
     this.subscription.add(
       this.globals.sendFormDataToBtnEmitter.subscribe((arr) => {
@@ -269,6 +288,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.canTableSendFormData = true;
     this.max_len = null;
     this.isBeingUsedDateContr = false;
+    // this.fetchingResidenceInfo = false;
   }
 
   specialDateContr(): { makeListen: boolean; key: string; } {
@@ -419,23 +439,74 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     }
   }
 
-  callStates() {
-    if (
-      this.settings.formsContent["addressState"] && !this.statesLoaded && this.componentForm && 
-      this.componentForm.value["addressMunicipality"] && this.componentForm.value["addressMunicipality"].length
-    )
-      this.subscription.add(
-        /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
-          this.showSelectState = false;
-          this.settings.formsContent["addressState"].options = states;
-          setTimeout(() => {
-            this.showSelectState = true;
-            this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
-            this.statesLoaded = true;
-          });
-        })
-      );
+  // callStates() {
+  //   if (
+  //     this.settings.formsContent["addressState"] && !this.statesLoaded && this.componentForm && 
+  //     this.componentForm.value["addressMunicipality"] && this.componentForm.value["addressMunicipality"].length
+  //   ) {
+  //     const upStates = (states_all, isFetched) => {
+  //       this.showSelectState = false;
+  //       if (isFetched) this.stepsService.setResidenceStates([...states_all]);
+  //       this.settings.formsContent["addressState"].options = states_all;
+  //       setTimeout(() => {
+  //         // this.fetchingResidenceInfo = false;
+  //         this.stepsService.setIsCallingM(false);
+  //         console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
+  //         this.showSelectState = true;
+  //         this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
+  //         this.statesLoaded = true;
+  //       });
+  //     };
+
+  //     const states_ = this.stepsService.getResidenceStates();
+  //     if (states_ && states_.length) upStates(states_,false);
+  //     else
+  //       this.subscription.add(
+  //         /* this.states$ */this.stepsService.getStates().subscribe(({ records: states }) => {
+  //           upStates(states,true);
+  //         }, error => {
+  //           // this.fetchingResidenceInfo = false;
+  //           this.stepsService.setIsCallingM(false);
+  //           console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
+  //         })
+  //       );
+  //   }
+  // }
+
+  callTheMuns(makeCall = true) {
+    if (makeCall) {
+      this.stepsService.callMuns(true);
+    }
   }
+
+  // callMuns(makeCall = true) {
+  //   if (makeCall) {
+  //     // this.fetchingResidenceInfo = true;
+  //     this.stepsService.setIsCallingM(true);
+
+  //     const upMuns = (muns_, isFetched) => {
+  //       if (isFetched) this.stepsService.setResidenceMuns([...muns_]);
+  //       setTimeout(() => {
+  //         this.settings.formsContent["addressMunicipality"].options = muns_;
+  //         this.munsLoaded = true;
+  //         this.callStates();
+  //       });
+  //     };
+
+  //     const muns = this.stepsService.getResidenceMuns();
+  //     if (muns && muns.length) upMuns(muns,false);
+  //     else
+  //       this.subscription.add(
+  //         /* this.municipalities$ */this.stepsService.getMunicipalities().subscribe(({ records: municipalities }) => {
+  //           upMuns(municipalities,true);
+  //         }, error => {
+  //           // this.fetchingResidenceInfo = false;
+  //           this.stepsService.setIsCallingM(false);
+  //           console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
+  //         })
+  //       ); 
+  //   }
+  // }
 
   btnUpdater(val, isEdited = false) {
     if (this.settings.buttonCode && isEdited) this.canTableSendFormData = false;
@@ -1262,7 +1333,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       // this.sendNull = false;
       this.someImgAdded = true;
       this.componentForm.get("imageGroup").reset();
-      this.componentForm.get("imageGroup").get("imageDescription").setValue("");
+      if (this.componentForm.value["imageGroup"] && this.componentForm.controls["imageGroup"].value["imageDescription"]) 
+        this.componentForm.get("imageGroup").get("imageDescription").setValue("");
       // setTimeout(() => {
       //   this.sendNull = true;
       // });
