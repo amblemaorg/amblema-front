@@ -32,6 +32,24 @@ export function MapperYearBookWeb(
   const lapse2Config = createLapseBlocksConfig("2", yearBookData);
   const lapse3Config = createLapseBlocksConfig("3", yearBookData);
 
+  function getRequestId() {
+    const theRequest = yearBookData["approvalHistory"] && yearBookData["approvalHistory"] instanceof Array && yearBookData["approvalHistory"].length ? yearBookData["approvalHistory"] : null;
+    return theRequest && theRequest[theRequest.length - 1].status === "1" ? theRequest[theRequest.length - 1].id : null;
+  }
+
+  function dispatchAction(section: string, data) {
+    const requestId = getRequestId();
+    const data_ = {
+      pecaId: yearBookData.pecaId,
+      userId: yearBookData.userId,
+      section: section,
+      partial: data,
+      data: yearBookData,
+      requestId: requestId,
+    };
+    store.dispatch(new UpdateYearBookRequest(data_));
+  }
+
   function createSectionsBlocksConfig(schoolSections) {
     const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
       const { id, grade, name } = section;
@@ -56,12 +74,12 @@ export function MapperYearBookWeb(
                 name: `grade${grade}-section${name}-image`,
                 label: "Carga de imagen",
                 value: section.image,
-                disabled: yearBookData.isInApproval,
+                disabled: /* yearBookData.isInApproval */false,
               },
               button: {
                 text: "Guardar cambios",
                 ingAction: "Guardando...",
-                hidden: yearBookData.isInApproval,
+                hidden: /* yearBookData.isInApproval */false,
               },
             },
           },
@@ -185,12 +203,12 @@ export function MapperYearBookWeb(
               label: "Análisis del diagnóstico de lectura",
               placeholder: "Análisis del diagnóstico de lectura",
               value: lapseData.readingDiagnosticAnalysis,
-              disabled: yearBookData.isInApproval,
+              disabled: /* yearBookData.isInApproval */false,
             },
             button: {
               text: "Guardar cambios",
               ingAction: "Guardando...",
-              hidden: yearBookData.isInApproval,
+              hidden: /* yearBookData.isInApproval */false,
             },
           },
         },
@@ -280,12 +298,12 @@ export function MapperYearBookWeb(
               label: "Análisis del diagnóstico de multiplicación",
               placeholder: "Análisis del diagnóstico de multiplicación",
               value: lapseData.mathDiagnosticAnalysis,
-              disabled: yearBookData.isInApproval,
+              disabled: /* yearBookData.isInApproval */false,
             },
             button: {
               text: "Guardar cambios",
               ingAction: "Guardando...",
-              hidden: yearBookData.isInApproval,
+              hidden: /* yearBookData.isInApproval */false,
             },
           },
         },
@@ -375,12 +393,12 @@ export function MapperYearBookWeb(
               label: "Análisis del diagnóstico de lógica matemática",
               placeholder: "Análisis del diagnóstico de lógica matemática",
               value: lapseData.logicDiagnosticAnalysis,
-              disabled: yearBookData.isInApproval,
+              disabled: /* yearBookData.isInApproval */false,
             },
             button: {
               text: "Guardar cambios",
               ingAction: "Guardando...",
-              hidden: yearBookData.isInApproval,
+              hidden: /* yearBookData.isInApproval */false,
             },
           },
         },
@@ -426,20 +444,20 @@ export function MapperYearBookWeb(
               inputImg: {
                 name: `${lapseName}-${id}-images`,
                 label: `Cargar de imágenes de ${name}`,
-                disabled: yearBookData.isInApproval,
+                disabled: /* yearBookData.isInApproval */false,
                 value: images,
                 multiple: true,
               },
               description: {
                 label: `Descripción de ${name}`,
                 placeholder: `Descripción de ${name}`,
-                disabled: yearBookData.isInApproval,
+                disabled: /* yearBookData.isInApproval */false,
                 value: description,
               },
               button: {
                 text: "Guardar cambios",
                 ingAction: "Guardando...",
-                hidden: yearBookData.isInApproval,
+                hidden: /* yearBookData.isInApproval */false,
               },
             },
           },
@@ -513,25 +531,28 @@ export function MapperYearBookWeb(
                                   image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
-                                store.dispatch(new SetHistoricalReview(data));
+                                
+                                // store.dispatch(new SetHistoricalReview(data));
+                                //
+                                dispatchAction("historicalReview",data);
                               },
                               fields: {
                                 inputImg: {
                                   name: "historical-review-image",
                                   label: "Carga de imagen",
                                   value: yearBookData.historicalReview.image,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 description: {
                                   label: "Descripción reseña histórica",
                                   placeholder: "Descripción reseña histórica",
                                   value: yearBookData.historicalReview.content,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 button: {
                                   text: "Guardar cambios",
                                   ingAction: "Guardando...",
-                                  hidden: yearBookData.isInApproval,
+                                  hidden: /* yearBookData.isInApproval */false,
                                 },
                               },
                             },
@@ -551,25 +572,26 @@ export function MapperYearBookWeb(
                                   image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
-                                store.dispatch(new SetSponsor(data));
+                                // store.dispatch(new SetSponsor(data));
+                                dispatchAction("sponsor",data);
                               },
                               fields: {
                                 inputImg: {
                                   name: "sponsor-image",
                                   label: "Carga de imagen",
                                   value: yearBookData.sponsor.image,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 description: {
                                   label: "Descripción de padrino",
                                   placeholder: "Descripción de padrino",
                                   value: yearBookData.sponsor.content,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 button: {
                                   text: "Guardar cambios",
                                   ingAction: "Guardando...",
-                                  hidden: yearBookData.isInApproval,
+                                  hidden: /* yearBookData.isInApproval */false,
                                 },
                               },
                             },
@@ -589,25 +611,26 @@ export function MapperYearBookWeb(
                                   image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
-                                store.dispatch(new SetCoordinator(data));
+                                // store.dispatch(new SetCoordinator(data));
+                                dispatchAction("coordinator",data);
                               },
                               fields: {
                                 inputImg: {
                                   name: "coordinator-image",
                                   label: "Carga de imagen",
                                   value: yearBookData.coordinator.image,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 description: {
                                   label: "Descripción de coordinador",
                                   placeholder: "Descripción de coordinador",
                                   value: yearBookData.coordinator.content,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 button: {
                                   text: "Guardar cambios",
                                   ingAction: "Guardando...",
-                                  hidden: yearBookData.isInApproval,
+                                  hidden: /* yearBookData.isInApproval */false,
                                 },
                               },
                             },
@@ -626,25 +649,26 @@ export function MapperYearBookWeb(
                                   image: values.inputImg && values.inputImg.length ? values.inputImg : null,
                                   content: values.description,
                                 };
-                                store.dispatch(new SetSchool(data));
+                                // store.dispatch(new SetSchool(data));
+                                dispatchAction("school",data);
                               },
                               fields: {
                                 inputImg: {
                                   name: "school-image",
                                   label: "Carga de imagen",
                                   value: yearBookData.school.image,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 description: {
                                   label: "Descripción de escuela",
                                   placeholder: "Descripción de escuela",
                                   value: yearBookData.school.content,
-                                  disabled: yearBookData.isInApproval,
+                                  disabled: /* yearBookData.isInApproval */false,
                                 },
                                 button: {
                                   text: "Guardar cambios",
                                   ingAction: "Guardando...",
-                                  hidden: yearBookData.isInApproval,
+                                  hidden: /* yearBookData.isInApproval */false,
                                 },
                               },
                             },
@@ -675,17 +699,17 @@ export function MapperYearBookWeb(
                         pecaId: yearBookData.pecaId,
                         userId: yearBookData.userId,
                       };
-                      store.dispatch(new UpdateYearBookRequest(data));
+                      // store.dispatch(new UpdateYearBookRequest(data));
                     },
                     onCancel: () => {
-                      store.dispatch(new CancelYearBookRequest({ pecaId: yearBookData.pecaId }));
+                      store.dispatch(new CancelYearBookRequest({ pecaId: yearBookData.pecaId, approvalHistory: yearBookData.approvalHistory }));
                     },
                     fields: {
                       button: {
                         text: "Enviar Solicitud",
                         ingAction: "Enviando...",
                         isMainBtn: true,
-                        hidden: yearBookData.isInApproval || !yearbook_edit,
+                        hidden: /* yearBookData.isInApproval || !yearbook_edit */true,
                       },
                       cancelButton: {
                         text: "Cancelar Solicitud Previa",

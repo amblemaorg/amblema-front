@@ -38,6 +38,7 @@ import { ApiWebContentService } from "../../../services/web/api-web-content.serv
 import { environment } from "../../../../environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { Injectable } from "@angular/core";
+import { SetFalseMakingAction } from '../../yearbook/yearbook.action';
 
 @State<PecaStateModel>({
   name: "peca",
@@ -135,12 +136,14 @@ export class PecaState {
     const response = await this.apiService.getWebContent().toPromise();
     //.subscribe((response) => {
       if (response) {
+        console.log("Hola", response);
         const pecaContent: PecaModel = response;
         patchState({
           pecaContentRequesting: false,
           content: pecaContent,
         });
       }
+      this.store.dispatch([new SetFalseMakingAction()]);
     //});
   }
 
