@@ -116,6 +116,7 @@ export function schedulingPlanningConfigMapper(
             label: "Input date",
             placeholder: "Fecha de la reunión",
             fullwidth: false,
+            specialDateForm: "dateForReunionAprobacionSet",
             ...controlProps.dateAndRequired,
             value: meetingDateFormatted,
           },

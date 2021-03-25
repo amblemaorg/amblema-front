@@ -106,6 +106,7 @@ export function specialActivityConfigMapper(
             label: "Input date",
             placeholder: "Fecha de la actividad",
             fullwidth: false,
+            specialDateForm: "dateForDateAndStatus",
             ...controlProps.dateAndRequired,
             value: currentDateFormatted,
           },
