@@ -27,64 +27,64 @@ export class CancelYearBookRequest {
   constructor(public payload: any) {}
 }
 
-export class SetHistoricalReview {
-  static readonly type = "[YearBook] Set Historical Review YearBook";
-  constructor(public payload: any) {}
-}
+// export class SetHistoricalReview {
+//   static readonly type = "[YearBook] Set Historical Review YearBook";
+//   constructor(public payload: any) {}
+// }
 
-export class SetSponsor {
-  static readonly type = "[YearBook] Set Sponsor YearBook";
-  constructor(public payload: any) {}
-}
+// export class SetSponsor {
+//   static readonly type = "[YearBook] Set Sponsor YearBook";
+//   constructor(public payload: any) {}
+// }
 
-export class SetCoordinator {
-  static readonly type = "[YearBook] Set Coordinator YearBook";
-  constructor(public payload: any) {}
-}
+// export class SetCoordinator {
+//   static readonly type = "[YearBook] Set Coordinator YearBook";
+//   constructor(public payload: any) {}
+// }
 
-export class SetSchool {
-  static readonly type = "[YearBook] Set School YearBook";
-  constructor(public payload: any) {}
-}
+// export class SetSchool {
+//   static readonly type = "[YearBook] Set School YearBook";
+//   constructor(public payload: any) {}
+// }
 
-export class SetLapseReadingAnalysis {
-  static readonly type = "[YearBook] Set Lapse Reading Analysis YearBook";
-  constructor(public payload: { lapse: string; analysis: string }) {}
-}
+// export class SetLapseReadingAnalysis {
+//   static readonly type = "[YearBook] Set Lapse Reading Analysis YearBook";
+//   constructor(public payload: { lapse: string; analysis: string }) {}
+// }
 
-export class SetLapseMathAnalysis {
-  static readonly type = "[YearBook] Set Lapse Math Analysis YearBook";
-  constructor(public payload: { lapse: string; analysis: string }) {}
-}
+// export class SetLapseMathAnalysis {
+//   static readonly type = "[YearBook] Set Lapse Math Analysis YearBook";
+//   constructor(public payload: { lapse: string; analysis: string }) {}
+// }
 
-export class SetLapseLogicAnalysis {
-  static readonly type = "[YearBook] Set Lapse Logic Analysis YearBook";
-  constructor(public payload: { lapse: string; analysis: string }) {}
-}
+// export class SetLapseLogicAnalysis {
+//   static readonly type = "[YearBook] Set Lapse Logic Analysis YearBook";
+//   constructor(public payload: { lapse: string; analysis: string }) {}
+// }
 
-export class SetLapseActivity {
-  static readonly type = "[YearBook] Set Lapse Activity YearBook";
-  constructor(
-    public payload: {
-      lapse: string;
-      activityId: string;
-      description: string;
-      images: string[];
-    }
-  ) {}
-}
+// export class SetLapseActivity {
+//   static readonly type = "[YearBook] Set Lapse Activity YearBook";
+//   constructor(
+//     public payload: {
+//       lapse: string;
+//       activityId: string;
+//       description: string;
+//       images: string[];
+//     }
+//   ) {}
+// }
 
-export class SetSectionImage {
-  static readonly type = "[YearBook] Set Section Image YearBook";
-  constructor(
-    public payload: {
-      sectionId: string;
-      sectionGrade: string;
-      sectionName: string;
-      image: string;
-    }
-  ) {}
-}
+// export class SetSectionImage {
+//   static readonly type = "[YearBook] Set Section Image YearBook";
+//   constructor(
+//     public payload: {
+//       sectionId: string;
+//       sectionGrade: string;
+//       sectionName: string;
+//       image: string;
+//     }
+//   ) {}
+// }
 
 export class ClearYearBook {
   static readonly type = "[YearBook] Clear YearBook";
@@ -355,22 +355,67 @@ export class YearBookState {
   @Action(UpdateYearBookRequest)
   async updateYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: UpdateYearBookRequest) {
     const { pecaId, userId, section, partial, data, requestId } = action.payload;
+    
     const yearBookData = {
       ...data,
       ...(requestId ? {requestId: requestId} : {})
     };
-    if ( ["historicalReview","sponsor","coordinator","school"].includes(section) ) 
+
+    if ( ["historicalReview", "sponsor", "coordinator", "school"].includes(section) ) 
       yearBookData[section] = {
         ...data[section],
         ...partial,
       };
+    
+    if (section === "sections") {
+      const { sectionId, sectionGrade, sectionName, image } = partial;
+      const sectionsUpdated = yearBookData.sections.map((section) => {
+        const { id, grade, name } = section;
+        if (id === sectionId || (grade === sectionGrade && name === sectionName)) {
+          return {
+            ...section,
+            image,
+          };
+        }
+        return section;
+      });
+      yearBookData[section] = sectionsUpdated;
+    }
+
+    if ( ["readingDiagnosticAnalysis", "mathDiagnosticAnalysis", "logicDiagnosticAnalysis"].includes(section) ) {
+      const { lapse, analysis } = partial;
+      const lapseName = `lapse${lapse}`;
+      yearBookData[lapseName] = {
+        ...data[lapseName],
+        [section]: analysis,
+      }
+    }
+
+    if (section === "activities") {
+      const { lapse, activityId, description, images } = partial;
+      const lapseName = `lapse${lapse}`;
+      const lapseActivitiesUpdated = yearBookData[lapseName].activities.map((activity) => {
+        if (activity.id === activityId) {
+          return {
+            ...activity,
+            description,
+            images,
+          };
+        }
+        return activity;
+      });
+      yearBookData[lapseName] = {
+        ...data[lapseName],
+        [section]: lapseActivitiesUpdated,
+      };
+    }
 
     patchState({
       makingAction: true,
       wasSaving: true,
     });
 
-    console.log("HOliata", yearBookData);
+    console.log("Yearbook data to be sent", yearBookData);
     delete yearBookData.approvalHistory;
     delete yearBookData["makingAction"];
     delete yearBookData["wasSaving"];
@@ -487,157 +532,155 @@ export class YearBookState {
   //   }
   // }
 
-  @Action(SetHistoricalReview)
-  setHistoricalReview({patchState, getState}: StateContext<YearBook>, action: SetHistoricalReview) {
-    const state = getState();
-    // ctx.setState(
-      patchState({
-        ...state,
-        historicalReview: {
-          ...state.historicalReview,
-          ...action.payload,
-        }, // <-- Save historical review
-      })
-    // );
-  }
+  // @Action(SetHistoricalReview)
+  // setHistoricalReview({patchState, getState}: StateContext<YearBook>, action: SetHistoricalReview) {
+  //   const state = getState();
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       historicalReview: {
+  //         ...state.historicalReview,
+  //         ...action.payload,
+  //       }, // <-- Save historical review
+  //     })
+  //   // );
+  // }
   
-  @Action(SetSponsor)
-  setSponsor({patchState, getState}: StateContext<YearBook>, action: SetSponsor) {
-    const state = getState();
-    // ctx.setState(
-      patchState({
-        ...state,
-        sponsor: {
-          ...state.sponsor,
-          ...action.payload,
-        },
-      })
-    // );
-  }
+  // @Action(SetSponsor)
+  // setSponsor({patchState, getState}: StateContext<YearBook>, action: SetSponsor) {
+  //   const state = getState();
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       sponsor: {
+  //         ...state.sponsor,
+  //         ...action.payload,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetCoordinator)
-  setCoordinator({patchState, getState}: StateContext<YearBook>, action: SetCoordinator) {
-    const state = getState();
-    // ctx.setState(
-      patchState({
-        ...state,
-        coordinator: {
-          ...state.coordinator,
-          ...action.payload,
-        },
-      })
-    // );
-  }
+  // @Action(SetCoordinator)
+  // setCoordinator({patchState, getState}: StateContext<YearBook>, action: SetCoordinator) {
+  //   const state = getState();
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       coordinator: {
+  //         ...state.coordinator,
+  //         ...action.payload,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  //!OJO
-  @Action(SetSchool)
-  setSchool({patchState, getState}: StateContext<YearBook>, action: SetSchool) {
-    const state = getState();
-    // ctx.setState(
-      patchState({
-        ...state,
-        school: {
-          ...state.school,
-          ...action.payload,
-        },
-      })
-    // );
-  }
+  // @Action(SetSchool)
+  // setSchool({patchState, getState}: StateContext<YearBook>, action: SetSchool) {
+  //   const state = getState();
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       school: {
+  //         ...state.school,
+  //         ...action.payload,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetLapseReadingAnalysis)
-  setLapseReadingAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseReadingAnalysis) {
-    const state = getState();
-    const { lapse, analysis } = action.payload;
-    const lapseName = `lapse${lapse}`;
-    // ctx.setState(
-      patchState({
-        ...state,
-        [lapseName]: {
-          ...state[lapseName],
-          readingDiagnosticAnalysis: analysis,
-        },
-      })
-    // );
-  }
+  // @Action(SetLapseReadingAnalysis)
+  // setLapseReadingAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseReadingAnalysis) {
+  //   const state = getState();
+  //   const { lapse, analysis } = action.payload;
+  //   const lapseName = `lapse${lapse}`;
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       [lapseName]: {
+  //         ...state[lapseName],
+  //         readingDiagnosticAnalysis: analysis,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetLapseMathAnalysis)
-  setLapseMathAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseMathAnalysis) {
-    const state = getState();
-    const { lapse, analysis } = action.payload;
-    const lapseName = `lapse${lapse}`;
-    // ctx.setState(
-      patchState({
-        ...state,
-        [lapseName]: {
-          ...state[lapseName],
-          mathDiagnosticAnalysis: analysis,
-        },
-      })
-    // );
-  }
+  // @Action(SetLapseMathAnalysis)
+  // setLapseMathAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseMathAnalysis) {
+  //   const state = getState();
+  //   const { lapse, analysis } = action.payload;
+  //   const lapseName = `lapse${lapse}`;
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       [lapseName]: {
+  //         ...state[lapseName],
+  //         mathDiagnosticAnalysis: analysis,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetLapseLogicAnalysis)
-  setLapseLogicAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseLogicAnalysis) {
-    const state = getState();
-    const { lapse, analysis } = action.payload;
-    const lapseName = `lapse${lapse}`;
-    // ctx.setState(
-      patchState({
-        ...state,
-        [lapseName]: {
-          ...state[lapseName],
-          logicDiagnosticAnalysis: analysis,
-        },
-      })
-    // );
-  }
+  // @Action(SetLapseLogicAnalysis)
+  // setLapseLogicAnalysis({patchState, getState}: StateContext<YearBook>, action: SetLapseLogicAnalysis) {
+  //   const state = getState();
+  //   const { lapse, analysis } = action.payload;
+  //   const lapseName = `lapse${lapse}`;
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       [lapseName]: {
+  //         ...state[lapseName],
+  //         logicDiagnosticAnalysis: analysis,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetLapseActivity)
-  setLapseActivity({patchState, getState}: StateContext<YearBook>, action: SetLapseActivity) {
-    const state = getState();
-    const { lapse, activityId, description, images } = action.payload;
-    const lapseName = `lapse${lapse}`;
-    const lapseActivitiesUpdated = state[lapseName].activities.map((activity) => {
-      if (activity.id === activityId) {
-        return {
-          ...activity,
-          description,
-          images,
-        };
-      }
-      return activity;
-    });
-    // ctx.setState(
-      patchState({
-        ...state,
-        [lapseName]: {
-          ...state[lapseName],
-          activities: lapseActivitiesUpdated,
-        },
-      })
-    // );
-  }
+  // @Action(SetLapseActivity)
+  // setLapseActivity({patchState, getState}: StateContext<YearBook>, action: SetLapseActivity) {
+  //   const state = getState();
+  //   const { lapse, activityId, description, images } = action.payload;
+  //   const lapseName = `lapse${lapse}`;
+  //   const lapseActivitiesUpdated = state[lapseName].activities.map((activity) => {
+  //     if (activity.id === activityId) {
+  //       return {
+  //         ...activity,
+  //         description,
+  //         images,
+  //       };
+  //     }
+  //     return activity;
+  //   });
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       [lapseName]: {
+  //         ...state[lapseName],
+  //         activities: lapseActivitiesUpdated,
+  //       },
+  //     })
+  //   // );
+  // }
 
-  @Action(SetSectionImage)
-  setSectionImage({patchState, getState}: StateContext<YearBook>, action: SetSectionImage) {
-    const state = getState();
-    const { sectionId, sectionGrade, sectionName, image } = action.payload;
-    const sectionsUpdated = state.sections.map((section) => {
-      const { id, grade, name } = section;
-      if (id === sectionId || (grade === sectionGrade && name === sectionName)) {
-        return {
-          ...section,
-          image,
-        };
-      }
-      return section;
-    });
-    // ctx.setState(
-      patchState({
-        ...state,
-        sections: sectionsUpdated,
-      })
-    // );
-  }
-  //!END-OJO
+  // @Action(SetSectionImage)
+  // setSectionImage({patchState, getState}: StateContext<YearBook>, action: SetSectionImage) {
+  //   const state = getState();
+  //   const { sectionId, sectionGrade, sectionName, image } = action.payload;
+  //   const sectionsUpdated = state.sections.map((section) => {
+  //     const { id, grade, name } = section;
+  //     if (id === sectionId || (grade === sectionGrade && name === sectionName)) {
+  //       return {
+  //         ...section,
+  //         image,
+  //       };
+  //     }
+  //     return section;
+  //   });
+  //   // ctx.setState(
+  //     patchState({
+  //       ...state,
+  //       sections: sectionsUpdated,
+  //     })
+  //   // );
+  // }
 }
