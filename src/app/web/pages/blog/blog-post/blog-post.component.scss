@@ -71,6 +71,13 @@ section.blog-post {
         font-size: 6vw;
         margin-bottom: 4vw;
 
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+
         @include breakpoint(small, landscape) {
           font-size: 3vw;
           margin-bottom: 2vw;
@@ -91,6 +98,13 @@ section.blog-post {
         font-size: 4vw;
         font-weight: normal;
         margin-bottom: 4vw;
+
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
 
         @include breakpoint(small, landscape) {
           font-size: 1.8vw;

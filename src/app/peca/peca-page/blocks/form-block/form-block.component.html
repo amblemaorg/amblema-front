@@ -67,6 +67,7 @@
               [virtualScroll]="true"
               [id]="getId(field)"
               [placeholder]="settings.formsContent[field].placeholder"
+              (click)="callTheMuns(field != 'addressState' ? false : true)"
               (change)="
                 settings.formsContent[field].isGrades
                   ? setSchoolSections($event)
@@ -80,6 +81,7 @@
                 <small>{{ item.name }}</small>
               </ng-template>
             </ng-select>
+            <span *ngIf="field == 'addressState' && stps.getIsCallingM()" class="floatingLoading">Cargando estados...</span>
           </ng-container>
 
           <ng-container *ngSwitchCase="'prepend'" [formGroupName]="field">
@@ -135,10 +137,7 @@
           <ng-container *ngSwitchCase="'date'">
             <label>{{ settings.formsContent[field].label }}</label>
             <div *ngIf="showDatePicker" class="date-container">
-              <div class="date-part-container" style="
-                  display: flex;
-                  align-items: center;
-              ">
+              <div class="date-part-container">
                   <ng-container *ngIf="!sendingForm && (settings.formsContent[field].readonly || isReadOnly()); else newDateInputs">
                     <div class="inactive-wrapper">
                       <input

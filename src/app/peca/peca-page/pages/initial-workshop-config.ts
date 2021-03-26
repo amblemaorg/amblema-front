@@ -313,6 +313,7 @@ export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, permis
           placeholder: "Fecha del taller",
           fullwidth: false,
           value: workshopDate,
+          specialDateForm: "dateForPreparingWorkshopForm",
           ...controlProps.dateAndRequired,
         },
       },
