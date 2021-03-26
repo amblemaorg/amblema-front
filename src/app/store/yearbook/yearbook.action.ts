@@ -101,46 +101,46 @@ export class SetFalseMakingAction {
   defaults: {
     makingAction: true,
     wasSaving: true,
-    historicalReview: {
-      image: "",
-      content: "",
-    },
-    sponsor: {
-      name: "",
-      content: "",
-      image: "",
-    },
-    school: {
-      name: "",
-      content: "",
-      image: "",
-    },
-    coordinator: {
-      name: "",
-      content: "",
-      image: "",
-    },
-    isInApproval: false,
-    approvalHistory: [],
-    sections: [],
-    lapse1: { 
-      activities: [], 
-      logicDiagnosticAnalysis: "",
-      mathDiagnosticAnalysis: "",
-      readingDiagnosticAnalysis: "" 
-    },
-    lapse2: { 
-      activities: [], 
-      logicDiagnosticAnalysis: "",
-      mathDiagnosticAnalysis: "",
-      readingDiagnosticAnalysis: "" 
-    },
-    lapse3: { 
-      activities: [], 
-      logicDiagnosticAnalysis: "",
-      mathDiagnosticAnalysis: "",
-      readingDiagnosticAnalysis: "" 
-    },
+    // historicalReview: {
+    //   image: "",
+    //   content: "",
+    // },
+    // sponsor: {
+    //   name: "",
+    //   content: "",
+    //   image: "",
+    // },
+    // school: {
+    //   name: "",
+    //   content: "",
+    //   image: "",
+    // },
+    // coordinator: {
+    //   name: "",
+    //   content: "",
+    //   image: "",
+    // },
+    // isInApproval: false,
+    // approvalHistory: [],
+    // sections: [],
+    // lapse1: { 
+    //   activities: [], 
+    //   logicDiagnosticAnalysis: "",
+    //   mathDiagnosticAnalysis: "",
+    //   readingDiagnosticAnalysis: "" 
+    // },
+    // lapse2: { 
+    //   activities: [], 
+    //   logicDiagnosticAnalysis: "",
+    //   mathDiagnosticAnalysis: "",
+    //   readingDiagnosticAnalysis: "" 
+    // },
+    // lapse3: { 
+    //   activities: [], 
+    //   logicDiagnosticAnalysis: "",
+    //   mathDiagnosticAnalysis: "",
+    //   readingDiagnosticAnalysis: "" 
+    // },
   },
 })
 @Injectable()
@@ -151,13 +151,13 @@ export class YearBookState {
     private toastr: ToastrService
   ) {}
 
-  @Selector()
-  static yearbookState(state: YearBook) {
-    const state_ = {...state};
-    delete state_["makingAction"];
-    delete state_["wasSaving"];
-    return state_;
-  }
+  // @Selector()
+  // static yearbookState(state: YearBook) {
+  //   const state_ = {...state};
+  //   delete state_["makingAction"];
+  //   delete state_["wasSaving"];
+  //   return state_;
+  // }
 
   @Selector()
   static isMakingAction(state: YearBook) {
@@ -169,46 +169,46 @@ export class YearBookState {
     setState({
       makingAction: true,
       wasSaving: true,
-      historicalReview: {
-        image: "",
-        content: "",
-      },
-      sponsor: {
-        name: "",
-        content: "",
-        image: "",
-      },
-      school: {
-        name: "",
-        content: "",
-        image: "",
-      },
-      coordinator: {
-        name: "",
-        content: "",
-        image: "",
-      },
-      isInApproval: false,
-      approvalHistory: [],
-      sections: [],
-      lapse1: { 
-        activities: [], 
-        logicDiagnosticAnalysis: "",
-        mathDiagnosticAnalysis: "",
-        readingDiagnosticAnalysis: "" 
-      },
-      lapse2: { 
-        activities: [], 
-        logicDiagnosticAnalysis: "",
-        mathDiagnosticAnalysis: "",
-        readingDiagnosticAnalysis: "" 
-      },
-      lapse3: { 
-        activities: [], 
-        logicDiagnosticAnalysis: "",
-        mathDiagnosticAnalysis: "",
-        readingDiagnosticAnalysis: "" 
-      },
+      // historicalReview: {
+      //   image: "",
+      //   content: "",
+      // },
+      // sponsor: {
+      //   name: "",
+      //   content: "",
+      //   image: "",
+      // },
+      // school: {
+      //   name: "",
+      //   content: "",
+      //   image: "",
+      // },
+      // coordinator: {
+      //   name: "",
+      //   content: "",
+      //   image: "",
+      // },
+      // isInApproval: false,
+      // approvalHistory: [],
+      // sections: [],
+      // lapse1: { 
+      //   activities: [], 
+      //   logicDiagnosticAnalysis: "",
+      //   mathDiagnosticAnalysis: "",
+      //   readingDiagnosticAnalysis: "" 
+      // },
+      // lapse2: { 
+      //   activities: [], 
+      //   logicDiagnosticAnalysis: "",
+      //   mathDiagnosticAnalysis: "",
+      //   readingDiagnosticAnalysis: "" 
+      // },
+      // lapse3: { 
+      //   activities: [], 
+      //   logicDiagnosticAnalysis: "",
+      //   mathDiagnosticAnalysis: "",
+      //   readingDiagnosticAnalysis: "" 
+      // },
     });
   }
 
