@@ -94,7 +94,7 @@
         type="submit"
         *ngIf="settings.fields.button && !settings.fields.button.hidden"
         nbButton
-        class="btn btn-primary col-12 col-lg-auto btn-normal"
+        class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
         [disabled]="settings.fields.button.disabled || isSaving || (makingActionSubs$ | async).makingAction"
       >
         {{ isSaving && (makingActionSubs$ | async).makingAction && (makingActionSubs$ | async).wasSaving

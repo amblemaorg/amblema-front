@@ -132,18 +132,23 @@ export class PecaState {
     { payload }: FetchPecaContent
   ) {
     patchState({ pecaContentRequesting: true });
-    this.apiService.setResourcePath("pecaprojects/" + payload);
+
+    let payload_ = payload;
+    const showToast = payload_.includes("[:show-toast:]");
+    if (showToast) payload_ = payload_.replace("[:show-toast:]","");
+    
+    this.apiService.setResourcePath("pecaprojects/" + payload_);
     const response = await this.apiService.getWebContent().toPromise();
     //.subscribe((response) => {
       if (response) {
-        console.log("Hola", response);
+        // console.log("Hola", response);
         const pecaContent: PecaModel = response;
         patchState({
           pecaContentRequesting: false,
           content: pecaContent,
         });
       }
-      this.store.dispatch([new SetFalseMakingAction()]);
+      this.store.dispatch([new SetFalseMakingAction(showToast)]);
     //});
   }
 
