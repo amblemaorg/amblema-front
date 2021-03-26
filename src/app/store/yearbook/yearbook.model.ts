@@ -1,16 +1,16 @@
 export interface YearBook {
   makingAction?: boolean;
   wasSaving?: boolean;
-  historicalReview?: HistoricalReview;
-  sponsor?: UserContentReview;
-  school?: UserContentReview;
-  coordinator?: UserContentReview;
-  isInApproval?: boolean;
-  approvalHistory?: any[];
-  sections?: Section[];
-  lapse1?: Lapse;
-  lapse2?: Lapse;
-  lapse3?: Lapse;
+  // historicalReview?: HistoricalReview;
+  // sponsor?: UserContentReview;
+  // school?: UserContentReview;
+  // coordinator?: UserContentReview;
+  // isInApproval?: boolean;
+  // approvalHistory?: any[];
+  // sections?: Section[];
+  // lapse1?: Lapse;
+  // lapse2?: Lapse;
+  // lapse3?: Lapse;
 }
 
 interface Lapse {
