@@ -1,3 +1,5 @@
+@import 'scss/variables';
+
 .btn-normal {
   background-color: #00809a !important;
   border-color: #00809a !important;
@@ -13,6 +15,24 @@
   }
 }
 
+.submit-btn {
+  &, &:active {
+      background-color: $blue !important;
+      color: #fff !important;
+      border-color: $blue !important;
+  }
+
+  &:hover {
+      background-color: #fff !important;
+      color: $blue !important;
+
+      &.inactive, &[disabled] {
+          background-color: $blue !important;
+          color: #fff !important;
+          cursor: default !important;
+      }     
+  }
+}
 //.btn-cancel {}
 
 .btn-tertiary {
