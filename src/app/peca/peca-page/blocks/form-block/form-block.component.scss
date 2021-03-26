@@ -51,6 +51,13 @@
         color: gray;
       }
 
+      .floatingLoading {
+        font-size: 0.8rem;
+        position: absolute;
+        font-size: smaller;
+        right: 0;
+      }
+
       .image-group {
         display: flex;
         flex-wrap: wrap;
