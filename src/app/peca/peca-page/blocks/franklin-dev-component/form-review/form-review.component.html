@@ -79,6 +79,7 @@
     <div class="text-right">
       <button
         type="button"
+        [class.d-none]="(makingActionSubs$ | async).makingAction && (makingActionSubs$ | async).wasSaving"
         *ngIf="settings.fields.cancelButton && !settings.fields.cancelButton.hidden"
         nbButton
         status="danger"
@@ -93,12 +94,14 @@
         type="submit"
         *ngIf="settings.fields.button && !settings.fields.button.hidden"
         nbButton
-        class="btn btn-primary col-12 col-lg-auto btn-normal"
+        class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
         [disabled]="settings.fields.button.disabled || isSaving || (makingActionSubs$ | async).makingAction"
       >
-        {{ isSaving || ( settings.fields.button.isMainBtn && (makingActionSubs$ | async).makingAction ) 
+        {{ isSaving && (makingActionSubs$ | async).makingAction && (makingActionSubs$ | async).wasSaving
             ? settings.fields.button.ingAction : settings.fields.button.text }}
       </button>
+      <!-- {{ isSaving || ( settings.fields.button.isMainBtn && (makingActionSubs$ | async).makingAction ) 
+            ? settings.fields.button.ingAction : settings.fields.button.text }} -->
     </div>
   </form>
 </div>

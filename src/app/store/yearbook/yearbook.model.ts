@@ -1,5 +1,6 @@
 export interface YearBook {
   makingAction?: boolean;
+  wasSaving?: boolean;
   historicalReview?: HistoricalReview;
   sponsor?: UserContentReview;
   school?: UserContentReview;

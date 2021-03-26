@@ -84,6 +84,11 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
     /**
      * The format of the object that is of type image is prepared
      */
+    this.makingActionSubs$.subscribe( res => {
+      if (!res.makingAction && this.isSaving) {
+        this.isSaving = false;
+      }
+    });
   }
 
   async compressFile({image, orientation = -2, isArray = false, position = 0}) {
@@ -216,7 +221,7 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
           : values
       );
 
-    this.isSaving = false;
+    // this.isSaving = false;
   }
 
   onUploadImage = (event: any) => {
@@ -281,6 +286,6 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
 
   setNullFormImg() {
     this.form.get('inputImg').setValue(null);
-    this.settings.onSubmit({...this.form.value, inputImg: null});
+    // this.settings.onSubmit({...this.form.value, inputImg: null});
   }
 }
