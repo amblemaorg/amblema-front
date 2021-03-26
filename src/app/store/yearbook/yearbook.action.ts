@@ -93,13 +93,13 @@ export class ClearYearBook {
 
 export class SetFalseMakingAction {
   static readonly type = "[YearBook] Set false makingAction attribute in YearBook";
-  constructor() {}
+  constructor(public showToast: boolean) {}
 }
 
 @State<YearBook>({
   name: "yearbooks",
   defaults: {
-    makingAction: false,
+    makingAction: true,
     wasSaving: true,
     historicalReview: {
       image: "",
@@ -167,7 +167,7 @@ export class YearBookState {
   @Action(ClearYearBook)
   clearYearBook({setState}: StateContext<YearBook>) {
     setState({
-      makingAction: false,
+      makingAction: true,
       wasSaving: true,
       historicalReview: {
         image: "",
@@ -344,7 +344,21 @@ export class YearBookState {
   }
 
   @Action(SetFalseMakingAction)
-  setFalseMakingAction({patchState}: StateContext<YearBook>) {
+  setFalseMakingAction({patchState, getState}: StateContext<YearBook>, action: SetFalseMakingAction) {
+    const { wasSaving: wasItSave } = getState();
+    const showToast = action.showToast;
+
+    if (wasItSave && showToast)
+      this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
+        positionClass: "toast-bottom-right",
+        onActivateTick: true
+      });
+    else if (showToast)
+      this.toastr.success("Solicitud de aprobación cancelada", "", {
+        positionClass: "toast-bottom-right",
+        onActivateTick: true
+      });
+
     patchState({
       makingAction: false,
       wasSaving: true,
@@ -415,7 +429,7 @@ export class YearBookState {
       wasSaving: true,
     });
 
-    console.log("Yearbook data to be sent", yearBookData);
+    // console.log("Yearbook data to be sent", yearBookData);
     delete yearBookData.approvalHistory;
     delete yearBookData["makingAction"];
     delete yearBookData["wasSaving"];
@@ -423,10 +437,8 @@ export class YearBookState {
     // console.log("yearbook data", yearBookData);
     try {
       const data = await this.fetcher.post(url, yearBookData).toPromise();
-      this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
-        positionClass: "toast-bottom-right",
-      });
-      this.store.dispatch([new FetchPecaContent(pecaId)]);
+      // console.log("Termino de enviar la solicitud...");
+      this.store.dispatch([new FetchPecaContent(`${pecaId}[:show-toast:]`)]);
     } catch (error) {
       console.error(error);
       patchState({
@@ -435,6 +447,7 @@ export class YearBookState {
       });
       this.toastr.error("Ha ocurrido un error", "", {
         positionClass: "toast-bottom-right",
+        onActivateTick: true
       });
     }
   }
@@ -476,10 +489,12 @@ export class YearBookState {
   @Action(CancelYearBookRequest)
   async cancelYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: CancelYearBookRequest) {
     const { approvalHistory, pecaId } = action.payload;
+    
     patchState({
       makingAction: true,
       wasSaving: false,
     });
+    
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${recentApprovalRequest.id}`;
     try {
@@ -488,10 +503,8 @@ export class YearBookState {
           status: "4",
         })
         .toPromise();
-      this.store.dispatch([new FetchPecaContent(pecaId)]);
-      this.toastr.success("Solicitud de aprobación cancelada", "", {
-        positionClass: "toast-bottom-right",
-      });
+      // console.log("Termino de cancelar...");
+      this.store.dispatch([new FetchPecaContent(`${pecaId}[:show-toast:]`)]);
     } catch (error) {
       patchState({
         makingAction: false,
@@ -499,6 +512,7 @@ export class YearBookState {
       });
       this.toastr.error("Ha ocurrido un error", "", {
         positionClass: "toast-bottom-right",
+        onActivateTick: true
       });
     }
   }
