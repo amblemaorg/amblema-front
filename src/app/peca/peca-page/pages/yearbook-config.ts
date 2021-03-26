@@ -1,14 +1,14 @@
 import { Store } from "@ngxs/store";
 import {
-  SetLapseActivity, 
-  SetSectionImage,
-  SetHistoricalReview,
-  SetSchool,
-  SetCoordinator,
-  SetSponsor,
-  SetLapseReadingAnalysis,
-  SetLapseMathAnalysis,
-  SetLapseLogicAnalysis,
+  // SetLapseActivity, 
+  // SetSectionImage,
+  // SetHistoricalReview,
+  // SetSchool,
+  // SetCoordinator,
+  // SetSponsor,
+  // SetLapseReadingAnalysis,
+  // SetLapseMathAnalysis,
+  // SetLapseLogicAnalysis,
   UpdateYearBookRequest,
   CancelYearBookRequest,
 } from "../../../store/yearbook/yearbook.action";
@@ -26,6 +26,7 @@ export function MapperYearBookWeb(
   permissions,
   store: Store
 ) {
+  // console.log("KEY", yearBookData);
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections);
   const lapse1Config = createLapseBlocksConfig("1", yearBookData);
@@ -67,7 +68,8 @@ export function MapperYearBookWeb(
                 sectionName: name,
                 image: values.inputImg && values.inputImg.length ? values.inputImg : null,
               };
-              store.dispatch(new SetSectionImage(data));
+              // store.dispatch(new SetSectionImage(data));
+              dispatchAction("sections",data);
             },
             fields: {
               inputImg: {
@@ -196,7 +198,8 @@ export function MapperYearBookWeb(
               lapse: lapseNumber,
               analysis: values.description,
             };
-            store.dispatch(new SetLapseReadingAnalysis(data));
+            // store.dispatch(new SetLapseReadingAnalysis(data));
+            dispatchAction("readingDiagnosticAnalysis",data);
           },
           fields: {
             description: {
@@ -291,7 +294,8 @@ export function MapperYearBookWeb(
               lapse: lapseNumber,
               analysis: values.description,
             };
-            store.dispatch(new SetLapseMathAnalysis(data));
+            // store.dispatch(new SetLapseMathAnalysis(data));
+            dispatchAction("mathDiagnosticAnalysis",data);
           },
           fields: {
             description: {
@@ -386,7 +390,8 @@ export function MapperYearBookWeb(
               lapse: lapseNumber,
               analysis: values.description,
             };
-            store.dispatch(new SetLapseLogicAnalysis(data));
+            // store.dispatch(new SetLapseLogicAnalysis(data));
+            dispatchAction("logicDiagnosticAnalysis",data);
           },
           fields: {
             description: {
@@ -438,7 +443,8 @@ export function MapperYearBookWeb(
                 description: values.description,
                 images: values.inputImg && values.inputImg.length ? values.inputImg : [],
               };
-              store.dispatch(new SetLapseActivity(data));
+              // store.dispatch(new SetLapseActivity(data));
+              dispatchAction("activities",data);
             },
             fields: {
               inputImg: {
