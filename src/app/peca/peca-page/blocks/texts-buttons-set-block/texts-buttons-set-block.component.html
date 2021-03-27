@@ -36,8 +36,63 @@
             class="estilo-date"
             [class.estilo-date-non-editable]="!userCanEdit"
           >
+            <div class="date-part-container">
+              <ng-container *ngIf="activity_uneditable || !userCanEdit; else newDateInputs">
+                <div class="inactive-wrapper">
+                  <input
+                    [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'InactiveInput']"
+                    class="form-control" 
+                    [placeholder]="settings.dateOrtext.fields[0].placeholder"
+                    autocomplete="off" 
+                    type="text"
+                    readonly
+                  />
+                </div>
+              </ng-container>
+              <ng-template #newDateInputs>
+                <input 
+                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Day']"
+                  class="form-control day" placeholder="Día" autocomplete="off" type="number" max="31" min="1"
+                  [readonly]="
+                    activity_uneditable || !userCanEdit
+                  "
+                  (ngModelChange)="ejempl($event)"
+                /><!-- 
+                  (blur)="dateOnBlur($event,'day')"
+                 -->
+                <input 
+                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Month']"
+                  class="form-control month" placeholder="Mes" autocomplete="off" type="number" max="12" min="1"
+                  [readonly]="
+                    activity_uneditable || !userCanEdit
+                  "
+                  (ngModelChange)="ejempl($event)"
+                /><!-- 
+                  (blur)="dateOnBlur($event,'month')"
+                 -->
+                <input 
+                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Year']"
+                  class="form-control year" placeholder="Año" autocomplete="off" type="number" min="1"
+                  [readonly]="
+                    activity_uneditable || !userCanEdit
+                  "
+                  (ngModelChange)="ejempl($event)"
+                /><!-- 
+                  (blur)="dateOnBlur($event,'year')"
+                 -->
+                <div class="calendaricon">
+                  <nb-icon
+                    icon="calendar"
+                    style="font-size: 1.5rem;"
+                  ></nb-icon>
+                </div>
+              </ng-template>
+            </div>
           <ng-datepicker
             #inputDate
+            [headless]="activity_uneditable || !userCanEdit"
+            position="bottom-left"
+            class="datepicker-control"
             *ngIf="settings.dateOrtext && settings.dateOrtext.fields[0] && !reloadDate"
             [(ngModel)]="settings.dateOrtext.fields[0].value"
             [options]="datePickerOptions"

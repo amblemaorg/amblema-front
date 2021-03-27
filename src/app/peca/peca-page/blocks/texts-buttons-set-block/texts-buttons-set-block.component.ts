@@ -120,6 +120,8 @@ export class TextsButtonsSetBlockComponent
     statusForSubmit?: string;
   };
 
+  isBeingUsedDateContr: boolean = false;
+
   userCanCreate: boolean = true;
   userCanEdit: boolean = true;
   userCanDelete: boolean = true;
@@ -136,7 +138,7 @@ export class TextsButtonsSetBlockComponent
     // maxDate: new Date(Date.now()),
     barTitleIfEmpty: 'Haga click para seleccionar una fecha',
     placeholder: 'Seleccione una fecha',
-    addClass: 'form-control', // Optional, value to pass on to [ngClass] on the input field
+    addClass: 'form-control date-picker-custom', // Optional, value to pass on to [ngClass] on the input field
     addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
     fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
@@ -278,6 +280,11 @@ export class TextsButtonsSetBlockComponent
     this.isTableEdited = true;
     this.isFormEdited = true;
     this.isImgsTableShown = null;
+    this.isBeingUsedDateContr = false;
+  }
+
+  ejempl(e) {
+    console.log(e);
   }
 
   private setId() {
@@ -332,6 +339,7 @@ export class TextsButtonsSetBlockComponent
       // this.reloadDate = true;
       this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
+      console.log(this.settings.dateOrtext);
       setTimeout(() => {
         if (
           this.settings.dateOrtext
