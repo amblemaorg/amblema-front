@@ -30,7 +30,7 @@ export class YearbookPageComponent
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
-  @Select(YearBookState.yearbookState) ybState$: Observable<any>;
+  // @Select(YearBookState.yearbookState) ybState$: Observable<any>;
   ybData: any;
   subscription: Subscription = new Subscription();
   ybSubscription: Subscription = new Subscription();
@@ -51,10 +51,10 @@ export class YearbookPageComponent
   }
 
   ngOnInit() {
-      this.ybSubscription = this.ybState$.subscribe( ybData_ => {
-        // console.log("ybData", ybData_);
-        this.ybData = ybData_;
-      });
+      // this.ybSubscription = this.ybState$.subscribe( ybData_ => {
+      //   // console.log("ybData", ybData_);
+      //   this.ybData = ybData_;
+      // });
 
       this.subscription = this.pecaData$
         .pipe(
