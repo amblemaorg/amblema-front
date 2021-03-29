@@ -56,30 +56,27 @@
                   [readonly]="
                     activity_uneditable || !userCanEdit
                   "
-                  (ngModelChange)="ejempl($event)"
-                /><!-- 
+                  (ngModelChange)="setDateHandlr($event,'day')"
                   (blur)="dateOnBlur($event,'day')"
-                 -->
+                />
                 <input 
                   [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Month']"
                   class="form-control month" placeholder="Mes" autocomplete="off" type="number" max="12" min="1"
                   [readonly]="
                     activity_uneditable || !userCanEdit
                   "
-                  (ngModelChange)="ejempl($event)"
-                /><!-- 
+                  (ngModelChange)="setDateHandlr($event,'month')"
                   (blur)="dateOnBlur($event,'month')"
-                 -->
+                />
                 <input 
                   [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Year']"
                   class="form-control year" placeholder="Año" autocomplete="off" type="number" min="1"
                   [readonly]="
                     activity_uneditable || !userCanEdit
                   "
-                  (ngModelChange)="ejempl($event)"
-                /><!-- 
+                  (ngModelChange)="setDateHandlr($event,'year')"
                   (blur)="dateOnBlur($event,'year')"
-                 -->
+                />
                 <div class="calendaricon">
                   <nb-icon
                     icon="calendar"
@@ -417,11 +414,13 @@
                 ? action.type == 8
                   ? "Guardando"
                   : action.type == 7
-                  ? setGenActBtnName()
-                  : "Enviando"
+                    ? setGenActBtnName()
+                    : "Enviando"
                 : action.type == 7
-                ? setGenActBtnName()
-                : action.name
+                  ? setGenActBtnName()
+                  : isSending 
+                  ? (action.name + " ...")
+                  : action.name
             }}
           </button>
 

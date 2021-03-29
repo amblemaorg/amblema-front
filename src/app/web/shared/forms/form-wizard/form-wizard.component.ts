@@ -425,7 +425,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.recaptchaSubscription = this.recaptchaService
         .execute(this.recaptchaAction)
         .subscribe((token) => {
-          console.log(token);
+          // console.log(token);
           this.isSubmitting = true;
           this.submit.emit(this.dataToSubmit);
         });

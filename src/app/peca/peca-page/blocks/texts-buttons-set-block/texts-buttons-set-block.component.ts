@@ -283,8 +283,8 @@ export class TextsButtonsSetBlockComponent
     this.isBeingUsedDateContr = false;
   }
 
-  ejempl(e) {
-    console.log(e);
+  setDateHandlr(e, type: string) {
+    if (!this.isBeingUsedDateContr) this.setDateFunc({ type, theValue: e });
   }
 
   private setId() {
@@ -313,6 +313,9 @@ export class TextsButtonsSetBlockComponent
         && this.settings.dateOrtext.fields
         && this.settings.dateOrtext.fields[0]
       ) {
+        this.setDateInputs();
+        
+        if (!this.settings.dateOrtext.fields[0].value) this.inputDate.reset();
         if (this.inputDate) {
           this.inputDate.registerOnChange((value: Date) => {
             const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
@@ -339,13 +342,15 @@ export class TextsButtonsSetBlockComponent
       // this.reloadDate = true;
       this.reloadUpload = true;
       this.settings.dateOrtext = data["dateOrtext"] ? data.dateOrtext : null;
-      console.log(this.settings.dateOrtext);
+
       setTimeout(() => {
         if (
           this.settings.dateOrtext
           && this.settings.dateOrtext.fields
           && this.settings.dateOrtext.fields[0]
         ) {
+          this.setDateInputs();
+          
           if (!this.settings.dateOrtext.fields[0].value) this.inputDate.reset();
           if (this.inputDate) {
             this.inputDate.registerOnChange((value: Date) => {
@@ -436,6 +441,22 @@ export class TextsButtonsSetBlockComponent
     e.focus();
   }
 
+  setDateInputs() {
+    const theWhD = this.settings.dateOrtext.fields[0]["theWholeDate"];
+    const isSpecialDate = theWhD && this.settings.dateOrtext.fields[0]["specialDateForm"];
+    const dNow = new Date();
+    const dnSplit = dNow.toISOString().split("T")[1];
+
+    if (isSpecialDate) {
+      const dateKey = this.globals.getDateFormat(new Date(`${theWhD.split("T")[0]}T${dnSplit}`));
+      const theDate = new Date(`${dateKey}T${dnSplit}`);
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Day`] = theDate.getDate();
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Month`] = theDate.getMonth() + 1;
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Year`] = theDate.getFullYear();
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}InactiveInput`] = `${this.addZero(theDate.getDate())}-${this.addZero(theDate.getMonth() + 1)}-${theDate.getFullYear()}`; 
+    } else this.settings.dateOrtext.fields[0].value = dNow.toISOString().split("T")[0];
+  }
+
   disableThis(type: number) {
     if (this.settings.receivesFromTableOrForm && (type == 1 || type == 3 || type == 4)) {
       if (
@@ -461,7 +482,9 @@ export class TextsButtonsSetBlockComponent
 
       if (this.settings.genActSavingTypes.hasDate) {
         date = this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
-        conditions.push(date);
+        const isDateNotValid = date ? this.globals.validateDate(this.dataGenAct.date.split("T")[0], "greater", true, true) : false;      
+        const istrue = date && !isDateNotValid;
+        conditions.push(istrue);
       }
       if (this.settings.genActSavingTypes.hasUpload) {
         upload = this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
@@ -470,45 +493,20 @@ export class TextsButtonsSetBlockComponent
 
       return !conditions.some((cond) => cond);
     }
-    // else if (
-    //   (type == 7 || type == 8) &&
-    //   this.settings.isGenericActivity
-    // ) {
-    //   let { date, upload, checklist } = { date: false, upload: false, checklist: false };
-    //   const conditions = [];
-
-    //   if (this.settings.genActSavingTypes.hasDate) {
-    //     date = typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date ? false : this.dataGenAct.date ? false : true;
-    //     conditions.push(date);
-    //   }
-    //   if (this.settings.genActSavingTypes.hasUpload) {
-    //     upload = typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload ? false : this.dataGenAct.upload ? false : true;
-    //     conditions.push(upload);
-    //   }
-    //   if (this.settings.genActSavingTypes.hasChecklist) {
-    //     // if (this.settings.btnApprovalType === 2 || type == 7) {
-    //     //   checklist = true;
-
-    //     //   if (this.dataGenAct.checklist && type == 7)
-    //     //     checklist = !this.dataGenAct.checklist.every(check => check.checked);
-    //     //   else if (this.dataGenAct.checklist && this.settings.btnApprovalType === 2)
-    //     //     checklist = !this.dataGenAct.checklist.some(check => check.checked);
-    //     // }
-    //     /* else  */checklist = typeof this.dataGenAct.checklist === "boolean" && this.dataGenAct.checklist ? false : this.dataGenAct.checklist ? false : true;
-    //     conditions.push(checklist);
-    //   }
-
-    //   const forSaveMode = type == 7 ? 0
-    //     : conditions.reduce((acum,cond) => {
-    //       if (cond) acum++
-    //       return acum
-    //     },0);
-
-    //   return type == 7
-    //     ? conditions.some(cond => cond)
-    //     : conditions.length > 0
-    //         ? (forSaveMode == conditions.length) : false;
-    // }
+    if (
+      this.settings.dateOrtext && 
+      this.settings.dateOrtext.fields && 
+      this.settings.dateOrtext.fields instanceof Array && 
+      this.settings.dateOrtext.fields.length
+    ) {
+      const {
+        day: lDay,
+        month: lMonth,
+        year: lYear
+      } = this.getDates();
+      const isDateNotValid = this.globals.validateDate(`${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`, "greater", true, true);
+      return isDateNotValid;
+    }
     return false;
   }
 
@@ -1078,12 +1076,151 @@ export class TextsButtonsSetBlockComponent
     }
   }
 
+  addZero(dN, isYear = false) {
+    const dNlen = `${dN}`.length;
+    if (isYear && dNlen < 4) {
+      const yearStrArr = `${dN}`.split("").reverse();
+      const second = yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
+      const third = yearStrArr.length > 1 ? yearStrArr[1] : "0";
+      const fourth = yearStrArr[0];
+      return "0" + second + third + fourth;
+    }
+    return dNlen > 1 ? `${dN}` : `0${dN}`;
+  };
+
+  getDates() {
+    return {
+      day: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Day`],
+      month: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`],
+      year: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Year`]
+    }
+  }
+
+  isValidDay(day, month, year) {
+    const now = new Date();
+    const d = new Date(`${this.addZero(year,true)}-${this.addZero(month)}-${this.addZero(day)}`);
+    const validDate = d instanceof Date && !isNaN( d.getTime() );
+    const dateChecker = validDate && new Date( `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]}` );
+    
+    return dateChecker && (dateChecker.getMonth() + 1 === month);
+  };
+
+  /**
+   * @param type string --> calendar, day, month, year
+   */
+  setDateFunc({type = "calendar", theValue = null}) {
+    this.isBeingUsedDateContr = true;
+
+    const theSpecialDate = this.settings.dateOrtext.fields[0]["specialDateForm"];
+
+    const theDate = type === "calendar" && theValue ? new Date(theValue) : new Date();
+
+    const { day, month, year } = {
+      day: theDate.getDate(),
+      month: theDate.getMonth() + 1,
+      year: theDate.getFullYear()
+    };
+
+    const {
+      day: theDay,
+      month: theMonth,
+      year: theYear
+    } = this.getDates();
+
+    if (type !== "day" && day && (type === "calendar" || !theDay) ) 
+      this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = day;
+
+    if (type !== "month" && month && (type === "calendar" || !theMonth) ) 
+      this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] = month;
+
+    if (type !== "year" && year && (type === "calendar" || !theYear) ) 
+      this.settings.dateOrtext.fields[0][`${theSpecialDate}Year`] = year;
+
+    if (type !== "calendar") {
+      const {
+        day: tDay,
+        month: tMonth,
+        year: tYear
+      } = this.getDates();
+      
+      let isValid = this.isValidDay(tDay, tMonth, tYear);
+
+      const theWholeDate: string = `${this.addZero(tYear,true)}-${this.addZero(isValid ? tMonth : (tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) ) )}-${this.addZero(isValid ? tDay : 1)}`;
+
+      this.settings.dateOrtext.fields[0].value = theWholeDate;
+      if (tDay && tMonth && tYear) this.controlDateChange({ target:{ value: theWholeDate } }, 'greater');
+      this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(tDay)}-${this.addZero(tMonth)}-${tYear}`;
+
+      if (!isValid) {
+        if (tMonth && tDay) this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
+        if (tDay && tMonth) this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] = tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1);
+      }
+    }
+    else 
+      this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(day)}-${this.addZero(month)}-${year}`;
+    
+    this.isBeingUsedDateContr = false;
+  }
+
+  dateOnBlur(e, datePart: string) {
+    if (
+      !e || 
+      (
+        e && 
+        (
+          !e.target || 
+          (e.target && !e.target.value) || 
+          (e.target && e.target.value && !e.target.value.length) 
+        ) 
+      ) 
+    ) {
+      this.isBeingUsedDateContr = true;
+
+      const theSpecialDate = this.settings.dateOrtext.fields[0]["specialDateForm"];
+  
+      const {
+        day: fDay,
+        month: fMonth,
+        year: fYear
+      } = this.getDates();
+  
+      let isValid = this.isValidDay(fDay, fMonth, fYear);
+  
+      if (!isValid) {
+        if (datePart === "day") this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
+        if (datePart === "month") this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`]= 1;
+      }
+
+      if (datePart === "year") {
+        const now = new Date();
+        this.settings.dateOrtext.fields[0][`${theSpecialDate}Year`] = now.getFullYear();
+      }
+
+      const {
+        day: lDay,
+        month: lMonth,
+        year: lYear
+      } = this.getDates();
+
+      isValid = this.isValidDay(lDay, lMonth, lYear);
+
+      if (isValid) {
+        const theWholeDate: string = `${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
+        this.settings.dateOrtext.fields[0].value = theWholeDate;
+        if (lDay && lMonth && lYear) this.controlDateChange({ target:{ value: theWholeDate } }, 'greater');
+        this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(lDay)}-${this.addZero(lMonth)}-${lYear}`;
+      }
+
+      this.isBeingUsedDateContr = false; 
+    }
+  }
+
   // FOR DATE FIELD
   controlDateChange(e, dateOrder: string) {
     const isDateNotValid = this.globals.validateDate(e.target.value, dateOrder, true, true);
     if (e && e.target) {
       const date =
-        e.target.value && e.target.value.length > 0 && !isDateNotValid
+        e.target.value && e.target.value.length && !isDateNotValid
           ? this.globals.dateStringToISOString(e.target.value)
           : null;
       this.settings.dateForSubmit = date;
@@ -1092,11 +1229,17 @@ export class TextsButtonsSetBlockComponent
       }
     }
 
+    if (e.target.value && e.target.value.length && !isDateNotValid && !this.isBeingUsedDateContr) {
+      const dNow = new Date();
+      const theValue = `${e.target.value}T${dNow.toISOString().split("T")[1]}`;
+      this.setDateFunc({ theValue });
+    }
+
     if (this.settings.isGenericActivity && e && e.target) {
       // if truty, this is for generic activity
       if (this.settings.genActSelectStatus) {
         this.dataGenAct.date =
-          e.target.value && e.target.value.length > 0 && !isDateNotValid
+          e.target.value && e.target.value.length && !isDateNotValid
             ? this.globals.dateStringToISOString(e.target.value)
             : null;
       } else {

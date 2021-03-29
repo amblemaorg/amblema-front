@@ -343,7 +343,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   setDateFunc(key_, type = "calendar") {
     this.isBeingUsedDateContr = true;
 
-    const theDate = type === "calendar" ? new Date(this.componentForm.controls[key_].value) : new Date();
+    const theDate = type === "calendar" && this.componentForm.controls[key_].value ? new Date(this.componentForm.controls[key_].value) : new Date();
     const { day, month, year } = {
       day: theDate.getDate(),
       month: theDate.getMonth() + 1,
@@ -410,7 +410,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       } = this.getDates(key_);
   
       let isValid = this.isValidDay(fDay, fMonth, fYear);
-      console.log("1", isValid);
+      // console.log("1", isValid);
   
       if (!isValid) {
         if (datePart === "day") this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(1);
