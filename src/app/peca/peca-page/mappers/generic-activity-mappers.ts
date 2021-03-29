@@ -66,6 +66,12 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
                     dateOtherData["fields"] = [{ 
                         placeholder: "Fecha de la actividad", 
                         fullwidth: false, 
+                        specialDateForm: "dateForGenericActivity",
+                        dateForGenericActivityDay: null,
+                        dateForGenericActivityMonth: null,
+                        dateForGenericActivityYear: null,
+                        dateForGenericActivityInactiveInput: null,
+                        theWholeDate: isThereDate ? date : null,
                         type: "date",
                         // value: isThereDate ? parseDate( new Date( date.split("+").shift() ), true ) : null,
                         value: isThereDate ? date.split("T")[0] : null,
