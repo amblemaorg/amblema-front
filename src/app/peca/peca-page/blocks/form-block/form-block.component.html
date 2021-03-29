@@ -141,14 +141,14 @@
                   <ng-container *ngIf="!sendingForm && (settings.formsContent[field].readonly || isReadOnly()); else newDateInputs">
                     <div class="inactive-wrapper">
                       <input
-                      [formControlName]="settings.formsContent[field].specialDateForm+'InactiveInput'"
-                      class="form-control" 
-                      [placeholder]="settings.formsContent[field].placeholder" 
-                      autocomplete="off" 
-                      type="text" 
-                      [id]="getId(field+'-part-inactive')"
-                      readonly
-                    />
+                        [formControlName]="settings.formsContent[field].specialDateForm+'InactiveInput'"
+                        class="form-control" 
+                        [placeholder]="settings.formsContent[field].placeholder" 
+                        autocomplete="off" 
+                        type="text" 
+                        [id]="getId(field+'-part-inactive')"
+                        readonly
+                      />
                     </div>
                   </ng-container>
                   <ng-template #newDateInputs>

@@ -96,7 +96,7 @@ export class InitialDiagnosticPageComponent
           }
           this.students = auxStudents;
           if (!isNullOrUndefined(data)) {
-            console.log(data.user);
+            // console.log(data.user);
             let { permissions } = data.user;
             permissions = this.managePermissions(permissions);
             this.setReadingTableData(

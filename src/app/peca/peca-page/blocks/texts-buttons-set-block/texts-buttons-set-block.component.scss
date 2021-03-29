@@ -30,6 +30,23 @@
         // margin-left: 10px;
         display: inline-block;
 
+        .date-part-container {
+            display: flex;
+            align-items: center;
+
+            .inactive-wrapper {
+              width: 100%;
+            }
+
+            .calendaricon {
+              margin-left: 0.5rem;
+
+              .icon-calendar:before {
+                color: $blue;
+              }
+            }
+        }
+
         .is-date-placeholder.greyer {
             background: #e9ecef !important;
         }
@@ -78,6 +95,33 @@
                 .left-side {
                     .left-sided-content {
                         margin-bottom: 0;
+
+                        .datepicker-control {
+                            position: absolute;
+                            top: 0;
+                            overflow-y: hidden;
+                            overflow: visible;
+                            right: 2.2rem;
+                            width: 1.5rem;
+                    
+                            .date-picker-custom {
+                                opacity: 0;
+                            }
+                        }
+                        .day {
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            border-right: 0;
+                        }
+                        .month {
+                            border-radius: 0;
+                        }
+                        .year {
+                            width: 150%;
+                            border-top-left-radius: 0;
+                            border-bottom-left-radius: 0;
+                            border-left: 0;
+                        }
                     }
                 }
                 .right-side {
