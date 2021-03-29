@@ -7,6 +7,7 @@ import { PageBlockComponent } from '../page-block.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NbIconModule } from '@nebular/theme';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { NgxsModule } from '@ngxs/store';
@@ -66,6 +67,7 @@ describe('TextsButtonsSetBlockComponent', () => {
         FormsModule,
         RouterTestingModule.withRoutes([]),
         ToastrModule.forRoot(),
+        NbIconModule,
         HttpClientModule,
         NgDatepickerModule,
         NgxsModule.forRoot( [
