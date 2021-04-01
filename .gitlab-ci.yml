@@ -1,11 +1,24 @@
+image: alpine:latest
+
 stages:
+  - build
+  - test
   - integration-testing
   - qa-testing
   - qa-update
+  - deploy
   - qa-deploy
+  - review
+  #- dast
+  - staging
   - staging-testing
   - staging-update
   - staging-deploy
+  #- canary
+  - release
+  - production
+  #- performance
+  - cleanup
 
 variables:
   QA_CONTAINER_NAME: 'amblema_front_qa'
@@ -18,6 +31,20 @@ variables:
   # Path to staging
   PATH_FOLDER_STAGING: /home/amblema/amblema-front/staging
   PATH_PROJECT_STAGING: $PATH_FOLDER_STAGING
+
+  # KUBE_INGRESS_BASE_DOMAIN is the application deployment domain and should be set as a variable at the group or project level.
+  # KUBE_INGRESS_BASE_DOMAIN: domain.example.com
+
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: testing-password
+  POSTGRES_ENABLED: "true"
+  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+
+  DOCKER_DRIVER: overlay2
+
+  ROLLOUT_RESOURCE_TYPE: deployment
+
+  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
 
 # Jobs for Staging environment
 .teststagingscript: &test
@@ -103,3 +130,9 @@ staging-turn-off:
   only:
     - master
   when: manual
+
+
+include:  
+
+  - project: binaural/ecosistema/DevOps/ci-cd/ymls
+    file: /semantic-versioning/release.gitlab-ci.yml #para versionado
