@@ -1022,25 +1022,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             }
           },
           (error) => {
+            const { error: { message } } = error;
+
             const error_msg =
               error.error && error.error instanceof ProgressEvent
                 ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                : message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+                  ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                  :"Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             this.sendingForm = false;
             if (this.settings.tableCode)
               this.globals.setAsReadOnly(this.settings.tableCode, false, false);
-
-            // const errorType = (error.error && error.error["name"])
-            //   ? (this.settings.formType === "agregarGradoSeccion"
-            //     ? "section"
-            //     : "name")
-            //   : "regular";
-
-            // if (
-            //   errorType!="regular" &&
-            //   this.settings.formType === "agregarGradoSeccion"
-            // ) this.componentForm.get(errorType).setValue("");
 
             this.toastr.error(
               // errorType!="regular"
@@ -1052,8 +1045,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
                 ? error.error["cardId"][0].msg
                 : error.error && error.error["msg"]
                 ? error.error["msg"]
-                : error.error && error.error["message"]
-                ? error.error["message"]
                 : error_msg,
               "",
               { positionClass: "toast-bottom-right" }

@@ -185,7 +185,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -216,7 +222,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -254,7 +266,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -283,7 +301,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -319,7 +343,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -350,7 +380,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -387,7 +423,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -417,7 +459,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -579,7 +627,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -626,7 +680,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -703,7 +763,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -744,7 +810,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -798,7 +870,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -835,7 +913,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
@@ -877,7 +961,13 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      this.toastr.error("Ha ocurrido un error", "", {
+      const { error: { message } } = error;
+
+      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
+        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
+        : "Ha ocurrido un error";
+
+      this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
       });
     }
