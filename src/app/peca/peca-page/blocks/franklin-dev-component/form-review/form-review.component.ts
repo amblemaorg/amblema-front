@@ -186,8 +186,18 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
   onTableActions = (event: any) => {
     if (event.action === "DELETE") {
       const images = this.form.get("inputImg").value;
+      const readImgs = this.imgResultAfterCompress && typeof this.imgResultAfterCompress === "object" ? Object.keys(this.imgResultAfterCompress) : null;
       const newImages = images.filter((image) => image !== event.data.image);
       this.form.get("inputImg").setValue(newImages);
+      if (readImgs) {
+        const imgs_ = readImgs.reduce( ( theIms, currentImg ) => {
+          if (this.imgResultAfterCompress[currentImg] !== event.data.image) theIms.push(currentImg);
+          return theIms
+        }, [] );
+        imgs_.map( img => {
+          delete this.imgResultAfterCompress[img];
+        });
+      }
       this.source.remove(event.data);
     }
   };
@@ -269,10 +279,14 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
       if (this.settings.fields.inputImg.multiple) {
         let images = [...this.form.get("inputImg").value];
         images = images instanceof Array ? images : [];
-        images.push(reader.result as string);
-        this.form.get("inputImg").setValue(images);
-        this.source.add({ image: reader.result as string });
-        this.source.refresh();
+        const newImg =  reader.result as string;
+        const isRepeated = images.some(theImg => theImg === newImg);
+        if (!isRepeated) {
+          images.push(newImg);
+          this.form.get("inputImg").setValue(images);
+          this.source.add({ image: reader.result as string });
+          this.source.refresh();
+        }
       } else {
         this.form.get("inputImg").setValue(reader.result as string);
       }
