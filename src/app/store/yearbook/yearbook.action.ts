@@ -437,7 +437,16 @@ export class YearBookState {
     // console.log("yearbook data", yearBookData);
     try {
       const data = await this.fetcher.post(url, yearBookData).toPromise();
-      // console.log("Termino de enviar la solicitud...");
+      // console.log("Termino de enviar la solicitud...", data);
+      const { msgs } = data;
+      if (msgs && msgs instanceof Array && msgs.length) {
+        msgs.map(message => {
+          this.toastr.error(message, "", {
+            positionClass: "toast-bottom-right",
+            onActivateTick: true
+          });
+        });
+      }
       this.store.dispatch([new FetchPecaContent(`${pecaId}[:show-toast:]`)]);
     } catch (error) {
       console.error(error);
