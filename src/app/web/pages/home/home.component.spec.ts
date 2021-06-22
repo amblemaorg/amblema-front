@@ -33,7 +33,7 @@ describe("HomeComponent", () => {
         ChartsSwitcherModule,
         HttpClientModule,
         CountoModule,
-        AngularSvgIconModule,
+        AngularSvgIconModule.forRoot(),
         NgxsModule.forRoot([WebState]),
       ],
       providers: [

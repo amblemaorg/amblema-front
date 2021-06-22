@@ -29,7 +29,7 @@ describe("AboutComponent", () => {
         OwlModule,
         CarouselModule,
         HttpClientModule,
-        AngularSvgIconModule,
+        AngularSvgIconModule.forRoot(),
         NgxsModule.forRoot([WebState]),
       ],
       providers: [
