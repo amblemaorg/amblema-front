@@ -95,8 +95,9 @@
                 [id]="uploadFile.id+'0'"
                 (change)="fileMngr($event,i)"
                 type="file"
-                accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint"
+                accept="application/pdf"
               >
+              <!-- ,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint -->
               <button
                 [id]="uploadFile.id+'1'"
                 (click)="clickUpload(uploadFile); $event.preventDefault()"
