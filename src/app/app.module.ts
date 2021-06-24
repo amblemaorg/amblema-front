@@ -33,7 +33,7 @@ import { YearBookState } from "./store/yearbook/yearbook.action";
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     AppRoutingModule,
     HttpClientModule,
-    AngularSvgIconModule,
+    AngularSvgIconModule.forRoot(),
     NgbModalModule,
     NbAuthModule.forRoot(),
     // -- NGXS --
