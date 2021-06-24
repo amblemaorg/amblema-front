@@ -460,60 +460,57 @@ export class PdfYearbookService {
             .build()
         : null;
 
-      const sectionsPromise = new Promise((resolve) => {
-        if (pdfData["schoolSections"]) {
-          pdf.add(
-            new TocItem(new Txt("Grados y secciones").fontSize(0).opacity(0).end)
-              .tocStyle({ bold: true, italics: true, fontSize: 13 })
-              .tocMargin([0, 0, 0, menu_item_margin.bottom]).end
-          );
-          
-          const sortedSections = pdfData.schoolSections.sort((curr, next) => {
-            const currentGrade = curr.sectionGrade.toLowerCase();
-            const nextGrade = next.sectionGrade.toLowerCase();
-            if (currentGrade < nextGrade) return -1;
-            if (currentGrade > nextGrade) return 1;
-            return 0;
-          });
+      if (pdfData["schoolSections"]) {
+        pdf.add(
+          new TocItem(new Txt("Grados y secciones").fontSize(0).opacity(0).end)
+            .tocStyle({ bold: true, italics: true, fontSize: 13 })
+            .tocMargin([0, 0, 0, menu_item_margin.bottom]).end
+        );
+        
+        const sortedSections = pdfData.schoolSections.sort((curr, next) => {
+          const currentGrade = curr.sectionGrade.toLowerCase();
+          const nextGrade = next.sectionGrade.toLowerCase();
+          if (currentGrade < nextGrade) return -1;
+          if (currentGrade > nextGrade) return 1;
+          return 0;
+        });
 
-          sortedSections.map(async (section, i, arr) => {
-            if (section["sectionName"] && section["sectionStudents"]) {
-              const section_img = section["sectionImg"]
-                ? await new Img(section.sectionImg)
-                    .fit([pdfPageSizes.width - 140, 190])
-                    .absolutePosition(70, 60)
-                    .alignment("center")
-                    .build()
-                : null;
+        const sectionsPromises = sortedSections.map(async (section) => {
+          if (section["sectionName"] && section["sectionStudents"]) {
+            const section_img = section["sectionImg"]
+              ? await new Img(section.sectionImg)
+                  .fit([pdfPageSizes.width - 140, 190])
+                  .absolutePosition(70, 60)
+                  .alignment("center")
+                  .build()
+              : null;
 
-              pdf.add(
-                new TocItem(
-                  new Txt(section.sectionName)
-                    .style("highlight")
-                    .margin([0, section["sectionImg"] ? 205 : 190, 0, 15])
-                    .pageBreak("before").end
-                )
-                  .tocStyle({ bold: true, italics: true })
-                  .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end
-              );
+            pdf.add(
+              new TocItem(
+                new Txt(section.sectionName)
+                  .style("highlight")
+                  .margin([0, section["sectionImg"] ? 205 : 190, 0, 15])
+                  .pageBreak("before").end
+              )
+                .tocStyle({ bold: true, italics: true })
+                .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end
+            );
 
-              if (symbolsCoverImg) pdf.add(symbolsCoverImg);
-              if (section_img) pdf.add(section_img);
+            if (symbolsCoverImg) pdf.add(symbolsCoverImg);
+            if (section_img) pdf.add(section_img);
 
-              pdf.add(
-                new Columns(this.getStudents(section.sectionStudents))
-                  .color(this.colors.blue)
-                  .bold()
-                  .italics().end
-              );
-            }
+            pdf.add(
+              new Columns(this.getStudents(section.sectionStudents))
+                .color(this.colors.blue)
+                .bold()
+                .italics().end
+            );
+          }
+        });
 
-            if (i === arr.length - 1) resolve(null);
-          });
-        } else resolve(null);
-      });
+        await Promise.all(sectionsPromises);
+      }
 
-      await sectionsPromise;
       //? END SCHOOL REVIEW ...........................................................................................................................................
 
       // LAPSES' GRAPHICS IMAGES ------------------------------------------------------------------------
