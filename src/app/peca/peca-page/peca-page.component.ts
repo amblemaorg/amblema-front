@@ -163,6 +163,7 @@ export class PecaPageComponent {
           );      
       })
       .finally(() => {
+        this.creatingPdf = false;
         this.pdfToasterCalledTimes++;
       }); 
   }
