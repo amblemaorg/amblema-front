@@ -99,7 +99,6 @@ export class PdfYearbookService {
         const theActImgs =
           lapse["activities"] && lapse["activities"].length
             ? lapse.activities.map(async (activity, j, arrA) => {
-                console.log("la act", activity);
                 // if (activity["images"] && activity["images"].length > 0) {
                 const images_act = await this.getActivityImages(
                   activity.images || []
@@ -631,17 +630,16 @@ export class PdfYearbookService {
       // await graphicsPromise;
       //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
       if (pdfData["lapses"]) {
+        let lastWasImg = false;
         pdfData.lapses.map((lapse, indx) => {
-          const lapse_skills = [];
+          const lapse_skills = [
+            ...(lapse["diagnosticReading"] ? [lapse["diagnosticReading"]] : []),
+            ...(lapse["diagnosticMath"] ? [lapse["diagnosticMath"]] : []),
+            ...(lapse["diagnosticLogic"] ? [lapse["diagnosticLogic"]] : []),
+          ];
 
-          if (lapse["diagnosticReading"])
-            lapse_skills.push(lapse["diagnosticReading"]);
-          if (lapse["diagnosticMath"])
-            lapse_skills.push(lapse["diagnosticMath"]);
-          if (lapse["diagnosticLogic"])
-            lapse_skills.push(lapse["diagnosticLogic"]);
           const hasSum = Object.keys(images_[`lapse${indx + 1}`]).length;
-          if (lapse_skills.length > 0 || (lapse["activities"] && hasSum))
+          if (lapse_skills.length || (lapse["activities"] && hasSum))
             pdf.add(
               new TocItem(new Txt(lapse.lapseName).fontSize(0).opacity(0).end)
                 .tocStyle({ bold: true, italics: true, fontSize: 13 })
@@ -845,24 +843,32 @@ export class PdfYearbookService {
                 ]).end
             );
 
-            console.log(
-              "Ay dios",
-              images_[`lapse${indx + 1}`],
-              lapse.activities
-            );
-            lapse.activities.map((activity, actInx) => {
-              // console.log("muestrame 1", activity);
+            let count_ = -1; //! TEST
+            let canBreak = true;
+            lapse.activities.map((activity, actInx, actArr) => {
               const thisActImgs =
                 hasSum && images_[`lapse${indx + 1}`][actInx].length
                   ? images_[`lapse${indx + 1}`][actInx]
                   : null;
 
-              // console.log("muestrame 2", thisActImgs);
-
               if (
                 activity["name"] &&
                 ((activity["images"] && thisActImgs) || activity["description"])
               ) {
+                //! TEST
+                count_++;
+                console.log("Hi", lastWasImg);
+                canBreak = indx && !count_ && !lastWasImg;
+                console.log("Pre", indx, actInx, count_, canBreak);
+                if (!indx || count_ || canBreak)
+                  pdf.add(
+                    new Txt("page-breaker")
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak("before").end
+                  );
+                else console.log("Ok");
+                //! TEST
                 pdf.add(
                   new Stack([
                     new Txt(lapse.lapseName).style(["highlight", "heading"])
@@ -877,8 +883,7 @@ export class PdfYearbookService {
                       .relativePosition(0, 8).end,
                   ])
                     .color(this.colors.blue)
-                    .margin([0, 0, 0, 35])
-                    .pageBreak("before").end
+                    .margin([0, 0, 0, 35]).end
                 );
 
                 pdf.add(
@@ -894,33 +899,36 @@ export class PdfYearbookService {
                   ]).end
                 );
 
-                if (activity["description"]) {
+                if (activity["description"])
                   pdf.add(
                     new Columns(this.getColums(activity.description, pdf))
                       .columnGap(column_gap)
                       .style(column_style).end
                   );
 
-                  if (activity["images"] && thisActImgs)
+                if (
+                  activity["images"] &&
+                  thisActImgs &&
+                  thisActImgs.length /*  &&
+                  actInx !== actArr.length - 1 */
+                ) {
+                  lastWasImg = true;
+                  if (activity["description"])
                     pdf.add(
                       new Txt("page-breaker")
                         .fontSize(0)
                         .opacity(0)
                         .pageBreak("after").end
                     );
-                }
-
-                if (activity["images"] && thisActImgs) {
-                  if (thisActImgs)
-                    pdf.add(
-                      new Table(thisActImgs).widths(["*", "*"]).layout({
-                        paddingRight: (r) => (r === 0 ? 25 : 0),
-                        paddingLeft: (r) => (r > 0 ? 25 : 0),
-                        hLineWidth: () => 0,
-                        vLineWidth: () => 0,
-                      }).end
-                    );
-                }
+                  pdf.add(
+                    new Table(thisActImgs).widths(["*", "*"]).layout({
+                      paddingRight: (r) => (r === 0 ? 25 : 0),
+                      paddingLeft: (r) => (r > 0 ? 25 : 0),
+                      hLineWidth: () => 0,
+                      vLineWidth: () => 0,
+                    }).end
+                  );
+                } else lastWasImg = false;
               }
             });
           }
