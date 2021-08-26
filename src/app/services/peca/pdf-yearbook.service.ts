@@ -92,33 +92,24 @@ export class PdfYearbookService {
     };
     console.log("pdfData", pdf_data);
 
-    // const promActImgs = new Promise<any>((resolve) => {
     if (pdf_data["lapses"]) {
       const lapsesImgs = pdf_data.lapses.map(async (lapse, i, arrL) => {
-        // if (lapse["activities"] && lapse["activities"].length > 0) {
         const theActImgs =
           lapse["activities"] && lapse["activities"].length
             ? lapse.activities.map(async (activity, j, arrA) => {
-                // if (activity["images"] && activity["images"].length > 0) {
                 const images_act = await this.getActivityImages(
                   activity.images || []
                 );
                 images_[`lapse${i + 1}`][`${j}`] = images_act.length
                   ? images_act
                   : [];
-                // if (j === arrA.length - 1 && i === arrL.length - 1)
-                //   resolve(null);
-                // } /*  else if (j === arrA.length - 1) resolve(null); */
               })
             : [];
         if (lapse["activities"] && lapse["activities"].length)
           await Promise.all(theActImgs);
-        // } /*  else if (i === arrL.length - 1) resolve(null); */
       });
       await Promise.all(lapsesImgs);
     }
-    // });
-    // await promActImgs;
 
     const generateThisPdf = async () => {
       clearInterval(interval);
@@ -601,10 +592,8 @@ export class PdfYearbookService {
       //? END SCHOOL REVIEW ...........................................................................................................................................
 
       // LAPSES' GRAPHICS IMAGES ------------------------------------------------------------------------
-      // const graphicsPromise = new Promise((resolve) => {
       const theGraphs = Object.keys(this.graphics).map(
         async (lapse, i, arrP) => {
-          // const graphicsPromiseC = new Promise((resolve) => {
           const graphsImgs = Object.keys(this.graphics[lapse]).map(
             async (diagnostic, j, arrC) => {
               if (this.graphics[lapse][diagnostic]) {
@@ -614,24 +603,17 @@ export class PdfYearbookService {
                   .build();
                 this.graphics[lapse][diagnostic] = graphimg;
               }
-              // if (j === arrC.length - 1 && i === arrP.length - 1)
-              //   resolve(null);
             }
           );
           await Promise.all(graphsImgs);
-          // });
-
-          // await graphicsPromiseC;
-          // if (i === arrP.length - 1) resolve(null);
         }
       );
       await Promise.all(theGraphs);
-      // });
-      // await graphicsPromise;
       //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
       if (pdfData["lapses"]) {
         let lastWasImg = false;
         pdfData.lapses.map((lapse, indx) => {
+          let applyOverHere = false;
           const lapse_skills = [
             ...(lapse["diagnosticReading"] ? [lapse["diagnosticReading"]] : []),
             ...(lapse["diagnosticMath"] ? [lapse["diagnosticMath"]] : []),
@@ -646,6 +628,8 @@ export class PdfYearbookService {
                 .tocMargin([0, 0, 0, menu_item_margin.bottom]).end
             );
 
+          let count_skill = [-1, -1, -1];
+          let canBreak_skill = [true, true, true];
           lapse_skills.map((skill, index, arr) => {
             if (skill) {
               pdf.add(
@@ -669,14 +653,27 @@ export class PdfYearbookService {
                   : "diagnosticLogic";
 
               if (skill["diagnosticTable"]) {
+                count_skill[0]++;
+                canBreak_skill[0] = indx && !count_skill[0] && !lastWasImg;
+                if (
+                  applyOverHere ||
+                  !indx ||
+                  count_skill[0] ||
+                  canBreak_skill[0]
+                )
+                  pdf.add(
+                    new Txt("page-breaker")
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak("before").end
+                  );
                 pdf.add(
                   new Stack([
                     new Txt(lapse.lapseName).style(["highlight", "heading"])
                       .end,
                   ])
                     .color(this.colors.blue)
-                    .margin([0, 0, 0, 35])
-                    .pageBreak("before").end
+                    .margin([0, 0, 0, 35]).end
                 );
 
                 pdf.add(
@@ -722,6 +719,8 @@ export class PdfYearbookService {
                     }).end
                 );
 
+                if (count_skill[0] === 0) applyOverHere = true;
+
                 if (
                   skill["diagnosticAnalysis"] &&
                   !this.graphics[`lapse${indx + 1}`][skillName]
@@ -736,14 +735,27 @@ export class PdfYearbookService {
 
               // GRAPHICS
               if (this.graphics[`lapse${indx + 1}`][skillName]) {
+                count_skill[1]++;
+                canBreak_skill[1] = indx && !count_skill[1] && !lastWasImg;
+                if (
+                  applyOverHere ||
+                  !indx ||
+                  count_skill[1] ||
+                  canBreak_skill[1]
+                )
+                  pdf.add(
+                    new Txt("page-breaker")
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak("before").end
+                  );
                 pdf.add(
                   new Stack([
                     new Txt(lapse.lapseName).style(["highlight", "heading"])
                       .end,
                   ])
                     .color(this.colors.blue)
-                    .margin([0, 0, 0, 35])
-                    .pageBreak("before").end
+                    .margin([0, 0, 0, 35]).end
                 );
 
                 pdf.add(
@@ -761,6 +773,8 @@ export class PdfYearbookService {
 
                 pdf.add(this.graphics[`lapse${indx + 1}`][skillName]);
 
+                if (count_skill[1] === 0) applyOverHere = true;
+
                 if (skill["diagnosticAnalysis"])
                   pdf.add(
                     new Txt("page-breaker")
@@ -775,15 +789,30 @@ export class PdfYearbookService {
                 if (
                   !skill["diagnosticTable"] &&
                   !this.graphics[`lapse${indx + 1}`][skillName]
-                )
+                ) {
+                  count_skill[2]++;
+                  canBreak_skill[2] = indx && !count_skill[2] && !lastWasImg;
+                  if (
+                    applyOverHere ||
+                    !indx ||
+                    count_skill[2] ||
+                    canBreak_skill[2]
+                  )
+                    pdf.add(
+                      new Txt("page-breaker")
+                        .fontSize(0)
+                        .opacity(0)
+                        .pageBreak("before").end
+                    );
                   pdf.add(
                     new Txt(lapse.lapseName)
                       .style("highlight")
                       .alignment("center")
                       .color(this.colors.blue)
-                      .margin([0, 0, 0, 10])
-                      .pageBreak("before").end
+                      .margin([0, 0, 0, 10]).end
                   );
+                  if (count_skill[2] === 0) applyOverHere = true;
+                }
 
                 pdf.add(
                   new Stack([
@@ -843,9 +872,9 @@ export class PdfYearbookService {
                 ]).end
             );
 
-            let count_ = -1; //! TEST
+            let count_ = -1;
             let canBreak = true;
-            lapse.activities.map((activity, actInx, actArr) => {
+            lapse.activities.map((activity, actInx) => {
               const thisActImgs =
                 hasSum && images_[`lapse${indx + 1}`][actInx].length
                   ? images_[`lapse${indx + 1}`][actInx]
@@ -855,20 +884,16 @@ export class PdfYearbookService {
                 activity["name"] &&
                 ((activity["images"] && thisActImgs) || activity["description"])
               ) {
-                //! TEST
                 count_++;
-                console.log("Hi", lastWasImg);
                 canBreak = indx && !count_ && !lastWasImg;
-                console.log("Pre", indx, actInx, count_, canBreak);
-                if (!indx || count_ || canBreak)
+
+                if (applyOverHere || !indx || count_ || canBreak)
                   pdf.add(
                     new Txt("page-breaker")
                       .fontSize(0)
                       .opacity(0)
                       .pageBreak("before").end
                   );
-                else console.log("Ok");
-                //! TEST
                 pdf.add(
                   new Stack([
                     new Txt(lapse.lapseName).style(["highlight", "heading"])
@@ -906,12 +931,7 @@ export class PdfYearbookService {
                       .style(column_style).end
                   );
 
-                if (
-                  activity["images"] &&
-                  thisActImgs &&
-                  thisActImgs.length /*  &&
-                  actInx !== actArr.length - 1 */
-                ) {
+                if (activity["images"] && thisActImgs && thisActImgs.length) {
                   lastWasImg = true;
                   if (activity["description"])
                     pdf.add(
@@ -1034,10 +1054,9 @@ export class PdfYearbookService {
   }
 
   private async getActivityImages(images: string[]): Promise<any[][]> {
-    // return new Promise<any[][]>(async (resolve) => {
     const body: any[][] = [];
-    // const imgPr = new Promise<any>((resolve) => {
     const theImgs = [];
+    const blankImgs = [];
     const images_for_loop: any[] =
       images.length % 2 === 0 ? images : [...images, { img: images[0] }];
     const imagesPr = images_for_loop.map(async (img_url) => {
@@ -1050,27 +1069,27 @@ export class PdfYearbookService {
           .opacity(typeof img_url === "string" ? 1 : 0)
           .alignment("center")
           .build();
-        theImgs.push(image_rendered);
+        if (typeof img_url === "string") theImgs.push(image_rendered);
+        else blankImgs.push(image_rendered);
       } catch (e) {
         console.error("could not get image", e);
       }
     });
 
     if (images_for_loop.length) await Promise.all(imagesPr);
-    // .then((imagesGotten) => {
-    theImgs.map((img, i, arr) => {
-      if (body.length && body[body.length - 1].length === 1) {
-        body[body.length - 1].push(img);
-      } else body.push([img]);
-      // if (i === arr.length - 1) resolve(null);
-    });
-    // });
-    // });
 
-    // await imgPr;
-    // resolve(body.length > 0 ? body : null);
+    theImgs.forEach((img) => {
+      if (body.length && body[body.length - 1].length === 1)
+        body[body.length - 1].push(img);
+      else body.push([img]);
+    });
+
+    blankImgs.forEach((bI) => {
+      if (body.length && body[body.length - 1].length === 1)
+        body[body.length - 1].push(bI);
+    });
+
     return body.length ? body : [];
-    // });
   }
 
   private getPageNumberFormated(number: string): string {
