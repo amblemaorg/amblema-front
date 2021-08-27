@@ -1,7 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
 import { Label } from "ng2-charts";
-import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
+import {
+  PageBlockComponent,
+  PresentationalBlockComponent,
+} from "../page-block.component";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "../../../../store/states/peca/peca.state";
@@ -41,7 +44,10 @@ export class GraphicsBlockComponent
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private router: Router, private pdfYearbookService: PdfYearbookService) {
+  constructor(
+    private router: Router,
+    private pdfYearbookService: PdfYearbookService
+  ) {
     this.type = "presentational";
     this.component = "graphics";
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -55,8 +61,7 @@ export class GraphicsBlockComponent
   ngOnInit() {
     if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
       this.color = "#FFF";
-    }
-    else {
+    } else {
       this.color = "#111";
     }
 
@@ -114,7 +119,10 @@ export class GraphicsBlockComponent
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
-              this.parseGradeName(data.activePecaContent.school.sections[i].grade, data.activePecaContent.school.sections[i].name)
+              this.parseGradeName(
+                data.activePecaContent.school.sections[i].grade,
+                data.activePecaContent.school.sections[i].name
+              )
             );
             this.arrayColors.push("#81B03E");
           }
@@ -122,7 +130,8 @@ export class GraphicsBlockComponent
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex
+                  data.activePecaContent.school.sections[i].diagnostics.lapse1
+                    .wordsPerMinIndex
                 ).toFixed(2)
               );
             }
@@ -130,7 +139,8 @@ export class GraphicsBlockComponent
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex
+                  data.activePecaContent.school.sections[i].diagnostics.lapse2
+                    .wordsPerMinIndex
                 ).toFixed(2)
               );
             }
@@ -138,7 +148,8 @@ export class GraphicsBlockComponent
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex
+                  data.activePecaContent.school.sections[i].diagnostics.lapse3
+                    .wordsPerMinIndex
                 ).toFixed(2)
               );
             }
