@@ -1,8 +1,9 @@
 #!/bin/sh
 export REGISTRY=gitlab.binauraldev.com:5050
 export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
+export TOKEN=4Pm291_ryF2XyRA_Q3fD
 
-docker login ${REGISTRY} -u serh -p VqvYjUD6h88Yask4aZtV
+echo "${TOKEN}" | docker login ${REGISTRY} -u serh --password-stdin
 
 docker network create --subnet 172.20.0.0/16 --ip-range 172.20.240.0/24 amblema-network
 
@@ -21,3 +22,5 @@ docker rm -f amblema-front-ssr
 docker run -d --name amblema-front-ssr -p 10516:4200 ${REGISTRY}${PROJECT}/ssr
 
 docker network connect --alias amblema-front-ssr --ip 172.20.240.2 amblema-network amblema-front-ssr
+
+docker logout ${REGISTRY}
