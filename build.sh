@@ -3,6 +3,8 @@ export REGISTRY=gitlab.binauraldev.com:5050
 
 export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 
+export TOKEN=4Pm291_ryF2XyRA_Q3fD
+
 # You MUST create .env.prod to add environment variables needed to create the images successfully
 # .env.prod file variables provided MUST be like :
 #
@@ -15,7 +17,7 @@ export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
 # export G_ANALYTICS_ID=
 source .env.prod
 
-docker login ${REGISTRY} -u serh -p VqvYjUD6h88Yask4aZtV
+echo "${TOKEN}" | docker login ${REGISTRY} -u serh --password-stdin
 
 docker build \
   -f prod.Dockerfile \
@@ -48,3 +50,5 @@ docker build \
 docker push ${REGISTRY}${PROJECT}/ssr
 
 docker rmi ${REGISTRY}${PROJECT}/ssr
+
+docker logout ${REGISTRY}
