@@ -187,6 +187,7 @@ export class GraphicsBlockComponent
           ],
         },
         options: {
+          maintainAspectRatio: false,
           title: {
             //text: "BAR CHART",
             display: true,
