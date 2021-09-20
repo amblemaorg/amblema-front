@@ -1,0 +1,11 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmitAction(form.value)">
+    <!-- Button -->
+    <ng2-smart-table
+      [settings]="tableStudents"
+      [source]="source"
+      (custom)="onTableActions($event)"
+    >
+    </ng2-smart-table>
+  </form>
+</div>

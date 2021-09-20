@@ -32,6 +32,10 @@ const routes: Routes = [
         component: SchoolDataPageComponent,
       },
       {
+        path: "matricula-escolar-anterior",
+        component: SchoolPicturesPageComponent,
+      },
+      {
         path: "lapso/:lapsoNumber/diagnostico-inicial",
         component: InitialDiagnosticPageComponent,
       },
