@@ -4,7 +4,9 @@
       <a [routerLink]="['/']"><fa-icon [icon]="backIcon"></fa-icon></a>
     </div>
     <div id="logout">
-      <a [routerLink]="['/auth/logout']"><fa-icon [icon]="closeIcon"></fa-icon></a>
+      <a [routerLink]="['/auth/logout']" [queryParams]="{ reload: 1 }"
+        ><fa-icon [icon]="closeIcon"></fa-icon
+      ></a>
     </div>
   </div>
   <section id="principal">
@@ -30,14 +32,16 @@
                 Todavía no tienes proyectos asignados
               </button>
             </div>
-            
-          
           </div>
           <div
             *ngFor="let item of projects; index as i"
             class="col-6 col-sm-6 col-md-4 col-lg-4 button-col"
           >
-            <button type="button" (click)="goTo(item.phase, item.id, i)" class="btn btn-light">
+            <button
+              type="button"
+              (click)="goTo(item.phase, item.id, i)"
+              class="btn btn-light"
+            >
               {{
                 item.school.name != undefined
                   ? item.school.name

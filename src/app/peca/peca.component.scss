@@ -5,7 +5,7 @@
 @import "~@nebular/auth/styles/globals";
 // @import "scss/variables";
 @import "fonts/amblema-icons/amblemaicons";
-@import 'scss/sharedheader';
+@import "scss/sharedheader";
 
 ::ng-deep {
   $nb-enable-css-custom-properties: true;
@@ -17,7 +17,7 @@
       sidebar-background-color: $blue,
       text-basic-color: $green,
       // Menu theme variables
-        menu-text-color: #ffffff,
+      menu-text-color: #ffffff,
       menu-item-icon-color: #ffffff,
       menu-item-hover-text-color: #01474e,
       menu-item-icon-hover-color: #01474e,
@@ -26,7 +26,7 @@
       menu-item-divider-width: 2px,
       menu-item-divider-color: #367a92,
       // General theme variables
-        color-primary-100: #f2f6ff,
+      color-primary-100: #f2f6ff,
       color-primary-200: #d9e4ff,
       color-primary-300: #a6c1ff,
       color-primary-400: #598bff,
@@ -152,7 +152,7 @@
       font-family: "Montserrat" !important;
     }
     @media (max-width: 768px) {
-      h6{
+      h6 {
         font-size: 1rem;
       }
     }
@@ -161,7 +161,7 @@
       font-family: "Montserrat" !important;
       margin: 0;
     }
-    @media (min-width:768px) and (max-width:1200px) {
+    @media (min-width: 768px) and (max-width: 1200px) {
       h1 {
         font-size: 1.125rem;
       }
@@ -183,40 +183,52 @@
             font-family: "Montserrat" !important;
           }
           .welcome-image {
-            @media screen and (orientation: landscape) and (min-width: 640px) { max-width: 84%; }
-            @media screen and (orientation: landscape) and (min-width: 1024px) { max-width: 60%; }
-            @media screen and (orientation: landscape) and (min-width: 1600px) { max-width: 56%; }
-            @media screen and (orientation: landscape) and (min-width: 1900px) { max-width: 50%; }
-            @media screen and (orientation: landscape) and (min-width: 2000px) { max-width: 50rem; }
+            @media screen and (orientation: landscape) and (min-width: 640px) {
+              max-width: 84%;
+            }
+            @media screen and (orientation: landscape) and (min-width: 1024px) {
+              max-width: 60%;
+            }
+            @media screen and (orientation: landscape) and (min-width: 1600px) {
+              max-width: 56%;
+            }
+            @media screen and (orientation: landscape) and (min-width: 1900px) {
+              max-width: 50%;
+            }
+            @media screen and (orientation: landscape) and (min-width: 2000px) {
+              max-width: 50rem;
+            }
           }
 
           &.header-title-and-button-container {
-            .btn-go-steps, .btn-download-yearbook {
+            .btn-go-steps,
+            .btn-download-yearbook {
               @include layout-header-btn-confs();
             }
             .btn-go-steps {
               display: none;
             }
 
-            &.comes-from-steps, &.has-yearbook {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            &.comes-from-steps,
+            &.has-yearbook {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
 
-                .btn-go-steps {
-                    display: inline-block;
-                }
+              .btn-go-steps {
+                display: inline-block;
+              }
 
-                @media screen and (orientation: portrait) {
-                  flex-wrap: wrap;
-                  align-items: baseline;
+              @media screen and (orientation: portrait) {
+                flex-wrap: wrap;
+                align-items: baseline;
 
-                  .title-style {
-                    @media screen and (max-width: 374px) {
-                      margin-bottom: 1rem;
-                    }
+                .title-style {
+                  @media screen and (max-width: 374px) {
+                    margin-bottom: 1rem;
                   }
                 }
+              }
             }
           }
         }
@@ -251,10 +263,10 @@
       .header-main-name {
         margin-left: 1rem;
 
-        @media screen and (orientation: landscape){
+        @media screen and (orientation: landscape) {
           margin-left: 0.5rem;
         }
-        @include mediabreak(small,landscape,true,640px) {
+        @include mediabreak(small, landscape, true, 640px) {
           margin-left: 0;
         }
 
@@ -277,13 +289,17 @@
     /*DROPDOWN PRUEBA*/
     .dropdown {
       .dropdown-menu {
-          @include shared-dropdown-menu();
-          &.show {
-            top: 0.75rem !important;
-            right: 0px;
-            @media screen and (orientation: landscape) and (min-width: 640px) { top: 0.85rem !important; }
-            @media screen and (orientation: landscape) and (min-width: 1280px) { top: 0.6rem !important; }
+        @include shared-dropdown-menu();
+        &.show {
+          top: 0.75rem !important;
+          right: 0px;
+          @media screen and (orientation: landscape) and (min-width: 640px) {
+            top: 0.85rem !important;
           }
+          @media screen and (orientation: landscape) and (min-width: 1280px) {
+            top: 0.6rem !important;
+          }
+        }
       }
     }
 
@@ -307,7 +323,7 @@
 
         ::ng-deep {
           span {
-              display: block;
+            display: block;
           }
         }
       }
@@ -354,31 +370,53 @@
   .ng-select {
     .ng-select-container {
       .ng-placeholder {
-          font-size: 0.8rem;
-          font-family: "Montserrat";
-          line-height: 2;
+        font-size: 0.8rem;
+        font-family: "Montserrat";
+        line-height: 2;
       }
     }
   }
 }
 
-
 #no-peca-modal {
   background: rgba(0, 0, 0, 0.25);
   .modal-content {
-      .modal-header {
-          border-bottom: none;
-          padding: 1rem 1rem;
-          .close:focus { outline: none; }
+    .modal-header {
+      border-bottom: none;
+      padding: 1rem 1rem;
+      .close:focus {
+        outline: none;
       }
-      .modal-body {
+    }
+    .modal-body {
+      padding: 0 2rem 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+
+      p {
         color: $blue;
         text-align: justify;
-        padding: 0 2rem 3rem 2rem;
       }
+
+      .btn {
+        background: $blue;
+        color: #fff;
+        padding: 0.25rem 1rem;
+        border: 1px solid $blue;
+
+        &:hover,
+        &:focus {
+          background: #fff;
+          color: $blue;
+        }
+
+        @media screen and (min-width: 768px) {
+          margin-left: auto;
+        }
+      }
+    }
   }
 }
-
 
 ::ng-deep {
   // ng-datepicker

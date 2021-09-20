@@ -1,22 +1,63 @@
 <div class="header-elearning d-flex flex-column">
-    <div class="d-flex header-first-row flex-wrap pt-2" [class.no-under]="(user_type$ | async) != '2'">
-        <h2 class="main-name ml-3 mr-auto mb-0 font-weight-bold">AmbLeMa</h2>
+  <div
+    class="d-flex header-first-row flex-wrap pt-2"
+    [class.no-under]="(user_type$ | async) != '2'"
+  >
+    <h2 class="main-name ml-3 mr-auto mb-0 font-weight-bold">AmbLeMa</h2>
 
-        <div class="dropdown">
-            <div class="avatar-container media p-3 d-flex align-items-center" data-toggle="dropdown">
-                <img [src]="(userBrief$ | async).image ? (userBrief$ | async).image : '../../../../assets/images/profile2.png'" [alt]="(userBrief$ | async).name" class="mr-2 rounded-circle">
-                <div class="media-body">
-                    <h4 class="mb-0 name font-weight-bold" [innerHTML]="getUserOneOrTwoLines((userBrief$ | async).name)"></h4>
-                </div>
-            </div>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a *ngIf="(user_type$ | async) !== '0' && (user_type$ | async) !== '1'" class="dropdown-item" href="javascript:void(0)" (click)="goToProfile()">Perfil</a>
-                <a class="dropdown-item" [routerLink]="['/auth/logout']">Salir</a>
-            </div>
-        </div>        
+    <div class="dropdown">
+      <div
+        class="avatar-container media p-3 d-flex align-items-center"
+        data-toggle="dropdown"
+      >
+        <img
+          [src]="
+            (userBrief$ | async).image
+              ? (userBrief$ | async).image
+              : '../../../../assets/images/profile2.png'
+          "
+          [alt]="(userBrief$ | async).name"
+          class="mr-2 rounded-circle"
+        />
+        <div class="media-body">
+          <h4
+            class="mb-0 name font-weight-bold"
+            [innerHTML]="getUserOneOrTwoLines((userBrief$ | async).name)"
+          ></h4>
+        </div>
+      </div>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a
+          *ngIf="(user_type$ | async) !== '0' && (user_type$ | async) !== '1'"
+          class="dropdown-item"
+          href="javascript:void(0)"
+          (click)="goToProfile()"
+          >Perfil</a
+        >
+        <a
+          class="dropdown-item"
+          [routerLink]="['/auth/logout']"
+          [queryParams]="{ reload: 1 }"
+          >Salir</a
+        >
+      </div>
     </div>
+  </div>
 
-    <p *ngIf="(user_type$ | async) == '2'" class="user-info px-3">
-        <span class="coins">{{ (coins$ | async) == 1 ? ((coins$ | async) + ' punto') : ((coins$ | async) + ' puntos') }}</span> &nbsp;|&nbsp; <span class="aproved-modules">{{ (approved_modules_total$ | async) == 1 ? ((approved_modules_total$ | async) + ' módulo aprobado') : ((approved_modules_total$ | async) + ' módulos aprobados') }} de {{modules_total$ | async}}</span>
-    </p>
+  <p *ngIf="(user_type$ | async) == '2'" class="user-info px-3">
+    <span class="coins">{{
+      (coins$ | async) == 1
+        ? (coins$ | async) + " punto"
+        : (coins$ | async) + " puntos"
+    }}</span>
+    &nbsp;|&nbsp;
+    <span class="aproved-modules"
+      >{{
+        (approved_modules_total$ | async) == 1
+          ? (approved_modules_total$ | async) + " módulo aprobado"
+          : (approved_modules_total$ | async) + " módulos aprobados"
+      }}
+      de {{ modules_total$ | async }}</span
+    >
+  </p>
 </div>
