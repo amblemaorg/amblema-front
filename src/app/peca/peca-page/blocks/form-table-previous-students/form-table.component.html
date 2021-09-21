@@ -4,8 +4,8 @@
     <ng2-smart-table
       [settings]="tableStudents"
       [source]="source"
-      (custom)="onTableActions($event)"
-    >
-    </ng2-smart-table>
+      (userRowSelect)="onUserRowSelect($event)"
+      class="is-multi"
+    ></ng2-smart-table>
   </form>
 </div>
