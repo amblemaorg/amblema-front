@@ -1,16 +1,6 @@
-import { Store } from "@ngxs/store";
-import {
-  AddImageToSchoolActivitiesRequestData,
-  RemoveImageFromSchoolActivitiesRequestData,
-  CancelSchoolActivitiesRequest,
-  UpdateSchoolActivitiesRequest,
-  // ClearSchoolActivitiesRequestData,
-} from "src/app/store/actions/peca/peca.actions";
-
 export function previousScholarYearStudentsConfigMapper(
   previousYearStudents,
   permissions
-  // store: Store
 ) {
   // const { activities_slider_edit, activities_slider_delete } = permissions;
 
@@ -22,12 +12,22 @@ export function previousScholarYearStudentsConfigMapper(
         console.log("Hello values");
       },
       fields: {
-        description: {
-          label: "La des",
-          placeholder: "La des",
-          value: "LA DES",
-          disabled: /* yearBookData.isInApproval */ false,
-        },
+        table: [
+          {
+            name: "Astrid",
+            lastName: "Herrera",
+            idCard: "1234567890",
+            gender: "Femenino",
+            birthDate: "22-08-2011",
+          },
+          {
+            name: "Asdrubal",
+            lastName: "Querales",
+            idCard: "1234567891",
+            gender: "Masculino",
+            birthDate: "12-05-2011",
+          },
+        ],
         button: {
           text: "Guardar cambios",
           ingAction: "Guardando...",
@@ -39,7 +39,7 @@ export function previousScholarYearStudentsConfigMapper(
 
   return {
     header: {
-      title: "Matricula",
+      title: "Matrícula de año escolar anterior",
     },
     blocks: [
       {
