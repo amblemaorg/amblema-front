@@ -10,9 +10,11 @@
       'hide-view': settings.classes.hideView,
       'hide-edit': settings.classes.hideEdit,
       'hide-delete': settings.classes.hideDelete,
-      'has-img-in-first-col': settings.isImageFirstCol
+      'has-img-in-first-col': settings.isImageFirstCol,
+      'is-multi': settings.isMulti
     }"
     (custom)="onCustomActions($event)"
+    (userRowSelect)="onUserRowSelect($event)"
   ></ng2-smart-table>
 
   <div *ngIf="settings.total" class="estilo-total">
