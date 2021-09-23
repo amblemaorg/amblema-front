@@ -33,6 +33,6 @@ export default {
   },
   pager: {
     display: true,
-    perPage: 10,
+    perPage: 100,
   },
 };

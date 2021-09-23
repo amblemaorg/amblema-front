@@ -56,7 +56,13 @@ export function previousScholarYearStudentsConfigMapper(
           section2P: {
             id: "sections2P",
             label: "Seleccione la sección a promover",
-            items: [],
+            items: [
+              { id: "0", name: "A" },
+              { id: "1", name: "B" },
+              { id: "2", name: "C" },
+              { id: "3", name: "D" },
+              { id: "4", name: "U" },
+            ],
             placeholder: "Sección",
             loadingLabel: "Cargando secciones...",
             loading: false,
