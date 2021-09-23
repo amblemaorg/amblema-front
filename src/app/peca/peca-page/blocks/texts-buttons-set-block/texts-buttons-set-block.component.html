@@ -15,17 +15,26 @@
     "
   >
     <div class="date-download-status d-flex justify-content-between mt-1">
-      <div
-        class="left-side"
-        [class.mr-auto]="settings.genActSelectStatus"
-      >
+      <div class="left-side" [class.mr-auto]="settings.genActSelectStatus">
         <h6 class="left-sided-content">
-          <span *ngIf="settings.dateOrtext && settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text }}</span>
           <span
-            [class.display-date]="settings.dateOrtext && settings.dateOrtext.date"
-            *ngIf="settings.dateOrtext && settings.dateOrtext.text && settings.dateOrtext.date"
+            *ngIf="settings.dateOrtext && settings.dateOrtext.text"
+            class="mr-2"
+            >{{ settings.dateOrtext.text }}</span
+          >
+          <span
+            [class.display-date]="
+              settings.dateOrtext && settings.dateOrtext.date
+            "
+            *ngIf="
+              settings.dateOrtext &&
+              settings.dateOrtext.text &&
+              settings.dateOrtext.date
+            "
           ></span>
-          <span *ngIf="settings.dateOrtext && settings.dateOrtext.date">{{ settings.dateOrtext.date }}</span>
+          <span *ngIf="settings.dateOrtext && settings.dateOrtext.date">{{
+            settings.dateOrtext.date
+          }}</span>
           <span
             *ngIf="
               settings.dateOrtext &&
@@ -37,66 +46,94 @@
             [class.estilo-date-non-editable]="!userCanEdit"
           >
             <div class="date-part-container">
-              <ng-container *ngIf="activity_uneditable || !userCanEdit; else newDateInputs">
+              <ng-container
+                *ngIf="activity_uneditable || !userCanEdit; else newDateInputs"
+              >
                 <div class="inactive-wrapper">
                   <input
-                    [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'InactiveInput']"
-                    class="form-control" 
+                    [(ngModel)]="
+                      settings.dateOrtext.fields[0][
+                        settings.dateOrtext.fields[0].specialDateForm +
+                          'InactiveInput'
+                      ]
+                    "
+                    class="form-control"
                     [placeholder]="settings.dateOrtext.fields[0].placeholder"
-                    autocomplete="off" 
+                    autocomplete="off"
                     type="text"
                     readonly
                   />
                 </div>
               </ng-container>
               <ng-template #newDateInputs>
-                <input 
-                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Day']"
-                  class="form-control day" placeholder="Día" autocomplete="off" type="number" max="31" min="1"
-                  [readonly]="
-                    activity_uneditable || !userCanEdit
+                <input
+                  [(ngModel)]="
+                    settings.dateOrtext.fields[0][
+                      settings.dateOrtext.fields[0].specialDateForm + 'Day'
+                    ]
                   "
-                  (ngModelChange)="setDateHandlr($event,'day')"
-                  (blur)="dateOnBlur($event,'day')"
+                  class="form-control day"
+                  placeholder="Día"
+                  autocomplete="off"
+                  type="number"
+                  max="31"
+                  min="1"
+                  [readonly]="activity_uneditable || !userCanEdit"
+                  (ngModelChange)="setDateHandlr($event, 'day')"
+                  (blur)="dateOnBlur($event, 'day')"
                 />
-                <input 
-                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Month']"
-                  class="form-control month" placeholder="Mes" autocomplete="off" type="number" max="12" min="1"
-                  [readonly]="
-                    activity_uneditable || !userCanEdit
+                <input
+                  [(ngModel)]="
+                    settings.dateOrtext.fields[0][
+                      settings.dateOrtext.fields[0].specialDateForm + 'Month'
+                    ]
                   "
-                  (ngModelChange)="setDateHandlr($event,'month')"
-                  (blur)="dateOnBlur($event,'month')"
+                  class="form-control month"
+                  placeholder="Mes"
+                  autocomplete="off"
+                  type="number"
+                  max="12"
+                  min="1"
+                  [readonly]="activity_uneditable || !userCanEdit"
+                  (ngModelChange)="setDateHandlr($event, 'month')"
+                  (blur)="dateOnBlur($event, 'month')"
                 />
-                <input 
-                  [(ngModel)]="settings.dateOrtext.fields[0][settings.dateOrtext.fields[0].specialDateForm+'Year']"
-                  class="form-control year" placeholder="Año" autocomplete="off" type="number" min="1"
-                  [readonly]="
-                    activity_uneditable || !userCanEdit
+                <input
+                  [(ngModel)]="
+                    settings.dateOrtext.fields[0][
+                      settings.dateOrtext.fields[0].specialDateForm + 'Year'
+                    ]
                   "
-                  (ngModelChange)="setDateHandlr($event,'year')"
-                  (blur)="dateOnBlur($event,'year')"
+                  class="form-control year"
+                  placeholder="Año"
+                  autocomplete="off"
+                  type="number"
+                  min="1"
+                  [readonly]="activity_uneditable || !userCanEdit"
+                  (ngModelChange)="setDateHandlr($event, 'year')"
+                  (blur)="dateOnBlur($event, 'year')"
                 />
                 <div class="calendaricon">
-                  <nb-icon
-                    icon="calendar"
-                    style="font-size: 1.5rem;"
-                  ></nb-icon>
+                  <nb-icon icon="calendar" style="font-size: 1.5rem"></nb-icon>
                 </div>
               </ng-template>
             </div>
-          <ng-datepicker
-            #inputDate
-            [headless]="activity_uneditable || !userCanEdit"
-            position="bottom-left"
-            class="datepicker-control"
-            *ngIf="settings.dateOrtext && settings.dateOrtext.fields[0] && !reloadDate"
-            [(ngModel)]="settings.dateOrtext.fields[0].value"
-            [options]="datePickerOptions"
-            [disabled]="activity_uneditable || !userCanEdit"
-          >
-          </ng-datepicker>
-          <!--
+            <ng-datepicker
+              #inputDate
+              [headless]="activity_uneditable || !userCanEdit"
+              position="bottom-left"
+              class="datepicker-control"
+              *ngIf="
+                settings.dateOrtext &&
+                settings.dateOrtext.fields[0] &&
+                !reloadDate
+              "
+              [(ngModel)]="settings.dateOrtext.fields[0].value"
+              [options]="datePickerOptions"
+              [disabled]="activity_uneditable || !userCanEdit"
+            >
+            </ng-datepicker>
+            <!--
             <input
               #inputDate
               type="date"
@@ -124,14 +161,18 @@
         </h6>
       </div>
       <div *ngIf="settings.download || settings.status" class="right-side">
-        <h6 *ngIf="settings.status && settings.status.subText != 0" class="status ml-4">
+        <h6
+          *ngIf="settings.status && settings.status.subText != 0"
+          class="status ml-2"
+        >
           <span>{{ settings.status.text }}:&nbsp;</span>
           <span
             class="rounded-circle"
             [ngClass]="{
               yellow: settings.status.subText === 1,
               green: settings.status.subText === 2,
-              red: settings.status.subText === 3 || settings.status.subText === 4
+              red:
+                settings.status.subText === 3 || settings.status.subText === 4
             }"
           ></span>
           &nbsp;
@@ -154,7 +195,9 @@
           [download]="settings.download.name"
           class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper"
           [class.ml-4]="!settings.isGenericActivity"
-          (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+          (click)="
+            activity_uneditable || !userCanEdit ? $event.preventDefault() : null
+          "
           [class.inactive]="activity_uneditable || !userCanEdit"
           >Descargar</a
         >
@@ -222,7 +265,10 @@
           </ng-select>
         </div>
         <ng-container
-          *ngIf="settings.btnGeneral && settings.btnGeneral.addToTable; else regularGeneral"
+          *ngIf="
+            settings.btnGeneral && settings.btnGeneral.addToTable;
+            else regularGeneral
+          "
         >
           <button
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
@@ -247,9 +293,16 @@
       </div>
 
       <!--Input y boton para el anuario-->
-      <div *ngIf="settings.inputAndBtns" class="containerInputAndBtn buttons-wrapper">
+      <div
+        *ngIf="settings.inputAndBtns"
+        class="containerInputAndBtn buttons-wrapper"
+      >
         <div *ngFor="let prueba of settings.inputAndBtns" class="">
-          <h6 class="text-left" *ngIf="prueba.titleInput" [class.mb-negativo]="prueba.titleInput">
+          <h6
+            class="text-left"
+            *ngIf="prueba.titleInput"
+            [class.mb-negativo]="prueba.titleInput"
+          >
             {{ prueba.titleInput }}
           </h6>
           <input
@@ -282,7 +335,10 @@
       *ngIf="settings.title"
       class="title"
       [class.mt-4]="
-        settings.dateOrtext || settings.download || settings.status || settings.selectStatus
+        settings.dateOrtext ||
+        settings.download ||
+        settings.status ||
+        settings.selectStatus
       "
       [class.text-left]="settings.title.aligning == 'left'"
       [class.text-center]="settings.title.aligning == 'center'"
@@ -310,21 +366,31 @@
       [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
     >
       <h6 class="sub-title">{{ subtitle.title }}</h6>
-      <p [class.text-justify]="settings.isGenericActivity">{{ subtitle.text }}</p>
+      <p [class.text-justify]="settings.isGenericActivity">
+        {{ subtitle.text }}
+      </p>
     </div>
     <!-- </ng-container> -->
   </div>
 
   <!-- VIDEO SECTION -->
   <div *ngIf="showThisVideo" class="video-section">
-    <div *ngIf="settings.video && settings.video.url" class="activity-video-container">
-      <div class="activity-video" [innerHTML]="getVideo(settings.video.url)"></div>
+    <div
+      *ngIf="settings.video && settings.video.url"
+      class="activity-video-container"
+    >
+      <div
+        class="activity-video"
+        [innerHTML]="getVideo(settings.video.url)"
+      ></div>
     </div>
   </div>
 
   <div
     *ngIf="
-      (settings.action && settings.action.length > 0) || settings.upload || settings.uploaddown
+      (settings.action && settings.action.length > 0) ||
+      settings.upload ||
+      settings.uploaddown
     "
     class="d-inline-block buttons-wrapper"
     [class.text-center]="settings.isFromCustomTableActions"
@@ -336,7 +402,9 @@
       id="tb-upload-btn-container"
       #tbUploadFile
       [class.d-inline]="userCanEdit"
-      [class.d-none]="!userCanEdit && settings.upload && settings.upload.uploadEmpty"
+      [class.d-none]="
+        !userCanEdit && settings.upload && settings.upload.uploadEmpty
+      "
     >
       <input
         class="d-none tb-upload-btn-input-file"
@@ -347,12 +415,20 @@
       />
       <button
         id="tb-upload-btn"
-        [title]="settings.upload.uploadEmpty ? 'Adjuntar archivo' : settings.upload.name"
+        [title]="
+          settings.upload.uploadEmpty
+            ? 'Adjuntar archivo'
+            : settings.upload.name
+        "
         (click)="clickUpload(tbUploadFile); $event.preventDefault()"
         class="btn btn-primary text-decoration-none py-1 px-4"
         [disabled]="activity_uneditable || !userCanEdit"
       >
-        {{ settings.upload.uploadEmpty ? "Adjuntar archivo" : shortenName(settings.upload.name) }}
+        {{
+          settings.upload.uploadEmpty
+            ? "Adjuntar archivo"
+            : shortenName(settings.upload.name)
+        }}
       </button>
     </div>
 
@@ -363,7 +439,9 @@
       target="_blank"
       [download]="settings.uploaddown.name"
       class="btn btn-primary text-decoration-none py-1 px-4"
-      (click)="activity_uneditable || !userCanEdit ? $event.preventDefault() : null"
+      (click)="
+        activity_uneditable || !userCanEdit ? $event.preventDefault() : null
+      "
       [class.inactive]="activity_uneditable || !userCanEdit"
       >{{ settings.uploaddown.name }}</a
     >
@@ -377,7 +455,9 @@
     -->
     <ng-container *ngIf="userCanEdit">
       <ng-container *ngFor="let action of settings.action">
-        <ng-container *ngIf="action.type == 6 || action.type == 5; else notModal">
+        <ng-container
+          *ngIf="action.type == 6 || action.type == 5; else notModal"
+        >
           <button
             *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
@@ -391,11 +471,16 @@
             *ngIf="action.name && !action.hidden"
             [class.d-none]="
               ((action.type === 4 || action.type === 9) &&
-              settings.fetcherUrls &&
-              settings.fetcherUrls.cancel) ||
-              (action.type === 2 && !this.settings.modalCode && isImgsTableShown)
+                settings.fetcherUrls &&
+                settings.fetcherUrls.cancel) ||
+              (action.type === 2 &&
+                !this.settings.modalCode &&
+                isImgsTableShown)
             "
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            [class]="
+              'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
+              getStyles(action)
+            "
             [disabled]="disableThis(action.type) || isSending || sleepSend"
             (click)="takeAction(action.type, $event)"
           >
@@ -410,26 +495,27 @@
               class="spinner-grow spinner-grow-sm"
             ></span>
             {{
-              isSending && (action.type == 4 || action.type == 7 || action.type == 8)
+              isSending &&
+              (action.type == 4 || action.type == 7 || action.type == 8)
                 ? action.type == 8
                   ? "Guardando"
                   : action.type == 7
-                    ? setGenActBtnName()
-                    : "Enviando"
-                : action.type == 7
                   ? setGenActBtnName()
-                  : isSending 
-                  ? (action.name + " ...")
-                  : action.name
+                  : "Enviando"
+                : action.type == 7
+                ? setGenActBtnName()
+                : isSending
+                ? action.name + " ..."
+                : action.name
             }}
           </button>
 
           <ng-container
             *ngIf="
-              (action.type === 4 || action.type === 9)
-              && !action.hidden
-              && settings.fetcherUrls
-              && settings.fetcherUrls.cancel
+              (action.type === 4 || action.type === 9) &&
+              !action.hidden &&
+              settings.fetcherUrls &&
+              settings.fetcherUrls.cancel
             "
           >
             <button
@@ -437,7 +523,10 @@
               [disabled]="isSending || sleepSend"
               (click)="cancelRequest()"
             >
-              <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
+              <span
+                *ngIf="isSending"
+                class="spinner-grow spinner-grow-sm"
+              ></span>
               {{ isSending ? "Cancelando solicitud" : "Cancelar solicitud" }}
             </button>
           </ng-container>

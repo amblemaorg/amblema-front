@@ -10,7 +10,7 @@ import { PecaState } from "../../../../store/states/peca/peca.state";
 import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
 import { FormBuilder } from "@angular/forms";
-import { DatepickerOptions, NgDatepickerComponent } from 'ng2-datepicker';
+import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
 
 @Component({
   selector: "buttons-set-block",
@@ -83,6 +83,9 @@ export class TextsButtonsSetBlockComponent
       hidden?: boolean;
       type: number;
       name: string; // text in the button
+      margin?: string;
+      direction?: string;
+      removeMargin?: string;
     }[];
     upload: any;
     uploaddown?: any;
@@ -126,21 +129,21 @@ export class TextsButtonsSetBlockComponent
   userCanEdit: boolean = true;
   userCanDelete: boolean = true;
   userCanView: boolean = true;
-  @ViewChild('inputDate', { static: false }) inputDate: NgDatepickerComponent;
+  @ViewChild("inputDate", { static: false }) inputDate: NgDatepickerComponent;
   datePickerOptions: DatepickerOptions = {
     minYear: 1950,
     maxYear: 2050,
-    displayFormat: 'DD/MM/YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    dayNamesFormat: 'dd',
+    displayFormat: "DD/MM/YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
     minDate: new Date(Date.now()),
     // maxDate: new Date(Date.now()),
-    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
-    placeholder: 'Seleccione una fecha',
-    addClass: 'form-control date-picker-custom', // Optional, value to pass on to [ngClass] on the input field
+    barTitleIfEmpty: "Haga click para seleccionar una fecha",
+    placeholder: "Seleccione una fecha",
+    addClass: "form-control date-picker-custom", // Optional, value to pass on to [ngClass] on the input field
     addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    fieldId: "inputDate", // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
   pecaId: string;
@@ -308,22 +311,26 @@ export class TextsButtonsSetBlockComponent
     }
     setTimeout(() => {
       if (
-        !this.settings.isGenericActivity
-        && this.settings.dateOrtext
-        && this.settings.dateOrtext.fields
-        && this.settings.dateOrtext.fields[0]
+        !this.settings.isGenericActivity &&
+        this.settings.dateOrtext &&
+        this.settings.dateOrtext.fields &&
+        this.settings.dateOrtext.fields[0]
       ) {
         this.setDateInputs();
-        
+
         if (!this.settings.dateOrtext.fields[0].value) this.inputDate.reset();
         if (this.inputDate) {
           this.inputDate.registerOnChange((value: Date) => {
-            const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
-            this.controlDateChange(event, 'greater');
-          }); 
+            const event = {
+              target: {
+                value: this.globals.dateToISOString(value).split("T")[0],
+              },
+            };
+            this.controlDateChange(event, "greater");
+          });
         }
       }
-    })
+    });
   }
 
   setData(data: any) {
@@ -345,18 +352,22 @@ export class TextsButtonsSetBlockComponent
 
       setTimeout(() => {
         if (
-          this.settings.dateOrtext
-          && this.settings.dateOrtext.fields
-          && this.settings.dateOrtext.fields[0]
+          this.settings.dateOrtext &&
+          this.settings.dateOrtext.fields &&
+          this.settings.dateOrtext.fields[0]
         ) {
           this.setDateInputs();
-          
+
           if (!this.settings.dateOrtext.fields[0].value) this.inputDate.reset();
           if (this.inputDate) {
             this.inputDate.registerOnChange((value: Date) => {
-              const event = { target: { value: this.globals.dateToISOString(value).split('T')[0] } }
-              this.controlDateChange(event, 'greater');
-            }); 
+              const event = {
+                target: {
+                  value: this.globals.dateToISOString(value).split("T")[0],
+                },
+              };
+              this.controlDateChange(event, "greater");
+            });
           }
         }
       });
@@ -374,13 +385,23 @@ export class TextsButtonsSetBlockComponent
       this.settings.genActSelectStatus = data["statusSelectorData"]
         ? data.statusSelectorData.genActSelectStatus
         : null;
-      this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
-      this.settings.genericActivityId = data["genericActivityId"] ? data.genericActivityId : null;
-      this.settings.isGenericActivityBtnReceptor = data["isGenericActivityBtnReceptor"]
+      this.activity_uneditable = data["activityUneditable"]
+        ? data.activityUneditable
+        : null;
+      this.settings.genericActivityId = data["genericActivityId"]
+        ? data.genericActivityId
+        : null;
+      this.settings.isGenericActivityBtnReceptor = data[
+        "isGenericActivityBtnReceptor"
+      ]
         ? data.isGenericActivityBtnReceptor
         : null;
-      this.settings.genActSavingTypes = data["genActSavingTypes"] ? data.genActSavingTypes : null;
-      this.settings.btnApprovalType = data["btnApprovalType"] ? data.btnApprovalType : 0;
+      this.settings.genActSavingTypes = data["genActSavingTypes"]
+        ? data.genActSavingTypes
+        : null;
+      this.settings.btnApprovalType = data["btnApprovalType"]
+        ? data.btnApprovalType
+        : 0;
 
       if (data["statusSelectorData"]) {
         this.statusForm.setValue({ status: data.statusSelectorData.status });
@@ -400,13 +421,18 @@ export class TextsButtonsSetBlockComponent
       if (!this.settings.isGenericActivityBtnReceptor) {
         if (this.settings.genActSelectStatus) {
           this.dataGenAct.date =
-            data["dateOrtext"] && data["dateOrtext"].fields[0].value ? true : false;
+            data["dateOrtext"] && data["dateOrtext"].fields[0].value
+              ? true
+              : false;
           this.dataGenAct.upload = data["upload"] ? true : false;
         } else {
           setTimeout(() => {
             this.globals.updateGenActButtonDataUpdater({
               gaId: this.settings.genericActivityId,
-              date: data["dateOrtext"] && data["dateOrtext"].fields[0].value ? true : false,
+              date:
+                data["dateOrtext"] && data["dateOrtext"].fields[0].value
+                  ? true
+                  : false,
               upload: data["upload"] ? true : false,
             });
           });
@@ -414,13 +440,18 @@ export class TextsButtonsSetBlockComponent
       }
     } else {
       if (data["action"]) this.settings.action = data.action;
-      if (data["contentTeacherInfo"]) this.settings.selectStatus.lista = data.contentTeacherInfo;
+      if (data["contentTeacherInfo"])
+        this.settings.selectStatus.lista = data.contentTeacherInfo;
       if (data["status"]) this.settings.status.subText = data.status.subText;
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;
-      if (data["dateOrtext"]) this.settings.dateOrtext.date = data.dateOrtext.date;
-      if (data["enviromentTitleLapse1"]) this.settings.title.text = data.enviromentTitleLapse1;
-      if (data["enviromentTitleLapse2"]) this.settings.title.text = data.enviromentTitleLapse2;
-      if (data["enviromentTitleLapse3"]) this.settings.title.text = data.enviromentTitleLapse3;
+      if (data["dateOrtext"])
+        this.settings.dateOrtext.date = data.dateOrtext.date;
+      if (data["enviromentTitleLapse1"])
+        this.settings.title.text = data.enviromentTitleLapse1;
+      if (data["enviromentTitleLapse2"])
+        this.settings.title.text = data.enviromentTitleLapse2;
+      if (data["enviromentTitleLapse3"])
+        this.settings.title.text = data.enviromentTitleLapse3;
       if (data["download"]) this.settings.download = data.download;
       if (data["upload"]) this.settings.upload = data.upload;
       if (data["inputAndBtns"]) this.settings.inputAndBtns = data.inputAndBtns;
@@ -443,33 +474,61 @@ export class TextsButtonsSetBlockComponent
 
   setDateInputs() {
     const theWhD = this.settings.dateOrtext.fields[0]["theWholeDate"];
-    const isSpecialDate = theWhD && this.settings.dateOrtext.fields[0]["specialDateForm"];
+    const isSpecialDate =
+      theWhD && this.settings.dateOrtext.fields[0]["specialDateForm"];
     const dNow = new Date();
     const dnSplit = dNow.toISOString().split("T")[1];
 
     if (isSpecialDate) {
-      const dateKey = this.globals.getDateFormat(new Date(`${theWhD.split("T")[0]}T${dnSplit}`));
+      const dateKey = this.globals.getDateFormat(
+        new Date(`${theWhD.split("T")[0]}T${dnSplit}`)
+      );
       const theDate = new Date(`${dateKey}T${dnSplit}`);
-      this.settings.dateOrtext.fields[0][`${isSpecialDate}Day`] = theDate.getDate();
-      this.settings.dateOrtext.fields[0][`${isSpecialDate}Month`] = theDate.getMonth() + 1;
-      this.settings.dateOrtext.fields[0][`${isSpecialDate}Year`] = theDate.getFullYear();
-      this.settings.dateOrtext.fields[0][`${isSpecialDate}InactiveInput`] = `${this.addZero(theDate.getDate())}-${this.addZero(theDate.getMonth() + 1)}-${theDate.getFullYear()}`; 
-    } else this.settings.dateOrtext.fields[0].value = dNow.toISOString().split("T")[0];
+      this.settings.dateOrtext.fields[0][
+        `${isSpecialDate}Day`
+      ] = theDate.getDate();
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Month`] =
+        theDate.getMonth() + 1;
+      this.settings.dateOrtext.fields[0][
+        `${isSpecialDate}Year`
+      ] = theDate.getFullYear();
+      this.settings.dateOrtext.fields[0][
+        `${isSpecialDate}InactiveInput`
+      ] = `${this.addZero(theDate.getDate())}-${this.addZero(
+        theDate.getMonth() + 1
+      )}-${theDate.getFullYear()}`;
+    } else
+      this.settings.dateOrtext.fields[0].value = dNow
+        .toISOString()
+        .split("T")[0];
   }
 
   disableThis(type: number) {
-    if (this.settings.receivesFromTableOrForm && (type == 1 || type == 3 || type == 4)) {
+    if (
+      this.settings.receivesFromTableOrForm &&
+      (type == 1 || type == 3 || type == 4)
+    ) {
       if (
         (this.settings.receivesFromTableOrForm == "table" &&
-          (!this.dataTorF.table || this.dataTorF.table.length == 0 || !this.isTableEdited)) ||
+          (!this.dataTorF.table ||
+            this.dataTorF.table.length == 0 ||
+            !this.isTableEdited)) ||
         (this.settings.receivesFromTableOrForm == "form" &&
           (!this.dataTorF.form || !this.isFormEdited)) ||
         (this.settings.receivesFromTableOrForm == "both" &&
-          (!this.dataTorF.table || !this.isTableEdited || !this.dataTorFWasEdited.table) &&
-          (!this.dataTorF.form || !this.isFormEdited || !this.dataTorFWasEdited.form))
+          (!this.dataTorF.table ||
+            !this.isTableEdited ||
+            !this.dataTorFWasEdited.table) &&
+          (!this.dataTorF.form ||
+            !this.isFormEdited ||
+            !this.dataTorFWasEdited.form))
       )
         return true;
-    } else if (type == 2 && this.settings.fetcherUrls && this.settings.fetcherUrls.cancel)
+    } else if (
+      type == 2 &&
+      this.settings.fetcherUrls &&
+      this.settings.fetcherUrls.cancel
+    )
       return true;
     // when there's cancel request button
     else if (
@@ -481,30 +540,42 @@ export class TextsButtonsSetBlockComponent
       const conditions = [];
 
       if (this.settings.genActSavingTypes.hasDate) {
-        date = this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
-        const isDateNotValid = date ? this.globals.validateDate(this.dataGenAct.date.split("T")[0], "greater", true, true) : false;      
+        date =
+          this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
+        const isDateNotValid = date
+          ? this.globals.validateDate(
+              this.dataGenAct.date.split("T")[0],
+              "greater",
+              true,
+              true
+            )
+          : false;
         const istrue = date && !isDateNotValid;
         conditions.push(istrue);
       }
       if (this.settings.genActSavingTypes.hasUpload) {
-        upload = this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
+        upload =
+          this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
         conditions.push(upload);
       }
 
       return !conditions.some((cond) => cond);
     }
     if (
-      this.settings.dateOrtext && 
-      this.settings.dateOrtext.fields && 
-      this.settings.dateOrtext.fields instanceof Array && 
+      this.settings.dateOrtext &&
+      this.settings.dateOrtext.fields &&
+      this.settings.dateOrtext.fields instanceof Array &&
       this.settings.dateOrtext.fields.length
     ) {
-      const {
-        day: lDay,
-        month: lMonth,
-        year: lYear
-      } = this.getDates();
-      const isDateNotValid = this.globals.validateDate(`${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`, "greater", true, true);
+      const { day: lDay, month: lMonth, year: lYear } = this.getDates();
+      const isDateNotValid = this.globals.validateDate(
+        `${this.addZero(lYear, true)}-${this.addZero(lMonth)}-${this.addZero(
+          lDay
+        )}`,
+        "greater",
+        true,
+        true
+      );
       return isDateNotValid;
     }
     return false;
@@ -640,8 +711,10 @@ export class TextsButtonsSetBlockComponent
                   positionClass: "toast-bottom-right",
                 });
 
-                if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-                if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+                if (this.settings.buttonCode)
+                  this.globals.resetEdited(this.settings.buttonCode);
+                if (this.pecaId)
+                  this.store.dispatch([new FetchPecaContent(this.pecaId)]);
               },
               (error) => {
                 const error_msg =
@@ -666,11 +739,15 @@ export class TextsButtonsSetBlockComponent
             );
           }
         } else {
-          const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
+          const body = textsAndButtonsAdaptBody(
+            this.settings.buttonCode,
+            this.dataTorF
+          );
           const method = this.settings.fetcherMethod || "post";
           const resourcePath = this.settings.fetcherUrls[method];
 
-          if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
+          if (this.settings.buttonCode)
+            this.globals.setAsReadOnly(this.settings.buttonCode, true);
 
           this.fetcher[method](resourcePath, body).subscribe(
             (response) => {
@@ -682,8 +759,10 @@ export class TextsButtonsSetBlockComponent
                 positionClass: "toast-bottom-right",
               });
 
-              if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-              if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+              if (this.settings.buttonCode)
+                this.globals.resetEdited(this.settings.buttonCode);
+              if (this.pecaId)
+                this.store.dispatch([new FetchPecaContent(this.pecaId)]);
             },
             (error) => {
               const error_msg =
@@ -732,11 +811,15 @@ export class TextsButtonsSetBlockComponent
           ] = this.globals.dateStringToISOString(
             this.dataTorF.form[this.dataTorF.form.age ? "age" : "date"]
           ); //---------------
-        const body = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
+        const body = textsAndButtonsAdaptBody(
+          this.settings.buttonCode,
+          this.dataTorF
+        );
         const method = this.settings.fetcherMethod || "post";
         const resourcePath = this.settings.fetcherUrls[method];
 
-        if (this.settings.buttonCode) this.globals.setAsReadOnly(this.settings.buttonCode, true);
+        if (this.settings.buttonCode)
+          this.globals.setAsReadOnly(this.settings.buttonCode, true);
 
         this.fetcher[method](resourcePath, body).subscribe(
           (response) => {
@@ -748,18 +831,24 @@ export class TextsButtonsSetBlockComponent
               positionClass: "toast-bottom-right",
             });
 
-            if (this.settings.buttonCode) this.globals.resetEdited(this.settings.buttonCode);
-            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            if (this.settings.buttonCode)
+              this.globals.resetEdited(this.settings.buttonCode);
+            if (this.pecaId)
+              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
           },
           (error) => {
-            const { error: { message } } = error;
+            const {
+              error: { message },
+            } = error;
 
             const error_msg =
               error.error && error.error instanceof ProgressEvent
                 ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-                : message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-                  ? "Ocurrió un problema al procesar la(s) imágen(es)"
-                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                : message &&
+                  typeof message === "string" &&
+                  message.toLowerCase() === "invalid image format"
+                ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             if (this.settings.buttonCode)
               this.globals.setAsReadOnly(this.settings.buttonCode, false);
@@ -769,7 +858,9 @@ export class TextsButtonsSetBlockComponent
                 ? error.error["name"][0].msg
                 : error.error && error.error["email"] && error.error["email"][0]
                 ? error.error["email"][0].msg
-                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                : error.error &&
+                  error.error["cardId"] &&
+                  error.error["cardId"][0]
                 ? error.error["cardId"][0].msg
                 : error.error && error.error["msg"]
                 ? error.error["msg"]
@@ -783,14 +874,20 @@ export class TextsButtonsSetBlockComponent
         break;
       case 7:
         const num_ =
-          this.setGenActBtnName() == "Guardar" || this.setGenActBtnName() == "Guardando" ? 8 : 7;
+          this.setGenActBtnName() == "Guardar" ||
+          this.setGenActBtnName() == "Guardando"
+            ? 8
+            : 7;
         this.activityActioned(num_);
         break;
       case 8:
         this.activityActioned(8);
         break;
       default:
-        const data = textsAndButtonsAdaptBody(this.settings.buttonCode, this.dataTorF);
+        const data = textsAndButtonsAdaptBody(
+          this.settings.buttonCode,
+          this.dataTorF
+        );
         const values = {
           file: this.settings.upload ? this.settings.upload.file : null,
           date: this.settings.dateForSubmit,
@@ -810,7 +907,10 @@ export class TextsButtonsSetBlockComponent
     const fetcherMethod = this.settings.fetcherMethod || "put";
     const url = this.settings.fetcherUrls[fetcherMethod];
 
-    if (this.settings.genericActivityId && this.settings.genericActivityId.length > 0)
+    if (
+      this.settings.genericActivityId &&
+      this.settings.genericActivityId.length > 0
+    )
       formData.append("id", this.settings.genericActivityId);
     if (this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean")
       formData.append("date", this.dataGenAct.date);
@@ -826,31 +926,36 @@ export class TextsButtonsSetBlockComponent
         this.isSending = false;
 
         this.toastr.success(
-          case_type === 7 ? "Solicitud enviada" : "Ha sido guardado exitosamente",
+          case_type === 7
+            ? "Solicitud enviada"
+            : "Ha sido guardado exitosamente",
           "",
           {
             positionClass: "toast-bottom-right",
           }
         );
 
-        if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        if (this.pecaId)
+          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       (error) => {
-        const { error: { message } } = error;
+        const {
+          error: { message },
+        } = error;
 
         const error_msg =
           error.error && error.error instanceof ProgressEvent
             ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-            : message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-              ? "Ocurrió un problema al procesar la(s) imágen(es)"
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+            : message &&
+              typeof message === "string" &&
+              message.toLowerCase() === "invalid image format"
+            ? "Ocurrió un problema al procesar la(s) imágen(es)"
+            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
         this.globals.actionsSleeperUpdater(false, false);
         this.isSending = false;
         this.toastr.error(
-          error.error && error.error["msg"]
-            ? error.error["msg"]
-            : error_msg,
+          error.error && error.error["msg"] ? error.error["msg"] : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
         );
@@ -868,7 +973,8 @@ export class TextsButtonsSetBlockComponent
     const method = "put";
     const url = this.settings.fetcherUrls["cancel"];
 
-    if (this.settings.isGenericActivity) this.globals.actionsSleeperUpdater(true, true);
+    if (this.settings.isGenericActivity)
+      this.globals.actionsSleeperUpdater(true, true);
 
     this.fetcher[method](url, body).subscribe(
       (response) => {
@@ -883,7 +989,8 @@ export class TextsButtonsSetBlockComponent
 
         if (this.settings.buttonCode && !this.settings.isGenericActivity)
           this.globals.resetEdited(this.settings.buttonCode);
-        if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        if (this.pecaId)
+          this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       },
       (error) => {
         const error_msg =
@@ -892,7 +999,8 @@ export class TextsButtonsSetBlockComponent
             : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
         this.isSending = false;
 
-        if (this.settings.isGenericActivity) this.globals.actionsSleeperUpdater(false, true);
+        if (this.settings.isGenericActivity)
+          this.globals.actionsSleeperUpdater(false, true);
 
         this.toastr.error(
           error.error && error.error["msg"]
@@ -914,7 +1022,11 @@ export class TextsButtonsSetBlockComponent
   }
 
   getVideo(url) {
-    if (this.showThisVideo && this.timesVideoSourceCalled < 10 && !this.activity_video) {
+    if (
+      this.showThisVideo &&
+      this.timesVideoSourceCalled < 10 &&
+      !this.activity_video
+    ) {
       this.activity_video = this.embedService.embed(url);
       if (this.activity_video) this.timesVideoSourceCalled++;
       return this.activity_video;
@@ -936,7 +1048,8 @@ export class TextsButtonsSetBlockComponent
   // FOR UPLOAD
   fileMngr(e) {
     if (e && e.target && e.target.files && e.target.files.length > 0) {
-      if (this.settings.onFileUpload) this.settings.onFileUpload(<File>e.target.files[0]);
+      if (this.settings.onFileUpload)
+        this.settings.onFileUpload(<File>e.target.files[0]);
       this.settings.upload = this.settings.upload
         ? {
             ...this.settings.upload,
@@ -958,7 +1071,9 @@ export class TextsButtonsSetBlockComponent
         } else {
           this.globals.updateGenActButtonDataUpdater({
             gaId: this.settings.genericActivityId,
-            upload: this.settings.upload.uploadEmpty ? null : <File>e.target.files[0],
+            upload: this.settings.upload.uploadEmpty
+              ? null
+              : <File>e.target.files[0],
           });
         }
       }
@@ -970,7 +1085,9 @@ export class TextsButtonsSetBlockComponent
   }
 
   shortenName(name: string) {
-    return name.length > 40 ? `${name.substr(0, 10)}...${name.substr(30)}` : name;
+    return name.length > 40
+      ? `${name.substr(0, 10)}...${name.substr(30)}`
+      : name;
   }
 
   // FOR STATUS CHANGER
@@ -990,7 +1107,10 @@ export class TextsButtonsSetBlockComponent
       const url = this.settings.fetcherUrls[fetcherMethod];
 
       formData.append("status", e.id === "1" ? "1" : "3");
-      if (this.settings.genericActivityId && this.settings.genericActivityId.length > 0)
+      if (
+        this.settings.genericActivityId &&
+        this.settings.genericActivityId.length > 0
+      )
         formData.append("id", this.settings.genericActivityId);
       if (this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean")
         formData.append("date", this.dataGenAct.date);
@@ -1016,17 +1136,22 @@ export class TextsButtonsSetBlockComponent
             }
           );
 
-          if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+          if (this.pecaId)
+            this.store.dispatch([new FetchPecaContent(this.pecaId)]);
         },
         (error) => {
-          const { error: { message } } = error;
+          const {
+            error: { message },
+          } = error;
 
           const error_msg =
             error.error && error.error instanceof ProgressEvent
               ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-              : message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-                ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+              : message &&
+                typeof message === "string" &&
+                message.toLowerCase() === "invalid image format"
+              ? "Ocurrió un problema al procesar la(s) imágen(es)"
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
           this.globals.actionsSleeperUpdater(false, false);
           this.isSending = false;
@@ -1036,9 +1161,7 @@ export class TextsButtonsSetBlockComponent
           this.statusForm.setValue({ status: e.id === "1" ? "2" : "1" });
 
           this.toastr.error(
-            error.error && error.error["msg"]
-              ? error.error["msg"]
-              : error_msg,
+            error.error && error.error["msg"] ? error.error["msg"] : error_msg,
             "",
             { positionClass: "toast-bottom-right" }
           );
@@ -1048,12 +1171,20 @@ export class TextsButtonsSetBlockComponent
     }
   }
   statusSelectorDisabler() {
-    if (this.isSending || this.sleepSend || this.selectorSendingEstatus) return true;
+    if (this.isSending || this.sleepSend || this.selectorSendingEstatus)
+      return true;
     else {
-      let { date, upload, checklist } = { date: false, upload: false, checklist: false };
+      let { date, upload, checklist } = {
+        date: false,
+        upload: false,
+        checklist: false,
+      };
       const conditions = [];
 
-      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasDate) {
+      if (
+        this.settings.genActSavingTypes &&
+        this.settings.genActSavingTypes.hasDate
+      ) {
         date =
           typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date
             ? false
@@ -1062,7 +1193,10 @@ export class TextsButtonsSetBlockComponent
             : true;
         conditions.push(date);
       }
-      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasUpload) {
+      if (
+        this.settings.genActSavingTypes &&
+        this.settings.genActSavingTypes.hasUpload
+      ) {
         upload =
           typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload
             ? false
@@ -1071,7 +1205,10 @@ export class TextsButtonsSetBlockComponent
             : true;
         conditions.push(upload);
       }
-      if (this.settings.genActSavingTypes && this.settings.genActSavingTypes.hasChecklist) {
+      if (
+        this.settings.genActSavingTypes &&
+        this.settings.genActSavingTypes.hasChecklist
+      ) {
         checklist = true;
         if (this.dataGenAct.checklist)
           checklist = this.dataGenAct.checklist.some((check) => !check.checked);
@@ -1086,144 +1223,185 @@ export class TextsButtonsSetBlockComponent
     const dNlen = `${dN}`.length;
     if (isYear && dNlen < 4) {
       const yearStrArr = `${dN}`.split("").reverse();
-      const second = yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
+      const second =
+        yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
       const third = yearStrArr.length > 1 ? yearStrArr[1] : "0";
       const fourth = yearStrArr[0];
       return "0" + second + third + fourth;
     }
     return dNlen > 1 ? `${dN}` : `0${dN}`;
-  };
+  }
 
   getDates() {
     return {
-      day: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Day`],
-      month: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`],
-      year: this.settings.dateOrtext.fields[0][`${this.settings.dateOrtext.fields[0]["specialDateForm"]}Year`]
-    }
+      day: this.settings.dateOrtext.fields[0][
+        `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Day`
+      ],
+      month: this.settings.dateOrtext.fields[0][
+        `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`
+      ],
+      year: this.settings.dateOrtext.fields[0][
+        `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Year`
+      ],
+    };
   }
 
   isValidDay(day, month, year) {
     const now = new Date();
-    const d = new Date(`${this.addZero(year,true)}-${this.addZero(month)}-${this.addZero(day)}`);
-    const validDate = d instanceof Date && !isNaN( d.getTime() );
-    const dateChecker = validDate && new Date( `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]}` );
-    
-    return dateChecker && (dateChecker.getMonth() + 1 === month);
-  };
+    const d = new Date(
+      `${this.addZero(year, true)}-${this.addZero(month)}-${this.addZero(day)}`
+    );
+    const validDate = d instanceof Date && !isNaN(d.getTime());
+    const dateChecker =
+      validDate &&
+      new Date(
+        `${d.toISOString().split("T")[0]}T${
+          now.toISOString().split("T").reverse()[0]
+        }`
+      );
+
+    return dateChecker && dateChecker.getMonth() + 1 === month;
+  }
 
   /**
    * @param type string --> calendar, day, month, year
    */
-  setDateFunc({type = "calendar", theValue = null}) {
+  setDateFunc({ type = "calendar", theValue = null }) {
     this.isBeingUsedDateContr = true;
 
-    const theSpecialDate = this.settings.dateOrtext.fields[0]["specialDateForm"];
+    const theSpecialDate = this.settings.dateOrtext.fields[0][
+      "specialDateForm"
+    ];
 
-    const theDate = type === "calendar" && theValue ? new Date(theValue) : new Date();
+    const theDate =
+      type === "calendar" && theValue ? new Date(theValue) : new Date();
 
     const { day, month, year } = {
       day: theDate.getDate(),
       month: theDate.getMonth() + 1,
-      year: theDate.getFullYear()
+      year: theDate.getFullYear(),
     };
 
-    const {
-      day: theDay,
-      month: theMonth,
-      year: theYear
-    } = this.getDates();
+    const { day: theDay, month: theMonth, year: theYear } = this.getDates();
 
-    if (type !== "day" && day && (type === "calendar" || !theDay) ) 
+    if (type !== "day" && day && (type === "calendar" || !theDay))
       this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = day;
 
-    if (type !== "month" && month && (type === "calendar" || !theMonth) ) 
+    if (type !== "month" && month && (type === "calendar" || !theMonth))
       this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] = month;
 
-    if (type !== "year" && year && (type === "calendar" || !theYear) ) 
+    if (type !== "year" && year && (type === "calendar" || !theYear))
       this.settings.dateOrtext.fields[0][`${theSpecialDate}Year`] = year;
 
     if (type !== "calendar") {
-      const {
-        day: tDay,
-        month: tMonth,
-        year: tYear
-      } = this.getDates();
-      
+      const { day: tDay, month: tMonth, year: tYear } = this.getDates();
+
       let isValid = this.isValidDay(tDay, tMonth, tYear);
 
-      const theWholeDate: string = `${this.addZero(tYear,true)}-${this.addZero(isValid ? tMonth : (tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) ) )}-${this.addZero(isValid ? tDay : 1)}`;
+      const theWholeDate: string = `${this.addZero(tYear, true)}-${this.addZero(
+        isValid
+          ? tMonth
+          : tMonth < 12
+          ? type === "month"
+            ? tMonth
+            : tMonth + 1
+          : type === "month"
+          ? tMonth
+          : 1
+      )}-${this.addZero(isValid ? tDay : 1)}`;
 
       this.settings.dateOrtext.fields[0].value = theWholeDate;
-      if (tDay && tMonth && tYear) this.controlDateChange({ target:{ value: theWholeDate } }, 'greater');
-      this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(tDay)}-${this.addZero(tMonth)}-${tYear}`;
+      if (tDay && tMonth && tYear)
+        this.controlDateChange({ target: { value: theWholeDate } }, "greater");
+      this.settings.dateOrtext.fields[0][
+        `${theSpecialDate}InactiveInput`
+      ] = `${this.addZero(tDay)}-${this.addZero(tMonth)}-${tYear}`;
 
       if (!isValid) {
-        if (tMonth && tDay) this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
-        if (tDay && tMonth) this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] = tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1);
+        if (tMonth && tDay)
+          this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
+        if (tDay && tMonth)
+          this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] =
+            tMonth < 12
+              ? type === "month"
+                ? tMonth
+                : tMonth + 1
+              : type === "month"
+              ? tMonth
+              : 1;
       }
-    }
-    else 
-      this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(day)}-${this.addZero(month)}-${year}`;
-    
+    } else
+      this.settings.dateOrtext.fields[0][
+        `${theSpecialDate}InactiveInput`
+      ] = `${this.addZero(day)}-${this.addZero(month)}-${year}`;
+
     this.isBeingUsedDateContr = false;
   }
 
   dateOnBlur(e, datePart: string) {
     if (
-      !e || 
-      (
-        e && 
-        (
-          !e.target || 
-          (e.target && !e.target.value) || 
-          (e.target && e.target.value && !e.target.value.length) 
-        ) 
-      ) 
+      !e ||
+      (e &&
+        (!e.target ||
+          (e.target && !e.target.value) ||
+          (e.target && e.target.value && !e.target.value.length)))
     ) {
       this.isBeingUsedDateContr = true;
 
-      const theSpecialDate = this.settings.dateOrtext.fields[0]["specialDateForm"];
-  
-      const {
-        day: fDay,
-        month: fMonth,
-        year: fYear
-      } = this.getDates();
-  
+      const theSpecialDate = this.settings.dateOrtext.fields[0][
+        "specialDateForm"
+      ];
+
+      const { day: fDay, month: fMonth, year: fYear } = this.getDates();
+
       let isValid = this.isValidDay(fDay, fMonth, fYear);
-  
+
       if (!isValid) {
-        if (datePart === "day") this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
-        if (datePart === "month") this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`]= 1;
+        if (datePart === "day")
+          this.settings.dateOrtext.fields[0][`${theSpecialDate}Day`] = 1;
+        if (datePart === "month")
+          this.settings.dateOrtext.fields[0][`${theSpecialDate}Month`] = 1;
       }
 
       if (datePart === "year") {
         const now = new Date();
-        this.settings.dateOrtext.fields[0][`${theSpecialDate}Year`] = now.getFullYear();
+        this.settings.dateOrtext.fields[0][
+          `${theSpecialDate}Year`
+        ] = now.getFullYear();
       }
 
-      const {
-        day: lDay,
-        month: lMonth,
-        year: lYear
-      } = this.getDates();
+      const { day: lDay, month: lMonth, year: lYear } = this.getDates();
 
       isValid = this.isValidDay(lDay, lMonth, lYear);
 
       if (isValid) {
-        const theWholeDate: string = `${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
+        const theWholeDate: string = `${this.addZero(
+          lYear,
+          true
+        )}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
         this.settings.dateOrtext.fields[0].value = theWholeDate;
-        if (lDay && lMonth && lYear) this.controlDateChange({ target:{ value: theWholeDate } }, 'greater');
-        this.settings.dateOrtext.fields[0][`${theSpecialDate}InactiveInput`] = `${this.addZero(lDay)}-${this.addZero(lMonth)}-${lYear}`;
+        if (lDay && lMonth && lYear)
+          this.controlDateChange(
+            { target: { value: theWholeDate } },
+            "greater"
+          );
+        this.settings.dateOrtext.fields[0][
+          `${theSpecialDate}InactiveInput`
+        ] = `${this.addZero(lDay)}-${this.addZero(lMonth)}-${lYear}`;
       }
 
-      this.isBeingUsedDateContr = false; 
+      this.isBeingUsedDateContr = false;
     }
   }
 
   // FOR DATE FIELD
   controlDateChange(e, dateOrder: string) {
-    const isDateNotValid = this.globals.validateDate(e.target.value, dateOrder, true, true);
+    const isDateNotValid = this.globals.validateDate(
+      e.target.value,
+      dateOrder,
+      true,
+      true
+    );
     if (e && e.target) {
       const date =
         e.target.value && e.target.value.length && !isDateNotValid
@@ -1235,7 +1413,12 @@ export class TextsButtonsSetBlockComponent
       }
     }
 
-    if (e.target.value && e.target.value.length && !isDateNotValid && !this.isBeingUsedDateContr) {
+    if (
+      e.target.value &&
+      e.target.value.length &&
+      !isDateNotValid &&
+      !this.isBeingUsedDateContr
+    ) {
       const dNow = new Date();
       const theValue = `${e.target.value}T${dNow.toISOString().split("T")[1]}`;
       this.setDateFunc({ theValue });
@@ -1259,7 +1442,7 @@ export class TextsButtonsSetBlockComponent
         });
       }
     }
-    return e.target.value
+    return e.target.value;
   }
 
   // FOR GENERIC ACTIVITY ACTION BUTTON NAME
@@ -1272,16 +1455,38 @@ export class TextsButtonsSetBlockComponent
       conditions.push(date);
     }
     if (this.settings.genActSavingTypes.hasUpload) {
-      upload = this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
+      upload =
+        this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean";
       conditions.push(upload);
     }
 
-    return conditions.some((cond) => cond) || !this.settings.genActSavingTypes.hasChecklist
+    return conditions.some((cond) => cond) ||
+      !this.settings.genActSavingTypes.hasChecklist
       ? this.isSending
         ? "Enviando solicitud"
         : "Enviar solicitud"
       : this.isSending
       ? "Guardando"
       : "Guardar";
+  }
+
+  getStyles(action: {
+    margin?: string;
+    direction?: string;
+    removeMargin?: string;
+  }) {
+    const margin = action.margin
+      ? ` m${action.direction}-${action.margin} m${action.direction}-md-0`
+      : "";
+    const removeML = action.removeMargin
+      ? ` m${action.removeMargin}-0${
+          action.removeMargin.length === 1
+            ? ` m${action.removeMargin}-md-2`
+            : ""
+        }`
+      : "";
+    const style = margin + removeML;
+
+    return style;
   }
 }

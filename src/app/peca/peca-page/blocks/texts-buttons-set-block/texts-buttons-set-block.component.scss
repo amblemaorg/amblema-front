@@ -1,530 +1,553 @@
-@import 'scss/placeholders';
+@import "scss/placeholders";
 
 ::ng-deep {
-    .nb-theme-default {
-        p, h5, h6 {
-            color: $blue;
-            @media (max-width:768px) {
-                font-size: 1.2rem;
-            }
+  .nb-theme-default {
+    p,
+    h5,
+    h6 {
+      color: $blue;
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
+    }
+    p {
+      @media (max-width: 768px) {
+        font-size: 0.8rem !important;
+      }
+    }
+    @media (max-width: 768px) {
+      h6 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // .texts-buttons-wrapper {
+  // padding: 2rem;
+  // }
+  .estilo-date {
+    position: relative;
+    width: 100%;
+    padding-right: 0;
+    // margin-left: 10px;
+    display: inline-block;
+
+    .date-part-container {
+      display: flex;
+      align-items: center;
+
+      .inactive-wrapper {
+        width: 100%;
+      }
+
+      .calendaricon {
+        margin-left: 0.5rem;
+
+        .icon-calendar:before {
+          color: $blue;
         }
-        p{
-            @media (max-width:768px) {
-                font-size: 0.8rem !important;
-            }
-        }
-        @media (max-width: 768px){
-            h6 {
-                font-size: 1rem;
-            }
-        }
+      }
     }
 
-    // .texts-buttons-wrapper {
-        // padding: 2rem;
-    // }
-    .estilo-date{
-        position: relative;
-        width: 100%;
-        padding-right: 0;        
-        // margin-left: 10px;
-        display: inline-block;
+    .is-date-placeholder.greyer {
+      background: #e9ecef !important;
+    }
 
-        .date-part-container {
-            display: flex;
-            align-items: center;
+    &.estilo-date-non-editable {
+      .is-date-input,
+      .is-date-placeholder {
+        background-color: #fff;
+        background: #fff !important;
+      }
+    }
 
-            .inactive-wrapper {
-              width: 100%;
+    .date-error-message {
+      display: none;
+      position: relative;
+      font-size: small;
+      color: $red;
+
+      @include mediabreak(small, landscape, true, 640px) {
+        position: absolute;
+      }
+    }
+
+    .is-date-input.date-not-valid ~ .date-error-message {
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      margin: 10px 0px;
+    }
+    @include mediabreak(small, landscape, true, 640px) {
+      width: 18rem;
+      padding-right: 2.5rem;
+    }
+  }
+  .display-date {
+    @media (max-width: 768px) {
+      display: inherit !important;
+    }
+  }
+  .inactive {
+    opacity: 0.65;
+  }
+  .texts-buttons-wrapper {
+    .texts-wrapper {
+      .date-download-status {
+        .left-side {
+          .left-sided-content {
+            margin-bottom: 0;
+
+            .datepicker-control {
+              position: absolute;
+              top: 0;
+              overflow-y: hidden;
+              overflow: visible;
+              right: 2.2rem;
+              width: 1.5rem;
+
+              .date-picker-custom {
+                opacity: 0;
+              }
             }
+            .day {
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 0;
+              border-right: 0;
+            }
+            .month {
+              border-radius: 0;
+            }
+            .year {
+              width: 150%;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+              border-left: 0;
+            }
+          }
+        }
+        .right-side {
+          display: flex;
+          // align-items: baseline;
+          align-items: center;
 
-            .calendaricon {
-              margin-left: 0.5rem;
+          a,
+          button {
+            @include shared-btn-confs;
 
-              .icon-calendar:before {
+            @media (max-width: 768px) {
+              margin: 10px 0px;
+              margin-left: 0px !important;
+              font-size: 0.7rem;
+            }
+          }
+          .status {
+            .rounded-circle {
+              width: 0.85rem;
+              height: 0.85rem;
+              display: inline-block;
+              vertical-align: middle;
+
+              &.yellow {
+                background: #ffff00;
+              }
+              &.green {
+                background: #19ff00;
+              }
+              &.red {
+                background: #fb6743;
+              }
+            }
+            @media (max-width: 768px) {
+              margin: 5px 0px 15px !important;
+            }
+          }
+          @media (max-width: 768px) {
+            display: block;
+          }
+        }
+
+        .select-estatus-width {
+          width: auto;
+          flex: auto;
+          align-items: center;
+          justify-content: flex-end;
+
+          &.select-gen-act {
+            flex: unset;
+            margin-left: 2.25rem;
+
+            .select-gen-act-control {
+              width: 20rem;
+              display: flex;
+              align-items: center;
+              margin: 0;
+
+              label {
+                flex: 100%;
                 color: $blue;
               }
-            }
-        }
 
-        .is-date-placeholder.greyer {
-            background: #e9ecef !important;
-        }
-
-        &.estilo-date-non-editable {
-            .is-date-input, .is-date-placeholder {
-                background-color: #fff;
-                background: #fff !important;
-            }
-        }
-
-        .date-error-message {
-            display: none;
-            position: relative;
-            font-size: small;
-            color: $red;
-
-            @include mediabreak(small,landscape,true,640px) {
-                position: absolute;
-            }
-        }
-
-        .is-date-input.date-not-valid ~ .date-error-message {
-            display: inline-block;
-        }
-
-        @media (max-width:768px){
-            margin: 10px 0px;
-        }
-        @include mediabreak(small,landscape,true,640px) {
-            width: 18rem;
-            padding-right: 2.5rem;
-        }
-    }
-    .display-date{
-        @media (max-width:768px){
-           display: inherit !important;
-        }
-    }
-    .inactive {
-        opacity: 0.65;
-    }
-    .texts-buttons-wrapper {
-        .texts-wrapper {
-            .date-download-status {
-                .left-side {
-                    .left-sided-content {
-                        margin-bottom: 0;
-
-                        .datepicker-control {
-                            position: absolute;
-                            top: 0;
-                            overflow-y: hidden;
-                            overflow: visible;
-                            right: 2.2rem;
-                            width: 1.5rem;
-                    
-                            .date-picker-custom {
-                                opacity: 0;
-                            }
-                        }
-                        .day {
-                            border-top-right-radius: 0;
-                            border-bottom-right-radius: 0;
-                            border-right: 0;
-                        }
-                        .month {
-                            border-radius: 0;
-                        }
-                        .year {
-                            width: 150%;
-                            border-top-left-radius: 0;
-                            border-bottom-left-radius: 0;
-                            border-left: 0;
-                        }
-                    }
+              .ng-select {
+                &.ng-valid,
+                &.ng-valid:focus,
+                &.ng-valid.ng-select-focused {
+                  border: 1px solid #ced4da;
                 }
-                .right-side {
-                    display: flex;
-                    // align-items: baseline;
-                    align-items: center;
-
-                    a, button {
-                        @include shared-btn-confs;
-
-                        @media (max-width:768px) {
-                            margin: 10px 0px;
-                            margin-left: 0px !important;
-                            font-size: 0.7rem;
-                        }
-                    }
-                    .status {
-                        .rounded-circle {                            
-                            width: 0.85rem;
-                            height: 0.85rem;
-                            display: inline-block;
-                            vertical-align: middle;
-
-                            &.yellow {
-                                background: #ffff00;
-                            }
-                            &.green {
-                                background: #19ff00;
-                            }
-                            &.red {
-                                background: #fb6743;
-                            }
-                        }
-                        @media (max-width:768px){
-                            margin: 5px 0px 15px !important;
-                        }
-                    }
-                    @media  (max-width:768px){
-                        display: block;
-                    }
-                }
-                
-                .select-estatus-width {
-                    width: auto;
-                    flex: auto;
-                    align-items: center;
-                    justify-content: flex-end;
-
-                    &.select-gen-act {
-                        flex: unset;
-                        margin-left: 2.25rem;
-
-                        .select-gen-act-control {
-                            width: 20rem;
-                            display: flex;
-                            align-items: center;
-                            margin: 0;
-
-                            label {
-                                flex: 100%;
-                                color: $blue;
-                            }
-
-                            .ng-select {
-                                &.ng-valid, &.ng-valid:focus, &.ng-valid.ng-select-focused {
-                                    border: 1px solid #ced4da;
-                                }
-                            }
-                        }
-                    }
-                    
-                    .ng-select {
-                        //max-width: 13rem;
-                        //width: auto;
-                        min-width: 10rem;
-                        @media  (max-width:768px){
-                            min-width: 100%;
-                        }
-                    }  
-
-                }               
-            }
-            @media  (max-width:768px){
-                .d-flex{
-                    display: flow-root !important;
-                }
-                
-            }
-
-            .sub-titles {
-                p {
-                    // text-align: justify;
-
-                    @media screen and (orientation: portrait) {
-                        font-size: 1rem;
-                    }
-                }
-
-                &.text-incremented p {
-                    font-size: large !important;
-                }
-
-                &.subtitlesMT {
-                    @include mediabreak(small,landscape,true,640px) {
-                        margin-top: 2rem;
-                    }
-                }
-            }
-        }
-
-        .video-section {
-            .activity-video-container {
-                margin-bottom: 1rem;
-                @media screen and (orientation:landscape) and (min-width:640px) { width: 100%; }
-                @include mediabreak(large,portrait) { width: 100%; }
-            
-                .activity-video {
-                    ::ng-deep iframe {
-                        width: 100%;
-                        height: 50vw;
-        
-                        @include mediabreak(medium,landscape,true,800px) { height: 42vw; }
-                        @include mediabreak(small,portrait) { height: 45vw; }
-                        @include mediabreak(large,landscape) { height: 36vw; }
-                        @include mediabreak(larger,landscape) {
-                            height: 33vw;
-                            margin-top: 1rem;
-                        }
-                    }
-                }
-            }
-        }        
-
-
-        .buttons-wrapper {
-            width: 100%;
-            text-align: right;
-            margin: 1rem 0 0 0;
-            nb-icon {
-                &::before {
-                    margin: 0;
-                    vertical-align: middle;
-                }
-            }    
-    
-            a.btn, button.btn {
-                @include shared-btn-confs;
-                margin-right: 0;
-                font-family: 'Montserrat';
-                @media (max-width: 768px) {
-                    font-size: 0.7rem;
-                }
-            }
-    
-            .btn-in-wrapper {
-                margin-left: 1rem;
-    
-                &:first-child {
-                    margin-left: 0;
-                }
-            }
-            @media (max-width:478px) {
-                .btn-in-wrapper{
-                    margin-left: 0rem;
-                    margin-top: 0.5rem;
-                    display: block;
-                }
-            }
-        }
-        
-        @media (max-width:768px) {
-            .buttons-wrapper{
-                text-align: left;
-                margin: 0 0 0 0;
-            }
-        }
-
-    }
-    .select-estatus{
-        width: 40%;
-    }
-    .select-estatuz{
-        width: auto;
-    }
-    .select-general{
-        width: 10%;
-    }
-    .h6-select{
-        margin-right: 10px;
-        font-size: 1rem !important;
-        font-weight: normal !important;
-    }
-    .containerInputAndBtn{
-        width: 100%;
-        padding: 1rem 0rem;
-        .mb-negativo{
-            margin-bottom: 0rem !important;
-        }
-        .style-input{
-            width: 73%;
-            display: inline-block;
-        }
-        .styleInputAndBtn{
-            width: 25%;
-            display: inline-block;
-        }
-        @media (min-width: 768px) and (max-width:992px){
-            .style-input{
-                width: 72%;
-                display: inline-block;
-            }
-        }
-        @media (max-width:768px){
-            .styleInputAndBtn{
-                width: 200px;
-                display: inline-block;
-                margin-top: 1rem;
-                margin-left: 0px !important;
-            }
-            .style-input{
-                width: 100%;
-                display: inline-block;
-            }
-        }
-        @media (max-width:400px){
-            .styleInputAndBtn{
-                width: 130px;
-            }
-        }
-        .style-textarea{
-            width: 100%;
-            resize: none;
-            height: 130px;
-        }
-    }
-    
-    .form-control {
-        color: $blue;
-        font-size: 0.8rem;
-
-        &.tb-date-picker:after {
-            @include mediabreak(small,landscape,true,640px) {
-                right: 2.75rem;
-            }            
-        }
-
-        &.is-date-placeholder {
-            cursor: default;
-            background-color: #fff;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            border: none;
-            width: 70%;
-            padding-bottom: 0 !important;
-            height: auto;
-        }
-
-        &[readonly] {
-            background-color: #fff;
-        }
-
-        &[type="date"]:focus + .form-control.is-date-placeholder {
-            display: none;
-        }
-    
-        &:focus {
-            box-shadow: none;
-        }
-    
-        &.ng-touched {
-            &.ng-invalid, &.date-not-valid {
-                border: 2px solid $red;
-            }
-        
-            &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
-                &:focus.ng-dirty, &.ng-select-focused.ng-dirty {
-                    border: 2px solid $green;
-                }
-            }
-
-            &[readonly] {
-                border: 1px solid map-get($color_map, form-gray) !important;
-            }
-            
-            & ~ .error-message, &.ng-invalid.date-not-valid ~ .date-error-message {
-                display: block;
-            }
-
-            &:not(.date-not-valid) ~ .date-error-message {
-                display: none;
-            }      
-            
-            &[readonly] ~ .error-message, &[readonly] ~ .date-error-message {
-                display: none !important;
-            }
-        }
-
-        // &[readonly] {
-        //     cursor: default;
-        //     &:not(.is-date-placeholder):focus {
-        //         // border: 1px solid map-get($color_map, form-gray) !important;
-        //     }
-        // }
-    
-        &.ng-untouched {
-            & ~ .error-message, & ~ .date-error-message {
-                display: none;
-            }
-        }
-    }
-    .ng-select {
-        &.readonly-activity-selector {
-            color: $dark-gray;
-        }
-
-        .ng-dropdown-panel {
-            z-index: 3;
-
-            .ng-dropdown-panel-items {
-                .ng-option {
-                  &.ng-option-marked {
-                    small, a {
-                      font-weight: bold;
-                    }
-                  }
-                }
-            }
-
-            .scroll-host {
-                left: -0.75rem;
-                top: 0.35rem;
-                background: #fff;
-                border: solid map-get($color_map, form-gray);
-                border-width: 0 1px 1px;
-
-                .scrollable-content{
-                    padding: 0 1rem;
-                }
-            }
-        }
-
-        &.ng-select-opened .ng-select-container {
-            z-index: 3;           
-        }
-        
-        .ng-select-container {
-            .ng-placeholder {
-                color: #6c757d;
-            }
-
-            &.ng-has-value .ng-placeholder {
-                display: none;
-            }
-        }         
-
-        &.ng-untouched {
-            &.ng-invalid .ng-select-container .ng-placeholder,
-            &.image-status .ng-select-container .ng-placeholder {
-                display: block;
-            }
-            &.ng-valid:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
-                display: none;
-            }
-        }
-
-        &.ng-touched {
-            &.ng-pristine, 
-            &.ng-invalid {
-              .ng-select-container .ng-placeholder {
-                  display: block;
               }
             }
-            &.ng-invalid .ng-select-container .ng-placeholder {
-                display: block !important;
+          }
+
+          .ng-select {
+            //max-width: 13rem;
+            //width: auto;
+            min-width: 10rem;
+            @media (max-width: 768px) {
+              min-width: 100%;
             }
-            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
-                display: none;
-            }
+          }
+        }
+      }
+      @media (max-width: 768px) {
+        .d-flex {
+          display: flow-root !important;
+        }
+      }
+
+      .sub-titles {
+        p {
+          // text-align: justify;
+
+          @media screen and (orientation: portrait) {
+            font-size: 1rem;
+          }
         }
 
-        &.ng-select-filtered .ng-select-container .ng-placeholder,
-        &.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder {
-            display: none !important;
+        &.text-incremented p {
+          font-size: large !important;
         }
 
-        .ng-clear-wrapper .ng-clear {
-            color: map-get($color_map, form-gray);
+        &.subtitlesMT {
+          @include mediabreak(small, landscape, true, 640px) {
+            margin-top: 2rem;
+          }
         }
-
-        .ng-arrow-wrapper {
-            width: 1rem;
-
-            .ng-arrow {
-                height: 0.5rem !important;
-                width: 0.5rem !important;
-                border-color: map-get($color_map, form-gray);
-                border-style: solid;
-                border-width: 0 2px 2px 0;
-                -webkit-transform: rotate(45deg);
-                transform: rotate(45deg);
-                top: -0.15rem;
-            }
-        } 
+      }
     }
+
+    .video-section {
+      .activity-video-container {
+        margin-bottom: 1rem;
+        @media screen and (orientation: landscape) and (min-width: 640px) {
+          width: 100%;
+        }
+        @include mediabreak(large, portrait) {
+          width: 100%;
+        }
+
+        .activity-video {
+          ::ng-deep iframe {
+            width: 100%;
+            height: 50vw;
+
+            @include mediabreak(medium, landscape, true, 800px) {
+              height: 42vw;
+            }
+            @include mediabreak(small, portrait) {
+              height: 45vw;
+            }
+            @include mediabreak(large, landscape) {
+              height: 36vw;
+            }
+            @include mediabreak(larger, landscape) {
+              height: 33vw;
+              margin-top: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    .buttons-wrapper {
+      width: 100%;
+      text-align: right;
+      margin: 1rem 0 0 0;
+      nb-icon {
+        &::before {
+          margin: 0;
+          vertical-align: middle;
+        }
+      }
+
+      a.btn,
+      button.btn {
+        @include shared-btn-confs;
+        margin-right: 0;
+        font-family: "Montserrat";
+        @media (max-width: 768px) {
+          font-size: 0.7rem;
+        }
+      }
+
+      .btn-in-wrapper {
+        margin-left: 1rem;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+      @media (max-width: 478px) {
+        .btn-in-wrapper {
+          margin-left: 0rem;
+          margin-top: 0.5rem;
+          display: block;
+        }
+      }
+    }
+
+    @media (max-width: 767px) {
+      .buttons-wrapper {
+        text-align: left;
+        margin: 0 0 0 0;
+      }
+    }
+  }
+  .select-estatus {
+    width: 40%;
+  }
+  .select-estatuz {
+    width: auto;
+  }
+  .select-general {
+    width: 10%;
+  }
+  .h6-select {
+    margin-right: 10px;
+    font-size: 1rem !important;
+    font-weight: normal !important;
+  }
+  .containerInputAndBtn {
+    width: 100%;
+    padding: 1rem 0rem;
+    .mb-negativo {
+      margin-bottom: 0rem !important;
+    }
+    .style-input {
+      width: 73%;
+      display: inline-block;
+    }
+    .styleInputAndBtn {
+      width: 25%;
+      display: inline-block;
+    }
+    @media (min-width: 768px) and (max-width: 992px) {
+      .style-input {
+        width: 72%;
+        display: inline-block;
+      }
+    }
+    @media (max-width: 768px) {
+      .styleInputAndBtn {
+        width: 200px;
+        display: inline-block;
+        margin-top: 1rem;
+        margin-left: 0px !important;
+      }
+      .style-input {
+        width: 100%;
+        display: inline-block;
+      }
+    }
+    @media (max-width: 400px) {
+      .styleInputAndBtn {
+        width: 130px;
+      }
+    }
+    .style-textarea {
+      width: 100%;
+      resize: none;
+      height: 130px;
+    }
+  }
+
+  .form-control {
+    color: $blue;
+    font-size: 0.8rem;
+
+    &.tb-date-picker:after {
+      @include mediabreak(small, landscape, true, 640px) {
+        right: 2.75rem;
+      }
+    }
+
+    &.is-date-placeholder {
+      cursor: default;
+      background-color: #fff;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      border: none;
+      width: 70%;
+      padding-bottom: 0 !important;
+      height: auto;
+    }
+
+    &[readonly] {
+      background-color: #fff;
+    }
+
+    &[type="date"]:focus + .form-control.is-date-placeholder {
+      display: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &.ng-touched {
+      &.ng-invalid,
+      &.date-not-valid {
+        border: 2px solid $red;
+      }
+
+      &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
+        &:focus.ng-dirty,
+        &.ng-select-focused.ng-dirty {
+          border: 2px solid $green;
+        }
+      }
+
+      &[readonly] {
+        border: 1px solid map-get($color_map, form-gray) !important;
+      }
+
+      & ~ .error-message,
+      &.ng-invalid.date-not-valid ~ .date-error-message {
+        display: block;
+      }
+
+      &:not(.date-not-valid) ~ .date-error-message {
+        display: none;
+      }
+
+      &[readonly] ~ .error-message,
+      &[readonly] ~ .date-error-message {
+        display: none !important;
+      }
+    }
+
+    // &[readonly] {
+    //     cursor: default;
+    //     &:not(.is-date-placeholder):focus {
+    //         // border: 1px solid map-get($color_map, form-gray) !important;
+    //     }
+    // }
+
+    &.ng-untouched {
+      & ~ .error-message,
+      & ~ .date-error-message {
+        display: none;
+      }
+    }
+  }
+  .ng-select {
+    &.readonly-activity-selector {
+      color: $dark-gray;
+    }
+
+    .ng-dropdown-panel {
+      z-index: 3;
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          &.ng-option-marked {
+            small,
+            a {
+              font-weight: bold;
+            }
+          }
+        }
+      }
+
+      .scroll-host {
+        left: -0.75rem;
+        top: 0.35rem;
+        background: #fff;
+        border: solid map-get($color_map, form-gray);
+        border-width: 0 1px 1px;
+
+        .scrollable-content {
+          padding: 0 1rem;
+        }
+      }
+    }
+
+    &.ng-select-opened .ng-select-container {
+      z-index: 3;
+    }
+
+    .ng-select-container {
+      .ng-placeholder {
+        color: #6c757d;
+      }
+
+      &.ng-has-value .ng-placeholder {
+        display: none;
+      }
+    }
+
+    &.ng-untouched {
+      &.ng-invalid .ng-select-container .ng-placeholder,
+      &.image-status .ng-select-container .ng-placeholder {
+        display: block;
+      }
+      &.ng-valid:not(.image-status)
+        .ng-select-container.ng-has-value
+        .ng-placeholder {
+        display: none;
+      }
+    }
+
+    &.ng-touched {
+      &.ng-pristine,
+      &.ng-invalid {
+        .ng-select-container .ng-placeholder {
+          display: block;
+        }
+      }
+      &.ng-invalid .ng-select-container .ng-placeholder {
+        display: block !important;
+      }
+      &.ng-pristine:not(.image-status)
+        .ng-select-container.ng-has-value
+        .ng-placeholder {
+        display: none;
+      }
+    }
+
+    &.ng-select-filtered .ng-select-container .ng-placeholder,
+    &.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder {
+      display: none !important;
+    }
+
+    .ng-clear-wrapper .ng-clear {
+      color: map-get($color_map, form-gray);
+    }
+
+    .ng-arrow-wrapper {
+      width: 1rem;
+
+      .ng-arrow {
+        height: 0.5rem !important;
+        width: 0.5rem !important;
+        border-color: map-get($color_map, form-gray);
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: -0.15rem;
+      }
+    }
+  }
 }

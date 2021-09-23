@@ -64,29 +64,39 @@
       </span>
     </div>
   </div>
-  <div *ngFor="let dato of info.datosNivel" class="style-checklist">
+  <div
+    *ngFor="let dato of info.datosNivel"
+    class="style-checklist"
+    [class.pl-0]="settings.removePL"
+  >
     <!-- [class.in-generic-activity]="dato.isFromGenericActivity"> -->
     <ng-container *ngIf="flag; else other_content">
       <h6 *ngIf="dato.title">{{ dato.title }}</h6>
       <div class="mt-3 mb-3 check-btn" *ngFor="let check of dato.checkList">
         <nb-checkbox
           class="prueba"
-          [class.disabled-and-approved]="(activity_uneditable && dato.approvedAct) || !userCanEdit"
+          [class.disabled-and-approved]="
+            (activity_uneditable && dato.approvedAct) || !userCanEdit
+          "
           status="basic"
           [checked]="check.checked"
           [disabled]="activity_uneditable || !userCanEdit"
-          (checkedChange)="toggleCheck($event, check, dato.isFromGenericActivity)"
+          (checkedChange)="
+            toggleCheck($event, check, dato.isFromGenericActivity)
+          "
           ><span class="descripcion">{{ check.name }}</span>
         </nb-checkbox>
       </div>
       <div class="style-btn">
         <button
           title="general"
-          *ngIf="dato.isFromAnnualConvention && info.button && !info.button.hidden"
-          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
+          *ngIf="
+            dato.isFromAnnualConvention && info.button && !info.button.hidden
+          "
+          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-md-4"
           (click)="sendAnnualConvention(dato.checkList)"
         >
-        {{ info.button.name }}
+          {{ info.button.name }}
         </button>
       </div>
     </ng-container>
@@ -95,11 +105,15 @@
       <div class="mt-3 mb-3" *ngFor="let check of dato.checkList">
         <nb-checkbox
           class="prueba"
-          [class.disabled-and-approved]="activity_uneditable && dato.approvedAct"
+          [class.disabled-and-approved]="
+            activity_uneditable && dato.approvedAct
+          "
           status="basic"
           [checked]="check.checked"
           [disabled]="activity_uneditable"
-          (checkedChange)="toggleCheck($event, check, dato.isFromGenericActivity)"
+          (checkedChange)="
+            toggleCheck($event, check, dato.isFromGenericActivity)
+          "
           ><span class="descripcion">{{ check.name }}</span>
         </nb-checkbox>
       </div>
@@ -113,14 +127,18 @@
     <div *ngIf="dato.material">
       <h6>Materiales de apoyo:</h6>
       <span *ngFor="let m of dato.material; let isLast = last">
-        <a href="{{ m.link }}" target="_blank"> {{ m.link }}{{ isLast ? "" : ", " }} </a>
+        <a href="{{ m.link }}" target="_blank">
+          {{ m.link }}{{ isLast ? "" : ", " }}
+        </a>
       </span>
       <div class="style-btn" [class.no-margin]="info.isFromGenericActivity">
         <button
           *ngIf="info.button && !info.button.hidden"
           title="general"
-          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-4"
-          (click)="sendChecks(info.datosNivel[0].checkList, info.datosNivel[0].index)"
+          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-md-4"
+          (click)="
+            sendChecks(info.datosNivel[0].checkList, info.datosNivel[0].index)
+          "
         >
           {{ info.button.name }}
         </button>

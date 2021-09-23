@@ -25,7 +25,7 @@
           settings.fields.table.length
         "
         class="promote-wrapper"
-        [class.disabled]="!selectedRows.length"
+        [class.disabled]="!selectedRows.length || !form1.valid"
       >
         <h6>Datos a promover</h6>
         <ng-container
