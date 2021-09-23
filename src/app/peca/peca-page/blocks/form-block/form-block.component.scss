@@ -1,4 +1,4 @@
-@import 'scss/placeholders';
+@import "scss/placeholders";
 
 @mixin form-mix {
   display: flex;
@@ -6,21 +6,53 @@
   justify-content: flex-end;
   align-items: baseline;
 
-  @include mediabreak(large,landscape) { justify-content: space-between; }
+  @include mediabreak(large, landscape) {
+    justify-content: space-between;
+  }
 }
 @mixin form-flexings {
-  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { max-width: 46.5%; flex: 0 0 46.5%; }
-  @include mediabreak(larger,landscape) { max-width: 47.25%; flex: 0 0 47.25%; }
-  @include mediabreak(larger,landscape,true,1680px) { max-width: 47.75%; flex: 0 0 47.75%; }
+  @media screen and (orientation: landscape) and (min-width: 640px) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  @include mediabreak(large, portrait) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  @include mediabreak(large, landscape) {
+    max-width: 46.5%;
+    flex: 0 0 46.5%;
+  }
+  @include mediabreak(larger, landscape) {
+    max-width: 47.25%;
+    flex: 0 0 47.25%;
+  }
+  @include mediabreak(larger, landscape, true, 1680px) {
+    max-width: 47.75%;
+    flex: 0 0 47.75%;
+  }
 }
 @mixin form-flexings-one-row {
-  @media screen and (orientation:landscape) and (min-width:640px) { max-width: 100%; flex: 0 0 100%; }
-  @include mediabreak(large,portrait) { max-width: 100%; flex: 0 0 100%; }
-  @include mediabreak(large,landscape) { max-width: 38%; flex: 0 0 38%; }
-  @include mediabreak(larger,landscape) { max-width: 38%; flex: 0 0 38%; }
-  @include mediabreak(larger,landscape,true,1680px) { max-width: 38%; flex: 0 0 38%; }
+  @media screen and (orientation: landscape) and (min-width: 640px) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  @include mediabreak(large, portrait) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  @include mediabreak(large, landscape) {
+    max-width: 38%;
+    flex: 0 0 38%;
+  }
+  @include mediabreak(larger, landscape) {
+    max-width: 38%;
+    flex: 0 0 38%;
+  }
+  @include mediabreak(larger, landscape, true, 1680px) {
+    max-width: 38%;
+    flex: 0 0 38%;
+  }
 }
 @mixin for-image-widths {
   width: 8rem;
@@ -30,8 +62,12 @@
 ::ng-deep {
   form {
     .fields-container {
-      @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
-      @include mediabreak(large,portrait) { @include form-mix; }
+      @media screen and (orientation: landscape) and (min-width: 640px) {
+        @include form-mix;
+      }
+      @include mediabreak(large, portrait) {
+        @include form-mix;
+      }
       &.one-row-form {
         align-items: center;
       }
@@ -39,7 +75,8 @@
         flex-wrap: nowrap;
       }
 
-      h6, label {
+      h6,
+      label {
         width: 100%;
         color: $blue;
       }
@@ -82,17 +119,19 @@
             }
           }
 
-          button, img {
+          button,
+          img {
             @include for-image-widths;
             border: 1px solid $blue;
           }
 
-          .overlay, i {
+          .overlay,
+          i {
             height: 0;
             opacity: 0;
             position: absolute;
-            -webkit-transition: opacity .5s, color .5s;
-            transition: opacity .5s, color .5s;
+            -webkit-transition: opacity 0.5s, color 0.5s;
+            transition: opacity 0.5s, color 0.5s;
           }
 
           i {
@@ -120,8 +159,8 @@
             object-fit: contain;
 
             &.show-remover + i {
-              -webkit-text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
-              text-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+              -webkit-text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+              text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
               height: auto;
               padding: 1rem;
               opacity: 1;
@@ -153,7 +192,7 @@
           }
         }
 
-        @media (max-width:768px) {
+        @media (max-width: 768px) {
           .image-upload-btn-container {
             flex: 0 0 100%;
             padding: 30px;
@@ -209,7 +248,7 @@
             }
           }
 
-          @media (max-width:768px) {
+          @media (max-width: 768px) {
             .input-container {
               width: 100% !important;
             }
@@ -225,13 +264,13 @@
       }
 
       .two-wrapper {
-          @include form-mix;
-          @include form-flexings;
-          margin-bottom: 1rem;
+        @include form-mix;
+        @include form-flexings;
+        margin-bottom: 1rem;
 
-          .form-group {
-              width: 100%;
-          }
+        .form-group {
+          width: 100%;
+        }
       }
 
       .form-group {
@@ -245,32 +284,33 @@
         }
 
         .field-label {
-          color: $blue
+          color: $blue;
         }
 
         .date-container {
-            width: 100%;
-            position: relative;
+          width: 100%;
+          position: relative;
 
-            .date-part-container {
-              display: flex;
-              align-items: center;
+          .date-part-container {
+            display: flex;
+            align-items: center;
 
-              .inactive-wrapper {
-                width: 100%;
-              }
+            .inactive-wrapper {
+              width: 100%;
+            }
 
-              .calendaricon {
-                margin-left: 0.5rem;
+            .calendaricon {
+              margin-left: 0.5rem;
 
-                .icon-calendar:before {
-                  color: $blue;
-                }
+              .icon-calendar:before {
+                color: $blue;
               }
             }
+          }
         }
 
-        .error-message, .date-error-message {
+        .error-message,
+        .date-error-message {
           color: $red;
           font-size: 3.5vw;
 
@@ -279,7 +319,7 @@
           }
 
           @include breakpoint(large) {
-            font-size: .9vw;
+            font-size: 0.9vw;
           }
         }
       }
@@ -305,19 +345,25 @@
           .error-message {
             color: $red;
             width: 100%;
-            @include mediabreak(large,landscape) { width: 50%; }
+            @include mediabreak(large, landscape) {
+              width: 50%;
+            }
 
             &.sibling-error-one {
-              @include mediabreak(large,landscape) { margin-right: auto; }
+              @include mediabreak(large, landscape) {
+                margin-right: auto;
+              }
             }
             &.sibling-error-two {
-              @include mediabreak(large,landscape) { margin-left: auto; }
+              @include mediabreak(large, landscape) {
+                margin-left: auto;
+              }
             }
           }
         }
       }
 
-      textarea{
+      textarea {
         resize: none;
         height: 130px;
       }
@@ -371,7 +417,8 @@
           background-color: #fff;
         }
 
-        &[type="date"]:focus + .form-control.is-date-input-placeholder.form-control-date {
+        &[type="date"]:focus
+          + .form-control.is-date-input-placeholder.form-control-date {
           display: none;
         }
 
@@ -384,12 +431,14 @@
         }
 
         &.ng-touched {
-          &.ng-invalid, &.date-not-valid {
+          &.ng-invalid,
+          &.date-not-valid {
             border: 2px solid $red;
           }
 
           &.ng-valid:not(.date-not-valid):not(.image-description):not(.image-status) {
-            &:focus.ng-dirty, &.ng-select-focused.ng-dirty {
+            &:focus.ng-dirty,
+            &.ng-select-focused.ng-dirty {
               border: 2px solid $green;
             }
           }
@@ -398,7 +447,7 @@
             border: 1px solid map-get($color_map, form-gray) !important;
           }
 
-          &:not(.sibling-one,.sibling-two) ~ .error-message,
+          &:not(.sibling-one, .sibling-two) ~ .error-message,
           &.sibling-one ~ .error-message.sibling-error-one,
           &.sibling-two ~ .error-message.sibling-error-two,
           &.ng-invalid.date-not-valid ~ .date-error-message {
@@ -409,7 +458,7 @@
             display: none;
           }
 
-          &[readonly]:not(.sibling-one,.sibling-two) ~ .error-message,
+          &[readonly]:not(.sibling-one, .sibling-two) ~ .error-message,
           &[readonly].sibling-one ~ .error-message.sibling-error-one,
           &[readonly].sibling-two ~ .error-message.sibling-error-two,
           &[readonly] ~ .date-error-message {
@@ -420,12 +469,12 @@
         &[readonly] {
           cursor: default;
           &:not(.is-date-input-placeholder):focus {
-              border: 1px solid map-get($color_map, form-gray) !important;
+            border: 1px solid map-get($color_map, form-gray) !important;
           }
         }
 
         &.ng-untouched {
-          &:not(.sibling-one,.sibling-two) ~ .error-message,
+          &:not(.sibling-one, .sibling-two) ~ .error-message,
           &.sibling-one ~ .error-message.sibling-error-one,
           &.sibling-two ~ .error-message.sibling-error-two,
           & ~ .date-error-message {
@@ -435,98 +484,105 @@
       }
 
       .ng-select {
-          .ng-dropdown-panel {
-            z-index: 3;
+        .ng-dropdown-panel {
+          z-index: 3;
 
-            .ng-dropdown-panel-items {
-              .ng-option {
-                &.ng-option-marked {
-                  small, a {
-                    font-weight: bold;
-                  }
+          .ng-dropdown-panel-items {
+            .ng-option {
+              &.ng-option-marked {
+                small,
+                a {
+                  font-weight: bold;
                 }
               }
             }
+          }
 
-            .scroll-host {
-                left: -0.75rem;
-                top: 0.35rem;
-                background: #fff;
-                border: solid map-get($color_map, form-gray);
-                border-width: 0 1px 1px;
+          .scroll-host {
+            left: -0.75rem;
+            top: 0.35rem;
+            background: #fff;
+            border: solid map-get($color_map, form-gray);
+            border-width: 0 1px 1px;
 
-                .scrollable-content{
-                    padding: 0 1rem;
-                }
+            .scrollable-content {
+              padding: 0 1rem;
             }
           }
+        }
 
-          &.ng-select-opened .ng-select-container {
-              z-index: 3;
+        &.ng-select-opened .ng-select-container {
+          z-index: 3;
+        }
+
+        .ng-select-container {
+          .ng-placeholder {
+            color: #6c757d;
           }
 
-          .ng-select-container {
-              .ng-placeholder {
-                  color: #6c757d;
-              }
-
-              &.ng-has-value .ng-placeholder {
-                  display: none;
-              }
+          &.ng-has-value .ng-placeholder {
+            display: none;
           }
+        }
 
-          &.ng-untouched {
-              &.ng-invalid .ng-select-container .ng-placeholder,
-              &.image-status .ng-select-container .ng-placeholder {
-                  display: block;
-              }
-              &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
-                  display: none;
-              }
+        &.ng-untouched {
+          &.ng-invalid .ng-select-container .ng-placeholder,
+          &.image-status .ng-select-container .ng-placeholder {
+            display: block;
           }
+          &.ng-valid:not(.image-status) .ng-select-container .ng-placeholder {
+            display: none;
+          }
+        }
 
-          &.ng-touched {
-            &.ng-pristine,
-            &.ng-invalid {
-              .ng-select-container .ng-placeholder {
-                  display: block;
-              }
-            }
-            &.ng-invalid .ng-select-container .ng-placeholder {
-                display: block !important;
-            }
-            &.ng-pristine:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
-                display: none;
+        &.ng-touched {
+          &.ng-pristine,
+          &.ng-invalid {
+            .ng-select-container .ng-placeholder {
+              display: block;
             }
           }
-
-          &.ng-dirty.is-in-modal:not(.image-status) .ng-select-container.ng-has-value .ng-placeholder {
-              display: none;
+          &.ng-invalid .ng-select-container .ng-placeholder {
+            display: block !important;
           }
-
-          &.ng-select-filtered .ng-select-container .ng-placeholder,
-          &.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder {
-              display: none !important;
+          &.ng-pristine:not(.image-status)
+            .ng-select-container.ng-has-value
+            .ng-placeholder {
+            display: none;
           }
+        }
 
-          .ng-clear-wrapper .ng-clear {
-              color: map-get($color_map, form-gray);
+        &.ng-dirty.is-in-modal:not(.image-status)
+          .ng-select-container.ng-has-value
+          .ng-placeholder {
+          display: none;
+        }
+
+        &.ng-select-filtered .ng-select-container .ng-placeholder,
+        &.ng-select-filtered.ng-select-opened
+          .ng-select-container
+          .ng-placeholder {
+          display: none !important;
+        }
+
+        .ng-clear-wrapper .ng-clear {
+          color: map-get($color_map, form-gray);
+        }
+
+        .ng-arrow-wrapper {
+          width: 1rem;
+
+          .ng-arrow {
+            height: 0.5rem;
+            width: 0.5rem;
+            border-color: map-get($color_map, form-gray);
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            top: -0.15rem;
           }
-
-          .ng-arrow-wrapper {
-              width: 1rem;
-
-              .ng-arrow {
-                  height: 0.5rem;
-                  width: 0.5rem;
-                  border-color: map-get($color_map, form-gray);
-                  border-style: solid;
-                  border-width: 0 2px 2px 0;
-                  -webkit-transform: rotate(45deg);
-                  transform: rotate(45deg);
-                  top: -0.15rem;
-              }
-          }
+        }
       }
 
       .two-wrapper .form-group.full-width,
@@ -540,7 +596,7 @@
         max-width: 21.25%;
         flex: 0 0 21.25%;
       }
-      @media (max-width:992px) {
+      @media (max-width: 992px) {
         two-wrapper .form-group.full-width2,
         .form-group.full-width2 {
           max-width: 100%;
@@ -573,7 +629,7 @@
         .submit-btn,
         .add-img-button {
           @include shared-btn-confs;
-          @media (max-width:768px) {
+          @media (max-width: 768px) {
             font-size: 0.7rem;
           }
         }
@@ -582,12 +638,12 @@
         }
       }
 
-      @media (max-width:768px) {
+      @media (max-width: 768px) {
         .btn-container,
         .btn-container.one-row-form-btn-container,
         .image-group .add-img-btn {
           width: 100%;
-          text-align: left !important;
+          // text-align: left !important;
         }
       }
     }

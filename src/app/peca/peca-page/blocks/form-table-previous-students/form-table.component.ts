@@ -136,11 +136,10 @@ export class FormTableComponent
   onUserRowSelect(event) {
     this.selectedRows =
       event.selected && event.selected instanceof Array ? event.selected : [];
-    console.log("HOLA LU", this.selectedRows);
   }
 
   setSelect(field, event) {
-    console.log("HI LU", field, event, this.form1.valid, this.form2.valid);
+    console.log("field, event", field, event);
   }
 
   hasErrors(form: FormGroup, field: string): string | null {

@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
+import {
+  PageBlockComponent,
+  PresentationalBlockComponent,
+} from "../page-block.component";
 import { GlobalService } from "../../../../services/global.service";
 import { Subscription, Observable } from "rxjs";
 import { ToastrService } from "ngx-toastr";
@@ -14,7 +17,8 @@ import { NavigationEnd, Router, Event } from "@angular/router";
   templateUrl: "./checklist-block.component.html",
   styleUrls: ["./checklist-block.component.scss"],
 })
-export class ChecklistBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class ChecklistBlockComponent
+  implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   prueba: any;
@@ -82,6 +86,7 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
       //delete: string;
       //cancel: string;
     };
+    removePL?: boolean;
     fetcherMethod?: "get" | "post" | "put" | "patch" | "delete";
     extraData: {
       environmentalData: any;
@@ -144,20 +149,28 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
     if (data["button"]) {
       this.settings.infoContainer[0].button = {
         ...this.settings.infoContainer[0].button,
-        ...data["button"]
-      }
+        ...data["button"],
+      };
     }
     if (data["isGenericActivity"]) {
       this.userCanEdit = data["userCanEdit"];
-      this.settings.infoContainer[0].datosNivel[0].title = data["title"] ? data.title : null;
+      this.settings.infoContainer[0].datosNivel[0].title = data["title"]
+        ? data.title
+        : null;
       this.settings.infoContainer[0].datosNivel[0].checkList = data["checklist"]
         ? data.checklist
         : null;
-      this.activity_uneditable = data["activityUneditable"] ? data.activityUneditable : null;
-      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data["genericActivityId"]
+      this.activity_uneditable = data["activityUneditable"]
+        ? data.activityUneditable
+        : null;
+      this.settings.infoContainer[0].datosNivel[0].genericActivityId = data[
+        "genericActivityId"
+      ]
         ? data.genericActivityId
         : null;
-      this.settings.infoContainer[0].datosNivel[0].approvedAct = data["approvedAct"]
+      this.settings.infoContainer[0].datosNivel[0].approvedAct = data[
+        "approvedAct"
+      ]
         ? data.approvedAct
         : null;
 
@@ -242,7 +255,9 @@ export class ChecklistBlockComponent implements PresentationalBlockComponent, On
 
   sendChecks(checks, levelIndex) {
     const { environmentalData, lapse, topicIndex } = this.settings.extraData;
-    environmentalData[lapse].topics[topicIndex].levels[levelIndex].activities = checks;
+    environmentalData[lapse].topics[topicIndex].levels[
+      levelIndex
+    ].activities = checks;
     const body = {
       ...environmentalData,
     };

@@ -102,6 +102,10 @@ $z-index-higher: 4;
   font-size: 1rem;
   line-height: 1.5;
 
+  @media screen and (orientation: portrait) and (max-width: 767px) {
+    width: 100%;
+  }
+
   &,
   &[disabled] {
     background-color: $blue;
