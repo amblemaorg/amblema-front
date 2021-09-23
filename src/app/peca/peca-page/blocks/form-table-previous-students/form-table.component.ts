@@ -71,6 +71,7 @@ export class FormTableComponent
 
   isSaving: boolean = false;
   isSearching: boolean = false;
+  showSelectData: boolean = true;
 
   constructor() {}
 
@@ -138,8 +139,26 @@ export class FormTableComponent
       event.selected && event.selected instanceof Array ? event.selected : [];
   }
 
-  setSelect(field, event) {
-    console.log("field, event", field, event);
+  setSelect(field: string, type: number, event: any) {
+    console.log("field, type, event", field, type, event);
+    if (type === 1 && field !== "section") {
+      this.showSelectData = false;
+      const ind = event
+        ? this.settings.fields.fields1[field].items.findIndex(
+            (item) => item.id === event.id
+          )
+        : -1;
+      if (ind >= 0) {
+        const toPromoteArr = this.settings.fields.fields1[field].items.slice(
+          ind
+        );
+        this.settings.fields.fields2[`${field}2P`].items = toPromoteArr; // 2P means => To Promote
+      }
+      this.form2.get(`${field}2P`).reset();
+      setTimeout(() => {
+        this.showSelectData = true;
+      });
+    }
   }
 
   hasErrors(form: FormGroup, field: string): string | null {

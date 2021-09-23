@@ -51,7 +51,16 @@
       <ng-container *ngFor="let field of fieldsarr; index as ind">
         <div class="form-group">
           <label>{{ settings.fields["fields" + type][field].label }}</label>
+          <input
+            *ngIf="type === 2 && !showSelectData"
+            class="form-control"
+            type="text"
+            [formControlName]="field"
+            [id]="settings.fields['fields' + type][field].id"
+            [placeholder]="settings.fields['fields' + type][field].placeholder"
+          />
           <ng-select
+            *ngIf="type === 1 || showSelectData"
             class="form-control"
             notFoundText="Elementos no encontrados"
             [items]="settings.fields['fields' + type][field].items"
@@ -62,7 +71,7 @@
             [virtualScroll]="true"
             [id]="settings.fields['fields' + type][field].id"
             [placeholder]="settings.fields['fields' + type][field].placeholder"
-            (change)="setSelect(field, $event)"
+            (change)="setSelect(field, type, $event)"
             [readonly]="disabledThis() || (type === 2 && !selectedRows.length)"
           >
             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
