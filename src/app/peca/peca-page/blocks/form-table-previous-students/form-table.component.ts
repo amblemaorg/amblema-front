@@ -60,6 +60,8 @@ export class FormTableComponent
     };
   };
 
+  showTable: boolean = true;
+
   form1: FormGroup;
   form2: FormGroup;
   fields1: string[];
@@ -78,7 +80,9 @@ export class FormTableComponent
   ngOnInit() {}
 
   ngAfterViewChecked() {
-    const td = document.querySelector('.is-multi tbody td[colspan="5"]');
+    const td = document.querySelector(
+      '.is-multi.form-table-component tbody td[colspan="5"]'
+    );
     if (td) td.setAttribute("colspan", "6");
   }
 
@@ -102,14 +106,6 @@ export class FormTableComponent
       grade2P: new FormControl("", [Validators.required]),
       section2P: new FormControl("", [Validators.required]),
     });
-
-    // setTimeout(() => {
-    //   ["form1", "form2"].forEach((form) => {
-    //     Object.keys(this[form].value).forEach((fControl) => {
-    //       this[form].get(fControl).setErrors({ required: true });
-    //     });
-    //   });
-    // });
   }
 
   disabledThis(type: number = 0): boolean {
@@ -126,11 +122,11 @@ export class FormTableComponent
     console.log("event.action", event.action);
   };
 
-  onSubmitAction(values: any) {
-    this.isSearching = true;
+  onSubmitAction(type: number, values: any) {
+    this[type === 1 ? "isSearching" : "isSaving"] = true;
     console.log("Submit values", values);
     setTimeout(() => {
-      this.isSearching = false;
+      this[type === 1 ? "isSearching" : "isSaving"] = false;
     }, 3000);
   }
 
@@ -168,13 +164,5 @@ export class FormTableComponent
     }
 
     return null;
-  }
-
-  takeAction() {
-    this.isSaving = true;
-    console.log("Action");
-    setTimeout(() => {
-      this.isSaving = false;
-    }, 3000);
   }
 }

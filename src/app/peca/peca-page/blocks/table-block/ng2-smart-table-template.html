@@ -2,22 +2,105 @@
   <h6 *ngIf="settings.tableTitle && !isContentRefreshing" class="table-title">
     {{ settings.tableTitle }}
   </h6>
-  <ng2-smart-table
-    [settings]="settings"
-    [source]="source"
-    [ngClass]="{
+  <div class="table-element">
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      [ngClass]="{
       'd-none': settings.hideImgContainer,
       'hide-view': settings.classes.hideView,
       'hide-edit': settings.classes.hideEdit,
       'hide-delete': settings.classes.hideDelete,
       'has-img-in-first-col': settings.isImageFirstCol,
-      'is-multi': settings.isMulti
+      'is-multi table-block-component': settings.isMulti,
+      'is-empty': settings.isMulti && !settings.tableTitle
     }"
-    (custom)="onCustomActions($event)"
-    (userRowSelect)="onUserRowSelect($event)"
-  ></ng2-smart-table>
+      (custom)="onCustomActions($event)"
+      (userRowSelect)="onUserRowSelect($event)"
+    ></ng2-smart-table>
+  </div>
 
   <div *ngIf="settings.total" class="estilo-total">
     <h5>Total: <span>{{ settings.total | number:'1.0':'es-ES' }}</span></h5>
+  </div>
+  <div
+    *ngIf="promoteFields.length"
+    class="promote-wrapper"
+    [class.disabled]="!selectedRows.length || !settings.tableGrade"
+  >
+    <h6 class="actions">Acciones</h6>
+    <h6>Eliminar Estudiantes Seleccionados:</h6>
+    <button
+      type="button"
+      class="btn btn-primary text-decoration-none py-1 px-4 delete-btn"
+      [disabled]="disabledThis() || !selectedRows.length"
+      (click)="deleteStudents()"
+    >
+      <span *ngIf="isDeleting" class="spinner-grow spinner-grow-sm"></span>
+      {{ isDeleting ? "Eliminando..." : "Eliminar" }}
+    </button>
+    <hr />
+    <h6>Cambiar Estudiantes Seleccionados:</h6>
+    <form
+      [formGroup]="promoteForm"
+      (ngSubmit)="onSubmitAction(promoteForm.value)"
+    >
+      <div class="fields-container">
+        <ng-container *ngFor="let field of promoteFields; index as inx">
+          <div class="form-group">
+            <label>{{ settings.promoteData[field].label }}</label>
+            <input
+              *ngIf="!showSelectData"
+              class="form-control"
+              type="text"
+              [formControlName]="field"
+              [id]="settings.promoteData[field].id"
+              [placeholder]="settings.promoteData[field].placeholder"
+            />
+            <ng-select
+              *ngIf="showSelectData"
+              class="form-control"
+              notFoundText="Elementos no encontrados"
+              [items]="settings.promoteData[field].items"
+              bindValue="id"
+              bindLabel="name"
+              [labelForId]="settings.promoteData[field].id"
+              [formControlName]="field"
+              [virtualScroll]="true"
+              [id]="settings.promoteData[field].id"
+              [placeholder]="settings.promoteData[field].placeholder"
+              [readonly]="disabledThis() || !selectedRows.length"
+            >
+              <ng-template
+                ng-option-tmp
+                let-item="item"
+                let-search="searchTerm"
+              >
+                <small>{{ item.name }}</small>
+              </ng-template>
+            </ng-select>
+            <span
+              *ngIf="settings.promoteData[field].loading"
+              class="floating-loading"
+              >{{ settings.promoteData[field].loadingLabel }}</span
+            >
+            <ng-container *ngIf="hasErrors(promoteForm, field)">
+              <div class="error-message">
+                <strong>{{ hasErrors(promoteForm, field) }}</strong>`
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        <!-- BUTTON -->
+        <button
+          type="submit"
+          class="btn btn-primary text-decoration-none py-1 px-4"
+          [disabled]="disabledThis(true) || !selectedRows.length"
+        >
+          <span *ngIf="isPromoting" class="spinner-grow spinner-grow-sm"></span>
+          {{ isPromoting ? "Cambiando..." : "Cambiar" }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>

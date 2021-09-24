@@ -13,9 +13,11 @@ import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from "./ng2-smart
 import { LocalDataSource } from "ng2-smart-table";
 import { GlobalService } from "src/app/services/global.service";
 import { Subscription } from "rxjs";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import cloneDeep from "lodash/cloneDeep";
 import localeEs from "@angular/common/locales/es-VE";
 import { registerLocaleData } from "@angular/common";
+import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 registerLocaleData(localeEs, "es");
 
 @Component({
@@ -51,9 +53,22 @@ export class TableBlockComponent
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
     tableTitle?: string; // to set a title for the table
+    tableGrade?: string;
+    tableSection?: string;
     onDelete: Function | null;
     isMulti?: boolean; // to set table as multi selectable
     selectMode?: string;
+    promoteData?: {
+      any: {
+        id?: string;
+        name?: string;
+        label?: string;
+        items?: any[];
+        placeholder?: string;
+        loadingLabel?: string;
+        loading?: boolean;
+      };
+    };
   };
 
   tableStates: any = {};
@@ -70,6 +85,12 @@ export class TableBlockComponent
   isEditable: boolean = true; // to disable editing on table actions
   isContentRefreshing: boolean = false;
   selectedRows: any[] = [];
+
+  promoteForm: FormGroup;
+  promoteFields: string[] = [];
+  showSelectData: boolean = true;
+  isPromoting: boolean;
+  isDeleting: boolean;
 
   private subscription: Subscription = new Subscription();
 
@@ -148,7 +169,7 @@ export class TableBlockComponent
   }
   ngAfterViewChecked() {
     const td_student = document.querySelector(
-      '.is-multi tbody td[colspan="6"]'
+      '.is-multi.table-block-component tbody td[colspan="6"]'
     );
     if (td_student) td_student.setAttribute("colspan", "7");
   }
@@ -344,9 +365,29 @@ export class TableBlockComponent
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
 
+      if (data.promoteData) {
+        this.showSelectData = false;
+        console.log("PROMOTE DATA", data.promoteData);
+        this.settings["promoteData"] = data.promoteData;
+        this.promoteFields = Object.keys(data.promoteData);
+
+        this.promoteForm = new FormGroup({
+          grades2P: new FormControl("", [Validators.required]),
+          sections2P: new FormControl("", [Validators.required]),
+        });
+
+        this.promoteForm.reset();
+        setTimeout(() => {
+          this.showSelectData = true;
+        });
+      }
+
       if (data.hasTitle) {
         this.isContentRefreshing = true;
+        console.log(data.hasTitle);
         this.settings["tableTitle"] = data.hasTitle.tableTitle;
+        this.settings["tableGrade"] = data.hasTitle.tableGrade;
+        this.settings["tableSection"] = data.hasTitle.tableSection;
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
@@ -431,10 +472,44 @@ export class TableBlockComponent
     }
   }
 
+  disabledThis(doThis: boolean = false): boolean {
+    const dis = [
+      this.isPromoting,
+      this.isDeleting,
+      ...(doThis ? [!this.promoteForm.valid] : []),
+    ].some((cond) => cond);
+    return dis;
+  }
+
   onUserRowSelect(event) {
     if (this.settings.isMulti)
       this.selectedRows =
         event.selected && event.selected instanceof Array ? event.selected : [];
     console.log("selected ones", this.selectedRows);
+  }
+
+  onSubmitAction(values: any) {
+    this.isPromoting = true;
+    console.log("Submit values", values);
+    setTimeout(() => {
+      this.isPromoting = false;
+    }, 3000);
+  }
+
+  deleteStudents() {
+    this.isDeleting = true;
+    console.log("Deleting");
+    setTimeout(() => {
+      this.isDeleting = false;
+    }, 3000);
+  }
+
+  hasErrors(form: FormGroup, field: string): string | null {
+    const errors: any = form.get(field).errors;
+    if (errors) {
+      return errors.required ? MESSAGES.REQUIRED_MESSAGE : null;
+    }
+
+    return null;
   }
 }

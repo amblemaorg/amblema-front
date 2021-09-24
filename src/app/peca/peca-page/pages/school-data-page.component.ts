@@ -487,14 +487,36 @@ export class SchoolDataPageComponent
         data: this.currentStudentsGroup
           ? mapper.allStudents[this.currentStudentsGroup]
           : [],
+        promoteData: {
+          grades2P: {
+            id: "grade2P",
+            label: "Seleccione el grado a promover",
+            items: Object.keys(mapper.grades).map((grade) => {
+              return mapper.grades[grade];
+            }),
+            placeholder: "Grados",
+            loadingLabel: "Cargando grados...",
+            loading: false,
+          },
+          sections2P: {
+            id: "section2P",
+            label: "Seleccione la sección a promover",
+            items: mapper.sections,
+            placeholder: "Sección",
+            loadingLabel: "Cargando secciones...",
+            loading: false,
+          },
+        },
         hasTitle: {
-          tableTitle: this.currentStudentsGroup
-            ? section_name_index >= 0
-              ? `Estudiantes de ${
+          ...(this.currentStudentsGroup && section_name_index >= 0
+            ? {
+                tableTitle: `Estudiantes de ${
                   mapper.grades[mapper.sections[section_name_index].grade].name
-                }, sección ${mapper.sections[section_name_index].name}`
-              : ""
-            : "",
+                }, sección ${mapper.sections[section_name_index].name}`,
+                tableGrade: mapper.sections[section_name_index].grade,
+                tableSection: mapper.sections[section_name_index].name,
+              }
+            : { tableTitle: "", tableGrade: "", tableSection: "" }),
         },
         isEditable: true,
         classes: {
