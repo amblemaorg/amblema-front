@@ -13,7 +13,7 @@
           [settings]="tableStudents"
           [source]="source"
           (userRowSelect)="onUserRowSelect($event)"
-          class="is-multi"
+          class="is-multi form-table-component"
         ></ng2-smart-table>
       </div>
 
@@ -46,7 +46,7 @@
   let-type="type"
   let-frmlr="frmlr"
 >
-  <form [formGroup]="frmlr" (ngSubmit)="onSubmitAction(frmlr.value)">
+  <form [formGroup]="frmlr" (ngSubmit)="onSubmitAction(type, frmlr.value)">
     <div class="fields-container">
       <ng-container *ngFor="let field of fieldsarr; index as ind">
         <div class="form-group">
@@ -91,27 +91,25 @@
         </div>
       </ng-container>
       <!-- BUTTON -->
-      <ng-container *ngIf="type === 1; else otherType">
-        <button
-          type="submit"
-          class="btn btn-primary text-decoration-none py-1 px-4"
-          [disabled]="disabledThis(type)"
-        >
-          <span *ngIf="isSearching" class="spinner-grow spinner-grow-sm"></span>
-          {{ isSearching ? "Buscando..." : "Buscar" }}
-        </button>
-      </ng-container>
-      <ng-template #otherType>
-        <button
-          type="button"
-          class="btn btn-primary text-decoration-none py-1 px-4"
-          [disabled]="disabledThis(type) || !selectedRows.length"
-          (click)="takeAction()"
-        >
-          <span *ngIf="isSaving" class="spinner-grow spinner-grow-sm"></span>
-          {{ isSaving ? "Promoviendo..." : "Promover" }}
-        </button>
-      </ng-template>
+      <button
+        type="submit"
+        class="btn btn-primary text-decoration-none py-1 px-4"
+        [disabled]="disabledThis(type) || (type === 2 && !selectedRows.length)"
+      >
+        <span
+          *ngIf="(type === 1 && isSearching) || (type === 2 && isSaving)"
+          class="spinner-grow spinner-grow-sm"
+        ></span>
+        {{
+          type === 1
+            ? isSearching
+              ? "Buscando..."
+              : "Buscar"
+            : isSaving
+            ? "Promoviendo..."
+            : "Promover"
+        }}
+      </button>
     </div>
   </form>
 </ng-template>

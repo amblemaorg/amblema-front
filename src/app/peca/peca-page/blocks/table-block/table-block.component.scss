@@ -1,44 +1,12 @@
-@import "scss/placeholders";
+@import "scss/sharedpromote";
 
 $table-border-color: 1px solid $blue;
 
-@mixin box($tr-x: -0.25rem, $width: 1.4rem, $height: 1.4rem) {
-  content: "";
-  width: $width;
-  height: $height;
-  background: transparent;
-  position: absolute;
-  border: 1px solid $blue;
-  border-radius: 3px;
-  top: 0.9rem;
-  -moz-transform: translateX($tr-x);
-  -o-transform: translateX($tr-x);
-  -webkit-transform: translateX($tr-x);
-  -ms-transform: translateX($tr-x);
-  transform: translateX($tr-x);
-}
-
-@mixin check($tr-x: 1px, $top: 1.25rem, $width: 0.8rem, $height: 0.5rem) {
-  content: "";
-  width: $width;
-  height: $height;
-  background: transparent;
-  display: block;
-  position: absolute;
-  border: 4px solid #fff;
-  border-top-width: 0;
-  top: $top;
-  border-right-width: 0;
-  -moz-transform: translateX($tr-x) rotate(-50deg);
-  -o-transform: translateX($tr-x) rotate(-50deg);
-  -webkit-transform: translateX($tr-x) rotate(-50deg);
-  -ms-transform: translateX($tr-x) rotate(-50deg);
-  transform: translateX($tr-x) rotate(-50deg);
-}
-
 ::ng-deep {
   .table-container {
-    overflow-x: auto;
+    .table-element {
+      overflow-x: auto;
+    }
 
     .table-title {
       width: 100%;
@@ -46,6 +14,19 @@ $table-border-color: 1px solid $blue;
       position: relative;
       bottom: -0.85rem;
       margin-top: 1rem;
+    }
+
+    .promote-wrapper {
+      @include promoteWrapper;
+      h6 {
+        color: $blue;
+        font-size: small;
+      }
+      hr {
+        border-top: 1px solid $blue;
+      }
+      @include promoteH6("h6.actions");
+      @include promoteButton("button");
     }
   }
   .estilo-total {
@@ -61,153 +42,36 @@ $table-border-color: 1px solid $blue;
   .nb-theme-default nb-tabset nb-tab {
     padding: 1rem 2rem !important;
   }
-  .nb-theme-default ng2-smart-table.is-multi {
-    table thead tr:first-child th:first-child input {
-      opacity: 0;
-    }
-    table thead tr:first-child th:first-child::before {
-      @include box;
-    }
-    table
-      thead
-      tr:first-child
-      th:first-child[ng-reflect-is-all-selected="true"]::before,
-    table tbody tr.selected td:first-child::before {
-      background: $blue !important;
-    }
-    table
-      thead
-      tr:first-child
-      th:first-child[ng-reflect-is-all-selected="true"]::after {
-      @include check;
-    }
+  .nb-theme-default ng2-smart-table.is-multi.table-block-component {
+    @include isMulti("7");
+  }
+  .nb-theme-default ng2-smart-table.is-empty table thead tr th:nth-child(2) {
+    display: none;
+  }
 
-    table tbody tr td:first-child input {
-      opacity: 0;
-      &:focus {
-        box-shadow: none;
-      }
-    }
-    table tbody tr td:first-child:not([colspan="7"]):before {
-      @include box(-0.75rem);
-      margin-inline: auto;
-    }
-    table tbody tr.selected td:first-child::after {
-      @include check(1rem, 1.25rem);
-    }
-  }
-  .nb-theme-default ng2-smart-table table tr th,
-  .nb-theme-default ng2-smart-table table tr th a {
-    font-family: "Montserrat";
-    font-weight: 300;
-    font-style: normal;
-    font-size: 0.8rem;
-  }
-  .nb-theme-default ng2-smart-table table tr td {
-    font-family: "Montserrat";
-    font-weight: 300;
-    font-style: normal;
-    font-size: 0.8rem;
-  }
-  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.asc,
-  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.desc {
-    font-weight: 300;
-  }
-  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th {
-    padding: 0.375rem 1rem;
-  }
-  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th {
-    padding: 0.875rem 2rem 0;
-    text-align: left;
-  }
-  .nb-theme-default ng2-smart-table .ng2-smart-actions {
-    text-align: center !important;
-  }
+  @include tableConfs;
+
   .nb-theme-default ng2-smart-table {
     &.has-img-in-first-col tbody tr td:nth-child(2) {
       text-align: center;
     }
 
-    thead {
-      border: $table-border-color;
-
-      tr.ng2-smart-filters
-        th.ng2-smart-th
-        ng2-smart-table-filter
-        div.ng2-smart-filter
-        default-table-filter
-        input-filter {
-        input,
-        input.ng-valid {
-          border: $table-border-color !important;
-
-          &::placeholder {
-            color: transparent !important;
-          }
-        }
-      }
-
-      tr {
-        th {
-          text-align: center;
-          border: none !important;
-          border-right: $table-border-color !important;
-
-          &,
-          a {
-            color: $blue !important;
-          }
-        }
-      }
-    }
-
-    tbody {
-      border: $table-border-color;
-
-      tr {
-        &:nth-child(even) {
-          background-color: map-get($color_map, gray);
+    @include tHead("thead");
+    @include tBody("tbody") {
+      &.ng2-smart-actions {
+        ng2-st-tbody-edit-delete {
+          display: none !important;
         }
 
-        &:hover {
-          background-color: map-get($color_map, grayer) !important;
+        ng2-st-tbody-custom {
+          display: grid;
+          grid-template-columns: auto auto auto;
+          grid-column-gap: 0.5rem;
         }
 
-        td {
+        a.ng2-smart-action {
           color: $blue !important;
-          border: none !important;
-          border-right: $table-border-color !important;
-          max-width: 20rem;
-          word-break: break-word;
-
-          img {
-            width: 3.5rem;
-            height: 3.5rem;
-            object-fit: contain;
-          }
-
-          &:first-child {
-            padding-left: 1rem;
-            padding-right: 1rem;
-            // max-width: 5rem;
-          }
-
-          &.ng2-smart-actions {
-            ng2-st-tbody-edit-delete {
-              display: none !important;
-            }
-
-            ng2-st-tbody-custom {
-              display: grid;
-              grid-template-columns: auto auto auto;
-              grid-column-gap: 0.5rem;
-            }
-
-            a.ng2-smart-action {
-              color: $blue !important;
-              font-size: 1.4rem !important;
-            }
-          }
+          font-size: 1.4rem !important;
         }
       }
     }
@@ -274,84 +138,22 @@ $table-border-color: 1px solid $blue;
     }
 
     // pagination
-    nav.ng2-smart-pagination-nav {
-      ul.pagination {
-        border: none !important;
+    @include tPagination("nav.ng2-smart-pagination-nav");
+  }
 
-        li.page-item {
-          cursor: pointer;
-          border: $table-border-color !important;
-
-          &:not(:nth-last-child(2)) {
-            border-right: none !important;
-          }
-
-          &:first-child,
-          &:last-child {
-            display: none;
-          }
-
-          &:nth-child(2),
-          &:nth-last-child(2) {
-            span {
-              transform: scaleY(1.5);
-              display: inline-block;
-            }
-          }
-
-          & .page-link,
-          &.disabled .page-link {
-            background: none;
-          }
-
-          & .page-link {
-            color: $blue;
-            font-size: small;
-            padding: 0.9rem 1.2rem;
-
-            @include mediabreak(small, portrait) {
-              font-size: medium;
-            }
-            @include mediabreak(large, landscape) {
-              padding: 0.8rem 1.1rem;
-              font-size: 0.75rem;
-            }
-            @include mediabreak(larger, landscape, true, 1900px) {
-              padding: 0.95rem 1.4rem;
-              font-size: 1rem;
-            }
-          }
-
-          &.disabled {
-            border-color: $dark-gray !important;
-
-            &:nth-child(2) {
-              border-right: none !important;
-            }
-            &:nth-last-child(2) {
-              border-left: none !important;
-            }
-
-            .page-link {
-              color: $dark-gray;
-            }
-          }
-
-          &.active .page-link {
-            color: #fff;
-            background: $blue;
-          }
-
-          &:nth-child(2) {
-            border-bottom-left-radius: 0.35rem;
-            border-top-left-radius: 0.35rem;
-          }
-          &:nth-last-child(2) {
-            border-bottom-right-radius: 0.35rem;
-            border-top-right-radius: 0.35rem;
-          }
-        }
-      }
+  //SELECTS .......................................................................
+  form {
+    .fields-container {
+      @include fieldsContainer;
+      @include label("label");
+      @include selectors(
+        ".floating-loading",
+        ".form-group .error-message",
+        "button"
+      );
+      @include formGroup(".form-group");
+      @include formControl(".form-control");
+      @include select(".ng-select");
     }
   }
 }
