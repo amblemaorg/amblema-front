@@ -9,6 +9,13 @@
   <div class="table-wrapper">
     <div class="the-table" [class.disabled]="disabledThis()">
       <div class="table-element">
+        <div
+          *ngIf="isUpdating"
+          class="updating d-flex align-items-center flex-column"
+        >
+          <span class="spinner-grow"></span>
+          <p>Actualizando tabla...</p>
+        </div>
         <ng2-smart-table
           [settings]="tableStudents"
           [source]="source"

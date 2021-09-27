@@ -42,14 +42,16 @@ export class FormTableComponent
           loading?: boolean;
         };
       };
-      table?: {
-        id?: string;
-        name?: string;
-        lastName?: string;
-        idCard?: string;
-        gender?: string;
-        birthDate?: string;
-      }[];
+      table?:
+        | any
+        | {
+            id?: string;
+            name?: string;
+            lastName?: string;
+            idCard?: string;
+            gender?: string;
+            birthDate?: string;
+          }[];
       allSections?: any[];
       sectionKey?: string;
       button?: {
@@ -75,6 +77,8 @@ export class FormTableComponent
 
   isSaving: boolean = false;
   isSearching: boolean = false;
+  isUpdating: boolean = false;
+
   showSelectSections1: boolean = true;
   showSelectGrades2: boolean = true;
   showSelectSections2: boolean = true;
@@ -90,16 +94,21 @@ export class FormTableComponent
     if (td) td.setAttribute("colspan", "6");
   }
 
+  private fillTable(rows: any[] = []) {
+    if (rows.length) this.settings.fields.table = rows;
+    if (this.settings.fields.table?.length) {
+      this.source = new LocalDataSource(this.settings.fields.table);
+      this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
+    }
+  }
+
   public setSettings(settings: any): void {
     this.settings = { ...settings };
 
     this.fields1 = Object.keys(this.settings.fields.fields1);
     this.fields2 = Object.keys(this.settings.fields.fields2);
 
-    if (this.settings.fields.table?.length) {
-      this.source = new LocalDataSource(this.settings.fields.table);
-      this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
-    }
+    this.fillTable();
 
     ["1", "2"].forEach((num) => {
       this[`form${num}`] = new FormGroup(
@@ -114,6 +123,7 @@ export class FormTableComponent
   disabledThis(type: number = 0): boolean {
     const dis = [
       this.isSaving,
+      this.isUpdating,
       ...(type === 1 ? [!this.form1.valid] : []),
       ...(type === 2 ? [!this.form2.valid] : []),
       this.isSearching,
@@ -125,11 +135,40 @@ export class FormTableComponent
     console.log("event.action", event.action);
   };
 
-  onSubmitAction(type: number, values: any) {
-    this[type === 1 ? "isSearching" : "isSaving"] = true;
+  onSubmitAction(type: number, values: any, update: boolean = false) {
+    this[
+      type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
+    ] = true;
     console.log("Submit values", values);
     setTimeout(() => {
-      this[type === 1 ? "isSearching" : "isSaving"] = false;
+      this[
+        type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
+      ] = false;
+      if (type === 1) {
+        this.source = new LocalDataSource();
+        this.selectedRows = [];
+        this.fillTable([
+          {
+            id: "1",
+            name: "Astrid",
+            lastName: "Herrera",
+            idCard: "1234567890",
+            gender: "Femenino",
+            birthDate: "22-08-2011",
+          },
+          {
+            id: "2",
+            name: "Asdrubal",
+            lastName: "Querales",
+            idCard: "1234567891",
+            gender: "Masculino",
+            birthDate: "12-05-2011",
+          },
+        ]);
+      } else {
+        this.form2.reset();
+        this.onSubmitAction(1, this.form1.value, true);
+      }
     }, 3000);
   }
 
