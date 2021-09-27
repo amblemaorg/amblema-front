@@ -50,6 +50,8 @@ export class FormTableComponent
         gender?: string;
         birthDate?: string;
       }[];
+      allSections?: any[];
+      sectionKey?: string;
       button?: {
         text?: string;
         hidden?: boolean;
@@ -73,7 +75,9 @@ export class FormTableComponent
 
   isSaving: boolean = false;
   isSearching: boolean = false;
-  showSelectData: boolean = true;
+  showSelectSections1: boolean = true;
+  showSelectGrades2: boolean = true;
+  showSelectSections2: boolean = true;
 
   constructor() {}
 
@@ -97,14 +101,13 @@ export class FormTableComponent
       this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
     }
 
-    this.form1 = new FormGroup({
-      grade: new FormControl("", [Validators.required]),
-      section: new FormControl("", [Validators.required]),
-    });
-
-    this.form2 = new FormGroup({
-      grade2P: new FormControl("", [Validators.required]),
-      section2P: new FormControl("", [Validators.required]),
+    ["1", "2"].forEach((num) => {
+      this[`form${num}`] = new FormGroup(
+        this[`fields${num}`].reduce((fields, field) => {
+          fields[field] = new FormControl("", [Validators.required]);
+          return fields;
+        }, {})
+      );
     });
   }
 
@@ -135,10 +138,32 @@ export class FormTableComponent
       event.selected && event.selected instanceof Array ? event.selected : [];
   }
 
+  // filling sections according to selected grade
+  private fillSections(field: string, grade = null, type: number = 0) {
+    if (type) this[`showSelectSections${type}`] = false;
+    if (!grade && type) {
+      this.settings.fields[`fields${type}`][
+        `${field}${type === 1 ? "" : "2P"}`
+      ].items = [];
+    } else if (type) {
+      this.settings.fields[`fields${type}`][
+        `${field}${type === 1 ? "" : "2P"}`
+      ].items = this.settings.fields.allSections.filter((s) => {
+        return s.grade == grade;
+      });
+    }
+    this[`form${type}`].get(`${field}${type === 1 ? "" : "2P"}`).reset();
+    setTimeout(() => {
+      if (type) this[`showSelectSections${type}`] = true;
+    });
+  }
+
   setSelect(field: string, type: number, event: any) {
     console.log("field, type, event", field, type, event);
-    if (type === 1 && field !== "section") {
-      this.showSelectData = false;
+    if (event && type === 1 && !field.includes("section")) {
+      this.fillSections(this.settings.fields.sectionKey, event.id, type);
+      this.showSelectGrades2 = false;
+      this.showSelectSections2 = false;
       const ind = event
         ? this.settings.fields.fields1[field].items.findIndex(
             (item) => item.id === event.id
@@ -152,9 +177,11 @@ export class FormTableComponent
       }
       this.form2.get(`${field}2P`).reset();
       setTimeout(() => {
-        this.showSelectData = true;
+        this.showSelectGrades2 = true;
+        this.showSelectSections2 = true;
       });
-    }
+    } else if (event && type === 2 && !field.includes("section"))
+      this.fillSections(this.settings.fields.sectionKey, event.id, type);
   }
 
   hasErrors(form: FormGroup, field: string): string | null {
