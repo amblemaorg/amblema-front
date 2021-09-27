@@ -1,82 +1,86 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ToastrService, ToastrModule } from 'ngx-toastr';
-import { PecaPageComponent } from './peca-page.component';
-import { NbCardModule, NbTabsetModule } from '@nebular/theme';
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { TabsBlockComponent } from './blocks/tabs-block/tabs-block.component';
-import { TableBlockComponent } from './blocks/table-block/table-block.component';
-import { ComponentFactoryResolver } from '@angular/core';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ToastrService, ToastrModule } from "ngx-toastr";
+import { PecaPageComponent } from "./peca-page.component";
+import { NbCardModule, NbTabsetModule } from "@nebular/theme";
+import { RouterTestingModule } from "@angular/router/testing";
+import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
+import { TabsBlockComponent } from "./blocks/tabs-block/tabs-block.component";
+import { TableBlockComponent } from "./blocks/table-block/table-block.component";
+import { ComponentFactoryResolver } from "@angular/core";
+import { Ng2SmartTableModule } from "ng2-smart-table";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { NgSelectModule } from "@ng-select/ng-select";
 
-describe('PecaPageComponent', () => {
+describe("PecaPageComponent", () => {
   let component: PecaPageComponent;
   let fixture: ComponentFixture<PecaPageComponent>;
   let factoryResolver: ComponentFactoryResolver;
   const pageConfig = {
     header: {
-      title: "Diagnóstico inicial"
+      title: "Diagnóstico inicial",
     },
     blocks: [
       {
-        component: 'tabs',
+        component: "tabs",
         settings: {
           items: [
             {
               title: "Lectura",
-              childBlocks: []
+              childBlocks: [],
             },
             {
               title: "Matemática",
-              childBlocks: []
-            }
+              childBlocks: [],
+            },
           ],
         },
       },
-    ]
-  }
+    ],
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         PecaPageComponent,
         TabsBlockComponent,
-        TableBlockComponent
+        TableBlockComponent,
       ],
       imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        NgSelectModule,
         RouterTestingModule.withRoutes([]),
         ToastrModule.forRoot(),
         NbCardModule,
         NbTabsetModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
       ],
       providers: [{ provide: ToastrService, useClass: ToastrService }],
-    })
+    });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [
-          TabsBlockComponent,
-          TableBlockComponent
-        ]
-      }
+        entryComponents: [TabsBlockComponent, TableBlockComponent],
+      },
     });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PecaPageComponent);
-    factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
+    factoryResolver = fixture.debugElement.injector.get(
+      ComponentFactoryResolver
+    );
     component = fixture.componentInstance;
     component.instantiateComponent(pageConfig);
     fixture.detectChanges();
   });
 
-  it('should create page component', () => {
+  it("should create page component", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have a title with only one h1 tag', () => {
-    const h1 = fixture.nativeElement.querySelectorAll('h1');
+  it("should have a title with only one h1 tag", () => {
+    const h1 = fixture.nativeElement.querySelectorAll("h1");
     expect(h1.length).toBe(1);
     expect(h1[0].textContent).toBe(pageConfig.header.title);
   });

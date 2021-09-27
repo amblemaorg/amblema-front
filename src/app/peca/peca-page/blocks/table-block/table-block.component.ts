@@ -358,6 +358,21 @@ export class TableBlockComponent
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
+  setFormG(data) {
+    if (data) {
+      this.promoteFields = Object.keys(data.promoteData);
+
+      this.promoteForm = new FormGroup(
+        this.promoteFields.reduce((fields, prField) => {
+          fields[prField] = new FormControl("", [Validators.required]);
+          return fields;
+        }, {})
+      );
+
+      this.promoteForm.reset();
+    }
+  }
+
   setData(data: any) {
     if (data["classes"]) {
       this.settings.classes = data["classes"];
@@ -371,18 +386,11 @@ export class TableBlockComponent
       if (data.promoteData) {
         this.showSelectGrades0 = false;
         this.showSelectSections0 = false;
-        console.log("PROMOTE DATA", data.promoteData);
+        console.log("PROMOTE DATA", JSON.stringify(data.promoteData));
         this.settings["promoteData"] = data.promoteData;
-        this.promoteFields = Object.keys(data.promoteData);
 
-        this.promoteForm = new FormGroup(
-          this.promoteFields.reduce((fields, prField) => {
-            fields[prField] = new FormControl("", [Validators.required]);
-            return fields;
-          }, {})
-        );
+        this.setFormG(data);
 
-        this.promoteForm.reset();
         setTimeout(() => {
           this.showSelectGrades0 = true;
           this.showSelectSections0 = true;
