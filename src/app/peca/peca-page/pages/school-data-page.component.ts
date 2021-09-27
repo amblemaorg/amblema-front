@@ -501,7 +501,7 @@ export class SchoolDataPageComponent
           sections2P: {
             id: "section2P",
             label: "Seleccione la sección a promover",
-            items: mapper.sections,
+            items: [],
             placeholder: "Sección",
             loadingLabel: "Cargando secciones...",
             loading: false,
@@ -515,8 +515,16 @@ export class SchoolDataPageComponent
                 }, sección ${mapper.sections[section_name_index].name}`,
                 tableGrade: mapper.sections[section_name_index].grade,
                 tableSection: mapper.sections[section_name_index].name,
+                sectionKey: "sections",
+                allSections: mapper.sections,
               }
-            : { tableTitle: "", tableGrade: "", tableSection: "" }),
+            : {
+                tableTitle: "",
+                tableGrade: "",
+                tableSection: "",
+                sectionKey: "section",
+                allSections: [],
+              }),
         },
         isEditable: true,
         classes: {

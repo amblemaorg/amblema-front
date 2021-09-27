@@ -50,7 +50,7 @@
           <div class="form-group">
             <label>{{ settings.promoteData[field].label }}</label>
             <input
-              *ngIf="!showSelectData"
+              *ngIf="(!inx && !showSelectGrades0) || (inx && !showSelectSections0)"
               class="form-control"
               type="text"
               [formControlName]="field"
@@ -58,7 +58,7 @@
               [placeholder]="settings.promoteData[field].placeholder"
             />
             <ng-select
-              *ngIf="showSelectData"
+              *ngIf="(!inx && showSelectGrades0) || (inx && showSelectSections0)"
               class="form-control"
               notFoundText="Elementos no encontrados"
               [items]="settings.promoteData[field].items"
@@ -69,6 +69,7 @@
               [virtualScroll]="true"
               [id]="settings.promoteData[field].id"
               [placeholder]="settings.promoteData[field].placeholder"
+              (change)="setSelect(field, $event)"
               [readonly]="disabledThis() || !selectedRows.length"
             >
               <ng-template

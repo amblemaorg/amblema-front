@@ -52,7 +52,12 @@
         <div class="form-group">
           <label>{{ settings.fields["fields" + type][field].label }}</label>
           <input
-            *ngIf="type === 2 && !showSelectData"
+            *ngIf="
+              (type === 2 &&
+                ((!ind && !showSelectGrades2) ||
+                  (ind && !showSelectSections2))) ||
+              (type === 1 && ind && !showSelectSections1)
+            "
             class="form-control"
             type="text"
             [formControlName]="field"
@@ -60,7 +65,12 @@
             [placeholder]="settings.fields['fields' + type][field].placeholder"
           />
           <ng-select
-            *ngIf="type === 1 || showSelectData"
+            *ngIf="
+              (type === 1 && !ind) ||
+              (type === 1 && ind && showSelectSections1) ||
+              (type === 2 &&
+                ((!ind && showSelectGrades2) || (ind && showSelectSections2)))
+            "
             class="form-control"
             notFoundText="Elementos no encontrados"
             [items]="settings.fields['fields' + type][field].items"

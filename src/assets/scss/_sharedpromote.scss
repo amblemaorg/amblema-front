@@ -251,7 +251,6 @@
         &:first-child {
           padding-left: 1rem;
           padding-right: 1rem;
-          // max-width: 5rem;
         }
 
         @content; //This is a special case

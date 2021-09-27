@@ -55,6 +55,8 @@ export class TableBlockComponent
     tableTitle?: string; // to set a title for the table
     tableGrade?: string;
     tableSection?: string;
+    sectionKey?: string;
+    allSections?: any[];
     onDelete: Function | null;
     isMulti?: boolean; // to set table as multi selectable
     selectMode?: string;
@@ -88,7 +90,8 @@ export class TableBlockComponent
 
   promoteForm: FormGroup;
   promoteFields: string[] = [];
-  showSelectData: boolean = true;
+  showSelectGrades0: boolean = true;
+  showSelectSections0: boolean = true;
   isPromoting: boolean;
   isDeleting: boolean;
 
@@ -366,19 +369,23 @@ export class TableBlockComponent
       this.isEditable = data.isEditable ? true : false;
 
       if (data.promoteData) {
-        this.showSelectData = false;
+        this.showSelectGrades0 = false;
+        this.showSelectSections0 = false;
         console.log("PROMOTE DATA", data.promoteData);
         this.settings["promoteData"] = data.promoteData;
         this.promoteFields = Object.keys(data.promoteData);
 
-        this.promoteForm = new FormGroup({
-          grades2P: new FormControl("", [Validators.required]),
-          sections2P: new FormControl("", [Validators.required]),
-        });
+        this.promoteForm = new FormGroup(
+          this.promoteFields.reduce((fields, prField) => {
+            fields[prField] = new FormControl("", [Validators.required]);
+            return fields;
+          }, {})
+        );
 
         this.promoteForm.reset();
         setTimeout(() => {
-          this.showSelectData = true;
+          this.showSelectGrades0 = true;
+          this.showSelectSections0 = true;
         });
       }
 
@@ -388,6 +395,8 @@ export class TableBlockComponent
         this.settings["tableTitle"] = data.hasTitle.tableTitle;
         this.settings["tableGrade"] = data.hasTitle.tableGrade;
         this.settings["tableSection"] = data.hasTitle.tableSection;
+        this.settings["sectionKey"] = data.hasTitle.sectionKey;
+        this.settings["allSections"] = data.hasTitle.allSections;
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
@@ -511,5 +520,24 @@ export class TableBlockComponent
     }
 
     return null;
+  }
+
+  setSelect(field: string, event: any) {
+    if (!field.includes("section")) {
+      this.showSelectSections0 = false;
+      if (event)
+        this.settings.promoteData[
+          `${this.settings.sectionKey}2P`
+        ].items = this.settings.allSections.filter((s) => {
+          return s.grade == event.id;
+        });
+      else if (!event) {
+        this.settings.promoteData[`${this.settings.sectionKey}2P`].items = [];
+      }
+      this.promoteForm.get(`${this.settings.sectionKey}2P`).reset();
+      setTimeout(() => {
+        this.showSelectSections0 = true;
+      });
+    }
   }
 }

@@ -45,8 +45,23 @@ $table-border-color: 1px solid $blue;
   .nb-theme-default ng2-smart-table.is-multi.table-block-component {
     @include isMulti("7");
   }
-  .nb-theme-default ng2-smart-table.is-empty table thead tr th:nth-child(2) {
-    display: none;
+  .nb-theme-default ng2-smart-table {
+    &.is-empty table {
+      thead tr th {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+
+    &:not(.is-empty) {
+      table {
+        thead tr th:first-child,
+        tbody tr td:first-child {
+          min-width: 4.9rem;
+        }
+      }
+    }
   }
 
   @include tableConfs;
