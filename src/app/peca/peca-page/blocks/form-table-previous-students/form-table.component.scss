@@ -36,6 +36,17 @@ $table-border-color: 1px solid $blue;
 
     .table-element {
       overflow-x: auto;
+
+      .updating {
+        position: absolute;
+        top: 3rem;
+        width: 100%;
+        z-index: 1;
+
+        p {
+          background: #fff;
+        }
+      }
     }
 
     .promote-wrapper {

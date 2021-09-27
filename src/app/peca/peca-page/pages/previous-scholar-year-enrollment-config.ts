@@ -56,24 +56,7 @@ export function previousScholarYearStudentsConfigMapper(
             loading: false,
           },
         },
-        table: [
-          {
-            id: "1",
-            name: "Astrid",
-            lastName: "Herrera",
-            idCard: "1234567890",
-            gender: "Femenino",
-            birthDate: "22-08-2011",
-          },
-          {
-            id: "2",
-            name: "Asdrubal",
-            lastName: "Querales",
-            idCard: "1234567891",
-            gender: "Masculino",
-            birthDate: "12-05-2011",
-          },
-        ],
+        table: [],
         allSections: [
           { grade: "0", id: "614b439d600b22f73bf1f261", name: "A" },
           { grade: "1", id: "614b439d600b22f73bf1f262", name: "A" },
