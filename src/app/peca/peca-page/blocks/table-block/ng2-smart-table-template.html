@@ -24,7 +24,7 @@
     <h5>Total: <span>{{ settings.total | number:'1.0':'es-ES' }}</span></h5>
   </div>
   <div
-    *ngIf="promoteFields.length"
+    *ngIf="promoteFields.length && settings.isMulti"
     class="promote-wrapper"
     [class.disabled]="!selectedRows.length || !settings.tableGrade"
   >
