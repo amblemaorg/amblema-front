@@ -483,6 +483,26 @@ export class SchoolDataPageComponent
           })
         : -1;
 
+      const { theGrade, theSection } = {
+        ...(this.currentStudentsGroup && section_name_index >= 0
+          ? {
+              theGrade: mapper.sections[section_name_index].grade,
+              theSection: mapper.sections[section_name_index].name,
+            }
+          : { theGrade: "", theSection: "" }),
+      };
+
+      const theAllSections =
+        this.currentStudentsGroup && section_name_index >= 0
+          ? mapper.sections.filter(
+              (s) => !(s.grade === theGrade && s.name === theSection)
+            )
+          : [];
+
+      const theGrades = Object.keys(mapper.grades).map((grade) => {
+        return mapper.grades[grade];
+      });
+
       this.studentsTableData = {
         data: this.currentStudentsGroup
           ? mapper.allStudents[this.currentStudentsGroup]
@@ -491,9 +511,9 @@ export class SchoolDataPageComponent
           grades2P: {
             id: "grade2P",
             label: "Seleccione el grado a promover",
-            items: Object.keys(mapper.grades).map((grade) => {
-              return mapper.grades[grade];
-            }),
+            items: theGrades.filter((g) =>
+              theAllSections.some((s) => s.grade === g.id)
+            ),
             placeholder: "Grados",
             loadingLabel: "Cargando grados...",
             loading: false,
@@ -510,13 +530,11 @@ export class SchoolDataPageComponent
         hasTitle: {
           ...(this.currentStudentsGroup && section_name_index >= 0
             ? {
-                tableTitle: `Estudiantes de ${
-                  mapper.grades[mapper.sections[section_name_index].grade].name
-                }, sección ${mapper.sections[section_name_index].name}`,
-                tableGrade: mapper.sections[section_name_index].grade,
-                tableSection: mapper.sections[section_name_index].name,
+                tableTitle: `Estudiantes de ${mapper.grades[theGrade].name}, sección ${theSection}`,
+                tableGrade: theGrade,
+                tableSection: theSection,
                 sectionKey: "sections",
-                allSections: mapper.sections,
+                allSections: theAllSections,
               }
             : {
                 tableTitle: "",
