@@ -386,7 +386,7 @@ export class TableBlockComponent
       if (data.promoteData) {
         this.showSelectGrades0 = false;
         this.showSelectSections0 = false;
-        console.log("PROMOTE DATA", JSON.stringify(data.promoteData));
+        console.log("PROMOTE DATA", data.promoteData);
         this.settings["promoteData"] = data.promoteData;
 
         this.setFormG(data);
