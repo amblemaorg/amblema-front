@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import smartTableStudentsConfig from "./table-students-config.js";
 import { LocalDataSource } from "ng2-smart-table";
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-form-table",
@@ -83,7 +84,7 @@ export class FormTableComponent
   showSelectGrades2: boolean = true;
   showSelectSections2: boolean = true;
 
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
 
   ngOnInit() {}
 
@@ -167,6 +168,9 @@ export class FormTableComponent
         ]);
       } else {
         this.form2.reset();
+        this.toastr.success("Estudiantes promovidos exitosamente", "", {
+          positionClass: "toast-bottom-right",
+        });
         this.onSubmitAction(1, this.form1.value, true);
       }
     }, 3000);
