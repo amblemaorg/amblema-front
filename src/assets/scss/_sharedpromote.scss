@@ -179,6 +179,10 @@
     padding: 0.875rem 2rem 0;
     text-align: left;
   }
+  .nb-theme-default ng2-smart-table.no-data table tr.ng2-smart-titles th {
+    padding: 0.875rem 2rem;
+    text-align: left;
+  }
   .nb-theme-default ng2-smart-table .ng2-smart-actions {
     text-align: center !important;
   }

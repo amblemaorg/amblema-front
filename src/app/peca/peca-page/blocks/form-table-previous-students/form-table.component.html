@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="settings.resStatus && settings.resStatus === 200; else noData">
   <ng-container
     *ngTemplateOutlet="
       formTemplate;
@@ -11,7 +11,7 @@
       <div class="table-element">
         <div
           *ngIf="isUpdating"
-          class="updating d-flex align-items-center flex-column"
+          class="updating d-flex align-items-center flex-column justify-content-center"
         >
           <span class="spinner-grow"></span>
           <p>Actualizando tabla...</p>
@@ -21,6 +21,7 @@
           [source]="source"
           (userRowSelect)="onUserRowSelect($event)"
           class="is-multi form-table-component"
+          [class.no-data]="tableStudents.hideSubHeader"
         ></ng2-smart-table>
       </div>
 
@@ -45,6 +46,12 @@
     </div>
   </div>
 </div>
+
+<ng-template #noData>
+  <div class="no-data-msg">
+    <p>{{ settings.resMsg }}</p>
+  </div>
+</ng-template>
 
 <!-- FORM TEMPLATE -->
 <ng-template

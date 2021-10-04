@@ -1,30 +1,77 @@
+const getSections = (sections: any[], grades: any[], pos: number) => {
+  return sections.map((section) => {
+    const { id, name, grade } = section;
+
+    grades[pos][grade] =
+      grade === "0"
+        ? { id: grade, name: "Preescolar" }
+        : grade === "1" || grade === "3"
+        ? { id: grade, name: `${grade}er Grado` }
+        : grade === "2"
+        ? { id: grade, name: `${grade}do Grado` }
+        : { id: grade, name: `${grade}to Grado` };
+
+    return {
+      id,
+      name,
+      grade,
+    };
+  });
+};
+
 export function previousScholarYearStudentsConfigMapper(
-  previousYearStudents,
-  permissions
+  data,
+  permissions,
+  getFetcher,
+  ...extras
 ) {
   // const { activities_slider_edit, activities_slider_delete } = permissions;
 
+  const school_code = extras && extras.length ? extras[0] : "";
+  const peca_id = extras && extras.length ? extras[1] : "";
+
+  const grades = [{}, {}];
+
+  const sections_previous =
+    data &&
+    data.status === 200 &&
+    data.section_previus &&
+    data.section_previus.length
+      ? getSections(data.section_previus, grades, 0)
+      : [];
+
+  const sections_current =
+    data &&
+    data.status === 200 &&
+    data.section_current &&
+    data.section_current.length
+      ? getSections(data.section_current, grades, 1)
+      : [];
+
   const prevStudentsFormTable = {
     component: "form-table",
-    name: "prev-students-form-table",
+    name: "prevStudentsFormTable",
     settings: {
+      resStatus: data.status || "",
+      resMsg: data.msg || "",
       onSubmit: (values: any) => {
         console.log("Hello values");
       },
+      getFetcher: (fetcher: string, ...genProps) =>
+        getFetcher({
+          fetcher,
+          genProps,
+          school_code,
+          peca_id,
+        }),
       fields: {
         fields1: {
           grade: {
             id: "grades",
             label: "Seleccione el grado",
-            items: [
-              { id: "0", name: "Preescolar" },
-              { id: "1", name: "1er Grado" },
-              { id: "2", name: "2do Grado" },
-              { id: "3", name: "3er Grado" },
-              { id: "4", name: "4to Grado" },
-              { id: "5", name: "5to Grado" },
-              { id: "6", name: "6to Grado" },
-            ],
+            items: Object.keys(grades[0]).map((grade) => {
+              return grades[0][grade];
+            }),
             placeholder: "Grados",
             loadingLabel: "Cargando grados...",
             loading: false,
@@ -42,7 +89,9 @@ export function previousScholarYearStudentsConfigMapper(
           grade2P: {
             id: "grades2P",
             label: "Seleccione el grado a promover",
-            items: [],
+            items: Object.keys(grades[1]).map((grade) => {
+              return grades[1][grade];
+            }),
             placeholder: "Grados",
             loadingLabel: "Cargando grados...",
             loading: false,
@@ -57,23 +106,8 @@ export function previousScholarYearStudentsConfigMapper(
           },
         },
         table: [],
-        allSections: [
-          { grade: "0", id: "614b439d600b22f73bf1f261", name: "A" },
-          { grade: "1", id: "614b439d600b22f73bf1f262", name: "A" },
-          { grade: "2", id: "614b439d600b22f73bf1f263", name: "A" },
-          { grade: "3", id: "614b439d600b22f73bf1f264", name: "A" },
-          { grade: "4", id: "614b439d600b22f73bf1f265", name: "A" },
-          { grade: "5", id: "614b439d600b22f73bf1f266", name: "A" },
-          { grade: "6", id: "614b439d600b22f73bf1f267", name: "A" },
-          { grade: "1", id: "614b439d600b22f73bf1f271", name: "B" },
-          { grade: "2", id: "614b439d600b22f73bf1f272", name: "B" },
-          { grade: "3", id: "614b439d600b22f73bf1f273", name: "B" },
-          { grade: "1", id: "614b439d600b22f73bf1f281", name: "C" },
-          { grade: "2", id: "614b439d600b22f73bf1f282", name: "C" },
-          { grade: "3", id: "614b439d600b22f73bf1f283", name: "C" },
-          { grade: "1", id: "614b439d600b22f73bf1f291", name: "D" },
-          { grade: "3", id: "614b439d600b22f73bf1f299", name: "U" },
-        ],
+        allSectionsPrevious: sections_previous,
+        allSectionsCurrent: sections_current,
         sectionKey: "section",
         button: {
           text: "Guardar cambios",

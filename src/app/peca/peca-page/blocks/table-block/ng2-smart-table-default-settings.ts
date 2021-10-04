@@ -6,6 +6,7 @@ export const NG2_SMART_TABLE_DEFAULT_SETTINGS = {
   selectMode: "single", //single|multi
   noDataMessage: "No hay registros",
   mode: "external",
+  hideSubHeader: true,
   actions: {
     columnTitle: "Acciones",
     add: false,
