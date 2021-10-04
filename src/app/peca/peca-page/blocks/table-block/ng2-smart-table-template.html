@@ -13,7 +13,8 @@
       'hide-delete': settings.classes.hideDelete,
       'has-img-in-first-col': settings.isImageFirstCol,
       'is-multi table-block-component': settings.isMulti,
-      'is-empty': settings.isMulti && !settings.tableTitle
+      'is-empty': settings.isMulti && !settings.tableTitle,
+      'no-data': settings.hideSubHeader
     }"
       (custom)="onCustomActions($event)"
       (userRowSelect)="onUserRowSelect($event)"

@@ -71,6 +71,7 @@ export class TableBlockComponent
         loading?: boolean;
       };
     };
+    hideSubHeader?: boolean;
   };
 
   tableStates: any = {};
@@ -344,6 +345,7 @@ export class TableBlockComponent
       ...defaultSettings,
       ...settings,
       selectMode: settings.isMulti ? "multi" : "single",
+      hideSubHeader: false,
       ...(settings.isMulti
         ? {
             pager: {

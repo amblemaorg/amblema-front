@@ -5,9 +5,13 @@ import {
   ViewChild,
   OnDestroy,
 } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Select } from "@ngxs/store";
+import { Observable, Subscription } from "rxjs";
+import { PecaState } from "../../../store/states/peca/peca.state";
+import { HttpFetcherService } from "../../../services/peca/http-fetcher.service";
 import { PecaPageComponent } from "../peca-page.component";
 import { previousScholarYearStudentsConfigMapper } from "./previous-scholar-year-enrollment-config";
+import { first } from "rxjs/internal/operators/first";
 
 @Component({
   selector: "peca-school-pictures",
@@ -20,19 +24,60 @@ export class PreviousScholarYearEnrollmentPageComponent
   container: ViewContainerRef;
   isInstantiating: boolean;
   subscription: Subscription;
+  school_code: string;
+  peca_id: string;
+  schoolDataSubscription: Subscription;
 
-  constructor(factoryResolver: ComponentFactoryResolver) {
+  @Select(PecaState.getPecaSchoolPromoteData) schoolData$: Observable<any>;
+
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    private fetcher: HttpFetcherService
+  ) {
     super(factoryResolver);
     this.initPage();
   }
 
   initPage() {
     if (!this.isInstantiating) {
-      const permissions = null;
-      // const permissionsObj = this.managePermissions(permissions);
-      const newConfig = previousScholarYearStudentsConfigMapper({}, null);
-      this.instantiateComponent(newConfig);
-      this.doInstantiateBlocks();
+      const defaultConfig = previousScholarYearStudentsConfigMapper(
+        { status: 400, msg: "La escuela no tiene proyecto actual" },
+        null,
+        this.getFetcher
+      );
+      this.instantiateComponent(defaultConfig);
+
+      this.schoolDataSubscription = this.schoolData$.subscribe(
+        (activePeca) => {
+          if (activePeca && activePeca.school) {
+            this.school_code = activePeca.school.code;
+            this.peca_id = activePeca.school.pecaId;
+            const permissions = null;
+            // const permissionsObj = this.managePermissions(permissions);
+
+            const initData = this.getFetcher({
+              fetcher: "get_previous_sections",
+              school_code: this.school_code,
+            });
+            console.log("VERR", initData);
+            this.fetcher[initData.method](initData.urlString).subscribe(
+              (res) => {
+                console.log("RESP", res);
+                const newConfig = previousScholarYearStudentsConfigMapper(
+                  res,
+                  null,
+                  this.getFetcher,
+                  this.school_code,
+                  this.peca_id
+                );
+                this.instantiateComponent(newConfig);
+                this.doInstantiateBlocks();
+              }
+            );
+          }
+        },
+        (error) => console.error(error)
+      );
     }
   }
 
@@ -46,6 +91,32 @@ export class PreviousScholarYearEnrollmentPageComponent
   //     {}
   //   );
   // }
+
+  getFetcher({
+    fetcher,
+    school_code,
+    peca_id,
+    genProps,
+  }: {
+    fetcher: string;
+    school_code?: string;
+    peca_id?: string;
+    genProps?: string[];
+  }) {
+    const params = genProps;
+    switch (fetcher) {
+      case "get_previous_sections":
+        return {
+          method: "get",
+          urlString: `init/promote/students/${school_code}`,
+        };
+      case "get_students_list":
+        return {
+          method: "get",
+          urlString: `promote/students/${school_code}/${params[0]}`,
+        };
+    }
+  }
 
   doInstantiateBlocks() {
     this.isInstantiating = true;

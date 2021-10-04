@@ -19,6 +19,12 @@ export class FormTableComponent
   settings: {
     // -- Event
     onSubmit: (values: any) => void;
+    getFetcher?: (
+      fetcher: string,
+      ...genProps
+    ) => { method: string; urlString: string };
+    resStatus?: string;
+    resMsg?: string;
     // -- Properties
     fields?: {
       fields1?: {
@@ -53,7 +59,8 @@ export class FormTableComponent
             gender?: string;
             birthDate?: string;
           }[];
-      allSections?: any[];
+      allSectionsPrevious?: any[];
+      allSectionsCurrent?: any[];
       sectionKey?: string;
       button?: {
         text?: string;
@@ -97,9 +104,12 @@ export class FormTableComponent
 
   private fillTable(rows: any[] = []) {
     if (rows.length) this.settings.fields.table = rows;
+    const init = this.source.count();
+    console.log("count", init);
     if (this.settings.fields.table?.length) {
-      this.source = new LocalDataSource(this.settings.fields.table);
       this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
+      if (init) this.source.load(this.settings.fields.table);
+      else this.source = new LocalDataSource(this.settings.fields.table);
     }
   }
 
@@ -137,6 +147,8 @@ export class FormTableComponent
   };
 
   onSubmitAction(type: number, values: any, update: boolean = false) {
+    const res = this.settings.getFetcher("get_previous_sections");
+    console.log("HULU", res);
     this[
       type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
     ] = true;
@@ -146,7 +158,6 @@ export class FormTableComponent
         type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
       ] = false;
       if (type === 1) {
-        this.source = new LocalDataSource();
         this.selectedRows = [];
         this.fillTable([
           {
@@ -191,7 +202,9 @@ export class FormTableComponent
     } else if (type) {
       this.settings.fields[`fields${type}`][
         `${field}${type === 1 ? "" : "2P"}`
-      ].items = this.settings.fields.allSections.filter((s) => {
+      ].items = this.settings.fields[
+        `${type === 1 ? "allSectionsPrevious" : "allSectionsCurrent"}`
+      ].filter((s) => {
         return s.grade == grade;
       });
     }
@@ -207,15 +220,21 @@ export class FormTableComponent
       this.fillSections(this.settings.fields.sectionKey, event.id, type);
       this.showSelectGrades2 = false;
       this.showSelectSections2 = false;
-      const ind = event
-        ? this.settings.fields.fields1[field].items.findIndex(
-            (item) => item.id === event.id
-          )
-        : -1;
-      if (ind >= 0) {
-        const toPromoteArr = this.settings.fields.fields1[field].items.slice(
-          ind
-        );
+      const prev_id = +this.form1.get(field).value;
+      console.log(
+        "AAAA1",
+        prev_id,
+        this.settings.fields.fields2[`${field}2P`].items
+      );
+      if (typeof prev_id === "number") {
+        const toPromoteArr = this.settings.fields.fields2[
+          `${field}2P`
+        ].items.filter((grade) => {
+          const id = +grade.id;
+          console.log("AAAA2", id, prev_id);
+          return id >= prev_id;
+        });
+        console.log("AAAA3", toPromoteArr);
         this.settings.fields.fields2[`${field}2P`].items = toPromoteArr; // 2P means => To Promote
       }
       this.form2.get(`${field}2P`).reset();
