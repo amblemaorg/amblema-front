@@ -114,6 +114,11 @@ export class PreviousScholarYearEnrollmentPageComponent
           method: "get",
           urlString: `promote/students/${school_code}/${params[0]}`,
         };
+      case "post_promote_students":
+        return {
+          method: "post",
+          urlString: `/promote/students/${school_code}`,
+        };
     }
   }
 

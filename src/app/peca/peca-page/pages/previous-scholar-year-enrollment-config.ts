@@ -52,7 +52,7 @@ export function previousScholarYearStudentsConfigMapper(
     component: "form-table",
     name: "prevStudentsFormTable",
     settings: {
-      resStatus: data.status || "",
+      resStatus: data.status || 400,
       resMsg: data.msg || "",
       onSubmit: (values: any) => {
         console.log("Hello values");
