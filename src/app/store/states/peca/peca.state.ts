@@ -1159,7 +1159,6 @@ export class PecaState {
 
   @Selector()
   static getPecaSchoolPromoteData(state: any) {
-    console.log("THE PECA", state);
     return {
       school: {
         code: state.content.school.code,
