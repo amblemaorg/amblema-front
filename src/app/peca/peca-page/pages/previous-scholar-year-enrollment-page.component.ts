@@ -59,10 +59,9 @@ export class PreviousScholarYearEnrollmentPageComponent
               fetcher: "get_previous_sections",
               school_code: this.school_code,
             });
-            console.log("VERR", initData);
+
             this.fetcher[initData.method](initData.urlString).subscribe(
               (res) => {
-                console.log("RESP", res);
                 const newConfig = previousScholarYearStudentsConfigMapper(
                   res,
                   null,

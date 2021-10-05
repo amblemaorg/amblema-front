@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewChecked } from "@angular/core";
 import { PresentationalBlockComponent } from "../page-block.component";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import smartTableStudentsConfig from "./table-students-config.js";
+import { TABLE_DEFAULT_SETTINGS as smartTableStudentsConfig } from "./table-students-config";
 import { LocalDataSource } from "ng2-smart-table";
-import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
+import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 import { ToastrService } from "ngx-toastr";
+import { HttpFetcherService } from "../../../../services/peca/http-fetcher.service";
 
 @Component({
   selector: "app-form-table",
@@ -91,7 +92,10 @@ export class FormTableComponent
   showSelectGrades2: boolean = true;
   showSelectSections2: boolean = true;
 
-  constructor(private toastr: ToastrService) {}
+  constructor(
+    private toastr: ToastrService,
+    private fetcher: HttpFetcherService
+  ) {}
 
   ngOnInit() {}
 
@@ -105,7 +109,6 @@ export class FormTableComponent
   private fillTable(rows: any[] = []) {
     if (rows.length) this.settings.fields.table = rows;
     const init = this.source.count();
-    console.log("count", init);
     if (this.settings.fields.table?.length) {
       this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
       if (init) this.source.load(this.settings.fields.table);
@@ -147,44 +150,67 @@ export class FormTableComponent
   };
 
   onSubmitAction(type: number, values: any, update: boolean = false) {
-    const res = this.settings.getFetcher("get_previous_sections");
-    console.log("HULU", res);
-    this[
-      type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
-    ] = true;
-    console.log("Submit values", values);
-    setTimeout(() => {
+    if (typeof values === "object") {
       this[
         type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
-      ] = false;
-      if (type === 1) {
-        this.selectedRows = [];
-        this.fillTable([
-          {
-            id: "1",
-            name: "Astrid",
-            lastName: "Herrera",
-            idCard: "1234567890",
-            gender: "Femenino",
-            birthDate: "22-08-2011",
-          },
-          {
-            id: "2",
-            name: "Asdrubal",
-            lastName: "Querales",
-            idCard: "1234567891",
-            gender: "Masculino",
-            birthDate: "12-05-2011",
-          },
-        ]);
-      } else {
-        this.form2.reset();
-        this.toastr.success("Estudiantes promovidos exitosamente", "", {
-          positionClass: "toast-bottom-right",
+      ] = true;
+
+      console.log(values);
+      const requestData = this.settings.getFetcher(
+        type === 1 ? "get_students_list" : "get_students_list",
+        values[`section${type === 1 ? "" : "2P"}`]
+      );
+
+      const body =
+        type === 1
+          ? {}
+          : {
+              students: this.selectedRows.length ? this.selectedRows : [],
+            };
+
+      console.log("Hola", body);
+
+      if (type === 1)
+        this.fetcher[requestData.method](
+          ...[requestData.urlString, ...(type === 1 ? [] : [body])]
+        ).subscribe((res) => {
+          console.log("Holis", res);
+          if (
+            res &&
+            ((requestData.method === "get" && res.status === 200) ||
+              res.status === 201)
+          ) {
+            if (type === 1) {
+              if (res.students instanceof Array && res.students.length)
+                this.fillTable(res.students);
+            } else {
+              this.form2.reset();
+              this.toastr.success("Estudiantes promovidos exitosamente", "", {
+                positionClass: "toast-bottom-right",
+              });
+              this.onSubmitAction(1, this.form1.value, true);
+            }
+          } else {
+            if (type === 1) {
+              this.fillTable([]);
+              this.toastr.error("Hubo problemas al buscar estudiantes", "", {
+                positionClass: "toast-bottom-right",
+              });
+            } else {
+              this.form2.reset();
+              this.toastr.error("Hubo problemas al promover estudiantes", "", {
+                positionClass: "toast-bottom-right",
+              });
+            }
+          }
+
+          if (type === 1) this.selectedRows = [];
+
+          this[
+            type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
+          ] = false;
         });
-        this.onSubmitAction(1, this.form1.value, true);
-      }
-    }, 3000);
+    }
   }
 
   onUserRowSelect(event) {
@@ -195,7 +221,7 @@ export class FormTableComponent
   // filling sections according to selected grade
   private fillSections(field: string, grade = null, type: number = 0) {
     if (type) this[`showSelectSections${type}`] = false;
-    if (!grade && type) {
+    if (grade === null && type) {
       this.settings.fields[`fields${type}`][
         `${field}${type === 1 ? "" : "2P"}`
       ].items = [];
@@ -221,20 +247,15 @@ export class FormTableComponent
       this.showSelectGrades2 = false;
       this.showSelectSections2 = false;
       const prev_id = +this.form1.get(field).value;
-      console.log(
-        "AAAA1",
-        prev_id,
-        this.settings.fields.fields2[`${field}2P`].items
-      );
+
       if (typeof prev_id === "number") {
         const toPromoteArr = this.settings.fields.fields2[
           `${field}2P`
         ].items.filter((grade) => {
           const id = +grade.id;
-          console.log("AAAA2", id, prev_id);
           return id >= prev_id;
         });
-        console.log("AAAA3", toPromoteArr);
+
         this.settings.fields.fields2[`${field}2P`].items = toPromoteArr; // 2P means => To Promote
       }
       this.form2.get(`${field}2P`).reset();
