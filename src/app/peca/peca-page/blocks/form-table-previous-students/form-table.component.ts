@@ -24,7 +24,7 @@ export class FormTableComponent
       fetcher: string,
       ...genProps
     ) => { method: string; urlString: string };
-    resStatus?: string;
+    resStatus?: number;
     resMsg?: string;
     // -- Properties
     fields?: {
@@ -157,14 +157,15 @@ export class FormTableComponent
 
       console.log(values);
       const requestData = this.settings.getFetcher(
-        type === 1 ? "get_students_list" : "get_students_list",
-        values[`section${type === 1 ? "" : "2P"}`]
+        type === 1 ? "get_students_list" : "post_promote_students",
+        type === 1 ? values.section : []
       );
 
       const body =
         type === 1
           ? {}
           : {
+              id_section_current: values.section2P,
               students: this.selectedRows.length ? this.selectedRows : [],
             };
 
@@ -172,7 +173,8 @@ export class FormTableComponent
 
       if (type === 1)
         this.fetcher[requestData.method](
-          ...[requestData.urlString, ...(type === 1 ? [] : [body])]
+          requestData.urlString,
+          type === 1 ? null : body
         ).subscribe((res) => {
           console.log("Holis", res);
           if (
