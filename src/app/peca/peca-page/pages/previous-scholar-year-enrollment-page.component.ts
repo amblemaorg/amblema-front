@@ -117,7 +117,7 @@ export class PreviousScholarYearEnrollmentPageComponent
       case "post_promote_students":
         return {
           method: "post",
-          urlString: `/promote/students/${school_code}`,
+          urlString: `promote/students/${school_code}`,
         };
     }
   }
