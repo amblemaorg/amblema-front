@@ -62,6 +62,7 @@ export class FormTableComponent
           }[];
       allSectionsPrevious?: any[];
       allSectionsCurrent?: any[];
+      allGradesCurrent?: any[];
       sectionKey?: string;
       button?: {
         text?: string;
@@ -169,49 +170,49 @@ export class FormTableComponent
               students: this.selectedRows.length ? this.selectedRows : [],
             };
 
-      console.log("Hola", body);
+      console.log("Hola", body, requestData);
 
-      if (type === 1)
-        this.fetcher[requestData.method](
-          requestData.urlString,
-          type === 1 ? null : body
-        ).subscribe((res) => {
-          console.log("Holis", res);
-          if (
-            res &&
-            ((requestData.method === "get" && res.status === 200) ||
-              res.status === 201)
-          ) {
-            if (type === 1) {
-              if (res.students instanceof Array && res.students.length)
-                this.fillTable(res.students);
-            } else {
-              this.form2.reset();
-              this.toastr.success("Estudiantes promovidos exitosamente", "", {
-                positionClass: "toast-bottom-right",
-              });
-              this.onSubmitAction(1, this.form1.value, true);
-            }
+      this.fetcher[requestData.method](
+        requestData.urlString,
+        type === 1 ? null : body
+      ).subscribe((res) => {
+        console.log("Holis", res);
+        if (
+          res &&
+          ((requestData.method === "get" && res.status === 200) ||
+            res.status === 201)
+        ) {
+          if (type === 1) {
+            if (res.students instanceof Array && res.students.length)
+              this.fillTable(res.students);
           } else {
-            if (type === 1) {
-              this.fillTable([]);
-              this.toastr.error("Hubo problemas al buscar estudiantes", "", {
-                positionClass: "toast-bottom-right",
-              });
-            } else {
-              this.form2.reset();
-              this.toastr.error("Hubo problemas al promover estudiantes", "", {
-                positionClass: "toast-bottom-right",
-              });
-            }
+            console.log("OK");
+            this.form2.reset();
+            this.toastr.success("Estudiantes promovidos exitosamente", "", {
+              positionClass: "toast-bottom-right",
+            });
+            this.onSubmitAction(1, this.form1.value, true);
           }
+        } else {
+          if (type === 1) {
+            this.fillTable([]);
+            this.toastr.error("Hubo problemas al buscar estudiantes", "", {
+              positionClass: "toast-bottom-right",
+            });
+          } else {
+            this.form2.reset();
+            this.toastr.error("Hubo problemas al promover estudiantes", "", {
+              positionClass: "toast-bottom-right",
+            });
+          }
+        }
 
-          if (type === 1) this.selectedRows = [];
+        if (type === 1) this.selectedRows = [];
 
-          this[
-            type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
-          ] = false;
-        });
+        this[
+          type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
+        ] = false;
+      });
     }
   }
 
@@ -251,12 +252,12 @@ export class FormTableComponent
       const prev_id = +this.form1.get(field).value;
 
       if (typeof prev_id === "number") {
-        const toPromoteArr = this.settings.fields.fields2[
-          `${field}2P`
-        ].items.filter((grade) => {
-          const id = +grade.id;
-          return id >= prev_id;
-        });
+        const toPromoteArr = this.settings.fields.allGradesCurrent.filter(
+          (grade) => {
+            const id = +grade.id;
+            return id >= prev_id;
+          }
+        );
 
         this.settings.fields.fields2[`${field}2P`].items = toPromoteArr; // 2P means => To Promote
       }

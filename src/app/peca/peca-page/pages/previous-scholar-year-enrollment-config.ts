@@ -48,6 +48,10 @@ export function previousScholarYearStudentsConfigMapper(
       ? getSections(data.section_current, grades, 1)
       : [];
 
+  const allGrdsCurr = Object.keys(grades[1]).map((grade) => {
+    return grades[1][grade];
+  });
+
   const prevStudentsFormTable = {
     component: "form-table",
     name: "prevStudentsFormTable",
@@ -89,9 +93,7 @@ export function previousScholarYearStudentsConfigMapper(
           grade2P: {
             id: "grades2P",
             label: "Seleccione el grado a promover",
-            items: Object.keys(grades[1]).map((grade) => {
-              return grades[1][grade];
-            }),
+            items: [...allGrdsCurr],
             placeholder: "Grados",
             loadingLabel: "Cargando grados...",
             loading: false,
@@ -108,6 +110,7 @@ export function previousScholarYearStudentsConfigMapper(
         table: [],
         allSectionsPrevious: sections_previous,
         allSectionsCurrent: sections_current,
+        allGradesCurrent: [...allGrdsCurr],
         sectionKey: "section",
         button: {
           text: "Guardar cambios",

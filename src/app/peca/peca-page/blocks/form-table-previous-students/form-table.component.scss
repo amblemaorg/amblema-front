@@ -71,6 +71,13 @@ $table-border-color: 1px solid $blue;
       text-align: center;
     }
 
+    table {
+      thead tr th:first-child,
+      tbody tr td:first-child {
+        min-width: 4.9rem;
+      }
+    }
+
     @include tHead("thead");
 
     &:not(.is-multi) tbody tr td {
