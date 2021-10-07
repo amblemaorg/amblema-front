@@ -191,6 +191,7 @@ export class FormTableComponent
             this.toastr.success("Estudiantes promovidos exitosamente", "", {
               positionClass: "toast-bottom-right",
             });
+            window.scroll(0, 0);
             this.onSubmitAction(1, this.form1.value, true);
           }
         } else {

@@ -8,10 +8,10 @@
 
   <div class="table-wrapper">
     <div class="the-table" [class.disabled]="disabledThis()">
-      <div class="table-element">
+      <div class="table-element" [class.not-overflow]="isUpdating">
         <div
           *ngIf="isUpdating"
-          class="updating d-flex align-items-center flex-column justify-content-center"
+          class="updating d-flex align-items-center flex-column"
         >
           <span class="spinner-grow"></span>
           <p>Actualizando tabla...</p>

@@ -44,6 +44,10 @@ $table-border-color: 1px solid $blue;
       overflow-x: auto;
       position: relative;
 
+      &.not-overflow {
+        overflow-x: hidden;
+      }
+
       .updating {
         position: absolute;
         width: 100%;
@@ -51,6 +55,7 @@ $table-border-color: 1px solid $blue;
         background: #fff;
         background: rgba(255, 255, 255, 0.75);
         z-index: 1;
+        padding-top: 4rem;
       }
     }
 
