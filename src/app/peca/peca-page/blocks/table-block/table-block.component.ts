@@ -1,12 +1,23 @@
-import { Component, OnInit, OnDestroy, DoCheck } from "@angular/core";
-import { PageBlockComponent, PresentationalBlockComponent } from "../page-block.component";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  DoCheck,
+  AfterViewChecked,
+} from "@angular/core";
+import {
+  PageBlockComponent,
+  PresentationalBlockComponent,
+} from "../page-block.component";
 import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from "./ng2-smart-table-default-settings";
 import { LocalDataSource } from "ng2-smart-table";
 import { GlobalService } from "src/app/services/global.service";
 import { Subscription } from "rxjs";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import cloneDeep from "lodash/cloneDeep";
 import localeEs from "@angular/common/locales/es-VE";
 import { registerLocaleData } from "@angular/common";
+import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 registerLocaleData(localeEs, "es");
 
 @Component({
@@ -14,7 +25,13 @@ registerLocaleData(localeEs, "es");
   templateUrl: "./ng2-smart-table-template.html",
   styleUrls: ["./table-block.component.scss"],
 })
-export class TableBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy, DoCheck {
+export class TableBlockComponent
+  implements
+    PresentationalBlockComponent,
+    OnInit,
+    OnDestroy,
+    DoCheck,
+    AfterViewChecked {
   type: "presentational";
   name: string;
   component: string;
@@ -36,7 +53,25 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
     tableTitle?: string; // to set a title for the table
+    tableGrade?: string;
+    tableSection?: string;
+    sectionKey?: string;
+    allSections?: any[];
     onDelete: Function | null;
+    isMulti?: boolean; // to set table as multi selectable
+    selectMode?: string;
+    promoteData?: {
+      any: {
+        id?: string;
+        name?: string;
+        label?: string;
+        items?: any[];
+        placeholder?: string;
+        loadingLabel?: string;
+        loading?: boolean;
+      };
+    };
+    hideSubHeader?: boolean;
   };
 
   tableStates: any = {};
@@ -52,6 +87,14 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   isEdited: boolean;
   isEditable: boolean = true; // to disable editing on table actions
   isContentRefreshing: boolean = false;
+  selectedRows: any[] = [];
+
+  promoteForm: FormGroup;
+  promoteFields: string[] = [];
+  showSelectGrades0: boolean = true;
+  showSelectSections0: boolean = true;
+  isPromoting: boolean;
+  isDeleting: boolean;
 
   private subscription: Subscription = new Subscription();
 
@@ -92,10 +135,16 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
-          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+          if (
+            this.settings.buttonCode &&
+            this.settings.buttonCode == data.buttonCode
+          )
             this.isEditable = !data.setReadOnly;
         } else {
-          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+          if (
+            this.settings.tableCode &&
+            this.settings.tableCode == data.buttonCode
+          )
             this.isEditable = !data.setReadOnly;
         }
       })
@@ -113,20 +162,31 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   ngDoCheck() {
     if (
       this.thisLapse &&
-      (
-        this.settings.tableCode === "initialDiagnosticConfigLectura" ||
-        this.settings.tableCode === "initialDiagnosticConfigMatematica"
-      )
+      (this.settings.tableCode === "initialDiagnosticConfigLectura" ||
+        this.settings.tableCode === "initialDiagnosticConfigMatematica")
     ) {
-      this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] = { ...this.source.getFilter(), ...this.source.getPaging() };
+      this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] = {
+        ...this.source.getFilter(),
+        ...this.source.getPaging(),
+      };
     }
+  }
+  ngAfterViewChecked() {
+    const td_student = document.querySelector(
+      '.is-multi.table-block-component tbody td[colspan="6"]'
+    );
+    if (td_student) td_student.setAttribute("colspan", "7");
   }
 
   async confsOnTable(data) {
     if (this.settings[data.code]) {
       let index = -1; //initial
 
-      if (data.action != "add" && data.action != "set" && this.settings.isFromImgContainer) {
+      if (
+        data.action != "add" &&
+        data.action != "set" &&
+        this.settings.isFromImgContainer
+      ) {
         index = this.settings["dataCopy"].findIndex((obj) => {
           return obj.id === data.data.oldData.id;
         });
@@ -138,7 +198,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
             this.source
               .find(data.data.dataToCompare)
               .then(async (value) => {
-                if (index != -1) this.settings["dataCopy"][index] = data.data.newData;
+                if (index != -1)
+                  this.settings["dataCopy"][index] = data.data.newData;
                 this.source
                   .update(data.data.dataToCompare, data.data.newData)
                   .then((resp) => {})
@@ -148,12 +209,15 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
                   this.settings.total = this.settings.updateTotal(tableData);
                 }
                 this.source.refresh();
-                if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
-                resolve(null)
+                if (this.settings.makesNoRequest && this.settings.buttonCode)
+                  this.isEdited = true;
+                resolve(null);
               })
-              .catch((error) => {resolve(null)});
+              .catch((error) => {
+                resolve(null);
+              });
             break;
-  
+
           case "delete":
             this.source
               .find(data.data.dataToCompare)
@@ -165,16 +229,19 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
                   this.settings.total = this.settings.updateTotal(tableData);
                 }
                 this.source.refresh();
-                if (this.settings.makesNoRequest && this.settings.buttonCode) this.isEdited = true;
-                resolve(null)
+                if (this.settings.makesNoRequest && this.settings.buttonCode)
+                  this.isEdited = true;
+                resolve(null);
               })
-              .catch((error) => {resolve(null)});
+              .catch((error) => {
+                resolve(null);
+              });
             break;
-  
+
           case "view":
-            resolve(null)
+            resolve(null);
             break;
-  
+
           default:
             // add or set
             if (data.resetData) {
@@ -183,7 +250,8 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
                 this.settings["dataCopy"] = [...this.settings[data.code]];
               this.source = new LocalDataSource(this.settings[data.code]);
             } else {
-              if (this.settings.isFromImgContainer) this.settings["dataCopy"].push(data.data);
+              if (this.settings.isFromImgContainer)
+                this.settings["dataCopy"].push(data.data);
               if (this.settings.isFromImgContainer)
                 this.settings[data.code] = [...this.settings["dataCopy"]];
               this.source.add(data.data);
@@ -193,7 +261,7 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
               }
               this.source.refresh();
             }
-            resolve(null)
+            resolve(null);
             // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);
             break;
         }
@@ -211,21 +279,44 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
     if (this.settings.buttonCode) {
       let sendFormDataToBtn_ = false;
 
-      if (!this.globals.getTableImgsCopy(this.settings.buttonCode) && !this.isTableContentEdited) this.globals.setTableImgsCopy(this.settings.buttonCode,this.settings["dataCopy"]);
+      if (
+        !this.globals.getTableImgsCopy(this.settings.buttonCode) &&
+        !this.isTableContentEdited
+      )
+        this.globals.setTableImgsCopy(
+          this.settings.buttonCode,
+          this.settings["dataCopy"]
+        );
 
       if (this.settings.isFromImgContainer && this.canTableSendFormDataToBtn) {
-        if (this.globals.getTableImgsCopy(this.settings.buttonCode) && this.isTableContentEdited) {
+        if (
+          this.globals.getTableImgsCopy(this.settings.buttonCode) &&
+          this.isTableContentEdited
+        ) {
           if (
-            this.settings.buttonCode !== "schoolDataConfigRegistroEscuela" || 
-            this.globals.getTableImgsCopy(this.settings.buttonCode).length !== this.settings["dataCopy"].length || 
-            this.settings["dataCopy"].reverse().some(tableEl => tableEl.source ? tableEl.source.includes(";base64,") : true) || 
-            !this.settings["dataCopy"].every((tableEl,inx) => tableEl.description === this.globals.getTableImgsCopy(this.settings.buttonCode)[inx].description)
-          ) sendFormDataToBtn_ = true;
+            this.settings.buttonCode !== "schoolDataConfigRegistroEscuela" ||
+            this.globals.getTableImgsCopy(this.settings.buttonCode).length !==
+              this.settings["dataCopy"].length ||
+            this.settings["dataCopy"]
+              .reverse()
+              .some((tableEl) =>
+                tableEl.source ? tableEl.source.includes(";base64,") : true
+              ) ||
+            !this.settings["dataCopy"].every(
+              (tableEl, inx) =>
+                tableEl.description ===
+                this.globals.getTableImgsCopy(this.settings.buttonCode)[inx]
+                  .description
+            )
+          )
+            sendFormDataToBtn_ = true;
         }
-      }
-      else if (this.canTableSendFormDataToBtn) sendFormDataToBtn_ = true;
+      } else if (this.canTableSendFormDataToBtn) sendFormDataToBtn_ = true;
 
-      this.globals.sendFormDataToBtn(this.settings.buttonCode,sendFormDataToBtn_);
+      this.globals.sendFormDataToBtn(
+        this.settings.buttonCode,
+        sendFormDataToBtn_
+      );
 
       if (this.settings.isFromImgContainer) {
         this.globals.buttonDataUpdater({
@@ -250,10 +341,38 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
   }
 
   setSettings(settings: any) {
-    this.settings = { ...defaultSettings, ...settings };
+    this.settings = {
+      ...defaultSettings,
+      ...settings,
+      selectMode: settings.isMulti ? "multi" : "single",
+      hideSubHeader: false,
+      ...(settings.isMulti
+        ? {
+            pager: {
+              display: true,
+              perPage: 100,
+            },
+          }
+        : {}),
+    };
     if (this.settings.isFromImgContainer)
       this.settings["dataCopy"] = [...this.settings[this.settings.tableCode]];
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
+  }
+
+  setFormG(data) {
+    if (data) {
+      this.promoteFields = Object.keys(data.promoteData);
+
+      this.promoteForm = new FormGroup(
+        this.promoteFields.reduce((fields, prField) => {
+          fields[prField] = new FormControl("", [Validators.required]);
+          return fields;
+        }, {})
+      );
+
+      this.promoteForm.reset();
+    }
   }
 
   setData(data: any) {
@@ -261,13 +380,31 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       this.settings.classes = data["classes"];
     }
     if (!this.isEdited) {
-      if (this.settings.isFromImgContainer) this.settings["dataCopy"] = [...data.data];
+      if (this.settings.isFromImgContainer)
+        this.settings["dataCopy"] = [...data.data];
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
+
+      if (data.promoteData) {
+        this.showSelectGrades0 = false;
+        this.showSelectSections0 = false;
+        this.settings["promoteData"] = data.promoteData;
+
+        this.setFormG(data);
+
+        setTimeout(() => {
+          this.showSelectGrades0 = true;
+          this.showSelectSections0 = true;
+        });
+      }
 
       if (data.hasTitle) {
         this.isContentRefreshing = true;
         this.settings["tableTitle"] = data.hasTitle.tableTitle;
+        this.settings["tableGrade"] = data.hasTitle.tableGrade;
+        this.settings["tableSection"] = data.hasTitle.tableSection;
+        this.settings["sectionKey"] = data.hasTitle.sectionKey;
+        this.settings["allSections"] = data.hasTitle.allSections;
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
@@ -283,24 +420,24 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
       }
 
       if (
-        this.settings.tableCode && 
-        this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] && 
-        (
-          this.settings.tableCode === "initialDiagnosticConfigLectura" ||
-          this.settings.tableCode === "initialDiagnosticConfigMatematica"
-        ) 
+        this.settings.tableCode &&
+        this.tableStates[`${this.settings.tableCode}${this.thisLapse}`] &&
+        (this.settings.tableCode === "initialDiagnosticConfigLectura" ||
+          this.settings.tableCode === "initialDiagnosticConfigMatematica")
       ) {
-        const { filters, page } = this.tableStates[`${this.settings.tableCode}${this.thisLapse}`];
+        const { filters, page } = this.tableStates[
+          `${this.settings.tableCode}${this.thisLapse}`
+        ];
         if (filters && filters.length) this.source.setFilter([...filters]);
         setTimeout(() => {
           if (this.settings["pager"]) {
-            this.source.getFilteredAndSorted().then( data => {
-              const decs = `${data.length  / this.settings["pager"].perPage}`;
+            this.source.getFilteredAndSorted().then((data) => {
+              const decs = `${data.length / this.settings["pager"].perPage}`;
               const decs_splitted = decs.split(".");
               let pages = parseInt(decs);
               if (decs_splitted.length > 1) pages++;
               if (page) this.source.setPage(page <= pages ? page : pages);
-            }); 
+            });
           }
         });
       }
@@ -349,6 +486,65 @@ export class TableBlockComponent implements PresentationalBlockComponent, OnInit
           this.globals.ModalShower(obj);
         }
         break;
+    }
+  }
+
+  disabledThis(doThis: boolean = false): boolean {
+    const dis = [
+      this.isPromoting,
+      this.isDeleting,
+      ...(doThis ? [!this.promoteForm.valid] : []),
+    ].some((cond) => cond);
+    return dis;
+  }
+
+  onUserRowSelect(event) {
+    if (this.settings.isMulti)
+      this.selectedRows =
+        event.selected && event.selected instanceof Array ? event.selected : [];
+    console.log("selected ones", this.selectedRows);
+  }
+
+  onSubmitAction(values: any) {
+    this.isPromoting = true;
+    console.log("Submit values", values);
+    setTimeout(() => {
+      this.isPromoting = false;
+    }, 3000);
+  }
+
+  deleteStudents() {
+    this.isDeleting = true;
+    setTimeout(() => {
+      this.isDeleting = false;
+    }, 3000);
+  }
+
+  hasErrors(form: FormGroup, field: string): string | null {
+    const errors: any = form.get(field).errors;
+    if (errors) {
+      return errors.required ? MESSAGES.REQUIRED_MESSAGE : null;
+    }
+
+    return null;
+  }
+
+  setSelect(field: string, event: any) {
+    if (!field.includes("section")) {
+      this.showSelectSections0 = false;
+      if (event)
+        this.settings.promoteData[
+          `${this.settings.sectionKey}2P`
+        ].items = this.settings.allSections.filter((s) => {
+          return s.grade == event.id;
+        });
+      else if (!event) {
+        this.settings.promoteData[`${this.settings.sectionKey}2P`].items = [];
+      }
+      this.promoteForm.get(`${this.settings.sectionKey}2P`).reset();
+      setTimeout(() => {
+        this.showSelectSections0 = true;
+      });
     }
   }
 }

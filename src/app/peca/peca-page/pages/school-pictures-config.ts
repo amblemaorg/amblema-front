@@ -17,7 +17,8 @@ export function schoolActivitiesPicturesConfigMapper(
   let currentSlider = slider;
   let currentStatus = currentSlider.length > 0 ? 2 : 1;
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
-    const lastActivitiesPicturesRequest = approvalHistory[approvalHistory.length - 1];
+    const lastActivitiesPicturesRequest =
+      approvalHistory[approvalHistory.length - 1];
     currentSlider = lastActivitiesPicturesRequest.detail.slider;
     currentStatus = +lastActivitiesPicturesRequest.status;
   }
@@ -62,7 +63,6 @@ export function schoolActivitiesPicturesConfigMapper(
         },
       },
       onAddImage: (image) => {
-        // console.log("school-pictures", image);
         const data = {
           image: image.source,
         };
@@ -137,7 +137,9 @@ export function schoolActivitiesPicturesConfigMapper(
         const imageSource = row.data.newData.image
           ? row.data.newData.image
           : row.data.newData.source;
-        store.dispatch(new RemoveImageFromSchoolActivitiesRequestData({ imageSource }));
+        store.dispatch(
+          new RemoveImageFromSchoolActivitiesRequestData({ imageSource })
+        );
       },
       makesNoRequest: true,
       classes: {
@@ -153,7 +155,9 @@ export function schoolActivitiesPicturesConfigMapper(
     settings: {
       action: [
         {
-          hidden: isInApproval ? !activities_slider_delete : !activities_slider_edit,
+          hidden: isInApproval
+            ? !activities_slider_delete
+            : !activities_slider_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar solicitud",
         },
       ],

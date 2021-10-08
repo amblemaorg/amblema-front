@@ -38,7 +38,7 @@ import { ApiWebContentService } from "../../../services/web/api-web-content.serv
 import { environment } from "../../../../environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { Injectable } from "@angular/core";
-import { SetFalseMakingAction } from '../../yearbook/yearbook.action';
+import { SetFalseMakingAction } from "../../yearbook/yearbook.action";
 
 @State<PecaStateModel>({
   name: "peca",
@@ -99,13 +99,17 @@ export class PecaState {
   }
 
   @Action(FetchProject)
-  async fetchProject({ patchState }: StateContext<PecaStateModel>, { payload }: FetchProject) {
+  async fetchProject(
+    { patchState }: StateContext<PecaStateModel>,
+    { payload }: FetchProject
+  ) {
     const { projectId, schoolYearId } = payload;
     this.apiService.setResourcePath("projects/" + projectId);
     const response = await this.apiService.getWebContent().toPromise();
     if (response) {
       const activePeca = response.schoolYears.reduce(
-        (prevPeca, peca) => (peca.schoolYear.id === schoolYearId ? peca : prevPeca),
+        (prevPeca, peca) =>
+          peca.schoolYear.id === schoolYearId ? peca : prevPeca,
         {}
       );
       const peca = {
@@ -135,20 +139,19 @@ export class PecaState {
 
     let payload_ = payload;
     const showToast = payload_.includes("[:show-toast:]");
-    if (showToast) payload_ = payload_.replace("[:show-toast:]","");
-    
+    if (showToast) payload_ = payload_.replace("[:show-toast:]", "");
+
     this.apiService.setResourcePath("pecaprojects/" + payload_);
     const response = await this.apiService.getWebContent().toPromise();
     //.subscribe((response) => {
-      if (response) {
-        // console.log("Hola", response);
-        const pecaContent: PecaModel = response;
-        patchState({
-          pecaContentRequesting: false,
-          content: pecaContent,
-        });
-      }
-      this.store.dispatch([new SetFalseMakingAction(showToast)]);
+    if (response) {
+      const pecaContent: PecaModel = response;
+      patchState({
+        pecaContentRequesting: false,
+        content: pecaContent,
+      });
+    }
+    this.store.dispatch([new SetFalseMakingAction(showToast)]);
     //});
   }
 
@@ -185,11 +188,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -206,7 +214,8 @@ export class PecaState {
     const { lapseNumber } = payload;
     const lapseName = `lapse${lapseNumber}`;
     const { approvalHistory } = pecaContent[lapseName].lapsePlanning;
-    const lastLapsePlanningFileRequest = approvalHistory[approvalHistory.length - 1];
+    const lastLapsePlanningFileRequest =
+      approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${lastLapsePlanningFileRequest.id}`;
     const data = {
       status: "4",
@@ -222,11 +231,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -266,11 +280,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -301,11 +320,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -329,7 +353,9 @@ export class PecaState {
       positionClass: "toast-bottom-right",
     });
     try {
-      const response = await this.fetcher.post(url, initialWorkshopImagesRequest).toPromise();
+      const response = await this.fetcher
+        .post(url, initialWorkshopImagesRequest)
+        .toPromise();
       patchState({
         content: {
           ...state.content,
@@ -343,11 +369,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -364,7 +395,8 @@ export class PecaState {
     const { lapseNumber } = payload;
     const lapseName = `lapse${lapseNumber}`;
     const { approvalHistory } = pecaContent[lapseName].initialWorkshop;
-    const lastInitialWorkshopImagesRequest = approvalHistory[approvalHistory.length - 1];
+    const lastInitialWorkshopImagesRequest =
+      approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${lastInitialWorkshopImagesRequest.id}`;
     const data = {
       status: "4",
@@ -380,11 +412,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -423,11 +460,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -443,7 +485,8 @@ export class PecaState {
     const { content: pecaContent } = getState();
     //@ts-ignore
     const { approvalHistory } = pecaContent.school.activitiesSlider;
-    const lastActivitiesImagesRequest = approvalHistory[approvalHistory.length - 1];
+    const lastActivitiesImagesRequest =
+      approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${lastActivitiesImagesRequest.id}`;
     const data = {
       status: "4",
@@ -459,11 +502,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -497,7 +545,9 @@ export class PecaState {
     patchState({
       initialWorkshopImagesRequest: {
         ...initialWorkshopImagesRequest,
-        description: description ? description : initialWorkshopImagesRequest.description,
+        description: description
+          ? description
+          : initialWorkshopImagesRequest.description,
         images:
           images instanceof Array && images.length > 0
             ? images
@@ -618,7 +668,10 @@ export class PecaState {
             ...state.content[lapseName],
             olympics: {
               ...state.content[lapseName].olympics,
-              students: [...state.content[lapseName].olympics.students, newStudent],
+              students: [
+                ...state.content[lapseName].olympics.students,
+                newStudent,
+              ],
             },
           },
         },
@@ -627,11 +680,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -680,11 +738,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -705,7 +768,9 @@ export class PecaState {
     try {
       const response = await this.fetcher.delete(url).toPromise();
       const students = state.content[lapseName].olympics.students;
-      const updatedStudents = students.filter((student) => student.id !== studentId);
+      const updatedStudents = students.filter(
+        (student) => student.id !== studentId
+      );
       patchState({
         content: {
           ...state.content,
@@ -739,7 +804,9 @@ export class PecaState {
     const pecaId = state.content.id;
     const url = `pecaprojects/annualpreparation/${pecaId}`;
     // @ts-ignore
-    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(({ id }) => id);
+    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(
+      ({ id }) => id
+    );
     const data = {
       teachersIds: [...teachersIds, teacherId],
     };
@@ -763,11 +830,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -786,7 +858,9 @@ export class PecaState {
     const pecaId = state.content.id;
     const url = `pecaprojects/annualpreparation/${pecaId}`;
     // @ts-ignore
-    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(({ id }) => id);
+    const teachersIds = state.content[lapseName].annualPreparation.teachers.map(
+      ({ id }) => id
+    );
     const data = {
       teachersIds: teachersIds.filter((id) => id !== teacherId),
     };
@@ -810,11 +884,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -870,11 +949,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -913,11 +997,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -935,12 +1024,14 @@ export class PecaState {
     const lapseName = `lapse${lapseNumber}`;
     const pecaId = state.content.id;
     const url = `pecaprojects/amblecoins/${pecaId}/${lapseNumber}`;
-    const sections = state.content[lapseName].ambleCoins.sections.map((section) => {
-      if (section.id === updatedSection.id) {
-        return updatedSection;
+    const sections = state.content[lapseName].ambleCoins.sections.map(
+      (section) => {
+        if (section.id === updatedSection.id) {
+          return updatedSection;
+        }
+        return section;
       }
-      return section;
-    });
+    );
     try {
       this.toastr.info("Guardando, por favor espere...", "", {
         positionClass: "toast-bottom-right",
@@ -961,11 +1052,16 @@ export class PecaState {
         positionClass: "toast-bottom-right",
       });
     } catch (error) {
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
@@ -1028,7 +1124,8 @@ export class PecaState {
   static getActivePeca(state: any) {
     const activeYearId = state.user.activeSchoolYear.id;
     const activePeca = state.selectedProject.pecas.reduce(
-      (prevPeca, peca) => (peca.schoolYear.id === activeYearId ? peca : prevPeca),
+      (prevPeca, peca) =>
+        peca.schoolYear.id === activeYearId ? peca : prevPeca,
       {}
     );
     return { activePeca };
@@ -1054,6 +1151,16 @@ export class PecaState {
       school: {
         ...state.content.school,
         id: state.selectedProject.school.id,
+        pecaId: state.content.id,
+      },
+    };
+  }
+
+  @Selector()
+  static getPecaSchoolPromoteData(state: any) {
+    return {
+      school: {
+        code: state.content.school.code,
         pecaId: state.content.id,
       },
     };

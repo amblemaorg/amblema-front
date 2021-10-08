@@ -1,0 +1,139 @@
+<div *ngIf="settings.resStatus && settings.resStatus === 200; else noData">
+  <ng-container
+    *ngTemplateOutlet="
+      formTemplate;
+      context: { fieldsarr: fields1, type: 1, frmlr: form1 }
+    "
+  ></ng-container>
+
+  <div class="table-wrapper">
+    <div class="the-table" [class.disabled]="disabledThis()">
+      <div class="table-element" [class.not-overflow]="isUpdating">
+        <div
+          *ngIf="isUpdating"
+          class="updating d-flex align-items-center flex-column"
+        >
+          <span class="spinner-grow"></span>
+          <p>Actualizando tabla...</p>
+        </div>
+        <ng2-smart-table
+          [settings]="tableStudents"
+          [source]="source"
+          (userRowSelect)="onUserRowSelect($event)"
+          class="is-multi form-table-component"
+          [class.no-data]="tableStudents.hideSubHeader"
+        ></ng2-smart-table>
+      </div>
+
+      <div
+        *ngIf="
+          settings &&
+          settings.fields &&
+          settings.fields.table &&
+          settings.fields.table.length
+        "
+        class="promote-wrapper"
+        [class.disabled]="!selectedRows.length || !form1.valid"
+      >
+        <h6>Datos a promover</h6>
+        <ng-container
+          *ngTemplateOutlet="
+            formTemplate;
+            context: { fieldsarr: fields2, type: 2, frmlr: form2 }
+          "
+        ></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="no-data-msg">
+    <p>{{ settings.resMsg }}</p>
+  </div>
+</ng-template>
+
+<!-- FORM TEMPLATE -->
+<ng-template
+  #formTemplate
+  let-fieldsarr="fieldsarr"
+  let-type="type"
+  let-frmlr="frmlr"
+>
+  <form [formGroup]="frmlr" (ngSubmit)="onSubmitAction(type, frmlr.value)">
+    <div class="fields-container">
+      <ng-container *ngFor="let field of fieldsarr; index as ind">
+        <div class="form-group">
+          <label>{{ settings.fields["fields" + type][field].label }}</label>
+          <input
+            *ngIf="
+              (type === 2 &&
+                ((!ind && !showSelectGrades2) ||
+                  (ind && !showSelectSections2))) ||
+              (type === 1 && ind && !showSelectSections1)
+            "
+            class="form-control"
+            type="text"
+            [formControlName]="field"
+            [id]="settings.fields['fields' + type][field].id"
+            [placeholder]="settings.fields['fields' + type][field].placeholder"
+          />
+          <ng-select
+            *ngIf="
+              (type === 1 && !ind) ||
+              (type === 1 && ind && showSelectSections1) ||
+              (type === 2 &&
+                ((!ind && showSelectGrades2) || (ind && showSelectSections2)))
+            "
+            class="form-control"
+            notFoundText="Elementos no encontrados"
+            [items]="settings.fields['fields' + type][field].items"
+            bindValue="id"
+            bindLabel="name"
+            [labelForId]="settings.fields['fields' + type][field].id"
+            [formControlName]="field"
+            [virtualScroll]="true"
+            [id]="settings.fields['fields' + type][field].id"
+            [placeholder]="settings.fields['fields' + type][field].placeholder"
+            (change)="setSelect(field, type, $event)"
+            [readonly]="disabledThis() || (type === 2 && !selectedRows.length)"
+          >
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <small>{{ item.name }}</small>
+            </ng-template>
+          </ng-select>
+          <span
+            *ngIf="settings.fields['fields' + type][field].loading"
+            class="floating-loading"
+            >{{ settings.fields["fields" + type][field].loadingLabel }}</span
+          >
+          <ng-container *ngIf="hasErrors(frmlr, field)">
+            <div class="error-message">
+              <strong>{{ hasErrors(frmlr, field) }}</strong>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <!-- BUTTON -->
+      <button
+        type="submit"
+        class="btn btn-primary text-decoration-none py-1 px-4"
+        [disabled]="disabledThis(type) || (type === 2 && !selectedRows.length)"
+      >
+        <span
+          *ngIf="(type === 1 && isSearching) || (type === 2 && isSaving)"
+          class="spinner-grow spinner-grow-sm"
+        ></span>
+        {{
+          type === 1
+            ? isSearching
+              ? "Buscando..."
+              : "Buscar"
+            : isSaving
+            ? "Promoviendo..."
+            : "Promover"
+        }}
+      </button>
+    </div>
+  </form>
+</ng-template>

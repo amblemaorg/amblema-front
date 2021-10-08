@@ -20,7 +20,7 @@ import {
   NbCheckboxModule,
   NbAlertModule,
 } from "@nebular/theme";
-import { NgDatepickerModule } from 'ng2-datepicker';
+import { NgDatepickerModule } from "ng2-datepicker";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { PecaRoutingModule } from "./peca-routing.module";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -29,7 +29,7 @@ import { CarouselModule } from "ngx-owl-carousel-o";
 import { OwlModule } from "ngx-owl-carousel";
 import { ScheduleModule } from "@syncfusion/ej2-angular-schedule";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { NgxImageCompressService } from 'ngx-image-compress';
+import { NgxImageCompressService } from "ngx-image-compress";
 // COMPONENTS
 import { PecaComponent } from "./peca.component";
 import { PecaPageComponent } from "./peca-page/peca-page.component";
@@ -70,6 +70,8 @@ import { GraphicsMatheBlockComponent } from "./peca-page/blocks/graphics-mathe-b
 import { GraphicsLogicComponent } from "./peca-page/blocks/graphics-logic/graphics-logic.component";
 import { SummaryBlockComponent } from "./peca-page/blocks/franklin-dev-component/summary-block/summary-block.component";
 import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/form-review/form-review.component";
+import { FormTableComponent } from "./peca-page/blocks/form-table-previous-students/form-table.component";
+import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/previous-scholar-year-enrollment-page.component";
 
 @NgModule({
   declarations: [
@@ -93,6 +95,7 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     SchoolPicturesPageComponent,
     YearbookPageComponent,
     GenericActivityPageComponent,
+    PreviousScholarYearEnrollmentPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
@@ -111,6 +114,7 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     GraphicsLogicComponent,
     SummaryBlockComponent,
     FormReviewComponent,
+    FormTableComponent,
   ],
   imports: [
     CommonModule,
@@ -139,7 +143,7 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     NbCheckboxModule,
     ScheduleModule,
     FontAwesomeModule,
-    NgDatepickerModule
+    NgDatepickerModule,
   ],
   entryComponents: [
     TabsBlockComponent,
@@ -159,10 +163,11 @@ import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/f
     GraphicsMatheBlockComponent,
     GraphicsLogicComponent,
     SummaryBlockComponent,
+    FormTableComponent,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
-    NgxImageCompressService
+    NgxImageCompressService,
   ],
 })
 export class PecaModule {}
