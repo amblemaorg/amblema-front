@@ -173,13 +173,10 @@ export class FormTableComponent
               students: this.selectedRows.length ? this.selectedRows : [],
             };
 
-      console.log("Hola", body, requestData);
-
       this.fetcher[requestData.method](
         requestData.urlString,
         type === 1 ? null : body
       ).subscribe((res) => {
-        console.log("Holis", res);
         if (
           res &&
           ((requestData.method === "get" && res.status === 200) ||
