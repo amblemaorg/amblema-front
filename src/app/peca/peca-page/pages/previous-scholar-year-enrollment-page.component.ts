@@ -11,7 +11,6 @@ import { PecaState } from "../../../store/states/peca/peca.state";
 import { HttpFetcherService } from "../../../services/peca/http-fetcher.service";
 import { PecaPageComponent } from "../peca-page.component";
 import { previousScholarYearStudentsConfigMapper } from "./previous-scholar-year-enrollment-config";
-import { first } from "rxjs/internal/operators/first";
 
 @Component({
   selector: "peca-school-pictures",
@@ -41,15 +40,21 @@ export class PreviousScholarYearEnrollmentPageComponent
   initPage() {
     if (!this.isInstantiating) {
       const defaultConfig = previousScholarYearStudentsConfigMapper(
-        { status: 400, msg: "La escuela no tiene proyecto actual" },
+        { status: 400, msg: "Cargando..." },
         null,
         this.getFetcher
       );
       this.instantiateComponent(defaultConfig);
+      this.doInstantiateBlocks();
 
       this.schoolDataSubscription = this.schoolData$.subscribe(
         (activePeca) => {
-          if (activePeca && activePeca.school) {
+          if (
+            activePeca &&
+            activePeca.school &&
+            !this.school_code &&
+            !this.peca_id
+          ) {
             this.school_code = activePeca.school.code;
             this.peca_id = activePeca.school.pecaId;
             const permissions = null;
@@ -132,5 +137,7 @@ export class PreviousScholarYearEnrollmentPageComponent
 
   ngOnDestroy() {
     if (this.subscription) this.subscription.unsubscribe();
+    this.school_code = "";
+    this.peca_id = "";
   }
 }
