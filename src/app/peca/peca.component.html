@@ -1,12 +1,12 @@
 <nb-layout>
   <nb-layout-header fixed>
-    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="padding: 0;">
+    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="padding: 0">
       <nb-icon
         icon="bars"
-        style="color: white;font-size: 1.5rem;"
+        style="color: white; font-size: 1.5rem"
         (click)="toggle()"
       ></nb-icon>
-    </div>   
+    </div>
     <div class="header-main-name mr-auto">
       <h1 class="h1-amblema"><b>AmbLeMa</b></h1>
     </div>
@@ -20,11 +20,24 @@
             imageUser ? imageUser : '../../../../assets/images/profile2.png'
           "
         ></nb-user>
-        <h4 class="mb-0 user-name font-weight-bold" [innerHTML]="getUserOneOrTwoLines(nameUser)"></h4>
+        <h4
+          class="mb-0 user-name font-weight-bold"
+          [innerHTML]="getUserOneOrTwoLines(nameUser)"
+        ></h4>
       </div>
       <div class="dropdown-menu dropdown-content">
-        <a *ngIf="userType !== '0' && userType !== '1'" class="dropdown-item" [routerLink]="['perfil-usuario']">Perfil</a>
-        <a class="dropdown-item" [routerLink]="['/auth/logout']">Salir</a>
+        <a
+          *ngIf="userType !== '0' && userType !== '1'"
+          class="dropdown-item"
+          [routerLink]="['perfil-usuario']"
+          >Perfil</a
+        >
+        <a
+          class="dropdown-item"
+          [routerLink]="['/auth/logout']"
+          [queryParams]="{ reload: 1 }"
+          >Salir</a
+        >
       </div>
     </div>
   </nb-layout-header>
@@ -37,8 +50,14 @@
     <ng-container *ngIf="showWelcome">
       <nb-card>
         <nb-card-body class="d-flex flex-column align-items-center pt-5">
-          <h4 class="welcome-text text-center">¡Bienvenido al PECA de AmbLeMa!</h4>
-          <img class="img-fluid welcome-image" src="../../assets/images/logo_amblema.jpg" alt="AmbLeMa">
+          <h4 class="welcome-text text-center">
+            ¡Bienvenido al PECA de AmbLeMa!
+          </h4>
+          <img
+            class="img-fluid welcome-image"
+            src="../../assets/images/logo_amblema.jpg"
+            alt="AmbLeMa"
+          />
         </nb-card-body>
       </nb-card>
     </ng-container>
@@ -50,8 +69,35 @@
 </nb-layout>
 
 <!-- MODAL -->
-<button #noPecaModalLauncher type="button" class="d-none" data-toggle="modal" data-target="#no-peca-modal" data-backdrop="false" data-keyboard="false"></button>
-<div class="modal fade" id="no-peca-modal"><div class="modal-dialog modal-dialog-scrollable modal-dialog-centered"><div class="modal-content">
-  <div class="modal-header"><button type="button" class="close d-none" data-dismiss="modal">&times;</button></div>
-  <div class="modal-body">Esta escuela no está registrada en el período académico actual. Por favor contacta al administrador</div>
-</div></div></div>
+<button
+  #noPecaModalLauncher
+  type="button"
+  class="d-none"
+  data-toggle="modal"
+  data-target="#no-peca-modal"
+  data-backdrop="false"
+  data-keyboard="false"
+></button>
+<div class="modal fade" id="no-peca-modal">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close d-none" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Esta escuela no está registrada en el período académico actual. Por
+          favor contacta al administrador
+        </p>
+        <a
+          class="btn"
+          [routerLink]="['/auth/logout']"
+          [queryParams]="{ reload: 1 }"
+          >Salir</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

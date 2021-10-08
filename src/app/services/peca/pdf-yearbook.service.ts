@@ -90,7 +90,6 @@ export class PdfYearbookService {
       lapse2: {},
       lapse3: {},
     };
-    console.log("pdfData", pdf_data);
 
     if (pdf_data["lapses"]) {
       const lapsesImgs = pdf_data.lapses.map(async (lapse, i, arrL) => {

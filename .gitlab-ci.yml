@@ -21,8 +21,8 @@ stages:
   - cleanup
 
 variables:
-  QA_CONTAINER_NAME: 'amblema_front_qa'
-  STAGING_CONTAINER_NAME: 'amblema_front_staging'
+  QA_CONTAINER_NAME: "amblema_front_qa"
+  STAGING_CONTAINER_NAME: "amblema_front_staging"
 
   # Path to QA
   PATH_FOLDER_QA: /home/amblema/amblema-front/qa
@@ -44,7 +44,7 @@ variables:
 
   ROLLOUT_RESOURCE_TYPE: deployment
 
-  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+  DOCKER_TLS_CERTDIR: "" # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
 
 # Jobs for Staging environment
 .teststagingscript: &test
@@ -131,8 +131,6 @@ staging-turn-off:
     - master
   when: manual
 
-
-include:  
-
+include:
   - project: binaural/ecosistema/DevOps/ci-cd/ymls
     file: /semantic-versioning/release.gitlab-ci.yml #para versionado

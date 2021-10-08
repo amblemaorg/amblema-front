@@ -16,7 +16,7 @@ import { environment } from "src/environments/environment";
 import { Store, Select } from "@ngxs/store";
 import { HttpClient } from "@angular/common/http";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
-import { WebState } from '../../../../store/states/web/web.state';
+import { WebState } from "../../../../store/states/web/web.state";
 import { Observable } from "rxjs";
 const DISMISS = "0";
 const ACCEPT = "1";
@@ -119,7 +119,6 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   getSchoolsPageData() {
     this.store.dispatch([new SetIsLoadingPage("true")]);
     this.schoolService.getWebContent().subscribe((data) => {
-      //console.log(data);
       this.schoolsList = data.records.map((school) => {
         return {
           slug: school.slug,

@@ -13,17 +13,21 @@ import { Subscription, Observable } from "rxjs";
 import { adaptBody } from "./fetcher-body-adapter";
 import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
-import { FetchPecaContent, SetUser } from "../../../../store/actions/peca/peca.actions";
+import {
+  FetchPecaContent,
+  SetUser,
+} from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
-import { NgDatepickerComponent, DatepickerOptions } from 'ng2-datepicker';
-import { StepsService } from '../../../../services/steps/steps.service';
+import { NgDatepickerComponent, DatepickerOptions } from "ng2-datepicker";
+import { StepsService } from "../../../../services/steps/steps.service";
 
 @Component({
   selector: "form-block",
   templateUrl: "./form-block.component.html",
   styleUrls: ["./form-block.component.scss"],
 })
-export class FormBlockComponent implements PresentationalBlockComponent, OnInit, OnDestroy {
+export class FormBlockComponent
+  implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   settings: {
@@ -97,21 +101,21 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   sendNull: boolean = true; // to avoid send form data null when uploading images
   someImgAdded: boolean; // to avoid send form null when images are saved in table
   imageUrl: string; //to can upload the image in profile component
-  @ViewChild('inputDate', { static: false }) inputDate: NgDatepickerComponent;
+  @ViewChild("inputDate", { static: false }) inputDate: NgDatepickerComponent;
   datePickerOptions: DatepickerOptions = {
     minYear: 1950,
     maxYear: 2050,
-    displayFormat: 'DD/MM/YYYY',
-    barTitleFormat: 'MMMM YYYY',
-    dayNamesFormat: 'dd',
+    displayFormat: "DD/MM/YYYY",
+    barTitleFormat: "MMMM YYYY",
+    dayNamesFormat: "dd",
     firstCalendarDay: 0, // 0 - Sunday, 1 - Monday
     minDate: new Date(Date.now()),
     maxDate: new Date(Date.now()),
-    barTitleIfEmpty: 'Haga click para seleccionar una fecha',
-    placeholder: 'Seleccione una fecha',
-    addClass: 'form-control date-picker-custom', // Optional, value to pass on to [ngClass] on the input field
+    barTitleIfEmpty: "Haga click para seleccionar una fecha",
+    placeholder: "Seleccione una fecha",
+    addClass: "form-control date-picker-custom", // Optional, value to pass on to [ngClass] on the input field
     addStyle: {}, // Optional, value to pass to [ngStyle] on the input field
-    fieldId: 'inputDate', // ID to assign to the input field. Defaults to datepicker-<counter>
+    fieldId: "inputDate", // ID to assign to the input field. Defaults to datepicker-<counter>
     useEmptyBarTitle: false, // Defaults to true. If set to false then barTitleIfEmpty will be disregarded and a date will always be shown
   };
   // currentGrade: string; // for grades selector only
@@ -148,17 +152,24 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.subscription.add(
       this.stepsService.residenceInfoEmitter.subscribe((bool) => {
         if (
-          bool && 
-          this.settings.formsContent["addressMunicipality"] && 
+          bool &&
+          this.settings.formsContent["addressMunicipality"] &&
           this.settings.formsContent["addressState"]
         ) {
           this.showSelectState = false;
-          this.settings.formsContent["addressMunicipality"].options = this.stepsService.getResidenceMuns();
-          this.settings.formsContent["addressState"].options = this.stepsService.getResidenceStates();
-          
+          this.settings.formsContent[
+            "addressMunicipality"
+          ].options = this.stepsService.getResidenceMuns();
+          this.settings.formsContent[
+            "addressState"
+          ].options = this.stepsService.getResidenceStates();
+
           setTimeout(() => {
-            this.showSelectState = true; 
-            this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
+            this.showSelectState = true;
+            this.updateMuns(
+              true,
+              this.componentForm.value["addressMunicipality"]
+            );
             this.munsLoaded = true;
             this.statesLoaded = true;
           });
@@ -171,7 +182,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         const comparer = this.initialVsFinalFormDataComparer();
         const isEqual = comparer[0] || comparer[1];
 
-        if (!this.someImgAdded && (val === "INVALID" || isEqual || this.isDateNotOk() || !this.isDirty())) {
+        if (
+          !this.someImgAdded &&
+          (val === "INVALID" ||
+            isEqual ||
+            this.isDateNotOk() ||
+            !this.isDirty())
+        ) {
           if (this.settings.buttonCode && this.isDirty()) this.isEdited = true;
           if (this.sendNull) this.btnUpdater(null);
         } else {
@@ -191,11 +208,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
               this.settings.tableRefreshName,
               this.componentForm.get("section").value
             );
-          else this.globals.emitStudentsTableRefresh(this.settings.tableRefreshName, null);
+          else
+            this.globals.emitStudentsTableRefresh(
+              this.settings.tableRefreshName,
+              null
+            );
         })
       );
 
-    if ( this.specialDateContr().makeListen ) {
+    if (this.specialDateContr().makeListen) {
       const key_ = this.specialDateContr().key;
 
       this.subscription.add(
@@ -205,21 +226,27 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       );
 
       this.subscription.add(
-        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).statusChanges.subscribe((val) => {
-          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "day");
-        })
+        this.componentForm
+          .get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`)
+          .statusChanges.subscribe((val) => {
+            if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "day");
+          })
       );
 
       this.subscription.add(
-        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).statusChanges.subscribe((val) => {
-          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "month");
-        })
+        this.componentForm
+          .get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`)
+          .statusChanges.subscribe((val) => {
+            if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "month");
+          })
       );
 
       this.subscription.add(
-        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).statusChanges.subscribe((val) => {
-          if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "year");
-        })
+        this.componentForm
+          .get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`)
+          .statusChanges.subscribe((val) => {
+            if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "year");
+          })
       );
     }
 
@@ -235,9 +262,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       })
     );
 
-    // if (!this.stepsService.getIsCallingM()/* !this.fetchingResidenceInfo */ && this.settings.formsContent["addressMunicipality"] && !this.munsLoaded) 
+    // if (!this.stepsService.getIsCallingM()/* !this.fetchingResidenceInfo */ && this.settings.formsContent["addressMunicipality"] && !this.munsLoaded)
     //   this.callMuns();
-    if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded) 
+    if (this.settings.formsContent["addressMunicipality"] && !this.munsLoaded)
       this.stepsService.callMuns();
 
     this.subscription.add(
@@ -250,7 +277,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.btnUpdater(arr[1] ? this.componentForm.value : null);
 
         const comparer = this.initialVsFinalFormDataComparer();
-        if (comparer[1]) this.btnUpdater(arr[1] ? this.componentForm.value : null);
+        if (comparer[1])
+          this.btnUpdater(arr[1] ? this.componentForm.value : null);
       })
     );
 
@@ -266,10 +294,16 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     this.subscription.add(
       this.globals.setReadonlyEmitter.subscribe((data) => {
         if (data.isBtnCode) {
-          if (this.settings.buttonCode && this.settings.buttonCode == data.buttonCode)
+          if (
+            this.settings.buttonCode &&
+            this.settings.buttonCode == data.buttonCode
+          )
             this.isInApproval = data.setReadOnly;
         } else {
-          if (this.settings.tableCode && this.settings.tableCode == data.buttonCode)
+          if (
+            this.settings.tableCode &&
+            this.settings.tableCode == data.buttonCode
+          )
             this.isInApproval = data.setReadOnly;
         }
       })
@@ -291,10 +325,13 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     // this.fetchingResidenceInfo = false;
   }
 
-  specialDateContr(): { makeListen: boolean; key: string; } {
-    let k_= "";
-    const mL = ["date","age","dateLog"].some( key => {
-      if (this.settings.formsContent[key] && this.settings.formsContent[key]["specialDateForm"]) {
+  specialDateContr(): { makeListen: boolean; key: string } {
+    let k_ = "";
+    const mL = ["date", "age", "dateLog"].some((key) => {
+      if (
+        this.settings.formsContent[key] &&
+        this.settings.formsContent[key]["specialDateForm"]
+      ) {
         k_ = key;
         return true;
       }
@@ -303,38 +340,53 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     return {
       makeListen: mL,
-      key: k_
-    }
+      key: k_,
+    };
   }
 
   addZero(dN, isYear = false) {
     const dNlen = `${dN}`.length;
     if (isYear && dNlen < 4) {
       const yearStrArr = `${dN}`.split("").reverse();
-      const second = yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
+      const second =
+        yearStrArr.length == 3 ? yearStrArr[yearStrArr.length - 1] : "0";
       const third = yearStrArr.length > 1 ? yearStrArr[1] : "0";
       const fourth = yearStrArr[0];
       return "0" + second + third + fourth;
     }
     return dNlen > 1 ? `${dN}` : `0${dN}`;
-  };
+  }
 
   getDates(key_) {
     return {
-      day: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Day`].value,
-      month: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Month`].value,
-      year: this.componentForm.controls[`${this.settings.formsContent[key_]["specialDateForm"]}Year`].value
-    }
+      day: this.componentForm.controls[
+        `${this.settings.formsContent[key_]["specialDateForm"]}Day`
+      ].value,
+      month: this.componentForm.controls[
+        `${this.settings.formsContent[key_]["specialDateForm"]}Month`
+      ].value,
+      year: this.componentForm.controls[
+        `${this.settings.formsContent[key_]["specialDateForm"]}Year`
+      ].value,
+    };
   }
 
   isValidDay(day, month, year) {
     const now = new Date();
-    const d = new Date(`${this.addZero(year,true)}-${this.addZero(month)}-${this.addZero(day)}`);
-    const validDate = d instanceof Date && !isNaN( d.getTime() );
-    const dateChecker = validDate && new Date( `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]}` );
-    
-    return dateChecker && (dateChecker.getMonth() + 1 === month);
-  };
+    const d = new Date(
+      `${this.addZero(year, true)}-${this.addZero(month)}-${this.addZero(day)}`
+    );
+    const validDate = d instanceof Date && !isNaN(d.getTime());
+    const dateChecker =
+      validDate &&
+      new Date(
+        `${d.toISOString().split("T")[0]}T${
+          now.toISOString().split("T").reverse()[0]
+        }`
+      );
+
+    return dateChecker && dateChecker.getMonth() + 1 === month;
+  }
 
   /**
    * @param type string --> calendar, day, month, year
@@ -343,105 +395,127 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   setDateFunc(key_, type = "calendar") {
     this.isBeingUsedDateContr = true;
 
-    const theDate = type === "calendar" && this.componentForm.controls[key_].value ? new Date(this.componentForm.controls[key_].value) : new Date();
+    const theDate =
+      type === "calendar" && this.componentForm.controls[key_].value
+        ? new Date(this.componentForm.controls[key_].value)
+        : new Date();
     const { day, month, year } = {
       day: theDate.getDate(),
       month: theDate.getMonth() + 1,
-      year: theDate.getFullYear()
+      year: theDate.getFullYear(),
     };
 
-    const {
-      day: theDay,
-      month: theMonth,
-      year: theYear
-    } = this.getDates(key_);
+    const { day: theDay, month: theMonth, year: theYear } = this.getDates(key_);
 
-    if (type !== "day" && day && (type === "calendar" || !theDay) ) 
-      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(day);
+    if (type !== "day" && day && (type === "calendar" || !theDay))
+      this.componentForm
+        .get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`)
+        .setValue(day);
 
-    if (type !== "month" && month && (type === "calendar" || !theMonth) ) 
-      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(month);
+    if (type !== "month" && month && (type === "calendar" || !theMonth))
+      this.componentForm
+        .get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`)
+        .setValue(month);
 
-    if (type !== "year" && year && (type === "calendar" || !theYear) ) 
-      this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).setValue(year);
+    if (type !== "year" && year && (type === "calendar" || !theYear))
+      this.componentForm
+        .get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`)
+        .setValue(year);
 
     if (type !== "calendar") {
-      const {
-        day: tDay,
-        month: tMonth,
-        year: tYear
-      } = this.getDates(key_);
-      
+      const { day: tDay, month: tMonth, year: tYear } = this.getDates(key_);
+
       let isValid = this.isValidDay(tDay, tMonth, tYear);
 
-      const theWholeDate: string = `${this.addZero(tYear,true)}-${this.addZero(isValid ? tMonth : (tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) ) )}-${this.addZero(isValid ? tDay : 1)}`;
+      const theWholeDate: string = `${this.addZero(tYear, true)}-${this.addZero(
+        isValid
+          ? tMonth
+          : tMonth < 12
+          ? type === "month"
+            ? tMonth
+            : tMonth + 1
+          : type === "month"
+          ? tMonth
+          : 1
+      )}-${this.addZero(isValid ? tDay : 1)}`;
 
       this.componentForm.get(key_).setValue(theWholeDate);
 
       if (!isValid) {
-        if (tMonth && tDay) this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(1);
-        if (tDay && tMonth) this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(tMonth < 12 ? (type === "month" ? tMonth : tMonth + 1) : (type === "month" ? tMonth : 1) );
+        if (tMonth && tDay)
+          this.componentForm
+            .get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`)
+            .setValue(1);
+        if (tDay && tMonth)
+          this.componentForm
+            .get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`)
+            .setValue(
+              tMonth < 12
+                ? type === "month"
+                  ? tMonth
+                  : tMonth + 1
+                : type === "month"
+                ? tMonth
+                : 1
+            );
       }
     }
-    
+
     this.isBeingUsedDateContr = false;
   }
 
   dateOnBlur(e, datePart: string) {
     if (
-      !e || 
-      (
-        e && 
-        (
-          !e.target || 
-          (e.target && !e.target.value) || 
-          (e.target && e.target.value && !e.target.value.length) 
-        ) 
-      ) 
+      !e ||
+      (e &&
+        (!e.target ||
+          (e.target && !e.target.value) ||
+          (e.target && e.target.value && !e.target.value.length)))
     ) {
       this.isBeingUsedDateContr = true;
 
       const key_ = this.specialDateContr().key;
-  
-      const {
-        day: fDay,
-        month: fMonth,
-        year: fYear
-      } = this.getDates(key_);
-  
+
+      const { day: fDay, month: fMonth, year: fYear } = this.getDates(key_);
+
       let isValid = this.isValidDay(fDay, fMonth, fYear);
-      // console.log("1", isValid);
-  
       if (!isValid) {
-        if (datePart === "day") this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`).setValue(1);
-        if (datePart === "month") this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`).setValue(1);
+        if (datePart === "day")
+          this.componentForm
+            .get(`${this.settings.formsContent[key_]["specialDateForm"]}Day`)
+            .setValue(1);
+        if (datePart === "month")
+          this.componentForm
+            .get(`${this.settings.formsContent[key_]["specialDateForm"]}Month`)
+            .setValue(1);
       }
 
       if (datePart === "year") {
         const now = new Date();
-        this.componentForm.get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`).setValue( now.getFullYear() );
+        this.componentForm
+          .get(`${this.settings.formsContent[key_]["specialDateForm"]}Year`)
+          .setValue(now.getFullYear());
       }
 
-      const {
-        day: lDay,
-        month: lMonth,
-        year: lYear
-      } = this.getDates(key_);
+      const { day: lDay, month: lMonth, year: lYear } = this.getDates(key_);
 
       isValid = this.isValidDay(lDay, lMonth, lYear);
 
       if (isValid) {
-        const theWholeDate: string = `${this.addZero(lYear,true)}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
+        const theWholeDate: string = `${this.addZero(
+          lYear,
+          true
+        )}-${this.addZero(lMonth)}-${this.addZero(lDay)}`;
         this.componentForm.get(key_).setValue(theWholeDate);
       }
 
-      this.isBeingUsedDateContr = false; 
+      this.isBeingUsedDateContr = false;
     }
   }
 
   // callStates() {
   //   if (
-  //     this.settings.formsContent["addressState"] && !this.statesLoaded && this.componentForm && 
+  //     this.settings.formsContent["addressState"] && !this.statesLoaded && this.componentForm &&
   //     this.componentForm.value["addressMunicipality"] && this.componentForm.value["addressMunicipality"].length
   //   ) {
   //     const upStates = (states_all, isFetched) => {
@@ -451,7 +525,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   //       setTimeout(() => {
   //         // this.fetchingResidenceInfo = false;
   //         this.stepsService.setIsCallingM(false);
-  //         console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
   //         this.showSelectState = true;
   //         this.updateMuns(true, this.componentForm.value["addressMunicipality"]);
   //         this.statesLoaded = true;
@@ -467,7 +540,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   //         }, error => {
   //           // this.fetchingResidenceInfo = false;
   //           this.stepsService.setIsCallingM(false);
-  //           console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
   //         })
   //       );
   //   }
@@ -502,9 +574,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   //         }, error => {
   //           // this.fetchingResidenceInfo = false;
   //           this.stepsService.setIsCallingM(false);
-  //           console.log("Hola"/* ,this.fetchingResidenceInfo */, this.settings.formType);
   //         })
-  //       ); 
+  //       );
   //   }
   // }
 
@@ -525,29 +596,51 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
    */
   private initialVsFinalFormDataComparer(): boolean[] {
     if (
-      this.settings && this.settings.formsContent && this.settings.buttonCode && 
-      this.componentForm && this.componentForm.value && 
-      Object.keys(this.componentForm.value).some(cf_k => this.settings.formsContent[cf_k]) && 
+      this.settings &&
+      this.settings.formsContent &&
+      this.settings.buttonCode &&
+      this.componentForm &&
+      this.componentForm.value &&
+      Object.keys(this.componentForm.value).some(
+        (cf_k) => this.settings.formsContent[cf_k]
+      ) &&
       !this.formInitialVals[this.settings.buttonCode]
-    ) this.formInitialVals[this.settings.buttonCode] = {...this.componentForm.value};
+    )
+      this.formInitialVals[this.settings.buttonCode] = {
+        ...this.componentForm.value,
+      };
 
-    const isEqual = this.settings && this.settings.buttonCode && this.settings.buttonCode === "schoolDataConfigRegistroEscuela" && 
-          this.formInitialVals[this.settings.buttonCode] && this.componentForm && this.componentForm.value 
-            ? Object.keys(this.formInitialVals[this.settings.buttonCode])
-              .every(iv_k => !this.componentForm.value[iv_k] || typeof this.componentForm.value[iv_k] === "object" 
-                                ? true 
-                                : this.componentForm.value[iv_k] && this.componentForm.value[iv_k] === this.formInitialVals[this.settings.buttonCode][iv_k]
-              ) 
-            : false;
+    const isEqual =
+      this.settings &&
+      this.settings.buttonCode &&
+      this.settings.buttonCode === "schoolDataConfigRegistroEscuela" &&
+      this.formInitialVals[this.settings.buttonCode] &&
+      this.componentForm &&
+      this.componentForm.value
+        ? Object.keys(
+            this.formInitialVals[this.settings.buttonCode]
+          ).every((iv_k) =>
+            !this.componentForm.value[iv_k] ||
+            typeof this.componentForm.value[iv_k] === "object"
+              ? true
+              : this.componentForm.value[iv_k] &&
+                this.componentForm.value[iv_k] ===
+                  this.formInitialVals[this.settings.buttonCode][iv_k]
+          )
+        : false;
 
-    const fi_v = this.settings && this.settings.buttonCode ? !this.formInitialVals[this.settings.buttonCode] : false;
+    const fi_v =
+      this.settings && this.settings.buttonCode
+        ? !this.formInitialVals[this.settings.buttonCode]
+        : false;
 
-    return [ fi_v, isEqual ];
+    return [fi_v, isEqual];
   }
 
   formInModalBtnConditioner() {
     if (this.settings.isFromCustomTableActions) {
-      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn) return true;
+      if (this.settings.dataFromRow && this.settings.dataFromRow.showBtn)
+        return true;
       else return false;
     } else return true;
   }
@@ -555,7 +648,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   isDirty(): boolean {
     const keys = Object.keys(this.componentForm.value);
     return keys.some((key) => {
-      return key === "imageGroup" ? false : this.componentForm.controls[key].dirty;
+      return key === "imageGroup"
+        ? false
+        : this.componentForm.controls[key].dirty;
     });
     // return this.componentForm.dirty
   }
@@ -565,7 +660,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   }
 
   setSettings(settings: any) {
-    settings.formsContent = this.addDatePickerConfigToFormsContent(settings.formsContent);
+    settings.formsContent = this.addDatePickerConfigToFormsContent(
+      settings.formsContent
+    );
     this.settings = { ...settings };
     this.componentForm = this.buildFormGroup(settings.formsContent);
     this.loadGroupedInfo(settings);
@@ -574,29 +671,28 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   addDatePickerConfigToFormsContent(formsContent: object) {
     return Object.keys(formsContent).reduce((prevObj, field) => {
-      const fieldConfig = formsContent[field]
+      const fieldConfig = formsContent[field];
       if (fieldConfig.type === "date") {
         const pickerOptions = { ...this.datePickerOptions };
         if (fieldConfig.lower) {
           delete pickerOptions.minDate;
-        }
-        else {
+        } else {
           delete pickerOptions.maxDate;
         }
         return {
           ...prevObj,
           [field]: {
             ...fieldConfig,
-            pickerOptions
-          }
-        }
+            pickerOptions,
+          },
+        };
       }
       return {
         ...prevObj,
-        [field]: fieldConfig
+        [field]: fieldConfig,
       };
-    }, {})
-  };
+    }, {});
+  }
 
   setData(data: any) {
     if (data.setContent) {
@@ -609,8 +705,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           attr == "imageGroup" &&
           this.settings.formsContent["imageGroup"].fields["imageDocente"]
         ) {
-          this.settings.formsContent["imageGroup"].fields["imageDocente"].options =
-            data.data[attr].imageDocente;
+          this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options = data.data[attr].imageDocente;
         } else this.settings.formsContent[attr].options = data.data[attr];
 
         if (
@@ -625,7 +722,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           attr == "grades" &&
           this.settings.formsContent["grades"] &&
           this.settings.formsContent["grades"].isGrades &&
-          (this.componentForm.controls["grades"].value == "" || !this.componentForm.dirty) &&
+          (this.componentForm.controls["grades"].value == "" ||
+            !this.componentForm.dirty) &&
           this.settings.formsContent[attr].options.length > 0
         ) {
           this.componentForm.patchValue({
@@ -641,7 +739,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           this.isContentRefreshing = false;
         });
       });
-      // console.log(this.componentForm.dirty);
     }
 
     if (!this.isEdited) {
@@ -676,9 +773,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   private loadGroupedInfo(settings) {
     if (settings.formsContent["imageGroup"])
-      this.componentForm.addControl("imageGroup", this.buildGroupControl("imageGroup"));
+      this.componentForm.addControl(
+        "imageGroup",
+        this.buildGroupControl("imageGroup")
+      );
     if (settings.formsContent["documentGroup"])
-      this.componentForm.addControl("documentGroup", this.buildGroupControl("documentGroup"));
+      this.componentForm.addControl(
+        "documentGroup",
+        this.buildGroupControl("documentGroup")
+      );
   }
 
   private buildFormGroup(formContent: any): FormGroup {
@@ -723,13 +826,21 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       }
     });
 
-    const formControls = this.reduceFormControls(formContentNoTitles, formContent, true);
+    const formControls = this.reduceFormControls(
+      formContentNoTitles,
+      formContent,
+      true
+    );
 
     return formControls;
   }
 
   // RETURNS A FORMCONTROL OBJECT TO BE USED IN FORMGROUP
-  private reduceFormControls(formContentFields, formContent, isMainContent = false): Object {
+  private reduceFormControls(
+    formContentFields,
+    formContent,
+    isMainContent = false
+  ): Object {
     let formReduced = formContentFields.reduce(
       (formControlsObj, formControlName) => {
         return {
@@ -738,7 +849,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             isMainContent ? formControlName.field : formControlName,
             isMainContent
               ? formControlName.parent
-                ? formContent[formControlName.parent].fields[formControlName.field]
+                ? formContent[formControlName.parent].fields[
+                    formControlName.field
+                  ]
                 : formContent[formControlName.field]
               : formContent[formControlName]
           ),
@@ -757,11 +870,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       validations: null,
     }
   ): object {
-    let defaultValue = name === "imageSelected" || name === "imageSrc" ? null : "";
+    let defaultValue =
+      name === "imageSelected" || name === "imageSrc" ? null : "";
     // adding form control to Image or Document Group, when the form has images or Identification document to be added
     if (name === "imageGroup" || name === "documentGroup") {
-      let itemGroupContent = Object.keys(this.settings.formsContent[name].fields);
-      if (name === "imageGroup") itemGroupContent.push(...["imageSelected", "imageSrc"]);
+      let itemGroupContent = Object.keys(
+        this.settings.formsContent[name].fields
+      );
+      if (name === "imageGroup")
+        itemGroupContent.push(...["imageSelected", "imageSrc"]);
       let formControls = this.reduceFormControls(
         itemGroupContent,
         this.settings.formsContent[name].fields
@@ -774,20 +891,25 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
       if (
         isNullOrUndefined(params.validations) ||
-        (Object.keys(params.validations).length === 1 && !params.validations["required"])
+        (Object.keys(params.validations).length === 1 &&
+          !params.validations["required"])
       )
         formControlStruct = { [name]: [defaultValue] };
       else
-        formControlStruct = { [name]: [defaultValue, this.getValidators(params.validations)] };
+        formControlStruct = {
+          [name]: [defaultValue, this.getValidators(params.validations)],
+        };
 
       return {
         ...formControlStruct,
-        ...(isSpecialDate ? {
-          [isSpecialDate+"Day"]: [null],
-          [isSpecialDate+"Month"]: [null],
-          [isSpecialDate+"Year"]: [null],
-          [isSpecialDate+"InactiveInput"]: [null],
-        } : {})
+        ...(isSpecialDate
+          ? {
+              [isSpecialDate + "Day"]: [null],
+              [isSpecialDate + "Month"]: [null],
+              [isSpecialDate + "Year"]: [null],
+              [isSpecialDate + "InactiveInput"]: [null],
+            }
+          : {}),
       };
     }
   }
@@ -798,8 +920,7 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       if (validator === "maxLength") {
         this.max_len = validations[validator][0];
         return Validators[validator](validations[validator][0]);
-      }
-      else return Validators[validator](validations[validator]);
+      } else return Validators[validator](validations[validator]);
     });
 
     return fieldValidators;
@@ -829,10 +950,15 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         ? !specialCase
           ? this.settings.formsContent[field].messages.pattern
           : !field2
-          ? (errors.maxlength ? this.settings.formsContent[field].fields["prependInput"].messages.maxLength : this.settings.formsContent[field].fields["prependInput"].messages.pattern)
+          ? errors.maxlength
+            ? this.settings.formsContent[field].fields["prependInput"].messages
+                .maxLength
+            : this.settings.formsContent[field].fields["prependInput"].messages
+                .pattern
           : !fromImg
           ? this.settings.formsContent[field].fields[field2].messages.pattern
-          : this.settings.formsContent["imageGroup"].fields[field2].messages.pattern
+          : this.settings.formsContent["imageGroup"].fields[field2].messages
+              .pattern
         : null;
     }
 
@@ -852,25 +978,33 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   // submitting forms
   onSubmitForm(cf: FormGroup) {
     //cf: component form
-    const showErrorPassword = this.settings.formType === "actualizarPadrino" || this.settings.formType === "actualizarEscuela" || this.settings.formType === "actualizarCoordinador" 
-      ? (
-          cf.value.newPassword.length || cf.value.confirmPassword.length 
-            ? (cf.value.newPassword === cf.value.confirmPassword ? false : true) 
-            : false
-        )
-      : false;
+    const showErrorPassword =
+      this.settings.formType === "actualizarPadrino" ||
+      this.settings.formType === "actualizarEscuela" ||
+      this.settings.formType === "actualizarCoordinador"
+        ? cf.value.newPassword.length || cf.value.confirmPassword.length
+          ? cf.value.newPassword === cf.value.confirmPassword
+            ? false
+            : true
+          : false
+        : false;
 
     this.sendingForm = true;
-    let manageData = structureData(this.settings.formType, this.settings.formsContent, cf);
+    let manageData = structureData(
+      this.settings.formType,
+      this.settings.formsContent,
+      cf
+    );
 
     if (this.settings.formType === "preparingWorkshopForm") {
       let date = cf.get("date").value;
       if (date instanceof Date) {
         manageData.data["workshopDate"] = this.globals.dateToISOString(date);
-      }
-      else if (typeof date === "string") {
-        date = date.split("T")[0].replace(/-/g, "/")
-        manageData.data["workshopDate"] = this.globals.dateToISOString(new Date(date));
+      } else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/");
+        manageData.data["workshopDate"] = this.globals.dateToISOString(
+          new Date(date)
+        );
       }
     }
 
@@ -878,9 +1012,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       let date = cf.get("age").value;
       if (date instanceof Date) {
         manageData.data["age"] = this.globals.dateToISOString(date);
-      }
-      else if (typeof date === "string") {
-        date = date.split("T")[0].replace(/-/g, "/")
+      } else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/");
         manageData.data["age"] = this.globals.dateToISOString(new Date(date));
       }
     }
@@ -889,10 +1022,11 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       let date = cf.get("date").value;
       if (date instanceof Date) {
         manageData.data["birthdate"] = this.globals.dateToISOString(date);
-      }
-      else if (typeof date === "string") {
-        date = date.split("T")[0].replace(/-/g, "/")
-        manageData.data["birthdate"] = this.globals.dateToISOString(new Date(date));
+      } else if (typeof date === "string") {
+        date = date.split("T")[0].replace(/-/g, "/");
+        manageData.data["birthdate"] = this.globals.dateToISOString(
+          new Date(date)
+        );
       }
       if (this.imageUrl) manageData.data["image"] = this.imageUrl;
     }
@@ -912,14 +1046,17 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
           ...this.settings.dataFromRow.data.newData,
           ...manageData.data,
         };
-        this.settings.dataFromRow.data.newData["id"] = this.settings.dataFromRow.data.oldData["id"];
+        this.settings.dataFromRow.data.newData[
+          "id"
+        ] = this.settings.dataFromRow.data.oldData["id"];
       } else {
         // is for adding in modal view
         this.settings.dataFromRow["data"] = manageData.data;
         this.settings.dataFromRow["data"]["id"] = `auto-${assignId()}`;
       }
     } else {
-      if (!this.settings.notGenerateId) manageData.data["id"] = `auto-${assignId()}`;
+      if (!this.settings.notGenerateId)
+        manageData.data["id"] = `auto-${assignId()}`;
     }
 
     let obj = {
@@ -941,7 +1078,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
       if (manageData.isThereTable) this.globals.tableDataUpdater(obj);
 
-      if (this.settings.modalCode) this.globals.ModalHider(this.settings.modalCode);
+      if (this.settings.modalCode)
+        this.globals.ModalHider(this.settings.modalCode);
 
       // initializers
       if (!this.settings.notResetForm) {
@@ -965,34 +1103,36 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     if (this.settings.makesNoRequest) commonTasks();
     else {
       if (this.settings.onSubmit instanceof Function) {
-        const body = this.settings.isFromCustomTableActions ? obj.data.newData : obj.data;
+        const body = this.settings.isFromCustomTableActions
+          ? obj.data.newData
+          : obj.data;
         this.settings.onSubmit(body);
         return (this.sendingForm = false);
       }
 
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
-        ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]}`
+        ? `${this.settings.fetcherUrls[method]}/${
+            manageData.data[this.settings.methodUrlPlus]
+          }`
         : this.settings.fetcherUrls[method];
 
-      if (this.settings.tableCode) this.globals.setAsReadOnly(this.settings.tableCode, true, false);
+      if (this.settings.tableCode)
+        this.globals.setAsReadOnly(this.settings.tableCode, true, false);
       const body = adaptBody(
         this.settings.formType,
         this.settings.isFromCustomTableActions ? obj.data.newData : obj.data
       );
-      // console.log("method: ", method, "url: ", resourcePath, "body: ", body);
 
       if (showErrorPassword) {
         this.sendingForm = false;
         this.toastr.error("La confirmación de la contraseña no coincide", "", {
           positionClass: "toast-bottom-right",
         });
-      }
-      else 
+      } else
         this.fetcher[method](resourcePath, body).subscribe(
           (response) => {
             commonTasks();
-            console.log("Form response", response);
             if (this.settings.tableCode)
               this.globals.setAsReadOnly(this.settings.tableCode, false, false);
 
@@ -1000,7 +1140,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
               positionClass: "toast-bottom-right",
             });
 
-            if (this.pecaId) this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+            if (this.pecaId)
+              this.store.dispatch([new FetchPecaContent(this.pecaId)]);
 
             if (
               this.settings.formType === "actualizarCoordinador" ||
@@ -1009,7 +1150,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             ) {
               //Do the consult to the endpoint which bring me the data of specific user
               this.fetcher
-                .get(`users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`)
+                .get(
+                  `users/${this.settings.data["id"]}?userType=${this.settings.data["userType"]}`
+                )
                 .subscribe(
                   (respuesta) => {
                     // within the answer I send the content to the SetUser::
@@ -1022,14 +1165,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             }
           },
           (error) => {
-            const { error: { message } } = error;
+            const {
+              error: { message },
+            } = error;
 
             const error_msg =
               error.error && error.error instanceof ProgressEvent
                 ? "Puede que tenga problemas con su conexión a internet, verifique e intente nuevamente"
-                : message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-                  ? "Ocurrió un problema al procesar la(s) imágen(es)"
-                  :"Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                : message &&
+                  typeof message === "string" &&
+                  message.toLowerCase() === "invalid image format"
+                ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             this.sendingForm = false;
             if (this.settings.tableCode)
@@ -1041,7 +1188,9 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
                 ? error.error["name"][0].msg
                 : error.error && error.error["email"] && error.error["email"][0]
                 ? error.error["email"][0].msg
-                : error.error && error.error["cardId"] && error.error["cardId"][0]
+                : error.error &&
+                  error.error["cardId"] &&
+                  error.error["cardId"][0]
                 ? error.error["cardId"][0].msg
                 : error.error && error.error["msg"]
                 ? error.error["msg"]
@@ -1057,15 +1206,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
   // filling municipalities according to selected state
   private fillMunicipalities(state_id = "default", munId = "") {
-    if (state_id == "default" || !this.settings.formsContent["addressMunicipality"])
+    if (
+      state_id == "default" ||
+      !this.settings.formsContent["addressMunicipality"]
+    )
       this.municipalities = [];
     else {
       setTimeout(() => {
-        this.municipalities = this.settings.formsContent["addressMunicipality"].options.filter(
-          (m) => {
-            return m.state.id == state_id;
-          }
-        );
+        this.municipalities = this.settings.formsContent[
+          "addressMunicipality"
+        ].options.filter((m) => {
+          return m.state.id == state_id;
+        });
       });
     }
 
@@ -1090,7 +1242,10 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       if (e.id == "0") {
         this.componentForm.setControl(
           "companyOtherType",
-          this.fb.control(this.componentForm.get("companyOtherType").value, Validators.required)
+          this.fb.control(
+            this.componentForm.get("companyOtherType").value,
+            Validators.required
+          )
         );
       } else {
         this.componentForm.setControl(
@@ -1108,13 +1263,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         this.max_len = validts.maxLength[pos];
         const prependInputValidators = Object.keys(validts).map((validator) => {
           if (validator === "required") return Validators[validator];
-          if (validator === "maxLength") return Validators[validator](validts[validator][pos]);
+          if (validator === "maxLength")
+            return Validators[validator](validts[validator][pos]);
           else return Validators[validator](validts[validator]);
         });
 
         this.componentForm.controls[field].get(subField).clearValidators();
-        this.componentForm.controls[field].get(subField).setValidators(prependInputValidators);
-        this.componentForm.controls[field].get(subField).updateValueAndValidity();
+        this.componentForm.controls[field]
+          .get(subField)
+          .setValidators(prependInputValidators);
+        this.componentForm.controls[field]
+          .get(subField)
+          .updateValueAndValidity();
       };
       //
       if (e.id == "1") updateCF(0);
@@ -1131,19 +1291,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     let shouldDis = false;
 
     if (this.settings.specialValidateSaveButton) {
-      disMathTableFormEdit = 
-        this.componentForm.controls["resultMul"].value || 
+      disMathTableFormEdit =
+        this.componentForm.controls["resultMul"].value ||
         this.componentForm.controls["resultLog"].value;
       if (
-        !disMathTableFormEdit || 
-        (
-          typeof disMathTableFormEdit === "string" && 
-          !disMathTableFormEdit.length
-        ) 
-      ) shouldDis = true;
+        !disMathTableFormEdit ||
+        (typeof disMathTableFormEdit === "string" &&
+          !disMathTableFormEdit.length)
+      )
+        shouldDis = true;
     }
 
-    return shouldDis || !this.componentForm.valid || this.sendingForm || this.isDateNotOk();
+    return (
+      shouldDis ||
+      !this.componentForm.valid ||
+      this.sendingForm ||
+      this.isDateNotOk()
+    );
   }
 
   disableBtnWithDate() {
@@ -1164,14 +1328,18 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     const years = this.settings.formsContent[f].validationPerYears ? 3 : 0;
 
     if (e instanceof Date) {
-      e = e.toISOString().split('T')[0]
+      e = e.toISOString().split("T")[0];
     }
-    const isNotValidDate = this.globals.validateDate(e, mode, true, notE, years)
-    if (isNotValidDate || value)
-      this.wrongDateDisabler[f] = false;
-    else
-      this.wrongDateDisabler[f] = true;
-    return isNotValidDate
+    const isNotValidDate = this.globals.validateDate(
+      e,
+      mode,
+      true,
+      notE,
+      years
+    );
+    if (isNotValidDate || value) this.wrongDateDisabler[f] = false;
+    else this.wrongDateDisabler[f] = true;
+    return isNotValidDate;
   }
 
   isDateNotOk() {
@@ -1210,15 +1378,21 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
   disableAddImgBtn() {
     return (
       (this.componentForm.controls["imageGroup"].get("imageDocente") &&
-        (this.componentForm.controls["imageGroup"].get("imageDocente").value === "" ||
-          !this.componentForm.controls["imageGroup"].get("imageDocente").value)) ||
+        (this.componentForm.controls["imageGroup"].get("imageDocente").value ===
+          "" ||
+          !this.componentForm.controls["imageGroup"].get("imageDocente")
+            .value)) ||
       (this.componentForm.controls["imageGroup"].get("imageCargo") &&
-        this.componentForm.controls["imageGroup"].get("imageCargo").value === "") ||
+        this.componentForm.controls["imageGroup"].get("imageCargo").value ===
+          "") ||
       (this.componentForm.controls["imageGroup"].get("imageDescription") &&
-        this.componentForm.controls["imageGroup"].get("imageDescription").value === "") ||
+        this.componentForm.controls["imageGroup"].get("imageDescription")
+          .value === "") ||
       (this.componentForm.controls["imageGroup"].get("imageStatus") &&
-        (this.componentForm.controls["imageGroup"].get("imageStatus").value === "" ||
-          !this.componentForm.controls["imageGroup"].get("imageStatus").value)) ||
+        (this.componentForm.controls["imageGroup"].get("imageStatus").value ===
+          "" ||
+          !this.componentForm.controls["imageGroup"].get("imageStatus")
+            .value)) ||
       (this.componentForm.controls["imageGroup"].get("imageSelected") &&
         !this.componentForm.controls["imageGroup"].get("imageSelected").value)
     );
@@ -1228,7 +1402,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
     switch (option) {
       case 1:
         return (
-          this.componentForm.controls["imageGroup"].get("imageSelected").value ||
+          this.componentForm.controls["imageGroup"].get("imageSelected")
+            .value ||
           this.componentForm.controls["imageGroup"].get("imageSrc").value
         );
       case 2:
@@ -1237,7 +1412,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         );
       default:
         return this.componentForm.controls["imageGroup"].value["imageSelected"]
-          ? this.componentForm.controls["imageGroup"].get("imageSelected").value.name
+          ? this.componentForm.controls["imageGroup"].get("imageSelected").value
+              .name
           : "image";
     }
   }
@@ -1252,7 +1428,8 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
 
     let obj = {};
 
-    if (imgGrp.get("imageDescription")) obj["description"] = imgGrp.get("imageDescription").value;
+    if (imgGrp.get("imageDescription"))
+      obj["description"] = imgGrp.get("imageDescription").value;
     if (imgGrp.get("imageStatus")) {
       obj["state"] = imgGrp.get("imageStatus").value;
       obj["status"] = "En espera";
@@ -1290,21 +1467,23 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
             ...this.imageObjWithAvailableFields(),
           }
         : {
-            id: this.settings.formsContent["imageGroup"].fields["imageDocente"].options
+            id: this.settings.formsContent["imageGroup"].fields[
+              "imageDocente"
+            ].options
               .find((d) => {
                 return d.id === imgGrp.get("imageDocente").value;
               })
               .id.toString(),
-            name: this.settings.formsContent["imageGroup"].fields["imageDocente"].options.find(
-              (d) => {
-                return d.id === imgGrp.get("imageDocente").value;
-              }
-            ).name,
-            lastName: this.settings.formsContent["imageGroup"].fields["imageDocente"].options.find(
-              (d) => {
-                return d.id === imgGrp.get("imageDocente").value;
-              }
-            ).lastName,
+            name: this.settings.formsContent["imageGroup"].fields[
+              "imageDocente"
+            ].options.find((d) => {
+              return d.id === imgGrp.get("imageDocente").value;
+            }).name,
+            lastName: this.settings.formsContent["imageGroup"].fields[
+              "imageDocente"
+            ].options.find((d) => {
+              return d.id === imgGrp.get("imageDocente").value;
+            }).lastName,
             cargo: imgGrp.get("imageCargo").value,
             description: imgGrp.get("imageDescription").value,
             // addressState: this.settings.formsContent["imageGroup"].fields[
@@ -1324,19 +1503,27 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       // this.sendNull = false;
       this.someImgAdded = true;
       this.componentForm.get("imageGroup").reset();
-      if (this.componentForm.value["imageGroup"] && this.componentForm.controls["imageGroup"].value["imageDescription"]) 
-        this.componentForm.get("imageGroup").get("imageDescription").setValue("");
+      if (
+        this.componentForm.value["imageGroup"] &&
+        this.componentForm.controls["imageGroup"].value["imageDescription"]
+      )
+        this.componentForm
+          .get("imageGroup")
+          .get("imageDescription")
+          .setValue("");
       // setTimeout(() => {
       //   this.sendNull = true;
       // });
     } else {
-      const inx = this.settings.formsContent["imageGroup"].fields["imageDocente"].options.findIndex(
-        (d) => {
-          return d.id === imgGrp.get("imageDocente").value;
-        }
-      );
+      const inx = this.settings.formsContent["imageGroup"].fields[
+        "imageDocente"
+      ].options.findIndex((d) => {
+        return d.id === imgGrp.get("imageDocente").value;
+      });
       if (inx != -1)
-        this.settings.formsContent["imageGroup"].fields["imageDocente"].options.splice(inx, 1);
+        this.settings.formsContent["imageGroup"].fields[
+          "imageDocente"
+        ].options.splice(inx, 1);
       this.componentForm.reset();
       setTimeout(() => {
         this.showSelectTeacher = true;
@@ -1363,20 +1550,32 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         else if (this.settings.formsContent[key].type === "date") {
           // if 'Z' comes in the date format it gets removed
           if (data[key]) {
-            //console.log("key", data[key])
-            const isSpecialDate = this.settings.formsContent && this.settings.formsContent[key] && this.settings.formsContent[key]["specialDateForm"];
-            const dateKey = this.globals.getDateFormat(new Date(data[key].replace("Z", "")));
+            const isSpecialDate =
+              this.settings.formsContent &&
+              this.settings.formsContent[key] &&
+              this.settings.formsContent[key]["specialDateForm"];
+            const dateKey = this.globals.getDateFormat(
+              new Date(data[key].replace("Z", ""))
+            );
             const dNow = new Date();
-            const theDate = new Date(`${dateKey}T${dNow.toISOString().split("T")[1]}`);
+            const theDate = new Date(
+              `${dateKey}T${dNow.toISOString().split("T")[1]}`
+            );
 
-            this.componentForm.patchValue({ 
+            this.componentForm.patchValue({
               [key]: dateKey,
-              ...(isSpecialDate ? {
-                [isSpecialDate+"Day"]: theDate.getDate(),
-                [isSpecialDate+"Month"]: theDate.getMonth() + 1,
-                [isSpecialDate+"Year"]: theDate.getFullYear(),
-                [isSpecialDate+"InactiveInput"]: `${this.addZero(theDate.getDate())}-${this.addZero(theDate.getMonth() + 1)}-${theDate.getFullYear()}`,
-              } : {})
+              ...(isSpecialDate
+                ? {
+                    [isSpecialDate + "Day"]: theDate.getDate(),
+                    [isSpecialDate + "Month"]: theDate.getMonth() + 1,
+                    [isSpecialDate + "Year"]: theDate.getFullYear(),
+                    [isSpecialDate + "InactiveInput"]: `${this.addZero(
+                      theDate.getDate()
+                    )}-${this.addZero(
+                      theDate.getMonth() + 1
+                    )}-${theDate.getFullYear()}`,
+                  }
+                : {}),
             });
             this.checkDateOk(
               dateKey,
@@ -1390,7 +1589,6 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
         } else this.componentForm.patchValue({ [key]: data[key] });
       }
     });
-    // console.log(this.componentForm.value);
     // this.componentForm.setValue(data);
   }
 
@@ -1411,9 +1609,11 @@ export class FormBlockComponent implements PresentationalBlockComponent, OnInit,
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
     } else {
-      this.sectionsArr = this.settings.formsContent["section"].options.filter((s) => {
-        return s.grade == grade;
-      });
+      this.sectionsArr = this.settings.formsContent["section"].options.filter(
+        (s) => {
+          return s.grade == grade;
+        }
+      );
 
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,

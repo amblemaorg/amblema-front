@@ -1,4 +1,4 @@
-import { environmentalProjectPermissions } from './../blocks/peca-permissology';
+import { environmentalProjectPermissions } from "./../blocks/peca-permissology";
 import {
   Component,
   AfterViewInit,
@@ -32,7 +32,10 @@ export class EnvironmentalProjectPageComponent
   UrlLapse = "";
 
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
-  constructor(factoryResolver: ComponentFactoryResolver, private globals: GlobalService) {
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    private globals: GlobalService
+  ) {
     super(factoryResolver);
     this.instantiateComponent(config);
   }
@@ -49,9 +52,15 @@ export class EnvironmentalProjectPageComponent
             const { environmentalProject, id } = data.activePecaContent;
             const { permissions } = data.user;
             const permissionsObj = this.managePermissions(permissions);
-            const configVista = EnviromentalMapper(environmentalProject, id, permissionsObj);
-            this.instantiateComponent(configVista);
-            this.doInstantiateBlocks();
+            if (environmentalProject) {
+              const configVista = EnviromentalMapper(
+                environmentalProject,
+                id,
+                permissionsObj
+              );
+              this.instantiateComponent(configVista);
+              this.doInstantiateBlocks();
+            }
           }
         }
       },
@@ -67,7 +76,8 @@ export class EnvironmentalProjectPageComponent
   managePermissions(permissionsArray) {
     return environmentalProjectPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray)
+          permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

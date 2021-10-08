@@ -1,0 +1,96 @@
+@import "scss/sharedpromote";
+
+$table-border-color: 1px solid $blue;
+
+.no-data-msg {
+  p {
+    color: $blue;
+  }
+}
+
+::ng-deep {
+  //SELECTS .......................................................................
+  form {
+    .fields-container {
+      @include fieldsContainer;
+      @include label("label");
+      @include selectors(
+        ".floating-loading",
+        ".form-group .error-message",
+        "button"
+      );
+      @include formGroup(".form-group");
+      @include formControl(".form-control");
+      @include select(".ng-select");
+    }
+  }
+
+  //TABLE .........................................................................
+  .table-wrapper {
+    .the-table {
+      position: relative;
+      &.disabled::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #fff;
+        opacity: 0.3;
+        z-index: 1;
+      }
+    }
+
+    .table-element {
+      overflow-x: auto;
+      position: relative;
+
+      &.not-overflow {
+        overflow-x: hidden;
+      }
+
+      .updating {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        background: rgba(255, 255, 255, 0.75);
+        z-index: 1;
+        padding-top: 4rem;
+      }
+    }
+
+    .promote-wrapper {
+      @include promoteWrapper;
+      @include promoteH6("h6");
+      @include promoteButton("button");
+    }
+  }
+  .nb-theme-default ng2-smart-table.is-multi.form-table-component {
+    @include isMulti("6");
+  }
+  // .................................
+  @include tableConfs;
+
+  .nb-theme-default ng2-smart-table {
+    &.has-img-in-first-col tbody tr td:nth-child(2) {
+      text-align: center;
+    }
+
+    table {
+      thead tr th:first-child,
+      tbody tr td:first-child {
+        min-width: 4.9rem;
+      }
+    }
+
+    @include tHead("thead");
+
+    &:not(.is-multi) tbody tr td {
+      max-width: 20rem;
+    }
+    @include tBody("tbody");
+
+    // pagination
+    @include tPagination("nav.ng2-smart-pagination-nav");
+  }
+}

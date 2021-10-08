@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { Location } from "@angular/common";
 import { NbAuthComponent, NbAuthService } from "@nebular/auth";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-auth",
@@ -11,7 +13,12 @@ import { NbAuthComponent, NbAuthService } from "@nebular/auth";
         <nb-card>
           <nb-card-header>
             <nav class="navigation">
-              <a href="#" (click)="back()" class="link arrow-back" aria-label="Back">
+              <a
+                href="#"
+                (click)="back()"
+                class="link arrow-back"
+                aria-label="Back"
+              >
                 <nb-icon icon="arrow-ios-back-outline"></nb-icon>
               </a>
             </nav>
@@ -27,7 +34,34 @@ import { NbAuthComponent, NbAuthService } from "@nebular/auth";
   `,
 })
 export class AuthComponent extends NbAuthComponent {
-  constructor(authService: NbAuthService, location: Location) {
+  activatedRout: Subscription;
+
+  constructor(
+    authService: NbAuthService,
+    location: Location,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
+  ) {
     super(authService, location);
+  }
+
+  ngOnInit() {
+    this.activatedRout = this.activatedRoute.queryParams.subscribe((params) => {
+      const reload = +params.reload;
+
+      if (reload)
+        this.router
+          .navigate([], {
+            queryParams: { reload: null },
+            queryParamsHandling: "merge",
+          })
+          .then(() => {
+            window.location.reload();
+          });
+    });
+  }
+
+  ngOnDestroy() {
+    this.activatedRout.unsubscribe();
   }
 }

@@ -36,7 +36,8 @@
             <input
               *ngIf="
                 (field == 'addressState' && !showSelectState) ||
-                (settings.formsContent[field].shouldContentRefresh && isContentRefreshing)
+                (settings.formsContent[field].shouldContentRefresh &&
+                  isContentRefreshing)
               "
               class="form-control"
               type="text"
@@ -47,7 +48,8 @@
             <ng-select
               *ngIf="
                 (field == 'addressState' && showSelectState) ||
-                (settings.formsContent[field].shouldContentRefresh && !isContentRefreshing) ||
+                (settings.formsContent[field].shouldContentRefresh &&
+                  !isContentRefreshing) ||
                 field != 'addressState'
               "
               class="form-control"
@@ -77,20 +79,32 @@
               "
               [readonly]="settings.formsContent[field].readonly || isReadOnly()"
             >
-              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <ng-template
+                ng-option-tmp
+                let-item="item"
+                let-search="searchTerm"
+              >
                 <small>{{ item.name }}</small>
               </ng-template>
             </ng-select>
-            <span *ngIf="field == 'addressState' && stps.getIsCallingM()" class="floatingLoading">Cargando estados...</span>
+            <span
+              *ngIf="field == 'addressState' && stps.getIsCallingM()"
+              class="floatingLoading"
+              >Cargando estados...</span
+            >
           </ng-container>
 
           <ng-container *ngSwitchCase="'prepend'" [formGroupName]="field">
-            <label>{{ settings.formsContent[field].fields["prependInput"].label }}</label>
+            <label>{{
+              settings.formsContent[field].fields["prependInput"].label
+            }}</label>
             <div class="input-group-prepend">
               <ng-select
                 class="form-control"
                 notFoundText="Elementos no encontrados"
-                [items]="settings.formsContent[field].fields['prependSelect'].options"
+                [items]="
+                  settings.formsContent[field].fields['prependSelect'].options
+                "
                 bindValue="id"
                 bindLabel="name"
                 [labelForId]="getId('prependSelect')"
@@ -99,11 +113,24 @@
                 [id]="getId('prependSelect')"
                 [clearable]="false"
                 [readonly]="
-                  settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
+                  settings.formsContent[field].fields['prependInput']
+                    .readonly || isReadOnly()
                 "
-                (change)="maxLenChanger($event,settings.formsContent[field].fields['prependInput'].validations,field,'prependInput')"
+                (change)="
+                  maxLenChanger(
+                    $event,
+                    settings.formsContent[field].fields['prependInput']
+                      .validations,
+                    field,
+                    'prependInput'
+                  )
+                "
               >
-                <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                <ng-template
+                  ng-option-tmp
+                  let-item="item"
+                  let-search="searchTerm"
+                >
                   <small>{{ item.name }}</small>
                 </ng-template>
               </ng-select>
@@ -114,17 +141,28 @@
               type="text"
               formControlName="prependInput"
               [id]="getId('prependInput')"
-              [placeholder]="settings.formsContent[field].fields['prependInput'].placeholder"
-              [pattern]="settings.formsContent[field].fields['prependInput'].validations.pattern"
+              [placeholder]="
+                settings.formsContent[field].fields['prependInput'].placeholder
+              "
+              [pattern]="
+                settings.formsContent[field].fields['prependInput'].validations
+                  .pattern
+              "
               [readonly]="
-                settings.formsContent[field].fields['prependInput'].readonly || isReadOnly()
+                settings.formsContent[field].fields['prependInput'].readonly ||
+                isReadOnly()
               "
               [maxlength]="
                 settings.formsContent[field].fields['prependInput'].maxlength
-                  ? settings.formsContent[field].fields['prependInput'].maxlength
-                  : settings.formsContent[field].fields['prependInput'].validations.maxLength 
-                    ? (max_len ? max_len : settings.formsContent[field].fields['prependInput'].validations.maxLength[0])
-                    : 'default'
+                  ? settings.formsContent[field].fields['prependInput']
+                      .maxlength
+                  : settings.formsContent[field].fields['prependInput']
+                      .validations.maxLength
+                  ? max_len
+                    ? max_len
+                    : settings.formsContent[field].fields['prependInput']
+                        .validations.maxLength[0]
+                  : 'default'
               "
             />
             <ng-container *ngIf="hasErrors(field, true)">
@@ -138,72 +176,105 @@
             <label>{{ settings.formsContent[field].label }}</label>
             <div *ngIf="showDatePicker" class="date-container">
               <div class="date-part-container">
-                  <ng-container *ngIf="!sendingForm && (settings.formsContent[field].readonly || isReadOnly()); else newDateInputs">
-                    <div class="inactive-wrapper">
-                      <input
-                        [formControlName]="settings.formsContent[field].specialDateForm+'InactiveInput'"
-                        class="form-control" 
-                        [placeholder]="settings.formsContent[field].placeholder" 
-                        autocomplete="off" 
-                        type="text" 
-                        [id]="getId(field+'-part-inactive')"
-                        readonly
-                      />
-                    </div>
-                  </ng-container>
-                  <ng-template #newDateInputs>
-                    <input 
-                      [formControlName]="settings.formsContent[field].specialDateForm+'Day'"
-                      class="form-control day" placeholder="Día" autocomplete="off" type="number" [id]="getId(field+'-part-day')" max="31" min="1"
-                      (blur)="dateOnBlur($event,'day')"
-                      [readonly]="
-                        settings.formsContent[field].readonly || isReadOnly()
+                <ng-container
+                  *ngIf="
+                    !sendingForm &&
+                      (settings.formsContent[field].readonly || isReadOnly());
+                    else newDateInputs
+                  "
+                >
+                  <div class="inactive-wrapper">
+                    <input
+                      [formControlName]="
+                        settings.formsContent[field].specialDateForm +
+                        'InactiveInput'
                       "
+                      class="form-control"
+                      [placeholder]="settings.formsContent[field].placeholder"
+                      autocomplete="off"
+                      type="text"
+                      [id]="getId(field + '-part-inactive')"
+                      readonly
                     />
-                    <input 
-                      [formControlName]="settings.formsContent[field].specialDateForm+'Month'"
-                      class="form-control month" placeholder="Mes" autocomplete="off" type="number" [id]="getId(field+'-part-month')" max="12" min="1"
-                      (blur)="dateOnBlur($event,'month')"
-                      [readonly]="
-                        settings.formsContent[field].readonly || isReadOnly()
-                      "
-                    />
-                    <input 
-                      [formControlName]="settings.formsContent[field].specialDateForm+'Year'"
-                      class="form-control year" placeholder="Año" autocomplete="off" type="number" [id]="getId(field+'-part-year')" min="1"
-                      (blur)="dateOnBlur($event,'year')"
-                      [readonly]="
-                        settings.formsContent[field].readonly || isReadOnly()
-                      "
-                    />
-                    <div class="calendaricon">
-                      <nb-icon
-                        icon="calendar"
-                        style="font-size: 1.5rem;"
-                      ></nb-icon>
-                    </div>
-                  </ng-template>
+                  </div>
+                </ng-container>
+                <ng-template #newDateInputs>
+                  <input
+                    [formControlName]="
+                      settings.formsContent[field].specialDateForm + 'Day'
+                    "
+                    class="form-control day"
+                    placeholder="Día"
+                    autocomplete="off"
+                    type="number"
+                    [id]="getId(field + '-part-day')"
+                    max="31"
+                    min="1"
+                    (blur)="dateOnBlur($event, 'day')"
+                    [readonly]="
+                      settings.formsContent[field].readonly || isReadOnly()
+                    "
+                  />
+                  <input
+                    [formControlName]="
+                      settings.formsContent[field].specialDateForm + 'Month'
+                    "
+                    class="form-control month"
+                    placeholder="Mes"
+                    autocomplete="off"
+                    type="number"
+                    [id]="getId(field + '-part-month')"
+                    max="12"
+                    min="1"
+                    (blur)="dateOnBlur($event, 'month')"
+                    [readonly]="
+                      settings.formsContent[field].readonly || isReadOnly()
+                    "
+                  />
+                  <input
+                    [formControlName]="
+                      settings.formsContent[field].specialDateForm + 'Year'
+                    "
+                    class="form-control year"
+                    placeholder="Año"
+                    autocomplete="off"
+                    type="number"
+                    [id]="getId(field + '-part-year')"
+                    min="1"
+                    (blur)="dateOnBlur($event, 'year')"
+                    [readonly]="
+                      settings.formsContent[field].readonly || isReadOnly()
+                    "
+                  />
+                  <div class="calendaricon">
+                    <nb-icon
+                      icon="calendar"
+                      style="font-size: 1.5rem"
+                    ></nb-icon>
+                  </div>
+                </ng-template>
               </div>
-            <ng-datepicker #inputDate
-              [headless]="
-                settings.formsContent[field].readonly || isReadOnly()
-              "
-              position="bottom-left"
-              [id]="getId('datepicker-' + field)"
-              class="datepicker-control"
-              [formControlName]="field"
-              [options]="settings.formsContent[field].pickerOptions"
-              [class.date-not-valid]="
-                checkDateOk(
-                  componentForm.get(field).value,
-                  settings.formsContent[field].lower ? 'lower' : 'greater',
-                  field,
-                  true
-                )
-              "
-            >
-            </ng-datepicker>
-            <!--
+              <ng-datepicker
+                #inputDate
+                [headless]="
+                  settings.formsContent[field].readonly || isReadOnly()
+                "
+                position="bottom-left"
+                [id]="getId('datepicker-' + field)"
+                class="datepicker-control"
+                [formControlName]="field"
+                [options]="settings.formsContent[field].pickerOptions"
+                [class.date-not-valid]="
+                  checkDateOk(
+                    componentForm.get(field).value,
+                    settings.formsContent[field].lower ? 'lower' : 'greater',
+                    field,
+                    true
+                  )
+                "
+              >
+              </ng-datepicker>
+              <!--
               <input
                 #inputDate
                 type="date"
@@ -251,8 +322,15 @@
             <label *ngIf="settings.formsContent[field].isInputGroup">{{
               settings.formsContent[field].label
             }}</label>
-            <ng-container *ngFor="let doublefield of doubleFields[field]; index as ig">
-              <ng-container *ngIf="settings.formsContent[field].isInputGroup; else regularDouble">
+            <ng-container
+              *ngFor="let doublefield of doubleFields[field]; index as ig"
+            >
+              <ng-container
+                *ngIf="
+                  settings.formsContent[field].isInputGroup;
+                  else regularDouble
+                "
+              >
                 <input
                   class="form-control"
                   [class.sibling-one]="ig == 0"
@@ -261,37 +339,59 @@
                   [type]="settings.formsContent[field].fields[doublefield].type"
                   [formControlName]="doublefield"
                   [id]="getId(doublefield)"
-                  [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
-                  [readonly]="
-                    settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
+                  [placeholder]="
+                    settings.formsContent[field].fields[doublefield].placeholder
                   "
-                  [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                  [readonly]="
+                    settings.formsContent[field].fields[doublefield].readonly ||
+                    isReadOnly()
+                  "
+                  [pattern]="
+                    settings.formsContent[field].fields[doublefield].validations
+                      .pattern
+                  "
                   [maxlength]="
                     settings.formsContent[field].fields[doublefield].maxlength
-                      ? settings.formsContent[field].fields[doublefield].maxlength
+                      ? settings.formsContent[field].fields[doublefield]
+                          .maxlength
                       : 'default'
                   "
                 />
               </ng-container>
               <ng-template #regularDouble>
                 <div
-                  [class]="'form-group ' + settings.formsContent[field].fields[doublefield].type"
+                  [class]="
+                    'form-group ' +
+                    settings.formsContent[field].fields[doublefield].type
+                  "
                 >
-                  <label>{{ settings.formsContent[field].fields[doublefield].label }}</label>
+                  <label>{{
+                    settings.formsContent[field].fields[doublefield].label
+                  }}</label>
                   <input
                     class="form-control"
                     autocomplete="off"
-                    [type]="settings.formsContent[field].fields[doublefield].type"
+                    [type]="
+                      settings.formsContent[field].fields[doublefield].type
+                    "
                     [formControlName]="doublefield"
                     [id]="getId(doublefield)"
-                    [placeholder]="settings.formsContent[field].fields[doublefield].placeholder"
-                    [readonly]="
-                      settings.formsContent[field].fields[doublefield].readonly || isReadOnly()
+                    [placeholder]="
+                      settings.formsContent[field].fields[doublefield]
+                        .placeholder
                     "
-                    [pattern]="settings.formsContent[field].fields[doublefield].validations.pattern"
+                    [readonly]="
+                      settings.formsContent[field].fields[doublefield]
+                        .readonly || isReadOnly()
+                    "
+                    [pattern]="
+                      settings.formsContent[field].fields[doublefield]
+                        .validations.pattern
+                    "
                     [maxlength]="
                       settings.formsContent[field].fields[doublefield].maxlength
-                        ? settings.formsContent[field].fields[doublefield].maxlength
+                        ? settings.formsContent[field].fields[doublefield]
+                            .maxlength
                         : 'default'
                     "
                   />
@@ -304,7 +404,9 @@
               </ng-template>
             </ng-container>
             <ng-container *ngIf="settings.formsContent[field].isInputGroup">
-              <ng-container *ngFor="let doublefield2 of doubleFields[field]; index as ige">
+              <ng-container
+                *ngFor="let doublefield2 of doubleFields[field]; index as ige"
+              >
                 <div
                   *ngIf="hasErrors(field, true, doublefield2)"
                   class="error-message"
@@ -365,10 +467,13 @@
       </ng-container>
 
       <ng-template #titleLabel>
-        <ng-container *ngIf="settings.formsContent[field].type === 'title'; else imageGroup">
+        <ng-container
+          *ngIf="settings.formsContent[field].type === 'title'; else imageGroup"
+        >
           <h6
             [class.d-none]="
-              settings.formsContent[field].hideImgContainer && settings.hideImgContainer
+              settings.formsContent[field].hideImgContainer &&
+              settings.hideImgContainer
             "
           >
             {{ settings.formsContent[field].label }}
@@ -406,7 +511,7 @@
               type="button"
               [id]="getId('image-upload-btn')"
               title="Subir archivo"
-              class="text-decoration-none"
+              class="text-decoration-none m-auto"
               (click)="uploadImageCaller(imageUploadContainer)"
               [disabled]="isReadOnly()"
             >
@@ -423,17 +528,24 @@
           </div>
 
           <div
-            *ngIf="imageFieldsArr(settings.formsContent[field].fields).length > 0"
+            *ngIf="
+              imageFieldsArr(settings.formsContent[field].fields).length > 0
+            "
             class="image-fields d-flex"
             [ngClass]="{
               'flex-column justify-content-center': !settings.alwaysValidations,
-              'flex-wrap justify-content-between general-container': settings.alwaysValidations,
+              'flex-wrap justify-content-between general-container':
+                settings.alwaysValidations,
               'inside-modal': settings.isFromCustomTableActions,
               'extra-fields-modal': settings.alwaysValidations
             }"
           >
             <ng-container
-              *ngFor="let imgField of imageFieldsArr(settings.formsContent[field].fields)"
+              *ngFor="
+                let imgField of imageFieldsArr(
+                  settings.formsContent[field].fields
+                )
+              "
             >
               <div
                 class="input-container"
@@ -449,68 +561,91 @@
                 <input
                   *ngIf="
                     (imgField == 'imageDocente' && !showSelectTeacher) ||
-                    (settings.formsContent[field].fields[imgField].shouldContentRefresh &&
+                    (settings.formsContent[field].fields[imgField]
+                      .shouldContentRefresh &&
                       isContentRefreshing)
                   "
                   class="form-control"
                   type="text"
                   [formControlName]="imgField"
                   [id]="getId(imgField)"
-                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                  [placeholder]="
+                    settings.formsContent[field].fields[imgField].placeholder
+                  "
                 />
                 <ng-select
                   *ngIf="
                     (imgField == 'imageDocente' && showSelectTeacher) ||
-                    (settings.formsContent[field].fields[imgField].shouldContentRefresh &&
+                    (settings.formsContent[field].fields[imgField]
+                      .shouldContentRefresh &&
                       !isContentRefreshing) ||
                     imgField == 'imageStatus'
                   "
                   class="form-control"
                   [ngClass]="{
                     'image-status':
-                      !settings.isFromCustomTableActions && !settings.alwaysValidations,
+                      !settings.isFromCustomTableActions &&
+                      !settings.alwaysValidations,
                     'is-in-modal': settings.isFromCustomTableActions
                   }"
                   notFoundText="Elementos no encontrados"
-                  [items]="settings.formsContent[field].fields[imgField].options"
+                  [items]="
+                    settings.formsContent[field].fields[imgField].options
+                  "
                   bindValue="id"
                   bindLabel="name"
                   [labelForId]="getId(imgField)"
                   [formControlName]="imgField"
                   [virtualScroll]="true"
                   [id]="getId(imgField)"
-                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                  [placeholder]="
+                    settings.formsContent[field].fields[imgField].placeholder
+                  "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly || isReadOnly()
+                    settings.formsContent[field].fields[imgField].readonly ||
+                    isReadOnly()
                   "
                 >
-                  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                  <ng-template
+                    ng-option-tmp
+                    let-item="item"
+                    let-search="searchTerm"
+                  >
                     <small>{{ item.name }}</small>
                   </ng-template>
                 </ng-select>
                 <input
-                  *ngIf="imgField == 'imageCargo' || imgField == 'imageDescription'"
+                  *ngIf="
+                    imgField == 'imageCargo' || imgField == 'imageDescription'
+                  "
                   class="form-control"
                   [class.image-description]="
-                    !settings.isFromCustomTableActions && !settings.alwaysValidations
+                    !settings.isFromCustomTableActions &&
+                    !settings.alwaysValidations
                   "
                   autocomplete="off"
                   type="text"
                   [formControlName]="imgField"
                   [id]="getId(imgField)"
-                  [placeholder]="settings.formsContent[field].fields[imgField].placeholder"
+                  [placeholder]="
+                    settings.formsContent[field].fields[imgField].placeholder
+                  "
                   [readonly]="
-                    settings.formsContent[field].fields[imgField].readonly || isReadOnly()
+                    settings.formsContent[field].fields[imgField].readonly ||
+                    isReadOnly()
                   "
                 />
                 <ng-container
                   *ngIf="
                     hasErrors(field, true, imgField, true) &&
-                    (settings.isFromCustomTableActions || settings.alwaysValidations)
+                    (settings.isFromCustomTableActions ||
+                      settings.alwaysValidations)
                   "
                 >
                   <div class="error-message">
-                    <strong>{{ hasErrors(field, true, imgField, true) }}</strong>
+                    <strong>{{
+                      hasErrors(field, true, imgField, true)
+                    }}</strong>
                   </div>
                 </ng-container>
               </div>
@@ -520,10 +655,15 @@
           <div
             *ngIf="!settings.isFromCustomTableActions"
             class="add-img-btn"
-            [class.no-fields]="imageFieldsArr(settings.formsContent[field].fields).length == 0"
+            [class.no-fields]="
+              imageFieldsArr(settings.formsContent[field].fields).length == 0
+            "
           >
             <ng-container
-              *ngIf="!settings.formsContent[field].fields['imageDocente']; else notAddImg"
+              *ngIf="
+                !settings.formsContent[field].fields['imageDocente'];
+                else notAddImg
+              "
             >
               <button
                 type="button"
@@ -567,7 +707,10 @@
             [disabled]="!componentForm.valid || sendingForm"
             *ngIf="!settings.hiddenButton"
           >
-            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
             {{ !sendingForm ? "Cargar imagenes" : "Cargando.." }}
           </button>
         </ng-container>
@@ -576,11 +719,14 @@
           <button
             [class.d-none]="settings.isEditable && !isEditing"
             type="submit"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             [disabled]="disableBtn()"
             *ngIf="!settings.hiddenButton"
           >
-            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
             {{ !sendingForm ? "Guardar" : "Guardando.." }}
           </button>
         </ng-container>
@@ -588,11 +734,14 @@
         <ng-container *ngSwitchCase="'agregar'">
           <button
             type="submit"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             [disabled]="disableBtnWithDate()"
             *ngIf="!settings.hiddenButton"
           >
-            <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
             {{ !sendingForm ? "Agregar" : "Agregando.." }}
           </button>
         </ng-container>
