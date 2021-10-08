@@ -145,7 +145,6 @@ export class PecaState {
     const response = await this.apiService.getWebContent().toPromise();
     //.subscribe((response) => {
     if (response) {
-      // console.log("Hola", response);
       const pecaContent: PecaModel = response;
       patchState({
         pecaContentRequesting: false,

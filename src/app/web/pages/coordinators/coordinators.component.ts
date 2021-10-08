@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  NgZone,
+} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { WebContentService } from "src/app/services/web/web-content.service";
@@ -74,9 +80,11 @@ export class CoordinatorsComponent implements OnInit {
     this.setApiService();
     this.getCoordinatorsData();
     this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
-        this.onScroll(event);
-      });
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe(
+        (event) => {
+          this.onScroll(event);
+        }
+      );
     });
   }
 
@@ -94,10 +102,15 @@ export class CoordinatorsComponent implements OnInit {
 
   getCoordinatorsData() {
     this.coordinatorService.getWebContent().subscribe((data) => {
-      // console.log(data)
       const stepsLength = data.coordinatorPage.steps.length;
-      this.stepsList1 = data.coordinatorPage.steps.slice(0, (stepsLength + 1) / 2);
-      this.stepsList2 = data.coordinatorPage.steps.slice((stepsLength + 1) / 2, stepsLength);
+      this.stepsList1 = data.coordinatorPage.steps.slice(
+        0,
+        (stepsLength + 1) / 2
+      );
+      this.stepsList2 = data.coordinatorPage.steps.slice(
+        (stepsLength + 1) / 2,
+        stepsLength
+      );
       this.coordinatorsPageData = data.coordinatorPage;
       this.coverData.slides.push({
         image: this.coordinatorsPageData.backgroundImage,

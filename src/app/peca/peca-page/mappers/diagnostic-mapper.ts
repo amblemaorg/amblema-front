@@ -3,7 +3,6 @@ export function diagnosticDataToReadingFormMapper(
   numberLapse
 ) {
   return diagnosticReadingData.map((student) => {
-    //console.log("mapp", student[`lapse${numberLapse}`])
     // if (student[`lapse${numberLapse}`])
     const { wordsPerMin, wordsPerMinIndex, readingDate } = student[
       `lapse${numberLapse}`

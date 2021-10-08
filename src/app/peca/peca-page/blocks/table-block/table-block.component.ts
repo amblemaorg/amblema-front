@@ -388,7 +388,6 @@ export class TableBlockComponent
       if (data.promoteData) {
         this.showSelectGrades0 = false;
         this.showSelectSections0 = false;
-        console.log("PROMOTE DATA", data.promoteData);
         this.settings["promoteData"] = data.promoteData;
 
         this.setFormG(data);
@@ -401,7 +400,6 @@ export class TableBlockComponent
 
       if (data.hasTitle) {
         this.isContentRefreshing = true;
-        console.log(data.hasTitle);
         this.settings["tableTitle"] = data.hasTitle.tableTitle;
         this.settings["tableGrade"] = data.hasTitle.tableGrade;
         this.settings["tableSection"] = data.hasTitle.tableSection;
@@ -517,7 +515,6 @@ export class TableBlockComponent
 
   deleteStudents() {
     this.isDeleting = true;
-    console.log("Deleting");
     setTimeout(() => {
       this.isDeleting = false;
     }, 3000);

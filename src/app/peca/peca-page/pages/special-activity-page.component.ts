@@ -13,7 +13,7 @@ import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { isNullOrUndefined } from "util";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
-import { specialActivityPermissions } from '../blocks/peca-permissology';
+import { specialActivityPermissions } from "../blocks/peca-permissology";
 
 @Component({
   selector: "peca-special-activity",
@@ -59,8 +59,12 @@ export class SpecialActivityPageComponent
       .pipe(
         distinctUntilChanged(
           (prev, curr) =>
-            JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].specialActivity) ===
-            JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].specialActivity)
+            JSON.stringify(
+              prev.activePecaContent[`lapse${this.UrlLapse}`].specialActivity
+            ) ===
+            JSON.stringify(
+              curr.activePecaContent[`lapse${this.UrlLapse}`].specialActivity
+            )
         )
       )
       .subscribe((data) => {
@@ -71,10 +75,9 @@ export class SpecialActivityPageComponent
             const lapseName = `lapse${this.UrlLapse}`;
             const { specialActivity } = data.activePecaContent[lapseName];
 
-            if (!isNullOrUndefined(data)) {
-              // console.log(data, "actividad especial");
-            }
-            let {permissions} = data.user;
+            // if (!isNullOrUndefined(data)) {
+            // }
+            let { permissions } = data.user;
             permissions = this.managePermissions(permissions);
 
             const config = specialActivityConfigMapper(
@@ -95,7 +98,8 @@ export class SpecialActivityPageComponent
   managePermissions(permissionsArray) {
     return specialActivityPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray)
+          permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

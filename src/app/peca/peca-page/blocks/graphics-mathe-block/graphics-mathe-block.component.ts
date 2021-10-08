@@ -1,24 +1,28 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
-import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
-import { Router, NavigationEnd, Event } from '@angular/router';
-import { Select } from '@ngxs/store';
-import { PecaState } from 'src/app/store/states/peca/peca.state';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { Label } from "ng2-charts";
+import {
+  PageBlockComponent,
+  PresentationalBlockComponent,
+} from "../page-block.component";
+import { Router, NavigationEnd, Event } from "@angular/router";
+import { Select } from "@ngxs/store";
+import { PecaState } from "src/app/store/states/peca/peca.state";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-graphics-mathe-block',
-  templateUrl: './graphics-mathe-block.component.html',
-  styleUrls: ['./graphics-mathe-block.component.scss']
+  selector: "app-graphics-mathe-block",
+  templateUrl: "./graphics-mathe-block.component.html",
+  styleUrls: ["./graphics-mathe-block.component.scss"],
 })
-export class GraphicsMatheBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit {
-  type: 'presentational';
+export class GraphicsMatheBlockComponent
+  implements PresentationalBlockComponent, OnInit, AfterViewInit {
+  type: "presentational";
   component: string;
   settings: {
     chartId?: string;
     items: any[];
-  }
+  };
   canvas: any;
   ctx: any;
   chart: any;
@@ -28,7 +32,7 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
   routerSubscription: Subscription;
   infoDataSubscription: Subscription;
   arraySections = [];
-  arrayColors=[];
+  arrayColors = [];
   dataChart = [];
   dataLabel = [];
   UrlLapse = "";
@@ -76,35 +80,41 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
       (data) => {
         if (data.activePecaContent) {
           this.arraySections = data.activePecaContent.school.sections;
-          //console.log("secciones", this.arraySections);
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
-              this.parseGradeName(data.activePecaContent.school.sections[i].grade, data.activePecaContent.school.sections[i].name)
+              this.parseGradeName(
+                data.activePecaContent.school.sections[i].grade,
+                data.activePecaContent.school.sections[i].name
+              )
             );
-            this.arrayColors.push(
-              "#FFF"
-            );
+            this.arrayColors.push("#FFF");
           }
           if (this.UrlLapse === "1") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1
-                  .multiplicationsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse1
+                    .multiplicationsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else if (this.UrlLapse === "2") {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2
-                  .multiplicationsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse2
+                    .multiplicationsPerMinIndex
+                ).toFixed(2)
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3
-                  .multiplicationsPerMinIndex).toFixed(2)
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse3
+                    .multiplicationsPerMinIndex
+                ).toFixed(2)
               );
             }
           }
@@ -133,7 +143,7 @@ export class GraphicsMatheBlockComponent implements PresentationalBlockComponent
           labels: this.dataLabel,
           datasets: [
             {
-              label: 'Diagnóstico de matemática​',
+              label: "Diagnóstico de matemática​",
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,

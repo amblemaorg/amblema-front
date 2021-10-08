@@ -11,7 +11,12 @@ import {
   ElementRef,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
@@ -134,55 +139,83 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     //----------------------------------------------------------------------
 
     if (this.isSchoolForm) {
-      this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).statusChanges.subscribe((res) => {
-        if (
-          this.currentMarker &&
-          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value &&
-          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value.length > 0
-        ) {
-          this.loadAllMarkers({
-            name: this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value,
-            coordinate: this.formWizard[this.getFormMapContainerIndex()].get("coordinate").value,
-          });
-        }
-      });
-
-      this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).statusChanges.subscribe((res) => {
-        if (
-          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value &&
-          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value.length > 0
-        ) {
-          const addressData = this.stepsContent[this.getFormMapContainerIndex()][this.toCapitalizedString("addressMunicipality")].options.filter((s) => {
-            return s.id === this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("addressMunicipality")).value;
-          });
-          if (addressData.length > 0) {
-            this.mapPositioner(addressData[0].state.name, addressData[0].name);
+      this.formWizard[this.getFormMapContainerIndex()]
+        .get(this.toCapitalizedString("name"))
+        .statusChanges.subscribe((res) => {
+          if (
+            this.currentMarker &&
+            this.formWizard[this.getFormMapContainerIndex()].get(
+              this.toCapitalizedString("name")
+            ).value &&
+            this.formWizard[this.getFormMapContainerIndex()].get(
+              this.toCapitalizedString("name")
+            ).value.length > 0
+          ) {
+            this.loadAllMarkers({
+              name: this.formWizard[this.getFormMapContainerIndex()].get(
+                this.toCapitalizedString("name")
+              ).value,
+              coordinate: this.formWizard[this.getFormMapContainerIndex()].get(
+                "coordinate"
+              ).value,
+            });
           }
-        } else {
-          if (this.googleMap) {
-            const initMap = () => {
-              if (google) {
-                clearInterval(interval);
-                this.mapSettings(this.lat, this.lng, 7);
-                this.mapInitializer();
-              }
-            };
-            let interval = null;
+        });
 
-            try {
-              initMap();
-            } catch (error) {
-              interval = setInterval(() => {
-                try {
-                  initMap();
-                } catch (error) {
-                  // TODO --
+      this.formWizard[this.getFormMapContainerIndex()]
+        .get(this.toCapitalizedString("addressMunicipality"))
+        .statusChanges.subscribe((res) => {
+          if (
+            this.formWizard[this.getFormMapContainerIndex()].get(
+              this.toCapitalizedString("addressMunicipality")
+            ).value &&
+            this.formWizard[this.getFormMapContainerIndex()].get(
+              this.toCapitalizedString("addressMunicipality")
+            ).value.length > 0
+          ) {
+            const addressData = this.stepsContent[
+              this.getFormMapContainerIndex()
+            ][this.toCapitalizedString("addressMunicipality")].options.filter(
+              (s) => {
+                return (
+                  s.id ===
+                  this.formWizard[this.getFormMapContainerIndex()].get(
+                    this.toCapitalizedString("addressMunicipality")
+                  ).value
+                );
+              }
+            );
+            if (addressData.length > 0) {
+              this.mapPositioner(
+                addressData[0].state.name,
+                addressData[0].name
+              );
+            }
+          } else {
+            if (this.googleMap) {
+              const initMap = () => {
+                if (google) {
+                  clearInterval(interval);
+                  this.mapSettings(this.lat, this.lng, 7);
+                  this.mapInitializer();
                 }
-              }, 2000);
+              };
+              let interval = null;
+
+              try {
+                initMap();
+              } catch (error) {
+                interval = setInterval(() => {
+                  try {
+                    initMap();
+                  } catch (error) {
+                    // TODO --
+                  }
+                }, 2000);
+              }
             }
           }
-        }
-      });
+        });
     }
   }
 
@@ -209,13 +242,23 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   mapInitializer() {
-    this.map = new google.maps.Map(this.googleMap.nativeElement, this.mapOptions);
+    this.map = new google.maps.Map(
+      this.googleMap.nativeElement,
+      this.mapOptions
+    );
 
     google.maps.event.addListener(this.map, "click", (e) => {
       this.loadAllMarkers({
         name:
-          this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value && this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value.length > 0
-            ? this.formWizard[this.getFormMapContainerIndex()].get(this.toCapitalizedString("name")).value
+          this.formWizard[this.getFormMapContainerIndex()].get(
+            this.toCapitalizedString("name")
+          ).value &&
+          this.formWizard[this.getFormMapContainerIndex()].get(
+            this.toCapitalizedString("name")
+          ).value.length > 0
+            ? this.formWizard[this.getFormMapContainerIndex()].get(
+                this.toCapitalizedString("name")
+              ).value
             : "Escuela",
         coordinate: {
           latitude: e.latLng.lat(),
@@ -237,12 +280,20 @@ export class FormWizardComponent implements OnInit, OnDestroy {
 
     this.currentMarker = new google.maps.Marker({
       map: this.map,
-      position: new google.maps.LatLng(data.coordinate.latitude, data.coordinate.longitude),
+      position: new google.maps.LatLng(
+        data.coordinate.latitude,
+        data.coordinate.longitude
+      ),
       label: data.name.substring(0, 1).toUpperCase(),
-      title: data.name.toLowerCase() == "escuela" ? data.name : `Escuela: ${data.name}`,
+      title:
+        data.name.toLowerCase() == "escuela"
+          ? data.name
+          : `Escuela: ${data.name}`,
     });
 
-    this.formWizard[this.getFormMapContainerIndex()].get("coordinate").setValue(data.coordinate);
+    this.formWizard[this.getFormMapContainerIndex()]
+      .get("coordinate")
+      .setValue(data.coordinate);
     this.currentMarker.setMap(this.map);
   }
 
@@ -340,7 +391,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     return stepContentIndex;
   }
 
-  private addIdentificationFieldsToStepContent(index: number, content: object): void {
+  private addIdentificationFieldsToStepContent(
+    index: number,
+    content: object
+  ): void {
     Object.entries(content).map((field) => {
       const { 0: fieldName, 1: fieldProps } = { ...field };
       if (this.isFormControlTypeof(fieldName, "identification")) {
@@ -353,7 +407,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private isFormControlTypeof(formControlName: string, formControlType: string): boolean {
+  private isFormControlTypeof(
+    formControlName: string,
+    formControlType: string
+  ): boolean {
     let isTypeof = false;
     this.stepsContent.map((stepContent) => {
       if (stepContent[formControlName]) {
@@ -373,7 +430,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       (formControlsObj, formControlName) => {
         return {
           ...formControlsObj,
-          ...this.getFormControlProperty(formControlName, stepContent[formControlName]),
+          ...this.getFormControlProperty(
+            formControlName,
+            stepContent[formControlName]
+          ),
         };
       },
       {} // This is the initial formControlsObj
@@ -396,7 +456,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           longitude: [defaultValue, this.getValidators(params.validations)],
         }),
       };
-    else return { [name]: [defaultValue, this.getValidators(params.validations)] };
+    else
+      return { [name]: [defaultValue, this.getValidators(params.validations)] };
   }
 
   private getValidators(validations: object): Validators {
@@ -411,7 +472,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   // get validation error messages per error, per field
-  private getValidationMessage(formIndex: number, formFieldName: string): string {
+  private getValidationMessage(
+    formIndex: number,
+    formFieldName: string
+  ): string {
     const formErrors = this.formWizard[formIndex].get(formFieldName).errors;
     const errorMessages = this.stepsContent[formIndex][formFieldName].errors;
     const validationError = errorMessages[Object.keys(formErrors)[0]];
@@ -421,11 +485,9 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   public onSubmit(): void {
     this.updateDataToSubmit();
     if (this.isValid()) {
-      // console.log("Datos del formulario:", this.dataToSubmit);
       this.recaptchaSubscription = this.recaptchaService
         .execute(this.recaptchaAction)
         .subscribe((token) => {
-          // console.log(token);
           this.isSubmitting = true;
           this.submit.emit(this.dataToSubmit);
         });
@@ -481,10 +543,17 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       if (this.isFormControlTypeof(fieldProp, "date")) {
         formDataValues[fieldProp] = this.dateStringToISOString(fieldValue);
       } else {
-        if (fieldProp.toLowerCase().includes("subprincipalemail") && fieldValue == "") {
+        if (
+          fieldProp.toLowerCase().includes("subprincipalemail") &&
+          fieldValue == ""
+        ) {
           formDataValues[fieldProp] = null;
         } else {
-          formDataValues[fieldProp] = ( fieldProp === "code" && typeof fieldValue === "string" && fieldValue.replace(/\s/g,"") ) || fieldValue;
+          formDataValues[fieldProp] =
+            (fieldProp === "code" &&
+              typeof fieldValue === "string" &&
+              fieldValue.replace(/\s/g, "")) ||
+            fieldValue;
         }
       }
     });
@@ -519,11 +588,15 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           stepContent[prop].condition.formControlName &&
           stepContent[prop].condition.value
         ) {
-          let conditionalFormControlName = stepContent[prop].condition.formControlName;
-          let conditionalFormControl = this.getFormControlInFormWizard(conditionalFormControlName);
+          let conditionalFormControlName =
+            stepContent[prop].condition.formControlName;
+          let conditionalFormControl = this.getFormControlInFormWizard(
+            conditionalFormControlName
+          );
           let dependentFormControl = this.getFormControlInFormWizard(prop);
           conditionalFormControl.valueChanges.subscribe((currentValue) => {
-            if (currentValue == stepContent[prop].condition.value) dependentFormControl.enable();
+            if (currentValue == stepContent[prop].condition.value)
+              dependentFormControl.enable();
             else dependentFormControl.disable();
           });
         }
@@ -534,16 +607,25 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   private subscribeDependentSelects() {
     this.stepsContent.map((stepContent, i) => {
       Object.keys(stepContent).map((prop) => {
-        const { type, isDependent, dependsOn, optionPropertyCondition } = stepContent[prop];
+        const {
+          type,
+          isDependent,
+          dependsOn,
+          optionPropertyCondition,
+        } = stepContent[prop];
         if (type === "select" && isDependent === true && dependsOn) {
           let dependsOnSelect = this.getFormControlInFormWizard(dependsOn);
           let dependentSelect = this.getFormControlInFormWizard(prop);
           dependsOnSelect.valueChanges.subscribe((currentValue) => {
             dependentSelect.reset();
             const propArrayPath = optionPropertyCondition.split(".");
-            const dependentSelectOptions = this.formsContent[i].data[prop].options;
+            const dependentSelectOptions = this.formsContent[i].data[prop]
+              .options;
             stepContent[prop].options = dependentSelectOptions.filter((op) => {
-              const optionConditionValue = this.accessPropertyByArrayPath(op, propArrayPath);
+              const optionConditionValue = this.accessPropertyByArrayPath(
+                op,
+                propArrayPath
+              );
               return optionConditionValue == currentValue;
             });
           });
@@ -567,15 +649,33 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   public goToStep(step: number): void {
-    const initMap = () => { if (google) { clearInterval(interval);setTimeout(() => {
-      if (this.googleMap) { if (this.currentMarker) this.currentMarker.setMap(null);
-        this.currentMarker = null; this.mapSettings(this.lat, this.lng, 7); this.mapInitializer();
-      } }); }};
+    const initMap = () => {
+      if (google) {
+        clearInterval(interval);
+        setTimeout(() => {
+          if (this.googleMap) {
+            if (this.currentMarker) this.currentMarker.setMap(null);
+            this.currentMarker = null;
+            this.mapSettings(this.lat, this.lng, 7);
+            this.mapInitializer();
+          }
+        });
+      }
+    };
     let interval = null;
     if (this.isSponsorForm && this.activeStepIndex === 2) {
-      try { initMap(); } catch (error) {
-      interval = setInterval(() => { try { initMap(); } catch (error) { /** TODO --*/ } }, 1000);
-    }}
+      try {
+        initMap();
+      } catch (error) {
+        interval = setInterval(() => {
+          try {
+            initMap();
+          } catch (error) {
+            /** TODO --*/
+          }
+        }, 1000);
+      }
+    }
 
     this.updateDataToSubmit();
     step = this.validateStep(step);
@@ -680,7 +780,10 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   }
 
   toCapitalizedString(value: string) {
-    return this.isSponsorForm ? "school" + value.slice(0, 1).toUpperCase() + value.slice(1, value.length) : value;
+    return this.isSponsorForm
+      ? "school" +
+          value.slice(0, 1).toUpperCase() +
+          value.slice(1, value.length)
+      : value;
   }
-
 }

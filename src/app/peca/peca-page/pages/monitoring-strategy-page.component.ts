@@ -46,11 +46,16 @@ export class MonitoringStrategyPageComponent
   isInstanciated: boolean;
   loadedData: boolean;
 
-  constructor(factoryResolver: ComponentFactoryResolver, globals: GlobalService) {
+  constructor(
+    factoryResolver: ComponentFactoryResolver,
+    globals: GlobalService
+  ) {
     super(factoryResolver);
 
     globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
       if (this.loadedData) this.updateMethods();
     });
 
@@ -61,9 +66,8 @@ export class MonitoringStrategyPageComponent
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          if (!isNullOrUndefined(data)) {
-            // console.log(data, "data seguimiento actividades");
-          }
+          // if (!isNullOrUndefined(data)) {
+          // }
           this.setAmbienteSlider(data);
           this.setAmbienteSliderData();
 
@@ -94,40 +98,40 @@ export class MonitoringStrategyPageComponent
 
   //slider ambiente
   setAmbienteSlider(data) {
-    this.responseAmbiente = data.activePecaContent.monitoringActivities.environmentActivities;
-    // console.log(this.responseAmbiente, "slider ambiente");
+    this.responseAmbiente =
+      data.activePecaContent.monitoringActivities.environmentActivities;
   }
 
   setAmbienteSliderData() {
     this.sliderSeguimientoAmbiente = {
       sliderImage: this.responseAmbiente,
-      sliderName: "1"
+      sliderName: "1",
     };
   }
 
   //slider lectura
   setLecturaSlider(data) {
-    this.responseLectura = data.activePecaContent.monitoringActivities.readingActivities;
-    // console.log(this.responseLectura, "slider Lectura");
+    this.responseLectura =
+      data.activePecaContent.monitoringActivities.readingActivities;
   }
 
   setLecturaSliderData() {
     this.sliderSeguimientoLectura = {
       sliderImage: this.responseLectura,
-      sliderName: "2"
+      sliderName: "2",
     };
   }
 
   //slider matematica
   setMatematicaSlider(data) {
-    this.responseMatematica = data.activePecaContent.monitoringActivities.mathActivities;
-    // console.log(this.responseMatematica, "slider Matematica");
+    this.responseMatematica =
+      data.activePecaContent.monitoringActivities.mathActivities;
   }
 
   setMatematicaSliderData() {
     this.sliderSeguimientoMatematica = {
       sliderImage: this.responseMatematica,
-      sliderName: "3"
+      sliderName: "3",
     };
   }
 

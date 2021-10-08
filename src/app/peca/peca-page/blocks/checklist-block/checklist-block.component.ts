@@ -222,7 +222,6 @@ export class ChecklistBlockComponent
 
     this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
-        console.log("form response", response);
         //this.sleepSend = true;
         this.isSending = false;
 
@@ -266,7 +265,6 @@ export class ChecklistBlockComponent
     const resourcePath = this.settings.fetcherUrls[method];
     this.fetcher[method](resourcePath, body).subscribe(
       (response) => {
-        console.log("form response", response);
         //this.sleepSend = true;
         this.isSending = false;
 

@@ -10,7 +10,7 @@ import {
 } from "src/app/web/shared/forms/custom-validators";
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 import { DatePipe } from "@angular/common";
-import { Store } from '@ngxs/store';
+import { Store } from "@ngxs/store";
 
 const controlProps = {
   onlyLettersAndRequired: {
@@ -51,7 +51,11 @@ export function mathOlympicsConfigMapper(
   store: Store
 ) {
   // Processing data
-  const { olympics_peca_create, olympics_peca_edit, olympics_peca_delete } = permissions;
+  const {
+    olympics_peca_create,
+    olympics_peca_edit,
+    olympics_peca_delete,
+  } = permissions;
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
   const mathOlympics = pecaData[lapseName].olympics;
@@ -65,18 +69,23 @@ export function mathOlympicsConfigMapper(
     };
   }
   const olympicStudentsId = olympicStudents.map((student) => student.id);
-  const schoolStudents = pecaData.school.sections.reduce((studentsArray, section) => {
-    const students = section.students.map((student) => {
-      return {
-        ...student,
-        sectionId: section.id,
-        section: section.name,
-        grade: section.grade,
-      };
-    });
-    return [...studentsArray, ...students];
-  }, []);
-  const studentsNotInOlympics = schoolStudents.filter(({ id }) => !olympicStudentsId.includes(id));
+  const schoolStudents = pecaData.school.sections.reduce(
+    (studentsArray, section) => {
+      const students = section.students.map((student) => {
+        return {
+          ...student,
+          sectionId: section.id,
+          section: section.name,
+          grade: section.grade,
+        };
+      });
+      return [...studentsArray, ...students];
+    },
+    []
+  );
+  const studentsNotInOlympics = schoolStudents.filter(
+    ({ id }) => !olympicStudentsId.includes(id)
+  );
 
   // Block components
   const olympicsSignIn = {
@@ -102,7 +111,14 @@ export function mathOlympicsConfigMapper(
       selectStatus: {
         placeholder: "Selecciona el estudiante",
         lista: studentsNotInOlympics.map((student) => {
-          const { id, firstName, lastName, sectionId, section, grade } = student;
+          const {
+            id,
+            firstName,
+            lastName,
+            sectionId,
+            section,
+            grade,
+          } = student;
           return {
             id,
             name: `${firstName} ${lastName}`,
@@ -116,10 +132,9 @@ export function mathOlympicsConfigMapper(
       },
       btnGeneral: {
         name: "Agregar estudiante",
-        hidden: !olympics_peca_create
+        hidden: !olympics_peca_create,
       },
       onAddTable: (row) => {
-        // console.log("on add table students", row);
         const data = {
           lapseNumber,
           studentId: row.id,
@@ -197,7 +212,6 @@ export function mathOlympicsConfigMapper(
       isFromCustomTableActions: true,
       fetcherMethod: "put",
       onSubmit: (values) => {
-        // console.log("math olympics form edit", values);
         const data = {
           lapseNumber,
           studentId: values.id,
@@ -220,9 +234,11 @@ export function mathOlympicsConfigMapper(
         grade: {
           title: "Grado",
           valuePrepareFunction: (row: any) => {
-            const grade = formResultadoEstudianteModal.grade.options.find((d) => {
-              return d.id === row;
-            });
+            const grade = formResultadoEstudianteModal.grade.options.find(
+              (d) => {
+                return d.id === row;
+              }
+            );
             if (row) {
               return `${grade ? grade.name : ""}`;
             } else {
@@ -230,12 +246,15 @@ export function mathOlympicsConfigMapper(
             }
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = formResultadoEstudianteModal.grade.options.find((d) => {
-              return d.id === cell;
-            }).name;
+            let value: string = formResultadoEstudianteModal.grade.options.find(
+              (d) => {
+                return d.id === cell;
+              }
+            ).name;
             value = value.toUpperCase();
 
-            if (value.includes(search.toUpperCase()) || search === "") return true;
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
             else return false;
           },
         },
@@ -252,7 +271,8 @@ export function mathOlympicsConfigMapper(
             let value: string = cell == "1" ? "Registrado" : "Clasificado";
             value = value.toUpperCase();
 
-            if (value.includes(search.toUpperCase()) || search === "") return true;
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
             else return false;
           },
         },
@@ -286,7 +306,8 @@ export function mathOlympicsConfigMapper(
                 value = "";
             }
             value = value.toUpperCase();
-            if (value.includes(search.toUpperCase()) || search === "") return true;
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
             else return false;
           },
         },
@@ -333,7 +354,6 @@ export function mathOlympicsConfigMapper(
         },
       ],
       onSubmit: (values) => {
-        // console.log("math olympic delete", values);
         const data = { lapseNumber, studentId: values.data.newData.id };
         store.dispatch(new RemoveStudentMathOlympics(data));
       },
