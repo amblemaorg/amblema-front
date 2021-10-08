@@ -12,14 +12,16 @@ export class SetYearBook {
 
 export class UpdateYearBookRequest {
   static readonly type = "[YearBook] Send Update YearBook Request";
-  constructor(public payload: { 
-    pecaId: string; 
-    userId: string, 
-    section: string, 
-    partial: any, 
-    data: any, 
-    requestId: string 
-  }) {}
+  constructor(
+    public payload: {
+      pecaId: string;
+      userId: string;
+      section: string;
+      partial: any;
+      data: any;
+      requestId: string;
+    }
+  ) {}
 }
 
 export class CancelYearBookRequest {
@@ -92,7 +94,8 @@ export class ClearYearBook {
 }
 
 export class SetFalseMakingAction {
-  static readonly type = "[YearBook] Set false makingAction attribute in YearBook";
+  static readonly type =
+    "[YearBook] Set false makingAction attribute in YearBook";
   constructor(public showToast: boolean) {}
 }
 
@@ -123,23 +126,23 @@ export class SetFalseMakingAction {
     // isInApproval: false,
     // approvalHistory: [],
     // sections: [],
-    // lapse1: { 
-    //   activities: [], 
+    // lapse1: {
+    //   activities: [],
     //   logicDiagnosticAnalysis: "",
     //   mathDiagnosticAnalysis: "",
-    //   readingDiagnosticAnalysis: "" 
+    //   readingDiagnosticAnalysis: ""
     // },
-    // lapse2: { 
-    //   activities: [], 
+    // lapse2: {
+    //   activities: [],
     //   logicDiagnosticAnalysis: "",
     //   mathDiagnosticAnalysis: "",
-    //   readingDiagnosticAnalysis: "" 
+    //   readingDiagnosticAnalysis: ""
     // },
-    // lapse3: { 
-    //   activities: [], 
+    // lapse3: {
+    //   activities: [],
     //   logicDiagnosticAnalysis: "",
     //   mathDiagnosticAnalysis: "",
-    //   readingDiagnosticAnalysis: "" 
+    //   readingDiagnosticAnalysis: ""
     // },
   },
 })
@@ -165,7 +168,7 @@ export class YearBookState {
   }
 
   @Action(ClearYearBook)
-  clearYearBook({setState}: StateContext<YearBook>) {
+  clearYearBook({ setState }: StateContext<YearBook>) {
     setState({
       makingAction: true,
       wasSaving: true,
@@ -191,29 +194,32 @@ export class YearBookState {
       // isInApproval: false,
       // approvalHistory: [],
       // sections: [],
-      // lapse1: { 
-      //   activities: [], 
+      // lapse1: {
+      //   activities: [],
       //   logicDiagnosticAnalysis: "",
       //   mathDiagnosticAnalysis: "",
-      //   readingDiagnosticAnalysis: "" 
+      //   readingDiagnosticAnalysis: ""
       // },
-      // lapse2: { 
-      //   activities: [], 
+      // lapse2: {
+      //   activities: [],
       //   logicDiagnosticAnalysis: "",
       //   mathDiagnosticAnalysis: "",
-      //   readingDiagnosticAnalysis: "" 
+      //   readingDiagnosticAnalysis: ""
       // },
-      // lapse3: { 
-      //   activities: [], 
+      // lapse3: {
+      //   activities: [],
       //   logicDiagnosticAnalysis: "",
       //   mathDiagnosticAnalysis: "",
-      //   readingDiagnosticAnalysis: "" 
+      //   readingDiagnosticAnalysis: ""
       // },
     });
   }
 
   @Action(SetYearBook)
-  setYearBook({patchState, getState}: StateContext<YearBook>, action: SetYearBook) {
+  setYearBook(
+    { patchState, getState }: StateContext<YearBook>,
+    action: SetYearBook
+  ) {
     // const state = getState();
     // const sections = state.sections && state.sections.length ? state.sections : [];
     // const activities = {
@@ -222,8 +228,6 @@ export class YearBookState {
     //   lapse3: state.lapse3.activities && state.lapse3.activities.length ? state.lapse3.activities : []
     // };
     // const actPayl = action.payload;
-    // // console.log("HYL", actPayl);
-
     // const theSections = {};
     // sections.map( section => {
     //   theSections[section.id] = {...section};
@@ -233,18 +237,16 @@ export class YearBookState {
     //     const { id: sectionId, image } = section_unit;
     //     theSections[sectionId] = {
     //       ...section_unit,
-    //       image: image && image.length 
-    //         ? image 
-    //         : (theSections[sectionId] && theSections[sectionId].image && theSections[sectionId].image.length 
-    //             ? theSections[sectionId].image 
+    //       image: image && image.length
+    //         ? image
+    //         : (theSections[sectionId] && theSections[sectionId].image && theSections[sectionId].image.length
+    //             ? theSections[sectionId].image
     //             : ""
     //           )
     //     };
     //   });
     // }
-
     // const sections_ = Object.keys(theSections).map( section_u => theSections[section_u] );
-
     // const determineImgs = (imgs, savedImgs) => {
     //   const finalImgs = imgs.reduce( (theImgs, img) => {
     //     if (!theImgs.includes(img)) theImgs.push(img);
@@ -252,7 +254,6 @@ export class YearBookState {
     //   }, [...savedImgs]);
     //   return finalImgs;
     // };
-
     // const theActivities = {
     //   lapse1: {},
     //   lapse2: {},
@@ -262,44 +263,41 @@ export class YearBookState {
     //   activities[lapseActivities].map( activity => {
     //     theActivities[lapseActivities][activity.id] = {...activity};
     //   });
-
     //   if (actPayl[lapseActivities].activities && actPayl[lapseActivities].activities.length) {
     //     actPayl[lapseActivities].activities.map( activity_unit => {
     //       const { id: activityId, images } = activity_unit;
     //       theActivities[lapseActivities][activityId] = {
     //         ...activity_unit,
-    //         description: activity_unit.description && 
-    //                      activity_unit.description.length 
-    //                       ? activity_unit.description 
+    //         description: activity_unit.description &&
+    //                      activity_unit.description.length
+    //                       ? activity_unit.description
     //                       : (
-    //                           theActivities[lapseActivities][activityId] && 
-    //                           theActivities[lapseActivities][activityId].description 
-    //                             ? theActivities[lapseActivities][activityId].description 
+    //                           theActivities[lapseActivities][activityId] &&
+    //                           theActivities[lapseActivities][activityId].description
+    //                             ? theActivities[lapseActivities][activityId].description
     //                             : ""
     //                         ),
-    //         images: theActivities[lapseActivities][activityId] && 
-    //                 theActivities[lapseActivities][activityId].images && 
-    //                 theActivities[lapseActivities][activityId].images.length 
+    //         images: theActivities[lapseActivities][activityId] &&
+    //                 theActivities[lapseActivities][activityId].images &&
+    //                 theActivities[lapseActivities][activityId].images.length
     //                   ? (
-    //                       images && images.length 
-    //                         ? determineImgs(images, theActivities[lapseActivities][activityId].images) 
+    //                       images && images.length
+    //                         ? determineImgs(images, theActivities[lapseActivities][activityId].images)
     //                         : theActivities[lapseActivities][activityId].images
-    //                     ) 
+    //                     )
     //                   : (images && images.length ? images : [])
     //       };
     //     });
     //   }
     // });
-
-    // const { 
+    // const {
     //   lapse1Activities,
     //   lapse2Activities,
-    //   lapse3Activities 
+    //   lapse3Activities
     // } = Object.keys(theActivities).reduce( (lapsesActivities, lapseName) => {
     //   lapsesActivities[`${lapseName}Activities`] = Object.keys(theActivities[lapseName]).map( activity_u => theActivities[lapseName][activity_u] );
     //   return lapsesActivities;
     // }, { lapse1Activities: [], lapse2Activities: [], lapse3Activities: [] });
-
     // const oldValues = {
     //   historicalReview: {
     //     image: actPayl.historicalReview?.image && actPayl.historicalReview?.image.length ? actPayl.historicalReview.image : state.historicalReview.image,
@@ -321,71 +319,89 @@ export class YearBookState {
     //     image: actPayl.coordinator?.image && actPayl.coordinator?.image.length ? actPayl.coordinator.image : state.coordinator.image,
     //   },
     //   sections: sections_,
-    //   lapse1: { 
-    //     activities: lapse1Activities, 
+    //   lapse1: {
+    //     activities: lapse1Activities,
     //     logicDiagnosticAnalysis: actPayl.lapse1?.logicDiagnosticAnalysis && actPayl.lapse1?.logicDiagnosticAnalysis.length ? actPayl.lapse1.logicDiagnosticAnalysis : state.lapse1.logicDiagnosticAnalysis,
     //     mathDiagnosticAnalysis: actPayl.lapse1?.mathDiagnosticAnalysis && actPayl.lapse1?.mathDiagnosticAnalysis.length ? actPayl.lapse1.mathDiagnosticAnalysis : state.lapse1.mathDiagnosticAnalysis,
-    //     readingDiagnosticAnalysis: actPayl.lapse1?.readingDiagnosticAnalysis && actPayl.lapse1?.readingDiagnosticAnalysis.length ? actPayl.lapse1.readingDiagnosticAnalysis : state.lapse1.readingDiagnosticAnalysis 
+    //     readingDiagnosticAnalysis: actPayl.lapse1?.readingDiagnosticAnalysis && actPayl.lapse1?.readingDiagnosticAnalysis.length ? actPayl.lapse1.readingDiagnosticAnalysis : state.lapse1.readingDiagnosticAnalysis
     //   },
-    //   lapse2: { 
-    //     activities: lapse2Activities, 
+    //   lapse2: {
+    //     activities: lapse2Activities,
     //     logicDiagnosticAnalysis: actPayl.lapse2?.logicDiagnosticAnalysis && actPayl.lapse2?.logicDiagnosticAnalysis.length ? actPayl.lapse2.logicDiagnosticAnalysis : state.lapse2.logicDiagnosticAnalysis,
     //     mathDiagnosticAnalysis: actPayl.lapse2?.mathDiagnosticAnalysis && actPayl.lapse2?.mathDiagnosticAnalysis.length ? actPayl.lapse2.mathDiagnosticAnalysis : state.lapse2.mathDiagnosticAnalysis,
-    //     readingDiagnosticAnalysis: actPayl.lapse2?.readingDiagnosticAnalysis && actPayl.lapse2?.readingDiagnosticAnalysis.length ? actPayl.lapse2.readingDiagnosticAnalysis : state.lapse2.readingDiagnosticAnalysis  
+    //     readingDiagnosticAnalysis: actPayl.lapse2?.readingDiagnosticAnalysis && actPayl.lapse2?.readingDiagnosticAnalysis.length ? actPayl.lapse2.readingDiagnosticAnalysis : state.lapse2.readingDiagnosticAnalysis
     //   },
-    //   lapse3: { 
-    //     activities: lapse3Activities, 
+    //   lapse3: {
+    //     activities: lapse3Activities,
     //     logicDiagnosticAnalysis: actPayl.lapse3?.logicDiagnosticAnalysis && actPayl.lapse3?.logicDiagnosticAnalysis.length ? actPayl.lapse3.logicDiagnosticAnalysis : state.lapse3.logicDiagnosticAnalysis,
     //     mathDiagnosticAnalysis: actPayl.lapse3?.mathDiagnosticAnalysis && actPayl.lapse3?.mathDiagnosticAnalysis.length ? actPayl.lapse3.mathDiagnosticAnalysis : state.lapse3.mathDiagnosticAnalysis,
-    //     readingDiagnosticAnalysis: actPayl.lapse3?.readingDiagnosticAnalysis && actPayl.lapse3?.readingDiagnosticAnalysis.length ? actPayl.lapse3.readingDiagnosticAnalysis : state.lapse3.readingDiagnosticAnalysis 
+    //     readingDiagnosticAnalysis: actPayl.lapse3?.readingDiagnosticAnalysis && actPayl.lapse3?.readingDiagnosticAnalysis.length ? actPayl.lapse3.readingDiagnosticAnalysis : state.lapse3.readingDiagnosticAnalysis
     //   },
     // };
     // patchState({ ...actPayl, ...oldValues, makingAction: state.makingAction });
   }
 
   @Action(SetFalseMakingAction)
-  setFalseMakingAction({patchState, getState}: StateContext<YearBook>, action: SetFalseMakingAction) {
+  setFalseMakingAction(
+    { patchState, getState }: StateContext<YearBook>,
+    action: SetFalseMakingAction
+  ) {
     const { wasSaving: wasItSave } = getState();
     const showToast = action.showToast;
 
     if (wasItSave && showToast)
       this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
         positionClass: "toast-bottom-right",
-        onActivateTick: true
+        onActivateTick: true,
       });
     else if (showToast)
       this.toastr.success("Solicitud de aprobación cancelada", "", {
         positionClass: "toast-bottom-right",
-        onActivateTick: true
+        onActivateTick: true,
       });
 
     patchState({
       makingAction: false,
       wasSaving: true,
-    });    
+    });
   }
 
   // NEW ONE
   @Action(UpdateYearBookRequest)
-  async updateYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: UpdateYearBookRequest) {
-    const { pecaId, userId, section, partial, data, requestId } = action.payload;
-    
+  async updateYearkBookRequest(
+    { patchState, getState }: StateContext<YearBook>,
+    action: UpdateYearBookRequest
+  ) {
+    const {
+      pecaId,
+      userId,
+      section,
+      partial,
+      data,
+      requestId,
+    } = action.payload;
+
     const yearBookData = {
       ...data,
-      ...(requestId ? {requestId: requestId} : {})
+      ...(requestId ? { requestId: requestId } : {}),
     };
 
-    if ( ["historicalReview", "sponsor", "coordinator", "school"].includes(section) ) 
+    if (
+      ["historicalReview", "sponsor", "coordinator", "school"].includes(section)
+    )
       yearBookData[section] = {
         ...data[section],
         ...partial,
       };
-    
+
     if (section === "sections") {
       const { sectionId, sectionGrade, sectionName, image } = partial;
       const sectionsUpdated = yearBookData.sections.map((section) => {
         const { id, grade, name } = section;
-        if (id === sectionId || (grade === sectionGrade && name === sectionName)) {
+        if (
+          id === sectionId ||
+          (grade === sectionGrade && name === sectionName)
+        ) {
           return {
             ...section,
             image,
@@ -396,28 +412,36 @@ export class YearBookState {
       yearBookData[section] = sectionsUpdated;
     }
 
-    if ( ["readingDiagnosticAnalysis", "mathDiagnosticAnalysis", "logicDiagnosticAnalysis"].includes(section) ) {
+    if (
+      [
+        "readingDiagnosticAnalysis",
+        "mathDiagnosticAnalysis",
+        "logicDiagnosticAnalysis",
+      ].includes(section)
+    ) {
       const { lapse, analysis } = partial;
       const lapseName = `lapse${lapse}`;
       yearBookData[lapseName] = {
         ...data[lapseName],
         [section]: analysis,
-      }
+      };
     }
 
     if (section === "activities") {
       const { lapse, activityId, description, images } = partial;
       const lapseName = `lapse${lapse}`;
-      const lapseActivitiesUpdated = yearBookData[lapseName].activities.map((activity) => {
-        if (activity.id === activityId) {
-          return {
-            ...activity,
-            description,
-            images,
-          };
+      const lapseActivitiesUpdated = yearBookData[lapseName].activities.map(
+        (activity) => {
+          if (activity.id === activityId) {
+            return {
+              ...activity,
+              description,
+              images,
+            };
+          }
+          return activity;
         }
-        return activity;
-      });
+      );
       yearBookData[lapseName] = {
         ...data[lapseName],
         [section]: lapseActivitiesUpdated,
@@ -429,33 +453,35 @@ export class YearBookState {
       wasSaving: true,
     });
 
-    // console.log("Yearbook data to be sent", yearBookData);
     delete yearBookData.approvalHistory;
     delete yearBookData["makingAction"];
     delete yearBookData["wasSaving"];
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
-    // console.log("yearbook data", yearBookData);
     try {
       const data = await this.fetcher.post(url, yearBookData).toPromise();
-      // console.log("Termino de enviar la solicitud...", data);
       const { msgs } = data;
       if (msgs && msgs instanceof Array && msgs.length) {
-        msgs.map(message => {
+        msgs.map((message) => {
           this.toastr.error(message, "", {
             positionClass: "toast-bottom-right",
-            onActivateTick: true
+            onActivateTick: true,
           });
         });
       }
       this.store.dispatch([new FetchPecaContent(`${pecaId}[:show-toast:]`)]);
     } catch (error) {
       console.error(error);
-      const { error: { message } } = error;
+      const {
+        error: { message },
+      } = error;
 
-      const errorMsg = message && typeof message === "string" && message.toLowerCase() === "invalid image format" 
-        ? "Ocurrió un problema al procesar la(s) imágen(es)" 
-        : "Ha ocurrido un error";
-      
+      const errorMsg =
+        message &&
+        typeof message === "string" &&
+        message.toLowerCase() === "invalid image format"
+          ? "Ocurrió un problema al procesar la(s) imágen(es)"
+          : "Ha ocurrido un error";
+
       patchState({
         makingAction: false,
         wasSaving: true,
@@ -463,7 +489,7 @@ export class YearBookState {
 
       this.toastr.error(errorMsg, "", {
         positionClass: "toast-bottom-right",
-        onActivateTick: true
+        onActivateTick: true,
       });
     }
   }
@@ -483,7 +509,6 @@ export class YearBookState {
   //   delete yearBookData.approvalHistory;
   //   delete yearBookData["makingAction"];
   //   const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
-  //   // console.log("yearbook data", yearBookData);
   //   try {
   //     const data = await this.fetcher.post(url, yearBookData).toPromise();
   //     this.toastr.success("Solicitud enviada, espere por su aprobación", "", {
@@ -503,14 +528,17 @@ export class YearBookState {
 
   // NEW ONE
   @Action(CancelYearBookRequest)
-  async cancelYearkBookRequest({patchState, getState}: StateContext<YearBook>, action: CancelYearBookRequest) {
+  async cancelYearkBookRequest(
+    { patchState, getState }: StateContext<YearBook>,
+    action: CancelYearBookRequest
+  ) {
     const { approvalHistory, pecaId } = action.payload;
-    
+
     patchState({
       makingAction: true,
       wasSaving: false,
     });
-    
+
     const recentApprovalRequest = approvalHistory[approvalHistory.length - 1];
     const url = `requestscontentapproval/${recentApprovalRequest.id}`;
     try {
@@ -519,7 +547,6 @@ export class YearBookState {
           status: "4",
         })
         .toPromise();
-      // console.log("Termino de cancelar...");
       this.store.dispatch([new FetchPecaContent(`${pecaId}[:show-toast:]`)]);
     } catch (error) {
       patchState({
@@ -528,7 +555,7 @@ export class YearBookState {
       });
       this.toastr.error("Ha ocurrido un error", "", {
         positionClass: "toast-bottom-right",
-        onActivateTick: true
+        onActivateTick: true,
       });
     }
   }
@@ -575,7 +602,7 @@ export class YearBookState {
   //     })
   //   // );
   // }
-  
+
   // @Action(SetSponsor)
   // setSponsor({patchState, getState}: StateContext<YearBook>, action: SetSponsor) {
   //   const state = getState();

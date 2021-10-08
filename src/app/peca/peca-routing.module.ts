@@ -18,6 +18,7 @@ import { SchedulePageComponent } from "./peca-page/pages/schedule-page.component
 import { SchoolPicturesPageComponent } from "./peca-page/pages/school-pictures-page.component";
 import { YearbookPageComponent } from "./peca-page/pages/yearbook-page.component";
 import { GenericActivityPageComponent } from "./peca-page/pages/generic-activity-page.component";
+import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/previous-scholar-year-enrollment-page.component";
 const routes: Routes = [
   {
     path: "",
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: "datos-escuela",
         component: SchoolDataPageComponent,
+      },
+      {
+        path: "matricula-escolar-anterior",
+        component: PreviousScholarYearEnrollmentPageComponent,
       },
       {
         path: "lapso/:lapsoNumber/diagnostico-inicial",
