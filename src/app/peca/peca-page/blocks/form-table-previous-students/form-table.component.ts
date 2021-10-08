@@ -6,6 +6,8 @@ import { LocalDataSource } from "ng2-smart-table";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 import { ToastrService } from "ngx-toastr";
 import { HttpFetcherService } from "../../../../services/peca/http-fetcher.service";
+import { Store } from "@ngxs/store";
+import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
 
 @Component({
   selector: "app-form-table",
@@ -64,6 +66,7 @@ export class FormTableComponent
       allSectionsCurrent?: any[];
       allGradesCurrent?: any[];
       sectionKey?: string;
+      pecaId?: string;
       button?: {
         text?: string;
         hidden?: boolean;
@@ -95,7 +98,8 @@ export class FormTableComponent
 
   constructor(
     private toastr: ToastrService,
-    private fetcher: HttpFetcherService
+    private fetcher: HttpFetcherService,
+    private store: Store
   ) {}
 
   ngOnInit() {}
@@ -185,6 +189,10 @@ export class FormTableComponent
             if (res.students instanceof Array && res.students.length)
               this.fillTable(res.students);
           } else {
+            if (this.settings.fields.pecaId)
+              this.store.dispatch([
+                new FetchPecaContent(this.settings.fields.pecaId),
+              ]);
             this.form2.reset();
             this.toastr.success("Estudiantes promovidos exitosamente", "", {
               positionClass: "toast-bottom-right",

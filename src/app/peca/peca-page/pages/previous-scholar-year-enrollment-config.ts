@@ -112,6 +112,7 @@ export function previousScholarYearStudentsConfigMapper(
         allSectionsCurrent: sections_current,
         allGradesCurrent: [...allGrdsCurr],
         sectionKey: "section",
+        pecaId: peca_id,
         button: {
           text: "Guardar cambios",
           ingAction: "Guardando...",
