@@ -413,7 +413,7 @@ const tablaEstudiante = {
   component: "table",
   name: "estudiantesTable",
   settings: {
-    isMulti: false,
+    // isMulti: false,
     columns: {
       name: {
         title: "Nombre",
