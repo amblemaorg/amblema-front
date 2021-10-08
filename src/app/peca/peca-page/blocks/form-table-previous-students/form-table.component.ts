@@ -156,7 +156,6 @@ export class FormTableComponent
         type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
       ] = true;
 
-      console.log(values);
       const requestData = this.settings.getFetcher(
         type === 1 ? "get_students_list" : "post_promote_students",
         type === 1 ? values.section : []
@@ -186,7 +185,6 @@ export class FormTableComponent
             if (res.students instanceof Array && res.students.length)
               this.fillTable(res.students);
           } else {
-            console.log("OK");
             this.form2.reset();
             this.toastr.success("Estudiantes promovidos exitosamente", "", {
               positionClass: "toast-bottom-right",
@@ -245,7 +243,6 @@ export class FormTableComponent
   }
 
   setSelect(field: string, type: number, event: any) {
-    console.log("field, type, event", field, type, event);
     if (event && type === 1 && !field.includes("section")) {
       this.fillSections(this.settings.fields.sectionKey, event.id, type);
       this.showSelectGrades2 = false;

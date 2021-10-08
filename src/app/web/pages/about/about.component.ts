@@ -6,34 +6,35 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
-} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { OwlCarousel } from 'ngx-owl-carousel';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { AboutUsPage } from 'src/app/models/web/web-about-us.model';
-import { WebContentService } from 'src/app/services/web/web-content.service';
-import { StaticWebContentService } from 'src/app/services/web/static-web-content.service';
-import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
-import { environment } from 'src/environments/environment';
-import { ABOUT_US_CONTENT } from './about-us-static-content';
-import { ModalService } from 'src/app/services/modal.service';
-import { SvgIconRegistryService } from 'angular-svg-icon';
-import { GlobalService } from 'src/app/services/global.service';
-import { METADATA } from '../../web-pages-metadata';
-import { Store } from '@ngxs/store';
-import { SetIsLoadingPage } from 'src/app/store/actions/web/web.actions';
+} from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { OwlCarousel } from "ngx-owl-carousel";
+import { OwlOptions } from "ngx-owl-carousel-o";
+import { AboutUsPage } from "src/app/models/web/web-about-us.model";
+import { WebContentService } from "src/app/services/web/web-content.service";
+import { StaticWebContentService } from "src/app/services/web/static-web-content.service";
+import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
+import { environment } from "src/environments/environment";
+import { ABOUT_US_CONTENT } from "./about-us-static-content";
+import { ModalService } from "src/app/services/modal.service";
+import { SvgIconRegistryService } from "angular-svg-icon";
+import { GlobalService } from "src/app/services/global.service";
+import { METADATA } from "../../web-pages-metadata";
+import { Store } from "@ngxs/store";
+import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss'],
+  selector: "app-about",
+  templateUrl: "./about.component.html",
+  styleUrls: ["./about.component.scss"],
 })
 export class AboutComponent implements OnInit {
-  @ViewChild('awardsCarousel', { static: false }) awardsCarousel: OwlCarousel;
-  @ViewChildren('awardModal', { read: ElementRef }) awardModal: QueryList<ElementRef>;
+  @ViewChild("awardsCarousel", { static: false }) awardsCarousel: OwlCarousel;
+  @ViewChildren("awardModal", { read: ElementRef })
+  awardModal: QueryList<ElementRef>;
 
   coverData = {
-    overlayImage: './assets/images/cover-simbolos.png',
+    overlayImage: "./assets/images/cover-simbolos.png",
     slider: [],
   };
 
@@ -45,7 +46,7 @@ export class AboutComponent implements OnInit {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
@@ -68,7 +69,7 @@ export class AboutComponent implements OnInit {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ['', ''],
+    navText: ["", ""],
     navSpeed: 1000,
     responsive: {
       0: {
@@ -101,15 +102,15 @@ export class AboutComponent implements OnInit {
 
   aboutUsPageData: AboutUsPage = {
     slider: [],
-    aboutUsText: '',
-    environmentText: '',
-    readingText: '',
-    mathText: '',
+    aboutUsText: "",
+    environmentText: "",
+    readingText: "",
+    mathText: "",
     awards: [],
   };
   selectedAward = {};
   aboutUsService: WebContentService;
-  ABOUT_US_PATH = 'webcontent?page=aboutUsPage';
+  ABOUT_US_PATH = "webcontent?page=aboutUsPage";
 
   constructor(
     private http: HttpClient,
@@ -120,12 +121,21 @@ export class AboutComponent implements OnInit {
   ) {
     this.globalService.setTitle(METADATA.aboutUsPage.title);
     this.globalService.setMetaTags(METADATA.aboutUsPage.metatags);
-    this.iconService.loadSvg('../../../assets/icons/environment-icon.svg', 'environment-icon');
-    this.iconService.loadSvg('../../../assets/icons/reading-icon.svg', 'reading-icon');
-    this.iconService.loadSvg('../../../assets/icons/math-icon.svg', 'math-icon');
+    this.iconService.loadSvg(
+      "../../../assets/icons/environment-icon.svg",
+      "environment-icon"
+    );
+    this.iconService.loadSvg(
+      "../../../assets/icons/reading-icon.svg",
+      "reading-icon"
+    );
+    this.iconService.loadSvg(
+      "../../../assets/icons/math-icon.svg",
+      "math-icon"
+    );
     this.modalService.defaultOptions = {
       ...this.modalService.defaultOptions,
-      size: 'lg',
+      size: "lg",
     };
   }
 
@@ -149,7 +159,6 @@ export class AboutComponent implements OnInit {
 
   getAboutUsData() {
     this.aboutUsService.getWebContent().subscribe((data) => {
-      // console.log(data)
       this.coverData.slider = data.aboutUsPage.slider.map((slide) => {
         return {
           image: slide.image,
@@ -165,7 +174,7 @@ export class AboutComponent implements OnInit {
     this.awardsCarousel.refresh();
   }
 
-  @HostListener('window:resize', [''])
+  @HostListener("window:resize", [""])
   onResize() {
     if (this.isMobile() && this.isPortrait()) {
       this.awardsCarousel.options.responsive[0].items = 1;

@@ -1,4 +1,7 @@
-import { diagnosticsPermissions, diagnosticsPermissionsI } from './../blocks/peca-permissology';
+import {
+  diagnosticsPermissions,
+  diagnosticsPermissionsI,
+} from "./../blocks/peca-permissology";
 import {
   Component,
   AfterViewInit,
@@ -49,7 +52,9 @@ export class InitialDiagnosticPageComponent
   ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
       if (this.loadedData) this.updateMethods(data.fromModal ? false : true);
     });
 
@@ -83,20 +88,21 @@ export class InitialDiagnosticPageComponent
               name: this.response.sections[i].name,
               idSection: this.response.sections[i].id,
             };
-            const studentsWithGradeAndSection = this.grade === "0" ? [] :
-              this.response.sections[i].students.map((student) => {
-                const student_ = {
-                  ...student,
-                  grade: this.grade,
-                  section: this.section
-                };
-                return student_;
-              });
+            const studentsWithGradeAndSection =
+              this.grade === "0"
+                ? []
+                : this.response.sections[i].students.map((student) => {
+                    const student_ = {
+                      ...student,
+                      grade: this.grade,
+                      section: this.section,
+                    };
+                    return student_;
+                  });
             auxStudents = auxStudents.concat(studentsWithGradeAndSection);
           }
           this.students = auxStudents;
           if (!isNullOrUndefined(data)) {
-            // console.log(data.user);
             let { permissions } = data.user;
             permissions = this.managePermissions(permissions);
             this.setReadingTableData(
@@ -178,7 +184,12 @@ export class InitialDiagnosticPageComponent
     );
   }
 
-  setReadingTableData(readingTableData, number, _mapper?: Function, permissions?: diagnosticsPermissionsI) {
+  setReadingTableData(
+    readingTableData,
+    number,
+    _mapper?: Function,
+    permissions?: diagnosticsPermissionsI
+  ) {
     if (_mapper) {
       this.readingData = {
         data: _mapper(readingTableData, number),
@@ -187,15 +198,19 @@ export class InitialDiagnosticPageComponent
           hideEdit: !permissions.diagnostics_peca_edit || false,
           hideDelete: !permissions.diagnostics_peca_delete || false,
         },
-        lapse: number
+        lapse: number,
       };
-      //console.log("este es el mapper de lectura", this.readingData.data);
     } else {
       this.readingData = readingTableData;
     }
   }
 
-  setMathTableData(mathTableData, number, _mapper?: Function, permissions?: diagnosticsPermissionsI) {
+  setMathTableData(
+    mathTableData,
+    number,
+    _mapper?: Function,
+    permissions?: diagnosticsPermissionsI
+  ) {
     if (_mapper) {
       this.mathData = {
         data: _mapper(mathTableData, number),
@@ -204,7 +219,7 @@ export class InitialDiagnosticPageComponent
           hideEdit: !permissions.diagnostics_peca_edit || false,
           hideDelete: !permissions.diagnostics_peca_delete || false,
         },
-        lapse: number
+        lapse: number,
       };
     } else {
       this.mathData = mathTableData;
@@ -214,7 +229,8 @@ export class InitialDiagnosticPageComponent
   managePermissions(permissionsArray) {
     return diagnosticsPermissions.actions.reduce(
       (permissionsObj, permission) => {
-        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
+        if (permissionsArray)
+          permissionsObj[permission] = permissionsArray.includes(permission);
         return permissionsObj;
       },
       {}

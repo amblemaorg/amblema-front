@@ -225,10 +225,7 @@ export class TextsButtonsSetBlockComponent
             this.dataTorFWasEdited.form = data.wasEdited;
             this.isFormEdited = data.formEdited;
           }
-
-          // console.log(this.dataTorF);
         }
-        // console.log(this.dataTorF);
       })
     );
 
@@ -702,7 +699,6 @@ export class TextsButtonsSetBlockComponent
 
             this.fetcher[method](url).subscribe(
               (data) => {
-                console.log(data);
                 commonTasks();
 
                 this.isSending = false;
@@ -751,7 +747,6 @@ export class TextsButtonsSetBlockComponent
 
           this.fetcher[method](resourcePath, body).subscribe(
             (response) => {
-              console.log("form response", response);
               this.sleepSend = true;
               this.isSending = false;
 
@@ -823,7 +818,6 @@ export class TextsButtonsSetBlockComponent
 
         this.fetcher[method](resourcePath, body).subscribe(
           (response) => {
-            console.log("form response", response);
             this.sleepSend = true;
             this.isSending = false;
 
@@ -921,7 +915,6 @@ export class TextsButtonsSetBlockComponent
 
     this.fetcher[fetcherMethod](url, formData).subscribe(
       (response) => {
-        console.log("activity response", response);
         this.sleepSend = true;
         this.isSending = false;
 
@@ -978,7 +971,6 @@ export class TextsButtonsSetBlockComponent
 
     this.fetcher[method](url, body).subscribe(
       (response) => {
-        console.log("form response", response);
         // if (this.settings.fetcherUrls.cancel) this.settings.fetcherUrls.cancel = null;
         this.sleepSend = true;
         this.isSending = false;
@@ -1121,7 +1113,6 @@ export class TextsButtonsSetBlockComponent
 
       this.fetcher[fetcherMethod](url, formData).subscribe(
         (response) => {
-          console.log("activity response", response);
           this.sleepSend = true;
           this.isSending = false;
           this.selectorSendingEstatus = false;
