@@ -61,6 +61,7 @@ export class SchoolDataPageComponent
 
   currentStudentsGroup: string;
   studentsDataTemp: any;
+  peca_id: string;
 
   currentUserId: string; // current user id on session
   requestIdToCancel: string; // if school data is in approval this holds last request id
@@ -186,6 +187,8 @@ export class SchoolDataPageComponent
             gradesAndSectionsDataToSectionsFormMapper,
             this.permissions
           );
+
+          this.peca_id = data.school.pecaId;
 
           this.setStudentsFormData(
             data.school.sections,
@@ -454,6 +457,22 @@ export class SchoolDataPageComponent
     }
   }
 
+  getFetcher({ fetcher, genProps }: { fetcher: string; genProps?: string[] }) {
+    const params = [...genProps];
+    switch (fetcher) {
+      case "post_change_students":
+        return {
+          method: "post",
+          urlString: `students/change/section/${params[0]}`,
+        };
+      case "put_delete_students":
+        return {
+          method: "put",
+          urlString: `students/change/section/${params[0]}`,
+        };
+    }
+  }
+
   setStudentsFormData(
     studentsData,
     both: boolean,
@@ -483,13 +502,14 @@ export class SchoolDataPageComponent
           })
         : -1;
 
-      const { theGrade, theSection } = {
+      const { theGrade, theSection, theId } = {
         ...(this.currentStudentsGroup && section_name_index >= 0
           ? {
               theGrade: mapper.sections[section_name_index].grade,
               theSection: mapper.sections[section_name_index].name,
+              theId: mapper.sections[section_name_index].id,
             }
-          : { theGrade: "", theSection: "" }),
+          : { theGrade: "", theSection: "", theId: "" }),
       };
 
       const theAllSections =
@@ -535,6 +555,13 @@ export class SchoolDataPageComponent
                 tableSection: theSection,
                 sectionKey: "sections",
                 allSections: theAllSections,
+                peca_id: this.peca_id,
+                section_id: theId,
+                getFetcher: (fetcher: string, ...genProps) =>
+                  this.getFetcher({
+                    fetcher,
+                    genProps,
+                  }),
               }
             : {
                 tableTitle: "",
@@ -542,6 +569,9 @@ export class SchoolDataPageComponent
                 tableSection: "",
                 sectionKey: "section",
                 allSections: [],
+                peca_id: "",
+                section_id: "",
+                getFetcher: null,
               }),
         },
         isEditable: true,

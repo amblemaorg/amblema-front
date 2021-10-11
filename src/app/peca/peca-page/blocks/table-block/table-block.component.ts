@@ -11,13 +11,17 @@ import {
 } from "../page-block.component";
 import { NG2_SMART_TABLE_DEFAULT_SETTINGS as defaultSettings } from "./ng2-smart-table-default-settings";
 import { LocalDataSource } from "ng2-smart-table";
-import { GlobalService } from "src/app/services/global.service";
+import { GlobalService } from "../../../../services/global.service";
 import { Subscription } from "rxjs";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import cloneDeep from "lodash/cloneDeep";
 import localeEs from "@angular/common/locales/es-VE";
 import { registerLocaleData } from "@angular/common";
-import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
+import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
+import { HttpFetcherService } from "../../../../services/peca/http-fetcher.service";
+import { Store } from "@ngxs/store";
+import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
+import { ToastrService } from "ngx-toastr";
 registerLocaleData(localeEs, "es");
 
 @Component({
@@ -50,6 +54,10 @@ export class TableBlockComponent
     };
     total?: number;
     updateTotal: (rows) => number;
+    getFetcher?: (
+      fetcher: string,
+      ...genProps
+    ) => { method: string; urlString: string };
     isImageFirstCol?: boolean;
     makesNoRequest?: boolean; // if true, this form makes no request to api
     tableTitle?: string; // to set a title for the table
@@ -57,6 +65,8 @@ export class TableBlockComponent
     tableSection?: string;
     sectionKey?: string;
     allSections?: any[];
+    peca_id?: string;
+    section_id?: string;
     onDelete: Function | null;
     isMulti?: boolean; // to set table as multi selectable
     selectMode?: string;
@@ -103,7 +113,12 @@ export class TableBlockComponent
 
   tableInitialData: object = {};
 
-  constructor(private globals: GlobalService) {
+  constructor(
+    private globals: GlobalService,
+    private fetcher: HttpFetcherService,
+    private store: Store,
+    private toastr: ToastrService
+  ) {
     this.type = "presentational";
     this.component = "table";
   }
@@ -405,6 +420,9 @@ export class TableBlockComponent
         this.settings["tableSection"] = data.hasTitle.tableSection;
         this.settings["sectionKey"] = data.hasTitle.sectionKey;
         this.settings["allSections"] = data.hasTitle.allSections;
+        this.settings["peca_id"] = data.hasTitle.peca_id;
+        this.settings["section_id"] = data.hasTitle.section_id;
+        this.settings["getFetcher"] = data.hasTitle.getFetcher;
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
@@ -505,19 +523,115 @@ export class TableBlockComponent
     console.log("selected ones", this.selectedRows);
   }
 
+  getStudents(students: any[]) {
+    const studentsRes = students.map((student) => {
+      const {
+        id,
+        name: firstName,
+        lastName,
+        documentGroup: { prependInput: cardId, prependSelect: cardType },
+        age: birthdate,
+        gender,
+      } = student;
+      return {
+        id,
+        firstName,
+        lastName,
+        ...(cardId ? { cardId, cardType } : { cardId: null, cardType: null }),
+        birthdate,
+        gender,
+      };
+    });
+
+    return studentsRes;
+  }
+
+  fetchActions(isChange: boolean, requestData: any, body) {
+    const cleanAction = (clear: boolean) => {
+      if (clear) this.selectedRows = [];
+      this[isChange ? "isPromoting" : "isDeleting"] = false;
+    };
+
+    const errorMsg = () => {
+      if (isChange) this.promoteForm.reset();
+      this.toastr.error(
+        this.selectedRows.length > 1
+          ? `Hubo problemas al ${
+              isChange ? "cambi" : "elimin"
+            }ar los estudiantes`
+          : `Hubo problemas al ${
+              isChange ? "cambi" : "elimin"
+            }ar el estudiante`,
+        "",
+        {
+          positionClass: "toast-bottom-right",
+        }
+      );
+      cleanAction(false);
+    };
+
+    this.fetcher[requestData.method](requestData.urlString, body).subscribe(
+      (res) => {
+        if (res && res.status === 201) {
+          if (this.settings.peca_id)
+            this.store.dispatch([new FetchPecaContent(this.settings.peca_id)]);
+          if (isChange) this.promoteForm.reset();
+          this.toastr.success(
+            this.selectedRows.length > 1
+              ? `Estudiantes ${isChange ? "cambi" : "elimin"}ados exitosamente`
+              : `Estudiante ${isChange ? "cambi" : "elimin"}ado exitosamente`,
+            "",
+            {
+              positionClass: "toast-bottom-right",
+            }
+          );
+          cleanAction(true);
+        } else errorMsg();
+      },
+      (error) => {
+        console.log(error);
+        errorMsg();
+      }
+    );
+  }
+
   onSubmitAction(values: any) {
-    this.isPromoting = true;
-    console.log("Submit values", values);
-    setTimeout(() => {
-      this.isPromoting = false;
-    }, 3000);
+    if (values && typeof values === "object") {
+      this.isPromoting = true;
+      const requestData = this.settings.peca_id
+        ? this.settings.getFetcher(
+            "post_change_students",
+            this.settings.peca_id
+          )
+        : null;
+
+      const theStudents = this.getStudents(this.selectedRows);
+
+      const body = this.settings.section_id
+        ? {
+            section_previus: this.settings.section_id,
+            section_new: values.sections2P,
+            students: theStudents,
+          }
+        : null;
+
+      this.fetchActions(true, requestData, body);
+    }
   }
 
   deleteStudents() {
     this.isDeleting = true;
-    setTimeout(() => {
-      this.isDeleting = false;
-    }, 3000);
+    const requestData = this.settings.peca_id
+      ? this.settings.getFetcher("put_delete_students", this.settings.peca_id)
+      : null;
+
+    const theStudents = this.getStudents(this.selectedRows);
+
+    const body = this.settings.section_id
+      ? { section: this.settings.section_id, students: theStudents }
+      : null;
+
+    this.fetchActions(false, requestData, body);
   }
 
   hasErrors(form: FormGroup, field: string): string | null {
