@@ -112,13 +112,10 @@ export class FormTableComponent
   }
 
   private fillTable(rows: any[] = []) {
-    if (rows.length) this.settings.fields.table = rows;
-    const init = this.source.count();
-    if (this.settings.fields.table?.length) {
-      this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
-      if (init) this.source.load(this.settings.fields.table);
-      else this.source = new LocalDataSource(this.settings.fields.table);
-    }
+    this.settings.fields.table = rows;
+
+    this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
+    this.source = new LocalDataSource(this.settings.fields.table);
   }
 
   public setSettings(settings: any): void {
@@ -173,50 +170,74 @@ export class FormTableComponent
               students: this.selectedRows.length ? this.selectedRows : [],
             };
 
-      this.fetcher[requestData.method](
-        requestData.urlString,
-        type === 1 ? null : body
-      ).subscribe((res) => {
-        if (
-          res &&
-          ((requestData.method === "get" && res.status === 200) ||
-            res.status === 201)
-        ) {
-          if (type === 1) {
-            if (res.students instanceof Array && res.students.length)
-              this.fillTable(res.students);
-          } else {
-            if (this.settings.fields.pecaId)
-              this.store.dispatch([
-                new FetchPecaContent(this.settings.fields.pecaId),
-              ]);
-            this.form2.reset();
-            this.toastr.success("Estudiantes promovidos exitosamente", "", {
-              positionClass: "toast-bottom-right",
-            });
-            window.scroll(0, 0);
-            this.onSubmitAction(1, this.form1.value, true);
-          }
-        } else {
-          if (type === 1) {
-            this.fillTable([]);
-            this.toastr.error("Hubo problemas al buscar estudiantes", "", {
-              positionClass: "toast-bottom-right",
-            });
-          } else {
-            this.form2.reset();
-            this.toastr.error("Hubo problemas al promover estudiantes", "", {
-              positionClass: "toast-bottom-right",
-            });
-          }
-        }
-
+      const cleanAction = () => {
         if (type === 1) this.selectedRows = [];
 
         this[
           type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
         ] = false;
-      });
+      };
+
+      const errorMsg = () => {
+        if (type === 1) {
+          this.fillTable([]);
+          this.toastr.error("Hubo problemas al buscar estudiantes", "", {
+            positionClass: "toast-bottom-right",
+          });
+        } else {
+          this.form2.reset();
+          this.toastr.error(
+            this.selectedRows.length > 1
+              ? "Hubo problemas al promover estudiantes"
+              : "Hubo problemas al promover al estudiante",
+            "",
+            {
+              positionClass: "toast-bottom-right",
+            }
+          );
+        }
+        cleanAction();
+      };
+
+      this.fetcher[requestData.method](
+        requestData.urlString,
+        type === 1 ? null : body
+      ).subscribe(
+        (res) => {
+          if (
+            res &&
+            ((requestData.method === "get" && res.status === 200) ||
+              res.status === 201)
+          ) {
+            if (type === 1) {
+              if (res.students instanceof Array)
+                this.fillTable(res.students.length ? res.students : []);
+            } else {
+              if (this.settings.fields.pecaId)
+                this.store.dispatch([
+                  new FetchPecaContent(this.settings.fields.pecaId),
+                ]);
+              this.form2.reset();
+              this.toastr.success(
+                this.selectedRows.length > 1
+                  ? "Estudiantes promovidos exitosamente"
+                  : "Estudiante promovido exitosamente",
+                "",
+                {
+                  positionClass: "toast-bottom-right",
+                }
+              );
+              window.scroll(0, 0);
+              this.onSubmitAction(1, this.form1.value, true);
+            }
+            cleanAction();
+          } else errorMsg();
+        },
+        (error) => {
+          console.log(error);
+          errorMsg();
+        }
+      );
     }
   }
 
