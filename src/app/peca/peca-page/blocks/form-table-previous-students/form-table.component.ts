@@ -112,13 +112,10 @@ export class FormTableComponent
   }
 
   private fillTable(rows: any[] = []) {
-    if (rows.length) this.settings.fields.table = rows;
-    const init = this.source.count();
-    if (this.settings.fields.table?.length) {
-      this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
-      if (init) this.source.load(this.settings.fields.table);
-      else this.source = new LocalDataSource(this.settings.fields.table);
-    }
+    this.settings.fields.table = rows;
+
+    this.tableStudents = { ...this.tableStudents, hideSubHeader: false };
+    this.source = new LocalDataSource(this.settings.fields.table);
   }
 
   public setSettings(settings: any): void {
@@ -183,8 +180,8 @@ export class FormTableComponent
             res.status === 201)
         ) {
           if (type === 1) {
-            if (res.students instanceof Array && res.students.length)
-              this.fillTable(res.students);
+            if (res.students instanceof Array)
+              this.fillTable(res.students.length ? res.students : []);
           } else {
             if (this.settings.fields.pecaId)
               this.store.dispatch([
