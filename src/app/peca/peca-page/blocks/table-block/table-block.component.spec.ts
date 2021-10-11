@@ -6,6 +6,13 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
 import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { HttpClientModule } from "@angular/common/http";
+import { ToastrService, ToastrModule } from "ngx-toastr";
+import { NgxsModule } from "@ngxs/store";
+import { ModulesState } from "../../../../store/states/e-learning/learning-modules.state";
+import { UserState } from "../../../../store/states/e-learning/user.state";
+import { StepsState } from "../../../../store/states/steps/project.state";
+import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
 
 describe("TableBlockComponent", () => {
   let factoryResolver: ComponentFactoryResolver;
@@ -53,10 +60,22 @@ describe("TableBlockComponent", () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
+        HttpClientModule,
         NgSelectModule,
+        ToastrModule.forRoot(),
         RouterTestingModule.withRoutes([]),
         Ng2SmartTableModule,
+        NgxsModule.forRoot(
+          [ModulesState, UserState, StepsState, ResidenceInfoState],
+          {
+            compatibility: {
+              strictContentSecurityPolicy: true,
+            },
+            developmentMode: false,
+          }
+        ),
       ],
+      providers: [{ provide: ToastrService, useClass: ToastrService }],
     });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
