@@ -530,15 +530,16 @@ export class TableBlockComponent
         name: firstName,
         lastName,
         documentGroup: { prependInput: cardId, prependSelect: cardType },
-        age: birthdate,
+        age,
         gender,
       } = student;
+      const bd = age.toLowerCase().replace("t", " ");
       return {
         id,
         firstName,
         lastName,
         ...(cardId ? { cardId, cardType } : { cardId: null, cardType: null }),
-        birthdate,
+        birthdate: bd,
         gender,
       };
     });
