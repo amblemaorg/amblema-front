@@ -117,17 +117,11 @@
   table thead tr:first-child th:first-child::before {
     @include box;
   }
-  table
-    thead
-    tr:first-child
-    th:first-child[ng-reflect-is-all-selected="true"]::before,
+  &.is-checked table thead tr:first-child th:first-child::before,
   table tbody tr.selected td:first-child::before {
     background: $blue !important;
   }
-  table
-    thead
-    tr:first-child
-    th:first-child[ng-reflect-is-all-selected="true"]::after {
+  &.is-checked table thead tr:first-child th:first-child::after {
     @include check;
   }
 
