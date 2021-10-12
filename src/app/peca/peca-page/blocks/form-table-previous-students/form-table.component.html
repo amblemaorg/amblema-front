@@ -21,7 +21,10 @@
           [source]="source"
           (userRowSelect)="onUserRowSelect($event)"
           class="is-multi form-table-component"
-          [class.no-data]="tableStudents.hideSubHeader"
+          [ngClass]="{
+            'no-data': tableStudents.hideSubHeader,
+            'is-checked': allSelected
+          }"
         ></ng2-smart-table>
       </div>
 
