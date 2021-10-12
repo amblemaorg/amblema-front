@@ -78,6 +78,7 @@ export class FormTableComponent
   };
 
   showTable: boolean = true;
+  allSelected: boolean;
 
   form1: FormGroup;
   form2: FormGroup;
@@ -242,8 +243,10 @@ export class FormTableComponent
   }
 
   onUserRowSelect(event) {
+    const count = event?.source?.data?.length;
     this.selectedRows =
-      event.selected && event.selected instanceof Array ? event.selected : [];
+      event?.selected && event.selected instanceof Array ? event.selected : [];
+    this.allSelected = count ? this.selectedRows.length === count : false;
   }
 
   // filling sections according to selected grade
