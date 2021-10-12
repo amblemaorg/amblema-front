@@ -86,6 +86,7 @@ export class TableBlockComponent
 
   tableStates: any = {};
   thisLapse: string;
+  allSelected: boolean;
 
   userCanCreate: boolean = true;
   userCanEdit: boolean = true;
@@ -517,10 +518,12 @@ export class TableBlockComponent
   }
 
   onUserRowSelect(event) {
-    if (this.settings.isMulti)
+    if (this.settings.isMulti) {
+      const count = event?.source?.data?.length;
       this.selectedRows =
         event.selected && event.selected instanceof Array ? event.selected : [];
-    console.log("selected ones", this.selectedRows);
+      this.allSelected = count ? this.selectedRows.length === count : false;
+    }
   }
 
   getStudents(students: any[]) {

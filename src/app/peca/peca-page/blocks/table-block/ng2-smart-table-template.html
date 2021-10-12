@@ -14,7 +14,8 @@
       'has-img-in-first-col': settings.isImageFirstCol,
       'is-multi table-block-component': settings.isMulti,
       'is-empty': settings.isMulti && !settings.tableTitle,
-      'no-data': settings.hideSubHeader
+      'no-data': settings.hideSubHeader,
+      'is-checked': allSelected
     }"
       (custom)="onCustomActions($event)"
       (userRowSelect)="onUserRowSelect($event)"
