@@ -3,11 +3,8 @@ import {
   ComponentFactoryResolver,
   ViewContainerRef,
   ViewChild,
-  OnDestroy,
 } from "@angular/core";
-import { Select } from "@ngxs/store";
-import { Observable, Subscription } from "rxjs";
-import { PecaState } from "../../../store/states/peca/peca.state";
+import { Store } from "@ngxs/store";
 import { HttpFetcherService } from "../../../services/peca/http-fetcher.service";
 import { PecaPageComponent } from "../peca-page.component";
 import { previousScholarYearStudentsConfigMapper } from "./previous-scholar-year-enrollment-config";
@@ -16,22 +13,17 @@ import { previousScholarYearStudentsConfigMapper } from "./previous-scholar-year
   selector: "peca-school-pictures",
   templateUrl: "../peca-page.component.html",
 })
-export class PreviousScholarYearEnrollmentPageComponent
-  extends PecaPageComponent
-  implements OnDestroy {
+export class PreviousScholarYearEnrollmentPageComponent extends PecaPageComponent {
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   isInstantiating: boolean;
-  subscription: Subscription;
   school_code: string;
   peca_id: string;
-  schoolDataSubscription: Subscription;
-
-  @Select(PecaState.getPecaSchoolPromoteData) schoolData$: Observable<any>;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    private fetcher: HttpFetcherService
+    private fetcher: HttpFetcherService,
+    private store: Store
   ) {
     super(factoryResolver);
     this.initPage();
@@ -47,41 +39,34 @@ export class PreviousScholarYearEnrollmentPageComponent
       this.instantiateComponent(defaultConfig);
       this.doInstantiateBlocks();
 
-      this.schoolDataSubscription = this.schoolData$.subscribe(
-        (activePeca) => {
-          if (
-            activePeca &&
-            activePeca.school &&
-            !this.school_code &&
-            !this.peca_id
-          ) {
-            this.school_code = activePeca.school.code;
-            this.peca_id = activePeca.school.pecaId;
-            const permissions = null;
-            // const permissionsObj = this.managePermissions(permissions);
+      const {
+        school: { code: promoteDataSchoolCode },
+        id: promoteDataPecaId,
+      } = this.store.selectSnapshot((state) => state.peca.content);
 
-            const initData = this.getFetcher({
-              fetcher: "get_previous_sections",
-              school_code: this.school_code,
-            });
+      if (promoteDataSchoolCode && promoteDataPecaId) {
+        this.school_code = promoteDataSchoolCode;
+        this.peca_id = promoteDataPecaId;
+        // const permissions = null;
+        // const permissionsObj = this.managePermissions(permissions);
 
-            this.fetcher[initData.method](initData.urlString).subscribe(
-              (res) => {
-                const newConfig = previousScholarYearStudentsConfigMapper(
-                  res,
-                  null,
-                  this.getFetcher,
-                  this.school_code,
-                  this.peca_id
-                );
-                this.instantiateComponent(newConfig);
-                this.doInstantiateBlocks();
-              }
-            );
-          }
-        },
-        (error) => console.error(error)
-      );
+        const initData = this.getFetcher({
+          fetcher: "get_previous_sections",
+          school_code: this.school_code,
+        });
+
+        this.fetcher[initData.method](initData.urlString).subscribe((res) => {
+          const newConfig = previousScholarYearStudentsConfigMapper(
+            res,
+            null,
+            this.getFetcher,
+            this.school_code,
+            this.peca_id
+          );
+          this.instantiateComponent(newConfig);
+          this.doInstantiateBlocks();
+        });
+      }
     }
   }
 
@@ -133,11 +118,5 @@ export class PreviousScholarYearEnrollmentPageComponent
       this.instantiateBlocks(this.container, true);
       this.isInstantiating = false;
     });
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) this.subscription.unsubscribe();
-    this.school_code = "";
-    this.peca_id = "";
   }
 }

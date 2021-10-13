@@ -23,6 +23,8 @@ import { Store } from "@ngxs/store";
 import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
 import { ToastrService } from "ngx-toastr";
 registerLocaleData(localeEs, "es");
+import * as $ from "jquery";
+declare var $: any;
 
 @Component({
   selector: "table-block",
@@ -114,6 +116,8 @@ export class TableBlockComponent
 
   tableInitialData: object = {};
 
+  observer: any;
+
   constructor(
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
@@ -125,6 +129,19 @@ export class TableBlockComponent
   }
 
   ngOnInit() {
+    this.observer = new IntersectionObserver(
+      function (entries) {
+        const thEl = document.querySelector("#students-current-count");
+        // no intersection with screen
+        if (entries[0].intersectionRatio === 0 && thEl)
+          thEl.classList.add("shadow-on");
+        // fully intersects with screen
+        else if (entries[0].intersectionRatio === 1 && thEl)
+          thEl.classList.remove("shadow-on");
+      },
+      { threshold: [0, 1] }
+    );
+
     this.subscription.add(
       // data actions (data.action): set, add, edit, delete, view
       this.globals.updateTableDataEmitter.subscribe((data) => {
@@ -192,6 +209,9 @@ export class TableBlockComponent
       '.is-multi.table-block-component tbody td[colspan="6"]'
     );
     if (td_student) td_student.setAttribute("colspan", "7");
+
+    const el = document.querySelector("#students-current-count-top");
+    if (this.observer && el) this.observer.observe(el);
   }
 
   async confsOnTable(data) {
@@ -416,14 +436,21 @@ export class TableBlockComponent
 
       if (data.hasTitle) {
         this.isContentRefreshing = true;
-        this.settings["tableTitle"] = data.hasTitle.tableTitle;
         this.settings["tableGrade"] = data.hasTitle.tableGrade;
         this.settings["tableSection"] = data.hasTitle.tableSection;
+        this.settings["tableTitle"] =
+          data?.promoteData &&
+          data?.data?.length &&
+          this.settings.tableGrade &&
+          this.settings.tableSection
+            ? data.hasTitle.tableTitle2
+            : data.hasTitle.tableTitle;
         this.settings["sectionKey"] = data.hasTitle.sectionKey;
         this.settings["allSections"] = data.hasTitle.allSections;
         this.settings["peca_id"] = data.hasTitle.peca_id;
         this.settings["section_id"] = data.hasTitle.section_id;
         this.settings["getFetcher"] = data.hasTitle.getFetcher;
+
         setTimeout(() => {
           this.isContentRefreshing = false;
         });
@@ -624,6 +651,8 @@ export class TableBlockComponent
   }
 
   deleteStudents() {
+    if (document.querySelector("#delete-students-modal"))
+      $("#delete-students-modal").modal("hide");
     this.isDeleting = true;
     const requestData = this.settings.peca_id
       ? this.settings.getFetcher("put_delete_students", this.settings.peca_id)
