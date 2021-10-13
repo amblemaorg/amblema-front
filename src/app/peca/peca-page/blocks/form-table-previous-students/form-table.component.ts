@@ -97,19 +97,38 @@ export class FormTableComponent
   showSelectGrades2: boolean = true;
   showSelectSections2: boolean = true;
 
+  observer: any;
+  studentsCount: string = "";
+
   constructor(
     private toastr: ToastrService,
     private fetcher: HttpFetcherService,
     private store: Store
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.observer = new IntersectionObserver(
+      function (entries) {
+        const theEl = document.querySelector("#students-count");
+        // no intersection with screen
+        if (entries[0].intersectionRatio === 0 && theEl)
+          theEl.classList.add("shadow-on");
+        // fully intersects with screen
+        else if (entries[0].intersectionRatio === 1 && theEl)
+          theEl.classList.remove("shadow-on");
+      },
+      { threshold: [0, 1] }
+    );
+  }
 
   ngAfterViewChecked() {
     const td = document.querySelector(
       '.is-multi.form-table-component tbody td[colspan="5"]'
     );
     if (td) td.setAttribute("colspan", "6");
+
+    const el = document.querySelector("#students-count-top");
+    if (this.observer && el) this.observer.observe(el);
   }
 
   private fillTable(rows: any[] = []) {
@@ -211,8 +230,26 @@ export class FormTableComponent
               res.status === 201)
           ) {
             if (type === 1) {
-              if (res.students instanceof Array)
+              if (res.students instanceof Array) {
+                const { grade: currentGrade, section: currentSection } = [
+                  "grade",
+                  "section",
+                ].reduce(
+                  (currents, key) => {
+                    const itm = this.settings.fields.fields1[key].items.find(
+                      (item) => item.id === values[key]
+                    );
+                    if (itm) currents[key] = itm;
+                    return currents;
+                  },
+                  { grade: null, section: null }
+                );
+                this.studentsCount =
+                  res.students.length && currentGrade && currentSection
+                    ? `Cantidad de estudiantes de ${currentGrade.name}, sección ${currentSection.name}: <b>${res.students.length}</b>`
+                    : "";
                 this.fillTable(res.students.length ? res.students : []);
+              }
             } else {
               if (this.settings.fields.pecaId)
                 this.store.dispatch([
