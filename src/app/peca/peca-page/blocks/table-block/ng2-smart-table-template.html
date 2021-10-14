@@ -64,13 +64,15 @@
               &times;
             </button>
           </div>
-          <div class="modal-body d-flex flex-wrap pt-4 pb-5">
+          <div
+            class="modal-body d-flex flex-wrap justify-content-center pt-4 pb-5"
+          >
             <div class="sub-titles-students mb-4 text-center text-incremented">
               <p>¿Desea eliminar los estudiantes seleccionados?</p>
             </div>
             <button
               type="button"
-              class="btn btn-primary text-decoration-none py-1 px-4 ml-auto mr-3 yes-btn"
+              class="btn btn-primary text-decoration-none py-1 px-4 ml-0 mr-md-3 yes-btn"
               [disabled]="disabledThis() || !selectedRows.length"
               (click)="deleteStudents()"
             >
@@ -78,7 +80,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary text-decoration-none py-1 px-4 mr-auto ml-3 no-btn"
+              class="btn btn-primary text-decoration-none py-1 px-4 ml-md-3 no-btn"
               data-dismiss="modal"
             >
               No
