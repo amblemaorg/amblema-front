@@ -28,7 +28,11 @@
       </div>
       <div class="school-data row">
         <div class="item" *ngIf="school.instagram">
-          <a [href]="school.instagram" rel="noopener noreferrer" target="_blank">
+          <a
+            [href]="school.instagram"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <fa-icon class="social-icon" [icon]="instagramIcon"></fa-icon>
           </a>
         </div>
@@ -63,7 +67,10 @@
     </owl-carousel>
   </div>
 </section>
-<div #symbols class="symbols-container slide-bottom-animation animation-init"></div>
+<div
+  #symbols
+  class="symbols-container slide-bottom-animation animation-init"
+></div>
 <section #charts class="charts">
   <div class="charts-switcher">
     <charts-switcher
@@ -90,21 +97,28 @@
   <div class="heading">
     <h2>Olimpíadas Recreativas de Matemática</h2>
     <p>
-      Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para que inscriban a los
-      estudiantes de 1er a 6to grado en las Olimpíadas de Matemáticas, que organiza la Fundación
-      para el Desarrollo de Competencias Matemáticas (FUNDECOM); siguiendo las tres fases:
-      Preliminar, Regional y Nacional. De acuerdo al sistema que ellos propongan, registrando a los
+      Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
+      que inscriban a los estudiantes de 1er a 6to grado en las Olimpíadas de
+      Matemáticas, que organiza la Fundación para el Desarrollo de Competencias
+      Matemáticas (FUNDECOM); siguiendo las tres fases: Preliminar, Regional y
+      Nacional. De acuerdo al sistema que ellos propongan, registrando a los
       estudiantes inscritos y clasificados en cada fase.
     </p>
   </div>
   <div class="result-summary">
     <div class="result enrolled">
-      <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+      <img
+        class="result-icon"
+        src="./assets/images/icon-enrolled-students.png"
+      />
       <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
       <span class="result-label">Estudiantes inscritos</span>
     </div>
     <div class="result classified">
-      <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+      <img
+        class="result-icon"
+        src="./assets/images/icon-classified-students.png"
+      />
       <span class="result-count">{{ school.mathOlympics.classified }}</span>
       <span class="result-label">Estudiantes clasificados</span>
     </div>
@@ -155,20 +169,31 @@
         <div
           class="activity-index"
           [ngClass]="{ active: activeActivityIndex == i }"
-          *ngFor="let item of school.activities[selectedActivitiesType]; index as i"
+          *ngFor="
+            let item of school.activities[selectedActivitiesType];
+            index as i
+          "
           (click)="activeActivityIndex !== i && setActiveActivity(i)"
         >
           {{ item.name }}
         </div>
       </owl-carousel>
     </div>
-    <div class="activity-details" *ngIf="school.activities[selectedActivitiesType].length > 0">
+    <div
+      class="activity-details"
+      *ngIf="school.activities[selectedActivitiesType].length > 0"
+    >
       <div class="activity-info">
         <span class="activity-name">
-          {{ school.activities[selectedActivitiesType][activeActivityIndex].name }}
+          {{
+            school.activities[selectedActivitiesType][activeActivityIndex].name
+          }}
         </span>
         <p class="activity-description">
-          {{ school.activities[selectedActivitiesType][activeActivityIndex].description }}
+          {{
+            school.activities[selectedActivitiesType][activeActivityIndex]
+              .description
+          }}
         </p>
       </div>
       <div class="activity-images">
@@ -179,7 +204,10 @@
           [carouselClasses]="['']"
           *ngIf="school.activitiesSlider.length"
         >
-          <div class="image-wrapper" *ngFor="let image of school.activitiesSlider; index as i">
+          <div
+            class="image-wrapper"
+            *ngFor="let image of school.activitiesSlider; index as i"
+          >
             <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
           </div>
         </owl-carousel>
@@ -204,7 +232,7 @@
     </owl-carousel-o>
   </div>
 </section>
-<section class="next-activities">
+<section *ngIf="school.nextActivities.length" class="next-activities">
   <div class="heading">
     <h2>Próximas actividades</h2>
   </div>
@@ -216,7 +244,9 @@
       [carouselClasses]="['']"
     >
       <ng-container *ngFor="let item of school.nextActivities">
-        <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="activity; context: { activity: item }"
+        ></ng-container>
       </ng-container>
     </owl-carousel>
   </div>
@@ -234,7 +264,9 @@
       [carouselClasses]="['']"
     >
       <ng-container *ngFor="let item of school.otherSchools">
-        <ng-container *ngTemplateOutlet="otherSchool; context: { school: item }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="otherSchool; context: { school: item }"
+        ></ng-container>
       </ng-container>
     </owl-carousel>
   </div>
@@ -247,7 +279,11 @@
     <div class="image-wrapper">
       <img [src]="school.image" [alt]="school.name + ' image'" />
     </div>
-    <a *ngIf="school.slug" class="school-link" [routerLink]="['/escuelas/' + school.slug]">
+    <a
+      *ngIf="school.slug"
+      class="school-link"
+      [routerLink]="['/escuelas/' + school.slug]"
+    >
       <h3 *ngIf="school.name" class="school-name">{{ school.name }}</h3>
     </a>
   </div>
