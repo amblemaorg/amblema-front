@@ -4,10 +4,20 @@ import { AllowAuthenticatedGuard } from "./guards/allow-authenticated.guard";
 import { decodeJwtPayload } from "@nebular/auth";
 import { Store, Select } from "@ngxs/store";
 import { StepsService } from "./services/steps/steps.service";
-import { SetCurrentUser, UpdateUserInfo } from "./store/actions/e-learning/user.actions";
-import { SetUserPermissions, SetUser, FetchProject } from "./store/actions/peca/peca.actions";
+import {
+  SetCurrentUser,
+  UpdateUserInfo,
+} from "./store/actions/e-learning/user.actions";
+import {
+  SetUserPermissions,
+  SetUser,
+  FetchProject,
+} from "./store/actions/peca/peca.actions";
 import { UpdateStepsSelectedProject } from "./store/actions/steps/project.actions";
-import { UpdateStates, UpdateMunicipalities } from "./store/actions/steps/residence-info.actions";
+import {
+  UpdateStates,
+  UpdateMunicipalities,
+} from "./store/actions/steps/residence-info.actions";
 import { PecaState } from "./store/states/peca/peca.state";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -24,7 +34,9 @@ const routes: Routes = [
     path: "previous-steps",
     canActivateChild: [AllowAuthenticatedGuard],
     loadChildren: () =>
-      import("./web/pages/previous-steps/previous-steps.module").then((m) => m.PreviousStepsModule),
+      import("./web/pages/previous-steps/previous-steps.module").then(
+        (m) => m.PreviousStepsModule
+      ),
   },
   {
     path: "peca",
@@ -50,13 +62,20 @@ const routes: Routes = [
   {
     path: "**",
     loadChildren: () =>
-      import("./web/pages/error404/error404.module").then((m) => m.Error404Module),
+      import("./web/pages/error404/error404.module").then(
+        (m) => m.Error404Module
+      ),
   },
 ];
 
 @NgModule({
   declarations: [RedirectionComponent],
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled", relativeLinkResolution: 'legacy' })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: "enabled",
+      relativeLinkResolution: "legacy",
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {
@@ -71,6 +90,7 @@ export class AppRoutingModule {
     this.router.events.pipe(tap()).subscribe(async (event) => {
       if (event instanceof NavigationStart) {
         const urlArrayPath = event.url.split("/");
+        console.log("AAAAAAAAAAAAAAA", event.url, urlArrayPath);
         if (urlArrayPath[1] === "historical") {
           const userId = urlArrayPath[2];
           const projectId = urlArrayPath[3];
@@ -82,7 +102,10 @@ export class AppRoutingModule {
             createdAt: new Date(),
             name: "nb:auth:oauth2:token",
             ownerStrategyName: "email",
-            value: JSON.stringify({ refresh_token: refreshToken, access_token: "" }),
+            value: JSON.stringify({
+              refresh_token: refreshToken,
+              access_token: "",
+            }),
           };
 
           localStorage.setItem("auth_app_token", JSON.stringify(authAppToken));
@@ -97,7 +120,10 @@ export class AppRoutingModule {
             ...authAppToken,
             value: JSON.stringify(newTokens),
           };
-          localStorage.setItem("auth_app_token", JSON.stringify(newAuthAppToken));
+          localStorage.setItem(
+            "auth_app_token",
+            JSON.stringify(newAuthAppToken)
+          );
           const decodedAccessToken = decodeJwtPayload(response.access_token);
           const permissions = decodedAccessToken.identity.permissions;
           const userType = decodedAccessToken.identity.userType;
@@ -111,7 +137,7 @@ export class AppRoutingModule {
             activeSchoolYear: {
               id: schoolYearId,
             },
-            permissions
+            permissions,
           };
           this.store.dispatch(new SetUser(user));
           this.store.dispatch(new SetUserPermissions(permissions));
