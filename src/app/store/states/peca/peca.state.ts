@@ -87,6 +87,7 @@ export class PecaState {
     { patchState }: StateContext<PecaStateModel>,
     { payload }: SetSelectedProject
   ) {
+    // console.log("EL PROYECTO", payload);
     patchState({ selectedProject: payload });
   }
 

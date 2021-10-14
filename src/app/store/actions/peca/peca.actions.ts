@@ -31,7 +31,9 @@ export class ClearPecaState {
 
 export class SetLapsePlanningRequestData {
   static readonly type = "[peca] Set LapsePlanning Data To Send Request";
-  constructor(public payload: { file?: string; date?: string; status?: string }) {}
+  constructor(
+    public payload: { file?: string; date?: string; status?: string }
+  ) {}
 }
 
 export class UpdateLapsePlanningFile {
@@ -88,11 +90,14 @@ export class SetInitialWorkshopRequestData {
 
 export class AddImageToInitialWorkshopRequestData {
   static readonly type = "[peca] Add Image To Initial Workshop Request Data";
-  constructor(public payload: { id: string; description: string; image: string }) {}
+  constructor(
+    public payload: { id: string; description: string; image: string }
+  ) {}
 }
 
 export class RemoveImageFromInitialWorkshopRequestData {
-  static readonly type = "[peca] Remove Image From Initial Workshop Request Data";
+  static readonly type =
+    "[peca] Remove Image From Initial Workshop Request Data";
   constructor(public payload: { imageSource: string }) {}
 }
 
@@ -107,7 +112,8 @@ export class AddImageToSchoolActivitiesRequestData {
 }
 
 export class RemoveImageFromSchoolActivitiesRequestData {
-  static readonly type = "[peca] Remove Image From School Activities Request Data";
+  static readonly type =
+    "[peca] Remove Image From School Activities Request Data";
   constructor(public payload: { imageSource: string }) {}
 }
 

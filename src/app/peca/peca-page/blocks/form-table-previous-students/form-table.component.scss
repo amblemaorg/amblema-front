@@ -27,6 +27,28 @@ $table-border-color: 1px solid $blue;
 
   //TABLE .........................................................................
   .table-wrapper {
+    #students-count-top {
+      height: 1px;
+      background: #fff;
+      top: -4.75rem;
+      position: relative;
+      z-index: -1;
+      visibility: hidden;
+    }
+    #students-count {
+      top: 4.75rem !important;
+      z-index: 1 !important;
+      background: #fff;
+
+      &.shadow-on {
+        box-shadow: 0px 9px 8px -3px rgba(0, 0, 0, 0.05);
+      }
+
+      p {
+        color: $blue;
+      }
+    }
+
     .the-table {
       position: relative;
       &.disabled::before {
