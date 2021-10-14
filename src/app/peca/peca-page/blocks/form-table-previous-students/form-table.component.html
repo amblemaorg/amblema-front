@@ -7,6 +7,13 @@
   ></ng-container>
 
   <div class="table-wrapper">
+    <ng-container *ngIf="studentsCount">
+      <div id="students-count-top"></div>
+      <div id="students-count" class="sticky-top pt-3 py-1">
+        <p class="mb-0" [innerHTML]="studentsCount"></p>
+      </div>
+    </ng-container>
+
     <div class="the-table" [class.disabled]="disabledThis()">
       <div class="table-element" [class.not-overflow]="isUpdating">
         <div
