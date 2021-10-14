@@ -523,10 +523,12 @@ export class SchoolDataPageComponent
         return mapper.grades[grade];
       });
 
+      const theData = this.currentStudentsGroup
+        ? mapper.allStudents[this.currentStudentsGroup]
+        : [];
+
       this.studentsTableData = {
-        data: this.currentStudentsGroup
-          ? mapper.allStudents[this.currentStudentsGroup]
-          : [],
+        data: theData,
         promoteData: {
           grades2P: {
             id: "grade2P",
@@ -551,6 +553,7 @@ export class SchoolDataPageComponent
           ...(this.currentStudentsGroup && section_name_index >= 0
             ? {
                 tableTitle: `Estudiantes de ${mapper.grades[theGrade].name}, sección ${theSection}`,
+                tableTitle2: `Cantidad de estudiantes de ${mapper.grades[theGrade].name}, sección ${theSection}: ${theData.length}`,
                 tableGrade: theGrade,
                 tableSection: theSection,
                 sectionKey: "sections",
@@ -565,6 +568,7 @@ export class SchoolDataPageComponent
               }
             : {
                 tableTitle: "",
+                tableTitle2: "",
                 tableGrade: "",
                 tableSection: "",
                 sectionKey: "section",

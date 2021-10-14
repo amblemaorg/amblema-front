@@ -1,7 +1,15 @@
 <div class="table-container">
-  <h6 *ngIf="settings.tableTitle && !isContentRefreshing" class="table-title">
-    {{ settings.tableTitle }}
-  </h6>
+  <ng-container *ngIf="settings.tableTitle">
+    <div id="students-current-count-top"></div>
+    <div id="students-current-count" class="sticky-top py-2">
+      <h6
+        *ngIf="settings.tableTitle && !isContentRefreshing"
+        class="table-title"
+      >
+        {{settings.tableTitle}}
+      </h6>
+    </div>
+  </ng-container>
   <div class="table-element">
     <ng2-smart-table
       [settings]="settings"
@@ -36,11 +44,52 @@
       type="button"
       class="btn btn-primary text-decoration-none py-1 px-4 delete-btn"
       [disabled]="disabledThis() || !selectedRows.length"
-      (click)="deleteStudents()"
+      data-toggle="modal"
+      data-target="#delete-students-modal"
     >
       <span *ngIf="isDeleting" class="spinner-grow spinner-grow-sm"></span>
       {{ isDeleting ? "Eliminando..." : "Eliminar" }}
     </button>
+    <!--   DELETE MODAL   -->
+    <div
+      class="modal fade"
+      id="delete-students-modal"
+      data-backdrop="static"
+      data-keyboard="false"
+    >
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div
+            class="modal-body d-flex flex-wrap justify-content-center pt-4 pb-5"
+          >
+            <div class="sub-titles-students mb-4 text-center text-incremented">
+              <p>¿Desea eliminar los estudiantes seleccionados?</p>
+            </div>
+            <button
+              type="button"
+              class="btn btn-primary text-decoration-none py-1 px-4 ml-0 mr-md-3 yes-btn"
+              [disabled]="disabledThis() || !selectedRows.length"
+              (click)="deleteStudents()"
+            >
+              Si
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary text-decoration-none py-1 px-4 ml-md-3 no-btn"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END DELETE MODAL -->
     <hr />
     <h6>Cambiar Estudiantes Seleccionados:</h6>
     <form

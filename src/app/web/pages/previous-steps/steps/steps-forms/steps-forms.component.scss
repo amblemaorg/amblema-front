@@ -1,258 +1,301 @@
-@import '../../previous-steps.component.scss';
+@import "../../previous-steps.component.scss";
 
 form {
-    @mixin form-mix {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        align-items: baseline;
+  @mixin form-mix {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: baseline;
 
-        @include mediabreak(large,landscape) { justify-content: space-between; }
+    @include mediabreak(large, landscape) {
+      justify-content: space-between;
     }
-    @media screen and (orientation:landscape) and (min-width:640px) { @include form-mix; }
-    @include mediabreak(large,portrait) { @include form-mix; }
+  }
+  @media screen and (orientation: landscape) and (min-width: 640px) {
+    @include form-mix;
+  }
+  @include mediabreak(large, portrait) {
+    @include form-mix;
+  }
 
-    h6 {
-        color: $blue;
-        font-weight: bold;
-        margin-right: auto;
-        @include mediabreak(large,landscape) { width: 100%; margin-bottom: 1rem; }
+  h6 {
+    color: $blue;
+    font-weight: bold;
+    margin-right: auto;
+    @include mediabreak(large, landscape) {
+      width: 100%;
+      margin-bottom: 1rem;
     }
-    h6:not(:first-child) {
-        margin-top: 2rem;
-        @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 1rem; }
-        @media screen and (orientation:landscape) and (min-width:640px) { margin-top: 1rem; }
+  }
+  h6:not(:first-child) {
+    margin-top: 2rem;
+    @media screen and (orientation: landscape) and (min-width: 640px) {
+      margin-top: 1rem;
     }
+    @media screen and (orientation: landscape) and (min-width: 640px) {
+      margin-top: 1rem;
+    }
+  }
 
-    @mixin form-flexings {
-        @media screen and (orientation:landscape) and (min-width:640px) { flex: 0 0 100%; }
-        @include mediabreak(large,portrait) { flex: 0 0 100%; }
-        @include mediabreak(large,landscape) { flex: 0 0 46.5%; }
-        @include mediabreak(larger,landscape) { flex: 0 0 47.25%; }
-        @include mediabreak(larger,landscape,true,1680px) { flex: 0 0 47.75%; }
+  @mixin form-flexings {
+    @media screen and (orientation: landscape) and (min-width: 640px) {
+      flex: 0 0 100%;
     }
-
-    .two-wrapper {
-        @include form-mix;
-        @include form-flexings;
-
-        .form-group {
-            width: 100%;
-        }
+    @include mediabreak(large, portrait) {
+      flex: 0 0 100%;
     }
+    @include mediabreak(medium, portrait) {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+    @include mediabreak(large, landscape) {
+      flex: 0 0 46.5%;
+    }
+    @include mediabreak(larger, landscape) {
+      flex: 0 0 47.25%;
+    }
+    @include mediabreak(larger, landscape, true, 1680px) {
+      flex: 0 0 47.75%;
+    }
+  }
+
+  .two-wrapper {
+    @include form-mix;
+    @include form-flexings;
 
     .form-group {
-        position: relative;
-        @include form-flexings;
+      width: 100%;
+    }
+  }
 
-        .date-container {
-            width: 100%;
-            position: relative;
-        }
+  .form-group {
+    position: relative;
+    @include form-flexings;
 
-        .field-empty,.field-invalid,
-        .field-max-len-over,.field-min-len-under {
-            font-size: smaller;
-            margin-block-start: 0.45rem;
-            color: map-get($color_map, red);
-            display: none;
-
-            @include mediabreak(small,portrait) { font-size: medium; }
-            @include mediabreak(large,portrait) { font-size: larger; }
-        }
-        .not-enabled {
-            color: #6c757d;
-            pointer-events: none;
-        }
-
-        label {
-            margin-bottom: 0.2rem;
-            width: 100%;
-        }
-
-        .form-control {
-            font-size: 0.9rem;
-
-            &.form-date-placeholder {
-                cursor: default;
-                background-color: #fff;
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                border: none;
-                width: 80%;
-                padding-bottom: 0 !important;
-                height: auto;
-              }
-
-              &[type="date"]:focus ~ .form-control.form-date-placeholder {
-                display: none;
-              }
-        }
-
-        .form-control:focus{
-            box-shadow: none;
-            border-color: map-get($color_map, blue);
-        }
-
-        .ng-touched.ng-invalid.not-empty, .ng-touched.ng-invalid, .date-not-valid {
-            border-color: map-get($color_map, red);
-            color: map-get($color_map, red);
-        }
-
-        .ng-touched.ng-invalid.not-empty.not-has-max-or-min + .field-alerts .field-invalid,
-        .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty,
-        .date-not-valid + .field-alerts .field-invalid,
-        .ng-touched.ng-invalid.max-len-over + .field-alerts .field-max-len-over,
-        .ng-touched.ng-invalid.min-len-under + .field-alerts .field-min-len-under {
-            display: inline-block;
-        }
-
-        ::ng-deep .ng-dropdown-panel {
-            z-index: 3;
-
-            .scroll-host {
-                left: -0.75rem;
-                top: 0.35rem;
-                background: #fff;
-                border: solid map-get($color_map, form-gray);
-                border-width: 0 1px 1px;
-
-                .scrollable-content{
-                    padding: 0 1rem;
-                }
-            }
-
-            .ng-dropdown-panel-items {
-                .ng-option {
-                  &.ng-option-marked {
-                    small, a {
-                      font-weight: bold;
-                    }
-                  }
-                }
-            }
-        }
-        ::ng-deep .ng-select {
-            &.ng-select-opened .ng-select-container {
-                z-index: 3;
-            }
-            .ng-select-container .ng-placeholder {
-                color: #6c757d;
-            }
-            .ng-select-container.ng-has-value .ng-placeholder {
-                display: none;
-            }
-
-            &.ng-untouched {
-                &.ng-invalid .ng-select-container .ng-placeholder {
-                    display: block;
-                }
-                &.ng-valid .ng-select-container .ng-placeholder {
-                    display: none;
-                }
-            }
-            &.ng-touched.ng-pristine, &.ng-touched.ng-invalid {
-                .ng-select-container .ng-placeholder {
-                    display: block;
-                }
-            }
-
-            &.ng-select-filtered .ng-select-container .ng-placeholder {
-                display: none !important;
-            }
-
-            .ng-clear-wrapper .ng-clear {
-                color: map-get($color_map, form-gray);
-            }
-            .ng-arrow-wrapper {
-                width: 1rem;
-
-                .ng-arrow {
-                    height: 0.5rem;
-                    width: 0.5rem;
-                    border-color: map-get($color_map, form-gray);
-                    border-style: solid;
-                    border-width: 0 2px 2px 0;
-                    -webkit-transform: rotate(45deg);
-                    transform: rotate(45deg);
-                    top: -0.15rem;
-                }
-            }
-        }
+    .date-container {
+      width: 100%;
+      position: relative;
     }
 
-    &.form-disabled .form-group{
-        .form-control {
-            border-color: #ced4da !important;
+    .field-empty,
+    .field-invalid,
+    .field-max-len-over,
+    .field-min-len-under {
+      font-size: smaller;
+      margin-block-start: 0.45rem;
+      color: map-get($color_map, red);
+      display: none;
 
-            &.form-date-placeholder {
-                background-color: #e9ecef !important;
+      @include mediabreak(small, portrait) {
+        font-size: medium;
+      }
+      @include mediabreak(large, portrait) {
+        font-size: larger;
+      }
+    }
+    .not-enabled {
+      color: #6c757d;
+      pointer-events: none;
+    }
+
+    label {
+      margin-bottom: 0.2rem;
+      width: 100%;
+    }
+
+    .form-control {
+      font-size: 0.9rem;
+
+      &.form-date-placeholder {
+        cursor: default;
+        background-color: #fff;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        border: none;
+        width: 80%;
+        padding-bottom: 0 !important;
+        height: auto;
+      }
+
+      &[type="date"]:focus ~ .form-control.form-date-placeholder {
+        display: none;
+      }
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+      border-color: map-get($color_map, blue);
+    }
+
+    .ng-touched.ng-invalid.not-empty,
+    .ng-touched.ng-invalid,
+    .date-not-valid {
+      border-color: map-get($color_map, red);
+      color: map-get($color_map, red);
+    }
+
+    .ng-touched.ng-invalid.not-empty.not-has-max-or-min
+      + .field-alerts
+      .field-invalid,
+    .ng-touched.ng-invalid:not(.not-empty) + .field-alerts .field-empty,
+    .date-not-valid + .field-alerts .field-invalid,
+    .ng-touched.ng-invalid.max-len-over + .field-alerts .field-max-len-over,
+    .ng-touched.ng-invalid.min-len-under + .field-alerts .field-min-len-under {
+      display: inline-block;
+    }
+
+    ::ng-deep .ng-dropdown-panel {
+      z-index: 3;
+
+      .scroll-host {
+        left: -0.75rem;
+        top: 0.35rem;
+        background: #fff;
+        border: solid map-get($color_map, form-gray);
+        border-width: 0 1px 1px;
+
+        .scrollable-content {
+          padding: 0 1rem;
+        }
+      }
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          &.ng-option-marked {
+            small,
+            a {
+              font-weight: bold;
             }
-            &.form-date-picker {
-                color: #6c757d !important;
-            }
+          }
         }
-        .field-alerts{
-            display: none;
+      }
+    }
+    ::ng-deep .ng-select {
+      &.ng-select-opened .ng-select-container {
+        z-index: 3;
+      }
+      .ng-select-container .ng-placeholder {
+        color: #6c757d;
+      }
+      .ng-select-container.ng-has-value .ng-placeholder {
+        display: none;
+      }
+
+      &.ng-untouched {
+        &.ng-invalid .ng-select-container .ng-placeholder {
+          display: block;
         }
-        ::ng-deep ng-select {
-            background-color: #e9ecef !important;
+        &.ng-valid .ng-select-container .ng-placeholder {
+          display: none;
         }
+      }
+      &.ng-touched.ng-pristine,
+      &.ng-touched.ng-invalid {
+        .ng-select-container .ng-placeholder {
+          display: block;
+        }
+      }
+
+      &.ng-select-filtered .ng-select-container .ng-placeholder {
+        display: none !important;
+      }
+
+      .ng-clear-wrapper .ng-clear {
+        color: map-get($color_map, form-gray);
+      }
+      .ng-arrow-wrapper {
+        width: 1rem;
+
+        .ng-arrow {
+          height: 0.5rem;
+          width: 0.5rem;
+          border-color: map-get($color_map, form-gray);
+          border-style: solid;
+          border-width: 0 2px 2px 0;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          top: -0.15rem;
+        }
+      }
+    }
+  }
+
+  &.form-disabled .form-group {
+    .form-control {
+      border-color: #ced4da !important;
+
+      &.form-date-placeholder {
+        background-color: #e9ecef !important;
+      }
+      &.form-date-picker {
+        color: #6c757d !important;
+      }
+    }
+    .field-alerts {
+      display: none;
+    }
+    ::ng-deep ng-select {
+      background-color: #e9ecef !important;
+    }
+  }
+
+  .input-group {
+    select {
+      border-color: map-get($color_map, form-gray);
+      &:focus {
+        outline: none;
+      }
+    }
+    ::ng-deep .ng-select-container {
+      overflow: visible;
+    }
+    ::ng-deep .ng-arrow-wrapper {
+      width: 0.8rem;
+      left: 0.2rem;
+    }
+    .field-alerts {
+      width: 100%;
+    }
+  }
+
+  button {
+    @include btn-righted;
+    color: #fff;
+
+    @include mediabreak(large, landscape) {
+      margin-right: 0;
+      margin-left: auto;
     }
 
-    .input-group {
-        select {
-            border-color: map-get($color_map, form-gray);
-            &:focus {
-                outline: none;
-            }
-        }
-        ::ng-deep .ng-select-container {
-            overflow: visible;
-        }
-        ::ng-deep .ng-arrow-wrapper {
-            width: 0.8rem;
-            left: 0.2rem;
-        }
-        .field-alerts {
-            width: 100%;
-        }
+    &.disabled {
+      cursor: not-allowed;
+    }
+    &:focus,
+    &:active:focus {
+      box-shadow: none !important;
+    }
+    &:active/* , &:hover */ {
+      background: #fff !important;
+      color: map-get($color_map, blue) !important;
+    }
+  }
+
+  .map-container {
+    width: 100%;
+
+    #school-address-map {
+      height: 45vh;
+      min-height: 20rem;
     }
 
-    button {
-        @include btn-righted;
-        color: #fff;
-
-        @include mediabreak(large,landscape) { margin-right: 0; margin-left: auto; }
-
-        &.disabled{
-            cursor: not-allowed;
-        }
-        &:focus, &:active:focus {
-            box-shadow: none !important;
-        }
-        &:active/* , &:hover */ {
-            background: #fff !important;
-            color: map-get($color_map, blue) !important;
-        }
+    .map-problem {
+      color: map-get($color_map, blue);
+      border: 1px solid map-get($color_map, red);
+      padding: 1rem;
+      border-radius: 0.25rem;
     }
-
-    .map-container {
-        width: 100%;
-
-        #school-address-map {
-            height: 45vh;
-            min-height: 20rem;
-        }
-
-        .map-problem {
-            color: map-get($color_map, blue);
-            border: 1px solid map-get($color_map, red);
-            padding: 1rem;
-            border-radius: 0.25rem;
-        }
-    }
+  }
 }
 
 ::ng-deep {
