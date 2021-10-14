@@ -19,6 +19,10 @@
     max-width: 100%;
     flex: 0 0 100%;
   }
+  @include mediabreak(medium, portrait) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
   @include mediabreak(large, landscape) {
     max-width: 46.5%;
     flex: 0 0 46.5%;
