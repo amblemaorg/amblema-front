@@ -90,7 +90,6 @@ export class AppRoutingModule {
     this.router.events.pipe(tap()).subscribe(async (event) => {
       if (event instanceof NavigationStart) {
         const urlArrayPath = event.url.split("/");
-        console.log("AAAAAAAAAAAAAAA", event.url, urlArrayPath);
         if (urlArrayPath[1] === "historical") {
           const userId = urlArrayPath[2];
           const projectId = urlArrayPath[3];
