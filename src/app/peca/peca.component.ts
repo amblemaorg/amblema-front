@@ -13,7 +13,6 @@ import { Store, Select } from "@ngxs/store";
 import { FetchPecaContent } from "../store/actions/peca/peca.actions";
 import { PecaState } from "../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
-import { first } from "rxjs/internal/operators/first";
 import cloneDeep from "lodash/cloneDeep";
 import { ActivatedRoute, Router, Event, NavigationEnd } from "@angular/router";
 import { DOCUMENT } from "@angular/common";
@@ -73,8 +72,6 @@ export class PecaComponent implements OnInit, OnDestroy {
   image_profile = "../../assets/images/profile-oscar.jpg";
 
   @Select(PecaState.getUser) userInfo$: Observable<any>;
-  @Select(PecaState.getActivePeca) activePeca$: Observable<any>;
-  @Select(PecaState.getActivePecaContent) activePecaContent$: Observable<any>;
   @Select(PecaState.getUserPermissions) permissions$: Observable<any>;
 
   menu_permissions: schoolPermissionsI &
@@ -151,12 +148,17 @@ export class PecaComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.store.dispatch([new UpdateStates()]);
     let activePecaId = null;
-    //this.activePecaSubscription = this.activePeca$.pipe(first());
-    const forActivePeca = await this.activePeca$.pipe(first()).toPromise();
-    const { activePeca = null } = forActivePeca || {};
 
-    //.subscribe(
-    //  ({ activePeca }) => {
+    const activePeca = this.store.selectSnapshot((state) => {
+      return state?.peca?.selectedProject?.pecas?.reduce(
+        (prevPeca, peca) =>
+          peca?.schoolYear?.id === state?.peca?.user?.activeSchoolYear?.id
+            ? peca
+            : prevPeca,
+        {}
+      );
+    });
+
     if (activePeca) {
       activePecaId = activePeca.id;
 
@@ -180,20 +182,16 @@ export class PecaComponent implements OnInit, OnDestroy {
           this.noPecaModalLauncherBtn.nativeElement.click();
       }
     }
-    //  },
-    //  error => console.error(error)
-    //);
 
-    //this.activePecaContentSubscription = this.activePecaContent$
-    const forActivePecaContent = await this.activePecaContent$
-      //.pipe(take(2))
-      .pipe(first())
-      .toPromise();
+    const { activePecaContent, selectedProject } = this.store.selectSnapshot(
+      (state) => {
+        return {
+          activePecaContent: state?.peca?.content,
+          selectedProject: state?.peca?.selectedProject,
+        };
+      }
+    );
 
-    const { activePecaContent = null, selectedProject = null } =
-      forActivePecaContent || {};
-    //.subscribe(
-    //  ({ activePecaContent }) => {
     try {
       if (activePecaContent && selectedProject) {
         this.managePermissions();
@@ -203,9 +201,6 @@ export class PecaComponent implements OnInit, OnDestroy {
       console.error("Menú no pudo crearse");
       console.error(error);
     }
-    //  },
-    //  error => console.error(error)
-    //);
 
     this.userSubscription = this.userInfo$.subscribe((res) => {
       this.imageUser = res.image;

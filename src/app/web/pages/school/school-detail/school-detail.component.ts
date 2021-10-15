@@ -37,13 +37,19 @@ import {
 export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("schoolDetails", { static: false }) schoolSection: ElementRef;
   @ViewChild("symbols", { static: true }) symbols: ElementRef;
-  @ViewChild("activitiesIndexCarousel", { static: true }) activitiesIndexCarousel: OwlCarousel;
-  @ViewChild("activityImageCarousel", { static: false }) activityImageCarousel: OwlCarousel;
-  @ViewChild("activitiesCarousel", { static: true }) activitiesCarousel: OwlCarousel;
-  @ViewChild("otherSchoolsCarousel", { static: true }) otherSchoolsCarousel: OwlCarousel;
+  @ViewChild("activitiesIndexCarousel", { static: true })
+  activitiesIndexCarousel: OwlCarousel;
+  @ViewChild("activityImageCarousel", { static: false })
+  activityImageCarousel: OwlCarousel;
+  @ViewChild("activitiesCarousel", { static: true })
+  activitiesCarousel: OwlCarousel;
+  @ViewChild("otherSchoolsCarousel", { static: true })
+  otherSchoolsCarousel: OwlCarousel;
   @ViewChild("charts", { static: false }) charts: ElementRef;
-  @ViewChild("chartTestimonial", { static: false }) chartTestimonial: ElementRef;
-  @ViewChild("chartSwitcher", { static: false }) chartSwitcher: ChartsSwitcherComponent;
+  @ViewChild("chartTestimonial", { static: false })
+  chartTestimonial: ElementRef;
+  @ViewChild("chartSwitcher", { static: false })
+  chartSwitcher: ChartsSwitcherComponent;
   instagramIcon = instagramIcon;
   twitterIcon = twitterIcon;
   facebookIcon = facebookIcon;
@@ -243,10 +249,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         name: data.name,
         sponsor: data.sponsor,
         direction: data.address,
-        staff: (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
+        staff:
+          (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) +
+          (data.nLaborStaff ? data.nLaborStaff : 0),
         coordinator: data.coordinator,
         enrollment: data.nStudents,
-        images: /* data.slider */null,
+        images: /* data.slider */ null,
         mathOlympics: {
           enrolled: data.olympicsSummary.inscribed,
           classified: data.olympicsSummary.classified,
@@ -259,17 +267,31 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           [this.ACTIVITIES.SPECIALS]: data.activities,
         },
         activitiesSlider: data.activitiesSlider,
-        testimonials: data.teachersTestimonials.testimonials.map((testimonial) => {
-          testimonial.function = testimonial.position;
-          return testimonial;
-        }),
-        nextActivities: data.nextActivities.map((activity) => {
-          activity.title = activity.name;
-          activity.date = this.pipe.transform(Date.parse(activity.date), "d/M/y");
-          return activity;
-        }),
-        otherSchools: data.nearbySchools.map((school)=> {
-          school.image = school.image ? school.image : './assets/images/profile2.png';
+        testimonials: data.teachersTestimonials.testimonials.map(
+          (testimonial) => {
+            testimonial.function = testimonial.position;
+            return testimonial;
+          }
+        ),
+        nextActivities: data.nextActivities.reduce((activities, activity) => {
+          const [now, actDate] = [new Date(), new Date(activity.date)].map(
+            (date_) => date_.toISOString().toLowerCase().split("t")[0]
+          );
+          const canPush = new Date(actDate) >= new Date(now);
+          if (canPush) {
+            const theActivity = {
+              ...activity,
+              title: activity.name,
+              date: this.pipe.transform(Date.parse(activity.date), "d/M/y"),
+            };
+            activities.push(theActivity);
+          }
+          return activities;
+        }, []),
+        otherSchools: data.nearbySchools.map((school) => {
+          school.image = school.image
+            ? school.image
+            : "./assets/images/profile2.png";
           return school;
         }),
         facebook: data.facebook,
@@ -287,7 +309,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         );
       });
       setTimeout(() => {
-        this.school.images = data.slider; 
+        this.school.images = data.slider;
       });
       this.reinitCarousels();
       this.chartSwitcher && this.chartSwitcher.switchChart(0);
@@ -316,14 +338,17 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscribeScrollEvent() {
     this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
-        this.onScroll(event);
-      });
+      this.scrollSubscription = fromEvent(window, "scroll").subscribe(
+        (event) => {
+          this.onScroll(event);
+        }
+      );
     });
   }
 
   onScroll($event) {
-    let scrollPosition = $event.srcElement.children[0].scrollTop + window.innerHeight;
+    let scrollPosition =
+      $event.srcElement.children[0].scrollTop + window.innerHeight;
     let symbolsPosition = this.symbols.nativeElement.offsetTop;
     let chartsPosition = this.charts.nativeElement.offsetTop;
 
@@ -375,16 +400,24 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
-      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 5;
-      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 5;
-      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 3;
-      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 3;
+      if (this.activitiesIndexCarousel)
+        this.activitiesIndexCarousel.options.responsive[0].items = 5;
+      if (this.activityImageCarousel)
+        this.activityImageCarousel.options.responsive[0].items = 5;
+      if (this.activitiesCarousel)
+        this.activitiesCarousel.options.responsive[0].items = 3;
+      if (this.otherSchoolsCarousel)
+        this.otherSchoolsCarousel.options.responsive[0].items = 3;
       this.refreshCarousels();
     } else {
-      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 2;
-      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 3;
-      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 1;
-      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 1;
+      if (this.activitiesIndexCarousel)
+        this.activitiesIndexCarousel.options.responsive[0].items = 2;
+      if (this.activityImageCarousel)
+        this.activityImageCarousel.options.responsive[0].items = 3;
+      if (this.activitiesCarousel)
+        this.activitiesCarousel.options.responsive[0].items = 1;
+      if (this.otherSchoolsCarousel)
+        this.otherSchoolsCarousel.options.responsive[0].items = 1;
       this.refreshCarousels();
     }
   }
