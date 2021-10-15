@@ -45,6 +45,7 @@ import { SetFalseMakingAction } from "../../yearbook/yearbook.action";
   defaults: {
     selectedProject: null,
     content: null,
+    user: null,
     userPermissions: null,
     pecaContentRequesting: false,
     lapsePlanningRequest: {
@@ -133,7 +134,7 @@ export class PecaState {
 
   @Action(FetchPecaContent)
   async fetchPecaContent(
-    { patchState, setState, getState }: StateContext<PecaStateModel>,
+    { patchState }: StateContext<PecaStateModel>,
     { payload }: FetchPecaContent
   ) {
     patchState({ pecaContentRequesting: true });
@@ -144,7 +145,6 @@ export class PecaState {
 
     this.apiService.setResourcePath("pecaprojects/" + payload_);
     const response = await this.apiService.getWebContent().toPromise();
-    //.subscribe((response) => {
     if (response) {
       const pecaContent: PecaModel = response;
       patchState({
@@ -153,7 +153,6 @@ export class PecaState {
       });
     }
     this.store.dispatch([new SetFalseMakingAction(showToast)]);
-    //});
   }
 
   @Action(UpdateLapsePlanningFile)
