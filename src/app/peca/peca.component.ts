@@ -370,9 +370,11 @@ export class PecaComponent implements OnInit, OnDestroy {
     }
 
     for (let i of [1, 2, 3]) {
-      if (this.menu[i - 1].children.length > 0)
+      /*if (this.menu[i - 1].children.length > 0){
         this.menu[i - 1].children.splice(i === 1 ? 2 : 1);
-
+        console.log("s ", i)
+        console.log(this.menu[i - 1]);
+      }*/
       const lapse = pecaContent[`lapse${i}`];
       const lapseOptions = this.menu[i - 1].children.reduce(
         (options, option) => {
