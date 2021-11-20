@@ -19,6 +19,8 @@ import { GraphicsLogicComponent } from "./graphics-logic/graphics-logic.componen
 import { SummaryBlockComponent } from "./franklin-dev-component/summary-block/summary-block.component";
 import { FormReviewComponent } from "./franklin-dev-component/form-review/form-review.component";
 import { FormTableComponent } from "./form-table-previous-students/form-table.component";
+import { FormatDownloadBlock } from "./format-block/format-block.component";
+
 export class PageBlockFactory {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -61,6 +63,10 @@ export class PageBlockFactory {
       case "checkList":
         return this.componentFactoryResolver.resolveComponentFactory(
           ChecklistBlockComponent
+        );
+      case "format-download-block":
+        return this.componentFactoryResolver.resolveComponentFactory(
+          FormatDownloadBlock
         );
       case "agendas":
         return this.componentFactoryResolver.resolveComponentFactory(
