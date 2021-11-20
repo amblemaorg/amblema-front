@@ -101,6 +101,11 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     ],
   },
   {
+    title: "Formato para registro de estudiantes",
+    link: "formato-registro-estudiantes",
+    data: "monitoring_activity_peca_view",
+  },
+  {
     title: "Estrategias de seguimiento para actividades extraordinarias",
     icon: "bar-chart-o",
     link: "estrategia-seguimiento",
