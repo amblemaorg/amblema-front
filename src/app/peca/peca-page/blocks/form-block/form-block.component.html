@@ -667,7 +667,14 @@
             >
               <button
                 type="button"
-                class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
+                class="
+                  btn btn-primary
+                  text-decoration-none
+                  py-1
+                  px-4
+                  mt-1
+                  add-img-button
+                "
                 [disabled]="disableAddImgBtn()"
                 (click)="addImage()"
               >
@@ -677,7 +684,14 @@
             <ng-template #notAddImg>
               <button
                 type="button"
-                class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
+                class="
+                  btn btn-primary
+                  text-decoration-none
+                  py-1
+                  px-4
+                  mt-1
+                  add-img-button
+                "
                 [disabled]="disableAddImgBtn()"
                 (click)="addImage(false)"
               >
@@ -719,7 +733,14 @@
           <button
             [class.d-none]="settings.isEditable && !isEditing"
             type="submit"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              mt-1
+              submit-btn
+            "
             [disabled]="disableBtn()"
             *ngIf="!settings.hiddenButton"
           >
@@ -734,7 +755,15 @@
         <ng-container *ngSwitchCase="'agregar'">
           <button
             type="submit"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              mt-1
+              mr-2
+              submit-btn
+            "
             [disabled]="disableBtnWithDate()"
             *ngIf="!settings.hiddenButton"
           >
@@ -746,27 +775,53 @@
           </button>
         </ng-container>
 
-        <!-- <ng-container *ngSwitchCase="'buscar'">
+        <ng-container *ngIf="sectionsArr.length > 0">
           <button
+            #modalLauncher
             type="button"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
-            [disabled]="!componentForm.valid || sendingForm || isDateNotOk()"
-            (click)="searchAndFillTable()"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2"
+            data-toggle="modal"
+            data-target="#no-peca-modal"
+            data-backdrop="false"
+            data-keyboard="false"
+            (click)="openModal()"
           >
             <span
               *ngIf="sendingForm"
               class="spinner-grow spinner-grow-sm"
             ></span>
-            {{ !sendingForm ? "Buscar" : "Buscando.." }}
+            Importar
           </button>
-        </ng-container> -->
+        </ng-container>
+
+        <ng-container *ngIf="studentsCount > 0">
+          <button
+            type="button"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
+            (click)="exportStudents()"
+          >
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            Exportar
+          </button>
+        </ng-container>
 
         <ng-container *ngSwitchCase="'editar'">
           <button
             [class.d-none]="settings.isEditable && isEditing"
             type="button"
             *ngIf="!settings.hiddenButton"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              mt-1
+              mr-2
+              submit-btn
+            "
             (click)="enableSaveAndCancelButtons()"
           >
             Editar
@@ -778,7 +833,14 @@
             [class.d-none]="settings.isEditable && !isEditing"
             type="button"
             *ngIf="!settings.hiddenButton"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              mt-1
+              submit-btn
+            "
             (click)="disableSaveAndCancelButtons()"
           >
             <span>Cancelar</span>
@@ -788,3 +850,48 @@
     </div>
   </div>
 </form>
+
+<!-- MODAL -->
+<div *ngIf="showImportModal; else null" class="modal fade" id="no-peca-modal">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content pb-4">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Importar estudiantes</h4>
+        <p class="py-2">
+          Por favor, suba el archivo excel con la información de los estudiantes
+          a importar:
+        </p>
+        <input
+          type="file"
+          id="file"
+          accept=".xls"
+          (change)="handleFileInput($event.target.files)"
+        />
+        <div class="full-width d-flex">
+          <button
+            *ngIf="showUploadBtn"
+            #upload
+            (click)="importStudents()"
+            class="btn btn-primary full-width submit-btn mx-auto mt-4"
+          >
+            <span
+              *ngIf="importingData"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            {{ !importingData ? "Importar data" : "Cargando..." }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

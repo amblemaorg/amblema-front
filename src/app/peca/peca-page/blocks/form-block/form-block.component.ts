@@ -1,4 +1,11 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -20,6 +27,9 @@ import {
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { NgDatepickerComponent, DatepickerOptions } from "ng2-datepicker";
 import { StepsService } from "../../../../services/steps/steps.service";
+import XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "form-block",
@@ -27,7 +37,16 @@ import { StepsService } from "../../../../services/steps/steps.service";
   styleUrls: ["./form-block.component.scss"],
 })
 export class FormBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, OnDestroy
+{
+  showImportModal: boolean;
+  showUploadBtn: boolean;
+  studentsToImport: any[];
+  studentsToExport: any[];
+  studentsCount: number;
+  studentsData: any;
+  importingData: boolean;
+
   type: "presentational";
   component: string;
   settings: {
@@ -134,12 +153,212 @@ export class FormBlockComponent
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
     private stepsService: StepsService,
+    private http: HttpClient,
+
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer
   ) {
     this.type = "presentational";
     this.component = "form";
     this.glbls = globals;
     this.stps = stepsService;
+    this.showImportModal = false;
+    this.showUploadBtn = false;
+    this.studentsData = [];
+    this.studentsCount = 0;
+  }
+
+  openModal() {
+    this.showImportModal = true;
+  }
+
+  closeModal() {
+    this.showImportModal = false;
+  }
+
+  handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      const data = new Uint8Array(reader.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const cell_ref = XLSX.utils.encode_cell({ c: 1, r: 2 });
+      const cell = sheet[cell_ref];
+
+      const elements = [];
+
+      Object.entries(sheet).forEach((keys, _) => {
+        const coordinate = keys[0];
+        const value_from_coordinate = sheet[coordinate].v;
+        elements.push(value_from_coordinate);
+      });
+
+      const el_cleaned = elements;
+      const num_cols = 8;
+
+      const matrix = el_cleaned.reduce(
+        (rows, key, index) =>
+          (index % num_cols == 0
+            ? rows.push([key])
+            : rows[rows.length - 1].push(key)) && rows,
+        []
+      );
+
+      const students: Array<Object> = matrix.map((registry, index) => {
+        if (index === 0) {
+          return null;
+        }
+        return {
+          grado: registry[0]?.toString() || "",
+          seccion: registry[1] || "",
+          nombre: registry[2] || "",
+          apellido: registry[3] || "",
+          tipo_de_documento: registry[4] || "",
+          documento_de_identidad: registry[5]?.toString() || "",
+          fecha_de_nacimiento: registry[6] || "",
+          genero: registry[7] || "",
+        };
+      });
+      students.shift();
+      students.pop();
+      this.showUploadBtn = true;
+      this.studentsToImport = students;
+
+      console.log("matrix: ", this.studentsToImport);
+    };
+  }
+
+  async importStudents() {
+    this.importingData = true;
+    const resourcePath = `section/load/${this.pecaId}`;
+    const body = {
+      action: "import",
+      students: this.studentsToImport,
+      section: this.sectionsArr[0].id,
+    };
+    try {
+      console.log("body: ", JSON.stringify(body));
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      if (result.status_code === 201) {
+        console.log(result);
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
+  }
+
+  makeExcel() {
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+
+    workbook.SheetNames.push("Data de estudiantes");
+    const columns_header = [
+      "Grado",
+      "Sección",
+      "Nombre",
+      "Apellido",
+      "Tipo de documento",
+      "Documento de identidad",
+      "Fecha de nacimiento",
+      "Género",
+    ];
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    for (
+      let count = 1, i = 0;
+      count <= this.studentsData.length;
+      count++, i++
+    ) {
+      genero = parseInt(this.studentsData[i]?.gender) === 1 ? "F" : "M";
+      fecha = new Date(this.studentsData[i]?.age)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      const data = [
+        this.studentsData[i]?.grades || "",
+        this.studentsData[i]?.section || "",
+        this.studentsData[i]?.name || "",
+        this.studentsData[i]?.lastName || "",
+        "V" || "", // TODO: check this
+        this.studentsData[i]?.documentGroup?.prependInput || "",
+        fecha,
+        genero,
+      ];
+      row_aux.push(data);
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+    // matrix.push(row_aux);
+    console.log(matrix);
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Data de estudiantes"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
+  exportStudents() {
+    console.log(this.sectionsArr[0]);
+    let grado = "";
+    switch (this.sectionsArr[0]?.grade) {
+      case "1":
+        grado = "1er grado";
+        break;
+      case "2":
+        grado = "2do grado";
+        break;
+      case "3":
+        grado = "3er grado";
+        break;
+      case "4":
+        grado = "4to grado";
+        break;
+      case "5":
+        grado = "5to grado";
+        break;
+      case "6":
+        grado = "6to grado";
+        break;
+      default:
+        grado = "";
+    }
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `Data de estudiantes - ${grado}, seccion ${this.sectionsArr[0].name}.xls`
+    );
+  }
+
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
   }
 
   ngOnInit() {
@@ -157,13 +376,12 @@ export class FormBlockComponent
           this.settings.formsContent["addressState"]
         ) {
           this.showSelectState = false;
-          this.settings.formsContent[
-            "addressMunicipality"
-          ].options = this.stepsService.getResidenceMuns();
-          this.settings.formsContent[
-            "addressState"
-          ].options = this.stepsService.getResidenceStates();
+          this.settings.formsContent["addressMunicipality"].options =
+            this.stepsService.getResidenceMuns();
+          this.settings.formsContent["addressState"].options =
+            this.stepsService.getResidenceStates();
 
+          this.studentsCount = 0;
           setTimeout(() => {
             this.showSelectState = true;
             this.updateMuns(
@@ -362,9 +580,10 @@ export class FormBlockComponent
       day: this.componentForm.controls[
         `${this.settings.formsContent[key_]["specialDateForm"]}Day`
       ].value,
-      month: this.componentForm.controls[
-        `${this.settings.formsContent[key_]["specialDateForm"]}Month`
-      ].value,
+      month:
+        this.componentForm.controls[
+          `${this.settings.formsContent[key_]["specialDateForm"]}Month`
+        ].value,
       year: this.componentForm.controls[
         `${this.settings.formsContent[key_]["specialDateForm"]}Year`
       ].value,
@@ -617,15 +836,14 @@ export class FormBlockComponent
       this.formInitialVals[this.settings.buttonCode] &&
       this.componentForm &&
       this.componentForm.value
-        ? Object.keys(
-            this.formInitialVals[this.settings.buttonCode]
-          ).every((iv_k) =>
-            !this.componentForm.value[iv_k] ||
-            typeof this.componentForm.value[iv_k] === "object"
-              ? true
-              : this.componentForm.value[iv_k] &&
-                this.componentForm.value[iv_k] ===
-                  this.formInitialVals[this.settings.buttonCode][iv_k]
+        ? Object.keys(this.formInitialVals[this.settings.buttonCode]).every(
+            (iv_k) =>
+              !this.componentForm.value[iv_k] ||
+              typeof this.componentForm.value[iv_k] === "object"
+                ? true
+                : this.componentForm.value[iv_k] &&
+                  this.componentForm.value[iv_k] ===
+                    this.formInitialVals[this.settings.buttonCode][iv_k]
           )
         : false;
 
@@ -1046,9 +1264,8 @@ export class FormBlockComponent
           ...this.settings.dataFromRow.data.newData,
           ...manageData.data,
         };
-        this.settings.dataFromRow.data.newData[
-          "id"
-        ] = this.settings.dataFromRow.data.oldData["id"];
+        this.settings.dataFromRow.data.newData["id"] =
+          this.settings.dataFromRow.data.oldData["id"];
       } else {
         // is for adding in modal view
         this.settings.dataFromRow["data"] = manageData.data;
@@ -1619,6 +1836,8 @@ export class FormBlockComponent
         section: this.sectionsArr[0].id,
       });
     }
+    this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
+    this.studentsCount = this.studentsData.length;
   }
   // managing sections depending on grades
   setSchoolSections(e) {

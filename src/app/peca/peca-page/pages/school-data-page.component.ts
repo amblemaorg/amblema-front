@@ -40,7 +40,8 @@ import { sectionsAndStudentsDataToSectionsFormMapper } from "../mappers/sections
 })
 export class SchoolDataPageComponent
   extends PecaPageComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -589,7 +590,10 @@ export class SchoolDataPageComponent
       this.studentsFormData = studentsData;
       this.studentsTableData = studentsData[0].students;
     }
-
+    localStorage.setItem(
+      "stud_data",
+      JSON.stringify(this.studentsTableData.data)
+    );
     this.studentsDataTemp = studentsData;
   }
 
