@@ -223,8 +223,6 @@ export class FormBlockComponent
       students.pop();
       this.showUploadBtn = true;
       this.studentsToImport = students;
-
-      console.log("matrix: ", this.studentsToImport);
     };
   }
 
@@ -237,10 +235,8 @@ export class FormBlockComponent
       section: this.sectionsArr[0].id,
     };
     try {
-      console.log("body: ", JSON.stringify(body));
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
-        console.log(result);
         this.showImportModal = false;
         this.toastr.success(result.message, "", {
           positionClass: "toast-bottom-right",
@@ -305,8 +301,6 @@ export class FormBlockComponent
     }
     matrix.push(columns_header);
     row_aux.forEach((student) => matrix.push(student));
-    // matrix.push(row_aux);
-    console.log(matrix);
 
     const columns = XLSX.utils.aoa_to_sheet(matrix);
     workbook.Sheets["Data de estudiantes"] = columns;
@@ -320,7 +314,6 @@ export class FormBlockComponent
   }
 
   exportStudents() {
-    console.log(this.sectionsArr[0]);
     let grado = "";
     switch (this.sectionsArr[0]?.grade) {
       case "1":
