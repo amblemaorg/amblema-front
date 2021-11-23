@@ -761,7 +761,6 @@
               py-1
               px-4
               mt-1
-              mr-2
               submit-btn
             "
             [disabled]="disableBtnWithDate()"
@@ -779,7 +778,7 @@
           <button
             #modalLauncher
             type="button"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
             data-toggle="modal"
             data-target="#no-peca-modal"
             data-backdrop="false"
@@ -794,10 +793,10 @@
           </button>
         </ng-container>
 
-        <ng-container *ngIf="studentsCount > 0">
+        <ng-container *ngIf="getStudentsCount()">
           <button
             type="button"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
             (click)="exportStudents()"
           >
             <span
@@ -805,6 +804,24 @@
               class="spinner-grow spinner-grow-sm"
             ></span>
             Exportar
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="fields.length > 5 && fields.length < 11">
+          <button
+            type="button"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+            data-toggle="modal"
+            data-target="#no-peca-modal-export"
+            data-backdrop="false"
+            data-keyboard="false"
+            (click)="openExportModal()"
+          >
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            Exportar secciones
           </button>
         </ng-container>
 
@@ -851,7 +868,7 @@
   </div>
 </form>
 
-<!-- MODAL -->
+<!-- MODAL IMPORTAR ESTUDIANTES -->
 <div *ngIf="showImportModal; else null" class="modal fade" id="no-peca-modal">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content pb-4">
@@ -889,6 +906,202 @@
               class="spinner-grow spinner-grow-sm"
             ></span>
             {{ !importingData ? "Importar data" : "Cargando..." }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IMPORTAR ESTUDIANTES -->
+<div
+  *ngIf="showExportModal; else null"
+  class="modal fade"
+  id="no-peca-modal-export"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content pb-4">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="closeExportModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Exportar secciones</h4>
+        <p class="py-2">
+          Por favor, seleccione el grado y las secciones de los estudiantes a
+          exportar:
+        </p>
+
+        <!-- adadad -->
+
+        <form
+          [formGroup]="componentForm"
+          (keydown.enter)="prevDef($event)"
+          (ngSubmit)="onSubmitForm(componentForm)"
+        >
+          <div
+            class="fields-container"
+            [class.one-row-form]="settings.isOneRow"
+            [class.one-line]="
+              settings.formsContent['imageGroup'] &&
+              settings.isFromCustomTableActions &&
+              imageFieldsArr(settings.formsContent['imageGroup'].fields)
+                .length == 0
+            "
+          >
+            <ng-container>
+              <ng-container *ngIf="isField(fields[0]); else titleLabel">
+                <div
+                  [class]="settings.formsContent[fields[0]].type"
+                  [ngClass]="{
+                    'form-group':
+                      settings.formsContent[fields[0]].type != 'double',
+                    'full-width':
+                      settings.formsContent[fields[0]].type != 'double' &&
+                      settings.formsContent[fields[0]].fullwidth,
+                    'input-group':
+                      settings.formsContent[fields[0]].type === 'prepend' ||
+                      (settings.formsContent[fields[0]].type === 'double' &&
+                        settings.formsContent[fields[0]].isInputGroup),
+                    'two-wrapper':
+                      settings.formsContent[fields[0]].type === 'double',
+                    'one-row-form-form-group': settings.isOneRow,
+                    'full-width2': settings.formsContent[fields[0]].fullwidth2
+                  }"
+                  [ngSwitch]="settings.formsContent[fields[0]].type"
+                >
+                  <ng-container *ngSwitchCase="'select'">
+                    <label>{{ settings.formsContent[fields[0]].label }}</label>
+                    <input
+                      *ngIf="
+                        (fields[0] == 'addressState' && !showSelectState) ||
+                        (settings.formsContent[fields[0]]
+                          .shouldContentRefresh &&
+                          isContentRefreshing)
+                      "
+                      class="form-control"
+                      type="text"
+                      [formControlName]="fields[0]"
+                      [id]="getId(fields[0])"
+                      [placeholder]="
+                        settings.formsContent[fields[0]].placeholder
+                      "
+                    />
+                    <ng-select
+                      *ngIf="
+                        (fields[0] == 'addressState' && showSelectState) ||
+                        (settings.formsContent[fields[0]]
+                          .shouldContentRefresh &&
+                          !isContentRefreshing) ||
+                        fields[0] != 'addressState'
+                      "
+                      class="form-control"
+                      [class.is-in-modal]="settings.isFromCustomTableActions"
+                      notFoundText="Elementos no encontrados"
+                      [items]="
+                        settings.formsContent[fields[0]].emmitSectionChange
+                          ? sectionsArr
+                          : fields[0] != 'addressMunicipality'
+                          ? settings.formsContent[fields[0]].options
+                          : municipalities
+                      "
+                      bindValue="id"
+                      bindLabel="name"
+                      [labelForId]="getId(fields[0])"
+                      [formControlName]="fields[0]"
+                      [virtualScroll]="true"
+                      [id]="getId(fields[0])"
+                      [placeholder]="
+                        settings.formsContent[fields[0]].placeholder
+                      "
+                      (click)="
+                        callTheMuns(fields[0] != 'addressState' ? false : true)
+                      "
+                      (change)="
+                        settings.formsContent[fields[0]].isGrades
+                          ? setSchoolSectionsModal($event)
+                          : settings.formsContent[fields[0]].isFactoryType
+                          ? requiredOtherCompany($event)
+                          : updateMuns(
+                              fields[0] === 'addressState' ? true : false
+                            )
+                      "
+                      [readonly]="
+                        settings.formsContent[fields[0]].readonly ||
+                        isReadOnly()
+                      "
+                    >
+                      <ng-template
+                        ng-option-tmp
+                        let-item="item"
+                        let-search="searchTerm"
+                      >
+                        <small>{{ item.name }}</small>
+                      </ng-template>
+                    </ng-select>
+                    <span
+                      *ngIf="
+                        fields[0] == 'addressState' && stps.getIsCallingM()
+                      "
+                      class="floatingLoading"
+                      >Cargando estados...</span
+                    >
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </form>
+
+        <!-- <div *ngIf="sectionsArr.length > 0">
+          <div *ngFor="let section of sectionsArr; trackBy: trackByFn">
+            <label>Seccion {{ section.name }}</label>
+          </div>
+        </div> -->
+        <div *ngIf="sectionsArr.length > 0">
+          <label style="color: grey">Seleccione la sección:</label>
+          <div *ngIf="sectionsArr.length > 1">
+            <label>
+              <input
+                id="allSections"
+                type="checkbox"
+                ngModel
+                (ngModelChange)="selectSection('all', $event)"
+                class="mx-2"
+              />
+              Todas las secciones
+            </label>
+          </div>
+          <div *ngFor="let section of sectionsArr; trackBy: trackByFn">
+            <label
+              ><input
+                id="{{ section.id }}"
+                type="checkbox"
+                ngModel
+                ngControl="section.id"
+                (ngModelChange)="selectSection(section.id, $event)"
+                class="mx-2"
+              />
+              Sección {{ section.name }}</label
+            ><br />
+          </div>
+        </div>
+
+        <div class="full-width d-flex">
+          <button
+            *ngIf="showExportBtn"
+            #upload
+            (click)="exportSections()"
+            class="btn btn-primary full-width submit-btn mx-auto mt-4"
+          >
+            <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm"></span>
+            {{ !isLoading ? "Exportar seccion(es)" : "Cargando..." }}
           </button>
         </div>
       </div>

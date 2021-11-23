@@ -935,6 +935,21 @@ export const formGradosSecciones = {
       // { id: "3", name: "Stephanie" }
     ],
   },
+  students: {
+    label: "Seleccione el estudiante",
+    placeholder: "estudiante",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "0", name: "Preescolar" },
+      { id: "1", name: "1er Grado" },
+      { id: "2", name: "2do Grado" },
+      { id: "3", name: "3er Grado" },
+      { id: "4", name: "4to Grado" },
+      { id: "5", name: "5to Grado" },
+      { id: "6", name: "6to Grado" },
+    ],
+  },
 };
 /*Tabs Estudiantes*/
 export const formTabsEstudiantesGradesSections = {

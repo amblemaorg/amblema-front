@@ -107,7 +107,6 @@ export class SchoolDataPageComponent
     globals.blockIntancesTableRefresherEmitter.subscribe((data) => {
       if (data.tableName === "estudiantesTable") {
         this.currentStudentsGroup = data.id_string;
-
         this.setStudentsFormData(
           this.studentsDataTemp,
           false,
@@ -191,6 +190,7 @@ export class SchoolDataPageComponent
 
           this.peca_id = data.school.pecaId;
 
+          // console.log("DATA SECTIONS: ", data.school);
           this.setStudentsFormData(
             data.school.sections,
             true,
@@ -482,7 +482,6 @@ export class SchoolDataPageComponent
   ) {
     if (_mapper) {
       const mapper = _mapper(studentsData);
-
       if (both) {
         this.studentsFormData = {
           setContent: true,
@@ -503,7 +502,7 @@ export class SchoolDataPageComponent
           })
         : -1;
 
-      const { theGrade, theSection, theId } = {
+      let { theGrade, theSection, theId } = {
         ...(this.currentStudentsGroup && section_name_index >= 0
           ? {
               theGrade: mapper.sections[section_name_index].grade,
@@ -524,10 +523,25 @@ export class SchoolDataPageComponent
         return mapper.grades[grade];
       });
 
-      const theData = this.currentStudentsGroup
-        ? mapper.allStudents[this.currentStudentsGroup]
-        : [];
-
+      let theData = [];
+      if (Array.isArray(this.currentStudentsGroup)) {
+        const aux = this.currentStudentsGroup
+          ? this.currentStudentsGroup.forEach((sectionId) => {
+              mapper.allStudents[sectionId].forEach((student) => {
+                theData.push(student);
+              });
+            })
+          : [];
+      } else {
+        theData = this.currentStudentsGroup
+          ? mapper.allStudents[this.currentStudentsGroup]
+          : [];
+      }
+      if (!theSection) {
+        theSection = " todas la secciones.";
+      }
+      // console.log("the section: ", theSection);
+      // console.log("data: ", theData);
       this.studentsTableData = {
         data: theData,
         promoteData: {
@@ -590,10 +604,10 @@ export class SchoolDataPageComponent
       this.studentsFormData = studentsData;
       this.studentsTableData = studentsData[0].students;
     }
-    localStorage.setItem(
-      "stud_data",
-      JSON.stringify(this.studentsTableData.data)
-    );
+    // localStorage.setItem(
+    //   "stud_data",
+    //   JSON.stringify(this.studentsTableData.data)
+    // );
     this.studentsDataTemp = studentsData;
   }
 
