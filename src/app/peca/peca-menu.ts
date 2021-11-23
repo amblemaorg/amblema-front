@@ -103,6 +103,7 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   {
     title: "Formato para registro de estudiantes",
     link: "formato-registro-estudiantes",
+    icon: "file-text",
     data: "monitoring_activity_peca_view",
   },
   {
