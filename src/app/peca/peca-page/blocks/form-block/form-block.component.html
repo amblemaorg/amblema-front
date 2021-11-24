@@ -956,7 +956,7 @@
             "
           >
             <ng-container>
-              <ng-container *ngIf="isField(fields[0]); else titleLabel">
+              <ng-container *ngIf="isField(fields[0])">
                 <div
                   [class]="settings.formsContent[fields[0]].type"
                   [ngClass]="{
