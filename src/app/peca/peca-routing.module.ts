@@ -19,6 +19,7 @@ import { SchoolPicturesPageComponent } from "./peca-page/pages/school-pictures-p
 import { YearbookPageComponent } from "./peca-page/pages/yearbook-page.component";
 import { GenericActivityPageComponent } from "./peca-page/pages/generic-activity-page.component";
 import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/previous-scholar-year-enrollment-page.component";
+import { FormatoRegistroComponent } from "./peca-page/pages/formato-registro-estudiantes-page.component";
 const routes: Routes = [
   {
     path: "",
@@ -79,6 +80,10 @@ const routes: Routes = [
       {
         path: "tematica-ambiental",
         component: EnvironmentalProjectPageComponent,
+      },
+      {
+        path: "formato-registro-estudiantes",
+        component: FormatoRegistroComponent,
       },
       {
         path: "estrategia-seguimiento",

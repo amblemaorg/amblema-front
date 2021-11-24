@@ -2,9 +2,7 @@ import {
   formTestimonioDocentesModal,
   formTestimonioDocentesModalEdit,
 } from "../blocks/form-block/all-forms";
-import {
-  requiredAndNormalText,
-} from "src/app/web/shared/forms/custom-validators";
+import { requiredAndNormalText } from "src/app/web/shared/forms/custom-validators";
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 
 const controlProps = {
@@ -88,20 +86,26 @@ const modalTestimonioDocenteTabla = {
   },
 };
 
-export function teacherTestimoniesConfigMapper(pecaContent, userId, permissions, store) {
+export function teacherTestimoniesConfigMapper(
+  pecaContent,
+  userId,
+  permissions,
+  store
+) {
   const schoolId = pecaContent.project.school.id;
   const schoolTeachers = pecaContent.school.teachers;
   const teachersTestimonies = pecaContent.school.teachersTestimonials;
   const { approvalHistory, isInApproval, testimonials } = teachersTestimonies;
   const { teacher_testimonial_edit, teacher_testimonial_delete } = permissions;
-  
+
   let currentTestimonies = testimonials;
   let currentStatus = testimonials.length > 0 ? 2 : 1;
   let lastTestimoniesRequest = null;
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     lastTestimoniesRequest = approvalHistory[approvalHistory.length - 1];
     currentTestimonies = lastTestimoniesRequest.detail.testimonials;
-    currentStatus = +lastTestimoniesRequest.status < 4 ? +lastTestimoniesRequest.status : 1;
+    currentStatus =
+      +lastTestimoniesRequest.status < 4 ? +lastTestimoniesRequest.status : 1;
   }
 
   const teacherTestimoniesStatus = {
@@ -185,7 +189,15 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, permissions,
       buttonCode: "dataTestimonioDocenteTabla",
       tableCode: "dataTestimonioDocenteTabla",
       dataTestimonioDocenteTabla: currentTestimonies.map((testimony) => {
-        const { id, teacherId, firstName, lastName, position, description, image } = testimony;
+        const {
+          id,
+          teacherId,
+          firstName,
+          lastName,
+          position,
+          description,
+          image,
+        } = testimony;
         return {
           id: teacherId,
           name: firstName,
@@ -227,7 +239,9 @@ export function teacherTestimoniesConfigMapper(pecaContent, userId, permissions,
     settings: {
       action: [
         {
-          hidden: isInApproval ? !teacher_testimonial_delete : !teacher_testimonial_edit,
+          hidden: isInApproval
+            ? !teacher_testimonial_delete
+            : !teacher_testimonial_edit,
           type: isInApproval ? 9 : 1,
           name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
         },
