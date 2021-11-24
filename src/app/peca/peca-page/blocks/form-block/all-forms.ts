@@ -130,7 +130,7 @@ import {
   requiredAndSocialNetwork,
   socialNetwork,
   password,
-  requiredAndPassword
+  requiredAndPassword,
 } from "../../../../web/shared/forms/custom-validators";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 
@@ -199,22 +199,22 @@ const controlProps = {
     type: "number",
     validations: {
       ...requiredAndNaturalNumber,
-      maxLength: [8,10]
+      maxLength: [8, 10],
     },
-    messages: { 
+    messages: {
       pattern: MESSAGES.NATURAL_NUMBER_MESSAGE,
-      maxLength: "ha superado el máximo caracteres permitidos"
+      maxLength: "ha superado el máximo caracteres permitidos",
     },
   },
   numberMax: {
     type: "number",
     validations: {
       ...naturalNumber,
-      maxLength: [8,10]
+      maxLength: [8, 10],
     },
-    messages: { 
+    messages: {
       pattern: MESSAGES.NATURAL_NUMBER_MESSAGE,
-      maxLength: "ha superado el máximo caracteres permitidos"
+      maxLength: "ha superado el máximo caracteres permitidos",
     },
   },
   phoneAndRequired: {
@@ -935,6 +935,21 @@ export const formGradosSecciones = {
       // { id: "3", name: "Stephanie" }
     ],
   },
+  students: {
+    label: "Seleccione el estudiante",
+    placeholder: "estudiante",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "0", name: "Preescolar" },
+      { id: "1", name: "1er Grado" },
+      { id: "2", name: "2do Grado" },
+      { id: "3", name: "3er Grado" },
+      { id: "4", name: "4to Grado" },
+      { id: "5", name: "5to Grado" },
+      { id: "6", name: "6to Grado" },
+    ],
+  },
 };
 /*Tabs Estudiantes*/
 export const formTabsEstudiantesGradesSections = {
@@ -1024,7 +1039,7 @@ export const passwordConfs = {
     placeholder: "Confirmación de contraseña",
     fullwidth: false,
     ...controlProps.password,
-  }
+  },
 };
 /* PERFIL DE USUARIO COORDINADOR*/
 export const formCoordinador = {
@@ -1610,7 +1625,7 @@ export const formMatematicaModal = {
     label: "Resultado de multiplicación",
     placeholder: "Resultado de multiplicación",
     fullwidth: false,
-    ...controlProps.number/* AndRequired */,
+    ...controlProps.number /* AndRequired */,
   },
   /* dateLog: {
     label: "Fecha del resultado logica matematica",
@@ -1625,7 +1640,7 @@ export const formMatematicaModal = {
     label: "Resultado de lógica matemática",
     placeholder: "Resultado de lógica matemática",
     fullwidth: false,
-    ...controlProps.number/* AndRequired */,
+    ...controlProps.number /* AndRequired */,
   },
   indexMul: {
     label: "Índice de multiplicación",

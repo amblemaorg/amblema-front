@@ -51,12 +51,12 @@ import { SchedulePageComponent } from "./peca-page/pages/schedule-page.component
 import { SchoolPicturesPageComponent } from "./peca-page/pages/school-pictures-page.component";
 import { YearbookPageComponent } from "./peca-page/pages/yearbook-page.component";
 import { GenericActivityPageComponent } from "./peca-page/pages/generic-activity-page.component";
+import { FormatoRegistroComponent } from "./peca-page/pages/formato-registro-estudiantes-page.component";
 // Block Components
 import { TabsBlockComponent } from "./peca-page/blocks/tabs-block/tabs-block.component";
 import { TableBlockComponent } from "./peca-page/blocks/table-block/table-block.component";
 import { AccordionBlockComponent } from "./peca-page/blocks/accordion-block/accordion-block.component";
 import { TextsButtonsSetBlockComponent } from "./peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component";
-import { FormBlockComponent } from "./peca-page/blocks/form-block/form-block.component";
 import { ProfileBlockComponent } from "./peca-page/blocks/profile-block/profile-block.component";
 import { SliderBlockComponent } from "./peca-page/blocks/slider-block/slider-block.component";
 import { StepperBlockComponent } from "./peca-page/blocks/stepper-block/stepper-block.component";
@@ -72,6 +72,8 @@ import { SummaryBlockComponent } from "./peca-page/blocks/franklin-dev-component
 import { FormReviewComponent } from "./peca-page/blocks/franklin-dev-component/form-review/form-review.component";
 import { FormTableComponent } from "./peca-page/blocks/form-table-previous-students/form-table.component";
 import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/previous-scholar-year-enrollment-page.component";
+import { FormBlockComponent } from "./peca-page/blocks/form-block/form-block.component";
+import { FormatDownloadBlock } from "./peca-page/blocks/format-block/format-block.component";
 
 @NgModule({
   declarations: [
@@ -115,6 +117,8 @@ import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/pr
     SummaryBlockComponent,
     FormReviewComponent,
     FormTableComponent,
+    FormatoRegistroComponent,
+    FormatDownloadBlock,
   ],
   imports: [
     CommonModule,
@@ -164,6 +168,8 @@ import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/pr
     GraphicsLogicComponent,
     SummaryBlockComponent,
     FormTableComponent,
+    FormatoRegistroComponent,
+    FormatDownloadBlock,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

@@ -37,7 +37,8 @@ export class TableBlockComponent
     OnInit,
     OnDestroy,
     DoCheck,
-    AfterViewChecked {
+    AfterViewChecked
+{
   type: "presentational";
   name: string;
   component: string;
@@ -471,9 +472,8 @@ export class TableBlockComponent
         (this.settings.tableCode === "initialDiagnosticConfigLectura" ||
           this.settings.tableCode === "initialDiagnosticConfigMatematica")
       ) {
-        const { filters, page } = this.tableStates[
-          `${this.settings.tableCode}${this.thisLapse}`
-        ];
+        const { filters, page } =
+          this.tableStates[`${this.settings.tableCode}${this.thisLapse}`];
         if (filters && filters.length) this.source.setFilter([...filters]);
         setTimeout(() => {
           if (this.settings["pager"]) {
@@ -545,6 +545,8 @@ export class TableBlockComponent
   }
 
   onUserRowSelect(event) {
+    const selectedData = event.selected;
+    localStorage.setItem("stud_data", JSON.stringify(selectedData));
     if (this.settings.isMulti) {
       const count = event?.source?.data?.length;
       this.selectedRows =
@@ -680,11 +682,10 @@ export class TableBlockComponent
     if (!field.includes("section")) {
       this.showSelectSections0 = false;
       if (event)
-        this.settings.promoteData[
-          `${this.settings.sectionKey}2P`
-        ].items = this.settings.allSections.filter((s) => {
-          return s.grade == event.id;
-        });
+        this.settings.promoteData[`${this.settings.sectionKey}2P`].items =
+          this.settings.allSections.filter((s) => {
+            return s.grade == event.id;
+          });
       else if (!event) {
         this.settings.promoteData[`${this.settings.sectionKey}2P`].items = [];
       }
