@@ -1866,7 +1866,7 @@ export class FormBlockComponent
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      markedCheckbox.forEach((checkbox) => {
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
       });
@@ -1874,7 +1874,8 @@ export class FormBlockComponent
     } else {
       this.fillSections();
       this.sectionsToExport.forEach((sectionId) => {
-        document.getElementById(sectionId).checked = false;
+        const sectionCheckbox = document.getElementById(sectionId) as HTMLInputElement;
+        sectionCheckbox.checked = false;
       });
     }
   }
@@ -1885,7 +1886,7 @@ export class FormBlockComponent
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      markedCheckbox.forEach((checkbox) => {
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         if (checkbox.id !== "allSections") {
           checkbox.checked = true;
           checkbox.disabled = true;
@@ -1898,7 +1899,7 @@ export class FormBlockComponent
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      markedCheckbox.forEach((checkbox) => {
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
       });
@@ -2044,12 +2045,13 @@ export class FormBlockComponent
         )}.xls`
       );
       this.sectionsToExport.forEach((sectionId) => {
-        document.getElementById(sectionId).checked = false;
+        const sectionCheckbox = document.getElementById(sectionId) as HTMLInputElement;
+        sectionCheckbox.checked = false;
       });
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      markedCheckbox.forEach((checkbox) => {
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
       });
