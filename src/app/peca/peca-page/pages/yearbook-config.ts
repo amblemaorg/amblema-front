@@ -231,6 +231,7 @@ export function MapperYearBookWeb(
               disabled: /* yearBookData.isInApproval */ false,
             },
             button: {
+              type: "button",
               text: "Guardar cambios",
               ingAction: "Guardando...",
               hidden: /* yearBookData.isInApproval */ false,
@@ -453,6 +454,7 @@ export function MapperYearBookWeb(
               disabled: /* yearBookData.isInApproval */ false,
             },
             button: {
+              type: "button",
               text: "Guardar cambios",
               ingAction: "Guardando...",
               hidden: /* yearBookData.isInApproval */ false,
