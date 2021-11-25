@@ -125,7 +125,8 @@
         *ngIf="
           settings.fields.button &&
           !settings.fields.button.hidden &&
-          settings.fields.button.type === 'submit'
+          (settings.fields.button.type === 'submit' ||
+            !settings.fields.button.type)
         "
         nbButton
         class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
