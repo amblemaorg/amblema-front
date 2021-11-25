@@ -52,6 +52,7 @@ export class FormReviewComponent
         | false;
       button?:
         | {
+            type?: string;
             text?: string;
             ingAction?: string;
             isMainBtn?: boolean;
@@ -61,6 +62,7 @@ export class FormReviewComponent
         | false;
       cancelButton?:
         | {
+            type?: string;
             text?: string;
             ingAction?: string;
             isMainBtn?: boolean;
