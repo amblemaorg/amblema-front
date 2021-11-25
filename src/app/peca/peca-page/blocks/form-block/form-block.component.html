@@ -785,24 +785,17 @@
             data-keyboard="false"
             (click)="openModal()"
           >
-            <span
-              *ngIf="sendingForm"
-              class="spinner-grow spinner-grow-sm"
-            ></span>
             Importar
           </button>
         </ng-container>
 
-        <ng-container *ngIf="getStudentsCount()">
+        <ng-container *ngSwitchCase="'agregar'">
           <button
             type="button"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
             (click)="exportStudents()"
+            [disabled]="getStudentsCount()"
           >
-            <span
-              *ngIf="sendingForm"
-              class="spinner-grow spinner-grow-sm"
-            ></span>
             Exportar
           </button>
         </ng-container>
