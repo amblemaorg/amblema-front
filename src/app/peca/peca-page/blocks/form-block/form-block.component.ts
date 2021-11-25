@@ -343,7 +343,7 @@ export class FormBlockComponent
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
       new Blob([octetStream], { type: "application/octet-stream" }),
-      `Data de estudiantes - ${grado}, seccion ${this.sectionsArr[0].name}.xls`
+      `Data de estudiantes - ${grado}, seccion ${this.sectionsArr[0].name}.xlsx`
     );
   }
 
@@ -1524,7 +1524,7 @@ export class FormBlockComponent
 
   getStudentsCount() {
     const count = JSON.parse(localStorage.getItem("stud_data")).length;
-    return count > 0;
+    return count <= 0;
   }
 
   disableBtnWithDate() {
@@ -1874,7 +1874,9 @@ export class FormBlockComponent
     } else {
       this.fillSections();
       this.sectionsToExport.forEach((sectionId) => {
-        const sectionCheckbox = document.getElementById(sectionId) as HTMLInputElement;
+        const sectionCheckbox = document.getElementById(
+          sectionId
+        ) as HTMLInputElement;
         sectionCheckbox.checked = false;
       });
     }
@@ -1920,9 +1922,12 @@ export class FormBlockComponent
         this.showExportBtn = false;
       }
     }
-    console.log("TO EXPORT: ", toExport);
-    console.log("sections to export: ", this.sectionsToExport);
-    this.showExportBtn = true;
+
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
+    }
   }
 
   makeExcelExport(studentsData) {
@@ -1976,7 +1981,7 @@ export class FormBlockComponent
     /* Exportar workbook como binario para descarga */
     const workbookBinary = XLSX.write(workbook, {
       type: "binary",
-      bookType: "xls",
+      bookType: "xlsx",
     });
     return workbookBinary;
   }
@@ -2042,10 +2047,12 @@ export class FormBlockComponent
         new Blob([octetStream], { type: "application/octet-stream" }),
         `Data de estudiantes - ${this.parseGrade(
           this.componentForm.controls["grades"].value
-        )}.xls`
+        )}.xlsx`
       );
       this.sectionsToExport.forEach((sectionId) => {
-        const sectionCheckbox = document.getElementById(sectionId) as HTMLInputElement;
+        const sectionCheckbox = document.getElementById(
+          sectionId
+        ) as HTMLInputElement;
         sectionCheckbox.checked = false;
       });
       const markedCheckbox = document.querySelectorAll(
