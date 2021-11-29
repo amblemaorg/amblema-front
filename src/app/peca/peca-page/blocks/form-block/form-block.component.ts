@@ -197,16 +197,24 @@ export class FormBlockComponent
       const data = new Uint8Array(reader.result as ArrayBuffer);
       const workbook = XLSX.read(data, { type: "array" });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const cell_ref = XLSX.utils.encode_cell({ c: 1, r: 2 });
-      const cell = sheet[cell_ref];
+      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
       const elements = [];
 
-      Object.entries(sheet).forEach((keys, _) => {
-        const coordinate = keys[0];
-        const value_from_coordinate = sheet[coordinate].v;
-        elements.push(value_from_coordinate);
+      studentsData.forEach((student) => {
+        elements.push(
+          student["Grado"],
+          student["Sección"],
+          student["Nombre"],
+          student["Apellido"],
+          student["Tipo de documento"],
+          student["Documento de identidad"],
+          student["Fecha de nacimiento"],
+          student["Género"]
+        );
       });
+
+      console.log("ELEMENTS: ", studentsData);
 
       const el_cleaned = elements;
       const num_cols = 8;
@@ -220,9 +228,8 @@ export class FormBlockComponent
       );
 
       const students: Array<Object> = matrix.map((registry, index) => {
-        if (index === 0) {
-          return null;
-        }
+        const fecha_de_nacimiento = this.parseDate(registry[6]);
+
         return {
           grado: registry[0]?.toString() || "",
           seccion: registry[1] || "",
@@ -230,15 +237,34 @@ export class FormBlockComponent
           apellido: registry[3] || "",
           tipo_de_documento: registry[4] || "",
           documento_de_identidad: registry[5]?.toString() || "",
-          fecha_de_nacimiento: registry[6] || "",
+          fecha_de_nacimiento: fecha_de_nacimiento || "",
           genero: registry[7] || "",
         };
       });
-      students.shift();
-      students.pop();
       this.showUploadBtn = true;
+
       this.studentsToImport = students;
+      console.log("students: ", students);
     };
+  }
+
+  parseDate(date) {
+    if (typeof date === "number") {
+      const dateString = this.SerialDateToJSDate(date, -4);
+      const dateOutput = new Date(dateString)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      return dateOutput;
+    } else {
+      return date;
+    }
+  }
+
+  // serialDate is whole number of days since Dec 30, 1899
+  // offsetUTC is -(24 - your timezone offset)
+  SerialDateToJSDate(serialDate, offsetUTC) {
+    return new Date(Date.UTC(0, 0, serialDate, offsetUTC));
   }
 
   async importStudents() {
@@ -249,23 +275,24 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[0].id,
     };
-    try {
-      const result = await this.fetcher.post(resourcePath, body).toPromise();
-      if (result.status_code === 201) {
-        this.showImportModal = false;
-        this.toastr.success(result.message, "", {
-          positionClass: "toast-bottom-right",
-        });
-        this.importingData = false;
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
-    } catch (err) {
-      console.log("error: ", err);
-      throw err;
-    } finally {
-    }
+    console.log("body: ", body);
+    // try {
+    //   const result = await this.fetcher.post(resourcePath, body).toPromise();
+    //   if (result.status_code === 201) {
+    //     this.showImportModal = false;
+    //     this.toastr.success(result.message, "", {
+    //       positionClass: "toast-bottom-right",
+    //     });
+    //     this.importingData = false;
+    //     setTimeout(() => {
+    //       window.location.reload();
+    //     }, 2000);
+    //   }
+    // } catch (err) {
+    //   console.log("error: ", err);
+    //   throw err;
+    // } finally {
+    // }
   }
 
   makeExcel() {
