@@ -82,6 +82,7 @@ export function MapperYearBookWeb(
               // store.dispatch(new SetSectionImage(data));
               dispatchAction("sections", data);
             },
+
             fields: {
               inputImg: {
                 name: `grade${grade}-section${name}-image`,
@@ -223,6 +224,14 @@ export function MapperYearBookWeb(
             // store.dispatch(new SetLapseReadingAnalysis(data));
             dispatchAction("readingDiagnosticAnalysis", data);
           },
+          onClickButton: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+              form: true,
+            };
+            dispatchAction("readingDiagnosticAnalysis", data);
+          },
           fields: {
             description: {
               label: "Análisis del diagnóstico de lectura",
@@ -335,6 +344,7 @@ export function MapperYearBookWeb(
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
+              form: true,
             };
             dispatchAction("mathDiagnosticAnalysis", data);
           },
@@ -442,8 +452,17 @@ export function MapperYearBookWeb(
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
+              form: true,
             };
             // store.dispatch(new SetLapseLogicAnalysis(data));
+            dispatchAction("logicDiagnosticAnalysis", data);
+          },
+          onClickButton: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+              form: true,
+            };
             dispatchAction("logicDiagnosticAnalysis", data);
           },
           fields: {
@@ -550,6 +569,9 @@ export function MapperYearBookWeb(
     }
   }
 
+  const mostrarFeedback = (statusCode) => {
+    return statusCode === 3;
+  };
   const yearbookStatus = {
     component: "textsbuttons",
     settings: {
@@ -557,7 +579,16 @@ export function MapperYearBookWeb(
       status: {
         text: "Estatus",
         subText: yearBookData.status,
+        comments: yearBookData.comments,
       },
+      action: mostrarFeedback(yearBookData.status)
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
     },
   };
 

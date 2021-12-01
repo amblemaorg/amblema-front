@@ -271,7 +271,14 @@
           "
         >
           <button
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              btn-in-wrapper
+              ml-4
+            "
             (click)="addToTable(true)"
             [disabled]="!userCanEdit"
             *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
@@ -283,7 +290,14 @@
           <button
             *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
             title="general"
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              btn-in-wrapper
+              ml-4
+            "
             (click)="addToTable()"
             [disabled]="!currentSelected || !userCanEdit"
           >
@@ -315,7 +329,12 @@
             *ngIf="prueba.btn"
             title="general"
             type="button"
-            class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              btn-in-wrapper
+              styleInputAndBtn
+            "
             (click)="addToTable()"
           >
             {{ prueba.btn }}
@@ -460,7 +479,14 @@
         >
           <button
             *ngIf="action.name && !action.hidden"
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            class="
+              btn btn-primary
+              text-decoration-none
+              py-1
+              px-4
+              btn-in-wrapper
+              action-btn
+            "
             (click)="addToTable(true, action.type == 6 ? false : true)"
           >
             {{ action.name }}
@@ -495,6 +521,7 @@
               class="spinner-grow spinner-grow-sm"
             ></span>
             {{
+              settings.action.type !== 9 &&
               isSending &&
               (action.type == 4 || action.type == 7 || action.type == 8)
                 ? action.type == 8
@@ -519,7 +546,15 @@
             "
           >
             <button
-              class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+              class="
+                btn btn-primary
+                text-decoration-none
+                py-1
+                px-4
+                btn-in-wrapper
+                action-btn
+                cancel-btn
+              "
               [disabled]="isSending || sleepSend"
               (click)="cancelRequest()"
             >
@@ -535,3 +570,17 @@
     </ng-container>
   </div>
 </div>
+
+<p
+  *ngIf="showModalInfo"
+  class="text-decoration-none"
+  style="
+    color: red;
+    background: #fcc7c7;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    margin-top: 10px;
+  "
+>
+  {{ settings.status.comments }}
+</p>
