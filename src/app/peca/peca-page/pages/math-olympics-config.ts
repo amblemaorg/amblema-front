@@ -51,11 +51,8 @@ export function mathOlympicsConfigMapper(
   store: Store
 ) {
   // Processing data
-  const {
-    olympics_peca_create,
-    olympics_peca_edit,
-    olympics_peca_delete,
-  } = permissions;
+  const { olympics_peca_create, olympics_peca_edit, olympics_peca_delete } =
+    permissions;
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
   const mathOlympics = pecaData[lapseName].olympics;
@@ -111,14 +108,8 @@ export function mathOlympicsConfigMapper(
       selectStatus: {
         placeholder: "Selecciona el estudiante",
         lista: studentsNotInOlympics.map((student) => {
-          const {
-            id,
-            firstName,
-            lastName,
-            sectionId,
-            section,
-            grade,
-          } = student;
+          const { id, firstName, lastName, sectionId, section, grade } =
+            student;
           return {
             id,
             name: `${firstName} ${lastName}`,

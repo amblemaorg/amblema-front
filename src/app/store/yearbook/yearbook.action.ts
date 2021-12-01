@@ -372,14 +372,8 @@ export class YearBookState {
     { patchState, getState }: StateContext<YearBook>,
     action: UpdateYearBookRequest
   ) {
-    const {
-      pecaId,
-      userId,
-      section,
-      partial,
-      data,
-      requestId,
-    } = action.payload;
+    const { pecaId, userId, section, partial, data, requestId } =
+      action.payload;
 
     const yearBookData = {
       ...data,
