@@ -1,24 +1,24 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TextsButtonsSetBlockComponent } from './texts-buttons-set-block.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { PageBlockFactory } from '../page-block-factory';
-import { ComponentFactoryResolver, ComponentFactory } from '@angular/core';
-import { PageBlockComponent } from '../page-block.component';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NbIconModule } from '@nebular/theme';
-import { HttpClientModule } from '@angular/common/http';
-import { ToastrService, ToastrModule } from 'ngx-toastr';
-import { NgxsModule } from '@ngxs/store';
-import { ModulesState } from '../../../../store/states/e-learning/learning-modules.state';
-import { UserState } from '../../../../store/states/e-learning/user.state';
-import { StepsState } from '../../../../store/states/steps/project.state';
-import { ResidenceInfoState } from '../../../../store/states/steps/residence-info.state';
-import { EmbedVideoService } from 'ngx-embed-video';
-import { NgDatepickerModule } from 'ng2-datepicker';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { TextsButtonsSetBlockComponent } from "./texts-buttons-set-block.component";
+import { RouterTestingModule } from "@angular/router/testing";
+import { PageBlockFactory } from "../page-block-factory";
+import { ComponentFactoryResolver, ComponentFactory } from "@angular/core";
+import { PageBlockComponent } from "../page-block.component";
+import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { NbIconModule } from "@nebular/theme";
+import { HttpClientModule } from "@angular/common/http";
+import { ToastrService, ToastrModule } from "ngx-toastr";
+import { NgxsModule } from "@ngxs/store";
+import { ModulesState } from "../../../../store/states/e-learning/learning-modules.state";
+import { UserState } from "../../../../store/states/e-learning/user.state";
+import { StepsState } from "../../../../store/states/steps/project.state";
+import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
+import { EmbedVideoService } from "ngx-embed-video";
+import { NgDatepickerModule } from "ng2-datepicker";
 
-describe('TextsButtonsSetBlockComponent', () => {
+describe("TextsButtonsSetBlockComponent", () => {
   let component: TextsButtonsSetBlockComponent;
   let fixture: ComponentFixture<TextsButtonsSetBlockComponent>;
 
@@ -28,29 +28,29 @@ describe('TextsButtonsSetBlockComponent', () => {
 
   let factory: PageBlockFactory = new PageBlockFactory(factoryResolver);
   let textsAndButtonsSettings = {
-    component: 'buttons',
+    component: "buttons",
     settings: {
       dateOrtext: {
-        text: 'texto fecha',
-        date: '12/12/12',
+        text: "texto fecha",
+        date: "12/12/12",
       },
-      status: 'pendiente',
+      status: "pendiente",
       // texts: {
       title: {
-        aligning: 'center', // 'center' for center aligning, 'left' otherwise
-        text: 'texto alineado',
+        aligning: "center", // 'center' for center aligning, 'left' otherwise
+        text: "texto alineado",
       },
       subtitles: [
         {
-          title: 'subtitulo', // subtitle
-          text: 'parrafo', // paragraph
+          title: "subtitulo", // subtitle
+          text: "parrafo", // paragraph
         },
       ],
       // }[];
       action: [
         {
           type: 1, // 1 send, 2 save
-          name: 'Enviar', // text in the button
+          name: "Enviar", // text in the button
         },
       ],
       // upload: any;
@@ -70,20 +70,20 @@ describe('TextsButtonsSetBlockComponent', () => {
         NbIconModule,
         HttpClientModule,
         NgDatepickerModule,
-        NgxsModule.forRoot( [
-          ModulesState,
-          UserState,
-          StepsState,
-          ResidenceInfoState,
-        ],
-        {
-          compatibility: {
-            strictContentSecurityPolicy: true
-          },
-          developmentMode: false
-        })
+        NgxsModule.forRoot(
+          [ModulesState, UserState, StepsState, ResidenceInfoState],
+          {
+            compatibility: {
+              strictContentSecurityPolicy: true,
+            },
+            developmentMode: false,
+          }
+        ),
       ],
-      providers: [{ provide: ToastrService, useClass: ToastrService },EmbedVideoService],
+      providers: [
+        { provide: ToastrService, useClass: ToastrService },
+        EmbedVideoService,
+      ],
     });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
@@ -96,12 +96,14 @@ describe('TextsButtonsSetBlockComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TextsButtonsSetBlockComponent);
     component = fixture.componentInstance;
-    factoryResolver = fixture.debugElement.injector.get(ComponentFactoryResolver);
+    factoryResolver = fixture.debugElement.injector.get(
+      ComponentFactoryResolver
+    );
     component.setSettings(textsAndButtonsSettings.settings);
     fixture.detectChanges();
   });
 
-  it('should create component', () => {
+  it("should create component", () => {
     expect(component).toBeTruthy();
   });
 });
