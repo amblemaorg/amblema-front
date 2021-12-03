@@ -1,4 +1,4 @@
-import { lapsePlanningPermissionsI } from './../blocks/peca-permissology';
+import { lapsePlanningPermissionsI } from "./../blocks/peca-permissology";
 import { Store } from "@ngxs/store";
 import {
   SetLapsePlanningRequestData,
@@ -52,7 +52,9 @@ export function schedulingPlanningConfigMapper(
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastFileRequest = approvalHistory[approvalHistory.length - 1];
     currentAttachedFile = lastFileRequest.detail.attachedFile;
-    currentFileStatus = lastFileRequest.status ? +lastFileRequest.status : currentFileStatus;
+    currentFileStatus = lastFileRequest.status
+      ? +lastFileRequest.status
+      : currentFileStatus;
   }
 
   const proposal = {
@@ -71,7 +73,9 @@ export function schedulingPlanningConfigMapper(
       ],
       action: [
         {
-          hidden: isInApproval ? !lapse_planning_peca_delete : !lapse_planning_peca_edit,
+          hidden: isInApproval
+            ? !lapse_planning_peca_delete
+            : !lapse_planning_peca_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar",
         },
       ],
@@ -96,7 +100,9 @@ export function schedulingPlanningConfigMapper(
         if (isInApproval) {
           store.dispatch(new CancelLapsePlanningFile({ lapseNumber }));
         } else {
-          store.dispatch(new UpdateLapsePlanningFile({ file: values.file, lapseNumber }));
+          store.dispatch(
+            new UpdateLapsePlanningFile({ file: values.file, lapseNumber })
+          );
         }
       },
     },
@@ -128,7 +134,9 @@ export function schedulingPlanningConfigMapper(
         ],
       },
       onStatusChange: (event) => {
-        store.dispatch(new SetLapsePlanningRequestData({ status: `${event.id}` }));
+        store.dispatch(
+          new SetLapsePlanningRequestData({ status: `${event.id}` })
+        );
       },
       selectGeneralStatus: {
         text: "Modificar estatus:",

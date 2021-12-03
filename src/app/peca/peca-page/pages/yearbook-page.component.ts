@@ -29,7 +29,8 @@ import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChang
 // @ts-ignore
 export class YearbookPageComponent
   extends PecaPageComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy
+{
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
@@ -78,12 +79,8 @@ export class YearbookPageComponent
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
-              const {
-                approvalHistory,
-                isInApproval,
-                pecaId,
-                userId,
-              } = currentYearBook;
+              const { approvalHistory, isInApproval, pecaId, userId } =
+                currentYearBook;
               const yearbookHasNotApprovedRequest =
                 !isInApproval && approvalHistory.length > 0;
               const lastRequest =
@@ -91,9 +88,11 @@ export class YearbookPageComponent
                   ? approvalHistory[approvalHistory.length - 1]
                   : null;
               let currentStatus = lastRequest ? +lastRequest.status : 1;
+              let comments = lastRequest ? lastRequest.comments : null;
               let newYearBook = {
                 ...currentYearBook,
                 status: currentStatus,
+                comments,
               };
 
               if (isInApproval || yearbookHasNotApprovedRequest) {
@@ -133,6 +132,7 @@ export class YearbookPageComponent
                   pecaId,
                   userId,
                   status: currentStatus,
+                  comments: comments,
                   approvalHistory: currentYearBook.approvalHistory,
                   isInApproval: currentYearBook.isInApproval,
                   sponsor: {
@@ -176,9 +176,10 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse1,
                     activities: currentYearBook.lapse1.activities.map(
                       (activity) => {
-                        const activityRequested = lastYearBookRequest.lapse1.activities.filter(
-                          ({ id }) => activity.id === id
-                        );
+                        const activityRequested =
+                          lastYearBookRequest.lapse1.activities.filter(
+                            ({ id }) => activity.id === id
+                          );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
@@ -191,9 +192,11 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description: /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].description && lapse1Activities[activity.id].description.length ? lapse1Activities[activity.id].description : false)
+                          description:
+                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].description && lapse1Activities[activity.id].description.length ? lapse1Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images: /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false) 
+                          images:
+                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false) 
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -212,9 +215,10 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse2,
                     activities: currentYearBook.lapse2.activities.map(
                       (activity) => {
-                        const activityRequested = lastYearBookRequest.lapse2.activities.filter(
-                          ({ id }) => activity.id === id
-                        );
+                        const activityRequested =
+                          lastYearBookRequest.lapse2.activities.filter(
+                            ({ id }) => activity.id === id
+                          );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
@@ -227,9 +231,11 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description: /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].description && lapse2Activities[activity.id].description.length ? lapse2Activities[activity.id].description : false)
+                          description:
+                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].description && lapse2Activities[activity.id].description.length ? lapse2Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images: /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false) 
+                          images:
+                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false) 
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -248,9 +254,10 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse3,
                     activities: currentYearBook.lapse3.activities.map(
                       (activity) => {
-                        const activityRequested = lastYearBookRequest.lapse3.activities.filter(
-                          ({ id }) => activity.id === id
-                        );
+                        const activityRequested =
+                          lastYearBookRequest.lapse3.activities.filter(
+                            ({ id }) => activity.id === id
+                          );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
@@ -263,9 +270,11 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description: /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].description && lapse3Activities[activity.id].description.length ? lapse3Activities[activity.id].description : false)
+                          description:
+                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].description && lapse3Activities[activity.id].description.length ? lapse3Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images: /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false) 
+                          images:
+                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false) 
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -281,16 +290,18 @@ export class YearbookPageComponent
                         .lapse3.readingDiagnosticAnalysis,
                   },
                   sections: currentYearBook.sections.map((section) => {
-                    const sectionRequested = lastYearBookRequest.sections.filter(
-                      ({ id }) => section.id === id
-                    );
+                    const sectionRequested =
+                      lastYearBookRequest.sections.filter(
+                        ({ id }) => section.id === id
+                      );
                     const returnValue =
                       sectionRequested.length > 0
                         ? sectionRequested[0].image
                         : "";
                     return {
                       ...section,
-                      image: /* (this.ybData && theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) ||  */ returnValue,
+                      image:
+                        /* (this.ybData && theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) ||  */ returnValue,
                     };
                   }),
                 };
