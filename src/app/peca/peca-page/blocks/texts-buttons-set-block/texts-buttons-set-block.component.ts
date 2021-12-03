@@ -50,7 +50,8 @@ export class TextsButtonsSetBlockComponent
     };
     status: {
       text?: string;
-      subText?: number; // 1 Pendiente = Amarillo, 2 Aprobado = Verde, 3 Rechazado = Rojo
+      subText?: number; // 1 Pendiente = Amarillo, 2 Aprobado = Verde, 3 Rechazado = Rojo,
+      comments: string;
     };
     genActSelectStatus?: boolean;
     // texts: {
