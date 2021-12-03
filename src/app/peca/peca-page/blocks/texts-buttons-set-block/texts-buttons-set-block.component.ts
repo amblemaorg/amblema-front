@@ -18,9 +18,11 @@ import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
   styleUrls: ["./texts-buttons-set-block.component.scss"],
 })
 export class TextsButtonsSetBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, OnDestroy
+{
   type: "presentational";
   component: string;
+  showModalInfo: boolean;
   settings: {
     modalCode?: string; // for views with modal inside
     dataFromRow?: any; // table's row data
@@ -191,6 +193,7 @@ export class TextsButtonsSetBlockComponent
     this.type = "presentational";
     this.component = "buttons";
     this.glbls = globals;
+    this.showModalInfo = false;
   }
 
   currentSelected = null;
@@ -481,14 +484,12 @@ export class TextsButtonsSetBlockComponent
         new Date(`${theWhD.split("T")[0]}T${dnSplit}`)
       );
       const theDate = new Date(`${dateKey}T${dnSplit}`);
-      this.settings.dateOrtext.fields[0][
-        `${isSpecialDate}Day`
-      ] = theDate.getDate();
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Day`] =
+        theDate.getDate();
       this.settings.dateOrtext.fields[0][`${isSpecialDate}Month`] =
         theDate.getMonth() + 1;
-      this.settings.dateOrtext.fields[0][
-        `${isSpecialDate}Year`
-      ] = theDate.getFullYear();
+      this.settings.dateOrtext.fields[0][`${isSpecialDate}Year`] =
+        theDate.getFullYear();
       this.settings.dateOrtext.fields[0][
         `${isSpecialDate}InactiveInput`
       ] = `${this.addZero(theDate.getDate())}-${this.addZero(
@@ -801,11 +802,10 @@ export class TextsButtonsSetBlockComponent
           this.dataTorF.form &&
           (this.dataTorF.form.age || this.dataTorF.form.date)
         )
-          this.dataTorF.form[
-            this.dataTorF.form.age ? "age" : "date"
-          ] = this.globals.dateStringToISOString(
-            this.dataTorF.form[this.dataTorF.form.age ? "age" : "date"]
-          ); //---------------
+          this.dataTorF.form[this.dataTorF.form.age ? "age" : "date"] =
+            this.globals.dateStringToISOString(
+              this.dataTorF.form[this.dataTorF.form.age ? "age" : "date"]
+            ); //---------------
         const body = textsAndButtonsAdaptBody(
           this.settings.buttonCode,
           this.dataTorF
@@ -877,6 +877,10 @@ export class TextsButtonsSetBlockComponent
       case 8:
         this.activityActioned(8);
         break;
+
+      case 9:
+        this.displayModal();
+        break;
       default:
         const data = textsAndButtonsAdaptBody(
           this.settings.buttonCode,
@@ -891,6 +895,11 @@ export class TextsButtonsSetBlockComponent
         this.settings.onSubmit(values);
         break;
     }
+  }
+
+  displayModal() {
+    this.showModalInfo = !this.showModalInfo;
+    this.settings.action[0].name = !this.showModalInfo ? "Ver más" : "Ocultar";
   }
 
   activityActioned(case_type: number) {
@@ -1228,9 +1237,10 @@ export class TextsButtonsSetBlockComponent
       day: this.settings.dateOrtext.fields[0][
         `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Day`
       ],
-      month: this.settings.dateOrtext.fields[0][
-        `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`
-      ],
+      month:
+        this.settings.dateOrtext.fields[0][
+          `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`
+        ],
       year: this.settings.dateOrtext.fields[0][
         `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Year`
       ],
@@ -1260,9 +1270,8 @@ export class TextsButtonsSetBlockComponent
   setDateFunc({ type = "calendar", theValue = null }) {
     this.isBeingUsedDateContr = true;
 
-    const theSpecialDate = this.settings.dateOrtext.fields[0][
-      "specialDateForm"
-    ];
+    const theSpecialDate =
+      this.settings.dateOrtext.fields[0]["specialDateForm"];
 
     const theDate =
       type === "calendar" && theValue ? new Date(theValue) : new Date();
@@ -1339,9 +1348,8 @@ export class TextsButtonsSetBlockComponent
     ) {
       this.isBeingUsedDateContr = true;
 
-      const theSpecialDate = this.settings.dateOrtext.fields[0][
-        "specialDateForm"
-      ];
+      const theSpecialDate =
+        this.settings.dateOrtext.fields[0]["specialDateForm"];
 
       const { day: fDay, month: fMonth, year: fYear } = this.getDates();
 
@@ -1356,9 +1364,8 @@ export class TextsButtonsSetBlockComponent
 
       if (datePart === "year") {
         const now = new Date();
-        this.settings.dateOrtext.fields[0][
-          `${theSpecialDate}Year`
-        ] = now.getFullYear();
+        this.settings.dateOrtext.fields[0][`${theSpecialDate}Year`] =
+          now.getFullYear();
       }
 
       const { day: lDay, month: lMonth, year: lYear } = this.getDates();

@@ -213,9 +213,6 @@ export class FormBlockComponent
           student["Género"]
         );
       });
-
-      console.log("ELEMENTS: ", studentsData);
-
       const el_cleaned = elements;
       const num_cols = 8;
 
@@ -244,7 +241,6 @@ export class FormBlockComponent
       this.showUploadBtn = true;
 
       this.studentsToImport = students;
-      console.log("students: ", students);
     };
   }
 
@@ -275,24 +271,23 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[0].id,
     };
-    console.log("body: ", body);
-    // try {
-    //   const result = await this.fetcher.post(resourcePath, body).toPromise();
-    //   if (result.status_code === 201) {
-    //     this.showImportModal = false;
-    //     this.toastr.success(result.message, "", {
-    //       positionClass: "toast-bottom-right",
-    //     });
-    //     this.importingData = false;
-    //     setTimeout(() => {
-    //       window.location.reload();
-    //     }, 2000);
-    //   }
-    // } catch (err) {
-    //   console.log("error: ", err);
-    //   throw err;
-    // } finally {
-    // }
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      if (result.status_code === 201) {
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
   }
 
   makeExcel() {
@@ -1921,7 +1916,6 @@ export class FormBlockComponent
           checkbox.disabled = true;
         }
       });
-      console.log("SECTIONS ARRAY: ", this.sectionsArr);
       this.sectionsToExport = this.sectionsArr.map((section) => section.id);
       // Deshabilitar descarga de todas las secciones
     } else if (section === "all" && !toExport) {
@@ -2052,7 +2046,6 @@ export class FormBlockComponent
     };
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
-      console.log("result", result);
       const students = [];
       if (result.status_code === 201) {
         this.toastr.success(result.message, "", {
