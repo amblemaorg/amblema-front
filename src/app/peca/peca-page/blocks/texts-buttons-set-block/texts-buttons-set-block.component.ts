@@ -84,7 +84,7 @@ export class TextsButtonsSetBlockComponent
        * (Para Actividad Generica) 7-8 Enviar/Guardar, 9 cancelar solicitud AG
        */
       hidden?: boolean;
-      type: number;
+      type?: number;
       name: string; // text in the button
       margin?: string;
       direction?: string;
