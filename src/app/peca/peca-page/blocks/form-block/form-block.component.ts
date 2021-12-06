@@ -50,6 +50,7 @@ export class FormBlockComponent
   isLoading: boolean;
   studentsData: any;
   importingData: boolean;
+  activeSection: number;
 
   type: "presentational";
   component: string;
@@ -170,6 +171,7 @@ export class FormBlockComponent
     this.showExportBtn = false;
     this.studentsData = [];
     this.studentsCount = 0;
+    this.activeSection = 0;
     localStorage.setItem("stud_data", JSON.stringify([]));
   }
 
@@ -269,9 +271,10 @@ export class FormBlockComponent
     const body = {
       action: "import",
       students: this.studentsToImport,
-      section: this.sectionsArr[0].id,
+      section: this.sectionsArr[this.activeSection].id,
     };
     try {
+      console.log("body to import: ", body);
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
         this.showImportModal = false;
@@ -438,12 +441,13 @@ export class FormBlockComponent
     )
       this.subscription.add(
         this.componentForm.get("section").statusChanges.subscribe((val) => {
-          if (val === "VALID")
+          if (val === "VALID") {
             this.globals.emitStudentsTableRefresh(
               this.settings.tableRefreshName,
               this.componentForm.get("section").value
             );
-          else
+            this.setActiveSection(this.componentForm.get("section").value);
+          } else
             this.globals.emitStudentsTableRefresh(
               this.settings.tableRefreshName,
               null
@@ -1874,6 +1878,18 @@ export class FormBlockComponent
     } else this.fillSections();
   }
 
+  setActiveSection(sectionId) {
+    let index = 0;
+    console.log("SECTIONS ARRAY: ", this.sectionsArr);
+    this.sectionsArr.forEach((section, idx) => {
+      if (section.id === sectionId) {
+        index = idx;
+      }
+    });
+    this.activeSection = index;
+    return;
+  }
+
   // managing sections depending on grades
   setSchoolSectionsModal(e) {
     this.sectionsToExport = [];
@@ -1906,6 +1922,7 @@ export class FormBlockComponent
 
   selectSection(section, toExport) {
     // Habilitar descarga de todas las secciones
+    console.log("section");
     if (section === "all" && toExport) {
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
