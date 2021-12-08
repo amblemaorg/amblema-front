@@ -176,7 +176,16 @@ export class FormBlockComponent
   }
 
   openModal() {
-    this.showImportModal = true;
+    console.log("YES IT TRIGGERS");
+    this.showImportModal = false;
+    const newOptions = [
+      ...this.settings.formsContent[this.fields[0]].options,
+      {
+        id: "7",
+        name: "Todos los grados",
+      },
+    ];
+    this.settings.formsContent[this.fields[0]].options = [];
   }
 
   closeModal() {
@@ -184,12 +193,35 @@ export class FormBlockComponent
   }
 
   openExportModal() {
+    console.log("YES IT TRIGGERS");
+    const optionsActual: any[] =
+      this.settings.formsContent[this.fields[0]].options;
+    const existOption = optionsActual.find((option) => option.id === "all");
+    if (existOption) {
+      this.showExportModal = true;
+      return;
+    }
+    const newOptions = [
+      ...optionsActual,
+      {
+        id: "all",
+        name: "Todos los grados",
+      },
+    ];
+
+    this.settings.formsContent[this.fields[0]].options = newOptions;
     this.showExportModal = true;
   }
 
   closeExportModal() {
-    this.showExportModal = false;
     this.sectionsToExport = [];
+    const newOptions = this.settings.formsContent[
+      this.fields[0]
+    ].options.filter((option) => option.id !== "all");
+    this.settings.formsContent[this.fields[0]].options = newOptions;
+
+    this.showExportModal = false;
+    this.componentForm.reset();
   }
 
   handleFileInput(files: FileList) {
@@ -1847,7 +1879,14 @@ export class FormBlockComponent
   }
 
   // filling sections according to selected grade
-  private fillSections(grade = null) {
+  private async fillSections(grade = null) {
+    if (grade === "all") {
+      // ignorar filtro para exportar todos los usuarios
+      await this.exportAll();
+      this.sectionsArr = [];
+      this.componentForm.patchValue({ section: "" });
+      return;
+    }
     if (!grade) {
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
@@ -1880,7 +1919,6 @@ export class FormBlockComponent
 
   setActiveSection(sectionId) {
     let index = 0;
-    console.log("SECTIONS ARRAY: ", this.sectionsArr);
     this.sectionsArr.forEach((section, idx) => {
       if (section.id === sectionId) {
         index = idx;
@@ -1922,7 +1960,6 @@ export class FormBlockComponent
 
   selectSection(section, toExport) {
     // Habilitar descarga de todas las secciones
-    console.log("section");
     if (section === "all" && toExport) {
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
@@ -1971,12 +2008,11 @@ export class FormBlockComponent
   makeExcelExport(studentsData) {
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
-      Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
+      Title: `Data de estudiantes - ${this.sectionsArr[0]?.name}`,
       Subject: "Data",
       Author: "Amblema",
       CreatedDate: new Date(Date.now()),
     };
-
     workbook.SheetNames.push("Data de estudiantes");
     const columns_header = [
       "Grado",
@@ -1998,13 +2034,15 @@ export class FormBlockComponent
         .toLocaleDateString("es-VE")
         .split("/")
         .join("-");
+
+      const cardType = parseInt(studentsData[i]?.cardType);
       const data = [
         studentsData[i]?.grades || "",
         studentsData[i].section || "",
         studentsData[i]?.firstName || "",
         studentsData[i]?.lastName || "",
-        "V" || "", // TODO: check this
-        studentsData[i]?.documentGroup?.prependInput || "",
+        cardType === 2 ? "E" : "V", // TODO: check this
+        studentsData[i]?.cardId || "",
         fecha,
         genero,
       ];
@@ -2103,7 +2141,53 @@ export class FormBlockComponent
     } catch (err) {
       console.log("error: ", err);
       throw err;
-    } finally {
+    }
+  }
+
+  async exportAll() {
+    const resourcePath = `section/load/${this.pecaId}`;
+    const allSections = this.settings.formsContent["section"].options;
+    const sectionsIds = allSections.map((section) => section.id);
+    let sectionsMapped = {};
+
+    allSections.forEach((section) => {
+      sectionsMapped = { ...sectionsMapped, [`${section.id}`]: section.grade };
+    });
+    const body = {
+      action: "export",
+      sections: sectionsIds,
+    };
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      const students = [];
+      if (result.status_code === 201) {
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        result.sections.forEach((section) => {
+          section.students.forEach((student) => {
+            students.push({
+              ...student,
+              grades: sectionsMapped[`${section.id}`],
+              section: section.name,
+            });
+          });
+        });
+
+        const workbookBin = this.makeExcelExport(students);
+        const octetStream = this.binary2octet(workbookBin);
+        saveAs(
+          new Blob([octetStream], { type: "application/octet-stream" }),
+          `Data de estudiantes - TODOS.xlsx`
+        );
+
+        this.showExportBtn = false;
+        this.showExportModal = false;
+        this.componentForm.reset();
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
     }
   }
 }
