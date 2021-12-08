@@ -814,7 +814,7 @@
               *ngIf="sendingForm"
               class="spinner-grow spinner-grow-sm"
             ></span>
-            Exportar secciones
+            Exportar multiple
           </button>
         </ng-container>
 
@@ -931,8 +931,6 @@
           exportar:
         </p>
 
-        <!-- adadad -->
-
         <form
           [formGroup]="componentForm"
           (keydown.enter)="prevDef($event)"
@@ -1038,13 +1036,6 @@
                         <small>{{ item.name }}</small>
                       </ng-template>
                     </ng-select>
-                    <span
-                      *ngIf="
-                        fields[0] == 'addressState' && stps.getIsCallingM()
-                      "
-                      class="floatingLoading"
-                      >Cargando estados...</span
-                    >
                   </ng-container>
                 </div>
               </ng-container>
