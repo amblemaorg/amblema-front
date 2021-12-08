@@ -395,12 +395,14 @@ export class FormBlockComponent
   }
 
   exportStudents() {
-    let grado = this.parseGrade(this.sectionsArr[0]?.grade);
+    let grado = this.parseGrade(this.sectionsArr[this.activeSection]?.grade);
     const workbookBin = this.makeExcel();
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
       new Blob([octetStream], { type: "application/octet-stream" }),
-      `Data de estudiantes - ${grado}, seccion ${this.sectionsArr[0].name}.xlsx`
+      `Data de estudiantes - ${grado}, seccion ${
+        this.sectionsArr[this.activeSection].name
+      }.xls`
     );
   }
 
@@ -2008,7 +2010,9 @@ export class FormBlockComponent
   makeExcelExport(studentsData) {
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
-      Title: `Data de estudiantes - ${this.sectionsArr[0]?.name}`,
+      Title: `Data de estudiantes - ${
+        this.sectionsArr[this.activeSection]?.name
+      }`,
       Subject: "Data",
       Author: "Amblema",
       CreatedDate: new Date(Date.now()),
@@ -2057,7 +2061,7 @@ export class FormBlockComponent
     /* Exportar workbook como binario para descarga */
     const workbookBinary = XLSX.write(workbook, {
       type: "binary",
-      bookType: "xlsx",
+      bookType: "xls",
     });
     return workbookBinary;
   }
@@ -2122,7 +2126,7 @@ export class FormBlockComponent
         new Blob([octetStream], { type: "application/octet-stream" }),
         `Data de estudiantes - ${this.parseGrade(
           this.componentForm.controls["grades"].value
-        )}.xlsx`
+        )}.xls`
       );
       this.sectionsToExport.forEach((sectionId) => {
         const sectionCheckbox = document.getElementById(
@@ -2178,7 +2182,7 @@ export class FormBlockComponent
         const octetStream = this.binary2octet(workbookBin);
         saveAs(
           new Blob([octetStream], { type: "application/octet-stream" }),
-          `Data de estudiantes - TODOS.xlsx`
+          `Data de estudiantes - TODOS.xls`
         );
 
         this.showExportBtn = false;
