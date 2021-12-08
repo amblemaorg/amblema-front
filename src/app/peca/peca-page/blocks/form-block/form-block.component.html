@@ -800,7 +800,7 @@
           </button>
         </ng-container>
 
-        <ng-container *ngIf="fields.length > 5 && fields.length < 11">
+        <ng-container *ngSwitchCase="'agregar'">
           <button
             type="button"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
