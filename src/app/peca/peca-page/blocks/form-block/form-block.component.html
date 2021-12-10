@@ -780,7 +780,7 @@
             type="button"
             class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
             data-toggle="modal"
-            data-target="#no-peca-modal"
+            data-target="#no-peca-modal-import"
             data-backdrop="false"
             data-keyboard="false"
             (click)="openModal()"
@@ -814,7 +814,7 @@
               *ngIf="sendingForm"
               class="spinner-grow spinner-grow-sm"
             ></span>
-            Exportar multiple
+            Exportar múltiple
           </button>
         </ng-container>
 
@@ -862,7 +862,11 @@
 </form>
 
 <!-- MODAL IMPORTAR ESTUDIANTES -->
-<div *ngIf="showImportModal; else null" class="modal fade" id="no-peca-modal">
+<div
+  *ngIf="showImportModal; else null"
+  class="modal fade"
+  id="no-peca-modal-import"
+>
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content pb-4">
       <div class="modal-header">
