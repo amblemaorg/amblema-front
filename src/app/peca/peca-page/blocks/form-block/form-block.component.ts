@@ -176,8 +176,7 @@ export class FormBlockComponent
   }
 
   openModal() {
-    console.log("YES IT TRIGGERS");
-    this.showImportModal = false;
+    this.showImportModal = true;
     const newOptions = [
       ...this.settings.formsContent[this.fields[0]].options,
       {
