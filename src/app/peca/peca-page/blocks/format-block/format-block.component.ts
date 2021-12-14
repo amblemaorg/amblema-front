@@ -56,14 +56,14 @@ export class FormatDownloadBlock
     workbook.SheetNames.push("Formato estudiantes");
     const columns_data = [
       [
-        "Grado",
-        "Sección",
         "Nombre",
         "Apellido",
         "Tipo de documento",
         "Documento de identidad",
         "Fecha de nacimiento",
         "Género",
+        "Grado",
+        "Sección",
       ],
     ];
     const columns = XLSX.utils.aoa_to_sheet(columns_data);

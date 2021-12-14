@@ -51,6 +51,7 @@ export class FormBlockComponent
   studentsData: any;
   importingData: boolean;
   activeSection: number;
+  gradesArr: any[];
 
   type: "presentational";
   component: string;
@@ -170,6 +171,7 @@ export class FormBlockComponent
     this.showUploadBtn = false;
     this.showExportBtn = false;
     this.studentsData = [];
+    this.gradesArr = [];
     this.studentsCount = 0;
     this.activeSection = 0;
     localStorage.setItem("stud_data", JSON.stringify([]));
@@ -181,7 +183,7 @@ export class FormBlockComponent
       ...this.settings.formsContent[this.fields[0]].options,
       {
         id: "7",
-        name: "Todos los grados",
+        name: "Varios grados",
       },
     ];
     this.settings.formsContent[this.fields[0]].options = [];
@@ -192,7 +194,6 @@ export class FormBlockComponent
   }
 
   openExportModal() {
-    console.log("YES IT TRIGGERS");
     const optionsActual: any[] =
       this.settings.formsContent[this.fields[0]].options;
     const existOption = optionsActual.find((option) => option.id === "all");
@@ -204,7 +205,7 @@ export class FormBlockComponent
       ...optionsActual,
       {
         id: "all",
-        name: "Todos los grados",
+        name: "Varios grados",
       },
     ];
 
@@ -236,14 +237,14 @@ export class FormBlockComponent
 
       studentsData.forEach((student) => {
         elements.push(
-          student["Grado"],
-          student["Sección"],
           student["Nombre"],
           student["Apellido"],
           student["Tipo de documento"],
           student["Documento de identidad"],
           student["Fecha de nacimiento"],
-          student["Género"]
+          student["Género"],
+          student["Grado"],
+          student["Sección"]
         );
       });
       const el_cleaned = elements;
@@ -261,14 +262,14 @@ export class FormBlockComponent
         const fecha_de_nacimiento = this.parseDate(registry[6]);
 
         return {
-          grado: registry[0]?.toString() || "",
-          seccion: registry[1] || "",
           nombre: registry[2] || "",
           apellido: registry[3] || "",
           tipo_de_documento: registry[4] || "",
           documento_de_identidad: registry[5]?.toString() || "",
           fecha_de_nacimiento: fecha_de_nacimiento || "",
           genero: registry[7] || "",
+          grado: registry[0]?.toString() || "",
+          seccion: registry[1] || "",
         };
       });
       this.showUploadBtn = true;
@@ -336,14 +337,14 @@ export class FormBlockComponent
 
     workbook.SheetNames.push("Data de estudiantes");
     const columns_header = [
-      "Grado",
-      "Sección",
       "Nombre",
       "Apellido",
       "Tipo de documento",
       "Documento de identidad",
       "Fecha de nacimiento",
       "Género",
+      "Grado",
+      "Sección",
     ];
     let matrix = [];
     let row_aux = [];
@@ -368,14 +369,14 @@ export class FormBlockComponent
         .split("/")
         .join("-");
       const data = [
-        this.studentsData[i]?.grades || "",
-        currentSectionName || "",
         this.studentsData[i]?.name || "",
         this.studentsData[i]?.lastName || "",
         "V" || "", // TODO: check this
         this.studentsData[i]?.documentGroup?.prependInput || "",
         fecha,
         genero,
+        this.studentsData[i]?.grades || "",
+        currentSectionName || "",
       ];
       row_aux.push(data);
     }
@@ -1883,7 +1884,8 @@ export class FormBlockComponent
   private async fillSections(grade = null) {
     if (grade === "all") {
       // ignorar filtro para exportar todos los usuarios
-      await this.exportAll();
+      // await this.exportAll();
+      this.handleVariosGrados();
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
       return;
@@ -1892,12 +1894,13 @@ export class FormBlockComponent
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
     } else {
+      this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
           return s.grade == grade;
         }
       );
-
+      console.log("sections array: ", this.settings.formsContent["section"]);
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,
       });
@@ -1960,6 +1963,7 @@ export class FormBlockComponent
   }
 
   selectSection(section, toExport) {
+    this.gradesArr = [];
     // Habilitar descarga de todas las secciones
     if (section === "all" && toExport) {
       const markedCheckbox = document.querySelectorAll(
@@ -2018,14 +2022,14 @@ export class FormBlockComponent
     };
     workbook.SheetNames.push("Data de estudiantes");
     const columns_header = [
-      "Grado",
-      "Sección",
       "Nombre",
       "Apellido",
       "Tipo de documento",
       "Documento de identidad",
       "Fecha de nacimiento",
       "Género",
+      "Grado",
+      "Sección",
     ];
     let matrix = [];
     let row_aux = [];
@@ -2040,14 +2044,14 @@ export class FormBlockComponent
 
       const cardType = parseInt(studentsData[i]?.cardType);
       const data = [
-        studentsData[i]?.grades || "",
-        studentsData[i].section || "",
         studentsData[i]?.firstName || "",
         studentsData[i]?.lastName || "",
         cardType === 2 ? "E" : "V", // TODO: check this
         studentsData[i]?.cardId || "",
         fecha,
         genero,
+        studentsData[i]?.grades || "",
+        studentsData[i].section || "",
       ];
       row_aux.push(data);
     }
@@ -2113,7 +2117,7 @@ export class FormBlockComponent
           section.students.forEach((student) => {
             students.push({
               ...student,
-              grades: this.componentForm.controls["grades"].value,
+              grades: section.grade,
               section: section.name,
             });
           });
@@ -2127,15 +2131,19 @@ export class FormBlockComponent
           this.componentForm.controls["grades"].value
         )}.xls`
       );
-      this.sectionsToExport.forEach((sectionId) => {
-        const sectionCheckbox = document.getElementById(
-          sectionId
-        ) as HTMLInputElement;
-        sectionCheckbox.checked = false;
-      });
+      if (!this.gradesArr) {
+        this.sectionsToExport.forEach((sectionId) => {
+          const sectionCheckbox = document.getElementById(
+            sectionId
+          ) as HTMLInputElement;
+          sectionCheckbox.checked = false;
+        });
+      }
+
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
+
       markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
@@ -2191,6 +2199,86 @@ export class FormBlockComponent
     } catch (err) {
       console.log("error: ", err);
       throw err;
+    }
+  }
+
+  handleVariosGrados() {
+    const allGrades = this.settings.formsContent["section"].options.map(
+      (section) => section.grade
+    );
+    console.log("grades: ", allGrades);
+    const grades = [];
+    allGrades.forEach((grade) => {
+      if (grades.includes(grade)) {
+        return;
+      } else {
+        grades.push(grade);
+      }
+    });
+    const gradesData = grades.map((grade) => {
+      return {
+        id: grade,
+        name: this.parseGrade(grade),
+      };
+    });
+    console.log("GRADES: ", gradesData);
+    this.gradesArr = gradesData;
+  }
+
+  async selectGrades(grade, toExport) {
+    // Habilitar descarga de todas las secciones
+    if (grade === "all" && toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        if (checkbox.id !== "allGrades") {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+        }
+      });
+      this.sectionsToExport = this.settings.formsContent["section"].options.map(
+        (section) => {
+          return section.id;
+        }
+      );
+      // Deshabilitar descarga de todas las secciones
+    } else if (grade === "all" && !toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      console.log("checkbox: ", markedCheckbox);
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.sectionsToExport = [];
+    } else {
+      // Descarga de secciones individuales
+      const sectionsFounded = this.settings.formsContent[
+        "section"
+      ].options.filter((section) => section.grade === grade);
+      sectionsFounded.forEach((section) => {
+        const sectionIndex = this.sectionsToExport.indexOf(section.id);
+        const alreadyExist = sectionIndex > -1;
+        // Pop section at index
+        if (alreadyExist && !toExport) {
+          this.sectionsToExport.splice(sectionIndex, 1);
+        }
+        // Push section
+        if (!alreadyExist && toExport) {
+          this.sectionsToExport.push(section.id);
+        }
+        if (!this.sectionsToExport.length) {
+          this.showExportBtn = false;
+        }
+      });
+    }
+    console.log("sections to export: ", this.sectionsToExport);
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
     }
   }
 }

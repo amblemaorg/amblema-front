@@ -910,7 +910,7 @@
   </div>
 </div>
 
-<!-- MODAL IMPORTAR ESTUDIANTES -->
+<!-- MODAL EXPORTAR ESTUDIANTES -->
 <div
   *ngIf="showExportModal; else null"
   class="modal fade"
@@ -1081,6 +1081,34 @@
           </div>
         </div>
 
+        <div *ngIf="gradesArr.length > 0">
+          <label style="color: grey">Seleccione el grado:</label>
+          <div *ngIf="gradesArr.length > 1">
+            <label>
+              <input
+                id="allGrades"
+                type="checkbox"
+                ngModel
+                (ngModelChange)="selectGrades('all', $event)"
+                class="mx-2"
+              />
+              Todos los grados
+            </label>
+          </div>
+          <div *ngFor="let grade of gradesArr; trackBy: trackByFn">
+            <label
+              ><input
+                id="{{ grade.id }}"
+                type="checkbox"
+                ngModel
+                ngControl="grade.id"
+                (ngModelChange)="selectGrades(grade.id, $event)"
+                class="mx-2"
+              />
+              {{ grade.name }}</label
+            ><br />
+          </div>
+        </div>
         <div class="full-width d-flex">
           <button
             *ngIf="showExportBtn"
@@ -1089,7 +1117,7 @@
             class="btn btn-primary full-width submit-btn mx-auto mt-4"
           >
             <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm"></span>
-            {{ !isLoading ? "Exportar seccion(es)" : "Cargando..." }}
+            {{ !isLoading ? "Exportar" : "Cargando..." }}
           </button>
         </div>
       </div>
