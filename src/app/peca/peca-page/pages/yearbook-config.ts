@@ -172,7 +172,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-reading-graphic-not-pdf`,
           sendGraphicToPdf: null,
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de lectura",
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
             return `${determineGradeString(grade)} ${name}`;
@@ -190,7 +191,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-reading-graphic`,
           sendGraphicToPdf: "diagnosticReading",
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de lectura",
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, wordsPerMinIndex } = diagnostic;
@@ -286,7 +288,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-math-graphic-not-pdf`,
           sendGraphicToPdf: null,
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de multiplicación",
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
             return `${determineGradeString(grade)} ${name}`;
@@ -304,7 +307,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-math-graphic`,
           sendGraphicToPdf: "diagnosticMath",
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de multiplicación",
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, multiplicationsPerMinIndex } = diagnostic;
@@ -402,7 +406,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-logic-graphic-not-pdf`,
           sendGraphicToPdf: null,
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de lógica matemática",
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
             const { grade, name } = diagnostic;
             return `${determineGradeString(grade)} ${name}`;
@@ -420,7 +425,8 @@ export function MapperYearBookWeb(
           chartId: `${lapseName}-logic-graphic`,
           sendGraphicToPdf: "diagnosticLogic",
           lapseN: +lapseNumber,
-          legendName: yearBookData.school.name,
+          //legendName: yearBookData.school.name,
+          legendName: "Diagnóstico de lógica matemática",
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, operationsPerMinIndex } = diagnostic;
