@@ -17,7 +17,8 @@ import { PdfYearbookService } from "../../../../services/peca/pdf-yearbook.servi
   styleUrls: ["./graphics-block.component.scss"],
 })
 export class GraphicsBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy
+{
   type: "presentational";
   component: string;
   settings: {
@@ -179,7 +180,9 @@ export class GraphicsBlockComponent
           labels: this.dataLabel,
           datasets: [
             {
-              label: "Diagnóstico de lectura",
+              label: this.settings.legendName
+                ? this.settings.legendName
+                : "Diagnóstico de lectura",
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,
