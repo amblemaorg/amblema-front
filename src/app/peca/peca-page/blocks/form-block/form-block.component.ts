@@ -259,17 +259,17 @@ export class FormBlockComponent
       );
 
       const students: Array<Object> = matrix.map((registry, index) => {
-        const fecha_de_nacimiento = this.parseDate(registry[6]);
+        const fecha_de_nacimiento = this.parseDate(registry[4]);
 
         return {
-          nombre: registry[2] || "",
-          apellido: registry[3] || "",
-          tipo_de_documento: registry[4] || "",
-          documento_de_identidad: registry[5]?.toString() || "",
+          nombre: registry[0] || "",
+          apellido: registry[1] || "",
+          tipo_de_documento: registry[2] || "",
+          documento_de_identidad: registry[3]?.toString() || "",
           fecha_de_nacimiento: fecha_de_nacimiento || "",
-          genero: registry[7] || "",
-          grado: registry[0]?.toString() || "",
-          seccion: registry[1] || "",
+          genero: registry[5] || "",
+          grado: registry[6]?.toString() || "",
+          seccion: registry[7] || "",
         };
       });
       this.showUploadBtn = true;
@@ -305,8 +305,8 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[this.activeSection].id,
     };
+    console.log("BODY to import: ", body);
     try {
-      console.log("body to import: ", body);
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
         this.showImportModal = false;
@@ -2149,6 +2149,7 @@ export class FormBlockComponent
         checkbox.disabled = false;
       });
       this.showExportBtn = false;
+      this.sectionsToExport = [];
     } catch (err) {
       console.log("error: ", err);
       throw err;
