@@ -26,7 +26,7 @@
     >
       <div class="card-body">
         <h6 class="mobile-only">
-          <b>Estatus:</b> {{ getStatusName(step.status) }}
+          <b>Estatus:</b> {{ getStatusName(step.status) }} fafa
         </h6>
 
         <status-selector
@@ -40,7 +40,7 @@
         </status-selector>
 
         <p *ngIf="step.hasText && !step.isForm" class="first-p">
-          {{ step.text }}
+          {{ step.text }} {{ step.status }}
         </p>
 
         <ng-container *ngIf="!step.isForm; else formOpt">

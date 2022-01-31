@@ -70,6 +70,7 @@ export class YearbookPageComponent
       )
       .subscribe(
         (data) => {
+          console.log("DATAAA: ", data);
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
               // this.store.dispatch(new SetFalseMakingAction());
@@ -309,7 +310,7 @@ export class YearbookPageComponent
 
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
-              this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
+              // this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
               this.setPdfData(this.pecaData);
               // this.store.dispatch(new SetYearBook(newYearBook));
               const yearBookConfig = MapperYearBookWeb(

@@ -14,19 +14,26 @@ export function schoolActivitiesPicturesConfigMapper(
 ) {
   const { isInApproval, approvalHistory, slider, status } = activitiesPictures;
   const { activities_slider_edit, activities_slider_delete } = permissions;
+  let comments = "";
   let currentSlider = slider;
   let currentStatus = currentSlider.length > 0 ? 2 : 1;
+  console.log("APPROVAL HISTORY: ", approvalHistory);
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastActivitiesPicturesRequest =
       approvalHistory[approvalHistory.length - 1];
     currentSlider = lastActivitiesPicturesRequest.detail.slider;
     currentStatus = +lastActivitiesPicturesRequest.status;
+    comments = lastActivitiesPicturesRequest.comments;
   }
 
   store.dispatch(new ClearSchoolActivitiesRequestData({}));
   currentSlider.map((image) => {
     store.dispatch(new AddImageToSchoolActivitiesRequestData({ image }));
   });
+
+  const mostrarFeedback = (statusCode) => {
+    return statusCode === 3;
+  };
 
   const activityPicturesStatus = {
     component: "textsbuttons",
@@ -35,7 +42,16 @@ export function schoolActivitiesPicturesConfigMapper(
       status: {
         text: "Estatus",
         subText: currentStatus,
+        comments: comments,
       },
+      action: mostrarFeedback(currentStatus)
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
       btnGeneral: {
         addToTable: true,
         name: "Adjuntar foto",
