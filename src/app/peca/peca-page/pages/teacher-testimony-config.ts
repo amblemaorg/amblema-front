@@ -108,6 +108,10 @@ export function teacherTestimoniesConfigMapper(
       +lastTestimoniesRequest.status < 4 ? +lastTestimoniesRequest.status : 1;
   }
 
+  const mostrarFeedback = (statusCode) => {
+    return statusCode === 3;
+  };
+
   const teacherTestimoniesStatus = {
     component: "textsbuttons",
     settings: {
@@ -116,6 +120,14 @@ export function teacherTestimoniesConfigMapper(
         text: "Estatus",
         subText: currentStatus,
       },
+      action: mostrarFeedback(currentStatus)
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
     },
   };
 
