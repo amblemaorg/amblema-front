@@ -14,7 +14,9 @@
       settings.genActSelectStatus
     "
   >
-    <div class="date-download-status d-flex justify-content-between mt-1">
+    <div
+      class="date-download-status flex-gap d-flex mt-1 align-items-end flex-column"
+    >
       <div class="left-side" [class.mr-auto]="settings.genActSelectStatus">
         <h6 class="left-sided-content">
           <span
@@ -218,6 +220,7 @@
             </button> -->
           </ng-container>
           <ng-template #notModal>
+            <!-- Ver mas Button -->
             <button
               *ngIf="action.name && !action.hidden"
               [class.d-none]="
@@ -229,7 +232,7 @@
                   isImgsTableShown)
               "
               [class]="
-                'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
+                'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
                 getStyles(action)
               "
               style="margin-left: 10px; margin-top: -4px"
