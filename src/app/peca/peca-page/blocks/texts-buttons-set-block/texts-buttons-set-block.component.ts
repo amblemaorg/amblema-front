@@ -443,7 +443,13 @@ export class TextsButtonsSetBlockComponent
       if (data["action"]) this.settings.action = data.action;
       if (data["contentTeacherInfo"])
         this.settings.selectStatus.lista = data.contentTeacherInfo;
-      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["status"]) {
+        let status = this.settings.status;
+        this.settings.status.subText = data.status.subText;
+        this.settings.status.comments = data.status.comments
+          ? data.status.comments
+          : status.comments;
+      }
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;
       if (data["dateOrtext"])
         this.settings.dateOrtext.date = data.dateOrtext.date;
