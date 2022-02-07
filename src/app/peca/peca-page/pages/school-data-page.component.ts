@@ -158,7 +158,7 @@ export class SchoolDataPageComponent
 
           this.setSchoolStatus(data.school); // sets current school status number
 
-          this.setSchoolFormStatusData();
+          this.setSchoolFormStatusData(data.school);
           this.setSchoolFormData(
             data.school,
             schoolDataToSchoolFormMapper,
@@ -222,8 +222,9 @@ export class SchoolDataPageComponent
 
   updateDataToBlocks(updateData: boolean) {
     if (updateData) {
+      // Render with new sections layout
       // School data
-      this.setBlockData("schoolFormStatus", this.schoolFormStatusData);
+      this.setBlockData("schoolFormStatus", this.schoolFormStatusData); // Add Approval status text, "ver mas" button and comments to show
       this.setBlockData("schoolForm", this.schoolFormData);
       this.setBlockData("schoolFormButton", this.schoolFormButton);
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
@@ -253,18 +254,33 @@ export class SchoolDataPageComponent
     this.requestIdToCancel = null;
   }
 
+  // Setting global status approval verification
   setSchoolStatus(school) {
+    // this.schoolDataStatus = school.isInApproval
+    //   ? 1
+    //   : school.approvalHistory.length > 0
+    //   ? school.approvalHistory[school.approvalHistory.length - 1].status ===
+    //       "2" ||
+    //     school.approvalHistory[school.approvalHistory.length - 1].status === "3"
+    //     ? +school.approvalHistory[school.approvalHistory.length - 1].status
+    //     : 0
+    //   : 0;
+
+    const approvalHistory = school.approvalHistory;
+    const status = approvalHistory[approvalHistory.length - 1].status;
+
     // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = school.isInApproval
-      ? 1
-      : school.approvalHistory.length > 0
-      ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-          "2" ||
-        school.approvalHistory[school.approvalHistory.length - 1].status === "3"
-        ? +school.approvalHistory[school.approvalHistory.length - 1].status
-        : 0
-      : 0;
-    // this.schoolDataStatus = school.isInApproval ? 1 : 0;
+    this.schoolDataStatus = 1;
+
+    if (!school.isInApproval) {
+      if (approvalHistory.length === 0) {
+        this.schoolDataStatus = 0;
+      }
+
+      if (approvalHistory.length > 0) {
+        this.schoolDataStatus = status === "2" || "3" ? +status : 0;
+      }
+    }
   }
 
   updateStaticFetchers() {
@@ -385,12 +401,30 @@ export class SchoolDataPageComponent
     }
   }
 
-  setSchoolFormStatusData() {
+  /**
+   * @description Setting options of approval status text, actions of "ver mas" button and comments to show
+   * @author Christopher Dallar Document This
+   * @date 07/02/2022
+   * @param {*} school
+   * @memberof SchoolDataPageComponent
+   */
+  setSchoolFormStatusData(school) {
+    const comments =
+      school.approvalHistory[school.approvalHistory.length - 1].comments;
     this.schoolFormStatusData = {
       status: {
-        text: "Estatus",
-        subText: this.schoolDataStatus,
+        text: "Estatus", // No tiene efecto
+        subText: this.schoolDataStatus, // si tiene efecto
+        comments: comments, // No tiene efecto
       },
+      action: this.schoolDataStatus // si tiene efecto
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
     };
   }
 
