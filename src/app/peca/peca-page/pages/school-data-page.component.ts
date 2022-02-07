@@ -411,13 +411,19 @@ export class SchoolDataPageComponent
   setSchoolFormStatusData(school) {
     const comments =
       school.approvalHistory[school.approvalHistory.length - 1].comments;
+    let showComment = false;
+
+    if (comments && this.schoolDataStatus) {
+      showComment = true;
+    }
+
     this.schoolFormStatusData = {
       status: {
-        text: "Estatus", // No tiene efecto
-        subText: this.schoolDataStatus, // si tiene efecto
-        comments: comments, // No tiene efecto
+        text: "Estatus",
+        subText: this.schoolDataStatus,
+        comments: comments,
       },
-      action: this.schoolDataStatus // si tiene efecto
+      action: showComment
         ? [
             {
               type: 9,
