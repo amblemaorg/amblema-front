@@ -562,20 +562,13 @@
 
         <!-- Botón cuando no se encuentra dentro del modal -->
         <ng-template #notModal>
+          {{ myConsoleLog(action) }}
           <button
             *ngIf="
               action.name &&
               !action.hidden &&
               action.extraData &&
               action.extraData.isToSendRequest
-            "
-            [class.d-none]="
-              ((action.type === 4 || action.type === 9) &&
-                settings.fetcherUrls &&
-                settings.fetcherUrls.cancel) ||
-              (action.type === 2 &&
-                !this.settings.modalCode &&
-                isImgsTableShown)
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +

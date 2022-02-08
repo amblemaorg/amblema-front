@@ -75,9 +75,15 @@ export class SchoolDataPageComponent
   teachersFormData: { hiddenButton: boolean };
   schoolFormButton: {
     action: (
-      | { type: number; name: string; hidden?: undefined }
+      | {
+          extraData: { isToSendRequest: boolean };
+          type: number;
+          name: string;
+          hidden?: undefined;
+        }
       | {
           hidden: boolean;
+          extraData: { isToSendRequest: boolean };
           type: number;
           name: string;
           margin?: string;
@@ -383,10 +389,12 @@ export class SchoolDataPageComponent
       this.schoolFormButton = {
         action: [
           {
+            extraData: { isToSendRequest: true },
             type: 2,
             name: "Adjuntar fotos",
           },
           {
+            extraData: { isToSendRequest: true },
             hidden: !permissions.school_peca_edit,
             type: 4,
             name: "Enviar Solicitud",
