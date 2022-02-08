@@ -1495,4 +1495,8 @@ export class TextsButtonsSetBlockComponent
 
     return style;
   }
+
+  myConsoleLog(data) {
+    console.log("myConsoleLog: ", data);
+  }
 }
