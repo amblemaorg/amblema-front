@@ -290,6 +290,21 @@
               </button>
             </ng-container>
           </ng-template>
+
+          <p
+            *ngIf="showModalInfo"
+            class="text-decoration-none"
+            style="
+              color: red;
+              background: #fcc7c7;
+              padding: 1rem 2rem;
+              border-radius: 5px;
+              margin-top: 10px;
+              width: 100%;
+            "
+          >
+            {{ settings.status.comments }}
+          </p>
         </ng-container>
       </ng-container>
       <!-- Adjuntar archivo -->
@@ -630,17 +645,3 @@
     </ng-container>
   </div>
 </div>
-
-<p
-  *ngIf="showModalInfo"
-  class="text-decoration-none"
-  style="
-    color: red;
-    background: #fcc7c7;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    margin-top: 10px;
-  "
->
-  {{ settings.status.comments }}
-</p>
