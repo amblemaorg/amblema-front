@@ -73,6 +73,7 @@ export function schedulingPlanningConfigMapper(
       ],
       action: [
         {
+          extraData: { isToSendRequest: true }, // Para identificar al texts-buttons-set.component que utilizare el boton de enviar solicitud y evitar que se dupliquen otros botones innecesarios
           hidden: isInApproval
             ? !lapse_planning_peca_delete
             : !lapse_planning_peca_edit,

@@ -178,6 +178,7 @@ export function schoolActivitiesPicturesConfigMapper(
     settings: {
       action: [
         {
+          extraData: { isToSendRequest: true },
           hidden: false,
           // isInApproval
           //   ? !activities_slider_delete

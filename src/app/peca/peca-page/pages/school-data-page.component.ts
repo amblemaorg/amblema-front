@@ -411,11 +411,7 @@ export class SchoolDataPageComponent
   setSchoolFormStatusData(school) {
     const comments =
       school.approvalHistory[school.approvalHistory.length - 1].comments;
-    let showComment = false;
-
-    if (comments && this.schoolDataStatus) {
-      showComment = true;
-    }
+    let showComment = comments && this.schoolDataStatus ? true : false;
 
     this.schoolFormStatusData = {
       status: {

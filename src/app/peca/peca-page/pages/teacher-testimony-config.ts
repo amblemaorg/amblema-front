@@ -112,6 +112,20 @@ export function teacherTestimoniesConfigMapper(
     return statusCode === 3;
   };
 
+  const getComments = (
+    approvalHistory,
+    statusCode,
+    isThereComments = false
+  ) => {
+    const comments = approvalHistory[approvalHistory.length - 1].comments;
+
+    if (isThereComments) {
+      return comments && statusCode === 3;
+    }
+
+    return comments;
+  };
+
   const teacherTestimoniesStatus = {
     component: "textsbuttons",
     settings: {
@@ -119,8 +133,9 @@ export function teacherTestimoniesConfigMapper(
       status: {
         text: "Estatus",
         subText: currentStatus,
+        comments: getComments(approvalHistory, currentStatus),
       },
-      action: mostrarFeedback(currentStatus)
+      action: getComments(approvalHistory, currentStatus, true)
         ? [
             {
               type: 9,
@@ -251,6 +266,7 @@ export function teacherTestimoniesConfigMapper(
     settings: {
       action: [
         {
+          extraData: { isToSendRequest: true },
           hidden: isInApproval
             ? !teacher_testimonial_delete
             : !teacher_testimonial_edit,
