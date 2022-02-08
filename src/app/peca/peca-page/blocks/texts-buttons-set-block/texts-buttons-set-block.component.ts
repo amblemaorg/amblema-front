@@ -89,7 +89,7 @@ export class TextsButtonsSetBlockComponent
       margin?: string;
       direction?: string;
       removeMargin?: string;
-      extraData: any;
+      extraData: any; // Para almacenar cualquier dato extra necesario
     }[];
     upload: any;
     uploaddown?: any;
