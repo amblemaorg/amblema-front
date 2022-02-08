@@ -222,7 +222,10 @@
           <ng-template #notModal>
             <!-- Ver mas Button -->
             <button
-              *ngIf="action.name && !action.hidden"
+              *ngIf="
+                (action.name && !action.hidden && !action.extraData) ||
+                !action.extraData.isToSendRequest
+              "
               [class.d-none]="
                 ((action.type === 4 || action.type === 9) &&
                   settings.fetcherUrls &&
@@ -541,8 +544,10 @@
             <nb-icon icon="planificacion"></nb-icon>
         </a>
     -->
-    <!-- <ng-container *ngIf="userCanEdit">
+    <!-- Enviar solicitud -->
+    <ng-container *ngIf="userCanEdit">
       <ng-container *ngFor="let action of settings.action">
+        <!-- Botón cuando se encuentra dentro del modal -->
         <ng-container
           *ngIf="action.type == 6 || action.type == 5; else notModal"
         >
@@ -554,9 +559,16 @@
             {{ action.name }}
           </button>
         </ng-container>
+
+        <!-- Botón cuando no se encuentra dentro del modal -->
         <ng-template #notModal>
           <button
-            *ngIf="action.name && !action.hidden"
+            *ngIf="
+              action.name &&
+              !action.hidden &&
+              action.extraData &&
+              action.extraData.isToSendRequest
+            "
             [class.d-none]="
               ((action.type === 4 || action.type === 9) &&
                 settings.fetcherUrls &&
@@ -572,7 +584,7 @@
             [disabled]="disableThis(action.type) || isSending || sleepSend"
             (click)="takeAction(action.type, $event)"
           >
-            <span
+            <!-- <span
               *ngIf="
                 isSending &&
                 (action.type == 4 ||
@@ -581,8 +593,8 @@
                   (settings.isDeleting && action.type == 1))
               "
               class="spinner-grow spinner-grow-sm"
-            ></span>
-            {{
+            ></span> -->
+            <!-- {{
               action.type !== 9 &&
               isSending &&
               (action.type == 4 || action.type == 7 || action.type == 8)
@@ -596,7 +608,8 @@
                 : isSending
                 ? action.name + " ..."
                 : action.name
-            }}
+            }} -->
+            {{ action.name }}
           </button>
 
           <ng-container
@@ -621,7 +634,7 @@
           </ng-container>
         </ng-template>
       </ng-container>
-    </ng-container> -->
+    </ng-container>
   </div>
 </div>
 
