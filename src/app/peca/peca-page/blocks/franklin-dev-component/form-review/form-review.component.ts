@@ -14,7 +14,8 @@ import { Observable } from "rxjs";
   styleUrls: ["./form-review.component.scss"],
 })
 export class FormReviewComponent
-  implements OnInit, PresentationalBlockComponent {
+  implements OnInit, PresentationalBlockComponent
+{
   // To validate the file
   readonly pattern = /image*/;
   public msgErrorFile: boolean = false;
@@ -27,6 +28,7 @@ export class FormReviewComponent
   settings: {
     // -- Event
     onSubmit: (values: any) => void;
+    onClickButton: (values: any) => void;
     onCancel: (values: any) => void;
     // -- Properties
     fields?: {
@@ -50,6 +52,7 @@ export class FormReviewComponent
         | false;
       button?:
         | {
+            type?: string;
             text?: string;
             ingAction?: string;
             isMainBtn?: boolean;
@@ -59,6 +62,7 @@ export class FormReviewComponent
         | false;
       cancelButton?:
         | {
+            type?: string;
             text?: string;
             ingAction?: string;
             isMainBtn?: boolean;
@@ -255,6 +259,54 @@ export class FormReviewComponent
       this.source.remove(event.data);
     }
   };
+
+  async onClickButton(values: any) {
+    this.isSaving = true;
+    let doTheArray = false;
+
+    if (values && values.inputImg) {
+      if (values.inputImg instanceof Array) {
+        doTheArray = true;
+        if (values.inputImg.length) {
+          const compressions = values.inputImg.map(
+            async (image_, i) =>
+              await this.compressFile({
+                image: image_,
+                isArray: true,
+                position: i,
+              })
+          );
+          await Promise.all(compressions);
+        }
+      } else if (typeof values.inputImg === "string")
+        await this.compressFile({ image: values.inputImg });
+    }
+    if (doTheArray) {
+      const theImages =
+        this.imgResultAfterCompress &&
+        typeof this.imgResultAfterCompress === "object"
+          ? Object.keys(this.imgResultAfterCompress).map(
+              (img) => this.imgResultAfterCompress[img]
+            )
+          : [];
+
+      this.settings.onClickButton(
+        values.inputImg && values.description
+          ? { ...values, inputImg: [...theImages] }
+          : values
+      );
+    } else
+      this.settings.onClickButton(
+        values.inputImg &&
+          values.description &&
+          this.imgResultAfterCompress &&
+          typeof this.imgResultAfterCompress === "string"
+          ? { ...values, inputImg: this.imgResultAfterCompress }
+          : values
+      );
+
+    // this.isSaving = false;
+  }
 
   async onSubmitAction(values: any) {
     this.isSaving = true;

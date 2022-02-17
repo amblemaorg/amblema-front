@@ -15,7 +15,8 @@ import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
   styleUrls: ["./form-table.component.scss"],
 })
 export class FormTableComponent
-  implements OnInit, AfterViewChecked, PresentationalBlockComponent {
+  implements OnInit, AfterViewChecked, PresentationalBlockComponent
+{
   type: "presentational";
   name: string;
   component: string;
@@ -173,9 +174,8 @@ export class FormTableComponent
 
   onSubmitAction(type: number, values: any, update: boolean = false) {
     if (typeof values === "object") {
-      this[
-        type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"
-      ] = true;
+      this[type === 1 ? (update ? "isUpdating" : "isSearching") : "isSaving"] =
+        true;
 
       const requestData = this.settings.getFetcher(
         type === 1 ? "get_students_list" : "post_promote_students",
