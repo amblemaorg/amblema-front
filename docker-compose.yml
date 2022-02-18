@@ -19,15 +19,15 @@ services:
       - 4200:4200
     env_file:
       - .env
-    ## environment:
-    ## Set enviroment values in .env file or here
-    ## - NGINX_HOST=
-    ## - NGINX_PORT=
-    ## - NGINX_ROOT=
-    ## - SSR_HOST=
-    ## - SSR_PORT=
-    ## - G_MAPS_ID=
-    ## - G_ANALYTICS_ID=
+    # environment:
+    # Set enviroment values in .env file or here
+    # - NGINX_HOST=
+    # - NGINX_PORT=
+    # - NGINX_ROOT=
+    # - SSR_HOST=
+    # - SSR_PORT=
+    # - G_MAPS_ID=
+    # - G_ANALYTICS_ID=
     volumes:
       - .:/home/amblema
     command: >
@@ -36,13 +36,13 @@ services:
       && exec nginx -g 'daemon off;'"
     networks:
       - default
-## volumes:
-##   amblema_web:
-##     driver: local
-##     driver_opts:
-##       type: none
-##       device: ${PWD}
-##       o: bind
+# volumes:
+#   amblema_web:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: ${PWD}
+#       o: bind
 networks:
   default:
     external:

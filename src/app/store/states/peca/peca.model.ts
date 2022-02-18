@@ -34,7 +34,6 @@ export interface PecaModel {
   school?: Object;
   schoolYearName?: string;
   updatedAt?: string;
-  yearbook?: Object;
 }
 
 // Data models for request to backend

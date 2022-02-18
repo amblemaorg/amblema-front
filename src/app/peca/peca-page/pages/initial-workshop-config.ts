@@ -268,12 +268,7 @@ export const INITIAL_WORKSHOP_CONFIG = {
   ],
 };
 
-export function initialWorkshopConfigMapper(
-  initialWorkshop,
-  lapseNumber,
-  permissions,
-  store: Store
-) {
+export function initialWorkshopConfigMapper(initialWorkshop, lapseNumber, permissions, store: Store) {
   const {
     isInApproval,
     approvalHistory,
@@ -282,7 +277,10 @@ export function initialWorkshopConfigMapper(
     workshopPlace,
     workshopDate,
   } = initialWorkshop;
-  const { initial_workshop_edit, initial_workshop_delete } = permissions;
+  const {
+    initial_workshop_edit,
+    initial_workshop_delete
+  } = permissions;
   let currentImages = images;
   let currentDescription = description;
   let currentStatus = description && currentImages.length > 0 ? 2 : 1;
@@ -295,10 +293,7 @@ export function initialWorkshopConfigMapper(
 
   store.dispatch(new ClearInitialWorkshopRequestData({}));
   store.dispatch(
-    new SetInitialWorkshopRequestData({
-      description: currentDescription,
-      images: currentImages,
-    })
+    new SetInitialWorkshopRequestData({ description: currentDescription, images: currentImages })
   );
 
   const preparingWorkshopForm = {
@@ -415,9 +410,7 @@ export function initialWorkshopConfigMapper(
         const imageSource = row.data.newData.source
           ? row.data.newData.source
           : row.data.newData.image;
-        store.dispatch(
-          new RemoveImageFromInitialWorkshopRequestData({ imageSource })
-        );
+        store.dispatch(new RemoveImageFromInitialWorkshopRequestData({ imageSource }));
       },
       isFromImgContainer: true,
       modalCode: "initialWorkshopConfigRegistroTallerInicial",
@@ -444,10 +437,7 @@ export function initialWorkshopConfigMapper(
     settings: {
       action: [
         {
-          extraData: { isToSendRequest: true },
-          hidden: isInApproval
-            ? !initial_workshop_delete
-            : !initial_workshop_edit,
+          hidden: isInApproval ? !initial_workshop_delete : !initial_workshop_edit,
           name: isInApproval ? "Cancelar solicitud" : "Enviar solicitud",
         },
       ],
@@ -474,7 +464,9 @@ export function initialWorkshopConfigMapper(
           items: [
             {
               title: "Preparación del taller",
-              childBlocks: [preparingWorkshopForm],
+              childBlocks: [
+                preparingWorkshopForm,
+              ],
             },
             {
               title: "Registro inicial",
