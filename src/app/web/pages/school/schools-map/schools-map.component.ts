@@ -48,6 +48,8 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   SCHOOLS_PATH = "schoolspage";
   schoolService: WebContentService;
 
+  searchInputValue = "";
+
   constructor(
     private router: Router,
     private globalService: GlobalService,
@@ -89,8 +91,8 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     );
   }
 
-  mapInitializer() {
-    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
+  mapInitializer(mapOptions = this.mapOptions) {
+    this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
   }
 
   loadAllMarkers() {
@@ -129,6 +131,17 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
       });
       this.loadAllMarkers();
       this.store.dispatch([new SetIsLoadingPage("false")]);
+
+      console.log(this.schoolsList);
     });
+  }
+
+  zoomTo(lat: number, lng: number) {
+    const coordinates = new google.maps.LatLng(lat, lng);
+    const mapOptions: google.maps.MapOptions = {
+      center: coordinates,
+      zoom: 10,
+    };
+    this.mapInitializer(mapOptions);
   }
 }
