@@ -1,3 +1,19 @@
+<div
+  class="progress progress-bar-activity"
+  [title]="'Cargando settings.infoContainer[0].datosNivel[0].percent%'"
+>
+  <div
+    class="progress-bar"
+    [ngClass]="{
+      'progress-bar-striped': true,
+      'progress-bar-animated': false
+    }"
+    [style.width.%]="settings.infoContainer[0].datosNivel[0].percent"
+  ></div>
+  <div class="div-percent">
+    {{ settings.infoContainer[0].datosNivel[0].percent }}%
+  </div>
+</div>
 <div *ngFor="let info of settings.infoContainer">
   <div *ngFor="let a of info.principal" class="style-principal d-flex">
     <div class="style-principal-div">
@@ -93,7 +109,13 @@
           *ngIf="
             dato.isFromAnnualConvention && info.button && !info.button.hidden
           "
-          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-md-4"
+          class="
+            btn btn-primary
+            text-decoration-none
+            p-1
+            btn-in-wrapper
+            ml-md-4
+          "
           (click)="sendAnnualConvention(dato.checkList)"
         >
           {{ info.button.name }}
@@ -135,7 +157,13 @@
         <button
           *ngIf="info.button && !info.button.hidden"
           title="general"
-          class="btn btn-primary text-decoration-none p-1 btn-in-wrapper ml-md-4"
+          class="
+            btn btn-primary
+            text-decoration-none
+            p-1
+            btn-in-wrapper
+            ml-md-4
+          "
           (click)="
             sendChecks(info.datosNivel[0].checkList, info.datosNivel[0].index)
           "

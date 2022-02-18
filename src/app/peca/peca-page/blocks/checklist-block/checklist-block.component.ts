@@ -18,7 +18,8 @@ import { NavigationEnd, Router, Event } from "@angular/router";
   styleUrls: ["./checklist-block.component.scss"],
 })
 export class ChecklistBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, OnDestroy
+{
   type: "presentational";
   component: string;
   prueba: any;
@@ -62,6 +63,7 @@ export class ChecklistBlockComponent
         isFromAnnualConvention?: boolean;
         genericActivityId?: string;
         approvedAct?: boolean;
+        percent?: number;
         checkList: {
           id?: string;
           name: string;
@@ -173,7 +175,7 @@ export class ChecklistBlockComponent
       ]
         ? data.approvedAct
         : null;
-
+      this.settings.infoContainer[0].datosNivel[0].percent = data["percent"];
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
           gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
@@ -186,7 +188,8 @@ export class ChecklistBlockComponent
 
     if (data["checkList"]) {
       this.flag = true;
-      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention = true;
+      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention =
+        true;
       this.settings.infoContainer[0].datosNivel[0].checkList = data.checkList;
     } else {
       this.flag = false;
@@ -254,9 +257,8 @@ export class ChecklistBlockComponent
 
   sendChecks(checks, levelIndex) {
     const { environmentalData, lapse, topicIndex } = this.settings.extraData;
-    environmentalData[lapse].topics[topicIndex].levels[
-      levelIndex
-    ].activities = checks;
+    environmentalData[lapse].topics[topicIndex].levels[levelIndex].activities =
+      checks;
     const body = {
       ...environmentalData,
     };
