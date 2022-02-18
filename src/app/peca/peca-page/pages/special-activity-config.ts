@@ -239,6 +239,7 @@ export function specialActivityConfigMapper(
     settings: {
       action: [
         {
+          extraData: { isToSendRequest: true },
           hidden: isInApproval
             ? !special_activity_delete
             : !special_activity_edit,
