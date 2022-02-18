@@ -14,9 +14,7 @@
       settings.genActSelectStatus
     "
   >
-    <div
-      class="date-download-status flex-gap d-flex mt-1 align-items-end flex-column"
-    >
+    <div class="date-download-status d-flex justify-content-between mt-1">
       <div class="left-side" [class.mr-auto]="settings.genActSelectStatus">
         <h6 class="left-sided-content">
           <span
@@ -204,110 +202,6 @@
           >Descargar</a
         >
       </div>
-
-      <!-- Ver mas boton -->
-      <ng-container *ngIf="userCanEdit">
-        <ng-container *ngFor="let action of settings.action">
-          <ng-container
-            *ngIf="action.type == 6 || action.type == 5; else notModal"
-          >
-            <!-- <button
-              *ngIf="action.name && !action.hidden"
-              class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-              (click)="addToTable(true, action.type == 6 ? false : true)"
-            >
-              {{ action.name }}
-            </button> -->
-          </ng-container>
-          <ng-template #notModal>
-            <!-- Ver mas Button -->
-            <button
-              *ngIf="
-                (action.name && !action.hidden && !action.extraData) ||
-                !action.extraData.isToSendRequest
-              "
-              [class.d-none]="
-                ((action.type === 4 || action.type === 9) &&
-                  settings.fetcherUrls &&
-                  settings.fetcherUrls.cancel) ||
-                (action.type === 2 &&
-                  !this.settings.modalCode &&
-                  isImgsTableShown)
-              "
-              [class]="
-                'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
-                getStyles(action)
-              "
-              style="margin-left: 10px; margin-top: -4px"
-              [disabled]="disableThis(action.type) || isSending || sleepSend"
-              (click)="takeAction(action.type, $event)"
-            >
-              <span
-                *ngIf="
-                  isSending &&
-                  (action.type == 4 ||
-                    action.type == 7 ||
-                    action.type == 8 ||
-                    (settings.isDeleting && action.type == 1))
-                "
-                class="spinner-grow spinner-grow-sm"
-              ></span>
-              {{
-                action.type !== 9 &&
-                isSending &&
-                (action.type == 4 || action.type == 7 || action.type == 8)
-                  ? action.type == 8
-                    ? "Guardando"
-                    : action.type == 7
-                    ? setGenActBtnName()
-                    : "Enviando"
-                  : action.type == 7
-                  ? setGenActBtnName()
-                  : isSending
-                  ? action.name + " ..."
-                  : action.name
-              }}
-            </button>
-
-            <ng-container
-              *ngIf="
-                (action.type === 4 || action.type === 9) &&
-                !action.hidden &&
-                settings.fetcherUrls &&
-                settings.fetcherUrls.cancel
-              "
-            >
-              <button
-                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-                [disabled]="isSending || sleepSend"
-                (click)="cancelRequest()"
-              >
-                <span
-                  *ngIf="isSending"
-                  class="spinner-grow spinner-grow-sm"
-                ></span>
-                {{ isSending ? "Cancelando solicitud" : "Cancelar solicitud" }}
-              </button>
-            </ng-container>
-          </ng-template>
-
-          <p
-            *ngIf="showModalInfo"
-            class="text-decoration-none"
-            style="
-              color: red;
-              background: #fcc7c7;
-              padding: 1rem 2rem;
-              border-radius: 5px;
-              margin-top: 10px;
-              width: 100%;
-            "
-          >
-            {{ settings.status.comments }}
-          </p>
-        </ng-container>
-      </ng-container>
-      <!-- Adjuntar archivo -->
       <div
         *ngIf="
           settings.selectStatus ||
@@ -559,10 +453,8 @@
             <nb-icon icon="planificacion"></nb-icon>
         </a>
     -->
-    <!-- Enviar solicitud -->
     <ng-container *ngIf="userCanEdit">
       <ng-container *ngFor="let action of settings.action">
-        <!-- Botón cuando se encuentra dentro del modal -->
         <ng-container
           *ngIf="action.type == 6 || action.type == 5; else notModal"
         >
@@ -574,16 +466,16 @@
             {{ action.name }}
           </button>
         </ng-container>
-
-        <!-- Botón cuando no se encuentra dentro del modal -->
         <ng-template #notModal>
-          {{ myConsoleLog(action) }}
           <button
-            *ngIf="
-              action.name &&
-              !action.hidden &&
-              action.extraData &&
-              action.extraData.isToSendRequest
+            *ngIf="action.name && !action.hidden"
+            [class.d-none]="
+              ((action.type === 4 || action.type === 9) &&
+                settings.fetcherUrls &&
+                settings.fetcherUrls.cancel) ||
+              (action.type === 2 &&
+                !this.settings.modalCode &&
+                isImgsTableShown)
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
@@ -592,7 +484,7 @@
             [disabled]="disableThis(action.type) || isSending || sleepSend"
             (click)="takeAction(action.type, $event)"
           >
-            <!-- <span
+            <span
               *ngIf="
                 isSending &&
                 (action.type == 4 ||
@@ -601,9 +493,8 @@
                   (settings.isDeleting && action.type == 1))
               "
               class="spinner-grow spinner-grow-sm"
-            ></span> -->
-            <!-- {{
-              action.type !== 9 &&
+            ></span>
+            {{
               isSending &&
               (action.type == 4 || action.type == 7 || action.type == 8)
                 ? action.type == 8
@@ -616,8 +507,7 @@
                 : isSending
                 ? action.name + " ..."
                 : action.name
-            }} -->
-            {{ action.name }}
+            }}
           </button>
 
           <ng-container

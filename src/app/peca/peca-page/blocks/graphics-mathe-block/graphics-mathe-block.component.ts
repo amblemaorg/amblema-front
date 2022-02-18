@@ -16,8 +16,7 @@ import { Observable, Subscription } from "rxjs";
   styleUrls: ["./graphics-mathe-block.component.scss"],
 })
 export class GraphicsMatheBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit
-{
+  implements PresentationalBlockComponent, OnInit, AfterViewInit {
   type: "presentational";
   component: string;
   settings: {

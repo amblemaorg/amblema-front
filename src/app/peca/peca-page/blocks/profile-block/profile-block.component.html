@@ -1,8 +1,4 @@
-<div
-  fullWidth
-  *ngFor="let item of settings.items; index as i"
-  class="profile-wrapper"
->
+<div fullWidth *ngFor="let item of settings.items; index as i" class="profile-wrapper">
   <div *ngIf="item.image || item.title || item.description" class="bloque">
     <div class="bloque1">
       <div #imagenPerfil>
@@ -15,12 +11,8 @@
           [alt]="name"
           (click)="uploadImageCaller(imagenPerfil)"
         />
-        <fa-icon
-          *ngIf="!url"
-          [icon]="faUser"
-          (click)="uploadImageCaller(imagenPerfil)"
-        ></fa-icon>
-        <h6 (click)="uploadImageCaller(imagenPerfil)">Actualizar Imagen</h6>
+        <fa-icon *ngIf="!url" [icon]="faUser" (click)="uploadImageCaller(imagenPerfil)"></fa-icon>
+        <h6 (click)="uploadImageCaller(imagenPerfil)">Actualizar Imagen</h6>        
       </div>
     </div>
     <div class="bloque2">
