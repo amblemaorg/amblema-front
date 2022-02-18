@@ -4,7 +4,7 @@
 }
 #school-overlay-loading {
   background: #000;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   position: fixed;
   top: 0;
   width: 100%;
@@ -16,10 +16,16 @@
   span {
     color: #fff;
     font-size: 4vw;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 
     @media screen and (orientation: landscape) {
       font-size: 1.5vw;
     }
   }
+}
+
+.school-list {
+  position: relative;
+  z-index: 100;
+  color: red;
 }
