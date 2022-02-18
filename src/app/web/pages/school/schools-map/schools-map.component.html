@@ -1,14 +1,39 @@
 <div #mapWrapper id="map"></div>
 <div
-  *ngIf="(isItLoading$ | async) && !hadNotAcceptedModal()"
+  *ngIf="(isItLoading$ | async) && !hadNotAcceptedModal(); else schoolList"
   id="school-overlay-loading"
 >
   <span>Cargando información de escuelas...</span>
 </div>
 
-<ng-container>
-  <div class="school-list">hello world</div>
-</ng-container>
+<ng-template #schoolList>
+  <div class="school-list">
+    <ul class="list">
+      <ng-container
+        *ngFor="
+          let school of this.schoolsList | filter: searchInputValue:'name'
+        "
+      >
+        <li (click)="zoomTo(school.lat, school.lng)">
+          <div class="div">
+            <nb-icon icon="pin-outline" class="icon"></nb-icon>
+          </div>
+
+          <span>{{ school.name | excerpt: 80 }}</span>
+        </li>
+      </ng-container>
+    </ul>
+
+    <input
+      nbInput
+      class="search-input"
+      type="text"
+      name="schoolSearcher"
+      placeholder="Buscar escuela en Amblema "
+      [(ngModel)]="searchInputValue"
+    />
+  </div>
+</ng-template>
 
 <ng-template #content let-modal>
   <div class="modal-header">
