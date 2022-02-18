@@ -372,8 +372,14 @@ export class YearBookState {
     { patchState, getState }: StateContext<YearBook>,
     action: UpdateYearBookRequest
   ) {
-    const { pecaId, userId, section, partial, data, requestId } =
-      action.payload;
+    const {
+      pecaId,
+      userId,
+      section,
+      partial,
+      data,
+      requestId,
+    } = action.payload;
 
     const yearBookData = {
       ...data,
@@ -452,7 +458,6 @@ export class YearBookState {
     delete yearBookData["wasSaving"];
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
     try {
-      console.log("YEAR BOOK DATA: ", yearBookData);
       const data = await this.fetcher.post(url, yearBookData).toPromise();
       const { msgs } = data;
       if (msgs && msgs instanceof Array && msgs.length) {

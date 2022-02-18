@@ -168,9 +168,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId, permissions) {
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],
@@ -347,9 +345,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId, permissions) {
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],
@@ -524,9 +520,7 @@ export function EnviromentalMapper(EnviromentalData, pecaId, permissions) {
                                   week: [
                                     ...level.week.map((w) => {
                                       return {
-                                        contWeek: moment(new Date(w)).format(
-                                          "DD/MM/YYYY"
-                                        ),
+                                        contWeek: moment(new Date(w)).format("DD/MM/YYYY"),
                                       };
                                     }),
                                   ],

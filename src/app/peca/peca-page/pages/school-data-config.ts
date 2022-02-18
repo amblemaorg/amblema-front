@@ -7,10 +7,6 @@ import {
   formTabsEstudiantesGradesSections,
 } from "../blocks/form-block/all-forms";
 
-const mostrarFeedback = (statusCode) => {
-  return statusCode === 3;
-};
-
 const statusGeneral = {
   component: "textsbuttons",
   name: "schoolFormStatus",
@@ -18,18 +14,8 @@ const statusGeneral = {
     dateOrtext: {},
     status: {
       text: "Estatus",
-      // subText: "dsadsa subtext", // No afecta en nada
-      // comments: "mi comentario 2", // Agrega el texto del comentario
+      subText: 0,
     },
-    // action: false // Muestra o no el boton con su texto
-    //   ? [
-    //       {
-    //         type: 9,
-    //         name: "Ver más",
-    //       },
-    //     ]
-    //   : [],
-
     buttonCode: "schoolDataConfigRegistroEscuela",
   },
 };
@@ -616,7 +602,3 @@ export const SCHOOL_DATA_CONFIG = {
     },
   ],
 };
-
-// export function _mapper_SCHOOL_DATA_CONFIG () {
-
-// }
