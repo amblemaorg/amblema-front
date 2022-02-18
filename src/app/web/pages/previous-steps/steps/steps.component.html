@@ -3,9 +3,9 @@
     <h1 class="font-weight-bold mb-4">Pasos para formar parte de AmbLeMa</h1>
     <div class="below-desc-info">
       <p class="text-center">
-        Cada uno de los actores que conforman el Sistema AmbLeMa: Padrino,
-        Coordinador o Escuela, deben seguir una serie de pasos para asumir el
-        compromiso en la aplicación de la Herramienta educativa.
+        Cada uno de los actores que conforman el Sistema AmbLeMa: Padrino, Coordinador o Escuela,
+        deben seguir una serie de pasos para asumir el compromiso en la aplicación de la Herramienta
+        educativa.
       </p>
     </div>
     <button
@@ -40,38 +40,22 @@
   <div class="tabs-container" [class.mt-add]="!enablingModsBtn()">
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a
-          class="nav-link active"
-          data-toggle="tab"
-          href="#general"
-          (click)="switchStep(0, $event)"
+        <a class="nav-link active" data-toggle="tab" href="#general" (click)="switchStep(0, $event)"
           >Generales</a
         >
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          data-toggle="tab"
-          href="#sponsor"
-          (click)="switchStep(1, $event)"
+        <a class="nav-link" data-toggle="tab" href="#sponsor" (click)="switchStep(1, $event)"
           >Padrino</a
         >
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          data-toggle="tab"
-          href="#coordinator"
-          (click)="switchStep(2, $event)"
+        <a class="nav-link" data-toggle="tab" href="#coordinator" (click)="switchStep(2, $event)"
           >Coordinador</a
         >
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          data-toggle="tab"
-          href="#school"
-          (click)="switchStep(3, $event)"
+        <a class="nav-link" data-toggle="tab" href="#school" (click)="switchStep(3, $event)"
           >Escuela</a
         >
       </li>
@@ -79,10 +63,7 @@
 
     <div class="steps-progress-bar">
       <h6>Progreso de los pasos</h6>
-      <div
-        class="progress"
-        [title]="fetchingSteps ? 'Cargando' : stepsProgress[activeStep] + '%'"
-      >
+      <div class="progress" [title]="fetchingSteps ? 'Cargando' : stepsProgress[activeStep] + '%'">
         <div
           class="progress-bar"
           [ngClass]="{
@@ -103,9 +84,7 @@
           [mode]="1"
           [steps]="generalSteps"
           [curriculumPending]="
-            curriculumPending &&
-            (user_type$ | async) != '0' &&
-            (user_type$ | async) != '1'
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
           "
           [project_id]="project_id"
           [user_type]="user_type$ | async"
@@ -114,7 +93,6 @@
           [enableActions]="enabledTabs"
         ></app-general-steps>
       </div>
-
       <div id="sponsor" class="container tab-pane fade">
         <br />
         <!-- states$ | async  municipalities$ | async -->
@@ -123,9 +101,7 @@
           [mode]="3"
           [steps]="sponsorSteps"
           [curriculumPending]="
-            curriculumPending &&
-            (user_type$ | async) != '0' &&
-            (user_type$ | async) != '1'
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
           "
           [project_id]="project_id"
           [user_type]="user_type$ | async"
@@ -144,9 +120,7 @@
           [mode]="2"
           [steps]="coordinatorSteps"
           [curriculumPending]="
-            curriculumPending &&
-            (user_type$ | async) != '0' &&
-            (user_type$ | async) != '1'
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
           "
           [project_id]="project_id"
           [user_type]="user_type$ | async"
@@ -165,9 +139,7 @@
           [mode]="4"
           [steps]="schoolSteps"
           [curriculumPending]="
-            curriculumPending &&
-            (user_type$ | async) != '0' &&
-            (user_type$ | async) != '1'
+            curriculumPending && (user_type$ | async) != '0' && (user_type$ | async) != '1'
           "
           [project_id]="project_id"
           [user_type]="user_type$ | async"

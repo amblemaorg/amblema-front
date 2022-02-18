@@ -1,5 +1,4 @@
 @import "scss/variables";
-@import "scss/placeholders";
 
 ::ng-deep {
   .bloque {
@@ -50,8 +49,7 @@
       }
     }
     .text-hover:hover {
-      img,
-      fa-icon svg {
+      img, fa-icon svg {
         cursor: pointer;
         opacity: 0.5;
       }
@@ -60,7 +58,7 @@
       }
     }
   }
-
+  
   .bloque2 {
     text-align: center;
     width: 50%;
@@ -70,13 +68,13 @@
       color: #00809a;
     }
   }
-
+  
   .container-form {
     width: 100%;
     padding: 50px;
   }
   @media (max-width: 768px) {
-    .container-form {
+    .container-form  {
       padding: 1rem;
     }
   }
