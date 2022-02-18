@@ -89,6 +89,7 @@ export class TextsButtonsSetBlockComponent
       margin?: string;
       direction?: string;
       removeMargin?: string;
+      extraData: any; // Para almacenar cualquier dato extra necesario
     }[];
     upload: any;
     uploaddown?: any;
@@ -443,7 +444,13 @@ export class TextsButtonsSetBlockComponent
       if (data["action"]) this.settings.action = data.action;
       if (data["contentTeacherInfo"])
         this.settings.selectStatus.lista = data.contentTeacherInfo;
-      if (data["status"]) this.settings.status.subText = data.status.subText;
+      if (data["status"]) {
+        let status = this.settings.status;
+        this.settings.status.subText = data.status.subText;
+        this.settings.status.comments = data.status.comments
+          ? data.status.comments
+          : status.comments;
+      }
       if (data["subtitles"]) this.settings.subtitles = data.subtitles;
       if (data["dateOrtext"])
         this.settings.dateOrtext.date = data.dateOrtext.date;
@@ -1487,5 +1494,9 @@ export class TextsButtonsSetBlockComponent
     const style = margin + removeML;
 
     return style;
+  }
+
+  myConsoleLog(data) {
+    console.log("myConsoleLog: ", data);
   }
 }

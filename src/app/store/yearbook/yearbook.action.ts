@@ -452,6 +452,7 @@ export class YearBookState {
     delete yearBookData["wasSaving"];
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
     try {
+      console.log("YEAR BOOK DATA: ", yearBookData);
       const data = await this.fetcher.post(url, yearBookData).toPromise();
       const { msgs } = data;
       if (msgs && msgs instanceof Array && msgs.length) {
