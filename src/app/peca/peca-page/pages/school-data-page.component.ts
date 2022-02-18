@@ -75,9 +75,15 @@ export class SchoolDataPageComponent
   teachersFormData: { hiddenButton: boolean };
   schoolFormButton: {
     action: (
-      | { type: number; name: string; hidden?: undefined }
+      | {
+          extraData: { isToSendRequest: boolean };
+          type: number;
+          name: string;
+          hidden?: undefined;
+        }
       | {
           hidden: boolean;
+          extraData: { isToSendRequest: boolean };
           type: number;
           name: string;
           margin?: string;
@@ -158,7 +164,7 @@ export class SchoolDataPageComponent
 
           this.setSchoolStatus(data.school); // sets current school status number
 
-          this.setSchoolFormStatusData();
+          this.setSchoolFormStatusData(data.school);
           this.setSchoolFormData(
             data.school,
             schoolDataToSchoolFormMapper,
@@ -222,8 +228,9 @@ export class SchoolDataPageComponent
 
   updateDataToBlocks(updateData: boolean) {
     if (updateData) {
+      // Render with new sections layout
       // School data
-      this.setBlockData("schoolFormStatus", this.schoolFormStatusData);
+      this.setBlockData("schoolFormStatus", this.schoolFormStatusData); // Add Approval status text, "ver mas" button and comments to show
       this.setBlockData("schoolForm", this.schoolFormData);
       this.setBlockData("schoolFormButton", this.schoolFormButton);
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
@@ -253,18 +260,33 @@ export class SchoolDataPageComponent
     this.requestIdToCancel = null;
   }
 
+  // Setting global status approval verification
   setSchoolStatus(school) {
+    // this.schoolDataStatus = school.isInApproval
+    //   ? 1
+    //   : school.approvalHistory.length > 0
+    //   ? school.approvalHistory[school.approvalHistory.length - 1].status ===
+    //       "2" ||
+    //     school.approvalHistory[school.approvalHistory.length - 1].status === "3"
+    //     ? +school.approvalHistory[school.approvalHistory.length - 1].status
+    //     : 0
+    //   : 0;
+
+    const approvalHistory = school.approvalHistory;
+    const status = approvalHistory[approvalHistory.length - 1].status;
+
     // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = school.isInApproval
-      ? 1
-      : school.approvalHistory.length > 0
-      ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-          "2" ||
-        school.approvalHistory[school.approvalHistory.length - 1].status === "3"
-        ? +school.approvalHistory[school.approvalHistory.length - 1].status
-        : 0
-      : 0;
-    // this.schoolDataStatus = school.isInApproval ? 1 : 0;
+    this.schoolDataStatus = 1;
+
+    if (!school.isInApproval) {
+      if (approvalHistory.length === 0) {
+        this.schoolDataStatus = 0;
+      }
+
+      if (approvalHistory.length > 0) {
+        this.schoolDataStatus = status === "2" || "3" ? +status : 0;
+      }
+    }
   }
 
   updateStaticFetchers() {
@@ -367,10 +389,12 @@ export class SchoolDataPageComponent
       this.schoolFormButton = {
         action: [
           {
+            extraData: { isToSendRequest: true },
             type: 2,
             name: "Adjuntar fotos",
           },
           {
+            extraData: { isToSendRequest: true },
             hidden: !permissions.school_peca_edit,
             type: 4,
             name: "Enviar Solicitud",
@@ -385,12 +409,32 @@ export class SchoolDataPageComponent
     }
   }
 
-  setSchoolFormStatusData() {
+  /**
+   * @description Setting options of approval status text, actions of "ver mas" button and comments to show
+   * @author Christopher Dallar Document This
+   * @date 07/02/2022
+   * @param {*} school
+   * @memberof SchoolDataPageComponent
+   */
+  setSchoolFormStatusData(school) {
+    const comments =
+      school.approvalHistory[school.approvalHistory.length - 1].comments;
+    let showComment = comments && this.schoolDataStatus ? true : false;
+
     this.schoolFormStatusData = {
       status: {
         text: "Estatus",
         subText: this.schoolDataStatus,
+        comments: comments,
       },
+      action: showComment
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
     };
   }
 

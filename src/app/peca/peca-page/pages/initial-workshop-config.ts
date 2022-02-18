@@ -444,6 +444,7 @@ export function initialWorkshopConfigMapper(
     settings: {
       action: [
         {
+          extraData: { isToSendRequest: true },
           hidden: isInApproval
             ? !initial_workshop_delete
             : !initial_workshop_edit,

@@ -16,7 +16,8 @@ import { Subscription, Observable } from "rxjs";
   styleUrls: ["./graphics-logic.component.scss"],
 })
 export class GraphicsLogicComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit {
+  implements PresentationalBlockComponent, OnInit, AfterViewInit
+{
   type: "presentational";
   component: string;
   settings: {
