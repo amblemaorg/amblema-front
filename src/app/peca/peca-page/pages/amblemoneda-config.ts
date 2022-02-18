@@ -145,15 +145,12 @@ export function amblecoinsConfigMapper(
             else return "";
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = formConfirmacionDocenteModal.grade.options.find(
-              (d) => {
-                return d.id === cell;
-              }
-            ).name;
+            let value: string = formConfirmacionDocenteModal.grade.options.find((d) => {
+              return d.id === cell;
+            }).name;
             value = value.toUpperCase();
 
-            if (value.includes(search.toUpperCase()) || search === "")
-              return true;
+            if (value.includes(search.toUpperCase()) || search === "") return true;
             else return false;
           },
         },
@@ -170,8 +167,7 @@ export function amblecoinsConfigMapper(
             let value: string = cell == "1" ? "Confirmado" : "Por confirmar";
             value = value.toUpperCase();
 
-            if (value.includes(search.toUpperCase()) || search === "")
-              return true;
+            if (value.includes(search.toUpperCase()) || search === "") return true;
             else return false;
           },
         },

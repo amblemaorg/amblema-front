@@ -20,8 +20,7 @@ import { PageBlockFactory } from "../page-block-factory";
   styleUrls: ["./accordion-block.component.scss"],
 })
 export class AccordionBlockComponent
-  implements StructuralBlockComponent, OnInit, AfterViewInit
-{
+  implements StructuralBlockComponent, OnInit, AfterViewInit {
   @ViewChildren("accordionItemBodyContainer", { read: ViewContainerRef })
   accordionItemBodyContainer: QueryList<ViewContainerRef>;
   factory: PageBlockFactory;
@@ -52,7 +51,9 @@ export class AccordionBlockComponent
     this.factory = settings.factory ? settings.factory : {};
   }
 
-  setData(data: any) {}
+  setData(data: any) {
+    
+  }
   public instantiateChildBlocks() {
     this.settings.items.map((item, i) => {
       const container = this.accordionItemBodyContainer.toArray()[i];
