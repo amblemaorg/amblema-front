@@ -18,8 +18,8 @@ export class FilterPipe implements PipeTransform {
   transform(
     items: any[],
     text: string,
-    column: string,
-    alertNotFound: string = ""
+    columns: string | string[],
+    method: "some" | "every" = "some"
   ): any[] {
     if (text === "" || !text) {
       return items;
@@ -27,16 +27,23 @@ export class FilterPipe implements PipeTransform {
 
     text = text.toLowerCase();
 
-    // Usar el every para que las comparaciones no sean solo con un atributo de la columna
     items = items.filter((items) => {
-      // includes = Si el text incluye ese text retorna  el items
-      return items[column].toLowerCase().includes(text);
+      if (!Array.isArray(columns)) {
+        // includes = Si el text incluye ese text retorna  el items
+        return items[columns].toLowerCase().includes(text);
+      }
+
+      // if (method === "every") {
+      //   return columns.every((column) => {
+      //     return items[column].toLowerCase().includes(text);
+      //   });
+      // }
+
+      return columns.some((column) => {
+        return items[column].toLowerCase().includes(text);
+      });
     });
 
-    if (items.length === 0) {
-      return [{ title: alertNotFound }];
-    } else {
-      return items;
-    }
+    return items;
   }
 }
