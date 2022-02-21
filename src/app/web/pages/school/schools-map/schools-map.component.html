@@ -12,16 +12,31 @@
       <ng-container
         *ngFor="
           let school of this.schoolsList
-            | filter: searchInputValue:['name', 'state']
+            | filter
+              : searchInputValue
+              : ['name', 'state']
+              : 'some'
+              : { notFound: true }
         "
       >
-        <li (click)="zoomTo(school.lat, school.lng)">
-          <div class="div">
-            <nb-icon icon="pin-outline" class="icon"></nb-icon>
-          </div>
+        <ng-container *ngIf="!school.notFound; else notFound">
+          <li (click)="zoomTo(school.lat, school.lng)">
+            <div>
+              <nb-icon icon="pin-outline" class="icon"></nb-icon>
+            </div>
 
-          <span>{{ school.name | excerpt: 80 }}</span>
-        </li>
+            <div class="content">
+              <span>{{ school.name | excerpt: 80 }}</span>
+              <small class="state">{{ school.state }}</small>
+            </div>
+          </li>
+        </ng-container>
+
+        <ng-template #notFound>
+          <li class="notFound">
+            Sin coincidencias ¡Intenta otras palabras claves!
+          </li>
+        </ng-template>
       </ng-container>
     </ul>
 
