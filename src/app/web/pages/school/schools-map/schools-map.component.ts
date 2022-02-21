@@ -95,13 +95,32 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     this.map = new google.maps.Map(this.gmap.nativeElement, mapOptions);
   }
 
-  loadAllMarkers() {
+  loadAllMarkers(coordinates?: google.maps.LatLng) {
+    const svgMarker = {
+      path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+      fillColor: "blue",
+      fillOpacity: 1,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 2.5,
+      anchor: new google.maps.Point(15, 30),
+    };
+
     this.schoolsList.map((schoolData) => {
-      const marker = new google.maps.Marker({
+      let makerOption = {
         map: this.map,
         position: new google.maps.LatLng(schoolData.lat, schoolData.lng),
         title: schoolData.slug,
-      });
+      };
+
+      if (coordinates) {
+        if (coordinates.equals(makerOption.position)) {
+          makerOption["icon"] = svgMarker;
+          makerOption["zIndex"] = 100;
+        }
+      }
+
+      const marker: google.maps.Marker = new google.maps.Marker(makerOption);
 
       marker.addListener("click", () => {
         this.router.navigate(["escuelas/" + marker.getTitle()]);
@@ -131,8 +150,6 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
       });
       this.loadAllMarkers();
       this.store.dispatch([new SetIsLoadingPage("false")]);
-
-      console.log(this.schoolsList);
     });
   }
 
@@ -140,8 +157,9 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     const coordinates = new google.maps.LatLng(lat, lng);
     const mapOptions: google.maps.MapOptions = {
       center: coordinates,
-      zoom: 10,
+      zoom: 12,
     };
     this.mapInitializer(mapOptions);
+    this.loadAllMarkers(coordinates);
   }
 }
