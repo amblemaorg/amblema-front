@@ -146,6 +146,7 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
           name: school.name,
           lat: school.coordinate.latitude,
           lng: school.coordinate.longitude,
+          state: school.addressState.name,
         };
       });
       this.loadAllMarkers();
