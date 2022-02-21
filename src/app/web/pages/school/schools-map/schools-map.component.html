@@ -12,7 +12,7 @@
       <ng-container
         *ngFor="
           let school of this.schoolsList
-            | filter: searchInputValue:['name', 'slug']
+            | filter: searchInputValue:['name', 'state']
         "
       >
         <li (click)="zoomTo(school.lat, school.lng)">
