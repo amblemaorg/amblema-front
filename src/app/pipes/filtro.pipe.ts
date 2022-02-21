@@ -11,7 +11,7 @@ export class FilterPipe implements PipeTransform {
    * Valor con el que se buscan coincidencias
    * @param column: string
    * Atributo o column del items donde se encontrara el valor a coincidir
-   * @param alertNotFound: string opcional default = ""
+   * @param notFound: string opcional default = ""
    * Mensaje a mostrar cuando no se encuentran coincidencias
    * @returns arreglo filtrado por el atributo, a partir de un text
    */
@@ -19,30 +19,38 @@ export class FilterPipe implements PipeTransform {
     items: any[],
     text: string,
     columns: string | string[],
-    method: "some" | "every" = "some"
+    method: "some" | "every" = "some",
+    notFound?: any
   ): any[] {
     if (text === "" || !text) {
       return items;
     }
 
     text = text.toLowerCase();
+    let keyWords;
+    keyWords = text.split(/[ ]|[,]|[_]|[-]|[/]/gi).join("|");
+    keyWords = new RegExp(keyWords, "gi");
 
     items = items.filter((items) => {
       if (!Array.isArray(columns)) {
-        // includes = Si el text incluye ese text retorna  el items
-        return items[columns].toLowerCase().includes(text);
+        // includes = Si el text coincida ese text retorna  el items
+        return items[columns].match(keyWords);
       }
 
       // if (method === "every") {
       //   return columns.every((column) => {
-      //     return items[column].toLowerCase().includes(text);
+      //     return items[column].match(keyWords);
       //   });
       // }
 
       return columns.some((column) => {
-        return items[column].toLowerCase().includes(text);
+        return items[column].match(keyWords);
       });
     });
+
+    if (items.length === 0 && notFound) {
+      return [notFound];
+    }
 
     return items;
   }
