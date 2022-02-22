@@ -56,6 +56,7 @@ export class FormBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    formId?: string | number;
     specialValidateSaveButton?: boolean;
     formsContent: any;
     buttons: string[];
@@ -151,6 +152,13 @@ export class FormBlockComponent
   canTableSendFormData: boolean = true;
 
   formInitialVals: object = {};
+
+  // FORMS
+  formsList = {
+    // Magic string to avoid errors and easily change formId of forms
+    addDocente: "add-docente",
+  };
+  currentForm: FormBlock;
 
   constructor(
     private store: Store,
@@ -421,6 +429,8 @@ export class FormBlockComponent
         this.pecaId = peca_id;
       })
     );
+
+    this.initForm();
 
     this.subscription.add(
       this.stepsService.residenceInfoEmitter.subscribe((bool) => {
@@ -2281,5 +2291,93 @@ export class FormBlockComponent
     } else {
       this.showExportBtn = true;
     }
+  }
+
+  initForm() {
+    const { formId, formsContent } = this.settings;
+
+    const forms = [
+      new docenteFormBLock(formId, formsContent, { fetcher: this.fetcher }),
+    ];
+
+    this.currentForm = forms.find((form) => {
+      return form.isInit;
+    });
+
+    if (this.currentForm) {
+      this.settings.formsContent = this.currentForm.getFields();
+    }
+
+    // console.log("inited: ", this.settings);
+  }
+
+  async fillSelect(resourcePath: string, options?: object) {
+    return await this.fetcher.get(resourcePath, options).toPromise();
+  }
+}
+
+interface FormBlockField {
+  label: string;
+  placeholder: string;
+  validations: {};
+  fullwidth: boolean;
+  options: { id: string; name: string }[];
+}
+
+abstract class FormBlockAbstract {
+  init(settings: any) {}
+}
+class FormBlock {
+  isInit = false;
+  fields? = []; // FormBlockField[]
+  defaultData?: any;
+  page?: string;
+  custom?: any;
+
+  constructor(public id: string | number, protected dep: {}) {}
+
+  isForm(formId: string) {
+    return this.id == formId;
+  }
+
+  fillSelect(key: string, options: { id: string; name: string }[]) {
+    this.fields[key].options = options;
+  }
+
+  getFields() {
+    return this.fields;
+  }
+}
+
+class docenteFormBLock extends FormBlock implements FormBlockAbstract {
+  constructor(formId, settings, dep: { fetcher: HttpFetcherService }) {
+    super("add-docente", dep);
+
+    if (this.isForm(formId)) {
+      this.init(settings);
+    }
+  }
+
+  init(settings) {
+    this.fields = settings; // setFields
+
+    this.body();
+
+    this.isInit = true;
+  }
+
+  async body() {
+    let specialTyOp;
+
+    specialTyOp = [];
+
+    let specialtiesApi = await this.dep["fetcher"].get("specialty").toPromise();
+
+    specialTyOp = specialtiesApi.records.map((specialtyApi) => {
+      const { id, name } = specialtyApi;
+      return { id, name };
+    });
+
+    this.fillSelect("specialty", specialTyOp);
   }
 }
