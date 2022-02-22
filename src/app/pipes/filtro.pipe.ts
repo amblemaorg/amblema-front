@@ -27,13 +27,10 @@ export class FilterPipe implements PipeTransform {
     }
 
     text = text.toLowerCase();
-    let keyWords;
-    // /[, ]|[_]|[-]|[/]/gi
 
-    keyWords = text.split(/[ |,|_|-|/]/);
-    keyWords = keyWords.filter((keyWord) => keyWord !== "");
+    let keyWords;
+    keyWords = text.split(/[ |,|_|-|/]/).filter((keyWord) => keyWord !== "");
     keyWords = keyWords.join("|");
-    console.log("text con join", keyWords);
 
     keyWords = new RegExp(keyWords, "gi");
 
