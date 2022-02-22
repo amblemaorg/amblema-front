@@ -157,6 +157,7 @@ const formDocente = {
   component: "form",
   name: "teacherForm",
   settings: {
+    formId: "add-docente",
     formsContent: formTabsDocente,
     buttons: ["guardar"],
     tableCode: "schoolDataConfigTablaDocente",
