@@ -2,6 +2,8 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.25.
 
+## Correr en local
+1. correr el servicio angular8local con el comando `docker-compose up angular8local`   
 ## Despliegue a producción
 
 ### Build docker images
