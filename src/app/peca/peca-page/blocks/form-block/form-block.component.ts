@@ -319,7 +319,7 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[this.activeSection].id,
     };
-    console.log("BODY to import: ", body);
+    // console.log("BODY to import: ", body);
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
@@ -1904,6 +1904,7 @@ export class FormBlockComponent
       // await this.exportAll();
       this.handleVariosGrados();
       this.sectionsArr = [];
+      console.log("docenteFormBLock", this.fields);
       this.componentForm.patchValue({ section: "" });
       return;
     }
@@ -1914,6 +1915,7 @@ export class FormBlockComponent
       this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
+          console.log("docenteFormBLock", this.fields);
           return s.grade == grade;
         }
       );
@@ -1954,6 +1956,7 @@ export class FormBlockComponent
     this.sectionsToExport = [];
     if (e) {
       let currGrade = null;
+      // console.log("docenteFormBLock", this.fields);
       currGrade =
         this.componentForm.controls["grades"].value &&
         this.componentForm.controls["grades"].value.length > 0
@@ -1983,6 +1986,7 @@ export class FormBlockComponent
     this.gradesArr = [];
     // Habilitar descarga de todas las secciones
     if (section === "all" && toExport) {
+      // console.log("docenteFormBLock", this.fields);
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
@@ -2239,7 +2243,7 @@ export class FormBlockComponent
         name: this.parseGrade(grade),
       };
     });
-    console.log("GRADES: ", gradesData);
+    // console.log("GRADES: ", gradesData);
     this.gradesArr = gradesData;
   }
 
@@ -2265,7 +2269,7 @@ export class FormBlockComponent
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      console.log("checkbox: ", markedCheckbox);
+      // console.log("checkbox: ", markedCheckbox);
       markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
@@ -2292,7 +2296,7 @@ export class FormBlockComponent
         }
       });
     }
-    console.log("sections to export: ", this.sectionsToExport);
+    // console.log("sections to export: ", this.sectionsToExport);
     if (!this.sectionsToExport.length) {
       this.showExportBtn = false;
     } else {
@@ -2357,6 +2361,7 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
     this.fields = this.defaultData; // set Fields
 
     this.body();
+    // console.log("docenteFormBLock", this.fields);
   }
 
   // setting and fill options for the fields
