@@ -30,6 +30,12 @@ import { StepsService } from "../../../../services/steps/steps.service";
 import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { HttpClient } from "@angular/common/http";
+import {
+  FormBlock,
+  FormBlockAbstract,
+  FormBlockFieldOption,
+  FormBlockOptions,
+} from "./form-model/form-block.class";
 
 @Component({
   selector: "form-block",
@@ -2293,91 +2299,76 @@ export class FormBlockComponent
     }
   }
 
+  /**
+   * @description Register of forms (Forms Class) and get just initialized forms class to set settings
+   * @author Christopher Dallar
+   * @date 23/02/2022
+   * @memberof FormBlockComponent
+   */
   initForm() {
-    const { formId, formsContent } = this.settings;
+    const { formId, formsContent } = this.settings; // settings from file view config.ts like school-data-config.ts
 
+    // Forms List waiting for init just adding to the array
     const forms = [
-      new docenteFormBLock(formId, formsContent, { fetcher: this.fetcher }),
+      new docenteFormBLock(
+        "add-docente", // Set unique string to identify the form
+        {
+          formId, // Pass current formId that instanced form-block component
+          defaultData: formsContent, // The pre-settings
+        },
+        { fetcher: this.fetcher } // Dependencies
+      ),
     ];
 
+    // Get the form (Form Class) which was initialized
     this.currentForm = forms.find((form) => {
       return form.isInit;
     });
 
+    // If there is an Form (Form Class) initialized
     if (this.currentForm) {
-      this.settings.formsContent = this.currentForm.getFields();
+      this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
     }
-
-    // console.log("inited: ", this.settings);
-  }
-
-  async fillSelect(resourcePath: string, options?: object) {
-    return await this.fetcher.get(resourcePath, options).toPromise();
   }
 }
 
-interface FormBlockField {
-  label: string;
-  placeholder: string;
-  validations: {};
-  fullwidth: boolean;
-  options: { id: string; name: string }[];
-}
-
-abstract class FormBlockAbstract {
-  init(settings: any) {}
-}
-class FormBlock {
-  isInit = false;
-  fields? = []; // FormBlockField[]
-  defaultData?: any;
-  page?: string;
-  custom?: any;
-
-  constructor(public id: string | number, protected dep: {}) {}
-
-  isForm(formId: string) {
-    return this.id == formId;
-  }
-
-  fillSelect(key: string, options: { id: string; name: string }[]) {
-    this.fields[key].options = options;
-  }
-
-  getFields() {
-    return this.fields;
-  }
-}
-
+/**
+ * @description This class represent an Form to be render, extending from FormBLock.
+ * The main idea is manage (settings, request to fill options or anything) each form
+ * grouping code by classes to get a clean order
+ * @author Christopher Dallar
+ * @date 23/02/2022
+ * @class docenteFormBLock
+ * @extends {FormBlock}
+ * @implements {FormBlockAbstract}
+ */
 class docenteFormBLock extends FormBlock implements FormBlockAbstract {
-  constructor(formId, settings, dep: { fetcher: HttpFetcherService }) {
-    super("add-docente", dep);
-
-    if (this.isForm(formId)) {
-      this.init(settings);
-    }
+  constructor(
+    id: string | number,
+    options: FormBlockOptions,
+    dep?: { fetcher: HttpFetcherService }
+  ) {
+    super(id, options, dep);
   }
 
-  init(settings) {
-    this.fields = settings; // setFields
+  // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
+  init() {
+    this.fields = this.defaultData; // set Fields
 
     this.body();
-
-    this.isInit = true;
   }
 
+  // setting and fill options for the fields
   async body() {
-    let specialTyOp;
+    let specialTyOp: FormBlockFieldOption[] = [];
+    let specialtiesApi = await this.dep["fetcher"].get("specialty").toPromise(); // get option from api
 
-    specialTyOp = [];
-
-    let specialtiesApi = await this.dep["fetcher"].get("specialty").toPromise();
-
+    // Adapt request to options field object structure {id: string, name: string}
     specialTyOp = specialtiesApi.records.map((specialtyApi) => {
       const { id, name } = specialtyApi;
       return { id, name };
     });
 
-    this.fillSelect("specialty", specialTyOp);
+    this.fillSelect("specialty", specialTyOp); // Set array options to the field "specialty"
   }
 }
