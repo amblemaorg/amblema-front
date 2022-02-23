@@ -15,6 +15,7 @@ export function teachersDataToTeachersTableMapper(teachersData) {
       addressCity,
       status,
       annualPreparationStatus,
+      specialty,
     } = teacher;
 
     return {
@@ -29,26 +30,26 @@ export function teachersDataToTeachersTableMapper(teachersData) {
         prependInput: cardId,
       },
       phone,
-      addressState: typeof addressState === "string" ? addressState : addressState.id,
-      addressMunicipality: typeof addressMunicipality === "string" ? addressMunicipality : addressMunicipality.id,
+      addressState:
+        typeof addressState === "string" ? addressState : addressState.id,
+      addressMunicipality:
+        typeof addressMunicipality === "string"
+          ? addressMunicipality
+          : addressMunicipality.id,
       street: address,
       city: addressCity,
+      specialty: specialty.name,
     };
   });
 }
 
-
 //To annual convention preparation component
-export function teachersDataToTeachersTableAnnualConventionMapper(teachersData) {
+export function teachersDataToTeachersTableAnnualConventionMapper(
+  teachersData
+) {
   return teachersData.map((teacher) => {
-    const {
-      id,
-      firstName,
-      lastName,
-      email,
-      phone,  
-      annualPreparationStatus
-    } = teacher;
+    const { id, firstName, lastName, email, phone, annualPreparationStatus } =
+      teacher;
 
     return {
       id,
@@ -56,7 +57,7 @@ export function teachersDataToTeachersTableAnnualConventionMapper(teachersData) 
       lastName,
       email,
       status: annualPreparationStatus,
-      phone
+      phone,
     };
   });
 }
