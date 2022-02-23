@@ -38,7 +38,7 @@ export function teachersDataToTeachersTableMapper(teachersData) {
           : addressMunicipality.id,
       street: address,
       city: addressCity,
-      specialty: specialty.name,
+      specialty: specialty.id,
     };
   });
 }
