@@ -1398,6 +1398,7 @@ export class FormBlockComponent
         return (this.sendingForm = false);
       }
 
+      // console.log("this.settings.methodUrlPlus: ", this.settings.methodUrlPlus);
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
         ? `${this.settings.fetcherUrls[method]}/${
@@ -1916,7 +1917,7 @@ export class FormBlockComponent
           return s.grade == grade;
         }
       );
-      console.log("sections array: ", this.settings.formsContent["section"]);
+      // console.log("sections array: ", this.settings.formsContent["section"]);
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,
       });

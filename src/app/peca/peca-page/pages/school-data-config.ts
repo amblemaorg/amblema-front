@@ -209,6 +209,9 @@ const tablaDocente = {
           else return false;
         },
       },
+      specialty: {
+        title: "Especialidad",
+      },
     },
     modalCode: "schoolDataConfigTablaDocente",
     tableCode: "schoolDataConfigTablaDocente",

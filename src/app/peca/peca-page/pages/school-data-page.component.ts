@@ -465,6 +465,8 @@ export class SchoolDataPageComponent
           hideDelete: !permissions.teacher_delete,
         },
       };
+
+      // console.log("setTeachersTableData", teachersData);
     } else {
       this.teachersTableData = teachersData;
     }
