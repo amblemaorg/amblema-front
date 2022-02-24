@@ -316,14 +316,14 @@
         .error-message,
         .date-error-message {
           color: $red;
-          font-size: 3.5vw;
+          font-size: 13px;
 
           @include breakpoint(medium) {
-            font-size: 2vw;
+            font-size: 13px;
           }
 
           @include breakpoint(large) {
-            font-size: 0.9vw;
+            font-size: 13px;
           }
         }
       }

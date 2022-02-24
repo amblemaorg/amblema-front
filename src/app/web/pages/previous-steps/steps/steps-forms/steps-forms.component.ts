@@ -24,7 +24,8 @@ export const LETTERS_PTTRN = /^[a-z A-Zá-úÁ-Ú]*$/;
 export const LETTERS_NUMBERS_PTTRN = "^[a-z A-Zá-úÁ-Ú0-9]*$";
 export const TEXT_PTTRN = /^[a-z A-Zá-úÁ-Ú0-9._~:/?#\[\]@!\$&'"\(\)\*\+,;=]*$/;
 export const NUMBER_PTTRN = /^[0-9]*$/;
-export const VIDEO_PTTRN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+export const VIDEO_PTTRN =
+  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
 @Component({
   selector: "app-steps-forms",
@@ -709,17 +710,14 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     const solicitudBodyReduced = Object.keys(this.sponsorForm.value).reduce(
       (solicitudBody, controlName) => {
         if (controlName === "addressStreet")
-          solicitudBody["address"] = this.sponsorForm.controls[
-            controlName
-          ].value;
+          solicitudBody["address"] =
+            this.sponsorForm.controls[controlName].value;
         else if (controlName === "phone")
-          solicitudBody["companyPhone"] = this.sponsorForm.controls[
-            controlName
-          ].value;
+          solicitudBody["companyPhone"] =
+            this.sponsorForm.controls[controlName].value;
         else
-          solicitudBody[controlName] = this.sponsorForm.controls[
-            controlName
-          ].value;
+          solicitudBody[controlName] =
+            this.sponsorForm.controls[controlName].value;
 
         return solicitudBody;
       },
@@ -738,17 +736,15 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     const solicitudBodyReduced = Object.keys(this.coordinatorForm.value).reduce(
       (solicitudBody, controlName) => {
         if (controlName === "addressStreet")
-          solicitudBody["address"] = this.coordinatorForm.controls[
-            controlName
-          ].value;
+          solicitudBody["address"] =
+            this.coordinatorForm.controls[controlName].value;
         else if (controlName === "birthdate")
           solicitudBody[controlName] = this.globals.dateToISOString(
             this.coordinatorForm.controls[controlName].value
           );
         else
-          solicitudBody[controlName] = this.coordinatorForm.controls[
-            controlName
-          ].value;
+          solicitudBody[controlName] =
+            this.coordinatorForm.controls[controlName].value;
         return solicitudBody;
       },
       {
@@ -766,9 +762,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     const solicitudBodyReduced = Object.keys(this.schoolForm.value).reduce(
       (solicitudBody, controlName) => {
         if (controlName === "addressStreet")
-          solicitudBody["address"] = this.schoolForm.controls[
-            controlName
-          ].value;
+          solicitudBody["address"] =
+            this.schoolForm.controls[controlName].value;
         else if (controlName === "coordinate")
           solicitudBody[controlName] =
             this.schoolForm.controls[controlName].value.latitude &&
@@ -788,8 +783,8 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
           controlName === "nGrades" ||
           controlName === "nSections"
         )
-          solicitudBody[controlName] = +this.schoolForm.controls[controlName]
-            .value;
+          solicitudBody[controlName] =
+            +this.schoolForm.controls[controlName].value;
         else
           solicitudBody[controlName] =
             (controlName === "code" &&
@@ -982,6 +977,7 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
       email: res.email ? res.email : "",
       code: res.code ? res.code : "",
       addressState: res.addressState.id ? res.addressState.id : "",
+      // specialty: res.specialty.name ? res.specialty.name : "", ///
       addressMunicipality: res.addressMunicipality.id
         ? res.addressMunicipality.id
         : "",
@@ -1092,15 +1088,17 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   }
 
   setMaxLen(controlName: string) {
-    const ct = this[
-      this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"
-    ].get(controlName).value; // 1: V, 2: J, 3: E
+    const ct =
+      this[this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"].get(
+        controlName
+      ).value; // 1: V, 2: J, 3: E
     return ct === "1" ? 8 : 9;
   }
   setMinLen(controlName: string) {
-    const ct = this[
-      this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"
-    ].get(controlName).value; // 1: V, 2: J, 3: E
+    const ct =
+      this[this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"].get(
+        controlName
+      ).value; // 1: V, 2: J, 3: E
     return ct === "1" ? 7 : ct === "2" ? 8 : 9;
   }
 
@@ -1132,9 +1130,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   }
 
   isMaxLenOver(controlName: string, controlCardType: string) {
-    const ctrlNameVal = this[
-      this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"
-    ].controls[controlName].value;
+    const ctrlNameVal =
+      this[this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"]
+        .controls[controlName].value;
     if (ctrlNameVal)
       return (
         ctrlNameVal.length > this.setMaxLen(controlCardType) &&
@@ -1143,9 +1141,9 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
     else return false;
   }
   isMinLenUnder(controlName: string, controlCardType: string) {
-    const ctrlNameVal = this[
-      this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"
-    ].controls[controlName].value;
+    const ctrlNameVal =
+      this[this.who === "coordinator" ? "coordinatorForm" : "sponsorForm"]
+        .controls[controlName].value;
     if (ctrlNameVal)
       return (
         ctrlNameVal.length < this.setMinLen(controlCardType) &&
