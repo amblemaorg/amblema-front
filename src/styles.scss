@@ -1,5 +1,6 @@
-@import "scss/variables";
+@import "./assets/scss/variables";
 @import "scss/responsive";
+@import "./assets/scss/scrollBar";
 
 @import "~ngx-toastr/toastr", "~bootstrap/dist/css/bootstrap.css",
   "~bootstrap/scss/print", "~bootstrap/scss/reboot", "~bootstrap/scss/type",
@@ -30,12 +31,15 @@
   src: url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'amblemaicons';
-  src:  url('./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx');
-  src:  url('./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx#iefix') format('embedded-opentype'),
-    url('./assets/fonts/amblema-icons/amblemaicons.ttf?l7zsfx') format('truetype'),
-    url('./assets/fonts/amblema-icons/amblemaicons.woff?l7zsfx') format('woff'),
-    url('./assets/fonts/amblema-icons/amblemaicons.svg?l7zsfx#icomoon') format('svg');
+  font-family: "amblemaicons";
+  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx");
+  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/amblema-icons/amblemaicons.ttf?l7zsfx")
+      format("truetype"),
+    url("./assets/fonts/amblema-icons/amblemaicons.woff?l7zsfx") format("woff"),
+    url("./assets/fonts/amblema-icons/amblemaicons.svg?l7zsfx#icomoon")
+      format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
