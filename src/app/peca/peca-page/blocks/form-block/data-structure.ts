@@ -6,13 +6,16 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
     data: {},
   };
 
-  const shouldAddPasswordToData = formType === "actualizarPadrino" || formType === "actualizarEscuela" || formType === "actualizarCoordinador" 
-    ? (
-        cf.value.newPassword.length || cf.value.confirmPassword.length 
-          ? (cf.value.newPassword === cf.value.confirmPassword ? true : false) 
+  const shouldAddPasswordToData =
+    formType === "actualizarPadrino" ||
+    formType === "actualizarEscuela" ||
+    formType === "actualizarCoordinador"
+      ? cf.value.newPassword.length || cf.value.confirmPassword.length
+        ? cf.value.newPassword === cf.value.confirmPassword
+          ? true
           : false
-      )
-    : false;
+        : false
+      : false;
 
   switch (formType) {
     case "agregarGradoSeccion": // for Datos de la Escuela view and Grados y Secciones section
@@ -43,7 +46,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
-        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
+        ...(shouldAddPasswordToData
+          ? { password: cf.get("newPassword").value }
+          : {}),
       };
       break;
     case "actualizarEscuela": // for Perfil de usuario view and escuelas form
@@ -70,7 +75,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
-        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
+        ...(shouldAddPasswordToData
+          ? { password: cf.get("newPassword").value }
+          : {}),
       };
       break;
     case "actualizarCoordinador": // for Perfil de usuario view and coordinadores form
@@ -92,7 +99,9 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         addressMunicipality: cf.get("addressMunicipality").value,
         addressCity: cf.get("city").value,
         address: cf.get("street").value,
-        ...(shouldAddPasswordToData ? { password: cf.get("newPassword").value } : {})
+        ...(shouldAddPasswordToData
+          ? { password: cf.get("newPassword").value }
+          : {}),
       };
       break;
     case "agregarDocente": // for Datos de la Escuela view and Docentes section
@@ -102,7 +111,8 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         email: cf.get("email").value,
         status: cf.get("status").value,
         documentGroup: {
-          prependSelect: cf.controls["documentGroup"].get("prependSelect").value,
+          prependSelect:
+            cf.controls["documentGroup"].get("prependSelect").value,
           prependInput: cf.controls["documentGroup"].get("prependInput").value,
         },
         phone: cf.get("phone").value,
@@ -111,6 +121,7 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         street: cf.get("street").value,
         city: cf.get("city").value,
         gender: cf.get("gender").value,
+        specialty: cf.get("specialty").value,
       };
       break;
     case "buscarEstudiante": // for Datos de la Escuela view and Estudiantes section
@@ -118,13 +129,15 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         name: cf.get("name").value,
         lastName: cf.get("lastName").value,
         documentGroup: {
-          prependSelect: cf.controls["documentGroup"].get("prependSelect").value,
+          prependSelect:
+            cf.controls["documentGroup"].get("prependSelect").value,
           prependInput: cf.controls["documentGroup"].get("prependInput").value,
         },
         gender: cf.get("gender").value,
       };
       if (formsContent["grades"]) data.data["grades"] = cf.get("grades").value;
-      if (formsContent["section"]) data.data["section"] = cf.get("section").value;
+      if (formsContent["section"])
+        data.data["section"] = cf.get("section").value;
       break;
     case "preparingWorkshopForm":
       // for Taller Inicial view and Preparacion del Taller section

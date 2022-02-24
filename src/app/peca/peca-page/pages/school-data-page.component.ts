@@ -19,7 +19,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { SCHOOL_DATA_CONFIG } from "./school-data-config";
 import { Select } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
@@ -93,6 +93,9 @@ export class SchoolDataPageComponent
     )[];
   };
 
+  // Main Config
+  customConfig = SCHOOL_DATA_CONFIG;
+
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
@@ -123,7 +126,7 @@ export class SchoolDataPageComponent
       }
     });
 
-    this.instantiateComponent(config);
+    this.instantiateComponent(this.customConfig);
   }
 
   ngOnInit() {
@@ -273,7 +276,6 @@ export class SchoolDataPageComponent
     //   : 0;
 
     const approvalHistory = school.approvalHistory;
-    const status = approvalHistory[approvalHistory.length - 1].status;
 
     // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
     this.schoolDataStatus = 1;
@@ -284,6 +286,8 @@ export class SchoolDataPageComponent
       }
 
       if (approvalHistory.length > 0) {
+        const status = approvalHistory[approvalHistory.length - 1].status;
+
         this.schoolDataStatus = status === "2" || "3" ? +status : 0;
       }
     }
@@ -417,9 +421,14 @@ export class SchoolDataPageComponent
    * @memberof SchoolDataPageComponent
    */
   setSchoolFormStatusData(school) {
-    const comments =
-      school.approvalHistory[school.approvalHistory.length - 1].comments;
-    let showComment = comments && this.schoolDataStatus ? true : false;
+    const approvalHistory = school.approvalHistory;
+    let comments = "";
+    let showComment = false;
+
+    if (approvalHistory.length > 0) {
+      comments = approvalHistory[approvalHistory.length - 1].comments;
+      showComment = comments && this.schoolDataStatus ? true : false;
+    }
 
     this.schoolFormStatusData = {
       status: {
@@ -456,6 +465,8 @@ export class SchoolDataPageComponent
           hideDelete: !permissions.teacher_delete,
         },
       };
+
+      // console.log("setTeachersTableData", teachersData);
     } else {
       this.teachersTableData = teachersData;
     }
