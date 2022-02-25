@@ -1,3 +1,4 @@
+import { RejectionCommentsCustomBlockModel } from "./custom-blocks-models/rejection-comments.blockmodel";
 import {
   SetInitialWorkshopRequestData,
   RemoveImageFromInitialWorkshopRequestData,
@@ -340,16 +341,22 @@ export function initialWorkshopConfigMapper(
     },
   };
 
-  const workshopContentStatus = {
-    component: "textsbuttons",
-    settings: {
-      dateOrtext: {},
-      status: {
-        text: "Estatus",
-        subText: currentStatus,
-      },
-    },
-  };
+  // const workshopContentStatus = {
+  //   component: "textsbuttons",
+  //   settings: {
+  //     dateOrtext: {},
+  //     status: {
+  //       text: "Estatus2",
+  //       subText: currentStatus,
+  //     },
+  //   },
+  // };
+
+  const workshopContentStatus = new RejectionCommentsCustomBlockModel(
+    approvalHistory,
+    isInApproval
+  ).getSettings();
+
   const workshopContentForm = {
     component: "form",
     settings: {

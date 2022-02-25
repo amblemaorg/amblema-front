@@ -1,3 +1,4 @@
+import { RejectionCommentsCustomBlockModel } from "./custom-blocks-models/rejection-comments.blockmodel";
 import {
   schoolPermissions,
   teacherPermissions,
@@ -66,7 +67,6 @@ export class SchoolDataPageComponent
 
   currentUserId: string; // current user id on session
   requestIdToCancel: string; // if school data is in approval this holds last request id
-  schoolDataStatus: number; // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
   permissions: any = {};
 
   // controlling when data from school is loaded
@@ -165,8 +165,6 @@ export class SchoolDataPageComponent
             this.setCancelRequest(data.school.approvalHistory);
           else this.unsetCancelRequest();
 
-          this.setSchoolStatus(data.school); // sets current school status number
-
           this.setSchoolFormStatusData(data.school);
           this.setSchoolFormData(
             data.school,
@@ -261,36 +259,6 @@ export class SchoolDataPageComponent
   }
   unsetCancelRequest() {
     this.requestIdToCancel = null;
-  }
-
-  // Setting global status approval verification
-  setSchoolStatus(school) {
-    // this.schoolDataStatus = school.isInApproval
-    //   ? 1
-    //   : school.approvalHistory.length > 0
-    //   ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-    //       "2" ||
-    //     school.approvalHistory[school.approvalHistory.length - 1].status === "3"
-    //     ? +school.approvalHistory[school.approvalHistory.length - 1].status
-    //     : 0
-    //   : 0;
-
-    const approvalHistory = school.approvalHistory;
-
-    // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = 1;
-
-    if (!school.isInApproval) {
-      if (approvalHistory.length === 0) {
-        this.schoolDataStatus = 0;
-      }
-
-      if (approvalHistory.length > 0) {
-        const status = approvalHistory[approvalHistory.length - 1].status;
-
-        this.schoolDataStatus = status === "2" || "3" ? +status : 0;
-      }
-    }
   }
 
   updateStaticFetchers() {
@@ -421,30 +389,12 @@ export class SchoolDataPageComponent
    * @memberof SchoolDataPageComponent
    */
   setSchoolFormStatusData(school) {
-    const approvalHistory = school.approvalHistory;
-    let comments = "";
-    let showComment = false;
+    const { approvalHistory, isInApproval } = school;
 
-    if (approvalHistory.length > 0) {
-      comments = approvalHistory[approvalHistory.length - 1].comments;
-      showComment = comments && this.schoolDataStatus ? true : false;
-    }
-
-    this.schoolFormStatusData = {
-      status: {
-        text: "Estatus",
-        subText: this.schoolDataStatus,
-        comments: comments,
-      },
-      action: showComment
-        ? [
-            {
-              type: 9,
-              name: "Ver más",
-            },
-          ]
-        : [],
-    };
+    this.schoolFormStatusData = new RejectionCommentsCustomBlockModel(
+      approvalHistory,
+      isInApproval
+    ).getSettings().settings;
   }
 
   setTeachersTableData(
