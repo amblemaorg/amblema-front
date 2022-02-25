@@ -30,6 +30,12 @@ import { StepsService } from "../../../../services/steps/steps.service";
 import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { HttpClient } from "@angular/common/http";
+import {
+  FormBlock,
+  FormBlockAbstract,
+  FormBlockFieldOption,
+  FormBlockOptions,
+} from "./form-model/form-block.class";
 
 @Component({
   selector: "form-block",
@@ -56,6 +62,7 @@ export class FormBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    formId?: string | number;
     specialValidateSaveButton?: boolean;
     formsContent: any;
     buttons: string[];
@@ -151,6 +158,13 @@ export class FormBlockComponent
   canTableSendFormData: boolean = true;
 
   formInitialVals: object = {};
+
+  // FORMS
+  formsList = {
+    // Magic string to avoid errors and easily change formId of forms
+    addDocente: "add-docente",
+  };
+  currentForm: FormBlock;
 
   constructor(
     private store: Store,
@@ -305,7 +319,7 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[this.activeSection].id,
     };
-    console.log("BODY to import: ", body);
+    // console.log("BODY to import: ", body);
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
@@ -421,6 +435,8 @@ export class FormBlockComponent
         this.pecaId = peca_id;
       })
     );
+
+    this.initForm();
 
     this.subscription.add(
       this.stepsService.residenceInfoEmitter.subscribe((bool) => {
@@ -1382,6 +1398,7 @@ export class FormBlockComponent
         return (this.sendingForm = false);
       }
 
+      // console.log("this.settings.methodUrlPlus: ", this.settings.methodUrlPlus);
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
         ? `${this.settings.fetcherUrls[method]}/${
@@ -1887,6 +1904,7 @@ export class FormBlockComponent
       // await this.exportAll();
       this.handleVariosGrados();
       this.sectionsArr = [];
+      console.log("docenteFormBLock", this.fields);
       this.componentForm.patchValue({ section: "" });
       return;
     }
@@ -1897,10 +1915,11 @@ export class FormBlockComponent
       this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
+          console.log("docenteFormBLock", this.fields);
           return s.grade == grade;
         }
       );
-      console.log("sections array: ", this.settings.formsContent["section"]);
+      // console.log("sections array: ", this.settings.formsContent["section"]);
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,
       });
@@ -1937,6 +1956,7 @@ export class FormBlockComponent
     this.sectionsToExport = [];
     if (e) {
       let currGrade = null;
+      // console.log("docenteFormBLock", this.fields);
       currGrade =
         this.componentForm.controls["grades"].value &&
         this.componentForm.controls["grades"].value.length > 0
@@ -1966,6 +1986,7 @@ export class FormBlockComponent
     this.gradesArr = [];
     // Habilitar descarga de todas las secciones
     if (section === "all" && toExport) {
+      // console.log("docenteFormBLock", this.fields);
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
@@ -2222,7 +2243,7 @@ export class FormBlockComponent
         name: this.parseGrade(grade),
       };
     });
-    console.log("GRADES: ", gradesData);
+    // console.log("GRADES: ", gradesData);
     this.gradesArr = gradesData;
   }
 
@@ -2248,7 +2269,7 @@ export class FormBlockComponent
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
-      console.log("checkbox: ", markedCheckbox);
+      // console.log("checkbox: ", markedCheckbox);
       markedCheckbox.forEach((checkbox: HTMLInputElement) => {
         checkbox.checked = false;
         checkbox.disabled = false;
@@ -2275,11 +2296,85 @@ export class FormBlockComponent
         }
       });
     }
-    console.log("sections to export: ", this.sectionsToExport);
+    // console.log("sections to export: ", this.sectionsToExport);
     if (!this.sectionsToExport.length) {
       this.showExportBtn = false;
     } else {
       this.showExportBtn = true;
     }
+  }
+
+  /**
+   * @description Register of forms (Forms Class) and get just initialized forms class to set settings
+   * @author Christopher Dallar
+   * @date 23/02/2022
+   * @memberof FormBlockComponent
+   */
+  initForm() {
+    const { formId, formsContent } = this.settings; // settings from file view config.ts like school-data-config.ts
+
+    // Forms List waiting for init just adding to the array
+    const forms = [
+      new docenteFormBLock(
+        "add-docente", // Set unique string to identify the form
+        {
+          formId, // Pass current formId that instanced form-block component
+          defaultData: formsContent, // The pre-settings
+        },
+        { fetcher: this.fetcher } // Dependencies
+      ),
+    ];
+
+    // Get the form (Form Class) which was initialized
+    this.currentForm = forms.find((form) => {
+      return form.isInit;
+    });
+
+    // If there is an Form (Form Class) initialized
+    if (this.currentForm) {
+      this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
+    }
+  }
+}
+
+/**
+ * @description This class represent an Form to be render, extending from FormBLock.
+ * The main idea is manage (settings, request to fill options or anything) each form
+ * grouping code by classes to get a clean order
+ * @author Christopher Dallar
+ * @date 23/02/2022
+ * @class docenteFormBLock
+ * @extends {FormBlock}
+ * @implements {FormBlockAbstract}
+ */
+class docenteFormBLock extends FormBlock implements FormBlockAbstract {
+  constructor(
+    id: string | number,
+    options: FormBlockOptions,
+    dep?: { fetcher: HttpFetcherService }
+  ) {
+    super(id, options, dep);
+  }
+
+  // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
+  init() {
+    this.fields = this.defaultData; // set Fields
+
+    this.body();
+    // console.log("docenteFormBLock", this.fields);
+  }
+
+  // setting and fill options for the fields
+  async body() {
+    let specialTyOp: FormBlockFieldOption[] = [];
+    let specialtiesApi = await this.dep["fetcher"].get("specialty").toPromise(); // get option from api
+
+    // Adapt request to options field object structure {id: string, name: string}
+    specialTyOp = specialtiesApi.records.map((specialtyApi) => {
+      const { id, name } = specialtyApi;
+      return { id, name };
+    });
+
+    this.fillSelect("specialty", specialTyOp); // Set array options to the field "specialty"
   }
 }
