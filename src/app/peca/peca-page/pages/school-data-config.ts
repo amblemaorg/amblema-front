@@ -18,18 +18,7 @@ const statusGeneral = {
     dateOrtext: {},
     status: {
       text: "Estatus",
-      // subText: "dsadsa subtext", // No afecta en nada
-      // comments: "mi comentario 2", // Agrega el texto del comentario
     },
-    // action: false // Muestra o no el boton con su texto
-    //   ? [
-    //       {
-    //         type: 9,
-    //         name: "Ver más",
-    //       },
-    //     ]
-    //   : [],
-
     buttonCode: "schoolDataConfigRegistroEscuela",
   },
 };
