@@ -20,7 +20,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { SCHOOL_DATA_CONFIG } from "./school-data-config";
 import { Select } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
@@ -93,6 +93,9 @@ export class SchoolDataPageComponent
     )[];
   };
 
+  // Main Config
+  customConfig = SCHOOL_DATA_CONFIG;
+
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
@@ -123,7 +126,7 @@ export class SchoolDataPageComponent
       }
     });
 
-    this.instantiateComponent(config);
+    this.instantiateComponent(this.customConfig);
   }
 
   ngOnInit() {
@@ -412,6 +415,8 @@ export class SchoolDataPageComponent
           hideDelete: !permissions.teacher_delete,
         },
       };
+
+      // console.log("setTeachersTableData", teachersData);
     } else {
       this.teachersTableData = teachersData;
     }
