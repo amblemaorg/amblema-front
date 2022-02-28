@@ -17,5 +17,4 @@ services:
 
 networks:
   db_network:
-    external:
       name: amblered
