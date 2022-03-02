@@ -149,14 +149,7 @@
             <button
               [id]="uploadFile.id + '1'"
               (click)="clickUpload(uploadFile); $event.preventDefault()"
-              class="
-                btn btn-primary
-                text-decoration-none
-                py-2
-                px-4
-                mt-1
-                attachfile
-              "
+              class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile"
               [class.has-several]="
                 (isAdmin() && step.approvalType == '1') || step.hasFile
               "
@@ -178,14 +171,7 @@
               [class.d-none]="!canUserSee(step)"
               [id]="uploadFile.id + '2'"
               (click)="approvalMethod(step, i, mode); $event.preventDefault()"
-              class="
-                btn btn-primary
-                text-decoration-none
-                py-2
-                px-4
-                mt-1
-                has-several
-              "
+              class="btn btn-primary text-decoration-none py-2 px-4 mt-1 has-several"
               [class.hidebtn]="
                 step.send ||
                 (step.status == '1' && !step.uploadedFile) ||
@@ -417,6 +403,15 @@
             <p class="mb-0">{{ messageInToaster }}</p>
           </div>
         </div>
+
+        <!-- Comments -->
+
+        <ng-container *ngIf="getComments(step)">
+          <p class="comments-rejection">
+            <strong class="color-red">Motivo de rechazo: </strong>
+            <span class="color-red">{{ getComments(step) }}</span>
+          </p>
+        </ng-container>
       </div>
     </div>
   </div>
