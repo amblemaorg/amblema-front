@@ -252,7 +252,7 @@ export function teacherTestimoniesConfigMapper(
     settings: {
       action: [
         {
-          extraData: { isToSendRequest: true },
+          extraData: { isDuplicated: isInApproval ? true : false },
           hidden: isInApproval
             ? !teacher_testimonial_delete
             : !teacher_testimonial_edit,

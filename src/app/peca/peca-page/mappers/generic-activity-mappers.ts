@@ -184,6 +184,7 @@ export function genericActivityMapper(data: GenericActivity, user_type) {
           ? null
           : [data.approvalType].reduce((btns, approvalType) => {
               btns.push({
+                extraData: { isDuplicated: false },
                 type:
                   data.status === "1" || approvalType === "5"
                     ? approvalType === "3"
