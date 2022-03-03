@@ -40,7 +40,7 @@
         </status-selector>
 
         <p *ngIf="step.hasText && !step.isForm" class="first-p">
-          {{ step.text }} {{ step.status }}
+          {{ step.text }}
         </p>
 
         <ng-container *ngIf="!step.isForm; else formOpt">
