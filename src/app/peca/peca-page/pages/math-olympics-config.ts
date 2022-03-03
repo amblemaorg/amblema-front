@@ -1,3 +1,4 @@
+import { ArrayHelper } from "./../../../helpers/array.helper";
 import {
   UpdateStudentMathOlympics,
   RemoveStudentMathOlympics,
@@ -11,6 +12,7 @@ import {
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 import { DatePipe } from "@angular/common";
 import { Store } from "@ngxs/store";
+import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
 
 const controlProps = {
   onlyLettersAndRequired: {
@@ -137,6 +139,75 @@ export function mathOlympicsConfigMapper(
       tableCode: "dataResultadoEstudiante",
     },
   };
+
+  // ----
+  console.log("pecaData", pecaData);
+  console.log("lapseNumber", lapseNumber);
+  console.log("updatedStudents", updatedStudents);
+  console.log("permissions", permissions);
+
+  const getOptionsStudentsSelectModal = () => {
+    const { sections } = gradesAndSectionsDataToSectionsFormMapper(
+      pecaData.school
+    );
+
+    const gradesNames = {
+      "0": "Preescolar",
+      "1": "1er grado",
+      "2": "2do grado",
+      "3": "3er grado",
+      "4": "4to grado",
+      "5": "5to grado",
+      "6": "6to grado",
+    };
+
+    const gradesOrdered = ArrayHelper.unique(sections, "grades").map(
+      (option) => {
+        return {
+          name: gradesNames[option],
+          id: option,
+        };
+      }
+    );
+
+    return [
+      // {
+      //   name: "Todos los grados",
+      //   id: "-1",
+      // },
+      ...gradesOrdered,
+    ];
+  };
+
+  console.log("getOptionsStudentsSelectModal", getOptionsStudentsSelectModal());
+
+  const studentsSelectModal = {
+    component: "form",
+    name: "estudiantesPostForm",
+    settings: {
+      extraData: { purpose: "agregarEstudiantesLotes" },
+      formsContent: {
+        grades: {
+          label: "Seleccione el grado",
+          placeholder: "Grados",
+          fullwidth: false,
+          isGrades: true,
+          ...controlProps.selectAndRequired,
+          options: getOptionsStudentsSelectModal(),
+        },
+      },
+      buttons: ["agregarLotes"],
+      // tableCode: "schoolDataConfigTablaEstudiante",
+      formType: "buscarEstudiante",
+      // isOneRow: true,
+      data: {},
+      fetcherMethod: "post",
+      methodUrlPlus: "section",
+      // tableRefreshName: "estudiantesTable",
+    },
+  };
+
+  // ----
 
   const studentForm = {
     component: "form",
@@ -383,7 +454,8 @@ export function mathOlympicsConfigMapper(
             {
               title: "Resultados",
               active: updatedStudents ? true : false,
-              childBlocks: [studentsSelect, studentsTable, studentModal],
+              // childBlocks: [studentsSelect, studentsTable, studentModal],
+              childBlocks: [studentsSelectModal, studentsTable, studentModal],
             },
           ],
         },
