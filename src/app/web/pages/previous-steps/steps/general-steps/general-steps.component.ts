@@ -84,19 +84,6 @@ export class GeneralStepsComponent implements OnInit {
   ngOnInit() {
     this.currentA = 0 + "-" + this.mode;
     this.glbls = this.globals;
-
-    this.myInit();
-  }
-
-  myInit() {
-    console.log("myInit");
-
-    console.log("generalSteps", this.steps);
-    console.log("curriculumPending", this.curriculumPending);
-
-    console.log("project_id", this.project_id);
-    console.log("canOrganizationConfirm", this.confirmable);
-    console.log("enabledTabs", this.enableActions);
   }
 
   getCollapsed(i, m) {
@@ -229,7 +216,7 @@ export class GeneralStepsComponent implements OnInit {
     }
 
     const { comments } = approvalHistory[approvalHistory.length - 1];
-    // console.log("getComments", comments);
+
     return comments ? comments : false;
   }
 
