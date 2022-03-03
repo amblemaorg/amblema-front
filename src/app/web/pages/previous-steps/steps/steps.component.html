@@ -22,8 +22,7 @@
       [class]="
         'btn btn-primary ' +
         ((project_steps$ | async).has_peca ? 'margin-with-peca' : 'ml-auto') +
-        ' text-decoration-none 
-                py-2 px-4 mt-1'
+        ' text-decoration-none py-2 px-4 mt-1'
       "
       (click)="goToModules()"
       [disabled]="curriculumPending && (user_type$ | async) == '2'"
@@ -136,6 +135,7 @@
           [user_id]="user_id$ | async"
         ></app-general-steps>
       </div>
+
       <div id="coordinator" class="container tab-pane fade">
         <br />
         <!-- states$ | async municipalities$ | async -->
@@ -157,6 +157,7 @@
           [user_id]="user_id$ | async"
         ></app-general-steps>
       </div>
+
       <div id="school" class="container tab-pane fade">
         <br />
         <!-- states$ | async municipalities$ | async -->
