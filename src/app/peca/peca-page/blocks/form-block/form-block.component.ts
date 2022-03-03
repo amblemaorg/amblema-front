@@ -62,6 +62,7 @@ export class FormBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    extraData?: any;
     formId?: string | number;
     specialValidateSaveButton?: boolean;
     formsContent: any;
@@ -2247,6 +2248,10 @@ export class FormBlockComponent
     this.gradesArr = gradesData;
   }
 
+  getGrades() {
+    return this.settings.formsContent["grades"].options;
+  }
+
   async selectGrades(grade, toExport) {
     // Habilitar descarga de todas las secciones
     if (grade === "all" && toExport) {
@@ -2259,11 +2264,14 @@ export class FormBlockComponent
           checkbox.disabled = true;
         }
       });
-      this.sectionsToExport = this.settings.formsContent["section"].options.map(
-        (section) => {
+      if ((this.sectionsToExport = this.settings.formsContent["section"])) {
+        this.sectionsToExport = this.settings.formsContent[
+          "section"
+        ].options.map((section) => {
           return section.id;
-        }
-      );
+        });
+      }
+
       // Deshabilitar descarga de todas las secciones
     } else if (grade === "all" && !toExport) {
       const markedCheckbox = document.querySelectorAll(
@@ -2302,6 +2310,60 @@ export class FormBlockComponent
     } else {
       this.showExportBtn = true;
     }
+  }
+
+  async selectGradesChangesLots(toMarkAll = false) {
+    const checkboxes = this.getCheckboxes();
+
+    console.log("selectGradesChangesLots", checkboxes);
+    const isEveryChecked = this.isCheckboxChecked(false);
+
+    console.log("Every", this.isCheckboxChecked(false));
+    // console.log("this.isCheckboxChecked()", this.isCheckboxChecked());
+
+    if (toMarkAll) {
+      checkboxes.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = !isEveryChecked;
+      });
+    }
+  }
+
+  private getCheckboxes() {
+    return document.querySelectorAll('.list-checkbox input[type="checkbox"]');
+  }
+
+  isCheckboxChecked(lookSome = true) {
+    const markedCheckboxes = document.querySelectorAll(
+      '.list-checkbox input[type="checkbox"]'
+    );
+
+    const checkboxStates = [];
+
+    markedCheckboxes.forEach((checkbox: HTMLInputElement) => {
+      checkboxStates.push(checkbox.checked);
+    });
+
+    // console.log("checkboxStates", checkboxStates);
+    if (!lookSome) {
+      return checkboxStates.every((checkboxState) => {
+        return checkboxState === true;
+      });
+    }
+
+    return checkboxStates.some((checkboxState) => {
+      return checkboxState;
+    });
+  }
+
+  addStudentsToOlimpicMath() {
+    const checkboxes = this.getCheckboxes();
+    const checkboxesChecked = [];
+
+    checkboxes.forEach((checkbox: HTMLInputElement) => {
+      if (checkbox.checked) {
+        checkboxesChecked.push(checkbox);
+      }
+    });
   }
 
   /**

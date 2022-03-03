@@ -667,14 +667,7 @@
             >
               <button
                 type="button"
-                class="
-                  btn btn-primary
-                  text-decoration-none
-                  py-1
-                  px-4
-                  mt-1
-                  add-img-button
-                "
+                class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
                 [disabled]="disableAddImgBtn()"
                 (click)="addImage()"
               >
@@ -684,14 +677,7 @@
             <ng-template #notAddImg>
               <button
                 type="button"
-                class="
-                  btn btn-primary
-                  text-decoration-none
-                  py-1
-                  px-4
-                  mt-1
-                  add-img-button
-                "
+                class="btn btn-primary text-decoration-none py-1 px-4 mt-1 add-img-button"
                 [disabled]="disableAddImgBtn()"
                 (click)="addImage(false)"
               >
@@ -733,14 +719,7 @@
           <button
             [class.d-none]="settings.isEditable && !isEditing"
             type="submit"
-            class="
-              btn btn-primary
-              text-decoration-none
-              py-1
-              px-4
-              mt-1
-              submit-btn
-            "
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             [disabled]="disableBtn()"
             *ngIf="!settings.hiddenButton"
           >
@@ -755,14 +734,7 @@
         <ng-container *ngSwitchCase="'agregar'">
           <button
             type="submit"
-            class="
-              btn btn-primary
-              text-decoration-none
-              py-1
-              px-4
-              mt-1
-              submit-btn
-            "
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             [disabled]="disableBtnWithDate()"
             *ngIf="!settings.hiddenButton"
           >
@@ -818,20 +790,30 @@
           </button>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'agregarLotes'">
+          <button
+            type="button"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+            data-toggle="modal"
+            data-target="#no-peca-modal-export"
+            data-backdrop="false"
+            data-keyboard="false"
+            (click)="openExportModal()"
+          >
+            <span
+              *ngIf="sendingForm"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            Agregar en lotes
+          </button>
+        </ng-container>
+
         <ng-container *ngSwitchCase="'editar'">
           <button
             [class.d-none]="settings.isEditable && isEditing"
             type="button"
             *ngIf="!settings.hiddenButton"
-            class="
-              btn btn-primary
-              text-decoration-none
-              py-1
-              px-4
-              mt-1
-              mr-2
-              submit-btn
-            "
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"
             (click)="enableSaveAndCancelButtons()"
           >
             Editar
@@ -843,14 +825,7 @@
             [class.d-none]="settings.isEditable && !isEditing"
             type="button"
             *ngIf="!settings.hiddenButton"
-            class="
-              btn btn-primary
-              text-decoration-none
-              py-1
-              px-4
-              mt-1
-              submit-btn
-            "
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"
             (click)="disableSaveAndCancelButtons()"
           >
             <span>Cancelar</span>
@@ -912,7 +887,7 @@
 
 <!-- MODAL EXPORTAR ESTUDIANTES -->
 <div
-  *ngIf="showExportModal; else null"
+  *ngIf="showExportModal && !settings.extraData; else null"
   class="modal fade"
   id="no-peca-modal-export"
 >
@@ -1115,6 +1090,163 @@
             #upload
             (click)="exportSections()"
             class="btn btn-primary full-width submit-btn mx-auto mt-4"
+          >
+            <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm"></span>
+            {{ !isLoading ? "Exportar" : "Cargando..." }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AGREGAR ESTUDIANTES EN LOTE -->
+<div
+  *ngIf="
+    showExportModal &&
+      settings.extraData &&
+      settings.extraData.purpose === 'agregarEstudiantesLotes';
+    else null
+  "
+  class="modal fade"
+  id="no-peca-modal-export"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content pb-4">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="closeExportModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Agregar estudiantes en lote</h4>
+        <p class="py-2">
+          Por favor, seleccione el grado y las secciones de los estudiantes:
+        </p>
+
+        <form
+          [formGroup]="componentForm"
+          (keydown.enter)="prevDef($event)"
+          (ngSubmit)="onSubmitForm(componentForm)"
+        >
+          <div
+            class="fields-container"
+            [class.one-row-form]="settings.isOneRow"
+          >
+            <ng-container>
+              <ng-container *ngIf="isField(fields[0])">
+                <div
+                  [class]="settings.formsContent[fields[0]].type"
+                  [ngClass]="{
+                    'form-group':
+                      settings.formsContent[fields[0]].type != 'double',
+                    'full-width':
+                      settings.formsContent[fields[0]].type != 'double' &&
+                      settings.formsContent[fields[0]].fullwidth,
+                    'input-group':
+                      settings.formsContent[fields[0]].type === 'prepend' ||
+                      (settings.formsContent[fields[0]].type === 'double' &&
+                        settings.formsContent[fields[0]].isInputGroup),
+                    'two-wrapper':
+                      settings.formsContent[fields[0]].type === 'double',
+                    'one-row-form-form-group': settings.isOneRow,
+                    'full-width2': settings.formsContent[fields[0]].fullwidth2
+                  }"
+                  [ngSwitch]="settings.formsContent[fields[0]].type"
+                >
+                  <ng-container *ngSwitchCase="'select'">
+                    <label>{{ settings.formsContent[fields[0]].label }}</label>
+                    <ng-select
+                      *ngIf="
+                        settings.formsContent[fields[0]].shouldContentRefresh &&
+                        !isContentRefreshing
+                      "
+                      class="form-control"
+                      [class.is-in-modal]="settings.isFromCustomTableActions"
+                      notFoundText="Elementos no encontrados"
+                      [items]="
+                        settings.formsContent[fields[0]].emmitSectionChange
+                          ? settings.formsContent[fields[0]].options
+                          : []
+                      "
+                      bindValue="id"
+                      bindLabel="name"
+                      [labelForId]="getId(fields[0])"
+                      [formControlName]="fields[0]"
+                      [virtualScroll]="true"
+                      [id]="getId(fields[0])"
+                      [placeholder]="
+                        settings.formsContent[fields[0]].placeholder
+                      "
+                      (change)="
+                        settings.formsContent[fields[0]].isGrades
+                          ? setSchoolSectionsModal($event)
+                          : true
+                      "
+                      [readonly]="
+                        settings.formsContent[fields[0]].readonly ||
+                        isReadOnly()
+                      "
+                    >
+                      <ng-template
+                        ng-option-tmp
+                        let-item="item"
+                        let-search="searchTerm"
+                      >
+                        <small>{{ item.name }}</small>
+                      </ng-template>
+                    </ng-select>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </form>
+
+        <div *ngIf="getGrades().length > 0">
+          <label style="color: grey">Seleccione el grado:</label>
+          <div class="list-checkbox">
+            <div *ngIf="getGrades().length > 1">
+              <label>
+                <input
+                  id="allGrades"
+                  type="checkbox"
+                  ngModel
+                  (click)="selectGradesChangesLots(true)"
+                  class="mx-2"
+                  [checked]="isCheckboxChecked(false)"
+                />
+                Todos los grados
+              </label>
+            </div>
+            <div *ngFor="let grade of getGrades(); trackBy: trackByFn">
+              <label
+                ><input
+                  id="{{ grade.id }}"
+                  type="checkbox"
+                  ngModel
+                  ngControl="grade.id"
+                  (ngModelChange)="selectGradesChangesLots()"
+                  class="mx-2"
+                />
+                {{ grade.name }}</label
+              >
+              <br />
+            </div>
+          </div>
+        </div>
+        <div class="full-width d-flex">
+          <button
+            #upload
+            (click)="addStudentsToOlimpicMath()"
+            class="btn btn-primary full-width submit-btn mx-auto mt-4"
+            [disabled]="!isCheckboxChecked()"
+            [ngClass]="{ disabled: !isCheckboxChecked() }"
           >
             <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm"></span>
             {{ !isLoading ? "Exportar" : "Cargando..." }}
