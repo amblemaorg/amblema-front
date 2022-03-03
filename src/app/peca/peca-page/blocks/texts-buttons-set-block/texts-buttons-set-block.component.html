@@ -220,11 +220,11 @@
             </button> -->
           </ng-container>
           <ng-template #notModal>
-            <!-- Ver mas Button -->
+            <!-- Ver mas Button ||
+                !action.extraData.isDuplicated -->
             <button
               *ngIf="
-                (action.name && !action.hidden && !action.extraData) ||
-                !action.extraData.isToSendRequest
+                (action.name && !action.hidden)
               "
               [class.d-none]="
                 ((action.type === 4 || action.type === 9) &&
@@ -575,14 +575,17 @@
           </button>
         </ng-container>
 
-        <!-- Botón cuando no se encuentra dentro del modal -->
+        <!-- Botón cuando no se encuentra dentro del modal es aqui-->
+        <!-- &&
+              action.extraData &&
+              action.extraData.isDuplicated  ---  || !action.extraData-->
         <ng-template #notModal>
           <button
             *ngIf="
               action.name &&
               !action.hidden &&
-              action.extraData &&
-              action.extraData.isToSendRequest
+              (action.extraData &&
+              !action.extraData.isDuplicated)
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
