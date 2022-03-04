@@ -26,7 +26,9 @@ import { GlobalService } from "src/app/services/global.service";
         "
         [tabTitle]="item.title"
         [class.environmental-project]="
-          item.viewName && item.viewName.length > 0 && item.viewName === 'environmental-project-tab'
+          item.viewName &&
+          item.viewName.length > 0 &&
+          item.viewName === 'environmental-project-tab'
         "
         *ngFor="let item of settings.items; index as i"
         [active]="item.active"
@@ -37,10 +39,11 @@ import { GlobalService } from "src/app/services/global.service";
   `,
   styleUrls: ["./tabs-block.component.scss"],
 })
-export class TabsBlockComponent implements StructuralBlockComponent, OnInit, AfterViewInit {
-  @ViewChildren("tabContainer", { read: ViewContainerRef }) tabContainer: QueryList<
-    ViewContainerRef
-  >;
+export class TabsBlockComponent
+  implements StructuralBlockComponent, OnInit, AfterViewInit
+{
+  @ViewChildren("tabContainer", { read: ViewContainerRef })
+  tabContainer: QueryList<ViewContainerRef>;
   factory: PageBlockFactory;
 
   type: "structural";
@@ -80,10 +83,17 @@ export class TabsBlockComponent implements StructuralBlockComponent, OnInit, Aft
         if (block.component == "profiles")
           settings = { settings: block.settings, factory: this.factory };
 
-        const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
-        const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
+        const pageBlockComponentFactory = this.factory.createPageBlockFactory(
+          block.component
+        );
+        const pageBlockComponent = container.createComponent(
+          pageBlockComponentFactory
+        );
         pageBlockComponent.instance.setSettings(settings);
-        blockInstances.set(block.name || `tab${i}block${j}`, pageBlockComponent.instance);
+        blockInstances.set(
+          block.name || `tab${i}block${j}`,
+          pageBlockComponent.instance
+        );
       });
     });
 

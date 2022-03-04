@@ -16,7 +16,7 @@ const charts = [
       image: "./assets/images/profile-oscar.jpg",
       function: "Presidente y Co-Fundador",
       description:
-        "¿Tienen lectura fluida? Primer paso para facilitar la compresión lectora. Hacemos el diagnóstico del número de palabras leídas por minuto y presentamos el promedio del curso, obteniendo el índice en base a la meta de cada nivel, según estándares internacionales.",
+        "¿Tienen lectura fluida? Primer paso para facilitar la compresión lectora. Hacemos el diagnóstico del número de palabras leídas por minuto y presentamos el promedio del curso, obteniendo el índice con base a la meta de cada nivel, según estándares internacionales.",
     },
   },
   {
@@ -50,7 +50,7 @@ const charts = [
       image: "./assets/images/profile-oscar.jpg",
       function: "Presidente y Co-Fundador",
       description:
-        "Es todo un reto lograr resolver correctamente problemas de razonamiento lógico-matemáticas en 30 minutos. ¿Cuántos de esos problemas, adecuados a sus edades, pueden resolver los niños? La meta es llegar al menos a 15. Con el apoyo de sus docentes lo podrán lograr.",
+        "Es todo un reto lograr resolver correctamente problemas de razonamiento lógico-matemáticas en 60 minutos. ¿Cuántos de esos problemas, adecuados a sus edades, pueden resolver los niños? La meta es llegar al menos a 15. Con el apoyo de sus docentes lo podrán lograr.",
     },
   },
 ];

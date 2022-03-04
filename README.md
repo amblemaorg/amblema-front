@@ -2,6 +2,17 @@
 
 Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) versión 8.3.25.
 
+## Correr en local
+1. Crear o sobreescribir el archivo .env con la siguiente informacion:  
+NGINX_HOST=127.0.0.1  
+NGINX_PORT=80  
+NGINX_ROOT=/home/amblema/dist/browser  
+SSR_HOST=  
+SSR_PORT=4200  
+G_MAPS_ID=  
+G_ANALYTICS_ID=  
+
+2. correr el servicio angular8local con el comando `docker-compose up angular8local`   
 ## Despliegue a producción
 
 ### Build docker images

@@ -1,4 +1,11 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -20,6 +27,9 @@ import {
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { NgDatepickerComponent, DatepickerOptions } from "ng2-datepicker";
 import { StepsService } from "../../../../services/steps/steps.service";
+import XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "form-block",
@@ -27,7 +37,22 @@ import { StepsService } from "../../../../services/steps/steps.service";
   styleUrls: ["./form-block.component.scss"],
 })
 export class FormBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, OnDestroy
+{
+  showImportModal: boolean;
+  showExportModal: boolean;
+  showUploadBtn: boolean;
+  showExportBtn: boolean;
+  sectionsToExport: any[];
+  studentsToImport: any[];
+  studentsToExport: any[];
+  studentsCount: number;
+  isLoading: boolean;
+  studentsData: any;
+  importingData: boolean;
+  activeSection: number;
+  gradesArr: any[];
+
   type: "presentational";
   component: string;
   settings: {
@@ -134,12 +159,260 @@ export class FormBlockComponent
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
     private stepsService: StepsService,
+    private http: HttpClient,
+
     @Inject(DomSanitizer) private readonly sanitizer: DomSanitizer
   ) {
     this.type = "presentational";
     this.component = "form";
     this.glbls = globals;
     this.stps = stepsService;
+    this.showImportModal = false;
+    this.showUploadBtn = false;
+    this.showExportBtn = false;
+    this.studentsData = [];
+    this.gradesArr = [];
+    this.studentsCount = 0;
+    this.activeSection = 0;
+    localStorage.setItem("stud_data", JSON.stringify([]));
+  }
+
+  openModal() {
+    this.showImportModal = true;
+    const newOptions = [
+      ...this.settings.formsContent[this.fields[0]].options,
+      {
+        id: "7",
+        name: "Varios grados",
+      },
+    ];
+    this.settings.formsContent[this.fields[0]].options = [];
+  }
+
+  closeModal() {
+    this.showImportModal = false;
+  }
+
+  openExportModal() {
+    const optionsActual: any[] =
+      this.settings.formsContent[this.fields[0]].options;
+    const existOption = optionsActual.find((option) => option.id === "all");
+    if (existOption) {
+      this.showExportModal = true;
+      return;
+    }
+    const newOptions = [
+      ...optionsActual,
+      {
+        id: "all",
+        name: "Varios grados",
+      },
+    ];
+
+    this.settings.formsContent[this.fields[0]].options = newOptions;
+    this.showExportModal = true;
+  }
+
+  closeExportModal() {
+    this.sectionsToExport = [];
+    const newOptions = this.settings.formsContent[
+      this.fields[0]
+    ].options.filter((option) => option.id !== "all");
+    this.settings.formsContent[this.fields[0]].options = newOptions;
+
+    this.showExportModal = false;
+    this.componentForm.reset();
+  }
+
+  handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      const data = new Uint8Array(reader.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+      const elements = [];
+
+      studentsData.forEach((student) => {
+        elements.push(
+          student["Nombre"],
+          student["Apellido"],
+          student["Tipo de documento"],
+          student["Documento de identidad"],
+          student["Fecha de nacimiento"],
+          student["Género"],
+          student["Grado"],
+          student["Sección"]
+        );
+      });
+      const el_cleaned = elements;
+      const num_cols = 8;
+
+      const matrix = el_cleaned.reduce(
+        (rows, key, index) =>
+          (index % num_cols == 0
+            ? rows.push([key])
+            : rows[rows.length - 1].push(key)) && rows,
+        []
+      );
+
+      const students: Array<Object> = matrix.map((registry, index) => {
+        const fecha_de_nacimiento = this.parseDate(registry[4]);
+
+        return {
+          nombre: registry[0] || "",
+          apellido: registry[1] || "",
+          tipo_de_documento: registry[2] || "",
+          documento_de_identidad: registry[3]?.toString() || "",
+          fecha_de_nacimiento: fecha_de_nacimiento || "",
+          genero: registry[5] || "",
+          grado: registry[6]?.toString() || "",
+          seccion: registry[7] || "",
+        };
+      });
+      this.showUploadBtn = true;
+
+      this.studentsToImport = students;
+    };
+  }
+
+  parseDate(date) {
+    if (typeof date === "number") {
+      const dateString = this.SerialDateToJSDate(date, -4);
+      const dateOutput = new Date(dateString)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      return dateOutput;
+    } else {
+      return date;
+    }
+  }
+
+  // serialDate is whole number of days since Dec 30, 1899
+  // offsetUTC is -(24 - your timezone offset)
+  SerialDateToJSDate(serialDate, offsetUTC) {
+    return new Date(Date.UTC(0, 0, serialDate, offsetUTC));
+  }
+
+  async importStudents() {
+    this.importingData = true;
+    const resourcePath = `section/load/${this.pecaId}`;
+    const body = {
+      action: "import",
+      students: this.studentsToImport,
+      section: this.sectionsArr[this.activeSection].id,
+    };
+    console.log("BODY to import: ", body);
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      if (result.status_code === 201) {
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
+  }
+
+  makeExcel() {
+    this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+
+    workbook.SheetNames.push("Data de estudiantes");
+    const columns_header = [
+      "Nombre",
+      "Apellido",
+      "Tipo de documento",
+      "Documento de identidad",
+      "Fecha de nacimiento",
+      "Género",
+      "Grado",
+      "Sección",
+    ];
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+
+    const currentSectionName = this.sectionsArr.filter((section) => {
+      const randomStudent = this.studentsData[0];
+      if (section.id === randomStudent.section) {
+        return section;
+      }
+    })[0].name;
+
+    for (
+      let count = 1, i = 0;
+      count <= this.studentsData.length;
+      count++, i++
+    ) {
+      genero = parseInt(this.studentsData[i]?.gender) === 1 ? "F" : "M";
+      fecha = new Date(this.studentsData[i]?.age)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      const data = [
+        this.studentsData[i]?.name || "",
+        this.studentsData[i]?.lastName || "",
+        "V" || "", // TODO: check this
+        this.studentsData[i]?.documentGroup?.prependInput || "",
+        fecha,
+        genero,
+        this.studentsData[i]?.grades || "",
+        currentSectionName || "",
+      ];
+      row_aux.push(data);
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Data de estudiantes"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
+  exportStudents() {
+    let grado = this.parseGrade(this.sectionsArr[this.activeSection]?.grade);
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `Data de estudiantes - ${grado}, seccion ${
+        this.sectionsArr[this.activeSection].name
+      }.xls`
+    );
+  }
+
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
   }
 
   ngOnInit() {
@@ -157,13 +430,12 @@ export class FormBlockComponent
           this.settings.formsContent["addressState"]
         ) {
           this.showSelectState = false;
-          this.settings.formsContent[
-            "addressMunicipality"
-          ].options = this.stepsService.getResidenceMuns();
-          this.settings.formsContent[
-            "addressState"
-          ].options = this.stepsService.getResidenceStates();
+          this.settings.formsContent["addressMunicipality"].options =
+            this.stepsService.getResidenceMuns();
+          this.settings.formsContent["addressState"].options =
+            this.stepsService.getResidenceStates();
 
+          this.studentsCount = 0;
           setTimeout(() => {
             this.showSelectState = true;
             this.updateMuns(
@@ -203,12 +475,13 @@ export class FormBlockComponent
     )
       this.subscription.add(
         this.componentForm.get("section").statusChanges.subscribe((val) => {
-          if (val === "VALID")
+          if (val === "VALID") {
             this.globals.emitStudentsTableRefresh(
               this.settings.tableRefreshName,
               this.componentForm.get("section").value
             );
-          else
+            this.setActiveSection(this.componentForm.get("section").value);
+          } else
             this.globals.emitStudentsTableRefresh(
               this.settings.tableRefreshName,
               null
@@ -362,9 +635,10 @@ export class FormBlockComponent
       day: this.componentForm.controls[
         `${this.settings.formsContent[key_]["specialDateForm"]}Day`
       ].value,
-      month: this.componentForm.controls[
-        `${this.settings.formsContent[key_]["specialDateForm"]}Month`
-      ].value,
+      month:
+        this.componentForm.controls[
+          `${this.settings.formsContent[key_]["specialDateForm"]}Month`
+        ].value,
       year: this.componentForm.controls[
         `${this.settings.formsContent[key_]["specialDateForm"]}Year`
       ].value,
@@ -617,15 +891,14 @@ export class FormBlockComponent
       this.formInitialVals[this.settings.buttonCode] &&
       this.componentForm &&
       this.componentForm.value
-        ? Object.keys(
-            this.formInitialVals[this.settings.buttonCode]
-          ).every((iv_k) =>
-            !this.componentForm.value[iv_k] ||
-            typeof this.componentForm.value[iv_k] === "object"
-              ? true
-              : this.componentForm.value[iv_k] &&
-                this.componentForm.value[iv_k] ===
-                  this.formInitialVals[this.settings.buttonCode][iv_k]
+        ? Object.keys(this.formInitialVals[this.settings.buttonCode]).every(
+            (iv_k) =>
+              !this.componentForm.value[iv_k] ||
+              typeof this.componentForm.value[iv_k] === "object"
+                ? true
+                : this.componentForm.value[iv_k] &&
+                  this.componentForm.value[iv_k] ===
+                    this.formInitialVals[this.settings.buttonCode][iv_k]
           )
         : false;
 
@@ -1046,9 +1319,8 @@ export class FormBlockComponent
           ...this.settings.dataFromRow.data.newData,
           ...manageData.data,
         };
-        this.settings.dataFromRow.data.newData[
-          "id"
-        ] = this.settings.dataFromRow.data.oldData["id"];
+        this.settings.dataFromRow.data.newData["id"] =
+          this.settings.dataFromRow.data.oldData["id"];
       } else {
         // is for adding in modal view
         this.settings.dataFromRow["data"] = manageData.data;
@@ -1308,6 +1580,11 @@ export class FormBlockComponent
       this.sendingForm ||
       this.isDateNotOk()
     );
+  }
+
+  getStudentsCount() {
+    const count = JSON.parse(localStorage.getItem("stud_data")).length;
+    return count <= 0;
   }
 
   disableBtnWithDate() {
@@ -1604,21 +1881,32 @@ export class FormBlockComponent
   }
 
   // filling sections according to selected grade
-  private fillSections(grade = null) {
+  private async fillSections(grade = null) {
+    if (grade === "all") {
+      // ignorar filtro para exportar todos los usuarios
+      // await this.exportAll();
+      this.handleVariosGrados();
+      this.sectionsArr = [];
+      this.componentForm.patchValue({ section: "" });
+      return;
+    }
     if (!grade) {
       this.sectionsArr = [];
       this.componentForm.patchValue({ section: "" });
     } else {
+      this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
           return s.grade == grade;
         }
       );
-
+      console.log("sections array: ", this.settings.formsContent["section"]);
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,
       });
     }
+    this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
+    this.studentsCount = this.studentsData.length;
   }
   // managing sections depending on grades
   setSchoolSections(e) {
@@ -1629,8 +1917,369 @@ export class FormBlockComponent
         this.componentForm.controls["grades"].value.length > 0
           ? this.componentForm.controls["grades"].value
           : null;
-
       this.fillSections(currGrade);
     } else this.fillSections();
+  }
+
+  setActiveSection(sectionId) {
+    let index = 0;
+    this.sectionsArr.forEach((section, idx) => {
+      if (section.id === sectionId) {
+        index = idx;
+      }
+    });
+    this.activeSection = index;
+    return;
+  }
+
+  // managing sections depending on grades
+  setSchoolSectionsModal(e) {
+    this.sectionsToExport = [];
+    if (e) {
+      let currGrade = null;
+      currGrade =
+        this.componentForm.controls["grades"].value &&
+        this.componentForm.controls["grades"].value.length > 0
+          ? this.componentForm.controls["grades"].value
+          : null;
+      this.fillSections(currGrade);
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.showExportBtn = false;
+    } else {
+      this.fillSections();
+      this.sectionsToExport.forEach((sectionId) => {
+        const sectionCheckbox = document.getElementById(
+          sectionId
+        ) as HTMLInputElement;
+        sectionCheckbox.checked = false;
+      });
+    }
+  }
+
+  selectSection(section, toExport) {
+    this.gradesArr = [];
+    // Habilitar descarga de todas las secciones
+    if (section === "all" && toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        if (checkbox.id !== "allSections") {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+        }
+      });
+      this.sectionsToExport = this.sectionsArr.map((section) => section.id);
+      // Deshabilitar descarga de todas las secciones
+    } else if (section === "all" && !toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.sectionsToExport = [];
+    } else {
+      // Descarga de secciones individuales
+      const sectionIndex = this.sectionsToExport.indexOf(section);
+      const alreadyExist = sectionIndex > -1;
+      // Pop section at index
+      if (alreadyExist && !toExport) {
+        this.sectionsToExport.splice(sectionIndex, 1);
+      }
+      // Push section
+      if (!alreadyExist && toExport) {
+        this.sectionsToExport.push(section);
+      }
+      if (!this.sectionsToExport.length) {
+        this.showExportBtn = false;
+      }
+    }
+
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
+    }
+  }
+
+  makeExcelExport(studentsData) {
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: `Data de estudiantes - ${
+        this.sectionsArr[this.activeSection]?.name
+      }`,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+    workbook.SheetNames.push("Data de estudiantes");
+    const columns_header = [
+      "Nombre",
+      "Apellido",
+      "Tipo de documento",
+      "Documento de identidad",
+      "Fecha de nacimiento",
+      "Género",
+      "Grado",
+      "Sección",
+    ];
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    for (let count = 1, i = 0; count <= studentsData.length; count++, i++) {
+      genero = parseInt(studentsData[i]?.gender) === 1 ? "F" : "M";
+      fecha = new Date(studentsData[i]?.birthdate)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+
+      const cardType = parseInt(studentsData[i]?.cardType);
+      const data = [
+        studentsData[i]?.firstName || "",
+        studentsData[i]?.lastName || "",
+        cardType === 2 ? "E" : "V", // TODO: check this
+        studentsData[i]?.cardId || "",
+        fecha,
+        genero,
+        studentsData[i]?.grades || "",
+        studentsData[i].section || "",
+      ];
+      row_aux.push(data);
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets["Data de estudiantes"] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+
+  parseGrade(grades) {
+    let grado;
+    switch (grades) {
+      case "0":
+        grado = "Preescolar";
+        break;
+      case "1":
+        grado = "1er grado";
+        break;
+      case "2":
+        grado = "2do grado";
+        break;
+      case "3":
+        grado = "3er grado";
+        break;
+      case "4":
+        grado = "4to grado";
+        break;
+      case "5":
+        grado = "5to grado";
+        break;
+      case "6":
+        grado = "6to grado";
+        break;
+      default:
+        grado = "";
+    }
+    return grado;
+  }
+
+  async exportSections() {
+    const resourcePath = `section/load/${this.pecaId}`;
+    const sections = this.sectionsToExport;
+    const body = {
+      action: "export",
+      sections,
+    };
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      const students = [];
+      if (result.status_code === 201) {
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        result.sections.forEach((section) => {
+          section.students.forEach((student) => {
+            students.push({
+              ...student,
+              grades: section.grade,
+              section: section.name,
+            });
+          });
+        });
+      }
+      const workbookBin = this.makeExcelExport(students);
+      const octetStream = this.binary2octet(workbookBin);
+      saveAs(
+        new Blob([octetStream], { type: "application/octet-stream" }),
+        `Data de estudiantes - ${this.parseGrade(
+          this.componentForm.controls["grades"].value
+        )}.xls`
+      );
+      if (!this.gradesArr) {
+        this.sectionsToExport.forEach((sectionId) => {
+          const sectionCheckbox = document.getElementById(
+            sectionId
+          ) as HTMLInputElement;
+          sectionCheckbox.checked = false;
+        });
+      }
+
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.showExportBtn = false;
+      this.sectionsToExport = [];
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    }
+  }
+
+  async exportAll() {
+    const resourcePath = `section/load/${this.pecaId}`;
+    const allSections = this.settings.formsContent["section"].options;
+    const sectionsIds = allSections.map((section) => section.id);
+    let sectionsMapped = {};
+
+    allSections.forEach((section) => {
+      sectionsMapped = { ...sectionsMapped, [`${section.id}`]: section.grade };
+    });
+    const body = {
+      action: "export",
+      sections: sectionsIds,
+    };
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      const students = [];
+      if (result.status_code === 201) {
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        result.sections.forEach((section) => {
+          section.students.forEach((student) => {
+            students.push({
+              ...student,
+              grades: sectionsMapped[`${section.id}`],
+              section: section.name,
+            });
+          });
+        });
+
+        const workbookBin = this.makeExcelExport(students);
+        const octetStream = this.binary2octet(workbookBin);
+        saveAs(
+          new Blob([octetStream], { type: "application/octet-stream" }),
+          `Data de estudiantes - TODOS.xls`
+        );
+
+        this.showExportBtn = false;
+        this.showExportModal = false;
+        this.componentForm.reset();
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    }
+  }
+
+  handleVariosGrados() {
+    const allGrades = this.settings.formsContent["section"].options.map(
+      (section) => section.grade
+    );
+    console.log("grades: ", allGrades);
+    const grades = [];
+    allGrades.forEach((grade) => {
+      if (grades.includes(grade)) {
+        return;
+      } else {
+        grades.push(grade);
+      }
+    });
+    const gradesData = grades.map((grade) => {
+      return {
+        id: grade,
+        name: this.parseGrade(grade),
+      };
+    });
+    console.log("GRADES: ", gradesData);
+    this.gradesArr = gradesData;
+  }
+
+  async selectGrades(grade, toExport) {
+    // Habilitar descarga de todas las secciones
+    if (grade === "all" && toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        if (checkbox.id !== "allGrades") {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+        }
+      });
+      this.sectionsToExport = this.settings.formsContent["section"].options.map(
+        (section) => {
+          return section.id;
+        }
+      );
+      // Deshabilitar descarga de todas las secciones
+    } else if (grade === "all" && !toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      console.log("checkbox: ", markedCheckbox);
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.sectionsToExport = [];
+    } else {
+      // Descarga de secciones individuales
+      const sectionsFounded = this.settings.formsContent[
+        "section"
+      ].options.filter((section) => section.grade === grade);
+      sectionsFounded.forEach((section) => {
+        const sectionIndex = this.sectionsToExport.indexOf(section.id);
+        const alreadyExist = sectionIndex > -1;
+        // Pop section at index
+        if (alreadyExist && !toExport) {
+          this.sectionsToExport.splice(sectionIndex, 1);
+        }
+        // Push section
+        if (!alreadyExist && toExport) {
+          this.sectionsToExport.push(section.id);
+        }
+        if (!this.sectionsToExport.length) {
+          this.showExportBtn = false;
+        }
+      });
+    }
+    console.log("sections to export: ", this.sectionsToExport);
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
+    }
   }
 }
