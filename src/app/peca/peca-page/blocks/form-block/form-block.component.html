@@ -798,7 +798,7 @@
             data-target="#no-peca-modal-export"
             data-backdrop="false"
             data-keyboard="false"
-            (click)="openExportModal()"
+            (click)="openAddStudentsByLots()"
           >
             <span
               *ngIf="sendingForm"
@@ -929,21 +929,7 @@
               <ng-container *ngIf="isField(fields[0])">
                 <div
                   [class]="settings.formsContent[fields[0]].type"
-                  [ngClass]="{
-                    'form-group':
-                      settings.formsContent[fields[0]].type != 'double',
-                    'full-width':
-                      settings.formsContent[fields[0]].type != 'double' &&
-                      settings.formsContent[fields[0]].fullwidth,
-                    'input-group':
-                      settings.formsContent[fields[0]].type === 'prepend' ||
-                      (settings.formsContent[fields[0]].type === 'double' &&
-                        settings.formsContent[fields[0]].isInputGroup),
-                    'two-wrapper':
-                      settings.formsContent[fields[0]].type === 'double',
-                    'one-row-form-form-group': settings.isOneRow,
-                    'full-width2': settings.formsContent[fields[0]].fullwidth2
-                  }"
+                  [ngClass]="getStudentsModalNgClass()"
                   [ngSwitch]="settings.formsContent[fields[0]].type"
                 >
                   <ng-container *ngSwitchCase="'select'">
@@ -1142,21 +1128,7 @@
               <ng-container *ngIf="isField(fields[0])">
                 <div
                   [class]="settings.formsContent[fields[0]].type"
-                  [ngClass]="{
-                    'form-group':
-                      settings.formsContent[fields[0]].type != 'double',
-                    'full-width':
-                      settings.formsContent[fields[0]].type != 'double' &&
-                      settings.formsContent[fields[0]].fullwidth,
-                    'input-group':
-                      settings.formsContent[fields[0]].type === 'prepend' ||
-                      (settings.formsContent[fields[0]].type === 'double' &&
-                        settings.formsContent[fields[0]].isInputGroup),
-                    'two-wrapper':
-                      settings.formsContent[fields[0]].type === 'double',
-                    'one-row-form-form-group': settings.isOneRow,
-                    'full-width2': settings.formsContent[fields[0]].fullwidth2
-                  }"
+                  [ngClass]="getStudentsModalNgClass()"
                   [ngSwitch]="settings.formsContent[fields[0]].type"
                 >
                   <ng-container *ngSwitchCase="'select'">
@@ -1209,7 +1181,7 @@
         </form>
 
         <div *ngIf="getGrades().length > 0">
-          <label style="color: grey">Seleccione el grado:</label>
+          <!-- <label style="color: grey">Seleccione el grado:</label> -->
           <div class="list-checkbox">
             <div *ngIf="getGrades().length > 1">
               <label>

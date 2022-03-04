@@ -1,4 +1,5 @@
-import { olympicsPermissions } from './../blocks/peca-permissology';
+import { HttpFetcherService } from "./../../../services/peca/http-fetcher.service";
+import { olympicsPermissions } from "./../blocks/peca-permissology";
 import {
   Component,
   ViewChild,
@@ -22,7 +23,8 @@ import { scan } from "rxjs/internal/operators/scan";
 })
 export class MathOlympicsPageComponent
   extends PecaPageComponent
-  implements OnDestroy {
+  implements OnDestroy
+{
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
@@ -34,11 +36,12 @@ export class MathOlympicsPageComponent
   UrlLapse = "";
   peca_id: any;
   isInstantiating: boolean;
-
+  extraData: Object;
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private fetcher: HttpFetcherService
   ) {
     super(factoryResolver);
     //To know if the url change
@@ -60,18 +63,27 @@ export class MathOlympicsPageComponent
       .pipe(
         distinctUntilChanged(
           (prev, curr) =>
-            JSON.stringify(prev.activePecaContent[`lapse${this.UrlLapse}`].olympics) ===
-            JSON.stringify(curr.activePecaContent[`lapse${this.UrlLapse}`].olympics)
+            JSON.stringify(
+              prev.activePecaContent[`lapse${this.UrlLapse}`].olympics
+            ) ===
+            JSON.stringify(
+              curr.activePecaContent[`lapse${this.UrlLapse}`].olympics
+            )
         ),
         scan(
           (prev, curr) => {
             let updatedStudents = false;
             if (prev.activePecaContent) {
               const prevStudents =
-                prev.activePecaContent[`lapse${this.UrlLapse}`]["olympics"]["students"];
+                prev.activePecaContent[`lapse${this.UrlLapse}`]["olympics"][
+                  "students"
+                ];
               const currStudents =
-                curr.activePecaContent[`lapse${this.UrlLapse}`]["olympics"]["students"];
-              updatedStudents = JSON.stringify(prevStudents) !== JSON.stringify(currStudents);
+                curr.activePecaContent[`lapse${this.UrlLapse}`]["olympics"][
+                  "students"
+                ];
+              updatedStudents =
+                JSON.stringify(prevStudents) !== JSON.stringify(currStudents);
             }
             return {
               ...curr,
@@ -95,7 +107,8 @@ export class MathOlympicsPageComponent
                   this.UrlLapse,
                   data.updatedStudents,
                   permissionsObj,
-                  this.store
+                  this.store,
+                  this.extraData
                 );
                 this.instantiateComponent(config);
                 this.doInstantiateBlocks();
@@ -110,13 +123,11 @@ export class MathOlympicsPageComponent
   }
 
   managePermissions(permissionsArray) {
-    return olympicsPermissions.actions.reduce(
-      (permissionsObj, permission) => {
-        if (permissionsArray) permissionsObj[permission] = permissionsArray.includes(permission);
-        return permissionsObj;
-      },
-      {}
-    );
+    return olympicsPermissions.actions.reduce((permissionsObj, permission) => {
+      if (permissionsArray)
+        permissionsObj[permission] = permissionsArray.includes(permission);
+      return permissionsObj;
+    }, {});
   }
 
   doInstantiateBlocks() {

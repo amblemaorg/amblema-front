@@ -38,16 +38,25 @@ export class FormBlock {
   fields: FormBlockField[] = []; // [{'specialty': {label: '', placeholder: ''}}]
   custom: any; // To add extra data freely
   defaultData: any; // pre-settings from any file view config.ts like school-data-config.ts
-  dep: {}; // Dependencies needed form each specific form class
+  dep?: Object; // Dependencies needed form each specific form class
 
   // public defaultData?: any, protected dep?: {}
-  constructor(public id: string | number, options: FormBlockOptions, dep?: {}) {
+  constructor(
+    public id: string | number,
+    options: FormBlockOptions,
+    dep?: Object
+  ) {
     const { formId, defaultData, custom } = options;
     this.defaultData = defaultData;
     this.dep = dep;
     this.custom = custom;
 
     if (this.isForm(formId)) {
+      if (this.defaultData) {
+        // set Fields if exist default data
+        this.fields = this.defaultData;
+      }
+
       this.init(); // invocated immediately and just here
 
       this.isInit = true;
