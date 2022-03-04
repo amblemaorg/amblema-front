@@ -10,6 +10,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -2399,9 +2400,26 @@ export class FormBlockComponent
     });
   }
 
-
   getGrades() {
     return [];
+  }
+
+  onCheckboxChange(e) {
+    const checkArray: FormArray = this.componentForm.get(
+      "gradesStudents"
+    ) as FormArray;
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == e.target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
   }
 
   /**
@@ -2445,11 +2463,18 @@ export class FormBlockComponent
 
     // If there is an Form (Form Class) initialized
     if (this.currentForm) {
-      
-      if(this.currentForm.formGroupConfigs()) {
-        this.componentForm = this.currentForm.formGroupConfigs();
-      }
       this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
+
+      if (this.currentForm.getControlsToReplace().length > 0) {
+        this.currentForm.getControlsToReplace().map((newControl) => {
+          this.componentForm.setControl(
+            newControl.name,
+            newControl.formControl
+          );
+        });
+
+        console.log("this.currentForm.formGroupConfigs()", this.componentForm);
+      }
     }
   }
 }
@@ -2513,22 +2538,23 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     // console.log("docenteFormBLock", this.fields);
   }
 
-  formGroupConfigs() {
-    return this.custom.componentForm;
-  }
-
   // setting and fill options for the fields
   async body() {
     await this.fillSelectGrades();
   }
 
-  setStructureFormControl() {
-    const formGroup: FormGroup = this.custom.componentForm;
+  getControlsToReplace() {
+    const options = this.getField("gradesStudents").options.map((grade) => {
+      return { value: grade.id, name: grade.name };
+    });
     const formControl: AbstractControl = this.dep.formBuilder.array([]);
-    formGroup.setControl("grades", formControl);
-
+    return [
+      {
+        name: "gradesStudents",
+        formControl,
+      },
+    ];
   }
-
 
   onCheckboxChange(e) {
     // const checkArray: FormArray = this.form.get('checkArray') as FormArray;
@@ -2558,6 +2584,6 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
 
     console.log("MathOlympic - pecaGrades", pecaGrades);
 
-    this.fillSelect("grades", pecaGrades);
+    this.fillSelect("gradesStudents", pecaGrades);
   }
 }

@@ -189,7 +189,7 @@ export function mathOlympicsConfigMapper(
       formId: "add-students-math-olympic-lots",
       extraData: { purpose: "agregarEstudiantesLotes" },
       formsContent: {
-        grades: {
+        gradesStudents: {
           label: "Seleccione el grado",
           placeholder: "Grados",
           fullwidth: false,
