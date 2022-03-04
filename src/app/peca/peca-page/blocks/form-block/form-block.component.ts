@@ -194,6 +194,7 @@ export class FormBlockComponent
 
   openModal() {
     this.showImportModal = true;
+
     const newOptions = [
       ...this.settings.formsContent[this.fields[0]].options,
       {
@@ -201,11 +202,34 @@ export class FormBlockComponent
         name: "Varios grados",
       },
     ];
+
     this.settings.formsContent[this.fields[0]].options = [];
   }
 
   closeModal() {
     this.showImportModal = false;
+  }
+
+  openAddStudentsByLots() {
+    //
+    this.showExportModal = true;
+  }
+
+  getStudentsModalNgClass() {
+    return {
+      "form-group": this.settings.formsContent[this.fields[0]].type != "double",
+      "full-width":
+        this.settings.formsContent[this.fields[0]].type != "double" &&
+        this.settings.formsContent[this.fields[0]].fullwidth,
+      "input-group":
+        this.settings.formsContent[this.fields[0]].type === "prepend" ||
+        (this.settings.formsContent[this.fields[0]].type === "double" &&
+          this.settings.formsContent[this.fields[0]].isInputGroup),
+      "two-wrapper":
+        this.settings.formsContent[this.fields[0]].type === "double",
+      "one-row-form-form-group": this.settings.isOneRow,
+      "full-width2": this.settings.formsContent[this.fields[0]].fullwidth2,
+    };
   }
 
   openExportModal() {
@@ -2385,6 +2409,18 @@ export class FormBlockComponent
         },
         { fetcher: this.fetcher } // Dependencies
       ),
+      new MathOlympicFormBlock(
+        "add-students-math-olympic-lots", // Set unique string to identify the form
+        {
+          formId, // Pass current formId that instanced form-block component
+          defaultData: formsContent, // The pre-settings properly of the fields
+          custom: {
+            // To pass settings or data that is not properly of the fields
+            pecaId: this.pecaId,
+          },
+        },
+        { fetcher: this.fetcher } // Dependencies
+      ),
     ];
 
     // Get the form (Form Class) which was initialized
@@ -2413,15 +2449,13 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
   constructor(
     id: string | number,
     options: FormBlockOptions,
-    dep?: { fetcher: HttpFetcherService }
+    public dep?: { fetcher: HttpFetcherService }
   ) {
     super(id, options, dep);
   }
 
   // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
   init() {
-    this.fields = this.defaultData; // set Fields
-
     this.body();
     // console.log("docenteFormBLock", this.fields);
   }
@@ -2429,7 +2463,7 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
   // setting and fill options for the fields
   async body() {
     let specialTyOp: FormBlockFieldOption[] = [];
-    let specialtiesApi = await this.dep["fetcher"].get("specialty").toPromise(); // get option from api
+    let specialtiesApi = await this.dep.fetcher.get("specialty").toPromise(); // get option from api
 
     // Adapt request to options field object structure {id: string, name: string}
     specialTyOp = specialtiesApi.records.map((specialtyApi) => {
@@ -2438,5 +2472,41 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
     });
 
     this.fillSelect("specialty", specialTyOp); // Set array options to the field "specialty"
+  }
+}
+
+class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
+  constructor(
+    id: string | number,
+    options: FormBlockOptions,
+    public dep?: { fetcher: HttpFetcherService }
+  ) {
+    super(id, options, dep);
+  }
+
+  // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
+  async init() {
+    await this.body();
+    // console.log("docenteFormBLock", this.fields);
+  }
+
+  // setting and fill options for the fields
+  async body() {
+    await this.fillSelectGrades();
+  }
+
+  async fillSelectGrades() {
+    const pecaGradesApi = await this.dep.fetcher
+      .get(`peca/grade/${this.custom.pecaId}`)
+      .toPromise(); // get option from api
+
+    let pecaGrades: FormBlockFieldOption[] = [];
+
+    // Adapt request to options field object structure {id: string, name: string}
+    pecaGrades = pecaGradesApi.data.map((grade) => grade);
+
+    console.log("MathOlympic - pecaGrades", pecaGrades);
+
+    this.fillSelect("grades", pecaGrades);
   }
 }
