@@ -798,7 +798,7 @@
             data-target="#no-peca-modal-export"
             data-backdrop="false"
             data-keyboard="false"
-            (click)="openAddStudentsByLots()"
+            (click)="openModalAddStudentsByLots()"
           >
             <span
               *ngIf="sendingForm"
@@ -1120,110 +1120,59 @@
           (keydown.enter)="prevDef($event)"
           (ngSubmit)="onSubmitForm(componentForm)"
         >
-          <div
-            class="fields-container"
-            [class.one-row-form]="settings.isOneRow"
-          >
-            <ng-container>
-              <ng-container *ngIf="isField(fields[0])">
-                <div
-                  [class]="settings.formsContent[fields[0]].type"
-                  [ngClass]="getStudentsModalNgClass()"
-                  [ngSwitch]="settings.formsContent[fields[0]].type"
+          <div *ngIf="currentForm.getFields().length > 0">
+            <!-- <label style="color: grey">Seleccione el grado:</label> -->
+            <div class="list-checkbox">
+              <div *ngIf="currentForm.getFields().length > 1">
+                <label>
+                  <input
+                    id="allGrades"
+                    type="checkbox"
+                    ngModel
+                    (click)="selectGradesChangesLots(true)"
+                    class="mx-2"
+                    [checked]="isCheckboxChecked(false)"
+                  />
+                  Todos los grados
+                </label>
+              </div>
+              <div
+                *ngFor="
+                  let grade of currentForm.getFields();
+                  trackBy: trackByFn
+                "
+              >
+                <label
+                  ><input
+                    id="{{ grade.id }}"
+                    type="checkbox"
+                    ngModel
+                    ngControl="grade.id"
+                    (ngModelChange)="selectGradesChangesLots()"
+                    class="mx-2"
+                  />
+                  {{ grade.name }}</label
                 >
-                  <ng-container *ngSwitchCase="'select'">
-                    <label>{{ settings.formsContent[fields[0]].label }}</label>
-                    <ng-select
-                      *ngIf="
-                        settings.formsContent[fields[0]].shouldContentRefresh &&
-                        !isContentRefreshing
-                      "
-                      class="form-control"
-                      [class.is-in-modal]="settings.isFromCustomTableActions"
-                      notFoundText="Elementos no encontrados"
-                      [items]="
-                        settings.formsContent[fields[0]].emmitSectionChange
-                          ? settings.formsContent[fields[0]].options
-                          : []
-                      "
-                      bindValue="id"
-                      bindLabel="name"
-                      [labelForId]="getId(fields[0])"
-                      [formControlName]="fields[0]"
-                      [virtualScroll]="true"
-                      [id]="getId(fields[0])"
-                      [placeholder]="
-                        settings.formsContent[fields[0]].placeholder
-                      "
-                      (change)="
-                        settings.formsContent[fields[0]].isGrades
-                          ? setSchoolSectionsModal($event)
-                          : true
-                      "
-                      [readonly]="
-                        settings.formsContent[fields[0]].readonly ||
-                        isReadOnly()
-                      "
-                    >
-                      <ng-template
-                        ng-option-tmp
-                        let-item="item"
-                        let-search="searchTerm"
-                      >
-                        <small>{{ item.name }}</small>
-                      </ng-template>
-                    </ng-select>
-                  </ng-container>
-                </div>
-              </ng-container>
-            </ng-container>
+                <br />
+              </div>
+            </div>
+          </div>
+          <div class="full-width d-flex">
+            <button
+              #upload
+              (click)="addStudentsToOlimpicMath()"
+              class="btn btn-primary full-width submit-btn mx-auto mt-4"
+              [disabled]="!isCheckboxChecked()"
+              [ngClass]="{ disabled: !isCheckboxChecked() }"
+            >
+              <span
+                *ngIf="isLoading"
+                class="spinner-grow spinner-grow-sm"
+              ></span>
+              {{ !isLoading ? "Exportar" : "Cargando..." }}
+            </button>
           </div>
         </form>
-
-        <div *ngIf="getGrades().length > 0">
-          <!-- <label style="color: grey">Seleccione el grado:</label> -->
-          <div class="list-checkbox">
-            <div *ngIf="getGrades().length > 1">
-              <label>
-                <input
-                  id="allGrades"
-                  type="checkbox"
-                  ngModel
-                  (click)="selectGradesChangesLots(true)"
-                  class="mx-2"
-                  [checked]="isCheckboxChecked(false)"
-                />
-                Todos los grados
-              </label>
-            </div>
-            <div *ngFor="let grade of getGrades(); trackBy: trackByFn">
-              <label
-                ><input
-                  id="{{ grade.id }}"
-                  type="checkbox"
-                  ngModel
-                  ngControl="grade.id"
-                  (ngModelChange)="selectGradesChangesLots()"
-                  class="mx-2"
-                />
-                {{ grade.name }}</label
-              >
-              <br />
-            </div>
-          </div>
-        </div>
-        <div class="full-width d-flex">
-          <button
-            #upload
-            (click)="addStudentsToOlimpicMath()"
-            class="btn btn-primary full-width submit-btn mx-auto mt-4"
-            [disabled]="!isCheckboxChecked()"
-            [ngClass]="{ disabled: !isCheckboxChecked() }"
-          >
-            <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm"></span>
-            {{ !isLoading ? "Exportar" : "Cargando..." }}
-          </button>
-        </div>
       </div>
     </div>
   </div>

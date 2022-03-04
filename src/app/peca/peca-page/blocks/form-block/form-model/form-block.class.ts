@@ -66,6 +66,10 @@ export class FormBlock {
   // Keep cleaned, this is to be overload into Form Class inherited
   init() {}
 
+  formGroupConfigs(): any {
+    return false;
+  }
+
   /**
    * @description Compare own form class id with formId that need form-block component to be instanced.
    * Also set as active (boolean true) if is equals

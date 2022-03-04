@@ -8,7 +8,13 @@ import {
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 import { ToastrService } from "ngx-toastr";
@@ -2272,8 +2278,11 @@ export class FormBlockComponent
     this.gradesArr = gradesData;
   }
 
-  getGrades() {
-    return this.settings.formsContent["grades"].options;
+  //
+
+  openModalAddStudentsByLots() {
+    this.showExportModal = true;
+    console.log("openModalAddStudentsByLots", this.componentForm);
   }
 
   async selectGrades(grade, toExport) {
@@ -2390,6 +2399,11 @@ export class FormBlockComponent
     });
   }
 
+
+  getGrades() {
+    return [];
+  }
+
   /**
    * @description Register of forms (Forms Class) and get just initialized forms class to set settings
    * @author Christopher Dallar
@@ -2417,9 +2431,10 @@ export class FormBlockComponent
           custom: {
             // To pass settings or data that is not properly of the fields
             pecaId: this.pecaId,
+            componentForm: this.componentForm,
           },
         },
-        { fetcher: this.fetcher } // Dependencies
+        { fetcher: this.fetcher, formBuilder: this.fb } // Dependencies
       ),
     ];
 
@@ -2430,6 +2445,10 @@ export class FormBlockComponent
 
     // If there is an Form (Form Class) initialized
     if (this.currentForm) {
+      
+      if(this.currentForm.formGroupConfigs()) {
+        this.componentForm = this.currentForm.formGroupConfigs();
+      }
       this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
     }
   }
@@ -2460,8 +2479,12 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
     // console.log("docenteFormBLock", this.fields);
   }
 
-  // setting and fill options for the fields
   async body() {
+    this.fillSelectSpecialty();
+  }
+
+  // setting and fill options for the fields
+  async fillSelectSpecialty() {
     let specialTyOp: FormBlockFieldOption[] = [];
     let specialtiesApi = await this.dep.fetcher.get("specialty").toPromise(); // get option from api
 
@@ -2479,7 +2502,7 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   constructor(
     id: string | number,
     options: FormBlockOptions,
-    public dep?: { fetcher: HttpFetcherService }
+    public dep?: { fetcher: HttpFetcherService; formBuilder: FormBuilder }
   ) {
     super(id, options, dep);
   }
@@ -2490,9 +2513,37 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     // console.log("docenteFormBLock", this.fields);
   }
 
+  formGroupConfigs() {
+    return this.custom.componentForm;
+  }
+
   // setting and fill options for the fields
   async body() {
     await this.fillSelectGrades();
+  }
+
+  setStructureFormControl() {
+    const formGroup: FormGroup = this.custom.componentForm;
+    const formControl: AbstractControl = this.dep.formBuilder.array([]);
+    formGroup.setControl("grades", formControl);
+
+  }
+
+
+  onCheckboxChange(e) {
+    // const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+    // if (e.target.checked) {
+    //   checkArray.push(new FormControl(e.target.value));
+    // } else {
+    //   let i: number = 0;
+    //   checkArray.controls.forEach((item: FormControl) => {
+    //     if (item.value == e.target.value) {
+    //       checkArray.removeAt(i);
+    //       return;
+    //     }
+    //     i++;
+    //   });
+    // }
   }
 
   async fillSelectGrades() {
