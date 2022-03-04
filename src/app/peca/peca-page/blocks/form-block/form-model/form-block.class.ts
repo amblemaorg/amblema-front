@@ -1,3 +1,5 @@
+import { AbstractControl } from "@angular/forms";
+
 export interface FormBlockField {
   [key: string]: {
     label: string;
@@ -63,12 +65,16 @@ export class FormBlock {
     }
   }
 
+  // Return data to go over and use formGroup.setControl(data.name, data.newFormControl)
+  getControlsToReplace(): {
+    name: string;
+    formControl: AbstractControl;
+  }[] {
+    return [];
+  }
+
   // Keep cleaned, this is to be overload into Form Class inherited
   init() {}
-
-  formGroupConfigs(): any {
-    return false;
-  }
 
   /**
    * @description Compare own form class id with formId that need form-block component to be instanced.
@@ -89,5 +95,9 @@ export class FormBlock {
 
   getFields() {
     return this.fields;
+  }
+
+  getField(key: string) {
+    return this.fields[key];
   }
 }

@@ -1128,7 +1128,6 @@
                   <input
                     id="allGrades"
                     type="checkbox"
-                    ngModel
                     (click)="selectGradesChangesLots(true)"
                     class="mx-2"
                     [checked]="isCheckboxChecked(false)"
@@ -1144,11 +1143,9 @@
               >
                 <label
                   ><input
-                    id="{{ grade.id }}"
                     type="checkbox"
-                    ngModel
-                    ngControl="grade.id"
-                    (ngModelChange)="selectGradesChangesLots()"
+                    [value]="grade.id"
+                    (ngModelChange)="onCheckboxChange($event)"
                     class="mx-2"
                   />
                   {{ grade.name }}</label
