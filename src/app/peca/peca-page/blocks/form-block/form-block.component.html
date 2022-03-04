@@ -1120,10 +1120,10 @@
           (keydown.enter)="prevDef($event)"
           (ngSubmit)="onSubmitForm(componentForm)"
         >
-          <div *ngIf="currentForm.getFields().length > 0">
+          <div *ngIf="currentForm.getField("gradesStudents").options.length > 0">
             <!-- <label style="color: grey">Seleccione el grado:</label> -->
             <div class="list-checkbox">
-              <div *ngIf="currentForm.getFields().length > 1">
+              <div *ngIf="currentForm.getField("gradesStudents").options.length > 1">
                 <label>
                   <input
                     id="allGrades"
@@ -1137,7 +1137,7 @@
               </div>
               <div
                 *ngFor="
-                  let grade of currentForm.getFields();
+                  let grade of currentForm.getField("gradesStudents").options;
                   trackBy: trackByFn
                 "
               >
