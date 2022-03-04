@@ -2465,16 +2465,16 @@ export class FormBlockComponent
     if (this.currentForm) {
       this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
 
-      if (this.currentForm.getControlsToReplace().length > 0) {
-        this.currentForm.getControlsToReplace().map((newControl) => {
-          this.componentForm.setControl(
-            newControl.name,
-            newControl.formControl
-          );
-        });
+      // if (this.currentForm.getControlsToReplace().length > 0) {
+      //   this.currentForm.getControlsToReplace().map((newControl) => {
+      //     this.componentForm.setControl(
+      //       newControl.name,
+      //       newControl.formControl
+      //     );
+      //   });
 
-        console.log("this.currentForm.formGroupConfigs()", this.componentForm);
-      }
+      //   console.log("this.currentForm.formGroupConfigs()", this.componentForm);
+      // }
     }
   }
 }
