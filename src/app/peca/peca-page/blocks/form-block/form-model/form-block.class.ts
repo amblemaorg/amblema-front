@@ -1,13 +1,19 @@
-import { AbstractControl } from "@angular/forms";
+import { ElementRef } from "@angular/core";
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+} from "@angular/forms";
 
 export interface FormBlockField {
-  [key: string]: {
-    label: string;
-    placeholder: string;
-    validations?: {};
-    fullwidth?: boolean;
-    options?: FormBlockFieldOption[];
-  };
+  // [key: string]: {
+  label: string;
+  placeholder: string;
+  validations?: {};
+  fullwidth?: boolean;
+  options?: FormBlockFieldOption[];
+  // };
 }
 
 export interface FormBlockFieldOption {
@@ -41,6 +47,9 @@ export class FormBlock {
   custom: any; // To add extra data freely
   defaultData: any; // pre-settings from any file view config.ts like school-data-config.ts
   dep?: Object; // Dependencies needed form each specific form class
+  handles: {
+    onCheckboxChange: Function;
+  };
 
   // public defaultData?: any, protected dep?: {}
   constructor(
@@ -59,10 +68,47 @@ export class FormBlock {
         this.fields = this.defaultData;
       }
 
+      this.handles = {
+        onCheckboxChange: this.onCheckboxChange,
+      };
+
       this.init(); // invocated immediately and just here
 
       this.isInit = true;
     }
+  }
+
+  protected onCheckboxChange(
+    target: any | NodeList,
+    formControlName: string,
+    formGroup: FormGroup
+  ) {
+    const checkArray: FormArray = formGroup.get(formControlName) as FormArray;
+
+    console.log(target);
+    if (NodeList.prototype.isPrototypeOf(target)) {
+      checkArray.clear();
+      target.forEach((targetEach) => {
+        checkArray.push(new FormControl(targetEach.value));
+      });
+
+      return checkArray;
+    }
+
+    if (target.checked) {
+      checkArray.push(new FormControl(target.value));
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+
+    return checkArray;
   }
 
   // Return data to go over and use formGroup.setControl(data.name, data.newFormControl)
@@ -93,11 +139,13 @@ export class FormBlock {
     this.fields[key].options = options;
   }
 
-  getFields() {
+  getFields(): FormBlockField[] {
     return this.fields;
   }
 
-  getField(key: string) {
+  getField(key: string): FormBlockField {
     return this.fields[key];
   }
+
+  onSubmit(cf: FormGroup) {}
 }
