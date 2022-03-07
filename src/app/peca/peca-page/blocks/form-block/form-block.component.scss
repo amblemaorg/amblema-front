@@ -653,3 +653,9 @@
     }
   }
 }
+
+.buttons-containers {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}

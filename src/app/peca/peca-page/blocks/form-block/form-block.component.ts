@@ -199,6 +199,10 @@ export class FormBlockComponent
     localStorage.setItem("stud_data", JSON.stringify([]));
   }
 
+  isSettingToJustShowModal() {
+    return this.settings.extraData && this.settings.extraData.justModal;
+  }
+
   openModal() {
     this.showImportModal = true;
 
@@ -215,11 +219,6 @@ export class FormBlockComponent
 
   closeModal() {
     this.showImportModal = false;
-  }
-
-  openAddStudentsByLots() {
-    //
-    this.showExportModal = true;
   }
 
   getStudentsModalNgClass() {
@@ -2209,6 +2208,66 @@ export class FormBlockComponent
     }
   }
 
+  async selectGrades(grade, toExport) {
+    // Habilitar descarga de todas las secciones
+    if (grade === "all" && toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        if (checkbox.id !== "allGrades") {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+        }
+      });
+      if ((this.sectionsToExport = this.settings.formsContent["section"])) {
+        this.sectionsToExport = this.settings.formsContent[
+          "section"
+        ].options.map((section) => {
+          return section.id;
+        });
+      }
+
+      // Deshabilitar descarga de todas las secciones
+    } else if (grade === "all" && !toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      // console.log("checkbox: ", markedCheckbox);
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.sectionsToExport = [];
+    } else {
+      // Descarga de secciones individuales
+      const sectionsFounded = this.settings.formsContent[
+        "section"
+      ].options.filter((section) => section.grade === grade);
+      sectionsFounded.forEach((section) => {
+        const sectionIndex = this.sectionsToExport.indexOf(section.id);
+        const alreadyExist = sectionIndex > -1;
+        // Pop section at index
+        if (alreadyExist && !toExport) {
+          this.sectionsToExport.splice(sectionIndex, 1);
+        }
+        // Push section
+        if (!alreadyExist && toExport) {
+          this.sectionsToExport.push(section.id);
+        }
+        if (!this.sectionsToExport.length) {
+          this.showExportBtn = false;
+        }
+      });
+    }
+    // console.log("sections to export: ", this.sectionsToExport);
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
+    }
+  }
+
   async exportAll() {
     const resourcePath = `section/load/${this.pecaId}`;
     const allSections = this.settings.formsContent["section"].options;
@@ -2281,95 +2340,20 @@ export class FormBlockComponent
 
   //
 
-  openModalAddStudentsByLots() {
+  justOpenModal() {
     this.showExportModal = true;
-    console.log("openModalAddStudentsByLots", this.componentForm);
+    console.log("justOpenModal", this.componentForm);
   }
 
-  async selectGrades(grade, toExport) {
-    // Habilitar descarga de todas las secciones
-    if (grade === "all" && toExport) {
-      const markedCheckbox = document.querySelectorAll(
-        'input[type="checkbox"]'
-      );
-      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
-        if (checkbox.id !== "allGrades") {
-          checkbox.checked = true;
-          checkbox.disabled = true;
-        }
-      });
-      if ((this.sectionsToExport = this.settings.formsContent["section"])) {
-        this.sectionsToExport = this.settings.formsContent[
-          "section"
-        ].options.map((section) => {
-          return section.id;
-        });
-      }
-
-      // Deshabilitar descarga de todas las secciones
-    } else if (grade === "all" && !toExport) {
-      const markedCheckbox = document.querySelectorAll(
-        'input[type="checkbox"]'
-      );
-      // console.log("checkbox: ", markedCheckbox);
-      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
-        checkbox.checked = false;
-        checkbox.disabled = false;
-      });
-      this.sectionsToExport = [];
-    } else {
-      // Descarga de secciones individuales
-      const sectionsFounded = this.settings.formsContent[
-        "section"
-      ].options.filter((section) => section.grade === grade);
-      sectionsFounded.forEach((section) => {
-        const sectionIndex = this.sectionsToExport.indexOf(section.id);
-        const alreadyExist = sectionIndex > -1;
-        // Pop section at index
-        if (alreadyExist && !toExport) {
-          this.sectionsToExport.splice(sectionIndex, 1);
-        }
-        // Push section
-        if (!alreadyExist && toExport) {
-          this.sectionsToExport.push(section.id);
-        }
-        if (!this.sectionsToExport.length) {
-          this.showExportBtn = false;
-        }
-      });
-    }
-    // console.log("sections to export: ", this.sectionsToExport);
-    if (!this.sectionsToExport.length) {
-      this.showExportBtn = false;
-    } else {
-      this.showExportBtn = true;
-    }
-  }
-
-  async selectGradesChangesLots(toMarkAll = false) {
-    const checkboxes = this.getCheckboxes();
-
-    console.log("selectGradesChangesLots", checkboxes);
-    const isEveryChecked = this.isCheckboxChecked(false);
-
-    console.log("Every", this.isCheckboxChecked(false));
-    // console.log("this.isCheckboxChecked()", this.isCheckboxChecked());
-
-    if (toMarkAll) {
-      checkboxes.forEach((checkbox: HTMLInputElement) => {
-        checkbox.checked = !isEveryChecked;
-      });
-    }
-  }
-
+  // :not(#markAll)
   private getCheckboxes() {
-    return document.querySelectorAll('.list-checkbox input[type="checkbox"]');
+    return document.querySelectorAll(
+      '.list-checkbox input[type="checkbox"]:not(#markAll)'
+    );
   }
 
-  isCheckboxChecked(lookSome = true) {
-    const markedCheckboxes = document.querySelectorAll(
-      '.list-checkbox input[type="checkbox"]'
-    );
+  isCheckboxesChecked(lookSome = true) {
+    const markedCheckboxes = this.getCheckboxes();
 
     const checkboxStates = [];
 
@@ -2389,37 +2373,44 @@ export class FormBlockComponent
     });
   }
 
-  addStudentsToOlimpicMath() {
-    const checkboxes = this.getCheckboxes();
-    const checkboxesChecked = [];
+  checkAllGradesStudentsLots(check = true) {
+    const checkboxesElem = this.getCheckboxes();
 
-    checkboxes.forEach((checkbox: HTMLInputElement) => {
-      if (checkbox.checked) {
-        checkboxesChecked.push(checkbox);
-      }
+    checkboxesElem.forEach((checkbox: HTMLInputElement) => {
+      checkbox.checked = check;
     });
   }
 
-  getGrades() {
-    return [];
-  }
-
-  onCheckboxChange(e) {
-    const checkArray: FormArray = this.componentForm.get(
-      "gradesStudents"
+  onCheckboxChange(e, formControlName: string) {
+    let checkArray: FormArray = this.componentForm.get(
+      formControlName
     ) as FormArray;
-    if (e.target.checked) {
-      checkArray.push(new FormControl(e.target.value));
-    } else {
-      let i: number = 0;
-      checkArray.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
+
+    if (e.target.id === "markAll") {
+      if (e.target.checked) {
+        checkArray = this.currentForm.handles.onCheckboxChange(
+          this.getCheckboxes(),
+          formControlName,
+          this.componentForm
+        );
+        this.checkAllGradesStudentsLots();
+      }
+
+      if (!e.target.checked) {
+        checkArray.clear();
+        this.checkAllGradesStudentsLots(false);
+      }
     }
+
+    if (e.target.id !== "markAll") {
+      checkArray = this.currentForm.handles.onCheckboxChange(
+        e.target,
+        formControlName,
+        this.componentForm
+      );
+    }
+
+    console.log("onCheckboxChange", this.componentForm);
   }
 
   /**
@@ -2465,16 +2456,16 @@ export class FormBlockComponent
     if (this.currentForm) {
       this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
 
-      // if (this.currentForm.getControlsToReplace().length > 0) {
-      //   this.currentForm.getControlsToReplace().map((newControl) => {
-      //     this.componentForm.setControl(
-      //       newControl.name,
-      //       newControl.formControl
-      //     );
-      //   });
+      if (this.currentForm.getControlsToReplace().length > 0) {
+        this.currentForm.getControlsToReplace().map((newControl) => {
+          this.componentForm.setControl(
+            newControl.name,
+            newControl.formControl
+          );
+        });
 
-      //   console.log("this.currentForm.formGroupConfigs()", this.componentForm);
-      // }
+        console.log("this.currentForm.formGroupConfigs()", this.componentForm);
+      }
     }
   }
 }
@@ -2547,29 +2538,16 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     const options = this.getField("gradesStudents").options.map((grade) => {
       return { value: grade.id, name: grade.name };
     });
-    const formControl: AbstractControl = this.dep.formBuilder.array([]);
+    const formControl: AbstractControl = this.dep.formBuilder.array(
+      [],
+      Validators.required
+    );
     return [
       {
         name: "gradesStudents",
         formControl,
       },
     ];
-  }
-
-  onCheckboxChange(e) {
-    // const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-    // if (e.target.checked) {
-    //   checkArray.push(new FormControl(e.target.value));
-    // } else {
-    //   let i: number = 0;
-    //   checkArray.controls.forEach((item: FormControl) => {
-    //     if (item.value == e.target.value) {
-    //       checkArray.removeAt(i);
-    //       return;
-    //     }
-    //     i++;
-    //   });
-    // }
   }
 
   async fillSelectGrades() {
@@ -2585,5 +2563,11 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     console.log("MathOlympic - pecaGrades", pecaGrades);
 
     this.fillSelect("gradesStudents", pecaGrades);
+  }
+
+  // Think if add to father class
+
+  onSubmit(cf: FormGroup) {
+    console.log(cf);
   }
 }
