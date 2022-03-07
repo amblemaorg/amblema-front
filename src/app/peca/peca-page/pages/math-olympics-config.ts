@@ -1,3 +1,4 @@
+import { environment } from "src/environments/environment";
 import { ArrayHelper } from "./../../../helpers/array.helper";
 import {
   UpdateStudentMathOlympics,
@@ -146,41 +147,7 @@ export function mathOlympicsConfigMapper(
   console.log("lapseNumber", lapseNumber);
   console.log("updatedStudents", updatedStudents);
   console.log("permissions", permissions);
-
-  // const getOptionsStudentsSelectModal = () => {
-  //   const { sections } = gradesAndSectionsDataToSectionsFormMapper(
-  //     pecaData.school
-  //   );
-
-  //   const gradesNames = {
-  //     "0": "Preescolar",
-  //     "1": "1er grado",
-  //     "2": "2do grado",
-  //     "3": "3er grado",
-  //     "4": "4to grado",
-  //     "5": "5to grado",
-  //     "6": "6to grado",
-  //   };
-
-  //   const gradesOrdered = ArrayHelper.unique(sections, "grades").map(
-  //     (option) => {
-  //       return {
-  //         name: gradesNames[option],
-  //         id: option,
-  //       };
-  //     }
-  //   );
-
-  //   return [
-  //     // {
-  //     //   name: "Todos los grados",
-  //     //   id: "-1",
-  //     // },
-  //     ...gradesOrdered,
-  //   ];
-  // };
-
-  // console.log("getOptionsStudentsSelectModal", getOptionsStudentsSelectModal());
+  console.log("schoolStudents", schoolStudents);
 
   const studentsSelectModal = {
     component: "form",
@@ -190,6 +157,8 @@ export function mathOlympicsConfigMapper(
       extraData: {
         purpose: "agregarEstudiantesLotes",
         justModal: true,
+        lapseNumber,
+        students: schoolStudents,
       },
       formsContent: {
         gradesStudents: {
@@ -202,13 +171,13 @@ export function mathOlympicsConfigMapper(
         },
       },
       buttons: ["agregarLotes"],
-      // tableCode: "schoolDataConfigTablaEstudiante",
-      formType: "buscarEstudiante",
+      tableCode: "schoolDataConfigTablaEstudiante",
+      formType: "addStudentOlympicsMath",
       // isOneRow: true,
       data: {},
       fetcherMethod: "post",
-      methodUrlPlus: "section",
-      // tableRefreshName: "estudiantesTable",
+      methodUrlPlus: `peca/grade/${environment.apiKey}`,
+      tableRefreshName: "estudiantesTable",
     },
   };
 

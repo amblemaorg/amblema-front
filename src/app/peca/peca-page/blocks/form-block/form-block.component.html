@@ -1277,7 +1277,7 @@
         <form
           [formGroup]="componentForm"
           (keydown.enter)="prevDef($event)"
-          (ngSubmit)="currentForm.onSubmit(componentForm)"
+          (ngSubmit)="currentForm.onSubmit(componentForm, isLoading)"
         >
           <div
             *ngIf="
@@ -1332,10 +1332,10 @@
               [ngClass]="{ disabled: this.componentForm.invalid }"
             >
               <span
-                *ngIf="isLoading"
+                *ngIf="currentForm.isLoading"
                 class="spinner-grow spinner-grow-sm"
               ></span>
-              {{ !isLoading ? "Agregar en lotes" : "Cargando..." }}
+              {{ !currentForm.isLoading ? "Agregar en lotes" : "Cargando..." }}
             </button>
           </div>
         </form>

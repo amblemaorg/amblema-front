@@ -29,6 +29,7 @@ import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
 import {
   FetchPecaContent,
+  RemoveStudentMathOlympics,
   SetUser,
 } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
@@ -43,6 +44,7 @@ import {
   FormBlockFieldOption,
   FormBlockOptions,
 } from "./form-model/form-block.class";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "form-block",
@@ -172,7 +174,7 @@ export class FormBlockComponent
     // Magic string to avoid errors and easily change formId of forms
     addDocente: "add-docente",
   };
-  currentForm: FormBlock;
+  currentForm: FormBlock | any;
 
   constructor(
     private store: Store,
@@ -1316,6 +1318,15 @@ export class FormBlockComponent
       cf
     );
 
+    if (this.settings.extraData) {
+      manageData = structureData(
+        this.settings.formType,
+        this.settings.formsContent,
+        cf,
+        this.settings.extraData
+      );
+    }
+
     if (this.settings.formType === "preparingWorkshopForm") {
       let date = cf.get("date").value;
       if (date instanceof Date) {
@@ -2441,9 +2452,16 @@ export class FormBlockComponent
             // To pass settings or data that is not properly of the fields
             pecaId: this.pecaId,
             componentForm: this.componentForm,
+            settings: this.settings,
           },
         },
-        { fetcher: this.fetcher, formBuilder: this.fb } // Dependencies
+        {
+          fetcher: this.fetcher,
+          formBuilder: this.fb,
+          toastr: this.toastr,
+          globals: this.globals,
+          store: this.store,
+        } // Dependencies
       ),
     ];
 
@@ -2515,10 +2533,18 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
 }
 
 class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
+  isLoading = false;
+
   constructor(
     id: string | number,
     options: FormBlockOptions,
-    public dep?: { fetcher: HttpFetcherService; formBuilder: FormBuilder }
+    public dep?: {
+      fetcher: HttpFetcherService;
+      formBuilder: FormBuilder;
+      toastr: ToastrService;
+      globals: GlobalService;
+      store: Store;
+    }
   ) {
     super(id, options, dep);
   }
@@ -2567,7 +2593,80 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
 
   // Think if add to father class
 
-  onSubmit(cf: FormGroup) {
-    console.log(cf);
+  async onSubmit(cf: FormGroup) {
+    // this.addStudentsByLots(cf);
+    this.deleteStudentsByLots(cf);
+  }
+
+  async deleteStudentsByLots(cf: FormGroup) {
+    const { lapseNumber, students } = this.custom.settings.extraData;
+    const body = {
+      students: students.map((student) => student.id),
+      lapse: lapseNumber,
+    };
+
+    // console.log("onSubmit", body);
+
+    this.isLoading = true;
+    try {
+      const dataResp = await this.dep.fetcher
+        .patch(`peca/grade/${environment.apiKey}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al eliminar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    // this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
+    body.students.map((studentId) => {
+      this.dep.store.dispatch(
+        new RemoveStudentMathOlympics({
+          lapseNumber,
+          studentId,
+        })
+      );
+    });
+
+    this.isLoading = false;
+  }
+
+  async addStudentsByLots(cf: FormGroup) {
+    const body = {
+      grades: cf.get("gradesStudents").value,
+      lapse: this.custom.settings.extraData.lapseNumber,
+    };
+
+    console.log("onSubmit", body);
+
+    this.isLoading = true;
+    try {
+      const dataResp = await this.dep.fetcher
+        .post(`peca/grade/${environment.apiKey}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al agregar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
+
+    // const data = {
+    //   lapseNumber,
+    //   studentId: row.id,
+    //   sectionId: row.sectionId,
+    // };
+    // store.dispatch(new RegisterStudentMathOlympics(data));
+
+    this.isLoading = false;
   }
 }
