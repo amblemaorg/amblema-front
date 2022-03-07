@@ -1,6 +1,11 @@
 import { FormGroup } from "@angular/forms";
 
-export function structureData(formType: string, formsContent, cf: FormGroup) {
+export function structureData(
+  formType: string,
+  formsContent,
+  cf: FormGroup,
+  extraData?
+) {
   const data = {
     isThereTable: true,
     data: {},
@@ -257,6 +262,12 @@ export function structureData(formType: string, formsContent, cf: FormGroup) {
         cantidad: cf.get("cantidad").value,
         price: cf.get("price").value,
         impuesto: cf.get("impuesto").value,
+      };
+      break;
+    case "addStudentOlympicsMath": // for Actividad Especial view and table
+      data.data = {
+        grades: cf.get("gradesStudents").value,
+        lapse: extraData.lapseNumber,
       };
       break;
     case "docenteTestimonioUpdate": // for Testimonio Docente view table
