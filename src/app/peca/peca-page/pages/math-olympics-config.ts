@@ -265,6 +265,7 @@ export function mathOlympicsConfigMapper(
     component: "table",
     name: "resultadoTabla",
     settings: {
+      isMulti: true,
       columns: {
         name: {
           title: "Nombre y Apellido",
@@ -353,17 +354,20 @@ export function mathOlympicsConfigMapper(
       modalCode: "dataResultadoEstudiante",
       buttonCode: "dataResultadoEstudiante",
       tableCode: "dataResultadoEstudiante",
-      dataResultadoEstudiante: olympicStudents.map((student) => {
-        const { id, name, section, result, status } = student;
-        return {
-          id,
-          name,
-          section: section.name,
-          grade: section.grade,
-          result: result,
-          status: status,
-        };
-      }),
+      // schoolDataConfigTablaEstudiante: [],
+      // dataResultadoEstudiante: [],
+      // dataResultadoEstudiante: olympicStudents.map((student) => {
+      //   const { id, name, section, result, status } = student;
+      //   return {
+      //     checkBox: [],
+      //     id,
+      //     name,
+      //     section: section.name,
+      //     grade: section.grade,
+      //     result: result,
+      //     status: status,
+      //   };
+      // }),
       classes: {
         hideView: false,
         hideEdit: !olympics_peca_edit,
