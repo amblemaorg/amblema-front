@@ -158,6 +158,7 @@ export function mathOlympicsConfigMapper(
         purpose: "agregarEstudiantesLotes",
         justModal: true,
         lapseNumber,
+        pecaId: pecaData.id,
         students: schoolStudents,
       },
       formsContent: {
@@ -173,10 +174,11 @@ export function mathOlympicsConfigMapper(
       buttons: ["agregarLotes"],
       tableCode: "schoolDataConfigTablaEstudiante",
       formType: "addStudentOlympicsMath",
+      makesNoRequest: true,
       // isOneRow: true,
-      data: {},
-      fetcherMethod: "post",
-      methodUrlPlus: `peca/grade/${environment.apiKey}`,
+      // data: {},
+      // fetcherMethod: "post",
+      // methodUrlPlus: `peca/grade/${environment.apiKey}`,
       tableRefreshName: "estudiantesTable",
     },
   };
