@@ -143,11 +143,11 @@ export function mathOlympicsConfigMapper(
   };
 
   // ----
-  console.log("pecaData", pecaData);
-  console.log("lapseNumber", lapseNumber);
-  console.log("updatedStudents", updatedStudents);
-  console.log("permissions", permissions);
-  console.log("schoolStudents", schoolStudents);
+  // console.log("pecaData", pecaData);
+  // console.log("lapseNumber", lapseNumber);
+  // console.log("updatedStudents", updatedStudents);
+  // console.log("permissions", permissions);
+  // console.log("schoolStudents", schoolStudents);
 
   const studentsSelectModal = {
     component: "form",
