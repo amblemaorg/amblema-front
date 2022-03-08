@@ -223,9 +223,7 @@
             <!-- Ver mas Button ||
                 !action.extraData.isDuplicated -->
             <button
-              *ngIf="
-                (action.name && !action.hidden)
-              "
+              *ngIf="action.name && !action.hidden"
               [class.d-none]="
                 ((action.type === 4 || action.type === 9) &&
                   settings.fetcherUrls &&
@@ -235,7 +233,7 @@
                   isImgsTableShown)
               "
               [class]="
-                'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
+                'btn btn-blue text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
                 getStyles(action)
               "
               style="margin-left: 10px; margin-top: -4px"
@@ -584,8 +582,7 @@
             *ngIf="
               action.name &&
               !action.hidden &&
-              (action.extraData &&
-              !action.extraData.isDuplicated)
+              action.extraData && !action.extraData.isDuplicated
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +

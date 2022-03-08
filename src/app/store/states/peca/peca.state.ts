@@ -1,3 +1,4 @@
+import { UpdateStudentsMathOlympicsList } from "./../../actions/peca/peca.actions";
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import { State, Action, StateContext, Selector, Store } from "@ngxs/store";
 import {
@@ -680,17 +681,54 @@ export class PecaState {
         error: { message },
       } = error;
 
-      const errorMsg =
+      // const errorMsg =
+      //   message &&
+      //   typeof message === "string" &&
+      //   message.toLowerCase() === "invalid image format"
+      //     ? "Ocurrió un problema al procesar la(s) imágen(es)"
+      //     : "Ha ocurrido un error";
+
+      if (
         message &&
         typeof message === "string" &&
         message.toLowerCase() === "invalid image format"
-          ? "Ocurrió un problema al procesar la(s) imágen(es)"
-          : "Ha ocurrido un error";
+      ) {
+        this.toastr.error(
+          "Ocurrió un problema al procesar la(s) imágen(es)",
+          "",
+          {
+            positionClass: "toast-bottom-right",
+          }
+        );
+      }
 
-      this.toastr.error(errorMsg, "", {
-        positionClass: "toast-bottom-right",
-      });
+      // this.toastr.error(errorMsg, "", {
+      //   positionClass: "toast-bottom-right",
+      // });
     }
+  }
+
+  @Action(UpdateStudentsMathOlympicsList)
+  async UpdateStudentsMathOlympicsList(
+    { patchState, getState }: StateContext<PecaStateModel>,
+    { payload }: UpdateStudentsMathOlympicsList
+  ) {
+    const { lapseNumber, newStudents } = payload;
+    const lapseName = `lapse${lapseNumber}`;
+    const state = getState();
+
+    patchState({
+      content: {
+        ...state.content,
+        [lapseName]: {
+          ...state.content[lapseName],
+          olympics: {
+            ...state.content[lapseName].olympics,
+            students: newStudents,
+          },
+        },
+      },
+    });
   }
 
   @Action(UpdateStudentMathOlympics)

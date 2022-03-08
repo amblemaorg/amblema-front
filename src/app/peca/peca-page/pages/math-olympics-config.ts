@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+import { ArrayHelper } from "./../../../helpers/array.helper";
 import {
   UpdateStudentMathOlympics,
   RemoveStudentMathOlympics,
@@ -11,6 +13,7 @@ import {
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 import { DatePipe } from "@angular/common";
 import { Store } from "@ngxs/store";
+import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
 
 const controlProps = {
   onlyLettersAndRequired: {
@@ -48,7 +51,8 @@ export function mathOlympicsConfigMapper(
   lapseNumber,
   updatedStudents,
   permissions,
-  store: Store
+  store: Store,
+  extraData?
 ) {
   // Processing data
   const { olympics_peca_create, olympics_peca_edit, olympics_peca_delete } =
@@ -137,6 +141,49 @@ export function mathOlympicsConfigMapper(
       tableCode: "dataResultadoEstudiante",
     },
   };
+
+  // ----
+  // console.log("pecaData", pecaData);
+  // console.log("lapseNumber", lapseNumber);
+  // console.log("updatedStudents", updatedStudents);
+  // console.log("permissions", permissions);
+  // console.log("schoolStudents", schoolStudents);
+
+  const studentsSelectModal = {
+    component: "form",
+    name: "estudiantesPostForm",
+    settings: {
+      formId: "add-students-math-olympic-lots",
+      extraData: {
+        purpose: "agregarEstudiantesLotes",
+        justModal: true,
+        lapseNumber,
+        pecaId: pecaData.id,
+        students: schoolStudents,
+      },
+      formsContent: {
+        gradesStudents: {
+          label: "Seleccione el grado",
+          placeholder: "Grados",
+          fullwidth: false,
+          isGrades: true,
+          ...controlProps.selectAndRequired,
+          options: [],
+        },
+      },
+      buttons: ["agregarLotes"],
+      tableCode: "schoolDataConfigTablaEstudiante",
+      formType: "addStudentOlympicsMath",
+      makesNoRequest: true,
+      // isOneRow: true,
+      // data: {},
+      // fetcherMethod: "post",
+      // methodUrlPlus: `peca/grade/${environment.apiKey}`,
+      tableRefreshName: "estudiantesTable",
+    },
+  };
+
+  // ----
 
   const studentForm = {
     component: "form",
@@ -383,7 +430,8 @@ export function mathOlympicsConfigMapper(
             {
               title: "Resultados",
               active: updatedStudents ? true : false,
-              childBlocks: [studentsSelect, studentsTable, studentModal],
+              // childBlocks: [studentsSelect, studentsTable, studentModal],
+              childBlocks: [studentsSelectModal, studentsTable, studentModal],
             },
           ],
         },
