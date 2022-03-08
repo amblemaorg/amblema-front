@@ -830,7 +830,7 @@
                 *ngIf="sendingForm"
                 class="spinner-grow spinner-grow-sm"
               ></span>
-              Agregar en lotes
+              Agregar en lote
             </button>
           </ng-container>
 
@@ -956,7 +956,7 @@
       <ng-container *ngSwitchCase="'agregarLotes'">
         <button
           type="button"
-          class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+          class="btn btn-blue text-decoration-none py-1 px-4 mt-1 ml-2"
           data-toggle="modal"
           data-target="#no-peca-modal-export"
           data-backdrop="false"
@@ -964,7 +964,7 @@
           (click)="justOpenModal()"
         >
           <span *ngIf="sendingForm" class="spinner-grow spinner-grow-sm"></span>
-          Agregar en lotes
+          Agregar en lote
         </button>
       </ng-container>
 
@@ -1271,14 +1271,12 @@
       <div class="modal-body">
         <h4>Agregar estudiantes en lote</h4>
         <p class="py-2">
-          Por favor, seleccione el grado y las secciones de los estudiantes:
+          Por favor, seleccione el(los) grado(s) para registrar/actualizar
+          estudiantes que participan en Olimpiada de Matemática:
         </p>
 
-        <form
-          [formGroup]="componentForm"
-          (keydown.enter)="prevDef($event)"
-          (ngSubmit)="currentForm.onSubmit(componentForm, isLoading)"
-        >
+        <!-- (ngSubmit)="currentForm.onSubmit(componentForm, isLoading)" -->
+        <form [formGroup]="componentForm" (keydown.enter)="prevDef($event)">
           <div
             *ngIf="
               this.currentForm.getField('gradesStudents').options.length > 0
@@ -1323,10 +1321,24 @@
             </div>
           </div>
           <div class="full-width d-flex">
-            <!-- (click)="addStudentsToOlimpicMath()" -->
+            <!-- type="submit" -->
             <button
+              (click)="currentForm.onSubmit(componentForm)"
               #upload
-              type="submit"
+              class="btn full-width submit-btn mx-auto mt-4 btn-blue"
+              [disabled]="this.componentForm.invalid"
+              [ngClass]="{ disabled: this.componentForm.invalid }"
+            >
+              <span
+                *ngIf="currentForm.isLoading"
+                class="spinner-grow spinner-grow-sm"
+              ></span>
+              {{ !currentForm.isLoading ? "Agregar en lote" : "Cargando..." }}
+            </button>
+
+            <!-- <button
+              #upload
+              (click)="currentForm.onSubmit(componentForm, true)"
               class="btn btn-primary full-width submit-btn mx-auto mt-4"
               [disabled]="this.componentForm.invalid"
               [ngClass]="{ disabled: this.componentForm.invalid }"
@@ -1335,8 +1347,8 @@
                 *ngIf="currentForm.isLoading"
                 class="spinner-grow spinner-grow-sm"
               ></span>
-              {{ !currentForm.isLoading ? "Agregar en lotes" : "Cargando..." }}
-            </button>
+              {{ !currentForm.isLoading ? "Eliminar en lotes" : "Cargando..." }}
+            </button> -->
           </div>
         </form>
       </div>

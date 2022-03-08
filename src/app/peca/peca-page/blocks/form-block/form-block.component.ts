@@ -1,11 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { RespPecaProjectsOlympics } from "src/app/resp-interfaces/resp-pecaprojects-olimpics.interface";
+import { UpdateStudentsMathOlympicsList } from "./../../../../store/actions/peca/peca.actions";
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
 import {
@@ -29,7 +24,6 @@ import { Select, Store } from "@ngxs/store";
 import { ResidenceInfoState } from "../../../../store/states/steps/residence-info.state";
 import {
   FetchPecaContent,
-  RemoveStudentMathOlympics,
   SetUser,
 } from "../../../../store/actions/peca/peca.actions";
 import { PecaState } from "../../../../store/states/peca/peca.state";
@@ -44,8 +38,6 @@ import {
   FormBlockFieldOption,
   FormBlockOptions,
 } from "./form-model/form-block.class";
-import { environment } from "src/environments/environment";
-
 @Component({
   selector: "form-block",
   templateUrl: "./form-block.component.html",
@@ -2593,24 +2585,29 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
 
   // Think if add to father class
 
-  async onSubmit(cf: FormGroup) {
-    // this.addStudentsByLots(cf);
-    this.deleteStudentsByLots(cf);
+  async onSubmit(cf: FormGroup, toDelete = false) {
+    if (!toDelete) {
+      this.addStudentsByLots(cf);
+    }
+
+    if (toDelete) {
+      this.deleteStudentsByLots(cf);
+    }
   }
 
-  async deleteStudentsByLots(cf: FormGroup) {
-    const { lapseNumber, students } = this.custom.settings.extraData;
+  private async deleteStudentsByLots(cf: FormGroup) {
+    const { lapseNumber, students, pecaId } = this.custom.settings.extraData;
     const body = {
       students: students.map((student) => student.id),
       lapse: lapseNumber,
     };
 
-    // console.log("onSubmit", body);
+    console.log("onSubmit", body);
 
     this.isLoading = true;
     try {
       const dataResp = await this.dep.fetcher
-        .patch(`peca/grade/${environment.apiKey}`, body)
+        .patch(`peca/grade/${pecaId}`, body)
         .toPromise();
 
       this.dep.toastr.success(dataResp.message, "", {
@@ -2622,23 +2619,17 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
       });
     }
 
-    // this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
-    body.students.map((studentId) => {
-      this.dep.store.dispatch(
-        new RemoveStudentMathOlympics({
-          lapseNumber,
-          studentId,
-        })
-      );
-    });
+    await this.updateStudentsList();
 
     this.isLoading = false;
   }
 
-  async addStudentsByLots(cf: FormGroup) {
+  private async addStudentsByLots(cf: FormGroup) {
+    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+
     const body = {
       grades: cf.get("gradesStudents").value,
-      lapse: this.custom.settings.extraData.lapseNumber,
+      lapse: lapseNumber,
     };
 
     console.log("onSubmit", body);
@@ -2646,7 +2637,7 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     this.isLoading = true;
     try {
       const dataResp = await this.dep.fetcher
-        .post(`peca/grade/${environment.apiKey}`, body)
+        .post(`peca/grade/${pecaId}`, body)
         .toPromise();
 
       this.dep.toastr.success(dataResp.message, "", {
@@ -2658,15 +2649,39 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
       });
     }
 
-    this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
+    await this.updateStudentsList();
 
-    // const data = {
-    //   lapseNumber,
-    //   studentId: row.id,
-    //   sectionId: row.sectionId,
-    // };
-    // store.dispatch(new RegisterStudentMathOlympics(data));
+    // this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
 
     this.isLoading = false;
+  }
+
+  async updateStudentsList() {
+    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+
+    try {
+      const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .toPromise();
+
+      // console.log("RespPecaProjects respData", respData);
+      const data = {
+        lapseNumber,
+        newStudents: respData.students,
+      };
+      this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+
+      // this.dep.toastr.success("Tabla de estudiantes actualizada", "", {
+      //   positionClass: "toast-bottom-right",
+      // });
+    } catch {
+      // this.dep.toastr.error(
+      //   "Error al actualizar la tabla estudiantes en lote",
+      //   "",
+      //   {
+      //     positionClass: "toast-bottom-right",
+      //   }
+      // );
+    }
   }
 }
