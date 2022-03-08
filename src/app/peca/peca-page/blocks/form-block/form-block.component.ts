@@ -358,7 +358,7 @@ export class FormBlockComponent
         }, 2000);
       }
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
     } finally {
     }
@@ -1482,7 +1482,7 @@ export class FormBlockComponent
                     this.store.dispatch([new SetUser(respuesta)]);
                   },
                   (error) => {
-                    console.log(error);
+                    // console.log(error);
                   }
                 );
             }
@@ -1938,7 +1938,7 @@ export class FormBlockComponent
       // await this.exportAll();
       this.handleVariosGrados();
       this.sectionsArr = [];
-      console.log("docenteFormBLock", this.fields);
+      // console.log("docenteFormBLock", this.fields);
       this.componentForm.patchValue({ section: "" });
       return;
     }
@@ -1949,7 +1949,7 @@ export class FormBlockComponent
       this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
-          console.log("docenteFormBLock", this.fields);
+          // console.log("docenteFormBLock", this.fields);
           return s.grade == grade;
         }
       );
@@ -2206,7 +2206,7 @@ export class FormBlockComponent
       this.showExportBtn = false;
       this.sectionsToExport = [];
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
     }
   }
@@ -2313,7 +2313,7 @@ export class FormBlockComponent
         this.componentForm.reset();
       }
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
     }
   }
@@ -2322,7 +2322,7 @@ export class FormBlockComponent
     const allGrades = this.settings.formsContent["section"].options.map(
       (section) => section.grade
     );
-    console.log("grades: ", allGrades);
+    // console.log("grades: ", allGrades);
     const grades = [];
     allGrades.forEach((grade) => {
       if (grades.includes(grade)) {
@@ -2345,7 +2345,7 @@ export class FormBlockComponent
 
   justOpenModal() {
     this.showExportModal = true;
-    console.log("justOpenModal", this.componentForm);
+    // console.log("justOpenModal", this.componentForm);
   }
 
   // :not(#markAll)
@@ -2413,7 +2413,7 @@ export class FormBlockComponent
       );
     }
 
-    console.log("onCheckboxChange", this.componentForm);
+    // console.log("onCheckboxChange", this.componentForm);
   }
 
   /**
@@ -2474,7 +2474,7 @@ export class FormBlockComponent
           );
         });
 
-        console.log("this.currentForm.formGroupConfigs()", this.componentForm);
+        // console.log("this.currentForm.formGroupConfigs()", this.componentForm);
       }
     }
   }
@@ -2578,7 +2578,7 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
     // Adapt request to options field object structure {id: string, name: string}
     pecaGrades = pecaGradesApi.data.map((grade) => grade);
 
-    console.log("MathOlympic - pecaGrades", pecaGrades);
+    // console.log("MathOlympic - pecaGrades", pecaGrades);
 
     this.fillSelect("gradesStudents", pecaGrades);
   }
@@ -2602,7 +2602,7 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
       lapse: lapseNumber,
     };
 
-    console.log("onSubmit", body);
+    // console.log("onSubmit", body);
 
     this.isLoading = true;
     try {
@@ -2632,7 +2632,7 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
       lapse: lapseNumber,
     };
 
-    console.log("onSubmit", body);
+    // console.log("onSubmit", body);
 
     this.isLoading = true;
     try {
@@ -2670,18 +2670,6 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
         newStudents: respData.students,
       };
       this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
-
-      // this.dep.toastr.success("Tabla de estudiantes actualizada", "", {
-      //   positionClass: "toast-bottom-right",
-      // });
-    } catch {
-      // this.dep.toastr.error(
-      //   "Error al actualizar la tabla estudiantes en lote",
-      //   "",
-      //   {
-      //     positionClass: "toast-bottom-right",
-      //   }
-      // );
-    }
+    } catch {}
   }
 }

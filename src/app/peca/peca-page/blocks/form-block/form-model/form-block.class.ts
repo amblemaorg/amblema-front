@@ -85,7 +85,6 @@ export class FormBlock {
   ) {
     const checkArray: FormArray = formGroup.get(formControlName) as FormArray;
 
-    console.log(target);
     if (NodeList.prototype.isPrototypeOf(target)) {
       checkArray.clear();
       target.forEach((targetEach) => {
