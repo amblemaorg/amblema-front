@@ -85,6 +85,8 @@ export class TableBlockComponent
       };
     };
     hideSubHeader?: boolean;
+    extraData;
+    data?;
   };
 
   tableStates: any = {};
@@ -206,6 +208,8 @@ export class TableBlockComponent
     }
   }
   ngAfterViewChecked() {
+    console.log("ngAfterViewChecked", this.settings);
+    console.log("ngAfterViewChecked source", this.source);
     const td_student = document.querySelector(
       '.is-multi.table-block-component tbody td[colspan="6"]'
     );
