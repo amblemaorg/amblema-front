@@ -16,6 +16,7 @@ import { isNullOrUndefined } from "util";
 import { Router, NavigationEnd, Event } from "@angular/router";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 import { scan } from "rxjs/internal/operators/scan";
+import { previousScholarYearStudentsConfigMapper } from "./previous-scholar-year-enrollment-config";
 
 @Component({
   selector: "peca-maths-olympics",
@@ -36,7 +37,8 @@ export class MathOlympicsPageComponent
   UrlLapse = "";
   peca_id: any;
   isInstantiating: boolean;
-  extraData: Object;
+  formTable;
+
   constructor(
     factoryResolver: ComponentFactoryResolver,
     private store: Store,
@@ -58,7 +60,7 @@ export class MathOlympicsPageComponent
     this.getInfo();
   }
 
-  getInfo() {
+  async getInfo() {
     this.infoDataSubscription = this.infoData$
       .pipe(
         distinctUntilChanged(
@@ -102,13 +104,16 @@ export class MathOlympicsPageComponent
                 const lapseName = `lapse${this.UrlLapse}`;
                 const { permissions } = data.user;
                 const permissionsObj = this.managePermissions(permissions);
+
+                this.configTable();
+
                 const config = mathOlympicsConfigMapper(
                   data.activePecaContent,
                   this.UrlLapse,
                   data.updatedStudents,
                   permissionsObj,
                   this.store,
-                  this.extraData
+                  this.formTable //
                 );
                 this.instantiateComponent(config);
                 this.doInstantiateBlocks();
@@ -142,4 +147,80 @@ export class MathOlympicsPageComponent
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
+
+  // ////////////////
+
+  async configTable() {
+    this.formTable = {
+      data: { status: 400, msg: "Cargando..." },
+      permissions: null,
+      getFetcher: this.getFetcher,
+    };
+
+    const {
+      school: { code: promoteDataSchoolCode },
+      id: promoteDataPecaId,
+    } = this.store.selectSnapshot((state) => state.peca.content);
+    console.log(
+      "promoteDataSchoolCode, promoteDataPecaId",
+      promoteDataSchoolCode,
+      promoteDataPecaId
+    );
+    if (promoteDataSchoolCode && promoteDataPecaId) {
+      console.log("yeeees");
+      const school_code = promoteDataSchoolCode;
+      const peca_id = promoteDataPecaId;
+
+      const initData = this.getFetcher({
+        fetcher: "get_previous_sections",
+        school_code: school_code,
+      });
+
+      await this.fetcher[initData.method](initData.urlString)
+        .toPromise()
+        .then((res) => {
+          console.log("fetcher: ", res);
+
+          this.formTable = {
+            data: res,
+            permissions: null,
+            getFetcher: this.getFetcher,
+            extras: [school_code, peca_id],
+          };
+        });
+    }
+  }
+
+  getFetcher({
+    fetcher,
+    school_code,
+    peca_id,
+    genProps,
+  }: {
+    fetcher: string;
+    school_code?: string;
+    peca_id?: string;
+    genProps?: string[];
+  }) {
+    const params = genProps;
+    switch (fetcher) {
+      case "get_previous_sections":
+        return {
+          method: "get",
+          urlString: `init/promote/students/${school_code}`,
+        };
+      case "get_students_list":
+        return {
+          method: "get",
+          urlString: `promote/students/${school_code}/${params[0]}`,
+        };
+      case "post_promote_students":
+        return {
+          method: "post",
+          urlString: `promote/students/${school_code}`,
+        };
+    }
+  }
+
+  // ////////////////
 }

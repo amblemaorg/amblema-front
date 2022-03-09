@@ -122,6 +122,8 @@ export function previousScholarYearStudentsConfigMapper(
     },
   };
 
+  console.log("prevStudentsFormTable", prevStudentsFormTable);
+
   return {
     header: {
       title: "Matrícula de año escolar anterior",
