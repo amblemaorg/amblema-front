@@ -225,6 +225,15 @@ $table-border-color: 1px solid $blue;
     @include tPagination("nav.ng2-smart-pagination-nav");
   }
 
+  .nb-theme-default
+    ng2-smart-table.is-multi.table-block-component
+    table
+    tbody
+    tr.selected
+    td:first-child::after {
+    right: 42px;
+  }
+
   //SELECTS .......................................................................
   form {
     .fields-container {

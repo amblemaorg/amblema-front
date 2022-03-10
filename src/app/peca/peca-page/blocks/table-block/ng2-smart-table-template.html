@@ -1,7 +1,4 @@
-<div
-  class="table-container"
-  *ngIf="(!settings.extraData) && settings.extraData !== 'studentsTable'"
->
+<div class="table-container" *ngIf="!settings.extraData">
   <ng-container *ngIf="settings.tableTitle">
     <div id="students-current-count-top"></div>
     <div id="students-current-count" class="sticky-top py-2">
@@ -162,7 +159,8 @@
 
 <div
   class="table-container"
-  *ngIf="settings.extraData && settings.extraData.purpose == 'studentsTable'"
+  *ngIf="settings.extraData &&
+settings.extraData.purpose === 'resultadoTabla'"
 >
   <ng-container *ngIf="settings.tableTitle">
     <div id="students-current-count-top"></div>
@@ -178,7 +176,18 @@
   <div class="table-element">
     <ng2-smart-table
       [settings]="settings"
-      [source]="settings.data"
+      [source]="source"
+      [ngClass]="{
+      'd-none': settings.hideImgContainer,
+      'hide-view': settings.classes.hideView,
+      'hide-edit': settings.classes.hideEdit,
+      'hide-delete': settings.classes.hideDelete,
+      'has-img-in-first-col': settings.isImageFirstCol,
+      'is-multi table-block-component': settings.isMulti,
+      'is-empty': settings.isMulti && !settings.tableTitle,
+      'no-data': settings.hideSubHeader,
+      'is-checked': allSelected
+    }"
       (custom)="onCustomActions($event)"
       (userRowSelect)="onUserRowSelect($event)"
     ></ng2-smart-table>
@@ -188,9 +197,9 @@
     <h5>Total: <span>{{ settings.total | number:'1.0':'es-ES' }}</span></h5>
   </div>
   <div
-    *ngIf="promoteFields.length && settings.isMulti"
+    *ngIf="promoteFields.length > 0 && settings.isMulti"
     class="promote-wrapper"
-    [class.disabled]="!selectedRows.length || !settings.tableGrade"
+    [class.disabled]="!selectedRows.length"
   >
     <h6 class="actions">Acciones</h6>
     <h6>Eliminar Estudiantes Seleccionados:</h6>
@@ -202,7 +211,7 @@
       data-target="#delete-students-modal"
     >
       <span *ngIf="isDeleting" class="spinner-grow spinner-grow-sm"></span>
-      {{ isDeleting ? "Eliminando..." : "Eliminar" }}
+      {{ tableStudentsMathOlympic.isDeleting ? "Eliminando..." : "Eliminar" }}
     </button>
     <!--   DELETE MODAL   -->
     <div
@@ -228,7 +237,7 @@
               type="button"
               class="btn btn-primary text-decoration-none py-1 px-4 ml-0 mr-md-3 yes-btn"
               [disabled]="disabledThis() || !selectedRows.length"
-              (click)="deleteStudents()"
+              (click)="tableStudentsMathOlympic.deleteStudentsMathOlympic()"
             >
               Si
             </button>

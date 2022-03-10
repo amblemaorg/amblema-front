@@ -229,4 +229,13 @@ $table-border-color: 1px solid $blue;
       @include select(".ng-select");
     }
   }
+
+  .nb-theme-default
+    ng2-smart-table.is-multi.table-block-component
+    table
+    tbody
+    tr.selected
+    td:first-child::after {
+    left: 19px;
+  }
 }

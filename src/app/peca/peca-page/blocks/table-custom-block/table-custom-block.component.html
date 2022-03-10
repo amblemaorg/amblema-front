@@ -5,6 +5,8 @@
       [settings]="settings"
       [source]="source"
       class="is-multi table-block-component"
+      (custom)="onCustomActions($event)"
+      (userRowSelect)="onUserRowSelect($event)"
     ></ng2-smart-table>
   </div>
 

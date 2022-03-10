@@ -261,155 +261,129 @@ export function mathOlympicsConfigMapper(
     },
   };
 
-  // const studentsTable = {
-  //   component: "table",
-  //   name: "resultadoTabla",
-  //   settings: {
-  //     extraData: { purpose: "studentsTable" },
-  //     isMulti: true,
-  //     total: 10,
-  //     columns: {
-  //       name: {
-  //         title: "Nombre y Apellido",
-  //         with: "20%",
-  //       },
-  //       grade: {
-  //         title: "Grado",
-  //         with: "20%",
-  //         valuePrepareFunction: (row: any) => {
-  //           const grade = formResultadoEstudianteModal.grade.options.find(
-  //             (d) => {
-  //               return d.id === row;
-  //             }
-  //           );
-  //           if (row) {
-  //             return `${grade ? grade.name : ""}`;
-  //           } else {
-  //             return "";
-  //           }
-  //         },
-  //         filterFunction: (cell?: any, search?: string) => {
-  //           let value: string = formResultadoEstudianteModal.grade.options.find(
-  //             (d) => {
-  //               return d.id === cell;
-  //             }
-  //           ).name;
-  //           value = value.toUpperCase();
+  const studentsTable = {
+    component: "table",
+    name: "resultadoTabla",
+    settings: {
+      extraData: {
+        purpose: "resultadoTabla",
+        lapseNumber,
+        pecaId: pecaData.id,
+        students: schoolStudents,
+      },
+      isMulti: true,
+      total: 10,
+      columns: {
+        name: {
+          title: "Nombre y Apellido",
+          with: "20%",
+        },
+        grade: {
+          title: "Grado",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            const grade = formResultadoEstudianteModal.grade.options.find(
+              (d) => {
+                return d.id === row;
+              }
+            );
+            if (row) {
+              return `${grade ? grade.name : ""}`;
+            } else {
+              return "";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = formResultadoEstudianteModal.grade.options.find(
+              (d) => {
+                return d.id === cell;
+              }
+            ).name;
+            value = value.toUpperCase();
 
-  //           if (value.includes(search.toUpperCase()) || search === "")
-  //             return true;
-  //           else return false;
-  //         },
-  //       },
-  //       section: {
-  //         title: "Sección",
-  //         with: "20%",
-  //       },
-  //       status: {
-  //         title: "Estatus",
-  //         with: "20%",
-  //         valuePrepareFunction: (row: any) => {
-  //           if (row) return row == "1" ? "Registrado" : "Clasificado";
-  //           else return "";
-  //         },
-  //         filterFunction: (cell?: any, search?: string) => {
-  //           let value: string = cell == "1" ? "Registrado" : "Clasificado";
-  //           value = value.toUpperCase();
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        section: {
+          title: "Sección",
+          with: "20%",
+        },
+        status: {
+          title: "Estatus",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            if (row) return row == "1" ? "Registrado" : "Clasificado";
+            else return "";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Registrado" : "Clasificado";
+            value = value.toUpperCase();
 
-  //           if (value.includes(search.toUpperCase()) || search === "")
-  //             return true;
-  //           else return false;
-  //         },
-  //       },
-  //       result: {
-  //         title: "Resultado",
-  //         with: "20%",
-  //         valuePrepareFunction: (row: any) => {
-  //           switch (row) {
-  //             case "1":
-  //               return "Oro";
-  //             case "2":
-  //               return "Plata";
-  //             case "3":
-  //               return "Bronce";
-  //             default:
-  //               return "Sin Resultado";
-  //           }
-  //         },
-  //         filterFunction: (cell?: any, search?: string) => {
-  //           let value: string;
-  //           switch (cell) {
-  //             case "1":
-  //               value = "Oro";
-  //               break;
-  //             case "2":
-  //               value = "Plata";
-  //               break;
-  //             case "3":
-  //               value = "Bronce";
-  //               break;
-  //             default:
-  //               value = "";
-  //           }
-  //           value = value.toUpperCase();
-  //           if (value.includes(search.toUpperCase()) || search === "")
-  //             return true;
-  //           else return false;
-  //         },
-  //       },
-  //     },
-  //     // promoteData: {
-  //     //   data: olympicStudents.map((student) => {
-  //     //     const { id, name, section, result, status } = student;
-  //     //     return {
-  //     //       id,
-  //     //       name,
-  //     //       section: section.name,
-  //     //       grade: section.gradefalse
-  // false
-  // false,
-  //     //       result: result,
-  //     //       status: status,
-  //     //     };
-  //     //   }),
-  //     //   grades2P: {
-  //     //     id: "grade2P",
-  //     //     label: "Seleccione el grado a promover",
-  //     //     items: [{ id: "id", name: "sss" }],
-  //     //     placeholder: "Grados",
-  //     //     loadingLabel: "Cargando grados...",
-  //     //     loading: false,
-  //     //   },
-  //     //   sections2P: {
-  //     //     id: "section2P",
-  //     //     label: "Seleccione la sección a promover",
-  //     //     items: [],
-  //     //     placeholder: "Sección",
-  //     //     loadingLabel: "Cargando secciones...",
-  //     //     loading: false,
-  //     //   },
-  //     // },
-  //     dataResultadoEstudiante: olympicStudents.map((student) => {
-  //       const { id, name, section, result, status } = student;
-  //       return {
-  //         id,
-  //         name,
-  //         section: section.name,
-  //         grade: section.grade,
-  //         result: result,
-  //         status: status,
-  //       };
-  //     }),
-  //     classes: {
-  //       hideView: false,
-  //       hideEdit: !olympics_peca_edit,
-  //       hideDelete: !olympics_peca_delete,
-  //     },
-  //     modalCode: "dataResultadoEstudiante",
-  //     buttonCode: "dataResultadoEstudiante",
-  //     tableCode: "dataResultadoEstudiante",
-  //   },
-  // };
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        result: {
+          title: "Resultado",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            switch (row) {
+              case "1":
+                return "Oro";
+              case "2":
+                return "Plata";
+              case "3":
+                return "Bronce";
+              default:
+                return "Sin Resultado";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string;
+            switch (cell) {
+              case "1":
+                value = "Oro";
+                break;
+              case "2":
+                value = "Plata";
+                break;
+              case "3":
+                value = "Bronce";
+                break;
+              default:
+                value = "";
+            }
+            value = value.toUpperCase();
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+      },
+      dataResultadoEstudiante: olympicStudents.map((student) => {
+        const { id, name, section, result, status } = student;
+        return {
+          id,
+          name,
+          section: section.name,
+          grade: section.grade,
+          result,
+          status: status,
+        };
+      }),
+      classes: {
+        hideView: false,
+        hideEdit: !olympics_peca_edit,
+        hideDelete: !olympics_peca_delete,
+      },
+      modalCode: "dataResultadoEstudiante",
+      buttonCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+    },
+  };
 
   const getSections = (sections: any[], grades: any[], pos: number) => {
     return sections.map((section) => {
@@ -537,7 +511,12 @@ export function mathOlympicsConfigMapper(
 
   const studentsTable3 = {
     component: "table-custom",
-    // settings: {},
+    name: "resultadoTabla",
+    settings: {
+      modalCode: "dataResultadoEstudiante",
+      buttonCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+    },
   };
 
   // ----
@@ -601,7 +580,7 @@ export function mathOlympicsConfigMapper(
               title: "Resultados",
               active: updatedStudents ? true : false,
               // childBlocks: [studentsSelect, studentsTable, studentModal],
-              childBlocks: [studentsSelectModal, studentsTable3, studentModal],
+              childBlocks: [studentsSelectModal, studentsTable, studentModal],
             },
           ],
         },
