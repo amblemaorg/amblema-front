@@ -74,6 +74,7 @@ import { FormTableComponent } from "./peca-page/blocks/form-table-previous-stude
 import { PreviousScholarYearEnrollmentPageComponent } from "./peca-page/pages/previous-scholar-year-enrollment-page.component";
 import { FormBlockComponent } from "./peca-page/blocks/form-block/form-block.component";
 import { FormatDownloadBlock } from "./peca-page/blocks/format-block/format-block.component";
+import { TableCustomBlockComponent } from "./peca-page/blocks/table-custom-block/table-custom-block.component";
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { FormatDownloadBlock } from "./peca-page/blocks/format-block/format-bloc
     FormTableComponent,
     FormatoRegistroComponent,
     FormatDownloadBlock,
+    TableCustomBlockComponent,
   ],
   imports: [
     CommonModule,
@@ -170,6 +172,7 @@ import { FormatDownloadBlock } from "./peca-page/blocks/format-block/format-bloc
     FormTableComponent,
     FormatoRegistroComponent,
     FormatDownloadBlock,
+    TableCustomBlockComponent,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },

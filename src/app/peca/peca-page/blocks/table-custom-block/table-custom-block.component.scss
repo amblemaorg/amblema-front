@@ -1,0 +1,243 @@
+@import "scss/sharedpromote";
+$table-border-color: 1px solid $blue;
+
+::ng-deep {
+  .table-container {
+    #students-current-count-top {
+      height: 1px;
+      background: #fff;
+      top: -4.75rem;
+      position: relative;
+      z-index: -1;
+      visibility: hidden;
+    }
+    #students-current-count {
+      top: 4.75rem !important;
+      z-index: 1 !important;
+      background: #fff;
+
+      &.shadow-on {
+        box-shadow: 0px 9px 8px -3px rgba(0, 0, 0, 0.05);
+      }
+
+      p {
+        color: $blue;
+      }
+    }
+
+    .table-element {
+      overflow-x: auto;
+    }
+
+    .table-title {
+      width: 100%;
+      color: $blue;
+      position: relative;
+      bottom: -0.85rem;
+      // margin-top: 1rem;
+    }
+
+    .promote-wrapper {
+      @include promoteWrapper;
+
+      .modal {
+        &.show {
+          background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+          .modal-header {
+            padding: 1rem 1rem 0;
+            border-bottom: none;
+
+            .close {
+              &:focus {
+                outline: none;
+              }
+            }
+          }
+
+          .modal-body {
+            padding: 1rem 1.75rem;
+
+            .sub-titles-students {
+              p {
+                @media screen and (orientation: portrait) {
+                  font-size: 1rem;
+                }
+              }
+
+              &.text-incremented p {
+                font-size: large !important;
+              }
+            }
+          }
+        }
+      }
+
+      h6 {
+        color: $blue;
+        font-size: small;
+      }
+      hr {
+        border-top: 1px solid $blue;
+      }
+      @include promoteH6("h6.actions");
+      @include promoteButton("button.btn");
+    }
+  }
+  .estilo-total {
+    text-align: right;
+    margin: 0 2.5rem 2rem 0;
+    @media (max-width: 768px) {
+      text-align: left;
+    }
+  }
+  .estilo-total h5 {
+    font-size: 1rem;
+  }
+  .nb-theme-default nb-tabset nb-tab {
+    padding: 1rem 2rem !important;
+  }
+  .nb-theme-default ng2-smart-table.is-multi.table-block-component {
+    @include isMulti("7");
+  }
+  .nb-theme-default ng2-smart-table {
+    &.is-empty table {
+      thead tr th {
+        &:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+
+    &:not(.is-empty) {
+      table {
+        thead tr th:first-child,
+        tbody tr td:first-child {
+          // min-width: 4.9rem;
+          width: 0%;
+          min-width: 10px;
+          max-width: 10px;
+        }
+
+        thead tr th:nth-child(2),
+        tbody tr td:nth-child(2) {
+          // min-width: 4.9rem;
+          // width: 16%;
+          width: 5%;
+          max-width: 85px;
+          min-width: 85px;
+        }
+      }
+    }
+  }
+
+  @include tableConfs;
+
+  .nb-theme-default ng2-smart-table {
+    &.has-img-in-first-col tbody tr td:nth-child(2) {
+      text-align: center;
+    }
+
+    @include tHead("thead");
+    @include tBody("tbody") {
+      &.ng2-smart-actions {
+        ng2-st-tbody-edit-delete {
+          display: none !important;
+        }
+
+        ng2-st-tbody-custom {
+          display: grid;
+          grid-template-columns: auto auto auto;
+          grid-column-gap: 0.5rem;
+        }
+
+        a.ng2-smart-action {
+          color: $blue !important;
+          font-size: 1.4rem !important;
+        }
+      }
+    }
+
+    &.hide-view,
+    &.hide-edit,
+    &.hide-delete {
+      tbody .ng2-smart-actions ng2-st-tbody-custom {
+        grid-template-columns: auto auto;
+      }
+    }
+
+    &.hide-delete.hide-edit,
+    &.hide-view.hide-delete,
+    &.hide-edit.hide-view {
+      tbody .ng2-smart-actions ng2-st-tbody-custom {
+        grid-template-columns: auto;
+      }
+    }
+
+    &.hide-delete:not(.hide-view, .hide-edit) {
+      tbody
+        .ng2-smart-actions
+        ng2-st-tbody-custom
+        a.ng2-smart-action:nth-child(2) {
+        border-right: none;
+      }
+    }
+
+    &.hide-delete.hide-edit:not(.hide-view) {
+      tbody
+        .ng2-smart-actions
+        ng2-st-tbody-custom
+        a.ng2-smart-action:first-child {
+        border-right: none;
+      }
+    }
+
+    &.hide-delete.hide-view:not(.hide-edit) {
+      tbody
+        .ng2-smart-actions
+        ng2-st-tbody-custom
+        a.ng2-smart-action:nth-child(2) {
+        border-right: none;
+      }
+    }
+
+    &.hide-view
+      tbody
+      .ng2-smart-actions
+      ng2-st-tbody-custom
+      .ng2-smart-action:first-child,
+    &.hide-edit
+      tbody
+      .ng2-smart-actions
+      ng2-st-tbody-custom
+      .ng2-smart-action:nth-child(2),
+    &.hide-delete
+      tbody
+      .ng2-smart-actions
+      ng2-st-tbody-custom
+      .ng2-smart-action:last-child {
+      display: none;
+    }
+
+    // pagination
+    @include tPagination("nav.ng2-smart-pagination-nav");
+  }
+
+  //SELECTS .......................................................................
+  form {
+    .fields-container {
+      @include fieldsContainer;
+      @include label("label");
+      @include selectors(
+        ".floating-loading",
+        ".form-group .error-message",
+        "button"
+      );
+      @include formGroup(".form-group");
+      @include formControl(".form-control");
+      @include select(".ng-select");
+    }
+  }
+}
