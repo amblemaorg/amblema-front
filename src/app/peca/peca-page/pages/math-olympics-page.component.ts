@@ -105,15 +105,15 @@ export class MathOlympicsPageComponent
                 const { permissions } = data.user;
                 const permissionsObj = this.managePermissions(permissions);
 
-                this.configTable();
+                // this.configTable();
 
                 const config = mathOlympicsConfigMapper(
                   data.activePecaContent,
                   this.UrlLapse,
                   data.updatedStudents,
                   permissionsObj,
-                  this.store,
-                  this.formTable //
+                  this.store
+                  // this.formTable //
                 );
                 this.instantiateComponent(config);
                 this.doInstantiateBlocks();

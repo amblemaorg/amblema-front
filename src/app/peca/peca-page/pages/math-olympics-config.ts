@@ -365,7 +365,9 @@ export function mathOlympicsConfigMapper(
   //     //       id,
   //     //       name,
   //     //       section: section.name,
-  //     //       grade: section.grade,
+  //     //       grade: section.gradefalse
+  // false
+  // false,
   //     //       result: result,
   //     //       status: status,
   //     //     };
@@ -531,7 +533,14 @@ export function mathOlympicsConfigMapper(
     }
   };
 
-  const studentsTable2 = getTableMulti();
+  // const studentsTable2 = getTableMulti();
+
+  const studentsTable3 = {
+    component: "table-custom",
+    // settings: {},
+  };
+
+  // ----
 
   const studentsDelete = {
     component: "textsbuttons",
@@ -592,7 +601,7 @@ export function mathOlympicsConfigMapper(
               title: "Resultados",
               active: updatedStudents ? true : false,
               // childBlocks: [studentsSelect, studentsTable, studentModal],
-              childBlocks: [studentsSelectModal, studentsTable2, studentModal],
+              childBlocks: [studentsSelectModal, studentsTable3, studentModal],
             },
           ],
         },
