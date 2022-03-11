@@ -415,85 +415,7 @@ export class TableBlockComponent
       this.settings.extraData &&
       this.settings.extraData.purpose === "resultadoTabla"
     ) {
-      this.settings = {
-        isMulti: this.settings.isMulti,
-        extraData: this.settings.extraData,
-        tableTitle: this.settings.tableTitle,
-        selectMode: "multi",
-        columns: this.settings.columns,
-        pager: {
-          display: true,
-          perPage: 50,
-        },
-        noDataMessage: "No hay registros",
-        actions: {
-          columnTitle: "Acciones",
-          add: false,
-          edit: false,
-          delete: false,
-          custom: [
-            { name: "VIEW", title: '<i class="icon-eye"></i>' },
-            { name: "EDIT", title: '<i class="icon-pencil"></i>' },
-            { name: "DELETE", title: '<i class="icon-trash"></i>' },
-          ],
-        },
-        dataResultadoEstudiante: this.settings.dataResultadoEstudiante,
-        classes: {
-          hideView: false,
-          hideEdit: false,
-          hideDelete: false,
-        },
-        delete: {
-          deleteButtonContent: '<i class="ion-trash-a"></i>',
-          confirmDelete: true,
-        },
-        modalCode: "dataResultadoEstudiante",
-        tableCode: "dataResultadoEstudiante",
-      };
-
-      const promoteData = {
-        status: {
-          id: "estado",
-          label: "Seleccione un estado",
-          loading: false,
-          loadingLabel: "Cargando estado",
-          placeholder: "Estado",
-          items: [
-            {
-              id: 0,
-              name: "Preescolar",
-            },
-          ],
-        },
-      };
-
-      const data = {
-        promoteData,
-        data: [],
-        hasTitle: {
-          tableTitle: "",
-          tableTitle2: "",
-          tableGrade: "",
-          tableSection: "",
-          sectionKey: "section",
-          allSections: [],
-          peca_id: "",
-          section_id: "",
-          getFetcher: null,
-        },
-        isEditable: true,
-        classes: {
-          hideDelete: false,
-          hideEdit: false,
-          hideView: false,
-        },
-      };
-
-      console.log("this.settings", this.settings);
-
-      this.setDataOlympicMath(data);
-      // this.setData(data);
-
+      // Created a class just for group the code that manage the table Students Math Olympic
       this.tableStudentsMathOlympic = new tableStudentsMathOlympic(
         {
           extraData: this.settings.extraData,
@@ -504,7 +426,14 @@ export class TableBlockComponent
           store: this.store,
         }
       );
-      // this.setFormG(data);
+
+      this.settings = this.tableStudentsMathOlympic.getSettings(this.settings);
+
+      const data = this.tableStudentsMathOlympic.getData();
+
+      console.log("this.settings", this.settings);
+
+      this.setDataOlympicMath(data);
     }
     if (this.settings.isFromImgContainer) {
       this.settings["dataCopy"] = [...this.settings[this.settings.tableCode]];
@@ -844,6 +773,82 @@ class tableStudentsMathOlympic {
       store: Store;
     }
   ) {}
+
+  getData() {
+    return {
+      promoteData: {
+        status: {
+          id: "estado",
+          label: "Seleccione un estado",
+          loading: false,
+          loadingLabel: "Cargando estado",
+          placeholder: "Estado",
+          items: [
+            {
+              id: 0,
+              name: "Preescolar",
+            },
+          ],
+        },
+      },
+      data: [],
+      hasTitle: {
+        tableTitle: "",
+        tableTitle2: "",
+        tableGrade: "",
+        tableSection: "",
+        sectionKey: "section",
+        allSections: [],
+        peca_id: "",
+        section_id: "",
+        getFetcher: null,
+      },
+      isEditable: true,
+      classes: {
+        hideDelete: false,
+        hideEdit: false,
+        hideView: false,
+      },
+    };
+  }
+
+  getSettings(settings) {
+    return {
+      isMulti: settings.isMulti,
+      extraData: settings.extraData,
+      tableTitle: settings.tableTitle,
+      selectMode: "multi",
+      columns: settings.columns,
+      pager: {
+        display: true,
+        perPage: 30,
+      },
+      noDataMessage: "No hay registros",
+      actions: {
+        columnTitle: "Acciones",
+        add: false,
+        edit: false,
+        delete: false,
+        custom: [
+          { name: "VIEW", title: '<i class="icon-eye"></i>' },
+          { name: "EDIT", title: '<i class="icon-pencil"></i>' },
+          { name: "DELETE", title: '<i class="icon-trash"></i>' },
+        ],
+      },
+      dataResultadoEstudiante: settings.dataResultadoEstudiante,
+      classes: {
+        hideView: false,
+        hideEdit: false,
+        hideDelete: false,
+      },
+      delete: {
+        deleteButtonContent: '<i class="ion-trash-a"></i>',
+        confirmDelete: true,
+      },
+      modalCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+    };
+  }
 
   async deleteStudentsMathOlympic(selectedRows) {
     if (document.querySelector("#delete-students-modal")) {
