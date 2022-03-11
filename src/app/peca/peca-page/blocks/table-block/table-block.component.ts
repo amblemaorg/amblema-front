@@ -129,7 +129,6 @@ export class TableBlockComponent
   tableStudentsMathOlympic: tableStudentsMathOlympic;
 
   // Math Olympic /
-
   constructor(
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
@@ -390,6 +389,12 @@ export class TableBlockComponent
     }
   }
 
+  setDataOlympicMath(data) {
+    this.settings["promoteData"] = data.promoteData;
+
+    this.setFormG(data);
+  }
+
   setSettings(settings: any) {
     this.settings = {
       ...defaultSettings,
@@ -418,13 +423,14 @@ export class TableBlockComponent
         columns: this.settings.columns,
         pager: {
           display: true,
-          perPage: 10,
+          perPage: 50,
         },
+        noDataMessage: "No hay registros",
         actions: {
           columnTitle: "Acciones",
           add: false,
           edit: false,
-          delete: true,
+          delete: false,
           custom: [
             { name: "VIEW", title: '<i class="icon-eye"></i>' },
             { name: "EDIT", title: '<i class="icon-pencil"></i>' },
@@ -483,11 +489,13 @@ export class TableBlockComponent
         },
       };
 
-      this.setData(data);
+      console.log("this.settings", this.settings);
+
+      this.setDataOlympicMath(data);
+      // this.setData(data);
 
       this.tableStudentsMathOlympic = new tableStudentsMathOlympic(
         {
-          selectedRows: this.selectedRows,
           extraData: this.settings.extraData,
         },
         {
@@ -504,6 +512,7 @@ export class TableBlockComponent
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
 
     console.log("this.source", this.source);
+    console.log("this.source this.source.count", this.source.count());
     console.log("defaultSettings", defaultSettings);
     console.log("setSettings", settings);
   }
@@ -536,6 +545,7 @@ export class TableBlockComponent
       if (this.settings.isFromImgContainer) {
         this.settings["dataCopy"] = [...data.data];
       }
+
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
 
@@ -671,6 +681,8 @@ export class TableBlockComponent
         event.selected && event.selected instanceof Array ? event.selected : [];
       this.allSelected = count ? this.selectedRows.length === count : false;
     }
+
+    console.log("this.settings", this.settings, "this.source", this.source);
   }
 
   getStudents(students: any[]) {
@@ -824,7 +836,6 @@ class tableStudentsMathOlympic {
   isDeleting = false;
   constructor(
     public defaultData: {
-      selectedRows;
       extraData: { lapseNumber; students; pecaId };
     },
     public dep: {
@@ -834,14 +845,14 @@ class tableStudentsMathOlympic {
     }
   ) {}
 
-  async deleteStudentsMathOlympic() {
+  async deleteStudentsMathOlympic(selectedRows) {
     if (document.querySelector("#delete-students-modal")) {
       $("#delete-students-modal").modal("hide");
     }
 
     this.isDeleting = true;
 
-    const { selectedRows, extraData } = this.defaultData;
+    const { extraData } = this.defaultData;
     const { lapseNumber, pecaId } = extraData;
 
     console.log("selectedRows", selectedRows);
@@ -850,23 +861,23 @@ class tableStudentsMathOlympic {
       lapse: lapseNumber,
     };
 
-    // // console.log("onSubmit", body);
+    try {
+      const dataResp = await this.dep.fetcher
+        .patch(`peca/grade/${pecaId}`, body)
+        .toPromise();
 
-    // try {
-    //   const dataResp = await this.dep.fetcher
-    //     .patch(`peca/grade/${pecaId}`, body)
-    //     .toPromise();
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al eliminar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
 
-    //   this.dep.toastr.success(dataResp.message, "", {
-    //     positionClass: "toast-bottom-right",
-    //   });
-    // } catch (error) {
-    //   this.dep.toastr.error("Error al eliminar estudiantes en lote", "", {
-    //     positionClass: "toast-bottom-right",
-    //   });
-    // }
+    await this.updateStudentsList();
 
-    // await this.updateStudentsList();
+    this.isDeleting = false;
   }
 
   async updateStudentsList() {

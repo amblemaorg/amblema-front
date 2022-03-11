@@ -110,6 +110,10 @@ $table-border-color: 1px solid $blue;
           display: none;
         }
       }
+
+      tbody tr td::before {
+        display: none;
+      }
     }
 
     &:not(.is-empty) {
