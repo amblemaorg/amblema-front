@@ -193,8 +193,12 @@ settings.extraData.purpose === 'resultadoTabla'"
     ></ng2-smart-table>
   </div>
 
-  <div *ngIf="settings.total" class="estilo-total">
-    <h5>Total: <span>{{ settings.total | number:'1.0':'es-ES' }}</span></h5>
+  <div class="estilo-total">
+    <h5>
+      Total de estudiantes:
+      <span>{{ source.count() }}</span>
+      <!-- (Seleccionados: {{selectedRows.length}}) -->
+    </h5>
   </div>
   <div
     *ngIf="promoteFields.length > 0 && settings.isMulti"
@@ -257,7 +261,7 @@ settings.extraData.purpose === 'resultadoTabla'"
     <h6>Cambiar Estudiantes Seleccionados:</h6>
     <form
       [formGroup]="promoteForm"
-      (ngSubmit)="onSubmitAction(promoteForm.value)"
+      (ngSubmit)="tableStudentsMathOlympic.onSubmitPromoteForm(promoteForm.value, selectedRows)"
     >
       <div class="fields-container">
         <ng-container *ngFor="let field of promoteFields; index as inx">
@@ -294,11 +298,11 @@ settings.extraData.purpose === 'resultadoTabla'"
                 <small>{{ item.name }}</small>
               </ng-template>
             </ng-select>
-            <span
-              *ngIf="settings.promoteData[field].loading"
+            <!-- <span
+              *ngIf="tableStudentsMathOlympic.isUpdating"
               class="floating-loading"
               >{{ settings.promoteData[field].loadingLabel }}</span
-            >
+            > -->
             <ng-container *ngIf="hasErrors(promoteForm, field)">
               <div class="error-message">
                 <strong>{{ hasErrors(promoteForm, field) }}</strong>
@@ -312,8 +316,11 @@ settings.extraData.purpose === 'resultadoTabla'"
           class="btn btn-primary text-decoration-none py-1 px-4"
           [disabled]="disabledThis(true) || !selectedRows.length"
         >
-          <span *ngIf="isPromoting" class="spinner-grow spinner-grow-sm"></span>
-          {{ isPromoting ? "Cambiando..." : "Cambiar" }}
+          <span
+            *ngIf="tableStudentsMathOlympic.isUpdating"
+            class="spinner-grow spinner-grow-sm"
+          ></span>
+          {{ tableStudentsMathOlympic.isUpdating ? "Cambiando..." : "Cambiar" }}
         </button>
       </div>
     </form>
