@@ -105,15 +105,12 @@ export class MathOlympicsPageComponent
                 const { permissions } = data.user;
                 const permissionsObj = this.managePermissions(permissions);
 
-                // this.configTable();
-
                 const config = mathOlympicsConfigMapper(
                   data.activePecaContent,
                   this.UrlLapse,
                   data.updatedStudents,
                   permissionsObj,
                   this.store
-                  // this.formTable //
                 );
                 this.instantiateComponent(config);
                 this.doInstantiateBlocks();
@@ -147,80 +144,4 @@ export class MathOlympicsPageComponent
     this.infoDataSubscription.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
-
-  // ////////////////
-
-  async configTable() {
-    this.formTable = {
-      data: { status: 400, msg: "Cargando..." },
-      permissions: null,
-      getFetcher: this.getFetcher,
-    };
-
-    const {
-      school: { code: promoteDataSchoolCode },
-      id: promoteDataPecaId,
-    } = this.store.selectSnapshot((state) => state.peca.content);
-    console.log(
-      "promoteDataSchoolCode, promoteDataPecaId",
-      promoteDataSchoolCode,
-      promoteDataPecaId
-    );
-    if (promoteDataSchoolCode && promoteDataPecaId) {
-      console.log("yeeees");
-      const school_code = promoteDataSchoolCode;
-      const peca_id = promoteDataPecaId;
-
-      const initData = this.getFetcher({
-        fetcher: "get_previous_sections",
-        school_code: school_code,
-      });
-
-      await this.fetcher[initData.method](initData.urlString)
-        .toPromise()
-        .then((res) => {
-          console.log("fetcher: ", res);
-
-          this.formTable = {
-            data: res,
-            permissions: null,
-            getFetcher: this.getFetcher,
-            extras: [school_code, peca_id],
-          };
-        });
-    }
-  }
-
-  getFetcher({
-    fetcher,
-    school_code,
-    peca_id,
-    genProps,
-  }: {
-    fetcher: string;
-    school_code?: string;
-    peca_id?: string;
-    genProps?: string[];
-  }) {
-    const params = genProps;
-    switch (fetcher) {
-      case "get_previous_sections":
-        return {
-          method: "get",
-          urlString: `init/promote/students/${school_code}`,
-        };
-      case "get_students_list":
-        return {
-          method: "get",
-          urlString: `promote/students/${school_code}/${params[0]}`,
-        };
-      case "post_promote_students":
-        return {
-          method: "post",
-          urlString: `promote/students/${school_code}`,
-        };
-    }
-  }
-
-  // ////////////////
 }

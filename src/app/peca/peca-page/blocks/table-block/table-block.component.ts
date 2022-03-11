@@ -567,6 +567,8 @@ export class TableBlockComponent
       component: "form",
     };
 
+    console.log("onCustomActions", obj);
+
     switch (e.action) {
       case "VIEW":
         this.globals.ModalShower(obj);
@@ -763,6 +765,7 @@ export class TableBlockComponent
 
 class tableStudentsMathOlympic {
   isDeleting = false;
+  isUpdating = false;
   constructor(
     public defaultData: {
       extraData: { lapseNumber; students; pecaId };
@@ -785,8 +788,12 @@ class tableStudentsMathOlympic {
           placeholder: "Estado",
           items: [
             {
-              id: 0,
-              name: "Preescolar",
+              id: 1,
+              name: "Registrado",
+            },
+            {
+              id: 2,
+              name: "Clasificado",
             },
           ],
         },
@@ -883,6 +890,52 @@ class tableStudentsMathOlympic {
     await this.updateStudentsList();
 
     this.isDeleting = false;
+  }
+
+  onSubmitPromoteForm(fc, selectedRows) {
+    console.log("onSubmitPromoteForm", fc);
+
+    this.updateStatus(fc.status, selectedRows);
+  }
+
+  async updateStatus(status: number, selectedRows) {
+    // if (document.querySelector("#delete-students-modal")) {
+    //   $("#delete-students-modal").modal("hide");
+    // }
+
+    this.isUpdating = true;
+
+    const { extraData } = this.defaultData;
+    const { lapseNumber, pecaId } = extraData;
+
+    console.log("updateStatus selectedRows", selectedRows);
+    console.log("updateStatus status", status);
+
+    const body = {
+      students: selectedRows.map((student) => student.id),
+      lapse: lapseNumber,
+      status: status.toString(),
+    };
+
+    console.log("updateStatus body", body);
+
+    try {
+      const dataResp = await this.dep.fetcher
+        .put(`peca/grade/${pecaId}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al actualizar estatus en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    await this.updateStudentsList();
+
+    this.isUpdating = false;
   }
 
   async updateStudentsList() {
