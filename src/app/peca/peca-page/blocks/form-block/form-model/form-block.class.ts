@@ -1,11 +1,19 @@
+import { ElementRef } from "@angular/core";
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+} from "@angular/forms";
+
 export interface FormBlockField {
-  [key: string]: {
-    label: string;
-    placeholder: string;
-    validations?: {};
-    fullwidth?: boolean;
-    options?: FormBlockFieldOption[];
-  };
+  // [key: string]: {
+  label: string;
+  placeholder: string;
+  validations?: {};
+  fullwidth?: boolean;
+  options?: FormBlockFieldOption[];
+  // };
 }
 
 export interface FormBlockFieldOption {
@@ -38,20 +46,76 @@ export class FormBlock {
   fields: FormBlockField[] = []; // [{'specialty': {label: '', placeholder: ''}}]
   custom: any; // To add extra data freely
   defaultData: any; // pre-settings from any file view config.ts like school-data-config.ts
-  dep: {}; // Dependencies needed form each specific form class
+  dep?: Object; // Dependencies needed form each specific form class
+  handles: {
+    onCheckboxChange: Function;
+  };
 
   // public defaultData?: any, protected dep?: {}
-  constructor(public id: string | number, options: FormBlockOptions, dep?: {}) {
+  constructor(
+    public id: string | number,
+    options: FormBlockOptions,
+    dep?: Object
+  ) {
     const { formId, defaultData, custom } = options;
     this.defaultData = defaultData;
     this.dep = dep;
     this.custom = custom;
 
     if (this.isForm(formId)) {
+      if (this.defaultData) {
+        // set Fields if exist default data
+        this.fields = this.defaultData;
+      }
+
+      this.handles = {
+        onCheckboxChange: this.onCheckboxChange,
+      };
+
       this.init(); // invocated immediately and just here
 
       this.isInit = true;
     }
+  }
+
+  protected onCheckboxChange(
+    target: any | NodeList,
+    formControlName: string,
+    formGroup: FormGroup
+  ) {
+    const checkArray: FormArray = formGroup.get(formControlName) as FormArray;
+
+    if (NodeList.prototype.isPrototypeOf(target)) {
+      checkArray.clear();
+      target.forEach((targetEach) => {
+        checkArray.push(new FormControl(targetEach.value));
+      });
+
+      return checkArray;
+    }
+
+    if (target.checked) {
+      checkArray.push(new FormControl(target.value));
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+
+    return checkArray;
+  }
+
+  // Return data to go over and use formGroup.setControl(data.name, data.newFormControl)
+  getControlsToReplace(): {
+    name: string;
+    formControl: AbstractControl;
+  }[] {
+    return [];
   }
 
   // Keep cleaned, this is to be overload into Form Class inherited
@@ -74,7 +138,13 @@ export class FormBlock {
     this.fields[key].options = options;
   }
 
-  getFields() {
+  getFields(): FormBlockField[] {
     return this.fields;
   }
+
+  getField(key: string): FormBlockField {
+    return this.fields[key];
+  }
+
+  onSubmit(cf: FormGroup) {}
 }
