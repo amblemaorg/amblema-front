@@ -1,3 +1,5 @@
+import { UpdateStudentsMathOlympicsList } from "./../../../../store/actions/peca/peca.actions";
+import { RespPecaProjectsOlympics } from "src/app/resp-interfaces/resp-pecaprojects-olimpics.interface";
 import {
   Component,
   OnInit,
@@ -42,50 +44,54 @@ export class TableBlockComponent
   type: "presentational";
   name: string;
   component: string;
-  settings: {
-    columns: any;
-    // dataTypes: {};
-    tableCode: string; // specifies which table to work with
-    buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
-    hideImgContainer?: boolean; // if view has image adder container set this to true
-    modalCode?: string; // for views with modal inside
-    isFromImgContainer?: boolean; // indicates if data in table is from an image container
-    classes: {
-      hideView: boolean;
-      hideEdit: boolean;
-      hideDelete: boolean;
-    };
-    total?: number;
-    updateTotal: (rows) => number;
-    getFetcher?: (
-      fetcher: string,
-      ...genProps
-    ) => { method: string; urlString: string };
-    isImageFirstCol?: boolean;
-    makesNoRequest?: boolean; // if true, this form makes no request to api
-    tableTitle?: string; // to set a title for the table
-    tableGrade?: string;
-    tableSection?: string;
-    sectionKey?: string;
-    allSections?: any[];
-    peca_id?: string;
-    section_id?: string;
-    onDelete: Function | null;
-    isMulti?: boolean; // to set table as multi selectable
-    selectMode?: string;
-    promoteData?: {
-      any: {
-        id?: string;
-        name?: string;
-        label?: string;
-        items?: any[];
-        placeholder?: string;
-        loadingLabel?: string;
-        loading?: boolean;
-      };
-    };
-    hideSubHeader?: boolean;
-  };
+  settings:
+    | {
+        columns: any;
+        // dataTypes: {};
+        tableCode: string; // specifies which table to work with
+        buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
+        hideImgContainer?: boolean; // if view has image adder container set this to true
+        modalCode?: string; // for views with modal inside
+        isFromImgContainer?: boolean; // indicates if data in table is from an image container
+        classes: {
+          hideView: boolean;
+          hideEdit: boolean;
+          hideDelete: boolean;
+        };
+        total?: number;
+        updateTotal: (rows) => number;
+        getFetcher?: (
+          fetcher: string,
+          ...genProps
+        ) => { method: string; urlString: string };
+        isImageFirstCol?: boolean;
+        makesNoRequest?: boolean; // if true, this form makes no request to api
+        tableTitle?: string; // to set a title for the table
+        tableGrade?: string;
+        tableSection?: string;
+        sectionKey?: string;
+        allSections?: any[];
+        peca_id?: string;
+        section_id?: string;
+        onDelete: Function | null;
+        isMulti?: boolean; // to set table as multi selectable
+        selectMode?: string;
+        promoteData?: {
+          any: {
+            id?: string;
+            name?: string;
+            label?: string;
+            items?: any[];
+            placeholder?: string;
+            loadingLabel?: string;
+            loading?: boolean;
+          };
+        };
+        hideSubHeader?: boolean;
+        extraData;
+        data?;
+      }
+    | any;
 
   tableStates: any = {};
   thisLapse: string;
@@ -119,6 +125,10 @@ export class TableBlockComponent
 
   observer: any;
 
+  // Math Olympic
+  tableStudentsMathOlympic: tableStudentsMathOlympic;
+
+  // Math Olympic /
   constructor(
     private globals: GlobalService,
     private fetcher: HttpFetcherService,
@@ -377,6 +387,12 @@ export class TableBlockComponent
     }
   }
 
+  setDataOlympicMath(data) {
+    this.settings["promoteData"] = data.promoteData;
+
+    this.setFormG(data);
+  }
+
   setSettings(settings: any) {
     this.settings = {
       ...defaultSettings,
@@ -387,13 +403,37 @@ export class TableBlockComponent
         ? {
             pager: {
               display: true,
-              perPage: 100,
+              perPage: 50,
             },
           }
         : {}),
     };
-    if (this.settings.isFromImgContainer)
+
+    if (
+      this.settings.extraData &&
+      this.settings.extraData.purpose === "resultadoTabla"
+    ) {
+      // Created a class just for group the code that manage the table Students Math Olympic
+      this.tableStudentsMathOlympic = new tableStudentsMathOlympic(
+        {
+          extraData: this.settings.extraData,
+        },
+        {
+          toastr: this.toastr,
+          fetcher: this.fetcher,
+          store: this.store,
+        }
+      );
+
+      this.settings = this.tableStudentsMathOlympic.getSettings(this.settings);
+
+      const data = this.tableStudentsMathOlympic.getData();
+
+      this.setDataOlympicMath(data);
+    }
+    if (this.settings.isFromImgContainer) {
       this.settings["dataCopy"] = [...this.settings[this.settings.tableCode]];
+    }
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
@@ -417,8 +457,10 @@ export class TableBlockComponent
       this.settings.classes = data["classes"];
     }
     if (!this.isEdited) {
-      if (this.settings.isFromImgContainer)
+      if (this.settings.isFromImgContainer) {
         this.settings["dataCopy"] = [...data.data];
+      }
+
       this.source = new LocalDataSource(data.data);
       this.isEditable = data.isEditable ? true : false;
 
@@ -548,10 +590,14 @@ export class TableBlockComponent
     const selectedData = event.selected;
     localStorage.setItem("stud_data", JSON.stringify(selectedData));
     if (this.settings.isMulti) {
-      const count = event?.source?.data?.length;
       this.selectedRows =
         event.selected && event.selected instanceof Array ? event.selected : [];
-      this.allSelected = count ? this.selectedRows.length === count : false;
+      // const count = event?.source?.data?.length;
+      // this.allSelected = count ? this.selectedRows.length === count : false;
+
+      this.source.getElements().then((elements) => {
+        this.allSelected = event.selected.length === elements.length;
+      });
     }
   }
 
@@ -653,8 +699,9 @@ export class TableBlockComponent
   }
 
   deleteStudents() {
-    if (document.querySelector("#delete-students-modal"))
+    if (document.querySelector("#delete-students-modal")) {
       $("#delete-students-modal").modal("hide");
+    }
     this.isDeleting = true;
     const requestData = this.settings.peca_id
       ? this.settings.getFetcher("put_delete_students", this.settings.peca_id)
@@ -679,20 +726,204 @@ export class TableBlockComponent
   }
 
   setSelect(field: string, event: any) {
-    if (!field.includes("section")) {
-      this.showSelectSections0 = false;
-      if (event)
-        this.settings.promoteData[`${this.settings.sectionKey}2P`].items =
-          this.settings.allSections.filter((s) => {
-            return s.grade == event.id;
-          });
-      else if (!event) {
-        this.settings.promoteData[`${this.settings.sectionKey}2P`].items = [];
+    if (this.settings.promoteData[`${this.settings.sectionKey}2P`]) {
+      if (!field.includes("section")) {
+        this.showSelectSections0 = false;
+        if (event) {
+          this.settings.promoteData[`${this.settings.sectionKey}2P`].items =
+            this.settings.allSections.filter((s) => {
+              return s.grade == event.id;
+            });
+        } else if (!event) {
+          this.settings.promoteData[`${this.settings.sectionKey}2P`].items = [];
+        }
+        this.promoteForm.get(`${this.settings.sectionKey}2P`).reset();
+        setTimeout(() => {
+          this.showSelectSections0 = true;
+        });
       }
-      this.promoteForm.get(`${this.settings.sectionKey}2P`).reset();
-      setTimeout(() => {
-        this.showSelectSections0 = true;
+    }
+  }
+}
+
+class tableStudentsMathOlympic {
+  isDeleting = false;
+  isUpdating = false;
+  isAllChecked = false;
+
+  constructor(
+    public defaultData: {
+      extraData: { lapseNumber; students; pecaId };
+    },
+    public dep: {
+      toastr: ToastrService;
+      fetcher: HttpFetcherService;
+      store: Store;
+    }
+  ) {}
+
+  getData() {
+    return {
+      promoteData: {
+        status: {
+          id: "estado",
+          label: "Seleccione un estado",
+          loading: false,
+          loadingLabel: "Cargando estado",
+          placeholder: "Estado",
+          items: [
+            {
+              id: 1,
+              name: "Registrado",
+            },
+            {
+              id: 2,
+              name: "Clasificado",
+            },
+          ],
+        },
+      },
+      data: [],
+      hasTitle: {
+        tableTitle: "",
+        tableTitle2: "",
+        tableGrade: "",
+        tableSection: "",
+        sectionKey: "section",
+        allSections: [],
+        peca_id: "",
+        section_id: "",
+        getFetcher: null,
+      },
+      isEditable: true,
+      classes: {
+        hideDelete: false,
+        hideEdit: false,
+        hideView: false,
+      },
+    };
+  }
+
+  getSettings(settings) {
+    return {
+      isMulti: settings.isMulti,
+      extraData: settings.extraData,
+      tableTitle: settings.tableTitle,
+      selectMode: "multi",
+      columns: settings.columns,
+      pager: {
+        display: true,
+        perPage: 30,
+      },
+      noDataMessage: "No hay registros",
+      actions: {
+        columnTitle: "Acciones",
+        add: false,
+        edit: false,
+        delete: false,
+        custom: [
+          { name: "VIEW", title: '<i class="icon-eye"></i>' },
+          { name: "EDIT", title: '<i class="icon-pencil"></i>' },
+          { name: "DELETE", title: '<i class="icon-trash"></i>' },
+        ],
+      },
+      dataResultadoEstudiante: settings.dataResultadoEstudiante,
+      classes: {
+        hideView: false,
+        hideEdit: false,
+        hideDelete: false,
+      },
+      delete: {
+        deleteButtonContent: '<i class="ion-trash-a"></i>',
+        confirmDelete: true,
+      },
+      modalCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
+    };
+  }
+
+  async deleteStudentsMathOlympic(selectedRows) {
+    if (document.querySelector("#delete-students-modal")) {
+      $("#delete-students-modal").modal("hide");
+    }
+
+    this.isDeleting = true;
+
+    const { extraData } = this.defaultData;
+    const { lapseNumber, pecaId } = extraData;
+
+    const body = {
+      students: selectedRows.map((student) => student.id),
+      lapse: lapseNumber,
+    };
+
+    try {
+      const dataResp = await this.dep.fetcher
+        .patch(`peca/grade/${pecaId}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al eliminar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
       });
     }
+
+    await this.updateStudentsList();
+
+    this.isDeleting = false;
+  }
+
+  onSubmitPromoteForm(fc, selectedRows) {
+    this.updateStatus(fc.status, selectedRows);
+  }
+
+  async updateStatus(status: number, selectedRows) {
+    this.isUpdating = true;
+
+    const { extraData } = this.defaultData;
+    const { lapseNumber, pecaId } = extraData;
+
+    const body = {
+      students: selectedRows.map((student) => student.id),
+      lapse: lapseNumber,
+      status: status.toString(),
+    };
+
+    try {
+      const dataResp = await this.dep.fetcher
+        .put(`peca/grade/${pecaId}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al actualizar estatus en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    await this.updateStudentsList();
+
+    this.isUpdating = false;
+  }
+
+  async updateStudentsList() {
+    const { lapseNumber, pecaId } = this.defaultData.extraData;
+
+    try {
+      const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .toPromise();
+
+      const data = {
+        lapseNumber,
+        newStudents: respData.students,
+      };
+      this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+    } catch {}
   }
 }
