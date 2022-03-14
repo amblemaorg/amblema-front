@@ -216,8 +216,6 @@ export class TableBlockComponent
     }
   }
   ngAfterViewChecked() {
-    // console.log("ngAfterViewChecked", this.settings);
-    // console.log("ngAfterViewChecked source", this.source);
     const td_student = document.querySelector(
       '.is-multi.table-block-component tbody td[colspan="6"]'
     );
@@ -431,19 +429,12 @@ export class TableBlockComponent
 
       const data = this.tableStudentsMathOlympic.getData();
 
-      console.log("this.settings", this.settings);
-
       this.setDataOlympicMath(data);
     }
     if (this.settings.isFromImgContainer) {
       this.settings["dataCopy"] = [...this.settings[this.settings.tableCode]];
     }
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
-
-    console.log("this.source", this.source);
-    console.log("this.source this.source.count", this.source.count());
-    console.log("defaultSettings", defaultSettings);
-    console.log("setSettings", settings);
   }
 
   setFormG(data) {
@@ -458,11 +449,6 @@ export class TableBlockComponent
       );
 
       this.promoteForm.reset();
-
-      console.log("setFormG", data);
-
-      console.log("this.promoteFields", this.promoteFields);
-      console.log("data.promoteData", data.promoteData);
     }
   }
 
@@ -567,8 +553,6 @@ export class TableBlockComponent
       component: "form",
     };
 
-    console.log("onCustomActions", obj);
-
     switch (e.action) {
       case "VIEW":
         this.globals.ModalShower(obj);
@@ -603,17 +587,18 @@ export class TableBlockComponent
   }
 
   onUserRowSelect(event) {
-    console.log("onUserRowSelect", event);
     const selectedData = event.selected;
     localStorage.setItem("stud_data", JSON.stringify(selectedData));
     if (this.settings.isMulti) {
-      const count = event?.source?.data?.length;
       this.selectedRows =
         event.selected && event.selected instanceof Array ? event.selected : [];
-      this.allSelected = count ? this.selectedRows.length === count : false;
-    }
+      // const count = event?.source?.data?.length;
+      // this.allSelected = count ? this.selectedRows.length === count : false;
 
-    console.log("this.settings", this.settings, "this.source", this.source);
+      this.source.getElements().then((elements) => {
+        this.allSelected = event.selected.length === elements.length;
+      });
+    }
   }
 
   getStudents(students: any[]) {
@@ -710,8 +695,6 @@ export class TableBlockComponent
         : null;
 
       this.fetchActions(true, requestData, body);
-
-      console.log(values);
     }
   }
 
@@ -766,6 +749,8 @@ export class TableBlockComponent
 class tableStudentsMathOlympic {
   isDeleting = false;
   isUpdating = false;
+  isAllChecked = false;
+
   constructor(
     public defaultData: {
       extraData: { lapseNumber; students; pecaId };
@@ -867,7 +852,6 @@ class tableStudentsMathOlympic {
     const { extraData } = this.defaultData;
     const { lapseNumber, pecaId } = extraData;
 
-    console.log("selectedRows", selectedRows);
     const body = {
       students: selectedRows.map((student) => student.id),
       lapse: lapseNumber,
@@ -893,31 +877,20 @@ class tableStudentsMathOlympic {
   }
 
   onSubmitPromoteForm(fc, selectedRows) {
-    console.log("onSubmitPromoteForm", fc);
-
     this.updateStatus(fc.status, selectedRows);
   }
 
   async updateStatus(status: number, selectedRows) {
-    // if (document.querySelector("#delete-students-modal")) {
-    //   $("#delete-students-modal").modal("hide");
-    // }
-
     this.isUpdating = true;
 
     const { extraData } = this.defaultData;
     const { lapseNumber, pecaId } = extraData;
-
-    console.log("updateStatus selectedRows", selectedRows);
-    console.log("updateStatus status", status);
 
     const body = {
       students: selectedRows.map((student) => student.id),
       lapse: lapseNumber,
       status: status.toString(),
     };
-
-    console.log("updateStatus body", body);
 
     try {
       const dataResp = await this.dep.fetcher
@@ -946,7 +919,6 @@ class tableStudentsMathOlympic {
         .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
         .toPromise();
 
-      // console.log("RespPecaProjects respData", respData);
       const data = {
         lapseNumber,
         newStudents: respData.students,
