@@ -1,3 +1,4 @@
+import { StringHelper } from "./../helpers/string.helper";
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
@@ -26,7 +27,7 @@ export class FilterPipe implements PipeTransform {
       return items;
     }
 
-    text = text.toLowerCase();
+    text = StringHelper.rmDiacritics(text);
 
     let keyWords;
     keyWords = text.split(/[ |,|_|-|/]/).filter((keyWord) => keyWord !== "");
@@ -36,8 +37,7 @@ export class FilterPipe implements PipeTransform {
 
     items = items.filter((items) => {
       if (!Array.isArray(columns)) {
-        // includes = Si el text coincida ese text retorna  el items
-        return items[columns].match(keyWords);
+        return StringHelper.rmDiacritics(items[columns]).match(keyWords);
       }
 
       // if (method === "every") {
@@ -47,7 +47,7 @@ export class FilterPipe implements PipeTransform {
       // }
 
       return columns.some((column) => {
-        return items[column].match(keyWords);
+        return StringHelper.rmDiacritics(items[column]).match(keyWords);
       });
     });
 

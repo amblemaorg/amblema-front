@@ -20,7 +20,10 @@
         "
       >
         <ng-container *ngIf="!school.notFound; else notFound">
-          <li (click)="zoomTo(school.lat, school.lng)">
+          <li
+            (click)="zoomTo(school.lat, school.lng)"
+            [ngClass]="{ 'primary-color': isZoomIt(school) }"
+          >
             <div>
               <nb-icon icon="pin-outline" class="icon"></nb-icon>
             </div>
