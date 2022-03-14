@@ -280,10 +280,14 @@ export class FormTableComponent
   }
 
   onUserRowSelect(event) {
-    const count = event?.source?.data?.length;
     this.selectedRows =
       event?.selected && event.selected instanceof Array ? event.selected : [];
-    this.allSelected = count ? this.selectedRows.length === count : false;
+    // const count = event?.source?.data?.length;
+    // this.allSelected = count ? this.selectedRows.length === count : false;
+
+    this.source.getElements().then((elements) => {
+      this.allSelected = event.selected.length === elements.length;
+    });
   }
 
   // filling sections according to selected grade
