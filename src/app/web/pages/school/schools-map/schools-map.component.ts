@@ -160,7 +160,15 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
       center: coordinates,
       zoom: 12,
     };
+
     this.mapInitializer(mapOptions);
     this.loadAllMarkers(coordinates);
+  }
+
+  isZoomIt(school) {
+    const { lat, lng } = school;
+    const coordinates = new google.maps.LatLng(lat, lng);
+
+    return coordinates.equals(this.map.getCenter());
   }
 }
