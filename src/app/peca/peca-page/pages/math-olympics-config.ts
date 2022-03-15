@@ -387,11 +387,9 @@ export function mathOlympicsConfigMapper(
   const studentsDelete = {
     component: "textsbuttons",
     settings: {
-      subtitles: [
-        {
-          text: "¿Desea eliminar este estudiante?",
-        },
-      ],
+      title: {
+        text: "¿Desea eliminar este estudiante?",
+      },
       action: [
         {
           hidden: !olympics_peca_delete,
