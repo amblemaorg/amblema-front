@@ -145,6 +145,8 @@ export class PecaState {
     this.apiService.setResourcePath("pecaprojects/" + payload_);
     await this.apiService.getWebContent().toPromise();
     const response = await this.apiService.getWebContent().toPromise();
+    console.log("fetchPecaContent: ", response);
+    console.log("setResourcePath: ", payload_);
     if (response) {
       const pecaContent: PecaModel = response;
       patchState({ content: pecaContent, pecaContentRequesting: false });
