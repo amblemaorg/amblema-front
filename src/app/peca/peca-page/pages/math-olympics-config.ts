@@ -389,6 +389,7 @@ export function mathOlympicsConfigMapper(
     settings: {
       title: {
         text: "¿Desea eliminar este estudiante?",
+        aligning: "center",
       },
       action: [
         {
@@ -401,6 +402,7 @@ export function mathOlympicsConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       onSubmit: (values) => {
         const data = { lapseNumber, studentId: values.data.newData.id };
         store.dispatch(new RemoveStudentMathOlympics(data));
