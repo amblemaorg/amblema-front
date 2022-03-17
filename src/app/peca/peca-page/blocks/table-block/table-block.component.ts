@@ -434,6 +434,7 @@ export class TableBlockComponent
     if (this.settings.isFromImgContainer) {
       this.settings["dataCopy"] = [...this.settings[this.settings.tableCode]];
     }
+
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
@@ -811,6 +812,7 @@ class tableStudentsMathOlympic {
       tableTitle: settings.tableTitle,
       selectMode: "multi",
       columns: settings.columns,
+      sort: true,
       pager: {
         display: true,
         perPage: 30,
@@ -827,7 +829,13 @@ class tableStudentsMathOlympic {
           { name: "DELETE", title: '<i class="icon-trash"></i>' },
         ],
       },
-      dataResultadoEstudiante: settings.dataResultadoEstudiante,
+      dataResultadoEstudiante: settings.dataResultadoEstudiante.sort((a, b) => {
+        return (
+          a.name.localeCompare(b.name) &&
+          a.grade.localeCompare(b.grade) &&
+          a.section.localeCompare(b.section)
+        );
+      }),
       classes: {
         hideView: false,
         hideEdit: false,
