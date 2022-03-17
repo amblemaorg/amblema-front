@@ -917,7 +917,7 @@ export class TextsButtonsSetBlockComponent
 
     const fetcherMethod = this.settings.fetcherMethod || "put";
     const url = this.settings.fetcherUrls[fetcherMethod];
-    console.log("activityActioned formData", formData, this.dataGenAct);
+    // console.log("activityActioned formData", formData, this.dataGenAct);
 
     if (
       this.settings.genericActivityId &&
@@ -940,6 +940,7 @@ export class TextsButtonsSetBlockComponent
 
     this.fetcher[fetcherMethod](url, formData).subscribe(
       (response) => {
+        // console.log("response", response);
         this.sleepSend = true;
         this.isSending = false;
 
@@ -953,8 +954,9 @@ export class TextsButtonsSetBlockComponent
           }
         );
 
-        if (this.pecaId)
+        if (this.pecaId) {
           this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        }
       },
       (error) => {
         const {
