@@ -113,6 +113,7 @@ export function schoolActivitiesPicturesConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       modalCode: "dataTablaImagenesActividad",
       isFromCustomTableActions: true,
       isDeleting: true,

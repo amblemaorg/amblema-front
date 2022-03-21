@@ -1,14 +1,16 @@
+#USO-LOCAL - Use command docker-compose -f docker-compose.staging.yml up to set this specific .yml and up the docker-compose
 version: "3.5"
 services:
   web:
     container_name: amblema_front_staging
     image: devbinaural/nginx-angular:latest
     tty: true
+    working_dir: "/home/amblema"
     ports:
       - 10512:80
       - 10513:4200
     env_file:
-      - .env.staging
+      - .env
     # environment:
     # Set enviroment values in .env.staging file or here
     # - NGINX_HOST=
@@ -21,7 +23,7 @@ services:
     volumes:
       - amblema_front_staging:/home/amblema
     command: >
-      /bin/bash -c "envsubst '$$NGINX_HOST$$NGINX_PORT$$NGINX_ROOT$$SSR_HOST$$SSR_PORT' < /home/amblema/vhost-template.conf > /etc/nginx/conf.d/default.conf
+      /bin/bash -c "npm install && npm run build && envsubst '$$NGINX_HOST$$NGINX_PORT$$NGINX_ROOT$$SSR_HOST$$SSR_PORT' < /home/amblema/vhost-template.conf > /etc/nginx/conf.d/default.conf
       && envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html
       && exec nginx -g 'daemon off;'"
     networks:

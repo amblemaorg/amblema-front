@@ -64,6 +64,7 @@ const textsAndButtonsTestimonioDocenteTabla = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "dataTestimonioDocenteTabla",
     makesNoRequest: true,
     isFromCustomTableActions: true,

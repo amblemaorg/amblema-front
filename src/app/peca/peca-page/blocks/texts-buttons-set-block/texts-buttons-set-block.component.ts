@@ -917,21 +917,30 @@ export class TextsButtonsSetBlockComponent
 
     const fetcherMethod = this.settings.fetcherMethod || "put";
     const url = this.settings.fetcherUrls[fetcherMethod];
+    // console.log("activityActioned formData", formData, this.dataGenAct);
 
     if (
       this.settings.genericActivityId &&
       this.settings.genericActivityId.length > 0
-    )
+    ) {
       formData.append("id", this.settings.genericActivityId);
-    if (this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean")
+    }
+
+    if (this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean") {
       formData.append("date", this.dataGenAct.date);
-    if (this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean")
+    }
+
+    if (this.dataGenAct.upload && typeof this.dataGenAct.upload !== "boolean") {
       formData.append("uploadedFile", this.dataGenAct.upload);
-    if (this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0)
+    }
+
+    if (this.dataGenAct.checklist && this.dataGenAct.checklist.length > 0) {
       formData.append("checklist", JSON.stringify(this.dataGenAct.checklist));
+    }
 
     this.fetcher[fetcherMethod](url, formData).subscribe(
       (response) => {
+        // console.log("response", response);
         this.sleepSend = true;
         this.isSending = false;
 
@@ -945,8 +954,9 @@ export class TextsButtonsSetBlockComponent
           }
         );
 
-        if (this.pecaId)
+        if (this.pecaId) {
           this.store.dispatch([new FetchPecaContent(this.pecaId)]);
+        }
       },
       (error) => {
         const {
