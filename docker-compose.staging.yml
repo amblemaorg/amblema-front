@@ -1,3 +1,4 @@
+#USO-LOCAL - Use command docker-compose -f docker-compose.staging.yml up to set this specific .yml and up the docker-compose
 version: "3.5"
 services:
   web:
