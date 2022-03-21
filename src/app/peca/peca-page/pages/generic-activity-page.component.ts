@@ -112,8 +112,10 @@ export class GenericActivityPageComponent
     this.subscription.add(
       this.pecaLapseData$.subscribe(
         (data) => {
-          if (data && data.lapses && data.lapses.pecaId)
+          if (data && data.lapses && data.lapses.pecaId) {
             this.peca_id = data.lapses.pecaId;
+          }
+
           if (data && data.lapses && data.lapses[`lapse${lapseId}`]) {
             const actDevNameDecoded = decodeURI(activityDevName);
             const activity: GenericActivity = data.lapses[
@@ -215,7 +217,7 @@ export class GenericActivityPageComponent
   setGenericActivityData(data: GenericActivity) {
     // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
     // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
-    console.log(data);
+
     this.g_a_id = data.id;
     this.g_a_activity_uneditable =
       data.status === "1" || data.approvalType === "5" ? false : true;

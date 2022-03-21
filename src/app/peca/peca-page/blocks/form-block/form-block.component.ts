@@ -2573,10 +2573,14 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
       .get(`peca/grade/${this.custom.pecaId}`)
       .toPromise(); // get option from api
 
-    let pecaGrades: FormBlockFieldOption[] = [];
+    let pecaGrades = [];
 
     // Adapt request to options field object structure {id: string, name: string}
-    pecaGrades = pecaGradesApi.data.map((grade) => grade);
+    pecaGrades = pecaGradesApi.data.filter((grade) => {
+      return (
+        grade.grade != "0" || grade.name.toLocaleLowerCase() !== "preescolar"
+      );
+    });
 
     // console.log("MathOlympic - pecaGrades", pecaGrades);
 
