@@ -387,11 +387,10 @@ export function mathOlympicsConfigMapper(
   const studentsDelete = {
     component: "textsbuttons",
     settings: {
-      subtitles: [
-        {
-          text: "¿Desea eliminar este estudiante?",
-        },
-      ],
+      title: {
+        text: "¿Desea eliminar este estudiante?",
+        aligning: "center",
+      },
       action: [
         {
           hidden: !olympics_peca_delete,
@@ -403,6 +402,7 @@ export function mathOlympicsConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       onSubmit: (values) => {
         const data = { lapseNumber, studentId: values.data.newData.id };
         store.dispatch(new RemoveStudentMathOlympics(data));
