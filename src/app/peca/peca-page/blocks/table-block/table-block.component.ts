@@ -312,7 +312,7 @@ export class TableBlockComponent
               this.source.refresh();
             }
             resolve(null);
-            // if (this.settings.isFromImgContainer) this.source = new LocalDataSource(this.settings[data.code]);
+
             break;
         }
       });
@@ -596,8 +596,6 @@ export class TableBlockComponent
     if (this.settings.isMulti) {
       this.selectedRows =
         event.selected && event.selected instanceof Array ? event.selected : [];
-      // const count = event?.source?.data?.length;
-      // this.allSelected = count ? this.selectedRows.length === count : false;
 
       this.source.getElements().then((elements) => {
         this.allSelected = event.selected.length === elements.length;
