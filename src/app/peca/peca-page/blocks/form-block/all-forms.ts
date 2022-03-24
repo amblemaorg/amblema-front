@@ -899,8 +899,8 @@ export const formTabsDocente = {
     ],
   },
   specialty: {
-    label: "Especialidades",
-    placeholder: "Especialidades",
+    label: "Especialidad",
+    placeholder: "Especialidad",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [],
