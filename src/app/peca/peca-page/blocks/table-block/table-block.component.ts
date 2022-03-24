@@ -24,9 +24,12 @@ import { HttpFetcherService } from "../../../../services/peca/http-fetcher.servi
 import { Store } from "@ngxs/store";
 import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
 import { ToastrService } from "ngx-toastr";
+
 registerLocaleData(localeEs, "es");
 import * as $ from "jquery";
 declare var $: any;
+
+import * as ArraySort from "array-sort";
 
 @Component({
   selector: "table-block",
@@ -829,13 +832,11 @@ class tableStudentsMathOlympic {
           { name: "DELETE", title: '<i class="icon-trash"></i>' },
         ],
       },
-      dataResultadoEstudiante: settings.dataResultadoEstudiante.sort((a, b) => {
-        return (
-          a.name.localeCompare(b.name) &&
-          a.grade.localeCompare(b.grade) &&
-          a.section.localeCompare(b.section)
-        );
-      }),
+      dataResultadoEstudiante: ArraySort(settings.dataResultadoEstudiante, [
+        "grade",
+        "section",
+        "name",
+      ]),
       classes: {
         hideView: false,
         hideEdit: false,
