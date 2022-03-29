@@ -174,10 +174,6 @@ export function mathOlympicsConfigMapper(
       tableCode: "schoolDataConfigTablaEstudiante",
       formType: "addStudentOlympicsMath",
       makesNoRequest: true,
-      // isOneRow: true,
-      // data: {},
-      // fetcherMethod: "post",
-      // methodUrlPlus: `peca/grade/${environment.apiKey}`,
       tableRefreshName: "estudiantesTable",
     },
   };
