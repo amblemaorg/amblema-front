@@ -1,3 +1,4 @@
+import { RejectionCommentsCustomBlockModel } from "./custom-blocks-models/rejection-comments.blockmodel";
 import {
   schoolPermissions,
   teacherPermissions,
@@ -19,7 +20,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { SCHOOL_DATA_CONFIG } from "./school-data-config";
 import { Select } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
@@ -66,7 +67,6 @@ export class SchoolDataPageComponent
 
   currentUserId: string; // current user id on session
   requestIdToCancel: string; // if school data is in approval this holds last request id
-  schoolDataStatus: number; // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
   permissions: any = {};
 
   // controlling when data from school is loaded
@@ -92,6 +92,9 @@ export class SchoolDataPageComponent
         }
     )[];
   };
+
+  // Main Config
+  customConfig = SCHOOL_DATA_CONFIG;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
@@ -123,7 +126,7 @@ export class SchoolDataPageComponent
       }
     });
 
-    this.instantiateComponent(config);
+    this.instantiateComponent(this.customConfig);
   }
 
   ngOnInit() {
@@ -161,8 +164,6 @@ export class SchoolDataPageComponent
           if (data.school.isInApproval)
             this.setCancelRequest(data.school.approvalHistory);
           else this.unsetCancelRequest();
-
-          this.setSchoolStatus(data.school); // sets current school status number
 
           this.setSchoolFormStatusData(data.school);
           this.setSchoolFormData(
@@ -258,35 +259,6 @@ export class SchoolDataPageComponent
   }
   unsetCancelRequest() {
     this.requestIdToCancel = null;
-  }
-
-  // Setting global status approval verification
-  setSchoolStatus(school) {
-    // this.schoolDataStatus = school.isInApproval
-    //   ? 1
-    //   : school.approvalHistory.length > 0
-    //   ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-    //       "2" ||
-    //     school.approvalHistory[school.approvalHistory.length - 1].status === "3"
-    //     ? +school.approvalHistory[school.approvalHistory.length - 1].status
-    //     : 0
-    //   : 0;
-
-    const approvalHistory = school.approvalHistory;
-    const status = approvalHistory[approvalHistory.length - 1].status;
-
-    // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = 1;
-
-    if (!school.isInApproval) {
-      if (approvalHistory.length === 0) {
-        this.schoolDataStatus = 0;
-      }
-
-      if (approvalHistory.length > 0) {
-        this.schoolDataStatus = status === "2" || "3" ? +status : 0;
-      }
-    }
   }
 
   updateStaticFetchers() {
@@ -417,25 +389,12 @@ export class SchoolDataPageComponent
    * @memberof SchoolDataPageComponent
    */
   setSchoolFormStatusData(school) {
-    const comments =
-      school.approvalHistory[school.approvalHistory.length - 1].comments;
-    let showComment = comments && this.schoolDataStatus ? true : false;
+    const { approvalHistory, isInApproval } = school;
 
-    this.schoolFormStatusData = {
-      status: {
-        text: "Estatus",
-        subText: this.schoolDataStatus,
-        comments: comments,
-      },
-      action: showComment
-        ? [
-            {
-              type: 9,
-              name: "Ver más",
-            },
-          ]
-        : [],
-    };
+    this.schoolFormStatusData = new RejectionCommentsCustomBlockModel(
+      approvalHistory,
+      isInApproval
+    ).getSettings().settings;
   }
 
   setTeachersTableData(
@@ -456,6 +415,8 @@ export class SchoolDataPageComponent
           hideDelete: !permissions.teacher_delete,
         },
       };
+
+      // console.log("setTeachersTableData", teachersData);
     } else {
       this.teachersTableData = teachersData;
     }

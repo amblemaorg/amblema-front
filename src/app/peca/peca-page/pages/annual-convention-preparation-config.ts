@@ -147,6 +147,7 @@ export function annualConventionPreparationConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       onSubmit: (values) => {
         const data = { teacherId: values.data.newData.id, lapseNumber };
         store.dispatch(new RemoveTeacherInAnnualConvention(data));

@@ -14,9 +14,41 @@
       settings.genActSelectStatus
     "
   >
+    <!-- align-items-end -->
     <div
-      class="date-download-status flex-gap d-flex mt-1 align-items-end flex-column"
+      class="date-download-status flex-gap d-flex mt-1 flex-column {{
+        settings['classes'] ? settings['classes'] : 'align-items-end'
+      }}"
     >
+      <h5
+        *ngIf="settings.title"
+        class="title font-weight-normal"
+        [class.mt-4]="
+          settings.dateOrtext ||
+          settings.download ||
+          settings.status ||
+          settings.selectStatus
+        "
+        [class.text-left]="settings.title.aligning == 'left'"
+        [class.text-center]="settings.title.aligning == 'center'"
+      >
+        {{ settings.title.text }}
+      </h5>
+      <br class="line-breaker" *ngIf="settings.title" />
+
+      <div
+        class="sub-titles mb-2"
+        *ngFor="let subtitle of settings.subtitles"
+        [class.text-center]="settings.isFromCustomTableActions"
+        [class.text-incremented]="settings.isFromCustomTableActions"
+        [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
+      >
+        <h6 class="sub-title">{{ subtitle.title }}</h6>
+        <p [class.text-justify]="settings.isGenericActivity">
+          {{ subtitle.text }}
+        </p>
+      </div>
+
       <div class="left-side" [class.mr-auto]="settings.genActSelectStatus">
         <h6 class="left-sided-content">
           <span
@@ -162,6 +194,7 @@
           </span>
         </h6>
       </div>
+
       <div *ngIf="settings.download || settings.status" class="right-side">
         <h6
           *ngIf="settings.status && settings.status.subText != 0"
@@ -207,106 +240,101 @@
 
       <!-- Ver mas boton -->
       <ng-container *ngIf="userCanEdit">
-        <ng-container *ngFor="let action of settings.action">
-          <ng-container
-            *ngIf="action.type == 6 || action.type == 5; else notModal"
-          >
-            <!-- <button
-              *ngIf="action.name && !action.hidden"
-              class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-              (click)="addToTable(true, action.type == 6 ? false : true)"
+        <div class="d-flex flex-gap justify-content-center">
+          <ng-container *ngFor="let action of settings.action">
+            <!-- <ng-container
+              *ngIf="action.type == 6 || action.type == 5; else notModal"
             >
-              {{ action.name }}
-            </button> -->
-          </ng-container>
-          <ng-template #notModal>
-            <!-- Ver mas Button -->
-            <button
-              *ngIf="
-                (action.name && !action.hidden && !action.extraData) ||
-                !action.extraData.isToSendRequest
-              "
-              [class.d-none]="
-                ((action.type === 4 || action.type === 9) &&
-                  settings.fetcherUrls &&
-                  settings.fetcherUrls.cancel) ||
-                (action.type === 2 &&
-                  !this.settings.modalCode &&
-                  isImgsTableShown)
-              "
-              [class]="
-                'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
-                getStyles(action)
-              "
-              style="margin-left: 10px; margin-top: -4px"
-              [disabled]="disableThis(action.type) || isSending || sleepSend"
-              (click)="takeAction(action.type, $event)"
-            >
-              <span
-                *ngIf="
-                  isSending &&
-                  (action.type == 4 ||
-                    action.type == 7 ||
-                    action.type == 8 ||
-                    (settings.isDeleting && action.type == 1))
-                "
-                class="spinner-grow spinner-grow-sm"
-              ></span>
-              {{
-                action.type !== 9 &&
-                isSending &&
-                (action.type == 4 || action.type == 7 || action.type == 8)
-                  ? action.type == 8
-                    ? "Guardando"
-                    : action.type == 7
-                    ? setGenActBtnName()
-                    : "Enviando"
-                  : action.type == 7
-                  ? setGenActBtnName()
-                  : isSending
-                  ? action.name + " ..."
-                  : action.name
-              }}
-            </button>
 
-            <ng-container
-              *ngIf="
-                (action.type === 4 || action.type === 9) &&
-                !action.hidden &&
-                settings.fetcherUrls &&
-                settings.fetcherUrls.cancel
-              "
-            >
+            </ng-container> -->
+            <ng-container *ngIf="!(action.type == 6 || action.type == 5)">
               <button
-                class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-                [disabled]="isSending || sleepSend"
-                (click)="cancelRequest()"
+                *ngIf="action.name && !action.hidden"
+                [class.d-none]="
+                  ((action.type === 4 || action.type === 9) &&
+                    settings.fetcherUrls &&
+                    settings.fetcherUrls.cancel) ||
+                  (action.type === 2 &&
+                    !this.settings.modalCode &&
+                    isImgsTableShown)
+                "
+                [class]="
+                  'btn btn-blue text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
+                  getStyles(action)
+                "
+                style="margin-left: 10px; margin-top: -4px"
+                [disabled]="disableThis(action.type) || isSending || sleepSend"
+                (click)="takeAction(action.type, $event)"
               >
                 <span
-                  *ngIf="isSending"
+                  *ngIf="
+                    isSending &&
+                    (action.type == 4 ||
+                      action.type == 7 ||
+                      action.type == 8 ||
+                      (settings.isDeleting && action.type == 1))
+                  "
                   class="spinner-grow spinner-grow-sm"
                 ></span>
-                {{ isSending ? "Cancelando solicitud" : "Cancelar solicitud" }}
+                {{
+                  action.type !== 9 &&
+                  isSending &&
+                  (action.type == 4 || action.type == 7 || action.type == 8)
+                    ? action.type == 8
+                      ? "Guardando"
+                      : action.type == 7
+                      ? setGenActBtnName()
+                      : "Enviando"
+                    : action.type == 7
+                    ? setGenActBtnName()
+                    : isSending
+                    ? action.name + " ..."
+                    : action.name
+                }}
               </button>
-            </ng-container>
-          </ng-template>
 
-          <p
-            *ngIf="showModalInfo"
-            class="text-decoration-none"
-            style="
-              color: red;
-              background: #fcc7c7;
-              padding: 1rem 2rem;
-              border-radius: 5px;
-              margin-top: 10px;
-              width: 100%;
-            "
-          >
-            {{ settings.status.comments }}
-          </p>
-        </ng-container>
+              <ng-container
+                *ngIf="
+                  (action.type === 4 || action.type === 9) &&
+                  !action.hidden &&
+                  settings.fetcherUrls &&
+                  settings.fetcherUrls.cancel
+                "
+              >
+                <button
+                  class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+                  [disabled]="isSending || sleepSend"
+                  (click)="cancelRequest()"
+                >
+                  <span
+                    *ngIf="isSending"
+                    class="spinner-grow spinner-grow-sm"
+                  ></span>
+                  {{
+                    isSending ? "Cancelando solicitud" : "Cancelar solicitud"
+                  }}
+                </button>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+
+        <p
+          *ngIf="showModalInfo"
+          class="text-decoration-none"
+          style="
+            color: red;
+            background: #fcc7c7;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+          "
+        >
+          {{ settings.status.comments }}
+        </p>
       </ng-container>
+
       <!-- Adjuntar archivo -->
       <div
         *ngIf="
@@ -435,48 +463,6 @@
         <!--------------------------------------->
       </div>
     </div>
-
-    <!-- <ng-container *ngFor="let text of settings.texts"> -->
-    <h5
-      *ngIf="settings.title"
-      class="title"
-      [class.mt-4]="
-        settings.dateOrtext ||
-        settings.download ||
-        settings.status ||
-        settings.selectStatus
-      "
-      [class.text-left]="settings.title.aligning == 'left'"
-      [class.text-center]="settings.title.aligning == 'center'"
-    >
-      {{ settings.title.text }}
-    </h5>
-    <br class="line-breaker" *ngIf="settings.title" />
-
-    <!--  <div
-                class="sub-titles mb-2"
-                *ngIf="settings.subtitles"
-                [class.text-center]="settings.isFromCustomTableActions"
-                [class.text-incremented]="settings.isFromCustomTableActions"
-                [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
-            >
-                <h6 class="sub-title">{{ settings.subtitles.title }}</h6>
-                <p [class.text-justify]="settings.isGenericActivity">{{ settings.subtitles.text }}</p>
-            </div> -->
-
-    <div
-      class="sub-titles mb-2"
-      *ngFor="let subtitle of settings.subtitles"
-      [class.text-center]="settings.isFromCustomTableActions"
-      [class.text-incremented]="settings.isFromCustomTableActions"
-      [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
-    >
-      <h6 class="sub-title">{{ subtitle.title }}</h6>
-      <p [class.text-justify]="settings.isGenericActivity">
-        {{ subtitle.text }}
-      </p>
-    </div>
-    <!-- </ng-container> -->
   </div>
 
   <!-- VIDEO SECTION -->
@@ -575,15 +561,17 @@
           </button>
         </ng-container>
 
-        <!-- Botón cuando no se encuentra dentro del modal -->
+        <!-- Botón cuando no se encuentra dentro del modal es aqui-->
+        <!-- &&
+              action.extraData &&
+              action.extraData.isDuplicated  ---  || !action.extraData-->
         <ng-template #notModal>
-          {{ myConsoleLog(action) }}
           <button
             *ngIf="
               action.name &&
               !action.hidden &&
               action.extraData &&
-              action.extraData.isToSendRequest
+              !action.extraData.isDuplicated
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +

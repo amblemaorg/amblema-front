@@ -20,7 +20,6 @@ import { SummaryBlockComponent } from "./franklin-dev-component/summary-block/su
 import { FormReviewComponent } from "./franklin-dev-component/form-review/form-review.component";
 import { FormTableComponent } from "./form-table-previous-students/form-table.component";
 import { FormatDownloadBlock } from "./format-block/format-block.component";
-
 export class PageBlockFactory {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 

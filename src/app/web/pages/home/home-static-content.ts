@@ -94,7 +94,7 @@ export const HOME_CONTENT = {
           id: "operationsPerMinIndex",
           title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
-            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo.",
+            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.3 },
