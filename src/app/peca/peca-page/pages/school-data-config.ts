@@ -18,18 +18,7 @@ const statusGeneral = {
     dateOrtext: {},
     status: {
       text: "Estatus",
-      // subText: "dsadsa subtext", // No afecta en nada
-      // comments: "mi comentario 2", // Agrega el texto del comentario
     },
-    // action: false // Muestra o no el boton con su texto
-    //   ? [
-    //       {
-    //         type: 9,
-    //         name: "Ver más",
-    //       },
-    //     ]
-    //   : [],
-
     buttonCode: "schoolDataConfigRegistroEscuela",
   },
 };
@@ -130,6 +119,7 @@ const textsAndButtonsRegistroEscuela = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigRegistroEscuela",
     isFromCustomTableActions: true,
     makesNoRequest: true,
@@ -157,6 +147,7 @@ const formDocente = {
   component: "form",
   name: "teacherForm",
   settings: {
+    formId: "add-docente",
     formsContent: formTabsDocente,
     buttons: ["guardar"],
     tableCode: "schoolDataConfigTablaDocente",
@@ -208,6 +199,9 @@ const tablaDocente = {
           else return false;
         },
       },
+      // specialty: { // Para mostrar columna de especialidad
+      //   title: "Especialidad",
+      // },
     },
     modalCode: "schoolDataConfigTablaDocente",
     tableCode: "schoolDataConfigTablaDocente",
@@ -253,6 +247,7 @@ const textsAndButtonsTablaDocente = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaDocente",
     isFromCustomTableActions: true,
     fetcherMethod: "delete",
@@ -383,6 +378,7 @@ const textsAndButtonsTablaGradosSecciones = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaGradosSecciones",
     isFromCustomTableActions: true,
     fetcherMethod: "delete",
@@ -535,6 +531,7 @@ const textsAndButtonsTablaEstudiante = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaEstudiante",
     isFromCustomTableActions: true,
     isDeleting: true,

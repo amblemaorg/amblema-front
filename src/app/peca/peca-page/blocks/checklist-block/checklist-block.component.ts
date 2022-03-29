@@ -176,6 +176,7 @@ export class ChecklistBlockComponent
         ? data.approvedAct
         : null;
       this.settings.infoContainer[0].datosNivel[0].percent = data["percent"];
+
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
           gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
@@ -200,10 +201,25 @@ export class ChecklistBlockComponent
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {
-    check.checked = checked;
+    // check.checked = checked;
+
+    check = {
+      id: check.id,
+      name: check.name,
+      checked: checked,
+    };
+
+    this.settings.infoContainer[0].datosNivel[0].checkList =
+      this.settings.infoContainer[0].datosNivel[0].checkList.map(
+        (checkItem) => {
+          if (checkItem.id === check.id) {
+            return check;
+          }
+          return checkItem;
+        }
+      );
 
     if (isGenAct) {
-      // if truty, this is for generic activity
       this.globals.updateGenActButtonDataUpdater({
         gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
         checklist:

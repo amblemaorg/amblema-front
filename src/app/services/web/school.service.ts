@@ -16,7 +16,7 @@ const charts = [
       image: "./assets/images/profile-oscar.jpg",
       function: "Presidente y Co-Fundador",
       description:
-        "¿Tienen lectura fluida? Primer paso para facilitar la compresión lectora. Hacemos el diagnóstico del número de palabras leídas por minuto y presentamos el promedio del curso, obteniendo el índice en base a la meta de cada nivel, según estándares internacionales.",
+        "¿Tienen lectura fluida? Primer paso para facilitar la compresión lectora. Hacemos el diagnóstico del número de palabras leídas por minuto y presentamos el promedio del curso, obteniendo el índice con base a la meta de cada nivel, según estándares internacionales.",
     },
   },
   {
@@ -40,7 +40,7 @@ const charts = [
     title: "Diagnóstico de Razonamiento Lógico - Matemático",
     id: "operationsPerMinIndex",
     description:
-      "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+      "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM60: Lógica - Matemática en 60 minutos.",
     type: "bar",
     data: [],
     goals: [{ label: "Valor esperado", value: 1 }],
@@ -50,7 +50,7 @@ const charts = [
       image: "./assets/images/profile-oscar.jpg",
       function: "Presidente y Co-Fundador",
       description:
-        "Es todo un reto lograr resolver correctamente problemas de razonamiento lógico-matemáticas en 30 minutos. ¿Cuántos de esos problemas, adecuados a sus edades, pueden resolver los niños? La meta es llegar al menos a 15. Con el apoyo de sus docentes lo podrán lograr.",
+        "Es todo un reto lograr resolver correctamente problemas de razonamiento lógico-matemáticas en 60 minutos. ¿Cuántos de esos problemas, adecuados a sus edades, pueden resolver los niños? La meta es llegar al menos a 15. Con el apoyo de sus docentes lo podrán lograr.",
     },
   },
 ];
@@ -141,7 +141,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
-            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM60: Lógica - Matemática en 60 minutos.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso 1", value: 0.2 },
@@ -452,7 +452,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
-            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM60: Lógica - Matemática en 60 minutos.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 30 },
@@ -763,7 +763,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
-            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM60: Lógica - Matemática en 60 minutos.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 30 },
@@ -1074,7 +1074,7 @@ const schoolsList = {
         {
           title: "Diagnóstico de Razonamiento Lógico - Matemático",
           description:
-            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
+            "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 60 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM60: Lógica - Matemática en 60 minutos.",
           type: "bar",
           data: [
             { label: "2015-2016", serie: "Lapso1", value: 30 },
