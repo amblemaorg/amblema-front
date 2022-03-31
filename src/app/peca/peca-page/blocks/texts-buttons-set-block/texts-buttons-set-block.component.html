@@ -22,7 +22,9 @@
     >
       <h5
         *ngIf="settings.title"
-        class="title font-weight-normal"
+        class="title font-weight-normal {{
+          settings.title['classes'] ? settings.title['classes'] : ''
+        }}"
         [class.mt-4]="
           settings.dateOrtext ||
           settings.download ||
