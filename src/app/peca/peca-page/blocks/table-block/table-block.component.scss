@@ -146,7 +146,7 @@ $table-border-color: 1px solid $blue;
       }
     }
 
-    &:not(.is-empty) {
+    &.is-multi:not(.is-empty) {
       table {
         thead tr th:first-child,
         tbody tr td:first-child {
