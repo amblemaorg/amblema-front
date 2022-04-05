@@ -312,4 +312,8 @@ export class ChecklistBlockComponent
       }
     );
   }
+
+  getPercentWidth(percent) {
+    return Math.floor(percent);
+  }
 }
