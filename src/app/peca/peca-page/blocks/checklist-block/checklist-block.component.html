@@ -8,10 +8,12 @@
       'progress-bar-striped': true,
       'progress-bar-animated': false
     }"
-    [style.width.%]="settings.infoContainer[0].datosNivel[0].percent"
+    [style.width.%]="
+      getPercentWidth(settings.infoContainer[0].datosNivel[0].percent)
+    "
   ></div>
   <div class="div-percent">
-    {{ settings.infoContainer[0].datosNivel[0].percent }}%
+    {{ getPercentWidth(settings.infoContainer[0].datosNivel[0].percent) }}%
   </div>
 </div>
 <div *ngFor="let info of settings.infoContainer">
