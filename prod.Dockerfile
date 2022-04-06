@@ -9,7 +9,7 @@ ENV PATH /home/app/node_modules/.bin:$PATH
 
 COPY ./package.json ./
 
-COPY ./package-lock.json ./
+# COPY ./package-lock.json ./
 
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh curl
