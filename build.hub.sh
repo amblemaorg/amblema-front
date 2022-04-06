@@ -30,8 +30,9 @@ docker build \
   --build-arg SSR_HOST \
   --build-arg SSR_PORT \
   --target csr-prod \
-  -t ${REPOSITORY}:${TAGNAME}-app .
+  -t ${USER}/${REPOSITORY}-app .
 
+# docker tag ${REPOSITORY}-app ${USER}/${REPOSITORY}
 docker push ${REPOSITORY}-app
 
 docker rmi ${REPOSITORY}-app
@@ -46,10 +47,10 @@ docker build \
   --build-arg SSR_HOST \
   --build-arg SSR_PORT \
   --target ssr-prod \
-  -t ${REPOSITORY}:${TAGNAME}-ssr .
+  -t ${USER}/${REPOSITORY}-ssr .
 
-docker push ${REPOSITORY}-ssr
+docker push ${USER}/${REPOSITORY}-ssr
 
-docker rmi ${REPOSITORY}-ssr
+docker rmi ${USER}/${REPOSITORY}-ssr
 
 docker logout
