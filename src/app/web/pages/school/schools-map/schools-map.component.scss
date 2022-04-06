@@ -1,10 +1,13 @@
+@import "../../../../../assets/scss/scrollBar";
+@import "../../../../../assets/scss/variables";
+
 #map {
   height: 100vh;
   width: 100%;
 }
 #school-overlay-loading {
   background: #000;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   position: fixed;
   top: 0;
   width: 100%;
@@ -16,10 +19,83 @@
   span {
     color: #fff;
     font-size: 4vw;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 
     @media screen and (orientation: landscape) {
       font-size: 1.5vw;
+    }
+  }
+}
+
+.school-list {
+  min-width: 280px;
+  width: 25vw;
+  background: white;
+  padding: 18px;
+  position: absolute;
+  bottom: 2vw;
+  left: 0.6vw;
+  z-index: 1;
+
+  .list {
+    max-height: 380px;
+    overflow: auto;
+    list-style: none;
+    padding: 10px 0px;
+
+    display: flex;
+    gap: 18px;
+    flex-direction: column;
+
+    @include custom-scrollbar;
+    &::-webkit-scrollbar {
+      width: 0.5em;
+      height: 0.5em;
+    }
+
+    li {
+      transition: 0.3s;
+
+      display: flex;
+
+      &:not(.notFound) {
+        cursor: pointer;
+        &:hover {
+          color: $blue;
+        }
+      }
+
+      .icon {
+        width: 23px;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+
+        .state {
+          color: $blue;
+        }
+      }
+    }
+  }
+
+  .search-input {
+    width: 100%;
+    border-radius: 0.25rem;
+    background-color: #f7f9fc;
+    border: 0.0625rem solid #e4e9f2;
+    color: $blue;
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1rem;
+    transition-duration: 0.15s;
+    transition-property: border, background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+
+    &:focus-visible,
+    &:focus {
+      outline: 0px;
     }
   }
 }

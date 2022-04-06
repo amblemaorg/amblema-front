@@ -14,13 +14,16 @@ export function schoolActivitiesPicturesConfigMapper(
 ) {
   const { isInApproval, approvalHistory, slider, status } = activitiesPictures;
   const { activities_slider_edit, activities_slider_delete } = permissions;
+  let comments = "";
   let currentSlider = slider;
   let currentStatus = currentSlider.length > 0 ? 2 : 1;
+  // console.log("APPROVAL HISTORY: ", approvalHistory);
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     const lastActivitiesPicturesRequest =
       approvalHistory[approvalHistory.length - 1];
     currentSlider = lastActivitiesPicturesRequest.detail.slider;
     currentStatus = +lastActivitiesPicturesRequest.status;
+    comments = lastActivitiesPicturesRequest.comments;
   }
 
   store.dispatch(new ClearSchoolActivitiesRequestData({}));
@@ -28,6 +31,12 @@ export function schoolActivitiesPicturesConfigMapper(
     store.dispatch(new AddImageToSchoolActivitiesRequestData({ image }));
   });
 
+  // Utilizado en activityPicturesStatus, para determinar si mostrar o no el botón ver mas y el comentario de rechazo
+  const mostrarFeedback = (statusCode) => {
+    return statusCode === 3;
+  };
+
+  // Texto de status de la aprobación de cambios, botón de ver mas y comentarios de rechazos
   const activityPicturesStatus = {
     component: "textsbuttons",
     settings: {
@@ -35,7 +44,16 @@ export function schoolActivitiesPicturesConfigMapper(
       status: {
         text: "Estatus",
         subText: currentStatus,
+        comments: comments,
       },
+      action: mostrarFeedback(currentStatus)
+        ? [
+            {
+              type: 9,
+              name: "Ver más",
+            },
+          ]
+        : [],
       btnGeneral: {
         addToTable: true,
         name: "Adjuntar foto",
@@ -44,6 +62,7 @@ export function schoolActivitiesPicturesConfigMapper(
     },
   };
 
+  // ChildBlock of activityPictureModal, aparece al momento de agregar una imagen
   const activityPictureForm = {
     component: "form",
     settings: {
@@ -75,6 +94,7 @@ export function schoolActivitiesPicturesConfigMapper(
     },
   };
 
+  // ChildBlock of activityPictureModal, aparecer al momento de eliminar un imagen
   const activityPictureDeleteModal = {
     component: "textsbuttons",
     settings: {
@@ -93,6 +113,7 @@ export function schoolActivitiesPicturesConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       modalCode: "dataTablaImagenesActividad",
       isFromCustomTableActions: true,
       isDeleting: true,
@@ -100,6 +121,7 @@ export function schoolActivitiesPicturesConfigMapper(
     },
   };
 
+  // Modal para eliminar o agregar una imagen
   const activityPictureModal = {
     component: "modal",
     settings: {
@@ -113,6 +135,7 @@ export function schoolActivitiesPicturesConfigMapper(
     },
   };
 
+  // Tabla con listado de imágenes
   const activitiesPicturesTable = {
     component: "table",
     settings: {
@@ -150,14 +173,14 @@ export function schoolActivitiesPicturesConfigMapper(
     },
   };
 
+  // Botones para cancelar o enviar solicitud de cambios en el listado de imágenes
   const sendActivitiesPicturesRequest = {
     component: "textsbuttons",
     settings: {
       action: [
         {
-          hidden: isInApproval
-            ? !activities_slider_delete
-            : !activities_slider_edit,
+          extraData: { isDuplicated: false },
+          hidden: false,
           name: isInApproval ? "Cancelar solicitud" : "Enviar solicitud",
         },
       ],

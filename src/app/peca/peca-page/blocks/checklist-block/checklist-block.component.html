@@ -1,3 +1,21 @@
+<div
+  class="progress progress-bar-activity"
+  [title]="'Cargando settings.infoContainer[0].datosNivel[0].percent%'"
+>
+  <div
+    class="progress-bar"
+    [ngClass]="{
+      'progress-bar-striped': true,
+      'progress-bar-animated': false
+    }"
+    [style.width.%]="
+      getPercentWidth(settings.infoContainer[0].datosNivel[0].percent)
+    "
+  ></div>
+  <div class="div-percent">
+    {{ getPercentWidth(settings.infoContainer[0].datosNivel[0].percent) }}%
+  </div>
+</div>
 <div *ngFor="let info of settings.infoContainer">
   <div *ngFor="let a of info.principal" class="style-principal d-flex">
     <div class="style-principal-div">

@@ -2,19 +2,19 @@ import {
   Component,
   ViewContainerRef,
   ComponentFactoryResolver,
-  Inject
+  Inject,
 } from "@angular/core";
 import { PageBlockFactory } from "./blocks/page-block-factory";
 import { PageBlockComponent } from "./blocks/page-block.component";
-import { Location, DOCUMENT } from "@angular/common"
+import { Location, DOCUMENT } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
-import { PdfYearbookService } from '../../services/peca/pdf-yearbook.service';
+import { PdfYearbookService } from "../../services/peca/pdf-yearbook.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "peca-page",
   templateUrl: "./peca-page.component.html",
-  styleUrls: ["./peca-page.component.scss"]
+  styleUrls: ["./peca-page.component.scss"],
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
@@ -28,7 +28,7 @@ export class PecaPageComponent {
   creatingPdf: boolean;
 
   constructor(
-    protected factoryResolver: ComponentFactoryResolver, 
+    protected factoryResolver: ComponentFactoryResolver,
     protected location?: Location,
     protected route?: ActivatedRoute,
     protected pdfYearbookService?: PdfYearbookService,
@@ -44,20 +44,22 @@ export class PecaPageComponent {
   public changeComponentHeader(header) {
     this.header.title = header;
   }
-  public instantiateBlocks(container: ViewContainerRef, reSet: boolean = false) {
+  public instantiateBlocks(
+    container: ViewContainerRef,
+    reSet: boolean = false
+  ) {
     this.blocks.map((block, i) => {
-      const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
-        block.component
-      );
+      const pageBlockComponentFactory =
+        this.pageBlockFactory.createPageBlockFactory(block.component);
 
       if (reSet && container.length > 0) container.clear();
-      
+
       const pageBlockComponent = container.createComponent(
         pageBlockComponentFactory
       );
       const settings = {
         settings: block.settings,
-        factory: this.pageBlockFactory
+        factory: this.pageBlockFactory,
       };
       pageBlockComponent.instance.setSettings(settings);
       this.blockInstances.set(
@@ -65,7 +67,7 @@ export class PecaPageComponent {
         pageBlockComponent.instance
       );
     });
-}
+  }
 
   public setBlockData(blockName: string, blockData: any) {
     if (this.blockInstances.has(blockName)) {
@@ -108,7 +110,7 @@ export class PecaPageComponent {
     if (this.blockInstances.has(blockName)) {
       const formComponent = this.blockInstances.get(blockName);
 
-      const args = generatorsProps.map(prop => {
+      const args = generatorsProps.map((prop) => {
         const propertyPath = prop.split(".");
         return this.accessPropertyByArrayPath(formComponent, propertyPath);
       });
@@ -118,7 +120,7 @@ export class PecaPageComponent {
         post: typeof post === "function" ? post(...args) : "",
         put: typeof put === "function" ? put(...args) : "",
         patch: typeof patch === "function" ? patch(...args) : "",
-        delete: typeof deleteFn === "function" ? deleteFn(...args) : ""
+        delete: typeof deleteFn === "function" ? deleteFn(...args) : "",
       };
       formComponent.setFetcherUrls(urls);
     }
@@ -141,31 +143,31 @@ export class PecaPageComponent {
   public disablePdfDownload(): boolean {
     return this.pdfData ? false : true;
   }
-  
+
   pdfToasterCalledTimes: number = 0;
   public generatePDF() {
     this.pdfToasterCalledTimes = 0;
     this.creatingPdf = true;
 
-    this.pdfYearbookService.generateYearbookPdf(this.pdfData)
-      .then(res => {
+    this.pdfYearbookService
+      .generateYearbookPdf(this.pdfData)
+      .then((res) => {
         this.creatingPdf = res;
-        if (this.pdfToasterCalledTimes === 0) 
+        if (this.pdfToasterCalledTimes === 0)
           this.toastr.success("La descarga del PDF comenzará en breve", "", {
-            positionClass: "toast-bottom-right"
+            positionClass: "toast-bottom-right",
           });
       })
-      .catch(e => {
+      .catch((e) => {
         this.creatingPdf = e;
-        if (this.pdfToasterCalledTimes === 0) 
-          this.toastr.error("Algo salió mal al procesar el PDF", "",
-            { positionClass: "toast-bottom-right" }
-          );      
+        if (this.pdfToasterCalledTimes === 0)
+          this.toastr.error("Algo salió mal al procesar el PDF", "", {
+            positionClass: "toast-bottom-right",
+          });
       })
       .finally(() => {
         this.creatingPdf = false;
         this.pdfToasterCalledTimes++;
-      }); 
+      });
   }
-
 }

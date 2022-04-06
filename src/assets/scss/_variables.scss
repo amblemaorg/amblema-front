@@ -6,3 +6,18 @@ $black: #555;
 $dark-gray: #909090;
 $red: #f35f5f;
 $cancel-gray: #9fa9bd;
+
+.btn-blue {
+  background-color: $blue;
+  color: #fff;
+  border: 1px solid $blue;
+
+  &:hover {
+    background-color: #fff;
+    color: $blue;
+  }
+}
+
+.primary-color {
+  color: $blue;
+}
