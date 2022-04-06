@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+import { ArrayHelper } from "./../../../helpers/array.helper";
 import {
   UpdateStudentMathOlympics,
   RemoveStudentMathOlympics,
@@ -11,6 +13,7 @@ import {
 import { MESSAGES } from "src/app/web/shared/forms/validation-messages";
 import { DatePipe } from "@angular/common";
 import { Store } from "@ngxs/store";
+import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
 
 const controlProps = {
   onlyLettersAndRequired: {
@@ -51,11 +54,8 @@ export function mathOlympicsConfigMapper(
   store: Store
 ) {
   // Processing data
-  const {
-    olympics_peca_create,
-    olympics_peca_edit,
-    olympics_peca_delete,
-  } = permissions;
+  const { olympics_peca_create, olympics_peca_edit, olympics_peca_delete } =
+    permissions;
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
   const mathOlympics = pecaData[lapseName].olympics;
@@ -111,14 +111,8 @@ export function mathOlympicsConfigMapper(
       selectStatus: {
         placeholder: "Selecciona el estudiante",
         lista: studentsNotInOlympics.map((student) => {
-          const {
-            id,
-            firstName,
-            lastName,
-            sectionId,
-            section,
-            grade,
-          } = student;
+          const { id, firstName, lastName, sectionId, section, grade } =
+            student;
           return {
             id,
             name: `${firstName} ${lastName}`,
@@ -146,6 +140,45 @@ export function mathOlympicsConfigMapper(
       tableCode: "dataResultadoEstudiante",
     },
   };
+
+  // ----
+  // console.log("pecaData", pecaData);
+  // console.log("lapseNumber", lapseNumber);
+  // console.log("updatedStudents", updatedStudents);
+  // console.log("permissions", permissions);
+  // console.log("schoolStudents", schoolStudents);
+
+  const studentsSelectModal = {
+    component: "form",
+    name: "estudiantesPostForm",
+    settings: {
+      formId: "add-students-math-olympic-lots",
+      extraData: {
+        purpose: "agregarEstudiantesLotes",
+        justModal: true,
+        lapseNumber,
+        pecaId: pecaData.id,
+        students: schoolStudents,
+      },
+      formsContent: {
+        gradesStudents: {
+          label: "Seleccione el grado",
+          placeholder: "Grados",
+          fullwidth: false,
+          isGrades: true,
+          ...controlProps.selectAndRequired,
+          options: [],
+        },
+      },
+      buttons: ["agregarLotes"],
+      tableCode: "schoolDataConfigTablaEstudiante",
+      formType: "addStudentOlympicsMath",
+      makesNoRequest: true,
+      tableRefreshName: "estudiantesTable",
+    },
+  };
+
+  // ----
 
   const studentForm = {
     component: "form",
@@ -227,12 +260,22 @@ export function mathOlympicsConfigMapper(
     component: "table",
     name: "resultadoTabla",
     settings: {
+      extraData: {
+        purpose: "resultadoTabla",
+        lapseNumber,
+        pecaId: pecaData.id,
+        students: schoolStudents,
+      },
+      isMulti: true,
+      total: 10,
       columns: {
         name: {
           title: "Nombre y Apellido",
+          with: "20%",
         },
         grade: {
           title: "Grado",
+          with: "20%",
           valuePrepareFunction: (row: any) => {
             const grade = formResultadoEstudianteModal.grade.options.find(
               (d) => {
@@ -260,9 +303,11 @@ export function mathOlympicsConfigMapper(
         },
         section: {
           title: "Sección",
+          with: "20%",
         },
         status: {
           title: "Estatus",
+          with: "20%",
           valuePrepareFunction: (row: any) => {
             if (row) return row == "1" ? "Registrado" : "Clasificado";
             else return "";
@@ -278,6 +323,7 @@ export function mathOlympicsConfigMapper(
         },
         result: {
           title: "Resultado",
+          with: "20%",
           valuePrepareFunction: (row: any) => {
             switch (row) {
               case "1":
@@ -312,9 +358,6 @@ export function mathOlympicsConfigMapper(
           },
         },
       },
-      modalCode: "dataResultadoEstudiante",
-      buttonCode: "dataResultadoEstudiante",
-      tableCode: "dataResultadoEstudiante",
       dataResultadoEstudiante: olympicStudents.map((student) => {
         const { id, name, section, result, status } = student;
         return {
@@ -322,7 +365,7 @@ export function mathOlympicsConfigMapper(
           name,
           section: section.name,
           grade: section.grade,
-          result: result,
+          result,
           status: status,
         };
       }),
@@ -331,17 +374,19 @@ export function mathOlympicsConfigMapper(
         hideEdit: !olympics_peca_edit,
         hideDelete: !olympics_peca_delete,
       },
+      modalCode: "dataResultadoEstudiante",
+      buttonCode: "dataResultadoEstudiante",
+      tableCode: "dataResultadoEstudiante",
     },
   };
 
   const studentsDelete = {
     component: "textsbuttons",
     settings: {
-      subtitles: [
-        {
-          text: "¿Desea eliminar este estudiante?",
-        },
-      ],
+      title: {
+        text: "¿Desea eliminar este estudiante?",
+        aligning: "center",
+      },
       action: [
         {
           hidden: !olympics_peca_delete,
@@ -353,6 +398,7 @@ export function mathOlympicsConfigMapper(
           name: "No",
         },
       ],
+      classes: "justify-content-center",
       onSubmit: (values) => {
         const data = { lapseNumber, studentId: values.data.newData.id };
         store.dispatch(new RemoveStudentMathOlympics(data));
@@ -392,7 +438,8 @@ export function mathOlympicsConfigMapper(
             {
               title: "Resultados",
               active: updatedStudents ? true : false,
-              childBlocks: [studentsSelect, studentsTable, studentModal],
+              // childBlocks: [studentsSelect, studentsTable, studentModal],
+              childBlocks: [studentsSelectModal, studentsTable, studentModal],
             },
           ],
         },

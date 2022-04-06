@@ -498,7 +498,9 @@ export function MapperYearBookWeb(
         title: {
           text: title,
           aligning: "left",
+          classes: "font-weight-bold",
         },
+        classes: "yearbook align-items-start",
       },
     };
   }

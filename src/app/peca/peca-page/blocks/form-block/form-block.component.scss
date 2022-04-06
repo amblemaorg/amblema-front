@@ -1,4 +1,5 @@
 @import "scss/placeholders";
+@import "scss/variables";
 
 @mixin form-mix {
   display: flex;
@@ -316,14 +317,14 @@
         .error-message,
         .date-error-message {
           color: $red;
-          font-size: 3.5vw;
+          font-size: 13px;
 
           @include breakpoint(medium) {
-            font-size: 2vw;
+            font-size: 13px;
           }
 
           @include breakpoint(large) {
-            font-size: 0.9vw;
+            font-size: 13px;
           }
         }
       }
@@ -652,4 +653,10 @@
       }
     }
   }
+}
+
+.buttons-containers {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
 }

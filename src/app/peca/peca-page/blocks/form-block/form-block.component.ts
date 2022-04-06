@@ -1,14 +1,16 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { RespPecaProjectsOlympics } from "src/app/resp-interfaces/resp-pecaprojects-olimpics.interface";
+import { UpdateStudentsMathOlympicsList } from "./../../../../store/actions/peca/peca.actions";
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
 import { ToastrService } from "ngx-toastr";
@@ -30,7 +32,12 @@ import { StepsService } from "../../../../services/steps/steps.service";
 import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { HttpClient } from "@angular/common/http";
-
+import {
+  FormBlock,
+  FormBlockAbstract,
+  FormBlockFieldOption,
+  FormBlockOptions,
+} from "./form-model/form-block.class";
 @Component({
   selector: "form-block",
   templateUrl: "./form-block.component.html",
@@ -56,6 +63,8 @@ export class FormBlockComponent
   type: "presentational";
   component: string;
   settings: {
+    extraData?: any;
+    formId?: string | number;
     specialValidateSaveButton?: boolean;
     formsContent: any;
     buttons: string[];
@@ -152,6 +161,13 @@ export class FormBlockComponent
 
   formInitialVals: object = {};
 
+  // FORMS
+  formsList = {
+    // Magic string to avoid errors and easily change formId of forms
+    addDocente: "add-docente",
+  };
+  currentForm: FormBlock | any;
+
   constructor(
     private store: Store,
     private fb: FormBuilder,
@@ -177,8 +193,13 @@ export class FormBlockComponent
     localStorage.setItem("stud_data", JSON.stringify([]));
   }
 
+  isSettingToJustShowModal() {
+    return this.settings.extraData && this.settings.extraData.justModal;
+  }
+
   openModal() {
     this.showImportModal = true;
+
     const newOptions = [
       ...this.settings.formsContent[this.fields[0]].options,
       {
@@ -186,11 +207,29 @@ export class FormBlockComponent
         name: "Varios grados",
       },
     ];
+
     this.settings.formsContent[this.fields[0]].options = [];
   }
 
   closeModal() {
     this.showImportModal = false;
+  }
+
+  getStudentsModalNgClass() {
+    return {
+      "form-group": this.settings.formsContent[this.fields[0]].type != "double",
+      "full-width":
+        this.settings.formsContent[this.fields[0]].type != "double" &&
+        this.settings.formsContent[this.fields[0]].fullwidth,
+      "input-group":
+        this.settings.formsContent[this.fields[0]].type === "prepend" ||
+        (this.settings.formsContent[this.fields[0]].type === "double" &&
+          this.settings.formsContent[this.fields[0]].isInputGroup),
+      "two-wrapper":
+        this.settings.formsContent[this.fields[0]].type === "double",
+      "one-row-form-form-group": this.settings.isOneRow,
+      "full-width2": this.settings.formsContent[this.fields[0]].fullwidth2,
+    };
   }
 
   openExportModal() {
@@ -305,7 +344,7 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[this.activeSection].id,
     };
-    console.log("BODY to import: ", body);
+    // console.log("BODY to import: ", body);
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
       if (result.status_code === 201) {
@@ -319,7 +358,7 @@ export class FormBlockComponent
         }, 2000);
       }
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
     } finally {
     }
@@ -421,6 +460,8 @@ export class FormBlockComponent
         this.pecaId = peca_id;
       })
     );
+
+    this.initForm();
 
     this.subscription.add(
       this.stepsService.residenceInfoEmitter.subscribe((bool) => {
@@ -1269,6 +1310,15 @@ export class FormBlockComponent
       cf
     );
 
+    if (this.settings.extraData) {
+      manageData = structureData(
+        this.settings.formType,
+        this.settings.formsContent,
+        cf,
+        this.settings.extraData
+      );
+    }
+
     if (this.settings.formType === "preparingWorkshopForm") {
       let date = cf.get("date").value;
       if (date instanceof Date) {
@@ -1382,6 +1432,7 @@ export class FormBlockComponent
         return (this.sendingForm = false);
       }
 
+      // console.log("this.settings.methodUrlPlus: ", this.settings.methodUrlPlus);
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
         ? `${this.settings.fetcherUrls[method]}/${
@@ -1431,7 +1482,7 @@ export class FormBlockComponent
                     this.store.dispatch([new SetUser(respuesta)]);
                   },
                   (error) => {
-                    console.log(error);
+                    // console.log(error);
                   }
                 );
             }
@@ -1887,6 +1938,7 @@ export class FormBlockComponent
       // await this.exportAll();
       this.handleVariosGrados();
       this.sectionsArr = [];
+      // console.log("docenteFormBLock", this.fields);
       this.componentForm.patchValue({ section: "" });
       return;
     }
@@ -1897,10 +1949,11 @@ export class FormBlockComponent
       this.gradesArr = [];
       this.sectionsArr = this.settings.formsContent["section"].options.filter(
         (s) => {
+          // console.log("docenteFormBLock", this.fields);
           return s.grade == grade;
         }
       );
-      console.log("sections array: ", this.settings.formsContent["section"]);
+      // console.log("sections array: ", this.settings.formsContent["section"]);
       this.componentForm.patchValue({
         section: this.sectionsArr[0].id,
       });
@@ -1937,6 +1990,7 @@ export class FormBlockComponent
     this.sectionsToExport = [];
     if (e) {
       let currGrade = null;
+      // console.log("docenteFormBLock", this.fields);
       currGrade =
         this.componentForm.controls["grades"].value &&
         this.componentForm.controls["grades"].value.length > 0
@@ -1966,6 +2020,7 @@ export class FormBlockComponent
     this.gradesArr = [];
     // Habilitar descarga de todas las secciones
     if (section === "all" && toExport) {
+      // console.log("docenteFormBLock", this.fields);
       const markedCheckbox = document.querySelectorAll(
         'input[type="checkbox"]'
       );
@@ -2151,8 +2206,68 @@ export class FormBlockComponent
       this.showExportBtn = false;
       this.sectionsToExport = [];
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
+    }
+  }
+
+  async selectGrades(grade, toExport) {
+    // Habilitar descarga de todas las secciones
+    if (grade === "all" && toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        if (checkbox.id !== "allGrades") {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+        }
+      });
+      if ((this.sectionsToExport = this.settings.formsContent["section"])) {
+        this.sectionsToExport = this.settings.formsContent[
+          "section"
+        ].options.map((section) => {
+          return section.id;
+        });
+      }
+
+      // Deshabilitar descarga de todas las secciones
+    } else if (grade === "all" && !toExport) {
+      const markedCheckbox = document.querySelectorAll(
+        'input[type="checkbox"]'
+      );
+      // console.log("checkbox: ", markedCheckbox);
+      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
+        checkbox.checked = false;
+        checkbox.disabled = false;
+      });
+      this.sectionsToExport = [];
+    } else {
+      // Descarga de secciones individuales
+      const sectionsFounded = this.settings.formsContent[
+        "section"
+      ].options.filter((section) => section.grade === grade);
+      sectionsFounded.forEach((section) => {
+        const sectionIndex = this.sectionsToExport.indexOf(section.id);
+        const alreadyExist = sectionIndex > -1;
+        // Pop section at index
+        if (alreadyExist && !toExport) {
+          this.sectionsToExport.splice(sectionIndex, 1);
+        }
+        // Push section
+        if (!alreadyExist && toExport) {
+          this.sectionsToExport.push(section.id);
+        }
+        if (!this.sectionsToExport.length) {
+          this.showExportBtn = false;
+        }
+      });
+    }
+    // console.log("sections to export: ", this.sectionsToExport);
+    if (!this.sectionsToExport.length) {
+      this.showExportBtn = false;
+    } else {
+      this.showExportBtn = true;
     }
   }
 
@@ -2198,7 +2313,7 @@ export class FormBlockComponent
         this.componentForm.reset();
       }
     } catch (err) {
-      console.log("error: ", err);
+      // console.log("error: ", err);
       throw err;
     }
   }
@@ -2207,7 +2322,7 @@ export class FormBlockComponent
     const allGrades = this.settings.formsContent["section"].options.map(
       (section) => section.grade
     );
-    console.log("grades: ", allGrades);
+    // console.log("grades: ", allGrades);
     const grades = [];
     allGrades.forEach((grade) => {
       if (grades.includes(grade)) {
@@ -2222,64 +2337,343 @@ export class FormBlockComponent
         name: this.parseGrade(grade),
       };
     });
-    console.log("GRADES: ", gradesData);
+    // console.log("GRADES: ", gradesData);
     this.gradesArr = gradesData;
   }
 
-  async selectGrades(grade, toExport) {
-    // Habilitar descarga de todas las secciones
-    if (grade === "all" && toExport) {
-      const markedCheckbox = document.querySelectorAll(
-        'input[type="checkbox"]'
-      );
-      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
-        if (checkbox.id !== "allGrades") {
-          checkbox.checked = true;
-          checkbox.disabled = true;
-        }
-      });
-      this.sectionsToExport = this.settings.formsContent["section"].options.map(
-        (section) => {
-          return section.id;
-        }
-      );
-      // Deshabilitar descarga de todas las secciones
-    } else if (grade === "all" && !toExport) {
-      const markedCheckbox = document.querySelectorAll(
-        'input[type="checkbox"]'
-      );
-      console.log("checkbox: ", markedCheckbox);
-      markedCheckbox.forEach((checkbox: HTMLInputElement) => {
-        checkbox.checked = false;
-        checkbox.disabled = false;
-      });
-      this.sectionsToExport = [];
-    } else {
-      // Descarga de secciones individuales
-      const sectionsFounded = this.settings.formsContent[
-        "section"
-      ].options.filter((section) => section.grade === grade);
-      sectionsFounded.forEach((section) => {
-        const sectionIndex = this.sectionsToExport.indexOf(section.id);
-        const alreadyExist = sectionIndex > -1;
-        // Pop section at index
-        if (alreadyExist && !toExport) {
-          this.sectionsToExport.splice(sectionIndex, 1);
-        }
-        // Push section
-        if (!alreadyExist && toExport) {
-          this.sectionsToExport.push(section.id);
-        }
-        if (!this.sectionsToExport.length) {
-          this.showExportBtn = false;
-        }
+  //
+
+  justOpenModal() {
+    this.showExportModal = true;
+    // console.log("justOpenModal", this.componentForm);
+  }
+
+  // :not(#markAll)
+  private getCheckboxes() {
+    return document.querySelectorAll(
+      '.list-checkbox input[type="checkbox"]:not(#markAll)'
+    );
+  }
+
+  isCheckboxesChecked(lookSome = true) {
+    const markedCheckboxes = this.getCheckboxes();
+
+    const checkboxStates = [];
+
+    markedCheckboxes.forEach((checkbox: HTMLInputElement) => {
+      checkboxStates.push(checkbox.checked);
+    });
+
+    // console.log("checkboxStates", checkboxStates);
+    if (!lookSome) {
+      return checkboxStates.every((checkboxState) => {
+        return checkboxState === true;
       });
     }
-    console.log("sections to export: ", this.sectionsToExport);
-    if (!this.sectionsToExport.length) {
-      this.showExportBtn = false;
-    } else {
-      this.showExportBtn = true;
+
+    return checkboxStates.some((checkboxState) => {
+      return checkboxState;
+    });
+  }
+
+  checkAllGradesStudentsLots(check = true) {
+    const checkboxesElem = this.getCheckboxes();
+
+    checkboxesElem.forEach((checkbox: HTMLInputElement) => {
+      checkbox.checked = check;
+    });
+  }
+
+  onCheckboxChange(e, formControlName: string) {
+    let checkArray: FormArray = this.componentForm.get(
+      formControlName
+    ) as FormArray;
+
+    if (e.target.id === "markAll") {
+      if (e.target.checked) {
+        checkArray = this.currentForm.handles.onCheckboxChange(
+          this.getCheckboxes(),
+          formControlName,
+          this.componentForm
+        );
+        this.checkAllGradesStudentsLots();
+      }
+
+      if (!e.target.checked) {
+        checkArray.clear();
+        this.checkAllGradesStudentsLots(false);
+      }
     }
+
+    if (e.target.id !== "markAll") {
+      checkArray = this.currentForm.handles.onCheckboxChange(
+        e.target,
+        formControlName,
+        this.componentForm
+      );
+    }
+
+    // console.log("onCheckboxChange", this.componentForm);
+  }
+
+  /**
+   * @description Register of forms (Forms Class) and get just initialized forms class to set settings
+   * @author Christopher Dallar
+   * @date 23/02/2022
+   * @memberof FormBlockComponent
+   */
+  initForm() {
+    const { formId, formsContent } = this.settings; // settings from file view config.ts like school-data-config.ts
+
+    // Forms List waiting for init just adding to the array
+    const forms = [
+      new docenteFormBLock(
+        "add-docente", // Set unique string to identify the form
+        {
+          formId, // Pass current formId that instanced form-block component
+          defaultData: formsContent, // The pre-settings
+        },
+        { fetcher: this.fetcher } // Dependencies
+      ),
+      new MathOlympicFormBlock(
+        "add-students-math-olympic-lots", // Set unique string to identify the form
+        {
+          formId, // Pass current formId that instanced form-block component
+          defaultData: formsContent, // The pre-settings properly of the fields
+          custom: {
+            // To pass settings or data that is not properly of the fields
+            pecaId: this.pecaId,
+            componentForm: this.componentForm,
+            settings: this.settings,
+          },
+        },
+        {
+          fetcher: this.fetcher,
+          formBuilder: this.fb,
+          toastr: this.toastr,
+          globals: this.globals,
+          store: this.store,
+        } // Dependencies
+      ),
+    ];
+
+    // Get the form (Form Class) which was initialized
+    this.currentForm = forms.find((form) => {
+      return form.isInit;
+    });
+
+    // If there is an Form (Form Class) initialized
+    if (this.currentForm) {
+      this.settings.formsContent = this.currentForm.getFields(); // Get the fields for set to global form settings
+
+      if (this.currentForm.getControlsToReplace().length > 0) {
+        this.currentForm.getControlsToReplace().map((newControl) => {
+          this.componentForm.setControl(
+            newControl.name,
+            newControl.formControl
+          );
+        });
+
+        // console.log("this.currentForm.formGroupConfigs()", this.componentForm);
+      }
+    }
+  }
+}
+
+/**
+ * @description This class represent an Form to be render, extending from FormBLock.
+ * The main idea is manage (settings, request to fill options or anything) each form
+ * grouping code by classes to get a clean order
+ * @author Christopher Dallar
+ * @date 23/02/2022
+ * @class docenteFormBLock
+ * @extends {FormBlock}
+ * @implements {FormBlockAbstract}
+ */
+class docenteFormBLock extends FormBlock implements FormBlockAbstract {
+  constructor(
+    id: string | number,
+    options: FormBlockOptions,
+    public dep?: { fetcher: HttpFetcherService }
+  ) {
+    super(id, options, dep);
+  }
+
+  // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
+  init() {
+    this.body();
+    // console.log("docenteFormBLock", this.fields);
+  }
+
+  async body() {
+    this.fillSelectSpecialty();
+  }
+
+  // setting and fill options for the fields
+  async fillSelectSpecialty() {
+    let specialTyOp: FormBlockFieldOption[] = [];
+    let specialtiesApi = await this.dep.fetcher.get("specialty").toPromise(); // get option from api
+
+    // Adapt request to options field object structure {id: string, name: string}
+    specialTyOp = specialtiesApi.records.map((specialtyApi) => {
+      const { id, name } = specialtyApi;
+      return { id, name };
+    });
+
+    this.fillSelect("specialty", specialTyOp); // Set array options to the field "specialty"
+  }
+}
+
+class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
+  isLoading = false;
+
+  constructor(
+    id: string | number,
+    options: FormBlockOptions,
+    public dep?: {
+      fetcher: HttpFetcherService;
+      formBuilder: FormBuilder;
+      toastr: ToastrService;
+      globals: GlobalService;
+      store: Store;
+    }
+  ) {
+    super(id, options, dep);
+  }
+
+  // Always you have to set a init method, it recibe all method to manage (settings, request to fill options or anything) the form
+  async init() {
+    await this.body();
+    // console.log("docenteFormBLock", this.fields);
+  }
+
+  // setting and fill options for the fields
+  async body() {
+    await this.fillSelectGrades();
+  }
+
+  getControlsToReplace() {
+    const options = this.getField("gradesStudents").options.map((grade) => {
+      return { value: grade.id, name: grade.name };
+    });
+    const formControl: AbstractControl = this.dep.formBuilder.array(
+      [],
+      Validators.required
+    );
+    return [
+      {
+        name: "gradesStudents",
+        formControl,
+      },
+    ];
+  }
+
+  async fillSelectGrades() {
+    const pecaGradesApi = await this.dep.fetcher
+      .get(`peca/grade/${this.custom.pecaId}`)
+      .toPromise(); // get option from api
+
+    let pecaGrades = [];
+
+    // Adapt request to options field object structure {id: string, name: string}
+    pecaGrades = pecaGradesApi.data.filter((grade) => {
+      return (
+        grade.grade != "0" || grade.name.toLocaleLowerCase() !== "preescolar"
+      );
+    });
+
+    // console.log("MathOlympic - pecaGrades", pecaGrades);
+
+    this.fillSelect("gradesStudents", pecaGrades);
+  }
+
+  // Think if add to father class
+
+  async onSubmit(cf: FormGroup, toDelete = false) {
+    if (!toDelete) {
+      this.addStudentsByLots(cf);
+    }
+
+    if (toDelete) {
+      this.deleteStudentsByLots(cf);
+    }
+  }
+
+  private async deleteStudentsByLots(cf: FormGroup) {
+    const { lapseNumber, students, pecaId } = this.custom.settings.extraData;
+    const body = {
+      students: students.map((student) => student.id),
+      lapse: lapseNumber,
+    };
+
+    // console.log("onSubmit", body);
+
+    this.isLoading = true;
+    try {
+      const dataResp = await this.dep.fetcher
+        .patch(`peca/grade/${pecaId}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al eliminar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    await this.updateStudentsList();
+
+    this.isLoading = false;
+  }
+
+  private async addStudentsByLots(cf: FormGroup) {
+    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+
+    const body = {
+      grades: cf.get("gradesStudents").value,
+      lapse: lapseNumber,
+    };
+
+    // console.log("onSubmit", body);
+
+    this.isLoading = true;
+    try {
+      const dataResp = await this.dep.fetcher
+        .post(`peca/grade/${pecaId}`, body)
+        .toPromise();
+
+      this.dep.toastr.success(dataResp.message, "", {
+        positionClass: "toast-bottom-right",
+      });
+    } catch (error) {
+      this.dep.toastr.error("Error al agregar estudiantes en lote", "", {
+        positionClass: "toast-bottom-right",
+      });
+    }
+
+    await this.updateStudentsList();
+
+    // this.dep.globals.setAsReadOnly(this.custom.settings.tableCode, true, false);
+
+    this.isLoading = false;
+  }
+
+  async updateStudentsList() {
+    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+
+    try {
+      const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .toPromise();
+
+      // console.log("RespPecaProjects respData", respData);
+      const data = {
+        lapseNumber,
+        newStudents: respData.students,
+      };
+      this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+    } catch {}
   }
 }

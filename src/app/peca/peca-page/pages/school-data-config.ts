@@ -7,6 +7,10 @@ import {
   formTabsEstudiantesGradesSections,
 } from "../blocks/form-block/all-forms";
 
+const mostrarFeedback = (statusCode) => {
+  return statusCode === 3;
+};
+
 const statusGeneral = {
   component: "textsbuttons",
   name: "schoolFormStatus",
@@ -14,7 +18,6 @@ const statusGeneral = {
     dateOrtext: {},
     status: {
       text: "Estatus",
-      subText: 0,
     },
     buttonCode: "schoolDataConfigRegistroEscuela",
   },
@@ -116,6 +119,7 @@ const textsAndButtonsRegistroEscuela = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigRegistroEscuela",
     isFromCustomTableActions: true,
     makesNoRequest: true,
@@ -143,6 +147,7 @@ const formDocente = {
   component: "form",
   name: "teacherForm",
   settings: {
+    formId: "add-docente",
     formsContent: formTabsDocente,
     buttons: ["guardar"],
     tableCode: "schoolDataConfigTablaDocente",
@@ -194,6 +199,9 @@ const tablaDocente = {
           else return false;
         },
       },
+      // specialty: { // Para mostrar columna de especialidad
+      //   title: "Especialidad",
+      // },
     },
     modalCode: "schoolDataConfigTablaDocente",
     tableCode: "schoolDataConfigTablaDocente",
@@ -239,6 +247,7 @@ const textsAndButtonsTablaDocente = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaDocente",
     isFromCustomTableActions: true,
     fetcherMethod: "delete",
@@ -369,6 +378,7 @@ const textsAndButtonsTablaGradosSecciones = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaGradosSecciones",
     isFromCustomTableActions: true,
     fetcherMethod: "delete",
@@ -521,6 +531,7 @@ const textsAndButtonsTablaEstudiante = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "schoolDataConfigTablaEstudiante",
     isFromCustomTableActions: true,
     isDeleting: true,
@@ -602,3 +613,7 @@ export const SCHOOL_DATA_CONFIG = {
     },
   ],
 };
+
+// export function _mapper_SCHOOL_DATA_CONFIG () {
+
+// }
