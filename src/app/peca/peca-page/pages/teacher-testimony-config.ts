@@ -1,3 +1,4 @@
+import { RejectionCommentsCustomBlockModel } from "./custom-blocks-models/rejection-comments.blockmodel";
 import {
   formTestimonioDocentesModal,
   formTestimonioDocentesModalEdit,
@@ -63,6 +64,7 @@ const textsAndButtonsTestimonioDocenteTabla = {
         name: "No",
       },
     ],
+    classes: "justify-content-center",
     modalCode: "dataTestimonioDocenteTabla",
     makesNoRequest: true,
     isFromCustomTableActions: true,
@@ -108,16 +110,28 @@ export function teacherTestimoniesConfigMapper(
       +lastTestimoniesRequest.status < 4 ? +lastTestimoniesRequest.status : 1;
   }
 
-  const teacherTestimoniesStatus = {
-    component: "textsbuttons",
-    settings: {
-      dateOrtext: {},
-      status: {
-        text: "Estatus",
-        subText: currentStatus,
-      },
-    },
+  const mostrarFeedback = (statusCode) => {
+    return statusCode === 3;
   };
+
+  const getComments = (
+    approvalHistory,
+    statusCode,
+    checkIsThereComments = false
+  ) => {
+    const comments = approvalHistory[approvalHistory.length - 1].comments;
+
+    if (checkIsThereComments) {
+      return comments && statusCode == 3;
+    }
+
+    return comments;
+  };
+
+  const teacherTestimoniesStatus = new RejectionCommentsCustomBlockModel(
+    approvalHistory,
+    isInApproval
+  ).getSettings();
 
   const teacherTestimonyForm = {
     component: "form",
@@ -239,10 +253,11 @@ export function teacherTestimoniesConfigMapper(
     settings: {
       action: [
         {
+          extraData: { isDuplicated: isInApproval ? true : false },
           hidden: isInApproval
             ? !teacher_testimonial_delete
             : !teacher_testimonial_edit,
-          type: isInApproval ? 9 : 1,
+          type: isInApproval ? 9 : 1, // If it's 9 show two (ver mas y cancelar) else just enviar
           name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
         },
       ],

@@ -28,14 +28,16 @@ import {
 })
 export class GenericActivityPageComponent
   extends PecaPageComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
 
   @Select(PecaState.getPecaLapsesData) pecaLapseData$: Observable<any>;
   // @Select(PecaState.isPecaContentRequesting) isPecaContentRequesting$: Observable<boolean>;
   @Select(PecaState.getUserResume) userData$: Observable<any>;
-  @Select(PecaState.getUserPermissions) genericActivitiesPemissions$: Observable<any>;
+  @Select(PecaState.getUserPermissions)
+  genericActivitiesPemissions$: Observable<any>;
 
   private subscription: Subscription = new Subscription();
   isInstanciated: boolean;
@@ -72,7 +74,9 @@ export class GenericActivityPageComponent
     super(factoryResolver);
 
     globals.blockIntancesEmitter.subscribe((data) => {
-      data.blocks.forEach((block, name) => this.blockInstances.set(name, block));
+      data.blocks.forEach((block, name) =>
+        this.blockInstances.set(name, block)
+      );
 
       if (this.loadedData) this.updateMethods();
     });
@@ -108,10 +112,15 @@ export class GenericActivityPageComponent
     this.subscription.add(
       this.pecaLapseData$.subscribe(
         (data) => {
-          if (data && data.lapses && data.lapses.pecaId) this.peca_id = data.lapses.pecaId;
+          if (data && data.lapses && data.lapses.pecaId) {
+            this.peca_id = data.lapses.pecaId;
+          }
+
           if (data && data.lapses && data.lapses[`lapse${lapseId}`]) {
             const actDevNameDecoded = decodeURI(activityDevName);
-            const activity: GenericActivity = data.lapses[`lapse${lapseId}`].activities.find(
+            const activity: GenericActivity = data.lapses[
+              `lapse${lapseId}`
+            ].activities.find(
               (activity) => activity.devName === actDevNameDecoded
             );
 
@@ -141,7 +150,10 @@ export class GenericActivityPageComponent
       this.genericActivitiesPemissions$.subscribe((permissions) => {
         const permissions_ = genericActivityPermissions.actions.reduce(
           (permssionsObj, viewPermission) => {
-            if (permissions) permssionsObj[viewPermission] = permissions.some((p) => p === viewPermission);
+            if (permissions)
+              permssionsObj[viewPermission] = permissions.some(
+                (p) => p === viewPermission
+              );
             return permssionsObj;
           },
           {}
@@ -170,12 +182,18 @@ export class GenericActivityPageComponent
 
     let genericActivityObj = { ...genericActivity };
 
-    if (this.g_a_text) genericActivityObj = { ...genericActivityObj, ...this.g_a_text };
-    if (this.g_a_date) genericActivityObj = { ...genericActivityObj, ...this.g_a_date };
-    if (this.g_a_download) genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
-    if (this.g_a_video) genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
-    if (this.g_a_addMT) genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
-    if (this.g_a_upload) genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
+    if (this.g_a_text)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_text };
+    if (this.g_a_date)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_date };
+    if (this.g_a_download)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_download };
+    if (this.g_a_video)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_video };
+    if (this.g_a_addMT)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_addMT };
+    if (this.g_a_upload)
+      genericActivityObj = { ...genericActivityObj, ...this.g_a_upload };
     if (this.g_a_status_selector)
       genericActivityObj = {
         ...genericActivityObj,
@@ -185,7 +203,10 @@ export class GenericActivityPageComponent
 
     this.setBlockData("genericActivityStatus", this.g_a_status);
     this.setBlockData("genericActivityFields", genericActivityObj);
-    this.setBlockData("genericActivityChecklist", { ...genericActivity, ...this.g_a_checklist });
+    this.setBlockData("genericActivityChecklist", {
+      ...genericActivity,
+      ...this.g_a_checklist,
+    });
     this.setBlockData("genericActivityActionButton", {
       ...genericActivity,
       ...this.g_a_action_btn,
@@ -196,11 +217,16 @@ export class GenericActivityPageComponent
   setGenericActivityData(data: GenericActivity) {
     // "approvalType": "str (1=solo aproeba el admin, 2=al rellenar, 3=genera solicitud de aprobacion, 4=aprobacion interna, 5=sin aprobacion)",
     // "status": ("1", "2", "3"), ("pending", "in_approval", "approved")
+
     this.g_a_id = data.id;
-    this.g_a_activity_uneditable = data.status === "1" || data.approvalType === "5" ? false : true;
+    this.g_a_activity_uneditable =
+      data.status === "1" || data.approvalType === "5" ? false : true;
     this.g_a_user_can_edit = this.g_a_view_permissions.activity_peca_edit;
 
-    const genActMapped = genericActivityMapper(data, /* this.user_id,  */ this.user_type);
+    const genActMapped = genericActivityMapper(
+      data,
+      /* this.user_id,  */ this.user_type
+    );
 
     this.activity_cancel_id = genActMapped.activity_cancel_id;
 
@@ -218,7 +244,6 @@ export class GenericActivityPageComponent
     this.g_a_video = genActMapped.g_a_video;
     this.g_a_addMT = genActMapped.g_a_addMT;
     this.g_a_upload = genActMapped.g_a_upload;
-
     // CHECKLIST
     this.g_a_checklist = genActMapped.g_a_checklist;
     // Action buttons
@@ -230,7 +255,9 @@ export class GenericActivityPageComponent
     // genericActivityActionButton
     this.setBlockFetcherUrls("genericActivityActionButton", {
       put: `pecaprojects/activities/${this.peca_id}/${this.lapse_n}/${this.g_a_id}?userId=${this.user_id}`,
-      cancel: this.activity_cancel_id ? `requestscontentapproval/${this.activity_cancel_id}` : null,
+      cancel: this.activity_cancel_id
+        ? `requestscontentapproval/${this.activity_cancel_id}`
+        : null,
     });
 
     // genericActivityFields
