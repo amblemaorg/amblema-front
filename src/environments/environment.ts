@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   recaptchaKey: "6LcB7OsUAAAAADp1Ja9obo2HXVmb2r1Gl0Dqlsgj", // from cuentas.soporte@binaural.com.ve
   recaptchaNonce: "0D3VrhyLft",
-  baseUrl: "http://157.245.131.248:10506/"
+  baseUrl: "http://157.245.131.248:10506/",
+  // baseUrl: "http://157.245.131.248:10506/"
   // baseUrl: "http://157.245.131.248:10506/",
   // baseUrl: "http://192.168.1.103:10506/",
   // baseUrl: "http://157.245.131.248:10506/",

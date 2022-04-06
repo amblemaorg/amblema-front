@@ -18,7 +18,8 @@ import { NavigationEnd, Router, Event } from "@angular/router";
   styleUrls: ["./checklist-block.component.scss"],
 })
 export class ChecklistBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy {
+  implements PresentationalBlockComponent, OnInit, OnDestroy
+{
   type: "presentational";
   component: string;
   prueba: any;
@@ -62,6 +63,7 @@ export class ChecklistBlockComponent
         isFromAnnualConvention?: boolean;
         genericActivityId?: string;
         approvedAct?: boolean;
+        percent?: number;
         checkList: {
           id?: string;
           name: string;
@@ -173,6 +175,7 @@ export class ChecklistBlockComponent
       ]
         ? data.approvedAct
         : null;
+      this.settings.infoContainer[0].datosNivel[0].percent = data["percent"];
 
       setTimeout(() => {
         this.globals.updateGenActButtonDataUpdater({
@@ -186,7 +189,8 @@ export class ChecklistBlockComponent
 
     if (data["checkList"]) {
       this.flag = true;
-      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention = true;
+      this.settings.infoContainer[0].datosNivel[0].isFromAnnualConvention =
+        true;
       this.settings.infoContainer[0].datosNivel[0].checkList = data.checkList;
     } else {
       this.flag = false;
@@ -197,10 +201,25 @@ export class ChecklistBlockComponent
   }
 
   toggleCheck(checked: boolean, check: any, isGenAct) {
-    check.checked = checked;
+    // check.checked = checked;
+
+    check = {
+      id: check.id,
+      name: check.name,
+      checked: checked,
+    };
+
+    this.settings.infoContainer[0].datosNivel[0].checkList =
+      this.settings.infoContainer[0].datosNivel[0].checkList.map(
+        (checkItem) => {
+          if (checkItem.id === check.id) {
+            return check;
+          }
+          return checkItem;
+        }
+      );
 
     if (isGenAct) {
-      // if truty, this is for generic activity
       this.globals.updateGenActButtonDataUpdater({
         gaId: this.settings.infoContainer[0].datosNivel[0].genericActivityId,
         checklist:
@@ -254,9 +273,8 @@ export class ChecklistBlockComponent
 
   sendChecks(checks, levelIndex) {
     const { environmentalData, lapse, topicIndex } = this.settings.extraData;
-    environmentalData[lapse].topics[topicIndex].levels[
-      levelIndex
-    ].activities = checks;
+    environmentalData[lapse].topics[topicIndex].levels[levelIndex].activities =
+      checks;
     const body = {
       ...environmentalData,
     };
@@ -293,5 +311,9 @@ export class ChecklistBlockComponent
         console.error(error);
       }
     );
+  }
+
+  getPercentWidth(percent) {
+    return Math.floor(percent);
   }
 }

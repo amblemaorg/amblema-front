@@ -136,6 +136,10 @@ export class RegisterStudentMathOlympics {
   constructor(public payload: any) {}
 }
 
+export class UpdateStudentsMathOlympicsList {
+  static readonly type = "[peca] Register Student Math Olympics";
+  constructor(public payload: { lapseNumber: number; newStudents: any[] }) {}
+}
 export class UpdateStudentMathOlympics {
   static readonly type = "[peca] Update Student Math Olympics";
   constructor(public payload: any) {}

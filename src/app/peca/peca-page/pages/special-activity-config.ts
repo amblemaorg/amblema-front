@@ -1,4 +1,4 @@
-import { specialActivityPermissionsI } from './../blocks/peca-permissology';
+import { specialActivityPermissionsI } from "./../blocks/peca-permissology";
 import { formSpecialActivityTableModal } from "../blocks/form-block/all-forms";
 import {
   UpdateSpecialActivity,
@@ -65,7 +65,7 @@ const modalSpecialActivityTable = {
       {
         childBlocks: [
           formSpecialActivityTable,
-          textsAndButtonsSpecialActivityTable
+          textsAndButtonsSpecialActivityTable,
         ],
       },
     ],
@@ -80,19 +80,29 @@ export function specialActivityConfigMapper(
   permissions: specialActivityPermissionsI,
   store
 ) {
-  const { special_activity_edit, special_activity_delete } = permissions
-  const { approvalHistory, isInApproval, activityDate, itemsActivities } = specialActivity;
+  const { special_activity_edit, special_activity_delete } = permissions;
+  const { approvalHistory, isInApproval, activityDate, itemsActivities } =
+    specialActivity;
   let currentDateFormatted = activityDate ? activityDate.split("T")[0] : null;
   let currentItems = itemsActivities;
   let currentStatus = itemsActivities.length > 0 ? 2 : 1;
   let lastSpecialActivityRequest = null;
   if (isInApproval || (!isInApproval && approvalHistory.length > 0)) {
     lastSpecialActivityRequest = approvalHistory[approvalHistory.length - 1];
-    const lastItemActivities = lastSpecialActivityRequest.detail.itemsActivities;
+    const lastItemActivities =
+      lastSpecialActivityRequest.detail.itemsActivities;
     const lastActivityDate = lastSpecialActivityRequest.detail.activityDate;
-    currentItems = lastItemActivities && lastItemActivities.length > 0 ? lastItemActivities : [];
-    currentDateFormatted = lastActivityDate ? lastActivityDate.split("T")[0] : null;
-    currentStatus = +lastSpecialActivityRequest.status < 4 ? +lastSpecialActivityRequest.status : 1;
+    currentItems =
+      lastItemActivities && lastItemActivities.length > 0
+        ? lastItemActivities
+        : [];
+    currentDateFormatted = lastActivityDate
+      ? lastActivityDate.split("T")[0]
+      : null;
+    currentStatus =
+      +lastSpecialActivityRequest.status < 4
+        ? +lastSpecialActivityRequest.status
+        : 1;
   }
 
   const dateAndStatus = {
@@ -111,7 +121,16 @@ export function specialActivityConfigMapper(
             dateForDateAndStatusMonth: null,
             dateForDateAndStatusYear: null,
             dateForDateAndStatusInactiveInput: null,
-            theWholeDate: isInApproval || (!isInApproval && approvalHistory.length > 0) ? (approvalHistory[approvalHistory.length - 1].detail.activityDate ? approvalHistory[approvalHistory.length - 1].detail.activityDate : null) : (activityDate ? activityDate : null),
+            theWholeDate:
+              isInApproval || (!isInApproval && approvalHistory.length > 0)
+                ? approvalHistory[approvalHistory.length - 1].detail
+                    .activityDate
+                  ? approvalHistory[approvalHistory.length - 1].detail
+                      .activityDate
+                  : null
+                : activityDate
+                ? activityDate
+                : null,
             ...controlProps.dateAndRequired,
             value: currentDateFormatted,
           },
@@ -164,7 +183,8 @@ export function specialActivityConfigMapper(
             let value: string = cell.toString() + "%";
             value = value.toUpperCase();
 
-            if (value.includes(search.toUpperCase()) || search === "") return true;
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
             else return false;
           },
         },
@@ -219,7 +239,10 @@ export function specialActivityConfigMapper(
     settings: {
       action: [
         {
-          hidden: isInApproval ? !special_activity_delete : !special_activity_edit,
+          extraData: { isDuplicated: false },
+          hidden: isInApproval
+            ? !special_activity_delete
+            : !special_activity_edit,
           type: isInApproval ? 9 : 0,
           name: isInApproval ? "Cancelar Solicitud" : "Enviar Solicitud",
         },
@@ -248,7 +271,9 @@ export function specialActivityConfigMapper(
               const calc = +unitPrice * +quantity * (1 + +tax / 100);
               return +calc.toFixed(2);
             }
-            store.dispatch(new UpdateSpecialActivity({ lapseNumber, itemsActivities, total }));
+            store.dispatch(
+              new UpdateSpecialActivity({ lapseNumber, itemsActivities, total })
+            );
           },
     },
   };

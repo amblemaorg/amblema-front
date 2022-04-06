@@ -1,3 +1,4 @@
+import { RejectionCommentsCustomBlockModel } from "./custom-blocks-models/rejection-comments.blockmodel";
 import {
   schoolPermissions,
   teacherPermissions,
@@ -19,7 +20,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { PecaPageComponent } from "../peca-page.component";
-import { SCHOOL_DATA_CONFIG as config } from "./school-data-config";
+import { SCHOOL_DATA_CONFIG } from "./school-data-config";
 import { Select } from "@ngxs/store";
 import { PecaState } from "../../../store/states/peca/peca.state";
 import { Observable, Subscription } from "rxjs";
@@ -66,7 +67,6 @@ export class SchoolDataPageComponent
 
   currentUserId: string; // current user id on session
   requestIdToCancel: string; // if school data is in approval this holds last request id
-  schoolDataStatus: number; // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
   permissions: any = {};
 
   // controlling when data from school is loaded
@@ -75,9 +75,15 @@ export class SchoolDataPageComponent
   teachersFormData: { hiddenButton: boolean };
   schoolFormButton: {
     action: (
-      | { type: number; name: string; hidden?: undefined }
+      | {
+          extraData: { isToSendRequest: boolean };
+          type: number;
+          name: string;
+          hidden?: undefined;
+        }
       | {
           hidden: boolean;
+          extraData: { isToSendRequest: boolean };
           type: number;
           name: string;
           margin?: string;
@@ -86,6 +92,9 @@ export class SchoolDataPageComponent
         }
     )[];
   };
+
+  // Main Config
+  customConfig = SCHOOL_DATA_CONFIG;
 
   constructor(
     factoryResolver: ComponentFactoryResolver,
@@ -117,7 +126,7 @@ export class SchoolDataPageComponent
       }
     });
 
-    this.instantiateComponent(config);
+    this.instantiateComponent(this.customConfig);
   }
 
   ngOnInit() {
@@ -156,9 +165,7 @@ export class SchoolDataPageComponent
             this.setCancelRequest(data.school.approvalHistory);
           else this.unsetCancelRequest();
 
-          this.setSchoolStatus(data.school); // sets current school status number
-
-          this.setSchoolFormStatusData();
+          this.setSchoolFormStatusData(data.school);
           this.setSchoolFormData(
             data.school,
             schoolDataToSchoolFormMapper,
@@ -222,8 +229,9 @@ export class SchoolDataPageComponent
 
   updateDataToBlocks(updateData: boolean) {
     if (updateData) {
+      // Render with new sections layout
       // School data
-      this.setBlockData("schoolFormStatus", this.schoolFormStatusData);
+      this.setBlockData("schoolFormStatus", this.schoolFormStatusData); // Add Approval status text, "ver mas" button and comments to show
       this.setBlockData("schoolForm", this.schoolFormData);
       this.setBlockData("schoolFormButton", this.schoolFormButton);
       this.setBlockData("schoolPicturesTable", this.sliderPicturesData);
@@ -251,20 +259,6 @@ export class SchoolDataPageComponent
   }
   unsetCancelRequest() {
     this.requestIdToCancel = null;
-  }
-
-  setSchoolStatus(school) {
-    // 1 pendiente, 2 aprobado, 3 rechazado, 4 cancelado
-    this.schoolDataStatus = school.isInApproval
-      ? 1
-      : school.approvalHistory.length > 0
-      ? school.approvalHistory[school.approvalHistory.length - 1].status ===
-          "2" ||
-        school.approvalHistory[school.approvalHistory.length - 1].status === "3"
-        ? +school.approvalHistory[school.approvalHistory.length - 1].status
-        : 0
-      : 0;
-    // this.schoolDataStatus = school.isInApproval ? 1 : 0;
   }
 
   updateStaticFetchers() {
@@ -367,10 +361,12 @@ export class SchoolDataPageComponent
       this.schoolFormButton = {
         action: [
           {
+            extraData: { isToSendRequest: true },
             type: 2,
             name: "Adjuntar fotos",
           },
           {
+            extraData: { isToSendRequest: true },
             hidden: !permissions.school_peca_edit,
             type: 4,
             name: "Enviar Solicitud",
@@ -385,13 +381,20 @@ export class SchoolDataPageComponent
     }
   }
 
-  setSchoolFormStatusData() {
-    this.schoolFormStatusData = {
-      status: {
-        text: "Estatus",
-        subText: this.schoolDataStatus,
-      },
-    };
+  /**
+   * @description Setting options of approval status text, actions of "ver mas" button and comments to show
+   * @author Christopher Dallar Document This
+   * @date 07/02/2022
+   * @param {*} school
+   * @memberof SchoolDataPageComponent
+   */
+  setSchoolFormStatusData(school) {
+    const { approvalHistory, isInApproval } = school;
+
+    this.schoolFormStatusData = new RejectionCommentsCustomBlockModel(
+      approvalHistory,
+      isInApproval
+    ).getSettings().settings;
   }
 
   setTeachersTableData(
@@ -412,6 +415,8 @@ export class SchoolDataPageComponent
           hideDelete: !permissions.teacher_delete,
         },
       };
+
+      // console.log("setTeachersTableData", teachersData);
     } else {
       this.teachersTableData = teachersData;
     }
