@@ -1,8 +1,4 @@
 #!/bin/bash
-export REGISTRY=gitlab.binauraldev.com:5050
-
-export PROJECT=/binaural/proyectos/frontend/spa/angular/amblema-front
-
 export TAGNAME=lastest
 export REPOSITORY=devbinaural/build_amblema-front
 export USER=devbinaural
@@ -36,9 +32,9 @@ docker build \
   --target csr-prod \
   -t ${REPOSITORY}:${TAGNAME}-app .
 
-docker push ${REPOSITORY}:${TAGNAME}-app
+docker push ${REPOSITORY}-app
 
-docker rmi ${REPOSITORY}:${TAGNAME}-app
+docker rmi ${REPOSITORY}-app
 
 docker build \
   -f prod.Dockerfile \
@@ -52,8 +48,8 @@ docker build \
   --target ssr-prod \
   -t ${REPOSITORY}:${TAGNAME}-ssr .
 
-docker push ${REPOSITORY}:${TAGNAME}-ssr
+docker push ${REPOSITORY}-ssr
 
-docker rmi ${REPOSITORY}:${TAGNAME}-ssr
+docker rmi ${REPOSITORY}-ssr
 
 docker logout
