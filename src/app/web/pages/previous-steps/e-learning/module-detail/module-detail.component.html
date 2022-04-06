@@ -27,14 +27,16 @@
     </section>
     <section class="col-lg-7 px-0 mt-2 mb-4 initial-learning">
       <h4 class="mb-3">{{ moduleInfo.title }}</h4>
-      <p>
-        {{ moduleInfo.description }}
-      </p>
+
+      <div [innerHtml]="moduleInfo.description" class="description-html"></div>
     </section>
   </section>
 
   <div class="gallery d-flex flex-wrap mb-4">
-    <div class="carousel col-sm-9 px-0" [class.margin-both-auto]="imgvid && imgvid.length < 2">
+    <div
+      class="carousel col-sm-9 px-0"
+      [class.margin-both-auto]="imgvid && imgvid.length < 2"
+    >
       <owl-carousel
         #owlElement
         [options]="carouselOps"
@@ -42,22 +44,37 @@
         [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']"
       >
         <div *ngFor="let img of imgvid; index as i">
-          <img *ngIf="img.type == '1'" [src]="img.url" [alt]="img.description" />
+          <img
+            *ngIf="img.type == '1'"
+            [src]="img.url"
+            [alt]="img.description"
+          />
           <a *ngIf="img.type == '2'" class="owl-video" [href]="img.url"></a>
           <h6 class="my-4">{{ img.description }}</h6>
         </div>
       </owl-carousel>
     </div>
 
-    <div class="images col-sm-3 px-0" [class.d-none]="imgvid && imgvid.length < 2">
+    <div
+      class="images col-sm-3 px-0"
+      [class.d-none]="imgvid && imgvid.length < 2"
+    >
       <owl-carousel
         #imgsElement
         [options]="carouselOpsImgs"
         [items]="imgvid"
         [carouselClasses]="['owl-theme', 'sliding', 'owl-styles']"
       >
-        <div class="image-item mb-3" *ngFor="let img of imgvid; index as i" (click)="goToImg(i)">
-          <img *ngIf="img.type == '1'" [src]="img.url" [alt]="img.description" />
+        <div
+          class="image-item mb-3"
+          *ngFor="let img of imgvid; index as i"
+          (click)="goToImg(i)"
+        >
+          <img
+            *ngIf="img.type == '1'"
+            [src]="img.url"
+            [alt]="img.description"
+          />
           <div class="over-video" *ngIf="img.type == '2'"></div>
           <a *ngIf="img.type == '2'" class="owl-video" [href]="img.url"></a>
           <p class="ml-3">
@@ -80,9 +97,10 @@
 
   <section class="description">
     <h4 class="mb-4">{{ moduleInfo.secondaryTitle }}</h4>
-    <p>
-      {{ moduleInfo.secondaryDescription }}
-    </p>
+    <div
+      [innerHtml]="moduleInfo.secondaryDescription"
+      class="description-html"
+    ></div>
   </section>
 </div>
 
@@ -111,9 +129,13 @@
   </div>
 
   <div class="questions">
-    <div class="d-flex flex-wrap q-item" *ngFor="let question of moduleInfo.quizzes; index as i">
+    <div
+      class="d-flex flex-wrap q-item"
+      *ngFor="let question of moduleInfo.quizzes; index as i"
+    >
       <h3 class="col-sm-12 px-0 mt-2 mb-4">
-        <span class="mr-4">{{ i + 1 }}</span> <span>{{ question.question }}</span>
+        <span class="mr-4">{{ i + 1 }}</span>
+        <span>{{ question.question }}</span>
       </h3>
       <div
         class="col-sm-6 mb-4 px-0 option-answer"
@@ -133,7 +155,9 @@
           (click)="selectAnswer(i, option)"
         >
           <div class="col-2 mr-2">
-            <span class="letter-sequence border rounded-circle">{{ letterSequence(j) }}</span>
+            <span class="letter-sequence border rounded-circle">{{
+              letterSequence(j)
+            }}</span>
           </div>
           <div class="col-10 text-left">{{ getOption(j, question) }}</div>
         </a>
@@ -160,7 +184,8 @@
     </button>
     <!-- <p *ngIf="!completedModule" class="d-inline"><img src="../../../../../assets/images/icn-amblemoneda-blue.png" alt="">&nbsp;&times;&nbsp;{{moduleCoins}}</p> -->
     <p *ngIf="completedModule" class="d-inline green">
-      Ganaste {{ moduleCoins > 1 ? moduleCoins + " puntos." : moduleCoins + " punto." }}
+      Ganaste
+      {{ moduleCoins > 1 ? moduleCoins + " puntos." : moduleCoins + " punto." }}
     </p>
     <button
       #modalOpener
@@ -193,12 +218,16 @@
 
       <!-- Modal body -->
       <div class="modal-body d-flex flex-column justify-content-center">
-        <h2 class="font-weight-bold text-center mt-4 mb-4">MODULO COMPLETADO</h2>
-        <p class="text-center mb-4">Gracias por querer formar parte del equipo AmbLeMa.</p>
+        <h2 class="font-weight-bold text-center mt-4 mb-4">
+          MODULO COMPLETADO
+        </h2>
         <p class="text-center mb-4">
-          Cada módulo dentro del AmblePENSUM permitirá conocer mejor el perfil y las atribuciones de
-          un Coordinador para lograr la eficaz aplicación de la Herramienta Educativa en cada
-          escuela.
+          Gracias por querer formar parte del equipo AmbLeMa.
+        </p>
+        <p class="text-center mb-4">
+          Cada módulo dentro del AmblePENSUM permitirá conocer mejor el perfil y
+          las atribuciones de un Coordinador para lograr la eficaz aplicación de
+          la Herramienta Educativa en cada escuela.
         </p>
         <p class="text-center mb-4">
           Es parte de nuestra manera de lograr la calidad en cada proceso
@@ -232,7 +261,9 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
       </div>
       <div class="modal-body">
         <p>
@@ -253,11 +284,15 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
       </div>
       <div class="modal-body">
         <img [src]="current.image" [alt]="current.description" />
-        <h5 class="font-weight-bold text-left mt-3">{{ current.description }}</h5>
+        <h5 class="font-weight-bold text-left mt-3">
+          {{ current.description }}
+        </h5>
       </div>
     </div>
   </div>

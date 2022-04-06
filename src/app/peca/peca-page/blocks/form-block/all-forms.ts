@@ -898,6 +898,13 @@ export const formTabsDocente = {
       { id: "2", name: "Inactivo" },
     ],
   },
+  specialty: {
+    label: "Especialidad",
+    placeholder: "Especialidad",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [],
+  },
 };
 /*TABS GRADOS Y SECCIONES*/
 export const formGradosSecciones = {
