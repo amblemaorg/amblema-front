@@ -70,7 +70,7 @@ export class YearbookPageComponent
       )
       .subscribe(
         (data) => {
-          console.log("DATAAA: ", data);
+          // console.log("DATAAA: ", data);
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
               // this.store.dispatch(new SetFalseMakingAction());
@@ -197,7 +197,7 @@ export class YearbookPageComponent
                             /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].description && lapse1Activities[activity.id].description.length ? lapse1Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
                           images:
-                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false) 
+                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -236,7 +236,7 @@ export class YearbookPageComponent
                             /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].description && lapse2Activities[activity.id].description.length ? lapse2Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
                           images:
-                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false) 
+                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -275,7 +275,7 @@ export class YearbookPageComponent
                             /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].description && lapse3Activities[activity.id].description.length ? lapse3Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
                           images:
-                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false) 
+                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
                       }
@@ -310,7 +310,9 @@ export class YearbookPageComponent
 
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
-              // this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
+              this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
+              // console.log("yearbook - this.pecaData", this.pecaData);
+
               this.setPdfData(this.pecaData);
               // this.store.dispatch(new SetYearBook(newYearBook));
               const yearBookConfig = MapperYearBookWeb(
