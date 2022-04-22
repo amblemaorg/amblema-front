@@ -141,6 +141,8 @@ export class PecaPageComponent {
   }
 
   public disablePdfDownload(): boolean {
+    // console.log("this.pdfData", this.pdfData);
+
     return this.pdfData ? false : true;
   }
 
@@ -153,17 +155,20 @@ export class PecaPageComponent {
       .generateYearbookPdf(this.pdfData)
       .then((res) => {
         this.creatingPdf = res;
-        if (this.pdfToasterCalledTimes === 0)
+        if (this.pdfToasterCalledTimes === 0) {
           this.toastr.success("La descarga del PDF comenzará en breve", "", {
             positionClass: "toast-bottom-right",
           });
+        }
       })
       .catch((e) => {
         this.creatingPdf = e;
-        if (this.pdfToasterCalledTimes === 0)
+        if (this.pdfToasterCalledTimes === 0) {
           this.toastr.error("Algo salió mal al procesar el PDF", "", {
             positionClass: "toast-bottom-right",
           });
+        }
+        console.log("e", e);
       })
       .finally(() => {
         this.creatingPdf = false;
