@@ -99,6 +99,8 @@ export class PdfYearbookService {
                 const images_act = await this.getActivityImages(
                   activity.images || []
                 );
+                // console.log("activity.images", activity.images);
+
                 images_[`lapse${i + 1}`][`${j}`] = images_act.length
                   ? images_act
                   : [];
@@ -531,12 +533,10 @@ export class PdfYearbookService {
         );
 
         const sortedSections = pdfData.schoolSections.sort((curr, next) => {
-          const currentSection = curr.sectionName[
-            curr.sectionName.length - 1
-          ].toLowerCase();
-          const nextSection = next.sectionName[
-            next.sectionName.length - 1
-          ].toLowerCase();
+          const currentSection =
+            curr.sectionName[curr.sectionName.length - 1].toLowerCase();
+          const nextSection =
+            next.sectionName[next.sectionName.length - 1].toLowerCase();
           const currentGrade = curr.sectionGrade.toLowerCase();
           const nextGrade = next.sectionGrade.toLowerCase();
           if (
@@ -1059,6 +1059,7 @@ export class PdfYearbookService {
     const blankImgs = [];
     const images_for_loop: any[] =
       images.length % 2 === 0 ? images : [...images, { img: images[0] }];
+
     const imagesPr = images_for_loop.map(async (img_url) => {
       try {
         const image_rendered = await new Img(
@@ -1068,8 +1069,11 @@ export class PdfYearbookService {
           .opacity(typeof img_url === "string" ? 1 : 0)
           .alignment("center")
           .build();
-        if (typeof img_url === "string") theImgs.push(image_rendered);
-        else blankImgs.push(image_rendered);
+        if (typeof img_url === "string") {
+          theImgs.push(image_rendered);
+        } else {
+          blankImgs.push(image_rendered);
+        }
       } catch (e) {
         console.error("could not get image", e);
       }
