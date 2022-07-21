@@ -1,4 +1,4 @@
-#USO-LOCAL - Use command docker-compose -f docker-compose.dev.yml up to set this specific .yml and up the docker-compose
+#USO-LOCAL - Use command docker-compose -f docker-compose.dev.yml up -d to set this specific .yml and up the docker-compose
 version: "3.3"
 
 services:
@@ -8,7 +8,6 @@ services:
     volumes:
       - ".:/app"
       - "/app/node_modules"
-    # command: bash -c "npm install && ng serve --host 0.0.0.0"
     command: bash -c "npm install -g && npm install && ng serve --host 0.0.0.0"
     ports:
       - "22222:4200"
