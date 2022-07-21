@@ -20,6 +20,7 @@ import { SummaryBlockComponent } from "./franklin-dev-component/summary-block/su
 import { FormReviewComponent } from "./franklin-dev-component/form-review/form-review.component";
 import { FormTableComponent } from "./form-table-previous-students/form-table.component";
 import { FormatDownloadBlock } from "./format-block/format-block.component";
+import { YearbookPdfComponent } from "./customs";
 export class PageBlockFactory {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
@@ -102,6 +103,10 @@ export class PageBlockFactory {
       case "form-table":
         return this.componentFactoryResolver.resolveComponentFactory(
           FormTableComponent
+        );
+      case "yearbook-pdf":
+        return this.componentFactoryResolver.resolveComponentFactory(
+          YearbookPdfComponent
         );
       default:
         throw Error("PageBlockTypeException: invalid page block type");

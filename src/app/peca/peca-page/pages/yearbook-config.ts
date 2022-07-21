@@ -600,6 +600,13 @@ export function MapperYearBookWeb(
     },
   };
 
+  const yearbookPDF = {
+    component: "yearbook-pdf",
+    settings: {
+      test: 'hello world'
+    },
+  }
+
   const YEARBOOK_CONFIG = {
     header: {
       title: "AmbLeMario",
@@ -836,8 +843,7 @@ export function MapperYearBookWeb(
                         text: "Enviar Solicitud",
                         ingAction: "Enviando...",
                         isMainBtn: true,
-                        hidden:
-                          /* yearBookData.isInApproval || !yearbook_edit */ true,
+                        hidden: true, // yearBookData.isInApproval || !yearbook_edit
                       },
                       cancelButton: {
                         text: "Cancelar Solicitud Previa",
@@ -848,6 +854,7 @@ export function MapperYearBookWeb(
                     },
                   },
                 },
+                yearbookPDF
               ],
             },
           ],
