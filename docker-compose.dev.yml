@@ -2,15 +2,13 @@
 version: "3.3"
 
 services:
-  angular8local:
+  angular:
     image: devbinaural/angular:8.0.0
-    container_name: angular_amblema
     volumes:
       - ".:/app"
       - "/app/node_modules"
     command: bash -c "npm install -g && npm install && ng serve --host 0.0.0.0"
     ports:
       - "22222:4200"
-      - "22223:4000"
     environment:
       - CHOKIDAR_USEPOLLING=true
