@@ -20,6 +20,8 @@ export class YearbookPdfComponent
   // viewMode?: string;
   settings: {}
 
+  images = {}
+
   constructor() {}
 
   setSettings(settings: {}): void {
@@ -35,14 +37,22 @@ export class YearbookPdfComponent
     throw new Error('Method not implemented.')
   }
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+    this.images = {
+      amblelogo: await pdfImgs['amblelogo'](),
+    }
+  }
+
+  getImage(name: string) {
+    return this.images[name] ? this.images[name] : ''
+  }
 
   //
   async generatePdfFromHtml(pdfElement) {
     try {
       const documentHeader: any = [
         {
-          image: await pdfImgs['amblelogo'](),
+          image: this.images['amblelogo'],
           width: 50,
           absolutePosition: { x: 30, y: 10 },
         },

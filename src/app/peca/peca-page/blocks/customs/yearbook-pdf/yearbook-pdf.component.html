@@ -2,7 +2,9 @@
   <div #pdfElement>
     <div class="page frontpage">
       <p>Hello world</p>
+      <img [src]="getImage('amblelogo')" />
     </div>
   </div>
+
   <button class="btn btn-primary" (click)="printPdfFromHtml()">Download</button>
 </section>
