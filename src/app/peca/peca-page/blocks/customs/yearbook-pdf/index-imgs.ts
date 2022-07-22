@@ -11,4 +11,8 @@ export const pdfImgs = {
     `${imgDirectory}/pdf/open-book.png`,
     imgDirectory,
   ),
+  frontpage: ImgHelper.getBase64FromImg(
+    `${imgDirectory}/pdf/frontpage.jpg`,
+    imgDirectory,
+  ),
 }

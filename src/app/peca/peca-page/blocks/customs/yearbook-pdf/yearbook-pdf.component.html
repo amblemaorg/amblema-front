@@ -1,10 +1,30 @@
-<section class="yearbook-pdf">
-  <div #pdfElement>
-    <div class="page frontpage">
-      <p>Hello world</p>
-      <img [src]="getImage('amblelogo')" />
+<section class="yearbook-pdf" #pdfElement>
+  <div class="page frontpage" [style]="pdfStyle.page.value">
+    <div class="header" [style]="pdfStyle.page.frontpage.header.value">
+      <div
+        class="heading"
+        [style]="pdfStyle.page.frontpage.header.heading.value"
+      >
+        <p>2021 - 2022</p>
+        <p>los arcos 83 a</p>
+      </div>
+      <div
+        class="partnerBrand"
+        [style]="pdfStyle.page.frontpage.header.partnerBrand.value"
+      >
+        <img
+          class="partner-brand__img"
+          [src]="getImage('amblelogo')"
+          [style]="pdfStyle.page.frontpage.header.partnerBrand.img.value"
+        />
+      </div>
     </div>
   </div>
-
-  <button class="btn btn-primary" (click)="printPdfFromHtml()">Download</button>
 </section>
+<button
+  class="btn btn-primary"
+  [disabled]="resourceLoaded"
+  (click)="printPdfFromHtml()"
+>
+  Download
+</button>

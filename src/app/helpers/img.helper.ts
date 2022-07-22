@@ -36,7 +36,7 @@ export class ImgHelper {
       const dataURL = await ImgHelper.startBase64FormattingFromImg(
         `${imgDir}${imgSrc}`,
       )
-      console.log(dataURL)
+      // console.log(dataURL)
 
       return dataURL
     }

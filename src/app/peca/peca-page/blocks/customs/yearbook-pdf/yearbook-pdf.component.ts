@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { PresentationalBlockComponent } from '../../page-block.component'
 import { pdfImgs } from './index-imgs'
+import { yearbookPdfStyle } from './yearbook-pdf-maker-style'
 const pdfMake = require('pdfmake/build/pdfmake.js')
 const pdfFonts = require('pdfmake/build/vfs_fonts.js')
 const htmlToPdfmake = require('html-to-pdfmake')
@@ -20,7 +21,10 @@ export class YearbookPdfComponent
   // viewMode?: string;
   settings: {}
 
+  // PDF Mock up
   images = {}
+  resourceLoaded = true
+  pdfStyle = yearbookPdfStyle
 
   constructor() {}
 
@@ -30,24 +34,33 @@ export class YearbookPdfComponent
 
     // throw new Error('Method not implemented.');
   }
-  setData?(data: any): void {
-    throw new Error('Method not implemented.')
-  }
-  setFetcherUrls?(urls: object): void {
-    throw new Error('Method not implemented.')
+
+  ngOnInit() {
+    // Listing and formatting to base64 image to use on htmlContext
+    Object.keys(pdfImgs).forEach(async (key) => {
+      this.images[key] = await pdfImgs[key]()
+    })
+
+    this.resourceLoaded =
+      Object.keys(this.images).length === Object.keys(pdfImgs).length
+
+    console.log(this.pdfStyle)
+
+    console.log(
+      'pdfStyle',
+      this.trimStyle(this.pdfStyle.page.frontpage.header.value),
+    )
   }
 
-  async ngOnInit() {
-    this.images = {
-      amblelogo: await pdfImgs['amblelogo'](),
-    }
+  trimStyle(style: string) {
+    return style.toString().replace('\n', ' ').trim()
   }
 
   getImage(name: string) {
     return this.images[name] ? this.images[name] : ''
   }
 
-  //
+  // Ref: https://pdfmake.github.io/docs/0.1/document-definition-object/
   async generatePdfFromHtml(pdfElement) {
     try {
       const documentHeader: any = [
@@ -75,26 +88,43 @@ export class YearbookPdfComponent
       const finalDocument: any = {
         info: {
           // Metadata, visible en la propiedades del documento
-          title: 'Reporte de actividades del PECA',
+          title: 'AmbLeMario',
           author: 'Binaural C.A',
-          subject: 'Reporte de actividades del PECA',
-          keywords: 'Reporte, usuarios, coordinador, escuela',
+          subject: 'AmbLeMario PDF',
+          keywords: 'estudiantes, usuarios, coordinador, escuela',
         },
         pageSize: 'A4',
         pageOrientation: 'landscape',
-        content: [documentHeader],
+        content: [
+          // documentHeader
+        ],
         defaultStyle: {
           fontSize: 12,
         },
-        footer: function (currentPage, pageCount) {
-          return [
-            {
-              text: currentPage.toString() + ' de ' + pageCount,
-              alignment: 'right',
-              marginRight: 40,
-            },
-          ]
+        background: (currentPage, pageSize) => {
+          if (currentPage === 1) {
+            return {
+              image: this.getImage('frontpage'),
+              width: pageSize.width,
+              height: pageSize.height,
+            }
+          }
+
+          if (currentPage === 2) {
+          }
+
+          return ''
         },
+        // footer: function (currentPage, pageCount) {
+        //   return [
+        //     {
+        //       text: currentPage.toString() + ' de ' + pageCount,
+        //       alignment: 'right',
+        //       color: 'white',
+        //       marginRight: 40,
+        //     },
+        //   ]
+        // },
       }
 
       /**
