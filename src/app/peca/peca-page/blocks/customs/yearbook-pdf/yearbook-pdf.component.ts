@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { PresentationalBlockComponent } from '../../page-block.component'
-import { amblelogo } from './index-imgs'
+import { pdfImgs } from './index-imgs'
 const pdfMake = require('pdfmake/build/pdfmake.js')
 const pdfFonts = require('pdfmake/build/vfs_fonts.js')
 const htmlToPdfmake = require('html-to-pdfmake')
@@ -42,7 +42,7 @@ export class YearbookPdfComponent
     try {
       const documentHeader: any = [
         {
-          image: await amblelogo(),
+          image: await pdfImgs['amblelogo'](),
           width: 50,
           absolutePosition: { x: 30, y: 10 },
         },
