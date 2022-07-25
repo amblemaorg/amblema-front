@@ -21,6 +21,7 @@ import { Router } from '@angular/router'
   providedIn: 'root',
 })
 export class PdfYearbookService {
+  pdfData: any
   private fontsInstantiated: boolean
 
   private colors = {
@@ -1198,6 +1199,7 @@ export class PdfYearbookService {
 
   routeToPdfTemplate(pdfData) {
     console.log('routeToPdfTemplate', pdfData)
+    this.pdfData = pdfData
     // this.router.navigate(['pdf-template/yearbook'])
     this.router.navigateByUrl('/pdf-template/yearbook')
   }

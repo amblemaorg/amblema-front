@@ -1,50 +1,52 @@
 import { Router } from '@angular/router'
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  HostListener,
-  OnDestroy,
-} from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
   templateUrl: './yearbook-pdf-template.component.html',
   styleUrls: ['./yearbook-pdf-template.component.scss'],
 })
-export class YearbookPdfTemplateComponent
-  implements OnInit, AfterViewInit, OnDestroy {
-  constructor(private router: Router) {}
+export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
+  constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  // isComponentLoaded = false
+  pdfData: any = null
+  pages?: any = []
 
-  ngOnInit(): void {}
+  frontpage: FrontPage
 
-  @HostListener('unloaded')
-  ngOnDestroy() {
-    // this.isComponentLoaded = false
-    console.log('Items destroyed')
+  ngOnInit(): void {
+    this.pdfData = this.pdfService.pdfData
   }
 
   ngAfterViewInit() {
-    // addEventListener('beforeprint', (event) => {
-    //   console.log('beforeprint')
-    // })
-    addEventListener('afterprint', (event) => {
+    console.log('YearbookPdfTemplateComponent', this.pdfData)
+
+    if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page'])
-      // this.ngOnDestroy()
+    }
+
+    if (this.pdfData) {
+      const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
+
+      this.frontpage = new FrontPage({
+        schoolName,
+        schoolYear,
+        sponsorName,
+        sponsorLogo,
+      })
+    }
+
+    addEventListener('afterprint', (event) => {
+      // this.router.navigate(['/peca/anuario-page'])
     })
-
-    // this.isComponentLoaded = true
-
-    // if (this.isComponentLoaded) {
-    //   window.print()
-    // }
-
-    // window.print()
   }
 
   print() {
     window.print()
   }
+}
+
+class FrontPage {
+  constructor(public data: any, public show = false, public priority = 0) {}
 }

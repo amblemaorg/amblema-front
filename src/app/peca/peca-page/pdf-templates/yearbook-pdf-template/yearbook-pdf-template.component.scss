@@ -1,5 +1,6 @@
 // Variables
 $black: #000000;
+$gray: #666666;
 
 @media print {
   .not-print {
@@ -20,7 +21,12 @@ $black: #000000;
 
 
   h1, p {
-    color: $black !important;
+    color: $black;
+    font-size: 20px;
+  }
+
+  p {
+    color: $gray;
   }
 
   .front-page {
@@ -42,6 +48,10 @@ $black: #000000;
 
         p {
           margin: 0;
+
+          &:last-child {
+            margin-top: 10px;
+          }
         }
       }
 
@@ -75,7 +85,7 @@ $black: #000000;
 
       h1 {
         font-weight: bold;
-        font-size: 64px;
+        font-size: 64px !important;
         line-height: 65px;
         margin: 0px;
 
