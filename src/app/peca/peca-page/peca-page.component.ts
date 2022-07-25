@@ -1,85 +1,87 @@
+import { Router } from '@angular/router'
 import {
   Component,
   ViewContainerRef,
   ComponentFactoryResolver,
   Inject,
-} from "@angular/core";
-import { PageBlockFactory } from "./blocks/page-block-factory";
-import { PageBlockComponent } from "./blocks/page-block.component";
-import { Location, DOCUMENT } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { PdfYearbookService } from "../../services/peca/pdf-yearbook.service";
-import { ToastrService } from "ngx-toastr";
+} from '@angular/core'
+import { PageBlockFactory } from './blocks/page-block-factory'
+import { PageBlockComponent } from './blocks/page-block.component'
+import { Location, DOCUMENT } from '@angular/common'
+import { ActivatedRoute } from '@angular/router'
+import { PdfYearbookService } from '../../services/peca/pdf-yearbook.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  selector: "peca-page",
-  templateUrl: "./peca-page.component.html",
-  styleUrls: ["./peca-page.component.scss"],
+  selector: 'peca-page',
+  templateUrl: './peca-page.component.html',
+  styleUrls: ['./peca-page.component.scss'],
 })
 export class PecaPageComponent {
-  protected pageBlockFactory: PageBlockFactory;
-  header: { title: string; download: any };
-  blocks: PageBlockComponent[];
-  blockInstances = new Map<string, PageBlockComponent>();
+  protected pageBlockFactory: PageBlockFactory
+  header: { title: string; download: any }
+  blocks: PageBlockComponent[]
+  blockInstances = new Map<string, PageBlockComponent>()
 
-  isFromSteps: boolean;
+  isFromSteps: boolean
   // fontsInstantiated: boolean;
-  pdfData: any;
-  creatingPdf: boolean;
+  pdfData: any
+  creatingPdf: boolean
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
     protected location?: Location,
     protected route?: ActivatedRoute,
     protected pdfYearbookService?: PdfYearbookService,
-    protected toastr?: ToastrService
+    protected toastr?: ToastrService,
   ) {}
 
   public instantiateComponent(config) {
-    this.header = config.header;
-    this.blocks = config.blocks;
-    this.pageBlockFactory = new PageBlockFactory(this.factoryResolver);
+    this.header = config.header
+    this.blocks = config.blocks
+    this.pageBlockFactory = new PageBlockFactory(this.factoryResolver)
   }
 
   public changeComponentHeader(header) {
-    this.header.title = header;
+    this.header.title = header
   }
   public instantiateBlocks(
     container: ViewContainerRef,
-    reSet: boolean = false
+    reSet: boolean = false,
   ) {
     this.blocks.map((block, i) => {
-      const pageBlockComponentFactory =
-        this.pageBlockFactory.createPageBlockFactory(block.component);
+      const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
+        block.component,
+      )
 
-      if (reSet && container.length > 0) container.clear();
+      if (reSet && container.length > 0) container.clear()
 
       const pageBlockComponent = container.createComponent(
-        pageBlockComponentFactory
-      );
+        pageBlockComponentFactory,
+      )
       const settings = {
         settings: block.settings,
         factory: this.pageBlockFactory,
-      };
-      pageBlockComponent.instance.setSettings(settings);
+      }
+      pageBlockComponent.instance.setSettings(settings)
       this.blockInstances.set(
         block.name || `block${i}`,
-        pageBlockComponent.instance
-      );
-    });
+        pageBlockComponent.instance,
+      )
+    })
   }
 
   public setBlockData(blockName: string, blockData: any) {
     if (this.blockInstances.has(blockName)) {
-      const blockComponent = this.blockInstances.get(blockName);
-      blockComponent.setData(blockData);
+      const blockComponent = this.blockInstances.get(blockName)
+      blockComponent.setData(blockData)
     }
   }
 
   public setBlockFetcherUrls(blockName: string, urls: any) {
     if (this.blockInstances.has(blockName)) {
-      const blockComponent = this.blockInstances.get(blockName);
-      blockComponent.setFetcherUrls(urls);
+      const blockComponent = this.blockInstances.get(blockName)
+      blockComponent.setFetcherUrls(urls)
     }
   }
 
@@ -105,74 +107,80 @@ export class PecaPageComponent {
     urlGenerators: any,
     ...generatorsProps
   ) {
-    const { get, post, put, patch, delete: deleteFn } = urlGenerators;
+    const { get, post, put, patch, delete: deleteFn } = urlGenerators
 
     if (this.blockInstances.has(blockName)) {
-      const formComponent = this.blockInstances.get(blockName);
+      const formComponent = this.blockInstances.get(blockName)
 
       const args = generatorsProps.map((prop) => {
-        const propertyPath = prop.split(".");
-        return this.accessPropertyByArrayPath(formComponent, propertyPath);
-      });
+        const propertyPath = prop.split('.')
+        return this.accessPropertyByArrayPath(formComponent, propertyPath)
+      })
 
       const urls = {
-        get: typeof get === "function" ? get(...args) : "",
-        post: typeof post === "function" ? post(...args) : "",
-        put: typeof put === "function" ? put(...args) : "",
-        patch: typeof patch === "function" ? patch(...args) : "",
-        delete: typeof deleteFn === "function" ? deleteFn(...args) : "",
-      };
-      formComponent.setFetcherUrls(urls);
+        get: typeof get === 'function' ? get(...args) : '',
+        post: typeof post === 'function' ? post(...args) : '',
+        put: typeof put === 'function' ? put(...args) : '',
+        patch: typeof patch === 'function' ? patch(...args) : '',
+        delete: typeof deleteFn === 'function' ? deleteFn(...args) : '',
+      }
+      formComponent.setFetcherUrls(urls)
     }
   }
 
   private accessPropertyByArrayPath(object, properties: string[]): any {
     return properties.reduce((prevObj: any, prop) => {
-      return prevObj.hasOwnProperty(prop) ? prevObj[prop] : null;
-    }, object);
+      return prevObj.hasOwnProperty(prop) ? prevObj[prop] : null
+    }, object)
   }
 
   goToSteps() {
-    this.location.back();
+    this.location.back()
   }
 
   public setPdfData(pdfData: any) {
-    this.pdfData = pdfData;
+    this.pdfData = pdfData
   }
 
   public disablePdfDownload(): boolean {
     // console.log("this.pdfData", this.pdfData);
 
-    return this.pdfData ? false : true;
+    return this.pdfData ? false : true
   }
 
-  pdfToasterCalledTimes: number = 0;
+  pdfToasterCalledTimes: number = 0
   public generatePDF() {
-    this.pdfToasterCalledTimes = 0;
-    this.creatingPdf = true;
+    this.pdfToasterCalledTimes = 0
+    this.creatingPdf = true
 
     this.pdfYearbookService
       .generateYearbookPdf(this.pdfData)
       .then((res) => {
-        this.creatingPdf = res;
+        this.creatingPdf = res
         if (this.pdfToasterCalledTimes === 0) {
-          this.toastr.success("La descarga del PDF comenzará en breve", "", {
-            positionClass: "toast-bottom-right",
-          });
+          this.toastr.success('La descarga del PDF comenzará en breve', '', {
+            positionClass: 'toast-bottom-right',
+          })
         }
       })
       .catch((e) => {
-        this.creatingPdf = e;
+        this.creatingPdf = e
         if (this.pdfToasterCalledTimes === 0) {
-          this.toastr.error("Algo salió mal al procesar el PDF", "", {
-            positionClass: "toast-bottom-right",
-          });
+          this.toastr.error('Algo salió mal al procesar el PDF', '', {
+            positionClass: 'toast-bottom-right',
+          })
         }
-        console.log("e", e);
+        console.log('e', e)
       })
       .finally(() => {
-        this.creatingPdf = false;
-        this.pdfToasterCalledTimes++;
-      });
+        this.creatingPdf = false
+        this.pdfToasterCalledTimes++
+      })
+  }
+
+  routeToPdfTemplate() {
+    console.log('routeToPdfTemplate')
+
+    this.pdfYearbookService.routeToPdfTemplate()
   }
 }

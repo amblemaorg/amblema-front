@@ -75,7 +75,6 @@ import { FormTableComponent } from './peca-page/blocks/form-table-previous-stude
 import { PreviousScholarYearEnrollmentPageComponent } from './peca-page/pages/previous-scholar-year-enrollment-page.component'
 import { FormBlockComponent } from './peca-page/blocks/form-block/form-block.component'
 import { FormatDownloadBlock } from './peca-page/blocks/format-block/format-block.component'
-import { YearbookPdfComponent } from './peca-page/blocks/customs/yearbook-pdf/yearbook-pdf.component'
 
 @NgModule({
   declarations: [
@@ -121,7 +120,6 @@ import { YearbookPdfComponent } from './peca-page/blocks/customs/yearbook-pdf/ye
     FormTableComponent,
     FormatoRegistroComponent,
     FormatDownloadBlock,
-    YearbookPdfComponent,
   ],
   imports: [
     CommonModule,
@@ -174,7 +172,6 @@ import { YearbookPdfComponent } from './peca-page/blocks/customs/yearbook-pdf/ye
     FormTableComponent,
     FormatoRegistroComponent,
     FormatDownloadBlock,
-    YearbookPdfComponent,
   ],
   providers: [
     { provide: NbTokenStorage, useClass: NbTokenLocalStorage },
