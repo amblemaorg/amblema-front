@@ -8,7 +8,7 @@
   width: 27.94cm;
   height: 21.59cm;
 
-  padding: 60px 70px;
+  padding: 60px 70px 70px 70px;
 }
 
 .yearbook-pdf {
@@ -67,6 +67,9 @@
       h1 {
         font-weight: bold;
         font-size: 64px;
+        line-height: 65px;
+        margin: 0px;
+
       }
 
       p {

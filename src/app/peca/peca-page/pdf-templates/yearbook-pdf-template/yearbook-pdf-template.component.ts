@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core'
 export class YearbookPdfTemplateComponent implements OnInit {
   constructor() {}
 
-  showBtnDownload = true
-
   ngOnInit(): void {
     // window.print()
     // addEventListener('beforeprint', (event) => {
