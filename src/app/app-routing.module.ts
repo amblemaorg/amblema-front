@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: "peca",
-    canActivateChild: [AllowAuthenticatedGuard],
+    // canActivateChild: [AllowAuthenticatedGuard],
     loadChildren: () => import("./peca/peca.module").then((m) => m.PecaModule),
   },
   {
