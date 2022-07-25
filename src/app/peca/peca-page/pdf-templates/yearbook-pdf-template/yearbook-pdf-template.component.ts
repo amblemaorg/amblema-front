@@ -11,13 +11,11 @@ export class YearbookPdfTemplateComponent implements OnInit {
   showBtnDownload = true
 
   ngOnInit(): void {
-    window.print()
-
-    addEventListener('beforeprint', (event) => {
-      console.log('beforeprint')
-    })
-
-    addEventListener('afterprint', (event) => {})
+    // window.print()
+    // addEventListener('beforeprint', (event) => {
+    //   console.log('beforeprint')
+    // })
+    // addEventListener('afterprint', (event) => {})
   }
 
   print() {
