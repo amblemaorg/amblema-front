@@ -1,0 +1,25 @@
+@media print {
+  .not-print {
+    display: none;
+  }
+  @page {
+    size: landscape;
+  }
+
+  .page {
+    width: 27.94cm;
+    height: 21.59cm;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .background-1 {
+    background: purple;
+  }
+
+  .background-2 {
+    background: blue;
+  }
+}
