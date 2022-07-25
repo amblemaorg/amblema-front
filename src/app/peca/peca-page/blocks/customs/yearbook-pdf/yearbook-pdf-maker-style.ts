@@ -8,7 +8,8 @@ export const yearbookPdfStyle = {
         heading: {
           value: 'display: inline-block;',
           p: {
-            value: 'display: inline-block;',
+            value:
+              'display: inline-block;float:left;color:purple;position: absolute;right: 0px;',
           },
         },
         partnerBrand: {

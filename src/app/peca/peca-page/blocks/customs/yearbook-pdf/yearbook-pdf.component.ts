@@ -65,7 +65,7 @@ export class YearbookPdfComponent
     try {
       const documentHeader: any = [
         {
-          image: this.images['amblelogo'],
+          image: this.getImage('amblelogo'),
           width: 50,
           absolutePosition: { x: 30, y: 10 },
         },
@@ -95,9 +95,7 @@ export class YearbookPdfComponent
         },
         pageSize: 'A4',
         pageOrientation: 'landscape',
-        content: [
-          // documentHeader
-        ],
+        content: [documentHeader],
         defaultStyle: {
           fontSize: 12,
         },
