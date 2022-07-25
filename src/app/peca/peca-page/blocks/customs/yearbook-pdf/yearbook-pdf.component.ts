@@ -1,3 +1,4 @@
+import { Router } from '@angular/router'
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { PresentationalBlockComponent } from '../../page-block.component'
 import { pdfImgs } from './index-imgs'
@@ -26,7 +27,7 @@ export class YearbookPdfComponent
   resourceLoaded = true
   pdfStyle = yearbookPdfStyle
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   setSettings(settings: {}): void {
     this.settings = settings
@@ -146,5 +147,9 @@ export class YearbookPdfComponent
 
   async printPdfFromHtml() {
     await this.generatePdfFromHtml(this.pdfElement)
+  }
+
+  routeToPdfTemplate() {
+    this.router.navigate(['pdf-template/yearbook'])
   }
 }

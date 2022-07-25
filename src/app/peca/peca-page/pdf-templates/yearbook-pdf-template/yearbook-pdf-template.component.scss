@@ -2,21 +2,66 @@
   .not-print {
     display: none;
   }
+}
 
-  .page {
-    width: 29.7cm;
-    height: 21cm;
+.page {
+  width: 29.7cm;
+  height: 21cm;
 
+  padding: 20px 20px;
+}
+
+.front-page {
+  background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  .head {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: relative;
+
+    .headings {
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .partner-img {
+      width: 180px;
+      height: 180px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      // right: calc(100vw - 29.7cm);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 
-  .background-1 {
-    background: purple;
-  }
+  .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-  .background-2 {
-    background: blue;
+    text-align: center;
+
+    position: relative;
+    top: 100px;
+
+
+    p {
+      text-transform: uppercase;
+    }
   }
+}
+
+.background-2 {
+  background: blue;
 }

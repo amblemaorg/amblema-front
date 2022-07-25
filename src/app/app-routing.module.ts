@@ -60,6 +60,13 @@ const routes: Routes = [
     component: RedirectionComponent,
   },
   {
+    path: 'pdf-template',
+    loadChildren: () =>
+      import('./peca/peca-page/pdf-templates/pdf-templates.module').then(
+        (m) => m.PdfTemplatesModule,
+      ),
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./web/pages/error404/error404.module').then(
