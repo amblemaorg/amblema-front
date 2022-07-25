@@ -181,6 +181,6 @@ export class PecaPageComponent {
   routeToPdfTemplate() {
     console.log('routeToPdfTemplate')
 
-    this.pdfYearbookService.routeToPdfTemplate()
+    this.pdfYearbookService.routeToPdfTemplate(this.pdfData)
   }
 }

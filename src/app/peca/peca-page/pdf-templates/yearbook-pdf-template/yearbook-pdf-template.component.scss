@@ -1,8 +1,12 @@
+// Variables
+$black: #000000;
+
 @media print {
   .not-print {
     display: none;
   }
 }
+
 
 .page {
   width: 27.94cm;
@@ -13,6 +17,11 @@
 
 .yearbook-pdf {
   font-size: 20px;
+
+
+  h1, p {
+    color: $black !important;
+  }
 
   .front-page {
     background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');

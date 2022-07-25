@@ -238,7 +238,6 @@ export class PdfYearbookService {
           .style('coverHeader')
           .bold().end,
       )
-
       ;[
         ...(amble_logo ? ['amble_logo'] : []),
         ...(pdfData['sponsorLogo'] ? ['sponsor_logo'] : []),
@@ -1197,9 +1196,10 @@ export class PdfYearbookService {
     return body_
   }
 
-  routeToPdfTemplate() {
-    console.log('routeToPdfTemplate')
-    this.router.navigate(['pdf-template/yearbook'])
+  routeToPdfTemplate(pdfData) {
+    console.log('routeToPdfTemplate', pdfData)
+    // this.router.navigate(['pdf-template/yearbook'])
+    this.router.navigateByUrl('/pdf-template/yearbook')
   }
 }
 // TO USE CUSTOM FONT, do the following:
