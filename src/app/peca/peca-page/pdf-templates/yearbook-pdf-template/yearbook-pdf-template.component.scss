@@ -11,10 +11,29 @@ $size__p: 16px;
 
 @media print {
   .not-print {
-    display: none;
+    display: none !important;
   }
 }
 
+.loading {
+  width: 100vw;
+  height: 100vh;
+  background: $blue;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    min-width: 200px;
+    width: 20vw;
+  }
+}
 
 .page {
   width: 27.94cm;
@@ -165,24 +184,6 @@ $size__p: 16px;
 
 }
 
-.loading {
-  width: 100vw;
-  height: 100vh;
-  background: $blue;
 
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    min-width: 200px;
-    width: 20vw;
-  }
-}
 
 

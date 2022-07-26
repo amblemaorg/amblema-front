@@ -40,9 +40,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.isLoading = false
       console.log(this.isLoading)
 
-      // setTimeout(() => {
-      //   window.print()
-      // }, 1500)
+      setTimeout(() => {
+        window.print()
+      }, 1500)
     }
   }
 

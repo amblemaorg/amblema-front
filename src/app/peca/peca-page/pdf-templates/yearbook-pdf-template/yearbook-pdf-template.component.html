@@ -1,6 +1,6 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
-<ng-container *ngIf="pdfData && !isLoading; else loading">
+<ng-container *ngIf="pdfData">
   <div class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
       <section class="page front-page">
@@ -75,8 +75,10 @@
   </div>
 </ng-container>
 
-<ng-template #loading>
-  <div class="loading not-print">
-    <img src="../../../../../assets/images/amblema-loader.gif" />
-  </div>
-</ng-template>
+<div class="loading not-print">
+  <img src="../../../../../assets/images/amblema-loader.gif" />
+</div>
+
+<!-- <ng-template #loading>
+
+</ng-template> -->
