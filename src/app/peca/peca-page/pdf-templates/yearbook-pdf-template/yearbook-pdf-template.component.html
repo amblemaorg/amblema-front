@@ -1,6 +1,6 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
-<ng-container *ngIf="pdfData; else loading">
+<ng-container *ngIf="pdfData && !isLoading; else loading">
   <div class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
       <section class="page front-page">

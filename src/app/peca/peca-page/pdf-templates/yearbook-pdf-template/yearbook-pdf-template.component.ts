@@ -10,6 +10,7 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
+  isLoading = true
   pdfData: any = false
   pages: any = []
 
@@ -28,16 +29,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     }
 
     addEventListener('afterprint', (event) => {
-      // this.router.navigate(['/peca/anuario-page'])
+      this.isLoading = true
+      this.router.navigate(['/peca/anuario-page'])
     })
 
     if (this.pdfData) {
       this.setFrontPage()
       this.setSummaryAndCoordinatorPage()
 
-      setTimeout(() => {
-        window.print()
-      }, 1500)
+      this.isLoading = false
+      console.log(this.isLoading)
+
+      // setTimeout(() => {
+      //   window.print()
+      // }, 1500)
     }
   }
 
