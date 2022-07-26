@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common'
 
 import { PdfTemplatesRoutingModule } from './pdf-templates-routing.module'
 import { YearbookPdfTemplateComponent } from './yearbook-pdf-template/yearbook-pdf-template.component'
+import { PipesModule } from 'src/app/pipes/pipes.module'
 
 @NgModule({
   declarations: [YearbookPdfTemplateComponent],
-  imports: [CommonModule, PdfTemplatesRoutingModule],
+  imports: [CommonModule, PdfTemplatesRoutingModule, PipesModule],
 })
 export class PdfTemplatesModule {}

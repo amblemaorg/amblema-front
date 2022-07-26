@@ -22,9 +22,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     console.log('YearbookPdfTemplateComponent', this.pdfData)
 
-    if (!this.pdfData) {
-      this.router.navigate(['/peca/anuario-page'])
-    }
+    // if (!this.pdfData) {
+    //   this.router.navigate(['/peca/anuario-page'])
+    // }
 
     if (this.pdfData) {
       const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
