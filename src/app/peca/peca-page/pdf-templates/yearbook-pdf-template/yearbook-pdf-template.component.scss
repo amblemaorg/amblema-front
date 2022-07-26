@@ -59,6 +59,7 @@ $size__p: 16px;
 
     h2, p {
       color: $gray;
+      text-align: center;
     }
 
     .head {
@@ -78,7 +79,7 @@ $size__p: 16px;
           margin: 0;
 
           &:last-child {
-            margin-bottom: 10px;
+            margin-top: 10px;
           }
         }
 
@@ -115,7 +116,7 @@ $size__p: 16px;
       h1 {
         font-weight: bold;
         font-size: 64px !important;
-        line-height: 65px;
+        line-height: 50px;
         margin: 0px;
 
       }
