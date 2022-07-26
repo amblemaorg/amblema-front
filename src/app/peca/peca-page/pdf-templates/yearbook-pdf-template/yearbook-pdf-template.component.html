@@ -1,6 +1,6 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
-<ng-container *ngIf="!!pdfData">
+<ng-container *ngIf="pdfData">
   <div class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
       <section class="page front-page">
@@ -15,7 +15,52 @@
         </div>
         <div class="body">
           <h1>AmbLeMario</h1>
-          <p>{{ frontpage.data.schoolName }}</p>
+          <h2>{{ frontpage.data.schoolName }}</h2>
+        </div>
+      </section>
+    </ng-container>
+
+    <ng-container *ngIf="!!summaryAndCoordinatorPage">
+      <section class="page layout--2 background--generic">
+        <div class="row">
+          <div class="col">
+            <div class="container-img">
+              <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
+            </div>
+          </div>
+
+          <div class="col">
+            <div>
+              <h3 class="title">Reseña histórica</h3>
+              <p>
+                {{
+                  summaryAndCoordinatorPage.data.historicalReviewText
+                    | excerpt: 590
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="container-img">
+              <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
+            </div>
+          </div>
+
+          <div class="col">
+            <div>
+              <h3 class="title">
+                Coordinador/a
+                {{ summaryAndCoordinatorPage.data.coordinatorName }}
+              </h3>
+              <p>
+                {{
+                  summaryAndCoordinatorPage.data.coordinatorText | excerpt: 590
+                }}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </ng-container>
@@ -23,5 +68,17 @@
     <!-- <section class="page background-2">
       <p>yearbook-pdf-template works! 2</p>
     </section> -->
+    <!-- <ng-template #frontpage let-></ng-template> -->
+    <!-- <ng-container *ngFor="let page of pages; let data as page.data;">
+      <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template>
+    </ng-container> -->
   </div>
 </ng-container>
+
+<div class="loading not-print">
+  <img src="../../../../../assets/images/amblema-loader.gif" />
+</div>
+
+<!-- <ng-template #loading>
+
+</ng-template> -->

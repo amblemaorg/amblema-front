@@ -1,38 +1,85 @@
 // Variables
 $black: #000000;
 $gray: #666666;
+$green: #81b03e;
+$blue: #00809a;
+
+// Text size
+$size__h1: 64px;
+$size__h2: 20px;
+$size__p: 16px;
 
 @media print {
   .not-print {
-    display: none;
+    display: none !important;
   }
 }
 
+.loading {
+  width: 100vw;
+  height: 100vh;
+  background: $blue;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    min-width: 200px;
+    width: 20vw;
+  }
+}
 
 .page {
   width: 27.94cm;
   height: 21.59cm;
 
   padding: 60px 70px 70px 70px;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .yearbook-pdf {
-  font-size: 20px;
 
-
-  h1, p {
+  * {
     color: $black;
-    font-size: 20px;
+  }
+  h1 {
+   font-size: $size__h1;
+  }
+
+  h2, h3 {
+    font-size: $size__h2;
   }
 
   p {
-    color: $gray;
+    font-size: $size__p;
+    text-align: justify;
   }
+
+  h1, p {
+    color: $black;
+  }
+
+
 
   .front-page {
     background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
-    background-repeat: no-repeat;
-    background-size: contain;
+
+    h2, p {
+      color: $gray;
+      text-align: center;
+    }
 
     .head {
       display: flex;
@@ -47,12 +94,14 @@ $gray: #666666;
         text-transform: uppercase;
 
         p {
+          font-size: $size__h2;
           margin: 0;
 
           &:last-child {
             margin-top: 10px;
           }
         }
+
       }
 
       .partner-img {
@@ -86,7 +135,7 @@ $gray: #666666;
       h1 {
         font-weight: bold;
         font-size: 64px !important;
-        line-height: 65px;
+        line-height: 50px;
         margin: 0px;
 
       }
@@ -97,10 +146,44 @@ $gray: #666666;
     }
   }
 
-  .background-2 {
-    background: blue;
+  .layout--2 {
+    display: grid;
+    grid-template-rows: repeat(2, 320px );
+    justify-content: center;
+    row-gap: 20px;
+
+    .row {
+      overflow: hidden;
+
+      &:nth-child(even){
+        flex-direction: row-reverse;
+      }
+    }
+    .container-img {
+      height: 100%;
+
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+
+      img {
+        object-fit: contain;
+      }
+    }
+
+    .title {
+      // color: $green;
+    }
+
+  }
+
+  .background--generic {
+    background-image: url('../../../../../assets/images/pdf/yearbook/background.jpg');
+    padding: 90px 70px 70px 70px;
   }
 
 }
+
+
 
 
