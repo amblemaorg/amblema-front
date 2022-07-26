@@ -10,10 +10,11 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  pdfData: any = null
-  pages?: any = []
+  pdfData: any = false
+  pages: any = []
 
   frontpage: FrontPage
+  summaryAndCoordinatorPage: SummaryAndCoordinatorPage
 
   ngOnInit(): void {
     this.pdfData = this.pdfService.pdfData
@@ -22,23 +23,44 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     console.log('YearbookPdfTemplateComponent', this.pdfData)
 
-    // if (!this.pdfData) {
-    //   this.router.navigate(['/peca/anuario-page'])
-    // }
-
-    if (this.pdfData) {
-      const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
-
-      this.frontpage = new FrontPage({
-        schoolName,
-        schoolYear,
-        sponsorName,
-        sponsorLogo,
-      })
+    if (!this.pdfData) {
+      this.router.navigate(['/peca/anuario-page'])
     }
 
     addEventListener('afterprint', (event) => {
       // this.router.navigate(['/peca/anuario-page'])
+    })
+
+    if (this.pdfData) {
+      this.setFrontPage()
+      this.setSummaryAndCoordinatorPage()
+    }
+  }
+
+  setFrontPage() {
+    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
+    this.frontpage = new FrontPage({
+      schoolName,
+      schoolYear,
+      sponsorName,
+      sponsorLogo,
+    })
+  }
+
+  setSummaryAndCoordinatorPage() {
+    const {
+      historicalReviewText,
+      historicalReviewImg,
+      coordinatorName,
+      coordinatorImg,
+      coordinatorText,
+    } = this.pdfData
+    this.summaryAndCoordinatorPage = new SummaryAndCoordinatorPage({
+      historicalReviewText,
+      historicalReviewImg,
+      coordinatorName,
+      coordinatorImg,
+      coordinatorText,
     })
   }
 
@@ -47,6 +69,14 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 }
 
-class FrontPage {
+class SummaryAndCoordinatorPage {
   constructor(public data: any, public show = false, public priority = 0) {}
+}
+
+class FrontPage {
+  constructor(
+    public data: { schoolName; schoolYear; sponsorName; sponsorLogo },
+    public show = false,
+    public priority = 0,
+  ) {}
 }

@@ -1,50 +1,42 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
-<ng-container>
+<ng-container *ngIf="pdfData; else loading">
   <div class="yearbook-pdf">
-    <ng-container>
+    <ng-container *ngIf="!!frontpage">
       <section class="page front-page">
         <div class="head">
           <div class="headings">
-            <p>{{ 'testing' }}</p>
-            <p>{{ 'testing' }}</p>
+            <p>{{ frontpage.data.schoolYear }}</p>
+            <p>{{ frontpage.data.sponsorName }}</p>
           </div>
           <div class="partner-img">
-            <img
-              src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
-            />
+            <img [src]="frontpage.data.sponsorLogo" />
           </div>
         </div>
         <div class="body">
           <h1>AmbLeMario</h1>
-          <h2>{{ 'testing' }}</h2>
+          <h2>{{ frontpage.data.schoolName }}</h2>
         </div>
       </section>
     </ng-container>
 
-    <ng-container>
+    <ng-container *ngIf="!!summaryAndCoordinatorPage">
       <section class="page layout--2 background--generic">
         <div class="row">
           <div class="col">
             <div class="container-img">
-              <img src="../../../../../assets/images/background-blog2.png" />
+              <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
             </div>
           </div>
 
           <div class="col">
-            <div class="layout__text">
+            <div>
+              <h3 class="title">Reseña histórica</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Expedita repellat sequi tempora dignissimos corporis in aliquam
-                ad. Excepturi, recusandae maxime molestias tempore, eum eos quia
-                explicabo modi, cum porro vel! Lorem ipsum dolor sit amet
-                consectetur, adipisicing elit. Expedita repellat sequi tempora
-                dignissimos corporis in aliquam ad. Excepturi, recusandae maxime
-                molestias tempore, eum eos quia explicabo modi, cum porro vel!
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Expedita repellat sequi tempora dignissimos corporis in aliquam
-                ad. Excepturi, recusandae maxime molestias tempore, eum eos quia
-                explicabo modi, cum porro vel!
+                {{
+                  summaryAndCoordinatorPage.data.historicalReviewText
+                    | excerpt: 590
+                }}
               </p>
             </div>
           </div>
@@ -52,18 +44,19 @@
         <div class="row">
           <div class="col">
             <div class="container-img">
-              <img
-                src="https://www.cdc.gov/hiv/images/icons/cdc-hiv-circle-icon-tube-sample-blood-infected.png?_=58203"
-              />
+              <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
             </div>
           </div>
 
           <div class="col">
-            <div class="layout__text">
+            <div>
+              <h3 class="title">
+                Coordinador/a
+                {{ summaryAndCoordinatorPage.data.coordinatorName }}
+              </h3>
               <p>
                 {{
-                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis dolor voluptate quidem modi odit, natus doloribus hic harum quae suscipit odio pariatur est esse porro nulla sint tempore dolorum veritatis.lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia explicabo voluptas accusamus vero vel ducimus, ut natus, ab dolor labore quibusdam quam voluptates cum? Commodi cupiditate nesciunt eligendi qui numquam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quasi exercitationem dolorum ab qui, eum aspernatur consequuntur adipisci fuga ipsum accusamus odit voluptatibus quam molestias non cumque nam repudiandae. Ratione. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis quisquam omnis inventore quae dolor labore exercitationem in. Repellendus iusto, commodi quo modi veritatis atque officia nisi recusandae iste sint nesciunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates dolores, ex assumenda eaque, rem fugit voluptatem vel perferendis magnam nobis corporis dignissimos saepe quis placeat, animi ut a culpa ab!'
-                    | excerpt: 670
+                  summaryAndCoordinatorPage.data.coordinatorText | excerpt: 590
                 }}
               </p>
             </div>
@@ -75,7 +68,15 @@
     <!-- <section class="page background-2">
       <p>yearbook-pdf-template works! 2</p>
     </section> -->
-
-    <!-- <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template> -->
+    <!-- <ng-template #frontpage let-></ng-template> -->
+    <!-- <ng-container *ngFor="let page of pages; let data as page.data;">
+      <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template>
+    </ng-container> -->
   </div>
 </ng-container>
+
+<ng-template #loading>
+  <div class="loading">
+    <img src="../../../../../assets/images/amblema-loader.gif" />
+  </div>
+</ng-template>
