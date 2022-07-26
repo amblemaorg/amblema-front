@@ -38,7 +38,7 @@ $size__p: 16px;
 .page {
   width: 27.94cm;
   height: 21.59cm;
-
+  overflow: hidden;
   padding: 60px 70px 70px 70px;
 
   background-repeat: no-repeat;
@@ -46,6 +46,11 @@ $size__p: 16px;
 
   img {
     max-width: 100%;
+  }
+
+  .page__content {
+    height: 100%;
+    overflow: hidden;
   }
 }
 
@@ -71,6 +76,17 @@ $size__p: 16px;
     color: $black;
   }
 
+  .container-img {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
 
 
   .front-page {
@@ -159,22 +175,20 @@ $size__p: 16px;
         flex-direction: row-reverse;
       }
     }
+
     .container-img {
       height: 100%;
-
-      display: flex;
-      align-items: baseline;
-      justify-content: center;
-
-      img {
-        object-fit: contain;
-      }
     }
 
-    .title {
-      // color: $green;
-    }
+  }
 
+  .layout--3 {
+    .container-img {
+      height: 280px;
+    }
+    .row {
+      column-gap: 20px;
+    }
   }
 
   .background--generic {

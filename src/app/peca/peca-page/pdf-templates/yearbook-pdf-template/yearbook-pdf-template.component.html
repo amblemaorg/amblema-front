@@ -4,60 +4,111 @@
   <div class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
       <section class="page front-page">
-        <div class="head">
-          <div class="headings">
-            <p>{{ frontpage.data.schoolYear }}</p>
-            <p>{{ frontpage.data.sponsorName }}</p>
+        <div class="page__content">
+          <div class="head">
+            <div class="headings">
+              <p>{{ frontpage.data.schoolYear }}</p>
+              <p>{{ frontpage.data.sponsorName }}</p>
+            </div>
+            <div class="partner-img">
+              <img [src]="frontpage.data.sponsorLogo" />
+            </div>
           </div>
-          <div class="partner-img">
-            <img [src]="frontpage.data.sponsorLogo" />
+          <div class="body">
+            <h1>AmbLeMario</h1>
+            <h2>{{ frontpage.data.schoolName }}</h2>
           </div>
-        </div>
-        <div class="body">
-          <h1>AmbLeMario</h1>
-          <h2>{{ frontpage.data.schoolName }}</h2>
         </div>
       </section>
     </ng-container>
 
     <ng-container *ngIf="!!summaryAndCoordinatorPage">
       <section class="page layout--2 background--generic">
-        <div class="row">
-          <div class="col">
-            <div class="container-img">
-              <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
+        <div class="page__content">
+          <div class="row">
+            <div class="col">
+              <div class="container-img">
+                <img
+                  [src]="summaryAndCoordinatorPage.data.historicalReviewImg"
+                />
+              </div>
+            </div>
+
+            <div class="col">
+              <div>
+                <h3 class="title">Reseña histórica</h3>
+                <p>
+                  {{
+                    summaryAndCoordinatorPage.data.historicalReviewText
+                      | excerpt: 590
+                  }}
+                </p>
+              </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <div class="container-img">
+                <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
+              </div>
+            </div>
 
-          <div class="col">
-            <div>
-              <h3 class="title">Reseña histórica</h3>
-              <p>
-                {{
-                  summaryAndCoordinatorPage.data.historicalReviewText
-                    | excerpt: 590
-                }}
-              </p>
+            <div class="col">
+              <div>
+                <h3 class="title">
+                  Coordinador/a
+                  {{ summaryAndCoordinatorPage.data.coordinatorName }}
+                </h3>
+                <p>
+                  {{
+                    summaryAndCoordinatorPage.data.coordinatorText
+                      | excerpt: 590
+                  }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="container-img">
-              <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
-            </div>
-          </div>
+      </section>
+    </ng-container>
 
-          <div class="col">
-            <div>
-              <h3 class="title">
-                Coordinador/a
-                {{ summaryAndCoordinatorPage.data.coordinatorName }}
-              </h3>
+    <ng-container>
+      <section class="page background--generic layout--3">
+        <div class="page__content">
+          <div class="row">
+            <div class="col">
+              <div class="container-img">
+                <img
+                  src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <div class="container-img">
+                <img
+                  src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
+                />
+              </div>
+
               <p>
-                {{
-                  summaryAndCoordinatorPage.data.coordinatorText | excerpt: 590
-                }}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sequi rerum itaque, libero magni perferendis accusamus
+                cum iure ipsam enim quae consequatur, cumque veniam assumenda
+                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Corrupti sequi rerum itaque,
+                libero magni perferendis accusamus cum iure ipsam enim quae
+                consequatur, cumque veniam assumenda quia at nostrum. Totam,
+                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sequi rerum itaque, libero magni perferendis accusamus
+                cum iure ipsam enim quae consequatur, cumque veniam assumenda
+                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Corrupti sequi rerum itaque,
+                libero magni perferendis accusamus cum iure ipsam enim quae
+                consequatur, cumque veniam assumenda quia at nostrum. Totam,
+                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sequi rerum itaque, libero magni perferendis accusamus
+                cum iure ipsam enim quae consequatur, cumque veniam assumenda
+                quia at nostrum. Totam, porro?
               </p>
             </div>
           </div>
@@ -75,7 +126,7 @@
   </div>
 </ng-container>
 
-<div class="loading not-print">
+<div class="loading not-print" *ngIf="isProd">
   <img src="../../../../../assets/images/amblema-loader.gif" />
 </div>
 
