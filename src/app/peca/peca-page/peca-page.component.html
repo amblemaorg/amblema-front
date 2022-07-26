@@ -21,28 +21,16 @@
 
     <button
       *ngIf="header && header.download"
-      [title]="
-        disablePdfDownload()
-          ? 'Cargando informacion del AmbLeMario'
-          : 'Descargar AmbLeMario'
-      "
-      class="
-        btn btn-primary
-        text-decoration-none
-        p-1
-        btn-in-wrapper btn-download-yearbook
-      "
-      (click)="generatePDF()"
-      [disabled]="disablePdfDownload() || creatingPdf"
+      class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
+      (click)="routeToPdfTemplate()"
     >
-      <span *ngIf="creatingPdf" class="spinner-grow spinner-grow-sm"></span>
-      {{ creatingPdf ? "Preparando descarga" : header?.download?.name }}
+      {{ header?.download?.name ? header.download.name : '' }}
     </button>
   </nb-card-body>
 </nb-card>
 
 <nb-card>
   <nb-card-body>
-    <ng-template #blocksContainer> </ng-template>
+    <ng-template #blocksContainer></ng-template>
   </nb-card-body>
 </nb-card>

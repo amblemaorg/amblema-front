@@ -1,0 +1,27 @@
+<button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
+
+<ng-container *ngIf="!!pdfData">
+  <div class="yearbook-pdf">
+    <ng-container *ngIf="!!frontpage">
+      <section class="page front-page">
+        <div class="head">
+          <div class="headings">
+            <p>{{ frontpage.data.schoolYear }}</p>
+            <p>{{ frontpage.data.sponsorName }}</p>
+          </div>
+          <div class="partner-img">
+            <img [src]="frontpage.data.sponsorLogo" />
+          </div>
+        </div>
+        <div class="body">
+          <h1>AmbLeMario</h1>
+          <p>{{ frontpage.data.schoolName }}</p>
+        </div>
+      </section>
+    </ng-container>
+
+    <!-- <section class="page background-2">
+      <p>yearbook-pdf-template works! 2</p>
+    </section> -->
+  </div>
+</ng-container>
