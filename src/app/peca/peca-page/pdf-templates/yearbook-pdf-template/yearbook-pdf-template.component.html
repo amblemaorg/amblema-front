@@ -90,17 +90,17 @@
           <div class="row">
             <div class="col col-img--centered">
               <div class="container-img">
-                <img [src]="data.sponsorLogo" />
+                <img [src]="data.img" />
               </div>
             </div>
             <div class="col overflow--hidden">
-              <p class="tag-title">padrino</p>
+              <p class="tag-title">{{ data.tagTitle }}</p>
               <h2 class="text-capitalize">
-                {{ data.sponsorName }}
+                {{ data.name }}
               </h2>
 
               <p>
-                {{ data.sponsorText | excerpt: 1380 }}
+                {{ data.text | excerpt: 1380 }}
               </p>
             </div>
           </div>

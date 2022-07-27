@@ -16,8 +16,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   frontpage: FrontPage
   summaryAndCoordinatorPage: SummaryAndCoordinatorPage
-  godfatherPage: SchoolAndGodfatherPage
-  schoolPage: SchoolAndGodfatherPage
+  godfatherPage: TemplateThird
+  schoolPage: TemplateThird
 
   ngOnInit(): void {
     this.pdfData = this.pdfService.pdfData
@@ -82,17 +82,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorText,
       schoolName,
       schoolText,
-      school,
+      schoolImg,
     } = this.pdfData
-    this.godfatherPage = new SchoolAndGodfatherPage({
-      sponsorName,
-      sponsorLogo,
-      sponsorText,
+    this.godfatherPage = new TemplateThird({
+      tagTitle: 'padrino',
+      name: sponsorName,
+      img: sponsorLogo,
+      text: sponsorText,
     })
 
-    this.schoolPage = new SchoolAndGodfatherPage({
-      schoolName,
-      schoolText,
+    this.schoolPage = new TemplateThird({
+      tagTitle: 'escuela',
+      name: schoolName,
+      img: schoolImg,
+      text: schoolText,
     })
   }
 
@@ -101,8 +104,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 }
 
-class SchoolAndGodfatherPage {
-  constructor(public data: any, public show = false, public priority = 0) {}
+class TemplateThird {
+  constructor(
+    public data: any,
+    public template = 'layout1',
+    public show = false,
+    public priority = 0,
+  ) {}
 }
 
 class SummaryAndCoordinatorPage {
@@ -114,6 +122,7 @@ class SummaryAndCoordinatorPage {
       coordinatorImg
       coordinatorText
     },
+    public template = 'layout1',
     public show = false,
     public priority = 0,
   ) {}
@@ -122,6 +131,7 @@ class SummaryAndCoordinatorPage {
 class FrontPage {
   constructor(
     public data: { schoolName; schoolYear; sponsorName; sponsorLogo },
+    public template = 'layout1',
     public show = false,
     public priority = 0,
   ) {}
