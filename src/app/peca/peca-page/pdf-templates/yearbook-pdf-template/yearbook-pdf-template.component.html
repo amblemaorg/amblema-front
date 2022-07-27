@@ -1,10 +1,10 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
 <ng-container *ngIf="pdfData">
-  <div class="yearbook-pdf">
+  <main class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
-      <section class="page front-page">
-        <div class="page__content">
+      <section class="page background--front-page">
+        <div class="page__content layout--front">
           <div class="head">
             <div class="headings">
               <p>{{ frontpage.data.schoolYear }}</p>
@@ -23,8 +23,8 @@
     </ng-container>
 
     <ng-container *ngIf="!!summaryAndCoordinatorPage">
-      <section class="page layout--2 background--generic">
-        <div class="page__content">
+      <section class="page background--generic">
+        <div class="page__content layout--2">
           <div class="row">
             <div class="col">
               <div class="container-img">
@@ -73,8 +73,8 @@
     </ng-container>
 
     <ng-container>
-      <section class="page background--generic layout--3">
-        <div class="page__content">
+      <section class="page background--generic">
+        <div class="page__content layout--3">
           <div class="row">
             <div class="col col-img--center">
               <div class="container-img">
@@ -84,8 +84,8 @@
               </div>
             </div>
             <div class="col">
-              <span class="tag-title">padrino</span>
-              <h2>nombre padrino</h2>
+              <p class="tag-title">padrino</p>
+              <h2 class="text-capitalize">nombre padrino</h2>
 
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -120,7 +120,7 @@
     <!-- <ng-container *ngFor="let page of pages; let data as page.data;">
       <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template>
     </ng-container> -->
-  </div>
+  </main>
 </ng-container>
 
 <div class="loading not-print" *ngIf="isProd">
