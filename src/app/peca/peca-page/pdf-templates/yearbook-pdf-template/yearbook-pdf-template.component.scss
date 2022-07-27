@@ -35,24 +35,7 @@ $size__p: 16px;
   }
 }
 
-.page {
-  width: 27.94cm;
-  height: 21.59cm;
-  overflow: hidden;
-  padding: 60px 70px 70px 70px;
 
-  background-repeat: no-repeat;
-  background-size: contain;
-
-  img {
-    max-width: 100%;
-  }
-
-  .page__content {
-    height: 100%;
-    overflow: hidden;
-  }
-}
 
 .yearbook-pdf {
 
@@ -76,125 +59,158 @@ $size__p: 16px;
     color: $black;
   }
 
-  .container-img {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
+  .page {
+    width: 27.94cm;
+    height: 21.59cm;
+    overflow: hidden;
+    padding: 60px 70px 70px 70px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
 
     img {
+      max-width: 100%;
+    }
+
+
+    .background--generic {
+      background-image: url('../../../../../assets/images/pdf/yearbook/background.jpg');
+      padding: 90px 70px 70px 70px;
+    }
+
+    .page__content {
       height: 100%;
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
-
-  .front-page {
-    background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
-
-    h2, p {
-      color: $gray;
-      text-align: center;
+      overflow: hidden;
     }
 
-    .head {
+    .container-img {
       display: flex;
+      align-items: baseline;
       justify-content: center;
-      align-items: center;
 
-      position: relative;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
 
-      .headings {
-        max-width: 60%;
+
+    .front-page {
+      background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
+
+      h2, p {
+        color: $gray;
         text-align: center;
-        text-transform: uppercase;
+      }
 
-        p {
-          font-size: $size__h2;
-          margin: 0;
+      .head {
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-          &:last-child {
-            margin-top: 10px;
+        position: relative;
+
+        .headings {
+          max-width: 60%;
+          text-align: center;
+          text-transform: uppercase;
+
+          p {
+            font-size: $size__h2;
+            margin: 0;
+
+            &:last-child {
+              margin-top: 10px;
+            }
+          }
+
+        }
+
+        .partner-img {
+          width: 180px;
+          height: 180px;
+          position: absolute;
+          top: 0;
+          right: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
           }
         }
-
       }
 
-      .partner-img {
-        width: 180px;
-        height: 180px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        // right: calc(100vw - 29.7cm);
+      .body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+        text-align: center;
+
+        position: relative;
+        top: 100px;
+
+
+        h1 {
+          font-weight: bold;
+          font-size: 64px !important;
+          line-height: 50px;
+          margin: 0px;
+
+        }
+
+        p {
+          text-transform: uppercase;
         }
       }
     }
 
-    .body {
-      display: flex;
+    .layout--2 {
+      display: grid;
+      grid-template-rows: repeat(2, 320px );
       justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      row-gap: 20px;
 
-      text-align: center;
+      .row {
+        overflow: hidden;
 
-      position: relative;
-      top: 100px;
-
-
-      h1 {
-        font-weight: bold;
-        font-size: 64px !important;
-        line-height: 50px;
-        margin: 0px;
-
+        &:nth-child(even){
+          flex-direction: row-reverse;
+        }
       }
 
-      p {
-        text-transform: uppercase;
+      .container-img {
+        height: 100%;
       }
+
     }
-  }
 
-  .layout--2 {
-    display: grid;
-    grid-template-rows: repeat(2, 320px );
-    justify-content: center;
-    row-gap: 20px;
-
-    .row {
-      overflow: hidden;
-
-      &:nth-child(even){
-        flex-direction: row-reverse;
+    .layout--3 {
+      .container-img {
+        height: 280px;
       }
-    }
+      .page__content > .row {
+        height: 100%;
+        column-gap: 20px;
+      }
 
-    .container-img {
-      height: 100%;
+      .col-img--center {
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+
     }
 
   }
 
-  .layout--3 {
-    .container-img {
-      height: 280px;
-    }
-    .row {
-      column-gap: 20px;
-    }
-  }
 
-  .background--generic {
-    background-image: url('../../../../../assets/images/pdf/yearbook/background.jpg');
-    padding: 90px 70px 70px 70px;
-  }
 
 }
 

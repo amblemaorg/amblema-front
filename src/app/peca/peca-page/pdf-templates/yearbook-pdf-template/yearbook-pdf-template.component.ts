@@ -37,9 +37,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.setFrontPage()
       this.setSummaryAndCoordinatorPage()
 
-      setTimeout(() => {
-        window.print()
-      }, 1500)
+      if (this.isProd) {
+        setTimeout(() => {
+          window.print()
+        }, 1500)
+      }
     }
   }
 
