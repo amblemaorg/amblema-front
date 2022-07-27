@@ -72,20 +72,20 @@
       </section>
     </ng-container>
 
-    <ng-container>
+    <ng-container *ngIf="!!godfatherPage">
       <section class="page background--generic">
         <div class="page__content layout--3">
           <div class="row">
             <div class="col col-img--center">
               <div class="container-img">
-                <img
-                  src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
-                />
+                <img [src]="godfatherPage.data.sponsorLogo" />
               </div>
             </div>
-            <div class="col">
+            <div class="col overflow--hidden">
               <p class="tag-title">padrino</p>
-              <h2 class="text-capitalize">nombre padrino</h2>
+              <h2 class="text-capitalize">
+                {{ godfatherPage.data.sponsorLogo }}
+              </h2>
 
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -105,7 +105,25 @@
                 porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Corrupti sequi rerum itaque, libero magni perferendis accusamus
                 cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro?
+                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Corrupti sequi rerum itaque,
+                libero magni perferendis accusamus cum iure ipsam enim quae
+                consequatur, cumque veniam assumenda quia at nostrum. Totam,
+                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sequi rerum itaque, libero magni perferendis accusamus
+                cum iure ipsam enim quae consequatur, cumque veniam assumenda
+                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Corrupti sequi rerum itaque,
+                libero magni perferendis accusamus cum iure ipsam enim quae
+                consequatur, cumque veniam assumenda quia at nostrum. Totam,
+                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti sequi rerum itaque, libero magni perferendis accusamus
+                cum iure ipsam enim quae consequatur, cumque veniam assumenda
+                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Corrupti sequi rerum itaque,
+                libero magni perferendis accusamus cum iure ipsam enim quae
+                consequatur, cumque veniam assumenda quia at nostrum. Totam,
+                porro?
               </p>
             </div>
           </div>
