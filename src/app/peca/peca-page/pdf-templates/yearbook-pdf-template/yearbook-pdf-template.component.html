@@ -73,10 +73,10 @@
     </ng-container>
 
     <ng-container *ngIf="!!godfatherPage">
-      <section class="page background--generic">
+      <!-- <section class="page background--generic">
         <div class="page__content layout--3">
           <div class="row">
-            <div class="col col-img--center">
+            <div class="col col-img--centered">
               <div class="container-img">
                 <img [src]="godfatherPage.data.sponsorLogo" />
               </div>
@@ -84,60 +84,45 @@
             <div class="col overflow--hidden">
               <p class="tag-title">padrino</p>
               <h2 class="text-capitalize">
-                {{ godfatherPage.data.sponsorLogo }}
+                {{ godfatherPage.data.sponsorName }}
               </h2>
 
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sequi rerum itaque, libero magni perferendis accusamus
-                cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Corrupti sequi rerum itaque,
-                libero magni perferendis accusamus cum iure ipsam enim quae
-                consequatur, cumque veniam assumenda quia at nostrum. Totam,
-                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sequi rerum itaque, libero magni perferendis accusamus
-                cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Corrupti sequi rerum itaque,
-                libero magni perferendis accusamus cum iure ipsam enim quae
-                consequatur, cumque veniam assumenda quia at nostrum. Totam,
-                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sequi rerum itaque, libero magni perferendis accusamus
-                cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Corrupti sequi rerum itaque,
-                libero magni perferendis accusamus cum iure ipsam enim quae
-                consequatur, cumque veniam assumenda quia at nostrum. Totam,
-                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sequi rerum itaque, libero magni perferendis accusamus
-                cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Corrupti sequi rerum itaque,
-                libero magni perferendis accusamus cum iure ipsam enim quae
-                consequatur, cumque veniam assumenda quia at nostrum. Totam,
-                porro? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti sequi rerum itaque, libero magni perferendis accusamus
-                cum iure ipsam enim quae consequatur, cumque veniam assumenda
-                quia at nostrum. Totam, porro? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Corrupti sequi rerum itaque,
-                libero magni perferendis accusamus cum iure ipsam enim quae
-                consequatur, cumque veniam assumenda quia at nostrum. Totam,
-                porro?
+                {{ godfatherPage.data.sponsorText | excerpt: 1380 }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <ng-container
+        *ngTemplateOutlet="layout3; context: { data: godfatherPage.data }"
+      ></ng-container>
+    </ng-container>
+
+    <ng-template #layout3 let-data="data">
+      <section class="page background--generic">
+        <div class="page__content layout--3">
+          <div class="row">
+            <div class="col col-img--centered">
+              <div class="container-img">
+                <img [src]="data.sponsorLogo" />
+              </div>
+            </div>
+            <div class="col overflow--hidden">
+              <p class="tag-title">padrino</p>
+              <h2 class="text-capitalize">
+                {{ data.sponsorName }}
+              </h2>
+
+              <p>
+                {{ data.sponsorText | excerpt: 1380 }}
               </p>
             </div>
           </div>
         </div>
       </section>
-    </ng-container>
-
-    <!-- <section class="page background-2">
-      <p>yearbook-pdf-template works! 2</p>
-    </section> -->
-    <!-- <ng-template #frontpage let-></ng-template> -->
-    <!-- <ng-container *ngFor="let page of pages; let data as page.data;">
-      <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template>
-    </ng-container> -->
+    </ng-template>
   </main>
 </ng-container>
 

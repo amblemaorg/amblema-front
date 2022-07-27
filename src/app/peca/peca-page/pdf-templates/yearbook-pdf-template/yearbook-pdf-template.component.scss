@@ -108,10 +108,7 @@ $size__p: 16px;
       .tag-title {
         @extend .first-letter--uppercase;
         margin: 0;
-
-        & + h2 {
-          margin-top: -10px;
-        }
+        margin-bottom: -7px;
 
       }
 
@@ -220,11 +217,13 @@ $size__p: 16px;
     & > .row {
       height: 100%;
       column-gap: 20px;
+
+      .col {
+        height: 100%;
+      }
     }
 
-    .col-img--center {
-      height: 100%;
-
+    .col-img--centered {
       display: flex;
       justify-content: center;
       align-items: center;
