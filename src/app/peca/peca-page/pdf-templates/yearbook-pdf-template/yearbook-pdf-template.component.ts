@@ -17,6 +17,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   frontpage: FrontPage
   summaryAndCoordinatorPage: SummaryAndCoordinatorPage
   godfatherPage: SchoolAndGodfatherPage
+  schoolPage: SchoolAndGodfatherPage
 
   ngOnInit(): void {
     this.pdfData = this.pdfService.pdfData
@@ -75,11 +76,23 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   setSchoolAndGodfatherPage() {
-    const { sponsorName, sponsorLogo, sponsorText } = this.pdfData
+    const {
+      sponsorName,
+      sponsorLogo,
+      sponsorText,
+      schoolName,
+      schoolText,
+      school,
+    } = this.pdfData
     this.godfatherPage = new SchoolAndGodfatherPage({
       sponsorName,
       sponsorLogo,
       sponsorText,
+    })
+
+    this.schoolPage = new SchoolAndGodfatherPage({
+      schoolName,
+      schoolText,
     })
   }
 

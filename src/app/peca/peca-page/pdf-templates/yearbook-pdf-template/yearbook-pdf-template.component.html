@@ -73,30 +73,14 @@
     </ng-container>
 
     <ng-container *ngIf="!!godfatherPage">
-      <!-- <section class="page background--generic">
-        <div class="page__content layout--3">
-          <div class="row">
-            <div class="col col-img--centered">
-              <div class="container-img">
-                <img [src]="godfatherPage.data.sponsorLogo" />
-              </div>
-            </div>
-            <div class="col overflow--hidden">
-              <p class="tag-title">padrino</p>
-              <h2 class="text-capitalize">
-                {{ godfatherPage.data.sponsorName }}
-              </h2>
-
-              <p>
-                {{ godfatherPage.data.sponsorText | excerpt: 1380 }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section> -->
-
       <ng-container
         *ngTemplateOutlet="layout3; context: { data: godfatherPage.data }"
+      ></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!!schoolPage">
+      <ng-container
+        *ngTemplateOutlet="layout3; context: { data: schoolPage.data }"
       ></ng-container>
     </ng-container>
 
