@@ -1,81 +1,116 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
 <ng-container *ngIf="pdfData">
-  <div class="yearbook-pdf">
+  <main class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
-      <section class="page front-page">
-        <div class="head">
-          <div class="headings">
-            <p>{{ frontpage.data.schoolYear }}</p>
-            <p>{{ frontpage.data.sponsorName }}</p>
+      <section class="page background--front-page">
+        <div class="page__content layout--front">
+          <div class="head">
+            <div class="headings">
+              <p>{{ frontpage.data.schoolYear }}</p>
+              <p>{{ frontpage.data.sponsorName }}</p>
+            </div>
+            <div class="partner-img">
+              <img [src]="frontpage.data.sponsorLogo" />
+            </div>
           </div>
-          <div class="partner-img">
-            <img [src]="frontpage.data.sponsorLogo" />
+          <div class="body">
+            <h1>AmbLeMario</h1>
+            <h2>{{ frontpage.data.schoolName }}</h2>
           </div>
-        </div>
-        <div class="body">
-          <h1>AmbLeMario</h1>
-          <h2>{{ frontpage.data.schoolName }}</h2>
         </div>
       </section>
     </ng-container>
 
     <ng-container *ngIf="!!summaryAndCoordinatorPage">
-      <section class="page layout--2 background--generic">
-        <div class="row">
-          <div class="col">
-            <div class="container-img">
-              <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
+      <section class="page background--generic">
+        <div class="page__content layout--2">
+          <div class="row">
+            <div class="col">
+              <div class="container-img">
+                <img
+                  [src]="summaryAndCoordinatorPage.data.historicalReviewImg"
+                />
+              </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div>
-              <h3 class="title">Reseña histórica</h3>
-              <p>
-                {{
-                  summaryAndCoordinatorPage.data.historicalReviewText
-                    | excerpt: 590
-                }}
-              </p>
+            <div class="col">
+              <div>
+                <h3 class="title">Reseña histórica</h3>
+                <p>
+                  {{
+                    summaryAndCoordinatorPage.data.historicalReviewText
+                      | excerpt: 590
+                  }}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="container-img">
-              <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
+          <div class="row">
+            <div class="col">
+              <div class="container-img">
+                <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
+              </div>
             </div>
-          </div>
 
-          <div class="col">
-            <div>
-              <h3 class="title">
-                Coordinador/a
-                {{ summaryAndCoordinatorPage.data.coordinatorName }}
-              </h3>
-              <p>
-                {{
-                  summaryAndCoordinatorPage.data.coordinatorText | excerpt: 590
-                }}
-              </p>
+            <div class="col">
+              <div>
+                <h3 class="title">
+                  Coordinador/a
+                  {{ summaryAndCoordinatorPage.data.coordinatorName }}
+                </h3>
+                <p>
+                  {{
+                    summaryAndCoordinatorPage.data.coordinatorText
+                      | excerpt: 590
+                  }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </ng-container>
 
-    <!-- <section class="page background-2">
-      <p>yearbook-pdf-template works! 2</p>
-    </section> -->
-    <!-- <ng-template #frontpage let-></ng-template> -->
-    <!-- <ng-container *ngFor="let page of pages; let data as page.data;">
-      <ng-template [ngTemplateOutlet]="outlet" [ngOutletContext]="context"></ng-template>
-    </ng-container> -->
-  </div>
+    <ng-container *ngIf="!!godfatherPage">
+      <ng-container
+        *ngTemplateOutlet="layout3; context: { data: godfatherPage.data }"
+      ></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!!schoolPage">
+      <ng-container
+        *ngTemplateOutlet="layout3; context: { data: schoolPage.data }"
+      ></ng-container>
+    </ng-container>
+
+    <ng-template #layout3 let-data="data">
+      <section class="page background--generic">
+        <div class="page__content layout--3">
+          <div class="row">
+            <div class="col col-img--centered">
+              <div class="container-img">
+                <img [src]="data.img" />
+              </div>
+            </div>
+            <div class="col overflow--hidden">
+              <p class="tag-title">{{ data.tagTitle }}</p>
+              <h2 class="text-capitalize">
+                {{ data.name }}
+              </h2>
+
+              <p>
+                {{ data.text | excerpt: 1380 }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+  </main>
 </ng-container>
 
-<div class="loading not-print">
+<div class="loading not-print" *ngIf="isProd">
   <img src="../../../../../assets/images/amblema-loader.gif" />
 </div>
 

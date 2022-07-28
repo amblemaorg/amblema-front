@@ -10,12 +10,14 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  isLoading = true
+  isProd = true
   pdfData: any = false
   pages: any = []
 
   frontpage: FrontPage
   summaryAndCoordinatorPage: SummaryAndCoordinatorPage
+  godfatherPage: TemplateThird
+  schoolPage: TemplateThird
 
   ngOnInit(): void {
     this.pdfData = this.pdfService.pdfData
@@ -27,18 +29,14 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page'])
     }
-
     addEventListener('afterprint', (event) => {
-      this.isLoading = true
       this.router.navigate(['/peca/anuario-page'])
     })
 
     if (this.pdfData) {
       this.setFrontPage()
       this.setSummaryAndCoordinatorPage()
-
-      this.isLoading = false
-      console.log(this.isLoading)
+      this.setSchoolAndGodfatherPage()
 
       setTimeout(() => {
         window.print()
@@ -73,18 +71,63 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     })
   }
 
+  setSchoolAndGodfatherPage() {
+    const {
+      sponsorName,
+      sponsorLogo,
+      sponsorText,
+      schoolName,
+      schoolText,
+      schoolImg,
+    } = this.pdfData
+    this.godfatherPage = new TemplateThird({
+      tagTitle: 'padrino',
+      name: sponsorName,
+      img: sponsorLogo,
+      text: sponsorText,
+    })
+
+    this.schoolPage = new TemplateThird({
+      tagTitle: 'escuela',
+      name: schoolName,
+      img: schoolImg,
+      text: schoolText,
+    })
+  }
+
   print() {
     window.print()
   }
 }
 
+class TemplateThird {
+  constructor(
+    public data: any,
+    public template = 'layout1',
+    public show = false,
+    public priority = 0,
+  ) {}
+}
+
 class SummaryAndCoordinatorPage {
-  constructor(public data: any, public show = false, public priority = 0) {}
+  constructor(
+    public data: {
+      historicalReviewText
+      historicalReviewImg
+      coordinatorName
+      coordinatorImg
+      coordinatorText
+    },
+    public template = 'layout1',
+    public show = false,
+    public priority = 0,
+  ) {}
 }
 
 class FrontPage {
   constructor(
     public data: { schoolName; schoolYear; sponsorName; sponsorLogo },
+    public template = 'layout1',
     public show = false,
     public priority = 0,
   ) {}
