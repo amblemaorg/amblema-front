@@ -84,29 +84,79 @@
       ></ng-container>
     </ng-container>
 
-    <ng-template #layout3 let-data="data">
+    <ng-container>
       <section class="page background--generic">
-        <div class="page__content layout--3">
-          <div class="row">
-            <div class="col col-img--centered">
+        <div class="page__content layout--4">
+          <div class="row body">
+            <div class="col">
               <div class="container-img">
-                <img [src]="data.img" />
+                <img
+                  src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
+                />
               </div>
+              <ul class="list">
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+              </ul>
             </div>
             <div class="col overflow--hidden">
-              <p class="tag-title">{{ data.tagTitle }}</p>
               <h2 class="text-capitalize">
-                {{ data.name }}
+                Preescolar, sección: A
               </h2>
 
-              <p>
-                {{ data.text | excerpt: 1380 }}
-              </p>
+              <ul class="list">
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
-    </ng-template>
+    </ng-container>
   </main>
 </ng-container>
 
@@ -114,6 +164,26 @@
   <img src="../../../../../assets/images/amblema-loader.gif" />
 </div>
 
-<!-- <ng-template #loading>
+<ng-template #layout3 let-data="data">
+  <section class="page background--generic">
+    <div class="page__content layout--3">
+      <div class="row body">
+        <div class="col col-img--centered">
+          <div class="container-img">
+            <img [src]="data.img" />
+          </div>
+        </div>
+        <div class="col overflow--hidden">
+          <p class="tag-title">{{ data.tagTitle }}</p>
+          <h2 class="text-capitalize">
+            {{ data.name }}
+          </h2>
 
-</ng-template> -->
+          <p>
+            {{ data.text | excerpt: 1380 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
