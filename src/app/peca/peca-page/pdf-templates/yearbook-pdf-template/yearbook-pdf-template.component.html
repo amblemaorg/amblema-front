@@ -84,78 +84,22 @@
       ></ng-container>
     </ng-container>
 
-    <ng-container>
-      <section class="page background--generic">
-        <div class="page__content layout--4">
-          <div class="row body">
-            <div class="col">
-              <div class="container-img">
-                <img
-                  src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
-                />
-              </div>
-              <ul class="list">
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-              </ul>
-            </div>
-            <div class="col overflow--hidden">
-              <h2 class="text-capitalize">
-                Preescolar, sección: A
-              </h2>
-
-              <ul class="list">
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-                <li>FABIÁN ALEJANDRO RODRÍGUEZ SEGOVIA</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+    <ng-container *ngIf="!!schoolSectionsPage">
+      <ng-container
+        *ngFor="let schoolSection of schoolSectionsPage.data.schoolSections"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            layout4;
+            context: {
+              data: schoolSection,
+              studentsSegmented: getStudentsSegmented(
+                schoolSection.sectionStudents
+              )
+            }
+          "
+        ></ng-container>
+      </ng-container>
     </ng-container>
   </main>
 </ng-container>
@@ -182,6 +126,40 @@
           <p>
             {{ data.text | excerpt: 1380 }}
           </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #layout4 let-data="data" let-studentsSegmented="studentsSegmented">
+  <section class="page background--generic">
+    <div class="page__content layout--4">
+      <div class="row body">
+        <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data.sectionName }}
+          </h2>
+
+          <ul class="list">
+            l
+            <ng-container *ngFor="let name of studentsSegmented.large">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="col overflow--hidden">
+          <ng-container *ngIf="data.sectionImg">
+            <div class="container-img col-img--centered">
+              <img [src]="data.sectionImg" />
+            </div>
+          </ng-container>
+
+          <ul class="list">
+            <ng-container *ngFor="let name of studentsSegmented.small">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
         </div>
       </div>
     </div>

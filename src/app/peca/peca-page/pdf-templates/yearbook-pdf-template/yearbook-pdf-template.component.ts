@@ -18,6 +18,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   summaryAndCoordinatorPage: SummaryAndCoordinatorPage
   godfatherPage: TemplateThird
   schoolPage: TemplateThird
+  schoolSectionsPage: SchoolSectionsPage
 
   ngOnInit(): void {
     this.pdfData = this.pdfService.pdfData
@@ -34,14 +35,23 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     // })
 
     if (this.pdfData) {
-      this.setFrontPage()
-      this.setSummaryAndCoordinatorPage()
-      this.setSchoolAndGodfatherPage()
+      this.pageInit()
 
       // setTimeout(() => {
       //   window.print()
       // }, 1500)
     }
+  }
+
+  print() {
+    window.print()
+  }
+
+  pageInit() {
+    this.setFrontPage()
+    this.setSummaryAndCoordinatorPage()
+    this.setSchoolAndGodfatherPage()
+    this.setSchoolSectionsPage()
   }
 
   setFrontPage() {
@@ -95,9 +105,36 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     })
   }
 
-  print() {
-    window.print()
+  setSchoolSectionsPage() {
+    const { schoolSections } = this.pdfData
+
+    this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
   }
+
+  getStudentsSegmented(students: any[]) {
+    // 29 items
+    if (students.length <= 29) {
+      return {
+        large: students,
+        small: [],
+      }
+    }
+    console.log(students)
+    // 18
+    return {
+      large: students.slice(0, 29),
+      small: students.slice(29, students.length),
+    }
+  }
+}
+
+class SchoolSectionsPage {
+  constructor(
+    public data: any,
+    public template = 'layout--4',
+    public show = false,
+    public priority = 0,
+  ) {}
 }
 
 class TemplateThird {
