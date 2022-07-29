@@ -1,6 +1,6 @@
 <button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
 
-<ng-container *ngIf="pdfData">
+<ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
       <section class="page background--front-page">
@@ -38,10 +38,13 @@
               <div>
                 <h3 class="title">Reseña histórica</h3>
                 <p>
-                  {{
-                    summaryAndCoordinatorPage.data.historicalReviewText
-                      | excerpt: 590
-                  }}
+                  <span
+                    [outerHTML]="
+                      summaryAndCoordinatorPage.data.historicalReviewText
+                        | excerpt: 580
+                        | br
+                    "
+                  ></span>
                 </p>
               </div>
             </div>
@@ -60,10 +63,13 @@
                   {{ summaryAndCoordinatorPage.data.coordinatorName }}
                 </h3>
                 <p>
-                  {{
-                    summaryAndCoordinatorPage.data.coordinatorText
-                      | excerpt: 590
-                  }}
+                  <span
+                    [outerHTML]="
+                      summaryAndCoordinatorPage.data.coordinatorText
+                        | excerpt: 580
+                        | br
+                    "
+                  ></span>
                 </p>
               </div>
             </div>
@@ -93,6 +99,7 @@
             layout4;
             context: {
               data: schoolSection,
+              secondSection: schoolSection,
               studentsSegmented: getStudentsSegmented(
                 schoolSection.sectionStudents,
                 schoolSection.sectionImg
@@ -125,7 +132,7 @@
           </h2>
 
           <p>
-            {{ data.text | excerpt: 1380 }}
+            <span [outerHTML]="data.text | excerpt: 1122 | br"></span>
           </p>
         </div>
       </div>
@@ -155,7 +162,7 @@
             </div>
           </ng-container>
 
-          <ul class="list small">
+          <ul class="list small padding-top">
             <ng-container *ngFor="let name of studentsSegmented.small">
               <li>{{ name }}</li>
             </ng-container>
