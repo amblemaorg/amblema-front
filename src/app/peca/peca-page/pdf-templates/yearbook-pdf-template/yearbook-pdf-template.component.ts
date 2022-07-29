@@ -1,6 +1,7 @@
 import { Router } from '@angular/router'
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
+import { PdfYearbookData, SchoolSection } from './pdfYearbookData.interface'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -11,7 +12,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
   isProd = false
-  pdfData: any = false
+  pdfData: PdfYearbookData
   pages: any = []
 
   frontpage: FrontPage
@@ -111,6 +112,27 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
   }
 
+  getSchoolSectionSegmented(
+    schoolSections = this.schoolSectionsPage.data.schoolSections,
+  ) {
+    let schoolSectionsSegmented = []
+
+    for (let index = 0; index < schoolSections.length; index++) {
+      const section = schoolSections[index]
+
+      if (section.sectionStudents.length <= 29) {
+        schoolSectionsSegmented.push(section)
+        return
+      }
+    }
+
+    // schoolSections.forEach( section => {
+    //   if (section.sectionStudents.length > 29) {
+
+    //   }
+    // })
+  }
+
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
   getStudentsSegmented(students: any[], sectionImg) {
     const maxLargeSize = 29
@@ -139,7 +161,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
 class SchoolSectionsPage {
   constructor(
-    public data: any,
+    public data: { schoolSections: SchoolSection[] },
     public template = 'layout--4',
     public show = false,
     public priority = 0,
