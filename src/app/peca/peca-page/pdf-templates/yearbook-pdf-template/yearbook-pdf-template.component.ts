@@ -111,19 +111,28 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
   }
 
-  getStudentsSegmented(students: any[]) {
+  // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
+  getStudentsSegmented(students: any[], sectionImg) {
+    const maxLargeSize = 29
+    const maxSmallSize = maxLargeSize + (sectionImg ? 18 : 29)
+
     // 29 items
-    if (students.length <= 29) {
+    if (students.length <= maxLargeSize) {
       return {
         large: students,
         small: [],
       }
     }
-    console.log(students)
-    // 18
+
+    let maxSmallLength = students.length
+
+    if (students.length > maxSmallSize) {
+      maxSmallLength = maxSmallSize
+    }
+
     return {
-      large: students.slice(0, 29),
-      small: students.slice(29, students.length),
+      large: students.slice(0, maxLargeSize),
+      small: students.slice(maxLargeSize, maxSmallLength),
     }
   }
 }
