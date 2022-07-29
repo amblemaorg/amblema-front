@@ -118,52 +118,41 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     schoolSections = this.schoolSectionsPage.data.schoolSections,
   ) {
     // let strategySchoolSectionsLength = schoolSections.length
-    // let schoolSectionsSegmented = []
 
     if (schoolSections.length <= 1) {
       return schoolSections
     }
 
-    // const isPairLength = schoolSections.length % 2 === 0
-    // strategySchoolSectionsLength = isPairLength
-    //   ? schoolSections.length / 2
-    //   : schoolSections.length
-    // console.log('schoolSections.length', schoolSections.length)
+    console.log(
+      'schoolSections.length',
+      schoolSections.length,
+      'Math.floor(11 / 2)',
+      Math.floor(11 / 2),
+    )
 
-    // if (schoolSections.length % 2 === 0) {
-    //   strategySchoolSectionsLength /= 2
-    // }
-    console.log('schoolSections.length', schoolSections.length)
+    let schoolSectionsSegmented = []
 
-    for (let index = 0; index < schoolSections.length / 3; index++) {
+    for (let index = 0; index < Math.floor(10 / 2); index++) {
       console.log(index)
-
-      // if (isPairLength) {
       const section = schoolSections[index]
       const nextSection = schoolSections[index + 1]
       console.log('section and nextSection', { section, nextSection })
-      // }
 
-      // if (!isPairLength) {
-      //   const section = schoolSections[index]
-      //   const nextSection = schoolSections[index + 1]
-      //   console.log('section', section)
-      //   console.log('nextSection', nextSection)
-      // }
+      if (
+        section.sectionStudents.length <= 29 &&
+        nextSection.sectionStudents.length <= 29
+      ) {
+        schoolSectionsSegmented.push([section, nextSection])
 
-      // const section = schoolSections[index]
-      // if (section.sectionStudents.length > 29) {
-      //   schoolSectionsSegmented.push(section)
-      //   return
-      // }
-      // schoolSectionsSegmented.push(section)
+        return
+      }
+
+      if (section.sectionStudents.length > 29) {
+        schoolSectionsSegmented.push(section)
+
+        // index -= 1
+      }
     }
-
-    // schoolSections.forEach( section => {
-    //   if (section.sectionStudents.length > 29) {
-
-    //   }
-    // })
   }
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
