@@ -110,20 +110,53 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const { schoolSections } = this.pdfData
 
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
+
+    this.getSchoolSectionSegmented()
   }
 
   getSchoolSectionSegmented(
     schoolSections = this.schoolSectionsPage.data.schoolSections,
   ) {
-    let schoolSectionsSegmented = []
+    // let strategySchoolSectionsLength = schoolSections.length
+    // let schoolSectionsSegmented = []
 
-    for (let index = 0; index < schoolSections.length; index++) {
+    if (schoolSections.length <= 1) {
+      return schoolSections
+    }
+
+    // const isPairLength = schoolSections.length % 2 === 0
+    // strategySchoolSectionsLength = isPairLength
+    //   ? schoolSections.length / 2
+    //   : schoolSections.length
+    // console.log('schoolSections.length', schoolSections.length)
+
+    // if (schoolSections.length % 2 === 0) {
+    //   strategySchoolSectionsLength /= 2
+    // }
+    console.log('schoolSections.length', schoolSections.length)
+
+    for (let index = 0; index < schoolSections.length / 3; index++) {
+      console.log(index)
+
+      // if (isPairLength) {
       const section = schoolSections[index]
+      const nextSection = schoolSections[index + 1]
+      console.log('section and nextSection', { section, nextSection })
+      // }
 
-      if (section.sectionStudents.length <= 29) {
-        schoolSectionsSegmented.push(section)
-        return
-      }
+      // if (!isPairLength) {
+      //   const section = schoolSections[index]
+      //   const nextSection = schoolSections[index + 1]
+      //   console.log('section', section)
+      //   console.log('nextSection', nextSection)
+      // }
+
+      // const section = schoolSections[index]
+      // if (section.sectionStudents.length > 29) {
+      //   schoolSectionsSegmented.push(section)
+      //   return
+      // }
+      // schoolSectionsSegmented.push(section)
     }
 
     // schoolSections.forEach( section => {

@@ -18,8 +18,6 @@ import { Pipe, PipeTransform } from '@angular/core'
 export class Excerpt implements PipeTransform {
   transform(value: string, long: number, end: string = '...'): string {
     if (value) {
-      console.log(value.replace(/(?:\r\n|\r|\n)/g, '<br />'))
-
       if (value.length <= long) {
         return value
       }
