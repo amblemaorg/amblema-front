@@ -182,11 +182,22 @@ class SchoolSectionsPage {
 
       schoolSectionsSegmentedTest.push({ section, nextSection })
 
+      if (section.sectionImg) {
+        schoolSectionsSegmented.push(section)
+        continue
+      }
+
+      if (nextSection.sectionImg) {
+        schoolSectionsSegmented.push(nextSection)
+        continue
+      }
+
       if (
         section.sectionStudents.length <= maxStudentsNameByColumn &&
         nextSection.sectionStudents.length <= maxStudentsNameByColumn
       ) {
         schoolSectionsSegmented.push([section, nextSection])
+
         continue
       }
 
