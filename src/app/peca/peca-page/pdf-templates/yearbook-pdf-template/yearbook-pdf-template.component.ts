@@ -110,53 +110,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const { schoolSections } = this.pdfData
 
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
-
-    this.getSchoolSectionSegmented()
+    console.log(
+      'his.schoolSectionsPage.data.schoolSectionsSegmented',
+      this.schoolSectionsPage.data.schoolSectionsSegmented,
+    )
   }
 
-  getSchoolSectionSegmented(
-    schoolSections = this.schoolSectionsPage.data.schoolSections,
-  ) {
-    if (schoolSections.length <= 1) {
-      return schoolSections
-    }
+  consoleLog(d) {
+    console.log('logo logo sofs', d, Array.isArray(d))
 
-    let schoolSectionsSegmented = []
-    let schoolSectionsSegmentedTest = []
+    return ''
+  }
 
-    for (let index = 0; index < schoolSections.length; index += 2) {
-      const section = schoolSections[index]
-      const nextSection = schoolSections[index + 1]
-      const maxStudentsNameByColumn = 29
-
-      schoolSectionsSegmentedTest.push({ section, nextSection })
-
-      if (
-        section.sectionStudents.length <= maxStudentsNameByColumn &&
-        nextSection.sectionStudents.length <= maxStudentsNameByColumn
-      ) {
-        schoolSectionsSegmented.push({ section, nextSection })
-        continue
-      }
-
-      if (section.sectionStudents.length > maxStudentsNameByColumn) {
-        schoolSectionsSegmented.push({ section, nextSection: false })
-
-        // Do nextSection become to section on next iteration
-        if (nextSection.sectionStudents.length < maxStudentsNameByColumn) {
-          index -= 1
-          continue
-        }
-      }
-
-      if (nextSection.sectionStudents.length > maxStudentsNameByColumn) {
-        schoolSectionsSegmented.push({ section, nextSection: false }) // Single page to section  that is lower than nexSection
-        schoolSectionsSegmented.push({ section: false, nextSection }) // Single page to section that is higher than section
-      }
-    }
-
-    console.log('schoolSectionsSegmentedTest', schoolSectionsSegmentedTest)
-    console.log('schoolSectionsSegmented', schoolSectionsSegmented)
+  isArray(arg) {
+    return Array.isArray(arg)
   }
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
@@ -186,12 +153,64 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 }
 
 class SchoolSectionsPage {
+  public data: {
+    schoolSections: SchoolSection[]
+    schoolSectionsSegmented: any[]
+  } = { schoolSections: [], schoolSectionsSegmented: [] }
   constructor(
-    public data: { schoolSections: SchoolSection[] },
+    data: { schoolSections: SchoolSection[] },
     public template = 'layout--4',
     public show = false,
     public priority = 0,
-  ) {}
+  ) {
+    this.data.schoolSections = data.schoolSections
+    this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
+  }
+
+  getSchoolSectionsSegmented(schoolSections = this.data.schoolSections) {
+    if (schoolSections.length <= 1) {
+      return schoolSections
+    }
+
+    let schoolSectionsSegmented = []
+    let schoolSectionsSegmentedTest = []
+
+    for (let index = 0; index < schoolSections.length; index += 2) {
+      const section = schoolSections[index]
+      const nextSection = schoolSections[index + 1]
+      const maxStudentsNameByColumn = 29
+
+      schoolSectionsSegmentedTest.push({ section, nextSection })
+
+      if (
+        section.sectionStudents.length <= maxStudentsNameByColumn &&
+        nextSection.sectionStudents.length <= maxStudentsNameByColumn
+      ) {
+        schoolSectionsSegmented.push([section, nextSection])
+        continue
+      }
+
+      if (section.sectionStudents.length > maxStudentsNameByColumn) {
+        schoolSectionsSegmented.push(section)
+
+        // Do nextSection become to section on next iteration
+        if (nextSection.sectionStudents.length < maxStudentsNameByColumn) {
+          index -= 1
+          continue
+        }
+      }
+
+      if (nextSection.sectionStudents.length > maxStudentsNameByColumn) {
+        schoolSectionsSegmented.push(section) // Single page to section  that is lower than nexSection
+        schoolSectionsSegmented.push(nextSection) // Single page to section that is higher than section
+      }
+    }
+
+    console.log('schoolSectionsSegmentedTest', schoolSectionsSegmentedTest)
+    console.log('schoolSectionsSegmented', schoolSectionsSegmented)
+
+    return schoolSectionsSegmented
+  }
 }
 
 class TemplateThird {

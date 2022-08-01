@@ -237,6 +237,10 @@ $size__p: 16px;
 
     .body {
 
+      h2 {
+        text-align: center;
+      }
+
       .container-img {
         img {
           object-position: left;
@@ -246,6 +250,7 @@ $size__p: 16px;
       .list {
         list-style: none;
         padding: 0;
+        text-align: center;
 
         li {
           color: $black !important;

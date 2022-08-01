@@ -92,20 +92,36 @@
 
     <ng-container *ngIf="!!schoolSectionsPage">
       <ng-container
-        *ngFor="let schoolSectionSegmented of getSchoolSectionsSegmented()"
+        *ngFor="
+          let schoolSectionSegmented of this.schoolSectionsPage.data
+            .schoolSectionsSegmented
+        "
       >
-        <ng-container
-          *ngTemplateOutlet="
-            largeSchoolSection;
-            context: {
-              data: schoolSectionSegmented,
-              studentsSegmented: getStudentsSegmented(
-                schoolSection.sectionStudents,
-                schoolSection.sectionImg
-              )
-            }
-          "
-        ></ng-container>
+        <ng-container *ngIf="isArray(schoolSectionSegmented)">
+          <ng-container
+            *ngTemplateOutlet="
+              smallSchoolSections;
+              context: {
+                data: schoolSectionSegmented
+              }
+            "
+          ></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="!isArray(schoolSectionSegmented)">
+          <ng-container
+            *ngTemplateOutlet="
+              largeSchoolSection;
+              context: {
+                data: schoolSectionSegmented,
+                studentsSegmented: getStudentsSegmented(
+                  schoolSectionSegmented.sectionStudents,
+                  schoolSectionSegmented.sectionImg
+                )
+              }
+            "
+          ></ng-container>
+        </ng-container>
       </ng-container>
     </ng-container>
   </main>
@@ -159,9 +175,6 @@
           </ul>
         </div>
         <div class="col overflow--hidden">
-          <h2 class="text-capitalize">
-            {{ data.sectionName }}
-          </h2>
           <ng-container *ngIf="data.sectionImg">
             <div class="container-img">
               <img [src]="data.sectionImg" />
@@ -179,7 +192,7 @@
   </section>
 </ng-template>
 
-<ng-template #smallSchoolSection let-data="data">
+<ng-template #smallSchoolSections let-data="data">
   <section class="page background--generic">
     <div class="page__content layout--4">
       <div class="row body">
@@ -204,7 +217,7 @@
             </div>
           </ng-container> -->
 
-          <ul class="list small padding-top">
+          <ul class="list small">
             <ng-container *ngFor="let name of data[1].sectionStudents">
               <li>{{ name }}</li>
             </ng-container>
