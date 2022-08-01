@@ -115,21 +115,78 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   getSchoolSectionSegmented(
-    schoolSections: any = this.schoolSectionsPage.data.schoolSections,
+    schoolSections = this.schoolSectionsPage.data.schoolSections,
   ) {
     if (schoolSections.length <= 1) {
       return schoolSections
     }
 
     let schoolSectionsSegmented = []
+    let schoolSectionsSegmentedTest = []
+
+    // for (let index = 0; index < schoolSections.length; index += 2) {
+    //   const section = schoolSections[index]
+    //   const nextSection = schoolSections[index + 1]
+    //   let thirdNextSection
+
+    //   schoolSectionsSegmentedTest.push({ section, nextSection })
+    //   console.log('schoolSectionsSegmentedTest', schoolSectionsSegmentedTest);
+
+    //   if(section.sectionStudents.length <= 29 && nextSection.sectionStudents.length <= 29) {
+    //     schoolSectionsSegmented.push({ section, nextSection })
+    //   }
+
+    //   if(section.sectionStudents.length > 29) {
+    //     schoolSectionsSegmented.push({ section,  nextSection: false})
+
+    //     if( nextSection.sectionStudents.length < 29 ) {
+
+    //       if(schoolSections[index + 2]) {
+    //         thirdNextSection = schoolSections[index + 2]
+
+    //       }
+    //       schoolSectionsSegmented.push({ section: nextSection,  nextSection:})
+    //     }
+    //   }
+
+    //   if(nextSection.sectionStudents.length > 29) {
+    //     schoolSectionsSegmented.push({ section: false,  nextSection })
+
+    //   }
+
+    // }
 
     for (let index = 0; index < schoolSections.length; index += 2) {
       const section = schoolSections[index]
       const nextSection = schoolSections[index + 1]
+      const maxStudentsNameByColumn = 29
+      const newSectionSegmented = { section: false, nextSection: false }
+      schoolSectionsSegmentedTest.push({ section, nextSection })
 
-      schoolSectionsSegmented.push({ section, nextSection })
+      if (
+        section.sectionStudents.length <= maxStudentsNameByColumn &&
+        nextSection.sectionStudents.length <= maxStudentsNameByColumn
+      ) {
+        schoolSectionsSegmented.push({ section, nextSection })
+        continue
+      }
+
+      if (section.sectionStudents.length > maxStudentsNameByColumn) {
+        schoolSectionsSegmented.push({ section, nextSection: false })
+
+        // Do nextSection become to section on next iteration
+        if (nextSection.sectionStudents.length < maxStudentsNameByColumn) {
+          index -= 1
+          continue
+        }
+      }
+
+      if (nextSection.sectionStudents.length > maxStudentsNameByColumn) {
+        schoolSectionsSegmented.push({ section, nextSection })
+      }
     }
 
+    console.log('schoolSectionsSegmentedTest', schoolSectionsSegmentedTest)
     console.log('schoolSectionsSegmented', schoolSectionsSegmented)
   }
 
