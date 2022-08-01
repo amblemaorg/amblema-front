@@ -92,14 +92,13 @@
 
     <ng-container *ngIf="!!schoolSectionsPage">
       <ng-container
-        *ngFor="let schoolSection of schoolSectionsPage.data.schoolSections"
+        *ngFor="let schoolSectionSegmented of getSchoolSectionsSegmented()"
       >
         <ng-container
           *ngTemplateOutlet="
-            layout4;
+            largeSchoolSection;
             context: {
-              data: schoolSection,
-              secondSection: schoolSection,
+              data: schoolSectionSegmented,
               studentsSegmented: getStudentsSegmented(
                 schoolSection.sectionStudents,
                 schoolSection.sectionImg
@@ -140,7 +139,11 @@
   </section>
 </ng-template>
 
-<ng-template #layout4 let-data="data" let-studentsSegmented="studentsSegmented">
+<ng-template
+  #largeSchoolSection
+  let-data="data"
+  let-studentsSegmented="studentsSegmented"
+>
   <section class="page background--generic">
     <div class="page__content layout--4">
       <div class="row body">
@@ -156,6 +159,9 @@
           </ul>
         </div>
         <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data.sectionName }}
+          </h2>
           <ng-container *ngIf="data.sectionImg">
             <div class="container-img">
               <img [src]="data.sectionImg" />
@@ -164,6 +170,42 @@
 
           <ul class="list small padding-top">
             <ng-container *ngFor="let name of studentsSegmented.small">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #smallSchoolSection let-data="data">
+  <section class="page background--generic">
+    <div class="page__content layout--4">
+      <div class="row body">
+        <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data[0].sectionName }}
+          </h2>
+
+          <ul class="list">
+            <ng-container *ngFor="let name of data[0].sectionStudents">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data[1].sectionName }}
+          </h2>
+          <!-- <ng-container *ngIf="data.sectionImg">
+            <div class="container-img">
+              <img [src]="data[1].sectionImg" />
+            </div>
+          </ng-container> -->
+
+          <ul class="list small padding-top">
+            <ng-container *ngFor="let name of data[1].sectionStudents">
               <li>{{ name }}</li>
             </ng-container>
           </ul>
