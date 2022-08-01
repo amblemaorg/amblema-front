@@ -115,44 +115,22 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   getSchoolSectionSegmented(
-    schoolSections = this.schoolSectionsPage.data.schoolSections,
+    schoolSections: any = this.schoolSectionsPage.data.schoolSections,
   ) {
-    // let strategySchoolSectionsLength = schoolSections.length
-
     if (schoolSections.length <= 1) {
       return schoolSections
     }
 
-    console.log(
-      'schoolSections.length',
-      schoolSections.length,
-      'Math.floor(11 / 2)',
-      Math.floor(11 / 2),
-    )
-
     let schoolSectionsSegmented = []
 
-    for (let index = 0; index < Math.floor(10 / 2); index++) {
-      console.log(index)
+    for (let index = 0; index < schoolSections.length; index += 2) {
       const section = schoolSections[index]
       const nextSection = schoolSections[index + 1]
-      console.log('section and nextSection', { section, nextSection })
 
-      if (
-        section.sectionStudents.length <= 29 &&
-        nextSection.sectionStudents.length <= 29
-      ) {
-        schoolSectionsSegmented.push([section, nextSection])
-
-        return
-      }
-
-      if (section.sectionStudents.length > 29) {
-        schoolSectionsSegmented.push(section)
-
-        // index -= 1
-      }
+      schoolSectionsSegmented.push({ section, nextSection })
     }
+
+    console.log('schoolSectionsSegmented', schoolSectionsSegmented)
   }
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
