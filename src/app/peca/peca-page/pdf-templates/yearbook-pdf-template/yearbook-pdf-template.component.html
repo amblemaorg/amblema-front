@@ -67,11 +67,22 @@
     <ng-container *ngIf="!!schoolSectionsPage">
       <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
         <ng-container
-          *ngTemplateOutlet="
-            galleryTemplate;
-            context: { galleryImgs: schoolSectionsPage.data.galleryImgs }
+          *ngFor="
+            let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(
+              schoolSectionsPage.data.galleryImgs
+            )
           "
-        ></ng-container>
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              galleryTemplate;
+              context: {
+                galleryImgs: galleryImgs,
+                withSubtitle: true
+              }
+            "
+          ></ng-container>
+        </ng-container>
       </ng-container>
     </ng-container>
   </main>
@@ -201,11 +212,11 @@
           </ul>
         </div>
         <div class="col overflow--hidden">
-          <ng-container *ngIf="data.sectionImg">
+          <!-- <ng-container *ngIf="data.sectionImg">
             <div class="container-img">
               <img [src]="data.sectionImg" />
             </div>
-          </ng-container>
+          </ng-container> -->
 
           <ul class="list small padding-top">
             <ng-container *ngFor="let name of studentsSegmented.small">
@@ -255,16 +266,26 @@
 </ng-template>
 
 <!-- Gallery -->
-<ng-template #galleryTemplate let-galleryImgs="galleryImgs">
+<ng-template
+  #galleryTemplate
+  let-galleryImgs="galleryImgs"
+  let-withSubtitle="withSubtitle"
+>
   <section class="page background--generic">
-    <div class="page__content layout--gallery with-subtitles">
+    <div
+      class="page__content layout--gallery  {{
+        withSubtitle ? 'with-subtitles' : ''
+      }}"
+    >
       <ng-container *ngFor="let imgItem of galleryImgs">
-        <ng-container *ngIf="schoolSection.sectionImg">
+        <ng-container *ngIf="imgItem">
           <div class="gallery__item">
             <div class="image-container">
-              <img [src]="imgItem.img" [title]="imgItem.title" />
+              <img [src]="imgItem.img" />
             </div>
-            <p>{{ imgItem.title }}</p>
+            <ng-container *ngIf="withSubtitle">
+              <p>{{ imgItem.title }}</p>
+            </ng-container>
           </div>
         </ng-container>
       </ng-container>

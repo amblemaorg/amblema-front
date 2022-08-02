@@ -2,6 +2,7 @@ import { Router } from '@angular/router'
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
 import { PdfYearbookData, SchoolSection } from './pdfYearbookData.interface'
+import { mockSchoolSections } from './mockShoolSectionData'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -164,7 +165,10 @@ class SchoolSectionsPage {
     public show = false,
     public priority = 0,
   ) {
-    this.data.schoolSections = data.schoolSections
+    console.log('SchoolSectionsPage', data.schoolSections)
+
+    // this.data.schoolSections = data.schoolSections
+    this.data.schoolSections = mockSchoolSections
     this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
 
     this.data.schoolSections.forEach((schoolSection) => {
@@ -215,6 +219,121 @@ class SchoolSectionsPage {
     }
 
     return schoolSectionsSegmented
+  }
+
+  getGalleryImgsSegmented(galleryImgs = []) {
+    console.log('getGalleryImgsSegmented', galleryImgs)
+    galleryImgs = Array.from(Array(22).keys()).map((i, idx) => {
+      return {
+        img: `${idx} ---- https://picsum.photos/200/300`,
+        title: `${idx}`,
+      }
+    })
+    const maxByPage = 9
+    let galleryImgsSegmented = []
+
+    if (galleryImgs.length <= maxByPage) {
+      return [galleryImgs]
+    }
+
+    // 22
+    // for (let index = 0; index < galleryImgs.length; index += maxByPage) {
+    //   // let currentStrategyLength = index === 0 ? maxByPage : 2 * maxByPage
+
+    //   // if (currentStrategyLength > galleryImgs.length) {
+    //   //   console.log('yeees', galleryImgsSegmented.length, galleryImgs.length)
+
+    //   //   console.log()
+
+    //   //   galleryImgsSegmented.push(
+    //   //     galleryImgs.slice(galleryImgsSegmented.length, galleryImgs.length),
+    //   //   )
+
+    //   //   return
+    //   // }
+
+    //   // if(index === 0) {
+    //   //   galleryImgsSegmented.push(
+    //   //     galleryImgs.slice(index, maxByPage),
+    //   //   )
+    //   //   continue
+    //   // }
+
+    //   // if(index > galleryImgs.length) {
+
+    //   // }
+
+    //   console.log('galleryImgsSegmented.length, currentStrategyLength', {
+    //     galleryImgsSegmented: galleryImgsSegmented.length,
+    //     index,
+    //   })
+
+    //   galleryImgsSegmented.push(
+    //     galleryImgs.slice(
+    //       galleryImgsSegmented.length,
+    //       index == 0 ? maxByPage : 2 * index,
+    //     ),
+    //   )
+    //   console.log('for galleryImgsSegmented:::', galleryImgsSegmented)
+
+    //   // galleryImgsSegmented.push(
+    //   //   galleryImgs.slice(galleryImgsSegmented.length, index),
+    //   // )
+    // }
+
+    for (let index = 0; index < galleryImgs.length / maxByPage; index++) {
+      const currentStrategyLength =
+        index === 0 ? maxByPage : (index + 1) * maxByPage
+
+      // if (currentStrategyLength > galleryImgs.length) {
+      //   console.log('yeees', galleryImgsSegmented.length, galleryImgs.length)
+
+      //   console.log()
+
+      //   galleryImgsSegmented.push(
+      //     galleryImgs.slice(galleryImgsSegmented.length, galleryImgs.length),
+      //   )
+
+      //   return
+      // }
+
+      if (index === 0) {
+        galleryImgsSegmented.push(galleryImgs.slice(0, currentStrategyLength))
+        continue
+      }
+
+      if (currentStrategyLength < galleryImgs.length) {
+        galleryImgsSegmented.push(
+          galleryImgs.slice(
+            galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
+            currentStrategyLength,
+          ),
+        )
+        continue
+      }
+
+      console.log('no')
+
+      if (currentStrategyLength > galleryImgs.length) {
+        galleryImgsSegmented.push(
+          galleryImgs.slice(
+            galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
+            currentStrategyLength,
+          ),
+        )
+        return
+      }
+    }
+
+    console.log('form galleryImgsSegmented::: galleryImgs', galleryImgs)
+    console.log('form galleryImgsSegmented:::', galleryImgsSegmented)
+
+    return [
+      galleryImgs.slice(0, 9),
+      galleryImgs.length > 18
+        ? galleryImgs.slice(9, 18)
+        : galleryImgs.slice(9, galleryImgs.length),
+    ]
   }
 }
 
