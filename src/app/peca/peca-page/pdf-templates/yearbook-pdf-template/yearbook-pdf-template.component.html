@@ -3,79 +3,18 @@
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
     <ng-container *ngIf="!!frontpage">
-      <section class="page background--front-page">
-        <div class="page__content layout--front">
-          <div class="head">
-            <div class="headings">
-              <p>{{ frontpage.data.schoolYear }}</p>
-              <p>{{ frontpage.data.sponsorName }}</p>
-            </div>
-            <div class="partner-img">
-              <img [src]="frontpage.data.sponsorLogo" />
-            </div>
-          </div>
-          <div class="body">
-            <h1>AmbLeMario</h1>
-            <h2>{{ frontpage.data.schoolName }}</h2>
-          </div>
-        </div>
-      </section>
+      <ng-container
+        *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
+      ></ng-container>
     </ng-container>
 
     <ng-container *ngIf="!!summaryAndCoordinatorPage">
-      <section class="page background--generic">
-        <div class="page__content layout--2">
-          <div class="row">
-            <div class="col">
-              <div class="container-img">
-                <img
-                  [src]="summaryAndCoordinatorPage.data.historicalReviewImg"
-                />
-              </div>
-            </div>
-
-            <div class="col">
-              <div>
-                <h3 class="title">Reseña histórica</h3>
-                <p>
-                  <span
-                    [outerHTML]="
-                      summaryAndCoordinatorPage.data.historicalReviewText
-                        | excerpt: 627
-                        | br
-                    "
-                  ></span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="container-img">
-                <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
-              </div>
-            </div>
-
-            <div class="col">
-              <div>
-                <h3 class="title">
-                  Coordinador/a
-                  {{ summaryAndCoordinatorPage.data.coordinatorName }}
-                </h3>
-                <p>
-                  <span
-                    [outerHTML]="
-                      summaryAndCoordinatorPage.data.coordinatorText
-                        | excerpt: 627
-                        | br
-                    "
-                  ></span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ng-container
+        *ngTemplateOutlet="
+          layout2Template;
+          context: { summaryAndCoordinatorPage: summaryAndCoordinatorPage }
+        "
+      ></ng-container>
     </ng-container>
 
     <ng-container *ngIf="!!godfatherPage">
@@ -130,6 +69,81 @@
 <div class="loading not-print" *ngIf="isProd">
   <img src="../../../../../assets/images/amblema-loader.gif" />
 </div>
+
+<!-- Templates -->
+<ng-template #frontpageTemplate let-frontpage="frontpage">
+  <section class="page background--front-page">
+    <div class="page__content layout--front">
+      <div class="head">
+        <div class="headings">
+          <p>{{ frontpage.data.schoolYear }}</p>
+          <p>{{ frontpage.data.sponsorName }}</p>
+        </div>
+        <div class="partner-img">
+          <img [src]="frontpage.data.sponsorLogo" />
+        </div>
+      </div>
+      <div class="body">
+        <h1>AmbLeMario</h1>
+        <h2>{{ frontpage.data.schoolName }}</h2>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #layout2Template let-frontpage="frontpage">
+  <section class="page background--generic">
+    <div class="page__content layout--2">
+      <div class="row">
+        <div class="col">
+          <div class="container-img">
+            <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
+          </div>
+        </div>
+
+        <div class="col">
+          <div>
+            <h3 class="title">Reseña histórica</h3>
+            <p>
+              <span
+                [outerHTML]="
+                  summaryAndCoordinatorPage.data.historicalReviewText
+                    | excerpt: 627
+                    | br
+                "
+              ></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="container-img">
+            <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
+          </div>
+        </div>
+
+        <div class="col">
+          <div>
+            <h3 class="title">
+              Coordinador/a
+              {{ summaryAndCoordinatorPage.data.coordinatorName }}
+            </h3>
+            <p>
+              <span
+                [outerHTML]="
+                  summaryAndCoordinatorPage.data.coordinatorText
+                    | excerpt: 627
+                    | br
+                "
+              ></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
 
 <ng-template #layout3 let-data="data">
   <section class="page background--generic">
