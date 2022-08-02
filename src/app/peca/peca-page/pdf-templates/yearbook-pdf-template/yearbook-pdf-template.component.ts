@@ -173,24 +173,11 @@ class SchoolSectionsPage {
     }
 
     let schoolSectionsSegmented = []
-    let schoolSectionsSegmentedTest = []
 
     for (let index = 0; index < schoolSections.length; index += 2) {
       const section = schoolSections[index]
       const nextSection = schoolSections[index + 1]
       const maxStudentsNameByColumn = 29
-
-      schoolSectionsSegmentedTest.push({ section, nextSection })
-
-      if (section.sectionImg) {
-        schoolSectionsSegmented.push(section)
-        continue
-      }
-
-      if (nextSection.sectionImg) {
-        schoolSectionsSegmented.push(nextSection)
-        continue
-      }
 
       if (
         section.sectionStudents.length <= maxStudentsNameByColumn &&
@@ -216,9 +203,6 @@ class SchoolSectionsPage {
         schoolSectionsSegmented.push(nextSection) // Single page to section that is higher than section
       }
     }
-
-    console.log('schoolSectionsSegmentedTest', schoolSectionsSegmentedTest)
-    console.log('schoolSectionsSegmented', schoolSectionsSegmented)
 
     return schoolSectionsSegmented
   }
