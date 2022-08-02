@@ -63,6 +63,10 @@
         </ng-container>
       </ng-container>
     </ng-container>
+
+    <ng-container>
+      <ng-container *ngTemplateOutlet="galleryTemplate"></ng-container>
+    </ng-container>
   </main>
 </ng-container>
 
@@ -169,6 +173,7 @@
   </section>
 </ng-template>
 
+<!-- SchoolSections -->
 <ng-template
   #largeSchoolSection
   let-data="data"
@@ -237,6 +242,26 @@
             </ng-container>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- Gallery -->
+<ng-template #galleryTemplate let-data="">
+  <section class="page background--generic">
+    <div class="page__content layout--gallery with-subtitles">
+      <div
+        class="gallery__item"
+        *ngFor="let item of [0, 0, 0, 0, 0, 0, 0, 0, 0]; let idx = index"
+      >
+        <div class="image-container">
+          <img
+            src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
+            [title]="idx"
+          />
+        </div>
+        <p>Hello</p>
       </div>
     </div>
   </section>
