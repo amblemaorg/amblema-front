@@ -314,15 +314,12 @@ class SchoolSectionsPage {
 
       console.log('no')
 
-      if (currentStrategyLength > galleryImgs.length) {
-        galleryImgsSegmented.push(
-          galleryImgs.slice(
-            galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
-            currentStrategyLength,
-          ),
-        )
-        return
-      }
+      galleryImgsSegmented.push(
+        galleryImgs.slice(
+          galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
+          galleryImgs.length,
+        ),
+      )
     }
 
     console.log('form galleryImgsSegmented::: galleryImgs', galleryImgs)
