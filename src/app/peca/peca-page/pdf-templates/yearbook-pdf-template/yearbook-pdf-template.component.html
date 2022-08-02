@@ -64,8 +64,15 @@
       </ng-container>
     </ng-container>
 
-    <ng-container>
-      <ng-container *ngTemplateOutlet="galleryTemplate"></ng-container>
+    <ng-container *ngIf="!!schoolSectionsPage">
+      <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
+        <ng-container
+          *ngTemplateOutlet="
+            galleryTemplate;
+            context: { galleryImgs: schoolSectionsPage.data.galleryImgs }
+          "
+        ></ng-container>
+      </ng-container>
     </ng-container>
   </main>
 </ng-container>
@@ -248,21 +255,19 @@
 </ng-template>
 
 <!-- Gallery -->
-<ng-template #galleryTemplate let-data="">
+<ng-template #galleryTemplate let-galleryImgs="galleryImgs">
   <section class="page background--generic">
     <div class="page__content layout--gallery with-subtitles">
-      <div
-        class="gallery__item"
-        *ngFor="let item of [0, 0, 0, 0, 0, 0, 0, 0, 0]; let idx = index"
-      >
-        <div class="image-container">
-          <img
-            src="../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg"
-            [title]="idx"
-          />
-        </div>
-        <p>Hello</p>
-      </div>
+      <ng-container *ngFor="let imgItem of galleryImgs">
+        <ng-container *ngIf="schoolSection.sectionImg">
+          <div class="gallery__item">
+            <div class="image-container">
+              <img [src]="imgItem.img" [title]="imgItem.title" />
+            </div>
+            <p>{{ imgItem.title }}</p>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
   </section>
 </ng-template>

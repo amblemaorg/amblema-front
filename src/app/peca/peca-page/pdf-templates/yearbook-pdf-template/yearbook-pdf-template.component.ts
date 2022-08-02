@@ -114,17 +114,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       'his.schoolSectionsPage.data.schoolSectionsSegmented',
       this.schoolSectionsPage.data.schoolSectionsSegmented,
     )
-  }
-
-  consoleLog(d) {
-    console.log('logo logo sofs', d, Array.isArray(d))
-
-    return ''
+    console.log(
+      'this.schoolSectionsPage.data.galleryImgs',
+      this.schoolSectionsPage.data.galleryImgs,
+    )
   }
 
   isArray(arg) {
     return Array.isArray(arg)
   }
+  d
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
   getStudentsSegmented(students: any[], sectionImg) {
@@ -153,10 +152,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 }
 
 class SchoolSectionsPage {
-  public data: {
+  data: {
     schoolSections: SchoolSection[]
     schoolSectionsSegmented: any[]
-  } = { schoolSections: [], schoolSectionsSegmented: [] }
+    galleryImgs: any[]
+  } = { schoolSections: [], schoolSectionsSegmented: [], galleryImgs: [] }
+
   constructor(
     data: { schoolSections: SchoolSection[] },
     public template = 'layout--4',
@@ -165,6 +166,15 @@ class SchoolSectionsPage {
   ) {
     this.data.schoolSections = data.schoolSections
     this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
+
+    this.data.schoolSections.forEach((schoolSection) => {
+      if (schoolSection.sectionImg) {
+        this.data.galleryImgs.push({
+          img: schoolSection.sectionImg,
+          title: schoolSection.sectionName,
+        })
+      }
+    })
   }
 
   getSchoolSectionsSegmented(schoolSections = this.data.schoolSections) {
