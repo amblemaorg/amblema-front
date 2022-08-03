@@ -111,14 +111,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const { schoolSections } = this.pdfData
 
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
-    console.log(
-      'his.schoolSectionsPage.data.schoolSectionsSegmented',
-      this.schoolSectionsPage.data.schoolSectionsSegmented,
-    )
-    console.log(
-      'this.schoolSectionsPage.data.galleryImgs',
-      this.schoolSectionsPage.data.galleryImgs,
-    )
   }
 
   isArray(arg) {
@@ -165,10 +157,10 @@ class SchoolSectionsPage {
     public show = false,
     public priority = 0,
   ) {
-    console.log('SchoolSectionsPage', data.schoolSections)
+    // console.log('SchoolSectionsPage', data.schoolSections)
 
-    // this.data.schoolSections = data.schoolSections
-    this.data.schoolSections = mockSchoolSections
+    // this.data.schoolSections = mockSchoolSections
+    this.data.schoolSections = data.schoolSections
     this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
 
     this.data.schoolSections.forEach((schoolSection) => {
@@ -222,13 +214,6 @@ class SchoolSectionsPage {
   }
 
   getGalleryImgsSegmented(galleryImgs = []) {
-    console.log('getGalleryImgsSegmented', galleryImgs)
-    galleryImgs = Array.from(Array(22).keys()).map((i, idx) => {
-      return {
-        img: `${idx} ---- https://picsum.photos/200/300`,
-        title: `${idx}`,
-      }
-    })
     const maxByPage = 9
     let galleryImgsSegmented = []
 
@@ -236,101 +221,31 @@ class SchoolSectionsPage {
       return [galleryImgs]
     }
 
-    // 22
-    // for (let index = 0; index < galleryImgs.length; index += maxByPage) {
-    //   // let currentStrategyLength = index === 0 ? maxByPage : 2 * maxByPage
-
-    //   // if (currentStrategyLength > galleryImgs.length) {
-    //   //   console.log('yeees', galleryImgsSegmented.length, galleryImgs.length)
-
-    //   //   console.log()
-
-    //   //   galleryImgsSegmented.push(
-    //   //     galleryImgs.slice(galleryImgsSegmented.length, galleryImgs.length),
-    //   //   )
-
-    //   //   return
-    //   // }
-
-    //   // if(index === 0) {
-    //   //   galleryImgsSegmented.push(
-    //   //     galleryImgs.slice(index, maxByPage),
-    //   //   )
-    //   //   continue
-    //   // }
-
-    //   // if(index > galleryImgs.length) {
-
-    //   // }
-
-    //   console.log('galleryImgsSegmented.length, currentStrategyLength', {
-    //     galleryImgsSegmented: galleryImgsSegmented.length,
-    //     index,
-    //   })
-
-    //   galleryImgsSegmented.push(
-    //     galleryImgs.slice(
-    //       galleryImgsSegmented.length,
-    //       index == 0 ? maxByPage : 2 * index,
-    //     ),
-    //   )
-    //   console.log('for galleryImgsSegmented:::', galleryImgsSegmented)
-
-    //   // galleryImgsSegmented.push(
-    //   //   galleryImgs.slice(galleryImgsSegmented.length, index),
-    //   // )
-    // }
-
+    let currentTotalImgsSegmented = 0
     for (let index = 0; index < galleryImgs.length / maxByPage; index++) {
       const currentStrategyLength =
         index === 0 ? maxByPage : (index + 1) * maxByPage
 
-      // if (currentStrategyLength > galleryImgs.length) {
-      //   console.log('yeees', galleryImgsSegmented.length, galleryImgs.length)
-
-      //   console.log()
-
-      //   galleryImgsSegmented.push(
-      //     galleryImgs.slice(galleryImgsSegmented.length, galleryImgs.length),
-      //   )
-
-      //   return
-      // }
-
       if (index === 0) {
-        galleryImgsSegmented.push(galleryImgs.slice(0, currentStrategyLength))
+        galleryImgsSegmented.push(
+          galleryImgs.slice(currentTotalImgsSegmented, currentStrategyLength),
+        )
+        currentTotalImgsSegmented += galleryImgsSegmented[index].length
         continue
       }
 
       if (currentStrategyLength < galleryImgs.length) {
         galleryImgsSegmented.push(
-          galleryImgs.slice(
-            galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
-            currentStrategyLength,
-          ),
+          galleryImgs.slice(currentTotalImgsSegmented, currentStrategyLength),
         )
+        currentTotalImgsSegmented += galleryImgsSegmented[index].length
         continue
       }
-
-      console.log('no')
-
       galleryImgsSegmented.push(
-        galleryImgs.slice(
-          galleryImgsSegmented[galleryImgsSegmented.length - 1].length,
-          galleryImgs.length,
-        ),
+        galleryImgs.slice(currentTotalImgsSegmented, galleryImgs.length),
       )
     }
-
-    console.log('form galleryImgsSegmented::: galleryImgs', galleryImgs)
-    console.log('form galleryImgsSegmented:::', galleryImgsSegmented)
-
-    return [
-      galleryImgs.slice(0, 9),
-      galleryImgs.length > 18
-        ? galleryImgs.slice(9, 18)
-        : galleryImgs.slice(9, galleryImgs.length),
-    ]
+    return galleryImgsSegmented
   }
 }
 
