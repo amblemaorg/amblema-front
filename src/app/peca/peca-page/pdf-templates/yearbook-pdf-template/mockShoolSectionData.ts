@@ -811,6 +811,7 @@ export const mockSchoolSections = [
 
 const sectionImg =
   'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg'
+
 export const mocksPdfData = {
   schoolYear: '2021 - 2022',
   sponsorName: 'Triz y Beto',

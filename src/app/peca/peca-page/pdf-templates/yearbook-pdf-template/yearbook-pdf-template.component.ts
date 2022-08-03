@@ -21,6 +21,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   godfatherPage: TemplateThird
   schoolPage: TemplateThird
   schoolSectionsPage: SchoolSectionsPage
+  activitiesPage: ActivitiesPage
 
   ngOnInit(): void {
     this.pdfData = mocksPdfData
@@ -50,11 +51,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     window.print()
   }
 
+  isArray(arg) {
+    return Array.isArray(arg)
+  }
+
   pageInit() {
     this.setFrontPage()
     this.setSummaryAndCoordinatorPage()
     this.setSchoolAndGodfatherPage()
     this.setSchoolSectionsPage()
+    this.setActivitiesPage()
   }
 
   setFrontPage() {
@@ -114,10 +120,63 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
   }
 
-  isArray(arg) {
-    return Array.isArray(arg)
+  setActivitiesPage() {
+    const { lapses } = this.pdfData
+
+    this.activitiesPage = new ActivitiesPage({ lapses })
   }
-  d
+}
+
+class ActivitiesPage {
+  constructor(
+    public data: any,
+    public template = 'layout4Template',
+    public show = false,
+    public priority = 0,
+  ) {
+    this.data.lapses = this.getActivities()
+  }
+
+  getActivities() {
+    console.log('ActivitiesPage 222', this.data.lapses)
+
+    return this.data.lapses.map((lap) => {
+      lap.activities = lap.activities.filter(
+        (activity) => activity.description && activity.name,
+      )
+      return lap
+    })
+  }
+}
+
+class SchoolSectionsPage {
+  data: {
+    schoolSections: SchoolSection[]
+    schoolSectionsSegmented: any[]
+    galleryImgs: any[]
+  } = { schoolSections: [], schoolSectionsSegmented: [], galleryImgs: [] }
+
+  constructor(
+    data: { schoolSections: SchoolSection[] },
+    public template = 'largeSchoolSection',
+    public show = false,
+    public priority = 0,
+  ) {
+    // console.log('SchoolSectionsPage', data.schoolSections)
+
+    // this.data.schoolSections = mockSchoolSections
+    this.data.schoolSections = data.schoolSections
+    this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
+
+    this.data.schoolSections.forEach((schoolSection) => {
+      if (schoolSection.sectionImg) {
+        this.data.galleryImgs.push({
+          img: schoolSection.sectionImg,
+          title: schoolSection.sectionName,
+        })
+      }
+    })
+  }
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
   getStudentsSegmented(students: any[], sectionImg) {
@@ -142,36 +201,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       large: students.slice(0, maxLargeSize),
       small: students.slice(maxLargeSize, maxSmallLength),
     }
-  }
-}
-
-class SchoolSectionsPage {
-  data: {
-    schoolSections: SchoolSection[]
-    schoolSectionsSegmented: any[]
-    galleryImgs: any[]
-  } = { schoolSections: [], schoolSectionsSegmented: [], galleryImgs: [] }
-
-  constructor(
-    data: { schoolSections: SchoolSection[] },
-    public template = 'layout--4',
-    public show = false,
-    public priority = 0,
-  ) {
-    // console.log('SchoolSectionsPage', data.schoolSections)
-
-    // this.data.schoolSections = mockSchoolSections
-    this.data.schoolSections = data.schoolSections
-    this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
-
-    this.data.schoolSections.forEach((schoolSection) => {
-      if (schoolSection.sectionImg) {
-        this.data.galleryImgs.push({
-          img: schoolSection.sectionImg,
-          title: schoolSection.sectionName,
-        })
-      }
-    })
   }
 
   getSchoolSectionsSegmented(schoolSections = this.data.schoolSections) {
@@ -253,7 +282,7 @@ class SchoolSectionsPage {
 class TemplateThird {
   constructor(
     public data: { tagTitle; name; img; text },
-    public template = 'layout1',
+    public template = 'layout3Template',
     public show = false,
     public priority = 0,
   ) {}
@@ -268,7 +297,7 @@ class SummaryAndCoordinatorPage {
       coordinatorImg
       coordinatorText
     },
-    public template = 'layout1',
+    public template = 'layout2Template',
     public show = false,
     public priority = 0,
   ) {}
@@ -277,7 +306,7 @@ class SummaryAndCoordinatorPage {
 class FrontPage {
   constructor(
     public data: { schoolName; schoolYear; sponsorName; sponsorLogo },
-    public template = 'layout1',
+    public template = 'frontpageTemplate',
     public show = false,
     public priority = 0,
   ) {}

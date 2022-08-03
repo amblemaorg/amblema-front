@@ -56,7 +56,7 @@
               largeSchoolSection;
               context: {
                 data: schoolSectionSegmented,
-                studentsSegmented: getStudentsSegmented(
+                studentsSegmented: this.schoolSectionsPage.getStudentsSegmented(
                   schoolSectionSegmented.sectionStudents,
                   schoolSectionSegmented.sectionImg
                 )
@@ -88,8 +88,21 @@
       </ng-container>
     </ng-container>
 
-    <ng-container>
-      <ng-container *ngTemplateOutlet="layout4Template"></ng-container>
+    <ng-container *ngIf="!!activitiesPage">
+      <ng-container *ngFor="let lapse of activitiesPage.data.lapses">
+        <ng-container *ngFor="let activity of lapse.activities; let i = index">
+          <ng-container
+            *ngTemplateOutlet="
+              layout4Template;
+              context: {
+                data: activity,
+                lapseName: lapse.lapseName,
+                activityIdx: i
+              }
+            "
+          ></ng-container>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </main>
 </ng-container>
@@ -170,7 +183,7 @@
           </h2>
 
           <p>
-            <span [outerHTML]="data.text | excerpt: 1122 | br"></span>
+            <span [outerHTML]="data.text | excerpt: 1005 | br"></span>
           </p>
         </div>
       </div>
@@ -179,24 +192,35 @@
 </ng-template>
 
 <!-- ## Layout 4 -->
-<ng-template #layout4Template>
+<ng-template
+  #layout4Template
+  let-data="data"
+  let-lapseName="lapseName"
+  let-activityIdx="activityIdx"
+>
   <section class="page background--generic">
     <div class="page__content layout--4">
-      <h2>titulo</h2>
-      <h3>subtitle</h3>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo quas
-        blanditiis quo odit error minus cum vero natus, voluptas, esse quis
-        incidunt iure quibusdam temporibus aut. Delectus nam beatae omnis?
-      </p>
+      <div class="body">
+        <h2 class="text-capitalize title">
+          {{ activityIdx === 0 ? 'Actividades - ' + lapseName : data.name }}
+        </h2>
+
+        <ng-container *ngIf="activityIdx === 0">
+          <h3 class="subtitle">{{ data.name }}</h3>
+        </ng-container>
+
+        <p class="first-letter--uppercase description">
+          <span
+            [outerHTML]="data.description || '' | excerpt: 1138 | br"
+          ></span>
+        </p>
+      </div>
 
       <div class="gallery-container">
         <app-gallery
-          [images]="[
-            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg',
-            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg',
-            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg'
-          ]"
+          [images]="data.images || []"
+          [limit]="3"
+          galleryContainerClasses="justify-content-between"
         ></app-gallery>
       </div>
     </div>
