@@ -35,18 +35,16 @@ $size__p: 16px;
   }
 }
 
-
-
 .yearbook-pdf {
-
   * {
     color: $black;
   }
   h1 {
-   font-size: $size__h1;
+    font-size: $size__h1;
   }
 
-  h2, h3 {
+  h2,
+  h3 {
     font-size: $size__h2;
   }
 
@@ -55,13 +53,13 @@ $size__p: 16px;
     text-align: justify;
   }
 
-  h1, p {
+  h1,
+  p {
     color: $black;
   }
 
   .background--front-page {
     background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
-
   }
 
   .background--generic {
@@ -88,7 +86,7 @@ $size__p: 16px;
       .first-letter--uppercase {
         text-transform: lowercase;
 
-        &::first-letter{
+        &::first-letter {
           text-transform: uppercase;
         }
       }
@@ -109,9 +107,7 @@ $size__p: 16px;
         @extend .first-letter--uppercase;
         margin: 0;
         margin-bottom: -7px;
-
       }
-
     }
 
     .overflow--hidden {
@@ -121,7 +117,8 @@ $size__p: 16px;
 
   .layout--front {
     padding-top: 24px !important;
-    h2, p {
+    h2,
+    p {
       color: $gray;
       text-align: center;
     }
@@ -146,7 +143,6 @@ $size__p: 16px;
             margin-top: 10px;
           }
         }
-
       }
 
       .partner-img {
@@ -175,13 +171,11 @@ $size__p: 16px;
       position: relative;
       top: 100px;
 
-
       h1 {
         font-weight: bold;
         font-size: 64px !important;
         line-height: 50px;
         margin: 0px;
-
       }
 
       p {
@@ -192,14 +186,14 @@ $size__p: 16px;
 
   .layout--2 {
     display: grid;
-    grid-template-rows: repeat(2, 320px );
+    grid-template-rows: repeat(2, 320px);
     justify-content: center;
     row-gap: 20px;
 
     .row {
       overflow: hidden;
 
-      &:nth-child(even){
+      &:nth-child(even) {
         flex-direction: row-reverse;
       }
     }
@@ -207,14 +201,13 @@ $size__p: 16px;
     .container-img {
       height: 100%;
     }
-
   }
 
   .layout--3 {
     .container-img {
       height: 280px;
     }
-    & > .row {
+    .body {
       height: 100%;
       column-gap: 20px;
 
@@ -228,17 +221,93 @@ $size__p: 16px;
       justify-content: center;
       align-items: center;
     }
-
-
   }
 
+  .layout--4 {
+    @extend .layout--3;
+
+    .body {
+      h2 {
+        text-align: center;
+      }
+
+      .container-img {
+        img {
+          object-position: left;
+        }
+      }
+
+      .list {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+
+        li {
+          color: $black !important;
+          line-height: 20px;
+          text-transform: uppercase;
+        }
+
+        &.padding-top {
+          padding-top: 48px;
+        }
+      }
+    }
+  }
+
+  // .layout--gallery {
+  //   display: flex;
+  //   flex-direction: row;
+  //   gap: 10px;
+
+  //   .image-item {
+  //     max-width: 25%;
+  //     min-width: 120px;
+  //     width: 25%;
+  //     height: 18.5vw;
+
+  //     img {
+  //       width: 100%;
+  //       height: 100%;
+  //       object-fit: contain;
+  //     }
+
+  //   }
+  // }
+
+  .layout--gallery {
+    width: 100%;
+    display: inline-grid;
+    gap: 10px;
+
+    grid: auto/repeat(3, minmax(auto, 280px));
+
+    &.with-subtitles {
+      .image-container {
+        height: 78%;
+      }
+      p {
+        color: black;
+        text-transform: capitalize;
+      }
+    }
+
+    .gallery__item {
+      overflow: hidden;
+
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      row-gap: 10px;
+      justify-content: center;
+
+      .image-container {
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
 }
-
-
-
-
-
-
-
-
-
