@@ -19,13 +19,16 @@
 
     <ng-container *ngIf="!!godfatherPage">
       <ng-container
-        *ngTemplateOutlet="layout3; context: { data: godfatherPage.data }"
+        *ngTemplateOutlet="
+          layout3Template;
+          context: { data: godfatherPage.data }
+        "
       ></ng-container>
     </ng-container>
 
     <ng-container *ngIf="!!schoolPage">
       <ng-container
-        *ngTemplateOutlet="layout3; context: { data: schoolPage.data }"
+        *ngTemplateOutlet="layout3Template; context: { data: schoolPage.data }"
       ></ng-container>
     </ng-container>
 
@@ -85,6 +88,10 @@
         </ng-container>
       </ng-container>
     </ng-container>
+
+    <ng-container>
+      <ng-container *ngTemplateOutlet="layout4Template"></ng-container>
+    </ng-container>
   </main>
 </ng-container>
 
@@ -92,28 +99,9 @@
   <img src="../../../../../assets/images/amblema-loader.gif" />
 </div>
 
-<!-- Templates -->
-<ng-template #frontpageTemplate let-frontpage="frontpage">
-  <section class="page background--front-page">
-    <div class="page__content layout--front">
-      <div class="head">
-        <div class="headings">
-          <p>{{ frontpage.data.schoolYear }}</p>
-          <p>{{ frontpage.data.sponsorName }}</p>
-        </div>
-        <div class="partner-img">
-          <img [src]="frontpage.data.sponsorLogo" />
-        </div>
-      </div>
-      <div class="body">
-        <h1>AmbLeMario</h1>
-        <h2>{{ frontpage.data.schoolName }}</h2>
-      </div>
-    </div>
-  </section>
-</ng-template>
+<!-- # Templates -->
 
-<ng-template #layout2Template let-frontpage="frontpage">
+<ng-template #layout2Template>
   <section class="page background--generic">
     <div class="page__content layout--2">
       <div class="row">
@@ -167,7 +155,7 @@
   </section>
 </ng-template>
 
-<ng-template #layout3 let-data="data">
+<ng-template #layout3Template let-data="data">
   <section class="page background--generic">
     <div class="page__content layout--3">
       <div class="row body">
@@ -191,14 +179,74 @@
   </section>
 </ng-template>
 
-<!-- SchoolSections -->
+<!-- ## Layout 4 -->
+<ng-template #layout4Template>
+  <section class="page background--generic">
+    <div class="page__content layout--4">
+      <p>hello</p>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## Gallery -->
+<ng-template
+  #galleryTemplate
+  let-galleryImgs="galleryImgs"
+  let-withSubtitle="withSubtitle"
+>
+  <section class="page background--generic">
+    <div
+      class="page__content layout--gallery  {{
+        withSubtitle ? 'with-subtitles' : ''
+      }}"
+    >
+      <ng-container *ngFor="let imgItem of galleryImgs">
+        <ng-container *ngIf="imgItem">
+          <div class="gallery__item">
+            <div class="image-container">
+              <img [src]="imgItem.img" />
+            </div>
+            <ng-container *ngIf="withSubtitle">
+              <p>{{ imgItem.title }}</p>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## Customs -->
+
+<!-- ### FrontPage Template -->
+<ng-template #frontpageTemplate let-frontpage="frontpage">
+  <section class="page background--front-page">
+    <div class="page__content layout--front">
+      <div class="head">
+        <div class="headings">
+          <p>{{ frontpage.data.schoolYear }}</p>
+          <p>{{ frontpage.data.sponsorName }}</p>
+        </div>
+        <div class="partner-img">
+          <img [src]="frontpage.data.sponsorLogo" />
+        </div>
+      </div>
+      <div class="body">
+        <h1>AmbLeMario</h1>
+        <h2>{{ frontpage.data.schoolName }}</h2>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ### SchoolSections -->
 <ng-template
   #largeSchoolSection
   let-data="data"
   let-studentsSegmented="studentsSegmented"
 >
   <section class="page background--generic">
-    <div class="page__content layout--4">
+    <div class="page__content layout--schoolSections">
       <div class="row body">
         <div class="col overflow--hidden">
           <h2 class="text-capitalize">
@@ -231,7 +279,7 @@
 
 <ng-template #smallSchoolSections let-data="data">
   <section class="page background--generic">
-    <div class="page__content layout--4">
+    <div class="page__content layout--schoolSections">
       <div class="row body">
         <div class="col overflow--hidden">
           <h2 class="text-capitalize">
@@ -261,34 +309,6 @@
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-</ng-template>
-
-<!-- Gallery -->
-<ng-template
-  #galleryTemplate
-  let-galleryImgs="galleryImgs"
-  let-withSubtitle="withSubtitle"
->
-  <section class="page background--generic">
-    <div
-      class="page__content layout--gallery  {{
-        withSubtitle ? 'with-subtitles' : ''
-      }}"
-    >
-      <ng-container *ngFor="let imgItem of galleryImgs">
-        <ng-container *ngIf="imgItem">
-          <div class="gallery__item">
-            <div class="image-container">
-              <img [src]="imgItem.img" />
-            </div>
-            <ng-container *ngIf="withSubtitle">
-              <p>{{ imgItem.title }}</p>
-            </ng-container>
-          </div>
-        </ng-container>
-      </ng-container>
     </div>
   </section>
 </ng-template>

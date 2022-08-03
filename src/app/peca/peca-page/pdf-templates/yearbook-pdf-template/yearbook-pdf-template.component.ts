@@ -2,7 +2,7 @@ import { Router } from '@angular/router'
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
 import { PdfYearbookData, SchoolSection } from './pdfYearbookData.interface'
-import { mockSchoolSections } from './mockShoolSectionData'
+import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -23,7 +23,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   schoolSectionsPage: SchoolSectionsPage
 
   ngOnInit(): void {
-    this.pdfData = this.pdfService.pdfData
+    this.pdfData = mocksPdfData
+    // this.pdfData = this.pdfService.pdfData
   }
 
   ngAfterViewInit() {
