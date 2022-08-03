@@ -809,6 +809,8 @@ export const mockSchoolSections = [
   },
 ]
 
+const sectionImg =
+  'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg'
 export const mocksPdfData = {
   schoolYear: '2021 - 2022',
   sponsorName: 'Triz y Beto',
@@ -835,7 +837,7 @@ export const mocksPdfData = {
   schoolSections: [
     {
       sectionName: 'Preescolar, sección: A',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Jhanier Antonio Blanco',
         'Jhaider Andrés Blanco',
@@ -862,7 +864,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: 'Preescolar, sección: B',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Leysmar Paredes',
         'Xavier Marcano',
@@ -890,7 +892,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '1er Grado, sección: A',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Jadriel Arcila',
         'Lesbia Camacho',
@@ -917,7 +919,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '1er Grado, sección: B',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Manuel Piña',
         'Ronald Quintero',
@@ -943,7 +945,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '2do Grado, sección: A',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Jose Olivares',
         'Anyelit Roa',
@@ -977,7 +979,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '2do Grado, sección: B',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Kleiber Rangel',
         'Delinyer Torres',
@@ -1003,7 +1005,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '3er Grado, sección: A',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Samira Rodríguez ',
         'Nataly Villegas',
@@ -1032,7 +1034,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '3er Grado, sección: B',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Valeria García',
         'Danny  Mejia',
@@ -1061,7 +1063,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '4to Grado, sección: A',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Valeria  Abreu',
         'Cristian Acosta ',
@@ -1095,7 +1097,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '4to Grado, sección: B',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Luciana Perry',
         'Ariannys Fumero',
@@ -1129,7 +1131,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '5to Grado, sección: U',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Amada  Ramírez',
         'Scarlet Piñango',
@@ -1148,7 +1150,7 @@ export const mocksPdfData = {
     },
     {
       sectionName: '6to Grado, sección: U',
-      sectionImg: null,
+      sectionImg,
       sectionStudents: [
         'Yaslevis González',
         'Willians Tribiño',

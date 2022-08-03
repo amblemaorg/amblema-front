@@ -80,8 +80,7 @@
             *ngTemplateOutlet="
               galleryTemplate;
               context: {
-                galleryImgs: galleryImgs,
-                withSubtitle: true
+                galleryImgs: galleryImgs
               }
             "
           ></ng-container>
@@ -183,35 +182,32 @@
 <ng-template #layout4Template>
   <section class="page background--generic">
     <div class="page__content layout--4">
-      <p>hello</p>
+      <h2>titulo</h2>
+      <h3>subtitle</h3>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo quas
+        blanditiis quo odit error minus cum vero natus, voluptas, esse quis
+        incidunt iure quibusdam temporibus aut. Delectus nam beatae omnis?
+      </p>
+
+      <div class="gallery-container">
+        <app-gallery
+          [images]="[
+            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg',
+            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg',
+            '../../../../../assets/images/pdf/yearbook/logo_partner_test.jpeg'
+          ]"
+        ></app-gallery>
+      </div>
     </div>
   </section>
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template
-  #galleryTemplate
-  let-galleryImgs="galleryImgs"
-  let-withSubtitle="withSubtitle"
->
+<ng-template #galleryTemplate let-galleryImgs="galleryImgs">
   <section class="page background--generic">
-    <div
-      class="page__content layout--gallery  {{
-        withSubtitle ? 'with-subtitles' : ''
-      }}"
-    >
-      <ng-container *ngFor="let imgItem of galleryImgs">
-        <ng-container *ngIf="imgItem">
-          <div class="gallery__item">
-            <div class="image-container">
-              <img [src]="imgItem.img" />
-            </div>
-            <ng-container *ngIf="withSubtitle">
-              <p>{{ imgItem.title }}</p>
-            </ng-container>
-          </div>
-        </ng-container>
-      </ng-container>
+    <div class="page__content layout--gallery">
+      <app-gallery [images]="galleryImgs" [withSubtitle]="true"></app-gallery>
     </div>
   </section>
 </ng-template>
@@ -266,7 +262,7 @@
             </div>
           </ng-container> -->
 
-          <ul class="list small padding-top">
+          <ul class="list padding-top">
             <ng-container *ngFor="let name of studentsSegmented.small">
               <li>{{ name }}</li>
             </ng-container>
@@ -302,7 +298,7 @@
             </div>
           </ng-container> -->
 
-          <ul class="list small">
+          <ul class="list">
             <ng-container *ngFor="let name of data[1].sectionStudents">
               <li>{{ name }}</li>
             </ng-container>
