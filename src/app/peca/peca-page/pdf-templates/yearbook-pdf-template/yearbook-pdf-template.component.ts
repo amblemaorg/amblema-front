@@ -24,26 +24,26 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   activitiesPage: ActivitiesPage
 
   ngOnInit(): void {
-    this.pdfData = mocksPdfData
-    // this.pdfData = this.pdfService.pdfData
+    // this.pdfData = mocksPdfData
+    this.pdfData = this.pdfService.pdfData
   }
 
   ngAfterViewInit() {
-    console.log('YearbookPdfTemplateComponent', this.pdfData)
+    // console.log('YearbookPdfTemplateComponent', this.pdfData)
 
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page'])
     }
-    // addEventListener('afterprint', (event) => {
-    //   this.router.navigate(['/peca/anuario-page'])
-    // })
+    addEventListener('afterprint', (event) => {
+      this.router.navigate(['/peca/anuario-page'])
+    })
 
     if (this.pdfData) {
       this.pageInit()
 
-      // setTimeout(() => {
-      //   window.print()
-      // }, 1500)
+      setTimeout(() => {
+        window.print()
+      }, 1500)
     }
   }
 
@@ -138,7 +138,7 @@ class ActivitiesPage {
   }
 
   getActivities() {
-    console.log('ActivitiesPage 222', this.data.lapses)
+    // console.log('ActivitiesPage 222', this.data.lapses)
 
     return this.data.lapses.map((lap) => {
       lap.activities = lap.activities.filter(
