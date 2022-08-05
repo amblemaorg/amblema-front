@@ -12,7 +12,7 @@ import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  isProd = false
+  showLoading = true
   pdfData: PdfYearbookData
   pages: any = []
 
@@ -41,9 +41,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     if (this.pdfData) {
       this.pageInit()
 
-      setTimeout(() => {
-        window.print()
-      }, 1500)
+      // setTimeout(() => {
+      //   window.print()
+      // }, 2000)
     }
   }
 
