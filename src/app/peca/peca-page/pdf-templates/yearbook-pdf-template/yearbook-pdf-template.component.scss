@@ -2,7 +2,8 @@
 $black: #000000;
 $gray: #666666;
 $green: #81b03e;
-$blue: #00809a;
+// $blue: #00809a;
+$blue: #00a9c4;
 
 // Text size
 $size__h1: 64px;
@@ -43,19 +44,21 @@ $size__p: 16px;
     font-size: $size__h1;
   }
 
+  h1,
+  h2 {
+    color: $blue;
+    font-weight: bold;
+  }
+
   h2,
   h3 {
     font-size: $size__h2;
   }
 
   p {
+    color: $black;
     font-size: $size__p;
     text-align: justify;
-  }
-
-  h1,
-  p {
-    color: $black;
   }
 
   .background--front-page {
@@ -106,7 +109,7 @@ $size__p: 16px;
       .tag-title {
         @extend .first-letter--uppercase;
         margin: 0;
-        margin-bottom: -7px;
+        margin-bottom: -2px;
       }
     }
 
@@ -140,9 +143,9 @@ $size__p: 16px;
           font-size: $size__h2;
           margin: 0;
 
-          &:last-child {
-            margin-top: 10px;
-          }
+          // &:last-child {
+          //   margin-top: 10px;
+          // }
         }
       }
 
@@ -190,6 +193,11 @@ $size__p: 16px;
     grid-template-rows: repeat(2, 320px);
     justify-content: center;
     row-gap: 20px;
+
+    .title {
+      color: $blue;
+      font-weight: bold;
+    }
 
     .row {
       overflow: hidden;
