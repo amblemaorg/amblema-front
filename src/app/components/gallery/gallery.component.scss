@@ -5,9 +5,9 @@ $black: #000000;
   height: 100%;
 
   display: inline-grid;
-  grid: auto/repeat(3, minmax(auto, 280px));
+  grid: auto/repeat(3, minmax(auto, 298px));
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px 18px;
 
   &.with-subtitles {
     .image-container {

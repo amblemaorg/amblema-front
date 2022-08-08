@@ -103,7 +103,7 @@ $size__p: 16px;
     background-repeat: no-repeat;
     background-size: contain;
     overflow: hidden;
-    padding: 90px 70px 70px 70px;
+    padding: 100px 70px 95px 70px;
 
     img {
       max-width: 100%;
@@ -267,7 +267,7 @@ $size__p: 16px;
     justify-content: space-between;
 
     .body {
-      max-height: 57.6%;
+      max-height: 57.5%;
       overflow: hidden;
       text-align: center;
 
@@ -298,6 +298,7 @@ $size__p: 16px;
 
     .body {
       h2 {
+        margin-bottom: 10px;
         text-align: center;
       }
 

@@ -82,6 +82,7 @@
               context: {
                 galleryImgs: galleryImgs,
                 options: {
+                  withSubtitle: true,
                   limit: 0,
                   offset: 0,
                   backgroundClass: 'background--generic'
@@ -114,7 +115,8 @@
                 context: {
                   galleryImgs: activity.images,
                   options: {
-                    limit: 9,
+                    withSubtitle: false,
+                    limit: 12,
                     offset: 3,
                     backgroundClass: 'background--gallery'
                   }
@@ -259,7 +261,7 @@
     <div class="page__content layout--gallery">
       <app-gallery
         [images]="galleryImgs"
-        [withSubtitle]="true"
+        [withSubtitle]="options.withSubtitle"
         [limit]="options.limit"
         [offset]="options.offset"
         itemStyle="max-height: 330px;"
