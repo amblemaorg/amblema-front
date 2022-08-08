@@ -2,7 +2,8 @@
 $black: #000000;
 $gray: #666666;
 $green: #81b03e;
-$blue: #00809a;
+// $blue: #00809a;
+$blue: #00a9c4;
 
 // Text size
 $size__h1: 64px;
@@ -20,14 +21,38 @@ $size__p: 16px;
   height: 100vh;
   background: $blue;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   z-index: 1;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  row-gap: 18px;
+
+  button {
+    background: white;
+    color: $green;
+    border: 2px solid white;
+    padding: 10px 45px;
+    border-radius: 5px;
+    font-size: $size__h2;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: none;
+      color: white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
 
   img {
     min-width: 200px;
@@ -43,19 +68,21 @@ $size__p: 16px;
     font-size: $size__h1;
   }
 
+  h1,
+  h2 {
+    color: $blue;
+    font-weight: bold;
+  }
+
   h2,
   h3 {
     font-size: $size__h2;
   }
 
   p {
+    color: $black;
     font-size: $size__p;
     text-align: justify;
-  }
-
-  h1,
-  p {
-    color: $black;
   }
 
   .background--front-page {
@@ -69,10 +96,10 @@ $size__p: 16px;
   .page {
     width: 27.94cm;
     height: 21.59cm;
-    overflow: hidden;
-
     background-repeat: no-repeat;
     background-size: contain;
+    overflow: hidden;
+    padding: 90px 70px 70px 70px;
 
     img {
       max-width: 100%;
@@ -80,7 +107,7 @@ $size__p: 16px;
 
     .page__content {
       height: 100%;
-      padding: 90px 70px 70px 70px;
+      // padding: 90px 70px 70px 70px;
       overflow: hidden;
 
       .first-letter--uppercase {
@@ -106,7 +133,7 @@ $size__p: 16px;
       .tag-title {
         @extend .first-letter--uppercase;
         margin: 0;
-        margin-bottom: -7px;
+        margin-bottom: -2px;
       }
     }
 
@@ -116,7 +143,8 @@ $size__p: 16px;
   }
 
   .layout--front {
-    padding-top: 24px !important;
+    position: relative;
+    top: -70px;
     h2,
     p {
       color: $gray;
@@ -139,9 +167,9 @@ $size__p: 16px;
           font-size: $size__h2;
           margin: 0;
 
-          &:last-child {
-            margin-top: 10px;
-          }
+          // &:last-child {
+          //   margin-top: 10px;
+          // }
         }
       }
 
@@ -190,6 +218,11 @@ $size__p: 16px;
     justify-content: center;
     row-gap: 20px;
 
+    .title {
+      color: $blue;
+      font-weight: bold;
+    }
+
     .row {
       overflow: hidden;
 
@@ -218,12 +251,45 @@ $size__p: 16px;
 
     .col-img--centered {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
   }
 
   .layout--4 {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    justify-content: space-between;
+
+    .body {
+      max-height: 57.6%;
+      overflow: hidden;
+      text-align: center;
+
+      .title {
+        margin: 0;
+      }
+      .subtitle {
+        font-size: $size__p;
+      }
+
+      .description {
+        margin-top: 20px;
+      }
+    }
+    .gallery-container {
+      // height: 35%;
+      justify-content: space-between;
+    }
+  }
+
+  .layout--gallery {
+    // @extend .gallery-container;
+  }
+
+  // Customs
+  .layout--schoolSections {
     @extend .layout--3;
 
     .body {
@@ -249,63 +315,7 @@ $size__p: 16px;
         }
 
         &.padding-top {
-          padding-top: 48px;
-        }
-      }
-    }
-  }
-
-  // .layout--gallery {
-  //   display: flex;
-  //   flex-direction: row;
-  //   gap: 10px;
-
-  //   .image-item {
-  //     max-width: 25%;
-  //     min-width: 120px;
-  //     width: 25%;
-  //     height: 18.5vw;
-
-  //     img {
-  //       width: 100%;
-  //       height: 100%;
-  //       object-fit: contain;
-  //     }
-
-  //   }
-  // }
-
-  .layout--gallery {
-    width: 100%;
-    display: inline-grid;
-    gap: 10px;
-
-    grid: auto/repeat(3, minmax(auto, 280px));
-
-    &.with-subtitles {
-      .image-container {
-        height: 78%;
-      }
-      p {
-        color: black;
-        text-transform: capitalize;
-      }
-    }
-
-    .gallery__item {
-      overflow: hidden;
-
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      row-gap: 10px;
-      justify-content: center;
-
-      .image-container {
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          padding-top: 30px;
         }
       }
     }
