@@ -80,7 +80,13 @@
             *ngTemplateOutlet="
               galleryTemplate;
               context: {
-                galleryImgs: galleryImgs
+                galleryImgs: galleryImgs,
+                options: {
+                  withSubtitle: true,
+                  limit: 0,
+                  offset: 0,
+                  backgroundClass: 'background--generic'
+                }
               }
             "
           ></ng-container>
@@ -101,6 +107,23 @@
               }
             "
           ></ng-container>
+
+          <ng-container *ngIf="activity.isExpandedGallery">
+            <ng-container
+              *ngTemplateOutlet="
+                galleryTemplate;
+                context: {
+                  galleryImgs: activity.images,
+                  options: {
+                    withSubtitle: false,
+                    limit: 12,
+                    offset: 3,
+                    backgroundClass: 'background--gallery'
+                  }
+                }
+              "
+            ></ng-container>
+          </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
@@ -212,7 +235,7 @@
 
         <p class="first-letter--uppercase description">
           <span
-            [outerHTML]="data.description || '' | excerpt: 1138 | br"
+            [outerHTML]="data.description || '' | excerpt: 2000 | br"
           ></span>
         </p>
       </div>
@@ -221,7 +244,7 @@
         <app-gallery
           [images]="data.images || []"
           [limit]="3"
-          galleryContainerClasses="justify-content-between"
+          containerClasses="justify-content-between"
         ></app-gallery>
       </div>
     </div>
@@ -229,10 +252,21 @@
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template #galleryTemplate let-galleryImgs="galleryImgs">
-  <section class="page background--generic">
+<ng-template
+  #galleryTemplate
+  let-galleryImgs="galleryImgs"
+  let-options="options"
+>
+  <section class="page {{ options.backgroundClass }}">
     <div class="page__content layout--gallery">
-      <app-gallery [images]="galleryImgs" [withSubtitle]="true"></app-gallery>
+      <app-gallery
+        [images]="galleryImgs"
+        [withSubtitle]="options.withSubtitle"
+        [limit]="options.limit"
+        [offset]="options.offset"
+        itemStyle="max-height: 330px;"
+        containerClasses="align-items-center"
+      ></app-gallery>
     </div>
   </section>
 </ng-template>
