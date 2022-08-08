@@ -12,7 +12,7 @@ import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = false
+  showLoading = true
   pdfData: PdfYearbookData
   pages: any = []
 
