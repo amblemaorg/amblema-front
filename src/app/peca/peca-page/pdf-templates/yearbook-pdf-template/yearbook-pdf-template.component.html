@@ -81,7 +81,11 @@
               galleryTemplate;
               context: {
                 galleryImgs: galleryImgs,
-                options: { limit: 0, backgroundClass: 'background--generic' }
+                options: {
+                  limit: 0,
+                  offset: 0,
+                  backgroundClass: 'background--generic'
+                }
               }
             "
           ></ng-container>
@@ -109,7 +113,11 @@
                 galleryTemplate;
                 context: {
                   galleryImgs: activity.images,
-                  options: { limit: 9, backgroundClass: 'background--gallery' }
+                  options: {
+                    limit: 9,
+                    offset: 3,
+                    backgroundClass: 'background--gallery'
+                  }
                 }
               "
             ></ng-container>
@@ -234,7 +242,7 @@
         <app-gallery
           [images]="data.images || []"
           [limit]="3"
-          galleryContainerClasses="justify-content-between"
+          containerClasses="justify-content-between"
         ></app-gallery>
       </div>
     </div>
@@ -253,6 +261,9 @@
         [images]="galleryImgs"
         [withSubtitle]="true"
         [limit]="options.limit"
+        [offset]="options.offset"
+        itemStyle="max-height: 330px;"
+        containerClasses="align-items-center"
       ></app-gallery>
     </div>
   </section>

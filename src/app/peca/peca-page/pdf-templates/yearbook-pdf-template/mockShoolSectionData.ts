@@ -1609,6 +1609,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/23/62d0f207281b3475e326654c.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/23/62d0f207281b3475e326654d.jpeg',
           ],
+          isExpandedGallery: true,
         },
       ],
     },

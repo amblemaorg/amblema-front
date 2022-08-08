@@ -11,25 +11,26 @@ $black: #000000;
 
   &.with-subtitles {
     .image-container {
-      height: 72% !important;
+      height: 85% !important;
     }
     .subtitle {
       color: $black;
       text-transform: capitalize;
       text-align: center;
       margin: 0;
-      margin-top: 10px;
+      // margin-top: 10px;
     }
   }
 
   .gallery__item {
+    height: 100%;
     overflow: hidden;
 
     display: flex;
     align-items: center;
     flex-direction: column;
     row-gap: 10px;
-    justify-content: center;
+    // justify-content: center;
 
     .image-container {
       width: 100%; //

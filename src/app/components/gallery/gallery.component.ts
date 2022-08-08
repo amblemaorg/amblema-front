@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core'
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
+  @Input() offset = 0
   @Input() limit = 0
   @Input() withSubtitle = false
   @Input() images:
@@ -15,14 +16,16 @@ export class GalleryComponent implements OnInit {
         title?: string
       }[] = []
 
-  @Input() galleryContainerClasses = ''
+  @Input() containerClasses = ''
+  @Input() itemStyle = ''
+
   constructor() {}
 
   ngOnInit(): void {}
 
   getImagesLimited() {
     if (this.limit > 0) {
-      return this.images.slice(0, this.limit)
+      return this.images.slice(this.offset, this.limit)
     }
     return this.images
   }
