@@ -12,7 +12,7 @@ import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = false
+  showLoading = true
   pdfData: PdfYearbookData
   pages: any = []
 
@@ -34,6 +34,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page'])
     }
+
     addEventListener('afterprint', (event) => {
       this.router.navigate(['/peca/anuario-page'])
     })
@@ -135,7 +136,7 @@ class ActivitiesPage {
     public priority = 0,
   ) {
     this.data.lapses = this.getActivities()
-    console.log('ActivitiesPage', this.data)
+    // console.log('ActivitiesPage', this.data)
   }
 
   getActivities() {
