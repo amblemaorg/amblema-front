@@ -12,7 +12,7 @@ import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = true
+  showLoading = false
   pdfData: PdfYearbookData
   pages: any = []
 
@@ -24,12 +24,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   activitiesPage: ActivitiesPage
 
   ngOnInit(): void {
-    // this.pdfData = mocksPdfData
-    this.pdfData = this.pdfService.pdfData
+    this.pdfData = mocksPdfData
+    // this.pdfData = this.pdfService.pdfData
   }
 
   ngAfterViewInit() {
-    // console.log('YearbookPdfTemplateComponent', this.pdfData)
+    console.log('YearbookPdfTemplateComponent', this.pdfData)
 
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page'])

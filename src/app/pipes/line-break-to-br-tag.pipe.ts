@@ -8,7 +8,7 @@ export class BreakLinePipe {
     return value == undefined
       ? value
       : value
-          .replace(new RegExp('\r\n', 'g'), '<br />')
-          .replace(new RegExp('\n', 'g'), '<br />')
+          .replace(new RegExp('\r\n', 'g'), '<br /><br />')
+          .replace(new RegExp('\n', 'g'), '<br /><br />')
   }
 }

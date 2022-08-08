@@ -80,7 +80,8 @@
             *ngTemplateOutlet="
               galleryTemplate;
               context: {
-                galleryImgs: galleryImgs
+                galleryImgs: galleryImgs,
+                options: { limit: 0, backgroundClass: 'background--generic' }
               }
             "
           ></ng-container>
@@ -101,6 +102,18 @@
               }
             "
           ></ng-container>
+
+          <ng-container *ngIf="true">
+            <ng-container
+              *ngTemplateOutlet="
+                galleryTemplate;
+                context: {
+                  galleryImgs: activity.images,
+                  options: { limit: 9, backgroundClass: 'background--gallery' }
+                }
+              "
+            ></ng-container>
+          </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
@@ -212,7 +225,7 @@
 
         <p class="first-letter--uppercase description">
           <span
-            [outerHTML]="data.description || '' | excerpt: 1138 | br"
+            [outerHTML]="data.description || '' | excerpt: 2000 | br"
           ></span>
         </p>
       </div>
@@ -229,10 +242,18 @@
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template #galleryTemplate let-galleryImgs="galleryImgs">
-  <section class="page background--generic">
+<ng-template
+  #galleryTemplate
+  let-galleryImgs="galleryImgs"
+  let-options="options"
+>
+  <section class="page {{ options.backgroundClass }}">
     <div class="page__content layout--gallery">
-      <app-gallery [images]="galleryImgs" [withSubtitle]="true"></app-gallery>
+      <app-gallery
+        [images]="galleryImgs"
+        [withSubtitle]="true"
+        [limit]="options.limit"
+      ></app-gallery>
     </div>
   </section>
 </ng-template>
