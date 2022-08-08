@@ -135,6 +135,7 @@ class ActivitiesPage {
     public priority = 0,
   ) {
     this.data.lapses = this.getActivities()
+    console.log('ActivitiesPage', this.data)
   }
 
   getActivities() {
@@ -144,6 +145,13 @@ class ActivitiesPage {
       lap.activities = lap.activities.filter(
         (activity) => activity.description && activity.name,
       )
+      lap.activities = lap.activities.map((activity) => ({
+        ...activity,
+        isExpandedGallery: activity.isExpandedGallery
+          ? activity.isExpandedGallery
+          : false,
+      }))
+
       return lap
     })
   }

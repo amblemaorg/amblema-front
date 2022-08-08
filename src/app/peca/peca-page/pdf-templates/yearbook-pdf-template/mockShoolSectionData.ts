@@ -1247,6 +1247,7 @@ export const mocksPdfData = {
           name: 'Taller inicial',
           description: null,
           images: null,
+          isExpandedGallery: true,
         },
         {
           name: 'AmbLeMonedas',
@@ -1263,6 +1264,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/1/617bfdc3c69d4ab3e2824673.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/2/617c08adc69d4ab3e2824689.jpeg',
           ],
+          isExpandedGallery: true,
         },
         {
           name: 'Historia del cacao en Venezuela',
