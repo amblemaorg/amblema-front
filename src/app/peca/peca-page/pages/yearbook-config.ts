@@ -13,6 +13,22 @@ import {
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action'
 
+const yearbookPDFOptions = (store) => ({
+  component: 'store-line-options',
+  settings: {
+    store,
+    type: 'boolean',
+    classes: 'justify-content-end',
+    options: [
+      {
+        label: 'Imprimir',
+        key: 'print',
+        value: true,
+      },
+    ],
+  },
+})
+
 /**
  *
  * @function MapperYearBookWeb
@@ -96,6 +112,7 @@ export function MapperYearBookWeb(
             },
           },
         },
+        yearbookPDFOptions('school-section'),
         {
           component: 'table',
           settings: {
@@ -248,6 +265,7 @@ export function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(`lapso-${lapseNumber}-reading-diagnostic-section`),
       createTitleComponent('Diagnóstico de Multiplicación'),
       {
         component: 'table',
@@ -366,6 +384,9 @@ export function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(
+        `lapso-${lapseNumber}-multiplication-diagnostic-section`,
+      ),
       createTitleComponent('Diagnóstico de lógica matemática'),
       {
         component: 'table',
@@ -485,6 +506,7 @@ export function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(`lapso-${lapseNumber}-math-logic-diagnostic-section`),
       ...createActivitiesComponents(lapseData.activities, lapseNumber),
     ]
   }
@@ -667,26 +689,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
-                          {
-                            component: 'store-line-options',
-                            settings: {
-                              store: 'story-resume',
-                              type: 'boolean',
-                              classes: 'justify-content-end',
-                              options: [
-                                {
-                                  label: 'hellos world',
-                                  key: 'd',
-                                  value: true,
-                                },
-                                {
-                                  label: 'hellos world',
-                                  key: 'd2',
-                                  value: false,
-                                },
-                              ],
-                            },
-                          },
+                          yearbookPDFOptions('story-resume-section'),
                         ],
                       },
                       {
@@ -729,6 +732,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
+                          yearbookPDFOptions('sponsor-section'),
                         ],
                       },
                       {
@@ -771,6 +775,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
+                          yearbookPDFOptions('coordinator-section'),
                         ],
                       },
                       {
@@ -812,6 +817,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
+                          yearbookPDFOptions('school-section'),
                           ...schoolSectionsConfig,
                         ],
                       },
