@@ -593,7 +593,7 @@ export function MapperYearBookWeb(
             },
           },
         },
-        yearbookPDFLapseOptions(`${lapseName}-${id}-lapse-section`),
+        yearbookPDFLapseOptions(`${lapseName}${name}`),
       ]
     }, [])
   }
@@ -642,13 +642,6 @@ export function MapperYearBookWeb(
     },
   }
 
-  const yearbookPDF = {
-    component: 'yearbook-pdf',
-    settings: {
-      test: 'hello world',
-    },
-  }
-
   const YEARBOOK_CONFIG = {
     header: {
       title: 'AmbLeMario',
@@ -684,6 +677,7 @@ export function MapperYearBookWeb(
                                       ? values.inputImg
                                       : null,
                                   content: values.description,
+                                  testing: 'testing',
                                 }
 
                                 // store.dispatch(new SetHistoricalReview(data));
@@ -892,7 +886,6 @@ export function MapperYearBookWeb(
                     },
                   },
                 },
-                yearbookPDF,
               ],
             },
           ],
