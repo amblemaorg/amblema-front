@@ -12,33 +12,22 @@ export class StoreLineOptionsBlockComponent
 
   type: 'presentational'
   settings: Settings = null
-  name?: string
   component: string
-  viewMode?: string
 
   storeGlobalKey = 'ui-store-line-options'
 
-  setSettings(settings: any): void {
+  setSettings(settings: Settings): void {
     if (!this.isSettingsValid(settings)) return
 
     this.settings = settings
 
-    const optionsLocation = localStorage.getItem(this.storeGlobalKey)
-      ? JSON.parse(localStorage.getItem(this.storeGlobalKey))
-      : null
+    // console.log('SETTINGS', settings)
 
-    this.settings.options =
-      optionsLocation[this.settings.store] || this.settings.options
-  }
-  setData?(data: any): void {
-    throw new Error('Method not implemented.')
-  }
-  setFetcherUrls?(urls: object): void {
-    throw new Error('Method not implemented.')
+    this.initStorePreferences()
   }
 
   ngOnInit(): void {
-    console.log('StoreLineOptionsBlockComponent', this.settings)
+    // console.log('StoreLineOptionsBlockComponent', this.settings)
   }
 
   isSettingsValid(settings: Settings): boolean {
@@ -51,23 +40,50 @@ export class StoreLineOptionsBlockComponent
     return options.every((option) => typeof option.value === type)
   }
 
-  storePreferences(opSelected: Option, { target }) {
-    const preferences: any = localStorage.getItem(this.storeGlobalKey)
+  private getOptSectionsStored() {
+    return localStorage.getItem(this.storeGlobalKey)
       ? JSON.parse(localStorage.getItem(this.storeGlobalKey))
       : {}
+  }
 
+  initStorePreferences() {
+    const { store, options } = this.settings
+
+    if (options.length === 0) return
+
+    let optionSectionsStored = this.getOptSectionsStored()
+
+    optionSectionsStored[`${store}`] = optionSectionsStored[`${store}`]
+      ? optionSectionsStored[`${store}`]
+      : options
+
+    this.settings.options = optionSectionsStored[`${store}`]
+
+    localStorage.setItem(
+      this.storeGlobalKey,
+      JSON.stringify(optionSectionsStored),
+    )
+  }
+
+  changeOptStored(optSelected: Option, { target }) {
     const { store, options } = this.settings
 
     const optionsMapped = options.map((optionMap) => {
-      if (optionMap.key === opSelected.key) {
+      if (optionMap.key === optSelected.key) {
         optionMap.value = target.checked
       }
 
       return optionMap
     })
 
-    preferences[`${store}`] = optionsMapped
-    localStorage.setItem(this.storeGlobalKey, JSON.stringify(preferences))
+    let optionSectionsStored = this.getOptSectionsStored()
+
+    optionSectionsStored[`${store}`] = optionsMapped
+
+    localStorage.setItem(
+      this.storeGlobalKey,
+      JSON.stringify(optionSectionsStored),
+    )
   }
 }
 

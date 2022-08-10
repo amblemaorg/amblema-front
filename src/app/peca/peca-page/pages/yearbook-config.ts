@@ -29,6 +29,27 @@ const yearbookPDFOptions = (store) => ({
   },
 })
 
+const yearbookPDFLapseOptions = (store) => ({
+  component: 'store-line-options',
+  settings: {
+    store,
+    type: 'boolean',
+    classes: 'justify-content-end',
+    options: [
+      {
+        label: 'Galería ampliada',
+        key: 'galleryExpanded',
+        value: true,
+      },
+      {
+        label: 'Imprimir',
+        key: 'print',
+        value: true,
+      },
+    ],
+  },
+})
+
 /**
  *
  * @function MapperYearBookWeb
@@ -112,7 +133,7 @@ export function MapperYearBookWeb(
             },
           },
         },
-        yearbookPDFOptions('school-section'),
+        yearbookPDFOptions(`grade${grade}-section${name}-school-section`),
         {
           component: 'table',
           settings: {
@@ -572,6 +593,7 @@ export function MapperYearBookWeb(
             },
           },
         },
+        yearbookPDFLapseOptions(`${lapseName}-${id}-lapse-section`),
       ]
     }, [])
   }
@@ -817,7 +839,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
-                          yearbookPDFOptions('school-section'),
+                          yearbookPDFOptions('school-description-section'),
                           ...schoolSectionsConfig,
                         ],
                       },

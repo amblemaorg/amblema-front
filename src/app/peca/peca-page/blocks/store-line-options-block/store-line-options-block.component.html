@@ -24,13 +24,13 @@
       <input
         type="checkbox"
         [name]="option.key"
-        [id]="option.key"
+        [id]="option.key + '-' + settings.store"
         [checked]="option.value"
-        (change)="storePreferences(option, $event)"
+        (change)="changeOptStored(option, $event)"
       />
     </div>
   </ng-container>
-  <label [for]="option.key">
+  <label [for]="option.key + '-' + settings.store">
     <p>{{ option.label }}</p>
   </label>
 </ng-template>
