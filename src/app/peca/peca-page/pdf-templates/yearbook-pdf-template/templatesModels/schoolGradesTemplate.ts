@@ -56,9 +56,9 @@ export class SchoolGradePageGroup {
 
     //Adding school templates (pages)
     schoolSections.forEach((section) => {
-      const { sectionName, sectionImg, sectionStudents } = section
+      const { sectionName, sectionImg, sectionStudents, teacher } = section
       this.pages.push(
-        new SchoolGradePage(sectionName, sectionImg, sectionStudents),
+        new SchoolGradePage(sectionName, sectionImg, teacher, sectionStudents),
       )
     })
   }
@@ -71,31 +71,50 @@ class SchoolGradePage {
   }
   isFirstColumnEmpty = false
 
-  constructor(public name: string, public img: string, students: string[]) {
+  constructor(
+    public name: string,
+    public img: string,
+    public teacher: any,
+    students: string[],
+  ) {
     this.students = this.getStudents(students)
+    console.log('SchoolGradePage - students', this.students)
 
     this.isFirstColumnEmpty = this.students.firstColumn.length > 0
+
+    this.teacher = {
+      ...this.teacher,
+      fullName: `${this.teacher.firstName} ${this.teacher.lastName}`,
+    }
+    console.log('this.teacher', this.teacher)
   }
 
   // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
   getStudents(students: string[], sectionImg = this.img) {
-    const maxColumnSize = 29
-    const maxSmallerColumnSize = 15
+    const maxColumnSize = 27
+    const maxSmallerColumnSize = 13
     //47 || < 47
     const restMaxLength =
       students.length > maxColumnSize + maxSmallerColumnSize
         ? maxColumnSize
         : students.length
 
-    if (sectionImg) {
-      // ....
+    console.log('students.length', students.length)
 
-      if (students.length <= 29) {
+    if (sectionImg) {
+      if (students.length <= 15) {
         return {
           firstColumn: [],
           secondColumn: students,
         }
       }
+
+      // if (students.length > 15 && students.length <= 29) {
+      //   return {
+      //     firstColumn: [],
+      //     secondColumn: students,
+      //   }
+      // }
 
       return {
         firstColumn: students.slice(0, maxSmallerColumnSize),

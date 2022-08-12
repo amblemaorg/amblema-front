@@ -1,8 +1,8 @@
 import { Router } from '@angular/router'
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
-import { PdfYearbookData, SchoolSection } from './pdfYearbookData.interface'
-import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
+import { PdfYearbookData } from './pdfYearbookData.interface'
+import { mocksPdfData } from './mockShoolSectionData'
 import { SchoolGradePageGroup } from './templatesModels'
 
 @Component({

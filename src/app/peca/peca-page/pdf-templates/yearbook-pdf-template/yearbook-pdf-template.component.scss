@@ -297,6 +297,7 @@ $size__p: 16px;
     @extend .layout--3;
 
     .body {
+      height: 94%;
       .col--centered {
         display: flex;
         align-items: center;
@@ -333,6 +334,19 @@ $size__p: 16px;
 
         &.padding-top {
           padding-top: 30px;
+        }
+      }
+    }
+
+    .teacher {
+      display: flex;
+      justify-content: end;
+
+      .name {
+        font-size: $size__p;
+
+        span {
+          margin-right: 5px;
         }
       }
     }
