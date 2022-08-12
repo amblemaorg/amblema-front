@@ -3,6 +3,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
 import { PdfYearbookData, SchoolSection } from './pdfYearbookData.interface'
 import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
+import { SchoolGradePageGroup } from './templatesModels'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -12,7 +13,7 @@ import { mockSchoolSections, mocksPdfData } from './mockShoolSectionData'
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = true
+  showLoading = false
   pdfData: PdfYearbookData
   pages: any = []
 
@@ -20,7 +21,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   summaryAndCoordinatorPage: SummaryAndCoordinatorPage
   godfatherPage: TemplateThird
   schoolPage: TemplateThird
-  schoolSectionsPage: SchoolSectionsPage
+  schoolGradePageGroup: SchoolGradePageGroup
   activitiesPage: ActivitiesPage
 
   ngOnInit(): void {
@@ -60,7 +61,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setFrontPage()
     this.setSummaryAndCoordinatorPage()
     this.setSchoolAndGodfatherPage()
-    this.setSchoolSectionsPage()
+    this.setSchoolGradePageGroup() // refactored
     this.setActivitiesPage()
   }
 
@@ -115,10 +116,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     })
   }
 
-  setSchoolSectionsPage() {
+  setSchoolGradePageGroup() {
     const { schoolSections } = this.pdfData
 
-    this.schoolSectionsPage = new SchoolSectionsPage({ schoolSections })
+    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections })
   }
 
   setActivitiesPage() {
@@ -158,135 +159,13 @@ class ActivitiesPage {
   }
 }
 
-class SchoolSectionsPage {
-  data: {
-    schoolSections: SchoolSection[]
-    schoolSectionsSegmented: any[]
-    galleryImgs: any[]
-  } = { schoolSections: [], schoolSectionsSegmented: [], galleryImgs: [] }
+/**
+ * Templates about school
+ * 1. layout3Template
+ * 2. schoolStudentListTemplate
+ */
 
-  constructor(
-    data: { schoolSections: SchoolSection[] },
-    public template = 'largeSchoolSection',
-    public show = false,
-    public priority = 0,
-  ) {
-    // console.log('SchoolSectionsPage', data.schoolSections)
-
-    // this.data.schoolSections = mockSchoolSections
-    this.data.schoolSections = data.schoolSections
-    this.data.schoolSectionsSegmented = this.getSchoolSectionsSegmented()
-
-    this.data.schoolSections.forEach((schoolSection) => {
-      if (schoolSection.sectionImg) {
-        this.data.galleryImgs.push({
-          img: schoolSection.sectionImg,
-          title: schoolSection.sectionName,
-        })
-      }
-    })
-  }
-
-  // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
-  getStudentsSegmented(students: any[], sectionImg) {
-    const maxLargeSize = 29
-    const maxSmallSize = maxLargeSize + (sectionImg ? 18 : 29)
-
-    // 29 items
-    if (students.length <= maxLargeSize) {
-      return {
-        large: students,
-        small: [],
-      }
-    }
-
-    let maxSmallLength = students.length
-
-    if (students.length > maxSmallSize) {
-      maxSmallLength = maxSmallSize
-    }
-
-    return {
-      large: students.slice(0, maxLargeSize),
-      small: students.slice(maxLargeSize, maxSmallLength),
-    }
-  }
-
-  getSchoolSectionsSegmented(schoolSections = this.data.schoolSections) {
-    if (schoolSections.length <= 1) {
-      return schoolSections
-    }
-
-    let schoolSectionsSegmented = []
-
-    for (let index = 0; index < schoolSections.length; index += 2) {
-      const section = schoolSections[index]
-      const nextSection = schoolSections[index + 1]
-      const maxStudentsNameByColumn = 29
-
-      if (
-        section.sectionStudents.length <= maxStudentsNameByColumn &&
-        nextSection.sectionStudents.length <= maxStudentsNameByColumn
-      ) {
-        schoolSectionsSegmented.push([section, nextSection])
-
-        continue
-      }
-
-      if (section.sectionStudents.length > maxStudentsNameByColumn) {
-        schoolSectionsSegmented.push(section)
-
-        // Do nextSection become to section on next iteration
-        if (nextSection.sectionStudents.length < maxStudentsNameByColumn) {
-          index -= 1
-          continue
-        }
-      }
-
-      if (nextSection.sectionStudents.length > maxStudentsNameByColumn) {
-        schoolSectionsSegmented.push(section) // Single page to section  that is lower than nexSection
-        schoolSectionsSegmented.push(nextSection) // Single page to section that is higher than section
-      }
-    }
-
-    return schoolSectionsSegmented
-  }
-
-  getGalleryImgsSegmented(galleryImgs = []) {
-    const maxByPage = 9
-    let galleryImgsSegmented = []
-
-    if (galleryImgs.length <= maxByPage) {
-      return [galleryImgs]
-    }
-
-    let currentTotalImgsSegmented = 0
-    for (let index = 0; index < galleryImgs.length / maxByPage; index++) {
-      const currentStrategyLength =
-        index === 0 ? maxByPage : (index + 1) * maxByPage
-
-      if (index === 0) {
-        galleryImgsSegmented.push(
-          galleryImgs.slice(currentTotalImgsSegmented, currentStrategyLength),
-        )
-        currentTotalImgsSegmented += galleryImgsSegmented[index].length
-        continue
-      }
-
-      if (currentStrategyLength < galleryImgs.length) {
-        galleryImgsSegmented.push(
-          galleryImgs.slice(currentTotalImgsSegmented, currentStrategyLength),
-        )
-        currentTotalImgsSegmented += galleryImgsSegmented[index].length
-        continue
-      }
-      galleryImgsSegmented.push(
-        galleryImgs.slice(currentTotalImgsSegmented, galleryImgs.length),
-      )
-    }
-    return galleryImgsSegmented
-  }
-}
+// SchoolSectionsTemplateGroup manager
 
 class TemplateThird {
   constructor(
