@@ -45,4 +45,11 @@ export interface SchoolSection {
   sectionImg?: any
   sectionStudents: string[]
   sectionGrade: string
+  teacher: SchoolSectionTeacher
+}
+
+export interface SchoolSectionTeacher {
+  firstName: string
+  id: string
+  lastName: string
 }
