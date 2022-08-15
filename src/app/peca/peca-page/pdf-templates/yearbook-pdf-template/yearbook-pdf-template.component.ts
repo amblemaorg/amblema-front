@@ -3,7 +3,13 @@ import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
 import { PdfYearbookData } from './pdfYearbookData.interface'
 import { mocksPdfData } from './mockShoolSectionData'
-import { SchoolGradePageGroup } from './templatesModels'
+import {
+  ActivitiesPage,
+  FrontPage,
+  SchoolGradePageGroup,
+  SummaryAndCoordinatorPage,
+  TemplateThird,
+} from './templatesModels'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -127,75 +133,4 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     this.activitiesPage = new ActivitiesPage({ lapses })
   }
-}
-
-class ActivitiesPage {
-  constructor(
-    public data: any,
-    public template = 'layout4Template',
-    public show = false,
-    public priority = 0,
-  ) {
-    this.data.lapses = this.getActivities()
-    // console.log('ActivitiesPage', this.data)
-  }
-
-  getActivities() {
-    // console.log('ActivitiesPage 222', this.data.lapses)
-
-    return this.data.lapses.map((lap) => {
-      lap.activities = lap.activities.filter(
-        (activity) => activity.description && activity.name,
-      )
-      lap.activities = lap.activities.map((activity) => ({
-        ...activity,
-        isExpandedGallery: activity.isExpandedGallery
-          ? activity.isExpandedGallery
-          : false,
-      }))
-
-      return lap
-    })
-  }
-}
-
-/**
- * Templates about school
- * 1. layout3Template
- * 2. schoolStudentListTemplate
- */
-
-// SchoolSectionsTemplateGroup manager
-
-class TemplateThird {
-  constructor(
-    public data: { tagTitle; name; img; text },
-    public template = 'layout3Template',
-    public show = false,
-    public priority = 0,
-  ) {}
-}
-
-class SummaryAndCoordinatorPage {
-  constructor(
-    public data: {
-      historicalReviewText
-      historicalReviewImg
-      coordinatorName
-      coordinatorImg
-      coordinatorText
-    },
-    public template = 'layout2Template',
-    public show = false,
-    public priority = 0,
-  ) {}
-}
-
-class FrontPage {
-  constructor(
-    public data: { schoolName; schoolYear; sponsorName; sponsorLogo },
-    public template = 'frontpageTemplate',
-    public show = false,
-    public priority = 0,
-  ) {}
 }

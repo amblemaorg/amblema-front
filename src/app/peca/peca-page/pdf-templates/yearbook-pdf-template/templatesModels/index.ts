@@ -1,1 +1,5 @@
+export * from './ActivitiesPage'
+export * from './frontPage'
 export * from './schoolGradesTemplate'
+export * from './summaryAndCoordinatorPage'
+export * from './TemplateThird'
