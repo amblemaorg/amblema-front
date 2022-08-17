@@ -1,7 +1,7 @@
-#USO-LOCAL - Use command docker-compose -f docker-compose.staging.yml up to set this specific .yml and up the docker-compose
+#USO-LOCAL - Use command npm i && npm run build && docker-compose -f docker-compose.staging.yml up to set this specific .yml and up the docker-compose
 version: "3.5"
 services:
-  web:
+  host-optimized-service:
     container_name: amblema_front_staging
     image: devbinaural/nginx-angular:latest
     tty: true
@@ -14,4 +14,4 @@ services:
       - ./:/home/amblema
       - ./vhost-template.conf:/etc/nginx/conf.d/default.conf
     command: >
-      /bin/bash -c "npm install && npm run build && envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html && exec nginx -g 'daemon off;'"
+      /bin/bash -c "envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html && exec nginx -g 'daemon off;'"
