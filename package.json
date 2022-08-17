@@ -2,6 +2,8 @@
   "name": "amblema-web",
   "version": "0.0.0",
   "scripts": {
+    "dev": "docker-compose up",
+    "staging": "npm run build && docker-compose -f docker-compose.staging.yml up",
     "ng": "ng",
     "start": "ng serve --port 4200 --host 0.0.0.0",
     "build": "ng build --configuration=staging",
