@@ -1,21 +1,21 @@
+<<<<<<< HEAD
 #USO-PROD -Use command docker-compose up -d
+=======
+#USO-LOCAL - Use command docker-compose -f docker-compose.dev.yml up to set this specific .yml and up the docker-compose
+>>>>>>> 34e77dfdfa04b886a7ca575eed70e06996c4a276
 version: "3.5"
+
 services:
-  support:
-    container_name: amblema-front-support
-    image: devbinaural/nginx-angular:latest
-    tty: true
-    ports:
-      - 10514:10514
+  angular8local:
+    image: devbinaural/angular:8.0.0
+    container_name: angular_amblema
     volumes:
-      - ${PWD}:/home/amblema
-    networks:
-      - default
-  web:
-    container_name: amblema_web
-    image: devbinaural/nginx-angular:latest
-    tty: true
+      - ".:/app"
+      - "/app/node_modules"
+    # command: bash -c "npm install && ng serve --host 0.0.0.0"
+    command: bash -c "npm install -g && npm install && ng serve --host 0.0.0.0"
     ports:
+<<<<<<< HEAD
       - 9014:80
       - 4200:4200
     env_file:
@@ -31,3 +31,9 @@ networks:
   default:
     external:
       name: amblema_db_db_network
+=======
+      - "22222:4200"
+      - "22223:4000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+>>>>>>> 34e77dfdfa04b886a7ca575eed70e06996c4a276
