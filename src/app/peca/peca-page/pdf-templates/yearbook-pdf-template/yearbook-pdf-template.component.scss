@@ -2,20 +2,12 @@
 $black: #000000;
 $gray: #666666;
 $green: #81b03e;
-// $blue: #00809a;
 $blue: #00a9c4;
 
 // Text size
 $size__h1: 64px;
 $size__h2: 20px;
 $size__p: 16px;
-
-/**
- * h1: blue, myriad variable concept, black
- * h2: blue, myriad variable concept, black
- * h3: Bahnschrift, bold
- * p: myriad pro, regular
- */
 
 @media print {
   .not-print {
@@ -167,8 +159,6 @@ $size__p: 16px;
   }
 
   .layout--front {
-    // position: relative;
-    // top: -70px;
     width: 100%;
 
     position: absolute;
@@ -245,7 +235,8 @@ $size__p: 16px;
 
   .layout--2 {
     display: grid;
-    grid-template-rows: repeat(2, 320px);
+    // grid-template-rows: repeat(2, 320px);
+    grid-template-rows: repeat(2, 50%);
     justify-content: center;
     row-gap: 20px;
 
@@ -256,6 +247,10 @@ $size__p: 16px;
 
     .row {
       overflow: hidden;
+
+      .col-container-img {
+        height: 100%;
+      }
 
       &:nth-child(even) {
         flex-direction: row-reverse;
