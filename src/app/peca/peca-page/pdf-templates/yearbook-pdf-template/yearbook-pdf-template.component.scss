@@ -97,10 +97,11 @@ $size__p: 16px;
   }
 
   p {
-    color: $black;
-    font-family: 'myriad_proregular';
-    font-size: $size__p;
     text-align: justify;
+  }
+
+  li {
+    font-family: 'myriad_proregular' !important;
   }
 
   .background--front-page {
