@@ -6,17 +6,7 @@ export const environment = {
   production: false,
   recaptchaKey: '6LcB7OsUAAAAADp1Ja9obo2HXVmb2r1Gl0Dqlsgj', // from cuentas.soporte@binaural.com.ve
   recaptchaNonce: '0D3VrhyLft',
-<<<<<<< HEAD
-  baseUrl: 'https://amblema.org/api/',
-  // baseUrl: "http://157.245.131.248:10506/"
-  // baseUrl: "http://157.245.131.248:10506/",
-  // baseUrl: "http://192.168.1.103:10506/",
-  // baseUrl: "http://157.245.131.248:10506/",
-  // baseUrl: "http://192.168.0.184:10505/", //back-franklin
-  // baseUrl: "http://186.93.147.191:10505/", //back-Greudys
-=======
   baseUrl: 'http://167.71.187.213:10508/',
->>>>>>> 34e77dfdfa04b886a7ca575eed70e06996c4a276
 }
 
 /*
