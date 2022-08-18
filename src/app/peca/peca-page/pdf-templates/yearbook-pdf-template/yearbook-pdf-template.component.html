@@ -32,38 +32,16 @@
       ></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!!schoolSectionsPage">
-      <ng-container
-        *ngFor="
-          let schoolSectionSegmented of this.schoolSectionsPage.data
-            .schoolSectionsSegmented
-        "
-      >
-        <ng-container *ngIf="isArray(schoolSectionSegmented)">
-          <ng-container
-            *ngTemplateOutlet="
-              smallSchoolSections;
-              context: {
-                data: schoolSectionSegmented
-              }
-            "
-          ></ng-container>
-        </ng-container>
-
-        <ng-container *ngIf="!isArray(schoolSectionSegmented)">
-          <ng-container
-            *ngTemplateOutlet="
-              largeSchoolSection;
-              context: {
-                data: schoolSectionSegmented,
-                studentsSegmented: this.schoolSectionsPage.getStudentsSegmented(
-                  schoolSectionSegmented.sectionStudents,
-                  schoolSectionSegmented.sectionImg
-                )
-              }
-            "
-          ></ng-container>
-        </ng-container>
+    <ng-container *ngIf="!!schoolGradePageGroup">
+      <ng-container *ngFor="let page of schoolGradePageGroup.pages">
+        <ng-container
+          *ngTemplateOutlet="
+            schoolStudentListTemplate;
+            context: {
+              page: page
+            }
+          "
+        ></ng-container>
       </ng-container>
     </ng-container>
 
@@ -295,38 +273,52 @@
 </ng-template>
 
 <!-- ### SchoolSections -->
-<ng-template
-  #largeSchoolSection
-  let-data="data"
-  let-studentsSegmented="studentsSegmented"
->
+<ng-template #schoolStudentListTemplate let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div class="col overflow--hidden">
-          <h2 class="text-capitalize">
-            {{ data.sectionName }}
-          </h2>
+        <div
+          class="col overflow--hidden {{
+            !page.isFirstColumnEmpty ? 'col--centered' : ''
+          }}"
+        >
+          <ng-container *ngIf="page.img">
+            <div class="container-img">
+              <img [src]="page.img" />
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="page.isFirstColumnEmpty">
+            <h2 class="text-capitalize">
+              {{ page.name }}
+            </h2>
+          </ng-container>
 
           <ul class="list">
-            <ng-container *ngFor="let name of studentsSegmented.large">
+            <ng-container *ngFor="let name of page.students.firstColumn">
               <li>{{ name }}</li>
             </ng-container>
           </ul>
         </div>
         <div class="col overflow--hidden">
-          <!-- <ng-container *ngIf="data.sectionImg">
-            <div class="container-img">
-              <img [src]="data.sectionImg" />
-            </div>
-          </ng-container> -->
-
-          <ul class="list padding-top">
-            <ng-container *ngFor="let name of studentsSegmented.small">
+          <ng-container *ngIf="!page.isFirstColumnEmpty">
+            <h2 class="text-capitalize">
+              {{ page.name }}
+            </h2>
+          </ng-container>
+          <!-- padding-top -->
+          <ul class="list">
+            <ng-container *ngFor="let name of page.students.secondColumn">
               <li>{{ name }}</li>
             </ng-container>
           </ul>
         </div>
+      </div>
+      <div class="teacher">
+        <h3 class="name">
+          <span>Docente:</span>
+          <strong>{{ page.teacher.fullName }}</strong>
+        </h3>
       </div>
     </div>
   </section>
