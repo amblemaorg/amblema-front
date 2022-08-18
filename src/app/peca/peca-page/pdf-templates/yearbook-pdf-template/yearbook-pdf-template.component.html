@@ -127,7 +127,7 @@
 
         <div class="col">
           <div>
-            <h3 class="title">Reseña histórica</h3>
+            <h2 class="title">Reseña histórica</h2>
             <p>
               <span
                 [outerHTML]="
@@ -149,10 +149,10 @@
 
         <div class="col">
           <div>
-            <h3 class="title">
+            <h2 class="title">
               Coordinador/a
               {{ summaryAndCoordinatorPage.data.coordinatorName }}
-            </h3>
+            </h2>
             <p>
               <span
                 [outerHTML]="
@@ -257,8 +257,8 @@
     <div class="page__content layout--front">
       <div class="head">
         <div class="headings">
-          <p>{{ frontpage.data.schoolYear }}</p>
-          <p>{{ frontpage.data.sponsorName }}</p>
+          <!-- <p>{{ frontpage.data.schoolYear }}</p> -->
+          <p class="primary-title">{{ frontpage.data.sponsorName }}</p>
         </div>
         <div class="partner-img">
           <img [src]="frontpage.data.sponsorLogo" />
@@ -266,7 +266,8 @@
       </div>
       <div class="body">
         <h1>AmbLeMario</h1>
-        <h2>{{ frontpage.data.schoolName }}</h2>
+        <h2 class="school-name">{{ frontpage.data.schoolName }}</h2>
+        <p class="primary-title">{{ frontpage.data.schoolYear }}</p>
       </div>
     </div>
   </section>
@@ -315,10 +316,10 @@
         </div>
       </div>
       <div class="teacher">
-        <h3 class="name">
+        <div class="name">
           <span>Docente:</span>
           <strong>{{ page.teacher.fullName }}</strong>
-        </h3>
+        </div>
       </div>
     </div>
   </section>
