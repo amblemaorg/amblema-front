@@ -10,6 +10,13 @@ $size__h1: 64px;
 $size__h2: 20px;
 $size__p: 16px;
 
+/**
+ * h1: blue, myriad variable concept, black
+ * h2: blue, myriad variable concept, black
+ * h3: Bahnschrift, bold
+ * p: myriad pro, regular
+ */
+
 @media print {
   .not-print {
     display: none !important;
@@ -63,7 +70,10 @@ $size__p: 16px;
 .yearbook-pdf {
   * {
     color: $black;
+    font-family: 'myriad_proregular';
+    font-size: $size__p;
   }
+
   h1 {
     font-size: $size__h1;
   }
@@ -71,6 +81,7 @@ $size__p: 16px;
   h1,
   h2 {
     color: $blue;
+    font-family: 'Montserrat';
     font-weight: bold;
   }
 
@@ -79,14 +90,22 @@ $size__p: 16px;
     font-size: $size__h2;
   }
 
+  h3 {
+    color: $black;
+    font-family: 'bahnschriftregular';
+    font-weight: bold;
+  }
+
   p {
     color: $black;
+    font-family: 'myriad_proregular';
     font-size: $size__p;
     text-align: justify;
   }
 
   .background--front-page {
     background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
+    position: relative;
   }
 
   .background--generic {
@@ -147,12 +166,19 @@ $size__p: 16px;
   }
 
   .layout--front {
-    position: relative;
-    top: -70px;
-    h2,
-    p {
-      color: $gray;
+    // position: relative;
+    // top: -70px;
+    width: 100%;
+
+    position: absolute;
+    top: 20px;
+    left: 0;
+
+    .primary-title {
+      @extend h2;
       text-align: center;
+      text-transform: capitalize;
+      margin: 0;
     }
 
     .head {
@@ -170,10 +196,6 @@ $size__p: 16px;
         p {
           font-size: $size__h2;
           margin: 0;
-
-          // &:last-child {
-          //   margin-top: 10px;
-          // }
         }
       }
 
@@ -201,7 +223,7 @@ $size__p: 16px;
       text-align: center;
 
       position: relative;
-      top: 100px;
+      top: 160px;
 
       h1 {
         font-weight: bold;
@@ -210,8 +232,12 @@ $size__p: 16px;
         margin: 0px;
       }
 
-      p {
-        text-transform: uppercase;
+      .school-name {
+        color: $black;
+        font-family: 'gill_sans_mt';
+        font-size: 28px;
+        margin: 6px 0px;
+        text-transform: capitalize;
       }
     }
   }
