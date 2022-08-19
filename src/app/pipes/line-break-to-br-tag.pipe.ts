@@ -5,8 +5,13 @@ import { Pipe } from '@angular/core';
 @Pipe({ name: 'br' })
 export class BreakLinePipe {
   transform(value: string): string {
-    return value == undefined
-      ? value
-      : value.replace(new RegExp('\r\n', 'g'), '<br />').replace(new RegExp('\n', 'g'), '<br />');
+    if (value == undefined) {
+      return value;
+    }
+
+    return (
+      '&nbsp' +
+      value.replace(new RegExp('\r\n', 'g'), '<br /><br />&nbsp').replace(new RegExp('\n', 'g'), '<br /><br />&nbsp')
+    );
   }
 }

@@ -94,6 +94,14 @@ $size__p: 16px;
 
   p {
     text-align: justify;
+
+    &.text-indent {
+      text-indent: 30px;
+    }
+
+    &.description {
+      word-spacing: 15px;
+    }
   }
 
   li {
@@ -121,7 +129,7 @@ $size__p: 16px;
     background-repeat: no-repeat;
     background-size: contain;
     overflow: hidden;
-    padding: 100px 70px 95px 70px;
+    padding: 100px 70px 100px 70px;
 
     img {
       max-width: 100%;
@@ -275,6 +283,9 @@ $size__p: 16px;
 
         .content {
           padding-left: 60px;
+          & > * {
+            line-height: 28px;
+          }
         }
       }
 
