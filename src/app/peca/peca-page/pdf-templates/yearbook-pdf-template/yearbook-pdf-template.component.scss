@@ -198,6 +198,9 @@ $size__p: 16px;
         text-align: center;
         text-transform: uppercase;
 
+        position: relative;
+        top: 16px;
+
         p {
           font-size: $size__h2;
           margin: 0;
@@ -335,7 +338,7 @@ $size__p: 16px;
         margin: 0;
       }
       .subtitle {
-        font-size: $size__p;
+        font-size: $size__p + 1;
       }
 
       .description {
