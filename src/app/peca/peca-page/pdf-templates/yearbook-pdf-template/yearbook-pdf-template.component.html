@@ -93,8 +93,8 @@
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">
-      <div class="layout--2__row" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
-        <div class="head">
+      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
+        <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
             <ng-container *ngIf="page.subtitle">
@@ -108,19 +108,9 @@
         </div>
       </div>
 
-      <div class="layout--2__row">
-        <div class="description-container">
-          <p>
-            <span [outerHTML]="page.paragraphColumns[1] | excerpt: 627 | br"></span>
-          </p>
-        </div>
-
-        <div class="description-container">
-          <p>
-            <span [outerHTML]="page.paragraphColumns[0] | excerpt: 627 | br"></span>
-          </p>
-        </div>
-      </div>
+      <p class="description">
+        <span [outerHTML]="page.paragraphColumns[1] | excerpt: 1600 | br"></span>
+      </p>
     </div>
   </section>
 </ng-template>

@@ -252,7 +252,7 @@ $size__p: 16px;
       font-weight: bold;
     }
 
-    &__row {
+    .head {
       overflow: hidden;
 
       // display: grid;
@@ -269,10 +269,7 @@ $size__p: 16px;
         flex-direction: row-reverse;
       }
 
-      // .description-container {
-      // }
-
-      .head {
+      .heading {
         display: flex;
         align-items: center;
 
@@ -284,6 +281,10 @@ $size__p: 16px;
       .container-img {
         height: 100%;
       }
+    }
+
+    .description {
+      column-count: 2;
     }
   }
 
