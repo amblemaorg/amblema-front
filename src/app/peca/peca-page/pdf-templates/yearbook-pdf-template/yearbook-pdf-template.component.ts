@@ -1,15 +1,9 @@
-import { Router } from '@angular/router'
-import { Component, OnInit, AfterViewInit } from '@angular/core'
-import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
-import { PdfYearbookData } from './pdfYearbookData.interface'
-import { mocksPdfData } from './mockShoolSectionData'
-import {
-  ActivitiesPage,
-  FrontPage,
-  SchoolGradePageGroup,
-  SummaryAndCoordinatorPage,
-  TemplateThird,
-} from './templatesModels'
+import { Router } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
+import { PdfYearbookData } from './pdfYearbookData.interface';
+import { mocksPdfData } from './mockShoolSectionData';
+import { ActivitiesPage, FrontPage, SchoolGradePageGroup, SecondLayoutTemplate } from './templatesModels';
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -19,35 +13,38 @@ import {
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = false
-  pdfData: PdfYearbookData
-  pages: any = []
+  showLoading = false;
+  pdfData: PdfYearbookData;
+  pages: any = [];
 
-  frontpage: FrontPage
-  summaryAndCoordinatorPage: SummaryAndCoordinatorPage
-  godfatherPage: TemplateThird
-  schoolPage: TemplateThird
-  schoolGradePageGroup: SchoolGradePageGroup
-  activitiesPage: ActivitiesPage
+  frontpage: FrontPage = null;
+  schoolGradePageGroup: SchoolGradePageGroup = null;
+  activitiesPage: ActivitiesPage = null;
+
+  // layout2
+  mySchoolPage: SecondLayoutTemplate = null;
+  coordinatorPage: SecondLayoutTemplate = null;
+  godFatherPage: SecondLayoutTemplate = null;
+  schoolPage: SecondLayoutTemplate = null;
 
   ngOnInit(): void {
-    this.pdfData = mocksPdfData
-    // this.pdfData = this.pdfService.pdfData
+    this.pdfData = mocksPdfData;
+    // this.pdfData = this.pdfService.pdfData;
   }
 
   ngAfterViewInit() {
-    console.log('YearbookPdfTemplateComponent', this.pdfData)
+    console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
-      this.router.navigate(['/peca/anuario-page'])
+      this.router.navigate(['/peca/anuario-page']);
     }
 
     addEventListener('afterprint', (event) => {
-      this.router.navigate(['/peca/anuario-page'])
-    })
+      this.router.navigate(['/peca/anuario-page']);
+    });
 
     if (this.pdfData) {
-      this.pageInit()
+      this.pageInit();
 
       // setTimeout(() => {
       //   window.print()
@@ -56,81 +53,60 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   print() {
-    window.print()
+    window.print();
   }
 
   isArray(arg) {
-    return Array.isArray(arg)
+    return Array.isArray(arg);
   }
 
   pageInit() {
-    this.setFrontPage()
-    this.setSummaryAndCoordinatorPage()
-    this.setSchoolAndGodfatherPage()
-    this.setSchoolGradePageGroup() // refactored
-    this.setActivitiesPage()
+    this.setFrontPage();
+    this.setSecondLayoutTemplateGroup(); // refactored
+    this.setSchoolGradePageGroup(); // refactored
+    this.setActivitiesPage();
   }
 
   setFrontPage() {
-    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
+    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
     this.frontpage = new FrontPage({
       schoolName,
       schoolYear,
       sponsorName,
       sponsorLogo,
-    })
+    });
   }
 
-  setSummaryAndCoordinatorPage() {
+  setSecondLayoutTemplateGroup() {
     const {
       historicalReviewText,
       historicalReviewImg,
       coordinatorName,
       coordinatorImg,
       coordinatorText,
-    } = this.pdfData
-    this.summaryAndCoordinatorPage = new SummaryAndCoordinatorPage({
-      historicalReviewText,
-      historicalReviewImg,
-      coordinatorName,
-      coordinatorImg,
-      coordinatorText,
-    })
-  }
-
-  setSchoolAndGodfatherPage() {
-    const {
-      sponsorName,
-      sponsorLogo,
-      sponsorText,
       schoolName,
       schoolText,
       schoolImg,
-    } = this.pdfData
-    this.godfatherPage = new TemplateThird({
-      tagTitle: 'padrino',
-      name: sponsorName,
-      img: sponsorLogo,
-      text: sponsorText,
-    })
+      sponsorName,
+      sponsorLogo,
+      sponsorText,
+    } = this.pdfData;
 
-    this.schoolPage = new TemplateThird({
-      tagTitle: 'escuela',
-      name: schoolName,
-      img: schoolImg,
-      text: schoolText,
-    })
+    this.mySchoolPage = new SecondLayoutTemplate('mi escuela', historicalReviewImg, historicalReviewText);
+    this.coordinatorPage = new SecondLayoutTemplate('coordinador', coordinatorImg, coordinatorText, coordinatorName);
+    this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
+    this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
   }
 
   setSchoolGradePageGroup() {
-    const { schoolSections } = this.pdfData
+    const { schoolSections } = this.pdfData;
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections })
+    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections });
   }
 
   setActivitiesPage() {
-    const { lapses } = this.pdfData
+    const { lapses } = this.pdfData;
 
-    this.activitiesPage = new ActivitiesPage({ lapses })
+    this.activitiesPage = new ActivitiesPage({ lapses });
   }
 }

@@ -2,37 +2,17 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="!!frontpage">
-      <ng-container
-        *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
-      ></ng-container>
+    <ng-container *ngIf="frontpage">
+      <ng-container *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!!summaryAndCoordinatorPage">
-      <ng-container
-        *ngTemplateOutlet="
-          layout2Template;
-          context: { summaryAndCoordinatorPage: summaryAndCoordinatorPage }
-        "
-      ></ng-container>
+    <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
+      <ng-container *ngIf="page">
+        <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
+      </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!!godfatherPage">
-      <ng-container
-        *ngTemplateOutlet="
-          layout3Template;
-          context: { data: godfatherPage.data }
-        "
-      ></ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="!!schoolPage">
-      <ng-container
-        *ngTemplateOutlet="layout3Template; context: { data: schoolPage.data }"
-      ></ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="!!schoolGradePageGroup">
+    <ng-container *ngIf="schoolGradePageGroup">
       <ng-container *ngFor="let page of schoolGradePageGroup.pages">
         <ng-container
           *ngTemplateOutlet="
@@ -45,14 +25,10 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!!schoolSectionsPage">
+    <ng-container *ngIf="schoolSectionsPage">
       <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
         <ng-container
-          *ngFor="
-            let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(
-              schoolSectionsPage.data.galleryImgs
-            )
-          "
+          *ngFor="let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(schoolSectionsPage.data.galleryImgs)"
         >
           <ng-container
             *ngTemplateOutlet="
@@ -72,7 +48,7 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="!!activitiesPage">
+    <ng-container *ngIf="activitiesPage">
       <ng-container *ngFor="let lapse of activitiesPage.data.lapses">
         <ng-container *ngFor="let activity of lapse.activities; let i = index">
           <ng-container
@@ -114,92 +90,33 @@
 </div>
 
 <!-- # Templates -->
-
-<ng-template #layout2Template>
+<ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">
-      <div class="row">
-        <div class="col">
-          <div class="container-img">
-            <img [src]="summaryAndCoordinatorPage.data.historicalReviewImg" />
+      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
+        <div class="heading">
+          <div class="content">
+            <h2>{{ page.title }}</h2>
+            <ng-container *ngIf="page.subtitle">
+              <h3>{{ page.subtitle }}</h3>
+            </ng-container>
           </div>
         </div>
 
-        <div class="col">
-          <div>
-            <h2 class="title">Reseña histórica</h2>
-            <p>
-              <span
-                [outerHTML]="
-                  summaryAndCoordinatorPage.data.historicalReviewText
-                    | excerpt: 627
-                    | br
-                "
-              ></span>
-            </p>
-          </div>
+        <div class="container-img">
+          <img [src]="page.img" />
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="container-img">
-            <img [src]="summaryAndCoordinatorPage.data.coordinatorImg" />
-          </div>
-        </div>
 
-        <div class="col">
-          <div>
-            <h2 class="title">
-              Coordinador/a
-              {{ summaryAndCoordinatorPage.data.coordinatorName }}
-            </h2>
-            <p>
-              <span
-                [outerHTML]="
-                  summaryAndCoordinatorPage.data.coordinatorText
-                    | excerpt: 627
-                    | br
-                "
-              ></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</ng-template>
-
-<ng-template #layout3Template let-data="data">
-  <section class="page background--generic">
-    <div class="page__content layout--3">
-      <div class="row body">
-        <div class="col col-img--centered">
-          <div class="container-img">
-            <img [src]="data.img" />
-          </div>
-        </div>
-        <div class="col overflow--hidden">
-          <p class="tag-title">{{ data.tagTitle }}</p>
-          <h2 class="text-capitalize">
-            {{ data.name }}
-          </h2>
-
-          <p>
-            <span [outerHTML]="data.text | excerpt: 1005 | br"></span>
-          </p>
-        </div>
-      </div>
+      <p class="description">
+        <span [outerHTML]="page.paragraphColumns[1] | excerpt: 1100 | br"></span>
+      </p>
     </div>
   </section>
 </ng-template>
 
 <!-- ## Layout 4 -->
-<ng-template
-  #layout4Template
-  let-data="data"
-  let-lapseName="lapseName"
-  let-activityIdx="activityIdx"
->
+<ng-template #layout4Template let-data="data" let-lapseName="lapseName" let-activityIdx="activityIdx">
   <section class="page background--generic">
     <div class="page__content layout--4">
       <div class="body">
@@ -211,30 +128,20 @@
           <h3 class="subtitle">{{ data.name }}</h3>
         </ng-container>
 
-        <p class="first-letter--uppercase description">
-          <span
-            [outerHTML]="data.description || '' | excerpt: 2000 | br"
-          ></span>
+        <p class="description">
+          <span [outerHTML]="data.description || '' | excerpt: 1130 | br"></span>
         </p>
       </div>
 
       <div class="gallery-container">
-        <app-gallery
-          [images]="data.images || []"
-          [limit]="3"
-          containerClasses="justify-content-between"
-        ></app-gallery>
+        <app-gallery [images]="data.images || []" [limit]="3" containerClasses="justify-content-between"></app-gallery>
       </div>
     </div>
   </section>
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template
-  #galleryTemplate
-  let-galleryImgs="galleryImgs"
-  let-options="options"
->
+<ng-template #galleryTemplate let-galleryImgs="galleryImgs" let-options="options">
   <section class="page {{ options.backgroundClass }}">
     <div class="page__content layout--gallery">
       <app-gallery
@@ -278,11 +185,7 @@
   <section class="page background--generic">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div
-          class="col overflow--hidden {{
-            !page.isFirstColumnEmpty ? 'col--centered' : ''
-          }}"
-        >
+        <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
           <ng-container *ngIf="page.img">
             <div class="container-img">
               <img [src]="page.img" />
