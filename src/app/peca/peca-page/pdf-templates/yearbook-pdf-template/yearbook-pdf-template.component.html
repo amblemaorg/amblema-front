@@ -81,6 +81,10 @@
         </ng-container>
       </ng-container>
     </ng-container>
+
+    <ng-container *ngFor="let page of lapsePageGroup">
+      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
+    </ng-container>
   </main>
 </ng-container>
 
@@ -90,6 +94,32 @@
 </div>
 
 <!-- # Templates -->
+<ng-template #diagnosticTemplate let-page="page">
+  <section class="page background--generic">
+    <div class="page__content layout--diagnostic">
+      <div class="head">
+        <h2 class="text-center">{{ page.title }}</h2>
+        <ng-container *ngIf="page.subtitle">
+          <h3 class="text-center">{{ page.subtitle }}</h3>
+        </ng-container>
+      </div>
+
+      <div class="body">
+        <div class="visual-references">
+          <div class="container-img">
+            <img [src]="page.graphic" />
+          </div>
+          <div class="table"></div>
+        </div>
+
+        <p class="description">
+          <span [outerHTML]="page.description | excerpt: 700 | br"></span>
+        </p>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">

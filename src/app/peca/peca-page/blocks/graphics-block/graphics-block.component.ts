@@ -1,27 +1,22 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
-import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
-import { Label } from "ng2-charts";
-import {
-  PageBlockComponent,
-  PresentationalBlockComponent,
-} from "../page-block.component";
-import { Router, NavigationEnd, Event } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
-import { PecaState } from "../../../../store/states/peca/peca.state";
-import { Select } from "@ngxs/store";
-import { PdfYearbookService } from "../../../../services/peca/pdf-yearbook.service";
+import { Component, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
+import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { Label } from 'ng2-charts';
+import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
+import { Router, NavigationEnd, Event } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { PecaState } from '../../../../store/states/peca/peca.state';
+import { Select } from '@ngxs/store';
+import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.service';
 
 @Component({
-  selector: "app-graphics-block",
-  templateUrl: "./graphics-block.component.html",
-  styleUrls: ["./graphics-block.component.scss"],
+  selector: 'app-graphics-block',
+  templateUrl: './graphics-block.component.html',
+  styleUrls: ['./graphics-block.component.scss'],
 })
-export class GraphicsBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy
-{
-  type: "presentational";
+export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
+  type: 'presentational';
   component: string;
-  settings: {
+  @Input() settings: {
     hideChart?: boolean;
     chartId?: string;
     labels: string[];
@@ -41,16 +36,13 @@ export class GraphicsBlockComponent
   arrayColors = [];
   dataChart = [];
   dataLabel = [];
-  UrlLapse = "";
+  UrlLapse = '';
 
   private subscription: Subscription = new Subscription();
 
-  constructor(
-    private router: Router,
-    private pdfYearbookService: PdfYearbookService
-  ) {
-    this.type = "presentational";
-    this.component = "graphics";
+  constructor(private router: Router, private pdfYearbookService: PdfYearbookService) {
+    this.type = 'presentational';
+    this.component = 'graphics';
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.UrlLapse = event.url;
@@ -60,29 +52,28 @@ export class GraphicsBlockComponent
   }
 
   ngOnInit() {
-    if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
-      this.color = "#FFF";
+    if (this.router.url.substring(14, 33) == 'diagnostico-inicial') {
+      this.color = '#FFF';
     } else {
-      this.color = "#111";
+      this.color = '#111';
     }
 
-    const routePathArray = this.router.url.split("/");
-    if (routePathArray[2] == "anuario-page") {
+    const routePathArray = this.router.url.split('/');
+
+    if (routePathArray[2] == 'anuario-page') {
       //this.nombreEscuela = this.settings.legendName;
       this.dataLabel = this.settings.labels;
-      this.arrayColors = this.settings.labels.map(() => "#81B03E");
+      this.arrayColors = this.settings.labels.map(() => '#81B03E');
       this.dataChart = this.settings.items;
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
             const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-            this.pdfYearbookService.setGraphics(
-              `lapse${this.settings.lapseN}`,
-              this.settings.sendGraphicToPdf,
-              imgB64
-            );
+            // console.log(this.chart);
+
+            this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, imgB64);
           }
-        })
+        }),
       );
       return;
     }
@@ -90,21 +81,29 @@ export class GraphicsBlockComponent
     this.getInfo();
   }
 
+  ngAfterViewInit(): void {
+    // console.log('ngAfterViewInit');
+
+    setTimeout(() => {
+      this.loadChart();
+    });
+  }
+
   parseGradeName(grade, name): string {
     switch (grade) {
-      case "0":
+      case '0':
         return `Preescolar ${name}`;
-      case "1":
+      case '1':
         return `1er Grado ${name}`;
-      case "2":
+      case '2':
         return `2do Grado ${name}`;
-      case "3":
+      case '3':
         return `3er Grado ${name}`;
-      case "4":
+      case '4':
         return `4to Grado ${name}`;
-      case "5":
+      case '5':
         return `5to Grado ${name}`;
-      case "6":
+      case '6':
         return `6to Grado ${name}`;
       default:
         return `${grade} Grado ${name}`;
@@ -122,67 +121,51 @@ export class GraphicsBlockComponent
             this.dataLabel.push(
               this.parseGradeName(
                 data.activePecaContent.school.sections[i].grade,
-                data.activePecaContent.school.sections[i].name
-              )
+                data.activePecaContent.school.sections[i].name,
+              ),
             );
-            this.arrayColors.push("#81B03E");
+            this.arrayColors.push('#81B03E');
           }
-          if (this.UrlLapse === "1") {
+          if (this.UrlLapse === '1') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse1
-                    .wordsPerMinIndex
-                ).toFixed(2)
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex).toFixed(2),
               );
             }
-          } else if (this.UrlLapse === "2") {
+          } else if (this.UrlLapse === '2') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse2
-                    .wordsPerMinIndex
-                ).toFixed(2)
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex).toFixed(2),
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(
-                  data.activePecaContent.school.sections[i].diagnostics.lapse3
-                    .wordsPerMinIndex
-                ).toFixed(2)
+                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex).toFixed(2),
               );
             }
           }
         }
       },
 
-      (error) => console.error(error)
+      (error) => console.error(error),
     );
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.loadChart();
-    });
-  }
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
   loadChart() {
     if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
-      this.ctx = this.canvas.getContext("2d");
+      this.ctx = this.canvas.getContext('2d');
       this.chart = new Chart(this.ctx, {
-        type: "bar",
+        type: 'bar',
         data: {
           labels: this.dataLabel,
           datasets: [
             {
-              label: this.settings.legendName
-                ? this.settings.legendName
-                : "Diagnóstico de lectura",
+              label: this.settings.legendName ? this.settings.legendName : 'Diagnóstico de lectura',
               data: this.dataChart,
               backgroundColor: this.arrayColors,
               fill: true,
@@ -220,6 +203,13 @@ export class GraphicsBlockComponent
           },
         },
       });
+
+      if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
+        const imgB64 = this.chart ? this.chart.toBase64Image() : null;
+        // console.log(this.chart);
+
+        this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, imgB64);
+      }
     }
   }
 

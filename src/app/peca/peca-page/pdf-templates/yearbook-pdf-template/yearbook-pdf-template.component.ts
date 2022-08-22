@@ -3,7 +3,13 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mocksPdfData } from './mockShoolSectionData';
-import { ActivitiesPage, FrontPage, SchoolGradePageGroup, SecondLayoutTemplate } from './templatesModels';
+import {
+  ActivitiesPage,
+  DiagnosticTemplate,
+  FrontPage,
+  SchoolGradePageGroup,
+  SecondLayoutTemplate,
+} from './templatesModels';
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -27,9 +33,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   godFatherPage: SecondLayoutTemplate = null;
   schoolPage: SecondLayoutTemplate = null;
 
+  // diagnosticTemplate
+  lapsePageGroup = [];
+
   ngOnInit(): void {
-    this.pdfData = mocksPdfData;
-    // this.pdfData = this.pdfService.pdfData;
+    // this.pdfData = mocksPdfData;
+    this.pdfData = this.pdfService.pdfData;
+    console.log(this.pdfService.getGraphics());
   }
 
   ngAfterViewInit() {
@@ -53,7 +63,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   print() {
-    window.print();
+    // window.print();
+    console.log(this.pdfService.getGraphics().lapse1.diagnosticLogic);
   }
 
   isArray(arg) {
@@ -65,6 +76,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setSecondLayoutTemplateGroup(); // refactored
     this.setSchoolGradePageGroup(); // refactored
     this.setActivitiesPage();
+    this.setDiagnosticTemplateGroup();
   }
 
   setFrontPage() {
@@ -108,5 +120,22 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const { lapses } = this.pdfData;
 
     this.activitiesPage = new ActivitiesPage({ lapses });
+  }
+
+  async setDiagnosticTemplateGroup() {
+    const graphics = await this.pdfService.getGraphics().lapse1.diagnosticLogic;
+    console.log(graphics);
+
+    this.pdfData.lapses.map((lapse) => {
+      const { lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
+
+      const pages = [
+        new DiagnosticTemplate(diagnosticLogic.diagnosticText, diagnosticLogic.diagnosticAnalysis, graphics, lapseName),
+        new DiagnosticTemplate(diagnosticMath.diagnosticText, diagnosticMath.diagnosticAnalysis, graphics),
+        new DiagnosticTemplate(diagnosticReading.diagnosticText, diagnosticReading.diagnosticAnalysis, graphics),
+      ];
+
+      this.lapsePageGroup.push(...pages);
+    });
   }
 }
