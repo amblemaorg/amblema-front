@@ -128,29 +128,67 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.pdfData.lapses.map((lapse) => {
-      const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
-      const lapseGraphic = graphics[lapseId];
-      const pages = [
-        new DiagnosticTemplate(
-          diagnosticLogic.diagnosticText,
-          diagnosticLogic.diagnosticAnalysis,
-          lapseGraphic.diagnosticLogic,
-          lapseName,
-        ),
-        new DiagnosticTemplate(
-          diagnosticMath.diagnosticText,
-          diagnosticMath.diagnosticAnalysis,
-          lapseGraphic.diagnosticMath,
-        ),
-        new DiagnosticTemplate(
-          diagnosticReading.diagnosticText,
-          diagnosticReading.diagnosticAnalysis,
-          lapseGraphic.diagnosticReading,
-        ),
-      ];
+    try {
+      const { schoolCode } = this.pdfData;
+      const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
 
-      this.lapsePageGroup.push(...pages);
-    });
+      console.log('setDiagnosticTemplateGroup', diagnostics);
+
+      this.pdfData.lapses.forEach((lapse, idx) => {
+        const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
+
+        let pages = [];
+
+        // When is lapse3
+        if (idx === 2) {
+          pages = [
+            new DiagnosticTemplate(
+              diagnosticLogic.diagnosticText,
+              diagnosticLogic.diagnosticAnalysis,
+              lapseGraphic.diagnosticLogic,
+              lapseName,
+            ),
+            new DiagnosticTemplate(
+              diagnosticMath.diagnosticText,
+              diagnosticMath.diagnosticAnalysis,
+              lapseGraphic.diagnosticMath,
+            ),
+            new DiagnosticTemplate(
+              diagnosticReading.diagnosticText,
+              diagnosticReading.diagnosticAnalysis,
+              lapseGraphic.diagnosticReading,
+            ),
+          ];
+
+          this.lapsePageGroup.push(...pages);
+
+          return;
+        }
+
+        const lapseGraphic = graphics[lapseId];
+        pages = [
+          new DiagnosticTemplate(
+            diagnosticLogic.diagnosticText,
+            diagnosticLogic.diagnosticAnalysis,
+            lapseGraphic.diagnosticLogic,
+            lapseName,
+          ),
+          new DiagnosticTemplate(
+            diagnosticMath.diagnosticText,
+            diagnosticMath.diagnosticAnalysis,
+            lapseGraphic.diagnosticMath,
+          ),
+          new DiagnosticTemplate(
+            diagnosticReading.diagnosticText,
+            diagnosticReading.diagnosticAnalysis,
+            lapseGraphic.diagnosticReading,
+          ),
+        ];
+
+        this.lapsePageGroup.push(...pages);
+      });
+    } catch (error) {
+      console.log('setDiagnosticTemplateGroup - error', error);
+    }
   }
 }
