@@ -69,7 +69,6 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
             const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-            // console.log(this.chart);
 
             this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, imgB64);
           }
@@ -203,13 +202,6 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
           },
         },
       });
-
-      if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
-        const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-        // console.log(this.chart);
-
-        this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, imgB64);
-      }
     }
   }
 

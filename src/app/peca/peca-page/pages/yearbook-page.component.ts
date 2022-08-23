@@ -254,7 +254,9 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
-              const lapseGraphics = this.pdfYearbookService.getGraphics();
+              // const lapseGraphics = this.pdfYearbookService.getGraphics();
+              // console.log({ lapseGraphics });
+
               this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
               console.log('data.activePecaContent', data.activePecaContent);
 

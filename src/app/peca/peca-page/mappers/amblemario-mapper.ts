@@ -124,7 +124,7 @@ export function amblemarioMapper(pecaData) {
     if ((vals4R || vals4M || vals4L || lapseActivities) && !breakForLapses) breakForLapses = true;
 
     return {
-      lapseId: 'lapse' + (i += 1),
+      lapseId: 'lapse' + (i + 1),
       lapseName: i === 0 ? 'Primer lapso' : i === 1 ? 'Segundo lapso' : 'Tercer lapso',
       diagnosticReading: vals4R
         ? {

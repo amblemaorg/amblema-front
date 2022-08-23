@@ -47,7 +47,21 @@ export class PdfYearbookService {
   }
 
   getGraphics() {
-    return this.graphics;
+    this.callGraphicBase64ImgEmitter.emit();
+
+    const graphics = this.graphics;
+
+    const isThereGraphics = Object.keys(graphics).every((key) => {
+      const graphicValue = graphics[key];
+
+      return Object.keys(graphicValue).every((lapseKey) => {
+        return !!graphicValue[lapseKey];
+      });
+    });
+
+    // console.log({ isThereGraphics });
+
+    return isThereGraphics ? this.graphics : false;
   }
 
   private clearGraphics() {
@@ -911,10 +925,9 @@ export class PdfYearbookService {
   }
 
   routeToPdfTemplate(pdfData) {
-    this.callGraphicBase64ImgEmitter.emit();
     console.log('routeToPdfTemplate', pdfData);
     this.pdfData = pdfData;
-    // this.router.navigate(['pdf-template/yearbook'])
+
     this.router.navigateByUrl('/pdf-template/yearbook');
   }
 }

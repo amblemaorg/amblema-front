@@ -63,8 +63,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   print() {
-    // window.print();
-    console.log(this.pdfService.getGraphics().lapse1.diagnosticLogic);
+    window.print();
   }
 
   isArray(arg) {
@@ -123,16 +122,32 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   async setDiagnosticTemplateGroup() {
-    const graphics = await this.pdfService.getGraphics().lapse1.diagnosticLogic;
-    console.log(graphics);
+    const graphics = this.pdfService.getGraphics();
+
+    if (!graphics) {
+      return;
+    }
 
     this.pdfData.lapses.map((lapse) => {
-      const { lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
-
+      const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
+      const lapseGraphic = graphics[lapseId];
       const pages = [
-        new DiagnosticTemplate(diagnosticLogic.diagnosticText, diagnosticLogic.diagnosticAnalysis, graphics, lapseName),
-        new DiagnosticTemplate(diagnosticMath.diagnosticText, diagnosticMath.diagnosticAnalysis, graphics),
-        new DiagnosticTemplate(diagnosticReading.diagnosticText, diagnosticReading.diagnosticAnalysis, graphics),
+        new DiagnosticTemplate(
+          diagnosticLogic.diagnosticText,
+          diagnosticLogic.diagnosticAnalysis,
+          lapseGraphic.diagnosticLogic,
+          lapseName,
+        ),
+        new DiagnosticTemplate(
+          diagnosticMath.diagnosticText,
+          diagnosticMath.diagnosticAnalysis,
+          lapseGraphic.diagnosticMath,
+        ),
+        new DiagnosticTemplate(
+          diagnosticReading.diagnosticText,
+          diagnosticReading.diagnosticAnalysis,
+          lapseGraphic.diagnosticReading,
+        ),
       ];
 
       this.lapsePageGroup.push(...pages);
