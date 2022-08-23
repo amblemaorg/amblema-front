@@ -106,9 +106,18 @@
 
       <div class="body">
         <div class="visual-references">
-          <div class="container-img">
-            <img [src]="page.graphic" />
-          </div>
+          <ng-container *ngIf="page.isImgGraphic">
+            <div class="container-img">
+              <img [src]="page.graphic" />
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="!page.isImgGraphic">
+            <div class="graphic">
+              <!-- <element [graphicValues]="page.graphic"></element> -->
+            </div>
+          </ng-container>
+
           <div class="table"></div>
         </div>
 

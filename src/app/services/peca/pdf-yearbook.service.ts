@@ -4,6 +4,7 @@ import { PdfMakeWrapper, Img, Rect, Canvas, Polyline, Txt, Toc, TocItem, Stack, 
 // import pdfFonts from "pdfmake/build/vfs_fonts";
 import pdfFonts from '../../peca/peca-page/pdf-fonts/custom-fonts';
 import { Router } from '@angular/router';
+import { HttpFetcherService } from './http-fetcher.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,12 +41,19 @@ export class PdfYearbookService {
 
   @Output() callGraphicBase64ImgEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(@Inject(DOCUMENT) private document: Document, private router: Router) {}
+  constructor(@Inject(DOCUMENT) private document: Document, private router: Router, private http: HttpFetcherService) {}
 
   public setGraphics(lapse: string, graphic: string, img: string) {
     this.graphics[lapse][graphic] = img;
   }
 
+  /**
+   * @description Return graphic objecto || false if every graphic it's null
+   * @author Christopher Dallar Document This
+   * @date 23/08/2022
+   * @return
+   * @memberof PdfYearbookService
+   */
   getGraphics() {
     this.callGraphicBase64ImgEmitter.emit();
 
@@ -924,10 +932,23 @@ export class PdfYearbookService {
     return body_;
   }
 
-  routeToPdfTemplate(pdfData) {
+  getSchoolByCode(code: string): Promise<any> {
+    return new Promise(async (res, rej) => {
+      try {
+        const data = await this.http.get(`schoolspage/${code}`).toPromise();
+        // console.log('getSchoolByCode', data);
+
+        res(data);
+      } catch (error) {
+        // console.log('getSchoolByCode - error', error);
+        rej(error);
+      }
+    });
+  }
+
+  async routeToPdfTemplate(pdfData) {
     console.log('routeToPdfTemplate', pdfData);
     this.pdfData = pdfData;
-
     this.router.navigateByUrl('/pdf-template/yearbook');
   }
 }

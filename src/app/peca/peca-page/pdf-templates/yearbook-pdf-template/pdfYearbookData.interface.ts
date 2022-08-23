@@ -8,6 +8,7 @@ export interface PdfYearbookData {
   coordinatorText: string;
   schoolName: string;
   schoolImg: string;
+  schoolCode: string;
   schoolText: string;
   schoolCity: string;
   historicalReviewName: string;

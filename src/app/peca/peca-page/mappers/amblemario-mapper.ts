@@ -8,6 +8,7 @@ export function amblemarioMapper(pecaData) {
 
   const schoolData = {
     city: pecaData.school && pecaData.school.addressCity ? pecaData.school.addressCity : null,
+    code: pecaData.school.code,
   };
 
   for (const grade of Array(7).keys()) {
@@ -169,6 +170,7 @@ export function amblemarioMapper(pecaData) {
     schoolImg: school && school.image ? school.image : null,
     schoolText: school && school.content ? school.content : null,
     schoolCity: schoolData.city,
+    schoolCode: schoolData.code,
     historicalReviewName: historicalReview && historicalReview.name ? historicalReview.name : 'Reseña Histórica',
     historicalReviewText: historicalReview && historicalReview.content ? historicalReview.content : null,
     historicalReviewImg: historicalReview && historicalReview.image ? historicalReview.image : null,

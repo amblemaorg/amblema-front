@@ -59,6 +59,8 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
           // console.log("DATAAA: ", data);
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
+              // console.log('YearbookPageComponent', data);
+
               // this.store.dispatch(new SetFalseMakingAction());
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
