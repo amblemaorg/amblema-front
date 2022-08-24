@@ -142,22 +142,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         // When is lapse3
         if (idx === 2) {
           pages = [
-            new DiagnosticTemplate(
-              diagnosticLogic.diagnosticText,
-              diagnosticLogic.diagnosticAnalysis,
-              lapseGraphic.diagnosticLogic,
-              lapseName,
-            ),
-            new DiagnosticTemplate(
-              diagnosticMath.diagnosticText,
-              diagnosticMath.diagnosticAnalysis,
-              lapseGraphic.diagnosticMath,
-            ),
-            new DiagnosticTemplate(
-              diagnosticReading.diagnosticText,
-              diagnosticReading.diagnosticAnalysis,
-              lapseGraphic.diagnosticReading,
-            ),
+            new DiagnosticTemplate(diagnosticLogic.diagnosticText, diagnosticLogic.diagnosticAnalysis, [], lapseName),
+            new DiagnosticTemplate(diagnosticMath.diagnosticText, diagnosticMath.diagnosticAnalysis, []),
+            new DiagnosticTemplate(diagnosticReading.diagnosticText, diagnosticReading.diagnosticAnalysis, []),
           ];
 
           this.lapsePageGroup.push(...pages);
