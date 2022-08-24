@@ -1,5 +1,5 @@
 const sectionImg =
-  'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg'
+  'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg';
 
 export const mocksPdfData = {
   schoolYear: '2021 - 2022',
@@ -461,37 +461,25 @@ export const mocksPdfData = {
       diagnosticMath: {
         diagnosticText: 'Diagnóstico de multiplicación',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de multiplicación',
-            'Índice de multiplicación',
-          ],
+          ['Grado', 'Sección', 'Resultado de multiplicación', 'Índice de multiplicación'],
           ['3er Grado', 'A', '13', '0.443'],
           ['4to Grado', 'A', '7', '0.233'],
         ],
         diagnosticAnalysis:
           '      Esta evaluación consiste en la resolución de 30 operaciones de multiplicación en 2 minutos. A cada niño se le hace entrega de un cartón en forma de tabla que contiene 30 operaciones de multiplicación de una sola cifra. Se aplica a los alumnos de 3ero hasta 6to grado\n      El diagnóstico inicial de multiplicación se aplicó a un total 18 estudiantes de la Unidad Educativa Estadal Santa Inés (AM), lo que representa el 36.73 % de la matrícula de 3ero hasta 4to grado. Recordemos que el turno de la mañana atiende de 1ero a 4to grado.\n      De 3er grado solo participaron 3 niños en el diagnóstico. La poca participación de la masa estudiantil se debe a que la mayoría no está asistiendo a las clases presenciales, la principal razón es la pandemia por el Covid-19.  \n      En función a los resultados obtenidos nos demuestran, de acuerdo al índice promedio de multiplicación, que 3er grado está cerca de alcanzar la mitad de la meta. Mientras que 4to grado han alcanzado solo el 23 % de la meta, con 0.23 de índice promedio. \n       Estos resultados, en parte, son consecuencia de la ausencia de clases presenciales por casi dos años escolares. Un ejemplo, para el momento que inició la pandemia los alumnos de 3er grado estaban en 1ero, los de 4to en 2do grado.    \n      ¿Qué debemos hacer para mejorar los resultados? Socializar con los docentes los índices obtenidos, para que ellos en conjunto con padres y representantes pongan en práctica las actividades contempladas en el Momento X del módulo de matemática de AmbLeMa, así lograremos que los niños desarrollen el dominio de las operaciones básicas de matemática y por supuesto, mejoren los resultados en los próximos diagnósticos.\n\n',
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de multiplicación',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de multiplicación',
         diagnosticGraphic: null,
       },
       diagnosticLogic: {
         diagnosticText: 'Diagnóstico de razonamiento lógico - matemático',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de lógica matemática',
-            'Índice de lógica matemática',
-          ],
+          ['Grado', 'Sección', 'Resultado de lógica matemática', 'Índice de lógica matemática'],
           ['3er Grado', 'A', '1', '0.11'],
           ['4to Grado', 'A', '1', '0.111'],
         ],
         diagnosticAnalysis:
           '          El diagnóstico de Lógica Matemática se aplicó a un total 18 estudiantes de la Unidad Educativa Estadal Santa Inés (AM), lo que representa el 36,73 % de la matrícula de 3ero hasta 4to grado. Este diagnóstico consiste en la resolución de 15 problemas de razonamiento lógico en 30 minutos. \n      En función a los resultados obtenidos podemos concluir que ambos grados están muy por debajo de alcanzar la meta, con 0.11 de índice promedio. \n      Estos resultados se deben a que la mayoría no lee rápidamente, lo que dificulta la comprensión del enunciado planteado en cada ejercicio. De aquí la importancia de aplicar la Hora TAL. \n      Además, debido a la pandemia, los estudiantes ven clases presenciales únicamente durante 2 horas y asisten a la institución solo dos días a la semana. Por lo que la falta de tiempo también impidió que pudieran completar los ejercicios. \n      Es sumamente importante informar a los docentes los resultados obtenidos para establecer los mecanismos que permitan trabajar en conjunto con los padres para lograr que los niños pongan en práctica en sus hogares las estrategias sugeridas por AmbLeMa, entre las cuales están: Ingenio Matemático y Laboratorio de Matemática.\n',
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
@@ -614,12 +602,7 @@ export const mocksPdfData = {
       diagnosticMath: {
         diagnosticText: 'Diagnóstico de multiplicación',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de multiplicación',
-            'Índice de multiplicación',
-          ],
+          ['Grado', 'Sección', 'Resultado de multiplicación', 'Índice de multiplicación'],
           ['3er Grado', 'A', '10', '0.343'],
           ['3er Grado', 'B', '8', '0.277'],
           ['4to Grado', 'A', '13', '0.444'],
@@ -628,19 +611,13 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '11', '0.389'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de multiplicación',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de multiplicación',
         diagnosticGraphic: null,
       },
       diagnosticLogic: {
         diagnosticText: 'Diagnóstico de razonamiento lógico - matemático',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de lógica matemática',
-            'Índice de lógica matemática',
-          ],
+          ['Grado', 'Sección', 'Resultado de lógica matemática', 'Índice de lógica matemática'],
           ['3er Grado', 'A', '1', '0.096'],
           ['3er Grado', 'B', '1', '0.11'],
           ['4to Grado', 'A', '2', '0.144'],
@@ -649,8 +626,7 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '1', '0.127'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
@@ -776,12 +752,7 @@ export const mocksPdfData = {
       diagnosticMath: {
         diagnosticText: 'Diagnóstico de multiplicación',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de multiplicación',
-            'Índice de multiplicación',
-          ],
+          ['Grado', 'Sección', 'Resultado de multiplicación', 'Índice de multiplicación'],
           ['3er Grado', 'A', '14', '0.47'],
           ['3er Grado', 'B', '12', '0.421'],
           ['4to Grado', 'A', '20', '0.683'],
@@ -790,19 +761,13 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '21', '0.702'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de multiplicación',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de multiplicación',
         diagnosticGraphic: null,
       },
       diagnosticLogic: {
         diagnosticText: 'Diagnóstico de razonamiento lógico - matemático',
         diagnosticTable: [
-          [
-            'Grado',
-            'Sección',
-            'Resultado de lógica matemática',
-            'Índice de lógica matemática',
-          ],
+          ['Grado', 'Sección', 'Resultado de lógica matemática', 'Índice de lógica matemática'],
           ['3er Grado', 'A', '3', '0.211'],
           ['3er Grado', 'B', '2', '0.167'],
           ['4to Grado', 'A', '3', '0.239'],
@@ -811,8 +776,7 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '4', '0.27'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText:
-          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
@@ -864,4 +828,121 @@ export const mocksPdfData = {
     },
   ],
   breakForLapses: true,
-}
+};
+
+export const mockDiagnosticChartData = {
+  multiplicationsPerMinIndex: [
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 1',
+      value: 0.338,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 2',
+      value: 0.354,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 3',
+      value: 0.569,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 1',
+      value: 0.667,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 2',
+      value: 0,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 3',
+      value: 0,
+    },
+  ],
+  operationsPerMinIndex: [
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 1',
+      value: 0.111,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 2',
+      value: 0.133,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 3',
+      value: 0.217,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 1',
+      value: 0.765,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 2',
+      value: 0,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 3',
+      value: 0,
+    },
+  ],
+  wordsPerMinIndex: [
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 1',
+      value: 0.396,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 2',
+      value: 0.494,
+    },
+    {
+      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+      label: '2021 - 2022',
+      serie: 'Lapso 3',
+      value: 0.733,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 1',
+      value: 0.95,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 2',
+      value: 0,
+    },
+    {
+      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+      label: '2020 - 2021',
+      serie: 'Lapso 3',
+      value: 0,
+    },
+  ],
+};

@@ -106,14 +106,15 @@
 
       <div class="body">
         <div class="visual-references">
-          <ng-container *ngIf="page.isImgGraphic">
+          <ng-container *ngIf="page.isImgChart">
             <div class="container-img">
-              <img [src]="page.graphic" />
+              <img [src]="page.chart" />
             </div>
           </ng-container>
 
-          <ng-container *ngIf="!page.isImgGraphic">
+          <ng-container *ngIf="!page.isImgChart">
             <div class="graphic">
+              <charts-switcher [options]="page.chart" [flatMode]="true"></charts-switcher>
               <!-- <element [graphicValues]="page.graphic"></element> -->
             </div>
           </ng-container>

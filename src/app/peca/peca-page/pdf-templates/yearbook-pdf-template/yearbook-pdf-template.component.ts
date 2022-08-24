@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
-import { mocksPdfData } from './mockShoolSectionData';
+import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
   ActivitiesPage,
   DiagnosticTemplate,
@@ -128,54 +128,72 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    try {
-      const { schoolCode } = this.pdfData;
-      const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
+    const { schoolCode, schoolYear } = this.pdfData;
 
-      console.log('setDiagnosticTemplateGroup', diagnostics);
+    const filterDiagnosticValByYear = (diagValues: any[]) => {
+      return diagValues.filter((diagValue) => diagValue.label == schoolYear);
+    };
 
-      this.pdfData.lapses.forEach((lapse, idx) => {
-        const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
+    this.pdfData.lapses.forEach(async (lapse, idx) => {
+      const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
 
-        let pages = [];
+      let pages = [];
 
-        // When is lapse3
-        if (idx === 2) {
+      // When is lapse3
+      if (idx === 2) {
+        try {
+          // const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
+          const diagnostics = mockDiagnosticChartData;
+          console.log('setDiagnosticTemplateGroup', diagnostics);
+
           pages = [
-            new DiagnosticTemplate(diagnosticLogic.diagnosticText, diagnosticLogic.diagnosticAnalysis, [], lapseName),
-            new DiagnosticTemplate(diagnosticMath.diagnosticText, diagnosticMath.diagnosticAnalysis, []),
-            new DiagnosticTemplate(diagnosticReading.diagnosticText, diagnosticReading.diagnosticAnalysis, []),
+            new DiagnosticTemplate(
+              diagnosticLogic.diagnosticText,
+              diagnosticLogic.diagnosticAnalysis,
+              filterDiagnosticValByYear(diagnostics.operationsPerMinIndex),
+              lapseName,
+            ),
+            new DiagnosticTemplate(
+              diagnosticMath.diagnosticText,
+              diagnosticMath.diagnosticAnalysis,
+              filterDiagnosticValByYear(diagnostics.multiplicationsPerMinIndex),
+            ),
+            new DiagnosticTemplate(
+              diagnosticReading.diagnosticText,
+              diagnosticReading.diagnosticAnalysis,
+              filterDiagnosticValByYear(diagnostics.wordsPerMinIndex),
+            ),
           ];
 
           this.lapsePageGroup.push(...pages);
-
-          return;
+        } catch (error) {
+          console.log('setDiagnosticTemplateGroup - error', error);
         }
 
-        const lapseGraphic = graphics[lapseId];
-        pages = [
-          new DiagnosticTemplate(
-            diagnosticLogic.diagnosticText,
-            diagnosticLogic.diagnosticAnalysis,
-            lapseGraphic.diagnosticLogic,
-            lapseName,
-          ),
-          new DiagnosticTemplate(
-            diagnosticMath.diagnosticText,
-            diagnosticMath.diagnosticAnalysis,
-            lapseGraphic.diagnosticMath,
-          ),
-          new DiagnosticTemplate(
-            diagnosticReading.diagnosticText,
-            diagnosticReading.diagnosticAnalysis,
-            lapseGraphic.diagnosticReading,
-          ),
-        ];
+        return;
+      }
 
-        this.lapsePageGroup.push(...pages);
-      });
-    } catch (error) {
-      console.log('setDiagnosticTemplateGroup - error', error);
-    }
+      const lapseGraphic = graphics[lapseId];
+      pages = [
+        new DiagnosticTemplate(
+          diagnosticLogic.diagnosticText,
+          diagnosticLogic.diagnosticAnalysis,
+          lapseGraphic.diagnosticLogic,
+          lapseName,
+        ),
+        new DiagnosticTemplate(
+          diagnosticMath.diagnosticText,
+          diagnosticMath.diagnosticAnalysis,
+          lapseGraphic.diagnosticMath,
+        ),
+        new DiagnosticTemplate(
+          diagnosticReading.diagnosticText,
+          diagnosticReading.diagnosticAnalysis,
+          lapseGraphic.diagnosticReading,
+        ),
+      ];
+
+      this.lapsePageGroup.push(...pages);
+    });
   }
 }

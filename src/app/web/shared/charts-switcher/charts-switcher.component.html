@@ -6,25 +6,34 @@
     'd-column': direction != 'row'
   }"
 >
-  <div class="switchers-wrapper">
-    <p *ngIf="buttonsDescription">
-      {{ buttonsDescription }}
-    </p>
-    <button
-      class="switcher-button"
-      [ngClass]="{
-        active: activeChartIndex == i
-      }"
-      type="button"
-      *ngFor="let chart of charts; index as i"
-      (click)="switchChart(i)"
-    >
-      {{ chart.title }}
-    </button>
-  </div>
-  <div class="chart-wrapper">
-    <p *ngIf="charts.length > 0 && charts[activeChartIndex].description">
-      {{ charts[activeChartIndex].description }}
-    </p>
-    <ng-template #chartHost></ng-template>
-  </div>
+  <ng-container *ngIf="!flatMode; else flatModeTemplate">
+    <div class="switchers-wrapper">
+      <p *ngIf="buttonsDescription">
+        {{ buttonsDescription }}
+      </p>
+      <button
+        class="switcher-button"
+        [ngClass]="{
+          active: activeChartIndex == i
+        }"
+        type="button"
+        *ngFor="let chart of charts; index as i"
+        (click)="switchChart(i)"
+      >
+        {{ chart.title }}
+      </button>
+    </div>
+    <div class="chart-wrapper">
+      <p *ngIf="charts.length > 0 && charts[activeChartIndex].description">
+        {{ charts[activeChartIndex].description }}
+      </p>
+      <ng-template #chartHost></ng-template>
+    </div>
+  </ng-container>
+
+  <ng-template #flatModeTemplate>
+    <div class="chart-wrapper">
+      <ng-template #chartHost></ng-template>
+    </div>
+  </ng-template>
+</div>
