@@ -102,9 +102,9 @@ $size__p: 16px;
       text-indent: 30px;
     }
 
-    &.description {
-      word-spacing: 10px;
-    }
+    // &.description {
+    //   word-spacing: 10px;
+    // }
   }
 
   li {
@@ -355,6 +355,11 @@ $size__p: 16px;
   }
 
   .layout--diagnostic {
+    .head {
+      .title {
+        margin-bottom: -12px;
+      }
+    }
     .body {
       .visual-references {
         margin-top: 20px;

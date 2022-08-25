@@ -2,39 +2,30 @@ import { Template, TemplateOptions } from './Template';
 
 export class DiagnosticTemplate extends Template {
   isImgChart = false;
-  chart: string | any;
+  chart;
 
   constructor(
     public title: string,
     public description: string,
-    chart: string | chartValue[],
+    chart: chartValues,
+    chartId: string,
     public subtitle?: string,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
 
-    this.buildChart(chart);
+    this.buildChart(chart, chartId);
   }
 
-  buildChart(chartValues: string | chartValue[]) {
-    if (typeof chartValues === 'string') {
-      this.isImgChart = true;
-      this.chart = chartValues;
-      return;
-    }
+  buildChart(chartValues: chartValues, chartId) {
+    const { labels, values: items } = chartValues;
 
-    const labels = chartValues.map((chartValue) => {
-      return `${chartValue.serie} - ${chartValue.label}`;
-    });
-
-    const items = chartValues.map((chartValue) => {
-      return chartValue.value;
-    });
+    // console.log('buildChart', chartValues);
 
     this.chart = {
       fitContainer: true,
       hideChart: false,
-      chartId: `${this.title}-graphic`,
+      chartId,
       sendGraphicToPdf: this.title,
       lapseN: 1321,
       //legendName: yearBookData.school.name,
@@ -45,9 +36,7 @@ export class DiagnosticTemplate extends Template {
   }
 }
 
-interface chartValue {
-  createdAt: string;
-  label: string;
-  serie: string;
-  value: number;
+interface chartValues {
+  labels: string;
+  values: number;
 }

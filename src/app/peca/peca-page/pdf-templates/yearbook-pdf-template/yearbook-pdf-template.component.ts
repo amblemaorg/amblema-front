@@ -124,72 +124,66 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   async setDiagnosticTemplateGroup() {
     const graphics = this.pdfService.getGraphics();
 
+    // console.log('setDiagnosticTemplateGroup - graphics', { graphics });
+
     if (!graphics) {
       return;
     }
 
     const { schoolCode, schoolYear } = this.pdfData;
+    // const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
+    const diagnostics = mockDiagnosticChartData;
 
-    const filterDiagnosticValByYear = (diagValues: any[]) => {
-      return diagValues.filter((diagValue) => diagValue.label == schoolYear);
+    const formatFilterDiagnosticValueByYear = (diagValues: any[]) => {
+      diagValues = diagValues.filter((diagValue) => diagValue.label == schoolYear);
+
+      if (!diagValues) {
+        return {
+          labels: [],
+          values: [],
+        };
+      }
+
+      return {
+        labels: diagValues.map((diagValue) => diagValue.serie),
+        values: diagValues.map((diagValue) => diagValue.value),
+      };
     };
 
     this.pdfData.lapses.forEach(async (lapse, idx) => {
       const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
 
-      let pages = [];
-
-      // When is lapse3
-      if (idx === 2) {
-        try {
-          const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
-          this.showLoading = false;
-          console.log('setDiagnosticTemplateGroup', diagnostics);
-
-          pages = [
-            new DiagnosticTemplate(
-              diagnosticLogic.diagnosticText,
-              diagnosticLogic.diagnosticAnalysis,
-              filterDiagnosticValByYear(diagnostics.operationsPerMinIndex),
-              lapseName,
-            ),
-            new DiagnosticTemplate(
-              diagnosticMath.diagnosticText,
-              diagnosticMath.diagnosticAnalysis,
-              filterDiagnosticValByYear(diagnostics.multiplicationsPerMinIndex),
-            ),
-            new DiagnosticTemplate(
-              diagnosticReading.diagnosticText,
-              diagnosticReading.diagnosticAnalysis,
-              filterDiagnosticValByYear(diagnostics.wordsPerMinIndex),
-            ),
-          ];
-
-          this.lapsePageGroup.push(...pages);
-        } catch (error) {
-          console.log('setDiagnosticTemplateGroup - error', error);
-        }
-
-        return;
-      }
+      this.showLoading = false;
+      // console.log('setDiagnosticTemplateGroup - diagnostics', { diagnostics });
 
       const lapseGraphic = graphics[lapseId];
-      pages = [
+
+      if (idx === 2) {
+        const { operationsPerMinIndex, multiplicationsPerMinIndex, wordsPerMinIndex } = diagnostics;
+        lapseGraphic.diagnosticReading = formatFilterDiagnosticValueByYear(wordsPerMinIndex);
+        lapseGraphic.diagnosticMath = formatFilterDiagnosticValueByYear(multiplicationsPerMinIndex);
+        lapseGraphic.diagnosticLogic = formatFilterDiagnosticValueByYear(operationsPerMinIndex);
+      }
+
+      const pages = [
         new DiagnosticTemplate(
-          diagnosticLogic.diagnosticText,
-          diagnosticLogic.diagnosticAnalysis,
-          lapseGraphic.diagnosticLogic,
+          diagnosticReading.diagnosticText,
+          diagnosticReading.diagnosticAnalysis,
+          lapseGraphic.diagnosticReading,
+          `${idx}-${lapseName}-${diagnosticReading.diagnosticText}-graphic`,
           lapseName,
         ),
         new DiagnosticTemplate(
           diagnosticMath.diagnosticText,
           diagnosticMath.diagnosticAnalysis,
           lapseGraphic.diagnosticMath,
+          `${idx}-${lapseName}-${diagnosticMath.diagnosticText}-graphic`,
         ),
         new DiagnosticTemplate(
-          diagnosticReading.diagnosticText,
-          diagnosticReading.diagnosticAnalysis,
-          lapseGraphic.diagnosticReading,
+          diagnosticLogic.diagnosticText,
+          diagnosticLogic.diagnosticAnalysis,
+          lapseGraphic.diagnosticLogic,
+          `${idx}-${lapseName}-${diagnosticLogic.diagnosticText}-graphic`,
         ),
       ];
 

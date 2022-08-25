@@ -71,9 +71,10 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
-            const imgB64 = this.chart ? this.chart.toBase64Image() : null;
-
-            this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, imgB64);
+            this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, {
+              labels: this.dataLabel,
+              values: this.dataChart,
+            });
           }
         }),
       );

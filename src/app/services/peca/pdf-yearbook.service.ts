@@ -43,8 +43,15 @@ export class PdfYearbookService {
 
   constructor(@Inject(DOCUMENT) private document: Document, private router: Router, private http: HttpFetcherService) {}
 
-  public setGraphics(lapse: string, graphic: string, img: string) {
-    this.graphics[lapse][graphic] = img;
+  public setGraphics(
+    lapse: string,
+    graphic: string,
+    graphicData: {
+      labels: string[];
+      values: string[];
+    },
+  ) {
+    this.graphics[lapse][graphic] = graphicData;
   }
 
   /**
@@ -952,18 +959,3 @@ export class PdfYearbookService {
     this.router.navigateByUrl('/pdf-template/yearbook');
   }
 }
-// TO USE CUSTOM FONT, do the following:
-// - npm install pdfmake-font-generator --save-dev
-// - pdfmakefg /path/of/your/custom/fonts /path/of/the/output/file.js , i.e:
-//      - pdfmakefg ./my-fonts ./pdf/fonts/custom-fonts.js
-// - import pdfFonts from "./pdf/fonts/custom-fonts"; // The path of your custom fonts
-// -----------------------------------------------------------------------------------
-// PdfMakeWrapper.setFonts(pdfFonts, {
-//   montserrat: {
-//     normal: 'Montserrat-Regular.ttf',
-//     bold: 'Montserrat-ExtraBold.ttf',
-//     italics: 'Montserrat-Regular.ttf',
-//     bolditalics: 'Montserrat-Medium.ttf'
-//   }
-// });
-// PdfMakeWrapper.useFont('montserrat');
