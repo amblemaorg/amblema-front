@@ -19,7 +19,7 @@ import {
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = false;
+  showLoading = true;
   pdfData: PdfYearbookData;
   pages: any = [];
 
@@ -142,8 +142,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       // When is lapse3
       if (idx === 2) {
         try {
-          // const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
-          const diagnostics = mockDiagnosticChartData;
+          const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
+          this.showLoading = false;
           console.log('setDiagnosticTemplateGroup', diagnostics);
 
           pages = [

@@ -30,6 +30,9 @@ $size__p: 16px;
   align-items: center;
   justify-content: center;
   row-gap: 18px;
+  p {
+    color: white;
+  }
 
   button {
     background: white;
