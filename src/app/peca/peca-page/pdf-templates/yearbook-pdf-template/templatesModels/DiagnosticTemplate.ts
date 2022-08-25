@@ -32,6 +32,9 @@ export class DiagnosticTemplate extends Template {
       legendName: this.title,
       labels,
       items,
+      // datasets: {
+
+      // }
     };
   }
 }

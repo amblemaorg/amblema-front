@@ -24,6 +24,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     lapseN?: number;
     items: any[];
     legendName: string;
+    datasets?: [];
   };
 
   @Input() fitContainer = false;
@@ -156,6 +157,22 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   setSettings(settings: any) {
     this.settings = { ...settings };
   }
+
+  defaultChartDatasets() {
+    if (this.settings.datasets) {
+      return [
+        {
+          label: this.settings.legendName ? this.settings.legendName : 'Diagnóstico de lectura',
+          data: this.dataChart,
+          backgroundColor: this.arrayColors,
+          fill: true,
+        },
+      ];
+    }
+
+    return this.settings.datasets;
+  }
+
   loadChart() {
     if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
@@ -164,14 +181,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
         type: 'bar',
         data: {
           labels: this.dataLabel,
-          datasets: [
-            {
-              label: this.settings.legendName ? this.settings.legendName : 'Diagnóstico de lectura',
-              data: this.dataChart,
-              backgroundColor: this.arrayColors,
-              fill: true,
-            },
-          ],
+          datasets: this.defaultChartDatasets(),
         },
         options: {
           maintainAspectRatio: false,
