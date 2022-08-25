@@ -23,8 +23,6 @@ export class DiagnosticTemplate extends Template {
       return;
     }
 
-    console.log(chartValues);
-
     const labels = chartValues.map((chartValue) => {
       return `${chartValue.serie} - ${chartValue.label}`;
     });
@@ -44,8 +42,6 @@ export class DiagnosticTemplate extends Template {
       labels,
       items,
     };
-
-    console.log('buildChart', this.chart);
   }
 }
 
