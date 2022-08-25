@@ -50,13 +50,18 @@ export class DiagnosticTemplate extends Template {
           color: '#81B03E',
         },
         xaxis: {
-          color: '#000000',
+          color: '#ededed',
         },
         yaxis: {
           labels: true,
           edgeSpace: 0,
-          color: '#000000',
-          beginAtZero: true,
+          color: '#ededed',
+          ticks: {
+            backdropColor: 'rgb(162 75 75 / 75%)',
+            textStrokeColor: '#000000',
+            // min: 0, // minimum value
+            // max: 10, // maximum value
+          },
         },
         grid: {},
         asymptoteDefaultProps: {

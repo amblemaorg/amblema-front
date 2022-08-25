@@ -24,7 +24,7 @@ import { BarChartComponent } from '../chart-components';
 export class ChartJSBarChart extends BarChartComponent {
   barChartData: ChartDataSets[];
   barChartLabels: Label[];
-  barChartOptions: ChartOptions & { annotation?: any };
+  barChartOptions: (ChartOptions & { annotation?: any }) | any;
   barChartColors: Color[];
   barChartLegend = true;
   barChartType: string;
