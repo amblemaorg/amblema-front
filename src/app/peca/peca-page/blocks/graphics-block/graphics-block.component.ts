@@ -25,6 +25,9 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     items: any[];
     legendName: string;
   };
+
+  @Input() fitContainer = false;
+
   canvas: any;
   ctx: any;
   chart: any;
@@ -60,7 +63,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
 
     const routePathArray = this.router.url.split('/');
 
-    if (routePathArray[2] == 'anuario-page') {
+    if (routePathArray[2] == 'anuario-page' || routePathArray[2] == 'yearbook') {
       //this.nombreEscuela = this.settings.legendName;
       this.dataLabel = this.settings.labels;
       this.arrayColors = this.settings.labels.map(() => '#81B03E');
@@ -81,8 +84,6 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   }
 
   ngAfterViewInit(): void {
-    // console.log('ngAfterViewInit');
-
     setTimeout(() => {
       this.loadChart();
     });

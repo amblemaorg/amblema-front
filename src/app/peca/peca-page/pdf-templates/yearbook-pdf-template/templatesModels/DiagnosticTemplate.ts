@@ -16,75 +16,36 @@ export class DiagnosticTemplate extends Template {
     this.buildChart(chart);
   }
 
-  buildChart(chartValue) {
-    if (typeof chartValue === 'string') {
+  buildChart(chartValues: string | chartValue[]) {
+    if (typeof chartValues === 'string') {
       this.isImgChart = true;
-      this.chart = chartValue;
+      this.chart = chartValues;
       return;
     }
 
-    // console.log(chartValue);
+    console.log(chartValues);
 
-    const charts = [
-      {
-        title: this.title,
-        id: '',
-        type: 'bar',
-        legend: {
-          labels: {
-            fontColor: '#000000',
-          },
-        },
-        data: chartValue,
-        goals: [
-          {
-            label: 'Valor esperado',
-            value: 1,
-          },
-        ],
-        props: {
-          colors: ['#81B03E', '#00a9c4', '#163b47'],
-        },
-        markers: {
-          show: true,
-          color: '#81B03E',
-        },
-        xaxis: {
-          color: '#ededed',
-        },
-        yaxis: {
-          labels: true,
-          edgeSpace: 0,
-          color: '#ededed',
-          ticks: {
-            backdropColor: 'rgb(162 75 75 / 75%)',
-            textStrokeColor: '#000000',
-            // min: 0, // minimum value
-            // max: 10, // maximum value
-          },
-        },
-        grid: {},
-        asymptoteDefaultProps: {
-          axis: 'y',
-          color: '#000000',
-        },
-        asymptotes: [
-          {
-            axis: 'y',
-            color: '#000000',
-            value: 1,
-            title: 'Valor esperado',
-          },
-        ],
-      },
-    ];
+    const labels = chartValues.map((chartValue) => {
+      return `${chartValue.serie} - ${chartValue.label}`;
+    });
 
-    console.log('buildChart', charts);
+    const items = chartValues.map((chartValue) => {
+      return chartValue.value;
+    });
 
     this.chart = {
-      direction: 'column',
-      charts,
+      fitContainer: true,
+      hideChart: false,
+      chartId: `${this.title}-graphic`,
+      sendGraphicToPdf: this.title,
+      lapseN: 1321,
+      //legendName: yearBookData.school.name,
+      legendName: this.title,
+      labels,
+      items,
     };
+
+    console.log('buildChart', this.chart);
   }
 }
 

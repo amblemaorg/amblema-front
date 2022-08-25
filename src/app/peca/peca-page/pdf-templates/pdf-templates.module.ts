@@ -6,9 +6,10 @@ import { YearbookPdfTemplateComponent } from './yearbook-pdf-template/yearbook-p
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ChartsSwitcherModule } from 'src/app/web/shared/charts-switcher/charts-switcher.module';
+import { PecaModule } from '../../peca.module';
 
 @NgModule({
   declarations: [YearbookPdfTemplateComponent],
-  imports: [CommonModule, PdfTemplatesRoutingModule, PipesModule, ComponentsModule, ChartsSwitcherModule],
+  imports: [CommonModule, PdfTemplatesRoutingModule, PipesModule, ComponentsModule, ChartsSwitcherModule, PecaModule],
 })
 export class PdfTemplatesModule {}
