@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Label } from 'ng2-charts';
 import { PageBlockComponent, PresentationalBlockComponent } from '../page-block.component';
 import { Router, NavigationEnd, Event } from '@angular/router';
@@ -24,14 +25,14 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     lapseN?: number;
     items: any[];
     legendName: string;
-    datasets?: [];
+    datasets?: any[];
   };
 
   @Input() fitContainer = false;
 
   canvas: any;
   ctx: any;
-  chart: any;
+  chart: Chart;
   color: any;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   routerSubscription: Subscription;
@@ -65,10 +66,12 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     const routePathArray = this.router.url.split('/');
 
     if (routePathArray[2] == 'anuario-page' || routePathArray[2] == 'yearbook') {
-      //this.nombreEscuela = this.settings.legendName;
       this.dataLabel = this.settings.labels;
-      this.arrayColors = this.settings.labels.map(() => '#81B03E');
-      this.dataChart = this.settings.items;
+      if (!this.settings.datasets) {
+        this.arrayColors = this.settings.labels.map(() => '#81B03E');
+        this.dataChart = this.settings.items;
+      }
+
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
@@ -159,8 +162,14 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
   }
 
   defaultChartDatasets() {
+    let datasets = [];
+
     if (this.settings.datasets) {
-      return [
+      datasets = this.settings.datasets;
+    }
+
+    if (!this.settings.datasets) {
+      datasets = [
         {
           label: this.settings.legendName ? this.settings.legendName : 'Diagnóstico de lectura',
           data: this.dataChart,
@@ -170,13 +179,14 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       ];
     }
 
-    return this.settings.datasets;
+    return datasets;
   }
 
   loadChart() {
     if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
       this.ctx = this.canvas.getContext('2d');
+      Chart.plugins.register(ChartDataLabels);
       this.chart = new Chart(this.ctx, {
         type: 'bar',
         data: {
@@ -212,8 +222,25 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               fontColor: this.color,
             },
           },
+          plugins: {
+            datalabels: {
+              color: '#000000',
+            },
+          },
         },
+        plugins: [ChartDataLabels],
       });
+
+      // this.chart.config.data.datasets.forEach(function (dataset) {
+
+      //   dataset.bars.forEach(function (bar) {
+      //       this.ctx.fillText(bar.value, bar.x, bar.y - 5);
+      //   });
+      // })
+
+      // this.chart.getDatasetAtEvent((e) => {
+      //   console.log('getDatasetAtEvent', e);
+      // });
     }
   }
 

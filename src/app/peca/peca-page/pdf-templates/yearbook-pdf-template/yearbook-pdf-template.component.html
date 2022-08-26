@@ -107,17 +107,9 @@
 
       <div class="body">
         <div class="visual-references">
-          <ng-container *ngIf="page.isImgChart">
-            <div class="container-img">
-              <img [src]="page.chart" />
-            </div>
-          </ng-container>
-
-          <ng-container *ngIf="!page.isImgChart">
-            <div class="graphic">
-              <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
-            </div>
-          </ng-container>
+          <div class="graphic">
+            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
+          </div>
 
           <div class="table"></div>
         </div>

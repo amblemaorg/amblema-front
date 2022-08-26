@@ -130,12 +130,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const { schoolCode, schoolYear } = this.pdfData;
-    // const { diagnostics } = await this.pdfService.getSchoolByCode(schoolCode);
-    const diagnostics = mockDiagnosticChartData;
-
     const formatFilterDiagnosticValueByYear = (diagValues: any[]) => {
-      diagValues = diagValues.filter((diagValue) => diagValue.label == schoolYear);
+      diagValues = diagValues.filter((diagValue) => diagValue.label == this.pdfData.schoolYear);
 
       if (!diagValues) {
         return {
@@ -150,12 +146,55 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       };
     };
 
+    const chartDatasetDefault = (chartId: string, legend, labels: string[], data: number[]): Chart => {
+      // return {
+      //   chartId,
+      //   labels,
+      //   datasets: [
+      //     {
+      //       label: legend,
+      //       data,
+      //       backgroundColor: labels.map((label) => '#81B03E'),
+      //       fill: true,
+      //     },
+      //   ],
+      // };
+      // return {
+      //   chartId,
+      //   labels: data.map((la) => la.toString()),
+      //   datasets: labels.map((label, idx) => {
+      //     return {
+      //       label,
+      //       data: [0, 0, data[idx]],
+      //       backgroundColor: ['#81B03E'],
+      //       fill: true,
+      //     };
+      //   }),
+      // };
+
+      return {
+        chartId,
+        labels: labels,
+        datasets: [
+          {
+            label: '',
+            fillColor: '#81B03E',
+            strokeColor: '#81B03E',
+            backgroundColor: '#81B03E',
+            data: data,
+          },
+        ],
+      };
+    };
+
+    // const { diagnostics } = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
+    const diagnostics = mockDiagnosticChartData;
+    this.showLoading = false;
+
+    console.log('setDiagnosticTemplateGroup - diagnostics', { diagnostics });
+
     this.pdfData.lapses.forEach(async (lapse, idx) => {
-      const { lapseId, lapseName, diagnosticLogic, diagnosticMath, diagnosticReading } = lapse;
-
-      this.showLoading = false;
-      // console.log('setDiagnosticTemplateGroup - diagnostics', { diagnostics });
-
+      const { lapseId, lapseName } = lapse;
       const lapseGraphic = graphics[lapseId];
 
       if (idx === 2) {
@@ -165,29 +204,57 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         lapseGraphic.diagnosticLogic = formatFilterDiagnosticValueByYear(operationsPerMinIndex);
       }
 
-      const pages = [
-        new DiagnosticTemplate(
-          diagnosticReading.diagnosticText,
-          diagnosticReading.diagnosticAnalysis,
-          lapseGraphic.diagnosticReading,
-          `${idx}-${lapseName}-${diagnosticReading.diagnosticText}-graphic`,
-          lapseName,
-        ),
-        new DiagnosticTemplate(
-          diagnosticMath.diagnosticText,
-          diagnosticMath.diagnosticAnalysis,
-          lapseGraphic.diagnosticMath,
-          `${idx}-${lapseName}-${diagnosticMath.diagnosticText}-graphic`,
-        ),
-        new DiagnosticTemplate(
-          diagnosticLogic.diagnosticText,
-          diagnosticLogic.diagnosticAnalysis,
-          lapseGraphic.diagnosticLogic,
-          `${idx}-${lapseName}-${diagnosticLogic.diagnosticText}-graphic`,
-        ),
-      ];
+      const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
+
+      const pages = diagnosticKeys.map((key, idx) => {
+        const currentDiag = lapse[key];
+
+        console.log(key, { currentDiag });
+
+        const chart: Chart = chartDatasetDefault(
+          `${idx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
+          currentDiag.diagnosticText,
+          lapseGraphic[key].labels,
+          lapseGraphic[key].values,
+        );
+
+        // {
+        //   chartId: `${idx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
+        //   labels: lapseGraphic[currentDiag].labels,
+        //   datasets: [
+        //     {
+        //       label: currentDiag.diagnosticText,
+        //       data: lapseGraphic[currentDiag].values,
+        //       backgroundColor: lapseGraphic[currentDiag].labels.map((label) => '#81B03E'),
+        //       fill: true,
+        //     },
+        //   ],
+        // };
+
+        // console.log('chartDatasetDefault');
+        // console.log('chartDatasetDefault', chart);
+
+        if (idx > 0) {
+          return new DiagnosticTemplate(currentDiag.diagnosticText, currentDiag.diagnosticAnalysis, chart);
+        }
+
+        return new DiagnosticTemplate(currentDiag.diagnosticText, currentDiag.diagnosticAnalysis, chart, lapseName);
+      });
 
       this.lapsePageGroup.push(...pages);
     });
   }
+}
+
+interface Chart {
+  chartId: string;
+  labels: string[];
+  datasets: any[];
+}
+
+interface ChartDataset {
+  label: string; // legend name
+  data: number[]; // value items
+  backgroundColor: string[]; // same count of colors of graphic figure
+  fill: boolean; // fill or not graphic figure
 }

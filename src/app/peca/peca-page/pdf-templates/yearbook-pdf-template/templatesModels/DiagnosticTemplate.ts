@@ -7,39 +7,42 @@ export class DiagnosticTemplate extends Template {
   constructor(
     public title: string,
     public description: string,
-    chart: chartValues,
-    chartId: string,
+    chart: Chart,
     public subtitle?: string,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
 
-    this.buildChart(chart, chartId);
+    this.buildChart(chart);
   }
 
-  buildChart(chartValues: chartValues, chartId) {
-    const { labels, values: items } = chartValues;
-
-    // console.log('buildChart', chartValues);
-
+  buildChart(chart: Chart) {
+    // console.log('buildChart - ' + this.title, chart);
     this.chart = {
       fitContainer: true,
       hideChart: false,
-      chartId,
-      sendGraphicToPdf: this.title,
       lapseN: 1321,
-      //legendName: yearBookData.school.name,
-      legendName: this.title,
-      labels,
-      items,
-      // datasets: {
 
-      // }
+      sendGraphicToPdf: this.title,
+      chartId: chart.chartId,
+      labels: chart.labels,
+      datasets: chart.datasets,
     };
+    console.log(this.title);
+
+    console.log('this.chart', this.chart);
   }
 }
 
-interface chartValues {
-  labels: string;
-  values: number;
+interface Chart {
+  chartId: string;
+  labels: string[];
+  datasets: any[];
+}
+
+interface ChartDataset {
+  label: string; // legend name
+  data: number[]; // value items
+  backgroundColor: string[]; // same count of colors of graphic figure
+  fill: boolean; // fill or not graphic figure
 }
