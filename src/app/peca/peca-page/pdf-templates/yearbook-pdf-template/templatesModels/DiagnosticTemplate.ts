@@ -27,6 +27,14 @@ export class DiagnosticTemplate extends Template {
       chartId: chart.chartId,
       labels: chart.labels,
       datasets: chart.datasets,
+      pluginOptions: {
+        datalabels: {
+          color: '#ffffff',
+          font: {
+            weight: 'bold',
+          },
+        },
+      },
     };
     console.log(this.title);
 

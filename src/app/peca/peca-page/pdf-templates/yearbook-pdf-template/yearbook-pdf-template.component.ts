@@ -103,8 +103,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorText,
     } = this.pdfData;
 
-    this.mySchoolPage = new SecondLayoutTemplate('mi escuela', historicalReviewImg, historicalReviewText);
-    this.coordinatorPage = new SecondLayoutTemplate('coordinador', coordinatorImg, coordinatorText, coordinatorName);
+    this.mySchoolPage = new SecondLayoutTemplate(
+      'mi escuela',
+      historicalReviewImg,
+      historicalReviewText,
+    );
+    this.coordinatorPage = new SecondLayoutTemplate(
+      'coordinador',
+      coordinatorImg,
+      coordinatorText,
+      coordinatorName,
+    );
     this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
     this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
   }
@@ -146,45 +155,30 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       };
     };
 
-    const chartDatasetDefault = (chartId: string, legend, labels: string[], data: number[]): Chart => {
-      // return {
-      //   chartId,
-      //   labels,
-      //   datasets: [
-      //     {
-      //       label: legend,
-      //       data,
-      //       backgroundColor: labels.map((label) => '#81B03E'),
-      //       fill: true,
-      //     },
-      //   ],
-      // };
-      // return {
-      //   chartId,
-      //   labels: data.map((la) => la.toString()),
-      //   datasets: labels.map((label, idx) => {
-      //     return {
-      //       label,
-      //       data: [0, 0, data[idx]],
-      //       backgroundColor: ['#81B03E'],
-      //       fill: true,
-      //     };
-      //   }),
-      // };
-
-      return {
+    const chartDefault = (
+      chartId: string,
+      legend,
+      labels: string[],
+      data: number[],
+      withBgColorArray = false,
+    ): Chart => {
+      const chart: any = {
         chartId,
         labels: labels,
         datasets: [
           {
-            label: '',
-            fillColor: '#81B03E',
-            strokeColor: '#81B03E',
+            label: legend,
             backgroundColor: '#81B03E',
             data: data,
           },
         ],
       };
+
+      if (withBgColorArray) {
+        chart.datasets[0].backgroundColor = ['#4472c4', '#ed7d31', '#a5a5a5'];
+      }
+
+      return chart;
     };
 
     // const { diagnostics } = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
@@ -206,16 +200,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
 
-      const pages = diagnosticKeys.map((key, idx) => {
+      const pages = diagnosticKeys.map((key, diagIdx) => {
         const currentDiag = lapse[key];
 
         console.log(key, { currentDiag });
 
-        const chart: Chart = chartDatasetDefault(
-          `${idx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
+        const chart: Chart = chartDefault(
+          `${diagIdx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
           currentDiag.diagnosticText,
           lapseGraphic[key].labels,
           lapseGraphic[key].values,
+          idx === 2,
         );
 
         // {
@@ -231,14 +226,23 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         //   ],
         // };
 
-        // console.log('chartDatasetDefault');
-        // console.log('chartDatasetDefault', chart);
+        // console.log('chartDefault');
+        // console.log('chartDefault', chart);
 
-        if (idx > 0) {
-          return new DiagnosticTemplate(currentDiag.diagnosticText, currentDiag.diagnosticAnalysis, chart);
+        if (diagIdx > 0) {
+          return new DiagnosticTemplate(
+            currentDiag.diagnosticText,
+            currentDiag.diagnosticAnalysis,
+            chart,
+          );
         }
 
-        return new DiagnosticTemplate(currentDiag.diagnosticText, currentDiag.diagnosticAnalysis, chart, lapseName);
+        return new DiagnosticTemplate(
+          currentDiag.diagnosticText,
+          currentDiag.diagnosticAnalysis,
+          chart,
+          lapseName,
+        );
       });
 
       this.lapsePageGroup.push(...pages);

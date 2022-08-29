@@ -14,7 +14,8 @@ import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.servi
   templateUrl: './graphics-block.component.html',
   styleUrls: ['./graphics-block.component.scss'],
 })
-export class GraphicsBlockComponent implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
+export class GraphicsBlockComponent
+  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
   type: 'presentational';
   component: string;
   @Input() settings: {
@@ -26,6 +27,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     items: any[];
     legendName: string;
     datasets?: any[];
+    pluginOptions: {};
   };
 
   @Input() fitContainer = false;
@@ -75,10 +77,14 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
-            this.pdfYearbookService.setGraphics(`lapse${this.settings.lapseN}`, this.settings.sendGraphicToPdf, {
-              labels: this.dataLabel,
-              values: this.dataChart,
-            });
+            this.pdfYearbookService.setGraphics(
+              `lapse${this.settings.lapseN}`,
+              this.settings.sendGraphicToPdf,
+              {
+                labels: this.dataLabel,
+                values: this.dataChart,
+              },
+            );
           }
         }),
       );
@@ -134,19 +140,25 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
           if (this.UrlLapse === '1') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex).toFixed(2),
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse1.wordsPerMinIndex,
+                ).toFixed(2),
               );
             }
           } else if (this.UrlLapse === '2') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex).toFixed(2),
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse2.wordsPerMinIndex,
+                ).toFixed(2),
               );
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
-                parseFloat(data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex).toFixed(2),
+                parseFloat(
+                  data.activePecaContent.school.sections[i].diagnostics.lapse3.wordsPerMinIndex,
+                ).toFixed(2),
               );
             }
           }
@@ -161,7 +173,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     this.settings = { ...settings };
   }
 
-  defaultChartDatasets() {
+  getChartDatasets() {
     let datasets = [];
 
     if (this.settings.datasets) {
@@ -182,16 +194,28 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
     return datasets;
   }
 
+  getChartPlugins() {
+    if (!this.settings.pluginOptions) {
+      return {
+        datalabels: {
+          // color: '#ffffff',
+          display: false,
+        },
+      };
+    }
+    return this.settings.pluginOptions;
+  }
+
   loadChart() {
     if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
       this.ctx = this.canvas.getContext('2d');
-      Chart.plugins.register(ChartDataLabels);
+      // Chart.plugins.register(ChartDataLabels);
       this.chart = new Chart(this.ctx, {
         type: 'bar',
         data: {
           labels: this.dataLabel,
-          datasets: this.defaultChartDatasets(),
+          datasets: this.getChartDatasets(),
         },
         options: {
           maintainAspectRatio: false,
@@ -222,11 +246,7 @@ export class GraphicsBlockComponent implements PresentationalBlockComponent, OnI
               fontColor: this.color,
             },
           },
-          plugins: {
-            datalabels: {
-              color: '#000000',
-            },
-          },
+          plugins: this.getChartPlugins(),
         },
         plugins: [ChartDataLabels],
       });
