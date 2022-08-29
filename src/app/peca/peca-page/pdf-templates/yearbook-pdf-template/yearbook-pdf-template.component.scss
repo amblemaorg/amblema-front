@@ -1,6 +1,6 @@
 // Variables
 $black: #000000;
-$gray: #666666;
+$gray: #606060;
 $green: #81b03e;
 $blue: #00a9c4;
 
@@ -369,6 +369,28 @@ $size__p: 16px;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 250px;
         column-gap: 60px;
+
+        .table {
+          tr {
+            th,
+            td {
+              border: 2px $gray solid;
+              font-size: 15px;
+              line-height: 18px;
+              padding: 4px 10px;
+              text-align: center;
+              vertical-align: middle;
+              &:not(th) {
+                text-transform: capitalize;
+              }
+            }
+          }
+
+          thead tr:last-child td,
+          tbody td:first-child {
+            font-weight: bold;
+          }
+        }
       }
     }
   }

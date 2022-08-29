@@ -55,12 +55,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     if (this.pdfData) {
       this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-      this.pageInit();
-      this.showLoading = false;
 
       // this.diagnosticGraphicData = {
       //   diagnostics: mockDiagnosticChartData,
       // };
+
+      this.pageInit();
+      this.showLoading = false;
 
       // setTimeout(() => {
       //   window.print()

@@ -3,7 +3,9 @@
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
     <ng-container *ngIf="frontpage">
-      <ng-container *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
+      ></ng-container>
     </ng-container>
 
     <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
@@ -28,7 +30,11 @@
     <ng-container *ngIf="schoolSectionsPage">
       <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
         <ng-container
-          *ngFor="let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(schoolSectionsPage.data.galleryImgs)"
+          *ngFor="
+            let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(
+              schoolSectionsPage.data.galleryImgs
+            )
+          "
         >
           <ng-container
             *ngTemplateOutlet="
@@ -111,7 +117,40 @@
             <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
           </div>
 
-          <div class="table"></div>
+          <div class="table">
+            <table>
+              <thead>
+                <tr>
+                  <!-- <td></td> -->
+                  <th colspan="5">Resultados por grados</th>
+                </tr>
+                <tr>
+                  <td>grado</td>
+                  <td>D. Inicial (PPM)</td>
+                  <td>D. Final (PPM)</td>
+                  <td>Meta</td>
+                  <td>Índice P. Final</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>2do</td>
+                  <td>12</td>
+                  <td>46</td>
+                  <td>60</td>
+                  <td>0.46</td>
+                </tr>
+                <tr>
+                  <td>3ero</td>
+                  <td>11</td>
+                  <td>42</td>
+                  <td>85</td>
+                  <td>0.42</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <p class="description">
@@ -148,7 +187,12 @@
 </ng-template>
 
 <!-- ## Layout 4 -->
-<ng-template #layout4Template let-data="data" let-lapseName="lapseName" let-activityIdx="activityIdx">
+<ng-template
+  #layout4Template
+  let-data="data"
+  let-lapseName="lapseName"
+  let-activityIdx="activityIdx"
+>
   <section class="page background--generic">
     <div class="page__content layout--4">
       <div class="body">
@@ -166,7 +210,11 @@
       </div>
 
       <div class="gallery-container">
-        <app-gallery [images]="data.images || []" [limit]="3" containerClasses="justify-content-between"></app-gallery>
+        <app-gallery
+          [images]="data.images || []"
+          [limit]="3"
+          containerClasses="justify-content-between"
+        ></app-gallery>
       </div>
     </div>
   </section>
