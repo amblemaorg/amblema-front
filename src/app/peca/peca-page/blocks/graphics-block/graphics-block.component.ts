@@ -27,7 +27,7 @@ export class GraphicsBlockComponent
     items: any[];
     legendName: string;
     datasets?: any[];
-    pluginOptions: {};
+    options?: {};
   };
 
   @Input() fitContainer = false;
@@ -194,16 +194,46 @@ export class GraphicsBlockComponent
     return datasets;
   }
 
-  getChartPlugins() {
-    if (!this.settings.pluginOptions) {
-      return {
+  getOptions() {
+    if (this.settings.options) {
+      return this.settings.options;
+    }
+
+    return {
+      maintainAspectRatio: false,
+      title: {
+        //text: "BAR CHART",
+        display: true,
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              fontColor: this.color,
+              beginAtZero: true,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            ticks: {
+              fontColor: this.color,
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        labels: {
+          fontColor: this.color,
+        },
+      },
+      plugins: {
         datalabels: {
-          // color: '#ffffff',
           display: false,
         },
-      };
-    }
-    return this.settings.pluginOptions;
+      },
+    };
   }
 
   loadChart() {
@@ -217,50 +247,9 @@ export class GraphicsBlockComponent
           labels: this.dataLabel,
           datasets: this.getChartDatasets(),
         },
-        options: {
-          maintainAspectRatio: false,
-          title: {
-            //text: "BAR CHART",
-            display: true,
-          },
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  fontColor: this.color,
-                  beginAtZero: true,
-                },
-              },
-            ],
-            xAxes: [
-              {
-                ticks: {
-                  fontColor: this.color,
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-          legend: {
-            labels: {
-              fontColor: this.color,
-            },
-          },
-          plugins: this.getChartPlugins(),
-        },
+        options: this.getOptions(),
         plugins: [ChartDataLabels],
       });
-
-      // this.chart.config.data.datasets.forEach(function (dataset) {
-
-      //   dataset.bars.forEach(function (bar) {
-      //       this.ctx.fillText(bar.value, bar.x, bar.y - 5);
-      //   });
-      // })
-
-      // this.chart.getDatasetAtEvent((e) => {
-      //   console.log('getDatasetAtEvent', e);
-      // });
     }
   }
 

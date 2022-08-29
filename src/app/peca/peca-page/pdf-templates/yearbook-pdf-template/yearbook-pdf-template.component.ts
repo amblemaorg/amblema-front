@@ -21,6 +21,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   showLoading = true;
   pdfData: PdfYearbookData;
+  diagnosticGraphicData: any;
   pages: any = [];
 
   frontpage: FrontPage = null;
@@ -36,14 +37,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   // diagnosticTemplate
   lapsePageGroup = [];
 
-  ngOnInit(): void {
-    // this.pdfData = mocksPdfData;
+  ngOnInit() {
     this.pdfData = this.pdfService.pdfData;
-    console.log(this.pdfService.getGraphics());
+    // this.pdfData = mocksPdfData;
   }
 
-  ngAfterViewInit() {
-    console.log('YearbookPdfTemplateComponent', this.pdfData);
+  async ngAfterViewInit() {
+    // console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page']);
@@ -54,7 +54,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     });
 
     if (this.pdfData) {
+      this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
       this.pageInit();
+      this.showLoading = false;
+
+      // this.diagnosticGraphicData = {
+      //   diagnostics: mockDiagnosticChartData,
+      // };
 
       // setTimeout(() => {
       //   window.print()
@@ -133,8 +139,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   async setDiagnosticTemplateGroup() {
     const graphics = this.pdfService.getGraphics();
 
-    // console.log('setDiagnosticTemplateGroup - graphics', { graphics });
-
     if (!graphics) {
       return;
     }
@@ -157,17 +161,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     const chartDefault = (
       chartId: string,
-      legend,
       labels: string[],
       data: number[],
+      legend = '',
       withBgColorArray = false,
-    ): Chart => {
+    ) => {
       const chart: any = {
         chartId,
+        title: legend,
         labels: labels,
         datasets: [
           {
-            label: legend,
             backgroundColor: '#81B03E',
             data: data,
           },
@@ -181,11 +185,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       return chart;
     };
 
-    // const { diagnostics } = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-    const diagnostics = mockDiagnosticChartData;
-    this.showLoading = false;
-
-    console.log('setDiagnosticTemplateGroup - diagnostics', { diagnostics });
+    const { diagnostics } = this.diagnosticGraphicData;
 
     this.pdfData.lapses.forEach(async (lapse, idx) => {
       const { lapseId, lapseName } = lapse;
@@ -203,31 +203,30 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const pages = diagnosticKeys.map((key, diagIdx) => {
         const currentDiag = lapse[key];
 
-        console.log(key, { currentDiag });
-
-        const chart: Chart = chartDefault(
+        let chart = chartDefault(
           `${diagIdx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
-          currentDiag.diagnosticText,
           lapseGraphic[key].labels,
           lapseGraphic[key].values,
-          idx === 2,
+          // currentDiag.diagnosticText,
         );
 
-        // {
-        //   chartId: `${idx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
-        //   labels: lapseGraphic[currentDiag].labels,
-        //   datasets: [
-        //     {
-        //       label: currentDiag.diagnosticText,
-        //       data: lapseGraphic[currentDiag].values,
-        //       backgroundColor: lapseGraphic[currentDiag].labels.map((label) => '#81B03E'),
-        //       fill: true,
-        //     },
-        //   ],
-        // };
+        if (idx === 2) {
+          let chartTitles = [
+            'Indice promedio de lectura general',
+            'Indice promedio de multiplicación general',
+            'Indice promedio de lógica matemática general',
+          ];
 
-        // console.log('chartDefault');
-        // console.log('chartDefault', chart);
+          const labels = ['D. Inicial (PPM)', 'D. Revisión (PPM)', 'D. Final (PPM)'];
+
+          chart = chartDefault(
+            `${diagIdx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
+            labels,
+            lapseGraphic[key].values,
+            chartTitles[diagIdx],
+            true,
+          );
+        }
 
         if (diagIdx > 0) {
           return new DiagnosticTemplate(
@@ -248,17 +247,4 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.lapsePageGroup.push(...pages);
     });
   }
-}
-
-interface Chart {
-  chartId: string;
-  labels: string[];
-  datasets: any[];
-}
-
-interface ChartDataset {
-  label: string; // legend name
-  data: number[]; // value items
-  backgroundColor: string[]; // same count of colors of graphic figure
-  fill: boolean; // fill or not graphic figure
 }

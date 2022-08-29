@@ -17,7 +17,46 @@ export class DiagnosticTemplate extends Template {
   }
 
   buildChart(chart: Chart) {
-    // console.log('buildChart - ' + this.title, chart);
+    const fontColor = '#111';
+    const options = {
+      maintainAspectRatio: false,
+      title: {
+        text: chart.title,
+        display: true,
+        fontSize: 13,
+        fontStyle: 'bold',
+        fontColor: '#111111',
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              fontColor,
+              beginAtZero: true,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            ticks: {
+              fontColor,
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        display: false,
+      },
+      plugins: {
+        datalabels: {
+          color: '#ffffff',
+          font: {
+            weight: 'bold',
+          },
+        },
+      },
+    };
     this.chart = {
       fitContainer: true,
       hideChart: false,
@@ -27,29 +66,20 @@ export class DiagnosticTemplate extends Template {
       chartId: chart.chartId,
       labels: chart.labels,
       datasets: chart.datasets,
-      pluginOptions: {
-        datalabels: {
-          color: '#ffffff',
-          font: {
-            weight: 'bold',
-          },
-        },
-      },
+      options,
     };
-    console.log(this.title);
-
-    console.log('this.chart', this.chart);
   }
 }
 
 interface Chart {
   chartId: string;
+  title: string;
   labels: string[];
   datasets: any[];
 }
 
 interface ChartDataset {
-  label: string; // legend name
+  label?: string; // legend name
   data: number[]; // value items
   backgroundColor: string[]; // same count of colors of graphic figure
   fill: boolean; // fill or not graphic figure
