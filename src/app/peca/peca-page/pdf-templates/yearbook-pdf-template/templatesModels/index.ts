@@ -4,3 +4,4 @@ export * from './frontPage';
 export * from './schoolGradesTemplate';
 export * from './TemplateThird';
 export * from './SecondLayoutTemplate';
+export * from './DiagnosticTemplate';

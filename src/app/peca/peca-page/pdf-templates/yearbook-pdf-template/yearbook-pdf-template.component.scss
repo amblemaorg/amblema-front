@@ -30,6 +30,9 @@ $size__p: 16px;
   align-items: center;
   justify-content: center;
   row-gap: 18px;
+  p {
+    color: white;
+  }
 
   button {
     background: white;
@@ -99,9 +102,9 @@ $size__p: 16px;
       text-indent: 30px;
     }
 
-    &.description {
-      word-spacing: 15px;
-    }
+    // &.description {
+    //   word-spacing: 10px;
+    // }
   }
 
   li {
@@ -348,6 +351,25 @@ $size__p: 16px;
     .gallery-container {
       height: 230px;
       justify-content: space-between;
+    }
+  }
+
+  .layout--diagnostic {
+    .head {
+      .title {
+        margin-bottom: -12px;
+      }
+    }
+    .body {
+      .visual-references {
+        margin-top: 20px;
+        margin-bottom: 30px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 250px;
+        column-gap: 60px;
+      }
     }
   }
 

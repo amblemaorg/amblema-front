@@ -7,48 +7,48 @@ import {
   HostListener,
   NgZone,
   OnDestroy,
-} from "@angular/core";
-import { SchoolService } from "src/app/services/web/school.service";
-import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
-import { OwlOptions } from "ngx-owl-carousel-o";
-import { OwlCarousel } from "ngx-owl-carousel";
-import { ChartService } from "src/app/services/web/chart.service";
-import { GlobalService } from "src/app/services/global.service";
-import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
-import { WebContentService } from "src/app/services/web/web-content.service";
-import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { DatePipe } from "@angular/common";
-import { Subscription, fromEvent } from "rxjs";
-import { Store } from "@ngxs/store";
-import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
-import { ChartsSwitcherComponent } from "src/app/web/shared/charts-switcher/charts-switcher.component";
+} from '@angular/core';
+import { SchoolService } from 'src/app/services/web/school.service';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { OwlCarousel } from 'ngx-owl-carousel';
+import { ChartService } from 'src/app/services/web/chart.service';
+import { GlobalService } from 'src/app/services/global.service';
+import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
+import { WebContentService } from 'src/app/services/web/web-content.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { Subscription, fromEvent } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { SetIsLoadingPage } from 'src/app/store/actions/web/web.actions';
+import { ChartsSwitcherComponent } from 'src/app/web/shared/charts-switcher/charts-switcher.component';
 import {
   faTwitter as twitterIcon,
   faInstagram as instagramIcon,
   faFacebook as facebookIcon,
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
-  selector: "app-school-detail",
-  templateUrl: "./school-detail.component.html",
-  styleUrls: ["./school-detail.component.scss"],
+  selector: 'app-school-detail',
+  templateUrl: './school-detail.component.html',
+  styleUrls: ['./school-detail.component.scss'],
 })
 export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("schoolDetails", { static: false }) schoolSection: ElementRef;
-  @ViewChild("symbols", { static: true }) symbols: ElementRef;
-  @ViewChild("activitiesIndexCarousel", { static: true })
+  @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
+  @ViewChild('symbols', { static: true }) symbols: ElementRef;
+  @ViewChild('activitiesIndexCarousel', { static: true })
   activitiesIndexCarousel: OwlCarousel;
-  @ViewChild("activityImageCarousel", { static: false })
+  @ViewChild('activityImageCarousel', { static: false })
   activityImageCarousel: OwlCarousel;
-  @ViewChild("activitiesCarousel", { static: true })
+  @ViewChild('activitiesCarousel', { static: true })
   activitiesCarousel: OwlCarousel;
-  @ViewChild("otherSchoolsCarousel", { static: true })
+  @ViewChild('otherSchoolsCarousel', { static: true })
   otherSchoolsCarousel: OwlCarousel;
-  @ViewChild("charts", { static: false }) charts: ElementRef;
-  @ViewChild("chartTestimonial", { static: false })
+  @ViewChild('charts', { static: false }) charts: ElementRef;
+  @ViewChild('chartTestimonial', { static: false })
   chartTestimonial: ElementRef;
-  @ViewChild("chartSwitcher", { static: false })
+  @ViewChild('chartSwitcher', { static: false })
   chartSwitcher: ChartsSwitcherComponent;
   instagramIcon = instagramIcon;
   twitterIcon = twitterIcon;
@@ -59,16 +59,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   landscape = window.innerWidth > window.innerHeight;
 
   ACTIVITIES = {
-    WITH_TEACHERS: "withTeachers",
-    SPECIALS: "specials",
+    WITH_TEACHERS: 'withTeachers',
+    SPECIALS: 'specials',
   };
   selectedActivitiesType = this.ACTIVITIES.SPECIALS;
   activeActivityIndex = 0;
 
   chartSwitcherOptions = {
-    direction: "column",
-    buttonsDescription:
-      "Medimos el impacto de la aplicación de la Herramienta Educativa en cada escuela",
+    direction: 'column',
+    buttonsDescription: 'Medimos el impacto de la aplicación de la Herramienta Educativa en cada escuela',
     charts: [],
   };
 
@@ -80,7 +79,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     pullDrag: false,
     dots: false,
     nav: true,
-    navText: ["", ""],
+    navText: ['', ''],
     navSpeed: 1000,
   };
 
@@ -168,12 +167,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   school: any = {
-    name: "",
-    sponsor: "",
-    direction: "",
-    staff: "",
-    coordinator: "",
-    enrollment: "",
+    name: '',
+    sponsor: '',
+    direction: '',
+    staff: '',
+    coordinator: '',
+    enrollment: '',
     images: [],
     mathOlympics: {
       enrolled: 0,
@@ -193,12 +192,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     charts: [],
   };
 
-  SCHOOLS_PATH = "schoolspage";
+  SCHOOLS_PATH = 'schoolspage';
   schoolService: WebContentService;
   activeChartIndex: number = 0;
   isBrowser: boolean;
   slug: string;
-  pipe = new DatePipe("en-US");
+  pipe = new DatePipe('en-US');
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -207,15 +206,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private chartService: ChartService,
     private zone: NgZone,
     private store: Store,
-    private http: HttpClient
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
     this.route.paramMap.subscribe((params) => {
-      this.slug = params.get("schoolSlug");
+      this.slug = params.get('schoolSlug');
       if (this.school && this.school.charts) this.school.charts = [];
-      this.setApiService(params.get("schoolSlug"));
+      this.setApiService(params.get('schoolSlug'));
       this.getSchoolDetail();
     });
 
@@ -249,9 +248,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         name: data.name,
         sponsor: data.sponsor,
         direction: data.address,
-        staff:
-          (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) +
-          (data.nLaborStaff ? data.nLaborStaff : 0),
+        staff: (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
         coordinator: data.coordinator,
         enrollment: data.nStudents,
         images: /* data.slider */ null,
@@ -267,31 +264,27 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           [this.ACTIVITIES.SPECIALS]: data.activities,
         },
         activitiesSlider: data.activitiesSlider,
-        testimonials: data.teachersTestimonials.testimonials.map(
-          (testimonial) => {
-            testimonial.function = testimonial.position;
-            return testimonial;
-          }
-        ),
+        testimonials: data.teachersTestimonials.testimonials.map((testimonial) => {
+          testimonial.function = testimonial.position;
+          return testimonial;
+        }),
         nextActivities: data.nextActivities.reduce((activities, activity) => {
           const [now, actDate] = [new Date(), new Date(activity.date)].map(
-            (date_) => date_.toISOString().toLowerCase().split("t")[0]
+            (date_) => date_.toISOString().toLowerCase().split('t')[0],
           );
           const canPush = new Date(actDate) >= new Date(now);
           if (canPush) {
             const theActivity = {
               ...activity,
               title: activity.name,
-              date: this.pipe.transform(Date.parse(activity.date), "d/M/y"),
+              date: this.pipe.transform(Date.parse(activity.date), 'd/M/y'),
             };
             activities.push(theActivity);
           }
           return activities;
         }, []),
         otherSchools: data.nearbySchools.map((school) => {
-          school.image = school.image
-            ? school.image
-            : "./assets/images/profile2.png";
+          school.image = school.image ? school.image : './assets/images/profile2.png';
           return school;
         }),
         facebook: data.facebook,
@@ -299,14 +292,14 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         instagram: data.instagram,
       };
 
+      console.log('school', data);
+
       this.staticSchoolService.getChartsTemplateJSON().subscribe((charts) => {
         this.school.charts = charts.map((chart) => {
           chart.data = data.diagnostics[chart.id];
           return chart;
         });
-        this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
-          this.school.charts
-        );
+        this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(this.school.charts);
       });
       setTimeout(() => {
         this.school.images = data.slider;
@@ -324,10 +317,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   renavigateToTop() {
-    this.symbols.nativeElement.classList.remove("animation-finish");
-    this.chartTestimonial.nativeElement.classList.remove("animation-finish");
-    this.symbols.nativeElement.classList.add("animation-init");
-    this.chartTestimonial.nativeElement.classList.add("animation-init");
+    this.symbols.nativeElement.classList.remove('animation-finish');
+    this.chartTestimonial.nativeElement.classList.remove('animation-finish');
+    this.symbols.nativeElement.classList.add('animation-init');
+    this.chartTestimonial.nativeElement.classList.add('animation-init');
     this.scrollToPage();
     if (this.isBrowser) {
       setTimeout(() => {
@@ -338,23 +331,20 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscribeScrollEvent() {
     this.zone.runOutsideAngular(() => {
-      this.scrollSubscription = fromEvent(window, "scroll").subscribe(
-        (event) => {
-          this.onScroll(event);
-        }
-      );
+      this.scrollSubscription = fromEvent(window, 'scroll').subscribe((event) => {
+        this.onScroll(event);
+      });
     });
   }
 
   onScroll($event) {
-    let scrollPosition =
-      $event.srcElement.children[0].scrollTop + window.innerHeight;
+    let scrollPosition = $event.srcElement.children[0].scrollTop + window.innerHeight;
     let symbolsPosition = this.symbols.nativeElement.offsetTop;
     let chartsPosition = this.charts.nativeElement.offsetTop;
 
     if (symbolsPosition / scrollPosition <= 1) {
-      this.symbols.nativeElement.classList.add("animation-finish");
-      this.symbols.nativeElement.classList.remove("animation-init");
+      this.symbols.nativeElement.classList.add('animation-finish');
+      this.symbols.nativeElement.classList.remove('animation-init');
     }
 
     if (chartsPosition / scrollPosition <= 0.8) {
@@ -362,8 +352,8 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.chartTestimonial) this.scrollSubscription.unsubscribe();
       }
       if (this.chartTestimonial) {
-        this.chartTestimonial.nativeElement.classList.add("animation-finish");
-        this.chartTestimonial.nativeElement.classList.remove("animation-init");
+        this.chartTestimonial.nativeElement.classList.add('animation-finish');
+        this.chartTestimonial.nativeElement.classList.remove('animation-init');
       }
     }
   }
@@ -396,28 +386,20 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.schoolService = service;
   }
 
-  @HostListener("window:resize", [""])
+  @HostListener('window:resize', [''])
   onResize() {
     this.landscape = window.innerWidth > window.innerHeight;
     if (this.landscape) {
-      if (this.activitiesIndexCarousel)
-        this.activitiesIndexCarousel.options.responsive[0].items = 5;
-      if (this.activityImageCarousel)
-        this.activityImageCarousel.options.responsive[0].items = 5;
-      if (this.activitiesCarousel)
-        this.activitiesCarousel.options.responsive[0].items = 3;
-      if (this.otherSchoolsCarousel)
-        this.otherSchoolsCarousel.options.responsive[0].items = 3;
+      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 5;
+      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 5;
+      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 3;
+      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 3;
       this.refreshCarousels();
     } else {
-      if (this.activitiesIndexCarousel)
-        this.activitiesIndexCarousel.options.responsive[0].items = 2;
-      if (this.activityImageCarousel)
-        this.activityImageCarousel.options.responsive[0].items = 3;
-      if (this.activitiesCarousel)
-        this.activitiesCarousel.options.responsive[0].items = 1;
-      if (this.otherSchoolsCarousel)
-        this.otherSchoolsCarousel.options.responsive[0].items = 1;
+      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.options.responsive[0].items = 2;
+      if (this.activityImageCarousel) this.activityImageCarousel.options.responsive[0].items = 3;
+      if (this.activitiesCarousel) this.activitiesCarousel.options.responsive[0].items = 1;
+      if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.options.responsive[0].items = 1;
       this.refreshCarousels();
     }
   }

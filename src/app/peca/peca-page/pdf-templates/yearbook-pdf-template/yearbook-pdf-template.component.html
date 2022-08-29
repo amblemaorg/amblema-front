@@ -81,15 +81,47 @@
         </ng-container>
       </ng-container>
     </ng-container>
+
+    <ng-container *ngFor="let page of lapsePageGroup">
+      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
+    </ng-container>
   </main>
 </ng-container>
 
 <div class="loading not-print" *ngIf="showLoading">
   <img src="../../../../../assets/images/amblema-loader.gif" />
-  <button [disabled]="!pdfData" (click)="print()">Imprimir PDF</button>
+  <p>Cargando...</p>
+  <!-- <button [disabled]="!pdfData" (click)="print()">Imprimir PDF</button> -->
 </div>
 
 <!-- # Templates -->
+<ng-template #diagnosticTemplate let-page="page">
+  <section class="page background--generic">
+    <div class="page__content layout--diagnostic">
+      <div class="head">
+        <ng-container *ngIf="page.subtitle">
+          <h3 class="text-center title">{{ page.subtitle }}</h3>
+        </ng-container>
+        <h2 class="text-center">{{ page.title }}</h2>
+      </div>
+
+      <div class="body">
+        <div class="visual-references">
+          <div class="graphic">
+            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
+          </div>
+
+          <div class="table"></div>
+        </div>
+
+        <p class="description">
+          <span [outerHTML]="page.description | excerpt: 700 | br"></span>
+        </p>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">
@@ -109,7 +141,7 @@
       </div>
 
       <p class="description">
-        <span [outerHTML]="page.paragraphColumns[1] | excerpt: 1100 | br"></span>
+        <span [outerHTML]="page.description | excerpt: 1100 | br"></span>
       </p>
     </div>
   </section>
