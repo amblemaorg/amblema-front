@@ -5,6 +5,7 @@ import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
   ActivitiesPage,
+  DiagnosticPageDataGroup,
   DiagnosticTemplate,
   FrontPage,
   SchoolGradePageGroup,
@@ -35,7 +36,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   schoolPage: SecondLayoutTemplate = null;
 
   // diagnosticTemplate
-  lapsePageGroup = [];
+  lapsesDiagnosticTmpGroup = [];
 
   ngOnInit() {
     this.pdfData = this.pdfService.pdfData;
@@ -54,11 +55,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     });
 
     if (this.pdfData) {
-      this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-
-      // this.diagnosticGraphicData = {
-      //   diagnostics: mockDiagnosticChartData,
-      // };
+      // this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
+      this.diagnosticGraphicData = mockDiagnosticChartData;
 
       this.pageInit();
       this.showLoading = false;
@@ -144,108 +142,19 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const formatFilterDiagnosticValueByYear = (diagValues: any[]) => {
-      diagValues = diagValues.filter((diagValue) => diagValue.label == this.pdfData.schoolYear);
+    const { lapses, schoolYear } = this.pdfData;
+    const diagnosticPageDataGroup = new DiagnosticPageDataGroup(
+      graphics,
+      lapses,
+      schoolYear,
+      this.diagnosticGraphicData,
+    );
 
-      if (!diagValues) {
-        return {
-          labels: [],
-          values: [],
-        };
-      }
-
-      return {
-        labels: diagValues.map((diagValue) => diagValue.serie),
-        values: diagValues.map((diagValue) => diagValue.value),
-      };
-    };
-
-    const chartDefault = (
-      chartId: string,
-      labels: string[],
-      data: number[],
-      legend = '',
-      withBgColorArray = false,
-    ) => {
-      const chart: any = {
-        chartId,
-        title: legend,
-        labels: labels,
-        datasets: [
-          {
-            backgroundColor: '#81B03E',
-            data: data,
-          },
-        ],
-      };
-
-      if (withBgColorArray) {
-        chart.datasets[0].backgroundColor = ['#4472c4', '#ed7d31', '#a5a5a5'];
-      }
-
-      return chart;
-    };
-
-    const { diagnostics } = this.diagnosticGraphicData;
-
-    this.pdfData.lapses.forEach(async (lapse, idx) => {
-      const { lapseId, lapseName } = lapse;
-      const lapseGraphic = graphics[lapseId];
-
-      if (idx === 2) {
-        const { operationsPerMinIndex, multiplicationsPerMinIndex, wordsPerMinIndex } = diagnostics;
-        lapseGraphic.diagnosticReading = formatFilterDiagnosticValueByYear(wordsPerMinIndex);
-        lapseGraphic.diagnosticMath = formatFilterDiagnosticValueByYear(multiplicationsPerMinIndex);
-        lapseGraphic.diagnosticLogic = formatFilterDiagnosticValueByYear(operationsPerMinIndex);
-      }
-
-      const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
-
-      const pages = diagnosticKeys.map((key, diagIdx) => {
-        const currentDiag = lapse[key];
-
-        let chart = chartDefault(
-          `${diagIdx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
-          lapseGraphic[key].labels,
-          lapseGraphic[key].values,
-          // currentDiag.diagnosticText,
-        );
-
-        if (idx === 2) {
-          let chartTitles = [
-            'Indice promedio de lectura general',
-            'Indice promedio de multiplicación general',
-            'Indice promedio de lógica matemática general',
-          ];
-
-          const labels = ['D. Inicial (PPM)', 'D. Revisión (PPM)', 'D. Final (PPM)'];
-
-          chart = chartDefault(
-            `${diagIdx}-${lapseName}-${currentDiag.diagnosticText}-graphic`,
-            labels,
-            lapseGraphic[key].values,
-            chartTitles[diagIdx],
-            true,
-          );
-        }
-
-        if (diagIdx > 0) {
-          return new DiagnosticTemplate(
-            currentDiag.diagnosticText,
-            currentDiag.diagnosticAnalysis,
-            chart,
-          );
-        }
-
-        return new DiagnosticTemplate(
-          currentDiag.diagnosticText,
-          currentDiag.diagnosticAnalysis,
-          chart,
-          lapseName,
-        );
-      });
-
-      this.lapsePageGroup.push(...pages);
-    });
+    this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
+    console.log('diagnosticPageDataGroup.getPages()', diagnosticPageDataGroup.getPages());
+    console.log(
+      'diagnosticPageDataGroup.getPagesWithDiagnosticTemplate()',
+      diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(),
+    );
   }
 }

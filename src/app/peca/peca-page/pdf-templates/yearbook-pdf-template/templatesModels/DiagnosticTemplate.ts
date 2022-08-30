@@ -4,16 +4,24 @@ interface Chart {
   chartId: string;
   title: string;
   labels: string[];
-  datasets: any[];
+  datasets: ChartDataset[];
 }
 
 interface ChartDataset {
-  label?: string; // legend name
-  data: number[]; // value items
-  backgroundColor: string[]; // same count of colors of graphic figure
-  fill: boolean; // fill or not graphic figure
+  backgroundColor: string | string[];
+  data: string[] | number[];
 }
 
+//
+
+interface DiagnosticPageData {
+  diagnosticText: string;
+  diagnosticAnalysis: string;
+  chart: Chart;
+  lapseName: string;
+}
+
+// Template Model
 export class DiagnosticTemplate extends Template {
   isImgChart = false;
   chart;
@@ -85,13 +93,18 @@ export class DiagnosticTemplate extends Template {
   }
 }
 
-export class DiagnosticsPageData {
+// Page Data Model
+export class DiagnosticPageDataGroup {
+  private pages: DiagnosticPageData[] = [];
+
   constructor(
     private graphics,
     private lapses: any[],
     private schoolYear: string,
     private diagnosticGraphicData,
-  ) {}
+  ) {
+    this.buildDataPages();
+  }
 
   private formatFilterDiagnosticValueByYear(diagValues: any[]) {
     diagValues = diagValues.filter((diagValue) => diagValue.label == this.schoolYear);
@@ -115,8 +128,8 @@ export class DiagnosticsPageData {
     data: number[],
     legend = '',
     withBgColorArray = false,
-  ) {
-    const chart: any = {
+  ): Chart {
+    const chart: Chart = {
       chartId,
       title: legend,
       labels: labels,
@@ -143,11 +156,21 @@ export class DiagnosticsPageData {
     graphics = this.graphics,
   ) {
     const { diagnostics } = this.diagnosticGraphicData;
-
     const lapseGraphic = graphics[lapseId];
+    let labels = lapseGraphic[diagKey].labels;
+    let chartTitle = '';
 
     // lapseIdx === 2
     if (isThirdLapse) {
+      const chartTitles = {
+        diagnosticReading: 'Indice promedio de lectura general',
+        diagnosticMath: 'Indice promedio de multiplicación general',
+        diagnosticLogic: 'Indice promedio de lógica matemática general',
+      };
+
+      chartTitle = chartTitles[diagKey];
+      labels = ['D. Inicial (PPM)', 'D. Revisión (PPM)', 'D. Final (PPM)'];
+
       const { operationsPerMinIndex, multiplicationsPerMinIndex, wordsPerMinIndex } = diagnostics;
       lapseGraphic.diagnosticReading = this.formatFilterDiagnosticValueByYear(wordsPerMinIndex);
       lapseGraphic.diagnosticMath = this.formatFilterDiagnosticValueByYear(
@@ -156,17 +179,7 @@ export class DiagnosticsPageData {
       lapseGraphic.diagnosticLogic = this.formatFilterDiagnosticValueByYear(operationsPerMinIndex);
     }
 
-    const labels = ['D. Inicial (PPM)', 'D. Revisión (PPM)', 'D. Final (PPM)'];
-
-    const chartTitles = {
-      diagnosticReading: 'Indice promedio de lectura general',
-      diagnosticMath: 'Indice promedio de multiplicación general',
-      diagnosticLogic: 'Indice promedio de lógica matemática general',
-    };
-
-    const chartTitle = isThirdLapse ? chartTitles[diagKey] : '';
-
-    const chartId = `${lapseName}-${chartTitles}-graphic`;
+    const chartId = `${lapseName}-${diagKey}-graphic`;
 
     return this.chartDefault(
       chartId,
@@ -177,15 +190,14 @@ export class DiagnosticsPageData {
     );
   }
 
-  getPageData() {
-    const pages = [];
-
-    this.lapses.forEach((lapse, lapseIdx) => {
+  buildDataPages() {
+    const pages: DiagnosticPageData[] = [];
+    this.lapses.map((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;
       const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
 
-      pages = diagnosticKeys.map((diagKey, diagIdx) => {
+      const page = diagnosticKeys.map((diagKey, diagIdx) => {
         const { diagnosticText, diagnosticAnalysis } = lapse[diagKey];
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
 
@@ -196,11 +208,21 @@ export class DiagnosticsPageData {
           lapseName: diagIdx > 0 ? undefined : lapseName,
         };
       });
-    });
-  }
-  getPages() {
-    const pages: any[] = this.getPageData();
 
-    pages;
+      pages.push(...page);
+    });
+
+    this.pages = pages;
+  }
+
+  getPages(): DiagnosticPageData[] {
+    return this.pages;
+  }
+
+  getPagesWithDiagnosticTemplate() {
+    return this.pages.map((page) => {
+      const { diagnosticText, diagnosticAnalysis, lapseName, chart } = page;
+      return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, lapseName);
+    });
   }
 }
