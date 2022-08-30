@@ -18,6 +18,7 @@ interface DiagnosticPageData {
   diagnosticText: string;
   diagnosticAnalysis: string;
   chart: Chart;
+  table: string[][];
   lapseName: string;
 }
 
@@ -25,17 +26,24 @@ interface DiagnosticPageData {
 export class DiagnosticTemplate extends Template {
   isImgChart = false;
   chart;
+  table: string[][] = [];
 
   constructor(
     public title: string,
     public description: string,
     chart: Chart,
+    table: string[][] = [],
     public subtitle?: string,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
 
     this.buildChart(chart);
+    this.buildTable(table);
+  }
+
+  buildTable(table: string[][]) {
+    this.table = table;
   }
 
   buildChart(chart: Chart) {
@@ -190,6 +198,52 @@ export class DiagnosticPageDataGroup {
     );
   }
 
+  // Diag = Diagnostic
+  private avgInitialDiagBySection(grade: string, tableData: string[][]) {
+    let sectionTableData: any[] = tableData.filter((td) => td[0] === grade);
+    sectionTableData = sectionTableData.map((sectionTbData) => parseFloat(sectionTbData[2]));
+    // console.log('avgInitialDiagBySection', { tableData });
+    const sum = sectionTableData.reduce((prev, current) => {
+      // console.log(prev);
+
+      return prev + current;
+    });
+
+    const result = sectionTableData.length > 0 ? sum / sectionTableData.length : 0.0;
+
+    // console.log('avgInitialDiagBySection', { sectionTableData });
+    // console.log('avgInitialDiagBySection', { sum });
+
+    return result.toString();
+  }
+
+  private getTable(tableData: string[][] = []) {
+    const header = [
+      ['Resultados por grado'],
+      // ['grado', 'D. Inicial (PPM)', 'D. Final (PPM)', 'Meta', 'Índice P. Final'],
+      ['grado', 'sección', 'D. Inicial (PPM)', 'Meta', 'Índice P. Final'],
+    ];
+
+    tableData = tableData.slice(1, tableData.length);
+    tableData = tableData.map((td) => {
+      /**
+       * [0]: grade
+       * [1]: section
+       * [2]: D. initial -> result
+       * [3]: Meta
+       * [4]: Final average
+       */
+      td[2] = this.avgInitialDiagBySection(td[0], tableData);
+      td[0] = td[0].replace(/grado/gi, '');
+      td[4] = td[3]; // Average
+      td[3] = '0.000'; // Meta
+      return td;
+    });
+    // console.log('getTable', tableData);
+
+    return [...header, ...tableData];
+  }
+
   buildDataPages() {
     const pages: DiagnosticPageData[] = [];
     this.lapses.map((lapse, lapseIdx) => {
@@ -198,13 +252,15 @@ export class DiagnosticPageDataGroup {
       const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
 
       const page = diagnosticKeys.map((diagKey, diagIdx) => {
-        const { diagnosticText, diagnosticAnalysis } = lapse[diagKey];
+        const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[diagKey];
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
+        const table = this.getTable(diagnosticTable);
 
         return {
           diagnosticText,
           diagnosticAnalysis,
           chart,
+          table,
           lapseName: diagIdx > 0 ? undefined : lapseName,
         };
       });
@@ -221,8 +277,8 @@ export class DiagnosticPageDataGroup {
 
   getPagesWithDiagnosticTemplate() {
     return this.pages.map((page) => {
-      const { diagnosticText, diagnosticAnalysis, lapseName, chart } = page;
-      return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, lapseName);
+      const { diagnosticText, diagnosticAnalysis, lapseName, chart, table } = page;
+      return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, table, lapseName);
     });
   }
 }
