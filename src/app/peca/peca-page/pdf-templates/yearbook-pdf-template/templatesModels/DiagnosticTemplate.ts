@@ -110,6 +110,7 @@ export class DiagnosticPageDataGroup {
     private lapses: any[],
     private schoolYear: string,
     private diagnosticGraphicData,
+    private diagnosticMetaTableData,
   ) {
     this.buildDataPages();
   }
@@ -198,63 +199,161 @@ export class DiagnosticPageDataGroup {
     );
   }
 
-  // Diag = Diagnostic
-  private avgInitialDiagBySection(grade: string, tableData: string[][]) {
-    let sectionTableData: any[] = tableData.filter((td) => td[0] === grade);
-    sectionTableData = sectionTableData.map((sectionTbData) => parseFloat(sectionTbData[2]));
-    // console.log('avgInitialDiagBySection', { tableData });
-    const sum = sectionTableData.reduce((prev, current) => {
-      // console.log(prev);
+  /**
+   * Diag = Diagnostic
+   * Purpose: Using just items of same grade, return average summing each columns on array index position passed by arg
+   *
+   * */
+  private avgColumnValuesBySection(
+    grade: string,
+    tableData: string[][],
+    columnIdxToSum: number,
+    toFixedCount = 1,
+  ) {
+    // td[0] === grade column
+    let columnTableData: any[] = tableData.filter((td) => td[0] === grade);
 
+    columnTableData = columnTableData.map((columnTbData) => {
+      return parseFloat(columnTbData[columnIdxToSum]);
+    });
+
+    const sum = columnTableData.reduce((prev, current) => {
       return prev + current;
     });
 
-    const result = sectionTableData.length > 0 ? sum / sectionTableData.length : 0.0;
+    const result = columnTableData.length > 0 ? sum / columnTableData.length : 0.0;
 
-    // console.log('avgInitialDiagBySection', { sectionTableData });
-    // console.log('avgInitialDiagBySection', { sum });
-
-    return result.toString();
+    return result.toFixed(toFixedCount).toString();
   }
 
-  private getTable(tableData: string[][] = []) {
-    const header = [
+  private getDiagMetaTableData(gradeIdx: number) {
+    // const metaKey = Object.keys(this.diagnosticMetaTableData).find((key) => key.includes(grade));
+
+    // if (!metaKey) return '0.0';
+
+    const diagMetas = Object.keys(this.diagnosticMetaTableData).map(
+      (key) => this.diagnosticMetaTableData[key],
+    );
+    console.log(diagMetas[gradeIdx]);
+
+    if (!diagMetas[gradeIdx]) return '0.0';
+
+    return {
+      diagnosticReading: diagMetas[gradeIdx].wordsPerMin,
+      diagnosticMath: diagMetas[gradeIdx].multiplicationsPerMin,
+      diagnosticLogic: diagMetas[gradeIdx].operationsPerMin,
+    };
+  }
+
+  private getTable(
+    tableData: string[][],
+    lapseIdx: number,
+    diagIdx: number,
+    diagKey: string,
+    tablesByLapses: string[][][] = [],
+  ) {
+    const isFirstLapse = lapseIdx === 0;
+    const isSecondLapse = lapseIdx === 1;
+    const isThirdLapse = lapseIdx === 2;
+
+    let header = [
       ['Resultados por grado'],
-      // ['grado', 'D. Inicial (PPM)', 'D. Final (PPM)', 'Meta', 'Índice P. Final'],
-      ['grado', 'sección', 'D. Inicial (PPM)', 'Meta', 'Índice P. Final'],
+      // ['grado', 'sección', 'D. Inicial', 'Meta', 'Índice P. Final'],
     ];
 
+    if (isFirstLapse) {
+      header.push(['grado', 'D. Inicial', 'Meta', 'Índice P. Final']);
+    }
+
+    if (isSecondLapse) {
+      header.push(['grado', 'D. Inicial', 'D. Revisión', 'Meta', 'Índice P. Revisión']);
+    }
+
+    if (isThirdLapse) {
+      header.push(['grado', 'D. Inicial', 'D. Revisión', 'Meta', 'Índice P. Final']);
+    }
+
+    // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
+
+    // reordered and format values
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
        * [1]: section
        * [2]: D. initial -> result
-       * [3]: Meta
-       * [4]: Final average
+       * [3]: promedio
        */
-      td[2] = this.avgInitialDiagBySection(td[0], tableData);
-      td[0] = td[0].replace(/grado/gi, '');
-      td[4] = td[3]; // Average
-      td[3] = '0.000'; // Meta
-      return td;
+      const metaSettings = this.getDiagMetaTableData(diagIdx);
+      // console.log('getDiagMetaTableData', metaSettings);
+      const tdFormatted = [
+        td[0].replace(/grado/gi, ''), // grade
+        td[1], // section
+        this.avgColumnValuesBySection(td[0], tableData, 2), // D. initial -> result
+        metaSettings[diagKey], // Meta
+        this.avgColumnValuesBySection(td[0], tableData, 3, 3), // promedio
+      ];
+
+      // Delete section column value
+      if (isFirstLapse) {
+        return [
+          tdFormatted[0], // grade
+          tdFormatted[2], // D. Inicial
+          tdFormatted[3], // Meta
+          tdFormatted[4], // Índice P. Final
+        ];
+      }
+
+      if (isSecondLapse || isThirdLapse) {
+        let valueRevision: any = tablesByLapses[lapseIdx - 1][diagIdx].slice(2, tableData.length);
+        valueRevision = valueRevision.find(
+          (valueRevByGrade) => valueRevByGrade[0] === tdFormatted[0],
+        );
+
+        return [
+          tdFormatted[0], // grade
+          valueRevision ? valueRevision[1] : '---', // D. Inicial
+          tdFormatted[2], // D. Revisión
+          tdFormatted[3], // Meta
+          tdFormatted[4], // Índice P. Final
+        ];
+      }
+
+      return tdFormatted;
     });
-    // console.log('getTable', tableData);
+
+    let filteredTableData = [];
+    // Get just one grade and not grade by each section
+    tableData = tableData.filter((td) => {
+      const wasTdFiltered = filteredTableData.find((tdF) => tdF[0] === td[0]);
+      if (wasTdFiltered) {
+        return false;
+      }
+
+      filteredTableData.push(td);
+      return true;
+    });
 
     return [...header, ...tableData];
   }
 
   buildDataPages() {
     const pages: DiagnosticPageData[] = [];
+    let tablesByLapses = [];
+    const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
+
     this.lapses.map((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;
-      const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
+
+      let tables = [];
 
       const page = diagnosticKeys.map((diagKey, diagIdx) => {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[diagKey];
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
-        const table = this.getTable(diagnosticTable);
+        const table = this.getTable(diagnosticTable, lapseIdx, diagIdx, diagKey, tablesByLapses);
+
+        tables.push(table);
 
         return {
           diagnosticText,
@@ -265,8 +364,11 @@ export class DiagnosticPageDataGroup {
         };
       });
 
+      tablesByLapses.push(tables);
       pages.push(...page);
     });
+
+    console.log('tablesByLapses', tablesByLapses[0]);
 
     this.pages = pages;
   }
