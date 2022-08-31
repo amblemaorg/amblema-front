@@ -22,7 +22,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   showLoading = true;
   pdfData: PdfYearbookData;
+
   diagnosticGraphicData: any;
+  diagnosticGoalTableData: any;
+
   pages: any = [];
 
   frontpage: FrontPage = null;
@@ -57,6 +60,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     if (this.pdfData) {
       // this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
       this.diagnosticGraphicData = mockDiagnosticChartData;
+      this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
+
+      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
 
       this.pageInit();
       this.showLoading = false;
@@ -148,6 +154,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       lapses,
       schoolYear,
       this.diagnosticGraphicData,
+      this.diagnosticGoalTableData,
     );
 
     this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();

@@ -110,7 +110,7 @@ export class DiagnosticPageDataGroup {
     private lapses: any[],
     private schoolYear: string,
     private diagnosticGraphicData,
-    private diagnosticMetaTableData,
+    private diagnosticGoalTableData,
   ) {
     this.buildDataPages();
   }
@@ -226,22 +226,35 @@ export class DiagnosticPageDataGroup {
     return result.toFixed(toFixedCount).toString();
   }
 
-  private getDiagMetaTableData(gradeIdx: number) {
-    // const metaKey = Object.keys(this.diagnosticMetaTableData).find((key) => key.includes(grade));
+  private getDiagGoalTableData(grade: string) {
+    // Maybe future instability if exist way to modify grade's name
+    const gradeRespKeyMappedWithGradeDiag = {
+      '1er Grado': 'grade1',
+      '2do Grado': 'grade2',
+      '3er Grado': 'grade3',
+      '4to Grado': 'grade4',
+      '5to Grado': 'grade5',
+      '6to Grado': 'grade6',
+    };
 
-    // if (!metaKey) return '0.0';
+    // const diagGoalKey = Object.keys(this.diagnosticGoalTableData).find((key) =>
+    //   key.includes(grade),
+    // );
 
-    const diagMetas = Object.keys(this.diagnosticMetaTableData).map(
-      (key) => this.diagnosticMetaTableData[key],
-    );
-    console.log(diagMetas[gradeIdx]);
+    // const gradeKey = gradeRespKeyMappedWithGradeDiag[]
 
-    if (!diagMetas[gradeIdx]) return '0.0';
+    const diagGoal = this.diagnosticGoalTableData[gradeRespKeyMappedWithGradeDiag[grade]];
+
+    if (!diagGoal) return '0.0';
+
+    // console.log(diagGoal[gradeIdx]);
+
+    // if (!diagGoal[gradeIdx]) return '0.0';
 
     return {
-      diagnosticReading: diagMetas[gradeIdx].wordsPerMin,
-      diagnosticMath: diagMetas[gradeIdx].multiplicationsPerMin,
-      diagnosticLogic: diagMetas[gradeIdx].operationsPerMin,
+      diagnosticReading: diagGoal.wordsPerMin,
+      diagnosticMath: diagGoal.multiplicationsPerMin,
+      diagnosticLogic: diagGoal.operationsPerMin,
     };
   }
 
@@ -262,7 +275,7 @@ export class DiagnosticPageDataGroup {
     ];
 
     if (isFirstLapse) {
-      header.push(['grado', 'D. Inicial', 'Meta', 'Índice P. Final']);
+      header.push(['grado', 'D. Inicial', 'Meta', 'Índice P. Inicial']);
     }
 
     if (isSecondLapse) {
@@ -270,7 +283,7 @@ export class DiagnosticPageDataGroup {
     }
 
     if (isThirdLapse) {
-      header.push(['grado', 'D. Inicial', 'D. Revisión', 'Meta', 'Índice P. Final']);
+      header.push(['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice P. Final']);
     }
 
     // Removed default headers got from DataBase
@@ -284,8 +297,8 @@ export class DiagnosticPageDataGroup {
        * [2]: D. initial -> result
        * [3]: promedio
        */
-      const metaSettings = this.getDiagMetaTableData(diagIdx);
-      // console.log('getDiagMetaTableData', metaSettings);
+      const metaSettings = this.getDiagGoalTableData(td[0]);
+      // console.log('getDiagGoalTableData', metaSettings);
       const tdFormatted = [
         td[0].replace(/grado/gi, ''), // grade
         td[1], // section
@@ -305,7 +318,7 @@ export class DiagnosticPageDataGroup {
       }
 
       if (isSecondLapse || isThirdLapse) {
-        let valueRevision: any = tablesByLapses[lapseIdx - 1][diagIdx].slice(2, tableData.length);
+        let valueRevision: any = tablesByLapses[0][diagIdx].slice(2, tableData.length);
         valueRevision = valueRevision.find(
           (valueRevByGrade) => valueRevByGrade[0] === tdFormatted[0],
         );
