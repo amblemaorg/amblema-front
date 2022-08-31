@@ -142,14 +142,16 @@ export function MapperYearBookWeb(
     return diagGoal;
   }
 
+  function getFirstLapseColumnData(yearBookData, diagnosticSummaryIdx: number) {
+    const { diagnosticSummary } = yearBookData['lapse1'];
+
+    return diagnosticSummary[diagnosticSummaryIdx];
+  }
+
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
     console.log('createLapseBlocksConfig', lapseData.diagnosticSummary);
-    console.log(
-      'createLapseBlocksConfig - getDiagGoalTableData',
-      getDiagGoalTableData(`grade${1}`),
-    );
 
     return [
       createTitleComponent('Diagnóstico de lectura'),
@@ -160,17 +162,22 @@ export function MapperYearBookWeb(
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
+            wordFirstLapse: {
+              title: 'Resultado de lectura lapso 1',
+              hide: lapseNumber === 1,
+            },
             words: { title: 'Resultado de lectura' },
             goal: { title: 'Meta' },
             wordsIndex: { title: 'Índice de lectura' },
           },
           tableCode: 'readingTable',
-          readingTable: lapseData.diagnosticSummary.map((diagnostic) => {
+          readingTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
             // const goal = diagnostic.grade'0.0';
 
             return {
               grade: determineGradeString(diagnostic.grade),
               section: diagnostic.name,
+              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).wordsPerMin,
               words: diagnostic.wordsPerMin,
               goal: getDiagGoalTableData(`grade${diagnostic.grade}`).wordsPerMin,
               wordsIndex: diagnostic.wordsPerMinIndex,
@@ -269,6 +276,10 @@ export function MapperYearBookWeb(
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
+            wordFirstLapse: {
+              title: 'Resultado de multiplicación lapso 1',
+              hide: lapseNumber === 1,
+            },
             multiplications: { title: 'Resultado de multiplicación' },
             goal: { title: 'Meta' },
             multiplicationsIndex: {
@@ -276,10 +287,11 @@ export function MapperYearBookWeb(
             },
           },
           tableCode: 'mathTable',
-          mathTable: lapseData.diagnosticSummary.map((diagnostic) => {
+          mathTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
             return {
               grade: determineGradeString(diagnostic.grade),
               section: diagnostic.name,
+              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).multiplicationsPerMin,
               multiplications: diagnostic.multiplicationsPerMin,
               goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
               multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
@@ -378,6 +390,10 @@ export function MapperYearBookWeb(
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
+            wordFirstLapse: {
+              title: 'Resultado de lógica matemática lapso 1',
+              hide: lapseNumber === 1,
+            },
             operations: { title: 'Resultado de lógica matemática' },
             goal: { title: 'Meta' },
             operationsIndex: {
@@ -385,10 +401,11 @@ export function MapperYearBookWeb(
             },
           },
           tableCode: 'logicTable',
-          logicTable: lapseData.diagnosticSummary.map((diagnostic) => {
+          logicTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
             return {
               grade: determineGradeString(diagnostic.grade),
               section: diagnostic.name,
+              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).operationsPerMin,
               operations: diagnostic.operationsPerMin,
               goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
               operationsIndex: diagnostic.operationsPerMinIndex,
