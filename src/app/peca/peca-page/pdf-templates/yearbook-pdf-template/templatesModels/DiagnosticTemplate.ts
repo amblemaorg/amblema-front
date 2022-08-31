@@ -381,7 +381,7 @@ export class DiagnosticPageDataGroup {
       pages.push(...page);
     });
 
-    console.log('tablesByLapses', tablesByLapses[0]);
+    // console.log('tablesByLapses', tablesByLapses[0]);
 
     this.pages = pages;
   }
