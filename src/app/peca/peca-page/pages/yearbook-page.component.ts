@@ -1,5 +1,12 @@
 import { yearbookPermissions } from './../blocks/peca-permissology';
-import { Component, ComponentFactoryResolver, ViewContainerRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { PecaPageComponent } from '../peca-page.component';
 import { MapperYearBookWeb } from './yearbook-config';
@@ -50,12 +57,13 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
       .pipe(
         distinctUntilChanged((prev, curr) =>
           prev && curr && prev.activePecaContent && curr.activePecaContent
-            ? JSON.stringify(prev.activePecaContent.yearbook) === JSON.stringify(curr.activePecaContent.yearbook)
+            ? JSON.stringify(prev.activePecaContent.yearbook) ===
+              JSON.stringify(curr.activePecaContent.yearbook)
             : false,
         ),
       )
       .subscribe(
-        (data) => {
+        async (data) => {
           // console.log("DATAAA: ", data);
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
@@ -70,7 +78,8 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
               };
               const { approvalHistory, isInApproval, pecaId, userId } = currentYearBook;
               const yearbookHasNotApprovedRequest = !isInApproval && approvalHistory.length > 0;
-              const lastRequest = approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1] : null;
+              const lastRequest =
+                approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1] : null;
               let currentStatus = lastRequest ? +lastRequest.status : 1;
               let comments = lastRequest ? lastRequest.comments : null;
               let newYearBook = {
@@ -165,7 +174,8 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
                       const descriptionReturnValue =
                         activityRequested.length > 0 ? activityRequested[0].description : '';
-                      const imagesReturnValue = activityRequested.length > 0 ? activityRequested[0].images : [];
+                      const imagesReturnValue =
+                        activityRequested.length > 0 ? activityRequested[0].images : [];
 
                       return {
                         ...activity,
@@ -194,7 +204,8 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
                       const descriptionReturnValue =
                         activityRequested.length > 0 ? activityRequested[0].description : '';
-                      const imagesReturnValue = activityRequested.length > 0 ? activityRequested[0].images : [];
+                      const imagesReturnValue =
+                        activityRequested.length > 0 ? activityRequested[0].images : [];
 
                       return {
                         ...activity,
@@ -223,7 +234,8 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
                       const descriptionReturnValue =
                         activityRequested.length > 0 ? activityRequested[0].description : '';
-                      const imagesReturnValue = activityRequested.length > 0 ? activityRequested[0].images : [];
+                      const imagesReturnValue =
+                        activityRequested.length > 0 ? activityRequested[0].images : [];
 
                       return {
                         ...activity,
@@ -244,8 +256,11 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
                         .lapse3.readingDiagnosticAnalysis,
                   },
                   sections: currentYearBook.sections.map((section) => {
-                    const sectionRequested = lastYearBookRequest.sections.filter(({ id }) => section.id === id);
-                    const returnValue = sectionRequested.length > 0 ? sectionRequested[0].image : '';
+                    const sectionRequested = lastYearBookRequest.sections.filter(
+                      ({ id }) => section.id === id,
+                    );
+                    const returnValue =
+                      sectionRequested.length > 0 ? sectionRequested[0].image : '';
                     return {
                       ...section,
                       image: /* (this.ybData && theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) ||  */ returnValue,
@@ -256,8 +271,6 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
-              // const lapseGraphics = this.pdfYearbookService.getGraphics();
-              // console.log({ lapseGraphics });
 
               this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
               console.log('data.activePecaContent', data.activePecaContent);
@@ -265,8 +278,18 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
               console.log('yearbook - this.pecaData', this.pecaData);
 
               this.setPdfData(this.pecaData);
+
+              const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
+
+              console.log({ diagnosticGoalTableData });
+
               // this.store.dispatch(new SetYearBook(newYearBook));
-              const yearBookConfig = MapperYearBookWeb(newYearBook, permissionsObj, this.store);
+              const yearBookConfig = MapperYearBookWeb(
+                newYearBook,
+                diagnosticGoalTableData,
+                permissionsObj,
+                this.store,
+              );
               this.instantiateComponent(yearBookConfig);
               this.doInstantiateBlocks();
             }

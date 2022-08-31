@@ -245,7 +245,12 @@ export class DiagnosticPageDataGroup {
 
     const diagGoal = this.diagnosticGoalTableData[gradeRespKeyMappedWithGradeDiag[grade]];
 
-    if (!diagGoal) return '0.0';
+    if (!diagGoal)
+      return {
+        diagnosticReading: '0.0',
+        diagnosticMath: '0.0',
+        diagnosticLogic: '0.0',
+      };
 
     // console.log(diagGoal[gradeIdx]);
 
