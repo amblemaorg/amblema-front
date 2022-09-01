@@ -27,6 +27,8 @@ export function MapperYearBookWeb(
   permissions,
   store: Store,
 ) {
+  const inputFileSizeLimitMb = 1;
+
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections);
   const lapse1Config = createLapseBlocksConfig('1', yearBookData);
@@ -85,6 +87,7 @@ export function MapperYearBookWeb(
                 label: 'Carga de imagen',
                 value: section.image,
                 disabled: /* yearBookData.isInApproval */ false,
+                sizeLimitMb: inputFileSizeLimitMb,
               },
               button: {
                 text: 'Guardar cambios',
@@ -583,6 +586,7 @@ export function MapperYearBookWeb(
                 disabled: /* yearBookData.isInApproval */ false,
                 value: images,
                 multiple: true,
+                sizeLimitMb: inputFileSizeLimitMb,
               },
               description: {
                 label: `Descripción de ${name}`,
@@ -693,6 +697,7 @@ export function MapperYearBookWeb(
                                   label: 'Carga de imagen',
                                   value: yearBookData.historicalReview.image,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
                                 },
                                 description: {
                                   label: 'Descripción reseña histórica',
@@ -735,6 +740,7 @@ export function MapperYearBookWeb(
                                   label: 'Carga de imagen',
                                   value: yearBookData.sponsor.image,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
                                 },
                                 description: {
                                   label: 'Descripción de padrino',
@@ -777,6 +783,7 @@ export function MapperYearBookWeb(
                                   label: 'Carga de imagen',
                                   value: yearBookData.coordinator.image,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
                                 },
                                 description: {
                                   label: 'Descripción de coordinador',
@@ -818,6 +825,7 @@ export function MapperYearBookWeb(
                                   label: 'Carga de imagen',
                                   value: yearBookData.school.image,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
                                 },
                                 description: {
                                   label: 'Descripción de escuela',
