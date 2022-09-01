@@ -1,6 +1,6 @@
 // Variables
 $black: #000000;
-$gray: #666666;
+$gray: #606060;
 $green: #81b03e;
 $blue: #00a9c4;
 
@@ -369,6 +369,39 @@ $size__p: 16px;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 250px;
         column-gap: 60px;
+
+        .table-container {
+          .table {
+            tr {
+              &:first-child {
+                td {
+                  text-transform: initial !important;
+                }
+              }
+
+              &:first-child,
+              &:nth-child(2) {
+                td {
+                  font-weight: bold;
+                }
+              }
+
+              td {
+                border: 2px $gray solid;
+                font-size: 15px;
+                line-height: 18px;
+                padding: 4px 10px;
+                text-align: center;
+                text-transform: capitalize;
+                vertical-align: middle;
+
+                &:first-child {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -4,26 +4,26 @@ const sectionImg =
 export const mocksPdfData = {
   schoolYear: '2021 - 2022',
   sponsorName: 'Triz y Beto',
-  sponsorLogo:
-    'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e26cc1b730ce9dcae9c0/yearbook/5/6112d46b9db0b0a2c5903c83.jpeg',
+  sponsorLogo: sectionImg,
   sponsorText:
     '      Queridos niños, maestros, representantes, obreros, directivo y demás miembros de esta gran familia llamada Unidad Educativa Estadal Santa Inés, sentimos un orgullo enorme al verlos crecer cada día, sus avances y sus logros, sin duda, nos llenan el corazón de una gran satisfacción. \n      Queremos decirles, que tenemos la convicción de que cada día se están desarrollando como héroes de nuestro país, y lo mejor de todo, es que cada uno de ustedes crece como persona gracias a los valores y conocimientos, varios, producto de la valiosa labor que ha emprendido Fundación AmbLeMa en nuestra escuela desde hace varios años. \n      De corazón, queremos darles las gracias por hacernos parte de este equipo maravilloso que nos motiva a seguir adelante. También, queremos darles las gracias por demostrarnos que con esfuerzo y perseverancia se pueden lograr todos nuestros sueños. \n      Ustedes son el futuro de nuestra Venezuela. Por eso les invitamos a permanecer en pie aun cuando los obstáculos sean muchos. Estamos convencidos que la semilla que sembramos en ustedes dará frutos que contribuirán en la transformación de nuestro país. \n      Sigamos adelante, trabajando en equipo y creciendo diariamente. \n      Con cariño, Triz & Beto',
   coordinatorName: 'Elisa Rojas',
   coordinatorImg:
-    'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5ff8a6a20418f4e22ae0465d/yearbook/19/61188d2e0495d926a12b4102.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5ff8a6a20418f4e22ae0465d/yearbook/19/61188d2e0495d926a12b4102.jpeg',
   coordinatorText:
     'Elisa Rojas es Licenciada en Comunicación Social mención Desarrollo Social, egresada de la Universidad Católica Cecilio Acosta (UNICA). Oriunda de Maracay estado Aragua,  llega a la familia AmbLeMa en septiembre de 2018 por invitación del profesor Tomás Linares, tras haberse presentado en una de las escuelas AmbLeMa, con la obra de títeres que ella misma dirige.  \nEn su debut como coordinadora, inicia con dos escuelas, U.E.E. Los Próceres y U.E.E. 24 de Octubre, ambas, ubicadas en Santa Rita,  específicamente en el municipio Linares Alcántara, estado Aragua. Para el siguiente año, se le presenta  un nuevo reto, coordinar la U.E.E. Santa Inés y U.E.E. Armida Morillo, las cuales se encuentran  en La Morita II, del mencionado municipio Aragüeño. \nTras la maravillosa experiencia de Venezuela Megadiversa y pese a los inconvenientes de estudiar desde la distancia, con la Feria Científica AmbLeMa el cual fue asumido con la misma responsabilidad, un nuevo año escolar toca la puerta en pandemia, Bosque de Chocolate. En esta oportunidad, Rojas reconoce los obstáculos y plantea estrategias para afrontarlos logrando la mayor integración de los estudiantes, ya que un grupo está en clases presenciales y otro se mantiene a distancia. \nEn AmbLeMa, somos testigo del crecimiento de los docentes como profesionales y como personas. Los coordinadores de AmbLeMa no somos los mismos que cuando llegamos, eso de debe a que estamos en constante entrenamiento, estamos conscientes de la importancia de crecer diariamente para poder ofrecer  a los docentes novedosas herramientas de trabajo. Hoy por hoy, ha sido maravilloso ver cómo directivo, docentes y representantes, responden a las actividades propuestas con gran entusiasmo, desde cada Hogar AmbLeMa o desde el aula de clases. \nJuntos en nuestra escuela seguimos Haciendo Que Suceda...',
   schoolName: 'Unidad Educativa Estadal Santa Inés - AM',
   schoolImg:
-    'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/8/6108664ce45b72e780f36c54.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/8/6108664ce45b72e780f36c54.jpeg',
   schoolText:
     'Nuestra escuela es un lugar agradable y campestre ubicado al final de la comunidad la Pintera, espacio que aunque carece de muchas cosas, brinda un espacio acogedor dónde un grupo de docentes ponen en práctica el verdadero significado del HQS. \n\nEl canto de las aves y la brisa que hace mover las plantas y entra por las ventanas brinda una sensación agradable a quienes visitan el lugar. \n\nDificultades muchas, necesidades muchas, historias conmovedoras muchas, pero desde AmbLeMa les hemos dado ese impulso para entender que es posible una educación de calidad pese a los obstáculos. \n\nLa institución cuenta con una estructura organizativa encabezada por su directora la profesora Anubis Mier y Terán, quien diariamente lucha por el bienestar de su escuela de la mano de 12 educadores, que imparten clases desde preescolar hasta 6to grado, un especialista, una secretaria, un obrero y un bibliotecario.\n\nÉste año, cada docente plantea su propia estrategia de trabajo adaptándose a la semipresencialidad, una realidad que estamos viviendo motivada por la pandemia. Cada quien trabaja a su ritmo y según las condiciones particulares. \n\nLo importante es que se ha hecho el trabajo, nada  les impide  seguir Haciendo que las cosas Sucedan, un reto sólo para los valientes. ',
   schoolCity: 'Maracay',
+  schoolCode: 'OD21690517',
   historicalReviewName: 'Reseña Histórica',
   historicalReviewText:
     'La historia de la U. E. E. Santa Inés, comienza en septiembre de 2005, cuando el señor Domingo Pinto de Meneses y la señora María de Salazar, concretan la compra del terreno en el sector La Pintera del barrio Santa Inés, ubicado en La Morita II, municipio Linares Alcántara del estado Aragua, con el fin de crear módulos educativos con su respectiva cancha. \nDidalco Bolívar, gobernador de la entidad aragueña para ese entonces, aprueba el proyecto para construcción de un preescolar y un módulo básico tipo A4. A mitad de la construcción, el ingeniero encargado informa que se agota el presupuesto dejando la obra inconclusa. \nLuego de varios años de incesante lucha, la señora María junto al Consejo Comunal del sector realizan algunos arreglos a la obra y se les autoriza la apertura de la institución, que abre sus puertas el 3 de noviembre de 2014 con tres secciones de preescolar, bajo la dirección de la profesora Domaiza Rojas. \nPara el año escolar 2015 - 2016 se apertura 1ro y 2do grado, y cada año se incorporan más grados. Actualmente, la escuela trabaja de preescolar hasta 6to grado en ambos turnos, ya que solo cuenta con seis aulas. Carece de servicio eléctrico y oficina para dirección, cancha deportiva y baño para docentes. \nAmbLeMa llega a la institución por recomendación de la profesora Rosa Bastardo, directora de la U.E.E. 24 de Octubre, escuela con años de trayectoria aplicando la herramienta. Ella, quien es vecina del sector, hizo la solicitud al profesor Tomás Linares para que AmbLeMa llegara a  su comunidad (Santa Inés). Tras concretarse un padrino, se visitó la institución, en aquel primer encuentro con el directivo, se coordinó  el taller inicial para presentar el plan de trabajo al personal y se planteó comenzar en el año escolar 2019/2020. ',
   historicalReviewImg:
-    'https://amblema.org/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/yearbook/4/60dcdf37df94c5238c833b39.jpeg',
   schoolSections: [
     {
       sectionName: 'Preescolar, sección: A',
@@ -52,9 +52,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '0',
       teacher: {
+        firstName: 'Yerika',
         lastName: 'Rojas',
         id: '5ffdc15bced2289542299ee3',
-        firstName: 'Yerika',
       },
     },
     {
@@ -85,9 +85,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '0',
       teacher: {
+        firstName: 'Domaiza',
         lastName: 'Rojas',
         id: '5fe0b53f0418f4e22ad43b15',
-        firstName: 'Domaiza',
       },
     },
     {
@@ -117,9 +117,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '1',
       teacher: {
+        firstName: 'Ana',
         lastName: 'Campos',
         id: '5ffdc5b1ced228954229a1d5',
-        firstName: 'Ana',
       },
     },
     {
@@ -148,9 +148,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '1',
       teacher: {
+        firstName: 'Anubis',
         lastName: 'Mier y Terán',
         id: '61101c239db0b0a2c5903af1',
-        firstName: 'Anubis',
       },
     },
     {
@@ -187,9 +187,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '2',
       teacher: {
+        firstName: 'María ',
         lastName: 'Matos',
         id: '5ffdc25aced228954229a015',
-        firstName: 'María ',
       },
     },
     {
@@ -218,9 +218,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '2',
       teacher: {
+        firstName: 'Francy',
         lastName: 'Otero',
         id: '61ed68a860b8270905362523',
-        firstName: 'Francy',
       },
     },
     {
@@ -252,9 +252,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '3',
       teacher: {
+        firstName: 'Ginelbys',
         lastName: 'Rodríguez ',
         id: '5ffdbcbcced2289542298b49',
-        firstName: 'Ginelbys',
       },
     },
     {
@@ -286,9 +286,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '3',
       teacher: {
+        firstName: 'Yinet',
         lastName: 'Romero',
         id: '61ed690160b8270905362524',
-        firstName: 'Yinet',
       },
     },
     {
@@ -325,9 +325,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '4',
       teacher: {
+        firstName: 'Judith',
         lastName: 'Vivas',
         id: '5ffdbbddced2289542298909',
-        firstName: 'Judith',
       },
     },
     {
@@ -364,9 +364,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '4',
       teacher: {
+        firstName: 'Anitcy',
         lastName: 'Puerta',
         id: '61ed696b60b8270905362527',
-        firstName: 'Anitcy',
       },
     },
     {
@@ -388,9 +388,9 @@ export const mocksPdfData = {
       ],
       sectionGrade: '5',
       teacher: {
+        firstName: 'Karina ',
         lastName: 'Pérez',
         id: '61ed69c060b8270905362528',
-        firstName: 'Karina ',
       },
     },
     {
@@ -436,14 +436,15 @@ export const mocksPdfData = {
       ],
       sectionGrade: '6',
       teacher: {
+        firstName: 'Erika',
         lastName: 'Rondon',
         id: '61ed6a0260b8270905362529',
-        firstName: 'Erika',
       },
     },
   ],
   lapses: [
     {
+      lapseId: 'lapse1',
       lapseName: 'Primer lapso',
       diagnosticReading: {
         diagnosticText: 'Diagnóstico de lectura',
@@ -479,20 +480,11 @@ export const mocksPdfData = {
         ],
         diagnosticAnalysis:
           '          El diagnóstico de Lógica Matemática se aplicó a un total 18 estudiantes de la Unidad Educativa Estadal Santa Inés (AM), lo que representa el 36,73 % de la matrícula de 3ero hasta 4to grado. Este diagnóstico consiste en la resolución de 15 problemas de razonamiento lógico en 30 minutos. \n      En función a los resultados obtenidos podemos concluir que ambos grados están muy por debajo de alcanzar la meta, con 0.11 de índice promedio. \n      Estos resultados se deben a que la mayoría no lee rápidamente, lo que dificulta la comprensión del enunciado planteado en cada ejercicio. De aquí la importancia de aplicar la Hora TAL. \n      Además, debido a la pandemia, los estudiantes ven clases presenciales únicamente durante 2 horas y asisten a la institución solo dos días a la semana. Por lo que la falta de tiempo también impidió que pudieran completar los ejercicios. \n      Es sumamente importante informar a los docentes los resultados obtenidos para establecer los mecanismos que permitan trabajar en conjunto con los padres para lograr que los niños pongan en práctica en sus hogares las estrategias sugeridas por AmbLeMa, entre las cuales están: Ingenio Matemático y Laboratorio de Matemática.\n',
-        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText:
+          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
-        {
-          name: 'Taller inicial',
-          description: null,
-          images: null,
-        },
-        {
-          name: 'AmbLeMonedas',
-          description: null,
-          images: null,
-        },
         {
           name: 'AmbLEncuentro',
           description:
@@ -503,6 +495,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/1/617bfdc3c69d4ab3e2824673.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/2/617c08adc69d4ab3e2824689.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Historia del cacao en Venezuela',
@@ -514,6 +507,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/3/61ae7a25e4a5597fdbe3088c.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/10/61b6c5a1ff5c8d90167857dc.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Características de la mazorca de cacao',
@@ -525,16 +519,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/4/61ae7d9ce4a5597fdbe30891.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/4/61ae7d9ce4a5597fdbe30892.jpeg',
           ],
-        },
-        {
-          name: 'Siembra de cacao',
-          description: null,
-          images: null,
-        },
-        {
-          name: 'JUMP Math',
-          description: null,
-          images: null,
+          isExpandedGallery: false,
         },
         {
           name: 'PROAMB... Una experiencia con sabor a chocolate',
@@ -546,6 +531,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/5/61ae7e92e4a5597fdbe30895.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/5/61ae7e93e4a5597fdbe30896.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Plan Lector... Todos A Leer',
@@ -557,6 +543,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/9/61b2c6ac4b97c4d4a22961ac.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/9/61b2c6ac4b97c4d4a22961ad.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Plan Matemática... Calcula, piensa y juega',
@@ -568,6 +555,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/8/61b2c3704b97c4d4a22961a8.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/11/61b6c5d9ff5c8d90167857dd.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Diagnósticos... En AmbLeMa todo se mide',
@@ -579,10 +567,12 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/6/61aec852e4a5597fdbe30921.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/7/61b2aeea4b97c4d4a229619f.jpeg',
           ],
+          isExpandedGallery: false,
         },
       ],
     },
     {
+      lapseId: 'lapse2',
       lapseName: 'Segundo lapso',
       diagnosticReading: {
         diagnosticText: 'Diagnóstico de lectura',
@@ -626,7 +616,8 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '1', '0.127'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText:
+          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
@@ -640,6 +631,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/17/625837d27248374344cd947e.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/17/625837d27248374344cd947f.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Los maestros, protagonistas de nuestra historia...',
@@ -651,6 +643,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/14/61f89ac3f259f1b6b1aa4587.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/15/61f89c0df259f1b6b1aa4588.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: '¿Cosechamos juntos?',
@@ -662,6 +655,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/21/62ab0594d6667ab81653af5e.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/21/62ab0594d6667ab81653af5f.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Paso a paso vamos avanzando',
@@ -673,6 +667,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/22/62ab062dd6667ab81653af62.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/22/62ab062dd6667ab81653af63.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Juntos en un solo lugar...',
@@ -684,16 +679,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/20/62aa978bd6667ab81653af3d.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/20/62aa978cd6667ab81653af3e.jpeg',
           ],
-        },
-        {
-          name: 'Prueba ORM',
-          description: null,
-          images: null,
-        },
-        {
-          name: 'Concurso Papagayo',
-          description: null,
-          images: null,
+          isExpandedGallery: false,
         },
         {
           name: 'Reto AmbLeMa',
@@ -705,6 +691,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/18/62aa95efd6667ab81653af35.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/18/62aa95efd6667ab81653af36.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Medir para comparar...',
@@ -716,6 +703,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/25/62d32cdf7786bc408f4cddee.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/25/62d32cdf7786bc408f4cddef.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Olimpiada Recreativa de Lenguaje',
@@ -727,10 +715,12 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/19/62aa96b0d6667ab81653af39.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/19/62aa96b0d6667ab81653af3a.jpeg',
           ],
+          isExpandedGallery: false,
         },
       ],
     },
     {
+      lapseId: 'lapse3',
       lapseName: 'Tercer lapso',
       diagnosticReading: {
         diagnosticText: 'Diagnóstico de lectura',
@@ -776,7 +766,8 @@ export const mocksPdfData = {
           ['6to Grado', 'U', '4', '0.27'],
         ],
         diagnosticAnalysis: null,
-        diagnosticGraphicText: 'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+        diagnosticGraphicText:
+          'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
         diagnosticGraphic: null,
       },
       activities: [
@@ -790,28 +781,31 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/24/62d1899b281b3475e326656f.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/24/62d1899b281b3475e3266570.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Beneficios del Chocolate para la Salud',
           description:
             'Un tema de gran importancia que quisimos destacar desde Fundación AmbLeMa este año, es el aporte que el cacao ofrece para nuestra salud y belleza. Luego de conocer detenidamente todo el proceso de siembra, cosecha y postcosecha, llegó el momento de dejar claro, que el cacao, es más que un dulce sabor para deleitar el paladar, pues constituye una fuente de grandes nutrientes que se traducen en salud y bienestar corporal. \nCreemos que al conocer las bondades del fruto, grandes y chicos podrán valorarlo cada vez más, siendo conscientes de la importancia que el mismo tiene para la economía y productividad de nuestro país. En este sentido, los estudiantes realizaron exposiciones, debates y creativos afiches. Asimismo, se invitó a los alumnos a preparar algunas choco recetas que ayudan a mejorar aspectos de la salud y la belleza corporal. \nEs importante destacar, que entre las creaciones hubo cremas corporales, manteca de cacao, baño de crema para cabellos resecos, mascarillas, jabón de chocolate, soluciones para talones y codos resecos, bebidas energéticas, te de cacao, etc. Hablar del cacao y sus bondades, sirvió como antesala para todo lo que habrá en la Botica (farmacia del pueblo) y el Choco-Spa del Bosque de Chocolate, con el cual se despedirá el año escolar 2021-2022',
           images: [
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf6.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf7.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf8.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf9.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf6.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf7.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf8.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/27/62d330e37786bc408f4cddf9.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Análisis de Resultados',
           description:
             'Luego de ver y comparar los tres diagnósticos realizados en nuestra institución a lo largo del año escolar 2021-2022, podemos observar que hubo un avance en la lectura, ya que el índice promedio inicial de la escuela fue de 0.39 y el final de 0.73, lo cual representa un 34 % de progreso.\nEn relación con los resultados obtenidos en el diagnóstico de matemáticas, tenemos que, en la multiplicación, el índice promedio inicial de la escuela fue de 0.33 y al final del año un 0.56, reflejando un avance de 23 %. En este sentido, nuestra meta es lograr que el índice promedio de la escuela llegue a 1, lo que significa que todos los alumnos dominen operaciones básicas de multiplicación.\nOtro de los aspectos a evaluar en AmbLeMa es el desarrollo del pensamiento lógico matemático, en este sentido, tenemos que, el índice promedio inicial de la escuela pasó de 0.11 a 0.21, es decir, un 10 % de progreso. Los resultados demuestran que los estudiantes requieren de un mayor esfuerzo para alcanzar las metas relacionadas con la resolución de problemas de lógica. \nEs importante tomar en cuenta, que, aunque la mayoría de los alumnos no logró alcanzar las metas establecidas de acuerdo a cada grado, para nosotros, no deja de representar un logro, tomando en cuenta, que los estudiantes retornaron a las aulas ha mediado del año en curso, luego de dos años de clases a distancia debido a la pandemia, lo que sin lugar a dudas influyó considerablemente en el rendimiento académico de los mismos.  \n',
           images: [
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d3b7786bc408f4cddf1.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d467786bc408f4cddf2.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d467786bc408f4cddf3.jpeg',
-            'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d477786bc408f4cddf4.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d3b7786bc408f4cddf1.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d467786bc408f4cddf2.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d467786bc408f4cddf3.jpeg',
+            'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/26/62d32d477786bc408f4cddf4.jpeg',
           ],
+          isExpandedGallery: false,
         },
         {
           name: 'Feria AmbLeMa "Bosque de Chocolate"',
@@ -823,6 +817,7 @@ export const mocksPdfData = {
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/23/62d0f207281b3475e326654c.jpeg',
             'https://amblema.org/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/yearbook/23/62d0f207281b3475e326654d.jpeg',
           ],
+          isExpandedGallery: false,
         },
       ],
     },
@@ -831,118 +826,902 @@ export const mocksPdfData = {
 };
 
 export const mockDiagnosticChartData = {
-  multiplicationsPerMinIndex: [
+  activities: [
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 1',
-      value: 0.338,
+      description: '',
+      name: 'Taller inicial',
     },
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 2',
-      value: 0.354,
+      description: '',
+      name: 'AmbLeMonedas',
     },
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 3',
-      value: 0.569,
+      description:
+        'En el AmbLEncuentro se presentaron las actividades propuestas para el nuevo a\u00f1o escolar 2020-2021.',
+      name: 'AmbLEncuentro',
     },
     {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 1',
-      value: 0.667,
+      description: '',
+      name: 'Historia del cacao en Venezuela',
     },
     {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 2',
-      value: 0,
+      description: '',
+      name: 'Caracter\u00edsticas de la mazorca de cacao',
     },
     {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 3',
-      value: 0,
+      description: '',
+      name: 'Siembra de cacao',
+    },
+    {
+      description: '',
+      name: 'JUMP Math',
+    },
+    {
+      description: '',
+      name: 'PROAMB... Una experiencia con sabor a chocolate',
+    },
+    {
+      description: '',
+      name: 'Plan Lector... Todos A Leer',
+    },
+    {
+      description: '',
+      name: 'Plan Matem\u00e1tica... Calcula, piensa y juega',
+    },
+    {
+      description: '',
+      name: 'Diagn\u00f3sticos... En AmbLeMa todo se mide',
+    },
+    {
+      description: '',
+      name: 'nueva actividad no req aprob',
+    },
+    {
+      description: '',
+      name: 'nueva actividad no req aproba',
+    },
+    {
+      description: 'Para mayor informaci\u00f3n consulta la p\u00e1gina https://ormve.org/',
+      name: 'Olimp\u00edadas matem\u00e1ticas',
+    },
+    {
+      description: '',
+      name: 'Los maestros, protagonistas de nuestra historia...',
+    },
+    {
+      description: '',
+      name: '\u00bfCosechamos juntos?',
+    },
+    {
+      description: '',
+      name: 'Paso a paso vamos avanzando',
+    },
+    {
+      description: '',
+      name: 'Juntos en un solo lugar...',
+    },
+    {
+      description: '',
+      name: 'Concurso Papagayo',
+    },
+    {
+      description: '',
+      name: 'Reto AmbLeMa',
+    },
+    {
+      description: '',
+      name: 'Medir para comparar...',
+    },
+    {
+      description: '',
+      name: 'Olimpiada Recreativa de Lenguaje',
+    },
+    {
+      description: '',
+      name: 'actividad aprueba al completar',
+    },
+    {
+      description: '',
+      name: '\u00bfC\u00f3mo se transforma el cacao en chocolate?',
+    },
+    {
+      description: '',
+      name: 'Choco - Salud',
+    },
+    {
+      description: '',
+      name: 'An\u00e1lisis de Resultados de los Diagn\u00f3sticos',
+    },
+    {
+      description: '',
+      name: 'An\u00e1lisis Final',
+    },
+    {
+      description: '',
+      name: 'An\u00e1lisis de Resultados',
+    },
+    {
+      description: '',
+      name: 'Feria AmbLeMa "Bosque de Chocolate"',
+    },
+    {
+      description: '',
+      name: 'nueva actividad 3er lapso',
+    },
+    {
+      description:
+        'Una aventura impregnada con sabor a chocolate que llevar\u00e1 a los ni\u00f1os a conocer el cacao venezolano',
+      name: 'Bosque de Chocolate 2021 - 2022',
     },
   ],
-  operationsPerMinIndex: [
+  activitiesSlider: [
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/1/61088b2ee45b72e780f36c91.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/2/6108ad8ee45b72e780f36caa.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/2/6108ad8ee45b72e780f36cab.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a49.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a4a.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a4c.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a4d.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a4e.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fa9db0b0a2c5903a4f.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a51.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a52.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a53.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a56.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a57.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/3/610f12fb9db0b0a2c5903a58.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18bf9db0b0a2c5903a5f.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18bf9db0b0a2c5903a60.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c09db0b0a2c5903a62.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c09db0b0a2c5903a64.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c09db0b0a2c5903a65.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c09db0b0a2c5903a66.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c09db0b0a2c5903a67.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c19db0b0a2c5903a68.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c19db0b0a2c5903a69.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c29db0b0a2c5903a6a.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c29db0b0a2c5903a6b.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c29db0b0a2c5903a6c.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c29db0b0a2c5903a6d.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/activities_slider/4/610f18c39db0b0a2c5903a74.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/activities_slider/1/61b2bd234b97c4d4a22961a0.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/activities_slider/1/61b2bd234b97c4d4a22961a1.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/activities_slider/1/61b2bd244b97c4d4a22961a2.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/activities_slider/1/61b2bd244b97c4d4a22961a3.jpeg',
+    'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5e61e22a46d8605b739/activities_slider/1/61b2bd254b97c4d4a22961a4.jpeg',
+  ],
+  address: 'Alc\u00e1ntara, Aragua, Venezuela',
+  coordinator: 'Elisa Rojas',
+  diagnostics: {
+    multiplicationsPerMinIndex: [
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 1',
+        value: 0.338,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 2',
+        value: 0.354,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 3',
+        value: 0.569,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 1',
+        value: 0.667,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 2',
+        value: 0.0,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 3',
+        value: 0.0,
+      },
+    ],
+    operationsPerMinIndex: [
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 1',
+        value: 0.111,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 2',
+        value: 0.133,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 3',
+        value: 0.217,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 1',
+        value: 0.765,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 2',
+        value: 0.0,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 3',
+        value: 0.0,
+      },
+    ],
+    wordsPerMinIndex: [
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 1',
+        value: 0.396,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 2',
+        value: 0.494,
+      },
+      {
+        createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
+        label: '2021 - 2022',
+        serie: 'Lapso 3',
+        value: 0.733,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 1',
+        value: 0.95,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 2',
+        value: 0.0,
+      },
+      {
+        createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
+        label: '2020 - 2021',
+        serie: 'Lapso 3',
+        value: 0.0,
+      },
+    ],
+  },
+  facebook: null,
+  id: '5ee7e79f677b59bb2937e36a',
+  instagram: 'https://www.instagram.com/amblema.stainesam/?hl=es',
+  nAdministrativeStaff: 1,
+  nLaborStaff: 2,
+  nStudents: 272,
+  nTeachers: 12,
+  name: 'Unidad Educativa Estadal Santa In\u00e9s ',
+  nearbySchools: [
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 1',
-      value: 0.111,
+      id: '5ff8987a0418f4e22adff3bc',
+      image:
+        'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db64b1e22a46d8605b775/yearbook/23/62f2e41c1e410758a2025afb.jpeg',
+      name: 'Unidad Educativa Estadal Arminda del Carmen Morillo - PM',
+      slug: 'OD13500517PM_Unidad-Educativa-Estadal-Arminda-del-Carmen-Morillo---PM',
     },
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 2',
-      value: 0.133,
+      id: '5ee7e265677b59bb2937e368',
+      image:
+        'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f8746f9c1b730ce9dcaeca3/yearbook/5/607adc517014e7aaf5e0a5ba.jpeg',
+      name: 'Unidad Educativa Estadal Arminda del Carmen Morillo - AM',
+      slug: 'OD13500517_Unidad-Educativa-Estadal-Arminda-del-Carmen-Morillo---AM',
     },
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 3',
-      value: 0.217,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 1',
-      value: 0.765,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 2',
-      value: 0,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 3',
-      value: 0,
+      id: '5ee7ffd9677b59bb2937e419',
+      image:
+        'http://amblema.org:10508/resources/images/school_years/614dab341e22a46d8605b6da/pecas/614db5db1e22a46d8605b733/yearbook/17/61b73b08ff5c8d90167857f2.jpeg',
+      name: 'Unidad Educativa Los Pr\u00f3ceres ',
+      slug: 'OD17910517_Unidad-Educativa-Los-Pr\u00f3ceres',
     },
   ],
-  wordsPerMinIndex: [
+  nextActivities: [
     {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 1',
-      value: 0.396,
-    },
-    {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 2',
-      value: 0.494,
-    },
-    {
-      createdAt: 'Fri, 24 Sep 2021 11:26:30 GMT',
-      label: '2021 - 2022',
-      serie: 'Lapso 3',
-      value: 0.733,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 1',
-      value: 0.95,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 2',
-      value: 0,
-    },
-    {
-      createdAt: 'Wed, 14 Oct 2020 11:35:03 GMT',
-      label: '2020 - 2021',
-      serie: 'Lapso 3',
-      value: 0,
+      date: '2022-03-18T17:14:49.595Z',
+      description: 'Para mayor informaci\u00f3n consulta la p\u00e1gina https://ormve.org/',
+      name: 'Olimp\u00edadas matem\u00e1ticas',
     },
   ],
+  olympicsSummary: {
+    classified: 0,
+    description:
+      'El objetivo principal de la Olimpiada Recreativa de Matem\u00e1tica es desarrollar estrategias para la ense\u00f1anza de la matem\u00e1tica, mejorar el nivel acad\u00e9mico y estimular en los ni\u00f1os el uso de sus capacidades intelectuales: comprensi\u00f3n, capacidad de s\u00edntesis y juicio cr\u00edtico. ',
+    inscribed: 146,
+    medalsBronze: 0,
+    medalsGold: 0,
+    medalsSilver: 0,
+  },
+  slider: [
+    {
+      description: 'Somos AmbLeMa Santa In\u00e9s - AM',
+      id: '6102ba11e45b72e780f36ba7',
+      image:
+        'http://amblema.org:10508/resources/images/school_years/5e823371e01964539e0e5f68/pecas/5f86e268c1b730ce9dcae9b6/slider/3/6102ba0be45b72e780f36ba6.jpeg',
+    },
+  ],
+  slug: 'OD21690517_Unidad-Educativa-Estadal-Santa-In\u00e9s',
+  sponsor: 'Triz y Beto',
+  teachersTestimonials: {
+    approvalHistory: [
+      {
+        comments: null,
+        createdAt: '2021-08-03T02:56:32.467000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Ella es Ana Campos, quien asume responsablemente primer grado y varios grupos de WhatsApp en apoyo a las maestras que no cuentan con tel\u00e9fono inteligente. ',
+              firstName: 'Ana',
+              id: '6108b060e45b72e780f36cb1',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/2/6108b060e45b72e780f36cb2.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+          ],
+        },
+        id: '6108b060e45b72e780f36cb3',
+        status: '4',
+        updatedAt: '2021-08-03T02:56:32.467000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-03T02:59:38.648000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Ella es Ana Campos, quien asume responsablemente primer grado y varios grupos de WhatsApp en apoyo a las maestras que no cuentan con tel\u00e9fono inteligente. ',
+              firstName: 'Ana',
+              id: '6108b11ae45b72e780f36cb4',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/2/6108b060e45b72e780f36cb2.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description: 'Una maestra HQS',
+              firstName: 'Judith',
+              id: '6108b11ae45b72e780f36cb5',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/3/6108b11ae45b72e780f36cb6.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+          ],
+        },
+        id: '6108b11ae45b72e780f36cb7',
+        status: '4',
+        updatedAt: '2021-08-03T02:59:38.648000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-07T15:14:30.288000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo en se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color no s\u00f3lo para que mi hijos la realizaran, sino para compartir con tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp.   Ha sido una experiencia divertido, diferente y a los ni\u00f1os les fascina.   Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '610ea3559db0b0a2c5903a0f',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+          ],
+        },
+        id: '610ea3569db0b0a2c5903a11',
+        status: '2',
+        updatedAt: '2021-08-07T15:14:30.288000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-07T23:24:45.416000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo en se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color no s\u00f3lo para que mi hijos la realizaran, sino para compartir con tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp.   Ha sido una experiencia divertido, diferente y a los ni\u00f1os les fascina.   Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '610f163d9db0b0a2c5903a5a',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue un experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '610f163d9db0b0a2c5903a5b',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+          ],
+        },
+        id: '610f163d9db0b0a2c5903a5d',
+        status: '4',
+        updatedAt: '2021-08-07T23:24:45.416000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-07T23:53:10.448000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '610f1ce69db0b0a2c5903a76',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '610f1ce69db0b0a2c5903a77',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+          ],
+        },
+        id: '610f1ce69db0b0a2c5903a78',
+        status: '2',
+        updatedAt: '2021-08-07T23:53:10.448000',
+        user: {
+          id: '5f85daedc1b730ce9dcae6bc',
+          name: 'Fundaci\u00f3n Amblema',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T18:05:56.097000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '61101d039db0b0a2c5903af2',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '61101d039db0b0a2c5903af3',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas.  Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda etc. Pero yo poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.  Los representantes al principio se quejaban porque dec\u00edan que era mucha tarea, pero luego se fueron adaptando.',
+              firstName: 'Anubis',
+              id: '61101d039db0b0a2c5903af4',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+          ],
+        },
+        id: '61101d049db0b0a2c5903af6',
+        status: '4',
+        updatedAt: '2021-08-08T18:05:56.097000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T19:18:34.649000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '61102e0a9db0b0a2c5903b04',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '61102e0a9db0b0a2c5903b05',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas.   Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Pero yo poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+              firstName: 'Anubis',
+              id: '61102e0a9db0b0a2c5903b06',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+          ],
+        },
+        id: '61102e0a9db0b0a2c5903b07',
+        status: '4',
+        updatedAt: '2021-08-08T19:18:34.648000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T20:26:43.276000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '61103e039db0b0a2c5903b21',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '61103e039db0b0a2c5903b22',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas.   Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Pero yo poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+              firstName: 'Anubis',
+              id: '61103e039db0b0a2c5903b23',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+            {
+              description:
+                'Me gusta Amblema porque combina elementos como ense\u00f1anza, te\u00f3rica y pr\u00e1ctica, lo que nos ayuda a facilitar el aprendizaje de los ni\u00f1os.  Yo siento que hay un grupo representantes que est\u00e1n m\u00e1s motivados haciendo las actividades con sus hijos, veo mayor entusiasmo.   Actividades como la Ginkana son algo nuevo para la mayor\u00eda de ellos, lo disfrutaron mucho.',
+              firstName: 'Mar\u00eda ',
+              id: '61103e039db0b0a2c5903b24',
+              image:
+                'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/7/61103e039db0b0a2c5903b25.jpeg',
+              lastName: 'Matos',
+              position: 'Docente',
+              teacherId: '5ffdc25aced228954229a015',
+            },
+          ],
+        },
+        id: '61103e039db0b0a2c5903b26',
+        status: '4',
+        updatedAt: '2021-08-08T20:26:43.276000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T20:45:44.760000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '611042789db0b0a2c5903b31',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 todo ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '611042789db0b0a2c5903b32',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas.   Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Pcco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+              firstName: 'Anubis',
+              id: '611042789db0b0a2c5903b33',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+            {
+              description:
+                'Estoy muy agradecida con AmbLeMa por el apoyo en cada experiencia para con nuestros ni\u00f1os y ni\u00f1as de la U.E.E.Santa In\u00e9s. Plantean una metodologia innovadora donde cada participante de forma espont\u00e1nea expres\u00f3 sus conocimientos y aprendi\u00f3 a su ritmo.  Gracias y muchas bendiciones.',
+              firstName: 'Mar\u00eda ',
+              id: '611042789db0b0a2c5903b34',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/7/61103e039db0b0a2c5903b25.jpeg',
+              lastName: 'Matos',
+              position: 'Docente',
+              teacherId: '5ffdc25aced228954229a015',
+            },
+          ],
+        },
+        id: '611042789db0b0a2c5903b35',
+        status: '2',
+        updatedAt: '2021-08-08T20:45:44.760000',
+        user: {
+          id: '5e8b6ceade32cb9923eb8f6e',
+          name: 'Elisa Rojas',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T21:07:48.186000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '611047a49db0b0a2c5903b37',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL\u2026 \u00a1todo ch\u00e9vere! Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '611047a49db0b0a2c5903b38',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas. Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+              firstName: 'Anubis',
+              id: '611047a49db0b0a2c5903b39',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+            {
+              description:
+                'Estoy muy agradecida con AmbLeMa por el apoyo en cada experiencia para con nuestros ni\u00f1os y ni\u00f1as de la U.E.E.Santa In\u00e9s. Plantean una metodolog\u00eda innovadora donde cada participante de forma espont\u00e1nea expres\u00f3 sus conocimientos y aprendi\u00f3 a su ritmo.  Gracias y muchas bendiciones.',
+              firstName: 'Mar\u00eda ',
+              id: '611047a49db0b0a2c5903b3a',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/7/61103e039db0b0a2c5903b25.jpeg',
+              lastName: 'Matos',
+              position: 'Docente',
+              teacherId: '5ffdc25aced228954229a015',
+            },
+          ],
+        },
+        id: '611047a49db0b0a2c5903b3b',
+        status: '2',
+        updatedAt: '2021-08-08T21:07:48.186000',
+        user: {
+          id: '5f85daedc1b730ce9dcae6bc',
+          name: 'Fundaci\u00f3n Amblema',
+        },
+      },
+      {
+        comments: null,
+        createdAt: '2021-08-08T21:11:10.259000',
+        detail: {
+          schoolId: '5ee7e79f677b59bb2937e36a',
+          testimonials: [
+            {
+              description:
+                'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+              firstName: 'Ana',
+              id: '6110486e9db0b0a2c5903b3c',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+              lastName: 'Campos',
+              position: 'Docente',
+              teacherId: '5ffdc5b1ced228954229a1d5',
+            },
+            {
+              description:
+                'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL, para ese momento todo era ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+              firstName: 'Judith',
+              id: '6110486e9db0b0a2c5903b3d',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+              lastName: 'Vivas',
+              position: 'Docente',
+              teacherId: '5ffdbbddced2289542298909',
+            },
+            {
+              description:
+                'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas. Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+              firstName: 'Anubis',
+              id: '6110486e9db0b0a2c5903b3e',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+              lastName: 'Mier y Ter\u00e1n',
+              position: 'Directivo',
+              teacherId: '61101c239db0b0a2c5903af1',
+            },
+            {
+              description:
+                'Estoy muy agradecida con AmbLeMa por el apoyo en cada experiencia para con nuestros ni\u00f1os y ni\u00f1as de la U.E.E.Santa In\u00e9s. Plantean una metodolog\u00eda innovadora donde cada participante de forma espont\u00e1nea expres\u00f3 sus conocimientos y aprendi\u00f3 a su ritmo.  Gracias y muchas bendiciones.',
+              firstName: 'Mar\u00eda ',
+              id: '6110486e9db0b0a2c5903b3f',
+              image:
+                'https://amblema.org/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/7/61103e039db0b0a2c5903b25.jpeg',
+              lastName: 'Matos',
+              position: 'Docente',
+              teacherId: '5ffdc25aced228954229a015',
+            },
+          ],
+        },
+        id: '6110486e9db0b0a2c5903b40',
+        status: '2',
+        updatedAt: '2021-08-08T21:11:10.259000',
+        user: {
+          id: '5f85daedc1b730ce9dcae6bc',
+          name: 'Fundaci\u00f3n Amblema',
+        },
+      },
+    ],
+    createdAt: '2020-08-11T14:39:38.009000',
+    isInApproval: false,
+    testimonials: [
+      {
+        description:
+          'Soy docente de coraz\u00f3n, desde ni\u00f1a jugaba a ser maestra, y despu\u00e9s de tanto tiempo se me di\u00f3 la oportunidad de vivir esa experiencia.  Junto a AmbLeMa hemos aprendido mucho, mis hijos y yo.  Gracias a Dios tuve la oportunidad de imprimir las gu\u00edas semanales a full color, no s\u00f3lo para que mis hijos la realizaran, sino para compartirlas tambi\u00e9n con las dem\u00e1s maestras que no tienen tel\u00e9fono inteligente y con los representantes que no tienen WhatsApp. Ha sido una experiencia divertida, diferente y a los ni\u00f1os les fascina. Gracias por todo el apoyo y por ayudarnos a crecer juntos.',
+        firstName: 'Ana',
+        id: '6110486e9db0b0a2c5903b3c',
+        image:
+          'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/4/610ea3559db0b0a2c5903a10.jpeg',
+        lastName: 'Campos',
+        position: 'Docente',
+        teacherId: '5ffdc5b1ced228954229a1d5',
+      },
+      {
+        description:
+          'Desde que AmbLeMa lleg\u00f3 a mi escuela me enganch\u00f3, para ese entonces trabajamos con Venezuela Megadiversa, para m\u00ed fue una experiencia maravillosa, yo puse todo mi empe\u00f1o, los ni\u00f1os realizaron sus maquetas de los estados, aprendimos sobre aves, fue extraordinario realmente, yo les hac\u00eda su Hora TAL, para ese momento todo era ch\u00e9vere. Cuando lleg\u00f3 la pandemia para m\u00ed fue un caos por no tener un tel\u00e9fono. As\u00ed que una de mis compa\u00f1eras me hizo el favor de abrir un grupo de WhatsApp y junto a la coordinadora enviaban las actividades all\u00ed. Yo sent\u00eda que estaba todo perdido, pero cuando iba a la escuela a atender a los representantes me sorprend\u00eda la cantidad de trabajos de AmbLeMa que recib\u00eda, as\u00ed que se logr\u00f3 el objetivo gracias al trabajo en equipo.',
+        firstName: 'Judith',
+        id: '6110486e9db0b0a2c5903b3d',
+        image:
+          'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/5/610f163d9db0b0a2c5903a5c.jpeg',
+        lastName: 'Vivas',
+        position: 'Docente',
+        teacherId: '5ffdbbddced2289542298909',
+      },
+      {
+        description:
+          'Para m\u00ed AmbLeMa ha sido un gran apoyo, no solo en Ambiente, Lectura y Matem\u00e1ticas, sino en otras \u00e1reas. Me consta todo el esfuerzo que han hecho mis docentes por cumplir con las actividades, superando los problemas muchas veces de salud, econ\u00f3micos, de transporte, tecnolog\u00eda, etc.  Poco a poco les voy motivando, somos una familia y juntos nos vamos apoyando para que se  logre el trabajo.',
+        firstName: 'Anubis',
+        id: '6110486e9db0b0a2c5903b3e',
+        image:
+          'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/6/61101d039db0b0a2c5903af5.jpeg',
+        lastName: 'Mier y Ter\u00e1n',
+        position: 'Directivo',
+        teacherId: '61101c239db0b0a2c5903af1',
+      },
+      {
+        description:
+          'Estoy muy agradecida con AmbLeMa por el apoyo en cada experiencia para con nuestros ni\u00f1os y ni\u00f1as de la U.E.E.Santa In\u00e9s. Plantean una metodolog\u00eda innovadora donde cada participante de forma espont\u00e1nea expres\u00f3 sus conocimientos y aprendi\u00f3 a su ritmo.  Gracias y muchas bendiciones.',
+        firstName: 'Mar\u00eda ',
+        id: '6110486e9db0b0a2c5903b3f',
+        image:
+          'http://amblema.org:10508/resources/images/schools/5ee7e79f677b59bb2937e36a/testimonials/7/61103e039db0b0a2c5903b25.jpeg',
+        lastName: 'Matos',
+        position: 'Docente',
+        teacherId: '5ffdc25aced228954229a015',
+      },
+    ],
+    updatedAt: '2020-08-11T14:39:38.009000',
+  },
+  twitter: null,
 };

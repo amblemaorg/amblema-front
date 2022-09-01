@@ -21,7 +21,12 @@ import {
  * and the components are recreated according
  * to the data.
  */
-export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) {
+export function MapperYearBookWeb(
+  yearBookData: any,
+  diagnosticGoalTableData,
+  permissions,
+  store: Store,
+) {
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections);
   const lapse1Config = createLapseBlocksConfig('1', yearBookData);
@@ -35,7 +40,9 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
       yearBookData['approvalHistory'].length
         ? yearBookData['approvalHistory']
         : null;
-    return theRequest && theRequest[theRequest.length - 1].status === '1' ? theRequest[theRequest.length - 1].id : null;
+    return theRequest && theRequest[theRequest.length - 1].status === '1'
+      ? theRequest[theRequest.length - 1].id
+      : null;
   }
 
   function dispatchAction(section: string, data) {
@@ -121,6 +128,36 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
     return sectionsReduced;
   }
 
+  function getDiagGoalTableData(grade: string) {
+    const diagGoal = diagnosticGoalTableData[grade];
+
+    if (!diagGoal) {
+      return {
+        wordsPerMin: '0',
+        multiplicationsPerMin: '0',
+        operationsPerMin: '0',
+      };
+    }
+
+    return diagGoal;
+  }
+
+  function getFirstLapseColumnData(
+    yearBookData,
+    diagnosticSummaryIdx: number,
+    lapseNumber,
+    readingTable,
+    keyValue: string,
+  ) {
+    const { diagnosticSummary } = yearBookData['lapse1'];
+
+    if (lapseNumber != 1) {
+      readingTable['wordFirstLapse'] = diagnosticSummary[diagnosticSummaryIdx][keyValue];
+    }
+
+    return readingTable;
+  }
+
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
@@ -133,17 +170,31 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
-            words: { title: 'Resultado de lectura' },
-            wordsIndex: { title: 'Índice de lectura' },
+            wordFirstLapse: {
+              title: 'Resultado de lectura lapso 1',
+              hide: lapseNumber == 1,
+            },
+            words: { title: `Resultado de lectura lapso ${lapseNumber}` },
+            goal: { title: 'Meta' },
+            wordsIndex: { title: `Índice de lectura lapso ${lapseNumber}` },
           },
           tableCode: 'readingTable',
-          readingTable: lapseData.diagnosticSummary.map((diagnostic) => {
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              words: diagnostic.wordsPerMin,
-              wordsIndex: diagnostic.wordsPerMinIndex,
-            };
+          readingTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
+            // const goal = diagnostic.grade'0.0';
+
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                words: diagnostic.wordsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).wordsPerMin,
+                wordsIndex: diagnostic.wordsPerMinIndex,
+              },
+              'wordsPerMin',
+            );
           }),
           classes: {
             hideView: false,
@@ -238,19 +289,39 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
-            multiplications: { title: 'Resultado de multiplicación' },
+            wordFirstLapse: {
+              title: 'Resultado de multiplicación lapso 1',
+              hide: lapseNumber == 1,
+            },
+            multiplications: { title: `Resultado de multiplicación lapso ${lapseNumber}` },
+            goal: { title: 'Meta' },
             multiplicationsIndex: {
-              title: 'Índice de multiplicación',
+              title: `Índice de multiplicación lapso ${lapseNumber}`,
             },
           },
           tableCode: 'mathTable',
-          mathTable: lapseData.diagnosticSummary.map((diagnostic) => {
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              multiplications: diagnostic.multiplicationsPerMin,
-              multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
-            };
+          mathTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
+            // return {
+            //   grade: determineGradeString(diagnostic.grade),
+            //   section: diagnostic.name,
+            //   multiplications: diagnostic.multiplicationsPerMin,
+            //   goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
+            //   multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
+            // };
+
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                multiplications: diagnostic.multiplicationsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
+                multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
+              },
+              'multiplicationsPerMin',
+            );
           }),
           classes: {
             hideView: false,
@@ -345,19 +416,39 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
           columns: {
             grade: { title: 'Grado' },
             section: { title: 'Sección' },
-            operations: { title: 'Resultado de lógica matemática' },
+            wordFirstLapse: {
+              title: 'Resultado de lógica matemática lapso 1',
+              hide: lapseNumber == 1,
+            },
+            operations: { title: `Resultado de lógica matemática lapso ${lapseNumber}` },
+            goal: { title: 'Meta' },
             operationsIndex: {
-              title: 'Índice de lógica matemática',
+              title: `Índice de lógica matemática lapso ${lapseNumber}`,
             },
           },
           tableCode: 'logicTable',
-          logicTable: lapseData.diagnosticSummary.map((diagnostic) => {
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              operations: diagnostic.operationsPerMin,
-              operationsIndex: diagnostic.operationsPerMinIndex,
-            };
+          logicTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
+            // return {
+            //   grade: determineGradeString(diagnostic.grade),
+            //   section: diagnostic.name,
+            //   operations: diagnostic.operationsPerMin,
+            //   goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
+            //   operationsIndex: diagnostic.operationsPerMinIndex,
+            // };
+
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                operations: diagnostic.operationsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
+                operationsIndex: diagnostic.operationsPerMinIndex,
+              },
+              'operationsPerMin',
+            );
           }),
           classes: {
             hideView: false,
@@ -585,7 +676,10 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
                                   content: values.description,
                                 };
 
@@ -626,7 +720,10 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
                                   content: values.description,
                                 };
                                 // store.dispatch(new SetSponsor(data));
@@ -665,7 +762,10 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
                                   content: values.description,
                                 };
                                 // store.dispatch(new SetCoordinator(data));
@@ -703,7 +803,10 @@ export function MapperYearBookWeb(yearBookData: any, permissions, store: Store) 
                             settings: {
                               onSubmit: (values: any) => {
                                 const data = {
-                                  image: values.inputImg && values.inputImg.length ? values.inputImg : null,
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
                                   content: values.description,
                                 };
                                 // store.dispatch(new SetSchool(data));
