@@ -165,6 +165,7 @@ export function MapperYearBookWeb(
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
+    const maxLength = YearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic');
     return [
       createTitleComponent('Diagnóstico de lectura'),
       {
@@ -275,7 +276,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de lectura',
               value: lapseData.readingDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
-              maxLength: 300,
+              maxLength,
             },
             button: {
               type: 'button',
@@ -403,7 +404,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de multiplicación',
               value: lapseData.mathDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
-              maxLength: 300,
+              maxLength,
             },
             button: {
               type: 'button',
@@ -532,7 +533,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de lógica matemática',
               value: lapseData.logicDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
-              maxLength: 300,
+              maxLength,
             },
             button: {
               type: 'button',
@@ -563,7 +564,6 @@ export function MapperYearBookWeb(
 
   function createActivitiesComponents(activities: any[], lapseNumber) {
     const lapseName = `lapse${lapseNumber}`;
-
     return activities.reduce((activitiesArray, activity) => {
       const { id, name, images, description } = activity;
       return [
@@ -597,7 +597,7 @@ export function MapperYearBookWeb(
                 placeholder: `Descripción de ${name}`,
                 disabled: /* yearBookData.isInApproval */ false,
                 value: description,
-                maxLength: 300,
+                maxLength: YearbookConfig.getFormDescriptionLimit('globalLapsesActivities'),
               },
               button: {
                 text: 'Guardar cambios',
@@ -709,7 +709,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción reseña histórica',
                                   value: yearBookData.historicalReview.content,
                                   disabled: /* yearBookData.isInApproval */ false,
-                                  maxLength: YearbookConfig.getFormDescriptionLimits(
+                                  maxLength: YearbookConfig.getFormDescriptionLimit(
                                     'historical-review-form',
                                   ),
                                 },
@@ -755,7 +755,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de padrino',
                                   value: yearBookData.sponsor.content,
                                   disabled: /* yearBookData.isInApproval */ false,
-                                  maxLength: 300,
+                                  maxLength: YearbookConfig.getFormDescriptionLimit('sponsor-form'),
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -799,7 +799,9 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de coordinador',
                                   value: yearBookData.coordinator.content,
                                   disabled: /* yearBookData.isInApproval */ false,
-                                  maxLength: 300,
+                                  maxLength: YearbookConfig.getFormDescriptionLimit(
+                                    'coordinator-form',
+                                  ),
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -842,7 +844,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de escuela',
                                   value: yearBookData.school.content,
                                   disabled: /* yearBookData.isInApproval */ false,
-                                  maxLength: 300,
+                                  maxLength: YearbookConfig.getFormDescriptionLimit('school-form'),
                                 },
                                 button: {
                                   text: 'Guardar cambios',

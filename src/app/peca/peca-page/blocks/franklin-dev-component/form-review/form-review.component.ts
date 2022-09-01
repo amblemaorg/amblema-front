@@ -388,4 +388,15 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
     this.form.get('inputImg').setValue(null);
     // this.settings.onSubmit({...this.form.value, inputImg: null});
   }
+
+  formControlHasError(formControlName: string, errorName: string) {
+    if (
+      this.form.get(formControlName).invalid &&
+      this.form.get(formControlName).errors &&
+      (this.form.get(formControlName).dirty || this.form.get(formControlName).pristine)
+    ) {
+      return this.form.get(formControlName).hasError(errorName);
+    }
+    return false;
+  }
 }

@@ -83,21 +83,19 @@
         rows="8"
         [disabled]="settings.fields.description.disabled"
         [readonly]="settings.fields.description.disabled"
-        [maxlength]="settings.fields.description.maxLength || 0"
-      >
-      </textarea>
-      <div
-        *ngIf="
-          form.get('description').invalid &&
-          form.get('description').errors &&
-          (form.get('description').dirty || form.get('description').touched)
+        [maxlength]="
+          settings.fields.description.maxLength ? settings.fields.description.maxLength : null
         "
       >
-        <small class="text-danger" *ngIf="form.get('description').hasError('maxlength')">
-          La longitud máxima de este campo es de
-          {{ form.get('description').errors.maxlength.requiredLength }} caracteres.
-        </small>
-      </div>
+      </textarea>
+      <p
+        *ngIf="settings.fields.description.maxLength"
+        [ngClass]="{ 'text-danger': formControlHasError('description', 'maxlength') }"
+      >
+        Cantidad de caracteres: {{ form.get('description').value.length }}/{{
+          settings.fields.description.maxLength
+        }}.<span *ngIf="formControlHasError('description', 'maxlength')"> (Excedido)</span>
+      </p>
     </div>
     <!-- Button -->
     <div class="text-right">
