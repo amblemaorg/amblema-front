@@ -1,3 +1,4 @@
+import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config';
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
@@ -22,6 +23,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   showLoading = true;
   pdfData: PdfYearbookData;
+  yearbookConfig = YearbookConfig;
 
   diagnosticGraphicData: any;
   diagnosticGoalTableData: any;

@@ -133,7 +133,13 @@
         </div>
 
         <p class="description">
-          <span [outerHTML]="page.description | excerpt: 700 | br"></span>
+          <span
+            [outerHTML]="
+              page.description
+                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic')
+                | br
+            "
+          ></span>
         </p>
       </div>
     </div>
@@ -159,7 +165,13 @@
       </div>
 
       <p class="description">
-        <span [outerHTML]="page.description | excerpt: 1100 | br"></span>
+        <span
+          [outerHTML]="
+            page.description
+              | excerpt: yearbookConfig.getFormDescriptionLimit('historical-review-form')
+              | br
+          "
+        ></span>
       </p>
     </div>
   </section>
@@ -184,7 +196,13 @@
         </ng-container>
 
         <p class="description">
-          <span [outerHTML]="data.description || '' | excerpt: 1130 | br"></span>
+          <span
+            [outerHTML]="
+              data.description || ''
+                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesActivities')
+                | br
+            "
+          ></span>
         </p>
       </div>
 
