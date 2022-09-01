@@ -161,10 +161,6 @@ export function MapperYearBookWeb(
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
-    console.log(lapseName);
-
-    console.log('createLapseBlocksConfig', lapseData.diagnosticSummary);
-
     return [
       createTitleComponent('Diagnóstico de lectura'),
       {

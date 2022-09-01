@@ -281,8 +281,6 @@ export class YearbookPageComponent extends PecaPageComponent implements OnInit, 
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
 
-              console.log({ diagnosticGoalTableData });
-
               // this.store.dispatch(new SetYearBook(newYearBook));
               const yearBookConfig = MapperYearBookWeb(
                 newYearBook,
