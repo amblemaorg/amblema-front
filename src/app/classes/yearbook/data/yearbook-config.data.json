@@ -1,0 +1,60 @@
+{
+  "historicalReview": {
+    "form": {
+      "description": {
+        "limit": 300
+      }
+    }
+  },
+
+  "sponsor": {
+    "form": {
+      "description": {
+        "limit": 300
+      }
+    }
+  },
+
+  "coordinator": {
+    "form": {
+      "description": {
+        "limit": 300
+      }
+    }
+  },
+
+  "school": {
+    "form": {
+      "description": {
+        "limit": 300
+      }
+    }
+  },
+
+  "lapse1": {
+    "subSections": {
+      "diagnosticSegments": {
+        "global": {
+          "form": {
+            "description": {
+              "limit": 300
+            }
+          }
+        },
+        "diagnosticReading": {},
+        "diagnosticMath": {},
+        "diagnosticMathLogic": {}
+      },
+      "activitySegments": {
+        "global": {
+          "form": {
+            "description": {
+              "limit": 300
+            }
+          }
+        },
+        "activities": []
+      }
+    }
+  }
+}

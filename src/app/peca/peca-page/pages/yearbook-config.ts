@@ -1,3 +1,4 @@
+import { YearbookConfig } from './../../../classes/yearbook/yearbook-config';
 import { Store } from '@ngxs/store';
 import {
   // SetLapseActivity,
@@ -274,6 +275,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de lectura',
               value: lapseData.readingDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
+              maxLength: 300,
             },
             button: {
               type: 'button',
@@ -401,6 +403,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de multiplicación',
               value: lapseData.mathDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
+              maxLength: 300,
             },
             button: {
               type: 'button',
@@ -529,6 +532,7 @@ export function MapperYearBookWeb(
               placeholder: 'Análisis del diagnóstico de lógica matemática',
               value: lapseData.logicDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
+              maxLength: 300,
             },
             button: {
               type: 'button',
@@ -593,6 +597,7 @@ export function MapperYearBookWeb(
                 placeholder: `Descripción de ${name}`,
                 disabled: /* yearBookData.isInApproval */ false,
                 value: description,
+                maxLength: 300,
               },
               button: {
                 text: 'Guardar cambios',
@@ -704,6 +709,9 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción reseña histórica',
                                   value: yearBookData.historicalReview.content,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  maxLength: YearbookConfig.getFormDescriptionLimits(
+                                    'historical-review-form',
+                                  ),
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -747,6 +755,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de padrino',
                                   value: yearBookData.sponsor.content,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  maxLength: 300,
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -790,6 +799,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de coordinador',
                                   value: yearBookData.coordinator.content,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  maxLength: 300,
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -832,6 +842,7 @@ export function MapperYearBookWeb(
                                   placeholder: 'Descripción de escuela',
                                   value: yearBookData.school.content,
                                   disabled: /* yearBookData.isInApproval */ false,
+                                  maxLength: 300,
                                 },
                                 button: {
                                   text: 'Guardar cambios',

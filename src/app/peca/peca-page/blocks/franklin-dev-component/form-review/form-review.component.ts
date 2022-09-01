@@ -36,6 +36,7 @@ export class FormReviewComponent implements OnInit, PresentationalBlockComponent
             placeholder?: string;
             value?: any;
             disabled?: boolean;
+            maxLength?: number;
           }
         | false;
       inputImg?:
