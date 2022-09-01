@@ -142,15 +142,27 @@ export function MapperYearBookWeb(
     return diagGoal;
   }
 
-  function getFirstLapseColumnData(yearBookData, diagnosticSummaryIdx: number) {
+  function getFirstLapseColumnData(
+    yearBookData,
+    diagnosticSummaryIdx: number,
+    lapseNumber,
+    readingTable,
+    keyValue: string,
+  ) {
     const { diagnosticSummary } = yearBookData['lapse1'];
 
-    return diagnosticSummary[diagnosticSummaryIdx];
+    if (lapseNumber != 1) {
+      readingTable['wordFirstLapse'] = diagnosticSummary[diagnosticSummaryIdx][keyValue];
+    }
+
+    return readingTable;
   }
 
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
     const lapseName = `lapse${lapseNumber}`;
     const lapseData = yearBookData[lapseName];
+    console.log(lapseName);
+
     console.log('createLapseBlocksConfig', lapseData.diagnosticSummary);
 
     return [
@@ -164,24 +176,29 @@ export function MapperYearBookWeb(
             section: { title: 'Sección' },
             wordFirstLapse: {
               title: 'Resultado de lectura lapso 1',
-              hide: lapseNumber === 1,
+              hide: lapseNumber == 1,
             },
-            words: { title: 'Resultado de lectura' },
+            words: { title: `Resultado de lectura lapso ${lapseNumber}` },
             goal: { title: 'Meta' },
-            wordsIndex: { title: 'Índice de lectura' },
+            wordsIndex: { title: `Índice de lectura lapso ${lapseNumber}` },
           },
           tableCode: 'readingTable',
           readingTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
             // const goal = diagnostic.grade'0.0';
 
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).wordsPerMin,
-              words: diagnostic.wordsPerMin,
-              goal: getDiagGoalTableData(`grade${diagnostic.grade}`).wordsPerMin,
-              wordsIndex: diagnostic.wordsPerMinIndex,
-            };
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                words: diagnostic.wordsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).wordsPerMin,
+                wordsIndex: diagnostic.wordsPerMinIndex,
+              },
+              'wordsPerMin',
+            );
           }),
           classes: {
             hideView: false,
@@ -278,24 +295,37 @@ export function MapperYearBookWeb(
             section: { title: 'Sección' },
             wordFirstLapse: {
               title: 'Resultado de multiplicación lapso 1',
-              hide: lapseNumber === 1,
+              hide: lapseNumber == 1,
             },
-            multiplications: { title: 'Resultado de multiplicación' },
+            multiplications: { title: `Resultado de multiplicación lapso ${lapseNumber}` },
             goal: { title: 'Meta' },
             multiplicationsIndex: {
-              title: 'Índice de multiplicación',
+              title: `Índice de multiplicación lapso ${lapseNumber}`,
             },
           },
           tableCode: 'mathTable',
           mathTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).multiplicationsPerMin,
-              multiplications: diagnostic.multiplicationsPerMin,
-              goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
-              multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
-            };
+            // return {
+            //   grade: determineGradeString(diagnostic.grade),
+            //   section: diagnostic.name,
+            //   multiplications: diagnostic.multiplicationsPerMin,
+            //   goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
+            //   multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
+            // };
+
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                multiplications: diagnostic.multiplicationsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).multiplicationsPerMin,
+                multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
+              },
+              'multiplicationsPerMin',
+            );
           }),
           classes: {
             hideView: false,
@@ -392,24 +422,37 @@ export function MapperYearBookWeb(
             section: { title: 'Sección' },
             wordFirstLapse: {
               title: 'Resultado de lógica matemática lapso 1',
-              hide: lapseNumber === 1,
+              hide: lapseNumber == 1,
             },
-            operations: { title: 'Resultado de lógica matemática' },
+            operations: { title: `Resultado de lógica matemática lapso ${lapseNumber}` },
             goal: { title: 'Meta' },
             operationsIndex: {
-              title: 'Índice de lógica matemática',
+              title: `Índice de lógica matemática lapso ${lapseNumber}`,
             },
           },
           tableCode: 'logicTable',
           logicTable: lapseData.diagnosticSummary.map((diagnostic, diagIdx) => {
-            return {
-              grade: determineGradeString(diagnostic.grade),
-              section: diagnostic.name,
-              wordFirstLapse: getFirstLapseColumnData(yearBookData, diagIdx).operationsPerMin,
-              operations: diagnostic.operationsPerMin,
-              goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
-              operationsIndex: diagnostic.operationsPerMinIndex,
-            };
+            // return {
+            //   grade: determineGradeString(diagnostic.grade),
+            //   section: diagnostic.name,
+            //   operations: diagnostic.operationsPerMin,
+            //   goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
+            //   operationsIndex: diagnostic.operationsPerMinIndex,
+            // };
+
+            return getFirstLapseColumnData(
+              yearBookData,
+              diagIdx,
+              lapseNumber,
+              {
+                grade: determineGradeString(diagnostic.grade),
+                section: diagnostic.name,
+                operations: diagnostic.operationsPerMin,
+                goal: getDiagGoalTableData(`grade${diagnostic.grade}`).operationsPerMin,
+                operationsIndex: diagnostic.operationsPerMinIndex,
+              },
+              'operationsPerMin',
+            );
           }),
           classes: {
             hideView: false,
