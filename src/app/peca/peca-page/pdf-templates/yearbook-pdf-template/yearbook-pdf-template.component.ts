@@ -1,9 +1,9 @@
-import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config';
-import { Router } from '@angular/router';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
-import { PdfYearbookData } from './pdfYearbookData.interface';
-import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
+import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config'
+import { Router } from '@angular/router'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
+import { PdfYearbookData } from './pdfYearbookData.interface'
+import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData'
 import {
   ActivitiesPage,
   DiagnosticPageDataGroup,
@@ -11,7 +11,7 @@ import {
   FrontPage,
   SchoolGradePageGroup,
   SecondLayoutTemplate,
-} from './templatesModels';
+} from './templatesModels'
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -21,30 +21,30 @@ import {
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = true;
-  pdfData: PdfYearbookData;
-  yearbookConfig = YearbookConfig;
+  showLoading = true
+  pdfData: PdfYearbookData
+  yearbookConfig = YearbookConfig
 
-  diagnosticGraphicData: any;
-  diagnosticGoalTableData: any;
+  diagnosticGraphicData: any
+  diagnosticGoalTableData: any
 
-  pages: any = [];
+  pages: any = []
 
-  frontpage: FrontPage = null;
-  schoolGradePageGroup: SchoolGradePageGroup = null;
-  activitiesPage: ActivitiesPage = null;
+  frontpage: FrontPage = null
+  schoolGradePageGroup: SchoolGradePageGroup = null
+  activitiesPage: ActivitiesPage = null
 
   // layout2
-  mySchoolPage: SecondLayoutTemplate = null;
-  coordinatorPage: SecondLayoutTemplate = null;
-  godFatherPage: SecondLayoutTemplate = null;
-  schoolPage: SecondLayoutTemplate = null;
+  mySchoolPage: SecondLayoutTemplate = null
+  coordinatorPage: SecondLayoutTemplate = null
+  godFatherPage: SecondLayoutTemplate = null
+  schoolPage: SecondLayoutTemplate = null
 
   // diagnosticTemplate
-  lapsesDiagnosticTmpGroup = [];
+  lapsesDiagnosticTmpGroup = []
 
   ngOnInit() {
-    this.pdfData = this.pdfService.pdfData;
+    this.pdfData = this.pdfService.pdfData
     // this.pdfData = mocksPdfData;
   }
 
@@ -52,22 +52,22 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     // console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
-      this.router.navigate(['/peca/anuario-page']);
+      this.router.navigate(['/peca/anuario-page'])
     }
 
     addEventListener('afterprint', (event) => {
-      this.router.navigate(['/peca/anuario-page']);
-    });
+      this.router.navigate(['/peca/anuario-page'])
+    })
 
     if (this.pdfData) {
       // this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-      this.diagnosticGraphicData = mockDiagnosticChartData;
-      this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
+      this.diagnosticGraphicData = mockDiagnosticChartData
+      this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable()
 
-      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
+      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData)
 
-      this.pageInit();
-      this.showLoading = false;
+      this.pageInit()
+      this.showLoading = false
 
       // setTimeout(() => {
       //   window.print()
@@ -76,29 +76,29 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   print() {
-    window.print();
+    window.print()
   }
 
   isArray(arg) {
-    return Array.isArray(arg);
+    return Array.isArray(arg)
   }
 
   pageInit() {
-    this.setFrontPage();
-    this.setSecondLayoutTemplateGroup(); // refactored
-    this.setSchoolGradePageGroup(); // refactored
-    this.setActivitiesPage();
-    this.setDiagnosticTemplateGroup();
+    this.setFrontPage()
+    this.setSecondLayoutTemplateGroup() // refactored
+    this.setSchoolGradePageGroup() // refactored
+    this.setActivitiesPage()
+    this.setDiagnosticTemplateGroup()
   }
 
   setFrontPage() {
-    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
+    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
     this.frontpage = new FrontPage({
       schoolName,
       schoolYear,
       sponsorName,
       sponsorLogo,
-    });
+    })
   }
 
   setSecondLayoutTemplateGroup() {
@@ -114,51 +114,62 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorName,
       sponsorLogo,
       sponsorText,
-    } = this.pdfData;
+    } = this.pdfData
 
     this.mySchoolPage = new SecondLayoutTemplate(
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
-    );
+    )
     this.coordinatorPage = new SecondLayoutTemplate(
       'coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
-    );
-    this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
-    this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
+    )
+    this.godFatherPage = new SecondLayoutTemplate(
+      'padrino',
+      sponsorLogo,
+      sponsorText,
+      sponsorName,
+    )
+    this.schoolPage = new SecondLayoutTemplate(
+      schoolName,
+      schoolImg,
+      schoolText,
+      null,
+      false,
+    )
   }
 
   setSchoolGradePageGroup() {
-    const { schoolSections } = this.pdfData;
+    const { schoolSections } = this.pdfData
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections });
+    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections })
   }
 
   setActivitiesPage() {
-    const { lapses } = this.pdfData;
+    const { lapses } = this.pdfData
 
-    this.activitiesPage = new ActivitiesPage({ lapses });
+    this.activitiesPage = new ActivitiesPage({ lapses })
   }
 
   async setDiagnosticTemplateGroup() {
-    const graphics = this.pdfService.getGraphics();
+    const graphics = this.pdfService.getGraphics()
 
     if (!graphics) {
-      return;
+      return
     }
 
-    const { lapses, schoolYear } = this.pdfData;
+    const { lapses, schoolYear } = this.pdfData
     const diagnosticPageDataGroup = new DiagnosticPageDataGroup(
       graphics,
       lapses,
       schoolYear,
       this.diagnosticGraphicData,
       this.diagnosticGoalTableData,
-    );
+    )
 
-    this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
+    this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate()
   }
 }
