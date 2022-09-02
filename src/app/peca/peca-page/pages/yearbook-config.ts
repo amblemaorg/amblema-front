@@ -14,7 +14,7 @@ import {
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action'
 
-const yearbookPDFOptions = (store) => ({
+const yearbookPDFOptions = (store: string) => ({
   component: 'store-line-options',
   settings: {
     store,
@@ -22,7 +22,7 @@ const yearbookPDFOptions = (store) => ({
     classes: 'justify-content-end',
     options: [
       {
-        label: 'Imprimir',
+        label: 'Añadir al PDF',
         key: 'print',
         value: true,
       },
@@ -30,7 +30,7 @@ const yearbookPDFOptions = (store) => ({
   },
 })
 
-const yearbookPDFLapseOptions = (store) => ({
+const yearbookPDFLapseOptions = (store: string) => ({
   component: 'store-line-options',
   settings: {
     store,
@@ -43,7 +43,7 @@ const yearbookPDFLapseOptions = (store) => ({
         value: true,
       },
       {
-        label: 'Imprimir',
+        label: 'Añadir al PDF',
         key: 'print',
         value: true,
       },
@@ -66,6 +66,8 @@ export function MapperYearBookWeb(
   store: Store,
 ) {
   const inputFileSizeLimitMb = 1
+
+  console.log('yearBookData', yearBookData)
 
   const { yearbook_edit, yearbook_delete } = permissions
   const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections)
@@ -343,6 +345,7 @@ export function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(`lapso-${lapseNumber}-reading-analysis-section`),
       createTitleComponent('Diagnóstico de Multiplicación'),
       {
         component: 'table',
@@ -485,6 +488,7 @@ export function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(`lapso-${lapseNumber}-math-analysis-section`),
       createTitleComponent('Diagnóstico de lógica matemática'),
       {
         component: 'table',
