@@ -2,6 +2,10 @@
   position: relative;
   height: 40vh;
 
+  &.fit-container {
+    height: 100% !important;
+  }
+
   @media screen and (orientation: landscape) {
     height: 60vh;
   }
