@@ -2,15 +2,25 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
+    <ng-container *ngIf="true">
+      <ng-container *ngTemplateOutlet="indexTemplate"></ng-container>
+    </ng-container>
+
     <ng-container *ngIf="frontpage">
       <ng-container
         *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
       ></ng-container>
     </ng-container>
 
-    <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
+    <ng-container
+      *ngFor="
+        let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
+      "
+    >
       <ng-container *ngIf="page">
-        <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="layout2Template; context: { page: page }"
+        ></ng-container>
       </ng-container>
     </ng-container>
 
@@ -89,7 +99,9 @@
     </ng-container>
 
     <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
-      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+      ></ng-container>
     </ng-container>
   </main>
 </ng-container>
@@ -101,6 +113,29 @@
 </div>
 
 <!-- # Templates -->
+<ng-template #indexTemplate>
+  <section class="page background--generic">
+    <div class="page__content layout--index">
+      <div class="head">
+        <h2>Indice</h2>
+      </div>
+      <div class="body">
+        <ul class="list">
+          <ng-container *ngFor="let item of list">
+            <li>
+              <li><a href="#">pagina de prueba</a></li>
+              <ul>
+                <li>1</li>
+                <li>2</li>
+              </ul>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
 <ng-template #diagnosticTemplate let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--diagnostic">
@@ -114,7 +149,10 @@
       <div class="body">
         <div class="visual-references">
           <div class="graphic">
-            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
+            <app-graphics-block
+              [settings]="page.chart"
+              [fitContainer]="true"
+            ></app-graphics-block>
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
@@ -123,7 +161,9 @@
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
                   <tr>
                     <ng-container *ngFor="let td of tr">
-                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">{{ td }}</td>
+                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                        {{ td }}
+                      </td>
                     </ng-container>
                   </tr>
                 </ng-container>
@@ -136,7 +176,10 @@
           <span
             [outerHTML]="
               page.description
-                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic')
+                | excerpt
+                  : yearbookConfig.getFormDescriptionLimit(
+                      'globalLapsesDiagnostic'
+                    )
                 | br
             "
           ></span>
@@ -149,7 +192,10 @@
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">
-      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
+      <div
+        class="head"
+        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
+      >
         <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
@@ -168,7 +214,10 @@
         <span
           [outerHTML]="
             page.description
-              | excerpt: yearbookConfig.getFormDescriptionLimit('historical-review-form')
+              | excerpt
+                : yearbookConfig.getFormDescriptionLimit(
+                    'historical-review-form'
+                  )
               | br
           "
         ></span>
@@ -199,7 +248,10 @@
           <span
             [outerHTML]="
               data.description || ''
-                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesActivities')
+                | excerpt
+                  : yearbookConfig.getFormDescriptionLimit(
+                      'globalLapsesActivities'
+                    )
                 | br
             "
           ></span>
@@ -218,7 +270,11 @@
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template #galleryTemplate let-galleryImgs="galleryImgs" let-options="options">
+<ng-template
+  #galleryTemplate
+  let-galleryImgs="galleryImgs"
+  let-options="options"
+>
   <section class="page {{ options.backgroundClass }}">
     <div class="page__content layout--gallery">
       <app-gallery
@@ -262,7 +318,11 @@
   <section class="page background--generic">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
+        <div
+          class="col overflow--hidden {{
+            !page.isFirstColumnEmpty ? 'col--centered' : ''
+          }}"
+        >
           <ng-container *ngIf="page.img">
             <div class="container-img">
               <img [src]="page.img" />

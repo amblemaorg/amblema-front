@@ -175,6 +175,19 @@ $size__p: 16px;
     }
   }
 
+  .layout--index {
+    .list {
+      list-style: none;
+      li {
+        text-transform: lowercase;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
   .layout--front {
     width: 100%;
 
