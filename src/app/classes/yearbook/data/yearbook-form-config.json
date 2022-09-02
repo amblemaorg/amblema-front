@@ -1,0 +1,32 @@
+{
+  "historical-review-form": {
+    "description": {
+      "limit": 1200
+    }
+  },
+  "sponsor-form": {
+    "description": {
+      "limit": 1200
+    }
+  },
+  "coordinator-form": {
+    "description": {
+      "limit": 1200
+    }
+  },
+  "school-form": {
+    "description": {
+      "limit": 1200
+    }
+  },
+  "globalLapsesDiagnostic": {
+    "description": {
+      "limit": 800
+    }
+  },
+  "globalLapsesActivities": {
+    "description": {
+      "limit": 1800
+    }
+  }
+}

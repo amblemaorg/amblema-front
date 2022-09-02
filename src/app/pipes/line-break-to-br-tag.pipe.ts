@@ -11,7 +11,9 @@ export class BreakLinePipe {
 
     return (
       '&nbsp' +
-      value.replace(new RegExp('\r\n', 'g'), '<br /><br />&nbsp').replace(new RegExp('\n', 'g'), '<br /><br />&nbsp')
+      value
+        .replace(new RegExp('\r\n', 'g'), '<br />&nbsp')
+        .replace(new RegExp('\n', 'g'), '<br />&nbsp')
     );
   }
 }
