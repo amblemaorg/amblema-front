@@ -7,8 +7,8 @@ import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
   ActivitiesPage,
   DiagnosticPageDataGroup,
-  DiagnosticTemplate,
   FrontPage,
+  IndexTemplate,
   SchoolGradePageGroup,
   SecondLayoutTemplate,
 } from './templatesModels';
@@ -30,6 +30,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pages: any = [];
 
+  IndexPage: IndexTemplate = null;
   frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
   activitiesPage: ActivitiesPage = null;
@@ -85,10 +86,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pageInit() {
     this.setFrontPage();
-    this.setSecondLayoutTemplateGroup(); // refactored
-    this.setSchoolGradePageGroup(); // refactored
+    this.setSecondLayoutTemplateGroup();
+    this.setSchoolGradePageGroup();
     this.setActivitiesPage();
     this.setDiagnosticTemplateGroup();
+    this.setIndexPage();
   }
 
   setFrontPage() {
@@ -160,5 +162,50 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
 
     this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
+  }
+
+  setIndexPage() {
+    const listItems = [
+      {
+        label: 'pagina de prueba 1',
+        href: 'pagina de prueba',
+      },
+      {
+        label: 'pagina de prueba 2',
+        href: 'pagina de prueba',
+      },
+      [
+        {
+          label: 'pagina de prueba 2-1',
+          href: 'pagina de prueba',
+        },
+        {
+          label: 'pagina de prueba 2-2',
+          href: 'pagina de prueba',
+        },
+        [
+          {
+            label: 'pagina de prueba 3-1',
+            href: 'pagina de prueba',
+          },
+          {
+            label: 'pagina de prueba 3-2',
+            href: 'pagina de prueba',
+          },
+          [
+            {
+              label: 'pagina de prueba 4-1',
+              href: 'pagina de prueba',
+            },
+            {
+              label: 'pagina de prueba 4-2',
+              href: 'pagina de prueba',
+            },
+          ],
+        ],
+      ],
+    ];
+
+    this.IndexPage = new IndexTemplate(listItems);
   }
 }
