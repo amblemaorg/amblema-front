@@ -2,8 +2,8 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="true">
-      <ng-container *ngTemplateOutlet="indexTemplate"></ng-container>
+    <ng-container *ngIf="IndexPage">
+      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: IndexPage }"></ng-container>
     </ng-container>
 
     <ng-container *ngIf="frontpage">
@@ -12,15 +12,9 @@
       ></ng-container>
     </ng-container>
 
-    <ng-container
-      *ngFor="
-        let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
-      "
-    >
+    <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
       <ng-container *ngIf="page">
-        <ng-container
-          *ngTemplateOutlet="layout2Template; context: { page: page }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
       </ng-container>
     </ng-container>
 
@@ -99,9 +93,7 @@
     </ng-container>
 
     <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
-      <ng-container
-        *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
-      ></ng-container>
+      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
     </ng-container>
   </main>
 </ng-container>
@@ -113,7 +105,27 @@
 </div>
 
 <!-- # Templates -->
-<ng-template #indexTemplate>
+
+<!-- indexTemplate -->
+<ng-template #indexListItem let-listItems="listItems">
+  <ng-container *ngIf="!isArray(listItems)">
+    <li>
+      <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
+    </li>
+  </ng-container>
+
+  <ng-container *ngIf="isArray(listItems)">
+    <ul>
+      <ng-container *ngFor="let childItem of listItems">
+        <ng-container
+          *ngTemplateOutlet="indexListItem; context: { listItems: childItem }"
+        ></ng-container>
+      </ng-container>
+    </ul>
+  </ng-container>
+</ng-template>
+
+<ng-template #indexTemplate let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--index">
       <div class="head">
@@ -121,14 +133,10 @@
       </div>
       <div class="body">
         <ul class="list">
-          <ng-container *ngFor="let item of []">
-            <li>
-              <!-- <li><a href="#">pagina de prueba</a></li> -->
-              <ul>
-                <li>1</li>
-                <li>2</li>
-              </ul>
-            </li>
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
+            ></ng-container>
           </ng-container>
         </ul>
       </div>
@@ -149,10 +157,7 @@
       <div class="body">
         <div class="visual-references">
           <div class="graphic">
-            <app-graphics-block
-              [settings]="page.chart"
-              [fitContainer]="true"
-            ></app-graphics-block>
+            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
@@ -176,10 +181,7 @@
           <span
             [outerHTML]="
               page.description
-                | excerpt
-                  : yearbookConfig.getFormDescriptionLimit(
-                      'globalLapsesDiagnostic'
-                    )
+                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic')
                 | br
             "
           ></span>
@@ -192,10 +194,7 @@
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--2">
-      <div
-        class="head"
-        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
-      >
+      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
         <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
@@ -214,10 +213,7 @@
         <span
           [outerHTML]="
             page.description
-              | excerpt
-                : yearbookConfig.getFormDescriptionLimit(
-                    'historical-review-form'
-                  )
+              | excerpt: yearbookConfig.getFormDescriptionLimit('historical-review-form')
               | br
           "
         ></span>
@@ -248,10 +244,7 @@
           <span
             [outerHTML]="
               data.description || ''
-                | excerpt
-                  : yearbookConfig.getFormDescriptionLimit(
-                      'globalLapsesActivities'
-                    )
+                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesActivities')
                 | br
             "
           ></span>
@@ -270,11 +263,7 @@
 </ng-template>
 
 <!-- ## Gallery -->
-<ng-template
-  #galleryTemplate
-  let-galleryImgs="galleryImgs"
-  let-options="options"
->
+<ng-template #galleryTemplate let-galleryImgs="galleryImgs" let-options="options">
   <section class="page {{ options.backgroundClass }}">
     <div class="page__content layout--gallery">
       <app-gallery
@@ -318,11 +307,7 @@
   <section class="page background--generic">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div
-          class="col overflow--hidden {{
-            !page.isFirstColumnEmpty ? 'col--centered' : ''
-          }}"
-        >
+        <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
           <ng-container *ngIf="page.img">
             <div class="container-img">
               <img [src]="page.img" />
