@@ -169,39 +169,25 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       {
         label: 'pagina de prueba 1',
         href: 'pagina de prueba',
+        pageNumber: '1',
       },
       {
         label: 'pagina de prueba 2',
         href: 'pagina de prueba',
+        pageNumber: '1',
       },
       [
         {
           label: 'pagina de prueba 2-1',
           href: 'pagina de prueba',
-        },
-        {
-          label: 'pagina de prueba 2-2',
-          href: 'pagina de prueba',
+          pageNumber: '1',
         },
         [
           {
             label: 'pagina de prueba 3-1',
             href: 'pagina de prueba',
+            pageNumber: '1',
           },
-          {
-            label: 'pagina de prueba 3-2',
-            href: 'pagina de prueba',
-          },
-          [
-            {
-              label: 'pagina de prueba 4-1',
-              href: 'pagina de prueba',
-            },
-            {
-              label: 'pagina de prueba 4-2',
-              href: 'pagina de prueba',
-            },
-          ],
         ],
       ],
     ];

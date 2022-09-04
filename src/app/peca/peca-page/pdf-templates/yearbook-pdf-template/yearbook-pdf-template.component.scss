@@ -176,13 +176,36 @@ $size__p: 16px;
   }
 
   .layout--index {
-    .list {
-      list-style: none;
-      li {
-        text-transform: lowercase;
+    .body {
+      display: flex;
+      justify-content: space-between;
+      column-gap: 45px;
 
-        &::first-letter {
-          text-transform: uppercase;
+      .list {
+        width: 50%;
+        padding: 0;
+
+        &,
+        ul,
+        li {
+          list-style: none;
+        }
+
+        li {
+          line-height: 24px;
+          text-transform: lowercase;
+
+          display: flex;
+          justify-content: space-between;
+
+          a {
+            text-decoration: none;
+          }
+
+          &::first-letter,
+          a::first-letter {
+            text-transform: uppercase;
+          }
         }
       }
     }

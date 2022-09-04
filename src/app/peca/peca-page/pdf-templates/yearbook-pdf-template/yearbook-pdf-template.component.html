@@ -111,6 +111,7 @@
   <ng-container *ngIf="!isArray(listItems)">
     <li>
       <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
+      <span>{{ listItems.pageNumber }}</span>
     </li>
   </ng-container>
 
@@ -132,6 +133,13 @@
         <h2>Indice</h2>
       </div>
       <div class="body">
+        <ul class="list">
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
+            ></ng-container>
+          </ng-container>
+        </ul>
         <ul class="list">
           <ng-container *ngFor="let listItem of page.listItems">
             <ng-container
