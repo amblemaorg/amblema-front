@@ -378,7 +378,7 @@ export class DiagnosticPageDataGroup {
           diagnosticAnalysis,
           chart,
           table,
-          lapseName: diagIdx > 0 ? undefined : lapseName,
+          lapseName,
         };
       });
 
@@ -395,9 +395,11 @@ export class DiagnosticPageDataGroup {
     return this.pages;
   }
 
-  getPagesWithDiagnosticTemplate() {
-    return this.pages.map((page) => {
-      const { diagnosticText, diagnosticAnalysis, lapseName, chart, table } = page;
+  getPagesWithDiagnosticTemplate(lapseName?: string) {
+    const pages = lapseName ? this.pages.filter((pg) => pg.lapseName === lapseName) : this.pages;
+    return pages.map((page, pgIdx) => {
+      const { diagnosticText, diagnosticAnalysis, chart, table } = page;
+      const lapseName = pgIdx === 0 ? page.lapseName : undefined;
       return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, table, lapseName);
     });
   }

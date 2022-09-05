@@ -25,8 +25,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   pdfData: PdfYearbookData;
   yearbookConfig = YearbookConfig;
 
-  diagnosticGraphicData: any;
-  diagnosticGoalTableData: any;
+  diagnosticPageDataGroup = null;
+  diagnosticGraphicData = null;
+  diagnosticGoalTableData = null;
 
   pages: any = [];
 
@@ -151,7 +152,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     }
 
     const { lapses, schoolYear } = this.pdfData;
-    const diagnosticPageDataGroup = new DiagnosticPageDataGroup(
+    this.diagnosticPageDataGroup = new DiagnosticPageDataGroup(
       graphics,
       lapses,
       schoolYear,
@@ -159,6 +160,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.diagnosticGoalTableData,
     );
 
-    this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
+    // this.lapsesDiagnosticTmpGroup = this.diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
   }
 }

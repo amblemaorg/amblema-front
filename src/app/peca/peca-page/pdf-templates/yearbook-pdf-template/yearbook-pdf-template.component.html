@@ -57,6 +57,18 @@
     <ng-container *ngIf="activitiesPage">
       <ng-container *ngFor="let lapse of activitiesPage.data.lapses">
         <ng-container *ngFor="let activity of lapse.activities; let i = index">
+          <ng-container *ngIf="i === 0">
+            <ng-container
+              *ngFor="
+                let page of diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(lapse.lapseName)
+              "
+            >
+              <ng-container
+                *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+              ></ng-container>
+            </ng-container>
+          </ng-container>
+
           <ng-container
             *ngTemplateOutlet="
               layout4Template;
@@ -88,9 +100,9 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
+    <!-- <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
       <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
-    </ng-container>
+    </ng-container> -->
   </main>
 </ng-container>
 
