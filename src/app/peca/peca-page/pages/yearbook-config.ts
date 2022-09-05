@@ -660,7 +660,7 @@ export function MapperYearBookWeb(
       title: 'AmbLeMario',
       download: {
         url: '#',
-        name: 'Descargar',
+        name: 'Vista previa',
       },
     },
     blocks: [
@@ -677,7 +677,7 @@ export function MapperYearBookWeb(
                     items: [
                       {
                         // -- Historical
-                        title: 'Reseña histórica',
+                        title: 'Mi escuela',
                         childBlocks: [
                           {
                             component: 'form-review',
