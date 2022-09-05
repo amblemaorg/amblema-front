@@ -397,6 +397,8 @@ export class DiagnosticPageDataGroup {
 
   getPagesWithDiagnosticTemplate(lapseName?: string) {
     const pages = lapseName ? this.pages.filter((pg) => pg.lapseName === lapseName) : this.pages;
+    console.log('s');
+
     return pages.map((page, pgIdx) => {
       const { diagnosticText, diagnosticAnalysis, chart, table } = page;
       const lapseName = pgIdx === 0 ? page.lapseName : undefined;
