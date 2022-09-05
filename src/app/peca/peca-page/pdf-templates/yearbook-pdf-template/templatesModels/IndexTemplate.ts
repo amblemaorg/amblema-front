@@ -3,7 +3,7 @@ import { Template, TemplateOptions } from './Template';
 export class IndexTemplate extends Template {
   listItems: any[];
   notNestedItems: any[] = [];
-  maxItemsToWrap = 30;
+  maxItemsToWrap = 23;
 
   constructor(listItems: any[], templateOptions?: TemplateOptions) {
     super('indexTemplate', templateOptions);

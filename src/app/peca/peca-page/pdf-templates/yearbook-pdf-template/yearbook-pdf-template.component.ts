@@ -172,63 +172,40 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   setIndexPage() {
-    const listItems = [
-      {
-        label: 'pagina de prueba 1',
+    const listItems: any[] = [];
+
+    for (let index = 0; index < 30; index++) {
+      listItems.push({
+        label: 'pagina de prueba ' + index,
         href: 'pagina de prueba',
-        pageNumber: '1',
+        pageNumber: index + '',
+      });
+    }
+
+    listItems.push([
+      {
+        label: 'pagina de prueba ',
+        href: 'pagina de prueba',
+        pageNumber: 1,
       },
       {
-        label: 'pagina de prueba 2',
+        label: 'pagina de prueba ',
         href: 'pagina de prueba',
-        pageNumber: '2',
-      },
-      {
-        label: 'pagina de prueba 3',
-        href: 'pagina de prueba',
-        pageNumber: '4',
-      },
-      {
-        label: 'pagina de prueba 5',
-        href: 'pagina de prueba',
-        pageNumber: '5',
-      },
-      {
-        label: 'pagina de prueba 6',
-        href: 'pagina de prueba',
-        pageNumber: '6',
-      },
-      {
-        label: 'pagina de prueba 7',
-        href: 'pagina de prueba',
-        pageNumber: '7',
-      },
-      {
-        label: 'pagina de prueba 8',
-        href: 'pagina de prueba',
-        pageNumber: '8',
-      },
-      {
-        label: 'pagina de prueba 9',
-        href: 'pagina de prueba',
-        pageNumber: '9',
+        pageNumber: 1,
       },
       [
         {
-          label: 'pagina de prueba 9-1',
+          label: 'pagina de prueba ',
           href: 'pagina de prueba',
-          pageNumber: '10',
+          pageNumber: 1,
         },
-        [
-          {
-            label: 'pagina de prueba 3-1',
-            href: 'pagina de prueba',
-            pageNumber: '11',
-          },
-        ],
+        {
+          label: 'pagina de prueba ',
+          href: 'pagina de prueba',
+          pageNumber: 1,
+        },
       ],
-    ];
-
+    ]);
     this.IndexPage = new IndexTemplate(listItems);
   }
 }
