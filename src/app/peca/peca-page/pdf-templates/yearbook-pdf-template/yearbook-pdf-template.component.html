@@ -188,12 +188,8 @@
     <div class="page__content layout--4">
       <div class="body">
         <h2 class="text-capitalize title">
-          {{ activityIdx === 0 ? 'Actividades - ' + lapseName : data.name }}
+          {{ data.name }}
         </h2>
-
-        <ng-container *ngIf="activityIdx === 0">
-          <h3 class="subtitle">{{ data.name }}</h3>
-        </ng-container>
 
         <p class="description">
           <span

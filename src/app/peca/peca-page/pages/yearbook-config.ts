@@ -660,7 +660,7 @@ export function MapperYearBookWeb(
       title: 'AmbLeMario',
       download: {
         url: '#',
-        name: 'Descargar',
+        name: 'Vista previa',
       },
     },
     blocks: [

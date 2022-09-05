@@ -82,6 +82,7 @@ $size__p: 16px;
 
   h2 {
     text-transform: capitalize;
+    margin-bottom: 0;
   }
 
   h2,
@@ -140,8 +141,7 @@ $size__p: 16px;
 
     .page__content {
       height: 100%;
-      // padding: 90px 70px 70px 70px;
-      overflow: hidden;
+      // overflow: hidden;
 
       .first-letter--uppercase {
         text-transform: lowercase;
@@ -334,7 +334,7 @@ $size__p: 16px;
     .body {
       // max-height: 57.5%;
       max-height: 60%;
-      overflow: hidden;
+      // overflow: hidden;
       text-align: center;
 
       .title {
