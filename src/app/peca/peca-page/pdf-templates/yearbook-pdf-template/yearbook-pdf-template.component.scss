@@ -178,11 +178,13 @@ $size__p: 16px;
   .layout--index {
     .body {
       display: flex;
-      justify-content: space-between;
+      // flex-direction: column;
       column-gap: 45px;
+      justify-content: space-between;
 
       .list {
         width: 50%;
+        margin: 0;
         padding: 0;
 
         &,
