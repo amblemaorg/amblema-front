@@ -677,7 +677,7 @@ export function MapperYearBookWeb(
                     items: [
                       {
                         // -- Historical
-                        title: 'Reseña histórica',
+                        title: 'Mi escuela',
                         childBlocks: [
                           {
                             component: 'form-review',

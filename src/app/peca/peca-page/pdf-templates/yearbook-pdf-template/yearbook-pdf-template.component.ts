@@ -160,6 +160,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.diagnosticGoalTableData,
     );
 
-    this.lapsesDiagnosticTmpGroup = this.diagnosticPageDataGroup.getPagesWithDiagnosticTemplate();
+    lapses.forEach((lapse) => {
+      this.lapsesDiagnosticTmpGroup.push(
+        this.diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(lapse.lapseName),
+      );
+    });
+
+    console.log('this.lapsesDiagnosticTmpGroup', this.lapsesDiagnosticTmpGroup);
   }
 }

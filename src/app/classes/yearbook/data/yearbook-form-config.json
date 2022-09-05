@@ -21,7 +21,7 @@
   },
   "globalLapsesDiagnostic": {
     "description": {
-      "limit": 800
+      "limit": 725
     }
   },
   "globalLapsesActivities": {
