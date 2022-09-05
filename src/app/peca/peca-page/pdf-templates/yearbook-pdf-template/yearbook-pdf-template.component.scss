@@ -301,7 +301,9 @@ $size__p: 16px;
     }
 
     .description {
+      height: 90%;
       column-count: 2;
+      column-fill: auto;
     }
   }
 
