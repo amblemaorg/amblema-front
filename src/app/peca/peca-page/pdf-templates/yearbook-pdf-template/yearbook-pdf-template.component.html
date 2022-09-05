@@ -27,7 +27,7 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="schoolSectionsPage">
+    <!-- <ng-container *ngIf="schoolSectionsPage">
       <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
         <ng-container
           *ngFor="
@@ -52,11 +52,19 @@
           ></ng-container>
         </ng-container>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container *ngIf="activitiesPage">
-      <ng-container *ngFor="let lapse of activitiesPage.data.lapses">
+      <ng-container *ngFor="let lapse of activitiesPage.data.lapses; let lapIdx = index">
         <ng-container *ngFor="let activity of lapse.activities; let i = index">
+          <ng-container *ngIf="i === 0">
+            <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup[lapIdx]">
+              <ng-container
+                *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+              ></ng-container>
+            </ng-container>
+          </ng-container>
+
           <ng-container
             *ngTemplateOutlet="
               layout4Template;
@@ -88,9 +96,9 @@
       </ng-container>
     </ng-container>
 
-    <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
+    <!-- <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
       <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
-    </ng-container>
+    </ng-container> -->
   </main>
 </ng-container>
 
@@ -188,12 +196,8 @@
     <div class="page__content layout--4">
       <div class="body">
         <h2 class="text-capitalize title">
-          {{ activityIdx === 0 ? 'Actividades - ' + lapseName : data.name }}
+          {{ data.name }}
         </h2>
-
-        <ng-container *ngIf="activityIdx === 0">
-          <h3 class="subtitle">{{ data.name }}</h3>
-        </ng-container>
 
         <p class="description">
           <span
