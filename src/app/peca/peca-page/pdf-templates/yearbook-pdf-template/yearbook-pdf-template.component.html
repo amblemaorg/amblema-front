@@ -2,6 +2,10 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
+    <ng-container *ngIf="IndexPage">
+      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: IndexPage }"></ng-container>
+    </ng-container>
+
     <ng-container *ngIf="frontpage">
       <ng-container
         *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
@@ -109,6 +113,53 @@
 </div>
 
 <!-- # Templates -->
+
+<!-- indexTemplate -->
+<ng-template #indexListItem let-listItems="listItems">
+  <ng-container *ngIf="!isArray(listItems)">
+    <li>
+      <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
+      <span>{{ listItems.pageNumber }}</span>
+    </li>
+  </ng-container>
+
+  <ng-container *ngIf="isArray(listItems)">
+    <ul>
+      <ng-container *ngFor="let childItem of listItems">
+        <ng-container
+          *ngTemplateOutlet="indexListItem; context: { listItems: childItem }"
+        ></ng-container>
+      </ng-container>
+    </ul>
+  </ng-container>
+</ng-template>
+
+<ng-template #indexTemplate let-page="page">
+  <section class="page background--generic">
+    <div class="page__content layout--index">
+      <div class="head">
+        <h2>Indice</h2>
+      </div>
+      <div class="body">
+        <ul class="list" [ngClass]="{ wrap: page.haveToWrapList(page.listItems) }">
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
+            ></ng-container>
+          </ng-container>
+        </ul>
+        <!-- <ul class="list">
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
+            ></ng-container>
+          </ng-container>
+        </ul> -->
+      </div>
+    </div>
+  </section>
+</ng-template>
+
 <ng-template #diagnosticTemplate let-page="page">
   <section class="page background--generic">
     <div class="page__content layout--diagnostic">
@@ -131,7 +182,9 @@
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
                   <tr>
                     <ng-container *ngFor="let td of tr">
-                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">{{ td }}</td>
+                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                        {{ td }}
+                      </td>
                     </ng-container>
                   </tr>
                 </ng-container>

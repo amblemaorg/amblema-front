@@ -7,8 +7,8 @@ import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
   ActivitiesPage,
   DiagnosticPageDataGroup,
-  DiagnosticTemplate,
   FrontPage,
+  IndexTemplate,
   SchoolGradePageGroup,
   SecondLayoutTemplate,
 } from './templatesModels';
@@ -31,6 +31,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pages: any = [];
 
+  IndexPage: IndexTemplate = null;
   frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
   activitiesPage: ActivitiesPage = null;
@@ -86,10 +87,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pageInit() {
     this.setFrontPage();
-    this.setSecondLayoutTemplateGroup(); // refactored
-    this.setSchoolGradePageGroup(); // refactored
+    this.setSecondLayoutTemplateGroup();
+    this.setSchoolGradePageGroup();
     this.setActivitiesPage();
     this.setDiagnosticTemplateGroup();
+    this.setIndexPage();
   }
 
   setFrontPage() {
@@ -167,5 +169,66 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     });
 
     console.log('this.lapsesDiagnosticTmpGroup', this.lapsesDiagnosticTmpGroup);
+  }
+
+  setIndexPage() {
+    const listItems = [
+      {
+        label: 'pagina de prueba 1',
+        href: 'pagina de prueba',
+        pageNumber: '1',
+      },
+      {
+        label: 'pagina de prueba 2',
+        href: 'pagina de prueba',
+        pageNumber: '2',
+      },
+      {
+        label: 'pagina de prueba 3',
+        href: 'pagina de prueba',
+        pageNumber: '4',
+      },
+      {
+        label: 'pagina de prueba 5',
+        href: 'pagina de prueba',
+        pageNumber: '5',
+      },
+      {
+        label: 'pagina de prueba 6',
+        href: 'pagina de prueba',
+        pageNumber: '6',
+      },
+      {
+        label: 'pagina de prueba 7',
+        href: 'pagina de prueba',
+        pageNumber: '7',
+      },
+      {
+        label: 'pagina de prueba 8',
+        href: 'pagina de prueba',
+        pageNumber: '8',
+      },
+      {
+        label: 'pagina de prueba 9',
+        href: 'pagina de prueba',
+        pageNumber: '9',
+      },
+      [
+        {
+          label: 'pagina de prueba 9-1',
+          href: 'pagina de prueba',
+          pageNumber: '10',
+        },
+        [
+          {
+            label: 'pagina de prueba 3-1',
+            href: 'pagina de prueba',
+            pageNumber: '11',
+          },
+        ],
+      ],
+    ];
+
+    this.IndexPage = new IndexTemplate(listItems);
   }
 }

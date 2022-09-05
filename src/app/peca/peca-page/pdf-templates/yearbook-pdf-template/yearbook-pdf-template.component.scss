@@ -175,6 +175,49 @@ $size__p: 16px;
     }
   }
 
+  .layout--index {
+    .body {
+      display: flex;
+      // flex-direction: column;
+      column-gap: 45px;
+      justify-content: space-between;
+
+      .list {
+        width: 50%;
+        margin: 0;
+        padding: 0;
+
+        &.wrap {
+          width: 100%;
+          column-count: 2;
+        }
+
+        &,
+        ul,
+        li {
+          list-style: none;
+        }
+
+        li {
+          line-height: 24px;
+          text-transform: lowercase;
+
+          display: flex;
+          justify-content: space-between;
+
+          a {
+            text-decoration: none;
+          }
+
+          &::first-letter,
+          a::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+
   .layout--front {
     width: 100%;
 
