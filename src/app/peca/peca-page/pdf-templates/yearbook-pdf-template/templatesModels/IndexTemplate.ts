@@ -3,13 +3,12 @@ import { Template, TemplateOptions } from './Template';
 export class IndexTemplate extends Template {
   listItems: any[];
   notNestedItems: any[] = [];
+  maxItemsToWrap = 30;
 
   constructor(listItems: any[], templateOptions?: TemplateOptions) {
     super('indexTemplate', templateOptions);
 
     this.setListItems(listItems);
-    this.setNotNestedItems(listItems);
-    console.log('this.notNestedItems', this.notNestedItems);
   }
 
   setNotNestedItems(listItems: any[]) {
@@ -23,6 +22,17 @@ export class IndexTemplate extends Template {
 
       this.setNotNestedItems(item);
     }
+  }
+
+  getListItemsLength(listItems: any[]) {
+    this.notNestedItems = [];
+    this.setNotNestedItems(listItems);
+    console.log('this.notNestedItems', this.notNestedItems);
+    return this.notNestedItems.length;
+  }
+
+  haveToWrapList(listItems: any[]) {
+    return this.getListItemsLength(listItems) > this.maxItemsToWrap;
   }
 
   setListItems(listItems: any[]) {

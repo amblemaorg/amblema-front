@@ -187,6 +187,11 @@ $size__p: 16px;
         margin: 0;
         padding: 0;
 
+        &.wrap {
+          width: 100%;
+          column-count: 2;
+        }
+
         &,
         ul,
         li {
