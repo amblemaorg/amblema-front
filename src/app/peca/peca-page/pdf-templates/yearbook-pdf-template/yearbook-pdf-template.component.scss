@@ -289,6 +289,10 @@ $size__p: 16px;
 
         .content {
           padding-left: 60px;
+
+          position: relative;
+          top: 85px;
+
           & > * {
             line-height: 28px;
           }
