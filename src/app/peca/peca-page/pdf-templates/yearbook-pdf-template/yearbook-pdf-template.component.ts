@@ -31,7 +31,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticGoalTableData = null;
 
   // pages: any = [];
-  pager = new Pager();
+  pager = new Pager(1);
   listItems = [];
 
   indexPage: IndexTemplate = null;
@@ -137,30 +137,52 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
     this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
 
-    const listItems = [
-      {
-        label: 'mi escuela',
-        href: 'mi escuela',
-        pageNumber: this.pager.increment(),
-      },
-      {
-        label: 'coordinador',
-        href: 'coordinador',
-        pageNumber: this.pager.increment(),
-      },
-      {
-        label: 'padrino',
-        href: 'padrino',
-        pageNumber: this.pager.increment(),
-      },
-      {
-        label: schoolName,
-        href: schoolName,
-        pageNumber: this.pager.increment(),
-      },
+    // Setting Pager
+    const pages = [
+      this.mySchoolPage,
+      this.coordinatorPage,
+      this.coordinatorPage,
+      this.godFatherPage,
+      this.schoolPage,
     ];
 
-    this.listItems.push(...listItems);
+    const listItems = [];
+    pages.forEach((page) => {
+      page.setPagerInst(this.pager);
+      console.log(page.title);
+      console.log(page.getPage());
+
+      this.listItems.push({
+        label: page.title,
+        href: page.title,
+        pageNumber: page.getPage(),
+      });
+    });
+
+    // const listItems = [
+    //   {
+    //     label: 'mi escuela',
+    //     href: 'mi escuela',
+    //     pageNumber: this.pager.increment(),
+    //   },
+    //   {
+    //     label: 'coordinador',
+    //     href: 'coordinador',
+    //     pageNumber: this.pager.increment(),
+    //   },
+    //   {
+    //     label: 'padrino',
+    //     href: 'padrino',
+    //     pageNumber: this.pager.increment(),
+    //   },
+    //   {
+    //     label: schoolName,
+    //     href: schoolName,
+    //     pageNumber: this.pager.increment(),
+    //   },
+    // ];
+
+    // this.listItems.push(...listItems);
   }
 
   setSchoolGradePageGroup() {

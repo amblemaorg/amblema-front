@@ -2,14 +2,14 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="indexPage">
-      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: indexPage }"></ng-container>
-    </ng-container>
-
     <ng-container *ngIf="frontpage">
       <ng-container
         *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
       ></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="indexPage">
+      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: indexPage }"></ng-container>
     </ng-container>
 
     <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">

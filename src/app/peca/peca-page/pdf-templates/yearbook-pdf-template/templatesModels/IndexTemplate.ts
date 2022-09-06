@@ -1,4 +1,4 @@
-import { Template, TemplateOptions } from './Template';
+import { Template, TemplateOptions, Pager } from './';
 
 export class IndexTemplate extends Template {
   // listItems: any[];
@@ -26,17 +26,17 @@ export class IndexTemplate extends Template {
   getListItemsLength(listItems: any[]) {
     this.notNestedItems = [];
     this.setNotNestedItems(listItems);
-    console.log('this.notNestedItems', this.notNestedItems);
+    // console.log('this.notNestedItems', this.notNestedItems);
     return this.notNestedItems.length;
   }
 
   haveToWrapList(listItems: any[]) {
-    console.log(this.getListItemsLength(listItems));
+    // console.log(this.getListItemsLength(listItems));
 
     return this.getListItemsLength(listItems) > this.maxItemsToWrap;
   }
 
-  addListItems(listItems) {}
+  // addListItems(listItems) {}
 }
 
 interface ListItem {

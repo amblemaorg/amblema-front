@@ -1,3 +1,4 @@
+import { Pager } from './Pager';
 import { Template, TemplateOptions } from './Template';
 
 export class SecondLayoutTemplate extends Template {

@@ -1,30 +1,24 @@
 export class Pager {
-  private page = 0;
-  private pageCount = 0;
+  readonly total = 0;
 
-  constructor(lastPagesAdded: number, incrementFactor?: number) {
-    if (incrementFactor) {
-      this.increment(incrementFactor);
-    }
-    this.setPage(lastPagesAdded);
-  }
+  constructor(private page = 0) {}
 
-  setPage(lastPagesAdded = 0) {
-    this.page = this.pageCount + lastPagesAdded;
+  getPage() {
+    return this.page;
   }
 
   increment(factor = 1) {
-    this.pageCount += factor;
-    return this.pageCount;
+    this.page += factor;
+    return this.page;
   }
 
   decrement(factor = 1) {
-    this.pageCount -= factor;
-    return this.pageCount;
+    this.page -= factor;
+    return this.page;
   }
 }
 
 export interface PagerOptions {
-  lastPagesAdded;
+  // lastPagesAdded?: number;
   incrementFactor?: number;
 }
