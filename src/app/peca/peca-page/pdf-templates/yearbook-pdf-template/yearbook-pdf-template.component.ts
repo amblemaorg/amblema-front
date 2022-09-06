@@ -9,6 +9,7 @@ import {
   DiagnosticPageDataGroup,
   FrontPage,
   IndexTemplate,
+  Pager,
   SchoolGradePageGroup,
   SecondLayoutTemplate,
 } from './templatesModels';
@@ -29,9 +30,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticGraphicData = null;
   diagnosticGoalTableData = null;
 
-  pages: any = [];
+  // pages: any = [];
+  pager = new Pager();
+  listItems = [];
 
-  IndexPage: IndexTemplate = null;
+  indexPage: IndexTemplate = null;
   frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
   activitiesPage: ActivitiesPage = null;
@@ -86,12 +89,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   pageInit() {
+    this.setIndexPage();
     this.setFrontPage();
     this.setSecondLayoutTemplateGroup();
     this.setSchoolGradePageGroup();
     this.setActivitiesPage();
     this.setDiagnosticTemplateGroup();
-    this.setIndexPage();
   }
 
   setFrontPage() {
@@ -124,6 +127,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       historicalReviewImg,
       historicalReviewText,
     );
+
     this.coordinatorPage = new SecondLayoutTemplate(
       'coordinador',
       coordinatorImg,
@@ -132,6 +136,31 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
     this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
     this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
+
+    const listItems = [
+      {
+        label: 'mi escuela',
+        href: 'mi escuela',
+        pageNumber: this.pager.increment(),
+      },
+      {
+        label: 'coordinador',
+        href: 'coordinador',
+        pageNumber: this.pager.increment(),
+      },
+      {
+        label: 'padrino',
+        href: 'padrino',
+        pageNumber: this.pager.increment(),
+      },
+      {
+        label: schoolName,
+        href: schoolName,
+        pageNumber: this.pager.increment(),
+      },
+    ];
+
+    this.listItems.push(...listItems);
   }
 
   setSchoolGradePageGroup() {
@@ -172,40 +201,44 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   setIndexPage() {
-    const listItems: any[] = [];
+    this.indexPage = new IndexTemplate(this.listItems);
+    console.log(this.indexPage);
 
-    for (let index = 0; index < 30; index++) {
-      listItems.push({
-        label: 'pagina de prueba ' + index,
-        href: 'pagina de prueba',
-        pageNumber: index + '',
-      });
-    }
+    // this.indexPage.addListItem(this.listItems);
 
-    listItems.push([
-      {
-        label: 'pagina de prueba ',
-        href: 'pagina de prueba',
-        pageNumber: 1,
-      },
-      {
-        label: 'pagina de prueba ',
-        href: 'pagina de prueba',
-        pageNumber: 1,
-      },
-      [
-        {
-          label: 'pagina de prueba ',
-          href: 'pagina de prueba',
-          pageNumber: 1,
-        },
-        {
-          label: 'pagina de prueba ',
-          href: 'pagina de prueba',
-          pageNumber: 1,
-        },
-      ],
-    ]);
-    this.IndexPage = new IndexTemplate(listItems);
+    // const listItems: any[] = [];
+
+    // for (let index = 0; index < 43; index++) {
+    //   listItems.push({
+    //     label: 'pagina de prueba ' + index,
+    //     href: 'pagina de prueba',
+    //     pageNumber: index + '',
+    //   });
+    // }
+
+    // listItems.push([
+    //   {
+    //     label: 'pagina de prueba ',
+    //     href: 'pagina de prueba',
+    //     pageNumber: 1,
+    //   },
+    //   {
+    //     label: 'pagina de prueba ',
+    //     href: 'pagina de prueba',
+    //     pageNumber: 1,
+    //   },
+    //   [
+    //     {
+    //       label: 'pagina de prueba ',
+    //       href: 'pagina de prueba',
+    //       pageNumber: 1,
+    //     },
+    //     {
+    //       label: 'pagina de prueba ',
+    //       href: 'pagina de prueba',
+    //       pageNumber: 1,
+    //     },
+    //   ],
+    // ]);
   }
 }

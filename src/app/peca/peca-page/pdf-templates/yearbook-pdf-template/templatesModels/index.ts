@@ -1,4 +1,5 @@
 export * from './Template';
+export * from './Pager';
 export * from './ActivitiesPage';
 export * from './frontPage';
 export * from './schoolGradesTemplate';

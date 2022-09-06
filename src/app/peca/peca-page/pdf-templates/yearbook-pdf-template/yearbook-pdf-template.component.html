@@ -2,8 +2,8 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="IndexPage">
-      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: IndexPage }"></ng-container>
+    <ng-container *ngIf="indexPage">
+      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: indexPage }"></ng-container>
     </ng-container>
 
     <ng-container *ngIf="frontpage">
@@ -30,33 +30,6 @@
         ></ng-container>
       </ng-container>
     </ng-container>
-
-    <!-- <ng-container *ngIf="schoolSectionsPage">
-      <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
-        <ng-container
-          *ngFor="
-            let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(
-              schoolSectionsPage.data.galleryImgs
-            )
-          "
-        >
-          <ng-container
-            *ngTemplateOutlet="
-              galleryTemplate;
-              context: {
-                galleryImgs: galleryImgs,
-                options: {
-                  withSubtitle: true,
-                  limit: 0,
-                  offset: 0,
-                  backgroundClass: 'background--generic'
-                }
-              }
-            "
-          ></ng-container>
-        </ng-container>
-      </ng-container>
-    </ng-container> -->
 
     <ng-container *ngIf="activitiesPage">
       <ng-container *ngFor="let lapse of activitiesPage.data.lapses; let lapIdx = index">

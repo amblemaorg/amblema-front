@@ -1,14 +1,13 @@
 import { Template, TemplateOptions } from './Template';
 
 export class IndexTemplate extends Template {
-  listItems: any[];
-  notNestedItems: any[] = [];
+  // listItems: any[];
+  notNestedItems = [];
   maxItemsToWrap = 23;
+  maxItemsPerPaged = 48;
 
-  constructor(listItems: any[], templateOptions?: TemplateOptions) {
+  constructor(public listItems = [], templateOptions?: TemplateOptions) {
     super('indexTemplate', templateOptions);
-
-    this.setListItems(listItems);
   }
 
   setNotNestedItems(listItems: any[]) {
@@ -32,16 +31,16 @@ export class IndexTemplate extends Template {
   }
 
   haveToWrapList(listItems: any[]) {
+    console.log(this.getListItemsLength(listItems));
+
     return this.getListItemsLength(listItems) > this.maxItemsToWrap;
   }
 
-  setListItems(listItems: any[]) {
-    this.listItems = listItems;
-    return this.listItems;
-  }
+  addListItems(listItems) {}
 }
 
-interface listItem {
+interface ListItem {
   label: string;
   href: string;
+  pageNumber: number;
 }
