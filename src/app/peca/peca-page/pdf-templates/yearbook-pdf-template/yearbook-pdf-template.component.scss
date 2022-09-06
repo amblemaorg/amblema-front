@@ -1,0 +1,474 @@
+// Variables
+$black: #000000;
+$gray: #606060;
+$green: #81b03e;
+$blue: #00a9c4;
+
+// Text size
+$size__h1: 64px;
+$size__h2: 20px;
+$size__p: 16px;
+
+@media print {
+  .not-print {
+    display: none !important;
+  }
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  background: $blue;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 18px;
+  p {
+    color: white;
+  }
+
+  button {
+    background: white;
+    color: $green;
+    border: 2px solid white;
+    padding: 10px 45px;
+    border-radius: 5px;
+    font-size: $size__h2;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background: none;
+      color: white;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  img {
+    min-width: 200px;
+    width: 20vw;
+  }
+}
+
+.yearbook-pdf {
+  * {
+    color: $black;
+    font-family: 'myriad_proregular';
+    font-size: $size__p;
+  }
+
+  h1 {
+    font-size: $size__h1;
+  }
+
+  h1,
+  h2 {
+    color: $blue;
+    font-family: 'Montserrat';
+    font-weight: bold;
+  }
+
+  h2 {
+    text-transform: capitalize;
+    margin-bottom: 0;
+  }
+
+  h2,
+  h3 {
+    font-size: $size__h2;
+  }
+
+  h3 {
+    color: $black;
+    font-family: 'bahnschriftregular';
+    font-weight: bold;
+  }
+
+  p {
+    text-align: justify;
+
+    &.text-indent {
+      text-indent: 30px;
+    }
+
+    // &.description {
+    //   word-spacing: 10px;
+    // }
+  }
+
+  li {
+    font-family: 'myriad_proregular' !important;
+  }
+
+  .background--front-page {
+    background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
+    position: relative;
+  }
+
+  .background--generic {
+    background-image: url('../../../../../assets/images/pdf/yearbook/background.jpg');
+  }
+
+  .background--gallery {
+    background-image: url('../../../../../assets/images/pdf/yearbook/gallery-background.jpg');
+  }
+
+  .page {
+    min-width: 27.94cm;
+    min-height: 21.59cm;
+    width: 27.94cm;
+    height: 21.59cm;
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    padding: 100px 70px 100px 70px;
+
+    img {
+      max-width: 100%;
+    }
+
+    .page__content {
+      height: 100%;
+      // overflow: hidden;
+
+      .first-letter--uppercase {
+        text-transform: lowercase;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+
+      .container-img {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+
+      .tag-title {
+        @extend .first-letter--uppercase;
+        margin: 0;
+        margin-bottom: -2px;
+      }
+    }
+
+    .overflow--hidden {
+      overflow: hidden;
+    }
+  }
+
+  .layout--front {
+    width: 100%;
+
+    position: absolute;
+    top: 20px;
+    left: 0;
+
+    .primary-title {
+      @extend h2;
+      text-align: center;
+      text-transform: capitalize;
+      margin: 0;
+    }
+
+    .head {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+
+      .headings {
+        max-width: 60%;
+        text-align: center;
+        text-transform: uppercase;
+
+        position: relative;
+        top: 16px;
+
+        p {
+          font-size: $size__h2;
+          margin: 0;
+        }
+      }
+
+      .partner-img {
+        width: 180px;
+        height: 180px;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+
+    .body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      text-align: center;
+
+      position: relative;
+      top: 160px;
+
+      h1 {
+        font-weight: bold;
+        font-size: 64px !important;
+        line-height: 50px;
+        margin: 0px;
+      }
+
+      .school-name {
+        color: $black;
+        font-family: 'gill_sans_mt';
+        font-size: 28px;
+        margin: 6px 0px;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .layout--2 {
+    display: grid;
+    // grid-template-rows: repeat(2, 320px);
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, 50%);
+    justify-content: center;
+    row-gap: 40px;
+
+    .title {
+      color: $blue;
+      font-weight: bold;
+    }
+
+    .head {
+      overflow: hidden;
+
+      // display: grid;
+      // grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      column-gap: 20px;
+      // flex-direction:;
+
+      & > * {
+        width: 50%;
+      }
+
+      &.direction--reverse {
+        flex-direction: row-reverse;
+      }
+
+      .heading {
+        display: flex;
+        align-items: center;
+
+        .content {
+          padding-left: 60px;
+          & > * {
+            line-height: 28px;
+          }
+        }
+      }
+
+      .container-img {
+        height: 100%;
+      }
+    }
+
+    .description {
+      height: 90%;
+      column-count: 2;
+      column-fill: auto;
+    }
+  }
+
+  .layout--3 {
+    .container-img {
+      height: 280px;
+    }
+    .body {
+      height: 100%;
+      column-gap: 20px;
+
+      .col {
+        height: 100%;
+      }
+    }
+
+    .col-img--centered {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .layout--4 {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    justify-content: space-between;
+
+    .body {
+      // max-height: 57.5%;
+      max-height: 60%;
+      // overflow: hidden;
+      text-align: center;
+
+      .title {
+        margin: 0;
+      }
+      .subtitle {
+        font-size: $size__p + 1;
+      }
+
+      .description {
+        margin-top: 20px;
+      }
+    }
+    .gallery-container {
+      height: 230px;
+      justify-content: space-between;
+    }
+  }
+
+  .layout--diagnostic {
+    .head {
+      .title {
+        margin-bottom: -12px;
+      }
+    }
+    .body {
+      .visual-references {
+        margin-top: 20px;
+        margin-bottom: 30px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 250px;
+        column-gap: 60px;
+
+        .table-container {
+          .table {
+            tr {
+              &:first-child {
+                td {
+                  text-transform: initial !important;
+                }
+              }
+
+              &:first-child,
+              &:nth-child(2) {
+                td {
+                  font-weight: bold;
+                }
+              }
+
+              td {
+                border: 2px $gray solid;
+                font-size: 15px;
+                line-height: 18px;
+                padding: 4px 10px;
+                text-align: center;
+                text-transform: capitalize;
+                vertical-align: middle;
+
+                &:first-child {
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .layout--gallery {
+    // @extend .gallery-container;
+  }
+
+  // Customs
+  .layout--schoolSections {
+    @extend .layout--3;
+
+    .body {
+      height: 94%;
+      .col--centered {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h2 {
+        // margin-bottom: 10px;
+        text-align: center;
+
+        & + .list {
+          padding-top: 0 !important;
+        }
+      }
+
+      .container-img {
+        margin-bottom: 10px;
+        // img {
+        //   object-position: left;
+        // }
+      }
+
+      .list {
+        list-style: none;
+        padding: 0;
+        padding-top: 30px;
+        text-align: center;
+
+        li {
+          color: $black !important;
+          line-height: 20px;
+          text-transform: uppercase;
+        }
+
+        &.padding-top {
+          padding-top: 30px;
+        }
+      }
+    }
+
+    .teacher {
+      display: flex;
+      justify-content: end;
+
+      .name {
+        font-size: $size__p;
+
+        span {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

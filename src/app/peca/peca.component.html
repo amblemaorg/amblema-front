@@ -1,9 +1,9 @@
 <nb-layout>
   <nb-layout-header fixed>
-    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="padding: 0">
+    <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="padding: 0;">
       <nb-icon
         icon="bars"
-        style="color: white; font-size: 1.5rem"
+        style="color: white; font-size: 1.5rem;"
         (click)="toggle()"
       ></nb-icon>
     </div>
@@ -30,14 +30,16 @@
           *ngIf="userType !== '0' && userType !== '1'"
           class="dropdown-item"
           [routerLink]="['perfil-usuario']"
-          >Perfil</a
         >
+          Perfil
+        </a>
         <a
           class="dropdown-item"
           [routerLink]="['/auth/logout']"
           [queryParams]="{ reload: 1 }"
-          >Salir</a
         >
+          Salir
+        </a>
       </div>
     </div>
   </nb-layout-header>
@@ -95,8 +97,9 @@
           class="btn"
           [routerLink]="['/auth/logout']"
           [queryParams]="{ reload: 1 }"
-          >Salir</a
         >
+          Salir
+        </a>
       </div>
     </div>
   </div>

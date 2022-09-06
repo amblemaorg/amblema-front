@@ -1,38 +1,23 @@
-import {
-  ComponentFactoryResolver,
-  ComponentFactory,
-  ViewContainerRef,
-  ComponentRef,
-} from "@angular/core";
-import {
-  ChartComponent,
-  LineChartComponent,
-  PieChartComponent,
-  BarChartComponent,
-} from "./chart-components";
-import { ChartJSLineChart as LineChart } from "./chartjs-adapters/chartjs-line-chart";
-import { ChartJSBarChart as BarChart } from "./chartjs-adapters/chartjs-bar-chart";
+import { ComponentFactoryResolver, ComponentFactory, ViewContainerRef, ComponentRef } from '@angular/core';
+import { ChartComponent, LineChartComponent, PieChartComponent, BarChartComponent } from './chart-components';
+import { ChartJSLineChart as LineChart } from './chartjs-adapters/chartjs-line-chart';
+import { ChartJSBarChart as BarChart } from './chartjs-adapters/chartjs-bar-chart';
 
 export class ChartComponentFactory {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  public createNewChartFactory(
-    chartOptions: any
-  ): ComponentFactory<ChartComponent> {
+  public createNewChartFactory(chartOptions: any): ComponentFactory<ChartComponent> {
     switch (chartOptions.type) {
-      case "line":
+      case 'line':
         return this.componentFactoryResolver.resolveComponentFactory(LineChart);
-      case "bar":
+      case 'bar':
         return this.componentFactoryResolver.resolveComponentFactory(BarChart);
       default:
         return this.componentFactoryResolver.resolveComponentFactory(LineChart);
     }
   }
 
-  public createChartComponent(
-    containerRef: ViewContainerRef,
-    chartOptions: ChartComponent
-  ): ChartComponent {
+  public createChartComponent(containerRef: ViewContainerRef, chartOptions: ChartComponent): ChartComponent {
     if (containerRef && chartOptions && chartOptions.type) {
       containerRef.clear();
       const concreteChartFactory = this.createNewChartFactory(chartOptions);
@@ -40,13 +25,13 @@ export class ChartComponentFactory {
       this.setChartComponentAttributes(chartComponent, chartOptions);
 
       switch (chartOptions.type) {
-        case "line":
+        case 'line':
           const lineChartInstance = <LineChartComponent>chartComponent.instance;
           const lineChartOptions = <LineChartComponent>chartOptions;
           lineChartInstance.asymptotes = lineChartOptions.asymptotes;
           lineChartInstance.configAsymptotes();
           return lineChartInstance;
-        case "bar":
+        case 'bar':
           const barChartInstance = <BarChartComponent>chartComponent.instance;
           const barChartOptions = <BarChartComponent>chartOptions;
           barChartInstance.asymptotes = barChartOptions.asymptotes;
@@ -61,7 +46,7 @@ export class ChartComponentFactory {
 
   public setChartComponentAttributes(
     chartComponentRef: ComponentRef<ChartComponent>,
-    chartOptions: ChartComponent
+    chartOptions: ChartComponent,
   ): ComponentRef<ChartComponent> {
     const chartComponentInstance = <ChartComponent>chartComponentRef.instance;
     chartComponentInstance.title = chartOptions.title;
@@ -71,11 +56,12 @@ export class ChartComponentFactory {
     chartComponentInstance.xaxis = chartOptions.xaxis;
     chartComponentInstance.yaxis = chartOptions.yaxis;
     chartComponentInstance.grid = chartOptions.grid;
-    chartComponentInstance.configChart();
+    chartComponentInstance.configChart(chartOptions.legend);
     chartComponentInstance.configMarkers();
     chartComponentInstance.configXAxis();
     chartComponentInstance.configYAxis();
     chartComponentInstance.configGrid();
+
     return chartComponentRef;
   }
 }
