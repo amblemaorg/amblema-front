@@ -1,12 +1,19 @@
+import { Pager } from './Pager';
+import { Template, TemplateOptions } from './Template';
 import { SchoolSection } from '../pdfYearbookData.interface';
 
 export class SchoolGradePageGroup {
   // group of templates
 
-  pages: SchoolGradePage[] = [];
+  pages: SchoolGradeTemplate[] = [];
+  indexListItems: any[] = [];
 
-  constructor(public data: { schoolSections: SchoolSection[] }) {
+  constructor(public data: { schoolSections: SchoolSection[] }, pagerInst?: Pager) {
     this.setTemplates();
+
+    if (pagerInst) {
+      this.setPager(pagerInst);
+    }
   }
 
   // from data add new Templates (pages)
@@ -16,19 +23,38 @@ export class SchoolGradePageGroup {
     //Adding school templates (pages)
     schoolSections.forEach((section) => {
       const { sectionName, sectionImg, sectionStudents, teacher } = section;
-      this.pages.push(new SchoolGradePage(sectionName, sectionImg, teacher, sectionStudents));
+      this.pages.push(new SchoolGradeTemplate(sectionName, sectionImg, teacher, sectionStudents));
     });
+  }
+
+  setPager(pagerInst: Pager) {
+    this.pages.forEach((pageTmp) => {
+      pageTmp.setPagerInst(pagerInst, pageTmp.name);
+      this.indexListItems.push({
+        label: pageTmp.name,
+        href: pageTmp.pgHref,
+        pageNumber: pageTmp.page,
+      });
+    });
+    console.log('SchoolGradeTemplate', this.indexListItems);
   }
 }
 
-class SchoolGradePage {
+class SchoolGradeTemplate extends Template {
   students: {
     firstColumn: any[];
     secondColumn: any[];
   };
   isFirstColumnEmpty = false;
 
-  constructor(public name: string, public img: string, public teacher: any, students: string[]) {
+  constructor(
+    public name: string,
+    public img: string,
+    public teacher: any,
+    students: string[],
+    templateOptions?: TemplateOptions,
+  ) {
+    super('schoolGradeTemplate', templateOptions);
     this.students = this.getStudents(students);
 
     this.isFirstColumnEmpty = this.students.firstColumn.length > 0;
@@ -43,7 +69,8 @@ class SchoolGradePage {
   getStudents(students: string[], sectionImg = this.img) {
     const maxColumnSize = 27;
     const maxSmallerColumnSize = 13;
-    const restMaxLength = students.length > maxColumnSize + maxSmallerColumnSize ? maxColumnSize : students.length;
+    const restMaxLength =
+      students.length > maxColumnSize + maxSmallerColumnSize ? maxColumnSize : students.length;
 
     if (sectionImg) {
       if (students.length <= 15) {

@@ -41,6 +41,6 @@ export class IndexTemplate extends Template {
 
 interface ListItem {
   label: string;
-  href: string;
-  pageNumber: number;
+  href?: string;
+  pageNumber?: number;
 }

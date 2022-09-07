@@ -137,13 +137,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
     this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
 
-    // Setting Pager
     const pages = [this.mySchoolPage, this.coordinatorPage, this.godFatherPage, this.schoolPage];
 
-    const listItems = [];
-
+    // Setting Pager
     pages.forEach((pageTmp) => {
-      pageTmp.setPagerInst(this.pager, pageTmp.title.replace(' ', '-'));
+      pageTmp.setPagerInst(this.pager, pageTmp.title);
 
       this.listItems.push({
         label: pageTmp.title,
@@ -159,7 +157,21 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   setSchoolGradePageGroup() {
     const { schoolSections } = this.pdfData;
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections });
+    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections }, this.pager);
+
+    console.log(
+      'this.schoolGradePageGroup.indexListItems',
+      this.schoolGradePageGroup.indexListItems,
+    );
+
+    this.listItems.push(
+      {
+        label: 'grados y secciones',
+        // href: '',
+        // pageNumber: pageTmp.page,
+      },
+      this.schoolGradePageGroup.indexListItems,
+    );
   }
 
   setActivitiesPage() {

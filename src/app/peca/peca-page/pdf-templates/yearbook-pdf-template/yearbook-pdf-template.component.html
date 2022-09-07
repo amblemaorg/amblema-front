@@ -91,8 +91,16 @@
 <ng-template #indexListItem let-listItems="listItems">
   <ng-container *ngIf="!isArray(listItems)">
     <li>
-      <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
-      <span>{{ listItems.pageNumber }}</span>
+      <ng-container *ngIf="listItems.href">
+        <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
+        <span *ngIf="listItems.pageNumber"
+          ><a [href]="'#' + listItems.href">{{ listItems.pageNumber }}</a></span
+        >
+      </ng-container>
+      <ng-container *ngIf="!listItems.href"
+        ><a>{{ listItems.label }}</a>
+        <span *ngIf="listItems.pageNumber">{{ listItems.pageNumber }}</span>
+      </ng-container>
     </li>
   </ng-container>
 
@@ -121,13 +129,6 @@
             ></ng-container>
           </ng-container>
         </ul>
-        <!-- <ul class="list">
-          <ng-container *ngFor="let listItem of page.listItems">
-            <ng-container
-              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
-            ></ng-container>
-          </ng-container>
-        </ul> -->
       </div>
     </div>
   </section>
@@ -292,7 +293,7 @@
 
 <!-- ### SchoolSections -->
 <ng-template #schoolStudentListTemplate let-page="page">
-  <section class="page background--generic">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">
         <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
@@ -334,6 +335,9 @@
           <strong>{{ page.teacher.fullName }}</strong>
         </div>
       </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
     </div>
   </section>
 </ng-template>

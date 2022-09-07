@@ -141,7 +141,7 @@ $size__p: 16px;
       max-width: 100%;
     }
 
-    .pager {
+    & > .pager {
       position: absolute;
       right: 48px;
     }
@@ -210,22 +210,22 @@ $size__p: 16px;
         }
 
         li {
+          color: $black !important;
+          font-size: $size__h2 !important;
           line-height: 24px;
-          text-transform: lowercase;
+          // text-transform: lowercase;
 
           display: flex;
           justify-content: space-between;
 
           a {
+            pointer-events: none;
             text-decoration: none;
           }
 
           &::first-letter,
           a::first-letter {
-            text-transform: uppercase;
-          }
-          span {
-            text-transform: capitalize;
+            text-transform: uppercase !important;
           }
         }
       }
