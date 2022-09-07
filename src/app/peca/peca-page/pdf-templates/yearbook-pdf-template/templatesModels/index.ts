@@ -7,3 +7,4 @@ export * from './TemplateThird';
 export * from './SecondLayoutTemplate';
 export * from './/DiagnosticTemplate';
 export * from './IndexTemplate';
+export * from './GalleryTemplate';

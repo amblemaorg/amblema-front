@@ -1,29 +1,34 @@
-export class ActivitiesPage {
+import { Template, TemplateOptions } from './Template';
+export class ActivityTemplate extends Template {
   constructor(
-    public data: any,
-    public template = 'layout4Template',
-    public show = false,
-    public priority = 0,
+    public name: string,
+    public description = '',
+    public images = [],
+    public characterLimit = 0,
+    templateOptions?: TemplateOptions,
   ) {
-    this.data.lapses = this.getActivities()
-    // console.log('ActivitiesPage', this.data)
+    super('activityTemplate', templateOptions);
+
+    // if (this.isExpandedGallery) {
+    //   this.templateOptions.pagerOptions.incrementFactor = 1;
+    // }
+  }
+}
+
+export class ActivitiesPageData {
+  constructor(public data: any) {
+    this.data.lapses = this.getActivities();
   }
 
   getActivities() {
-    // console.log('ActivitiesPage 222', this.data.lapses)
-
     return this.data.lapses.map((lap) => {
-      lap.activities = lap.activities.filter(
-        (activity) => activity.description && activity.name,
-      )
+      lap.activities = lap.activities.filter((activity) => activity.description && activity.name);
       lap.activities = lap.activities.map((activity) => ({
         ...activity,
-        isExpandedGallery: activity.isExpandedGallery
-          ? activity.isExpandedGallery
-          : false,
-      }))
+        isExpandedGallery: activity.isExpandedGallery ? activity.isExpandedGallery : false,
+      }));
 
-      return lap
-    })
+      return lap;
+    });
   }
 }

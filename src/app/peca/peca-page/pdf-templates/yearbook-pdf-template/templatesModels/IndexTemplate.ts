@@ -1,12 +1,13 @@
-import { Template, TemplateOptions, Pager } from './';
+import { Template, TemplateOptions } from './';
 
+type RecursiveArray = Array<RecursiveArray | IndexListItem>;
 export class IndexTemplate extends Template {
   // listItems: any[];
   notNestedItems = [];
   maxItemsToWrap = 23;
   maxItemsPerPaged = 48;
 
-  constructor(public listItems = [], templateOptions?: TemplateOptions) {
+  constructor(public listItems: RecursiveArray, templateOptions?: TemplateOptions) {
     super('indexTemplate', templateOptions);
   }
 
@@ -39,8 +40,11 @@ export class IndexTemplate extends Template {
   // addListItems(listItems) {}
 }
 
-interface ListItem {
-  label: string;
-  href?: string;
-  pageNumber?: number;
+export class IndexListItem {
+  constructor(
+    public label: string,
+    public href?: string,
+    public pageNumber?: number,
+    public show = true,
+  ) {}
 }

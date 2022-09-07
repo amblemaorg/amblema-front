@@ -203,6 +203,10 @@ $size__p: 16px;
           column-gap: 75px;
         }
 
+        ul {
+          padding-left: 10px;
+        }
+
         &,
         ul,
         li {
@@ -218,9 +222,16 @@ $size__p: 16px;
           display: flex;
           justify-content: space-between;
 
+          & > a {
+            width: 85.9%;
+          }
           a {
             pointer-events: none;
             text-decoration: none;
+
+            &:not([href]) {
+              font-weight: bold;
+            }
           }
 
           &::first-letter,

@@ -34,6 +34,7 @@ export class DiagnosticTemplate extends Template {
     chart: Chart,
     table: string[][] = [],
     public subtitle?: string,
+    public characterLimit = 0,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
@@ -422,13 +423,20 @@ export class DiagnosticPageDataGroup {
     return this.pages;
   }
 
-  getPagesWithDiagnosticTemplate(lapseName?: string) {
+  getPagesWithDiagnosticTemplate(lapseName?: string, characterLimit = 0) {
     const pages = lapseName ? this.pages.filter((pg) => pg.lapseName === lapseName) : this.pages;
 
     return pages.map((page, pgIdx) => {
       const { diagnosticText, diagnosticAnalysis, chart, table } = page;
       const lapseName = pgIdx === 0 ? page.lapseName : undefined;
-      return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, table, lapseName);
+      return new DiagnosticTemplate(
+        diagnosticText,
+        diagnosticAnalysis,
+        chart,
+        table,
+        lapseName,
+        characterLimit,
+      );
     });
   }
 }

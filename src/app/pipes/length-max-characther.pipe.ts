@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core'
+import { Pipe, PipeTransform } from '@angular/core';
 
 /**
  * @description Recorta caracteres del string y concatena por defecto ...
@@ -18,12 +18,13 @@ import { Pipe, PipeTransform } from '@angular/core'
 export class Excerpt implements PipeTransform {
   transform(value: string, long: number, end: string = '...'): string {
     if (value) {
-      if (value.length <= long) {
-        return value
-      }
-      return value.substr(0, long) + end
+      if (long === 0) return value;
+
+      if (value.length <= long) return value;
+
+      return value.substr(0, long) + end;
     }
 
-    return value
+    return value;
   }
 }

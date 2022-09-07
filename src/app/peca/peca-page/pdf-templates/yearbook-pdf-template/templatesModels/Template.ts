@@ -8,7 +8,7 @@ export interface TemplateOptions {
 }
 
 export class Template {
-  private templateOptions: TemplateOptions = {
+  protected templateOptions: TemplateOptions = {
     show: false,
     priority: 0,
     pagerOptions: {
@@ -20,16 +20,17 @@ export class Template {
   page = 1;
 
   constructor(public templateName: string, templateOptions?: TemplateOptions) {
-    this.setTemplateOptions(templateOptions);
+    this.addTemplateOptions(templateOptions);
   }
 
-  setPagerInst(pagerInst: Pager, href: string) {
-    const regex = /[!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`{\|}~]/gi;
-    href = href.replace(regex, ' ');
-    href = href.replace(/\s/g, '-');
+  setPagerInst(pagerInst: Pager, href?: string) {
     this.setPage(pagerInst);
-
-    this.pgHref = `${href}-${this.page}`;
+    if (href) {
+      const regex = /[!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`{\|}~]/gi;
+      href = href.replace(regex, ' ');
+      href = href.replace(/\s/g, '-');
+      this.pgHref = `${href}-${this.page}`;
+    }
   }
 
   setPage(pagerInst: Pager) {
@@ -38,7 +39,7 @@ export class Template {
     this.page = pagerInst.getPages();
   }
 
-  setTemplateOptions(options?: TemplateOptions) {
+  addTemplateOptions(options?: TemplateOptions) {
     if (options) {
       return {
         ...this.templateOptions,

@@ -5,9 +5,12 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
-  ActivitiesPage,
+  ActivityTemplate,
   DiagnosticPageDataGroup,
+  DiagnosticTemplate,
   FrontPage,
+  GalleryTemplate,
+  IndexListItem,
   IndexTemplate,
   Pager,
   SchoolGradePageGroup,
@@ -37,7 +40,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   indexPage: IndexTemplate = null;
   frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
-  activitiesPage: ActivitiesPage = null;
 
   // layout2
   mySchoolPage: SecondLayoutTemplate = null;
@@ -45,8 +47,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   godFatherPage: SecondLayoutTemplate = null;
   schoolPage: SecondLayoutTemplate = null;
 
-  // diagnosticTemplate
-  lapsesDiagnosticTmpGroup = [];
+  // layout4Template
+  lapsePages = [];
 
   ngOnInit() {
     this.pdfData = this.pdfService.pdfData;
@@ -93,8 +95,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setFrontPage();
     this.setSecondLayoutTemplateGroup();
     this.setSchoolGradePageGroup();
-    this.setActivitiesPage();
-    this.setDiagnosticTemplateGroup();
+    this.setLapsePages();
   }
 
   setFrontPage() {
@@ -143,11 +144,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     pages.forEach((pageTmp) => {
       pageTmp.setPagerInst(this.pager, pageTmp.title);
 
-      this.listItems.push({
-        label: pageTmp.title,
-        href: pageTmp.pgHref,
-        pageNumber: pageTmp.page,
-      });
+      this.listItems.push(new IndexListItem(pageTmp.title, pageTmp.pgHref, pageTmp.page));
     });
 
     console.log(this.godFatherPage.pgHref);
@@ -174,13 +171,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
   }
 
-  setActivitiesPage() {
-    const { lapses } = this.pdfData;
-
-    this.activitiesPage = new ActivitiesPage({ lapses });
-  }
-
-  async setDiagnosticTemplateGroup() {
+  private getDiagnosticPageDataGroup() {
     const graphics = this.pdfService.getGraphics();
 
     if (!graphics) {
@@ -188,21 +179,98 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     }
 
     const { lapses, schoolYear } = this.pdfData;
-    this.diagnosticPageDataGroup = new DiagnosticPageDataGroup(
+    return new DiagnosticPageDataGroup(
       graphics,
       lapses,
       schoolYear,
       this.diagnosticGraphicData,
       this.diagnosticGoalTableData,
     );
+  }
+
+  // private getMappedActivitiesOnLapsesData() {
+  //   const { lapses } = this.pdfData;
+
+  //   return lapses.map((lap) => {
+  //     lap.activities = lap.activities.filter((activity) => activity.description && activity.name);
+
+  //     lap.activities = lap.activities.map((activity) => ({
+  //       ...activity,
+  //       isExpandedGallery: activity['isExpandedGallery'] ? activity['isExpandedGallery'] : false,
+  //     }));
+
+  //     return lap;
+  //   });
+  // }
+
+  setLapsePages() {
+    const pages = [];
+    const indexListItems = [];
+
+    const { lapses } = this.pdfData;
+
+    const diagnosticPageDataGroup = this.getDiagnosticPageDataGroup();
+
+    const activityCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesActivities',
+    );
+    const diagnosticCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesDiagnostic',
+    );
+
+    const getLisItems = (page) => {
+      return page.map((pageTmp) => {
+        const label = pageTmp.title ? pageTmp.title : pageTmp.name;
+
+        pageTmp.setPagerInst(this.pager, label);
+
+        return new IndexListItem(
+          label,
+          pageTmp.pgHref,
+          pageTmp.page,
+          pageTmp.templateName !== 'galleryTemplate',
+        );
+      });
+    };
 
     lapses.forEach((lapse) => {
-      this.lapsesDiagnosticTmpGroup.push(
-        this.diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(lapse.lapseName),
+      const diagnosticsPage = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
+        lapse.lapseName,
+        diagnosticCharacterLimit,
+      );
+
+      const activities = [];
+
+      for (let index = 0; index < lapse.activities.length; index++) {
+        const activity = lapse.activities[index];
+
+        const { name, description, images } = activity;
+
+        const isExpandedGallery = true;
+
+        if (!(description && name)) {
+          continue;
+        }
+
+        activities.push(new ActivityTemplate(name, description, images, activityCharacterLimit));
+
+        if (isExpandedGallery) {
+          activities.push(new GalleryTemplate(images));
+        }
+      }
+
+      pages.push(...diagnosticsPage, ...activities);
+
+      indexListItems.push(
+        new IndexListItem(lapse.lapseName),
+        [new IndexListItem('Diagnósticos'), [...getLisItems(diagnosticsPage)]],
+        [new IndexListItem('Actividades'), [...getLisItems(activities)]],
       );
     });
 
-    console.log('this.lapsesDiagnosticTmpGroup', this.lapsesDiagnosticTmpGroup);
+    console.log({ pages });
+    this.lapsePages = pages;
+    this.listItems.push(...indexListItems);
   }
 
   setIndexPage() {
