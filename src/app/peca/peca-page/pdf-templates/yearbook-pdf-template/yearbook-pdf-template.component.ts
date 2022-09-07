@@ -138,51 +138,22 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
 
     // Setting Pager
-    const pages = [
-      this.mySchoolPage,
-      this.coordinatorPage,
-      this.coordinatorPage,
-      this.godFatherPage,
-      this.schoolPage,
-    ];
+    const pages = [this.mySchoolPage, this.coordinatorPage, this.godFatherPage, this.schoolPage];
 
     const listItems = [];
-    pages.forEach((page) => {
-      page.setPagerInst(this.pager);
-      console.log(page.title);
-      console.log(page.getPage());
+
+    pages.forEach((pageTmp) => {
+      pageTmp.setPagerInst(this.pager, pageTmp.title.replace(' ', '-'));
 
       this.listItems.push({
-        label: page.title,
-        href: page.title,
-        pageNumber: page.getPage(),
+        label: pageTmp.title,
+        href: pageTmp.pgHref,
+        pageNumber: pageTmp.page,
       });
     });
 
-    // const listItems = [
-    //   {
-    //     label: 'mi escuela',
-    //     href: 'mi escuela',
-    //     pageNumber: this.pager.increment(),
-    //   },
-    //   {
-    //     label: 'coordinador',
-    //     href: 'coordinador',
-    //     pageNumber: this.pager.increment(),
-    //   },
-    //   {
-    //     label: 'padrino',
-    //     href: 'padrino',
-    //     pageNumber: this.pager.increment(),
-    //   },
-    //   {
-    //     label: schoolName,
-    //     href: schoolName,
-    //     pageNumber: this.pager.increment(),
-    //   },
-    // ];
-
-    // this.listItems.push(...listItems);
+    console.log(this.godFatherPage.pgHref);
+    console.log(this.godFatherPage.page);
   }
 
   setSchoolGradePageGroup() {
@@ -225,42 +196,5 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   setIndexPage() {
     this.indexPage = new IndexTemplate(this.listItems);
     console.log(this.indexPage);
-
-    // this.indexPage.addListItem(this.listItems);
-
-    // const listItems: any[] = [];
-
-    // for (let index = 0; index < 43; index++) {
-    //   listItems.push({
-    //     label: 'pagina de prueba ' + index,
-    //     href: 'pagina de prueba',
-    //     pageNumber: index + '',
-    //   });
-    // }
-
-    // listItems.push([
-    //   {
-    //     label: 'pagina de prueba ',
-    //     href: 'pagina de prueba',
-    //     pageNumber: 1,
-    //   },
-    //   {
-    //     label: 'pagina de prueba ',
-    //     href: 'pagina de prueba',
-    //     pageNumber: 1,
-    //   },
-    //   [
-    //     {
-    //       label: 'pagina de prueba ',
-    //       href: 'pagina de prueba',
-    //       pageNumber: 1,
-    //     },
-    //     {
-    //       label: 'pagina de prueba ',
-    //       href: 'pagina de prueba',
-    //       pageNumber: 1,
-    //     },
-    //   ],
-    // ]);
   }
 }

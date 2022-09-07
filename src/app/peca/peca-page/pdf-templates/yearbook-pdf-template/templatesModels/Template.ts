@@ -1,8 +1,10 @@
-import { Pager, PagerOptions } from './Pager';
+import { Pager } from './Pager';
 export interface TemplateOptions {
   show?: boolean;
   priority?: number;
-  pagerOptions?: PagerOptions;
+  pagerOptions?: {
+    incrementFactor?: number;
+  };
 }
 
 export class Template {
@@ -10,29 +12,27 @@ export class Template {
     show: false,
     priority: 0,
     pagerOptions: {
-      // lastPagesAdded: 0,
       incrementFactor: 1,
     },
   };
-  pager: Pager = null;
+
+  pgHref: string;
+  page = 1;
 
   constructor(public templateName: string, templateOptions?: TemplateOptions) {
     this.setTemplateOptions(templateOptions);
-
-    // if (!pager) {
-    //   const { lastPagesAdded, incrementFactor } = this.templateOptions.pagerOptions;
-    //   this.pager = new Pager(lastPagesAdded, incrementFactor);
-    // }
   }
 
-  setPagerInst(pagerInst: Pager) {
+  setPagerInst(pagerInst: Pager, href: string) {
+    this.setPage(pagerInst);
+
+    this.pgHref = `${href}-${this.page}`;
+  }
+
+  setPage(pagerInst: Pager) {
     const { incrementFactor } = this.templateOptions.pagerOptions;
-    this.pager = pagerInst;
-    this.pager.increment(incrementFactor);
-  }
-
-  getPage() {
-    return this.pager.getPage();
+    pagerInst.increment(incrementFactor);
+    this.page = pagerInst.getPages();
   }
 
   setTemplateOptions(options?: TemplateOptions) {

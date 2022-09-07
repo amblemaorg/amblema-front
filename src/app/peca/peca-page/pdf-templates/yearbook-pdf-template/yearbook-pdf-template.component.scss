@@ -135,8 +135,15 @@ $size__p: 16px;
     overflow: hidden;
     padding: 100px 70px 100px 70px;
 
+    position: relative;
+
     img {
       max-width: 100%;
+    }
+
+    .pager {
+      position: absolute;
+      right: 48px;
     }
 
     .page__content {
@@ -216,6 +223,9 @@ $size__p: 16px;
           &::first-letter,
           a::first-letter {
             text-transform: uppercase;
+          }
+          span {
+            text-transform: capitalize;
           }
         }
       }

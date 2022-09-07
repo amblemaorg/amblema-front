@@ -181,7 +181,7 @@
 </ng-template>
 
 <ng-template #layout2Template let-page="page">
-  <section class="page background--generic">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--2">
       <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
         <div class="heading">
@@ -207,6 +207,9 @@
           "
         ></span>
       </p>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
     </div>
   </section>
 </ng-template>
