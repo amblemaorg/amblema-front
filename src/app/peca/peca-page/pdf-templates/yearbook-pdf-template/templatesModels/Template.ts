@@ -50,12 +50,21 @@ export interface TemplateOptions {
   };
 }
 
+export const showClauseFn = (pageTmp): boolean => {
+  return true;
+};
+
+export const getPageLabelKeyFn = (pageTmp): string => {
+  return 'title';
+};
+
 export class TemplateUtils {
   static addItemsToIndex(
     pagesTmp: any[],
     pagerInst: Pager,
-    pageLabelKey = 'title',
+    getLabelKey = getPageLabelKeyFn,
     parentItem?: IndexListItem,
+    showClause = showClauseFn,
   ): RecursiveArrayIndexListItem {
     const listItems = [];
     const childItems = [];
@@ -66,14 +75,16 @@ export class TemplateUtils {
 
     for (let index = 0; index < pagesTmp.length; index++) {
       const pageTmp = pagesTmp[index];
-      pageTmp.setPagerInst(pagerInst, pageTmp[pageLabelKey]);
+      const labelKey = getLabelKey(pageTmp);
+      pageTmp.setPagerInst(pagerInst, pageTmp[labelKey]);
 
       if (parentItem) {
         childItems.push(
           new IndexListItem(
-            pageTmp[pageLabelKey],
+            pageTmp[labelKey],
             pageTmp.pgHref,
             pageTmp.page,
+            showClause(pageTmp),
           ),
         );
 
@@ -81,7 +92,12 @@ export class TemplateUtils {
       }
 
       listItems.push(
-        new IndexListItem(pageTmp[pageLabelKey], pageTmp.pgHref, pageTmp.page),
+        new IndexListItem(
+          pageTmp[labelKey],
+          pageTmp.pgHref,
+          pageTmp.page,
+          showClause(pageTmp),
+        ),
       );
     }
 
