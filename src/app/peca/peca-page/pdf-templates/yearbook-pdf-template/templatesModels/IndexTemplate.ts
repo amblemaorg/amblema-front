@@ -53,9 +53,49 @@ export class IndexTemplateUtils {
     return this.notNestedItems;
   }
 
-  // pagerListItems(listItems: RecursiveArrayIndexListItem) {
-  //   const listItemsPaged = [];
-  // }
+  buildNestListItems(notNestedItems: IndexListItem[]) {
+    const nestedListItems = [];
+
+    for (let index = 0; index < notNestedItems.length; index++) {
+      const item = notNestedItems[index];
+      let nestedItem = [];
+
+      // console.log(item.arrayLevel);
+
+      for (let level = 0; level <= item.arrayLevel; level++) {
+        if (index == 0) {
+          console.log('buildNestListItems - level', level);
+        }
+
+        if (level === item.arrayLevel) {
+          if (nestedItem[level]) {
+            nestedItem[level].push(item);
+          } else {
+            nestedItem[level] = item;
+          }
+
+          nestedListItems.push(...nestedItem);
+          continue;
+        }
+
+        if (!nestedItem[level]) {
+          nestedItem[level] = [];
+        }
+      }
+
+      if (index === 0 || index === 5 || index === 10) {
+        console.log('buildNestListItems', nestedItem);
+      }
+    }
+
+    // for (let index = 0; index < nestedListItems.length; index++) {
+    //   const listItemToNest = nestedListItems[index];
+
+    //   Array.isArray(listItemToNest)
+
+    // }
+    return nestedListItems;
+  }
 }
 
 export class IndexListItem {
