@@ -46,6 +46,7 @@ export class SchoolGradePageGroup {
     this.indexListItems = TemplateUtils.addItemsToIndex(
       this.pages,
       pagerInst,
+      'name',
       new IndexListItem('grados y secciones'),
     );
 

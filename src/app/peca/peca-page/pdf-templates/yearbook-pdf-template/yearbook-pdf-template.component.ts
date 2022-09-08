@@ -13,8 +13,10 @@ import {
   IndexListItem,
   IndexTemplate,
   Pager,
+  RecursiveArrayIndexListItem,
   SchoolGradePageGroup,
   SecondLayoutTemplate,
+  TemplateUtils,
 } from './templatesModels';
 
 @Component({
@@ -35,7 +37,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   // pages: any = [];
   pager = new Pager(1);
-  listItems = [];
+  listItems: RecursiveArrayIndexListItem = [];
 
   indexPage: IndexTemplate = null;
   frontpage: FrontPage = null;
@@ -96,6 +98,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setSecondLayoutTemplateGroup();
     this.setSchoolGradePageGroup();
     this.setLapsePages();
+
+    console.log('listItems', this.listItems);
   }
 
   setFrontPage() {
@@ -157,13 +161,19 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     ];
 
     // Setting Pager
-    pages.forEach((pageTmp) => {
-      pageTmp.setPagerInst(this.pager, pageTmp.title);
+    // pages.forEach((pageTmp) => {
+    //   pageTmp.setPagerInst(this.pager, pageTmp.title);
 
-      this.listItems.push(
-        new IndexListItem(pageTmp.title, pageTmp.pgHref, pageTmp.page),
-      );
-    });
+    //   this.listItems.push(
+    //     new IndexListItem(pageTmp.title, pageTmp.pgHref, pageTmp.page),
+    //   );
+    // });
+
+    const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
+
+    console.log('listItems', listItems);
+
+    this.listItems.push(...listItems);
 
     console.log(this.godFatherPage.pgHref);
     console.log(this.godFatherPage.page);

@@ -54,23 +54,40 @@ export class TemplateUtils {
   static addItemsToIndex(
     pagesTmp: any[],
     pagerInst: Pager,
+    pageLabelKey = 'title',
     parentItem?: IndexListItem,
   ): RecursiveArrayIndexListItem {
     const listItems = [];
-    const items = [];
+    const childItems = [];
 
     if (parentItem) {
       listItems.push(parentItem);
     }
 
-    pagesTmp.forEach((pageTmp) => {
-      pageTmp.setPagerInst(pagerInst, pageTmp.name);
+    for (let index = 0; index < pagesTmp.length; index++) {
+      const pageTmp = pagesTmp[index];
+      pageTmp.setPagerInst(pagerInst, pageTmp[pageLabelKey]);
 
-      items.push(new IndexListItem(pageTmp.name, pageTmp.pgHref, pageTmp.page));
-    });
+      if (parentItem) {
+        childItems.push(
+          new IndexListItem(
+            pageTmp[pageLabelKey],
+            pageTmp.pgHref,
+            pageTmp.page,
+          ),
+        );
 
-    listItems.push(items);
-    // console.log('addItemsToIndex', parentItem);
+        continue;
+      }
+
+      listItems.push(
+        new IndexListItem(pageTmp[pageLabelKey], pageTmp.pgHref, pageTmp.page),
+      );
+    }
+
+    if (childItems.length > 0) {
+      listItems.push(childItems);
+    }
 
     return listItems;
   }
