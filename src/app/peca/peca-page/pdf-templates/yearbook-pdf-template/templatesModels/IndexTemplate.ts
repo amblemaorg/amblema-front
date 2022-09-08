@@ -39,10 +39,10 @@ export class IndexTemplateUtils {
         continue;
       }
       levels += 1;
-      console.log(levels);
-
       this.setNotNestedItems(item, levels);
     }
+    console.log(levels);
+    levels = 0;
   }
 
   getNotNestedItems(listItems: RecursiveArrayIndexListItem) {
