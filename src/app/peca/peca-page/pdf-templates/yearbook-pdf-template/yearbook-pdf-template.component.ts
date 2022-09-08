@@ -12,6 +12,7 @@ import {
   GalleryTemplate,
   IndexListItem,
   IndexTemplate,
+  IndexTemplateUtils,
   Pager,
   RecursiveArrayIndexListItem,
   SchoolGradePageGroup,
@@ -39,7 +40,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   pager = new Pager(1);
   listItems: RecursiveArrayIndexListItem = [];
 
-  indexPage: IndexTemplate = null;
+  // indexPage: IndexTemplate = null;
+  indexPages: IndexTemplate[] = [];
   frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
 
@@ -93,11 +95,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   pageInit() {
-    this.setIndexPage();
     this.setFrontPage();
     this.setSecondLayoutTemplateGroup();
     this.setSchoolGradePageGroup();
     this.setLapsePages();
+    this.setIndexPage();
 
     console.log('listItems', this.listItems);
   }
@@ -162,12 +164,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
 
-    console.log('listItems', listItems);
+    // console.log('listItems', listItems);
 
     this.listItems.push(...listItems);
 
-    console.log(this.godFatherPage.pgHref);
-    console.log(this.godFatherPage.page);
+    // console.log(this.godFatherPage.pgHref);
+    // console.log(this.godFatherPage.page);
   }
 
   setSchoolGradePageGroup() {
@@ -274,11 +276,34 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     // console.log({ pages });
     this.lapsePages = pages;
     this.listItems.push(...indexListItems);
-    console.log('setLapsePages - indexListItems', indexListItems);
+    // console.log('setLapsePages - indexListItems', indexListItems);
   }
 
-  setIndexPage() {
-    this.indexPage = new IndexTemplate(this.listItems);
-    console.log(this.indexPage);
+  setIndexPage(listItems?: RecursiveArrayIndexListItem) {
+    // this.indexPage = new IndexTemplate(this.listItems);
+    // console.log(this.indexPage);
+
+    // just for do some temporal tests
+    // if (!listItems) {
+    this.indexPages.push(new IndexTemplate(this.listItems));
+    // return;
+    // }
+
+    // this.indexPages.push(new IndexTemplate(this.listItems));
+    // if(indexPages) {
+
+    // }
+    // IndexTemplateUtils.getListItemsLength(listItems)
+
+    // const indexPage = new IndexTemplate();
+    // this.indexPages.push(indexPage);
+
+    // this.indexPages.push(indexPage);
+
+    const indexTemplateUtils = new IndexTemplateUtils();
+    console.log(
+      'IndexTemplateUtils.notNestedItems',
+      indexTemplateUtils.getNotNestedItems(this.listItems),
+    );
   }
 }

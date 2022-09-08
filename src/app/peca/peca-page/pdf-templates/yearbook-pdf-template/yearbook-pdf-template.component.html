@@ -8,13 +8,21 @@
       ></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="indexPage">
-      <ng-container *ngTemplateOutlet="indexTemplate; context: { page: indexPage }"></ng-container>
+    <ng-container *ngFor="let page of indexPages">
+      <ng-container
+        *ngTemplateOutlet="indexTemplate; context: { page: page }"
+      ></ng-container>
     </ng-container>
 
-    <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
+    <ng-container
+      *ngFor="
+        let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
+      "
+    >
       <ng-container *ngIf="page">
-        <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="layout2Template; context: { page: page }"
+        ></ng-container>
       </ng-container>
     </ng-container>
 
@@ -85,7 +93,9 @@
         <ng-container *ngIf="listItems.href">
           <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
           <span *ngIf="listItems.pageNumber"
-            ><a [href]="'#' + listItems.href">{{ listItems.pageNumber }}</a></span
+            ><a [href]="'#' + listItems.href">{{
+              listItems.pageNumber
+            }}</a></span
           >
         </ng-container>
         <ng-container *ngIf="!listItems.href"
@@ -114,10 +124,16 @@
         <h2>Indice</h2>
       </div>
       <div class="body">
-        <ul class="list" [ngClass]="{ wrap: page.haveToWrapList(page.listItems) }">
+        <ul
+          class="list"
+          [ngClass]="{ wrap: page.haveToWrapList(page.listItems) }"
+        >
           <ng-container *ngFor="let listItem of page.listItems">
             <ng-container
-              *ngTemplateOutlet="indexListItem; context: { listItems: listItem }"
+              *ngTemplateOutlet="
+                indexListItem;
+                context: { listItems: listItem }
+              "
             ></ng-container>
           </ng-container>
         </ul>
@@ -139,7 +155,10 @@
       <div class="body">
         <div class="visual-references">
           <div class="graphic">
-            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
+            <app-graphics-block
+              [settings]="page.chart"
+              [fitContainer]="true"
+            ></app-graphics-block>
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
@@ -160,7 +179,9 @@
         </div>
 
         <p class="description">
-          <span [outerHTML]="page.description | excerpt: page.characterLimit | br"></span>
+          <span
+            [outerHTML]="page.description | excerpt: page.characterLimit | br"
+          ></span>
         </p>
       </div>
     </div>
@@ -173,7 +194,10 @@
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--2">
-      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
+      <div
+        class="head"
+        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
+      >
         <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
@@ -192,7 +216,10 @@
         <span
           [outerHTML]="
             page.description
-              | excerpt: yearbookConfig.getFormDescriptionLimit('historical-review-form')
+              | excerpt
+                : yearbookConfig.getFormDescriptionLimit(
+                    'historical-review-form'
+                  )
               | br
           "
         ></span>
@@ -214,7 +241,9 @@
         </h2>
 
         <p class="description">
-          <span [outerHTML]="page.description | excerpt: page.characterLimit | br"></span>
+          <span
+            [outerHTML]="page.description | excerpt: page.characterLimit | br"
+          ></span>
         </p>
       </div>
 
@@ -277,7 +306,11 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
+        <div
+          class="col overflow--hidden {{
+            !page.isFirstColumnEmpty ? 'col--centered' : ''
+          }}"
+        >
           <ng-container *ngIf="page.img">
             <div class="container-img">
               <img [src]="page.img" />
