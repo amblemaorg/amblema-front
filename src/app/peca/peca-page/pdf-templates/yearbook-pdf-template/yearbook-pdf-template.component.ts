@@ -164,12 +164,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
 
-    // console.log('listItems', listItems);
-
     this.listItems.push(...listItems);
-
-    // console.log(this.godFatherPage.pgHref);
-    // console.log(this.godFatherPage.page);
   }
 
   setSchoolGradePageGroup() {
@@ -273,39 +268,23 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       );
     });
 
-    // console.log({ pages });
     this.lapsePages = pages;
     this.listItems.push(...indexListItems);
-    // console.log('setLapsePages - indexListItems', indexListItems);
   }
 
-  setIndexPage(listItems?: RecursiveArrayIndexListItem) {
-    // this.indexPage = new IndexTemplate(this.listItems);
-    // console.log(this.indexPage);
-
-    // just for do some temporal tests
-    // if (!listItems) {
-    this.indexPages.push(new IndexTemplate(this.listItems));
-    // return;
-    // }
-
-    // this.indexPages.push(new IndexTemplate(this.listItems));
-    // if(indexPages) {
-
-    // }
-    // IndexTemplateUtils.getListItemsLength(listItems)
-
-    // const indexPage = new IndexTemplate();
-    // this.indexPages.push(indexPage);
-
-    // this.indexPages.push(indexPage);
-
+  setIndexPage() {
     const indexTmpUtils = new IndexTemplateUtils();
     const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
     console.log('notNestedItems', notNestedItems);
 
-    const reNestedItems = indexTmpUtils.buildNestListItems(notNestedItems);
+    const maxItemsPerPage = 40;
 
-    console.log('reNestedItems', reNestedItems);
+    const notNestedItemsPaged = indexTmpUtils.getNotNestedItemsPaged(
+      maxItemsPerPage,
+    );
+
+    notNestedItemsPaged.forEach((listItems) => {
+      this.indexPages.push(new IndexTemplate(listItems));
+    });
   }
 }

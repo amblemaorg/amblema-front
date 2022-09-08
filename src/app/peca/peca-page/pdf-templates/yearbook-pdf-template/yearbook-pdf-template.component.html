@@ -86,27 +86,24 @@
 <!-- # Templates -->
 
 <!-- indexTemplate -->
-<ng-template #indexListItem let-listItems="listItems">
-  <ng-container *ngIf="!isArray(listItems)">
-    <ng-container *ngIf="listItems.show">
-      <li>
-        <ng-container *ngIf="listItems.href">
-          <a [href]="'#' + listItems.href">{{ listItems.label }}</a>
-          <span *ngIf="listItems.pageNumber"
-            ><a [href]="'#' + listItems.href">{{
-              listItems.pageNumber
-            }}</a></span
-          >
-        </ng-container>
-        <ng-container *ngIf="!listItems.href"
-          ><a>{{ listItems.label }}</a>
-          <span *ngIf="listItems.pageNumber">{{ listItems.pageNumber }}</span>
-        </ng-container>
-      </li>
-    </ng-container>
+<ng-template #indexListItem let-listItem="listItem">
+  <ng-container *ngIf="listItem.show">
+    <li [style.paddingLeft]="listItem.getPaddingLeftByLevel()">
+      <ng-container *ngIf="listItem.href">
+        <a [href]="'#' + listItem.href">{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber"
+          ><a [href]="'#' + listItem.href">{{ listItem.pageNumber }}</a></span
+        >
+      </ng-container>
+
+      <ng-container *ngIf="!listItem.href"
+        ><a>{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber">{{ listItem.pageNumber }}</span>
+      </ng-container>
+    </li>
   </ng-container>
 
-  <ng-container *ngIf="isArray(listItems)">
+  <!-- <ng-container *ngIf="isArray(listItems)">
     <ul>
       <ng-container *ngFor="let childItem of listItems">
         <ng-container
@@ -114,7 +111,7 @@
         ></ng-container>
       </ng-container>
     </ul>
-  </ng-container>
+  </ng-container> -->
 </ng-template>
 
 <ng-template #indexTemplate let-page="page">
@@ -124,16 +121,10 @@
         <h2>Indice</h2>
       </div>
       <div class="body">
-        <ul
-          class="list"
-          [ngClass]="{ wrap: page.haveToWrapList(page.listItems) }"
-        >
+        <ul class="list" [ngClass]="{ wrap: page.haveToWrapList() }">
           <ng-container *ngFor="let listItem of page.listItems">
             <ng-container
-              *ngTemplateOutlet="
-                indexListItem;
-                context: { listItems: listItem }
-              "
+              *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"
             ></ng-container>
           </ng-container>
         </ul>

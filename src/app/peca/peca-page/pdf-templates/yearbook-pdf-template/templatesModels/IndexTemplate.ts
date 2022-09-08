@@ -4,13 +4,14 @@ export type RecursiveArrayIndexListItem = Array<
   RecursiveArrayIndexListItem | IndexListItem
 >;
 export class IndexTemplate extends Template {
-  listItems: RecursiveArrayIndexListItem = [];
-  maxItemsToWrap = 23;
+  // listItems: RecursiveArrayIndexListItem = [];
+  // notNestedItems: IndexListItem[] = [];
+  maxItemsToWrap = 22;
   utils = new IndexTemplateUtils();
   // maxItemsPerPaged = 48;
 
   constructor(
-    listItems: RecursiveArrayIndexListItem = [],
+    public listItems: RecursiveArrayIndexListItem = [],
     templateOptions?: TemplateOptions,
   ) {
     super('indexTemplate', templateOptions);
@@ -18,12 +19,8 @@ export class IndexTemplate extends Template {
     this.listItems = listItems;
   }
 
-  getListItemsLength() {
-    return this.utils.getNotNestedItems(this.listItems).length;
-  }
-
-  haveToWrapList(listItems: any[]) {
-    return this.utils.getNotNestedItems(listItems).length > this.maxItemsToWrap;
+  haveToWrapList() {
+    return this.listItems.length > this.maxItemsToWrap;
   }
 }
 
@@ -31,17 +28,20 @@ export class IndexTemplateUtils {
   notNestedItems = [];
   levels = 0;
 
-  setNotNestedItems(listItems: RecursiveArrayIndexListItem) {
+  setNotNestedItems(listItems: RecursiveArrayIndexListItem, levels = 0) {
     for (let index = 0; index < listItems.length; index++) {
       const item = listItems[index];
 
       if (!Array.isArray(item)) {
-        item.arrayLevel = this.levels;
+        if (!item.label) continue;
+        item.arrayLevel = levels;
         this.notNestedItems.push(item);
         continue;
       }
-      this.levels += 1;
-      this.setNotNestedItems(item);
+      levels += 1;
+      console.log(levels);
+
+      this.setNotNestedItems(item, levels);
     }
   }
 
@@ -49,56 +49,34 @@ export class IndexTemplateUtils {
     this.notNestedItems = [];
     this.levels = 0;
     this.setNotNestedItems(listItems);
-    // console.log('this.notNestedItems', this.notNestedItems);
     return this.notNestedItems;
   }
 
-  buildNestListItems(notNestedItems: IndexListItem[]) {
-    const nestedListItems = [];
+  getNotNestedItemsPaged(
+    maxItemsPerPage: number,
+    notNestedItems = this.notNestedItems,
+  ) {
+    const notNestedItemsPaged = [];
+    const totalIndexPage = parseFloat(
+      (notNestedItems.length / maxItemsPerPage).toFixed(1),
+    );
 
-    for (let index = 0; index < notNestedItems.length; index++) {
-      const item = notNestedItems[index];
-      let nestedItem = [];
+    for (let index = 0; index < totalIndexPage; index++) {
+      const itemsToIgnore = index * maxItemsPerPage;
 
-      // console.log(item.arrayLevel);
+      console.log('yes', itemsToIgnore);
 
-      for (let level = 0; level <= item.arrayLevel; level++) {
-        if (index == 0) {
-          console.log('buildNestListItems - level', level);
-        }
-
-        if (level === item.arrayLevel) {
-          if (nestedItem[level]) {
-            nestedItem[level].push(item);
-          } else {
-            nestedItem[level] = item;
-          }
-
-          nestedListItems.push(...nestedItem);
-          continue;
-        }
-
-        if (!nestedItem[level]) {
-          nestedItem[level] = [];
-        }
-      }
-
-      if (index === 0 || index === 5 || index === 10) {
-        console.log('buildNestListItems', nestedItem);
-      }
+      notNestedItemsPaged.push(
+        notNestedItems.slice(itemsToIgnore, itemsToIgnore + maxItemsPerPage),
+      );
     }
 
-    // for (let index = 0; index < nestedListItems.length; index++) {
-    //   const listItemToNest = nestedListItems[index];
-
-    //   Array.isArray(listItemToNest)
-
-    // }
-    return nestedListItems;
+    return notNestedItemsPaged;
   }
 }
 
 export class IndexListItem {
+  private readonly factorPaddingIncrement = 10;
   constructor(
     public label: string,
     public href?: string,
@@ -106,4 +84,9 @@ export class IndexListItem {
     public show = true,
     public arrayLevel = 0,
   ) {}
+
+  getPaddingLeftByLevel() {
+    const padding = this.arrayLevel * this.factorPaddingIncrement;
+    return `${padding}px`;
+  }
 }
