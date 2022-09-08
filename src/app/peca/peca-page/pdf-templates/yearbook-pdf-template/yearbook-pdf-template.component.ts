@@ -300,10 +300,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     // this.indexPages.push(indexPage);
 
-    const indexTemplateUtils = new IndexTemplateUtils();
-    console.log(
-      'IndexTemplateUtils.notNestedItems',
-      indexTemplateUtils.getNotNestedItems(this.listItems),
-    );
+    const indexTmpUtils = new IndexTemplateUtils();
+    const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
+    console.log('notNestedItems', notNestedItems);
+
+    const reNestedItems = indexTmpUtils.buildNestListItems(notNestedItems);
+
+    console.log('reNestedItems', reNestedItems);
   }
 }
