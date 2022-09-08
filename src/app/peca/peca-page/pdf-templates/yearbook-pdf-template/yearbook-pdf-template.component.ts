@@ -213,50 +213,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       'globalLapsesDiagnostic',
     );
 
-    const getLisItems = (pages) => {
-      // const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
-      // console.log('setLapsePages', listItems);
-
-      // console.log(
-      //   'TemplateUtils',
-      //   TemplateUtils.addItemsToIndex(
-      //     pages,
-      //     this.pager,
-      //     (pageTmp) => (pageTmp.title ? pageTmp.title : pageTmp.name),
-      //     null,
-      //     (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      //   ),
-      // );
-
-      return TemplateUtils.addItemsToIndex(
-        pages,
-        this.pager,
-        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-        null,
-        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      );
-
-      // return pages.map((pageTmp) => {
-      //   const label = pageTmp.title ? pageTmp.title : pageTmp.name;
-
-      //   pageTmp.setPagerInst(this.pager, label);
-
-      //   return new IndexListItem(
-      //     label,
-      //     pageTmp.pgHref,
-      //     pageTmp.page,
-      //     pageTmp.templateName !== 'galleryTemplate',
-      //   );
-      // });
-    };
-
     lapses.forEach((lapse) => {
-      const diagnosticsPage = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
+      const diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
         lapse.lapseName,
         diagnosticCharacterLimit,
       );
 
-      const activities = [];
+      const activityPages = [];
 
       for (let index = 0; index < lapse.activities.length; index++) {
         const activity = lapse.activities[index];
@@ -269,7 +232,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
           continue;
         }
 
-        activities.push(
+        activityPages.push(
           new ActivityTemplate(
             name,
             description,
@@ -279,16 +242,32 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         );
 
         if (isExpandedGallery) {
-          activities.push(new GalleryTemplate(images));
+          activityPages.push(new GalleryTemplate(images));
         }
       }
 
-      pages.push(...diagnosticsPage, ...activities);
+      pages.push(...diagnosticsPages, ...activityPages);
+
+      const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
+        diagnosticsPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
+
+      const actPgIndexListItems = TemplateUtils.addItemsToIndex(
+        activityPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
 
       indexListItems.push(
         new IndexListItem(lapse.lapseName),
-        [new IndexListItem('Diagnósticos'), [...getLisItems(diagnosticsPage)]],
-        [new IndexListItem('Actividades'), [...getLisItems(activities)]],
+        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
+        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
       );
     });
 
