@@ -1,5 +1,10 @@
-import { Pager } from './Pager';
-import { Template, TemplateOptions } from './Template';
+import {
+  Template,
+  TemplateOptions,
+  TemplateUtils,
+  Pager,
+  IndexListItem,
+} from './';
 import { SchoolSection } from '../pdfYearbookData.interface';
 
 export class SchoolGradePageGroup {
@@ -8,7 +13,10 @@ export class SchoolGradePageGroup {
   pages: SchoolGradeTemplate[] = [];
   indexListItems: any[] = [];
 
-  constructor(public data: { schoolSections: SchoolSection[] }, pagerInst?: Pager) {
+  constructor(
+    public data: { schoolSections: SchoolSection[] },
+    pagerInst?: Pager,
+  ) {
     this.setTemplates();
 
     if (pagerInst) {
@@ -23,20 +31,32 @@ export class SchoolGradePageGroup {
     //Adding school templates (pages)
     schoolSections.forEach((section) => {
       const { sectionName, sectionImg, sectionStudents, teacher } = section;
-      this.pages.push(new SchoolGradeTemplate(sectionName, sectionImg, teacher, sectionStudents));
+      this.pages.push(
+        new SchoolGradeTemplate(
+          sectionName,
+          sectionImg,
+          teacher,
+          sectionStudents,
+        ),
+      );
     });
   }
 
   setPager(pagerInst: Pager) {
-    this.pages.forEach((pageTmp) => {
-      pageTmp.setPagerInst(pagerInst, pageTmp.name);
-      this.indexListItems.push({
-        label: pageTmp.name,
-        href: pageTmp.pgHref,
-        pageNumber: pageTmp.page,
-      });
-    });
-    console.log('SchoolGradeTemplate', this.indexListItems);
+    this.indexListItems = TemplateUtils.addItemsToIndex(
+      this.pages,
+      pagerInst,
+      new IndexListItem('grados y secciones'),
+    );
+
+    // this.pages.forEach((pageTmp) => {
+    //   pageTmp.setPagerInst(pagerInst, pageTmp.name);
+
+    //   this.indexListItems.push(
+    //     new IndexListItem(pageTmp.name, pageTmp.pgHref, pageTmp.page),
+    //   );
+    // });
+    // console.log('SchoolGradeTemplate', this.indexListItems);
   }
 }
 
@@ -70,7 +90,9 @@ class SchoolGradeTemplate extends Template {
     const maxColumnSize = 27;
     const maxSmallerColumnSize = 13;
     const restMaxLength =
-      students.length > maxColumnSize + maxSmallerColumnSize ? maxColumnSize : students.length;
+      students.length > maxColumnSize + maxSmallerColumnSize
+        ? maxColumnSize
+        : students.length;
 
     if (sectionImg) {
       if (students.length <= 15) {

@@ -1,11 +1,4 @@
-import { Pager } from './Pager';
-export interface TemplateOptions {
-  show?: boolean;
-  priority?: number;
-  pagerOptions?: {
-    incrementFactor?: number;
-  };
-}
+import { Pager, IndexListItem, RecursiveArrayIndexListItem } from './';
 
 export class Template {
   protected templateOptions: TemplateOptions = {
@@ -16,8 +9,8 @@ export class Template {
     },
   };
 
-  pgHref: string;
   page = 1;
+  pgHref: string;
 
   constructor(public templateName: string, templateOptions?: TemplateOptions) {
     this.addTemplateOptions(templateOptions);
@@ -46,5 +39,39 @@ export class Template {
         ...options,
       };
     }
+  }
+}
+
+export interface TemplateOptions {
+  show?: boolean;
+  priority?: number;
+  pagerOptions?: {
+    incrementFactor?: number;
+  };
+}
+
+export class TemplateUtils {
+  static addItemsToIndex(
+    pagesTmp: any[],
+    pagerInst: Pager,
+    parentItem?: IndexListItem,
+  ): RecursiveArrayIndexListItem {
+    const listItems = [];
+    const items = [];
+
+    if (parentItem) {
+      listItems.push(parentItem);
+    }
+
+    pagesTmp.forEach((pageTmp) => {
+      pageTmp.setPagerInst(pagerInst, pageTmp.name);
+
+      items.push(new IndexListItem(pageTmp.name, pageTmp.pgHref, pageTmp.page));
+    });
+
+    listItems.push(items);
+    // console.log('addItemsToIndex', parentItem);
+
+    return listItems;
   }
 }

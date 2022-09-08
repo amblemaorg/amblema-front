@@ -1,13 +1,18 @@
 import { Template, TemplateOptions } from './';
 
-type RecursiveArray = Array<RecursiveArray | IndexListItem>;
+export type RecursiveArrayIndexListItem = Array<
+  RecursiveArrayIndexListItem | IndexListItem
+>;
 export class IndexTemplate extends Template {
   // listItems: any[];
   notNestedItems = [];
   maxItemsToWrap = 23;
   maxItemsPerPaged = 48;
 
-  constructor(public listItems: RecursiveArray, templateOptions?: TemplateOptions) {
+  constructor(
+    public listItems: RecursiveArrayIndexListItem,
+    templateOptions?: TemplateOptions,
+  ) {
     super('indexTemplate', templateOptions);
   }
 

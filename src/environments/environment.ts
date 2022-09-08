@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   recaptchaKey: '6LcB7OsUAAAAADp1Ja9obo2HXVmb2r1Gl0Dqlsgj', // from cuentas.soporte@binaural.com.ve
   recaptchaNonce: '0D3VrhyLft',
-  baseUrl: 'http://localhost:10505/',
+  baseUrl: 'http://localhost:20010/',
 };
 
 /*

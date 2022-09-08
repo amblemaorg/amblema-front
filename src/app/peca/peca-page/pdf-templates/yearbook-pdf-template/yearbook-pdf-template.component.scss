@@ -182,6 +182,84 @@ $size__p: 16px;
     }
   }
 
+  .layout--front {
+    width: 100%;
+
+    position: absolute;
+    top: 20px;
+    left: 0;
+
+    .primary-title {
+      @extend h2;
+      text-align: center;
+      text-transform: capitalize;
+      margin: 0;
+    }
+
+    .head {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+
+      .headings {
+        max-width: 60%;
+        text-align: center;
+        text-transform: uppercase;
+
+        position: relative;
+        top: 16px;
+
+        p {
+          font-size: $size__h2;
+          margin: 0;
+        }
+      }
+
+      .partner-img {
+        width: 180px;
+        height: 180px;
+        position: absolute;
+        top: 0;
+        right: 48px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+    }
+
+    .body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      text-align: center;
+
+      position: relative;
+      top: 160px;
+
+      h1 {
+        font-weight: bold;
+        font-size: 64px !important;
+        line-height: 50px;
+        margin: 0px;
+      }
+
+      .school-name {
+        color: $black;
+        font-family: 'gill_sans_mt';
+        font-size: 28px;
+        margin: 6px 0px;
+        text-transform: capitalize;
+      }
+    }
+  }
+
   .layout--index {
     .body {
       height: 100%;
@@ -239,84 +317,6 @@ $size__p: 16px;
             text-transform: uppercase !important;
           }
         }
-      }
-    }
-  }
-
-  .layout--front {
-    width: 100%;
-
-    position: absolute;
-    top: 20px;
-    left: 0;
-
-    .primary-title {
-      @extend h2;
-      text-align: center;
-      text-transform: capitalize;
-      margin: 0;
-    }
-
-    .head {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      position: relative;
-
-      .headings {
-        max-width: 60%;
-        text-align: center;
-        text-transform: uppercase;
-
-        position: relative;
-        top: 16px;
-
-        p {
-          font-size: $size__h2;
-          margin: 0;
-        }
-      }
-
-      .partner-img {
-        width: 180px;
-        height: 180px;
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-      }
-    }
-
-    .body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-
-      text-align: center;
-
-      position: relative;
-      top: 160px;
-
-      h1 {
-        font-weight: bold;
-        font-size: 64px !important;
-        line-height: 50px;
-        margin: 0px;
-      }
-
-      .school-name {
-        color: $black;
-        font-family: 'gill_sans_mt';
-        font-size: 28px;
-        margin: 6px 0px;
-        text-transform: capitalize;
       }
     }
   }
