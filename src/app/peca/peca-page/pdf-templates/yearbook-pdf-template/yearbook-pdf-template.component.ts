@@ -38,9 +38,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
   showLoading = true;
+  pager = new Pager();
 
   pages: TemplatePages = [];
-  pager = new Pager(1);
 
   // Data
   pdfData: PdfYearbookData;
@@ -95,12 +95,15 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pageInit() {
     this.setFrontPage();
-    this.setSecondLayoutTemplateGroup();
-    this.setSchoolGradePageGroup();
+    this.set2Layout2TemplatePages();
+    this.setSchoolGradeTemplatePages();
     this.setLapsePages();
     this.setIndexPage();
 
     console.log('listItems', this.listItems);
+    console.log('pages', this.pages);
+
+    // this.pager.rebuild
   }
 
   setFrontPage() {
@@ -111,10 +114,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       { title: 'AmbLeMario', subTitle: schoolName, subTitleN2: schoolYear },
     );
 
+    frontPage.setPagerInst(this.pager);
     this.pages.push(frontPage);
   }
 
-  setSecondLayoutTemplateGroup() {
+  set2Layout2TemplatePages() {
     const {
       historicalReviewText,
       historicalReviewImg,
@@ -159,12 +163,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     this.pages.push(...pages);
 
-    const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
+    const listItems = TemplateUtils.getItemsToIndex(pages, this.pager);
 
     this.listItems.push(...listItems);
   }
 
-  setSchoolGradePageGroup() {
+  setSchoolGradeTemplatePages() {
     const { schoolSections } = this.pdfData;
 
     const pages = [];
@@ -182,8 +186,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     this.pages.push(...pages);
 
-    const indexListItems = TemplateUtils.addItemsToIndex(
-      this.pages,
+    const indexListItems = TemplateUtils.getItemsToIndex(
+      pages,
       this.pager,
       () => 'name',
       new IndexListItem('grados y secciones'),
@@ -260,7 +264,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       pagesToAdd.push(...diagnosticsPages, ...activityPages);
 
-      const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
+      const diagPgIndexListItems = TemplateUtils.getItemsToIndex(
         diagnosticsPages,
         this.pager,
         (pageTmp) => (pageTmp.title ? 'title' : 'name'),
@@ -268,7 +272,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
       );
 
-      const actPgIndexListItems = TemplateUtils.addItemsToIndex(
+      const actPgIndexListItems = TemplateUtils.getItemsToIndex(
         activityPages,
         this.pager,
         (pageTmp) => (pageTmp.title ? 'title' : 'name'),

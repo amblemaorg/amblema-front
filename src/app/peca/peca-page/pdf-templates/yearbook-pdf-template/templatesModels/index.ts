@@ -3,7 +3,6 @@ export * from './Pager';
 export * from './ActivityTemplate';
 export * from './FrontPageTemplate';
 export * from './schoolGradesTemplate';
-export * from './TemplateThird';
 export * from './SecondLayoutTemplate';
 export * from './/DiagnosticTemplate';
 export * from './IndexTemplate';

@@ -16,13 +16,13 @@ export class Template {
     this.addTemplateOptions(templateOptions);
   }
 
-  setPagerInst(pagerInst: Pager, href?: string) {
+  setPagerInst(pagerInst: Pager, setHref = true) {
     this.setPage(pagerInst);
-    if (href) {
-      const regex = /[!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`{\|}~]/gi;
-      href = href.replace(regex, ' ');
-      href = href.replace(/\s/g, '-');
-      this.pgHref = `${href}-${this.page}`;
+    if (setHref) {
+      // const regex = /[!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`{\|}~]/gi;
+      // href = href.replace(regex, ' ');
+      // href = href.replace(/\s/g, '-');
+      this.pgHref = `pagerHref-${this.page}`;
     }
   }
 
@@ -59,7 +59,7 @@ export const getPageLabelKeyFn = (pageTmp): string => {
 };
 
 export class TemplateUtils {
-  static addItemsToIndex(
+  static getItemsToIndex(
     pagesTmp: any[],
     pagerInst: Pager,
     getLabelKey = getPageLabelKeyFn,
@@ -76,7 +76,7 @@ export class TemplateUtils {
     for (let index = 0; index < pagesTmp.length; index++) {
       const pageTmp = pagesTmp[index];
       const labelKey = getLabelKey(pageTmp);
-      pageTmp.setPagerInst(pagerInst, pageTmp[labelKey]);
+      pageTmp.setPagerInst(pagerInst);
 
       if (parentItem) {
         childItems.push(
