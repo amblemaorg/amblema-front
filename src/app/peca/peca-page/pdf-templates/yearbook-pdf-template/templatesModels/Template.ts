@@ -19,9 +19,6 @@ export class Template {
   setPagerInst(pagerInst: Pager, setHref = true) {
     this.setPage(pagerInst);
     if (setHref) {
-      // const regex = /[!\"#\$%&\'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`{\|}~]/gi;
-      // href = href.replace(regex, ' ');
-      // href = href.replace(/\s/g, '-');
       this.pgHref = `pagerHref-${this.page}`;
     }
   }
