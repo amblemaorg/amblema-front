@@ -61,7 +61,7 @@ export class SchoolGradePageGroup {
   }
 }
 
-class SchoolGradeTemplate extends Template {
+export class SchoolGradeTemplate extends Template {
   students: {
     firstColumn: any[];
     secondColumn: any[];

@@ -2,66 +2,55 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="frontpage">
-      <ng-container
-        *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
-      ></ng-container>
+    <ng-container *ngFor="let page of pages">
+      <div [ngSwitch]="page.templateName">
+        <div *ngSwitchCase="'frontpageTemplate'">
+          <ng-container
+            *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
+        <div *ngSwitchCase="'indexTemplate'">output</div>
+        <div *ngSwitchCase="'layout2Template'">output</div>
+        <div *ngSwitchCase="'schoolStudentListTemplate'">output</div>
+        <div *ngSwitchCase="'diagnosticTemplate'">output</div>
+        <div *ngSwitchCase="'activityTemplate'">output</div>
+        <div *ngSwitchCase="'galleryTemplate'">output</div>
+      </div>
     </ng-container>
 
-    <ng-container *ngFor="let page of indexPages">
-      <ng-container
-        *ngTemplateOutlet="indexTemplate; context: { page: page }"
-      ></ng-container>
-    </ng-container>
-
-    <ng-container
-      *ngFor="
-        let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
-      "
-    >
-      <ng-container *ngIf="page">
-        <ng-container
-          *ngTemplateOutlet="layout2Template; context: { page: page }"
-        ></ng-container>
-      </ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="schoolGradePageGroup">
-      <ng-container *ngFor="let page of schoolGradePageGroup.pages">
+    <ng-container *ngIf="false">
+      <ng-container *ngIf="frontpage">
         <ng-container
           *ngTemplateOutlet="
-            schoolStudentListTemplate;
-            context: {
-              page: page
-            }
+            frontpageTemplate;
+            context: { frontpage: frontpage }
           "
         ></ng-container>
       </ng-container>
-    </ng-container>
 
-    <ng-container *ngIf="lapsePages">
-      <ng-container *ngFor="let page of lapsePages">
-        <ng-container *ngIf="page.templateName === 'diagnosticTemplate'">
+      <ng-container *ngFor="let page of indexPages">
+        <ng-container
+          *ngTemplateOutlet="indexTemplate; context: { page: page }"
+        ></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngFor="
+          let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
+        "
+      >
+        <ng-container *ngIf="page">
           <ng-container
-            *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+            *ngTemplateOutlet="layout2Template; context: { page: page }"
           ></ng-container>
         </ng-container>
+      </ng-container>
 
-        <ng-container *ngIf="page.templateName === 'activityTemplate'">
+      <ng-container *ngIf="schoolGradePageGroup">
+        <ng-container *ngFor="let page of schoolGradePageGroup.pages">
           <ng-container
             *ngTemplateOutlet="
-              layout4Template;
-              context: {
-                page: page
-              }
-            "
-          ></ng-container>
-        </ng-container>
-
-        <ng-container *ngIf="page.templateName === 'galleryTemplate'">
-          <ng-container
-            *ngTemplateOutlet="
-              galleryTemplate;
+              schoolStudentListTemplate;
               context: {
                 page: page
               }
@@ -69,11 +58,39 @@
           ></ng-container>
         </ng-container>
       </ng-container>
-    </ng-container>
 
-    <!-- <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
-      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
-    </ng-container> -->
+      <ng-container *ngIf="lapsePages">
+        <ng-container *ngFor="let page of lapsePages">
+          <ng-container *ngIf="page.templateName === 'diagnosticTemplate'">
+            <ng-container
+              *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+            ></ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="page.templateName === 'activityTemplate'">
+            <ng-container
+              *ngTemplateOutlet="
+                layout4Template;
+                context: {
+                  page: page
+                }
+              "
+            ></ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="page.templateName === 'galleryTemplate'">
+            <ng-container
+              *ngTemplateOutlet="
+                galleryTemplate;
+                context: {
+                  page: page
+                }
+              "
+            ></ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
   </main>
 </ng-container>
 
@@ -271,22 +288,22 @@
 <!-- ## Customs -->
 
 <!-- ### FrontPage Template -->
-<ng-template #frontpageTemplate let-frontpage="frontpage">
+<ng-template #frontpageTemplate let-page="page">
   <section class="page background--front-page">
     <div class="page__content layout--front">
       <div class="head">
         <div class="headings">
-          <!-- <p>{{ frontpage.data.schoolYear }}</p> -->
-          <p class="primary-title">{{ frontpage.data.sponsorName }}</p>
+          <!-- <p>{{ page.schoolYear }}</p> -->
+          <p class="primary-title">{{ page.head.title }}</p>
         </div>
         <div class="partner-img">
-          <img [src]="frontpage.data.sponsorLogo" />
+          <img [src]="page.head.brand" />
         </div>
       </div>
       <div class="body">
-        <h1>AmbLeMario</h1>
-        <h2 class="school-name">{{ frontpage.data.schoolName }}</h2>
-        <p class="primary-title">{{ frontpage.data.schoolYear }}</p>
+        <h1>{{ page.body.title }}</h1>
+        <h2 class="school-name">{{ page.body.subTitle }}</h2>
+        <p class="primary-title">{{ page.body.subTitleN2 }}</p>
       </div>
     </div>
   </section>

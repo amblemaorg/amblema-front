@@ -5,10 +5,11 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
+  // FrontPage,
   ActivityTemplate,
   DiagnosticPageDataGroup,
   DiagnosticTemplate,
-  FrontPage,
+  FrontPageTemplate,
   GalleryTemplate,
   IndexListItem,
   IndexTemplate,
@@ -16,9 +17,19 @@ import {
   Pager,
   RecursiveArrayIndexListItem,
   SchoolGradePageGroup,
+  SchoolGradeTemplate,
   SecondLayoutTemplate,
   TemplateUtils,
 } from './templatesModels';
+
+type TemplatePages = Array<
+  | IndexTemplate
+  | FrontPageTemplate
+  | SecondLayoutTemplate
+  | SchoolGradeTemplate
+  | DiagnosticTemplate
+  | ActivityTemplate
+>;
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -36,13 +47,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticGraphicData = null;
   diagnosticGoalTableData = null;
 
-  // pages: any = [];
+  pages: TemplatePages = [];
   pager = new Pager(1);
   listItems: RecursiveArrayIndexListItem = [];
 
   // indexPage: IndexTemplate = null;
   indexPages: IndexTemplate[] = [];
-  frontpage: FrontPage = null;
+  // frontpage: FrontPage = null;
   schoolGradePageGroup: SchoolGradePageGroup = null;
 
   // layout2
@@ -106,12 +117,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   setFrontPage() {
     const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
-    this.frontpage = new FrontPage({
-      schoolName,
-      schoolYear,
-      sponsorName,
-      sponsorLogo,
-    });
+
+    const frontPage = new FrontPageTemplate(
+      { title: sponsorName, brand: sponsorLogo },
+      { title: 'AmbLeMario', subTitle: schoolName, subTitleN2: schoolYear },
+    );
+
+    this.pages.push(frontPage);
   }
 
   setSecondLayoutTemplateGroup() {
