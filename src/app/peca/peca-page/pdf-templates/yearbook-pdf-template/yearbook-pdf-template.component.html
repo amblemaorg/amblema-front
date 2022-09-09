@@ -4,23 +4,42 @@
   <main class="yearbook-pdf">
     <ng-container *ngFor="let page of pages">
       <div [ngSwitch]="page.templateName">
+        <!-- frontpageTemplate -->
         <div *ngSwitchCase="'frontpageTemplate'">
           <ng-container
             *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
           ></ng-container>
         </div>
 
+        <!-- indexTemplate -->
         <div *ngSwitchCase="'indexTemplate'">output</div>
 
+        <!-- layout2Template -->
         <div *ngSwitchCase="'layout2Template'">
           <ng-container
             *ngTemplateOutlet="layout2Template; context: { page: page }"
           ></ng-container>
         </div>
 
-        <div *ngSwitchCase="'schoolStudentListTemplate'">output</div>
+        <!-- indexTemplate -->
+        <div *ngSwitchCase="'schoolGradeTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              schoolGradeTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+
+        <!-- indexTemplate -->
         <div *ngSwitchCase="'diagnosticTemplate'">output</div>
+
+        <!-- indexTemplate -->
         <div *ngSwitchCase="'activityTemplate'">output</div>
+
+        <!-- indexTemplate -->
         <div *ngSwitchCase="'galleryTemplate'">output</div>
       </div>
     </ng-container>
@@ -105,16 +124,6 @@
       </ng-container>
     </li>
   </ng-container>
-
-  <!-- <ng-container *ngIf="isArray(listItems)">
-    <ul>
-      <ng-container *ngFor="let childItem of listItems">
-        <ng-container
-          *ngTemplateOutlet="indexListItem; context: { listItems: childItem }"
-        ></ng-container>
-      </ng-container>
-    </ul>
-  </ng-container> -->
 </ng-template>
 
 <ng-template #indexTemplate let-page="page">
@@ -296,7 +305,7 @@
 </ng-template>
 
 <!-- ### SchoolSections -->
-<ng-template #schoolStudentListTemplate let-page="page">
+<ng-template #schoolGradeTemplate let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">

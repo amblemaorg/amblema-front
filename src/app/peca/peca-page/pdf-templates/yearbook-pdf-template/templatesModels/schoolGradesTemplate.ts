@@ -49,15 +49,6 @@ export class SchoolGradePageGroup {
       () => 'name',
       new IndexListItem('grados y secciones'),
     );
-
-    // this.pages.forEach((pageTmp) => {
-    //   pageTmp.setPagerInst(pagerInst, pageTmp.name);
-
-    //   this.indexListItems.push(
-    //     new IndexListItem(pageTmp.name, pageTmp.pgHref, pageTmp.page),
-    //   );
-    // });
-    // console.log('SchoolGradeTemplate', this.indexListItems);
   }
 }
 

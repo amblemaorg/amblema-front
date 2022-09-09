@@ -141,25 +141,25 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorText,
     } = this.pdfData;
 
-    this.mySchoolPage = new SecondLayoutTemplate(
+    const mySchoolPage = new SecondLayoutTemplate(
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
     );
 
-    this.coordinatorPage = new SecondLayoutTemplate(
+    const coordinatorPage = new SecondLayoutTemplate(
       'coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
     );
-    this.godFatherPage = new SecondLayoutTemplate(
+    const godFatherPage = new SecondLayoutTemplate(
       'padrino',
       sponsorLogo,
       sponsorText,
       sponsorName,
     );
-    this.schoolPage = new SecondLayoutTemplate(
+    const schoolPage = new SecondLayoutTemplate(
       schoolName,
       schoolImg,
       schoolText,
@@ -167,27 +167,53 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       false,
     );
 
-    const pages = [
-      this.mySchoolPage,
-      this.coordinatorPage,
-      this.godFatherPage,
-      this.schoolPage,
-    ];
+    this.pages.push(mySchoolPage, coordinatorPage, godFatherPage, schoolPage);
 
-    const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
+    // const pages = [
+    //   mySchoolPage,
+    //   coordinatorPage,
+    //   godFatherPage,
+    //   schoolPage,
+    // ];
 
-    this.listItems.push(...listItems);
+    // const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
+
+    // this.listItems.push(...listItems);
   }
 
   setSchoolGradePageGroup() {
     const { schoolSections } = this.pdfData;
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup(
-      { schoolSections },
-      this.pager,
-    );
+    // this.schoolGradePageGroup = new SchoolGradePageGroup(
+    //   { schoolSections },
+    //   this.pager,
+    // );
 
-    this.listItems.push(...this.schoolGradePageGroup.indexListItems);
+    //Adding school templates (pages)
+
+    const pages = [];
+    schoolSections.forEach((section) => {
+      const { sectionName, sectionImg, sectionStudents, teacher } = section;
+
+      const page = new SchoolGradeTemplate(
+        sectionName,
+        sectionImg,
+        teacher,
+        sectionStudents,
+      );
+      pages.push(page);
+    });
+
+    // const indexListItems = TemplateUtils.addItemsToIndex(
+    //   this.pages,
+    //   pagerInst,
+    //   () => 'name',
+    //   new IndexListItem('grados y secciones'),
+    // )
+
+    this.pages.push(...pages);
+
+    // this.listItems.push(...indexListItems);
   }
 
   private getDiagnosticPageDataGroup() {
