@@ -12,7 +12,12 @@
         </div>
 
         <!-- indexTemplate -->
-        <div *ngSwitchCase="'indexTemplate'">output</div>
+        <div *ngSwitchCase="'indexTemplate'">
+          <ng-container
+            *
+            ngTemplateOutlet="indexTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
 
         <!-- layout2Template -->
         <div *ngSwitchCase="'layout2Template'">
@@ -33,68 +38,37 @@
           ></ng-container>
         </div>
 
-        <!-- indexTemplate -->
-        <div *ngSwitchCase="'diagnosticTemplate'">output</div>
+        <!-- diagnosticTemplate -->
+        <div *ngSwitchCase="'diagnosticTemplate'">
+          <ng-container
+            *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
 
-        <!-- indexTemplate -->
-        <div *ngSwitchCase="'activityTemplate'">output</div>
-
-        <!-- indexTemplate -->
-        <div *ngSwitchCase="'galleryTemplate'">output</div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="false">
-      <ng-container *ngFor="let page of indexPages">
-        <ng-container
-          *ngTemplateOutlet="indexTemplate; context: { page: page }"
-        ></ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="schoolGradePageGroup">
-        <ng-container *ngFor="let page of schoolGradePageGroup.pages">
+        <!-- activityTemplate -->
+        <div *ngSwitchCase="'activityTemplate'">
           <ng-container
             *ngTemplateOutlet="
-              schoolStudentListTemplate;
+              activityTemplate;
               context: {
                 page: page
               }
             "
           ></ng-container>
-        </ng-container>
-      </ng-container>
+        </div>
 
-      <ng-container *ngIf="lapsePages">
-        <ng-container *ngFor="let page of lapsePages">
-          <ng-container *ngIf="page.templateName === 'diagnosticTemplate'">
-            <ng-container
-              *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
-            ></ng-container>
-          </ng-container>
-
-          <ng-container *ngIf="page.templateName === 'activityTemplate'">
-            <ng-container
-              *ngTemplateOutlet="
-                layout4Template;
-                context: {
-                  page: page
-                }
-              "
-            ></ng-container>
-          </ng-container>
-
-          <ng-container *ngIf="page.templateName === 'galleryTemplate'">
-            <ng-container
-              *ngTemplateOutlet="
-                galleryTemplate;
-                context: {
-                  page: page
-                }
-              "
-            ></ng-container>
-          </ng-container>
-        </ng-container>
-      </ng-container>
+        <!-- galleryTemplate -->
+        <div *ngSwitchCase="'galleryTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              galleryTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+      </div>
     </ng-container>
   </main>
 </ng-container>
@@ -145,6 +119,7 @@
   </section>
 </ng-template>
 
+<!-- ## diagnosticTemplate -->
 <ng-template #diagnosticTemplate let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--diagnostic">
@@ -194,6 +169,7 @@
   </section>
 </ng-template>
 
+<!-- ## layout2Template -->
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--2">
@@ -234,8 +210,8 @@
   </section>
 </ng-template>
 
-<!-- ## Layout 4 -->
-<ng-template #layout4Template let-page="page">
+<!-- ## activityTemplate -->
+<ng-template #activityTemplate let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--4">
       <div class="body">
@@ -264,7 +240,7 @@
   </section>
 </ng-template>
 
-<!-- ## Gallery -->
+<!-- ## galleryTemplate -->
 <ng-template #galleryTemplate let-page="page">
   <section class="page {{ page.options.backgroundClass }}">
     <div class="page__content layout--gallery">

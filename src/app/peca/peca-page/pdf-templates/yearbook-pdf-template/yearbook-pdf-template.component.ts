@@ -16,7 +16,6 @@ import {
   IndexTemplateUtils,
   Pager,
   RecursiveArrayIndexListItem,
-  SchoolGradePageGroup,
   SchoolGradeTemplate,
   SecondLayoutTemplate,
   TemplateUtils,
@@ -40,6 +39,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
   showLoading = true;
+
+  pages: TemplatePages = [];
+  pager = new Pager(1);
+
+  // Data
   pdfData: PdfYearbookData;
   yearbookConfig = YearbookConfig;
 
@@ -47,20 +51,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticGraphicData = null;
   diagnosticGoalTableData = null;
 
-  pages: TemplatePages = [];
-  pager = new Pager(1);
+  //
   listItems: RecursiveArrayIndexListItem = [];
 
   // indexPage: IndexTemplate = null;
   indexPages: IndexTemplate[] = [];
-  // frontpage: FrontPage = null;
-  schoolGradePageGroup: SchoolGradePageGroup = null;
-
-  // layout2
-  mySchoolPage: SecondLayoutTemplate = null;
-  coordinatorPage: SecondLayoutTemplate = null;
-  godFatherPage: SecondLayoutTemplate = null;
-  schoolPage: SecondLayoutTemplate = null;
 
   // layout4Template
   lapsePages = [];
@@ -234,7 +229,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   setLapsePages() {
-    const pages = [];
     const indexListItems = [];
 
     const { lapses } = this.pdfData;
@@ -247,6 +241,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const diagnosticCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
       'globalLapsesDiagnostic',
     );
+
+    const pagesToAdd = [];
 
     lapses.forEach((lapse) => {
       const diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
@@ -281,33 +277,34 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         }
       }
 
-      pages.push(...diagnosticsPages, ...activityPages);
+      pagesToAdd.push(...diagnosticsPages, ...activityPages);
 
-      const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
-        diagnosticsPages,
-        this.pager,
-        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-        null,
-        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      );
+      // const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
+      //   diagnosticsPages,
+      //   this.pager,
+      //   (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+      //   null,
+      //   (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      // );
 
-      const actPgIndexListItems = TemplateUtils.addItemsToIndex(
-        activityPages,
-        this.pager,
-        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-        null,
-        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      );
+      // const actPgIndexListItems = TemplateUtils.addItemsToIndex(
+      //   activityPages,
+      //   this.pager,
+      //   (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+      //   null,
+      //   (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      // );
 
-      indexListItems.push(
-        new IndexListItem(lapse.lapseName),
-        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
-        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
-      );
+      // indexListItems.push(
+      //   new IndexListItem(lapse.lapseName),
+      //   [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
+      //   [new IndexListItem('Actividades'), [...actPgIndexListItems]],
+      // );
     });
 
-    this.lapsePages = pages;
-    this.listItems.push(...indexListItems);
+    this.pages.push(...pagesToAdd);
+
+    // this.listItems.push(...indexListItems);
   }
 
   setIndexPage() {

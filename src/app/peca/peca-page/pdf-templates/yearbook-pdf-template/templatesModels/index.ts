@@ -1,6 +1,6 @@
 export * from './Template';
 export * from './Pager';
-export * from './ActivitiesPage';
+export * from './ActivityTemplate';
 export * from './FrontPageTemplate';
 export * from './schoolGradesTemplate';
 export * from './TemplateThird';
