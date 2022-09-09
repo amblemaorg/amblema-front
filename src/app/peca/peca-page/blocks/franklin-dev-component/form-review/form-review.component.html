@@ -26,13 +26,8 @@
         </button>
       </div>
 
-      <nb-alert
-        *ngIf="msgErrorFile"
-        closable
-        (close)="msgErrorFile = false"
-        status="danger"
-      >
-        El archivo no es una imagen.
+      <nb-alert *ngIf="msgErrorFile" closable (close)="msgErrorFile = false" status="danger">
+        {{ msgErrorFile }}
       </nb-alert>
 
       <div class="form-group text-left" *ngIf="settings.fields.inputImg">
@@ -53,15 +48,15 @@
             (makingActionSubs$ | async).makingAction
           "
         />
-        <label
-          [for]="settings.fields.inputImg.name"
-          class="btn btn-tertiary js-labelFile"
-        >
+        <label [for]="settings.fields.inputImg.name" class="btn btn-tertiary js-labelFile">
           <span class="js-fileName">
             <span *ngIf="!form.get('inputImg').value"> Carga de imagen </span>
             <span *ngIf="form.get('inputImg').value"> Archivo cargado </span>
           </span>
         </label>
+        <p *ngIf="settings.fields.inputImg.sizeLimitMb">
+          El peso de la imagen no debe exceder de {{ settings.fields.inputImg['sizeLimitMb'] }} MB.
+        </p>
       </div>
       <ng2-smart-table
         *ngIf="settings.fields.inputImg.multiple"
@@ -88,20 +83,28 @@
         rows="8"
         [disabled]="settings.fields.description.disabled"
         [readonly]="settings.fields.description.disabled"
+        [maxlength]="
+          settings.fields.description.maxLength ? settings.fields.description.maxLength : null
+        "
       >
       </textarea>
+      <p
+        *ngIf="settings.fields.description.maxLength"
+        [ngClass]="{ 'text-danger': formControlHasError('description', 'maxlength') }"
+      >
+        Cantidad de caracteres: {{ form.get('description').value.length }}/{{
+          settings.fields.description.maxLength
+        }}.<span *ngIf="formControlHasError('description', 'maxlength')"> (Excedido)</span>
+      </p>
     </div>
     <!-- Button -->
     <div class="text-right">
       <button
         type="button"
         [class.d-none]="
-          (makingActionSubs$ | async).makingAction &&
-          (makingActionSubs$ | async).wasSaving
+          (makingActionSubs$ | async).makingAction && (makingActionSubs$ | async).wasSaving
         "
-        *ngIf="
-          settings.fields.cancelButton && !settings.fields.cancelButton.hidden
-        "
+        *ngIf="settings.fields.cancelButton && !settings.fields.cancelButton.hidden"
         nbButton
         status="danger"
         class="btn btn-danger col-12 col-lg-auto btn-cancel"
@@ -114,8 +117,7 @@
       >
         {{
           isSaving ||
-          (settings.fields.cancelButton.isMainBtn &&
-            (makingActionSubs$ | async).makingAction)
+          (settings.fields.cancelButton.isMainBtn && (makingActionSubs$ | async).makingAction)
             ? settings.fields.cancelButton.ingAction
             : settings.fields.cancelButton.text
         }}
@@ -125,15 +127,12 @@
         *ngIf="
           settings.fields.button &&
           !settings.fields.button.hidden &&
-          (settings.fields.button.type === 'submit' ||
-            !settings.fields.button.type)
+          (settings.fields.button.type === 'submit' || !settings.fields.button.type)
         "
         nbButton
         class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
         [disabled]="
-          settings.fields.button.disabled ||
-          isSaving ||
-          (makingActionSubs$ | async).makingAction
+          settings.fields.button.disabled || isSaving || (makingActionSubs$ | async).makingAction
         "
       >
         {{
@@ -156,9 +155,7 @@
         nbButton
         class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
         [disabled]="
-          settings.fields.button.disabled ||
-          isSaving ||
-          (makingActionSubs$ | async).makingAction
+          settings.fields.button.disabled || isSaving || (makingActionSubs$ | async).makingAction
         "
       >
         {{
@@ -169,7 +166,7 @@
             : settings.fields.button.text
         }}
       </button>
-      <!-- {{ isSaving || ( settings.fields.button.isMainBtn && (makingActionSubs$ | async).makingAction ) 
+      <!-- {{ isSaving || ( settings.fields.button.isMainBtn && (makingActionSubs$ | async).makingAction )
             ? settings.fields.button.ingAction : settings.fields.button.text }} -->
     </div>
   </form>

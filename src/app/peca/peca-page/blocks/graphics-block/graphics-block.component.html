@@ -1,6 +1,10 @@
-<div *ngIf="settings.chartId" class="chart-graphics" [class.hide-chart]="settings.hideChart">
-    <canvas [id]="settings.chartId">
-        {{chart}}
-    </canvas>
+<div
+  *ngIf="settings.chartId"
+  class="chart-graphics"
+  [class.hide-chart]="settings.hideChart"
+  [ngClass]="{ 'fit-container': fitContainer }"
+>
+  <canvas [id]="settings.chartId">
+    {{ chart }}
+  </canvas>
 </div>
-

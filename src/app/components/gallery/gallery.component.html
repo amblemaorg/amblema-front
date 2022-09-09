@@ -1,0 +1,18 @@
+<div
+  class="gallery-container {{ containerClasses }} {{
+    withSubtitle ? 'with-subtitles' : ''
+  }}"
+>
+  <ng-container *ngFor="let imgItem of getImagesLimited()">
+    <ng-container *ngIf="imgItem">
+      <div class="gallery__item" [style]="itemStyle">
+        <div class="image-container">
+          <img [src]="imgItem.img || imgItem" />
+        </div>
+        <ng-container *ngIf="imgItem.title">
+          <p class="subtitle">{{ imgItem.title }}</p>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
