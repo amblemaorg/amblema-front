@@ -323,7 +323,6 @@ $size__p: 16px;
 
   .layout--2 {
     display: grid;
-    // grid-template-rows: repeat(2, 320px);
     grid-template-columns: 100%;
     grid-template-rows: repeat(2, 50%);
     justify-content: center;
@@ -334,14 +333,13 @@ $size__p: 16px;
       font-weight: bold;
     }
 
+    $columnGap: 30px;
+
     .head {
       overflow: hidden;
 
-      // display: grid;
-      // grid-template-columns: repeat(2, 1fr);
       display: flex;
-      column-gap: 20px;
-      // flex-direction:;
+      column-gap: $columnGap;
 
       & > * {
         width: 50%;
@@ -376,6 +374,7 @@ $size__p: 16px;
       height: 90%;
       column-count: 2;
       column-fill: auto;
+      column-gap: $columnGap;
     }
   }
 
