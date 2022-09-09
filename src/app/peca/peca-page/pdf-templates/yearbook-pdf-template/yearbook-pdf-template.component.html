@@ -9,8 +9,15 @@
             *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
           ></ng-container>
         </div>
+
         <div *ngSwitchCase="'indexTemplate'">output</div>
-        <div *ngSwitchCase="'layout2Template'">output</div>
+
+        <div *ngSwitchCase="'layout2Template'">
+          <ng-container
+            *ngTemplateOutlet="layout2Template; context: { page: page }"
+          ></ng-container>
+        </div>
+
         <div *ngSwitchCase="'schoolStudentListTemplate'">output</div>
         <div *ngSwitchCase="'diagnosticTemplate'">output</div>
         <div *ngSwitchCase="'activityTemplate'">output</div>
@@ -19,31 +26,10 @@
     </ng-container>
 
     <ng-container *ngIf="false">
-      <ng-container *ngIf="frontpage">
-        <ng-container
-          *ngTemplateOutlet="
-            frontpageTemplate;
-            context: { frontpage: frontpage }
-          "
-        ></ng-container>
-      </ng-container>
-
       <ng-container *ngFor="let page of indexPages">
         <ng-container
           *ngTemplateOutlet="indexTemplate; context: { page: page }"
         ></ng-container>
-      </ng-container>
-
-      <ng-container
-        *ngFor="
-          let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]
-        "
-      >
-        <ng-container *ngIf="page">
-          <ng-container
-            *ngTemplateOutlet="layout2Template; context: { page: page }"
-          ></ng-container>
-        </ng-container>
       </ng-container>
 
       <ng-container *ngIf="schoolGradePageGroup">
