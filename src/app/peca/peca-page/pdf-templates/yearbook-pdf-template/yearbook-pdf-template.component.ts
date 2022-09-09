@@ -74,7 +74,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.diagnosticGraphicData = mockDiagnosticChartData;
       this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
 
-      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
+      // console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
 
       this.pageInit();
       this.showLoading = false;
@@ -99,11 +99,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setSchoolGradeTemplatePages();
     this.setLapsePages();
     this.setIndexPage();
-
-    console.log('listItems', this.listItems);
-    console.log('pages', this.pages);
-
-    // this.pager.rebuild
   }
 
   setFrontPage() {
@@ -295,7 +290,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   setIndexPage() {
     const indexTmpUtils = new IndexTemplateUtils();
     const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
-    console.log('notNestedItems', notNestedItems);
 
     const maxItemsPerPage = 40;
 
@@ -304,15 +298,32 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
 
     const pages = [];
-    notNestedItemsPaged.forEach((listItems) => {
+
+    // pg = pages
+    const countPgToAdd = notNestedItemsPaged.length;
+
+    notNestedItemsPaged.forEach((listItems, idx) => {
+      listItems = listItems.map((listItem) => {
+        listItem.pageNumber += countPgToAdd;
+        return listItem;
+      });
       pages.push(new IndexTemplate(listItems));
     });
 
-    console.log('IndexTemplatePages', pages);
-
-    // this.pages = ;
-
     this.pages.splice(1, 0, ...pages);
-    // this.pages.unshift(...pages);
+
+    this.addPagesAtBeginPager(countPgToAdd, this.pages);
+  }
+
+  private addPagesAtBeginPager(countToAdd: number, pages: TemplatePages) {
+    if (countToAdd < 1) return;
+
+    const idxAvoidPgAdded = countToAdd - 1;
+
+    for (let index = idxAvoidPgAdded; index < pages.length; index++) {
+      const page = pages[index];
+
+      page.page += countToAdd;
+    }
   }
 }

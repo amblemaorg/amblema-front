@@ -4,11 +4,8 @@ export type RecursiveArrayIndexListItem = Array<
   RecursiveArrayIndexListItem | IndexListItem
 >;
 export class IndexTemplate extends Template {
-  // listItems: RecursiveArrayIndexListItem = [];
-  // notNestedItems: IndexListItem[] = [];
   maxItemsToWrap = 22;
   utils = new IndexTemplateUtils();
-  // maxItemsPerPaged = 48;
 
   constructor(
     public listItems: RecursiveArrayIndexListItem = [],
@@ -60,8 +57,6 @@ export class IndexTemplateUtils {
   }
 
   getNotNestedItems(listItems: RecursiveArrayIndexListItem) {
-    // console.log('getNotNestedItems', listItems);
-
     this.initRecursiveSettingNotNestedItems(listItems);
 
     return this.notNestedItems;
@@ -70,7 +65,7 @@ export class IndexTemplateUtils {
   getNotNestedItemsPaged(
     maxItemsPerPage: number,
     notNestedItems = this.notNestedItems,
-  ) {
+  ): IndexListItem[][] {
     const notNestedItemsPaged = [];
     const totalIndexPage = parseFloat(
       (notNestedItems.length / maxItemsPerPage).toFixed(1),
@@ -78,8 +73,6 @@ export class IndexTemplateUtils {
 
     for (let index = 0; index < totalIndexPage; index++) {
       const itemsToIgnore = index * maxItemsPerPage;
-
-      console.log('yes', itemsToIgnore);
 
       notNestedItemsPaged.push(
         notNestedItems.slice(itemsToIgnore, itemsToIgnore + maxItemsPerPage),
