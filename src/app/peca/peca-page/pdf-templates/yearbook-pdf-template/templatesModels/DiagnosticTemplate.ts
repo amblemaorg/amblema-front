@@ -117,7 +117,9 @@ export class DiagnosticPageDataGroup {
   }
 
   private formatFilterDiagnosticValueByYear(diagValues: any[]) {
-    diagValues = diagValues.filter((diagValue) => diagValue.label == this.schoolYear);
+    diagValues = diagValues.filter(
+      (diagValue) => diagValue.label == this.schoolYear,
+    );
 
     if (!diagValues) {
       return {
@@ -179,14 +181,22 @@ export class DiagnosticPageDataGroup {
       };
 
       chartTitle = chartTitles[diagKey];
-      labels = ['D. Inicial (PPM)', 'D. Revisión (PPM)', 'D. Final (PPM)'];
+      labels = ['Inicial', 'Revisión', 'Final'];
 
-      const { operationsPerMinIndex, multiplicationsPerMinIndex, wordsPerMinIndex } = diagnostics;
-      lapseGraphic.diagnosticReading = this.formatFilterDiagnosticValueByYear(wordsPerMinIndex);
+      const {
+        operationsPerMinIndex,
+        multiplicationsPerMinIndex,
+        wordsPerMinIndex,
+      } = diagnostics;
+      lapseGraphic.diagnosticReading = this.formatFilterDiagnosticValueByYear(
+        wordsPerMinIndex,
+      );
       lapseGraphic.diagnosticMath = this.formatFilterDiagnosticValueByYear(
         multiplicationsPerMinIndex,
       );
-      lapseGraphic.diagnosticLogic = this.formatFilterDiagnosticValueByYear(operationsPerMinIndex);
+      lapseGraphic.diagnosticLogic = this.formatFilterDiagnosticValueByYear(
+        operationsPerMinIndex,
+      );
     }
 
     const chartId = `${lapseName}-${diagKey}-graphic`;
@@ -222,7 +232,8 @@ export class DiagnosticPageDataGroup {
       return prev + current;
     });
 
-    const result = columnTableData.length > 0 ? sum / columnTableData.length : 0.0;
+    const result =
+      columnTableData.length > 0 ? sum / columnTableData.length : 0.0;
 
     return result.toFixed(toFixedCount).toString();
   }
@@ -244,7 +255,9 @@ export class DiagnosticPageDataGroup {
 
     // const gradeKey = gradeRespKeyMappedWithGradeDiag[]
 
-    const diagGoal = this.diagnosticGoalTableData[gradeRespKeyMappedWithGradeDiag[grade]];
+    const diagGoal = this.diagnosticGoalTableData[
+      gradeRespKeyMappedWithGradeDiag[grade]
+    ];
 
     if (!diagGoal)
       return {
@@ -285,11 +298,23 @@ export class DiagnosticPageDataGroup {
     }
 
     if (isSecondLapse) {
-      header.push(['grado', 'D. Inicial', 'D. Revisión', 'Meta', 'Índice P. Revisión']);
+      header.push([
+        'grado',
+        'D. Inicial',
+        'D. Revisión',
+        'Meta',
+        'Índice P. Revisión',
+      ]);
     }
 
     if (isThirdLapse) {
-      header.push(['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice P. Final']);
+      header.push([
+        'grado',
+        'D. Inicial',
+        'D. Final',
+        'Meta',
+        'Índice P. Final',
+      ]);
     }
 
     if (!tableData) {
@@ -327,7 +352,10 @@ export class DiagnosticPageDataGroup {
       }
 
       if (isSecondLapse || isThirdLapse) {
-        let valueRevision: any = tablesByLapses[0][diagIdx].slice(2, tableData.length);
+        let valueRevision: any = tablesByLapses[0][diagIdx].slice(
+          2,
+          tableData.length,
+        );
 
         // if (tdFormatted[0] === '6to ') {
         //   console.log('lapseIdx', lapseIdx);
@@ -384,7 +412,11 @@ export class DiagnosticPageDataGroup {
   buildDataPages() {
     const pages: DiagnosticPageData[] = [];
     let tablesByLapses = [];
-    const diagnosticKeys = ['diagnosticReading', 'diagnosticMath', 'diagnosticLogic'];
+    const diagnosticKeys = [
+      'diagnosticReading',
+      'diagnosticMath',
+      'diagnosticLogic',
+    ];
 
     this.lapses.map((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
@@ -393,9 +425,17 @@ export class DiagnosticPageDataGroup {
       let tables = [];
 
       let page = diagnosticKeys.map((diagKey, diagIdx) => {
-        const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[diagKey];
+        const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[
+          diagKey
+        ];
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
-        const table = this.getTable(diagnosticTable, lapseIdx, diagIdx, diagKey, tablesByLapses);
+        const table = this.getTable(
+          diagnosticTable,
+          lapseIdx,
+          diagIdx,
+          diagKey,
+          tablesByLapses,
+        );
 
         tables.push(table);
 
@@ -424,7 +464,9 @@ export class DiagnosticPageDataGroup {
   }
 
   getPagesWithDiagnosticTemplate(lapseName?: string, characterLimit = 0) {
-    const pages = lapseName ? this.pages.filter((pg) => pg.lapseName === lapseName) : this.pages;
+    const pages = lapseName
+      ? this.pages.filter((pg) => pg.lapseName === lapseName)
+      : this.pages;
 
     return pages.map((page, pgIdx) => {
       const { diagnosticText, diagnosticAnalysis, chart, table } = page;
