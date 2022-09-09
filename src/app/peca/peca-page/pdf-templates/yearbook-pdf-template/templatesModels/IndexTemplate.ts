@@ -28,27 +28,47 @@ export class IndexTemplateUtils {
   notNestedItems = [];
   levels = 0;
 
-  setNotNestedItems(listItems: RecursiveArrayIndexListItem, levels = 0) {
-    for (let index = 0; index < listItems.length; index++) {
-      const item = listItems[index];
+  setNotNestedItems(
+    listItems: RecursiveArrayIndexListItem | IndexListItem,
+    levels = 0,
+  ) {
+    console.log('First', levels);
 
-      if (!Array.isArray(item)) {
-        if (!item.label) continue;
-        item.arrayLevel = levels;
-        this.notNestedItems.push(item);
-        continue;
-      }
+    if (Array.isArray(listItems)) {
       levels += 1;
-      this.setNotNestedItems(item, levels);
+      listItems.forEach((item) => {
+        this.setNotNestedItems(item, levels);
+      });
+      return;
     }
-    console.log(levels);
-    levels = 0;
+
+    const item = listItems;
+
+    if (!item.label) return;
+
+    item.arrayLevel = levels;
+
+    this.notNestedItems.push(item);
+
+    console.log('End put single item', levels);
+  }
+
+  initRecursiveSettingNotNestedItems(listItems: RecursiveArrayIndexListItem) {
+    this.notNestedItems = [];
+
+    listItems.forEach((listItemsForE) => {
+      const levels = 0;
+      console.log('listItemsForE');
+
+      this.setNotNestedItems(listItemsForE, levels);
+    });
   }
 
   getNotNestedItems(listItems: RecursiveArrayIndexListItem) {
-    this.notNestedItems = [];
-    this.levels = 0;
-    this.setNotNestedItems(listItems);
+    console.log('getNotNestedItems', listItems);
+
+    this.initRecursiveSettingNotNestedItems(listItems);
+
     return this.notNestedItems;
   }
 
