@@ -34,6 +34,7 @@ export class DiagnosticTemplate extends Template {
     chart: Chart,
     table: string[][] = [],
     public subtitle?: string,
+    public characterLimit = 0,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
@@ -291,6 +292,9 @@ export class DiagnosticPageDataGroup {
       header.push(['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice P. Final']);
     }
 
+    if (!tableData) {
+      return [];
+    }
     // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
 
@@ -324,9 +328,31 @@ export class DiagnosticPageDataGroup {
 
       if (isSecondLapse || isThirdLapse) {
         let valueRevision: any = tablesByLapses[0][diagIdx].slice(2, tableData.length);
+
+        // if (tdFormatted[0] === '6to ') {
+        //   console.log('lapseIdx', lapseIdx);
+
+        //   console.log(tdFormatted[0]);
+
+        //   console.log(tablesByLapses);
+        //   console.log({ valueRevision });
+        // }
+
         valueRevision = valueRevision.find(
-          (valueRevByGrade) => valueRevByGrade[0] === tdFormatted[0],
+          (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
         );
+
+        // if (tdFormatted[0] === '6to ' && isSecondLapse) {
+        //   console.log('after find');
+        //   console.log('tablesByLapses[0]', tablesByLapses[0]);
+
+        //   console.log('lapseIdx', lapseIdx);
+
+        //   console.log(tdFormatted[0]);
+
+        //   console.log({ valueRevision });
+        //   console.log(valueRevision ? valueRevision[1] : '---');
+        // }
 
         return [
           tdFormatted[0], // grade
@@ -366,7 +392,7 @@ export class DiagnosticPageDataGroup {
 
       let tables = [];
 
-      const page = diagnosticKeys.map((diagKey, diagIdx) => {
+      let page = diagnosticKeys.map((diagKey, diagIdx) => {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[diagKey];
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
         const table = this.getTable(diagnosticTable, lapseIdx, diagIdx, diagKey, tablesByLapses);
@@ -382,6 +408,8 @@ export class DiagnosticPageDataGroup {
         };
       });
 
+      // Remove diagnostic pages without table data
+      page = page.filter((diag) => diag.table.length > 0);
       tablesByLapses.push(tables);
       pages.push(...page);
     });
@@ -395,13 +423,20 @@ export class DiagnosticPageDataGroup {
     return this.pages;
   }
 
-  getPagesWithDiagnosticTemplate(lapseName?: string) {
+  getPagesWithDiagnosticTemplate(lapseName?: string, characterLimit = 0) {
     const pages = lapseName ? this.pages.filter((pg) => pg.lapseName === lapseName) : this.pages;
 
     return pages.map((page, pgIdx) => {
       const { diagnosticText, diagnosticAnalysis, chart, table } = page;
       const lapseName = pgIdx === 0 ? page.lapseName : undefined;
-      return new DiagnosticTemplate(diagnosticText, diagnosticAnalysis, chart, table, lapseName);
+      return new DiagnosticTemplate(
+        diagnosticText,
+        diagnosticAnalysis,
+        chart,
+        table,
+        lapseName,
+        characterLimit,
+      );
     });
   }
 }

@@ -5,13 +5,29 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
-  ActivitiesPage,
+  ActivityTemplate,
   DiagnosticPageDataGroup,
   DiagnosticTemplate,
-  FrontPage,
-  SchoolGradePageGroup,
+  FrontPageTemplate,
+  GalleryTemplate,
+  IndexListItem,
+  IndexTemplate,
+  IndexTemplateUtils,
+  Pager,
+  RecursiveArrayIndexListItem,
+  SchoolGradeTemplate,
   SecondLayoutTemplate,
+  TemplateUtils,
 } from './templatesModels';
+
+type TemplatePages = Array<
+  | IndexTemplate
+  | FrontPageTemplate
+  | SecondLayoutTemplate
+  | SchoolGradeTemplate
+  | DiagnosticTemplate
+  | ActivityTemplate
+>;
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -22,6 +38,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
   showLoading = true;
+  pager = new Pager();
+
+  pages: TemplatePages = [];
+
+  // Data
   pdfData: PdfYearbookData;
   yearbookConfig = YearbookConfig;
 
@@ -29,20 +50,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticGraphicData = null;
   diagnosticGoalTableData = null;
 
-  pages: any = [];
-
-  frontpage: FrontPage = null;
-  schoolGradePageGroup: SchoolGradePageGroup = null;
-  activitiesPage: ActivitiesPage = null;
-
-  // layout2
-  mySchoolPage: SecondLayoutTemplate = null;
-  coordinatorPage: SecondLayoutTemplate = null;
-  godFatherPage: SecondLayoutTemplate = null;
-  schoolPage: SecondLayoutTemplate = null;
-
-  // diagnosticTemplate
-  lapsesDiagnosticTmpGroup = [];
+  //
+  listItems: RecursiveArrayIndexListItem = [];
 
   ngOnInit() {
     this.pdfData = this.pdfService.pdfData;
@@ -65,7 +74,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.diagnosticGraphicData = mockDiagnosticChartData;
       this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
 
-      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
+      // console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
 
       this.pageInit();
       this.showLoading = false;
@@ -86,23 +95,25 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   pageInit() {
     this.setFrontPage();
-    this.setSecondLayoutTemplateGroup(); // refactored
-    this.setSchoolGradePageGroup(); // refactored
-    this.setActivitiesPage();
-    this.setDiagnosticTemplateGroup();
+    this.set2Layout2TemplatePages();
+    this.setSchoolGradeTemplatePages();
+    this.setLapsePages();
+    this.setIndexPage();
   }
 
   setFrontPage() {
     const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
-    this.frontpage = new FrontPage({
-      schoolName,
-      schoolYear,
-      sponsorName,
-      sponsorLogo,
-    });
+
+    const frontPage = new FrontPageTemplate(
+      { title: sponsorName, brand: sponsorLogo },
+      { title: 'AmbLeMario', subTitle: schoolName, subTitleN2: schoolYear },
+    );
+
+    frontPage.setPagerInst(this.pager);
+    this.pages.push(frontPage);
   }
 
-  setSecondLayoutTemplateGroup() {
+  set2Layout2TemplatePages() {
     const {
       historicalReviewText,
       historicalReviewImg,
@@ -117,34 +128,70 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorText,
     } = this.pdfData;
 
-    this.mySchoolPage = new SecondLayoutTemplate(
+    const mySchoolPage = new SecondLayoutTemplate(
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
     );
-    this.coordinatorPage = new SecondLayoutTemplate(
+
+    const coordinatorPage = new SecondLayoutTemplate(
       'coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
     );
-    this.godFatherPage = new SecondLayoutTemplate('padrino', sponsorLogo, sponsorText, sponsorName);
-    this.schoolPage = new SecondLayoutTemplate(schoolName, schoolImg, schoolText, null, false);
+    const godFatherPage = new SecondLayoutTemplate(
+      'padrino',
+      sponsorLogo,
+      sponsorText,
+      sponsorName,
+    );
+    const schoolPage = new SecondLayoutTemplate(
+      schoolName,
+      schoolImg,
+      schoolText,
+      null,
+      false,
+    );
+
+    const pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
+
+    this.pages.push(...pages);
+
+    const listItems = TemplateUtils.getItemsToIndex(pages, this.pager);
+
+    this.listItems.push(...listItems);
   }
 
-  setSchoolGradePageGroup() {
+  setSchoolGradeTemplatePages() {
     const { schoolSections } = this.pdfData;
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections });
+    const pages = [];
+    schoolSections.forEach((section) => {
+      const { sectionName, sectionImg, sectionStudents, teacher } = section;
+
+      const page = new SchoolGradeTemplate(
+        sectionName,
+        sectionImg,
+        teacher,
+        sectionStudents,
+      );
+      pages.push(page);
+    });
+
+    this.pages.push(...pages);
+
+    const indexListItems = TemplateUtils.getItemsToIndex(
+      pages,
+      this.pager,
+      () => 'name',
+      new IndexListItem('grados y secciones'),
+    );
+
+    this.listItems.push(...indexListItems);
   }
 
-  setActivitiesPage() {
-    const { lapses } = this.pdfData;
-
-    this.activitiesPage = new ActivitiesPage({ lapses });
-  }
-
-  async setDiagnosticTemplateGroup() {
+  private getDiagnosticPageDataGroup() {
     const graphics = this.pdfService.getGraphics();
 
     if (!graphics) {
@@ -152,20 +199,131 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     }
 
     const { lapses, schoolYear } = this.pdfData;
-    this.diagnosticPageDataGroup = new DiagnosticPageDataGroup(
+    return new DiagnosticPageDataGroup(
       graphics,
       lapses,
       schoolYear,
       this.diagnosticGraphicData,
       this.diagnosticGoalTableData,
     );
+  }
+
+  setLapsePages() {
+    const indexListItems = [];
+
+    const { lapses } = this.pdfData;
+
+    const diagnosticPageDataGroup = this.getDiagnosticPageDataGroup();
+
+    const activityCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesActivities',
+    );
+    const diagnosticCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesDiagnostic',
+    );
+
+    const pagesToAdd = [];
 
     lapses.forEach((lapse) => {
-      this.lapsesDiagnosticTmpGroup.push(
-        this.diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(lapse.lapseName),
+      const diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
+        lapse.lapseName,
+        diagnosticCharacterLimit,
+      );
+
+      const activityPages = [];
+
+      for (let index = 0; index < lapse.activities.length; index++) {
+        const activity = lapse.activities[index];
+
+        const { name, description, images } = activity;
+
+        const isExpandedGallery = true;
+
+        if (!(description && name)) {
+          continue;
+        }
+
+        activityPages.push(
+          new ActivityTemplate(
+            name,
+            description,
+            images,
+            activityCharacterLimit,
+          ),
+        );
+
+        if (isExpandedGallery) {
+          activityPages.push(new GalleryTemplate(images));
+        }
+      }
+
+      pagesToAdd.push(...diagnosticsPages, ...activityPages);
+
+      const diagPgIndexListItems = TemplateUtils.getItemsToIndex(
+        diagnosticsPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
+
+      const actPgIndexListItems = TemplateUtils.getItemsToIndex(
+        activityPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
+
+      indexListItems.push(
+        new IndexListItem(lapse.lapseName),
+        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
+        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
       );
     });
 
-    console.log('this.lapsesDiagnosticTmpGroup', this.lapsesDiagnosticTmpGroup);
+    this.pages.push(...pagesToAdd);
+
+    this.listItems.push(...indexListItems);
+  }
+
+  setIndexPage() {
+    const indexTmpUtils = new IndexTemplateUtils();
+    const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
+
+    const maxItemsPerPage = 40;
+
+    const notNestedItemsPaged = indexTmpUtils.getNotNestedItemsPaged(
+      maxItemsPerPage,
+    );
+
+    const pages = [];
+
+    // pg = pages
+    const countPgToAdd = notNestedItemsPaged.length;
+
+    notNestedItemsPaged.forEach((listItems, idx) => {
+      listItems = listItems.map((listItem) => {
+        listItem.pageNumber += countPgToAdd;
+        return listItem;
+      });
+      pages.push(new IndexTemplate(listItems));
+    });
+
+    this.pages.splice(1, 0, ...pages);
+
+    this.addPagesAtBeginPager(countPgToAdd, this.pages);
+  }
+
+  private addPagesAtBeginPager(countToAdd: number, pages: TemplatePages) {
+    if (countToAdd < 1) return;
+
+    const idxAvoidPgAdded = countToAdd - 1;
+
+    for (let index = idxAvoidPgAdded; index < pages.length; index++) {
+      const page = pages[index];
+
+      page.page += countToAdd;
+    }
   }
 }
