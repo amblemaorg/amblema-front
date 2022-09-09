@@ -170,17 +170,17 @@ export class DiagnosticPageDataGroup {
     const { diagnostics } = this.diagnosticGraphicData;
     const lapseGraphic = graphics[lapseId];
     let labels = lapseGraphic[diagKey].labels;
-    let chartTitle = '';
+    let chartTitle = 'Índice Promedio de la Escuela';
 
     // lapseIdx === 2
     if (isThirdLapse) {
-      const chartTitles = {
-        diagnosticReading: 'Indice promedio de lectura general',
-        diagnosticMath: 'Indice promedio de multiplicación general',
-        diagnosticLogic: 'Indice promedio de lógica matemática general',
-      };
+      // const chartTitles = {
+      //   diagnosticReading: 'Indice promedio de lectura general',
+      //   diagnosticMath: 'Indice promedio de multiplicación general',
+      //   diagnosticLogic: 'Indice promedio de lógica matemática general',
+      // };
 
-      chartTitle = chartTitles[diagKey];
+      // chartTitle = chartTitles[diagKey];
       labels = ['Inicial', 'Revisión', 'Final'];
 
       const {
