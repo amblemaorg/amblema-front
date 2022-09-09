@@ -5,7 +5,6 @@ import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.ser
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
-  // FrontPage,
   ActivityTemplate,
   DiagnosticPageDataGroup,
   DiagnosticTemplate,
@@ -53,12 +52,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   //
   listItems: RecursiveArrayIndexListItem = [];
-
-  // indexPage: IndexTemplate = null;
-  indexPages: IndexTemplate[] = [];
-
-  // layout4Template
-  lapsePages = [];
 
   ngOnInit() {
     this.pdfData = this.pdfService.pdfData;
@@ -162,29 +155,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       false,
     );
 
-    this.pages.push(mySchoolPage, coordinatorPage, godFatherPage, schoolPage);
+    const pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
 
-    // const pages = [
-    //   mySchoolPage,
-    //   coordinatorPage,
-    //   godFatherPage,
-    //   schoolPage,
-    // ];
+    this.pages.push(...pages);
 
-    // const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
+    const listItems = TemplateUtils.addItemsToIndex(pages, this.pager);
 
-    // this.listItems.push(...listItems);
+    this.listItems.push(...listItems);
   }
 
   setSchoolGradePageGroup() {
     const { schoolSections } = this.pdfData;
-
-    // this.schoolGradePageGroup = new SchoolGradePageGroup(
-    //   { schoolSections },
-    //   this.pager,
-    // );
-
-    //Adding school templates (pages)
 
     const pages = [];
     schoolSections.forEach((section) => {
@@ -199,16 +180,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       pages.push(page);
     });
 
-    // const indexListItems = TemplateUtils.addItemsToIndex(
-    //   this.pages,
-    //   pagerInst,
-    //   () => 'name',
-    //   new IndexListItem('grados y secciones'),
-    // )
-
     this.pages.push(...pages);
 
-    // this.listItems.push(...indexListItems);
+    const indexListItems = TemplateUtils.addItemsToIndex(
+      this.pages,
+      this.pager,
+      () => 'name',
+      new IndexListItem('grados y secciones'),
+    );
+
+    this.listItems.push(...indexListItems);
   }
 
   private getDiagnosticPageDataGroup() {
@@ -279,32 +260,32 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       pagesToAdd.push(...diagnosticsPages, ...activityPages);
 
-      // const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
-      //   diagnosticsPages,
-      //   this.pager,
-      //   (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-      //   null,
-      //   (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      // );
+      const diagPgIndexListItems = TemplateUtils.addItemsToIndex(
+        diagnosticsPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
 
-      // const actPgIndexListItems = TemplateUtils.addItemsToIndex(
-      //   activityPages,
-      //   this.pager,
-      //   (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-      //   null,
-      //   (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      // );
+      const actPgIndexListItems = TemplateUtils.addItemsToIndex(
+        activityPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
 
-      // indexListItems.push(
-      //   new IndexListItem(lapse.lapseName),
-      //   [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
-      //   [new IndexListItem('Actividades'), [...actPgIndexListItems]],
-      // );
+      indexListItems.push(
+        new IndexListItem(lapse.lapseName),
+        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
+        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
+      );
     });
 
     this.pages.push(...pagesToAdd);
 
-    // this.listItems.push(...indexListItems);
+    this.listItems.push(...indexListItems);
   }
 
   setIndexPage() {
@@ -318,8 +299,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       maxItemsPerPage,
     );
 
+    const pages = [];
     notNestedItemsPaged.forEach((listItems) => {
-      this.indexPages.push(new IndexTemplate(listItems));
+      pages.push(new IndexTemplate(listItems));
     });
+
+    console.log('IndexTemplatePages', pages);
+
+    // this.pages = ;
+
+    this.pages.splice(1, 0, ...pages);
+    // this.pages.unshift(...pages);
   }
 }
