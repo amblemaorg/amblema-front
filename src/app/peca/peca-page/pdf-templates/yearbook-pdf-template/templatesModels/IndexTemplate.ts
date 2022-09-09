@@ -32,8 +32,6 @@ export class IndexTemplateUtils {
     listItems: RecursiveArrayIndexListItem | IndexListItem,
     levels = 0,
   ) {
-    console.log('First', levels);
-
     if (Array.isArray(listItems)) {
       levels += 1;
       listItems.forEach((item) => {
@@ -49,8 +47,6 @@ export class IndexTemplateUtils {
     item.arrayLevel = levels;
 
     this.notNestedItems.push(item);
-
-    console.log('End put single item', levels);
   }
 
   initRecursiveSettingNotNestedItems(listItems: RecursiveArrayIndexListItem) {
@@ -58,14 +54,13 @@ export class IndexTemplateUtils {
 
     listItems.forEach((listItemsForE) => {
       const levels = 0;
-      console.log('listItemsForE');
 
       this.setNotNestedItems(listItemsForE, levels);
     });
   }
 
   getNotNestedItems(listItems: RecursiveArrayIndexListItem) {
-    console.log('getNotNestedItems', listItems);
+    // console.log('getNotNestedItems', listItems);
 
     this.initRecursiveSettingNotNestedItems(listItems);
 
