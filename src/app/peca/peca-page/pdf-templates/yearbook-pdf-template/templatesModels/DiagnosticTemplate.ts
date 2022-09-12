@@ -288,13 +288,24 @@ export class DiagnosticPageDataGroup {
     const isSecondLapse = lapseIdx === 1;
     const isThirdLapse = lapseIdx === 2;
 
+    const diagHeading = {
+      diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
+      diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
+      diagnosticLogic: '60LM: Lógica-Matemática en 60 minutos',
+    };
+
     let header = [
-      ['Resultados por grado'],
+      [`Resultados por grado <br />${diagHeading[diagKey]}`],
       // ['grado', 'sección', 'D. Inicial', 'Meta', 'Índice P. Final'],
     ];
 
     if (isFirstLapse) {
-      header.push(['grado', 'D. Inicial', 'Meta', 'Índice P. Inicial']);
+      header.push([
+        'grado',
+        'D. Inicial',
+        'Meta',
+        'Índice Diagnostico Inicial',
+      ]);
     }
 
     if (isSecondLapse) {
@@ -303,7 +314,7 @@ export class DiagnosticPageDataGroup {
         'D. Inicial',
         'D. Revisión',
         'Meta',
-        'Índice P. Revisión',
+        'Índice Diagnostico Revisión',
       ]);
     }
 
@@ -313,7 +324,7 @@ export class DiagnosticPageDataGroup {
         'D. Inicial',
         'D. Final',
         'Meta',
-        'Índice P. Final',
+        'Índice Diagnostico Final',
       ]);
     }
 
