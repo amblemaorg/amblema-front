@@ -1,3 +1,4 @@
+import { PdfYearbookService } from 'src/app/services/peca/pdf-yearbook.service';
 import { YearbookConfig } from './../../../classes/yearbook/yearbook-config';
 import { Store } from '@ngxs/store';
 import {
@@ -14,43 +15,6 @@ import {
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action';
 
-const yearbookPDFOptions = (store: string) => ({
-  component: 'store-line-options',
-  settings: {
-    store,
-    type: 'boolean',
-    classes: 'justify-content-end',
-    options: [
-      {
-        label: 'Añadir al PDF',
-        key: 'print',
-        value: true,
-      },
-    ],
-  },
-});
-
-const yearbookPDFLapseOptions = (store: string) => ({
-  component: 'store-line-options',
-  settings: {
-    store,
-    type: 'boolean',
-    classes: 'justify-content-end',
-    options: [
-      {
-        label: 'Galería ampliada',
-        key: 'galleryExpanded',
-        value: true,
-      },
-      {
-        label: 'Añadir al PDF',
-        key: 'print',
-        value: true,
-      },
-    ],
-  },
-});
-
 /**
  *
  * @function MapperYearBookWeb
@@ -59,15 +23,169 @@ const yearbookPDFLapseOptions = (store: string) => ({
  * and the components are recreated according
  * to the data.
  */
-export function MapperYearBookWeb(
+export async function MapperYearBookWeb(
   yearBookData: any,
   diagnosticGoalTableData,
+  pdfYearbookService: PdfYearbookService,
   permissions,
   store: Store,
 ) {
   const inputFileSizeLimitMb = 1;
 
-  console.log('yearBookData', yearBookData);
+  const pdfOptionsDefaultValues = await pdfYearbookService.getPrintOptions(
+    yearBookData.pecaId,
+  );
+
+  console.log('setOptInitValues', pdfOptionsDefaultValues);
+
+  const yearbookPDFOptions = (store: string) => ({
+    component: 'store-line-options',
+    settings: {
+      store: store.replace(/\s/g, ''),
+      type: 'boolean',
+      classes: 'justify-content-end',
+      options: [
+        {
+          label: 'Añadir al PDF',
+          key: 'print',
+          value: true,
+        },
+      ],
+      setOptInitValues: (opts = []) => {
+        // console.log('setOptInitValues', pdfOptionsDefaultValues);
+        const disabledSection = pdfOptionsDefaultValues.disablePages.find(
+          (disabledSection) => disabledSection === store,
+        );
+
+        opts = opts.map((opt) => {
+          if (!disabledSection) {
+            return opt;
+          }
+
+          return {
+            ...opt,
+            value: false,
+          };
+        });
+
+        return opts;
+      },
+      onChange: async ({ optSelected }) => {
+        console.log('yearbookPDFOptions');
+
+        console.log(store, { optSelected });
+        const optionToPatch = {
+          sectionsPrint: [
+            {
+              name: store,
+              print: optSelected.value,
+            },
+          ],
+        };
+        console.log('optionToPatch', optionToPatch);
+
+        await pdfYearbookService.setPrintOptions(
+          yearBookData.pecaId,
+          optionToPatch,
+        );
+      },
+    },
+  });
+
+  const yearbookPDFLapseOptions = (store: string, lapseKey: string) => ({
+    component: 'store-line-options',
+    settings: {
+      store: store.replace(/\s/g, ''),
+      type: 'boolean',
+      classes: 'justify-content-end',
+      options: [
+        {
+          label: 'Galería ampliada',
+          key: 'expandGallery',
+          value: true,
+        },
+        {
+          label: 'Añadir al PDF',
+          key: 'print',
+          value: true,
+        },
+      ],
+      onChange: async ({ optSelected, options }) => {
+        console.log('yearbookPDFOptions');
+
+        console.log(store, { optSelected });
+        const optNotSelected = options.find(
+          (opt) => opt.key !== optSelected.key,
+        );
+
+        if (!optNotSelected) return;
+
+        const optionToPatch = {
+          activitiesPrint: [
+            {
+              name: store,
+              print: false,
+              expandGallery: true,
+              lapse: lapseKey,
+            },
+          ],
+        };
+
+        const optsToSet = [optNotSelected, optSelected];
+        optsToSet.forEach((opt) => {
+          switch (opt.key) {
+            case 'expandGallery':
+              optionToPatch.activitiesPrint[0].expandGallery = opt.value;
+              break;
+            case 'print':
+              optionToPatch.activitiesPrint[0].print = opt.value;
+              break;
+          }
+        });
+
+        console.log('optionToPatch', optionToPatch);
+
+        await pdfYearbookService.setPrintOptions(
+          yearBookData.pecaId,
+          optionToPatch,
+        );
+      },
+      setOptInitValues: (opts = []) => {
+        // console.log('setOptInitValues', pdfOptionsDefaultValues);
+
+        const activitiesPrint = pdfOptionsDefaultValues.activitiesPrint;
+        const activitiesOfLapse: any[] = activitiesPrint[lapseKey];
+
+        // console.log('activitiesOfLapse', activitiesOfLapse);
+
+        if (!activitiesOfLapse) {
+          return opts;
+        }
+
+        const optDefaultValue = activitiesOfLapse.find(
+          (activity) => activity.name === store,
+        );
+
+        if (!optDefaultValue) {
+          return opts;
+        }
+
+        opts = opts.map((opt) => {
+          if (opt.key === 'expandGallery') {
+            opt.value = optDefaultValue.expandGallery;
+          }
+
+          if (opt.key === 'print') {
+            opt.value = optDefaultValue.print;
+          }
+
+          return opt;
+        });
+
+        return opts;
+      },
+    },
+  });
 
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(
@@ -142,7 +260,7 @@ export function MapperYearBookWeb(
             },
           },
         },
-        yearbookPDFOptions(`grade${grade}-section${name}-school-section`),
+        yearbookPDFOptions(`school-section__grade-${grade}-section-${name}`),
         {
           component: 'table',
           settings: {
@@ -347,7 +465,9 @@ export function MapperYearBookWeb(
           },
         },
       },
-      yearbookPDFOptions(`lapso-${lapseNumber}-reading-analysis-section`),
+      yearbookPDFOptions(
+        `lapse-${lapseNumber}__diagnostic--reading-analysis-section`,
+      ),
       createTitleComponent('Diagnóstico de Multiplicación'),
       {
         component: 'table',
@@ -490,7 +610,9 @@ export function MapperYearBookWeb(
           },
         },
       },
-      yearbookPDFOptions(`lapso-${lapseNumber}-math-analysis-section`),
+      yearbookPDFOptions(
+        `lapse-${lapseNumber}__diagnostic--math-analysis-section`,
+      ),
       createTitleComponent('Diagnóstico de lógica matemática'),
       {
         component: 'table',
@@ -634,7 +756,9 @@ export function MapperYearBookWeb(
           },
         },
       },
-      yearbookPDFOptions(`lapso-${lapseNumber}-math-logic-diagnostic-section`),
+      yearbookPDFOptions(
+        `lapse-${lapseNumber}__diagnostic--math-logic-section`,
+      ),
       ...createActivitiesComponents(lapseData.activities, lapseNumber),
     ];
   }
@@ -655,7 +779,7 @@ export function MapperYearBookWeb(
 
   function createActivitiesComponents(activities: any[], lapseNumber) {
     const lapseName = `lapse${lapseNumber}`;
-    return activities.reduce((activitiesArray, activity) => {
+    return activities.reduce((activitiesArray, activity, idx) => {
       const { id, name, images, description } = activity;
       return [
         ...activitiesArray,
@@ -703,7 +827,10 @@ export function MapperYearBookWeb(
             },
           },
         },
-        yearbookPDFLapseOptions(`${lapseName}${name}`),
+        yearbookPDFLapseOptions(
+          `${lapseName}__${name}-${idx}-section`,
+          lapseName,
+        ),
       ];
     }, []);
   }
@@ -819,7 +946,7 @@ export function MapperYearBookWeb(
                               },
                             },
                           },
-                          yearbookPDFOptions('story-resume-section'),
+                          yearbookPDFOptions('historical-review-section'),
                         ],
                       },
                       {
