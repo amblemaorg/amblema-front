@@ -1,5 +1,5 @@
-import { YearbookConfig } from './../../../classes/yearbook/yearbook-config'
-import { Store } from '@ngxs/store'
+import { YearbookConfig } from './../../../classes/yearbook/yearbook-config';
+import { Store } from '@ngxs/store';
 import {
   // SetLapseActivity,
   // SetSectionImage,
@@ -12,7 +12,7 @@ import {
   // SetLapseLogicAnalysis,
   UpdateYearBookRequest,
   CancelYearBookRequest,
-} from '../../../store/yearbook/yearbook.action'
+} from '../../../store/yearbook/yearbook.action';
 
 const yearbookPDFOptions = (store: string) => ({
   component: 'store-line-options',
@@ -28,7 +28,7 @@ const yearbookPDFOptions = (store: string) => ({
       },
     ],
   },
-})
+});
 
 const yearbookPDFLapseOptions = (store: string) => ({
   component: 'store-line-options',
@@ -49,7 +49,7 @@ const yearbookPDFLapseOptions = (store: string) => ({
       },
     ],
   },
-})
+});
 
 /**
  *
@@ -65,15 +65,17 @@ export function MapperYearBookWeb(
   permissions,
   store: Store,
 ) {
-  const inputFileSizeLimitMb = 1
+  const inputFileSizeLimitMb = 1;
 
-  console.log('yearBookData', yearBookData)
+  console.log('yearBookData', yearBookData);
 
-  const { yearbook_edit, yearbook_delete } = permissions
-  const schoolSectionsConfig = createSectionsBlocksConfig(yearBookData.sections)
-  const lapse1Config = createLapseBlocksConfig('1', yearBookData)
-  const lapse2Config = createLapseBlocksConfig('2', yearBookData)
-  const lapse3Config = createLapseBlocksConfig('3', yearBookData)
+  const { yearbook_edit, yearbook_delete } = permissions;
+  const schoolSectionsConfig = createSectionsBlocksConfig(
+    yearBookData.sections,
+  );
+  const lapse1Config = createLapseBlocksConfig('1', yearBookData);
+  const lapse2Config = createLapseBlocksConfig('2', yearBookData);
+  const lapse3Config = createLapseBlocksConfig('3', yearBookData);
 
   function getRequestId() {
     const theRequest =
@@ -81,14 +83,14 @@ export function MapperYearBookWeb(
       yearBookData['approvalHistory'] instanceof Array &&
       yearBookData['approvalHistory'].length
         ? yearBookData['approvalHistory']
-        : null
+        : null;
     return theRequest && theRequest[theRequest.length - 1].status === '1'
       ? theRequest[theRequest.length - 1].id
-      : null
+      : null;
   }
 
   function dispatchAction(section: string, data) {
-    const requestId = getRequestId()
+    const requestId = getRequestId();
     const data_ = {
       pecaId: yearBookData.pecaId,
       userId: yearBookData.userId,
@@ -96,14 +98,14 @@ export function MapperYearBookWeb(
       partial: data,
       data: yearBookData,
       requestId: requestId,
-    }
-    store.dispatch(new UpdateYearBookRequest(data_))
+    };
+    store.dispatch(new UpdateYearBookRequest(data_));
   }
 
   function createSectionsBlocksConfig(schoolSections) {
     const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
-      const { id, grade, name } = section
-      const gradeName = `${determineGradeString(grade)}, sección ${name}`
+      const { id, grade, name } = section;
+      const gradeName = `${determineGradeString(grade)}, sección ${name}`;
       sectionsArray[`${grade}-${name}-${id}`] = [
         createTitleComponent(gradeName),
         {
@@ -119,9 +121,9 @@ export function MapperYearBookWeb(
                   values.inputImg && values.inputImg.length
                     ? values.inputImg
                     : null,
-              }
+              };
               // store.dispatch(new SetSectionImage(data));
-              dispatchAction('sections', data)
+              dispatchAction('sections', data);
             },
 
             fields: {
@@ -153,7 +155,7 @@ export function MapperYearBookWeb(
               (student) => {
                 return {
                   name: `${student.firstName} ${student.lastName}`,
-                }
+                };
               },
             ),
             classes: {
@@ -163,32 +165,32 @@ export function MapperYearBookWeb(
             },
           },
         },
-      ]
-      return sectionsArray
-    }, {}) // Initial sectionsArray
+      ];
+      return sectionsArray;
+    }, {}); // Initial sectionsArray
 
     const sectionsReduced = Object.keys(sectionsOrdered)
       .sort()
       .reduce((theSections, section) => {
-        theSections = [...theSections, ...sectionsOrdered[section]]
-        return theSections
-      }, [])
+        theSections = [...theSections, ...sectionsOrdered[section]];
+        return theSections;
+      }, []);
 
-    return sectionsReduced
+    return sectionsReduced;
   }
 
   function getDiagGoalTableData(grade: string) {
-    const diagGoal = diagnosticGoalTableData[grade]
+    const diagGoal = diagnosticGoalTableData[grade];
 
     if (!diagGoal) {
       return {
         wordsPerMin: '0',
         multiplicationsPerMin: '0',
         operationsPerMin: '0',
-      }
+      };
     }
 
-    return diagGoal
+    return diagGoal;
   }
 
   function getFirstLapseColumnData(
@@ -198,22 +200,22 @@ export function MapperYearBookWeb(
     readingTable,
     keyValue: string,
   ) {
-    const { diagnosticSummary } = yearBookData['lapse1']
+    const { diagnosticSummary } = yearBookData['lapse1'];
 
     if (lapseNumber != 1) {
       readingTable['wordFirstLapse'] =
-        diagnosticSummary[diagnosticSummaryIdx][keyValue]
+        diagnosticSummary[diagnosticSummaryIdx][keyValue];
     }
 
-    return readingTable
+    return readingTable;
   }
 
   function createLapseBlocksConfig(lapseNumber, yearBookData) {
-    const lapseName = `lapse${lapseNumber}`
-    const lapseData = yearBookData[lapseName]
+    const lapseName = `lapse${lapseNumber}`;
+    const lapseData = yearBookData[lapseName];
     const maxLength = YearbookConfig.getFormDescriptionLimit(
       'globalLapsesDiagnostic',
-    )
+    );
     return [
       createTitleComponent('Diagnóstico de lectura'),
       {
@@ -249,7 +251,7 @@ export function MapperYearBookWeb(
                   wordsIndex: diagnostic.wordsPerMinIndex,
                 },
                 'wordsPerMin',
-              )
+              );
             },
           ),
           classes: {
@@ -269,11 +271,11 @@ export function MapperYearBookWeb(
           //legendName: yearBookData.school.name,
           legendName: 'Diagnóstico de lectura',
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
-            const { grade, name } = diagnostic
-            return `${determineGradeString(grade)} ${name}`
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
           }),
           items: lapseData.diagnosticSummary.map((diagnostic) => {
-            return parseFloat(diagnostic.wordsPerMinIndex).toFixed(2)
+            return parseFloat(diagnostic.wordsPerMinIndex).toFixed(2);
           }),
         },
       },
@@ -289,19 +291,19 @@ export function MapperYearBookWeb(
           legendName: 'Diagnóstico de lectura',
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const { grade, name, wordsPerMinIndex } = diagnostic
-              const realN = parseFloat(wordsPerMinIndex)
+              const { grade, name, wordsPerMinIndex } = diagnostic;
+              const realN = parseFloat(wordsPerMinIndex);
               if (realN)
-                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`)
-              return diagnosticFinal
+                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+              return diagnosticFinal;
             },
             [],
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const realN = parseFloat(diagnostic.wordsPerMinIndex)
-              if (realN) diagnosticFinal.push(realN.toFixed(2))
-              return diagnosticFinal
+              const realN = parseFloat(diagnostic.wordsPerMinIndex);
+              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              return diagnosticFinal;
             },
             [],
           ),
@@ -316,17 +318,17 @@ export function MapperYearBookWeb(
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
-            }
+            };
             // store.dispatch(new SetLapseReadingAnalysis(data));
-            dispatchAction('readingDiagnosticAnalysis', data)
+            dispatchAction('readingDiagnosticAnalysis', data);
           },
           onClickButton: (values: any) => {
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
               form: true,
-            }
-            dispatchAction('readingDiagnosticAnalysis', data)
+            };
+            dispatchAction('readingDiagnosticAnalysis', data);
           },
           fields: {
             description: {
@@ -389,7 +391,7 @@ export function MapperYearBookWeb(
                 multiplicationsIndex: diagnostic.multiplicationsPerMinIndex,
               },
               'multiplicationsPerMin',
-            )
+            );
           }),
           classes: {
             hideView: false,
@@ -410,11 +412,11 @@ export function MapperYearBookWeb(
           //legendName: yearBookData.school.name,
           legendName: 'Diagnóstico de multiplicación',
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
-            const { grade, name } = diagnostic
-            return `${determineGradeString(grade)} ${name}`
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
           }),
           items: lapseData.diagnosticSummary.map((diagnostic) => {
-            return parseFloat(diagnostic.multiplicationsPerMinIndex).toFixed(2)
+            return parseFloat(diagnostic.multiplicationsPerMinIndex).toFixed(2);
           }),
         },
       },
@@ -430,19 +432,19 @@ export function MapperYearBookWeb(
           legendName: 'Diagnóstico de multiplicación',
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const { grade, name, multiplicationsPerMinIndex } = diagnostic
-              const realN = parseFloat(multiplicationsPerMinIndex)
+              const { grade, name, multiplicationsPerMinIndex } = diagnostic;
+              const realN = parseFloat(multiplicationsPerMinIndex);
               if (realN)
-                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`)
-              return diagnosticFinal
+                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+              return diagnosticFinal;
             },
             [],
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const realN = parseFloat(diagnostic.multiplicationsPerMinIndex)
-              if (realN) diagnosticFinal.push(realN.toFixed(2))
-              return diagnosticFinal
+              const realN = parseFloat(diagnostic.multiplicationsPerMinIndex);
+              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              return diagnosticFinal;
             },
             [],
           ),
@@ -459,17 +461,17 @@ export function MapperYearBookWeb(
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
-            }
+            };
             // store.dispatch(new SetLapseMathAnalysis(data));
-            dispatchAction('mathDiagnosticAnalysis', data)
+            dispatchAction('mathDiagnosticAnalysis', data);
           },
           onClickButton: (values: any) => {
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
               form: true,
-            }
-            dispatchAction('mathDiagnosticAnalysis', data)
+            };
+            dispatchAction('mathDiagnosticAnalysis', data);
           },
           fields: {
             description: {
@@ -532,7 +534,7 @@ export function MapperYearBookWeb(
                 operationsIndex: diagnostic.operationsPerMinIndex,
               },
               'operationsPerMin',
-            )
+            );
           }),
           classes: {
             hideView: false,
@@ -553,11 +555,11 @@ export function MapperYearBookWeb(
           //legendName: yearBookData.school.name,
           legendName: 'Diagnóstico de lógica matemática',
           labels: lapseData.diagnosticSummary.map((diagnostic) => {
-            const { grade, name } = diagnostic
-            return `${determineGradeString(grade)} ${name}`
+            const { grade, name } = diagnostic;
+            return `${determineGradeString(grade)} ${name}`;
           }),
           items: lapseData.diagnosticSummary.map((diagnostic) => {
-            return parseFloat(diagnostic.operationsPerMinIndex).toFixed(2)
+            return parseFloat(diagnostic.operationsPerMinIndex).toFixed(2);
           }),
         },
       },
@@ -573,19 +575,19 @@ export function MapperYearBookWeb(
           legendName: 'Diagnóstico de lógica matemática',
           labels: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const { grade, name, operationsPerMinIndex } = diagnostic
-              const realN = parseFloat(operationsPerMinIndex)
+              const { grade, name, operationsPerMinIndex } = diagnostic;
+              const realN = parseFloat(operationsPerMinIndex);
               if (realN)
-                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`)
-              return diagnosticFinal
+                diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
+              return diagnosticFinal;
             },
             [],
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
-              const realN = parseFloat(diagnostic.operationsPerMinIndex)
-              if (realN) diagnosticFinal.push(realN.toFixed(2))
-              return diagnosticFinal
+              const realN = parseFloat(diagnostic.operationsPerMinIndex);
+              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              return diagnosticFinal;
             },
             [],
           ),
@@ -603,17 +605,17 @@ export function MapperYearBookWeb(
               lapse: lapseNumber,
               analysis: values.description,
               form: true,
-            }
+            };
             // store.dispatch(new SetLapseLogicAnalysis(data));
-            dispatchAction('logicDiagnosticAnalysis', data)
+            dispatchAction('logicDiagnosticAnalysis', data);
           },
           onClickButton: (values: any) => {
             const data = {
               lapse: lapseNumber,
               analysis: values.description,
               form: true,
-            }
-            dispatchAction('logicDiagnosticAnalysis', data)
+            };
+            dispatchAction('logicDiagnosticAnalysis', data);
           },
           fields: {
             description: {
@@ -634,7 +636,7 @@ export function MapperYearBookWeb(
       },
       yearbookPDFOptions(`lapso-${lapseNumber}-math-logic-diagnostic-section`),
       ...createActivitiesComponents(lapseData.activities, lapseNumber),
-    ]
+    ];
   }
 
   function createTitleComponent(title) {
@@ -648,13 +650,13 @@ export function MapperYearBookWeb(
         },
         classes: 'yearbook align-items-start',
       },
-    }
+    };
   }
 
   function createActivitiesComponents(activities: any[], lapseNumber) {
-    const lapseName = `lapse${lapseNumber}`
+    const lapseName = `lapse${lapseNumber}`;
     return activities.reduce((activitiesArray, activity) => {
-      const { id, name, images, description } = activity
+      const { id, name, images, description } = activity;
       return [
         ...activitiesArray,
         createTitleComponent(name),
@@ -671,9 +673,9 @@ export function MapperYearBookWeb(
                   values.inputImg && values.inputImg.length
                     ? values.inputImg
                     : [],
-              }
+              };
               // store.dispatch(new SetLapseActivity(data));
-              dispatchAction('activities', data)
+              dispatchAction('activities', data);
             },
             fields: {
               inputImg: {
@@ -702,34 +704,34 @@ export function MapperYearBookWeb(
           },
         },
         yearbookPDFLapseOptions(`${lapseName}${name}`),
-      ]
-    }, [])
+      ];
+    }, []);
   }
 
   function determineGradeString(grade) {
     switch (grade) {
       case '0':
-        return 'Preescolar'
+        return 'Preescolar';
       case '1':
-        return '1er Grado'
+        return '1er Grado';
       case '2':
-        return '2do Grado'
+        return '2do Grado';
       case '3':
-        return '3er Grado'
+        return '3er Grado';
       case '4':
-        return '4to Grado'
+        return '4to Grado';
       case '5':
-        return '5to Grado'
+        return '5to Grado';
       case '6':
-        return '6to Grado'
+        return '6to Grado';
       default:
-        return `${grade} Grado`
+        return `${grade} Grado`;
     }
   }
 
   const mostrarFeedback = (statusCode) => {
-    return statusCode === 3
-  }
+    return statusCode === 3;
+  };
   const yearbookStatus = {
     component: 'textsbuttons',
     settings: {
@@ -748,7 +750,7 @@ export function MapperYearBookWeb(
           ]
         : [],
     },
-  }
+  };
 
   const YEARBOOK_CONFIG = {
     header: {
@@ -786,11 +788,11 @@ export function MapperYearBookWeb(
                                       : null,
                                   content: values.description,
                                   testing: 'testing',
-                                }
+                                };
 
                                 // store.dispatch(new SetHistoricalReview(data));
                                 //
-                                dispatchAction('historicalReview', data)
+                                dispatchAction('historicalReview', data);
                               },
                               fields: {
                                 inputImg: {
@@ -835,9 +837,9 @@ export function MapperYearBookWeb(
                                       ? values.inputImg
                                       : null,
                                   content: values.description,
-                                }
+                                };
                                 // store.dispatch(new SetSponsor(data));
-                                dispatchAction('sponsor', data)
+                                dispatchAction('sponsor', data);
                               },
                               fields: {
                                 inputImg: {
@@ -882,9 +884,9 @@ export function MapperYearBookWeb(
                                       ? values.inputImg
                                       : null,
                                   content: values.description,
-                                }
+                                };
                                 // store.dispatch(new SetCoordinator(data));
-                                dispatchAction('coordinator', data)
+                                dispatchAction('coordinator', data);
                               },
                               fields: {
                                 inputImg: {
@@ -928,9 +930,9 @@ export function MapperYearBookWeb(
                                       ? values.inputImg
                                       : null,
                                   content: values.description,
-                                }
+                                };
                                 // store.dispatch(new SetSchool(data));
-                                dispatchAction('school', data)
+                                dispatchAction('school', data);
                               },
                               fields: {
                                 inputImg: {
@@ -983,7 +985,7 @@ export function MapperYearBookWeb(
                       const data = {
                         pecaId: yearBookData.pecaId,
                         userId: yearBookData.userId,
-                      }
+                      };
                       // store.dispatch(new UpdateYearBookRequest(data));
                     },
                     onCancel: () => {
@@ -992,7 +994,7 @@ export function MapperYearBookWeb(
                           pecaId: yearBookData.pecaId,
                           approvalHistory: yearBookData.approvalHistory,
                         }),
-                      )
+                      );
                     },
                     fields: {
                       button: {
@@ -1016,7 +1018,7 @@ export function MapperYearBookWeb(
         },
       },
     ],
-  }
+  };
 
-  return YEARBOOK_CONFIG
+  return YEARBOOK_CONFIG;
 }
