@@ -145,7 +145,8 @@
                   <tr>
                     <ng-container *ngFor="let td of tr">
                       <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
-                        {{ td }}
+                        <!-- {{ td }} -->
+                        <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>
                   </tr>
