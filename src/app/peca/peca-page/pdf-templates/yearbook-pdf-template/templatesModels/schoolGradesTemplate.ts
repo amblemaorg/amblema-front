@@ -8,6 +8,7 @@ export class SchoolGradeTemplate extends Template {
   isFirstColumnEmpty = false;
 
   constructor(
+    public storeId: string,
     public name: string,
     public img: string,
     public teacher: any,

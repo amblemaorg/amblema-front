@@ -49,6 +49,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   diagnosticPageDataGroup = null;
   diagnosticGraphicData = null;
   diagnosticGoalTableData = null;
+  printOptions = null;
 
   //
   listItems: RecursiveArrayIndexListItem = [];
@@ -70,9 +71,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     });
 
     if (this.pdfData) {
-      // this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-      this.diagnosticGraphicData = mockDiagnosticChartData;
+      this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(
+        this.pdfData.schoolCode,
+      );
+      // this.diagnosticGraphicData = mockDiagnosticChartData;
       this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
+      this.printOptions = await this.pdfService.getPrintOptions(
+        this.pdfData.pecaId,
+      );
+
+      console.log('YearbookPdfTemplateComponent', this.printOptions);
 
       // console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
 
@@ -129,24 +137,28 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     } = this.pdfData;
 
     const mySchoolPage = new SecondLayoutTemplate(
+      'historical-review-section',
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
     );
 
     const coordinatorPage = new SecondLayoutTemplate(
+      'coordinator-section',
       'coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
     );
     const godFatherPage = new SecondLayoutTemplate(
+      'sponsor-section',
       'padrino',
       sponsorLogo,
       sponsorText,
       sponsorName,
     );
     const schoolPage = new SecondLayoutTemplate(
+      'school-description-section',
       schoolName,
       schoolImg,
       schoolText,
@@ -154,7 +166,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       false,
     );
 
-    const pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
+    let pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
+
+    pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 
     this.pages.push(...pages);
 
@@ -166,11 +180,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   setSchoolGradeTemplatePages() {
     const { schoolSections } = this.pdfData;
 
-    const pages = [];
+    let pages = [];
+
     schoolSections.forEach((section) => {
-      const { sectionName, sectionImg, sectionStudents, teacher } = section;
+      const {
+        sectionGrade,
+        sectionLetter,
+        sectionName,
+        sectionImg,
+        sectionStudents,
+        teacher,
+      } = section;
 
       const page = new SchoolGradeTemplate(
+        `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
         sectionName,
         sectionImg,
         teacher,
@@ -178,6 +201,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       );
       pages.push(page);
     });
+
+    pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 
     this.pages.push(...pages);
 
@@ -325,5 +350,15 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       page.page += countToAdd;
     }
+  }
+
+  private willPrintedSection(store: string) {
+    const disabledSection = this.printOptions.disablePages.find(
+      (disabledSection) => disabledSection === store,
+    );
+
+    if (disabledSection) return false;
+
+    return true;
   }
 }
