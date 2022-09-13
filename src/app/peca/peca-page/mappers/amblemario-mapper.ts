@@ -132,9 +132,10 @@ export function amblemarioMapper(pecaData) {
     const lapseActivities =
       activities && activities.length > 0
         ? activities.map((activity) => {
-            const { name, images, description } = activity;
+            const { name, images, description, id } = activity;
 
             return {
+              id: id ? id : null,
               name: name ? name : null,
               description: description ? description : null,
               images: images && images.length > 0 ? images : null,

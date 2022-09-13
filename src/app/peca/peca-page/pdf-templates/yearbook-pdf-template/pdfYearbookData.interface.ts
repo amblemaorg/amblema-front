@@ -30,6 +30,7 @@ interface Lapse {
 }
 
 interface Activity {
+  id: string;
   name: string;
   description?: string | string;
   images: (string[] | null | string)[];

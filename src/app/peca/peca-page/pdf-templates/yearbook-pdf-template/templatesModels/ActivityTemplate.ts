@@ -1,6 +1,7 @@
 import { Template, TemplateOptions } from './Template';
 export class ActivityTemplate extends Template {
   constructor(
+    public storeId: string,
     public name: string,
     public description = '',
     public images = [],

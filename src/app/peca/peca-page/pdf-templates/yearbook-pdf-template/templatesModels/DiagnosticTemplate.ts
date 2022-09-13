@@ -15,6 +15,7 @@ interface ChartDataset {
 //
 
 interface DiagnosticPageData {
+  storeId: string;
   diagnosticText: string;
   diagnosticAnalysis: string;
   chart: Chart;
@@ -29,6 +30,7 @@ export class DiagnosticTemplate extends Template {
   table: string[][] = [];
 
   constructor(
+    public storeId: string,
     public title: string,
     public description: string,
     chart: Chart,
@@ -451,6 +453,7 @@ export class DiagnosticPageDataGroup {
         tables.push(table);
 
         return {
+          storeId: `${lapseId}__diagnostic--${diagKey}-section`,
           diagnosticText,
           diagnosticAnalysis,
           chart,
@@ -480,9 +483,16 @@ export class DiagnosticPageDataGroup {
       : this.pages;
 
     return pages.map((page, pgIdx) => {
-      const { diagnosticText, diagnosticAnalysis, chart, table } = page;
+      const {
+        diagnosticText,
+        diagnosticAnalysis,
+        chart,
+        table,
+        storeId,
+      } = page;
       const lapseName = pgIdx === 0 ? page.lapseName : undefined;
       return new DiagnosticTemplate(
+        storeId,
         diagnosticText,
         diagnosticAnalysis,
         chart,

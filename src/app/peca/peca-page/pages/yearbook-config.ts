@@ -36,7 +36,7 @@ export async function MapperYearBookWeb(
     yearBookData.pecaId,
   );
 
-  console.log('setOptInitValues', pdfOptionsDefaultValues);
+  // console.log('setOptInitValues', pdfOptionsDefaultValues);
 
   const yearbookPDFOptions = (store: string) => ({
     component: 'store-line-options',
@@ -71,9 +71,9 @@ export async function MapperYearBookWeb(
         return opts;
       },
       onChange: async ({ optSelected }) => {
-        console.log('yearbookPDFOptions');
+        // console.log('yearbookPDFOptions');
 
-        console.log(store, { optSelected });
+        // console.log(store, { optSelected });
         const optionToPatch = {
           sectionsPrint: [
             {
@@ -111,9 +111,9 @@ export async function MapperYearBookWeb(
         },
       ],
       onChange: async ({ optSelected, options }) => {
-        console.log('yearbookPDFOptions');
+        // console.log('yearbookPDFOptions');
 
-        console.log(store, { optSelected });
+        // console.log(store, { optSelected });
         const optNotSelected = options.find(
           (opt) => opt.key !== optSelected.key,
         );
@@ -143,7 +143,7 @@ export async function MapperYearBookWeb(
           }
         });
 
-        console.log('optionToPatch', optionToPatch);
+        // console.log('optionToPatch', optionToPatch);
 
         await pdfYearbookService.setPrintOptions(
           yearBookData.pecaId,
@@ -466,7 +466,7 @@ export async function MapperYearBookWeb(
         },
       },
       yearbookPDFOptions(
-        `lapse-${lapseNumber}__diagnostic--reading-analysis-section`,
+        `lapse${lapseNumber}__diagnostic--diagnosticReading-section`,
       ),
       createTitleComponent('Diagnóstico de Multiplicación'),
       {
@@ -611,7 +611,7 @@ export async function MapperYearBookWeb(
         },
       },
       yearbookPDFOptions(
-        `lapse-${lapseNumber}__diagnostic--math-analysis-section`,
+        `lapse${lapseNumber}__diagnostic--diagnosticMath-section`,
       ),
       createTitleComponent('Diagnóstico de lógica matemática'),
       {
@@ -757,7 +757,7 @@ export async function MapperYearBookWeb(
         },
       },
       yearbookPDFOptions(
-        `lapse-${lapseNumber}__diagnostic--math-logic-section`,
+        `lapse${lapseNumber}__diagnostic--diagnosticLogic-section`,
       ),
       ...createActivitiesComponents(lapseData.activities, lapseNumber),
     ];
@@ -781,6 +781,8 @@ export async function MapperYearBookWeb(
     const lapseName = `lapse${lapseNumber}`;
     return activities.reduce((activitiesArray, activity, idx) => {
       const { id, name, images, description } = activity;
+      // console.log('createActivitiesComponents', activity);
+
       return [
         ...activitiesArray,
         createTitleComponent(name),
@@ -828,7 +830,7 @@ export async function MapperYearBookWeb(
           },
         },
         yearbookPDFLapseOptions(
-          `${lapseName}__${name}-${idx}-section`,
+          `${lapseName}__${name}-${id}-section`,
           lapseName,
         ),
       ];
