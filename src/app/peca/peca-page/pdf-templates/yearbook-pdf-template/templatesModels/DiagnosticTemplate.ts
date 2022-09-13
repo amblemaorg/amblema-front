@@ -383,17 +383,20 @@ export class DiagnosticPageDataGroup {
           (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
         );
 
-        // if (tdFormatted[0] === '6to ' && isSecondLapse) {
-        //   console.log('after find');
-        //   console.log('tablesByLapses[0]', tablesByLapses[0]);
+        if (isSecondLapse && 'diagnosticMath' === diagKey) {
+          console.log(diagKey);
+          console.log(valueRevision);
 
-        //   console.log('lapseIdx', lapseIdx);
+          // console.log('after find');
+          // console.log('tablesByLapses[0]', tablesByLapses[0]);
 
-        //   console.log(tdFormatted[0]);
+          // console.log('lapseIdx', lapseIdx);
 
-        //   console.log({ valueRevision });
-        //   console.log(valueRevision ? valueRevision[1] : '---');
-        // }
+          // console.log(tdFormatted[0]);
+
+          // console.log({ valueRevision });
+          // console.log(valueRevision ? valueRevision[1] : '---');
+        }
 
         return [
           tdFormatted[0], // grade
