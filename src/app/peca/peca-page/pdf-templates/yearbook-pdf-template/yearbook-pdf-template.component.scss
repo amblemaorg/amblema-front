@@ -82,6 +82,7 @@ $size__p: 16px;
 
   h2 {
     text-transform: capitalize;
+    margin-bottom: 0;
   }
 
   h2,
@@ -134,14 +135,20 @@ $size__p: 16px;
     overflow: hidden;
     padding: 100px 70px 100px 70px;
 
+    position: relative;
+
     img {
       max-width: 100%;
     }
 
+    & > .pager {
+      position: absolute;
+      right: 48px;
+    }
+
     .page__content {
       height: 100%;
-      // padding: 90px 70px 70px 70px;
-      overflow: hidden;
+      // overflow: hidden;
 
       .first-letter--uppercase {
         text-transform: lowercase;
@@ -215,7 +222,7 @@ $size__p: 16px;
         height: 180px;
         position: absolute;
         top: 0;
-        right: 0;
+        right: 48px;
 
         img {
           width: 100%;
@@ -253,9 +260,69 @@ $size__p: 16px;
     }
   }
 
+  .layout--index {
+    .body {
+      height: 100%;
+      display: flex;
+      // flex-direction: column;
+      column-gap: 45px;
+      justify-content: space-between;
+
+      .list {
+        width: 50%;
+        height: 96%;
+        margin: 0;
+        padding: 0;
+
+        &.wrap {
+          width: 100%;
+          column-count: 2;
+          column-fill: auto;
+          column-gap: 75px;
+        }
+
+        ul {
+          padding-left: 10px;
+        }
+
+        &,
+        ul,
+        li {
+          list-style: none;
+        }
+
+        li {
+          color: $black !important;
+          font-size: $size__h2 !important;
+          line-height: 24px;
+          // text-transform: lowercase;
+
+          display: flex;
+          justify-content: space-between;
+
+          & > a {
+            width: 85.9%;
+          }
+          a {
+            pointer-events: none;
+            text-decoration: none;
+
+            &:not([href]) {
+              font-weight: bold;
+            }
+          }
+
+          &::first-letter,
+          a::first-letter {
+            text-transform: uppercase !important;
+          }
+        }
+      }
+    }
+  }
+
   .layout--2 {
     display: grid;
-    // grid-template-rows: repeat(2, 320px);
     grid-template-columns: 100%;
     grid-template-rows: repeat(2, 50%);
     justify-content: center;
@@ -266,14 +333,13 @@ $size__p: 16px;
       font-weight: bold;
     }
 
+    $columnGap: 30px;
+
     .head {
       overflow: hidden;
 
-      // display: grid;
-      // grid-template-columns: repeat(2, 1fr);
       display: flex;
-      column-gap: 20px;
-      // flex-direction:;
+      column-gap: $columnGap;
 
       & > * {
         width: 50%;
@@ -289,6 +355,10 @@ $size__p: 16px;
 
         .content {
           padding-left: 60px;
+
+          position: relative;
+          top: 85px;
+
           & > * {
             line-height: 28px;
           }
@@ -301,7 +371,10 @@ $size__p: 16px;
     }
 
     .description {
+      height: 90%;
       column-count: 2;
+      column-fill: auto;
+      column-gap: $columnGap;
     }
   }
 
@@ -334,7 +407,7 @@ $size__p: 16px;
     .body {
       // max-height: 57.5%;
       max-height: 60%;
-      overflow: hidden;
+      // overflow: hidden;
       text-align: center;
 
       .title {
@@ -359,16 +432,21 @@ $size__p: 16px;
       .title {
         margin-bottom: -12px;
       }
+
+      h2 {
+        text-transform: initial;
+      }
     }
     .body {
       .visual-references {
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 30px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 250px;
-        column-gap: 60px;
+        grid-template-rows: 280px;
+        // column-gap: 60px;
+        column-gap: 35px;
 
         .table-container {
           .table {

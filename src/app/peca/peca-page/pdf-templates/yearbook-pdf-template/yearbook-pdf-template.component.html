@@ -2,94 +2,72 @@
 
 <ng-container *ngIf="!!pdfData">
   <main class="yearbook-pdf">
-    <ng-container *ngIf="frontpage">
-      <ng-container
-        *ngTemplateOutlet="frontpageTemplate; context: { frontpage: frontpage }"
-      ></ng-container>
-    </ng-container>
+    <ng-container *ngFor="let page of pages">
+      <div [ngSwitch]="page.templateName">
+        <!-- frontpageTemplate -->
+        <div *ngSwitchCase="'frontpageTemplate'">
+          <ng-container
+            *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
 
-    <ng-container *ngFor="let page of [mySchoolPage, coordinatorPage, godFatherPage, schoolPage]">
-      <ng-container *ngIf="page">
-        <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
-      </ng-container>
-    </ng-container>
+        <!-- indexTemplate -->
+        <div *ngSwitchCase="'indexTemplate'">
+          <ng-container
+            *ngTemplateOutlet="indexTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
 
-    <ng-container *ngIf="schoolGradePageGroup">
-      <ng-container *ngFor="let page of schoolGradePageGroup.pages">
-        <ng-container
-          *ngTemplateOutlet="
-            schoolStudentListTemplate;
-            context: {
-              page: page
-            }
-          "
-        ></ng-container>
-      </ng-container>
-    </ng-container>
+        <!-- layout2Template -->
+        <div *ngSwitchCase="'layout2Template'">
+          <ng-container
+            *ngTemplateOutlet="layout2Template; context: { page: page }"
+          ></ng-container>
+        </div>
 
-    <ng-container *ngIf="schoolSectionsPage">
-      <ng-container *ngIf="schoolSectionsPage.data.galleryImgs.length > 0">
-        <ng-container
-          *ngFor="
-            let galleryImgs of schoolSectionsPage.getGalleryImgsSegmented(
-              schoolSectionsPage.data.galleryImgs
-            )
-          "
-        >
+        <!-- indexTemplate -->
+        <div *ngSwitchCase="'schoolGradeTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              schoolGradeTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+
+        <!-- diagnosticTemplate -->
+        <div *ngSwitchCase="'diagnosticTemplate'">
+          <ng-container
+            *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
+
+        <!-- activityTemplate -->
+        <div *ngSwitchCase="'activityTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              activityTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+
+        <!-- galleryTemplate -->
+        <div *ngSwitchCase="'galleryTemplate'">
           <ng-container
             *ngTemplateOutlet="
               galleryTemplate;
               context: {
-                galleryImgs: galleryImgs,
-                options: {
-                  withSubtitle: true,
-                  limit: 0,
-                  offset: 0,
-                  backgroundClass: 'background--generic'
-                }
+                page: page
               }
             "
           ></ng-container>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="activitiesPage">
-      <ng-container *ngFor="let lapse of activitiesPage.data.lapses">
-        <ng-container *ngFor="let activity of lapse.activities; let i = index">
-          <ng-container
-            *ngTemplateOutlet="
-              layout4Template;
-              context: {
-                data: activity,
-                lapseName: lapse.lapseName,
-                activityIdx: i
-              }
-            "
-          ></ng-container>
-
-          <ng-container *ngIf="activity.isExpandedGallery">
-            <ng-container
-              *ngTemplateOutlet="
-                galleryTemplate;
-                context: {
-                  galleryImgs: activity.images,
-                  options: {
-                    withSubtitle: false,
-                    limit: 12,
-                    offset: 3,
-                    backgroundClass: 'background--gallery'
-                  }
-                }
-              "
-            ></ng-container>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-
-    <ng-container *ngFor="let page of lapsesDiagnosticTmpGroup">
-      <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
+        </div>
+      </div>
     </ng-container>
   </main>
 </ng-container>
@@ -101,8 +79,48 @@
 </div>
 
 <!-- # Templates -->
-<ng-template #diagnosticTemplate let-page="page">
+
+<!-- indexTemplate -->
+<ng-template #indexListItem let-listItem="listItem">
+  <ng-container *ngIf="listItem.show">
+    <li [style.paddingLeft]="listItem.getPaddingLeftByLevel()">
+      <ng-container *ngIf="listItem.href">
+        <a [href]="'#' + listItem.href">{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber"
+          ><a [href]="'#' + listItem.href">{{ listItem.pageNumber }}</a></span
+        >
+      </ng-container>
+
+      <ng-container *ngIf="!listItem.href"
+        ><a>{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber">{{ listItem.pageNumber }}</span>
+      </ng-container>
+    </li>
+  </ng-container>
+</ng-template>
+
+<ng-template #indexTemplate let-page="page">
   <section class="page background--generic">
+    <div class="page__content layout--index">
+      <div class="head">
+        <h2>Indice</h2>
+      </div>
+      <div class="body">
+        <ul class="list" [ngClass]="{ wrap: page.haveToWrapList() }">
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"
+            ></ng-container>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## diagnosticTemplate -->
+<ng-template #diagnosticTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--diagnostic">
       <div class="head">
         <ng-container *ngIf="page.subtitle">
@@ -114,7 +132,10 @@
       <div class="body">
         <div class="visual-references">
           <div class="graphic">
-            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
+            <app-graphics-block
+              [settings]="page.chart"
+              [fitContainer]="true"
+            ></app-graphics-block>
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
@@ -123,7 +144,10 @@
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
                   <tr>
                     <ng-container *ngFor="let td of tr">
-                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">{{ td }}</td>
+                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                        <!-- {{ td }} -->
+                        <span [innerHtml]="td"></span>
+                      </td>
                     </ng-container>
                   </tr>
                 </ng-container>
@@ -134,22 +158,25 @@
 
         <p class="description">
           <span
-            [outerHTML]="
-              page.description
-                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic')
-                | br
-            "
+            [outerHTML]="page.description | excerpt: page.characterLimit | br"
           ></span>
         </p>
       </div>
     </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
   </section>
 </ng-template>
 
+<!-- ## layout2Template -->
 <ng-template #layout2Template let-page="page">
-  <section class="page background--generic">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--2">
-      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
+      <div
+        class="head"
+        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
+      >
         <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
@@ -168,67 +195,66 @@
         <span
           [outerHTML]="
             page.description
-              | excerpt: yearbookConfig.getFormDescriptionLimit('historical-review-form')
+              | excerpt
+                : yearbookConfig.getFormDescriptionLimit(
+                    'historical-review-form'
+                  )
               | br
           "
         ></span>
       </p>
     </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
   </section>
 </ng-template>
 
-<!-- ## Layout 4 -->
-<ng-template
-  #layout4Template
-  let-data="data"
-  let-lapseName="lapseName"
-  let-activityIdx="activityIdx"
->
-  <section class="page background--generic">
+<!-- ## activityTemplate -->
+<ng-template #activityTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--4">
       <div class="body">
         <h2 class="text-capitalize title">
-          {{ activityIdx === 0 ? 'Actividades - ' + lapseName : data.name }}
+          {{ page.name }}
         </h2>
-
-        <ng-container *ngIf="activityIdx === 0">
-          <h3 class="subtitle">{{ data.name }}</h3>
-        </ng-container>
 
         <p class="description">
           <span
-            [outerHTML]="
-              data.description || ''
-                | excerpt: yearbookConfig.getFormDescriptionLimit('globalLapsesActivities')
-                | br
-            "
+            [outerHTML]="page.description | excerpt: page.characterLimit | br"
           ></span>
         </p>
       </div>
 
       <div class="gallery-container">
         <app-gallery
-          [images]="data.images || []"
+          [images]="page.images"
           [limit]="3"
           containerClasses="justify-content-between"
         ></app-gallery>
       </div>
     </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
   </section>
 </ng-template>
 
-<!-- ## Gallery -->
-<ng-template #galleryTemplate let-galleryImgs="galleryImgs" let-options="options">
-  <section class="page {{ options.backgroundClass }}">
+<!-- ## galleryTemplate -->
+<ng-template #galleryTemplate let-page="page">
+  <section class="page {{ page.options.backgroundClass }}">
     <div class="page__content layout--gallery">
       <app-gallery
-        [images]="galleryImgs"
-        [withSubtitle]="options.withSubtitle"
-        [limit]="options.limit"
-        [offset]="options.offset"
+        [images]="page.images"
+        [withSubtitle]="page.options.withSubtitle"
+        [limit]="page.options.limit"
+        [offset]="page.options.offset"
         itemStyle="max-height: 330px;"
         containerClasses="align-items-center"
       ></app-gallery>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
     </div>
   </section>
 </ng-template>
@@ -236,33 +262,37 @@
 <!-- ## Customs -->
 
 <!-- ### FrontPage Template -->
-<ng-template #frontpageTemplate let-frontpage="frontpage">
+<ng-template #frontpageTemplate let-page="page">
   <section class="page background--front-page">
     <div class="page__content layout--front">
       <div class="head">
         <div class="headings">
-          <!-- <p>{{ frontpage.data.schoolYear }}</p> -->
-          <p class="primary-title">{{ frontpage.data.sponsorName }}</p>
+          <!-- <p>{{ page.schoolYear }}</p> -->
+          <p class="primary-title">{{ page.head.title }}</p>
         </div>
         <div class="partner-img">
-          <img [src]="frontpage.data.sponsorLogo" />
+          <img [src]="page.head.brand" />
         </div>
       </div>
       <div class="body">
-        <h1>AmbLeMario</h1>
-        <h2 class="school-name">{{ frontpage.data.schoolName }}</h2>
-        <p class="primary-title">{{ frontpage.data.schoolYear }}</p>
+        <h1>{{ page.body.title }}</h1>
+        <h2 class="school-name">{{ page.body.subTitle }}</h2>
+        <p class="primary-title">{{ page.body.subTitleN2 }}</p>
       </div>
     </div>
   </section>
 </ng-template>
 
 <!-- ### SchoolSections -->
-<ng-template #schoolStudentListTemplate let-page="page">
-  <section class="page background--generic">
+<ng-template #schoolGradeTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div class="col overflow--hidden {{ !page.isFirstColumnEmpty ? 'col--centered' : '' }}">
+        <div
+          class="col overflow--hidden {{
+            !page.isFirstColumnEmpty ? 'col--centered' : ''
+          }}"
+        >
           <ng-container *ngIf="page.img">
             <div class="container-img">
               <img [src]="page.img" />
@@ -301,6 +331,9 @@
           <strong>{{ page.teacher.fullName }}</strong>
         </div>
       </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
     </div>
   </section>
 </ng-template>

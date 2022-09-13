@@ -1,34 +1,21 @@
-import { SchoolSection } from '../pdfYearbookData.interface';
+import { Template, TemplateOptions } from './';
 
-export class SchoolGradePageGroup {
-  // group of templates
-
-  pages: SchoolGradePage[] = [];
-
-  constructor(public data: { schoolSections: SchoolSection[] }) {
-    this.setTemplates();
-  }
-
-  // from data add new Templates (pages)
-  setTemplates() {
-    const { schoolSections } = this.data;
-
-    //Adding school templates (pages)
-    schoolSections.forEach((section) => {
-      const { sectionName, sectionImg, sectionStudents, teacher } = section;
-      this.pages.push(new SchoolGradePage(sectionName, sectionImg, teacher, sectionStudents));
-    });
-  }
-}
-
-class SchoolGradePage {
+export class SchoolGradeTemplate extends Template {
   students: {
     firstColumn: any[];
     secondColumn: any[];
   };
   isFirstColumnEmpty = false;
 
-  constructor(public name: string, public img: string, public teacher: any, students: string[]) {
+  constructor(
+    public storeId: string,
+    public name: string,
+    public img: string,
+    public teacher: any,
+    students: string[],
+    templateOptions?: TemplateOptions,
+  ) {
+    super('schoolGradeTemplate', templateOptions);
     this.students = this.getStudents(students);
 
     this.isFirstColumnEmpty = this.students.firstColumn.length > 0;
@@ -43,7 +30,10 @@ class SchoolGradePage {
   getStudents(students: string[], sectionImg = this.img) {
     const maxColumnSize = 27;
     const maxSmallerColumnSize = 13;
-    const restMaxLength = students.length > maxColumnSize + maxSmallerColumnSize ? maxColumnSize : students.length;
+    const restMaxLength =
+      students.length > maxColumnSize + maxSmallerColumnSize
+        ? maxColumnSize
+        : students.length;
 
     if (sectionImg) {
       if (students.length <= 15) {

@@ -1,24 +1,107 @@
-export interface TemplateOptions {
-  show?: boolean;
-  priority?: number;
-}
+import { Pager, IndexListItem, RecursiveArrayIndexListItem } from './';
 
 export class Template {
-  templateOptions = {
+  protected templateOptions: TemplateOptions = {
     show: false,
     priority: 0,
+    pagerOptions: {
+      incrementFactor: 1,
+    },
   };
 
-  constructor(public templateName = '', templateOptions?: TemplateOptions) {
-    this.setTemplateOptions(templateOptions);
+  page = 1;
+  pgHref: string;
+
+  constructor(public templateName: string, templateOptions?: TemplateOptions) {
+    this.addTemplateOptions(templateOptions);
   }
 
-  setTemplateOptions(options?: TemplateOptions) {
+  setPagerInst(pagerInst: Pager, setHref = true) {
+    this.setPage(pagerInst);
+    if (setHref) {
+      this.pgHref = `pagerHref-${this.page}`;
+    }
+  }
+
+  setPage(pagerInst: Pager) {
+    const { incrementFactor } = this.templateOptions.pagerOptions;
+    pagerInst.increment(incrementFactor);
+    this.page = pagerInst.getPages();
+  }
+
+  addTemplateOptions(options?: TemplateOptions) {
     if (options) {
       return {
         ...this.templateOptions,
         ...options,
       };
     }
+  }
+}
+
+export interface TemplateOptions {
+  show?: boolean;
+  priority?: number;
+  pagerOptions?: {
+    incrementFactor?: number;
+  };
+}
+
+export const showClauseFn = (pageTmp): boolean => {
+  return true;
+};
+
+export const getPageLabelKeyFn = (pageTmp): string => {
+  return 'title';
+};
+
+export class TemplateUtils {
+  static getItemsToIndex(
+    pagesTmp: any[],
+    pagerInst: Pager,
+    getLabelKey = getPageLabelKeyFn,
+    parentItem?: IndexListItem,
+    showClause = showClauseFn,
+  ): RecursiveArrayIndexListItem {
+    const listItems = [];
+    const childItems = [];
+
+    if (parentItem) {
+      listItems.push(parentItem);
+    }
+
+    for (let index = 0; index < pagesTmp.length; index++) {
+      const pageTmp = pagesTmp[index];
+      const labelKey = getLabelKey(pageTmp);
+      pageTmp.setPagerInst(pagerInst);
+
+      if (parentItem) {
+        childItems.push(
+          new IndexListItem(
+            pageTmp[labelKey],
+            pageTmp.pgHref,
+            pageTmp.page,
+            showClause(pageTmp),
+          ),
+        );
+
+        continue;
+      }
+
+      listItems.push(
+        new IndexListItem(
+          pageTmp[labelKey],
+          pageTmp.pgHref,
+          pageTmp.page,
+          showClause(pageTmp),
+        ),
+      );
+    }
+
+    if (childItems.length > 0) {
+      listItems.push(childItems);
+    }
+
+    return listItems;
   }
 }

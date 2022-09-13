@@ -10,10 +10,10 @@ export class BreakLinePipe {
     }
 
     return (
-      '&nbsp' +
+      '&nbsp&nbsp' +
       value
-        .replace(new RegExp('\r\n', 'g'), '<br />&nbsp')
-        .replace(new RegExp('\n', 'g'), '<br />&nbsp')
+        .replace(new RegExp('\r\n', 'g'), '<br />&nbsp&nbsp')
+        .replace(new RegExp('\n', 'g'), '<br />&nbsp&nbsp')
     );
   }
 }

@@ -1,17 +1,33 @@
-import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config'
-import { Router } from '@angular/router'
-import { Component, OnInit, AfterViewInit } from '@angular/core'
-import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service'
-import { PdfYearbookData } from './pdfYearbookData.interface'
-import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData'
+import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config';
+import { Router } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
+import { PdfYearbookData } from './pdfYearbookData.interface';
+import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
 import {
-  ActivitiesPage,
+  ActivityTemplate,
   DiagnosticPageDataGroup,
   DiagnosticTemplate,
-  FrontPage,
-  SchoolGradePageGroup,
+  FrontPageTemplate,
+  GalleryTemplate,
+  IndexListItem,
+  IndexTemplate,
+  IndexTemplateUtils,
+  Pager,
+  RecursiveArrayIndexListItem,
+  SchoolGradeTemplate,
   SecondLayoutTemplate,
-} from './templatesModels'
+  TemplateUtils,
+} from './templatesModels';
+
+type TemplatePages = Array<
+  | IndexTemplate
+  | FrontPageTemplate
+  | SecondLayoutTemplate
+  | SchoolGradeTemplate
+  | DiagnosticTemplate
+  | ActivityTemplate
+>;
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -21,30 +37,25 @@ import {
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
-  showLoading = true
-  pdfData: PdfYearbookData
-  yearbookConfig = YearbookConfig
+  showLoading = true;
+  pager = new Pager();
 
-  diagnosticGraphicData: any
-  diagnosticGoalTableData: any
+  pages: TemplatePages = [];
 
-  pages: any = []
+  // Data
+  pdfData: PdfYearbookData;
+  yearbookConfig = YearbookConfig;
 
-  frontpage: FrontPage = null
-  schoolGradePageGroup: SchoolGradePageGroup = null
-  activitiesPage: ActivitiesPage = null
+  diagnosticPageDataGroup = null;
+  diagnosticGraphicData = null;
+  diagnosticGoalTableData = null;
+  printOptions = null;
 
-  // layout2
-  mySchoolPage: SecondLayoutTemplate = null
-  coordinatorPage: SecondLayoutTemplate = null
-  godFatherPage: SecondLayoutTemplate = null
-  schoolPage: SecondLayoutTemplate = null
-
-  // diagnosticTemplate
-  lapsesDiagnosticTmpGroup = []
+  //
+  listItems: RecursiveArrayIndexListItem = [];
 
   ngOnInit() {
-    this.pdfData = this.pdfService.pdfData
+    this.pdfData = this.pdfService.pdfData;
     // this.pdfData = mocksPdfData;
   }
 
@@ -52,22 +63,29 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     // console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
-      this.router.navigate(['/peca/anuario-page'])
+      this.router.navigate(['/peca/anuario-page']);
     }
 
     addEventListener('afterprint', (event) => {
-      this.router.navigate(['/peca/anuario-page'])
-    })
+      this.router.navigate(['/peca/anuario-page']);
+    });
 
     if (this.pdfData) {
-      // this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(this.pdfData.schoolCode);
-      this.diagnosticGraphicData = mockDiagnosticChartData
-      this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable()
+      this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(
+        this.pdfData.schoolCode,
+      );
+      // this.diagnosticGraphicData = mockDiagnosticChartData;
+      this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
+      this.printOptions = await this.pdfService.getPrintOptions(
+        this.pdfData.pecaId,
+      );
 
-      console.log('diagnosticGoalTableData', this.diagnosticGoalTableData)
+      // console.log('YearbookPdfTemplateComponent', this.printOptions);
 
-      this.pageInit()
-      this.showLoading = false
+      // console.log('diagnosticGoalTableData', this.diagnosticGoalTableData);
+
+      this.pageInit();
+      this.showLoading = false;
 
       // setTimeout(() => {
       //   window.print()
@@ -76,32 +94,35 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   print() {
-    window.print()
+    window.print();
   }
 
   isArray(arg) {
-    return Array.isArray(arg)
+    return Array.isArray(arg);
   }
 
   pageInit() {
-    this.setFrontPage()
-    this.setSecondLayoutTemplateGroup() // refactored
-    this.setSchoolGradePageGroup() // refactored
-    this.setActivitiesPage()
-    this.setDiagnosticTemplateGroup()
+    this.setFrontPage();
+    this.set2Layout2TemplatePages();
+    this.setSchoolGradeTemplatePages();
+    this.setLapsePages();
+    this.setIndexPage();
+    // console.log(this.pages);
   }
 
   setFrontPage() {
-    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData
-    this.frontpage = new FrontPage({
-      schoolName,
-      schoolYear,
-      sponsorName,
-      sponsorLogo,
-    })
+    const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
+
+    const frontPage = new FrontPageTemplate(
+      { title: sponsorName, brand: sponsorLogo },
+      { title: 'AmbLeMario', subTitle: schoolName, subTitleN2: schoolYear },
+    );
+
+    frontPage.setPagerInst(this.pager);
+    this.pages.push(frontPage);
   }
 
-  setSecondLayoutTemplateGroup() {
+  set2Layout2TemplatePages() {
     const {
       historicalReviewText,
       historicalReviewImg,
@@ -114,62 +135,273 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorName,
       sponsorLogo,
       sponsorText,
-    } = this.pdfData
+    } = this.pdfData;
 
-    this.mySchoolPage = new SecondLayoutTemplate(
+    const mySchoolPage = new SecondLayoutTemplate(
+      'historical-review-section',
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
-    )
-    this.coordinatorPage = new SecondLayoutTemplate(
+    );
+
+    const coordinatorPage = new SecondLayoutTemplate(
+      'coordinator-section',
       'coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
-    )
-    this.godFatherPage = new SecondLayoutTemplate(
+    );
+    const godFatherPage = new SecondLayoutTemplate(
+      'sponsor-section',
       'padrino',
       sponsorLogo,
       sponsorText,
       sponsorName,
-    )
-    this.schoolPage = new SecondLayoutTemplate(
+    );
+    const schoolPage = new SecondLayoutTemplate(
+      'school-description-section',
       schoolName,
       schoolImg,
       schoolText,
       null,
       false,
-    )
+    );
+
+    let pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
+
+    pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
+
+    this.pages.push(...pages);
+
+    const listItems = TemplateUtils.getItemsToIndex(pages, this.pager);
+
+    this.listItems.push(...listItems);
   }
 
-  setSchoolGradePageGroup() {
-    const { schoolSections } = this.pdfData
+  setSchoolGradeTemplatePages() {
+    const { schoolSections } = this.pdfData;
 
-    this.schoolGradePageGroup = new SchoolGradePageGroup({ schoolSections })
+    let pages = [];
+
+    schoolSections.forEach((section) => {
+      const {
+        sectionGrade,
+        sectionLetter,
+        sectionName,
+        sectionImg,
+        sectionStudents,
+        teacher,
+      } = section;
+
+      const page = new SchoolGradeTemplate(
+        `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
+        sectionName,
+        sectionImg,
+        teacher,
+        sectionStudents,
+      );
+      pages.push(page);
+    });
+
+    pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
+
+    this.pages.push(...pages);
+
+    const indexListItems = TemplateUtils.getItemsToIndex(
+      pages,
+      this.pager,
+      () => 'name',
+      new IndexListItem('grados y secciones'),
+    );
+
+    this.listItems.push(...indexListItems);
   }
 
-  setActivitiesPage() {
-    const { lapses } = this.pdfData
-
-    this.activitiesPage = new ActivitiesPage({ lapses })
-  }
-
-  async setDiagnosticTemplateGroup() {
-    const graphics = this.pdfService.getGraphics()
+  private getDiagnosticPageDataGroup() {
+    const graphics = this.pdfService.getGraphics();
 
     if (!graphics) {
-      return
+      return;
     }
 
-    const { lapses, schoolYear } = this.pdfData
-    const diagnosticPageDataGroup = new DiagnosticPageDataGroup(
+    const { lapses, schoolYear } = this.pdfData;
+    return new DiagnosticPageDataGroup(
       graphics,
       lapses,
       schoolYear,
       this.diagnosticGraphicData,
       this.diagnosticGoalTableData,
-    )
+    );
+  }
 
-    this.lapsesDiagnosticTmpGroup = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate()
+  private getActivitiesPages(lapse, activityCharacterLimit) {
+    let activityPages = [];
+
+    for (let index = 0; index < lapse.activities.length; index++) {
+      const activity = lapse.activities[index];
+
+      const { name, description, images, id } = activity;
+
+      const {
+        print: willPrintActivity,
+        expandGallery,
+      } = this.getLapsePrintOption(
+        `${lapse.lapseId}__${name}-${id}-section`,
+        lapse.lapseId,
+      );
+
+      if (!(description && name && willPrintActivity)) {
+        continue;
+      }
+
+      activityPages.push(
+        new ActivityTemplate(
+          `${lapse.lapseId}__${name}-${id}-section`,
+          name,
+          description,
+          images,
+          activityCharacterLimit,
+        ),
+      );
+
+      if (expandGallery) {
+        activityPages.push(new GalleryTemplate(images));
+      }
+    }
+
+    return activityPages;
+  }
+
+  setLapsePages() {
+    const indexListItems = [];
+
+    const { lapses } = this.pdfData;
+
+    const diagnosticPageDataGroup = this.getDiagnosticPageDataGroup();
+
+    const activityCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesActivities',
+    );
+    const diagnosticCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'globalLapsesDiagnostic',
+    );
+
+    const pagesToAdd = [];
+
+    lapses.forEach((lapse) => {
+      let diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
+        lapse.lapseName,
+        diagnosticCharacterLimit,
+      );
+
+      diagnosticsPages = diagnosticsPages.filter((diagPg) =>
+        this.willPrintedSection(diagPg.storeId),
+      );
+
+      if (diagnosticsPages.length > 0) {
+        diagnosticsPages[0].subtitle = lapse.lapseName;
+      }
+
+      const activityPages = this.getActivitiesPages(
+        lapse,
+        activityCharacterLimit,
+      );
+
+      pagesToAdd.push(...diagnosticsPages, ...activityPages);
+
+      const diagPgIndexListItems = TemplateUtils.getItemsToIndex(
+        diagnosticsPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
+
+      const actPgIndexListItems = TemplateUtils.getItemsToIndex(
+        activityPages,
+        this.pager,
+        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
+        null,
+        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
+      );
+
+      indexListItems.push(
+        new IndexListItem(lapse.lapseName),
+        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
+        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
+      );
+    });
+
+    this.pages.push(...pagesToAdd);
+
+    this.listItems.push(...indexListItems);
+  }
+
+  setIndexPage() {
+    const indexTmpUtils = new IndexTemplateUtils();
+    const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
+
+    const maxItemsPerPage = 40;
+
+    const notNestedItemsPaged = indexTmpUtils.getNotNestedItemsPaged(
+      maxItemsPerPage,
+    );
+
+    const pages = [];
+
+    // pg = pages
+    const countPgToAdd = notNestedItemsPaged.length;
+
+    notNestedItemsPaged.forEach((listItems, idx) => {
+      listItems = listItems.map((listItem) => {
+        listItem.pageNumber += countPgToAdd;
+        return listItem;
+      });
+      pages.push(new IndexTemplate(listItems));
+    });
+
+    this.pages.splice(1, 0, ...pages);
+
+    this.addPagesAtBeginPager(countPgToAdd, this.pages);
+  }
+
+  private addPagesAtBeginPager(countToAdd: number, pages: TemplatePages) {
+    if (countToAdd < 1) return;
+
+    const idxAvoidPgAdded = countToAdd - 1;
+
+    for (let index = idxAvoidPgAdded; index < pages.length; index++) {
+      const page = pages[index];
+
+      page.page += countToAdd;
+    }
+  }
+
+  private willPrintedSection(store: string) {
+    const disabledSection = this.printOptions.disablePages.find(
+      (disabledSection) => disabledSection === store,
+    );
+
+    if (disabledSection) return false;
+
+    return true;
+  }
+
+  private getLapsePrintOption(store: string, lapseKey) {
+    const activityPrint = this.printOptions.activitiesPrint[lapseKey].find(
+      (activityPrint) => activityPrint.name === store,
+    );
+
+    if (!activityPrint) {
+      return {
+        expandGallery: true,
+        print: true,
+      };
+    }
+
+    return {
+      expandGallery: activityPrint.expandGallery,
+      print: activityPrint.print,
+    };
   }
 }

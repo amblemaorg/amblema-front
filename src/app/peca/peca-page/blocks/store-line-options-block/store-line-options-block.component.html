@@ -31,6 +31,7 @@
     </div>
   </ng-container>
   <label [for]="option.key + '-' + settings.store">
-    <p>{{ option.label }}</p>
+    <span *ngIf="loading" class="spinner-grow spinner-grow-sm"></span>
+    <p *ngIf="!loading">{{ option.label }}</p>
   </label>
 </ng-template>
