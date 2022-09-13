@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
-import { mockDiagnosticChartData, mocksPdfData } from './mockShoolSectionData';
+
 import {
   ActivityTemplate,
   DiagnosticPageDataGroup,
@@ -338,6 +338,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   setIndexPage() {
+    if (!this.getIndexPrintOption()) return;
+
     const indexTmpUtils = new IndexTemplateUtils();
     const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
 
@@ -403,5 +405,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       expandGallery: activityPrint.expandGallery,
       print: activityPrint.print,
     };
+  }
+
+  private getIndexPrintOption() {
+    return this.printOptions.index;
   }
 }

@@ -888,6 +888,7 @@ export async function MapperYearBookWeb(
         url: '#',
         name: 'Vista previa',
       },
+      indexOption: true,
     },
     blocks: [
       {

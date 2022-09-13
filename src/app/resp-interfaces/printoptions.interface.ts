@@ -1,6 +1,7 @@
 export interface QueryYearbookPrintOptions {
   sectionsPrint?: SectionsPrint[];
   activitiesPrint?: ActivitiesPrint[];
+  index?: boolean;
 }
 
 interface ActivitiesPrint {

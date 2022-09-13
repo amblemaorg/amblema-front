@@ -330,7 +330,7 @@ export class YearbookPageComponent extends PecaPageComponent
   }
 
   setAmblemarioData(pecaData, _mapper?: Function) {
-    console.log('setAmblemarioData', pecaData);
+    // console.log('setAmblemarioData', pecaData);
 
     if (_mapper) {
       this.pecaData = _mapper(pecaData);

@@ -1,5 +1,10 @@
 import { Router } from '@angular/router';
-import { Component, ViewContainerRef, ComponentFactoryResolver, Inject } from '@angular/core';
+import {
+  Component,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+  Inject,
+} from '@angular/core';
 import { PageBlockFactory } from './blocks/page-block-factory';
 import { PageBlockComponent } from './blocks/page-block.component';
 import { Location, DOCUMENT } from '@angular/common';
@@ -14,14 +19,16 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
-  header: { title: string; download: any };
+  header: { title: string; download: any; indexOption: boolean };
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
   isFromSteps: boolean;
   // fontsInstantiated: boolean;
   pdfData: any;
+  pdfIndexOptionLoading = false;
   creatingPdf: boolean;
+  printOptions;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
@@ -40,19 +47,29 @@ export class PecaPageComponent {
   public changeComponentHeader(header) {
     this.header.title = header;
   }
-  public instantiateBlocks(container: ViewContainerRef, reSet: boolean = false) {
+  public instantiateBlocks(
+    container: ViewContainerRef,
+    reSet: boolean = false,
+  ) {
     this.blocks.map((block, i) => {
-      const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(block.component);
+      const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
+        block.component,
+      );
 
       if (reSet && container.length > 0) container.clear();
 
-      const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
+      const pageBlockComponent = container.createComponent(
+        pageBlockComponentFactory,
+      );
       const settings = {
         settings: block.settings,
         factory: this.pageBlockFactory,
       };
       pageBlockComponent.instance.setSettings(settings);
-      this.blockInstances.set(block.name || `block${i}`, pageBlockComponent.instance);
+      this.blockInstances.set(
+        block.name || `block${i}`,
+        pageBlockComponent.instance,
+      );
     });
   }
 
@@ -87,7 +104,11 @@ export class PecaPageComponent {
    *   }
    *   in urlGenerators object
    */
-  public createAndSetBlockFetcherUrls(blockName: string, urlGenerators: any, ...generatorsProps) {
+  public createAndSetBlockFetcherUrls(
+    blockName: string,
+    urlGenerators: any,
+    ...generatorsProps
+  ) {
     const { get, post, put, patch, delete: deleteFn } = urlGenerators;
 
     if (this.blockInstances.has(blockName)) {
@@ -121,6 +142,7 @@ export class PecaPageComponent {
 
   public setPdfData(pdfData: any) {
     this.pdfData = pdfData;
+    this.loadIndexOption();
   }
 
   public disablePdfDownload(): boolean {
@@ -166,5 +188,49 @@ export class PecaPageComponent {
       console.log(this.pdfYearbookService.getGraphics());
       this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
     }
+  }
+
+  async loadIndexOption() {
+    this.pdfIndexOptionLoading = true;
+
+    this.printOptions = await this.pdfYearbookService.getPrintOptions(
+      this.pdfData.pecaId,
+    );
+
+    this.pdfIndexOptionLoading = false;
+  }
+  getIndexOption() {
+    // this.pdfIndexOptionLoading = true;
+
+    // const printOptions = await this.pdfYearbookService.getPrintOptions(
+    //   this.pdfData.pecaId,
+    // );
+
+    // console.log('getIndexOption', this.printOptions);
+    // this.pdfIndexOptionLoading = false;
+    if (!this.printOptions) {
+      return false;
+    }
+    return this.printOptions.index;
+  }
+
+  async setIndexOption(e) {
+    this.pdfIndexOptionLoading = true;
+
+    try {
+      const optionToPatch = {
+        index: e.target.checked,
+      };
+
+      await this.pdfYearbookService.setPrintOptions(
+        this.pdfData.pecaId,
+        optionToPatch,
+      );
+    } catch (error) {
+      e.target.checked = !e.target.checked;
+      console.error(error);
+    }
+
+    this.pdfIndexOptionLoading = false;
   }
 }
