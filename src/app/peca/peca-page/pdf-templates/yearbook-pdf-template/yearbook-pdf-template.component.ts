@@ -137,8 +137,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       sponsorText,
     } = this.pdfData;
 
+    const characterLimit = this.yearbookConfig.getFormDescriptionLimit(
+      'historical-review-form',
+    );
+
     const mySchoolPage = new SecondLayoutTemplate(
       'historical-review-section',
+      characterLimit,
       'mi escuela',
       historicalReviewImg,
       historicalReviewText,
@@ -146,6 +151,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     const coordinatorPage = new SecondLayoutTemplate(
       'coordinator-section',
+      characterLimit,
       'coordinador',
       coordinatorImg,
       coordinatorText,
@@ -153,6 +159,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
     const godFatherPage = new SecondLayoutTemplate(
       'sponsor-section',
+      characterLimit,
       'padrino',
       sponsorLogo,
       sponsorText,
@@ -160,6 +167,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
     const schoolPage = new SecondLayoutTemplate(
       'school-description-section',
+      characterLimit,
       schoolName,
       schoolImg,
       schoolText,

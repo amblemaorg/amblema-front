@@ -9,11 +9,8 @@ export class BreakLinePipe {
       return value;
     }
 
-    return (
-      '&nbsp&nbsp' +
-      value
-        .replace(new RegExp('\r\n', 'g'), '<br />&nbsp&nbsp')
-        .replace(new RegExp('\n', 'g'), '<br />&nbsp&nbsp')
-    );
+    return value
+      .replace(new RegExp('\r\n', 'g'), '<br />')
+      .replace(new RegExp('\n', 'g'), '<br />');
   }
 }

@@ -371,11 +371,15 @@ $size__p: 16px;
       }
     }
 
-    .description {
+    .description-columns {
       height: 90%;
       column-count: 2;
       column-fill: auto;
       column-gap: $columnGap;
+
+      .description {
+        text-indent: 10px;
+      }
     }
   }
 
@@ -420,6 +424,7 @@ $size__p: 16px;
 
       .description {
         margin-top: 20px;
+        text-indent: 10px;
       }
     }
     .gallery-container {
@@ -481,6 +486,10 @@ $size__p: 16px;
             }
           }
         }
+      }
+
+      .description {
+        text-indent: 10px;
       }
     }
   }
