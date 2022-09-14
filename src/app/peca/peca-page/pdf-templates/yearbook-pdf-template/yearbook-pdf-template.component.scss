@@ -373,7 +373,8 @@ $size__p: 16px;
     }
 
     .description-columns {
-      height: 90%;
+      // height: 90%;
+      height: 89%;
       column-count: 2;
       column-fill: auto;
       column-gap: $columnGap;
