@@ -305,9 +305,9 @@ export class YearbookPageComponent extends PecaPageComponent
               const permissionsObj = this.managePermissions(permissions);
 
               this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
-              console.log('data.activePecaContent', data.activePecaContent);
+              // console.log('data.activePecaContent', data.activePecaContent);
 
-              console.log('yearbook - this.pecaData', this.pecaData);
+              // console.log('yearbook - this.pecaData', this.pecaData);
 
               this.setPdfData(this.pecaData);
 
