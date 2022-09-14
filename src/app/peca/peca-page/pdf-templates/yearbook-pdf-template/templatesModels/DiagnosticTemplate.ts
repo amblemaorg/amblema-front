@@ -333,10 +333,12 @@ export class DiagnosticPageDataGroup {
     if (!tableData) {
       return [];
     }
+
     // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
 
     // reordered and format values
+
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
@@ -367,36 +369,12 @@ export class DiagnosticPageDataGroup {
       if (isSecondLapse || isThirdLapse) {
         let valueRevision: any = tablesByLapses[0][diagIdx].slice(
           2,
-          tableData.length,
+          tablesByLapses[0][diagIdx].length,
         );
-
-        // if (tdFormatted[0] === '6to ') {
-        //   console.log('lapseIdx', lapseIdx);
-
-        //   console.log(tdFormatted[0]);
-
-        //   console.log(tablesByLapses);
-        //   console.log({ valueRevision });
-        // }
 
         valueRevision = valueRevision.find(
           (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
         );
-
-        if (isSecondLapse && 'diagnosticMath' === diagKey) {
-          console.log(diagKey);
-          console.log(valueRevision);
-
-          // console.log('after find');
-          // console.log('tablesByLapses[0]', tablesByLapses[0]);
-
-          // console.log('lapseIdx', lapseIdx);
-
-          // console.log(tdFormatted[0]);
-
-          // console.log({ valueRevision });
-          // console.log(valueRevision ? valueRevision[1] : '---');
-        }
 
         return [
           tdFormatted[0], // grade
@@ -444,6 +422,8 @@ export class DiagnosticPageDataGroup {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[
           diagKey
         ];
+        // console.log({ lapseName, diagnosticTable });
+
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
         const table = this.getTable(
           diagnosticTable,
@@ -465,9 +445,10 @@ export class DiagnosticPageDataGroup {
         };
       });
 
+      tablesByLapses.push(tables);
+
       // Remove diagnostic pages without table data
       page = page.filter((diag) => diag.table.length > 0);
-      tablesByLapses.push(tables);
       pages.push(...page);
     });
 
