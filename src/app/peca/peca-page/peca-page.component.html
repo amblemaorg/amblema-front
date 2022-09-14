@@ -19,6 +19,22 @@
       Ir a los pasos
     </button>
 
+    <div class="print-index-check" *ngIf="header && header.indexOption">
+      <input
+        (click)="setIndexOption($event)"
+        type="checkbox"
+        id="print-index-check__input"
+        [checked]="getIndexOption()"
+      />
+      <label for="print-index-check__input">
+        <span
+          *ngIf="pdfIndexOptionLoading"
+          class="spinner-grow spinner-grow-sm"
+        ></span>
+        <span *ngIf="!pdfIndexOptionLoading">Añadir indice al pdf</span>
+      </label>
+    </div>
+
     <button
       *ngIf="header && header.download"
       class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
@@ -27,7 +43,7 @@
       {{ header?.download?.name ? header.download.name : '' }}
     </button>
 
-    <button
+    <!-- <button
       *ngIf="header && header.download"
       [title]="
         disablePdfDownload()
@@ -40,7 +56,7 @@
     >
       <span *ngIf="creatingPdf" class="spinner-grow spinner-grow-sm"></span>
       {{ creatingPdf ? 'Preparando descarga' : 'Descargar PDf viejo' }}
-    </button>
+    </button> -->
   </nb-card-body>
 </nb-card>
 

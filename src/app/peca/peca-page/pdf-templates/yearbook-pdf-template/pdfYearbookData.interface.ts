@@ -1,4 +1,5 @@
 export interface PdfYearbookData {
+  pecaId: number;
   schoolYear: string;
   sponsorName: string;
   sponsorLogo: string;
@@ -29,6 +30,7 @@ interface Lapse {
 }
 
 interface Activity {
+  id: string;
   name: string;
   description?: string | string;
   images: (string[] | null | string)[];
@@ -43,6 +45,7 @@ interface DiagnosticReading {
 }
 
 export interface SchoolSection {
+  sectionLetter: string;
   sectionName: string;
   sectionImg?: any;
   sectionStudents: string[];

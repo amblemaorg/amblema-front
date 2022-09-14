@@ -289,9 +289,8 @@
     <div class="page__content layout--schoolSections">
       <div class="row body">
         <div
-          class="col overflow--hidden {{
-            !page.isFirstColumnEmpty ? 'col--centered' : ''
-          }}"
+          class="col"
+          [ngClass]="{ 'col--centered': !page.isFirstColumnEmpty }"
         >
           <ng-container *ngIf="page.img">
             <div class="container-img">

@@ -144,6 +144,7 @@ $size__p: 16px;
     & > .pager {
       position: absolute;
       right: 48px;
+      bottom: 80px;
     }
 
     .page__content {
@@ -439,13 +440,14 @@ $size__p: 16px;
     }
     .body {
       .visual-references {
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 30px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 250px;
-        column-gap: 60px;
+        grid-template-rows: 280px;
+        // column-gap: 60px;
+        column-gap: 35px;
 
         .table-container {
           .table {
