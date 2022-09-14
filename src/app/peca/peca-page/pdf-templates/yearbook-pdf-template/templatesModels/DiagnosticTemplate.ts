@@ -302,12 +302,7 @@ export class DiagnosticPageDataGroup {
     ];
 
     if (isFirstLapse) {
-      header.push([
-        'grado',
-        'D. Inicial',
-        'Meta',
-        'Índice Diagnostico Inicial',
-      ]);
+      header.push(['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']);
     }
 
     if (isSecondLapse) {
@@ -316,7 +311,7 @@ export class DiagnosticPageDataGroup {
         'D. Inicial',
         'D. Revisión',
         'Meta',
-        'Índice Diagnostico Revisión',
+        'Índice D. Revisión',
       ]);
     }
 
@@ -326,7 +321,7 @@ export class DiagnosticPageDataGroup {
         'D. Inicial',
         'D. Final',
         'Meta',
-        'Índice Diagnostico Final',
+        'Índice D. Final',
       ]);
     }
 

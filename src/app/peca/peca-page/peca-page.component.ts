@@ -173,7 +173,7 @@ export class PecaPageComponent {
             positionClass: 'toast-bottom-right',
           });
         }
-        console.log('e', e);
+        // console.log('e', e);
       })
       .finally(() => {
         this.creatingPdf = false;
@@ -182,10 +182,10 @@ export class PecaPageComponent {
   }
 
   routeToPdfTemplate() {
-    console.log('routeToPdfTemplate');
+    // console.log('routeToPdfTemplate');
 
     if (this.pdfYearbookService.getGraphics()) {
-      console.log(this.pdfYearbookService.getGraphics());
+      // console.log(this.pdfYearbookService.getGraphics());
       this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
     }
   }
