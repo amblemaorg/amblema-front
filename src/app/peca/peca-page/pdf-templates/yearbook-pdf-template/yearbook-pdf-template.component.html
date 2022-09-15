@@ -145,7 +145,8 @@
                   <tr>
                     <ng-container *ngFor="let td of tr">
                       <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
-                        {{ td }}
+                        <!-- {{ td }} -->
+                        <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>
                   </tr>
@@ -155,11 +156,17 @@
           </ng-container>
         </div>
 
-        <p class="description">
-          <span
-            [outerHTML]="page.description | excerpt: page.characterLimit | br"
-          ></span>
-        </p>
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
       </div>
     </div>
     <div class="pager">
@@ -190,7 +197,21 @@
         </div>
       </div>
 
-      <p class="description">
+      <div class="description-columns">
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
+      </div>
+
+      <!-- <p class="description">
         <span
           [outerHTML]="
             page.description
@@ -201,7 +222,7 @@
               | br
           "
         ></span>
-      </p>
+      </p> -->
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>
@@ -218,11 +239,23 @@
           {{ page.name }}
         </h2>
 
-        <p class="description">
+        <!-- <p class="description">
           <span
             [outerHTML]="page.description | excerpt: page.characterLimit | br"
           ></span>
-        </p>
+        </p> -->
+
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
       </div>
 
       <div class="gallery-container">
@@ -288,9 +321,8 @@
     <div class="page__content layout--schoolSections">
       <div class="row body">
         <div
-          class="col overflow--hidden {{
-            !page.isFirstColumnEmpty ? 'col--centered' : ''
-          }}"
+          class="col"
+          [ngClass]="{ 'col--centered': !page.isFirstColumnEmpty }"
         >
           <ng-container *ngIf="page.img">
             <div class="container-img">

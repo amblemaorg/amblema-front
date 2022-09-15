@@ -1,3 +1,7 @@
+import {
+  RespYearbookPrintOptions,
+  QueryYearbookPrintOptions,
+} from './../../resp-interfaces/printoptions.interface';
 import { Injectable, Inject, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -135,13 +139,18 @@ export class PdfYearbookService {
         const theActImgs =
           lapse['activities'] && lapse['activities'].length
             ? lapse.activities.map(async (activity, j, arrA) => {
-                const images_act = await this.getActivityImages(activity.images || []);
+                const images_act = await this.getActivityImages(
+                  activity.images || [],
+                );
                 // console.log("activity.images", activity.images);
 
-                images_[`lapse${i + 1}`][`${j}`] = images_act.length ? images_act : [];
+                images_[`lapse${i + 1}`][`${j}`] = images_act.length
+                  ? images_act
+                  : [];
               })
             : [];
-        if (lapse['activities'] && lapse['activities'].length) await Promise.all(theActImgs);
+        if (lapse['activities'] && lapse['activities'].length)
+          await Promise.all(theActImgs);
       });
       await Promise.all(lapsesImgs);
     }
@@ -171,16 +180,24 @@ export class PdfYearbookService {
       pdf.pageMargins([70, 60, 70, 70]);
 
       //* local images to get transformed into base64 format---------------------------------------------
-      const open_book = await this.getBase64FromImg('../../../assets/images/pdf/open-book.png');
-      const amble_logo = await this.getBase64FromImg('../../../assets/images/pdf/amblelogo.png');
-      const symbols = await this.getBase64FromImg('../../../assets/images/pdf/simbolos-azules.png');
+      const open_book = await this.getBase64FromImg(
+        '../../../assets/images/pdf/open-book.png',
+      );
+      const amble_logo = await this.getBase64FromImg(
+        '../../../assets/images/pdf/amblelogo.png',
+      );
+      const symbols = await this.getBase64FromImg(
+        '../../../assets/images/pdf/simbolos-azules.png',
+      );
 
       //* pdf images library---------------------------------------------------------------------
       if (pdfData['sponsorLogo'])
         pdf.images({
           openBook: open_book ? await new Img(open_book).build() : null,
           ambleLogo: amble_logo ? await new Img(amble_logo).build() : null,
-          sponsorLogo: pdfData['sponsorLogo'] ? await new Img(pdfData.sponsorLogo).build() : null,
+          sponsorLogo: pdfData['sponsorLogo']
+            ? await new Img(pdfData.sponsorLogo).build()
+            : null,
           blueSymbols: symbols ? await new Img(symbols).build() : null,
         });
       else
@@ -197,7 +214,9 @@ export class PdfYearbookService {
 
         if (currentPage === 1)
           return new Canvas([
-            new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color(this.colors.blue).end,
+            new Rect(0, [pdfPageSizes.width, pdfPageSizes.height]).color(
+              this.colors.blue,
+            ).end,
           ]).end;
         else if (currentPage > 2)
           return new Txt(this.getPageNumberFormated(`${currentPage}`))
@@ -239,7 +258,8 @@ export class PdfYearbookService {
             footer_amble_logo,
             footer_sponsor_logo,
             new Canvas([
-              new Rect(0, [pdfPageSizes.width, 24]).color(this.colors.green).end,
+              new Rect(0, [pdfPageSizes.width, 24]).color(this.colors.green)
+                .end,
             ]).relativePosition(0, 46).end,
           ]).end;
       });
@@ -274,12 +294,20 @@ export class PdfYearbookService {
             ])
               .closePath()
               .color(this.colors.white).end,
-          ]).absolutePosition(logo === 'amble_logo' ? 45 : pdfPageSizes.width - 135, 0).end,
+          ]).absolutePosition(
+            logo === 'amble_logo' ? 45 : pdfPageSizes.width - 135,
+            0,
+          ).end,
         );
       });
 
       if (amble_logo)
-        pdf.add(await new Img('ambleLogo', true).fit([72, 72]).absolutePosition(54, 15).build());
+        pdf.add(
+          await new Img('ambleLogo', true)
+            .fit([72, 72])
+            .absolutePosition(54, 15)
+            .build(),
+        );
       if (pdfData['sponsorLogo'])
         pdf.add(
           await new Img('sponsorLogo', true)
@@ -291,14 +319,19 @@ export class PdfYearbookService {
       pdf.add(
         new Stack([
           new Txt('AmbLeMario').bold().fontSize(62).end,
-          pdfData['schoolName'] ? new Txt(pdfData.schoolName).bold().fontSize(16).end : null,
+          pdfData['schoolName']
+            ? new Txt(pdfData.schoolName).bold().fontSize(16).end
+            : null,
           pdfData['schoolName']
             ? new Canvas([
-                new Rect(0, [(185 * pdfData.schoolName.length) / 21, 1]).color(this.colors.green)
-                  .end,
+                new Rect(0, [(185 * pdfData.schoolName.length) / 21, 1]).color(
+                  this.colors.green,
+                ).end,
               ]).end
             : null,
-          pdfData['schoolCity'] ? new Txt(pdfData.schoolCity).bold().margin([0, 4]).end : null,
+          pdfData['schoolCity']
+            ? new Txt(pdfData.schoolCity).bold().margin([0, 4]).end
+            : null,
         ])
           .alignment('center')
           .margin([0, 135, 0, 0])
@@ -308,7 +341,10 @@ export class PdfYearbookService {
       //* INDEX ----------------------------------------------------------------------------
       pdf.add(
         new Toc(
-          new Txt('Indice').style('highlight').margin([0, 0, 0, 15]).pageBreak('before').end,
+          new Txt('Indice')
+            .style('highlight')
+            .margin([0, 0, 0, 15])
+            .pageBreak('before').end,
         ).numberStyle({
           bold: true,
           italics: true,
@@ -337,7 +373,10 @@ export class PdfYearbookService {
                 0,
                 pdfData['historicalReviewImg'] ? increment_top : 0,
                 0,
-                u_name_margin + (pdfData['historicalReviewImg'] ? increment_bottom + 20 : -20),
+                u_name_margin +
+                  (pdfData['historicalReviewImg']
+                    ? increment_bottom + 20
+                    : -20),
               ])
               .pageBreak('before').end,
           )
@@ -365,21 +404,36 @@ export class PdfYearbookService {
         pdf.add(
           new Stack([
             new TocItem(
-              new Txt('Padrino').color(this.colors.blue).style('subHeading').italics().end,
+              new Txt('Padrino')
+                .color(this.colors.blue)
+                .style('subHeading')
+                .italics().end,
             )
               .tocStyle({ bold: true, italics: true, fontSize: 13 })
               .tocMargin([0, 0, 0, menu_item_margin.bottom]).end,
             new Columns(
               pdfData['sponsorLogo']
-                ? [new Txt(pdfData.sponsorName).style(['highlight', 'userName']).end, null]
-                : [new Txt(pdfData.sponsorName).style(['highlight', 'userName']).end],
+                ? [
+                    new Txt(pdfData.sponsorName).style([
+                      'highlight',
+                      'userName',
+                    ]).end,
+                    null,
+                  ]
+                : [
+                    new Txt(pdfData.sponsorName).style([
+                      'highlight',
+                      'userName',
+                    ]).end,
+                  ],
             ).end,
           ])
             .margin([
               0,
               pdfData['sponsorLogo'] ? increment_top : 0,
               0,
-              u_name_margin + (pdfData['sponsorLogo'] ? increment_bottom : increment_bottom2),
+              u_name_margin +
+                (pdfData['sponsorLogo'] ? increment_bottom : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -405,21 +459,38 @@ export class PdfYearbookService {
         pdf.add(
           new Stack([
             new TocItem(
-              new Txt('Coordinador').color(this.colors.blue).style('subHeading').italics().end,
+              new Txt('Coordinador')
+                .color(this.colors.blue)
+                .style('subHeading')
+                .italics().end,
             )
               .tocStyle({ bold: true, italics: true, fontSize: 13 })
               .tocMargin([0, 0, 0, menu_item_margin.bottom]).end,
             new Columns(
               pdfData['coordinatorImg']
-                ? [new Txt(pdfData.coordinatorName).style(['highlight', 'userName']).end, null]
-                : [new Txt(pdfData.coordinatorName).style(['highlight', 'userName']).end],
+                ? [
+                    new Txt(pdfData.coordinatorName).style([
+                      'highlight',
+                      'userName',
+                    ]).end,
+                    null,
+                  ]
+                : [
+                    new Txt(pdfData.coordinatorName).style([
+                      'highlight',
+                      'userName',
+                    ]).end,
+                  ],
             ).end,
           ])
             .margin([
               0,
               pdfData['coordinatorImg'] ? increment_top : 0,
               0,
-              u_name_margin + (pdfData['coordinatorImg'] ? increment_bottom : increment_bottom2),
+              u_name_margin +
+                (pdfData['coordinatorImg']
+                  ? increment_bottom
+                  : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -445,21 +516,32 @@ export class PdfYearbookService {
         pdf.add(
           new Stack([
             new TocItem(
-              new Txt('Escuela').color(this.colors.blue).style('subHeading').italics().end,
+              new Txt('Escuela')
+                .color(this.colors.blue)
+                .style('subHeading')
+                .italics().end,
             )
               .tocStyle({ bold: true, italics: true, fontSize: 13 })
               .tocMargin([0, 0, 0, menu_item_margin.bottom]).end,
             new Columns(
               pdfData['schoolImg']
-                ? [new Txt(pdfData.schoolName).style(['highlight', 'userName']).end, null]
-                : [new Txt(pdfData.schoolName).style(['highlight', 'userName']).end],
+                ? [
+                    new Txt(pdfData.schoolName).style(['highlight', 'userName'])
+                      .end,
+                    null,
+                  ]
+                : [
+                    new Txt(pdfData.schoolName).style(['highlight', 'userName'])
+                      .end,
+                  ],
             ).end,
           ])
             .margin([
               0,
               pdfData['schoolImg'] ? increment_top : 0,
               0,
-              u_name_margin + (pdfData['schoolImg'] ? increment_bottom : increment_bottom2),
+              u_name_margin +
+                (pdfData['schoolImg'] ? increment_bottom : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -496,8 +578,12 @@ export class PdfYearbookService {
         );
 
         const sortedSections = pdfData.schoolSections.sort((curr, next) => {
-          const currentSection = curr.sectionName[curr.sectionName.length - 1].toLowerCase();
-          const nextSection = next.sectionName[next.sectionName.length - 1].toLowerCase();
+          const currentSection = curr.sectionName[
+            curr.sectionName.length - 1
+          ].toLowerCase();
+          const nextSection = next.sectionName[
+            next.sectionName.length - 1
+          ].toLowerCase();
           const currentGrade = curr.sectionGrade.toLowerCase();
           const nextGrade = next.sectionGrade.toLowerCase();
           if (
@@ -515,18 +601,20 @@ export class PdfYearbookService {
 
         const sortedSectionsImgs = Array(sortedSections.length).fill(null);
 
-        const sectionsPromises = sortedSections.map(async (section_, theInx_) => {
-          if (section_['sectionName'] && section_['sectionStudents']) {
-            const section_img = section_['sectionImg']
-              ? await new Img(section_.sectionImg)
-                  .fit([pdfPageSizes.width - 140, 190])
-                  .absolutePosition(70, 60)
-                  .alignment('center')
-                  .build()
-              : null;
-            sortedSectionsImgs[theInx_] = section_img;
-          } else sortedSectionsImgs[theInx_] = null;
-        });
+        const sectionsPromises = sortedSections.map(
+          async (section_, theInx_) => {
+            if (section_['sectionName'] && section_['sectionStudents']) {
+              const section_img = section_['sectionImg']
+                ? await new Img(section_.sectionImg)
+                    .fit([pdfPageSizes.width - 140, 190])
+                    .absolutePosition(70, 60)
+                    .alignment('center')
+                    .build()
+                : null;
+              sortedSectionsImgs[theInx_] = section_img;
+            } else sortedSectionsImgs[theInx_] = null;
+          },
+        );
 
         await Promise.all(sectionsPromises);
 
@@ -540,11 +628,17 @@ export class PdfYearbookService {
                   .pageBreak('before').end,
               )
                 .tocStyle({ bold: true, italics: true })
-                .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end,
+                .tocMargin([
+                  menu_item_margin.left,
+                  0,
+                  0,
+                  menu_item_margin.bottom,
+                ]).end,
             );
 
             if (symbolsCoverImg) pdf.add(symbolsCoverImg);
-            if (sortedSectionsImgs[theSectionInx]) pdf.add(sortedSectionsImgs[theSectionInx]);
+            if (sortedSectionsImgs[theSectionInx])
+              pdf.add(sortedSectionsImgs[theSectionInx]);
 
             pdf.add(
               new Columns(this.getStudents(section.sectionStudents))
@@ -560,21 +654,25 @@ export class PdfYearbookService {
 
       // LAPSES' GRAPHICS IMAGES ------------------------------------------------------------------------
       const theGraphs = Object.keys(this.graphics).map(async (lapse) => {
-        const graphsImgs = Object.keys(this.graphics[lapse]).map(async (diagnostic) => {
-          if (this.graphics[lapse][diagnostic]) {
-            const graphimg = await new Img(this.graphics[lapse][diagnostic])
-              .fit([pdfPageSizes.width - 140, 321])
-              .alignment('center')
-              .build();
-            this.graphics[lapse][diagnostic] = graphimg;
-          }
-        });
+        const graphsImgs = Object.keys(this.graphics[lapse]).map(
+          async (diagnostic) => {
+            if (this.graphics[lapse][diagnostic]) {
+              const graphimg = await new Img(this.graphics[lapse][diagnostic])
+                .fit([pdfPageSizes.width - 140, 321])
+                .alignment('center')
+                .build();
+              this.graphics[lapse][diagnostic] = graphimg;
+            }
+          },
+        );
         await Promise.all(graphsImgs);
       });
       await Promise.all(theGraphs);
 
       if (pdfData.breakForLapses)
-        pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+        pdf.add(
+          new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end,
+        );
 
       //! LAPSES ----------------------------------------------------------------------------------------------------------------------------------------
       if (pdfData['lapses']) {
@@ -596,9 +694,16 @@ export class PdfYearbookService {
           lapse_skills.map((skill, index, arr) => {
             if (skill) {
               pdf.add(
-                new TocItem(new Txt(skill.diagnosticText).fontSize(0).opacity(0).end)
+                new TocItem(
+                  new Txt(skill.diagnosticText).fontSize(0).opacity(0).end,
+                )
                   .tocStyle({ bold: true, italics: true })
-                  .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end,
+                  .tocMargin([
+                    menu_item_margin.left,
+                    0,
+                    0,
+                    menu_item_margin.bottom,
+                  ]).end,
               );
 
               const skillName =
@@ -610,17 +715,29 @@ export class PdfYearbookService {
 
               if (skill['diagnosticTable']) {
                 pdf.add(
-                  new Stack([new Txt(lapse.lapseName).style(['highlight', 'heading']).end])
+                  new Stack([
+                    new Txt(lapse.lapseName).style(['highlight', 'heading'])
+                      .end,
+                  ])
                     .color(this.colors.blue)
                     .margin([0, 0, 0, 35]).end,
                 );
 
-                pdf.add(new Txt(skill.diagnosticText).style('highlight').margin([0, 20]).end);
+                pdf.add(
+                  new Txt(skill.diagnosticText)
+                    .style('highlight')
+                    .margin([0, 20]).end,
+                );
 
                 pdf.add(
                   new TocItem(
                     new Txt('Tabla de diagnóstico').fontSize(0).opacity(0).end,
-                  ).tocMargin([menu_item_margin.left * 2, 0, 0, menu_item_margin.bottom]).end,
+                  ).tocMargin([
+                    menu_item_margin.left * 2,
+                    0,
+                    0,
+                    menu_item_margin.bottom,
+                  ]).end,
                 );
 
                 pdf.add(
@@ -628,18 +745,24 @@ export class PdfYearbookService {
                     .widths([75, 75, '*', 'auto'])
                     .layout({
                       fillColor: (rowIndex) =>
-                        rowIndex !== 0 && rowIndex % 2 === 0 ? this.colors.rowGray : null,
+                        rowIndex !== 0 && rowIndex % 2 === 0
+                          ? this.colors.rowGray
+                          : null,
                       paddingLeft: (rowIndex) => (rowIndex === 0 ? 25 : 15),
                       paddingTop: (rowIndex) => (rowIndex === 0 ? 10 : 7),
                       paddingRight: () => 15,
                       paddingBottom: (rowIndex) => (rowIndex === 0 ? 10 : 7),
                       hLineColor: (rowIndex, node) =>
-                        rowIndex === 0 || rowIndex === 1 || rowIndex === node.table.body.length
+                        rowIndex === 0 ||
+                        rowIndex === 1 ||
+                        rowIndex === node.table.body.length
                           ? this.colors.blue
                           : null,
                       vLineColor: () => this.colors.blue,
                       hLineWidth: (rowIndex, node) =>
-                        rowIndex > 1 && rowIndex !== node.table.body.length ? 0 : 1,
+                        rowIndex > 1 && rowIndex !== node.table.body.length
+                          ? 0
+                          : 1,
                     }).end,
                 );
 
@@ -648,32 +771,58 @@ export class PdfYearbookService {
                   this.graphics[`lapse${indx + 1}`][skillName] ||
                   (lapse['activities'] && hasSum)
                 )
-                  pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+                  pdf.add(
+                    new Txt('page-breaker')
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak('after').end,
+                  );
               }
 
               // GRAPHICS
               if (this.graphics[`lapse${indx + 1}`][skillName]) {
                 pdf.add(
-                  new Stack([new Txt(lapse.lapseName).style(['highlight', 'heading']).end])
+                  new Stack([
+                    new Txt(lapse.lapseName).style(['highlight', 'heading'])
+                      .end,
+                  ])
                     .color(this.colors.blue)
                     .margin([0, 0, 0, 35]).end,
                 );
 
                 pdf.add(
                   new TocItem(
-                    new Txt(skill.diagnosticGraphicText).style('highlight').margin([0, 0]).end,
-                  ).tocMargin([menu_item_margin.left * 2, 0, 0, menu_item_margin.bottom]).end,
+                    new Txt(skill.diagnosticGraphicText)
+                      .style('highlight')
+                      .margin([0, 0]).end,
+                  ).tocMargin([
+                    menu_item_margin.left * 2,
+                    0,
+                    0,
+                    menu_item_margin.bottom,
+                  ]).end,
                 );
 
                 pdf.add(this.graphics[`lapse${indx + 1}`][skillName]);
 
-                if (skill['diagnosticAnalysis'] || (lapse['activities'] && hasSum))
-                  pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+                if (
+                  skill['diagnosticAnalysis'] ||
+                  (lapse['activities'] && hasSum)
+                )
+                  pdf.add(
+                    new Txt('page-breaker')
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak('after').end,
+                  );
               }
 
               // ANALYSIS
               if (skill['diagnosticAnalysis']) {
-                if (!skill['diagnosticTable'] && !this.graphics[`lapse${indx + 1}`][skillName]) {
+                if (
+                  !skill['diagnosticTable'] &&
+                  !this.graphics[`lapse${indx + 1}`][skillName]
+                ) {
                   pdf.add(
                     new Txt(lapse.lapseName)
                       .style('highlight')
@@ -685,15 +834,25 @@ export class PdfYearbookService {
 
                 pdf.add(
                   new Stack([
-                    new Txt(skill.diagnosticText).style(['highlight', 'heading']).end,
-                    new Canvas([new Rect(0, [195, 1]).color(this.colors.blue).end])
+                    new Txt(skill.diagnosticText).style([
+                      'highlight',
+                      'heading',
+                    ]).end,
+                    new Canvas([
+                      new Rect(0, [195, 1]).color(this.colors.blue).end,
+                    ])
                       .alignment('center')
                       .relativePosition(0, 3).end,
                     new TocItem(
                       new Txt('Análisis y resultados')
                         .style(['heading', 'subHeading'])
                         .relativePosition(0, 8).end,
-                    ).tocMargin([menu_item_margin.left * 2, 0, 0, menu_item_margin.bottom]).end,
+                    ).tocMargin([
+                      menu_item_margin.left * 2,
+                      0,
+                      0,
+                      menu_item_margin.bottom,
+                    ]).end,
                   ])
                     .color(this.colors.blue)
                     .margin([
@@ -702,7 +861,8 @@ export class PdfYearbookService {
                       0,
                       index === arr.length - 1
                         ? 35
-                        : !skill['diagnosticTable'] && !this.graphics[`lapse${indx + 1}`][skillName]
+                        : !skill['diagnosticTable'] &&
+                          !this.graphics[`lapse${indx + 1}`][skillName]
                         ? 35
                         : 53,
                     ]).end,
@@ -715,7 +875,12 @@ export class PdfYearbookService {
                 );
 
                 if (lapse['activities'] && hasSum)
-                  pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+                  pdf.add(
+                    new Txt('page-breaker')
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak('after').end,
+                  );
               }
             }
           });
@@ -725,32 +890,44 @@ export class PdfYearbookService {
             pdf.add(
               new TocItem(new Txt('Actividades').fontSize(0).opacity(0).end)
                 .tocStyle({ bold: true, italics: true })
-                .tocMargin([menu_item_margin.left, 0, 0, menu_item_margin.bottom]).end,
+                .tocMargin([
+                  menu_item_margin.left,
+                  0,
+                  0,
+                  menu_item_margin.bottom,
+                ]).end,
             );
 
-            const imagesToShow = lapse.activities.reduce((activities_, activity_, actInx_) => {
-              const thisActImgs =
-                hasSum && images_[`lapse${indx + 1}`][actInx_].length
-                  ? images_[`lapse${indx + 1}`][actInx_]
-                  : null;
+            const imagesToShow = lapse.activities.reduce(
+              (activities_, activity_, actInx_) => {
+                const thisActImgs =
+                  hasSum && images_[`lapse${indx + 1}`][actInx_].length
+                    ? images_[`lapse${indx + 1}`][actInx_]
+                    : null;
 
-              if (
-                activity_['name'] &&
-                ((activity_['images'] && thisActImgs) || activity_['description'])
-              )
-                activities_.push({ ...activity_, thisActImgs });
-              return activities_;
-            }, []);
+                if (
+                  activity_['name'] &&
+                  ((activity_['images'] && thisActImgs) ||
+                    activity_['description'])
+                )
+                  activities_.push({ ...activity_, thisActImgs });
+                return activities_;
+              },
+              [],
+            );
 
             imagesToShow.forEach((activity, actInx, actArray) => {
               pdf.add(
                 new Stack([
                   new Txt(lapse.lapseName).style(['highlight', 'heading']).end,
-                  new Canvas([new Rect(0, [195, 1]).color(this.colors.blue).end])
+                  new Canvas([
+                    new Rect(0, [195, 1]).color(this.colors.blue).end,
+                  ])
                     .alignment('center')
                     .relativePosition(0, 3).end,
-                  new Txt('Actividades').style(['heading', 'subHeading']).relativePosition(0, 8)
-                    .end,
+                  new Txt('Actividades')
+                    .style(['heading', 'subHeading'])
+                    .relativePosition(0, 8).end,
                 ])
                   .color(this.colors.blue)
                   .margin([0, 0, 0, 35]).end,
@@ -758,8 +935,15 @@ export class PdfYearbookService {
 
               pdf.add(
                 new TocItem(
-                  new Txt(activity.name).style('highlight').margin([0, 20, 0, 15]).end,
-                ).tocMargin([menu_item_margin.left * 2, 0, 0, menu_item_margin.bottom]).end,
+                  new Txt(activity.name)
+                    .style('highlight')
+                    .margin([0, 20, 0, 15]).end,
+                ).tocMargin([
+                  menu_item_margin.left * 2,
+                  0,
+                  0,
+                  menu_item_margin.bottom,
+                ]).end,
               );
 
               if (activity['description'])
@@ -769,9 +953,18 @@ export class PdfYearbookService {
                     .style(column_style).end,
                 );
 
-              if (activity['images'] && activity['thisActImgs'] && activity['thisActImgs'].length) {
+              if (
+                activity['images'] &&
+                activity['thisActImgs'] &&
+                activity['thisActImgs'].length
+              ) {
                 if (activity['description'])
-                  pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+                  pdf.add(
+                    new Txt('page-breaker')
+                      .fontSize(0)
+                      .opacity(0)
+                      .pageBreak('after').end,
+                  );
 
                 const tableRows = activity['thisActImgs'].length;
 
@@ -782,19 +975,30 @@ export class PdfYearbookService {
                     hLineWidth: () => 0,
                     vLineWidth: () => 0,
                     paddingTop: (r, n) =>
-                      r === n.table.body.length - 1 && tableRows % 2 === 1 && r ? 30 : 0,
-                    paddingBottom: (r, n) => (r === n.table.body.length - 1 ? 0 : 30),
+                      r === n.table.body.length - 1 && tableRows % 2 === 1 && r
+                        ? 30
+                        : 0,
+                    paddingBottom: (r, n) =>
+                      r === n.table.body.length - 1 ? 0 : 30,
                   }).end,
                 );
               }
 
               if (actInx !== actArray.length - 1)
-                pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+                pdf.add(
+                  new Txt('page-breaker')
+                    .fontSize(0)
+                    .opacity(0)
+                    .pageBreak('after').end,
+                );
             });
           }
 
           if (indx !== lapseArr.length - 1)
-            pdf.add(new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after').end);
+            pdf.add(
+              new Txt('page-breaker').fontSize(0).opacity(0).pageBreak('after')
+                .end,
+            );
         });
       }
       //! END LAPSES ------------------------------------------------------------------------------------------------
@@ -905,7 +1109,9 @@ export class PdfYearbookService {
 
     const imagesPr = images_for_loop.map(async (img_url) => {
       try {
-        const image_rendered = await new Img(typeof img_url === 'string' ? img_url : img_url.img)
+        const image_rendered = await new Img(
+          typeof img_url === 'string' ? img_url : img_url.img,
+        )
           .fit([275, 200])
           .opacity(typeof img_url === 'string' ? 1 : 0)
           .alignment('center')
@@ -923,12 +1129,14 @@ export class PdfYearbookService {
     if (images_for_loop.length) await Promise.all(imagesPr);
 
     theImgs.forEach((img) => {
-      if (body.length && body[body.length - 1].length === 1) body[body.length - 1].push(img);
+      if (body.length && body[body.length - 1].length === 1)
+        body[body.length - 1].push(img);
       else body.push([img]);
     });
 
     blankImgs.forEach((bI) => {
-      if (body.length && body[body.length - 1].length === 1) body[body.length - 1].push(bI);
+      if (body.length && body[body.length - 1].length === 1)
+        body[body.length - 1].push(bI);
     });
 
     return body.length ? body : [];
@@ -942,14 +1150,17 @@ export class PdfYearbookService {
     let printed = false;
 
     return text_ && text_.length > 0
-      ? text_.split(/\n\r+|\r\n+|\r+|\n+|\\r+|\\n+/).reduce((finalText, line) => {
-          if (line.length > 0 && printed) finalText.push(pdf.ln(), new Txt(line.trim()).end);
-          if (line.length > 0 && !printed) {
-            printed = true;
-            finalText.push(new Txt(line.trim()).end);
-          }
-          return finalText;
-        }, [])
+      ? text_
+          .split(/\n\r+|\r\n+|\r+|\n+|\\r+|\\n+/)
+          .reduce((finalText, line) => {
+            if (line.length > 0 && printed)
+              finalText.push(pdf.ln(), new Txt(line.trim()).end);
+            if (line.length > 0 && !printed) {
+              printed = true;
+              finalText.push(new Txt(line.trim()).end);
+            }
+            return finalText;
+          }, [])
       : null;
   }
 
@@ -1012,7 +1223,11 @@ export class PdfYearbookService {
   private getTableRows(body: string[][]): any[][] {
     const body_ = body.reduce((body_: any[], row) => {
       const row_ = row.map((col) => {
-        return new Txt(col).fontSize(10).bold().italics().color(this.colors.blue).end;
+        return new Txt(col)
+          .fontSize(10)
+          .bold()
+          .italics()
+          .color(this.colors.blue).end;
       });
 
       body_.push(row_);
@@ -1041,9 +1256,24 @@ export class PdfYearbookService {
     return this.http.get('pecasetting/goalsetting').toPromise();
   }
 
-  async routeToPdfTemplate(pdfData) {
-    console.log('routeToPdfTemplate', pdfData);
+  routeToPdfTemplate(pdfData) {
+    // console.log('routeToPdfTemplate', pdfData);
     this.pdfData = pdfData;
     this.router.navigateByUrl('/pdf-template/yearbook');
+  }
+
+  setPrintOptions(
+    pecaProjectId: number,
+    printOptions: QueryYearbookPrintOptions,
+  ): Promise<{}> {
+    return this.http
+      .patch(`/pecaprojects/${pecaProjectId}/printoptions`, printOptions)
+      .toPromise();
+  }
+
+  getPrintOptions(pecaProjectId: number): Promise<RespYearbookPrintOptions> {
+    return this.http
+      .get(`/pecaprojects/${pecaProjectId}/printoptions`)
+      .toPromise();
   }
 }

@@ -680,6 +680,30 @@ input[type='date'] {
   }
 }
 
+.header-title-and-button-container {
+  position: relative;
+
+  .title-style {
+    position: absolute;
+    left: 25px;
+  }
+
+  .print-index-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      margin-right: 7px !important;
+    }
+
+    label {
+      color: #2c819a;
+      margin: 0;
+    }
+  }
+}
+
 // /* style sheet for "A4" printing */
 // @media print and (width: 21cm) and (height: 29.7cm) {
 //   @page {
