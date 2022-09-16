@@ -191,7 +191,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     let pages = [];
 
-    schoolSections.forEach((section) => {
+    for (let index = 0; index < schoolSections.length; index++) {
+      const section = schoolSections[index];
+
+      if (!section) continue;
+
       const {
         sectionGrade,
         sectionLetter,
@@ -201,6 +205,19 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         teacher,
       } = section;
 
+      if (
+        !(
+          sectionGrade &&
+          sectionLetter &&
+          sectionName &&
+          sectionImg &&
+          sectionStudents &&
+          teacher
+        )
+      ) {
+        continue;
+      }
+
       const page = new SchoolGradeTemplate(
         `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
         sectionName,
@@ -208,8 +225,29 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         teacher,
         sectionStudents,
       );
+
       pages.push(page);
-    });
+    }
+    // schoolSections.forEach((section) => {
+
+    //   const {
+    //     sectionGrade,
+    //     sectionLetter,
+    //     sectionName,
+    //     sectionImg,
+    //     sectionStudents,
+    //     teacher,
+    //   } = section;
+
+    //   const page = new SchoolGradeTemplate(
+    //     `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
+    //     sectionName,
+    //     sectionImg,
+    //     teacher,
+    //     sectionStudents,
+    //   );
+    //   pages.push(page);
+    // });
 
     pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 
@@ -252,7 +290,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     for (let index = 0; index < lapse.activities.length; index++) {
       const activity = lapse.activities[index];
 
-      const { name, description, images, id } = activity;
+      let { name, description, images, id } = activity;
 
       const {
         print: willPrintActivity,
@@ -266,6 +304,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         continue;
       }
 
+      if (!images) {
+        images = [];
+      }
+
       activityPages.push(
         new ActivityTemplate(
           `${lapse.lapseId}__${name}-${id}-section`,
@@ -277,7 +319,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       );
 
       if (expandGallery) {
-        activityPages.push(new GalleryTemplate(images));
+        const offset = 3;
+
+        if (images.length > offset) {
+          activityPages.push(
+            new GalleryTemplate(images, {
+              limit: 12,
+              offset,
+            }),
+          );
+        }
       }
     }
 

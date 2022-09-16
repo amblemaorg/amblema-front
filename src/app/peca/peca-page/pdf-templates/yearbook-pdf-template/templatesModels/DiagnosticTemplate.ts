@@ -352,14 +352,18 @@ export class DiagnosticPageDataGroup {
       }
 
       if (isSecondLapse || isThirdLapse) {
-        let valueRevision: any = tablesByLapses[0][diagIdx].slice(
-          2,
-          tablesByLapses[0][diagIdx].length,
-        );
+        let valueRevision: any = false;
 
-        valueRevision = valueRevision.find(
-          (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
-        );
+        if (tablesByLapses.length > 0 && tablesByLapses[0][diagIdx]) {
+          valueRevision = tablesByLapses[0][diagIdx].slice(
+            2,
+            tablesByLapses[0][diagIdx].length,
+          );
+
+          valueRevision = valueRevision.find(
+            (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
+          );
+        }
 
         return [
           tdFormatted[0], // grade
@@ -402,9 +406,6 @@ export class DiagnosticPageDataGroup {
       const isThirdLapse = lapseIdx === 2;
 
       let tables = [];
-
-      // console.log(lapseName);
-      // console.log(lapse);
 
       let diagKeys = diagnosticKeys.filter((diagKey, diagIdx) => {
         return lapse[diagKey];
