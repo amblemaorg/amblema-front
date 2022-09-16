@@ -41,29 +41,8 @@ export class StoreLineOptionsBlockComponent
     return options.every((option) => typeof option.value === type);
   }
 
-  private getOptSectionsStored() {
-    return localStorage.getItem(this.storeGlobalKey)
-      ? JSON.parse(localStorage.getItem(this.storeGlobalKey))
-      : {};
-  }
-
   initStorePreferences() {
     const { options } = this.settings;
-
-    // if (options.length === 0) return;
-
-    // let optionSectionsStored = this.getOptSectionsStored();
-
-    // optionSectionsStored[`${store}`] = optionSectionsStored[`${store}`]
-    //   ? optionSectionsStored[`${store}`]
-    //   : options;
-
-    // this.settings.options = optionSectionsStored[`${store}`];
-
-    // localStorage.setItem(
-    //   this.storeGlobalKey,
-    //   JSON.stringify(optionSectionsStored),
-    // );
 
     if (this.settings.setOptInitValues) {
       this.settings.options = this.settings.setOptInitValues(options);
@@ -84,15 +63,6 @@ export class StoreLineOptionsBlockComponent
 
       return optionMap;
     });
-
-    // let optionSectionsStored = this.getOptSectionsStored();
-
-    // optionSectionsStored[`${store}`] = optionsMapped;
-
-    // localStorage.setItem(
-    //   this.storeGlobalKey,
-    //   JSON.stringify(optionSectionsStored),
-    // );
 
     if (this.settings.onChange) {
       this.loading = true;

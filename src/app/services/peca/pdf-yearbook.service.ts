@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import {
   RespYearbookPrintOptions,
   QueryYearbookPrintOptions,
@@ -1269,6 +1270,12 @@ export class PdfYearbookService {
     return this.http
       .patch(`/pecaprojects/${pecaProjectId}/printoptions`, printOptions)
       .toPromise();
+  }
+
+  getPrintOptionsOb(
+    pecaProjectId: number,
+  ): Observable<RespYearbookPrintOptions> {
+    return this.http.get(`/pecaprojects/${pecaProjectId}/printoptions`);
   }
 
   getPrintOptions(pecaProjectId: number): Promise<RespYearbookPrintOptions> {
