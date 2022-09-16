@@ -215,12 +215,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     this.pages.push(...pages);
 
-    const indexListItems = TemplateUtils.getItemsToIndex(
-      pages,
-      this.pager,
-      () => 'name',
-      new IndexListItem('grados y secciones'),
-    );
+    let indexListItems = [];
+
+    if (pages.length > 0) {
+      indexListItems = TemplateUtils.getItemsToIndex(
+        pages,
+        this.pager,
+        () => 'name',
+        new IndexListItem('grados y secciones'),
+      );
+    }
 
     this.listItems.push(...indexListItems);
   }
@@ -333,11 +337,27 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
       );
 
-      indexListItems.push(
-        new IndexListItem(lapse.lapseName),
-        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
-        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
-      );
+      let indexListItemsToPush = [];
+
+      if (diagPgIndexListItems.length > 0 || actPgIndexListItems.length > 0) {
+        indexListItemsToPush.push(new IndexListItem(lapse.lapseName));
+      }
+
+      if (diagPgIndexListItems.length > 0) {
+        indexListItemsToPush.push([
+          new IndexListItem('Diagnósticos'),
+          [...diagPgIndexListItems],
+        ]);
+      }
+
+      if (actPgIndexListItems.length > 0) {
+        indexListItemsToPush.push([
+          new IndexListItem('Actividades'),
+          [...actPgIndexListItems],
+        ]);
+      }
+
+      indexListItems.push(indexListItemsToPush);
     });
 
     this.pages.push(...pagesToAdd);
