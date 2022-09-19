@@ -888,7 +888,9 @@ export async function MapperYearBookWeb(
         url: '#',
         name: 'Vista previa',
       },
-      indexOption: true,
+      indexOption: {
+        value: pdfOptionsDefaultValues.index,
+      },
     },
     blocks: [
       {

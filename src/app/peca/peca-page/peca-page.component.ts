@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
-  header: { title: string; download: any; indexOption: boolean };
+  header: { title: string; download: any; indexOption?: { value: boolean } };
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
@@ -28,7 +28,6 @@ export class PecaPageComponent {
   pdfData: any;
   pdfIndexOptionLoading = false;
   creatingPdf: boolean;
-  printOptions;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
@@ -142,7 +141,6 @@ export class PecaPageComponent {
 
   public setPdfData(pdfData: any) {
     this.pdfData = pdfData;
-    this.loadIndexOption();
   }
 
   public disablePdfDownload(): boolean {
@@ -188,30 +186,6 @@ export class PecaPageComponent {
       // console.log(this.pdfYearbookService.getGraphics());
       this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
     }
-  }
-
-  async loadIndexOption() {
-    this.pdfIndexOptionLoading = true;
-
-    this.printOptions = await this.pdfYearbookService.getPrintOptions(
-      this.pdfData.pecaId,
-    );
-
-    this.pdfIndexOptionLoading = false;
-  }
-  getIndexOption() {
-    // this.pdfIndexOptionLoading = true;
-
-    // const printOptions = await this.pdfYearbookService.getPrintOptions(
-    //   this.pdfData.pecaId,
-    // );
-
-    // console.log('getIndexOption', this.printOptions);
-    // this.pdfIndexOptionLoading = false;
-    if (!this.printOptions) {
-      return false;
-    }
-    return this.printOptions.index;
   }
 
   async setIndexOption(e) {
