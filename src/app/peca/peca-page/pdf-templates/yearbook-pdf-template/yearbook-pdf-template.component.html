@@ -1,7 +1,21 @@
-<button class="btn btn-primary not-print" (click)="print()">Generar PDF</button>
+<div class="not-print header-previewer">
+  <button class="btn btn-primary" (click)="backPage()">
+    Regresar
+  </button>
+  <button class="btn btn-primary" (click)="print()">
+    Generar PDF
+  </button>
+  <button
+    class="btn btn-primary"
+    (click)="addGrayScale = !addGrayScale"
+    [ngClass]="{ 'gray-scale': addGrayScale }"
+  >
+    Activar escala de grises
+  </button>
+</div>
 
 <ng-container *ngIf="!!pdfData">
-  <main class="yearbook-pdf">
+  <main class="yearbook-pdf" [ngClass]="{ 'gray-scale': addGrayScale }">
     <ng-container *ngFor="let page of pages">
       <div [ngSwitch]="page.templateName">
         <!-- frontpageTemplate -->
@@ -185,7 +199,7 @@
       >
         <div class="heading">
           <div class="content">
-            <h2>{{ page.title }}</h2>
+            <h2 class="first-letter--uppercase">{{ page.title }}</h2>
             <ng-container *ngIf="page.subtitle">
               <h3>{{ page.subtitle }}</h3>
             </ng-container>
@@ -235,7 +249,7 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--4">
       <div class="body">
-        <h2 class="text-capitalize title">
+        <h2 class="title">
           {{ page.name }}
         </h2>
 
@@ -342,7 +356,7 @@
             </ng-container>
           </ul>
         </div>
-        <div class="col overflow--hidden">
+        <div class="col overflow--hidden col--centered">
           <ng-container *ngIf="!page.isFirstColumnEmpty">
             <h2 class="text-capitalize">
               {{ page.name }}
