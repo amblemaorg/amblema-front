@@ -251,12 +251,6 @@ export class DiagnosticPageDataGroup {
       '6to Grado': 'grade6',
     };
 
-    // const diagGoalKey = Object.keys(this.diagnosticGoalTableData).find((key) =>
-    //   key.includes(grade),
-    // );
-
-    // const gradeKey = gradeRespKeyMappedWithGradeDiag[]
-
     const diagGoal = this.diagnosticGoalTableData[
       gradeRespKeyMappedWithGradeDiag[grade]
     ];
@@ -267,10 +261,6 @@ export class DiagnosticPageDataGroup {
         diagnosticMath: '0.0',
         diagnosticLogic: '0.0',
       };
-
-    // console.log(diagGoal[gradeIdx]);
-
-    // if (!diagGoal[gradeIdx]) return '0.0';
 
     return {
       diagnosticReading: diagGoal.wordsPerMin,
@@ -362,14 +352,18 @@ export class DiagnosticPageDataGroup {
       }
 
       if (isSecondLapse || isThirdLapse) {
-        let valueRevision: any = tablesByLapses[0][diagIdx].slice(
-          2,
-          tablesByLapses[0][diagIdx].length,
-        );
+        let valueRevision: any = false;
 
-        valueRevision = valueRevision.find(
-          (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
-        );
+        if (tablesByLapses.length > 0 && tablesByLapses[0][diagIdx]) {
+          valueRevision = tablesByLapses[0][diagIdx].slice(
+            2,
+            tablesByLapses[0][diagIdx].length,
+          );
+
+          valueRevision = valueRevision.find(
+            (valueRevByGrade) => valueRevByGrade[0] == tdFormatted[0],
+          );
+        }
 
         return [
           tdFormatted[0], // grade
@@ -407,13 +401,19 @@ export class DiagnosticPageDataGroup {
       'diagnosticLogic',
     ];
 
-    this.lapses.map((lapse, lapseIdx) => {
+    this.lapses.forEach((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;
 
       let tables = [];
 
-      let page = diagnosticKeys.map((diagKey, diagIdx) => {
+      let diagKeys = diagnosticKeys.filter((diagKey, diagIdx) => {
+        return lapse[diagKey];
+      });
+
+      if (diagKeys.length === 0) return;
+
+      let page = diagKeys.map((diagKey, diagIdx) => {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[
           diagKey
         ];

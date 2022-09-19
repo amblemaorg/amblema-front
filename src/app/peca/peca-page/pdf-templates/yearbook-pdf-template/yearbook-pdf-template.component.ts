@@ -191,7 +191,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     let pages = [];
 
-    schoolSections.forEach((section) => {
+    for (let index = 0; index < schoolSections.length; index++) {
+      const section = schoolSections[index];
+
+      if (!section) continue;
+
       const {
         sectionGrade,
         sectionLetter,
@@ -201,6 +205,19 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         teacher,
       } = section;
 
+      if (
+        !(
+          sectionGrade &&
+          sectionLetter &&
+          sectionName &&
+          sectionImg &&
+          sectionStudents &&
+          teacher
+        )
+      ) {
+        continue;
+      }
+
       const page = new SchoolGradeTemplate(
         `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
         sectionName,
@@ -208,19 +225,44 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         teacher,
         sectionStudents,
       );
+
       pages.push(page);
-    });
+    }
+    // schoolSections.forEach((section) => {
+
+    //   const {
+    //     sectionGrade,
+    //     sectionLetter,
+    //     sectionName,
+    //     sectionImg,
+    //     sectionStudents,
+    //     teacher,
+    //   } = section;
+
+    //   const page = new SchoolGradeTemplate(
+    //     `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
+    //     sectionName,
+    //     sectionImg,
+    //     teacher,
+    //     sectionStudents,
+    //   );
+    //   pages.push(page);
+    // });
 
     pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 
     this.pages.push(...pages);
 
-    const indexListItems = TemplateUtils.getItemsToIndex(
-      pages,
-      this.pager,
-      () => 'name',
-      new IndexListItem('grados y secciones'),
-    );
+    let indexListItems = [];
+
+    if (pages.length > 0) {
+      indexListItems = TemplateUtils.getItemsToIndex(
+        pages,
+        this.pager,
+        () => 'name',
+        new IndexListItem('grados y secciones'),
+      );
+    }
 
     this.listItems.push(...indexListItems);
   }
@@ -248,7 +290,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     for (let index = 0; index < lapse.activities.length; index++) {
       const activity = lapse.activities[index];
 
-      const { name, description, images, id } = activity;
+      let { name, description, images, id } = activity;
 
       const {
         print: willPrintActivity,
@@ -262,6 +304,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         continue;
       }
 
+      if (!images) {
+        images = [];
+      }
+
       activityPages.push(
         new ActivityTemplate(
           `${lapse.lapseId}__${name}-${id}-section`,
@@ -273,7 +319,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       );
 
       if (expandGallery) {
-        activityPages.push(new GalleryTemplate(images));
+        const offset = 3;
+
+        if (images.length > offset) {
+          activityPages.push(
+            new GalleryTemplate(images, {
+              limit: 12,
+              offset,
+            }),
+          );
+        }
       }
     }
 
@@ -333,11 +388,27 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
       );
 
-      indexListItems.push(
-        new IndexListItem(lapse.lapseName),
-        [new IndexListItem('Diagnósticos'), [...diagPgIndexListItems]],
-        [new IndexListItem('Actividades'), [...actPgIndexListItems]],
-      );
+      let indexListItemsToPush = [];
+
+      if (diagPgIndexListItems.length > 0 || actPgIndexListItems.length > 0) {
+        indexListItemsToPush.push(new IndexListItem(lapse.lapseName));
+      }
+
+      if (diagPgIndexListItems.length > 0) {
+        indexListItemsToPush.push([
+          new IndexListItem('Diagnósticos'),
+          [...diagPgIndexListItems],
+        ]);
+      }
+
+      if (actPgIndexListItems.length > 0) {
+        indexListItemsToPush.push([
+          new IndexListItem('Actividades'),
+          [...actPgIndexListItems],
+        ]);
+      }
+
+      indexListItems.push(indexListItemsToPush);
     });
 
     this.pages.push(...pagesToAdd);
