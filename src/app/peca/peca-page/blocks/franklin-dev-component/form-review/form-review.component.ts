@@ -38,6 +38,7 @@ export class FormReviewComponent
             value?: any;
             disabled?: boolean;
             maxLength?: number;
+            minLength?: number;
           }
         | false;
       inputImg?:
