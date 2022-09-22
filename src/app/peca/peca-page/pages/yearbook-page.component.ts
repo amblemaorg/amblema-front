@@ -103,34 +103,7 @@ export class YearbookPageComponent extends PecaPageComponent
               if (isInApproval || yearbookHasNotApprovedRequest) {
                 const lastYearBookRequest = lastRequest.detail;
 
-                // const theSections = this.ybData ? this.ybData.sections.reduce( (sections, section) => {
-                //   sections[section.id] = {...section};
-                //   return sections;
-                // }, {}) : {};
-
-                // const {
-                //   lapse1Activities,
-                //   lapse2Activities,
-                //   lapse3Activities
-                // } = this.ybData ? [
-                //   "lapse1",
-                //   "lapse2",
-                //   "lapse3"
-                // ].reduce( (lapsesActivities, lapseName) => {
-                //   this.ybData[lapseName].activities.map( activity => {
-                //     lapsesActivities[`${lapseName}Activities`][activity.id] = {...activity};
-                //   });
-                //   return lapsesActivities;
-                // }, { lapse1Activities: {}, lapse2Activities: {}, lapse3Activities: {} })
-                // : { lapse1Activities: {}, lapse2Activities: {}, lapse3Activities: {} };
-
-                // const determineImgs = (imgs, savedImgs) => {
-                //   const finalImgs = imgs.reduce( (theImgs, img) => {
-                //     if (!theImgs.includes(img)) theImgs.push(img);
-                //     return theImgs;
-                //   }, [...savedImgs]);
-                //   return finalImgs;
-                // };
+                console.log('lastYearBookRequest', { lastRequest });
 
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
@@ -304,10 +277,15 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
+              this.setAmblemarioData(
+                data.activePecaContent,
+                lastRequest,
+                amblemarioMapper,
+              );
               // console.log('data.activePecaContent', data.activePecaContent);
 
-              // console.log('yearbook - this.pecaData', this.pecaData);
+              console.log('yearbook - data', data);
+              console.log('yearbook - this.pecaData', this.pecaData);
 
               this.setPdfData(this.pecaData);
 
@@ -329,11 +307,11 @@ export class YearbookPageComponent extends PecaPageComponent
       );
   }
 
-  setAmblemarioData(pecaData, _mapper?: Function) {
+  setAmblemarioData(pecaData, lastRequest, _mapper?: Function) {
     // console.log('setAmblemarioData', pecaData);
 
     if (_mapper) {
-      this.pecaData = _mapper(pecaData);
+      this.pecaData = _mapper(pecaData, lastRequest);
     } else {
       this.pecaData = pecaData;
     }

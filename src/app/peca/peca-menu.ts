@@ -1,4 +1,4 @@
-import { NbMenuItem } from '@nebular/theme'
+import { NbMenuItem } from '@nebular/theme';
 
 export const PECA_LAPSE_OPTIONS_CONFIG = {
   initialWorkshop: {
@@ -49,7 +49,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     link: 'actividad',
     data: 'activity_peca_view',
   },
-}
+};
 
 export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
   {
@@ -142,4 +142,4 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     link: 'imagenes-escuela',
     data: 'activities_slider_view',
   },
-]
+];

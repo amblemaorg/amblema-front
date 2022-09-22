@@ -9,4 +9,9 @@ export class YearbookConfig {
     if (!this.forms[sectionName]) return null;
     return this.forms[sectionName].description.limit;
   }
+
+  static getFormDescriptionMinLimit(sectionName: string): number {
+    if (!this.forms[sectionName]) return null;
+    return this.forms[sectionName].description.minLimit;
+  }
 }

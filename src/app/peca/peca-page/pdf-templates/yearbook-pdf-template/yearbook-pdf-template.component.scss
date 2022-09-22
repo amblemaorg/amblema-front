@@ -9,6 +9,8 @@ $size__h1: 64px;
 $size__h2: 20px;
 $size__p: 16px;
 
+$text_indent: 18px;
+
 @media print {
   .not-print {
     display: none !important;
@@ -62,6 +64,29 @@ $size__p: 16px;
   }
 }
 
+.header-previewer {
+  border-radius: 5px;
+  // border: solid gray 2px;
+  margin: 20px 0px;
+  padding: 14px 10px;
+
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  // justify-content: flex-end;
+
+  .gray-scale-container {
+    label {
+      margin-bottom: 0px;
+      margin-left: 6px;
+    }
+  }
+}
+
+.gray-scale {
+  filter: grayscale(1);
+}
+
 .yearbook-pdf {
   * {
     color: $black;
@@ -81,7 +106,7 @@ $size__p: 16px;
   }
 
   h2 {
-    text-transform: capitalize;
+    // text-transform: capitalize;
     margin-bottom: 0;
   }
 
@@ -99,9 +124,9 @@ $size__p: 16px;
   p {
     text-align: justify;
 
-    &.text-indent {
-      text-indent: 30px;
-    }
+    // &.text-indent {
+    //   text-indent: 30px;
+    // }
 
     // &.description {
     //   word-spacing: 10px;
@@ -256,7 +281,7 @@ $size__p: 16px;
         font-family: 'gill_sans_mt';
         font-size: 28px;
         margin: 6px 0px;
-        text-transform: capitalize;
+        // text-transform: capitalize;
       }
     }
   }
@@ -361,6 +386,13 @@ $size__p: 16px;
           position: relative;
           top: 85px;
 
+          // h2 {
+
+          //   &::first-letter {
+          //     text-transform: uppercase;
+          //   }
+          // }
+
           & > * {
             line-height: 28px;
           }
@@ -380,7 +412,7 @@ $size__p: 16px;
       column-gap: $columnGap;
 
       .description {
-        text-indent: 10px;
+        text-indent: $text_indent;
       }
     }
   }
@@ -426,7 +458,7 @@ $size__p: 16px;
 
       .description {
         margin-top: 20px;
-        text-indent: 10px;
+        text-indent: $text_indent;
       }
     }
     .gallery-container {
@@ -491,7 +523,7 @@ $size__p: 16px;
       }
 
       .description {
-        text-indent: 10px;
+        text-indent: $text_indent;
       }
     }
   }
@@ -506,6 +538,7 @@ $size__p: 16px;
 
     .body {
       height: 94%;
+
       .col--centered {
         display: flex;
         align-items: center;

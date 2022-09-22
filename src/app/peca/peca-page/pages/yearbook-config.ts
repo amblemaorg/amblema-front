@@ -334,6 +334,9 @@ export async function MapperYearBookWeb(
     const maxLength = YearbookConfig.getFormDescriptionLimit(
       'globalLapsesDiagnostic',
     );
+    const minLength = YearbookConfig.getFormDescriptionMinLimit(
+      'globalLapsesDiagnostic',
+    );
     return [
       createTitleComponent('Diagnóstico de lectura'),
       {
@@ -455,6 +458,7 @@ export async function MapperYearBookWeb(
               value: lapseData.readingDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
               maxLength,
+              minLength,
             },
             button: {
               type: 'button',
@@ -820,6 +824,9 @@ export async function MapperYearBookWeb(
                 maxLength: YearbookConfig.getFormDescriptionLimit(
                   'globalLapsesActivities',
                 ),
+                minLength: YearbookConfig.getFormDescriptionMinLimit(
+                  'globalLapsesActivities',
+                ),
               },
               button: {
                 text: 'Guardar cambios',
@@ -942,6 +949,9 @@ export async function MapperYearBookWeb(
                                   maxLength: YearbookConfig.getFormDescriptionLimit(
                                     'historical-review-form',
                                   ),
+                                  minLength: YearbookConfig.getFormDescriptionMinLimit(
+                                    'historical-review-form',
+                                  ),
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -987,6 +997,9 @@ export async function MapperYearBookWeb(
                                   value: yearBookData.sponsor.content,
                                   disabled: /* yearBookData.isInApproval */ false,
                                   maxLength: YearbookConfig.getFormDescriptionLimit(
+                                    'sponsor-form',
+                                  ),
+                                  minLength: YearbookConfig.getFormDescriptionMinLimit(
                                     'sponsor-form',
                                   ),
                                 },
@@ -1036,6 +1049,9 @@ export async function MapperYearBookWeb(
                                   maxLength: YearbookConfig.getFormDescriptionLimit(
                                     'coordinator-form',
                                   ),
+                                  minLength: YearbookConfig.getFormDescriptionMinLimit(
+                                    'coordinator-form',
+                                  ),
                                 },
                                 button: {
                                   text: 'Guardar cambios',
@@ -1080,6 +1096,9 @@ export async function MapperYearBookWeb(
                                   value: yearBookData.school.content,
                                   disabled: /* yearBookData.isInApproval */ false,
                                   maxLength: YearbookConfig.getFormDescriptionLimit(
+                                    'school-form',
+                                  ),
+                                  minLength: YearbookConfig.getFormDescriptionMinLimit(
                                     'school-form',
                                   ),
                                 },

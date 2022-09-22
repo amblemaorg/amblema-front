@@ -38,6 +38,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private pdfService: PdfYearbookService) {}
 
   showLoading = true;
+  addGrayScale = false;
   pager = new Pager();
 
   pages: TemplatePages = [];
@@ -60,15 +61,15 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    // console.log('YearbookPdfTemplateComponent', this.pdfData);
+    console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
       this.router.navigate(['/peca/anuario-page']);
     }
 
-    addEventListener('afterprint', (event) => {
-      this.router.navigate(['/peca/anuario-page']);
-    });
+    // addEventListener('afterprint', (event) => {
+    //   this.router.navigate(['/peca/anuario-page']);
+    // });
 
     if (this.pdfData) {
       this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(
@@ -91,6 +92,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       //   window.print()
       // }, 2000)
     }
+  }
+
+  backPage() {
+    this.router.navigate(['/peca/anuario-page']);
   }
 
   print() {
