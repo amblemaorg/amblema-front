@@ -1,17 +1,22 @@
 <div class="not-print header-previewer">
-  <button class="btn btn-primary" (click)="backPage()">
-    Regresar
-  </button>
-  <button class="btn btn-primary" (click)="print()">
-    Generar PDF
-  </button>
-  <button
-    class="btn btn-primary"
-    (click)="addGrayScale = !addGrayScale"
-    [ngClass]="{ 'gray-scale': addGrayScale }"
-  >
-    Activar escala de grises
-  </button>
+  <h1>
+    Vista previa
+  </h1>
+  <div class="buttons-actions">
+    <button class="btn btn-primary" (click)="backPage()">
+      Regresar
+    </button>
+    <button class="btn btn-primary" (click)="print()">
+      Generar PDF
+    </button>
+    <button
+      class="btn btn-primary"
+      (click)="addGrayScale = !addGrayScale"
+      [ngClass]="{ 'gray-scale': addGrayScale }"
+    >
+      Activar escala de grises
+    </button>
+  </div>
 </div>
 
 <ng-container *ngIf="!!pdfData">

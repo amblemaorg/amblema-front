@@ -604,6 +604,7 @@ export async function MapperYearBookWeb(
               value: lapseData.mathDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
               maxLength,
+              minLength,
             },
             button: {
               type: 'button',
@@ -750,6 +751,7 @@ export async function MapperYearBookWeb(
               value: lapseData.logicDiagnosticAnalysis,
               disabled: /* yearBookData.isInApproval */ false,
               maxLength,
+              minLength,
             },
             button: {
               type: 'button',
