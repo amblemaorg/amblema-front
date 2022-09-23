@@ -41,8 +41,10 @@
       (click)="routeToPdfTemplate()"
       [disabled]="pdfBtnLoading"
     >
-      <span *ngIf="pdfBtnLoading" class="spinner-grow spinner-grow-sm"></span
-      >&nbsp;
+      <div class="div" *ngIf="pdfBtnLoading">
+        <span class="spinner-grow spinner-grow-sm"></span>
+        &nbsp;
+      </div>
       {{ header?.download?.name ? header.download.name : '' }}
     </button>
 
