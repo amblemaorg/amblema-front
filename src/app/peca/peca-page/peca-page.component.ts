@@ -28,6 +28,8 @@ export class PecaPageComponent {
   pdfData: any;
   pdfIndexOptionLoading = false;
   creatingPdf: boolean;
+  pdfToasterCalledTimes: number = 0;
+  pdfBtnDisabled = false;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
@@ -46,6 +48,7 @@ export class PecaPageComponent {
   public changeComponentHeader(header) {
     this.header.title = header;
   }
+
   public instantiateBlocks(
     container: ViewContainerRef,
     reSet: boolean = false,
@@ -143,13 +146,10 @@ export class PecaPageComponent {
     this.pdfData = pdfData;
   }
 
-  public disablePdfDownload(): boolean {
-    // console.log('this.pdfData', this.pdfData);
-    // console.log(this.pdfYearbookService.getGraphics());
-    return this.pdfData ? false : true;
+  setPdfBtnDisabled(disabled = true) {
+    this.pdfBtnDisabled = disabled;
   }
 
-  pdfToasterCalledTimes: number = 0;
   public generatePDF() {
     this.pdfToasterCalledTimes = 0;
     this.creatingPdf = true;

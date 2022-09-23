@@ -103,7 +103,7 @@ export class YearbookPageComponent extends PecaPageComponent
               if (isInApproval || yearbookHasNotApprovedRequest) {
                 const lastYearBookRequest = lastRequest.detail;
 
-                console.log('lastYearBookRequest', { lastRequest });
+                // console.log('lastYearBookRequest', { lastRequest });
 
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
@@ -277,20 +277,39 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              this.setAmblemarioData(
-                data.activePecaContent,
-                lastRequest,
-                amblemarioMapper,
+              const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                (yearbookAppHistory) => {
+                  const { isInApproval } = yearbookAppHistory.detail;
+
+                  const status = yearbookAppHistory.status;
+
+                  return !isInApproval && status == 2;
+                },
               );
-              // console.log('data.activePecaContent', data.activePecaContent);
 
-              console.log('yearbook - data', data);
-              console.log('yearbook - this.pecaData', this.pecaData);
+              this.setPdfBtnDisabled();
 
-              this.setPdfData(this.pecaData);
+              // console.log('yearbook - data', data);
+              // Temporal solution while is fixed back-end problem
+              if (activePecaContentAmblemario) {
+                const { detail } = activePecaContentAmblemario;
+                const pecaData = {
+                  ...data.activePecaContent,
+                  yearbook: detail,
+                };
+                // console.log('activePecaContentAmblemario - detail', pecaData);
+
+                this.setAmblemarioData(pecaData, lastRequest, amblemarioMapper);
+
+                // console.log('yearbook - this.pecaData', this.pecaData);
+
+                this.setPdfData(this.pecaData);
+
+                this.setPdfBtnDisabled(false);
+              }
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
-              // this.store.dispatch(new SetYearBook(newYearBook));
+
               const yearBookConfig = await MapperYearBookWeb(
                 newYearBook,
                 diagnosticGoalTableData,

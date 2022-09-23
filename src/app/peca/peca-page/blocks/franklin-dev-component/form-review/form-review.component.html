@@ -142,11 +142,7 @@
         nbButton
         status="danger"
         class="btn btn-danger col-12 col-lg-auto btn-cancel"
-        [disabled]="
-          settings.fields.cancelButton.disabled ||
-          isSaving ||
-          (makingActionSubs$ | async).makingAction
-        "
+        [disabled]="form.invalid"
         (click)="settings.onCancel($event)"
       >
         {{
@@ -157,6 +153,12 @@
             : settings.fields.cancelButton.text
         }}
       </button>
+
+      <!--           settings.fields.cancelButton.disabled ||
+          isSaving ||
+          (makingActionSubs$ | async).makingAction || -->
+      <!-- || formControlHasError('description', 'maxlength') ||
+      formControlHasError('description', 'minlength') -->
       <!-- Type submit  -->
       <button
         *ngIf="
@@ -167,7 +169,11 @@
         "
         nbButton
         class="btn btn-primary submit-btn col-12 col-lg-auto btn-normal"
-        [disabled]="settings.fields.button.disabled || isSaving || form.invalid"
+        [disabled]="
+          settings.fields.button.disabled ||
+          isSaving ||
+          (makingActionSubs$ | async).makingAction
+        "
       >
         {{
           isSaving &&
