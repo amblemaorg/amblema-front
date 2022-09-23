@@ -53,10 +53,7 @@ export class YearbookPageComponent extends PecaPageComponent
   }
 
   ngOnInit() {
-    // this.ybSubscription = this.ybState$.subscribe( ybData_ => {
-    //   this.ybData = ybData_;
-    // });
-
+    let countRespExecuted = 0; // Forma temporal para evitar que ingresen a la vista previa del amblemario pdf con datos incorrecto, porque los datos correctos vienen la segunda vez que se realiza la petición
     this.subscription = this.pecaData$
       .pipe(
         distinctUntilChanged((prev, curr) =>
@@ -68,7 +65,12 @@ export class YearbookPageComponent extends PecaPageComponent
       )
       .subscribe(
         async (data) => {
-          // console.log("DATAAA: ", data);
+          countRespExecuted++;
+
+          // console.log('DATAAA: ', data);
+
+          this.setPdfBtnLoading();
+
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
               // console.log('YearbookPageComponent', data);
@@ -277,35 +279,42 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
-                (yearbookAppHistory) => {
-                  const { isInApproval } = yearbookAppHistory.detail;
+              if (countRespExecuted === 2) {
+                const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                  (yearbookAppHistory) => {
+                    const { isInApproval } = yearbookAppHistory.detail;
 
-                  const status = yearbookAppHistory.status;
+                    const status = yearbookAppHistory.status;
 
-                  return !isInApproval && status == 2;
-                },
-              );
+                    return !isInApproval && status == 2;
+                  },
+                );
 
-              this.setPdfBtnDisabled();
+                // console.log(
+                //   'activePecaContentAmblemario',
+                //   activePecaContentAmblemario,
+                // );
+                // Temporal solution while is fixed back-end problem
+                if (activePecaContentAmblemario) {
+                  const { detail } = activePecaContentAmblemario;
+                  const pecaData = {
+                    ...data.activePecaContent,
+                    yearbook: detail,
+                  };
+                  // console.log('activePecaContentAmblemario - detail', pecaData);
 
-              // console.log('yearbook - data', data);
-              // Temporal solution while is fixed back-end problem
-              if (activePecaContentAmblemario) {
-                const { detail } = activePecaContentAmblemario;
-                const pecaData = {
-                  ...data.activePecaContent,
-                  yearbook: detail,
-                };
-                // console.log('activePecaContentAmblemario - detail', pecaData);
+                  this.setAmblemarioData(
+                    pecaData,
+                    lastRequest,
+                    amblemarioMapper,
+                  );
 
-                this.setAmblemarioData(pecaData, lastRequest, amblemarioMapper);
+                  // console.log('yearbook - this.pecaData', this.pecaData);
 
-                // console.log('yearbook - this.pecaData', this.pecaData);
+                  this.setPdfData(this.pecaData);
 
-                this.setPdfData(this.pecaData);
-
-                this.setPdfBtnDisabled(false);
+                  this.setPdfBtnLoading(false);
+                }
               }
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();

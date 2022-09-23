@@ -142,7 +142,11 @@
         nbButton
         status="danger"
         class="btn btn-danger col-12 col-lg-auto btn-cancel"
-        [disabled]="form.invalid"
+        [disabled]="
+          settings.fields.cancelButton.disabled ||
+          isSaving ||
+          (makingActionSubs$ | async).makingAction
+        "
         (click)="settings.onCancel($event)"
       >
         {{
@@ -172,7 +176,8 @@
         [disabled]="
           settings.fields.button.disabled ||
           isSaving ||
-          (makingActionSubs$ | async).makingAction
+          (makingActionSubs$ | async).makingAction ||
+          form.invalid
         "
       >
         {{
@@ -197,7 +202,8 @@
         [disabled]="
           settings.fields.button.disabled ||
           isSaving ||
-          (makingActionSubs$ | async).makingAction
+          (makingActionSubs$ | async).makingAction ||
+          form.invalid
         "
       >
         {{

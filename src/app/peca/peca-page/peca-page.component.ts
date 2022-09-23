@@ -29,7 +29,7 @@ export class PecaPageComponent {
   pdfIndexOptionLoading = false;
   creatingPdf: boolean;
   pdfToasterCalledTimes: number = 0;
-  pdfBtnDisabled = false;
+  pdfBtnLoading = false;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
@@ -146,8 +146,8 @@ export class PecaPageComponent {
     this.pdfData = pdfData;
   }
 
-  setPdfBtnDisabled(disabled = true) {
-    this.pdfBtnDisabled = disabled;
+  setPdfBtnLoading(loading = true) {
+    this.pdfBtnLoading = loading;
   }
 
   public generatePDF() {
