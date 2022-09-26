@@ -53,10 +53,7 @@ export class YearbookPageComponent extends PecaPageComponent
   }
 
   ngOnInit() {
-    // this.ybSubscription = this.ybState$.subscribe( ybData_ => {
-    //   this.ybData = ybData_;
-    // });
-
+    let countRespExecuted = 0; // Forma temporal para evitar que ingresen a la vista previa del amblemario pdf con datos incorrecto, porque los datos correctos vienen la segunda vez que se realiza la petición
     this.subscription = this.pecaData$
       .pipe(
         distinctUntilChanged((prev, curr) =>
@@ -68,7 +65,12 @@ export class YearbookPageComponent extends PecaPageComponent
       )
       .subscribe(
         async (data) => {
-          // console.log("DATAAA: ", data);
+          countRespExecuted++;
+
+          // console.log('DATAAA: ', data);
+
+          this.setPdfBtnLoading();
+
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
               // console.log('YearbookPageComponent', data);
@@ -103,7 +105,7 @@ export class YearbookPageComponent extends PecaPageComponent
               if (isInApproval || yearbookHasNotApprovedRequest) {
                 const lastYearBookRequest = lastRequest.detail;
 
-                console.log('lastYearBookRequest', { lastRequest });
+                // console.log('lastYearBookRequest', { lastRequest });
 
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
@@ -277,20 +279,46 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              this.setAmblemarioData(
-                data.activePecaContent,
-                lastRequest,
-                amblemarioMapper,
-              );
-              // console.log('data.activePecaContent', data.activePecaContent);
+              if (countRespExecuted === 2) {
+                const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                  (yearbookAppHistory) => {
+                    const { isInApproval } = yearbookAppHistory.detail;
 
-              console.log('yearbook - data', data);
-              console.log('yearbook - this.pecaData', this.pecaData);
+                    const status = yearbookAppHistory.status;
 
-              this.setPdfData(this.pecaData);
+                    return !isInApproval && status == 2;
+                  },
+                );
+
+                // console.log(
+                //   'activePecaContentAmblemario',
+                //   activePecaContentAmblemario,
+                // );
+                // Temporal solution while is fixed back-end problem
+                if (activePecaContentAmblemario) {
+                  const { detail } = activePecaContentAmblemario;
+                  const pecaData = {
+                    ...data.activePecaContent,
+                    yearbook: detail,
+                  };
+                  // console.log('activePecaContentAmblemario - detail', pecaData);
+
+                  this.setAmblemarioData(
+                    pecaData,
+                    lastRequest,
+                    amblemarioMapper,
+                  );
+
+                  // console.log('yearbook - this.pecaData', this.pecaData);
+
+                  this.setPdfData(this.pecaData);
+
+                  this.setPdfBtnLoading(false);
+                }
+              }
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
-              // this.store.dispatch(new SetYearBook(newYearBook));
+
               const yearBookConfig = await MapperYearBookWeb(
                 newYearBook,
                 diagnosticGoalTableData,

@@ -39,7 +39,12 @@
       *ngIf="header && header.download"
       class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
       (click)="routeToPdfTemplate()"
+      [disabled]="pdfBtnLoading"
     >
+      <label class="btnDownloadLoading" *ngIf="pdfBtnLoading">
+        <span class="spinner-grow spinner-grow-sm"></span>
+        &nbsp;
+      </label>
       {{ header?.download?.name ? header.download.name : '' }}
     </button>
 
