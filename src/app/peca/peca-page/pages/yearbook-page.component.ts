@@ -67,15 +67,10 @@ export class YearbookPageComponent extends PecaPageComponent
         async (data) => {
           countRespExecuted++;
 
-          // console.log('DATAAA: ', data);
-
           this.setPdfBtnLoading();
 
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
-              // console.log('YearbookPageComponent', data);
-
-              // this.store.dispatch(new SetFalseMakingAction());
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
                 sections: data.activePecaContent.school.sections,
@@ -290,10 +285,6 @@ export class YearbookPageComponent extends PecaPageComponent
                   },
                 );
 
-                // console.log(
-                //   'activePecaContentAmblemario',
-                //   activePecaContentAmblemario,
-                // );
                 // Temporal solution while is fixed back-end problem
                 if (activePecaContentAmblemario) {
                   const { detail } = activePecaContentAmblemario;
@@ -301,7 +292,6 @@ export class YearbookPageComponent extends PecaPageComponent
                     ...data.activePecaContent,
                     yearbook: detail,
                   };
-                  // console.log('activePecaContentAmblemario - detail', pecaData);
 
                   this.setAmblemarioData(
                     pecaData,
@@ -309,11 +299,7 @@ export class YearbookPageComponent extends PecaPageComponent
                     amblemarioMapper,
                   );
 
-                  // console.log('yearbook - this.pecaData', this.pecaData);
-
                   this.setPdfData(this.pecaData);
-
-                  this.setPdfBtnLoading(false);
                 }
               }
 
@@ -326,6 +312,8 @@ export class YearbookPageComponent extends PecaPageComponent
                 permissionsObj,
                 this.store,
               );
+
+              this.setPdfBtnLoading(false);
               this.instantiateComponent(yearBookConfig);
               this.doInstantiateBlocks();
             }
