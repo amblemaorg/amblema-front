@@ -279,7 +279,7 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              if (countRespExecuted === 2) {
+              if (countRespExecuted > 1) {
                 const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
                   (yearbookAppHistory) => {
                     const { isInApproval } = yearbookAppHistory.detail;

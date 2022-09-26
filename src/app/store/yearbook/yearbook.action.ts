@@ -94,7 +94,8 @@ export class ClearYearBook {
 }
 
 export class SetFalseMakingAction {
-  static readonly type = '[YearBook] Set false makingAction attribute in YearBook';
+  static readonly type =
+    '[YearBook] Set false makingAction attribute in YearBook';
   constructor(public showToast: boolean) {}
 }
 
@@ -215,7 +216,10 @@ export class YearBookState {
   }
 
   @Action(SetYearBook)
-  setYearBook({ patchState, getState }: StateContext<YearBook>, action: SetYearBook) {
+  setYearBook(
+    { patchState, getState }: StateContext<YearBook>,
+    action: SetYearBook,
+  ) {
     // const state = getState();
     // const sections = state.sections && state.sections.length ? state.sections : [];
     // const activities = {
@@ -368,14 +372,23 @@ export class YearBookState {
     { patchState, getState }: StateContext<YearBook>,
     action: UpdateYearBookRequest,
   ) {
-    const { pecaId, userId, section, partial, data, requestId } = action.payload;
+    const {
+      pecaId,
+      userId,
+      section,
+      partial,
+      data,
+      requestId,
+    } = action.payload;
 
     const yearBookData = {
       ...data,
       ...(requestId ? { requestId: requestId } : {}),
     };
 
-    if (['historicalReview', 'sponsor', 'coordinator', 'school'].includes(section))
+    if (
+      ['historicalReview', 'sponsor', 'coordinator', 'school'].includes(section)
+    )
       yearBookData[section] = {
         ...data[section],
         ...partial,
@@ -385,7 +398,10 @@ export class YearBookState {
       const { sectionId, sectionGrade, sectionName, image } = partial;
       const sectionsUpdated = yearBookData.sections.map((section) => {
         const { id, grade, name } = section;
-        if (id === sectionId || (grade === sectionGrade && name === sectionName)) {
+        if (
+          id === sectionId ||
+          (grade === sectionGrade && name === sectionName)
+        ) {
           return {
             ...section,
             image,
@@ -397,9 +413,11 @@ export class YearBookState {
     }
 
     if (
-      ['readingDiagnosticAnalysis', 'mathDiagnosticAnalysis', 'logicDiagnosticAnalysis'].includes(
-        section,
-      )
+      [
+        'readingDiagnosticAnalysis',
+        'mathDiagnosticAnalysis',
+        'logicDiagnosticAnalysis',
+      ].includes(section)
     ) {
       const { lapse, analysis } = partial;
       const lapseName = `lapse${lapse}`;
@@ -412,16 +430,18 @@ export class YearBookState {
     if (section === 'activities') {
       const { lapse, activityId, description, images } = partial;
       const lapseName = `lapse${lapse}`;
-      const lapseActivitiesUpdated = yearBookData[lapseName].activities.map((activity) => {
-        if (activity.id === activityId) {
-          return {
-            ...activity,
-            description,
-            images,
-          };
-        }
-        return activity;
-      });
+      const lapseActivitiesUpdated = yearBookData[lapseName].activities.map(
+        (activity) => {
+          if (activity.id === activityId) {
+            return {
+              ...activity,
+              description,
+              images,
+            };
+          }
+          return activity;
+        },
+      );
       yearBookData[lapseName] = {
         ...data[lapseName],
         [section]: lapseActivitiesUpdated,
@@ -438,9 +458,9 @@ export class YearBookState {
     delete yearBookData['wasSaving'];
     const url = `pecaprojects/yearbook/${pecaId}?userId=${userId}`;
     try {
-      console.log('YEAR BOOK DATA: ', yearBookData);
+      // console.log('YEAR BOOK DATA: ', yearBookData);
       const data = await this.fetcher.post(url, yearBookData).toPromise();
-      console.log(data);
+      // console.log(data);
 
       const { msgs } = data;
       if (msgs && msgs instanceof Array && msgs.length) {
@@ -459,7 +479,9 @@ export class YearBookState {
       } = error;
 
       const errorMsg =
-        message && typeof message === 'string' && message.toLowerCase() === 'invalid image format'
+        message &&
+        typeof message === 'string' &&
+        message.toLowerCase() === 'invalid image format'
           ? 'Ocurrió un problema al procesar la(s) imágen(es)'
           : 'Ha ocurrido un error';
 
