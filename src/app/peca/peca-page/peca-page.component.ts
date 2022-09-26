@@ -1,38 +1,42 @@
+import { Router } from '@angular/router';
 import {
   Component,
   ViewContainerRef,
   ComponentFactoryResolver,
   Inject,
-} from "@angular/core";
-import { PageBlockFactory } from "./blocks/page-block-factory";
-import { PageBlockComponent } from "./blocks/page-block.component";
-import { Location, DOCUMENT } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { PdfYearbookService } from "../../services/peca/pdf-yearbook.service";
-import { ToastrService } from "ngx-toastr";
+} from '@angular/core';
+import { PageBlockFactory } from './blocks/page-block-factory';
+import { PageBlockComponent } from './blocks/page-block.component';
+import { Location, DOCUMENT } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { PdfYearbookService } from '../../services/peca/pdf-yearbook.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: "peca-page",
-  templateUrl: "./peca-page.component.html",
-  styleUrls: ["./peca-page.component.scss"],
+  selector: 'peca-page',
+  templateUrl: './peca-page.component.html',
+  styleUrls: ['./peca-page.component.scss'],
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
-  header: { title: string; download: any };
+  header: { title: string; download: any; indexOption?: { value: boolean } };
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
   isFromSteps: boolean;
   // fontsInstantiated: boolean;
   pdfData: any;
+  pdfIndexOptionLoading = false;
   creatingPdf: boolean;
+  pdfToasterCalledTimes: number = 0;
+  pdfBtnLoading = false;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
     protected location?: Location,
     protected route?: ActivatedRoute,
     protected pdfYearbookService?: PdfYearbookService,
-    protected toastr?: ToastrService
+    protected toastr?: ToastrService,
   ) {}
 
   public instantiateComponent(config) {
@@ -44,18 +48,20 @@ export class PecaPageComponent {
   public changeComponentHeader(header) {
     this.header.title = header;
   }
+
   public instantiateBlocks(
     container: ViewContainerRef,
-    reSet: boolean = false
+    reSet: boolean = false,
   ) {
     this.blocks.map((block, i) => {
-      const pageBlockComponentFactory =
-        this.pageBlockFactory.createPageBlockFactory(block.component);
+      const pageBlockComponentFactory = this.pageBlockFactory.createPageBlockFactory(
+        block.component,
+      );
 
       if (reSet && container.length > 0) container.clear();
 
       const pageBlockComponent = container.createComponent(
-        pageBlockComponentFactory
+        pageBlockComponentFactory,
       );
       const settings = {
         settings: block.settings,
@@ -64,7 +70,7 @@ export class PecaPageComponent {
       pageBlockComponent.instance.setSettings(settings);
       this.blockInstances.set(
         block.name || `block${i}`,
-        pageBlockComponent.instance
+        pageBlockComponent.instance,
       );
     });
   }
@@ -111,16 +117,16 @@ export class PecaPageComponent {
       const formComponent = this.blockInstances.get(blockName);
 
       const args = generatorsProps.map((prop) => {
-        const propertyPath = prop.split(".");
+        const propertyPath = prop.split('.');
         return this.accessPropertyByArrayPath(formComponent, propertyPath);
       });
 
       const urls = {
-        get: typeof get === "function" ? get(...args) : "",
-        post: typeof post === "function" ? post(...args) : "",
-        put: typeof put === "function" ? put(...args) : "",
-        patch: typeof patch === "function" ? patch(...args) : "",
-        delete: typeof deleteFn === "function" ? deleteFn(...args) : "",
+        get: typeof get === 'function' ? get(...args) : '',
+        post: typeof post === 'function' ? post(...args) : '',
+        put: typeof put === 'function' ? put(...args) : '',
+        patch: typeof patch === 'function' ? patch(...args) : '',
+        delete: typeof deleteFn === 'function' ? deleteFn(...args) : '',
       };
       formComponent.setFetcherUrls(urls);
     }
@@ -140,13 +146,10 @@ export class PecaPageComponent {
     this.pdfData = pdfData;
   }
 
-  public disablePdfDownload(): boolean {
-    // console.log("this.pdfData", this.pdfData);
-
-    return this.pdfData ? false : true;
+  setPdfBtnLoading(loading = true) {
+    this.pdfBtnLoading = loading;
   }
 
-  pdfToasterCalledTimes: number = 0;
   public generatePDF() {
     this.pdfToasterCalledTimes = 0;
     this.creatingPdf = true;
@@ -156,23 +159,52 @@ export class PecaPageComponent {
       .then((res) => {
         this.creatingPdf = res;
         if (this.pdfToasterCalledTimes === 0) {
-          this.toastr.success("La descarga del PDF comenzará en breve", "", {
-            positionClass: "toast-bottom-right",
+          this.toastr.success('La descarga del PDF comenzará en breve', '', {
+            positionClass: 'toast-bottom-right',
           });
         }
       })
       .catch((e) => {
         this.creatingPdf = e;
         if (this.pdfToasterCalledTimes === 0) {
-          this.toastr.error("Algo salió mal al procesar el PDF", "", {
-            positionClass: "toast-bottom-right",
+          this.toastr.error('Algo salió mal al procesar el PDF', '', {
+            positionClass: 'toast-bottom-right',
           });
         }
-        console.log("e", e);
+        // console.log('e', e);
       })
       .finally(() => {
         this.creatingPdf = false;
         this.pdfToasterCalledTimes++;
       });
+  }
+
+  routeToPdfTemplate() {
+    // console.log('routeToPdfTemplate');
+
+    if (this.pdfYearbookService.getGraphics()) {
+      // console.log(this.pdfYearbookService.getGraphics());
+      this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
+    }
+  }
+
+  async setIndexOption(e) {
+    this.pdfIndexOptionLoading = true;
+
+    try {
+      const optionToPatch = {
+        index: e.target.checked,
+      };
+
+      await this.pdfYearbookService.setPrintOptions(
+        this.pdfData.pecaId,
+        optionToPatch,
+      );
+    } catch (error) {
+      e.target.checked = !e.target.checked;
+      console.error(error);
+    }
+
+    this.pdfIndexOptionLoading = false;
   }
 }

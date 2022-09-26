@@ -1,237 +1,287 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
-import { Chart, ChartOptions, ChartType, ChartDataSets } from "chart.js";
-import { Label } from "ng2-charts";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  Input,
+} from '@angular/core'
+import { Chart, ChartOptions, ChartType, ChartDataSets } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { Label } from 'ng2-charts'
 import {
   PageBlockComponent,
   PresentationalBlockComponent,
-} from "../page-block.component";
-import { Router, NavigationEnd, Event } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
-import { PecaState } from "../../../../store/states/peca/peca.state";
-import { Select } from "@ngxs/store";
-import { PdfYearbookService } from "../../../../services/peca/pdf-yearbook.service";
+} from '../page-block.component'
+import { Router, NavigationEnd, Event } from '@angular/router'
+import { Observable, Subscription } from 'rxjs'
+import { PecaState } from '../../../../store/states/peca/peca.state'
+import { Select } from '@ngxs/store'
+import { PdfYearbookService } from '../../../../services/peca/pdf-yearbook.service'
 
 @Component({
-  selector: "app-graphics-block",
-  templateUrl: "./graphics-block.component.html",
-  styleUrls: ["./graphics-block.component.scss"],
+  selector: 'app-graphics-block',
+  templateUrl: './graphics-block.component.html',
+  styleUrls: ['./graphics-block.component.scss'],
 })
 export class GraphicsBlockComponent
-  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy
-{
-  type: "presentational";
-  component: string;
-  settings: {
-    hideChart?: boolean;
-    chartId?: string;
-    labels: string[];
-    sendGraphicToPdf?: string;
-    lapseN?: number;
-    items: any[];
-    legendName: string;
-  };
-  canvas: any;
-  ctx: any;
-  chart: any;
-  color: any;
-  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
-  routerSubscription: Subscription;
-  infoDataSubscription: Subscription;
-  arraySections = [];
-  arrayColors = [];
-  dataChart = [];
-  dataLabel = [];
-  UrlLapse = "";
+  implements PresentationalBlockComponent, OnInit, AfterViewInit, OnDestroy {
+  type: 'presentational'
+  component: string
+  @Input() settings: {
+    hideChart?: boolean
+    chartId?: string
+    labels: string[]
+    sendGraphicToPdf?: string
+    lapseN?: number
+    items: any[]
+    legendName: string
+    datasets?: any[]
+    options?: {}
+  }
 
-  private subscription: Subscription = new Subscription();
+  @Input() fitContainer = false
+
+  canvas: any
+  ctx: any
+  chart: Chart
+  color: any
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>
+  routerSubscription: Subscription
+  infoDataSubscription: Subscription
+  arraySections = []
+  arrayColors = []
+  dataChart = []
+  dataLabel = []
+  UrlLapse = ''
+
+  private subscription: Subscription = new Subscription()
 
   constructor(
     private router: Router,
-    private pdfYearbookService: PdfYearbookService
+    private pdfYearbookService: PdfYearbookService,
   ) {
-    this.type = "presentational";
-    this.component = "graphics";
+    this.type = 'presentational'
+    this.component = 'graphics'
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.UrlLapse = event.url;
-        this.UrlLapse = this.router.url.substr(12, 1);
+        this.UrlLapse = event.url
+        this.UrlLapse = this.router.url.substr(12, 1)
       }
-    });
+    })
   }
 
   ngOnInit() {
-    if (this.router.url.substring(14, 33) == "diagnostico-inicial") {
-      this.color = "#FFF";
+    if (this.router.url.substring(14, 33) == 'diagnostico-inicial') {
+      this.color = '#FFF'
     } else {
-      this.color = "#111";
+      this.color = '#111'
     }
 
-    const routePathArray = this.router.url.split("/");
-    if (routePathArray[2] == "anuario-page") {
-      //this.nombreEscuela = this.settings.legendName;
-      this.dataLabel = this.settings.labels;
-      this.arrayColors = this.settings.labels.map(() => "#81B03E");
-      this.dataChart = this.settings.items;
+    const routePathArray = this.router.url.split('/')
+
+    if (
+      routePathArray[2] == 'anuario-page' ||
+      routePathArray[2] == 'yearbook'
+    ) {
+      this.dataLabel = this.settings.labels
+      if (!this.settings.datasets) {
+        this.arrayColors = this.settings.labels.map(() => '#81B03E')
+        this.dataChart = this.settings.items
+      }
+
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
-            const imgB64 = this.chart ? this.chart.toBase64Image() : null;
             this.pdfYearbookService.setGraphics(
               `lapse${this.settings.lapseN}`,
               this.settings.sendGraphicToPdf,
-              imgB64
-            );
+              {
+                labels: this.dataLabel,
+                values: this.dataChart,
+              },
+            )
           }
-        })
-      );
-      return;
+        }),
+      )
+      return
     }
 
-    this.getInfo();
+    this.getInfo()
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.loadChart()
+    })
   }
 
   parseGradeName(grade, name): string {
     switch (grade) {
-      case "0":
-        return `Preescolar ${name}`;
-      case "1":
-        return `1er Grado ${name}`;
-      case "2":
-        return `2do Grado ${name}`;
-      case "3":
-        return `3er Grado ${name}`;
-      case "4":
-        return `4to Grado ${name}`;
-      case "5":
-        return `5to Grado ${name}`;
-      case "6":
-        return `6to Grado ${name}`;
+      case '0':
+        return `Preescolar ${name}`
+      case '1':
+        return `1er Grado ${name}`
+      case '2':
+        return `2do Grado ${name}`
+      case '3':
+        return `3er Grado ${name}`
+      case '4':
+        return `4to Grado ${name}`
+      case '5':
+        return `5to Grado ${name}`
+      case '6':
+        return `6to Grado ${name}`
       default:
-        return `${grade} Grado ${name}`;
+        return `${grade} Grado ${name}`
     }
   }
 
   getInfo() {
-    this.UrlLapse = this.router.url.substr(12, 1);
+    this.UrlLapse = this.router.url.substr(12, 1)
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          this.arraySections = data.activePecaContent.school.sections;
+          this.arraySections = data.activePecaContent.school.sections
 
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
               this.parseGradeName(
                 data.activePecaContent.school.sections[i].grade,
-                data.activePecaContent.school.sections[i].name
-              )
-            );
-            this.arrayColors.push("#81B03E");
+                data.activePecaContent.school.sections[i].name,
+              ),
+            )
+            this.arrayColors.push('#81B03E')
           }
-          if (this.UrlLapse === "1") {
+          if (this.UrlLapse === '1') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
                   data.activePecaContent.school.sections[i].diagnostics.lapse1
-                    .wordsPerMinIndex
-                ).toFixed(2)
-              );
+                    .wordsPerMinIndex,
+                ).toFixed(2),
+              )
             }
-          } else if (this.UrlLapse === "2") {
+          } else if (this.UrlLapse === '2') {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
                   data.activePecaContent.school.sections[i].diagnostics.lapse2
-                    .wordsPerMinIndex
-                ).toFixed(2)
-              );
+                    .wordsPerMinIndex,
+                ).toFixed(2),
+              )
             }
           } else {
             for (let i = 0; i < this.arraySections.length; i++) {
               this.dataChart.push(
                 parseFloat(
                   data.activePecaContent.school.sections[i].diagnostics.lapse3
-                    .wordsPerMinIndex
-                ).toFixed(2)
-              );
+                    .wordsPerMinIndex,
+                ).toFixed(2),
+              )
             }
           }
         }
       },
 
-      (error) => console.error(error)
-    );
+      (error) => console.error(error),
+    )
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.loadChart();
-    });
-  }
   setSettings(settings: any) {
-    this.settings = { ...settings };
+    this.settings = { ...settings }
   }
+
+  getChartDatasets() {
+    let datasets = []
+
+    if (this.settings.datasets) {
+      datasets = this.settings.datasets
+    }
+
+    if (!this.settings.datasets) {
+      datasets = [
+        {
+          label: this.settings.legendName
+            ? this.settings.legendName
+            : 'Diagnóstico de lectura',
+          data: this.dataChart,
+          backgroundColor: this.arrayColors,
+          fill: true,
+        },
+      ]
+    }
+
+    return datasets
+  }
+
+  getOptions() {
+    if (this.settings.options) {
+      return this.settings.options
+    }
+
+    return {
+      maintainAspectRatio: false,
+      title: {
+        //text: "BAR CHART",
+        display: true,
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              fontColor: this.color,
+              beginAtZero: true,
+            },
+          },
+        ],
+        xAxes: [
+          {
+            ticks: {
+              fontColor: this.color,
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+      legend: {
+        labels: {
+          fontColor: this.color,
+        },
+      },
+      plugins: {
+        datalabels: {
+          display: false,
+        },
+      },
+    }
+  }
+
   loadChart() {
     if (document.getElementById(this.settings.chartId)) {
-      this.canvas = document.getElementById(this.settings.chartId);
-      this.ctx = this.canvas.getContext("2d");
+      this.canvas = document.getElementById(this.settings.chartId)
+      this.ctx = this.canvas.getContext('2d')
+      // Chart.plugins.register(ChartDataLabels);
       this.chart = new Chart(this.ctx, {
-        type: "bar",
+        type: 'bar',
         data: {
           labels: this.dataLabel,
-          datasets: [
-            {
-              label: this.settings.legendName
-                ? this.settings.legendName
-                : "Diagnóstico de lectura",
-              data: this.dataChart,
-              backgroundColor: this.arrayColors,
-              fill: true,
-            },
-          ],
+          datasets: this.getChartDatasets(),
         },
-        options: {
-          maintainAspectRatio: false,
-          title: {
-            //text: "BAR CHART",
-            display: true,
-          },
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  fontColor: this.color,
-                  beginAtZero: true,
-                },
-              },
-            ],
-            xAxes: [
-              {
-                ticks: {
-                  fontColor: this.color,
-                  beginAtZero: true,
-                },
-              },
-            ],
-          },
-          legend: {
-            labels: {
-              fontColor: this.color,
-            },
-          },
-        },
-      });
+        options: this.getOptions(),
+        plugins: [ChartDataLabels],
+      })
     }
   }
 
   ngOnDestroy() {
     if (this.infoDataSubscription) {
-      this.infoDataSubscription.unsubscribe();
+      this.infoDataSubscription.unsubscribe()
     }
     if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
+      this.routerSubscription.unsubscribe()
     }
     if (this.subscription) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe()
     }
   }
 }

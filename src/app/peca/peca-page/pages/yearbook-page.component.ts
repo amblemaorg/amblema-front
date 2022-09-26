@@ -1,4 +1,4 @@
-import { yearbookPermissions } from "./../blocks/peca-permissology";
+import { yearbookPermissions } from './../blocks/peca-permissology';
 import {
   Component,
   ComponentFactoryResolver,
@@ -6,32 +6,30 @@ import {
   ViewChild,
   OnInit,
   OnDestroy,
-} from "@angular/core";
-import { Select, Store } from "@ngxs/store";
-import { PecaPageComponent } from "../peca-page.component";
-import { MapperYearBookWeb } from "./yearbook-config";
-import { PecaState } from "../../../store/states/peca/peca.state";
-import { Observable, Subscription } from "rxjs";
-import { amblemarioMapper } from "../mappers/amblemario-mapper";
-import { PdfYearbookService } from "src/app/services/peca/pdf-yearbook.service";
+} from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { PecaPageComponent } from '../peca-page.component';
+import { MapperYearBookWeb } from './yearbook-config';
+import { PecaState } from '../../../store/states/peca/peca.state';
+import { Observable, Subscription } from 'rxjs';
+import { amblemarioMapper } from '../mappers/amblemario-mapper';
+import { PdfYearbookService } from 'src/app/services/peca/pdf-yearbook.service';
 import {
   SetYearBook,
   YearBookState,
-} from "src/app/store/yearbook/yearbook.action";
-import { ToastrService } from "ngx-toastr";
-import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
+} from 'src/app/store/yearbook/yearbook.action';
+import { ToastrService } from 'ngx-toastr';
+import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 // import { SetFalseMakingAction } from "../../../store/yearbook/yearbook.action";
 
 @Component({
-  selector: "peca-yearbook",
-  templateUrl: "../peca-page.component.html",
+  selector: 'peca-yearbook',
+  templateUrl: '../peca-page.component.html',
 })
 // @ts-ignore
-export class YearbookPageComponent
-  extends PecaPageComponent
-  implements OnInit, OnDestroy
-{
-  @ViewChild("blocksContainer", { read: ViewContainerRef, static: false })
+export class YearbookPageComponent extends PecaPageComponent
+  implements OnInit, OnDestroy {
+  @ViewChild('blocksContainer', { read: ViewContainerRef, static: false })
   container: ViewContainerRef;
   @Select(PecaState.getActivePecaContent) pecaData$: Observable<any>;
   // @Select(YearBookState.yearbookState) ybState$: Observable<any>;
@@ -49,30 +47,34 @@ export class YearbookPageComponent
     private store: Store,
     toastr: ToastrService,
     factoryResolver: ComponentFactoryResolver,
-    pdfYearbookService: PdfYearbookService
+    pdfYearbookService: PdfYearbookService,
   ) {
     super(factoryResolver, null, null, pdfYearbookService, toastr);
   }
 
   ngOnInit() {
-    // this.ybSubscription = this.ybState$.subscribe( ybData_ => {
-    //   this.ybData = ybData_;
-    // });
-
+    let countRespExecuted = 0; // Forma temporal para evitar que ingresen a la vista previa del amblemario pdf con datos incorrecto, porque los datos correctos vienen la segunda vez que se realiza la petición
     this.subscription = this.pecaData$
       .pipe(
         distinctUntilChanged((prev, curr) =>
           prev && curr && prev.activePecaContent && curr.activePecaContent
             ? JSON.stringify(prev.activePecaContent.yearbook) ===
               JSON.stringify(curr.activePecaContent.yearbook)
-            : false
-        )
+            : false,
+        ),
       )
       .subscribe(
-        (data) => {
-          // console.log("DATAAA: ", data);
+        async (data) => {
+          countRespExecuted++;
+
+          // console.log('DATAAA: ', data);
+
+          this.setPdfBtnLoading();
+
           if (!this.isInstantiating) {
             if (data && data.activePecaContent) {
+              // console.log('YearbookPageComponent', data);
+
               // this.store.dispatch(new SetFalseMakingAction());
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
@@ -80,8 +82,12 @@ export class YearbookPageComponent
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
-              const { approvalHistory, isInApproval, pecaId, userId } =
-                currentYearBook;
+              const {
+                approvalHistory,
+                isInApproval,
+                pecaId,
+                userId,
+              } = currentYearBook;
               const yearbookHasNotApprovedRequest =
                 !isInApproval && approvalHistory.length > 0;
               const lastRequest =
@@ -99,34 +105,7 @@ export class YearbookPageComponent
               if (isInApproval || yearbookHasNotApprovedRequest) {
                 const lastYearBookRequest = lastRequest.detail;
 
-                // const theSections = this.ybData ? this.ybData.sections.reduce( (sections, section) => {
-                //   sections[section.id] = {...section};
-                //   return sections;
-                // }, {}) : {};
-
-                // const {
-                //   lapse1Activities,
-                //   lapse2Activities,
-                //   lapse3Activities
-                // } = this.ybData ? [
-                //   "lapse1",
-                //   "lapse2",
-                //   "lapse3"
-                // ].reduce( (lapsesActivities, lapseName) => {
-                //   this.ybData[lapseName].activities.map( activity => {
-                //     lapsesActivities[`${lapseName}Activities`][activity.id] = {...activity};
-                //   });
-                //   return lapsesActivities;
-                // }, { lapse1Activities: {}, lapse2Activities: {}, lapse3Activities: {} })
-                // : { lapse1Activities: {}, lapse2Activities: {}, lapse3Activities: {} };
-
-                // const determineImgs = (imgs, savedImgs) => {
-                //   const finalImgs = imgs.reduce( (theImgs, img) => {
-                //     if (!theImgs.includes(img)) theImgs.push(img);
-                //     return theImgs;
-                //   }, [...savedImgs]);
-                //   return finalImgs;
-                // };
+                // console.log('lastYearBookRequest', { lastRequest });
 
                 // Merge data from last yearbook in approval with updated yearbook data
                 newYearBook = {
@@ -177,15 +156,14 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse1,
                     activities: currentYearBook.lapse1.activities.map(
                       (activity) => {
-                        const activityRequested =
-                          lastYearBookRequest.lapse1.activities.filter(
-                            ({ id }) => activity.id === id
-                          );
+                        const activityRequested = lastYearBookRequest.lapse1.activities.filter(
+                          ({ id }) => activity.id === id,
+                        );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].description
-                            : "";
+                            : '';
                         const imagesReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].images
@@ -193,14 +171,12 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description:
-                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].description && lapse1Activities[activity.id].description.length ? lapse1Activities[activity.id].description : false)
+                          description: /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].description && lapse1Activities[activity.id].description.length ? lapse1Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images:
-                            /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false)
+                          images: /* (this.ybData && lapse1Activities[activity.id] && lapse1Activities[activity.id].images && lapse1Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse1Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
-                      }
+                      },
                     ),
                     logicDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse1.logicDiagnosticAnalysis && this.ybData.lapse1.logicDiagnosticAnalysis.length ? this.ybData.lapse1.logicDiagnosticAnalysis : false) ||  */ lastYearBookRequest
@@ -216,15 +192,14 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse2,
                     activities: currentYearBook.lapse2.activities.map(
                       (activity) => {
-                        const activityRequested =
-                          lastYearBookRequest.lapse2.activities.filter(
-                            ({ id }) => activity.id === id
-                          );
+                        const activityRequested = lastYearBookRequest.lapse2.activities.filter(
+                          ({ id }) => activity.id === id,
+                        );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].description
-                            : "";
+                            : '';
                         const imagesReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].images
@@ -232,14 +207,12 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description:
-                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].description && lapse2Activities[activity.id].description.length ? lapse2Activities[activity.id].description : false)
+                          description: /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].description && lapse2Activities[activity.id].description.length ? lapse2Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images:
-                            /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false)
+                          images: /* (this.ybData && lapse2Activities[activity.id] && lapse2Activities[activity.id].images && lapse2Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse2Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
-                      }
+                      },
                     ),
                     logicDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse2.logicDiagnosticAnalysis && this.ybData.lapse2.logicDiagnosticAnalysis.length ? this.ybData.lapse2.logicDiagnosticAnalysis : false) ||  */ lastYearBookRequest
@@ -255,15 +228,14 @@ export class YearbookPageComponent
                     ...currentYearBook.lapse3,
                     activities: currentYearBook.lapse3.activities.map(
                       (activity) => {
-                        const activityRequested =
-                          lastYearBookRequest.lapse3.activities.filter(
-                            ({ id }) => activity.id === id
-                          );
+                        const activityRequested = lastYearBookRequest.lapse3.activities.filter(
+                          ({ id }) => activity.id === id,
+                        );
 
                         const descriptionReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].description
-                            : "";
+                            : '';
                         const imagesReturnValue =
                           activityRequested.length > 0
                             ? activityRequested[0].images
@@ -271,14 +243,12 @@ export class YearbookPageComponent
 
                         return {
                           ...activity,
-                          description:
-                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].description && lapse3Activities[activity.id].description.length ? lapse3Activities[activity.id].description : false)
+                          description: /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].description && lapse3Activities[activity.id].description.length ? lapse3Activities[activity.id].description : false)
                           ||  */ descriptionReturnValue,
-                          images:
-                            /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false)
+                          images: /* (this.ybData && lapse3Activities[activity.id] && lapse3Activities[activity.id].images && lapse3Activities[activity.id].images.length ? determineImgs(imagesReturnValue, lapse3Activities[activity.id].images) : false)
                           ||  */ imagesReturnValue,
                         };
-                      }
+                      },
                     ),
                     logicDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse3.logicDiagnosticAnalysis && this.ybData.lapse3.logicDiagnosticAnalysis.length ? this.ybData.lapse3.logicDiagnosticAnalysis : false) ||  */ lastYearBookRequest
@@ -291,18 +261,16 @@ export class YearbookPageComponent
                         .lapse3.readingDiagnosticAnalysis,
                   },
                   sections: currentYearBook.sections.map((section) => {
-                    const sectionRequested =
-                      lastYearBookRequest.sections.filter(
-                        ({ id }) => section.id === id
-                      );
+                    const sectionRequested = lastYearBookRequest.sections.filter(
+                      ({ id }) => section.id === id,
+                    );
                     const returnValue =
                       sectionRequested.length > 0
                         ? sectionRequested[0].image
-                        : "";
+                        : '';
                     return {
                       ...section,
-                      image:
-                        /* (this.ybData && theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) ||  */ returnValue,
+                      image: /* (this.ybData && theSections[section.id] && theSections[section.id].image && theSections[section.id].image.length ? theSections[section.id].image : false) ||  */ returnValue,
                     };
                   }),
                 };
@@ -310,28 +278,68 @@ export class YearbookPageComponent
 
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
-              this.setAmblemarioData(data.activePecaContent, amblemarioMapper);
-              // console.log("yearbook - this.pecaData", this.pecaData);
 
-              this.setPdfData(this.pecaData);
-              // this.store.dispatch(new SetYearBook(newYearBook));
-              const yearBookConfig = MapperYearBookWeb(
+              if (countRespExecuted === 2) {
+                const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                  (yearbookAppHistory) => {
+                    const { isInApproval } = yearbookAppHistory.detail;
+
+                    const status = yearbookAppHistory.status;
+
+                    return !isInApproval && status == 2;
+                  },
+                );
+
+                // console.log(
+                //   'activePecaContentAmblemario',
+                //   activePecaContentAmblemario,
+                // );
+                // Temporal solution while is fixed back-end problem
+                if (activePecaContentAmblemario) {
+                  const { detail } = activePecaContentAmblemario;
+                  const pecaData = {
+                    ...data.activePecaContent,
+                    yearbook: detail,
+                  };
+                  // console.log('activePecaContentAmblemario - detail', pecaData);
+
+                  this.setAmblemarioData(
+                    pecaData,
+                    lastRequest,
+                    amblemarioMapper,
+                  );
+
+                  // console.log('yearbook - this.pecaData', this.pecaData);
+
+                  this.setPdfData(this.pecaData);
+
+                  this.setPdfBtnLoading(false);
+                }
+              }
+
+              const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
+
+              const yearBookConfig = await MapperYearBookWeb(
                 newYearBook,
+                diagnosticGoalTableData,
+                this.pdfYearbookService,
                 permissionsObj,
-                this.store
+                this.store,
               );
               this.instantiateComponent(yearBookConfig);
               this.doInstantiateBlocks();
             }
           }
         },
-        (error) => console.error(error)
+        (error) => console.error(error),
       );
   }
 
-  setAmblemarioData(pecaData, _mapper?: Function) {
+  setAmblemarioData(pecaData, lastRequest, _mapper?: Function) {
+    // console.log('setAmblemarioData', pecaData);
+
     if (_mapper) {
-      this.pecaData = _mapper(pecaData);
+      this.pecaData = _mapper(pecaData, lastRequest);
     } else {
       this.pecaData = pecaData;
     }

@@ -1,74 +1,22 @@
-@import "./assets/scss/variables";
-@import "scss/responsive";
-@import "./assets/scss/scrollBar";
+@import './assets/scss/variables';
+@import 'scss/responsive';
+@import './assets/scss/scrollBar';
 
-@import "~ngx-toastr/toastr", "~bootstrap/dist/css/bootstrap.css",
-  "~bootstrap/scss/print", "~bootstrap/scss/reboot", "~bootstrap/scss/type",
-  "~owl.carousel/dist/assets/owl.carousel.min.css",
-  "~owl.carousel/dist/assets/owl.theme.default.min.css";
+@import '~ngx-toastr/toastr', '~bootstrap/dist/css/bootstrap.css',
+  '~bootstrap/scss/print', '~bootstrap/scss/reboot', '~bootstrap/scss/type',
+  '~owl.carousel/dist/assets/owl.carousel.min.css',
+  '~owl.carousel/dist/assets/owl.theme.default.min.css';
 
-@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css";
-
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 300;
-  font-style: normal;
-  src: url("./assets/fonts/Montserrat-Medium.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Montserrat";
-  font-weight: 700;
-  font-style: normal;
-  src: url("./assets/fonts/Montserrat-ExtraBold.ttf") format("truetype");
-}
-@font-face {
-  font-family: "amblemaicons";
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx");
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?l7zsfx#iefix")
-      format("embedded-opentype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.ttf?l7zsfx")
-      format("truetype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff?l7zsfx") format("woff"),
-    url("./assets/fonts/amblema-icons/amblemaicons.svg?l7zsfx#icomoon")
-      format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-/*
-@font-face {
-  font-family: "amblemaicons";
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?gupyn8");
-  src: url("./assets/fonts/amblema-icons/amblemaicons.eot?gupyn8#iefix")
-      format("embedded-opentype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.ttf?gupyn8")
-      format("truetype"),
-    url("./assets/fonts/amblema-icons/amblemaicons.woff?gupyn8") format("woff"),
-    url("./assets/fonts/amblema-icons/amblemaicons.svg?gupyn8#amblemaicons")
-      format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-} */
-@font-face {
-  font-family: "arrows";
-  src: url("./assets/fonts/arrows.eot");
-  src: url("./assets/fonts/arrows.eot?#iefix") format("embedded-opentype"),
-    url("./assets/fonts/arrows.woff") format("woff"),
-    url("./assets/fonts/arrows.ttf") format("truetype"),
-    url("./assets/fonts/arrows.svg#slick") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
+@import './assets/scss/fonts';
 
 @media (max-width: 575px) {
   .nb-theme-default
@@ -88,7 +36,7 @@ html.smooth-scrolling {
 }
 
 body {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   margin: 0;
   padding: 0;
   height: 100%;
@@ -290,7 +238,7 @@ section.pillars {
 
         &:before {
           color: $blue;
-          font-family: "arrows";
+          font-family: 'arrows';
           font-size: 6vw;
           @include breakpoint(small, landscape) {
             font-size: 3vw;
@@ -309,14 +257,14 @@ section.pillars {
       &.owl-prev {
         left: 0;
         &:before {
-          content: "\2190";
+          content: '\2190';
         }
       }
 
       &.owl-next {
         right: -100vw;
         &:before {
-          content: "\2192";
+          content: '\2192';
         }
       }
     }
@@ -426,7 +374,7 @@ owl-carousel-o {
 
         &:before {
           color: $blue;
-          font-family: "arrows";
+          font-family: 'arrows';
           font-size: 6vw;
 
           @include breakpoint(small, landscape) {
@@ -446,14 +394,14 @@ owl-carousel-o {
       .owl-prev {
         left: 0;
         &:before {
-          content: "\2190";
+          content: '\2190';
         }
       }
 
       .owl-next {
         right: -100vw;
         &:before {
-          content: "\2192";
+          content: '\2192';
         }
       }
     }
@@ -546,7 +494,7 @@ jw-pagination {
     border-top-right-radius: 0.2rem;
   }
 }
-span[class*="icon-"].icon-awesum {
+span[class*='icon-'].icon-awesum {
   display: none;
 }
 //?----------------------------------------------
@@ -554,7 +502,7 @@ span[class*="icon-"].icon-awesum {
 //SCHEDULE
 .nb-theme-default li {
   color: #00809a !important;
-  font-family: "Montserrat" !important;
+  font-family: 'Montserrat' !important;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.25rem;
@@ -701,11 +649,11 @@ textarea.e-input::selection,
   }
 }
 
-input[type="date"] {
+input[type='date'] {
   &:after {
-    content: "v";
-    content: "\25BE";
-    content: "\f073";
+    content: 'v';
+    content: '\25BE';
+    content: '\f073';
     z-index: 0;
     position: absolute;
     right: 0;
@@ -730,4 +678,52 @@ input[type="date"] {
     opacity: 0;
     z-index: 1;
   }
+}
+
+.header-title-and-button-container {
+  position: relative;
+
+  .title-style {
+    position: absolute;
+    left: 25px;
+  }
+
+  .print-index-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      margin-right: 7px !important;
+    }
+
+    label {
+      color: #2c819a;
+      margin: 0;
+    }
+  }
+}
+
+// /* style sheet for "A4" printing */
+// @media print and (width: 21cm) and (height: 29.7cm) {
+//   @page {
+//      margin: 3cm;
+//   }
+// }
+
+// /* style sheet for "letter" printing */
+// @media print and (width: 8.5in) and (height: 11in) {
+//  @page {
+//      margin: 1in;
+//  }
+// }
+
+/* A4 Landscape*/
+@page {
+  size: letter landscape;
+  //  margin: 10%;
+}
+
+.btnDownloadLoading {
+  margin: 0 !important;
 }

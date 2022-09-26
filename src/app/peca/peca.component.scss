@@ -1,11 +1,11 @@
-@import "~@nebular/theme/styles/theming";
-@import "~@nebular/theme/styles/themes/default";
-@import "~@nebular/theme/styles/prebuilt/default.css";
-@import "~@nebular/theme/styles/globals";
-@import "~@nebular/auth/styles/globals";
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/prebuilt/default.css';
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/globals';
 // @import "scss/variables";
-@import "fonts/amblema-icons/amblemaicons";
-@import "scss/sharedheader";
+@import 'fonts/amblema-icons/amblemaicons';
+@import 'scss/sharedheader';
 
 ::ng-deep {
   $nb-enable-css-custom-properties: true;
@@ -17,7 +17,7 @@
       sidebar-background-color: $blue,
       text-basic-color: $green,
       // Menu theme variables
-      menu-text-color: #ffffff,
+        menu-text-color: #ffffff,
       menu-item-icon-color: #ffffff,
       menu-item-hover-text-color: #01474e,
       menu-item-icon-hover-color: #01474e,
@@ -26,7 +26,7 @@
       menu-item-divider-width: 2px,
       menu-item-divider-color: #367a92,
       // General theme variables
-      color-primary-100: #f2f6ff,
+        color-primary-100: #f2f6ff,
       color-primary-200: #d9e4ff,
       color-primary-300: #a6c1ff,
       color-primary-400: #598bff,
@@ -46,7 +46,7 @@
   }
 
   body {
-    font-family: "Montserrat";
+    font-family: 'Montserrat';
     color: nb-theme(text-basic-color);
   }
 
@@ -117,7 +117,7 @@
             font-weight: normal;
             line-height: 1.2;
             max-width: 100%;
-            font-family: "Montserrat";
+            font-family: 'Montserrat';
           }
         }
         // Submenu items
@@ -134,7 +134,7 @@
     }
     .e-toolbar .e-tbar-btn .e-tbar-btn-text,
     .e-control {
-      font-family: "Montserrat" !important;
+      font-family: 'Montserrat' !important;
     }
     nb-layout-header nav a:focus,
     nb-layout-header nav a:active,
@@ -149,7 +149,7 @@
     nb-checkbox .text,
     a,
     nb-user .user-name {
-      font-family: "Montserrat" !important;
+      font-family: 'Montserrat' !important;
     }
     @media (max-width: 768px) {
       h6 {
@@ -158,7 +158,7 @@
     }
     h1 {
       font-size: 1.6rem;
-      font-family: "Montserrat" !important;
+      font-family: 'Montserrat' !important;
       margin: 0;
     }
     @media (min-width: 768px) and (max-width: 1200px) {
@@ -180,7 +180,7 @@
 
           .welcome-text {
             color: $blue;
-            font-family: "Montserrat" !important;
+            font-family: 'Montserrat' !important;
           }
           .welcome-image {
             @media screen and (orientation: landscape) and (min-width: 640px) {
@@ -212,8 +212,9 @@
             &.comes-from-steps,
             &.has-yearbook {
               display: flex;
-              justify-content: space-between;
               align-items: center;
+              justify-content: flex-end;
+              column-gap: 33px;
 
               .btn-go-steps {
                 display: inline-block;
@@ -349,21 +350,21 @@
 
     ::-webkit-input-placeholder {
       font-size: 0.8rem;
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
     }
     :-moz-placeholder {
       /* Firefox 18- */
       font-size: 0.8rem;
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
     }
     ::-moz-placeholder {
       /* Firefox 19+ */
       font-size: 0.8rem;
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
     }
     :-ms-input-placeholder {
       font-size: 0.8rem;
-      font-family: "Montserrat";
+      font-family: 'Montserrat';
     }
   }
 
@@ -371,7 +372,7 @@
     .ng-select-container {
       .ng-placeholder {
         font-size: 0.8rem;
-        font-family: "Montserrat";
+        font-family: 'Montserrat';
         line-height: 2;
       }
     }

@@ -19,30 +19,54 @@
       Ir a los pasos
     </button>
 
+    <div class="print-index-check" *ngIf="header && header.indexOption">
+      <input
+        (click)="setIndexOption($event)"
+        type="checkbox"
+        id="print-index-check__input"
+        [checked]="header.indexOption.value"
+      />
+      <label for="print-index-check__input">
+        <span
+          *ngIf="pdfIndexOptionLoading"
+          class="spinner-grow spinner-grow-sm"
+        ></span>
+        <span *ngIf="!pdfIndexOptionLoading">Añadir indice al pdf</span>
+      </label>
+    </div>
+
     <button
+      *ngIf="header && header.download"
+      class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
+      (click)="routeToPdfTemplate()"
+      [disabled]="pdfBtnLoading"
+    >
+      <label class="btnDownloadLoading" *ngIf="pdfBtnLoading">
+        <span class="spinner-grow spinner-grow-sm"></span>
+        &nbsp;
+      </label>
+      {{ header?.download?.name ? header.download.name : '' }}
+    </button>
+
+    <!-- <button
       *ngIf="header && header.download"
       [title]="
         disablePdfDownload()
           ? 'Cargando informacion del AmbLeMario'
           : 'Descargar AmbLeMario'
       "
-      class="
-        btn btn-primary
-        text-decoration-none
-        p-1
-        btn-in-wrapper btn-download-yearbook
-      "
+      class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
       (click)="generatePDF()"
       [disabled]="disablePdfDownload() || creatingPdf"
     >
       <span *ngIf="creatingPdf" class="spinner-grow spinner-grow-sm"></span>
-      {{ creatingPdf ? "Preparando descarga" : header?.download?.name }}
-    </button>
+      {{ creatingPdf ? 'Preparando descarga' : 'Descargar PDf viejo' }}
+    </button> -->
   </nb-card-body>
 </nb-card>
 
 <nb-card>
   <nb-card-body>
-    <ng-template #blocksContainer> </ng-template>
+    <ng-template #blocksContainer></ng-template>
   </nb-card-body>
 </nb-card>

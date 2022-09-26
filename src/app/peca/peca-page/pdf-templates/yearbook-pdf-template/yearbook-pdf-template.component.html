@@ -1,0 +1,425 @@
+<div class="not-print header-previewer">
+  <h1>
+    Vista previa
+  </h1>
+  <div class="buttons-actions">
+    <button class="btn btn-primary" (click)="backPage()">
+      Regresar
+    </button>
+    <button class="btn btn-primary" (click)="print()">
+      Generar PDF
+    </button>
+    <button
+      class="btn btn-primary"
+      (click)="addGrayScale = !addGrayScale"
+      [ngClass]="{ 'gray-scale': addGrayScale }"
+    >
+      Activar escala de grises
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="!!pdfData">
+  <main class="yearbook-pdf" [ngClass]="{ 'gray-scale': addGrayScale }">
+    <ng-container *ngFor="let page of pages">
+      <div [ngSwitch]="page.templateName">
+        <!-- frontpageTemplate -->
+        <div *ngSwitchCase="'frontpageTemplate'">
+          <ng-container
+            *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
+
+        <!-- indexTemplate -->
+        <div *ngSwitchCase="'indexTemplate'">
+          <ng-container
+            *ngTemplateOutlet="indexTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
+
+        <!-- layout2Template -->
+        <div *ngSwitchCase="'layout2Template'">
+          <ng-container
+            *ngTemplateOutlet="layout2Template; context: { page: page }"
+          ></ng-container>
+        </div>
+
+        <!-- indexTemplate -->
+        <div *ngSwitchCase="'schoolGradeTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              schoolGradeTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+
+        <!-- diagnosticTemplate -->
+        <div *ngSwitchCase="'diagnosticTemplate'">
+          <ng-container
+            *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
+          ></ng-container>
+        </div>
+
+        <!-- activityTemplate -->
+        <div *ngSwitchCase="'activityTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              activityTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+
+        <!-- galleryTemplate -->
+        <div *ngSwitchCase="'galleryTemplate'">
+          <ng-container
+            *ngTemplateOutlet="
+              galleryTemplate;
+              context: {
+                page: page
+              }
+            "
+          ></ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </main>
+</ng-container>
+
+<div class="loading not-print" *ngIf="showLoading">
+  <img src="../../../../../assets/images/amblema-loader.gif" />
+  <p>Cargando...</p>
+  <!-- <button [disabled]="!pdfData" (click)="print()">Imprimir PDF</button> -->
+</div>
+
+<!-- # Templates -->
+
+<!-- indexTemplate -->
+<ng-template #indexListItem let-listItem="listItem">
+  <ng-container *ngIf="listItem.show">
+    <li [style.paddingLeft]="listItem.getPaddingLeftByLevel()">
+      <ng-container *ngIf="listItem.href">
+        <a [href]="'#' + listItem.href">{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber"
+          ><a [href]="'#' + listItem.href">{{ listItem.pageNumber }}</a></span
+        >
+      </ng-container>
+
+      <ng-container *ngIf="!listItem.href"
+        ><a>{{ listItem.label }}</a>
+        <span *ngIf="listItem.pageNumber">{{ listItem.pageNumber }}</span>
+      </ng-container>
+    </li>
+  </ng-container>
+</ng-template>
+
+<ng-template #indexTemplate let-page="page">
+  <section class="page background--generic">
+    <div class="page__content layout--index">
+      <div class="head">
+        <h2>Indice</h2>
+      </div>
+      <div class="body">
+        <ul class="list" [ngClass]="{ wrap: page.haveToWrapList() }">
+          <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container
+              *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"
+            ></ng-container>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## diagnosticTemplate -->
+<ng-template #diagnosticTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
+    <div class="page__content layout--diagnostic">
+      <div class="head">
+        <ng-container *ngIf="page.subtitle">
+          <h3 class="text-center title">{{ page.subtitle }}</h3>
+        </ng-container>
+        <h2 class="text-center">{{ page.title }}</h2>
+      </div>
+
+      <div class="body">
+        <div class="visual-references">
+          <div class="graphic">
+            <app-graphics-block
+              [settings]="page.chart"
+              [fitContainer]="true"
+            ></app-graphics-block>
+          </div>
+
+          <ng-container *ngIf="page.table.length > 0">
+            <div class="table-container">
+              <table class="table">
+                <ng-container *ngFor="let tr of page.table; let trIdx = index">
+                  <tr>
+                    <ng-container *ngFor="let td of tr">
+                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                        <!-- {{ td }} -->
+                        <span [innerHtml]="td"></span>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
+      </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## layout2Template -->
+<ng-template #layout2Template let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
+    <div class="page__content layout--2">
+      <div
+        class="head"
+        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
+      >
+        <div class="heading">
+          <div class="content">
+            <h2 class="first-letter--uppercase">{{ page.title }}</h2>
+            <ng-container *ngIf="page.subtitle">
+              <h3>{{ page.subtitle }}</h3>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="container-img">
+          <img [src]="page.img" />
+        </div>
+      </div>
+
+      <div class="description-columns">
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
+      </div>
+
+      <!-- <p class="description">
+        <span
+          [outerHTML]="
+            page.description
+              | excerpt
+                : yearbookConfig.getFormDescriptionLimit(
+                    'historical-review-form'
+                  )
+              | br
+          "
+        ></span>
+      </p> -->
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## activityTemplate -->
+<ng-template #activityTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
+    <div class="page__content layout--4">
+      <div class="body">
+        <h2 class="title">
+          {{ page.name }}
+        </h2>
+
+        <!-- <p class="description">
+          <span
+            [outerHTML]="page.description | excerpt: page.characterLimit | br"
+          ></span>
+        </p> -->
+
+        <ng-container
+          *ngFor="
+            let pText of page.description
+              | excerpt: page.characterLimit
+              | strBreakSplit
+          "
+        >
+          <p class="description">
+            <span [outerHTML]="pText"></span>
+          </p>
+        </ng-container>
+      </div>
+
+      <div class="gallery-container">
+        <app-gallery
+          [images]="page.images"
+          [limit]="3"
+          containerClasses="justify-content-between"
+        ></app-gallery>
+      </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## galleryTemplate -->
+<ng-template #galleryTemplate let-page="page">
+  <section class="page {{ page.options.backgroundClass }}">
+    <div class="page__content layout--gallery">
+      <app-gallery
+        [images]="page.images"
+        [withSubtitle]="page.options.withSubtitle"
+        [limit]="page.options.limit"
+        [offset]="page.options.offset"
+        itemStyle="max-height: 330px;"
+        containerClasses="align-items-center"
+      ></app-gallery>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## Customs -->
+
+<!-- ### FrontPage Template -->
+<ng-template #frontpageTemplate let-page="page">
+  <section class="page background--front-page">
+    <div class="page__content layout--front">
+      <div class="head">
+        <div class="headings">
+          <!-- <p>{{ page.schoolYear }}</p> -->
+          <p class="primary-title">{{ page.head.title }}</p>
+        </div>
+        <div class="partner-img">
+          <img [src]="page.head.brand" />
+        </div>
+      </div>
+      <div class="body">
+        <h1>{{ page.body.title }}</h1>
+        <h2 class="school-name">{{ page.body.subTitle }}</h2>
+        <p class="primary-title">{{ page.body.subTitleN2 }}</p>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ### SchoolSections -->
+<ng-template #schoolGradeTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
+    <div class="page__content layout--schoolSections">
+      <div class="row body">
+        <div
+          class="col"
+          [ngClass]="{ 'col--centered': !page.isFirstColumnEmpty }"
+        >
+          <ng-container *ngIf="page.img">
+            <div class="container-img">
+              <img [src]="page.img" />
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="page.isFirstColumnEmpty">
+            <h2 class="text-capitalize">
+              {{ page.name }}
+            </h2>
+          </ng-container>
+
+          <ul class="list">
+            <ng-container *ngFor="let name of page.students.firstColumn">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="col overflow--hidden col--centered">
+          <ng-container *ngIf="!page.isFirstColumnEmpty">
+            <h2 class="text-capitalize">
+              {{ page.name }}
+            </h2>
+          </ng-container>
+          <!-- padding-top -->
+          <ul class="list">
+            <ng-container *ngFor="let name of page.students.secondColumn">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+      <div class="teacher">
+        <div class="name">
+          <span>Docente:</span>
+          <strong>{{ page.teacher.fullName }}</strong>
+        </div>
+      </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #smallSchoolSections let-data="data">
+  <section class="page background--generic">
+    <div class="page__content layout--schoolSections">
+      <div class="row body">
+        <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data[0].sectionName }}
+          </h2>
+
+          <ul class="list">
+            <ng-container *ngFor="let name of data[0].sectionStudents">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="col overflow--hidden">
+          <h2 class="text-capitalize">
+            {{ data[1].sectionName }}
+          </h2>
+          <!-- <ng-container *ngIf="data.sectionImg">
+            <div class="container-img">
+              <img [src]="data[1].sectionImg" />
+            </div>
+          </ng-container> -->
+
+          <ul class="list">
+            <ng-container *ngFor="let name of data[1].sectionStudents">
+              <li>{{ name }}</li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
