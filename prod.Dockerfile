@@ -11,11 +11,11 @@ COPY ./package.json ./
 
 # COPY ./package-lock.json ./
 
-RUN apk update && apk upgrade && \
-  apk add --no-cache bash curl
-
 # RUN apk update && apk upgrade && \
-#     apk add --no-cache bash git openssh curl
+#   apk add --no-cache bash curl
+
+RUN apk update && apk upgrade && \
+  apk add --no-cache bash git openssh curl
 
 
 RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst && \
