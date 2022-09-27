@@ -12,11 +12,15 @@ COPY ./package.json ./
 # COPY ./package-lock.json ./
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh curl
+  apk add --no-cache bash curl
+
+# RUN apk update && apk upgrade && \
+#     apk add --no-cache bash git openssh curl
+
 
 RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst && \
-    chmod +x envsubst && \
-    mv envsubst /usr/local/bin
+  chmod +x envsubst && \
+  mv envsubst /usr/local/bin
 
 RUN npm install
 
@@ -72,8 +76,8 @@ ENV SSR_PORT=${SSR_PORT}
 RUN apk --no-cache add curl
 
 RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst && \
-    chmod +x envsubst && \
-    mv envsubst /usr/local/bin
+  chmod +x envsubst && \
+  mv envsubst /usr/local/bin
 
 COPY --from=build /home/app/dist/browser /usr/share/nginx/html
 
