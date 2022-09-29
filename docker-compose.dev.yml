@@ -1,0 +1,16 @@
+#USO-LOCAL - Use command docker-compose -f docker-compose.dev.yml up to set this specific .yml and up the docker-compose
+version: "3.5"
+
+services:
+  angular8local:
+    image: devbinaural/angular:8.0.0
+    container_name: angular_amblema
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    # command: bash -c "npm install && ng serve --host 0.0.0.0"
+    command: bash -c "npm install -g && npm install && ng serve --host 0.0.0.0"
+    ports:
+      - $OUT_PORT:4200
+    environment:
+      - CHOKIDAR_USEPOLLING=true

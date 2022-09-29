@@ -53,7 +53,6 @@
 
 # docker logout ${REGISTRY}
 
-
 #!/bin/bash
 export REPOSITORY=devbinaural/build_amblema-front
 export USER=devbinaural
@@ -71,6 +70,47 @@ export TOKEN=Garden.86
 # export SSR_PORT=
 # export G_MAPS_ID=
 # export G_ANALYTICS_ID=
+# ----------------------------------
+
+# source .env.prod
+
+# echo "${TOKEN}" | docker login -u ${USER} --password-stdin
+
+# docker build \
+#   -f prod.Dockerfile \
+#   --build-arg G_MAPS_ID \
+#   --build-arg G_ANALYTICS_ID \
+#   --build-arg NGINX_HOST \
+#   --build-arg NGINX_PORT \
+#   --build-arg NGINX_ROOT \
+#   --build-arg SSR_HOST \
+#   --build-arg SSR_PORT \
+#   --target csr-prod \
+#   -t ${REPOSITORY}-app .
+
+# docker push ${REPOSITORY}-app
+
+# docker rmi ${REPOSITORY}-app
+
+# docker build \
+#   -f prod.Dockerfile \
+#   --build-arg G_MAPS_ID \
+#   --build-arg G_ANALYTICS_ID \
+#   --build-arg NGINX_HOST \
+#   --build-arg NGINX_PORT \
+#   --build-arg NGINX_ROOT \
+#   --build-arg SSR_HOST \
+#   --build-arg SSR_PORT \
+#   --target ssr-prod \
+#   -t ${REPOSITORY}-ssr .
+
+# docker push ${REPOSITORY}-ssr
+
+# docker rmi ${REPOSITORY}-ssr
+
+# docker logout
+
+#  ---------------------
 source .env.prod
 
 echo "${TOKEN}" | docker login -u ${USER} --password-stdin
@@ -88,23 +128,4 @@ docker build \
   -t ${REPOSITORY}-app .
 
 docker push ${REPOSITORY}-app
-
 docker rmi ${REPOSITORY}-app
-
-docker build \
-  -f prod.Dockerfile \
-  --build-arg G_MAPS_ID \
-  --build-arg G_ANALYTICS_ID \
-  --build-arg NGINX_HOST \
-  --build-arg NGINX_PORT \
-  --build-arg NGINX_ROOT \
-  --build-arg SSR_HOST \
-  --build-arg SSR_PORT \
-  --target ssr-prod \
-  -t ${REPOSITORY}-ssr .
-
-docker push ${REPOSITORY}-ssr
-
-docker rmi ${REPOSITORY}-ssr
-
-docker logout
