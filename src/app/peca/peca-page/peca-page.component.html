@@ -39,7 +39,7 @@
       *ngIf="header && header.download"
       class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
       (click)="routeToPdfTemplate()"
-      [disabled]="pdfBtnLoading"
+      [disabled]="pdfBtnDisabled"
     >
       <label class="btnDownloadLoading" *ngIf="pdfBtnLoading">
         <span class="spinner-grow spinner-grow-sm"></span>
