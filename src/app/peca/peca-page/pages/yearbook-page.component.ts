@@ -74,7 +74,9 @@ export class YearbookPageComponent extends PecaPageComponent
             if (data && data.activePecaContent) {
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
-                sections: data.activePecaContent.school.sections,
+                sections: data.activePecaContent.school.sections
+                  ? data.activePecaContent.school.sections
+                  : null,
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
@@ -305,7 +307,7 @@ export class YearbookPageComponent extends PecaPageComponent
                 this.setAmblemarioData(pecaData, lastRequest, amblemarioMapper);
 
                 this.setPdfData(this.pecaData);
-                // console.log({ pecaDataPDF: this.pecaData });
+                console.log({ pecaDataPDF: this.pecaData });
               }
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
