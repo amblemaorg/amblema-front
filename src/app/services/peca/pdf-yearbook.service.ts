@@ -1259,6 +1259,7 @@ export class PdfYearbookService {
 
   routeToPdfTemplate(pdfData) {
     // console.log('routeToPdfTemplate', pdfData);
+
     this.pdfData = pdfData;
     this.router.navigateByUrl('/pdf-template/yearbook');
   }

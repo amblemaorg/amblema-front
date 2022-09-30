@@ -66,6 +66,7 @@ export class YearbookPageComponent extends PecaPageComponent
       .subscribe(
         async (data) => {
           countRespExecuted++;
+          // console.log({ data });
 
           this.setPdfBtnLoading();
 
@@ -274,33 +275,37 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              if (countRespExecuted > 1) {
-                const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
-                  (yearbookAppHistory) => {
-                    const { isInApproval } = yearbookAppHistory.detail;
+              const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                (yearbookAppHistory) => {
+                  const { isInApproval } = yearbookAppHistory.detail;
 
-                    const status = yearbookAppHistory.status;
+                  const status = yearbookAppHistory.status;
 
-                    return !isInApproval && status == 2;
-                  },
-                );
+                  return !isInApproval && status == 2;
+                },
+              );
+
+              if (activePecaContentAmblemario) {
+                // console.log(
+                //   'yearbook with will pecaData have been overwritten',
+                //   { activePecaContentAmblemario },
+                // );
 
                 // Temporal solution while is fixed back-end problem
-                if (activePecaContentAmblemario) {
-                  const { detail } = activePecaContentAmblemario;
-                  const pecaData = {
-                    ...data.activePecaContent,
-                    yearbook: detail,
-                  };
+                const { detail } = activePecaContentAmblemario;
+                const pecaData = {
+                  ...data.activePecaContent,
+                  yearbook: detail,
+                };
 
-                  this.setAmblemarioData(
-                    pecaData,
-                    lastRequest,
-                    amblemarioMapper,
-                  );
+                // console.log('pecaData with yearbook overwritten', {
+                //   pecaData,
+                // });
 
-                  this.setPdfData(this.pecaData);
-                }
+                this.setAmblemarioData(pecaData, lastRequest, amblemarioMapper);
+
+                this.setPdfData(this.pecaData);
+                // console.log({ pecaDataPDF: this.pecaData });
               }
 
               const diagnosticGoalTableData = await this.pdfYearbookService.getGoalSettingsTable();
@@ -314,6 +319,12 @@ export class YearbookPageComponent extends PecaPageComponent
               );
 
               this.setPdfBtnLoading(false);
+              // console.log('after loading false', {
+              //   pecaDataPDF: this.pecaData,
+              // });
+
+              // this.setPdfBtnError(this.pecaData);
+
               this.instantiateComponent(yearBookConfig);
               this.doInstantiateBlocks();
             }
