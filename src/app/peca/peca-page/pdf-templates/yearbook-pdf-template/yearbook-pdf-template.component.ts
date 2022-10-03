@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
-
+// import { TemplateUtils } from './templatesModels/templateUtils';
 import {
   ActivityTemplate,
   DiagnosticPageDataGroup,
@@ -149,7 +149,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const mySchoolPage = new SecondLayoutTemplate(
       'historical-review-section',
       characterLimit,
-      'mi escuela',
+      'Mi escuela',
       historicalReviewImg,
       historicalReviewText,
     );
@@ -157,7 +157,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const coordinatorPage = new SecondLayoutTemplate(
       'coordinator-section',
       characterLimit,
-      'coordinador',
+      'Coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
@@ -165,7 +165,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const godFatherPage = new SecondLayoutTemplate(
       'sponsor-section',
       characterLimit,
-      'padrino',
+      'Padrino',
       sponsorLogo,
       sponsorText,
       sponsorName,
@@ -215,7 +215,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
           sectionGrade &&
           sectionLetter &&
           sectionName &&
-          sectionImg &&
+          // sectionImg &&
           sectionStudents &&
           teacher
         )
@@ -233,26 +233,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       pages.push(page);
     }
-    // schoolSections.forEach((section) => {
-
-    //   const {
-    //     sectionGrade,
-    //     sectionLetter,
-    //     sectionName,
-    //     sectionImg,
-    //     sectionStudents,
-    //     teacher,
-    //   } = section;
-
-    //   const page = new SchoolGradeTemplate(
-    //     `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
-    //     sectionName,
-    //     sectionImg,
-    //     teacher,
-    //     sectionStudents,
-    //   );
-    //   pages.push(page);
-    // });
 
     pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 

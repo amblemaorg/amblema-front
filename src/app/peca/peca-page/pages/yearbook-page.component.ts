@@ -71,19 +71,25 @@ export class YearbookPageComponent extends PecaPageComponent
           this.setPdfBtnLoading();
 
           if (!this.isInstantiating) {
-            if (data && data.activePecaContent) {
+            if (
+              data &&
+              data.activePecaContent &&
+              Object.keys(data.activePecaContent).length > 1
+            ) {
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
                 sections: data.activePecaContent.school.sections,
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
-              const {
+
+              let {
                 approvalHistory,
                 isInApproval,
                 pecaId,
                 userId,
               } = currentYearBook;
+
               const yearbookHasNotApprovedRequest =
                 !isInApproval && approvalHistory.length > 0;
               const lastRequest =
@@ -275,15 +281,21 @@ export class YearbookPageComponent extends PecaPageComponent
               const { permissions } = data.user;
               const permissionsObj = this.managePermissions(permissions);
 
-              const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
-                (yearbookAppHistory) => {
-                  // const { isInApproval } = yearbookAppHistory.detail;
+              let activePecaContentAmblemario = null;
 
-                  const status = yearbookAppHistory.status;
-                  // !isInApproval &&
-                  return status == 2;
-                },
-              );
+              if (data.activePecaContent.yearbook) {
+                if (data.activePecaContent.yearbook.approvalHistory) {
+                  activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
+                    (yearbookAppHistory) => {
+                      // const { isInApproval } = yearbookAppHistory.detail;
+
+                      const status = yearbookAppHistory.status;
+                      // !isInApproval &&
+                      return status == 2;
+                    },
+                  );
+                }
+              }
 
               if (activePecaContentAmblemario) {
                 // console.log(
