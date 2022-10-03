@@ -150,7 +150,7 @@
                   (blur)="dateOnBlur($event, 'year')"
                 />
                 <div class="calendaricon">
-                  <nb-icon icon="calendar" style="font-size: 1.5rem"></nb-icon>
+                  <nb-icon icon="calendar" style="font-size: 1.5rem;"></nb-icon>
                 </div>
               </ng-template>
             </div>
@@ -215,12 +215,12 @@
           &nbsp;
           <span class="font-weight-normal">{{
             settings.status.subText === 1
-              ? "Pendiente"
+              ? 'Pendiente'
               : settings.status.subText === 2
-              ? "Aprobado"
+              ? 'Aprobado'
               : settings.status.subText === 3
-              ? "Rechazado"
-              : "Cancelado"
+              ? 'Rechazado'
+              : 'Cancelado'
           }}</span>
         </h6>
 
@@ -264,7 +264,7 @@
                   'btn btn-blue text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
                   getStyles(action)
                 "
-                style="margin-left: 10px; margin-top: -4px"
+                style="margin-left: 10px; margin-top: -4px;"
                 [disabled]="disableThis(action.type) || isSending || sleepSend"
                 (click)="takeAction(action.type, $event)"
               >
@@ -283,14 +283,14 @@
                   isSending &&
                   (action.type == 4 || action.type == 7 || action.type == 8)
                     ? action.type == 8
-                      ? "Guardando"
+                      ? 'Guardando'
                       : action.type == 7
                       ? setGenActBtnName()
-                      : "Enviando"
+                      : 'Enviando'
                     : action.type == 7
                     ? setGenActBtnName()
                     : isSending
-                    ? action.name + " ..."
+                    ? action.name + ' ...'
                     : action.name
                 }}
               </button>
@@ -313,7 +313,7 @@
                     class="spinner-grow spinner-grow-sm"
                   ></span>
                   {{
-                    isSending ? "Cancelando solicitud" : "Cancelar solicitud"
+                    isSending ? 'Cancelando solicitud' : 'Cancelar solicitud'
                   }}
                 </button>
               </ng-container>
@@ -520,7 +520,7 @@
       >
         {{
           settings.upload.uploadEmpty
-            ? "Adjuntar archivo"
+            ? 'Adjuntar archivo'
             : shortenName(settings.upload.name)
         }}
       </button>
@@ -627,7 +627,7 @@
                 *ngIf="isSending"
                 class="spinner-grow spinner-grow-sm"
               ></span>
-              {{ isSending ? "Cancelando solicitud" : "Cancelar solicitud" }}
+              {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
             </button>
           </ng-container>
         </ng-template>

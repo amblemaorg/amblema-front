@@ -277,11 +277,11 @@ export class YearbookPageComponent extends PecaPageComponent
 
               const activePecaContentAmblemario = data.activePecaContent.yearbook.approvalHistory.findLast(
                 (yearbookAppHistory) => {
-                  const { isInApproval } = yearbookAppHistory.detail;
+                  // const { isInApproval } = yearbookAppHistory.detail;
 
                   const status = yearbookAppHistory.status;
-
-                  return !isInApproval && status == 2;
+                  // !isInApproval &&
+                  return status == 2;
                 },
               );
 
