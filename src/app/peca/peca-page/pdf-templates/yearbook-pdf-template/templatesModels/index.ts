@@ -1,4 +1,4 @@
-export * from './Template';
+export * from './templateUtils';
 export * from './Pager';
 export * from './ActivityTemplate';
 export * from './FrontPageTemplate';
