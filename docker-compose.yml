@@ -15,5 +15,7 @@ services:
     volumes:
       - ./:/home/amblema
       - ./vhost-template.conf:/etc/nginx/conf.d/default.conf
+    # command: >
+    #   /bin/bash -c "envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html && exec nginx -g 'daemon off;'"
     command: >
-      /bin/bash -c "envsubst '$$G_MAPS_ID$$G_ANALYTICS_ID' < /home/amblema/src/index.template.html > /home/amblema/src/index.html && exec nginx -g 'daemon off;'"
+      /bin/bash -c "exec nginx -g 'daemon off;'"
