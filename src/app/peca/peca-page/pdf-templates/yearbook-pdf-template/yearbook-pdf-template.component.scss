@@ -476,6 +476,9 @@ $text_indent: 18px;
         display: flex;
         flex-direction: column;
 
+        position: relative;
+        top: -11px;
+
         &.heading--reverse {
           flex-direction: column-reverse;
         }
@@ -487,7 +490,7 @@ $text_indent: 18px;
       }
 
       .description {
-        margin-top: 20px;
+        // margin-top: 20px;
         text-indent: $text_indent;
       }
     }
