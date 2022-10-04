@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
-
+// import { TemplateUtils } from './templatesModels/templateUtils';
 import {
   ActivityTemplate,
   DiagnosticPageDataGroup,
@@ -149,7 +149,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const mySchoolPage = new SecondLayoutTemplate(
       'historical-review-section',
       characterLimit,
-      'mi escuela',
+      'Mi escuela',
       historicalReviewImg,
       historicalReviewText,
     );
@@ -157,7 +157,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const coordinatorPage = new SecondLayoutTemplate(
       'coordinator-section',
       characterLimit,
-      'coordinador',
+      'Coordinador',
       coordinatorImg,
       coordinatorText,
       coordinatorName,
@@ -165,7 +165,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const godFatherPage = new SecondLayoutTemplate(
       'sponsor-section',
       characterLimit,
-      'padrino',
+      'Padrino',
       sponsorLogo,
       sponsorText,
       sponsorName,
@@ -215,7 +215,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
           sectionGrade &&
           sectionLetter &&
           sectionName &&
-          sectionImg &&
+          // sectionImg &&
           sectionStudents &&
           teacher
         )
@@ -233,26 +233,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       pages.push(page);
     }
-    // schoolSections.forEach((section) => {
-
-    //   const {
-    //     sectionGrade,
-    //     sectionLetter,
-    //     sectionName,
-    //     sectionImg,
-    //     sectionStudents,
-    //     teacher,
-    //   } = section;
-
-    //   const page = new SchoolGradeTemplate(
-    //     `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
-    //     sectionName,
-    //     sectionImg,
-    //     teacher,
-    //     sectionStudents,
-    //   );
-    //   pages.push(page);
-    // });
 
     pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
 
@@ -292,6 +272,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   private getActivitiesPages(lapse, activityCharacterLimit) {
     let activityPages = [];
 
+    if (!lapse) return activityPages;
+    if (!lapse.activities) return activityPages;
+
     for (let index = 0; index < lapse.activities.length; index++) {
       const activity = lapse.activities[index];
 
@@ -305,6 +288,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         lapse.lapseId,
       );
 
+      // console.log(lapse.lapseId);
+
+      // console.log({ description, name, willPrintActivity });
       if (!(description && name && willPrintActivity)) {
         continue;
       }
@@ -337,6 +323,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       }
     }
 
+    // console.log('getActivitiesPages', { activityPages });
+
     return activityPages;
   }
 
@@ -355,6 +343,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
 
     const pagesToAdd = [];
+    // console.log({ lapses });
 
     lapses.forEach((lapse) => {
       let diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(
@@ -366,6 +355,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         this.willPrintedSection(diagPg.storeId),
       );
 
+      // console.log({ diagnosticsPages });
+
       if (diagnosticsPages.length > 0) {
         diagnosticsPages[0].subtitle = lapse.lapseName;
       }
@@ -374,6 +365,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         lapse,
         activityCharacterLimit,
       );
+      // console.log({ activityPages });
 
       pagesToAdd.push(...diagnosticsPages, ...activityPages);
 
@@ -415,6 +407,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       indexListItems.push(indexListItemsToPush);
     });
+
+    // console.log({ pagesToAdd });
 
     this.pages.push(...pagesToAdd);
 

@@ -30,6 +30,8 @@ export class PecaPageComponent {
   creatingPdf: boolean;
   pdfToasterCalledTimes: number = 0;
   pdfBtnLoading = false;
+  pdfBtnDisabled = false;
+  pdfBtnError = false;
 
   constructor(
     protected factoryResolver: ComponentFactoryResolver,
@@ -146,8 +148,14 @@ export class PecaPageComponent {
     this.pdfData = pdfData;
   }
 
+  setPdfBtnError(showDanger = true) {
+    this.pdfBtnError = showDanger;
+    this.pdfBtnDisabled = showDanger;
+  }
+
   setPdfBtnLoading(loading = true) {
     this.pdfBtnLoading = loading;
+    this.pdfBtnDisabled = loading;
   }
 
   public generatePDF() {
@@ -181,6 +189,7 @@ export class PecaPageComponent {
 
   routeToPdfTemplate() {
     // console.log('routeToPdfTemplate');
+    if (!this.pdfData) return;
 
     if (this.pdfYearbookService.getGraphics()) {
       // console.log(this.pdfYearbookService.getGraphics());

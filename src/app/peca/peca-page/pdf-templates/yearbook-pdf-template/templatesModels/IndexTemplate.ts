@@ -1,4 +1,4 @@
-import { Template, TemplateOptions } from './';
+import { Template, TemplateOptions } from './Template';
 
 export type RecursiveArrayIndexListItem = Array<
   RecursiveArrayIndexListItem | IndexListItem
