@@ -472,11 +472,18 @@ $text_indent: 18px;
       // overflow: hidden;
       text-align: center;
 
-      .title {
-        margin: 0;
-      }
-      .subtitle {
-        font-size: $size__p + 1;
+      .heading {
+        display: flex;
+        flex-direction: column;
+
+        &.heading--reverse {
+          flex-direction: column-reverse;
+        }
+
+        & > * {
+          line-height: 28px;
+          margin: 0;
+        }
       }
 
       .description {
