@@ -82,7 +82,7 @@ export async function MapperYearBookWeb(
             },
           ],
         };
-        console.log('optionToPatch', optionToPatch);
+        // console.log('optionToPatch', optionToPatch);
 
         await pdfYearbookService.setPrintOptions(
           yearBookData.pecaId,

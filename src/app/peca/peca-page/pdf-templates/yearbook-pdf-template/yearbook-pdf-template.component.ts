@@ -269,7 +269,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private getActivitiesPages(lapse, activityCharacterLimit) {
+  private getActivitiesPages(lapse, activityCharacterLimit, isNotThereDiagPgs) {
     let activityPages = [];
 
     if (!lapse) return activityPages;
@@ -288,9 +288,6 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         lapse.lapseId,
       );
 
-      // console.log(lapse.lapseId);
-
-      // console.log({ description, name, willPrintActivity });
       if (!(description && name && willPrintActivity)) {
         continue;
       }
@@ -299,15 +296,16 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         images = [];
       }
 
-      activityPages.push(
-        new ActivityTemplate(
-          `${lapse.lapseId}__${name}-${id}-section`,
-          name,
-          description,
-          images,
-          activityCharacterLimit,
-        ),
+      let activityPage = new ActivityTemplate(
+        `${lapse.lapseId}__${name}-${id}-section`,
+        name,
+        description,
+        null,
+        images,
+        activityCharacterLimit,
       );
+
+      activityPages.push(activityPage);
 
       if (expandGallery) {
         const offset = 3;
@@ -323,7 +321,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       }
     }
 
-    // console.log('getActivitiesPages', { activityPages });
+    if (activityPages.length > 0 && isNotThereDiagPgs) {
+      activityPages[0].subtitle = lapse.lapseName;
+    }
 
     return activityPages;
   }
@@ -364,8 +364,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const activityPages = this.getActivitiesPages(
         lapse,
         activityCharacterLimit,
+        diagnosticsPages.length === 0,
       );
-      // console.log({ activityPages });
 
       pagesToAdd.push(...diagnosticsPages, ...activityPages);
 

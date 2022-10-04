@@ -229,19 +229,6 @@
           </p>
         </ng-container>
       </div>
-
-      <!-- <p class="description">
-        <span
-          [outerHTML]="
-            page.description
-              | excerpt
-                : yearbookConfig.getFormDescriptionLimit(
-                    'historical-review-form'
-                  )
-              | br
-          "
-        ></span>
-      </p> -->
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>
@@ -254,15 +241,16 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--4">
       <div class="body">
-        <h2 class="title">
+        <!-- <h2 class="title">
           {{ page.name }}
-        </h2>
+        </h2> -->
 
-        <!-- <p class="description">
-          <span
-            [outerHTML]="page.description | excerpt: page.characterLimit | br"
-          ></span>
-        </p> -->
+        <div class="heading" [ngClass]="{ 'heading--reverse': page.subtitle }">
+          <h2>{{ page.title }}</h2>
+          <ng-container *ngIf="page.subtitle">
+            <h3>{{ page.subtitle }}</h3>
+          </ng-container>
+        </div>
 
         <ng-container
           *ngFor="
