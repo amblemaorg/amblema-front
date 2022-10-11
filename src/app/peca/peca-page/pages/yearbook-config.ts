@@ -900,6 +900,7 @@ export async function MapperYearBookWeb(
       indexOption: {
         value: pdfOptionsDefaultValues.index,
       },
+      positionTitleLeft: true,
     },
     blocks: [
       {
