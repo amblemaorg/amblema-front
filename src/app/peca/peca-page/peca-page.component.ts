@@ -19,7 +19,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PecaPageComponent {
   protected pageBlockFactory: PageBlockFactory;
-  header: { title: string; download: any; indexOption?: { value: boolean } };
+  header: header = {
+    positionTitleLeft: false,
+  };
   blocks: PageBlockComponent[];
   blockInstances = new Map<string, PageBlockComponent>();
 
@@ -42,7 +44,9 @@ export class PecaPageComponent {
   ) {}
 
   public instantiateComponent(config) {
-    this.header = config.header;
+    this.header = {
+      ...config.header,
+    };
     this.blocks = config.blocks;
     this.pageBlockFactory = new PageBlockFactory(this.factoryResolver);
   }
@@ -217,3 +221,10 @@ export class PecaPageComponent {
     this.pdfIndexOptionLoading = false;
   }
 }
+
+type header = {
+  title?: string;
+  download?: any;
+  indexOption?: { value: boolean };
+  positionTitleLeft?: boolean;
+};

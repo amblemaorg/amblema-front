@@ -7,6 +7,7 @@
     <div
       [class.col-sm-6]="header && header.title && header.download"
       class="title-style"
+      [ngClass]="{ 'title-style': header.positionTitleLeft }"
     >
       <h1>{{ header?.title }}</h1>
     </div>
