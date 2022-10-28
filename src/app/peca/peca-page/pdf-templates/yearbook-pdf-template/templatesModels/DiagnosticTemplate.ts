@@ -115,6 +115,8 @@ export class DiagnosticPageDataGroup {
     private diagnosticGraphicData,
     private diagnosticGoalTableData,
   ) {
+    console.log({ graphics });
+
     this.buildDataPages();
   }
 
@@ -174,7 +176,8 @@ export class DiagnosticPageDataGroup {
     let labels = lapseGraphic[diagKey].labels;
     let chartTitle = 'Índice Promedio de la Escuela';
 
-    // lapseIdx === 2
+    console.log('getChart', lapseName, { diagnostics });
+
     if (isThirdLapse) {
       // const chartTitles = {
       //   diagnosticReading: 'Indice promedio de lectura general',
@@ -212,10 +215,66 @@ export class DiagnosticPageDataGroup {
     );
   }
 
+  // Used to set a provisional data table for show table when
+  // results of grades has 0 but from backend error
+  // average (Index) has value > 0
+  // To show table with just index this method is used
+  getDiagIndexFromGraphicsForProvDataTb(
+    lapseId: string,
+    diagKey: string,
+    graphics,
+  ) {
+    const lapseGraphic = graphics[lapseId];
+    const diagnostic = lapseGraphic[diagKey];
+
+    if (!diagnostic) return [];
+    if (diagnostic.labels.length === 0) return [];
+
+    const labels = [];
+    const values = [];
+
+    for (let idx = 0; idx < diagnostic.labels; idx++) {
+      const label = diagnostic.labels[idx];
+      const value = diagnostic.values[idx];
+
+      let grade: string = label.match(/[1-6]/);
+
+      // validations
+      if (!grade) continue; // if grade doesn't have expected format
+      if (value == 0) continue;
+
+      const gradeFormat = {
+        '1': '1ero Grado',
+        '2': '2do Grado',
+        '3': '3ero Grado',
+        '4': '4to Grado',
+        '5': '5to Grado',
+        '6': '6to Grado',
+      };
+
+      labels.push(gradeFormat[grade]);
+      value.push(value);
+    }
+
+    return {
+      labels,
+      values,
+    };
+  }
+
+  setProvisionalDataTable(lapseId: string, diagKey: string) {
+    const graphics = this.graphics;
+    const graphicDiagnosticData = this.getDiagIndexFromGraphicsForProvDataTb(
+      lapseId,
+      diagKey,
+      graphics,
+    );
+
+    console.log({ graphicDiagnosticData });
+  }
   /**
    * Diag = Diagnostic
    * Purpose: Using just items of same grade, return average summing each columns on array index position passed by arg
-   *
    * */
   private avgColumnValuesBySection(
     grade: string,
@@ -314,8 +373,8 @@ export class DiagnosticPageDataGroup {
         'Índice D. Final',
       ]);
     }
-
     if (!tableData) {
+      // setProvisionalDataTable(lapseId)
       return [];
     }
 
@@ -323,7 +382,6 @@ export class DiagnosticPageDataGroup {
     tableData = tableData.slice(1, tableData.length);
 
     // reordered and format values
-
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
@@ -442,8 +500,11 @@ export class DiagnosticPageDataGroup {
 
       tablesByLapses.push(tables);
 
+      console.log({ page });
+
       // Remove diagnostic pages without table data
       page = page.filter((diag) => diag.table.length > 0);
+
       pages.push(...page);
     });
 
