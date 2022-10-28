@@ -227,13 +227,10 @@ export class DiagnosticPageDataGroup {
     const lapseGraphic = graphics[lapseId];
     const diagnostic = lapseGraphic[diagKey];
 
-    if (!diagnostic) return [];
-    if (diagnostic.labels.length === 0) return [];
-
     const labels = [];
     const values = [];
 
-    for (let idx = 0; idx < diagnostic.labels; idx++) {
+    for (let idx = 0; idx < diagnostic.labels.length; idx++) {
       const label = diagnostic.labels[idx];
       const value = diagnostic.values[idx];
 
@@ -253,7 +250,7 @@ export class DiagnosticPageDataGroup {
       };
 
       labels.push(gradeFormat[grade]);
-      value.push(value);
+      values.push(value);
     }
 
     return {
@@ -262,16 +259,47 @@ export class DiagnosticPageDataGroup {
     };
   }
 
-  setProvisionalDataTable(lapseId: string, diagKey: string) {
+  getProvisionalDataTable(
+    lapseId: string,
+    diagKey: string,
+    isFirstLapse: boolean,
+    isSecondLapse: boolean,
+    isThirdLapse: boolean,
+  ) {
     const graphics = this.graphics;
+
     const graphicDiagnosticData = this.getDiagIndexFromGraphicsForProvDataTb(
       lapseId,
       diagKey,
       graphics,
     );
 
-    console.log({ graphicDiagnosticData });
+    const tableData = graphicDiagnosticData.labels.map((label, idx) => {
+      const value = graphicDiagnosticData.values[idx];
+      const metaSettings = this.getDiagGoalTableData(label);
+
+      if (isFirstLapse) {
+        // ['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']
+
+        return [label, '', metaSettings[diagKey], value];
+      }
+
+      if (isSecondLapse) {
+        // ['grado',  'D. Inicial',  'D. Revisión',  'Meta',  'Índice D. Revisión']
+
+        return [label, '', '', metaSettings[diagKey], value];
+      }
+
+      if (isThirdLapse) {
+        // ['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice D. Final']
+        return [label, '', '', metaSettings[diagKey], value];
+      }
+    });
+
+    console.log({ graphicDiagnosticData, tableData });
+    return tableData;
   }
+
   /**
    * Diag = Diagnostic
    * Purpose: Using just items of same grade, return average summing each columns on array index position passed by arg
@@ -373,9 +401,23 @@ export class DiagnosticPageDataGroup {
         'Índice D. Final',
       ]);
     }
+
     if (!tableData) {
-      // setProvisionalDataTable(lapseId)
-      return [];
+      // provisional while backend keep diagnostic 0 integer instead 0 decimal show on index's
+      const provisionalTableData = this.getProvisionalDataTable(
+        `lapse${lapseIdx + 1}`,
+        diagKey,
+        isFirstLapse,
+        isSecondLapse,
+        isThirdLapse,
+      );
+
+      console.log({ provisionalTableData });
+
+      return provisionalTableData.length > 0
+        ? [...header, ...provisionalTableData]
+        : [];
+      // return [];
     }
 
     // Removed default headers got from DataBase
@@ -499,8 +541,6 @@ export class DiagnosticPageDataGroup {
       });
 
       tablesByLapses.push(tables);
-
-      console.log({ page });
 
       // Remove diagnostic pages without table data
       page = page.filter((diag) => diag.table.length > 0);
