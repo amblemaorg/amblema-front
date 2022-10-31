@@ -115,8 +115,6 @@ export class DiagnosticPageDataGroup {
     private diagnosticGraphicData,
     private diagnosticGoalTableData,
   ) {
-    console.log({ graphics });
-
     this.buildDataPages();
   }
 
@@ -171,12 +169,35 @@ export class DiagnosticPageDataGroup {
     isThirdLapse = false,
     graphics = this.graphics,
   ) {
-    const { diagnostics } = this.diagnosticGraphicData;
-    const lapseGraphic = graphics[lapseId];
-    let labels = lapseGraphic[diagKey].labels;
     let chartTitle = 'Índice Promedio de la Escuela';
 
-    console.log('getChart', lapseName, { diagnostics });
+    const chartId = `${lapseName}-${diagKey}-graphic`;
+
+    const { diagnostics } = this.diagnosticGraphicData;
+
+    const lapseGraphic = graphics[lapseId];
+
+    // const lapseGraphic = null;
+
+    if (
+      !lapseGraphic ||
+      !lapseGraphic[diagKey] ||
+      !lapseGraphic[diagKey].values ||
+      lapseGraphic[diagKey].values.length === 0
+    ) {
+      const labels = [];
+      const values = [];
+
+      return this.chartDefault(
+        chartId,
+        labels,
+        values,
+        chartTitle,
+        isThirdLapse,
+      );
+    }
+
+    let labels = lapseGraphic[diagKey].labels;
 
     if (isThirdLapse) {
       // const chartTitles = {
@@ -203,8 +224,6 @@ export class DiagnosticPageDataGroup {
         operationsPerMinIndex,
       );
     }
-
-    const chartId = `${lapseName}-${diagKey}-graphic`;
 
     return this.chartDefault(
       chartId,
@@ -241,12 +260,12 @@ export class DiagnosticPageDataGroup {
       if (value == 0) continue;
 
       const gradeFormat = {
-        '1': '1ero Grado',
-        '2': '2do Grado',
-        '3': '3ero Grado',
-        '4': '4to Grado',
-        '5': '5to Grado',
-        '6': '6to Grado',
+        '1': '1ero',
+        '2': '2do',
+        '3': '3er',
+        '4': '4to',
+        '5': '5to',
+        '6': '6to',
       };
 
       labels.push(gradeFormat[grade]);
@@ -281,22 +300,21 @@ export class DiagnosticPageDataGroup {
       if (isFirstLapse) {
         // ['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']
 
-        return [label, '', metaSettings[diagKey], value];
+        return [label, '0', metaSettings[diagKey], value];
       }
 
       if (isSecondLapse) {
         // ['grado',  'D. Inicial',  'D. Revisión',  'Meta',  'Índice D. Revisión']
 
-        return [label, '', '', metaSettings[diagKey], value];
+        return [label, '0', '0', metaSettings[diagKey], value];
       }
 
       if (isThirdLapse) {
         // ['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice D. Final']
-        return [label, '', '', metaSettings[diagKey], value];
+        return [label, '0', '0', metaSettings[diagKey], value];
       }
     });
 
-    console.log({ graphicDiagnosticData, tableData });
     return tableData;
   }
 
@@ -363,6 +381,7 @@ export class DiagnosticPageDataGroup {
     diagKey: string,
     tablesByLapses: string[][][] = [],
   ) {
+    tableData = null;
     const isFirstLapse = lapseIdx === 0;
     const isSecondLapse = lapseIdx === 1;
     const isThirdLapse = lapseIdx === 2;
@@ -412,11 +431,12 @@ export class DiagnosticPageDataGroup {
         isThirdLapse,
       );
 
-      console.log({ provisionalTableData });
+      if (provisionalTableData.length > 0) {
+        return [...header, ...provisionalTableData];
+      }
+      // end provisional
 
-      return provisionalTableData.length > 0
-        ? [...header, ...provisionalTableData]
-        : [];
+      return [...header];
       // return [];
     }
 
@@ -432,7 +452,7 @@ export class DiagnosticPageDataGroup {
        * [3]: promedio
        */
       const metaSettings = this.getDiagGoalTableData(td[0]);
-      // console.log('getDiagGoalTableData', metaSettings);
+
       const tdFormatted = [
         td[0].replace(/grado/gi, ''), // grade
         td[1], // section

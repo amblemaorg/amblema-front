@@ -61,7 +61,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    console.log('YearbookPdfTemplateComponent', this.pdfData);
+    // console.log('YearbookPdfTemplateComponent', this.pdfData);
 
     if (!this.pdfData) {
       // this.router.navigate(['/peca/anuario-page']);
@@ -84,7 +84,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       // console.log('YearbookPdfTemplateComponent', this.printOptions);
 
-      console.log('this.diagnosticGraphicData', this.diagnosticGraphicData);
+      // console.log('this.diagnosticGraphicData', this.diagnosticGraphicData);
 
       this.pageInit();
       this.showLoading = false;
