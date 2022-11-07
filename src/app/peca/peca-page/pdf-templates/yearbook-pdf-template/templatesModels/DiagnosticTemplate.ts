@@ -506,7 +506,7 @@ export class DiagnosticPageDataGroup {
 
         return [
           tdFormatted[0], // grade
-          valueRevision ? valueRevision[1] : '---', // D. Inicial
+          valueRevision ? valueRevision[1] : '0.0', // D. Inicial
           tdFormatted[2], // D. Revisión
           tdFormatted[3], // Meta
           tdFormatted[4], // Índice P. Final
