@@ -286,7 +286,7 @@ export class DiagnosticPageDataGroup {
     isThirdLapse: boolean,
   ) {
     const graphics = this.graphics;
-
+    // console.log({ graphics });
     const graphicDiagnosticData = this.getDiagIndexFromGraphicsForProvDataTb(
       lapseId,
       diagKey,
@@ -295,7 +295,9 @@ export class DiagnosticPageDataGroup {
 
     const tableData = graphicDiagnosticData.labels.map((label, idx) => {
       const value = graphicDiagnosticData.values[idx];
-      const metaSettings = this.getDiagGoalTableData(label);
+      const metaSettings = this.getDiagGoalTableData(label, true);
+
+      // console.log({ metaSettings });
 
       if (isFirstLapse) {
         // ['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']
@@ -345,9 +347,9 @@ export class DiagnosticPageDataGroup {
     return result.toFixed(toFixedCount).toString();
   }
 
-  private getDiagGoalTableData(grade: string) {
+  private getDiagGoalTableData(grade: string, isProvisionalTable = false) {
     // Maybe future instability if exist way to modify grade's name
-    const gradeRespKeyMappedWithGradeDiag = {
+    let gradeRespKeyMappedWithGradeDiag: any = {
       '1er Grado': 'grade1',
       '2do Grado': 'grade2',
       '3er Grado': 'grade3',
@@ -356,16 +358,31 @@ export class DiagnosticPageDataGroup {
       '6to Grado': 'grade6',
     };
 
+    if (isProvisionalTable) {
+      gradeRespKeyMappedWithGradeDiag = {
+        '1er': 'grade1',
+        '2do': 'grade2',
+        '3er': 'grade3',
+        '4to': 'grade4',
+        '5to': 'grade5',
+        '6to': 'grade6',
+      };
+    }
+
     const diagGoal = this.diagnosticGoalTableData[
       gradeRespKeyMappedWithGradeDiag[grade]
     ];
+    // console.log(grade);
 
-    if (!diagGoal)
+    // console.log({ diagnosticGoalTableData: this.diagnosticGoalTableData });
+
+    if (!diagGoal) {
       return {
         diagnosticReading: '0.0',
         diagnosticMath: '0.0',
         diagnosticLogic: '0.0',
       };
+    }
 
     return {
       diagnosticReading: diagGoal.wordsPerMin,
@@ -381,7 +398,7 @@ export class DiagnosticPageDataGroup {
     diagKey: string,
     tablesByLapses: string[][][] = [],
   ) {
-    tableData = null;
+    // tableData = null;
     const isFirstLapse = lapseIdx === 0;
     const isSecondLapse = lapseIdx === 1;
     const isThirdLapse = lapseIdx === 2;
@@ -430,6 +447,8 @@ export class DiagnosticPageDataGroup {
         isSecondLapse,
         isThirdLapse,
       );
+
+      // console.log({ provisionalTableData });
 
       if (provisionalTableData.length > 0) {
         return [...header, ...provisionalTableData];
