@@ -169,12 +169,36 @@ export class DiagnosticPageDataGroup {
     isThirdLapse = false,
     graphics = this.graphics,
   ) {
-    const { diagnostics } = this.diagnosticGraphicData;
-    const lapseGraphic = graphics[lapseId];
-    let labels = lapseGraphic[diagKey].labels;
     let chartTitle = 'Índice Promedio de la Escuela';
 
-    // lapseIdx === 2
+    const chartId = `${lapseName}-${diagKey}-graphic`;
+
+    const { diagnostics } = this.diagnosticGraphicData;
+
+    const lapseGraphic = graphics[lapseId];
+
+    // const lapseGraphic = null;
+
+    if (
+      !lapseGraphic ||
+      !lapseGraphic[diagKey] ||
+      !lapseGraphic[diagKey].values ||
+      lapseGraphic[diagKey].values.length === 0
+    ) {
+      const labels = [];
+      const values = [];
+
+      return this.chartDefault(
+        chartId,
+        labels,
+        values,
+        chartTitle,
+        isThirdLapse,
+      );
+    }
+
+    let labels = lapseGraphic[diagKey].labels;
+
     if (isThirdLapse) {
       // const chartTitles = {
       //   diagnosticReading: 'Indice promedio de lectura general',
@@ -201,8 +225,6 @@ export class DiagnosticPageDataGroup {
       );
     }
 
-    const chartId = `${lapseName}-${diagKey}-graphic`;
-
     return this.chartDefault(
       chartId,
       labels,
@@ -212,10 +234,95 @@ export class DiagnosticPageDataGroup {
     );
   }
 
+  // Used to set a provisional data table for show table when
+  // results of grades has 0 but from backend error
+  // average (Index) has value > 0
+  // To show table with just index this method is used
+  getDiagIndexFromGraphicsForProvDataTb(
+    lapseId: string,
+    diagKey: string,
+    graphics,
+  ) {
+    const lapseGraphic = graphics[lapseId];
+    const diagnostic = lapseGraphic[diagKey];
+
+    const labels = [];
+    const values = [];
+
+    for (let idx = 0; idx < diagnostic.labels.length; idx++) {
+      const label = diagnostic.labels[idx];
+      const value = diagnostic.values[idx];
+
+      let grade: string = label.match(/[1-6]/);
+
+      // validations
+      if (!grade) continue; // if grade doesn't have expected format
+      if (value == 0) continue;
+
+      const gradeFormat = {
+        '1': '1ero',
+        '2': '2do',
+        '3': '3er',
+        '4': '4to',
+        '5': '5to',
+        '6': '6to',
+      };
+
+      labels.push(gradeFormat[grade]);
+      values.push(value);
+    }
+
+    return {
+      labels,
+      values,
+    };
+  }
+
+  getProvisionalDataTable(
+    lapseId: string,
+    diagKey: string,
+    isFirstLapse: boolean,
+    isSecondLapse: boolean,
+    isThirdLapse: boolean,
+  ) {
+    const graphics = this.graphics;
+    // console.log({ graphics });
+    const graphicDiagnosticData = this.getDiagIndexFromGraphicsForProvDataTb(
+      lapseId,
+      diagKey,
+      graphics,
+    );
+
+    const tableData = graphicDiagnosticData.labels.map((label, idx) => {
+      const value = graphicDiagnosticData.values[idx];
+      const metaSettings = this.getDiagGoalTableData(label, true);
+
+      // console.log({ metaSettings });
+
+      if (isFirstLapse) {
+        // ['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']
+
+        return [label, '0', metaSettings[diagKey], value];
+      }
+
+      if (isSecondLapse) {
+        // ['grado',  'D. Inicial',  'D. Revisión',  'Meta',  'Índice D. Revisión']
+
+        return [label, '0', '0', metaSettings[diagKey], value];
+      }
+
+      if (isThirdLapse) {
+        // ['grado', 'D. Inicial', 'D. Final', 'Meta', 'Índice D. Final']
+        return [label, '0', '0', metaSettings[diagKey], value];
+      }
+    });
+
+    return tableData;
+  }
+
   /**
    * Diag = Diagnostic
    * Purpose: Using just items of same grade, return average summing each columns on array index position passed by arg
-   *
    * */
   private avgColumnValuesBySection(
     grade: string,
@@ -240,9 +347,9 @@ export class DiagnosticPageDataGroup {
     return result.toFixed(toFixedCount).toString();
   }
 
-  private getDiagGoalTableData(grade: string) {
+  private getDiagGoalTableData(grade: string, isProvisionalTable = false) {
     // Maybe future instability if exist way to modify grade's name
-    const gradeRespKeyMappedWithGradeDiag = {
+    let gradeRespKeyMappedWithGradeDiag: any = {
       '1er Grado': 'grade1',
       '2do Grado': 'grade2',
       '3er Grado': 'grade3',
@@ -251,16 +358,31 @@ export class DiagnosticPageDataGroup {
       '6to Grado': 'grade6',
     };
 
+    if (isProvisionalTable) {
+      gradeRespKeyMappedWithGradeDiag = {
+        '1er': 'grade1',
+        '2do': 'grade2',
+        '3er': 'grade3',
+        '4to': 'grade4',
+        '5to': 'grade5',
+        '6to': 'grade6',
+      };
+    }
+
     const diagGoal = this.diagnosticGoalTableData[
       gradeRespKeyMappedWithGradeDiag[grade]
     ];
+    // console.log(grade);
 
-    if (!diagGoal)
+    // console.log({ diagnosticGoalTableData: this.diagnosticGoalTableData });
+
+    if (!diagGoal) {
       return {
         diagnosticReading: '0.0',
         diagnosticMath: '0.0',
         diagnosticLogic: '0.0',
       };
+    }
 
     return {
       diagnosticReading: diagGoal.wordsPerMin,
@@ -276,6 +398,7 @@ export class DiagnosticPageDataGroup {
     diagKey: string,
     tablesByLapses: string[][][] = [],
   ) {
+    // tableData = null;
     const isFirstLapse = lapseIdx === 0;
     const isSecondLapse = lapseIdx === 1;
     const isThirdLapse = lapseIdx === 2;
@@ -316,14 +439,30 @@ export class DiagnosticPageDataGroup {
     }
 
     if (!tableData) {
-      return [];
+      // provisional while backend keep diagnostic 0 integer instead 0 decimal show on index's
+      const provisionalTableData = this.getProvisionalDataTable(
+        `lapse${lapseIdx + 1}`,
+        diagKey,
+        isFirstLapse,
+        isSecondLapse,
+        isThirdLapse,
+      );
+
+      // console.log({ provisionalTableData });
+
+      if (provisionalTableData.length > 0) {
+        return [...header, ...provisionalTableData];
+      }
+      // end provisional
+
+      return [...header];
+      // return [];
     }
 
     // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
 
     // reordered and format values
-
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
@@ -332,7 +471,7 @@ export class DiagnosticPageDataGroup {
        * [3]: promedio
        */
       const metaSettings = this.getDiagGoalTableData(td[0]);
-      // console.log('getDiagGoalTableData', metaSettings);
+
       const tdFormatted = [
         td[0].replace(/grado/gi, ''), // grade
         td[1], // section
@@ -367,7 +506,7 @@ export class DiagnosticPageDataGroup {
 
         return [
           tdFormatted[0], // grade
-          valueRevision ? valueRevision[1] : '---', // D. Inicial
+          valueRevision ? valueRevision[1] : '0.0', // D. Inicial
           tdFormatted[2], // D. Revisión
           tdFormatted[3], // Meta
           tdFormatted[4], // Índice P. Final
@@ -444,6 +583,7 @@ export class DiagnosticPageDataGroup {
 
       // Remove diagnostic pages without table data
       page = page.filter((diag) => diag.table.length > 0);
+
       pages.push(...page);
     });
 
