@@ -31,7 +31,7 @@
   },
   "globalLapsesActivities": {
     "description": {
-      "limit": 1350,
+      "limit": 1300,
       "minLimit": 1000
     }
   }
