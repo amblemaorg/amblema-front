@@ -1,7 +1,7 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 export const EMAIL_PATTERN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
-export const LETTERS_PATTERN = /^[a-z A-Zá-úÁ-Ú]*$/;
-export const LETTERS_NUMBERS_PATTERN = "^[a-z A-Zá-úÁ-Ú0-9]*$";
+export const LETTERS_PATTERN = /^[A-Za-zÀ-ÿ. '´`]*$/;
+export const LETTERS_NUMBERS_PATTERN = '^[a-z A-Zá-úÁ-Ú0-9]*$';
 export const TEXT_PATTERN = /^[a-z A-Zá-úÁ-Ú0-9\W]*$/;
 export const NUMBER_PATTERN = /^[0-9]*$/;
 export const VIDEO_PATTERN = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
