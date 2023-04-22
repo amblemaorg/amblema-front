@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit {
       let chartsData = HOME_CONTENT.homePage.statistics.charts;
       chartsData.map((chart) => {
         chart.data = data.homePage.diagnostics[chart.id].map((lapse) => {
-          if (lapse.value == 0) lapse.value = 0.01;
+          if (lapse.value == 0) lapse.value = 0.00;
           return lapse;
         });
         return chart.data;
