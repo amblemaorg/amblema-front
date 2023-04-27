@@ -112,7 +112,7 @@ export class AmblemonedaPageComponent
           }
         },
         (er) => {
-          console.log(er);
+          console.error(er);
         }
       );
   }

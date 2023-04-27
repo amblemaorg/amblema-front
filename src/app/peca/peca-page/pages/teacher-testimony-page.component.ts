@@ -72,7 +72,7 @@ export class TeacherTestimonyPageComponent
           }
         },
         (er) => {
-          console.log(er);
+          console.error(er);
         }
       );
   }

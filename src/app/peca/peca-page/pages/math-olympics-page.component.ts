@@ -119,7 +119,7 @@ export class MathOlympicsPageComponent
           }
         },
         (er) => {
-          console.log(er);
+          console.error(er);
         }
       );
   }
