@@ -11,38 +11,38 @@ export const SPONSOR_CONTENT = {
       "Tengan la disposición de aumentar su grado de satisfacción personal, familiar y/o empresarial, al ver resultados positivos en la mejora de la calidad educativa de muchos docentes y niños en escuelas con escasos recursos económicos.",
     ],
     testimonials: [
-      {
-        description:
-          "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
-        firstName: "Stephanie",
-        function: "Padrino Principal",
-        image: "./assets/images/profile-leena.jpg",
-        lastName: "Soteldo",
-      },
-      {
-        description:
-          "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
-        firstName: "Greudys",
-        function: "Padrino Principal",
-        image: "./assets/images/profile-oscar.jpg",
-        lastName: "Godoy",
-      },
-      {
-        description:
-          "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
-        firstName: "Franklin",
-        function: "Padrino principal",
-        image: "./assets/images/profile-oscar.jpg",
-        lastName: "Perdomo",
-      },
-      {
-        description:
-          "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
-        firstName: "José Alberto",
-        function: "Padrino Principal",
-        image: "./assets/images/profile-oscar.jpg",
-        lastName: "Guerrero",
-      },
+      // {
+      //   description:
+      //     "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+      //   firstName: "Stephanie",
+      //   function: "Padrino Principal",
+      //   image: "./assets/images/profile-leena.jpg",
+      //   lastName: "Soteldo",
+      // },
+      // {
+      //   description:
+      //     "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+      //   firstName: "Greudys",
+      //   function: "Padrino Principal",
+      //   image: "./assets/images/profile-oscar.jpg",
+      //   lastName: "Godoy",
+      // },
+      // {
+      //   description:
+      //     "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+      //   firstName: "Franklin",
+      //   function: "Padrino principal",
+      //   image: "./assets/images/profile-oscar.jpg",
+      //   lastName: "Perdomo",
+      // },
+      // {
+      //   description:
+      //     "Quiero agradecer a los maestros su compromiso, su coraje, la pasión; con la que están educando a nuestros niños.... Nunca olviden que ustedes son agentes de cambio",
+      //   firstName: "José Alberto",
+      //   function: "Padrino Principal",
+      //   image: "./assets/images/profile-oscar.jpg",
+      //   lastName: "Guerrero",
+      // },
     ],
     sponsors: [
       {

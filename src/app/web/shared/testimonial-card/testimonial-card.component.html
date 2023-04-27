@@ -12,7 +12,7 @@
         {{ testimonial.firstName + ' ' + testimonial.lastName }}
       </p>
       <p *ngIf="testimonial.function" class="testimonial-role">
-        {{ testimonial.function }}
+        {{ testimonial.position ? testimonial.position : testimonial.function }}
       </p>
     </div>
   </div>

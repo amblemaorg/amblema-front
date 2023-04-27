@@ -97,7 +97,7 @@ export class SchedulingPlanningPageComponent
           }
         },
         (er) => {
-          console.log(er);
+          console.error(er);
         }
       );
   }

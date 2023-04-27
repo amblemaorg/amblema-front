@@ -59,7 +59,7 @@ export class SchoolPicturesPageComponent extends PecaPageComponent implements On
           }
         },
         (er) => {
-          console.log(er);
+          console.error(er);
         }
       );
   }

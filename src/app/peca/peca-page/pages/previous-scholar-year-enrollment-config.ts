@@ -59,7 +59,7 @@ export function previousScholarYearStudentsConfigMapper(
       resStatus: data.status || 400,
       resMsg: data.msg || "",
       onSubmit: (values: any) => {
-        console.log("Hello values");
+        // console.log("Hello values");
       },
       getFetcher: (fetcher: string, ...genProps) =>
         getFetcher({
@@ -122,7 +122,7 @@ export function previousScholarYearStudentsConfigMapper(
     },
   };
 
-  console.log("prevStudentsFormTable", prevStudentsFormTable);
+  // console.log("prevStudentsFormTable", prevStudentsFormTable);
 
   return {
     header: {

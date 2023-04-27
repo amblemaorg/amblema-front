@@ -64,7 +64,7 @@ export class PreviousScholarYearEnrollmentPageComponent extends PecaPageComponen
             this.peca_id
           );
 
-          console.log("fetcher newConfig", newConfig);
+          // console.log("fetcher newConfig", newConfig);
           this.instantiateComponent(newConfig);
           this.doInstantiateBlocks();
         });
