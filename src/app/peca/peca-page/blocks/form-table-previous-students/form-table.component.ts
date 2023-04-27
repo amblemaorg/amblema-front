@@ -169,7 +169,7 @@ export class FormTableComponent
   }
 
   onTableActions = (event: any) => {
-    console.log("event.action", event.action);
+    // console.log("event.action", event.action);
   };
 
   onSubmitAction(type: number, values: any, update: boolean = false) {
@@ -272,7 +272,7 @@ export class FormTableComponent
           } else errorMsg();
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           errorMsg();
         }
       );
