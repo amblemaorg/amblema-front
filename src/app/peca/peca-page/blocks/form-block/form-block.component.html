@@ -642,7 +642,7 @@
                   </ng-select>
                   <input
                     *ngIf="
-                      imgField == 'imageCargo' || imgField == 'imageDescription'
+                      imgField == 'imageCargo'
                     "
                     class="form-control"
                     [class.image-description]="
@@ -661,6 +661,51 @@
                       isReadOnly()
                     "
                   />
+                  <!-- <input
+                    *ngIf="
+                      imgField == 'imageDescription'
+                    "
+                    class="form-control"
+                    [class.image-description]="
+                      !settings.isFromCustomTableActions &&
+                      !settings.alwaysValidations
+                    "
+                    autocomplete="off"
+                    type="text"
+                    [formControlName]="imgField"
+                    [id]="getId(imgField)"
+                    [placeholder]="
+                      settings.formsContent[field].fields[imgField].placeholder
+                    "
+                    [readonly]="
+                      settings.formsContent[field].fields[imgField].readonly ||
+                      isReadOnly()
+                    "
+                    style="word-break: break-word !important;
+                            height: 10em !important;"
+                  /> -->
+                  <textarea
+                    *ngIf="
+                      imgField == 'imageDescription'
+                    "
+                    class="form-control"
+                    autocomplete="off"
+                    maxlength="330"
+                    minlength="300"
+                    [name]="imgField"
+                    [formControlName]="imgField"
+                    [placeholder]="
+                      settings.formsContent[field].fields[imgField].placeholder
+                    "
+                    [id]="getId(imgField)"
+                    [readonly]="
+                      settings.formsContent[field].fields[imgField].readonly ||
+                      isReadOnly()
+                    "
+                    cols="50"
+                    rows="2"
+                    style="height: 5rem !important;"
+                  ></textarea>
                   <ng-container
                     *ngIf="
                       hasErrors(field, true, imgField, true) &&
