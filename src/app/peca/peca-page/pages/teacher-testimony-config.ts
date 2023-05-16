@@ -12,6 +12,11 @@ const controlProps = {
     validations: requiredAndNormalText,
     messages: { pattern: MESSAGES.TEXT_MESSAGE },
   },
+  textareaNormalTextAndRequired: {
+    type: "textarea",
+    validations: requiredAndNormalText,
+    messages: { pattern: MESSAGES.TEXT_MESSAGE },
+  },
   selectAndRequired: {
     type: "select",
     options: [],
@@ -163,10 +168,10 @@ export function teacherTestimoniesConfigMapper(
               ...controlProps.normalTextAndRequired,
             },
             imageDescription: {
-              label: "Descripción de la imagen",
-              placeholder: "Descripción de la imagen",
+              label: "Testimonio",
+              placeholder: "Escribe el testimonio del docente",
               fullwidth: false,
-              ...controlProps.normalTextAndRequired,
+              ...controlProps.textareaNormalTextAndRequired,
             },
           },
         },

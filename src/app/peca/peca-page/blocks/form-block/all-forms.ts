@@ -429,7 +429,7 @@ export const formTestimonioDocentesModalEdit = {
         label: "Descripción",
         placeholder: "Descripción",
         fullwidth: false,
-        ...controlProps.normalTextAndRequired,
+        ...controlProps.textareaNormalTextAndRequired,
       },
       // imageStatus: {
       //   label: "Estatus",
