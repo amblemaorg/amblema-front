@@ -32,7 +32,7 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'annual_preparation_peca_view',
   },
   olympics: {
-    title: 'Olimpíada de Matemática',
+    title: 'Olimpíada de Recreativas de Matemática',
     icon: 'medal',
     link: 'olimpiadas-matematicas',
     data: 'olympics_peca_view',

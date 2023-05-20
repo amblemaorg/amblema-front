@@ -248,7 +248,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         name: data.name,
         sponsor: data.sponsor,
         direction: data.address,
-        staff: (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
+        staff: (data.nTeachers ? data.nTeachers : 0) + (data.nAdministrativeStaff ? data.nAdministrativeStaff : 0) + (data.nLaborStaff ? data.nLaborStaff : 0),
         coordinator: data.coordinator,
         enrollment: data.nStudents,
         images: /* data.slider */ null,
@@ -292,7 +292,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         instagram: data.instagram,
       };
 
-      console.log('school', data);
+      // console.log('school', data);
 
       this.staticSchoolService.getChartsTemplateJSON().subscribe((charts) => {
         this.school.charts = charts.map((chart) => {
@@ -375,7 +375,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.activeActivityIndex = index;
       //this.activityImageCarousel.reInit();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

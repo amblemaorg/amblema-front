@@ -28,7 +28,7 @@ export class ChartsSwitcherComponent implements OnInit {
   activeChartIndex: number = 0;
   constructor(private resolver: ComponentFactoryResolver) {}
   ngOnInit() {
-    console.log('ngOnInit', this.options);
+    // console.log('ngOnInit', this.options);
 
     this.chartFactory = new ChartComponentFactory(this.resolver);
     this.charts = this.options.charts.filter((chart) => {
@@ -44,7 +44,7 @@ export class ChartsSwitcherComponent implements OnInit {
   loadChartComponent() {
     if (this.charts.length > 0) {
       const activeChart = this.charts[this.activeChartIndex];
-      console.log('loadChartComponent', activeChart);
+      // console.log('loadChartComponent', activeChart);
 
       this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
     }

@@ -140,7 +140,7 @@ export class ChartJSBarChart extends BarChartComponent {
   }
 
   configGrid(): void {
-    console.log('Method not implemented');
+    // console.log('Method not implemented');
   }
 
   configAsymptotes(): void {

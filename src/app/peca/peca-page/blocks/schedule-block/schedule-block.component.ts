@@ -141,7 +141,7 @@ export class ScheduleBlockComponent
         }
       },
       (er) => {
-        console.log(er);
+        console.error(er);
       }
     );
   }

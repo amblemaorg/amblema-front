@@ -459,7 +459,7 @@ export class FormReviewComponent
   }
 
   isFormInvalid() {
-    console.log(this.form.invalid);
+    console.warn(this.form.invalid);
     return this.form.invalid;
   }
 

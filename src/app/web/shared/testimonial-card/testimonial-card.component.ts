@@ -9,7 +9,10 @@ import { Testimonial } from '../../../models/web/testimonial.model';
 export class TestimonialCardComponent implements OnInit {
   @Input() testimonial: Testimonial;
 
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log(this.testimonial)
+  }
 }

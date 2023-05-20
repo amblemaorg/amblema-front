@@ -71,7 +71,7 @@ xdescribe('ChecklistBlockComponent', () => {
                         { name: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                         { name: 'Una semana antes, los docentes construiran un mapa base de Venezuela con sus divisiones y el nombre de los estados.' },
                     ],
-                    material: 'https://binauraldev.com/ecommerce/',
+                    material: 'https://amblema.org/',
                     button: {
                         name: 'Guardar'
                     },
@@ -90,7 +90,7 @@ xdescribe('ChecklistBlockComponent', () => {
                 NgSelectModule
             ],
             providers: [{ provide: ToastrService, useClass: ToastrService }],
-        });   
+        });
         TestBed.overrideModule(BrowserDynamicTestingModule, {
             set: {
                 entryComponents: [ChecklistBlockComponent]

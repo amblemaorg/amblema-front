@@ -670,7 +670,7 @@ export class TableBlockComponent
         } else errorMsg();
       },
       (error) => {
-        console.log(error);
+        console.error(error);
         errorMsg();
       }
     );

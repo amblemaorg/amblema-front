@@ -433,6 +433,51 @@ owl-carousel-o {
   }
 }
 
+//Estilizar los testimonios en el detalle de escuelas
+.owl-carousel .owl-stage{display: flex;}
+.owl-item{display: flex;}
+web-testimonial-card.ng-star-inserted{
+  height: 100% !important;
+  min-height: 100% !important;
+  display: flex;
+  // flex: 1 0 auto;
+  //overflow-y: auto;
+
+      /* width */
+    ::-webkit-scrollbar {
+      width: 0.6em;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 0.6em;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+}
+.testimonial-card{
+  position: relative;
+  overflow: hidden;
+  //margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.testimonial-content{
+  overflow-y: auto;
+  height: 6.5em !important;
+}
+
+
 .margin-both-auto {
   margin-left: auto !important;
   margin-right: auto !important;
