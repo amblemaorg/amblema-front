@@ -131,8 +131,12 @@ export class AppRoutingModule {
             JSON.stringify(newAuthAppToken),
           )
           const decodedAccessToken = decodeJwtPayload(response.access_token)
-          const permissions = decodedAccessToken.identity.permissions
-          const userType = decodedAccessToken.identity.userType
+          const res = await this.http
+              .post<any>(`${environment.baseUrl}auth/me`, {email:decodedAccessToken.identity.email}, {})
+              .toPromise()
+          const {data} = res
+          const permissions = data.permissions
+          const userType = data.userType
           const userName = decodedAccessToken.identity.name
 
           // Whether enters to peca or phas to be called
