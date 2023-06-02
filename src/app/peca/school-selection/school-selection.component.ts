@@ -54,8 +54,6 @@ export class SchoolSelectionComponent implements OnInit {
             .post<any>(`${environment.baseUrl}auth/me`, {email:response.identity.email}, {})
             .toPromise()
         const {data} = res
-        // console.log('ME ENDPOINT',data)
-        // console.log('RESPONSE.IDENTITY',response.identity)
         this.store.dispatch([new SetUser(data)]);
         this.projects = data.projects;
         this.permissions = data.permissions;
