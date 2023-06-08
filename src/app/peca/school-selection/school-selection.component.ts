@@ -51,9 +51,9 @@ export class SchoolSelectionComponent implements OnInit {
         let tokens = JSON.parse(token.getValue());
         response = decodeJwtPayload(tokens.access_token);
         const res = await this.http
-            .post<any>(`${environment.baseUrl}auth/me`, {email:response.identity.email}, {})
+            .get<any>(`${environment.baseUrl}auth/me`)
             .toPromise()
-        const {data} = res
+        const { data } = res
         this.store.dispatch([new SetUser(data)]);
         this.projects = data.projects;
         this.permissions = data.permissions;
