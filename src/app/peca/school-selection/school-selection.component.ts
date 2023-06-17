@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from "@angular/core";
 import { faArrowLeft, faSignOutAlt  } from "@fortawesome/free-solid-svg-icons";
 import { Router } from "@angular/router";
@@ -10,6 +11,7 @@ import { UpdateUserInfo, SetCurrentUser } from '../../store/actions/e-learning/u
 import { UpdateStepsProgress, UpdateStepsSelectedProject } from '../../store/actions/steps/project.actions';
 import { StepsService } from '../../services/steps/steps.service';
 import { UpdateStates, UpdateMunicipalities } from '../../store/actions/steps/residence-info.actions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: "app-school-selection",
@@ -34,7 +36,8 @@ export class SchoolSelectionComponent implements OnInit {
     private router: Router,
     private authService: NbAuthService,
     private store: Store,
-    private stepsService: StepsService
+    private stepsService: StepsService,
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {
@@ -43,15 +46,19 @@ export class SchoolSelectionComponent implements OnInit {
 
   getTokenInfo() {
     let response;
-    this.authService.getToken().subscribe((token: NbAuthOAuth2Token) => {
+    this.authService.getToken().subscribe(async (token: NbAuthOAuth2Token) => {
       if (token.isValid()) {
         let tokens = JSON.parse(token.getValue());
         response = decodeJwtPayload(tokens.access_token);
-        this.store.dispatch([new SetUser(response.identity)]);
-        this.projects = response.identity.projects;
-        this.permissions = response.identity.permissions;
-        this.userType = response.identity.userType;
-        this.idUser = response.identity.id;
+        const res = await this.http
+            .get<any>(`${environment.baseUrl}auth/me`)
+            .toPromise()
+        const { data } = res
+        this.store.dispatch([new SetUser(data)]);
+        this.projects = data.projects;
+        this.permissions = data.permissions;
+        this.userType = data.userType;
+        this.idUser = data.id;
         this.emailUser = response.identity.email;
         this.nameUser = response.identity.name;
 
