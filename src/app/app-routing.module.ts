@@ -132,7 +132,7 @@ export class AppRoutingModule {
           )
           const decodedAccessToken = decodeJwtPayload(response.access_token)
           const res = await this.http
-              .post<any>(`${environment.baseUrl}auth/me`, {email:decodedAccessToken.identity.email}, {})
+              .get<any>(`${environment.baseUrl}auth/me`)
               .toPromise()
           const {data} = res
           const permissions = data.permissions
