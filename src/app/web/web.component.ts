@@ -105,10 +105,13 @@ export class WebComponent implements OnInit {
       element.classList.add(className);
     }
   }
-
   removeElementClass(element: any, className: string) {
     if (this.globalService.isBrowser) {
       element.classList.remove(className);
     }
+  }
+
+  remove() {
+    
   }
 }
