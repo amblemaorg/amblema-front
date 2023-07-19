@@ -14,6 +14,7 @@ import { METADATA } from "../../web-pages-metadata";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { Store } from "@ngxs/store";
 
+
 @Component({
   selector: "app-sponsors",
   templateUrl: "./sponsors.component.html",
