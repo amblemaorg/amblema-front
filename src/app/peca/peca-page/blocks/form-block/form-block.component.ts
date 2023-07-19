@@ -380,8 +380,8 @@ export class FormBlockComponent
       "Apellido",
       "Tipo de documento",
       "Documento de identidad",
-      "Fecha de nacimiento",
       "Género",
+      "Fecha de nacimiento",
       "Grado",
       "Sección",
     ];
@@ -389,7 +389,7 @@ export class FormBlockComponent
     let row_aux = [];
     let genero = "";
     let fecha = "";
-
+    console.log("aqio")
     const currentSectionName = this.sectionsArr.filter((section) => {
       const randomStudent = this.studentsData[0];
       if (section.id === randomStudent.section) {
@@ -412,8 +412,8 @@ export class FormBlockComponent
         this.studentsData[i]?.lastName || "",
         "V" || "", // TODO: check this
         this.studentsData[i]?.documentGroup?.prependInput || "",
-        fecha,
         genero,
+        fecha,
         this.studentsData[i]?.grades || "",
         currentSectionName || "",
       ];
@@ -2081,8 +2081,8 @@ export class FormBlockComponent
       "Apellido",
       "Tipo de documento",
       "Documento de identidad",
-      "Fecha de nacimiento",
       "Género",
+      "Fecha de nacimiento",
       "Grado",
       "Sección",
     ];
@@ -2103,8 +2103,8 @@ export class FormBlockComponent
         studentsData[i]?.lastName || "",
         cardType === 2 ? "E" : "V", // TODO: check this
         studentsData[i]?.cardId || "",
-        fecha,
         genero,
+        fecha,
         studentsData[i]?.grades || "",
         studentsData[i].section || "",
       ];
