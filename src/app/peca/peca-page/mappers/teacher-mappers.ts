@@ -16,6 +16,7 @@ export function teachersDataToTeachersTableMapper(teachersData) {
       status,
       annualPreparationStatus,
       specialty,
+      workPosition,
     } = teacher;
 
     return {
@@ -39,6 +40,7 @@ export function teachersDataToTeachersTableMapper(teachersData) {
       street: address,
       city: addressCity,
       specialty: specialty.id,
+      workPosition: workPosition.id,
     };
   });
 }
