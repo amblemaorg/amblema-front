@@ -54,7 +54,7 @@ export const HOME_CONTENT = {
             { label: '2019-2020', serie: 'Lapso 2', value: 0.6 },
             { label: '2019-2020', serie: 'Lapso 3', value: 1 },
           ],
-          goals: [{ label: 'Valor esperado', value: 1 }],
+          goals: [{ label: 'Valor esperado', value: 100 }],
           testimonial: {
             firstName: 'Oscar A.',
             lastName: 'Pietri Pacheco',
@@ -86,7 +86,7 @@ export const HOME_CONTENT = {
             { label: '2019-2020', serie: 'Lapso 2', value: 0.4 },
             { label: '2019-2020', serie: 'Lapso 3', value: 0.5 },
           ],
-          goals: [{ label: 'Valor esperado', value: 1 }],
+          goals: [{ label: 'Valor esperado', value: 100 }],
           testimonial: {
             firstName: 'Oscar A.',
             lastName: 'Pietri Pacheco',
@@ -118,7 +118,7 @@ export const HOME_CONTENT = {
             { label: '2019-2020', serie: 'Lapso 2', value: 0.4 },
             { label: '2019-2020', serie: 'Lapso 3', value: 0.25 },
           ],
-          goals: [{ label: 'Valor esperado', value: 1 }],
+          goals: [{ label: 'Valor esperado', value: 100 }],
           testimonial: {
             firstName: 'Oscar A.',
             lastName: 'Pietri Pacheco',
