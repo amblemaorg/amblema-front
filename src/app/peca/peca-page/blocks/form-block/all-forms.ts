@@ -905,6 +905,13 @@ export const formTabsDocente = {
     ...controlProps.selectAndRequired,
     options: [],
   },
+  workPosition: {
+    label: "Cargo",
+    placeholder: "Cargo",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [],
+  },
 };
 /*TABS GRADOS Y SECCIONES*/
 export const formGradosSecciones = {

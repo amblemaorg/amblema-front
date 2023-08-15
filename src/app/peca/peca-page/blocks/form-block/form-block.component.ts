@@ -2507,6 +2507,7 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
 
   async body() {
     this.fillSelectSpecialty();
+    this.fillSelectWorkPosition();
   }
 
   // setting and fill options for the fields
@@ -2521,6 +2522,18 @@ class docenteFormBLock extends FormBlock implements FormBlockAbstract {
     });
 
     this.fillSelect("specialty", specialTyOp); // Set array options to the field "specialty"
+  }
+  async fillSelectWorkPosition() {
+    let workPositionTyOp: FormBlockFieldOption[] = [];
+    let workPositionsApi = await this.dep.fetcher.get("work-position").toPromise(); // get option from api
+
+    // Adapt request to options field object structure {id: string, name: string}
+    workPositionTyOp = workPositionsApi.records.map((workPositionApi) => {
+      const { id, name } = workPositionApi;
+      return { id, name };
+    });
+
+    this.fillSelect("workPosition", workPositionTyOp); // Set array options to the field "workPosition"
   }
 }
 
