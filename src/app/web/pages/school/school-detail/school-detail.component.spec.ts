@@ -270,7 +270,7 @@ describe("SchoolDetailComponent", () => {
         "Diagnóstico de lectura fluida: Medimos trimestralmente el número de palabras leídas por minuto. La gráfica muestra el índice de resultados, en comparación con las metas por nivel en el tiempo. PPM. Palabras por minuto.",
       type: "bar",
       data: [],
-      goals: [{ label: "Valor esperado", value: 1 }],
+      goals: [{ label: "Valor esperado", value: 100 }],
       testimonial: {
         firstName: "Oscar A.",
         lastName: "Pietri Pacheco",
@@ -287,7 +287,7 @@ describe("SchoolDetailComponent", () => {
         "Medimos cada trimestre cuantas multiplicaciones de una cifra son contestadas correctamente en 2 minutos. La gráfica muestra el índice de resultados en base a la meta por grado. M2M. Multiplicaciónes en 2 minutos",
       type: "bar",
       data: [],
-      goals: [{ label: "Valor esperado", value: 1 }],
+      goals: [{ label: "Valor esperado", value: 100 }],
       testimonial: {
         firstName: "Oscar A.",
         lastName: "Pietri Pacheco",
@@ -304,7 +304,7 @@ describe("SchoolDetailComponent", () => {
         "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",
       type: "bar",
       data: [],
-      goals: [{ label: "Valor esperado", value: 1 }],
+      goals: [{ label: "Valor esperado", value: 100 }],
       testimonial: {
         firstName: "Oscar A.",
         lastName: "Pietri Pacheco",
