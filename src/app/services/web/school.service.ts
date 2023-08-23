@@ -3,11 +3,11 @@ import { Observable, of } from 'rxjs';
 
 const diagnosticText = {
   lecture:
-    'Medimos cada trimestre el número de palabras leídas por minuto (PPM). La gráfica muestra el promedio del índice del número de PPM frente a la meta por grado. Ejemplo: 0.45 significa que se está al 45 % respecto a la meta.',
+    'Medimos cada trimestre el número de palabras leídas por minuto (PPM). La gráfica muestra el porcentaje alcanzado de PPM frente a la meta del grado que sería el 100%.',
   math:
-    'Medimos cada trimestre la cantidad de multiplicaciones de una cifra resueltas de forma correcta en 2 minutos (M2M). La gráfica muestra el promedio del índice del número de M2M frente a la meta por grado. Ejemplo: 0.33 significa que se está al 33 % respecto a la meta.',
+    'Medimos cada trimestre la cantidad de multiplicaciones de una cifra resueltas de forma correcta en 2 minutos (M2M). La gráfica muestra el porcentaje alcanzado de M2M frente a la meta del grado que sería el 100 %.',
   logicMath:
-    'Medimos cada trimestre la cantidad de problemas de razonamiento lógico-matemático, adecuados a cada nivel, resueltos de forma correcta en 60 minutos (60LM). La gráfica muestra el promedio del índice del número de 60LM frente a la meta por grado. Ejemplo: 0.63 significa que se está al 63 % respecto a la meta.',
+    'Medimos cada trimestre la cantidad de problemas de razonamiento lógico-matemático, adecuados a cada nivel, resueltos de forma correcta en 60 minutos (60LM). La gráfica muestra el porcentaje alcanzado de 60LM frente a la meta del grado que sería el 100 %.',
 };
 
 const charts = [
