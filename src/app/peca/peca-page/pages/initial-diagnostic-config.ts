@@ -89,6 +89,7 @@ const readingDiagnosticTable = {
   component: "table",
   name: "readingTable",
   settings: {
+    isMulti: true,
     columns: {
       name: {
         title: "Nombre",
@@ -276,6 +277,7 @@ const mathDiagnosticTable = {
   component: "table",
   name: "mathTable",
   settings: {
+    isMulti: true,
     columns: {
       name: {
         title: "Nombre",
