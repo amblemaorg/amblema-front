@@ -899,8 +899,15 @@ export const formTabsDocente = {
     ],
   },
   specialty: {
-    label: "Especialidad",
-    placeholder: "Especialidad",
+    label: "Grado de instrucción",
+    placeholder: "Grado de instrucción",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [],
+  },
+  workPosition: {
+    label: "Cargo",
+    placeholder: "Cargo",
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [],

@@ -127,6 +127,7 @@ export function structureData(
         city: cf.get("city").value,
         gender: cf.get("gender").value,
         specialty: cf.get("specialty").value,
+        workPosition: cf.get("workPosition").value,
       };
       break;
     case "buscarEstudiante": // for Datos de la Escuela view and Estudiantes section

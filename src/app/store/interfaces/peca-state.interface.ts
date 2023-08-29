@@ -515,6 +515,7 @@ interface Teacher2 {
   addressState: User;
   addressMunicipality: User;
   specialty: User | string;
+  workPosition: User | string;
   address: string;
   addressCity: string;
   status: string;

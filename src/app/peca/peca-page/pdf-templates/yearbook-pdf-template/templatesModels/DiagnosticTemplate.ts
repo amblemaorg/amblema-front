@@ -50,6 +50,18 @@ export class DiagnosticTemplate extends Template {
   }
 
   buildChart(chart: Chart) {
+    var dataset = []
+    for(var i=0; i<chart.datasets[0].data.length; i++){
+      if(typeof chart.datasets[0].data[i] == "string"){
+        dataset.push(parseFloat(chart.datasets[0].data[i].toString()))
+      }else{
+        dataset.push(chart.datasets[0].data[i]);
+      }
+    }
+    var max = Math.max(...dataset)
+    var maxValue = max > 100 ? max : 100
+    
+    console.log(dataset)
     const fontColor = '#111';
     const options = {
       maintainAspectRatio: false,
@@ -66,6 +78,7 @@ export class DiagnosticTemplate extends Template {
             ticks: {
               fontColor,
               beginAtZero: true,
+              max: maxValue
             },
           },
         ],

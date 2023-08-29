@@ -132,10 +132,12 @@ export abstract class BarChartComponent extends ChartComponent {
   asymptotes: Asymptote[] = [];
   abstract configAsymptotes(): void;
 
-  calculateNumericAxisRange(axis: string = 'y', space: number = 5): { min: number; max: number } {
+  calculateNumericAxisRange(axis: string = 'y', space: number = 0): { min: number; max: number } {
     const asymtotes = this.asymptotes.filter((asymtote) => asymtote.axis == axis);
     const axisValues = [...this.data, ...asymtotes].map((element) => <number>element.value);
-    const minAndMax = this.findMinMaxInArray(axisValues);
+    let minAndMax = this.findMinMaxInArray(axisValues);
+    minAndMax[1] = minAndMax[1] > 100 ? minAndMax[1] : 100
+    
     return { min: minAndMax[0] - space, max: minAndMax[1] + space };
   }
 

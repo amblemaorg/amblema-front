@@ -203,7 +203,7 @@ export class GraphicsBlockComponent
         {
           label: this.settings.legendName
             ? this.settings.legendName
-            : 'Diagnóstico de lectura',
+            : 'Diagnóstico de lectura (%)',
           data: this.dataChart,
           backgroundColor: this.arrayColors,
           fill: true,
@@ -215,6 +215,10 @@ export class GraphicsBlockComponent
   }
 
   getOptions() {
+    var max = Math.max(...this.dataChart)
+    var maxValue = max > 100 ? max : 100
+    console.log(maxValue)
+
     if (this.settings.options) {
       return this.settings.options
     }
@@ -228,9 +232,12 @@ export class GraphicsBlockComponent
       scales: {
         yAxes: [
           {
+            suggestedMax: 100,
+            suggestedMin: 0,
             ticks: {
               fontColor: this.color,
               beginAtZero: true,
+              max: maxValue
             },
           },
         ],

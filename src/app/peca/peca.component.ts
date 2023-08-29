@@ -394,10 +394,12 @@ export class PecaComponent implements OnInit, OnDestroy {
       Object.keys(this.lapseOptionsConfig).map((lapsOpt) => {
         if (lapsOpt !== 'activities' && lapse[lapsOpt]) {
           const lapseOption = this.lapseOptionsConfig[lapsOpt]
+          
           lapseOptions.push({
             ...lapseOption,
             link: `lapso/${i}/${lapseOption.link}`,
             parent: this.menu[i - 1],
+            order: lapse[lapsOpt].order ? lapse[lapsOpt].order : lapseOption.order
           })
         }
       })
@@ -410,9 +412,10 @@ export class PecaComponent implements OnInit, OnDestroy {
           title: activity.name,
           link: `lapso/${i}/${lapseActivity.link}/${activity.devName}`,
           parent: this.menu[i - 1],
+          order: activity.order ? activity.order : lapseActivity.order
         })
       })
-
+      lapseOptions.sort((a, b) => a.order - b.order); 
       this.menu[i - 1].children = lapseOptions
     }
 
