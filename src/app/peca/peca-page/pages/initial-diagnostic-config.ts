@@ -13,6 +13,10 @@ const botonEstadisticaLectura = {
         type: 5,
         name: "Ver estadísticas",
       },
+      {
+        type: 5,
+        name: "Exportar",
+      },
     ],
     modalCode: "dataModalEstadisticasLectura",
   },
@@ -89,6 +93,7 @@ const readingDiagnosticTable = {
   component: "table",
   name: "readingTable",
   settings: {
+    tableTitle: "Diagnóstico de lectura",
     isMulti: true,
     columns: {
       name: {
@@ -277,6 +282,7 @@ const mathDiagnosticTable = {
   component: "table",
   name: "mathTable",
   settings: {
+    tableTitle: "Diagnóstico de matemática",
     isMulti: true,
     columns: {
       name: {

@@ -102,7 +102,7 @@ $table-border-color: 1px solid $blue;
     padding: 1rem 2rem !important;
   }
   .nb-theme-default ng2-smart-table.is-multi.table-block-component {
-    @include isMulti("7");
+    @include isMulti("10");
   }
   .nb-theme-default ng2-smart-table {
     &.is-empty table {
