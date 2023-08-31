@@ -168,7 +168,7 @@ export class HomeComponent implements OnInit {
           return lapse;
         });
         chart.data.map((element)=> {
-          element.value = element.value > 0 && element.value < 1 ? element.value * 100 : element.value
+          element.value = element.value > 0 && element.value < 1 ? parseFloat((element.value * 100).toFixed(2)) : parseFloat(element.value.toFixed(2))
         })
         return chart.data;
       });
