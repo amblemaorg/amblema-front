@@ -14,11 +14,13 @@ const botonEstadisticaLectura = {
         name: "Ver estadísticas",
       },
       {
-        type: 5,
+        type: 8,
         name: "Exportar",
       },
     ],
     modalCode: "dataModalEstadisticasLectura",
+    nameDiag: "Diagnóstico de lectura",
+    typeDiag: "reading"
   },
 };
 
@@ -52,8 +54,14 @@ const botonEstadisticaMatematica = {
         type: 5,
         name: "Ver estadísticas",
       },
+      {
+        type: 8,
+        name: "Exportar",
+      },
     ],
     modalCode: "dataModalEstadisticasMatematica",
+    typeDiag: "math"
+  
   },
 };
 /***************************** */

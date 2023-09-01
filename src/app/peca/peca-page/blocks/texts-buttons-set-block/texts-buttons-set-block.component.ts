@@ -11,6 +11,9 @@ import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
 import { FormBuilder } from "@angular/forms";
 import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
+import { saveAs } from "file-saver";
+import XLSX from "xlsx";
+
 
 @Component({
   selector: "buttons-set-block",
@@ -24,6 +27,8 @@ export class TextsButtonsSetBlockComponent
   component: string;
   showModalInfo: boolean;
   settings: {
+    nameDiag?: any;
+    typeDiag?: any;
     modalCode?: string; // for views with modal inside
     dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
@@ -196,11 +201,14 @@ export class TextsButtonsSetBlockComponent
     this.component = "buttons";
     this.glbls = globals;
     this.showModalInfo = false;
+    localStorage.setItem("stud_data", JSON.stringify([]));
+  
   }
 
   currentSelected = null;
   isSending: boolean;
   id_: string;
+  diagnosticsData = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -676,7 +684,125 @@ export class TextsButtonsSetBlockComponent
     if (!usingModal) this.globals.tableDataUpdater(obj);
     else this.globals.ModalShower(obj);
   }
+  exportDiagnostics(){
+    console.log(JSON.parse(localStorage.getItem("stud_data")))
+    const workbookBin = this.makeExcel();
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `${this.settings.nameDiag}.xls`
+    );
+  }
+  getStudentsCount() {
+    const count = JSON.parse(localStorage.getItem("stud_data")).length;
+    return count <= 0;
+  }
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
+  }
+  makeExcel() {
+    this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
 
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    if(this.settings.typeDiag == "reading"){
+      columns_header = [
+        "Nombre",
+        "Apellido",
+        "Género",
+        "Grado",
+        "Sección",
+        "Fecha de resultado",
+        "Resultado",
+        "Indice"
+      ];
+    }else{
+      columns_header = [
+        "Nombre",
+        "Apellido",
+        "Género",
+        "Grado",
+        "Sección",
+        "Fecha de resultado multiplicación",
+        "Resultado multiplicación",
+        "Indice multiplicación",
+        "Fecha de resultado lógica matemática",
+        "Resultado lógica matemática",
+        "Indice lógica matemática"
+      ];
+    }
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 1){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+        if(this.settings.typeDiag == "reading"){
+          data = [
+            this.diagnosticsData[i]?.name || "",
+            this.diagnosticsData[i]?.lastName || "",
+            genero,
+            this.diagnosticsData[i]?.grade || "",
+            this.diagnosticsData[i].section || "",
+            fecha,
+            this.diagnosticsData[i]?.result || "",
+            this.diagnosticsData[i]?.index || "",
+          ];
+        }else{
+          fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        
+          data = [
+            this.diagnosticsData[i]?.name || "",
+            this.diagnosticsData[i]?.lastName || "",
+            genero,
+            this.diagnosticsData[i]?.grade || "",
+            this.diagnosticsData[i].section || "",
+            fecha,
+            this.diagnosticsData[i]?.resultMul || "",
+            this.diagnosticsData[i]?.indexMul || "",
+            fechaLog,
+            this.diagnosticsData[i]?.resultLog || "",
+            this.diagnosticsData[i]?.indexLog || "",
+          ];
+        }          
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
   takeAction(type: number, e) {
     /**
      * 1 guardar or Si (on delete action),

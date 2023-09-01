@@ -563,6 +563,19 @@
           </button>
         </ng-container>
 
+        <ng-container
+          *ngIf="action.type == 8"
+        >
+          <button
+            *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="exportDiagnostics()"
+            [disabled] = "getStudentsCount()"
+          >
+            {{ action.name }}
+          </button>
+        </ng-container>
+
         <!-- Botón cuando no se encuentra dentro del modal es aqui-->
         <!-- &&
               action.extraData &&
