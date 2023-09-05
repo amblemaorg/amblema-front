@@ -686,7 +686,12 @@ export class TextsButtonsSetBlockComponent
   }
   exportDiagnostics(){
     console.log(JSON.parse(localStorage.getItem("stud_data")))
-    const workbookBin = this.makeExcel();
+    let workbookBin = null;
+    if(this.settings.typeDiag=="reading"){
+      workbookBin = this.makeExcel();
+    }else{
+      workbookBin = this.makeExcelMath();
+    }
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
       new Blob([octetStream], { type: "application/octet-stream" }),
@@ -717,32 +722,17 @@ export class TextsButtonsSetBlockComponent
 
     workbook.SheetNames.push(this.settings.nameDiag);
     let columns_header = []
-    if(this.settings.typeDiag == "reading"){
-      columns_header = [
-        "Nombre",
-        "Apellido",
-        "Género",
-        "Grado",
-        "Sección",
-        "Fecha de resultado",
-        "Resultado",
-        "Indice"
-      ];
-    }else{
-      columns_header = [
-        "Nombre",
-        "Apellido",
-        "Género",
-        "Grado",
-        "Sección",
-        "Fecha de resultado multiplicación",
-        "Resultado multiplicación",
-        "Indice multiplicación",
-        "Fecha de resultado lógica matemática",
-        "Resultado lógica matemática",
-        "Indice lógica matemática"
-      ];
-    }
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado",
+      "Resultado",
+      "Indice"
+    ];
+    
     let matrix = [];
     let row_aux = [];
     let genero = "";
@@ -756,37 +746,17 @@ export class TextsButtonsSetBlockComponent
           .split("/")
           .join("-");
         let data = []
-        if(this.settings.typeDiag == "reading"){
-          data = [
-            this.diagnosticsData[i]?.name || "",
-            this.diagnosticsData[i]?.lastName || "",
-            genero,
-            this.diagnosticsData[i]?.grade || "",
-            this.diagnosticsData[i].section || "",
-            fecha,
-            this.diagnosticsData[i]?.result || "",
-            this.diagnosticsData[i]?.index || "",
-          ];
-        }else{
-          fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
-          .toLocaleDateString("es-VE")
-          .split("/")
-          .join("-");
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.result || "",
+          this.diagnosticsData[i]?.index || "",
+        ];
         
-          data = [
-            this.diagnosticsData[i]?.name || "",
-            this.diagnosticsData[i]?.lastName || "",
-            genero,
-            this.diagnosticsData[i]?.grade || "",
-            this.diagnosticsData[i].section || "",
-            fecha,
-            this.diagnosticsData[i]?.resultMul || "",
-            this.diagnosticsData[i]?.indexMul || "",
-            fechaLog,
-            this.diagnosticsData[i]?.resultLog || "",
-            this.diagnosticsData[i]?.indexLog || "",
-          ];
-        }          
         row_aux.push(data);
       }
     }
@@ -803,6 +773,82 @@ export class TextsButtonsSetBlockComponent
     });
     return workbookBinary;
   }
+  makeExcelMath() {
+    this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+    console.log(this.settings.nameDiag);
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado multiplicación",
+      "Resultado multiplicación",
+      "Indice multiplicación",
+      "Fecha de resultado lógica matemática",
+      "Resultado lógica matemática",
+      "Indice lógica matemática"
+    ];
+    
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 1){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+    
+        fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.resultMul || "",
+          this.diagnosticsData[i]?.indexMul || "",
+          fechaLog,
+          this.diagnosticsData[i]?.resultLog || "",
+          this.diagnosticsData[i]?.indexLog || "",
+        ];
+        
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+  
   takeAction(type: number, e) {
     /**
      * 1 guardar or Si (on delete action),

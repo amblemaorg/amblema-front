@@ -55,13 +55,14 @@ const botonEstadisticaMatematica = {
         name: "Ver estadísticas",
       },
       {
-        type: 8,
+        type: 9,
         name: "Exportar",
       },
     ],
     modalCode: "dataModalEstadisticasMatematica",
-    typeDiag: "math"
-  
+    typeDiag: "math",
+    nameDiag: "Diagnóstico de matemática",
+    
   },
 };
 /***************************** */
