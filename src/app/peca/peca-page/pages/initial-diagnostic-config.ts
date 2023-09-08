@@ -4,6 +4,7 @@ import {
 } from "../blocks/form-block/all-forms";
 import { parseDate } from "../functions/parse-date";
 
+
 /*Boton estadistica Lectura y modal con grafica*/
 const botonEstadisticaLectura = {
   component: "textsbuttons",
@@ -16,6 +17,10 @@ const botonEstadisticaLectura = {
       {
         type: 8,
         name: "Exportar",
+      },
+      {
+        type: 10,
+        name: "Importar diagnósticos",
       },
     ],
     modalCode: "dataModalEstadisticasLectura",

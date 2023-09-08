@@ -13,7 +13,7 @@ import { FormBuilder } from "@angular/forms";
 import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
 import { saveAs } from "file-saver";
 import XLSX from "xlsx";
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: "buttons-set-block",
@@ -26,6 +26,11 @@ export class TextsButtonsSetBlockComponent
   type: "presentational";
   component: string;
   showModalInfo: boolean;
+  showImportModal: boolean;
+  showUploadBtn: boolean;
+  studentsToImport: any[];
+  importingData: boolean;
+  lapse: number;
   settings: {
     nameDiag?: any;
     typeDiag?: any;
@@ -195,14 +200,15 @@ export class TextsButtonsSetBlockComponent
     private store: Store,
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
+  
   ) {
     this.type = "presentational";
     this.component = "buttons";
     this.glbls = globals;
     this.showModalInfo = false;
     localStorage.setItem("stud_data", JSON.stringify([]));
-  
   }
 
   currentSelected = null;
@@ -1676,6 +1682,117 @@ export class TextsButtonsSetBlockComponent
     const style = margin + removeML;
 
     return style;
+  }
+  openModal() {
+    this.showImportModal = true;
+  
+  }
+  handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      const data = new Uint8Array(reader.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+      const elements = [];
+
+      studentsData.forEach((student) => {
+        elements.push(
+          student["Nombre"],
+          student["Apellido"],
+          student["Género"],
+          student["Grado"],
+          student["Sección"],
+          student["Fecha de resultado"],
+          student["Resultado"],
+          student["Indice"]          
+        );
+      });
+      const el_cleaned = elements;
+      const num_cols = 8;
+
+      const matrix = el_cleaned.reduce(
+        (rows, key, index) =>
+          (index % num_cols == 0
+            ? rows.push([key])
+            : rows[rows.length - 1].push(key)) && rows,
+        []
+      );
+
+      const students: Array<Object> = matrix.map((registry, index) => {
+        const fecha_resultado = this.parseDate(registry[5]);
+        const genero = registry[2] == "Femenino" ? "1" : "2"
+        return {
+          nombre: registry[0] || "",
+          apellido: registry[1] || "",
+          genero: genero || "",
+          grado: registry[3]?.toString() || "",
+          seccion: registry[4]?.toString() || "",
+          fecha_resultado: fecha_resultado || "",
+          resultado: registry[6] || "",
+          indice: registry[7]?.toString() || "",
+        };
+      });
+      this.showUploadBtn = true;
+
+      this.studentsToImport = students;
+      console.log(students);
+    };
+  }
+
+  parseDate(date) {
+    if (typeof date === "number") {
+      const dateString = this.SerialDateToJSDate(date, -4);
+      const dateOutput = new Date(dateString)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      return dateOutput;
+    } else {
+      return date;
+    }
+  }
+
+  SerialDateToJSDate(serialDate, offsetUTC) {
+    return new Date(Date.UTC(0, 0, serialDate, offsetUTC));
+  }
+
+  async importStudents() {
+    this.importingData = true;
+    const resourcePath = `diagnostic/load/${this.pecaId}`;
+    const body = {
+      type: this.settings.typeDiag,
+      students: this.studentsToImport,
+      lapse: this.getLapse()
+    };
+    // console.log("BODY to import: ", body);
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      console.log(result)
+      if (result.error === "false") {
+        console.log("pasa")
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
+  }
+
+  getLapse(){
+    let path = this.location.path()
+    let split_path = path.split("/")
+    return split_path[3];
   }
 
   // myConsoleLog(data) {
