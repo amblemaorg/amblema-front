@@ -63,6 +63,10 @@ const botonEstadisticaMatematica = {
         type: 9,
         name: "Exportar",
       },
+      {
+        type: 10,
+        name: "Importar diagnósticos",
+      },
     ],
     modalCode: "dataModalEstadisticasMatematica",
     typeDiag: "math",

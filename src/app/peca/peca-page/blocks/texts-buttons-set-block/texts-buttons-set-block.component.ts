@@ -1695,24 +1695,44 @@ export class TextsButtonsSetBlockComponent
       const workbook = XLSX.read(data, { type: "array" });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
       const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
-
+      let students = []
       const elements = [];
+      let num_cols = 0;
 
-      studentsData.forEach((student) => {
-        elements.push(
-          student["Nombre"],
-          student["Apellido"],
-          student["Género"],
-          student["Grado"],
-          student["Sección"],
-          student["Fecha de resultado"],
-          student["Resultado"],
-          student["Indice"]          
-        );
-      });
+      if(this.settings.typeDiag=="reading"){
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado"],
+            student["Resultado"],
+            student["Indice"]          
+          );
+          num_cols = 8;
+        });
+      }else{
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado multiplicación"],
+            student["Resultado multiplicación"],
+            student["Indice multiplicación"],          
+            student["Fecha de resultado lógica matemática"],
+            student["Resultado lógica matemática"],
+            student["Indice lógica matemática"]          
+          );
+        });
+        num_cols = 11;
+      }
       const el_cleaned = elements;
-      const num_cols = 8;
-
+      
       const matrix = el_cleaned.reduce(
         (rows, key, index) =>
           (index % num_cols == 0
@@ -1720,21 +1740,43 @@ export class TextsButtonsSetBlockComponent
             : rows[rows.length - 1].push(key)) && rows,
         []
       );
-
-      const students: Array<Object> = matrix.map((registry, index) => {
-        const fecha_resultado = this.parseDate(registry[5]);
-        const genero = registry[2] == "Femenino" ? "1" : "2"
-        return {
-          nombre: registry[0] || "",
-          apellido: registry[1] || "",
-          genero: genero || "",
-          grado: registry[3]?.toString() || "",
-          seccion: registry[4]?.toString() || "",
-          fecha_resultado: fecha_resultado || "",
-          resultado: registry[6] || "",
-          indice: registry[7]?.toString() || "",
-        };
-      });
+          
+      if(this.settings.typeDiag=="reading"){
+        students = matrix.map((registry, index) => {
+          const fecha_resultado = this.parseDate(registry[5]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado: fecha_resultado || "",
+            resultado: registry[6] || "",
+            indice: registry[7]?.toString() || "",
+          };
+        });
+      }else{
+        students = matrix.map((registry, index) => {
+          const fecha_resultado_mult = this.parseDate(registry[5]);
+          const fecha_resultado_log = this.parseDate(registry[8]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado_mult: fecha_resultado_mult || "",
+            resultado_mult: registry[6] || "",
+            indice_mult: registry[7]?.toString() || "",
+            fecha_resultado_log: fecha_resultado_log || "",
+            resultado_log: registry[9] || "",
+            indice_log: registry[10]?.toString() || "",
+          
+          };
+        });
+      }
       this.showUploadBtn = true;
 
       this.studentsToImport = students;
