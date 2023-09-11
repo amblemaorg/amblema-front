@@ -1837,6 +1837,9 @@ export class TextsButtonsSetBlockComponent
     return split_path[3];
   }
 
+  closeModal() {
+    this.showImportModal = false;
+  }
   // myConsoleLog(data) {
   //   console.log("myConsoleLog: ", data);
   // }
