@@ -11,6 +11,9 @@ import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
 import { FormBuilder } from "@angular/forms";
 import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
+import { saveAs } from "file-saver";
+import XLSX from "xlsx";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "buttons-set-block",
@@ -23,7 +26,14 @@ export class TextsButtonsSetBlockComponent
   type: "presentational";
   component: string;
   showModalInfo: boolean;
+  showImportModal: boolean;
+  showUploadBtn: boolean;
+  studentsToImport: any[];
+  importingData: boolean;
+  lapse: number;
   settings: {
+    nameDiag?: any;
+    typeDiag?: any;
     modalCode?: string; // for views with modal inside
     dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
@@ -190,17 +200,21 @@ export class TextsButtonsSetBlockComponent
     private store: Store,
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
+  
   ) {
     this.type = "presentational";
     this.component = "buttons";
     this.glbls = globals;
     this.showModalInfo = false;
+    localStorage.setItem("stud_data", JSON.stringify([]));
   }
 
   currentSelected = null;
   isSending: boolean;
   id_: string;
+  diagnosticsData = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -676,7 +690,171 @@ export class TextsButtonsSetBlockComponent
     if (!usingModal) this.globals.tableDataUpdater(obj);
     else this.globals.ModalShower(obj);
   }
+  exportDiagnostics(){
+    console.log(JSON.parse(localStorage.getItem("stud_data")))
+    let workbookBin = null;
+    if(this.settings.typeDiag=="reading"){
+      workbookBin = this.makeExcel();
+    }else{
+      workbookBin = this.makeExcelMath();
+    }
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `${this.settings.nameDiag}.xls`
+    );
+  }
+  getStudentsCount() {
+    const count = JSON.parse(localStorage.getItem("stud_data")).length;
+    return count <= 0;
+  }
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
+  }
+  makeExcel() {
+    this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
 
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado",
+      "Resultado",
+      "Indice"
+    ];
+    
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 1){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.result || "",
+          this.diagnosticsData[i]?.index || "",
+        ];
+        
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+  makeExcelMath() {
+    this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+    console.log(this.settings.nameDiag);
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado multiplicación",
+      "Resultado multiplicación",
+      "Indice multiplicación",
+      "Fecha de resultado lógica matemática",
+      "Resultado lógica matemática",
+      "Indice lógica matemática"
+    ];
+    
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 1){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+    
+        fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.resultMul || "",
+          this.diagnosticsData[i]?.indexMul || "",
+          fechaLog,
+          this.diagnosticsData[i]?.resultLog || "",
+          this.diagnosticsData[i]?.indexLog || "",
+        ];
+        
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+  
   takeAction(type: number, e) {
     /**
      * 1 guardar or Si (on delete action),
@@ -1505,7 +1683,163 @@ export class TextsButtonsSetBlockComponent
 
     return style;
   }
+  openModal() {
+    this.showImportModal = true;
+  
+  }
+  handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      const data = new Uint8Array(reader.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+      let students = []
+      const elements = [];
+      let num_cols = 0;
 
+      if(this.settings.typeDiag=="reading"){
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado"],
+            student["Resultado"],
+            student["Indice"]          
+          );
+          num_cols = 8;
+        });
+      }else{
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado multiplicación"],
+            student["Resultado multiplicación"],
+            student["Indice multiplicación"],          
+            student["Fecha de resultado lógica matemática"],
+            student["Resultado lógica matemática"],
+            student["Indice lógica matemática"]          
+          );
+        });
+        num_cols = 11;
+      }
+      const el_cleaned = elements;
+      
+      const matrix = el_cleaned.reduce(
+        (rows, key, index) =>
+          (index % num_cols == 0
+            ? rows.push([key])
+            : rows[rows.length - 1].push(key)) && rows,
+        []
+      );
+          
+      if(this.settings.typeDiag=="reading"){
+        students = matrix.map((registry, index) => {
+          const fecha_resultado = this.parseDate(registry[5]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado: fecha_resultado || "",
+            resultado: registry[6] || "",
+            indice: registry[7]?.toString() || "",
+          };
+        });
+      }else{
+        students = matrix.map((registry, index) => {
+          const fecha_resultado_mult = this.parseDate(registry[5]);
+          const fecha_resultado_log = this.parseDate(registry[8]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado_mult: fecha_resultado_mult || "",
+            resultado_mult: registry[6] || "",
+            indice_mult: registry[7]?.toString() || "",
+            fecha_resultado_log: fecha_resultado_log || "",
+            resultado_log: registry[9] || "",
+            indice_log: registry[10]?.toString() || "",
+          
+          };
+        });
+      }
+      this.showUploadBtn = true;
+
+      this.studentsToImport = students;
+      console.log(students);
+    };
+  }
+
+  parseDate(date) {
+    if (typeof date === "number") {
+      const dateString = this.SerialDateToJSDate(date, -4);
+      const dateOutput = new Date(dateString)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      return dateOutput;
+    } else {
+      return date;
+    }
+  }
+
+  SerialDateToJSDate(serialDate, offsetUTC) {
+    return new Date(Date.UTC(0, 0, serialDate, offsetUTC));
+  }
+
+  async importStudents() {
+    this.importingData = true;
+    const resourcePath = `diagnostic/load/${this.pecaId}`;
+    const body = {
+      type: this.settings.typeDiag,
+      students: this.studentsToImport,
+      lapse: this.getLapse()
+    };
+    // console.log("BODY to import: ", body);
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      console.log(result)
+      if (result.error === "false") {
+        console.log("pasa")
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
+  }
+
+  getLapse(){
+    let path = this.location.path()
+    let split_path = path.split("/")
+    return split_path[3];
+  }
+
+  closeModal() {
+    this.showImportModal = false;
+  }
   // myConsoleLog(data) {
   //   console.log("myConsoleLog: ", data);
   // }

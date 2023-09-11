@@ -563,6 +563,46 @@
           </button>
         </ng-container>
 
+        <ng-container
+          *ngIf="action.type == 8"
+        >
+          <button
+            *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="exportDiagnostics()"
+            [disabled] = "getStudentsCount()"
+          >
+            {{ action.name }}
+          </button>
+        </ng-container>
+        <ng-container
+          *ngIf="action.type == 9"
+        >
+          <button
+            *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="exportDiagnostics()"
+            [disabled] = "getStudentsCount()"
+          >
+            {{ action.name }}
+          </button>
+        </ng-container>
+        
+        <ng-container *ngIf="action.type == 10">
+          <button
+            #modalLauncher
+            type="button"
+            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+            data-toggle="modal"
+            data-target="#no-peca-modal-import"
+            data-backdrop="false"
+            data-keyboard="false"
+            (click)="openModal()"
+          >
+            Importar
+          </button>
+        </ng-container>
+      
         <!-- Botón cuando no se encuentra dentro del modal es aqui-->
         <!-- &&
               action.extraData &&
@@ -630,6 +670,57 @@
               {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
             </button>
           </ng-container>
+
+          <!-- MODAL IMPORTAR ESTUDIANTES -->
+          <div
+          *ngIf="showImportModal; else null"
+          class="modal fade"
+          id="no-peca-modal-import"
+          style="text-align: center;"
+          >
+          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content pb-4">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  (click)="closeModal()"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4>Importar {{settings.nameDiag}}</h4>
+                <p class="py-2">
+                  Por favor, suba el archivo excel con la información de los diagnósticos
+                  a importar:
+                </p>
+                <input
+                  type="file"
+                  id="file"
+                  accept=".xls, .xlsx"
+                  (change)="handleFileInput($event.target.files)"
+                />
+                <div class="full-width d-flex">
+                  <button
+                    *ngIf="showUploadBtn"
+                    #upload
+                    (click)="importStudents()"
+                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
+                  >
+                    <span
+                      *ngIf="importingData"
+                      class="spinner-grow spinner-grow-sm"
+                    ></span>
+                    {{ !importingData ? "Importar data" : "Cargando..." }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
         </ng-template>
       </ng-container>
     </ng-container>

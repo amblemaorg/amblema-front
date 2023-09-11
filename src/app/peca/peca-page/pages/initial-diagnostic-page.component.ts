@@ -49,7 +49,7 @@ export class InitialDiagnosticPageComponent
     factoryResolver: ComponentFactoryResolver,
     globals: GlobalService,
     private router: Router
-  ) {
+    ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>

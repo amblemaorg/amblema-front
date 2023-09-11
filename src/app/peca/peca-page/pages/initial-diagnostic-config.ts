@@ -4,6 +4,7 @@ import {
 } from "../blocks/form-block/all-forms";
 import { parseDate } from "../functions/parse-date";
 
+
 /*Boton estadistica Lectura y modal con grafica*/
 const botonEstadisticaLectura = {
   component: "textsbuttons",
@@ -13,8 +14,18 @@ const botonEstadisticaLectura = {
         type: 5,
         name: "Ver estadísticas",
       },
+      {
+        type: 8,
+        name: "Exportar",
+      },
+      {
+        type: 10,
+        name: "Importar diagnósticos",
+      },
     ],
     modalCode: "dataModalEstadisticasLectura",
+    nameDiag: "Diagnóstico de lectura",
+    typeDiag: "reading"
   },
 };
 
@@ -48,8 +59,19 @@ const botonEstadisticaMatematica = {
         type: 5,
         name: "Ver estadísticas",
       },
+      {
+        type: 9,
+        name: "Exportar",
+      },
+      {
+        type: 10,
+        name: "Importar diagnósticos",
+      },
     ],
     modalCode: "dataModalEstadisticasMatematica",
+    typeDiag: "math",
+    nameDiag: "Diagnóstico de matemática",
+    
   },
 };
 /***************************** */
@@ -89,6 +111,8 @@ const readingDiagnosticTable = {
   component: "table",
   name: "readingTable",
   settings: {
+    tableTitle: "Diagnóstico de lectura",
+    isMulti: true,
     columns: {
       name: {
         title: "Nombre",
@@ -276,6 +300,8 @@ const mathDiagnosticTable = {
   component: "table",
   name: "mathTable",
   settings: {
+    tableTitle: "Diagnóstico de matemática",
+    isMulti: true,
     columns: {
       name: {
         title: "Nombre",
