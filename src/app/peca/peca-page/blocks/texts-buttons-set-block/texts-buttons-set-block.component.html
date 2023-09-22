@@ -587,6 +587,22 @@
             {{ action.name }}
           </button>
         </ng-container>
+        <ng-container
+          *ngIf="action.type == 11"
+        >
+          <button
+            *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="showExportMultiple()"
+            data-toggle="modal"
+            data-target="#no-peca-modal-export"
+            data-backdrop="false"
+            data-keyboard="false"
+            
+            >
+            {{ action.name }}
+          </button>
+        </ng-container>
         
         <ng-container *ngIf="action.type == 10">
           <button
@@ -714,6 +730,78 @@
                       class="spinner-grow spinner-grow-sm"
                     ></span>
                     {{ !importingData ? "Importar data" : "Cargando..." }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div
+          *ngIf="showExportModal; else null"
+          class="modal fade"
+          id="no-peca-modal-export"
+          style="text-align: center;"
+          >
+          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content pb-4">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  (click)="closeModal()"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4>Exportar múltiple {{settings.nameDiag}}</h4>
+                <p class="py-2">
+                  Por favor, selecione los grados de los diagnósticos
+                  a exportar:
+                </p>
+                <div *ngIf="grades.length > 0" style="text-align: left;">
+                  <label style="color: grey">Seleccione el grado:</label>
+                  <div *ngIf="grades.length > 1">
+                    <label>
+                      <input
+                        id="allGrades"
+                        type="checkbox"
+                        ngModel
+                        (ngModelChange)="selectGrades('all', $event)"
+                        class="mx-2"
+                      />
+                      Todos los grados
+                    </label>
+                  </div>
+                  <div *ngFor="let grade of grades">
+                    <label
+                      ><input
+                        id="{{ grade }}"
+                        type="checkbox"
+                        ngModel
+                        ngControl="grade"
+                        (ngModelChange)="selectGrades(grade, $event)"
+                        class="mx-2"
+                      />
+                      {{ parseGrade(grade)}}</label
+                    ><br />
+                  </div>
+                </div>
+                
+                <div class="full-width d-flex">
+                  <button
+                    *ngIf="showExportBtn"
+                    #upload
+                    (click)="exportDiagnosticsMultiple()"
+                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
+                  >
+                    <span
+                      *ngIf="exportingData"
+                      class="spinner-grow spinner-grow-sm"
+                    ></span>
+                    {{ !exportingData ? "Exportar data" : "Cargando..." }}
                   </button>
                 </div>
               </div>

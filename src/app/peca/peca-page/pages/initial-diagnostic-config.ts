@@ -19,9 +19,14 @@ const botonEstadisticaLectura = {
         name: "Exportar",
       },
       {
+        type: 11,
+        name: "Exportar multiple",
+      },
+      {
         type: 10,
         name: "Importar diagnósticos",
       },
+      
     ],
     modalCode: "dataModalEstadisticasLectura",
     nameDiag: "Diagnóstico de lectura",
@@ -62,6 +67,10 @@ const botonEstadisticaMatematica = {
       {
         type: 9,
         name: "Exportar",
+      },
+      {
+        type: 11,
+        name: "Exportar multiple",
       },
       {
         type: 10,
