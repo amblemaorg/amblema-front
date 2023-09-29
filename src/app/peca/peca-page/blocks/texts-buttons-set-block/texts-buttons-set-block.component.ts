@@ -313,7 +313,6 @@ export class TextsButtonsSetBlockComponent
     this.isFormEdited = true;
     this.isImgsTableShown = null;
     this.isBeingUsedDateContr = false;
-    this.infoGradesSubscription.unsubscribe();
     
   }
 
@@ -1767,7 +1766,7 @@ export class TextsButtonsSetBlockComponent
             grado: registry[3]?.toString() || "",
             seccion: registry[4]?.toString() || "",
             fecha_resultado: fecha_resultado || "",
-            resultado: registry[6] || "",
+            resultado: registry[6]?.toString() || "",
             indice: registry[7]?.toString() || "",
           };
         });
@@ -1783,10 +1782,10 @@ export class TextsButtonsSetBlockComponent
             grado: registry[3]?.toString() || "",
             seccion: registry[4]?.toString() || "",
             fecha_resultado_mult: fecha_resultado_mult || "",
-            resultado_mult: registry[6] || "",
+            resultado_mult: registry[6] ?.toString() || "",
             indice_mult: registry[7]?.toString() || "",
             fecha_resultado_log: fecha_resultado_log || "",
-            resultado_log: registry[9] || "",
+            resultado_log: registry[9]?.toString() || "",
             indice_log: registry[10]?.toString() || "",
           
           };

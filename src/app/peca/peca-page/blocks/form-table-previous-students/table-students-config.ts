@@ -88,6 +88,6 @@ export const TABLE_DEFAULT_SETTINGS = {
   },
   pager: {
     display: true,
-    perPage: 10,
+    perPage: 100,
   },
 };
