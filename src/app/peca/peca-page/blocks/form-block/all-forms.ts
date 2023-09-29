@@ -888,16 +888,6 @@ export const formTabsDocente = {
     fullwidth: false,
     ...controlProps.normalTextAndRequired,
   },
-  status: {
-    label: "Estatus",
-    placeholder: "Estatus",
-    fullwidth: false,
-    ...controlProps.selectAndRequired,
-    options: [
-      { id: "1", name: "Activo" },
-      { id: "2", name: "Inactivo" },
-    ],
-  },
   specialty: {
     label: "Grado de instrucción",
     placeholder: "Grado de instrucción",
@@ -911,6 +901,16 @@ export const formTabsDocente = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [],
+  },
+  status: {
+    label: "Estatus",
+    placeholder: "Estatus",
+    fullwidth: false,
+    ...controlProps.selectAndRequired,
+    options: [
+      { id: "1", name: "Activo" },
+      { id: "2", name: "Inactivo" },
+    ],
   },
 };
 /*TABS GRADOS Y SECCIONES*/
