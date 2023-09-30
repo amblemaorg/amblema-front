@@ -31,4 +31,19 @@
       }
     }
   }
+
+  
+  #schoolDataConfigTablaDocente-modal{
+    @media (min-width: 576px){
+      .modal-dialog{
+        max-width: 900px;
+      }
+    }
+    @media screen and (min-width: 1200px) and (orientation: landscape){
+      form .fields-container .form-group:not(.one-row-form-form-group) {
+        max-width: 30% !important;
+        flex: 0 0 30% !important;
+      }
+    }
+}
 }

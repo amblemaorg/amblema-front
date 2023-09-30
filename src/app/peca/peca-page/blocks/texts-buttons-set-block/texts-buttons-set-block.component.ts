@@ -11,6 +11,9 @@ import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
 import { FormBuilder } from "@angular/forms";
 import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
+import { saveAs } from "file-saver";
+import XLSX from "xlsx";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "buttons-set-block",
@@ -23,7 +26,18 @@ export class TextsButtonsSetBlockComponent
   type: "presentational";
   component: string;
   showModalInfo: boolean;
+  showImportModal: boolean;
+  showExportModal: boolean;
+  showUploadBtn: boolean;
+  showExportBtn: boolean;
+  studentsToImport: any[];
+  gradesToExport: any[] = [];
+  importingData: boolean;
+  exportingData: boolean;
+  lapse: number;
   settings: {
+    nameDiag?: any;
+    typeDiag?: any;
     modalCode?: string; // for views with modal inside
     dataFromRow?: any; // table's row data
     isFromCustomTableActions?: boolean; // indicates if button is going to take action based on custom table actions
@@ -152,7 +166,9 @@ export class TextsButtonsSetBlockComponent
   };
   pecaId: string;
   @Select(PecaState.getPecaId) pecaId$: Observable<string>;
-
+  @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
+  infoGradesSubscription: Subscription;
+  grades: Array<any>;
   glbls: any;
 
   // data from form, table or both.
@@ -183,6 +199,9 @@ export class TextsButtonsSetBlockComponent
   activity_uneditable: boolean;
 
   isImgsTableShown: boolean;
+  response: any;
+  gradeSelected: any;
+  studentsExport: Array<any>;
 
   constructor(
     private globals: GlobalService,
@@ -190,17 +209,21 @@ export class TextsButtonsSetBlockComponent
     private store: Store,
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
+  
   ) {
     this.type = "presentational";
     this.component = "buttons";
     this.glbls = globals;
     this.showModalInfo = false;
+    localStorage.setItem("stud_data", JSON.stringify([]));
   }
 
   currentSelected = null;
   isSending: boolean;
   id_: string;
+  diagnosticsData = [];
 
   private subscription: Subscription = new Subscription();
 
@@ -264,6 +287,10 @@ export class TextsButtonsSetBlockComponent
     );
 
     this.setId();
+    if(this.settings.typeDiag == "reading" || this.settings.typeDiag == "math"){
+      this.getGrades();
+      console.log(this.grades);
+    }
   }
 
   ngOnDestroy() {
@@ -286,6 +313,7 @@ export class TextsButtonsSetBlockComponent
     this.isFormEdited = true;
     this.isImgsTableShown = null;
     this.isBeingUsedDateContr = false;
+    
   }
 
   setDateHandlr(e, type: string) {
@@ -676,7 +704,171 @@ export class TextsButtonsSetBlockComponent
     if (!usingModal) this.globals.tableDataUpdater(obj);
     else this.globals.ModalShower(obj);
   }
+  exportDiagnostics(){
+    console.log(JSON.parse(localStorage.getItem("stud_data")))
+    let workbookBin = null;
+    if(this.settings.typeDiag=="reading"){
+      this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+      workbookBin = this.makeExcel();
+    }else{
+      this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
+      workbookBin = this.makeExcelMath();
+    }
+    const octetStream = this.binary2octet(workbookBin);
+    saveAs(
+      new Blob([octetStream], { type: "application/octet-stream" }),
+      `${this.settings.nameDiag}.xls`
+    );
+  }
+  getStudentsCount() {
+    const count = JSON.parse(localStorage.getItem("stud_data")).length;
+    return count <= 0;
+  }
+  private binary2octet(binary): ArrayBuffer {
+    const buffer = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(buffer);
+    for (let i = 0; i < binary.length; i++) {
+      view[i] = binary.charCodeAt(i) & 0xff; // transformacion a octeto
+    }
+    return buffer;
+  }
+  makeExcel() {
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
 
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado",
+      "Resultado",
+      "Indice"
+    ];
+    
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 0){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.result || "",
+          this.diagnosticsData[i]?.index || "",
+        ];
+        
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+  makeExcelMath() {
+    const workbook = XLSX.utils.book_new();
+    workbook.Props = {
+      Title: this.settings.nameDiag,
+      Subject: "Data",
+      Author: "Amblema",
+      CreatedDate: new Date(Date.now()),
+    };
+    console.log(this.settings.nameDiag);
+    workbook.SheetNames.push(this.settings.nameDiag);
+    let columns_header = []
+    columns_header = [
+      "Nombre",
+      "Apellido",
+      "Género",
+      "Grado",
+      "Sección",
+      "Fecha de resultado multiplicación",
+      "Resultado multiplicación",
+      "Indice multiplicación",
+      "Fecha de resultado lógica matemática",
+      "Resultado lógica matemática",
+      "Indice lógica matemática"
+    ];
+    
+    let matrix = [];
+    let row_aux = [];
+    let genero = "";
+    let fecha = "";
+    let fechaLog = "";
+    for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
+      if(this.diagnosticsData[i]?.grade > 0){
+        genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
+        fecha = new Date(this.diagnosticsData[i]?.date)
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+        let data = []
+    
+        fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      
+        data = [
+          this.diagnosticsData[i]?.name || "",
+          this.diagnosticsData[i]?.lastName || "",
+          genero,
+          this.diagnosticsData[i]?.grade || "",
+          this.diagnosticsData[i].section || "",
+          fecha,
+          this.diagnosticsData[i]?.resultMul || "",
+          this.diagnosticsData[i]?.indexMul || "",
+          fechaLog,
+          this.diagnosticsData[i]?.resultLog || "",
+          this.diagnosticsData[i]?.indexLog || "",
+        ];
+        
+        row_aux.push(data);
+      }
+    }
+    matrix.push(columns_header);
+    row_aux.forEach((student) => matrix.push(student));
+
+    const columns = XLSX.utils.aoa_to_sheet(matrix);
+    workbook.Sheets[this.settings.nameDiag] = columns;
+
+    /* Exportar workbook como binario para descarga */
+    const workbookBinary = XLSX.write(workbook, {
+      type: "binary",
+      bookType: "xls",
+    });
+    return workbookBinary;
+  }
+  
   takeAction(type: number, e) {
     /**
      * 1 guardar or Si (on delete action),
@@ -1504,6 +1696,293 @@ export class TextsButtonsSetBlockComponent
     const style = margin + removeML;
 
     return style;
+  }
+  openModal() {
+    this.showImportModal = true;
+  
+  }
+  handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      const data = new Uint8Array(reader.result as ArrayBuffer);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+      let students = []
+      const elements = [];
+      let num_cols = 0;
+
+      if(this.settings.typeDiag=="reading"){
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado"],
+            student["Resultado"],
+            student["Indice"]          
+          );
+          num_cols = 8;
+        });
+      }else{
+        studentsData.forEach((student) => {
+          elements.push(
+            student["Nombre"],
+            student["Apellido"],
+            student["Género"],
+            student["Grado"],
+            student["Sección"],
+            student["Fecha de resultado multiplicación"],
+            student["Resultado multiplicación"],
+            student["Indice multiplicación"],          
+            student["Fecha de resultado lógica matemática"],
+            student["Resultado lógica matemática"],
+            student["Indice lógica matemática"]          
+          );
+        });
+        num_cols = 11;
+      }
+      const el_cleaned = elements;
+      
+      const matrix = el_cleaned.reduce(
+        (rows, key, index) =>
+          (index % num_cols == 0
+            ? rows.push([key])
+            : rows[rows.length - 1].push(key)) && rows,
+        []
+      );
+          
+      if(this.settings.typeDiag=="reading"){
+        students = matrix.map((registry, index) => {
+          const fecha_resultado = this.parseDate(registry[5]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado: fecha_resultado || "",
+            resultado: registry[6]?.toString() || "",
+            indice: registry[7]?.toString() || "",
+          };
+        });
+      }else{
+        students = matrix.map((registry, index) => {
+          const fecha_resultado_mult = this.parseDate(registry[5]);
+          const fecha_resultado_log = this.parseDate(registry[8]);
+          const genero = registry[2] == "Femenino" ? "1" : "2"
+          return {
+            nombre: registry[0] || "",
+            apellido: registry[1] || "",
+            genero: genero || "",
+            grado: registry[3]?.toString() || "",
+            seccion: registry[4]?.toString() || "",
+            fecha_resultado_mult: fecha_resultado_mult || "",
+            resultado_mult: registry[6] ?.toString() || "",
+            indice_mult: registry[7]?.toString() || "",
+            fecha_resultado_log: fecha_resultado_log || "",
+            resultado_log: registry[9]?.toString() || "",
+            indice_log: registry[10]?.toString() || "",
+          
+          };
+        });
+      }
+      this.showUploadBtn = true;
+
+      this.studentsToImport = students;
+      console.log(students);
+    };
+  }
+
+  parseDate(date) {
+    if (typeof date === "number") {
+      const dateString = this.SerialDateToJSDate(date, -4);
+      const dateOutput = new Date(dateString)
+        .toLocaleDateString("es-VE")
+        .split("/")
+        .join("-");
+      return dateOutput;
+    } else {
+      return date;
+    }
+  }
+
+  SerialDateToJSDate(serialDate, offsetUTC) {
+    return new Date(Date.UTC(0, 0, serialDate, offsetUTC));
+  }
+
+  async importStudents() {
+    this.importingData = true;
+    const resourcePath = `diagnostic/load/${this.pecaId}`;
+    const body = {
+      type: this.settings.typeDiag,
+      students: this.studentsToImport,
+      lapse: this.getLapse()
+    };
+    // console.log("BODY to import: ", body);
+    try {
+      const result = await this.fetcher.post(resourcePath, body).toPromise();
+      console.log(result)
+      if (result.error === "false") {
+        console.log("pasa")
+        this.showImportModal = false;
+        this.toastr.success(result.message, "", {
+          positionClass: "toast-bottom-right",
+        });
+        this.importingData = false;
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("error: ", err);
+      throw err;
+    } finally {
+    }
+  }
+
+  getLapse(){
+    let path = this.location.path()
+    let split_path = path.split("/")
+    return split_path[3];
+  }
+
+  closeModal() {
+    this.showImportModal = false;
+    this.showExportModal = false;
+  }
+  showExportMultiple(){
+    this.showExportModal = true;
+    
+  }
+
+  getGrades() {
+    this.infoGradesSubscription = this.infoData$.subscribe(
+      (data) => {
+        if (data.activePecaContent) {
+          this.response = data.activePecaContent.school;
+          let auxStudents = [];
+          this.grades = [...new Set(this.response.sections.map(item => item.grade))];    
+        }
+      },
+      (error) => console.error(error)
+    );
+  }
+  parseGrade(grades) {
+    let grado;
+    switch (grades) {
+      case "0":
+        grado = "Preescolar";
+        break;
+      case "1":
+        grado = "1er grado";
+        break;
+      case "2":
+        grado = "2do grado";
+        break;
+      case "3":
+        grado = "3er grado";
+        break;
+      case "4":
+        grado = "4to grado";
+        break;
+      case "5":
+        grado = "5to grado";
+        break;
+      case "6":
+        grado = "6to grado";
+        break;
+      default:
+        grado = "";
+    }
+    return grado;
+  }
+
+  async selectGrades(grade, toExport){
+    this.showExportBtn = false;        
+    let nuevoArr = [];
+      console.log(toExport);
+      if(toExport){
+        this.gradesToExport.push(grade);
+      }else{
+        nuevoArr = this.gradesToExport.filter(item => item !== grade);
+        this.gradesToExport = nuevoArr;
+      }
+      
+      nuevoArr = this.gradesToExport.sort((a, b) => +a - +b);
+      this.gradesToExport = nuevoArr;
+      console.log(this.gradesToExport);
+      /**/
+      
+    if(this.gradesToExport.length>0){
+      this.showExportBtn = true;
+    }
+  }
+  exportDiagnosticsMultiple(){
+    let lapse = this.getLapse();
+    let auxStudents = [];
+    this.exportingData = true;
+    this.infoGradesSubscription = this.infoData$.subscribe(
+      (data) => {
+        if (data.activePecaContent) {
+          for(let j=0; j<this.gradesToExport.length; j++){
+            for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
+              if(this.gradesToExport[j] == "all" || data.activePecaContent.school.sections[i].grade == this.gradesToExport[j]){
+                const studentsWithGradeAndSection =
+                data.activePecaContent.school.sections[i].students.map((student) => {
+                  const student_ = {
+                    name: student.firstName,
+                    lastName: student.lastName,
+                    gender: student.gender,
+                    grade: data.activePecaContent.school.sections[i].grade,
+                    section: data.activePecaContent.school.sections[i].name,
+                  };
+                  if(this.settings.typeDiag == "reading"){
+                    student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
+                    student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
+                    student_["date"] = student[`lapse${lapse}`]["readingDate"];
+                    
+                  }else{
+                    student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
+                    student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
+                    student_["date"] = student[`lapse${lapse}`]["mathDate"];
+                    student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
+                    student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
+                    student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
+                  }
+                  return student_;
+                });
+                auxStudents = auxStudents.concat(studentsWithGradeAndSection);
+              }
+            }
+          }
+
+          if(auxStudents){
+            this.diagnosticsData = auxStudents;
+            let workbookBin = null;
+    
+            if(this.settings.typeDiag=="reading"){
+              workbookBin = this.makeExcel();
+            }else{
+              workbookBin = this.makeExcelMath();  
+            }
+
+            const octetStream = this.binary2octet(workbookBin);
+            saveAs(
+              new Blob([octetStream], { type: "application/octet-stream" }),
+              `${this.settings.nameDiag}.xls`
+            );
+            this.gradesToExport = [];
+          }
+          this.exportingData = false;
+    
+        }
+      }
+    );
   }
 
   // myConsoleLog(data) {

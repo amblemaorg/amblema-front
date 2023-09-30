@@ -141,7 +141,44 @@
       @include box(-0.75rem);
       margin-inline: auto;
     }
+  } @else if $num == "8" {
+    table tbody tr td:first-child:not([colspan="8"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  } @else if $num == "9" {
+    table tbody tr td:first-child:not([colspan="9"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  } @else if $num == "10" {
+    table tbody tr td:first-child:not([colspan="10"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  }@else if $num == "11" {
+    table tbody tr td:first-child:not([colspan="11"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  }@else if $num == "12" {
+    table tbody tr td:first-child:not([colspan="12"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  }@else if $num == "13" {
+    table tbody tr td:first-child:not([colspan="13"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
+  }@else if $num == "14" {
+    table tbody tr td:first-child:not([colspan="14"]):before {
+      @include box(-0.75rem);
+      margin-inline: auto;
+    }
   }
+
+  
   table tbody tr.selected td:first-child::after {
     @include check(1rem, 1.25rem);
   }
