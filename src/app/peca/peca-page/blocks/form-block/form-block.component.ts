@@ -378,7 +378,7 @@ export class FormBlockComponent
     const columns_header = [
       "Nombre",
       "Apellido",
-      "Tipo de documento",
+      //"Tipo de documento",
       "Documento de identidad",
       "Género",
       "Fecha de nacimiento",
@@ -410,7 +410,7 @@ export class FormBlockComponent
       const data = [
         this.studentsData[i]?.name || "",
         this.studentsData[i]?.lastName || "",
-        "V" || "", // TODO: check this
+        //"V" || "", // TODO: check this
         this.studentsData[i]?.documentGroup?.prependInput || "",
         genero,
         fecha,
