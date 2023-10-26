@@ -1712,8 +1712,9 @@ export class TextsButtonsSetBlockComponent
       let students = []
       const elements = [];
       let num_cols = 0;
-
+      var valid = true;
       if(this.settings.typeDiag=="reading"){
+        valid = Object.keys(studentsData[0]).length == 8 ? true : false;
         studentsData.forEach((student) => {
           elements.push(
             student["Nombre"],
@@ -1728,6 +1729,7 @@ export class TextsButtonsSetBlockComponent
           num_cols = 8;
         });
       }else{
+        valid = Object.keys(studentsData[0]).length == 11 ? true : false;
         studentsData.forEach((student) => {
           elements.push(
             student["Nombre"],
@@ -1745,56 +1747,62 @@ export class TextsButtonsSetBlockComponent
         });
         num_cols = 11;
       }
-      const el_cleaned = elements;
-      
-      const matrix = el_cleaned.reduce(
-        (rows, key, index) =>
-          (index % num_cols == 0
-            ? rows.push([key])
-            : rows[rows.length - 1].push(key)) && rows,
-        []
-      );
-          
-      if(this.settings.typeDiag=="reading"){
-        students = matrix.map((registry, index) => {
-          const fecha_resultado = this.parseDate(registry[5]);
-          const genero = registry[2] == "Femenino" ? "1" : "2"
-          return {
-            nombre: registry[0] || "",
-            apellido: registry[1] || "",
-            genero: genero || "",
-            grado: registry[3]?.toString() || "",
-            seccion: registry[4]?.toString() || "",
-            fecha_resultado: fecha_resultado || "",
-            resultado: registry[6]?.toString() || "",
-            indice: registry[7]?.toString() || "",
-          };
-        });
+      if(valid){
+        const el_cleaned = elements;
+        
+        const matrix = el_cleaned.reduce(
+          (rows, key, index) =>
+            (index % num_cols == 0
+              ? rows.push([key])
+              : rows[rows.length - 1].push(key)) && rows,
+          []
+        );
+            
+        if(this.settings.typeDiag=="reading"){
+          students = matrix.map((registry, index) => {
+            const fecha_resultado = this.parseDate(registry[5]);
+            const genero = registry[2] == "Femenino" ? "1" : "2"
+            return {
+              nombre: registry[0] || "",
+              apellido: registry[1] || "",
+              genero: genero || "",
+              grado: registry[3]?.toString() || "",
+              seccion: registry[4]?.toString() || "",
+              fecha_resultado: fecha_resultado || "",
+              resultado: registry[6]?.toString() || "",
+              indice: registry[7]?.toString() || "",
+            };
+          });
+        }else{
+          students = matrix.map((registry, index) => {
+            const fecha_resultado_mult = this.parseDate(registry[5]);
+            const fecha_resultado_log = this.parseDate(registry[8]);
+            const genero = registry[2] == "Femenino" ? "1" : "2"
+            return {
+              nombre: registry[0] || "",
+              apellido: registry[1] || "",
+              genero: genero || "",
+              grado: registry[3]?.toString() || "",
+              seccion: registry[4]?.toString() || "",
+              fecha_resultado_mult: fecha_resultado_mult || "",
+              resultado_mult: registry[6] ?.toString() || "",
+              indice_mult: registry[7]?.toString() || "",
+              fecha_resultado_log: fecha_resultado_log || "",
+              resultado_log: registry[9]?.toString() || "",
+              indice_log: registry[10]?.toString() || "",
+            
+            };
+          });
+        }
+        this.showUploadBtn = true;
+
+        this.studentsToImport = students;
+        console.log(students);
       }else{
-        students = matrix.map((registry, index) => {
-          const fecha_resultado_mult = this.parseDate(registry[5]);
-          const fecha_resultado_log = this.parseDate(registry[8]);
-          const genero = registry[2] == "Femenino" ? "1" : "2"
-          return {
-            nombre: registry[0] || "",
-            apellido: registry[1] || "",
-            genero: genero || "",
-            grado: registry[3]?.toString() || "",
-            seccion: registry[4]?.toString() || "",
-            fecha_resultado_mult: fecha_resultado_mult || "",
-            resultado_mult: registry[6] ?.toString() || "",
-            indice_mult: registry[7]?.toString() || "",
-            fecha_resultado_log: fecha_resultado_log || "",
-            resultado_log: registry[9]?.toString() || "",
-            indice_log: registry[10]?.toString() || "",
-          
-          };
+        this.toastr.error("El formato es inválido para importar los "+this.settings.nameDiag, "", {
+          positionClass: "toast-bottom-right",
         });
       }
-      this.showUploadBtn = true;
-
-      this.studentsToImport = students;
-      console.log(students);
     };
   }
 
@@ -1816,8 +1824,10 @@ export class TextsButtonsSetBlockComponent
   }
 
   async importStudents() {
+    console.log("ddada")
     this.importingData = true;
     const resourcePath = `diagnostic/load/${this.pecaId}`;
+    var valido = false;
     const body = {
       type: this.settings.typeDiag,
       students: this.studentsToImport,
@@ -1843,6 +1853,7 @@ export class TextsButtonsSetBlockComponent
       throw err;
     } finally {
     }
+    
   }
 
   getLapse(){
