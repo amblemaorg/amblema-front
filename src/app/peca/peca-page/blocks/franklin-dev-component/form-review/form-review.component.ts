@@ -360,50 +360,53 @@ export class FormReviewComponent
 
   onUploadImage = (event: any) => {
     // Get file
-    const file = event.dataTransfer
-      ? event.dataTransfer.files[0]
-      : event.target.files[0];
+    for(var i=0; i<event.target.files.length; i++){
+      const file = event.dataTransfer
+        ? event.dataTransfer.files[i]
+        : event.target.files[i];
 
-    // MegaByte
-    const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
-    const fileSize = file.size
-      ? parseFloat((file.size / 1000 / 1000).toFixed(2))
-      : 0.0;
-    let isOverloadingSize = false;
+      // MegaByte
+      const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
+      const fileSize = file.size
+        ? parseFloat((file.size / 1000 / 1000).toFixed(2))
+        : 0.0;
+      let isOverloadingSize = false;
 
-    if (maxImageSizeMb > -1) {
-      isOverloadingSize = fileSize > maxImageSizeMb;
+      if (maxImageSizeMb > -1) {
+        isOverloadingSize = fileSize > maxImageSizeMb;
+      }
+
+      // Instance reader
+      const reader: FileReader = new FileReader();
+
+      if (file) {
+        if (isOverloadingSize) {
+          this.msgErrorFile = `La imagen pesa ${fileSize} MB, excede el limite de ${maxImageSizeMb} MB.`;
+        }
+
+        if (!this.isValidImage(file)) {
+          this.msgErrorFile = 'El archivo no es una imagen.';
+        }
+
+        if (this.msgErrorFile) {
+          setTimeout(() => {
+            this.msgErrorFile = false;
+          }, 10000);
+
+          return false;
+        }
+
+        // Convert binary file
+        reader.onload = (event) => this.convertLoad(event);
+        //.bind(this);
+
+        // Read the binary
+        reader.readAsDataURL(file);
+
+      }
     }
-
-    // Instance reader
-    const reader: FileReader = new FileReader();
-
-    if (file) {
-      if (isOverloadingSize) {
-        this.msgErrorFile = `La imagen pesa ${fileSize} MB, excede el limite de ${maxImageSizeMb} MB.`;
-      }
-
-      if (!this.isValidImage(file)) {
-        this.msgErrorFile = 'El archivo no es una imagen.';
-      }
-
-      if (this.msgErrorFile) {
-        setTimeout(() => {
-          this.msgErrorFile = false;
-        }, 10000);
-
-        return false;
-      }
-
-      // Convert binary file
-      reader.onload = (event) => this.convertLoad(event);
-      //.bind(this);
-
-      // Read the binary
-      reader.readAsDataURL(file);
-
-      return true;
-    }
+    return true;
+    
   };
 
   convertLoad(event) {
@@ -459,7 +462,6 @@ export class FormReviewComponent
   }
 
   isFormInvalid() {
-    console.warn(this.form.invalid);
     return this.form.invalid;
   }
 
