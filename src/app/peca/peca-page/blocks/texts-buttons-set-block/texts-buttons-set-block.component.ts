@@ -1713,7 +1713,25 @@ export class TextsButtonsSetBlockComponent
       const elements = [];
       let num_cols = 0;
       var valid = true;
+      var column_reading = ["Nombre","Apellido","Género","Grado","Sección","Fecha de resultado","Resultado","Indice"]
+      var column_math = ["Nombre","Apellido","Género","Grado","Sección","Fecha de resultado multiplicación", "Resultado multiplicación","Indice multiplicación","Fecha de resultado lógica matemática","Resultado lógica matemática","Indice lógica matemática"]
+      const ref = sheet['!ref'];
+      const range = XLSX.utils.decode_range(ref);
+      var areColumnNamesValid = false;
+      // Obtener los nombres de las columnas
+      const columnNames = [];
+      for (let C = range.s.c; C <= range.e.c; C++) {
+          const cellAddress = { r: range.s.r, c: C };
+          const cellRef = XLSX.utils.encode_cell(cellAddress);
+          if (sheet[cellRef] && sheet[cellRef].v) {
+            columnNames.push(sheet[cellRef].v);
+          }else{
+            columnNames.push("");  
+          }
+      }
       if(this.settings.typeDiag=="reading"){
+        areColumnNamesValid = column_reading.every((name) => columnNames.includes(name));
+
         valid = Object.keys(studentsData[0]).length == 8 ? true : false;
         studentsData.forEach((student) => {
           elements.push(
@@ -1729,6 +1747,8 @@ export class TextsButtonsSetBlockComponent
           num_cols = 8;
         });
       }else{
+        areColumnNamesValid = column_math.every((name) => columnNames.includes(name));
+
         valid = Object.keys(studentsData[0]).length == 11 ? true : false;
         studentsData.forEach((student) => {
           elements.push(
@@ -1747,7 +1767,7 @@ export class TextsButtonsSetBlockComponent
         });
         num_cols = 11;
       }
-      if(valid){
+      if(valid && areColumnNamesValid){
         const el_cleaned = elements;
         
         const matrix = el_cleaned.reduce(
