@@ -774,8 +774,8 @@ export class TextsButtonsSetBlockComponent
           this.diagnosticsData[i]?.grade || "",
           this.diagnosticsData[i].section || "",
           fecha,
-          this.diagnosticsData[i]?.result || "",
-          this.diagnosticsData[i]?.index || "",
+          this.diagnosticsData[i]?.result != null ? this.diagnosticsData[i]?.result : "",
+          this.diagnosticsData[i]?.index != null ? this.diagnosticsData[i]?.index : "",
         ];
         
         row_aux.push(data);
@@ -845,11 +845,11 @@ export class TextsButtonsSetBlockComponent
           this.diagnosticsData[i]?.grade || "",
           this.diagnosticsData[i].section || "",
           fecha,
-          this.diagnosticsData[i]?.resultMul || "",
-          this.diagnosticsData[i]?.indexMul || "",
+          this.diagnosticsData[i]?.resultMul != null ? this.diagnosticsData[i]?.resultMul : "",
+          this.diagnosticsData[i]?.indexMul != null ? this.diagnosticsData[i]?.indexMul : "",
           fechaLog,
-          this.diagnosticsData[i]?.resultLog || "",
-          this.diagnosticsData[i]?.indexLog || "",
+          this.diagnosticsData[i]?.resultLog != null ? this.diagnosticsData[i]?.resultLog : "",
+          this.diagnosticsData[i]?.indexLog != null ? this.diagnosticsData[i]?.indexLog : "",
         ];
         
         row_aux.push(data);
