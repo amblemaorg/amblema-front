@@ -232,7 +232,7 @@ export class ImplementedFormsComponent implements OnInit {
         "Visita comercios, empresas o negocios cercanos a tu escuela.",
         "Consulta entre padres y representantes si alguno conoce o trabaja en empresas cercanas a la escuela.",
         "Recauda información de los posibles padrinos y completa la planilla.",
-        "Escríbenos a través de info@amblema.org y solicítanos un padrino.",
+        "Escríbenos a través de amblemaoficial@gmail.com y solicítanos un padrino.",
       ],
       validations: {},
     },

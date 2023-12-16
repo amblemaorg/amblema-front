@@ -13,7 +13,7 @@ import { faPhoneAlt as phoneIcon } from "@fortawesome/free-solid-svg-icons";
 })
 export class FooterComponent implements OnInit {
   @Output() openModal = new EventEmitter<string>();
-  email = "info@amblema.org";
+  email = "amblemaoficial@gmail.com";
   emailIcon = emailIcon;
   phone = "0414 1000456";
   phoneIcon = phoneIcon;
