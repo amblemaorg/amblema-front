@@ -389,7 +389,7 @@ export class FormBlockComponent
     let row_aux = [];
     let genero = "";
     let fecha = "";
-    console.log("aqio")
+    
     const currentSectionName = this.sectionsArr.filter((section) => {
       const randomStudent = this.studentsData[0];
       if (section.id === randomStudent.section) {

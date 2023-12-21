@@ -61,7 +61,6 @@ export class DiagnosticTemplate extends Template {
     var max = Math.max(...dataset)
     var maxValue = max > 100 ? max : 100
     
-    console.log(dataset)
     const fontColor = '#111';
     const options = {
       maintainAspectRatio: false,
@@ -356,8 +355,7 @@ export class DiagnosticPageDataGroup {
 
     const result =
       columnTableData.length > 0 ? sum / columnTableData.length : 0.0;
-
-    return result.toFixed(toFixedCount).toString();
+    return result.toFixed(1).toString();
   }
 
   private getDiagGoalTableData(grade: string, isProvisionalTable = false) {

@@ -217,8 +217,7 @@ export class GraphicsBlockComponent
   getOptions() {
     var max = Math.max(...this.dataChart)
     var maxValue = max > 100 ? max : 100
-    console.log(maxValue)
-
+    
     if (this.settings.options) {
       return this.settings.options
     }

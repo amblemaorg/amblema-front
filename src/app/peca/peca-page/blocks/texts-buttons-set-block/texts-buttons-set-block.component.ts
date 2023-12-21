@@ -289,7 +289,6 @@ export class TextsButtonsSetBlockComponent
     this.setId();
     if(this.settings.typeDiag == "reading" || this.settings.typeDiag == "math"){
       this.getGrades();
-      console.log(this.grades);
     }
   }
 
@@ -705,7 +704,6 @@ export class TextsButtonsSetBlockComponent
     else this.globals.ModalShower(obj);
   }
   exportDiagnostics(){
-    console.log(JSON.parse(localStorage.getItem("stud_data")))
     let workbookBin = null;
     if(this.settings.typeDiag=="reading"){
       this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
@@ -802,7 +800,7 @@ export class TextsButtonsSetBlockComponent
       Author: "Amblema",
       CreatedDate: new Date(Date.now()),
     };
-    console.log(this.settings.nameDiag);
+    
     workbook.SheetNames.push(this.settings.nameDiag);
     let columns_header = []
     columns_header = [
@@ -1817,7 +1815,6 @@ export class TextsButtonsSetBlockComponent
         this.showUploadBtn = true;
 
         this.studentsToImport = students;
-        console.log(students);
       }else{
         this.toastr.error("El formato es inválido para importar los "+this.settings.nameDiag, "", {
           positionClass: "toast-bottom-right",
@@ -1844,7 +1841,6 @@ export class TextsButtonsSetBlockComponent
   }
 
   async importStudents() {
-    console.log("ddada")
     this.importingData = true;
     const resourcePath = `diagnostic/load/${this.pecaId}`;
     var valido = false;
@@ -1856,9 +1852,8 @@ export class TextsButtonsSetBlockComponent
     // console.log("BODY to import: ", body);
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
-      console.log(result)
+      
       if (result.error === "false") {
-        console.log("pasa")
         this.showImportModal = false;
         this.toastr.success(result.message, "", {
           positionClass: "toast-bottom-right",
