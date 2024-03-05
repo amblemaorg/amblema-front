@@ -180,13 +180,13 @@ web-bg-heading {
       width: 30vw;
 
       @include breakpoint(small, landscape) {
-        height: 5vw;
-        width: 5vw;
+        height: 100%;
+        width: 100%;
       }
 
       @include breakpoint(medium) {
-        height: 5vw;
-        width: 5vw;
+        height: 100%;
+        width: 100%;
       }
 
       img {
