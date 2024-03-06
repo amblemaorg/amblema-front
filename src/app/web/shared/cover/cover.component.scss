@@ -40,6 +40,7 @@
       width: 45%;
       bottom: -14vw;
     }
+    
   }
 
   &__mobile-image-extended-wrapper {
@@ -94,7 +95,7 @@
       width: 45vw;
       bottom: 7vw;
     }
-
+    
     &--sponsor-page,
     &--coordinator-page {
       bottom: 10vw;
@@ -172,5 +173,14 @@
     @include breakpoint(medium) {
       font-size: 1.4vw;
     }
+  }
+}
+
+@media (max-width: 590px) {
+  .web-cover__content-wrapper{
+    bottom: 7vw;
+  }
+  .web-cover__overlay-image{
+    display: none;
   }
 }

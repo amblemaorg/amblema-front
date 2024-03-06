@@ -65,16 +65,16 @@ section.about-us {
     p {
       font-size: 4vw;
       text-align: center;
-      line-height: 1.3;
+      line-height: 1.8;
 
       @include breakpoint(small, landscape) {
         font-size: 1.8vw;
-        line-height: 1.5;
+        line-height: 1.8;
       }
 
       @include breakpoint(medium) {
         font-size: 1.8vw;
-        line-height: 1.5;
+        line-height: 1.8;
       }
 
       @include breakpoint(large) {
