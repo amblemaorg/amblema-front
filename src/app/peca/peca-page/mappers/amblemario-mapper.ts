@@ -13,7 +13,7 @@ export function amblemarioMapper(pecaData) {
       lapse3,
     },
   } = pecaData;
-
+  
   const schoolData = {
     city:
       pecaData.school && pecaData.school.addressCity
@@ -76,7 +76,6 @@ export function amblemarioMapper(pecaData) {
       diagnosticSummary,
       activities,
     } = lapse;
-
     const tables =
       diagnosticSummary && diagnosticSummary.length > 0
         ? diagnosticSummary.reduce(
@@ -115,7 +114,8 @@ export function amblemarioMapper(pecaData) {
                   `${data.multiplicationsPerMin}`,
                   `${data.multiplicationsPerMinIndex}`,
                 ]);
-              if (data.operationsPerMin !== 0)
+              
+              if (data.operationsPerMin != 0 || data.operationsPerMinIndex != 0)
                 tables.table3.push([
                   grades[data.grade],
                   data.name.toUpperCase(),

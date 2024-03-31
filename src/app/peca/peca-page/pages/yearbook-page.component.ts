@@ -315,7 +315,6 @@ export class YearbookPageComponent extends PecaPageComponent
                 // });
 
                 this.setAmblemarioData(pecaData, lastRequest, amblemarioMapper);
-
                 this.setPdfData(this.pecaData);
                 // console.log({ pecaDataPDF: this.pecaData });
               }
@@ -350,8 +349,8 @@ export class YearbookPageComponent extends PecaPageComponent
     // console.log('setAmblemarioData', pecaData);
 
     if (_mapper) {
-      this.pecaData = _mapper(pecaData, lastRequest);
-    } else {
+    this.pecaData = _mapper(pecaData, lastRequest);
+  } else {
       this.pecaData = pecaData;
     }
   }
