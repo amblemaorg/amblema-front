@@ -564,7 +564,7 @@
         </ng-container>
 
         <ng-container
-          *ngIf="action.type == 8"
+          *ngIf="action.type == 15"
         >
           <button
             *ngIf="action.name && !action.hidden"
@@ -576,7 +576,7 @@
           </button>
         </ng-container>
         <ng-container
-          *ngIf="action.type == 9"
+          *ngIf="action.type == 16"
         >
           <button
             *ngIf="action.name && !action.hidden"
@@ -584,7 +584,7 @@
             (click)="exportDiagnostics()"
             [disabled] = "getStudentsCount()"
           >
-            {{ action.name }}
+            {{ action.name }} 
           </button>
         </ng-container>
         <ng-container

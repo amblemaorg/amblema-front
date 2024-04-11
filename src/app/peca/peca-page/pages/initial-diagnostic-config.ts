@@ -15,7 +15,7 @@ const botonEstadisticaLectura = {
         name: "Ver estadísticas",
       },
       {
-        type: 8,
+        type: 15,
         name: "Exportar",
       },
       {
@@ -65,7 +65,7 @@ const botonEstadisticaMatematica = {
         name: "Ver estadísticas",
       },
       {
-        type: 9,
+        type: 16,
         name: "Exportar",
       },
       {
