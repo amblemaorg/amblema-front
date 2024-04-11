@@ -255,7 +255,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     if (!graphics) {
       return;
     }
-
+    
     const { lapses, schoolYear } = this.pdfData;
     return new DiagnosticPageDataGroup(
       graphics,

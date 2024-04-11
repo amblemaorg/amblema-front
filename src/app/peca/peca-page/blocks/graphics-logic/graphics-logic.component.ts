@@ -137,8 +137,7 @@ export class GraphicsLogicComponent
   loadChart() {
     var max = Math.max(...this.dataChart)
     var maxValue = max > 100 ? max : 100
-    console.log(maxValue)
-
+    
     if (document.getElementById(this.settings.chartId)) {
       this.canvas = document.getElementById(this.settings.chartId);
       this.ctx = this.canvas.getContext("2d");

@@ -1931,7 +1931,6 @@ export class TextsButtonsSetBlockComponent
   async selectGrades(grade, toExport){
     this.showExportBtn = false;        
     let nuevoArr = [];
-      console.log(toExport);
       if(toExport){
         this.gradesToExport.push(grade);
       }else{
@@ -1941,7 +1940,6 @@ export class TextsButtonsSetBlockComponent
       
       nuevoArr = this.gradesToExport.sort((a, b) => +a - +b);
       this.gradesToExport = nuevoArr;
-      console.log(this.gradesToExport);
       /**/
       
     if(this.gradesToExport.length>0){

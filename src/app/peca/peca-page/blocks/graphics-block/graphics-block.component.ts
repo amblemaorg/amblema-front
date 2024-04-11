@@ -216,6 +216,14 @@ export class GraphicsBlockComponent
 
   getOptions() {
     var max = Math.max(...this.dataChart)
+    if(max > 100 && max <= 120){
+      max = 120
+    }else if(max > 120 && max <= 140){
+      max = 140
+    }else if(max > 140 && max <= 160){
+      max = 160
+    }
+    
     var maxValue = max > 100 ? max : 100
     
     if (this.settings.options) {

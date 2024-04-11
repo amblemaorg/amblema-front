@@ -59,6 +59,14 @@ export class DiagnosticTemplate extends Template {
       }
     }
     var max = Math.max(...dataset)
+    if(max > 100 && max <= 120){
+      max = 120
+    }else if(max > 120 && max <= 140){
+      max = 140
+    }else if(max > 140 && max <= 160){
+      max = 160
+    }
+    
     var maxValue = max > 100 ? max : 100
     
     const fontColor = '#111';
