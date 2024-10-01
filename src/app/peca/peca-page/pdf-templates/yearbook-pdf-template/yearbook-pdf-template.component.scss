@@ -161,16 +161,19 @@ $text_indent: 18px;
   }
 
   .background--front-page {
-    background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.jpg');
+    background-image: url('../../../../../assets/images/pdf/yearbook/frontpage.png');
     position: relative;
+    background-color: #fff;
   }
 
   .background--generic {
-    background-image: url('../../../../../assets/images/pdf/yearbook/background.jpg');
+    background-image: url('../../../../../assets/images/pdf/yearbook/background.png');
+    background-color: #fff;
   }
 
   .background--gallery {
-    background-image: url('../../../../../assets/images/pdf/yearbook/gallery-background.jpg');
+    background-image: url('../../../../../assets/images/pdf/yearbook/gallery-background.png');
+    background-color: #fff;
   }
 
   .page {
