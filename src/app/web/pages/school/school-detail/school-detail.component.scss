@@ -162,7 +162,8 @@ section.school-details {
       }
 
       @include breakpoint(medium) {
-        height: 4vw;
+        min-height: 4vw;
+        height: auto;
         font-size: 1.1vw;
       }
     }
