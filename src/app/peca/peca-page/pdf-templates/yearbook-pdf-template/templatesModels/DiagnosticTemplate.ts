@@ -194,9 +194,9 @@ export class DiagnosticPageDataGroup {
     const chartId = `${lapseName}-${diagKey}-graphic`;
 
     const { diagnostics } = this.diagnosticGraphicData;
-
+    
     const lapseGraphic = graphics[lapseId];
-
+    
     // const lapseGraphic = null;
 
     if (
@@ -306,7 +306,6 @@ export class DiagnosticPageDataGroup {
     isThirdLapse: boolean,
   ) {
     const graphics = this.graphics;
-    // console.log({ graphics });
     const graphicDiagnosticData = this.getDiagIndexFromGraphicsForProvDataTb(
       lapseId,
       diagKey,
@@ -480,7 +479,6 @@ export class DiagnosticPageDataGroup {
 
     // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
-
     // reordered and format values
     tableData = tableData.map((td) => {
       /**
@@ -558,7 +556,7 @@ export class DiagnosticPageDataGroup {
       'diagnosticMath',
       'diagnosticLogic',
     ];
-
+    console.log(this.lapses)
     this.lapses.forEach((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;

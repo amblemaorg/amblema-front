@@ -100,14 +100,15 @@ export function amblemarioMapper(pecaData) {
                   'Índice de lógica matemática',
                 ]);
               }
-              if (data.wordsPerMin !== 0)
+              if(data.grade!="0"){
+              if (data.wordsPerMin !== null)
                 tables.table1.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
                   `${data.wordsPerMin}`,
                   `${data.wordsPerMinIndex}`,
                 ]);
-              if (data.multiplicationsPerMin !== 0)
+              if (data.multiplicationsPerMin !== null)
                 tables.table2.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
@@ -115,14 +116,14 @@ export function amblemarioMapper(pecaData) {
                   `${data.multiplicationsPerMinIndex}`,
                 ]);
               
-              if (data.operationsPerMin != 0 || data.operationsPerMinIndex != 0)
+              if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
                 tables.table3.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
                   `${data.operationsPerMin}`,
                   `${data.operationsPerMinIndex}`,
                 ]);
-
+              }
               return tables;
             },
             { table1: [], table2: [], table3: [] },

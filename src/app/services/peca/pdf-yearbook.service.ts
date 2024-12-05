@@ -72,6 +72,7 @@ export class PdfYearbookService {
       values: string[];
     },
   ) {
+    console.log("set gradica", graphicData)
     this.graphics[lapse][graphic] = graphicData;
   }
 
@@ -84,9 +85,8 @@ export class PdfYearbookService {
    */
   getGraphics() {
     this.callGraphicBase64ImgEmitter.emit();
-
     const graphics = this.graphics;
-
+    
     const isThereGraphics = Object.keys(graphics).every((key) => {
       const graphicValue = graphics[key];
 

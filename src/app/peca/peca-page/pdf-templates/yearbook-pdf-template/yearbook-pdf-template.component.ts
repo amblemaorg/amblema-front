@@ -114,7 +114,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   setFrontPage() {
     const { schoolName, schoolYear, sponsorName, sponsorLogo } = this.pdfData;
-
+    
     const frontPage = new FrontPageTemplate(
       { title: sponsorName, brand: sponsorLogo },
       { title: 'AmbLeMario', subTitle: schoolName, subTitleN2: schoolYear },
@@ -251,12 +251,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   private getDiagnosticPageDataGroup() {
     const graphics = this.pdfService.getGraphics();
-
+    
     if (!graphics) {
       return;
     }
-    
     const { lapses, schoolYear } = this.pdfData;
+    
     return new DiagnosticPageDataGroup(
       graphics,
       lapses,
@@ -329,9 +329,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const indexListItems = [];
 
     const { lapses } = this.pdfData;
-
+    
     const diagnosticPageDataGroup = this.getDiagnosticPageDataGroup();
-
+    
     const activityCharacterLimit = this.yearbookConfig.getFormDescriptionLimit(
       'globalLapsesActivities',
     );
