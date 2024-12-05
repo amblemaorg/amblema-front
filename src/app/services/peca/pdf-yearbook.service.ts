@@ -72,7 +72,7 @@ export class PdfYearbookService {
       values: string[];
     },
   ) {
-    console.log("set gradica", graphicData)
+    
     this.graphics[lapse][graphic] = graphicData;
   }
 

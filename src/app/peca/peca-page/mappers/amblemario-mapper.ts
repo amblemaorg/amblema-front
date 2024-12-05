@@ -101,28 +101,28 @@ export function amblemarioMapper(pecaData) {
                 ]);
               }
               if(data.grade!="0"){
-              if (data.wordsPerMin !== null)
-                tables.table1.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${data.wordsPerMin}`,
-                  `${data.wordsPerMinIndex}`,
-                ]);
-              if (data.multiplicationsPerMin !== null)
-                tables.table2.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${data.multiplicationsPerMin}`,
-                  `${data.multiplicationsPerMinIndex}`,
-                ]);
-              
-              if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
-                tables.table3.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${data.operationsPerMin}`,
-                  `${data.operationsPerMinIndex}`,
-                ]);
+                if (data.wordsPerMin !== null)
+                  tables.table1.push([
+                    grades[data.grade],
+                    data.name.toUpperCase(),
+                    `${data.wordsPerMin}`,
+                    `${data.wordsPerMinIndex}`,
+                  ]);
+                if (data.multiplicationsPerMin !== null)
+                  tables.table2.push([
+                    grades[data.grade],
+                    data.name.toUpperCase(),
+                    `${data.multiplicationsPerMin}`,
+                    `${data.multiplicationsPerMinIndex}`,
+                  ]);
+                
+                if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
+                  tables.table3.push([
+                    grades[data.grade],
+                    data.name.toUpperCase(),
+                    `${data.operationsPerMin}`,
+                    `${data.operationsPerMinIndex}`,
+                  ]);
               }
               return tables;
             },
