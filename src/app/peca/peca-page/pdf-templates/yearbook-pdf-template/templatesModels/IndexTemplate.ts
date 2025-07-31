@@ -94,7 +94,8 @@ export class IndexListItem {
   ) {}
 
   getPaddingLeftByLevel() {
-    const padding = this.arrayLevel * this.factorPaddingIncrement;
+    //const padding = this.arrayLevel * this.factorPaddingIncrement;
+    const padding = 0 * this.factorPaddingIncrement;
     return `${padding}px`;
   }
 }

@@ -78,7 +78,7 @@ export class GraphicsBlockComponent
     }
 
     const routePathArray = this.router.url.split('/')
-
+    
     if (
       routePathArray[2] == 'anuario-page' ||
       routePathArray[2] == 'yearbook'
@@ -88,7 +88,6 @@ export class GraphicsBlockComponent
         this.arrayColors = this.settings.labels.map(() => '#81B03E')
         this.dataChart = this.settings.items
       }
-
       this.subscription.add(
         this.pdfYearbookService.callGraphicBase64ImgEmitter.subscribe((res) => {
           if (this.settings.lapseN && this.settings.sendGraphicToPdf) {
@@ -105,7 +104,6 @@ export class GraphicsBlockComponent
       )
       return
     }
-
     this.getInfo()
   }
 
@@ -142,7 +140,7 @@ export class GraphicsBlockComponent
       (data) => {
         if (data.activePecaContent) {
           this.arraySections = data.activePecaContent.school.sections
-
+          
           for (let i = 0; i < this.arraySections.length; i++) {
             this.dataLabel.push(
               this.parseGradeName(

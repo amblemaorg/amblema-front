@@ -414,7 +414,7 @@ export async function MapperYearBookWeb(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, wordsPerMinIndex } = diagnostic;
               const realN = parseFloat(wordsPerMinIndex);
-              if (realN)
+              if (realN != null && grade != '0')
                 diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
               return diagnosticFinal;
             },
@@ -422,8 +422,9 @@ export async function MapperYearBookWeb(
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
+              const { grade } = diagnostic;
               const realN = parseFloat(diagnostic.wordsPerMinIndex);
-              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              if (realN != null && grade != '0') diagnosticFinal.push(realN.toFixed(2));
               return diagnosticFinal;
             },
             [],
@@ -558,7 +559,7 @@ export async function MapperYearBookWeb(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, multiplicationsPerMinIndex } = diagnostic;
               const realN = parseFloat(multiplicationsPerMinIndex);
-              if (realN)
+              if (realN != null && grade != '0')
                 diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
               return diagnosticFinal;
             },
@@ -566,8 +567,9 @@ export async function MapperYearBookWeb(
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
+              const { grade } = diagnostic;
               const realN = parseFloat(diagnostic.multiplicationsPerMinIndex);
-              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              if (realN != null && grade != '0') diagnosticFinal.push(realN.toFixed(2));
               return diagnosticFinal;
             },
             [],
@@ -704,7 +706,7 @@ export async function MapperYearBookWeb(
             (diagnosticFinal, diagnostic) => {
               const { grade, name, operationsPerMinIndex } = diagnostic;
               const realN = parseFloat(operationsPerMinIndex);
-              if (realN)
+              if (realN != null && grade != '0')
                 diagnosticFinal.push(`${determineGradeString(grade)} ${name}`);
               return diagnosticFinal;
             },
@@ -712,8 +714,9 @@ export async function MapperYearBookWeb(
           ),
           items: lapseData.diagnosticSummary.reduce(
             (diagnosticFinal, diagnostic) => {
+              const { grade } = diagnostic;
               const realN = parseFloat(diagnostic.operationsPerMinIndex);
-              if (realN) diagnosticFinal.push(realN.toFixed(2));
+              if (realN != null && grade != '0') diagnosticFinal.push(realN.toFixed(2));
               return diagnosticFinal;
             },
             [],
