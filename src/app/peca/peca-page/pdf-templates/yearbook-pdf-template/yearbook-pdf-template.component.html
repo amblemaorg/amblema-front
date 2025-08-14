@@ -127,9 +127,11 @@
       <div class="body">
         <ul class="list" [ngClass]="{ wrap: page.haveToWrapList() }">
           <ng-container *ngFor="let listItem of page.listItems">
+            <ng-container *ngIf="listItem.label !== 'Primer lapso' && listItem.label !== 'Segundo lapso' && listItem.label !== 'Tercer lapso' && listItem.label !== 'Actividades' && listItem.label !== 'Diagnósticos'">
             <ng-container
               *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"
-            ></ng-container>
+              ></ng-container>
+            </ng-container>
           </ng-container>
         </ul>
       </div>
@@ -142,9 +144,9 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--diagnostic">
       <div class="head">
-        <ng-container *ngIf="page.subtitle">
+        <!--<ng-container *ngIf="page.subtitle">
           <h3 class="text-center title">{{ page.subtitle }}</h3>
-        </ng-container>
+        </ng-container>-->
         <h2 class="text-center">{{ page.title }}</h2>
       </div>
 
@@ -247,9 +249,9 @@
 
         <div class="heading" [ngClass]="{ 'heading--reverse': page.subtitle }">
           <h2>{{ page.title }}</h2>
-          <ng-container *ngIf="page.subtitle">
-            <h3>{{ page.subtitle }}</h3>
-          </ng-container>
+          <!--<ng-container *ngIf="page.subtitle">
+            <h3>{{ page.subtitle }} </h3>
+          </ng-container>-->
         </div>
 
         <ng-container
