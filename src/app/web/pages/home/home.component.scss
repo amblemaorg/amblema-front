@@ -17,7 +17,7 @@ section.about-us {
 
   @include breakpoint(medium) {
     flex-direction: row;
-    padding: 6vw 0;
+    padding: 3vw 0;
   }
 
   @import "scss/animations";
