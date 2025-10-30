@@ -185,10 +185,16 @@
                     <td style="text-align: center;">
                     <strong>{{ tr[2] }}</strong>
                     </td>
-                  </tr>
+                    <td *ngIf="tr[3] !== undefined" style="text-align: center;">
+                      <strong>{{ tr[3] }}</strong>
+                    </td>
                 </ng-container>
               </table>
+              <div *ngIf="page.lapseId && page.lapseId=='lapse2'" class="lapse-info">
+                <label>(*) Promedio por grado (**) Índice: % respecto a la meta</label>
+              </div>
             </div>
+            
           </ng-container>
         </div>
 
@@ -199,7 +205,7 @@
               | strBreakSplit
           "
         >
-          <p class="description">
+          <p class="description" [ngClass]="{'mas-margen': page.lapseId === 'lapse2'}">
             <span [outerHTML]="pText"></span>
           </p>
         </ng-container>

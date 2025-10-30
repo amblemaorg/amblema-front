@@ -21,6 +21,7 @@ interface DiagnosticPageData {
   chart: Chart;
   table: string[][];
   lapseName: string;
+  lapseId: string;
 }
 
 // Template Model
@@ -28,7 +29,7 @@ export class DiagnosticTemplate extends Template {
   isImgChart = false;
   chart;
   table: string[][] = [];
-
+  lapseId: string;
   constructor(
     public storeId: string,
     public title: string,
@@ -37,10 +38,11 @@ export class DiagnosticTemplate extends Template {
     table: string[][] = [],
     public subtitle?: string,
     public characterLimit = 0,
+    lapseId?: string,
     templateOptions?: TemplateOptions,
   ) {
     super('diagnosticTemplate', templateOptions);
-
+    this.lapseId = lapseId || '';
     this.buildChart(chart);
     this.buildTable(table);
   }
@@ -162,6 +164,7 @@ export class DiagnosticPageDataGroup {
     data: number[],
     legend = '',
     withBgColorArray = false,
+    otherBgColorArray = false,
   ): Chart {
     const chart: Chart = {
       chartId,
@@ -179,6 +182,9 @@ export class DiagnosticPageDataGroup {
       chart.datasets[0].backgroundColor = ['#4472c4', '#ed7d31', '#a5a5a5'];
     }
 
+    if(otherBgColorArray){
+      chart.datasets[0].backgroundColor = ['#81B03E', '#ffc000', '#a5a5a5'];  
+    }
     return chart;
   }
 
@@ -198,7 +204,7 @@ export class DiagnosticPageDataGroup {
     const lapseGraphic = graphics[lapseId];
     
     // const lapseGraphic = null;
-
+    let isSecondLapse = false;
     if (
       !lapseGraphic ||
       !lapseGraphic[diagKey] ||
@@ -219,12 +225,21 @@ export class DiagnosticPageDataGroup {
 
     let labels = lapseGraphic[diagKey].labels;
     let values = lapseGraphic[diagKey].values;
-  
-    // ↓↓↓ SOLO APLICAR AGRUPACIÓN PARA LAPSE1 ↓↓↓
-    if (lapseId === 'lapse1') {
-      const groupedData = this.groupByGradeAndAverage(labels, values);
-      labels = groupedData.labels;
-      values = groupedData.values;
+    
+    
+    const groupedData = this.groupByGradeAndAverage(labels, values);
+    labels = groupedData.labels;
+    values = groupedData.values;
+    
+    if(lapseId=="lapse2"){
+      let prevs = graphics["lapse1"][diagKey]
+      const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
+      const promedioAnterior = this.calculateAverage(valuesPrev.values);
+      const promedioActual = this.calculateAverage(groupedData.values);
+
+      labels = ["Diagnóstico Inicial", "Diagnóstico de Revisión"];
+      values = [promedioAnterior, promedioActual];
+      isSecondLapse = true;
     }
 
     if (isThirdLapse) {
@@ -259,6 +274,7 @@ export class DiagnosticPageDataGroup {
       values,
       chartTitle,
       isThirdLapse,
+      isSecondLapse
     );
   }
 
@@ -297,6 +313,12 @@ export class DiagnosticPageDataGroup {
     };
   }
   
+  private calculateAverage(values: number[]): number {
+    if (!values || values.length === 0) return 0;
+    const average = values.reduce((a, b) => a + b, 0) / values.length;
+    return parseFloat(average.toFixed(2));
+  }
+
   private extractGradeName(fullLabel: string): string {
     // Elimina las letras de sección (A, B, C, etc.) al final
     // Convierte "1er Grado A" → "1er Grado"
@@ -366,17 +388,13 @@ export class DiagnosticPageDataGroup {
       const value = graphicDiagnosticData.values[idx];
       const metaSettings = this.getDiagGoalTableData(label, true);
 
-      // console.log({ metaSettings });
-
       if (isFirstLapse) {
         // ['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']
-
         return [label, '0', metaSettings[diagKey], value];
       }
 
       if (isSecondLapse) {
         // ['grado',  'D. Inicial',  'D. Revisión',  'Meta',  'Índice D. Revisión']
-
         return [label, '0', '0', metaSettings[diagKey], value];
       }
 
@@ -440,10 +458,7 @@ export class DiagnosticPageDataGroup {
     const diagGoal = this.diagnosticGoalTableData[
       gradeRespKeyMappedWithGradeDiag[grade]
     ];
-    // console.log(grade);
-
-    // console.log({ diagnosticGoalTableData: this.diagnosticGoalTableData });
-
+    
     if (!diagGoal) {
       return {
         diagnosticReading: '0.0',
@@ -466,7 +481,6 @@ export class DiagnosticPageDataGroup {
     diagKey: string,
     tablesByLapses: string[][][] = [],
   ) {
-    // tableData = null;
     const isFirstLapse = lapseIdx === 0;
     const isSecondLapse = lapseIdx === 1;
     const isThirdLapse = lapseIdx === 2;
@@ -495,11 +509,11 @@ export class DiagnosticPageDataGroup {
     if (isSecondLapse) {
       header.push([`<strong>Diagnóstico de Revisión de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
       header.push([
-        'grado',
-        'D. Inicial',
-        'D. Revisión',
-        'Meta',
-        'Índice D. Revisión',
+        '<strong>Grado</strong>',
+        '<strong>PMM (*)</strong>',
+        '<strong>Meta</strong>',
+        '<strong>Índice Inicial (**)</strong>',
+        '<strong>Índice de Revisión (**)</strong>',
       ]);
     }
 
@@ -524,8 +538,6 @@ export class DiagnosticPageDataGroup {
         isThirdLapse,
       );
 
-      // console.log({ provisionalTableData });
-
       if (provisionalTableData.length > 0) {
         return [...header, ...provisionalTableData];
       }
@@ -538,6 +550,7 @@ export class DiagnosticPageDataGroup {
     // Removed default headers got from DataBase
     tableData = tableData.slice(1, tableData.length);
     // reordered and format values
+    
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
@@ -567,8 +580,27 @@ export class DiagnosticPageDataGroup {
 
       if (isSecondLapse || isThirdLapse) {
         let valueRevision: any = false;
+        let indiceInicialL1: any = '0.0'; // ← VALOR POR DEFECTO
 
         if (tablesByLapses.length > 0 && tablesByLapses[0][diagIdx]) {
+          
+          const lapso1Data = tablesByLapses[0][diagIdx];
+        
+          // Buscar el índice inicial del mismo grado en lapso1
+          // lapso1Data[2+] son las filas de datos, [0] es el grado, [3] es el índice inicial
+          const filaLapso1 = lapso1Data.find((fila, index) => 
+            index >= 2 && 
+            fila[0] && 
+            fila[0].trim() === tdFormatted[0].trim() &&
+            fila.length >= 4
+          );
+          
+          if (filaLapso1) {
+            indiceInicialL1 = filaLapso1[3]; // Índice Inicial del lapso1
+        }
+
+          
+
           valueRevision = tablesByLapses[0][diagIdx].slice(
             2,
             tablesByLapses[0][diagIdx].length,
@@ -579,6 +611,15 @@ export class DiagnosticPageDataGroup {
           );
         }
 
+        if(isSecondLapse){
+          return [
+            tdFormatted[0], // grade
+            tdFormatted[2], // PMM - D. Revisión
+            tdFormatted[3], // Meta
+            indiceInicialL1,
+            tdFormatted[4], // Índice P. Final
+          ];  
+        }
         return [
           tdFormatted[0], // grade
           valueRevision ? valueRevision[1] : '0.0', // D. Inicial
@@ -590,7 +631,7 @@ export class DiagnosticPageDataGroup {
 
       return tdFormatted;
     });
-
+    
     let filteredTableData = [];
     // Get just one grade and not grade by each section
     tableData = tableData.filter((td) => {
@@ -602,7 +643,7 @@ export class DiagnosticPageDataGroup {
       filteredTableData.push(td);
       return true;
     });
-
+    
     let finalTable = [...header, ...tableData];
 
     if (isFirstLapse && tableData.length > 0) {
@@ -614,6 +655,22 @@ export class DiagnosticPageDataGroup {
         'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
         'Promedio de la escuela',         // Columna 2 (PPM - texto que ocupará 2 columnas)
         promedioIndiceInicial.toFixed(2)  // Columna 4 (Índice Inicial - valor del promedio)
+      ];
+      
+      finalTable.push(filaPromedio);
+    }
+    if (isSecondLapse && tableData.length > 0) {
+      // Calcular promedio de la columna "Índice de revision" (columna 4 en el array, índice 4)
+      const indicesRevision = tableData.map(row => parseFloat(row[4]) || 0);
+      const promedioIndiceRevision = indicesRevision.reduce((sum, value) => sum + value, 0) / indicesRevision.length;
+      const indicesInicial = tableData.map(row => parseFloat(row[3]) || 0);
+      const promedioIndiceInicial = indicesInicial.reduce((sum, value) => sum + value, 0) / indicesInicial.length;
+      
+      const filaPromedio = [
+        'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
+        'Promedio de la escuela',       // Columna 2 (PPM - texto que ocupará 2 columnas)
+        promedioIndiceInicial.toFixed(2),  // Columna 4 (Índice Inicial - valor del promedio)
+        promedioIndiceRevision.toFixed(2)  // Columna 5 (Índice Revision - valor del promedio)
       ];
       
       finalTable.push(filaPromedio);
@@ -630,7 +687,7 @@ export class DiagnosticPageDataGroup {
       'diagnosticMath',
       'diagnosticLogic',
     ];
-    console.log(this.lapses)
+    
     this.lapses.forEach((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;
@@ -647,8 +704,7 @@ export class DiagnosticPageDataGroup {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[
           diagKey
         ];
-        // console.log({ lapseName, diagnosticTable });
-
+        
         const chart = this.getChart(lapseId, lapseName, diagKey, isThirdLapse);
         const table = this.getTable(
           diagnosticTable,
@@ -667,6 +723,7 @@ export class DiagnosticPageDataGroup {
           chart,
           table,
           lapseName,
+          lapseId: lapseId,
         };
       });
 
@@ -677,8 +734,6 @@ export class DiagnosticPageDataGroup {
 
       pages.push(...page);
     });
-
-    // console.log('tablesByLapses', tablesByLapses[0]);
 
     this.pages = pages;
   }
@@ -699,6 +754,7 @@ export class DiagnosticPageDataGroup {
         chart,
         table,
         storeId,
+        lapseId,
       } = page;
       const lapseName = pgIdx === 0 ? page.lapseName : undefined;
       return new DiagnosticTemplate(
@@ -709,6 +765,7 @@ export class DiagnosticPageDataGroup {
         table,
         lapseName,
         characterLimit,
+        lapseId,
       );
     });
   }

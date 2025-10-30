@@ -516,7 +516,7 @@ $text_indent: 18px;
     .body {
       .visual-references {
         margin-top: 10px;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -544,7 +544,7 @@ $text_indent: 18px;
                 border: 2px $gray solid;
                 font-size: 15px;
                 line-height: 18px;
-                padding: 4px 5px;
+                padding: 3px 5px;
                 text-align: center;
                 text-transform: none;
                 vertical-align: middle;
@@ -560,6 +560,16 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
+      }
+      .description.mas-margen{
+        margin-top: 80px;
+      }
+      .lapse-info{
+        margin-top: -15px;
+        text-align: right;
+        &:label{
+          font-size: 5px !important;
+        }
       }
     }
   }
