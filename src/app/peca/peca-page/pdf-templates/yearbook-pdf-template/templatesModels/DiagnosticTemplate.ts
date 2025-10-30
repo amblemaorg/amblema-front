@@ -105,10 +105,17 @@ export class DiagnosticTemplate extends Template {
       },
       plugins: {
         datalabels: {
-          color: '#ffffff',
+          color: '#111111', // ← Cambiar a color oscuro para mejor visibilidad
           font: {
             weight: 'bold',
+            size: 12,
           },
+          anchor: 'end',    // ← Posicionar en el extremo de la barra
+          align: 'top',     // ← Alinear en la parte superior
+          offset: 0,        // ← Sin offset adicional
+          formatter: function(value, context) {
+            return value;   // ← Mostrar el valor tal cual
+          }
         },
       },
     };
@@ -179,7 +186,7 @@ export class DiagnosticPageDataGroup {
     };
 
     if (withBgColorArray) {
-      chart.datasets[0].backgroundColor = ['#4472c4', '#ed7d31', '#a5a5a5'];
+      chart.datasets[0].backgroundColor = ['#81B03E', '#00b0f0', '#a5a5a5'];
     }
 
     if(otherBgColorArray){
@@ -250,9 +257,7 @@ export class DiagnosticPageDataGroup {
       // };
 
       // chartTitle = chartTitles[diagKey];
-      labels = ['Inicial', 'Revisión', 'Final'];
-
-      const {
+      /*const {
         operationsPerMinIndex,
         multiplicationsPerMinIndex,
         wordsPerMinIndex,
@@ -265,9 +270,17 @@ export class DiagnosticPageDataGroup {
       );
       lapseGraphic.diagnosticLogic = this.formatFilterDiagnosticValueByYear(
         operationsPerMinIndex,
-      );
-    }
+      );*/
+      let prevs = graphics["lapse1"][diagKey]
+      const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
+      const promedioAnterior = this.calculateAverage(valuesPrev.values);
+      const promedioActual = this.calculateAverage(groupedData.values);
 
+      labels = ["Diagnóstico Inicial", "Diagnóstico final"];
+      values = [promedioAnterior, promedioActual];
+      
+    }
+    
     return this.chartDefault(
       chartId,
       labels,
@@ -520,11 +533,11 @@ export class DiagnosticPageDataGroup {
     if (isThirdLapse) {
       header.push([`<strong>Diagnóstico Final de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
       header.push([
-        'grado',
-        'D. Inicial',
-        'D. Final',
-        'Meta',
-        'Índice D. Final',
+      '<strong>Grado</strong>',
+        '<strong>PMM (*)</strong>',
+        '<strong>Meta</strong>',
+        '<strong>Índice Inicial (**)</strong>',
+        '<strong>Índice Final (**)</strong>',
       ]);
     }
 
@@ -599,8 +612,6 @@ export class DiagnosticPageDataGroup {
             indiceInicialL1 = filaLapso1[3]; // Índice Inicial del lapso1
         }
 
-          
-
           valueRevision = tablesByLapses[0][diagIdx].slice(
             2,
             tablesByLapses[0][diagIdx].length,
@@ -611,7 +622,7 @@ export class DiagnosticPageDataGroup {
           );
         }
 
-        if(isSecondLapse){
+        /*if(isSecondLapse){
           return [
             tdFormatted[0], // grade
             tdFormatted[2], // PMM - D. Revisión
@@ -619,12 +630,12 @@ export class DiagnosticPageDataGroup {
             indiceInicialL1,
             tdFormatted[4], // Índice P. Final
           ];  
-        }
+        }*/
         return [
           tdFormatted[0], // grade
-          valueRevision ? valueRevision[1] : '0.0', // D. Inicial
-          tdFormatted[2], // D. Revisión
+          tdFormatted[2], // PMM - D. Revisión
           tdFormatted[3], // Meta
+          indiceInicialL1,
           tdFormatted[4], // Índice P. Final
         ];
       }
@@ -659,7 +670,7 @@ export class DiagnosticPageDataGroup {
       
       finalTable.push(filaPromedio);
     }
-    if (isSecondLapse && tableData.length > 0) {
+    if ((isSecondLapse || isThirdLapse) && tableData.length > 0) {
       // Calcular promedio de la columna "Índice de revision" (columna 4 en el array, índice 4)
       const indicesRevision = tableData.map(row => parseFloat(row[4]) || 0);
       const promedioIndiceRevision = indicesRevision.reduce((sum, value) => sum + value, 0) / indicesRevision.length;

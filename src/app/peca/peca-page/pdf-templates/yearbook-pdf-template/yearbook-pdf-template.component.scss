@@ -553,6 +553,12 @@ $text_indent: 18px;
                   font-weight: normal;
                 }
               }
+              td.green-bg{
+                background-color: #81b03e;
+                strong{
+                  color: white;
+                }
+              }
             }
           }
         }
@@ -570,6 +576,14 @@ $text_indent: 18px;
         &:label{
           font-size: 5px !important;
         }
+      }
+      .lapse2-bg{
+        background-color: #ffc000;
+        color: white !important;
+      }
+      .lapse3-bg{
+        color: white !important;
+        background-color: #00b0f0 ;
       }
     }
   }
