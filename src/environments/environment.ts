@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  recaptchaKey: '6LcB7OsUAAAAADp1Ja9obo2HXVmb2r1Gl0Dqlsgj', // from cuentas.soporte@binaural.com.ve
+  recaptchaKey: '6LdGCLYrAAAAAH9-r2S9OXr6iXEXczuAJ5wZ5o45', // from cuentas.soporte@binaural.com.ve
   recaptchaNonce: '0D3VrhyLft',
   baseUrl: 'http://localhost:10505/',
 };
