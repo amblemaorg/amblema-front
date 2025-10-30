@@ -516,13 +516,13 @@ $text_indent: 18px;
     .body {
       .visual-references {
         margin-top: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 280px;
         // column-gap: 60px;
-        column-gap: 35px;
+        column-gap: 10px;
 
         .table-container {
           .table {
@@ -536,7 +536,7 @@ $text_indent: 18px;
               &:first-child,
               &:nth-child(2) {
                 td {
-                  font-weight: bold;
+                  font-weight: normal;
                 }
               }
 
@@ -544,13 +544,13 @@ $text_indent: 18px;
                 border: 2px $gray solid;
                 font-size: 15px;
                 line-height: 18px;
-                padding: 4px 10px;
+                padding: 4px 5px;
                 text-align: center;
-                text-transform: capitalize;
+                text-transform: none;
                 vertical-align: middle;
 
                 &:first-child {
-                  font-weight: bold;
+                  font-weight: normal;
                 }
               }
             }

@@ -218,6 +218,14 @@ export class DiagnosticPageDataGroup {
     }
 
     let labels = lapseGraphic[diagKey].labels;
+    let values = lapseGraphic[diagKey].values;
+  
+    // ↓↓↓ SOLO APLICAR AGRUPACIÓN PARA LAPSE1 ↓↓↓
+    if (lapseId === 'lapse1') {
+      const groupedData = this.groupByGradeAndAverage(labels, values);
+      labels = groupedData.labels;
+      values = groupedData.values;
+    }
 
     if (isThirdLapse) {
       // const chartTitles = {
@@ -248,10 +256,52 @@ export class DiagnosticPageDataGroup {
     return this.chartDefault(
       chartId,
       labels,
-      lapseGraphic[diagKey].values,
+      values,
       chartTitle,
       isThirdLapse,
     );
+  }
+
+  private groupByGradeAndAverage(labels: string[], values: string[]): { labels: string[], values: number[] } {
+    const gradeMap = new Map<string, { sum: number, count: number }>();
+  
+    // Agrupar valores por grado
+    for (let i = 0; i < labels.length; i++) {
+      const label = labels[i];
+      const value = parseFloat(values[i]) || 0;
+      
+      // Extraer el nombre del grado (eliminar la sección A, B, C, etc.)
+      const gradeName = this.extractGradeName(label);
+      
+      if (!gradeMap.has(gradeName)) {
+        gradeMap.set(gradeName, { sum: 0, count: 0 });
+      }
+      
+      const gradeData = gradeMap.get(gradeName);
+      gradeData.sum += value;
+      gradeData.count++;
+    }
+  
+    // Calcular promedios y preparar arrays finales
+    const resultLabels: string[] = [];
+    const resultValues: number[] = [];
+  
+    gradeMap.forEach((data, gradeName) => {
+      resultLabels.push(gradeName);
+      resultValues.push(parseFloat((data.sum / data.count).toFixed(2)));
+    });
+  
+    return {
+      labels: resultLabels,
+      values: resultValues
+    };
+  }
+  
+  private extractGradeName(fullLabel: string): string {
+    // Elimina las letras de sección (A, B, C, etc.) al final
+    // Convierte "1er Grado A" → "1er Grado"
+    // Convierte "2do Grado B" → "2do Grado"
+    return fullLabel.replace(/\s+[A-Z]$/, '');
   }
 
   // Used to set a provisional data table for show table when
@@ -422,21 +472,28 @@ export class DiagnosticPageDataGroup {
     const isThirdLapse = lapseIdx === 2;
 
     const diagHeading = {
-      diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
-      diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
-      diagnosticLogic: '60LM: Lógica-Matemática en 60 minutos',
+      diagnosticReading: '(PPM: Palabras Leídas Por Minuto)',
+      diagnosticMath: '(M2M: Multiplicaciones en 2 minutos)',
+      diagnosticLogic: '(60LM: Lógica-Matemática en 60 minutos)',
     };
+    let typeDiagText = ""
+    if(diagKey=="diagnosticReading"){
+      typeDiagText="Lectura"
+    }else if(diagKey=="diagnosticMath"){
+      typeDiagText="Multiplicación"
+    }else if(diagKey=="diagnosticLogic"){
+      typeDiagText="Lógica - Matemática"
+    } 
 
-    let header = [
-      [`Resultados por grado <br />${diagHeading[diagKey]}`],
-      // ['grado', 'sección', 'D. Inicial', 'Meta', 'Índice P. Final'],
-    ];
+    let header = [];
 
     if (isFirstLapse) {
-      header.push(['grado', 'D. Inicial', 'Meta', 'Índice D. Inicial']);
+      header.push([`<strong>Diagnóstico Inicial de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
+      header.push(['<strong>Grado</strong>', '<strong>PPM</strong><br/>(Promedio por grado)', '<strong>Meta</strong>', '<strong>Índice Inicial</strong><br/>(% respecto a la meta)']);
     }
 
     if (isSecondLapse) {
+      header.push([`<strong>Diagnóstico de Revisión de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
       header.push([
         'grado',
         'D. Inicial',
@@ -447,6 +504,7 @@ export class DiagnosticPageDataGroup {
     }
 
     if (isThirdLapse) {
+      header.push([`<strong>Diagnóstico Final de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
       header.push([
         'grado',
         'D. Inicial',
@@ -545,7 +603,23 @@ export class DiagnosticPageDataGroup {
       return true;
     });
 
-    return [...header, ...tableData];
+    let finalTable = [...header, ...tableData];
+
+    if (isFirstLapse && tableData.length > 0) {
+      // Calcular promedio de la columna "Índice Inicial" (columna 3 en el array, índice 3)
+      const indicesIniciales = tableData.map(row => parseFloat(row[3]) || 0);
+      const promedioIndiceInicial = indicesIniciales.reduce((sum, value) => sum + value, 0) / indicesIniciales.length;
+      
+      const filaPromedio = [
+        'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
+        'Promedio de la escuela',         // Columna 2 (PPM - texto que ocupará 2 columnas)
+        promedioIndiceInicial.toFixed(2)  // Columna 4 (Índice Inicial - valor del promedio)
+      ];
+      
+      finalTable.push(filaPromedio);
+    }
+  
+    return finalTable;
   }
 
   buildDataPages() {

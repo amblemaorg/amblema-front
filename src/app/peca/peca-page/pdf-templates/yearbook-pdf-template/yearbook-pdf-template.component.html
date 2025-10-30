@@ -163,13 +163,28 @@
             <div class="table-container">
               <table class="table">
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
-                  <tr>
+                  <tr *ngIf="tr[0] !== 'AVERAGE_ROW_MARKER'">
                     <ng-container *ngFor="let td of tr">
                       <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
-                        <!-- {{ td }} -->
                         <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>
+                  </tr>
+                  
+                  <!-- Fila de Promedio (Especial) -->
+                  <tr *ngIf="tr[0] === 'AVERAGE_ROW_MARKER'">
+                    <!-- Columna 1: Grado (vacía) -->
+                    <td></td>
+                    
+                    <!-- Columnas 2 y 3: Combinadas con "Promedio de la escuela" -->
+                    <td colspan="2" style="text-align: center; font-weight: bold;">
+                      <strong>{{ tr[1] }}</strong>
+                    </td>
+                    
+                    <!-- Columna 4: Valor del promedio -->
+                    <td style="text-align: center;">
+                    <strong>{{ tr[2] }}</strong>
+                    </td>
                   </tr>
                 </ng-container>
               </table>
