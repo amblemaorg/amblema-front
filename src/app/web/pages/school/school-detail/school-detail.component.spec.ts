@@ -298,7 +298,7 @@ describe("SchoolDetailComponent", () => {
       },
     },
     {
-      title: "Diagnóstico de Razonamiento Lógico - Matemático",
+      title: "Diagnóstico de Razonamiento Lógico Matemático",
       id: "operationsPerMinIndex",
       description:
         "Medimos trimestralmente la cantidad de problemas lógico matemáticos, adecuados a cada nivel, resuelto en 30 minutos.  La gráfica muestra el índice de resultados en comparación con la meta por grado en el tiempo. LM30: Lógica - Matemática en 30 minutos.",

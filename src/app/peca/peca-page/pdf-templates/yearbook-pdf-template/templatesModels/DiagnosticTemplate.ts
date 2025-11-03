@@ -424,7 +424,7 @@ export class DiagnosticPageDataGroup {
     const diagHeading = {
       diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
       diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
-      diagnosticLogic: '60LM: Lógica-Matemática en 60 minutos',
+      diagnosticLogic: '60LM: Lógica Matemática en 60 minutos',
     };
 
     let header = [
