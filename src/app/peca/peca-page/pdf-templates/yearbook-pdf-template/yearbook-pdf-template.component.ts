@@ -192,9 +192,18 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const { schoolSections } = this.pdfData;
 
     let pages = [];
+    const gradeFormat = {
+      '1': '1er Grado',
+      '2': '2do Grado',
+      '3': '3er Grado',
+      '4': '4to Grado',
+      '5': '5to Grado',
+      '6': '6to Grado',
+    };
 
     for (let index = 0; index < schoolSections.length; index++) {
       const section = schoolSections[index];
+      console.log("SECCION", schoolSections[index])
 
       if (!section) continue;
 
@@ -219,10 +228,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       ) {
         continue;
       }
-
+      
+      let nameSection = gradeFormat[section.sectionGrade] + "<br/>"+ "Sección "+ section.sectionLetter
       const page = new SchoolGradeTemplate(
         `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
-        sectionName,
+        nameSection,
         sectionImg,
         teacher,
         sectionStudents,

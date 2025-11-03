@@ -329,7 +329,33 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div
+        <div class="col-md-12" style="text-align:center;">
+          <ng-container>
+            <h2 class="text-capitalize titulo-seccion" [innerHTML]="page.name">
+            </h2>
+          </ng-container>
+          
+          <ng-container *ngIf="page.img">
+            <div class="container-img">
+              <img [src]="page.img" />
+            </div>
+          </ng-container>
+          <div class="teacher teacher-seccion">
+            <h2 class="name">
+              Docente:<br/>
+              {{ page.teacher.fullName }}
+            </h2>
+          </div>
+          <div class="col-md-12" style="margin-top: 30px;">
+            <ng-container *ngFor="let name of page.students.firstColumn">
+              <span style="margin-right: 5px; text-transform: capitalize;">{{ name }},</span>
+            </ng-container>
+            <ng-container *ngFor="let name of page.students.secondColumn; let last = last">
+              <span style="text-transform: capitalize;">{{ name }}</span><span *ngIf="!last" style="margin-right: 5px;">, </span><span *ngIf="last">.</span>
+            </ng-container>
+          </div>
+        </div>
+        <!--<div
           class="col"
           [ngClass]="{ 'col--centered': !page.isFirstColumnEmpty }"
         >
@@ -357,20 +383,15 @@
               {{ page.name }}
             </h2>
           </ng-container>
-          <!-- padding-top -->
+          
           <ul class="list">
             <ng-container *ngFor="let name of page.students.secondColumn">
               <li>{{ name }}</li>
             </ng-container>
           </ul>
-        </div>
+        </div>-->
       </div>
-      <div class="teacher">
-        <div class="name">
-          <span>Docente:</span>
-          <strong>{{ page.teacher.fullName }}</strong>
-        </div>
-      </div>
+      
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>

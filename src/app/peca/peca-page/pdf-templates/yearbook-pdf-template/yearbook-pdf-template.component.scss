@@ -584,17 +584,41 @@ $text_indent: 18px;
       h2 {
         // margin-bottom: 10px;
         text-align: center;
-
+        color: $black;
+        line-height: 20px;
         & + .list {
           padding-top: 0 !important;
         }
       }
+      .teacher-seccion{
+        position: absolute;
+        top: 300px;
+        right: 5px;
+        width: 160px;
+        
+      }
+      .teacher-seccion h2.name{
+        font-size: $size__h2 !important;
+        line-height: 20px;
+        text-align: left;
+        font-weight: bolder;
+        
+      }
 
       .container-img {
         margin-bottom: 10px;
-        // img {
-        //   object-position: left;
-        // }
+        height: 400px;
+        margin-left: 150px; 
+        img {
+            object-position: left;
+            height: 400px;
+          }
+      }
+      .titulo-seccion{
+        position: absolute;
+        top: 50px;
+        left: 40px;
+        text-align: right;
       }
 
       .list {
