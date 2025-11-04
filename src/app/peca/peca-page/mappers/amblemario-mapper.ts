@@ -184,13 +184,13 @@ export function amblemarioMapper(pecaData) {
         : null,
       diagnosticLogic: vals4L
         ? {
-            diagnosticText: 'Diagnóstico de razonamiento lógico - matemático',
+            diagnosticText: 'Diagnóstico de razonamiento lógico matemático',
             diagnosticTable: tables.table3.length > 1 ? tables.table3 : null,
             diagnosticAnalysis: logicDiagnosticAnalysis
               ? logicDiagnosticAnalysis
               : null,
             diagnosticGraphicText:
-              'Gráfico estadístico del diagnóstico de razonamiento lógico - matemático',
+              'Gráfico estadístico del diagnóstico de razonamiento lógico matemático',
             diagnosticGraphic: null,
           }
         : null,

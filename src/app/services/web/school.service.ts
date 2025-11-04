@@ -44,7 +44,7 @@ const charts = [
     },
   },
   {
-    title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+    title: 'Diagnóstico de Razonamiento Lógico Matemático',
     id: 'operationsPerMinIndex',
     description: diagnosticText.logicMath,
     type: 'bar',
@@ -143,7 +143,7 @@ const schoolsList = {
           },
         },
         {
-          title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+          title: 'Diagnóstico de Razonamiento Lógico Matemático',
           description: diagnosticText.logicMath,
           type: 'bar',
           data: [
@@ -451,7 +451,7 @@ const schoolsList = {
           },
         },
         {
-          title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+          title: 'Diagnóstico de Razonamiento Lógico Matemático',
           description: diagnosticText.logicMath,
           type: 'bar',
           data: [
@@ -759,7 +759,7 @@ const schoolsList = {
           },
         },
         {
-          title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+          title: 'Diagnóstico de Razonamiento Lógico Matemático',
           description: diagnosticText.logicMath,
           type: 'bar',
           data: [
@@ -1067,7 +1067,7 @@ const schoolsList = {
           },
         },
         {
-          title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+          title: 'Diagnóstico de Razonamiento Lógico Matemático',
           description: diagnosticText.logicMath,
           type: 'bar',
           data: [

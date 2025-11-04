@@ -98,7 +98,7 @@ export const HOME_CONTENT = {
         },
         {
           id: 'operationsPerMinIndex',
-          title: 'Diagnóstico de Razonamiento Lógico - Matemático',
+          title: 'Diagnóstico de Razonamiento Lógico Matemático',
           description: diagnosticText.logicMath,
           type: 'bar',
           data: [
