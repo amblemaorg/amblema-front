@@ -1865,6 +1865,10 @@ export class TextsButtonsSetBlockComponent
       }
     } catch (err) {
       console.log("error: ", err);
+      this.toastr.error(JSON.stringify(err.error), "", {
+        positionClass: "toast-bottom-right",
+      });
+      this.importingData = false;
       throw err;
     } finally {
     }
