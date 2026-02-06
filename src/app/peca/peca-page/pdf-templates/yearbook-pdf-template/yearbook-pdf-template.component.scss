@@ -638,6 +638,12 @@ $text_indent: 18px;
             height: 400px;
           }
       }
+      .container-img.img-center{
+        margin-left: 0px;
+        img{
+          object-position: center;
+        }
+      }
       .titulo-seccion{
         position: absolute;
         top: 50px;
@@ -669,6 +675,7 @@ $text_indent: 18px;
 
       .name {
         font-size: $size__p;
+        text-transform: capitalize;
 
         span {
           margin-right: 5px;

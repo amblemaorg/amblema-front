@@ -194,6 +194,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     let pages = [];
     const gradeFormat = {
+      '0': 'Preescolar',
       '1': '1er Grado',
       '2': '2do Grado',
       '3': '3er Grado',
