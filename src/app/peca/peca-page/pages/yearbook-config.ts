@@ -195,6 +195,10 @@ export async function MapperYearBookWeb(
   const lapse2Config = createLapseBlocksConfig('2', yearBookData);
   const lapse3Config = createLapseBlocksConfig('3', yearBookData);
 
+  const groupPhotoState = {
+    groupedSections: yearBookData.groupPhoto ? (yearBookData.groupPhoto.groupedSections || []) : [],
+  };
+
   function getRequestId() {
     const theRequest =
       yearBookData['approvalHistory'] &&
@@ -1117,6 +1121,56 @@ export async function MapperYearBookWeb(
                             },
                           },
                           yearbookPDFOptions('school-description-section'),
+                          createTitleComponent('Foto grupal'),
+                          {
+                            component: 'textsbuttons',
+                            settings: {
+                              action: [
+                                {
+                                  type: 18,
+                                  name: 'Agrupar secciones',
+                                  extraData: {
+                                    sections: yearBookData.sections,
+                                    groupedSections: yearBookData.groupPhoto ? yearBookData.groupPhoto.groupedSections : [],
+                                  },
+                                  onSaveGroupedSections: (groupedSections) => {
+                                    groupPhotoState.groupedSections = groupedSections;
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          {
+                            component: 'form-review',
+                            name: 'group-photo-form',
+                            settings: {
+                              onSubmit: (values: any) => {
+                                const data = {
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
+                                  groupedSections: groupPhotoState.groupedSections,
+                                };
+                                dispatchAction('groupPhoto', data);
+                              },
+                              fields: {
+                                inputImg: {
+                                  name: 'group-photo-image',
+                                  label: 'Carga de imagen',
+                                  value: yearBookData.groupPhoto ? yearBookData.groupPhoto.image : null,
+                                  disabled: false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
+                                },
+                                button: {
+                                  text: 'Guardar cambios',
+                                  ingAction: 'Guardando...',
+                                  hidden: false,
+                                },
+                              },
+                            },
+                          },
+                          yearbookPDFOptions('group-photo-section'),
                           ...schoolSectionsConfig,
                         ],
                       },

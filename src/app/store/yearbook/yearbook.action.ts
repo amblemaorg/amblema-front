@@ -427,6 +427,13 @@ export class YearBookState {
       };
     }
 
+    if (section === 'groupPhoto') {
+      yearBookData['groupPhoto'] = {
+        ...(data['groupPhoto'] || {}),
+        ...partial,
+      };
+    }
+
     if (section === 'activities') {
       const { lapse, activityId, description, images } = partial;
       const lapseName = `lapse${lapse}`;

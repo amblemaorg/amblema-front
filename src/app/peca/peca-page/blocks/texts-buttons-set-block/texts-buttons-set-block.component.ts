@@ -28,6 +28,12 @@ export class TextsButtonsSetBlockComponent
   showModalInfo: boolean;
   showImportModal: boolean;
   showExportModal: boolean;
+  showGroupSectionsModal: boolean;
+  availableSections: any[];
+  groupedSectionIds: string[];
+  showGroupSaveBtn: boolean;
+  onSaveGroupedSections: (groupedSections: string[]) => void;
+  savingGroupedSections: boolean;
   showUploadBtn: boolean;
   showExportBtn: boolean;
   studentsToImport: any[];
@@ -2007,6 +2013,50 @@ export class TextsButtonsSetBlockComponent
         }
       }
     );
+  }
+
+  showGroupSections(action) {
+    this.availableSections = action.extraData && action.extraData.sections ? action.extraData.sections : [];
+    this.groupedSectionIds = action.extraData && action.extraData.groupedSections ? [...action.extraData.groupedSections] : [];
+    this.onSaveGroupedSections = action.onSaveGroupedSections || null;
+    this.showGroupSaveBtn = false;
+    this.showGroupSectionsModal = true;
+  }
+
+  toggleSectionGroup(sectionId: string, isChecked: boolean) {
+    this.showGroupSaveBtn = false;
+    let nuevoArr = [];
+    if (isChecked) {
+      this.groupedSectionIds.push(sectionId);
+    } else {
+      nuevoArr = this.groupedSectionIds.filter(item => item !== sectionId);
+      this.groupedSectionIds = nuevoArr;
+    }
+    if (this.groupedSectionIds.length > 0) {
+      this.showGroupSaveBtn = true;
+    }
+  }
+
+  saveGroupedSections() {
+    if (this.onSaveGroupedSections) {
+      this.savingGroupedSections = true;
+      this.onSaveGroupedSections(this.groupedSectionIds);
+      this.savingGroupedSections = false;
+      this.showGroupSectionsModal = false;
+    }
+  }
+
+  closeGroupSectionsModal() {
+    this.showGroupSectionsModal = false;
+  }
+
+  isSectionGrouped(sectionId: string): boolean {
+    return this.groupedSectionIds && this.groupedSectionIds.includes(sectionId);
+  }
+
+  parseSectionName(section: any): string {
+    const gradeName = this.parseGrade(section.grade);
+    return `${gradeName} ${section.name}`;
   }
 
   // myConsoleLog(data) {

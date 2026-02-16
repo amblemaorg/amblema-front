@@ -614,14 +614,17 @@ $text_indent: 18px;
           padding-top: 0 !important;
         }
       }
-      .teacher-seccion{
+      .teacher-seccion, .teacher-seccion-group{
         position: absolute;
         top: 300px;
-        right: 5px;
+        right: 15px;
         width: 160px;
         
       }
-      .teacher-seccion h2.name{
+      .teacher-seccion-group{
+        top: 50px;
+      }
+      .teacher-seccion h2.name, .teacher-seccion-group h2.name{
         font-size: $size__h2 !important;
         line-height: 20px;
         text-align: left;
@@ -648,7 +651,7 @@ $text_indent: 18px;
         position: absolute;
         top: 50px;
         left: 40px;
-        text-align: right;
+        text-align: left;
       }
 
       .list {

@@ -35,6 +35,11 @@ interface Section {
   image?: string;
 }
 
+export interface GroupPhoto {
+  image?: string;
+  groupedSections?: string[];
+}
+
 interface UserContentReview {
   name?: string;
   image?: string;

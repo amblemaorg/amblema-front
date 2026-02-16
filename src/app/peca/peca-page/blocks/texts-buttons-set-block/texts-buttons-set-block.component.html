@@ -604,6 +604,20 @@
           </button>
         </ng-container>
         
+        <ng-container *ngIf="action.type == 18">
+          <button
+            *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn btn-agrupar"
+            (click)="showGroupSections(action)"
+            data-toggle="modal"
+            data-target="#no-peca-modal-group-sections"
+            data-backdrop="false"
+            data-keyboard="false"
+          >
+            {{ action.name }}
+          </button>
+        </ng-container>
+
         <ng-container *ngIf="action.type == 10">
           <button
             #modalLauncher
@@ -630,6 +644,7 @@
               !action.hidden &&
               action.extraData &&
               !action.extraData.isDuplicated
+              && action.type != 18
             "
             [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
@@ -802,6 +817,64 @@
                       class="spinner-grow spinner-grow-sm"
                     ></span>
                     {{ !exportingData ? "Exportar data" : "Cargando..." }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div
+          *ngIf="showGroupSectionsModal; else null"
+          class="modal fade"
+          id="no-peca-modal-group-sections"
+          style="text-align: center;"
+          >
+          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content pb-4">
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  (click)="closeGroupSectionsModal()"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <h4>Agrupar secciones</h4>
+                <p class="py-2">
+                  Seleccione las secciones que desea agrupar bajo la foto grupal.
+                  Las secciones agrupadas no aparecerán individualmente en el PDF.
+                </p>
+                <div *ngIf="availableSections && availableSections.length > 0" style="text-align: left;">
+                  <label style="color: grey">Seleccione las secciones:</label>
+                  <div *ngFor="let section of availableSections">
+                    <label>
+                      <input
+                        type="checkbox"
+                        [checked]="isSectionGrouped(section.id)"
+                        (change)="toggleSectionGroup(section.id, $event.target.checked)"
+                        class="mx-2"
+                      />
+                      {{ parseSectionName(section) }}
+                    </label><br />
+                  </div>
+                </div>
+
+                <div class="full-width d-flex">
+                  <button
+                    *ngIf="showGroupSaveBtn"
+                    (click)="saveGroupedSections()"
+                    data-dismiss="modal"
+                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
+                  >
+                    <span
+                      *ngIf="savingGroupedSections"
+                      class="spinner-grow spinner-grow-sm"
+                    ></span>
+                    {{ !savingGroupedSections ? "Guardar" : "Guardando..." }}
                   </button>
                 </div>
               </div>

@@ -9,11 +9,7 @@
     <button class="btn btn-primary" (click)="print()">
       Generar PDF
     </button>
-    <button
-      class="btn btn-primary"
-      (click)="addGrayScale = !addGrayScale"
-      [ngClass]="{ 'gray-scale': addGrayScale }"
-    >
+    <button class="btn btn-primary" (click)="addGrayScale = !addGrayScale" [ngClass]="{ 'gray-scale': addGrayScale }">
       Activar escala de grises
     </button>
   </div>
@@ -25,66 +21,52 @@
       <div [ngSwitch]="page.templateName">
         <!-- frontpageTemplate -->
         <div *ngSwitchCase="'frontpageTemplate'">
-          <ng-container
-            *ngTemplateOutlet="frontpageTemplate; context: { page: page }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="frontpageTemplate; context: { page: page }"></ng-container>
         </div>
 
         <!-- indexTemplate -->
         <div *ngSwitchCase="'indexTemplate'">
-          <ng-container
-            *ngTemplateOutlet="indexTemplate; context: { page: page }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="indexTemplate; context: { page: page }"></ng-container>
         </div>
 
         <!-- layout2Template -->
         <div *ngSwitchCase="'layout2Template'">
-          <ng-container
-            *ngTemplateOutlet="layout2Template; context: { page: page }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="layout2Template; context: { page: page }"></ng-container>
         </div>
 
         <!-- indexTemplate -->
         <div *ngSwitchCase="'schoolGradeTemplate'">
-          <ng-container
-            *ngTemplateOutlet="
+          <ng-container *ngTemplateOutlet="
               schoolGradeTemplate;
               context: {
                 page: page
               }
-            "
-          ></ng-container>
+            "></ng-container>
         </div>
 
         <!-- diagnosticTemplate -->
         <div *ngSwitchCase="'diagnosticTemplate'">
-          <ng-container
-            *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"
-          ></ng-container>
+          <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
         </div>
 
         <!-- activityTemplate -->
         <div *ngSwitchCase="'activityTemplate'">
-          <ng-container
-            *ngTemplateOutlet="
+          <ng-container *ngTemplateOutlet="
               activityTemplate;
               context: {
                 page: page
               }
-            "
-          ></ng-container>
+            "></ng-container>
         </div>
 
         <!-- galleryTemplate -->
         <div *ngSwitchCase="'galleryTemplate'">
-          <ng-container
-            *ngTemplateOutlet="
+          <ng-container *ngTemplateOutlet="
               galleryTemplate;
               context: {
                 page: page
               }
-            "
-          ></ng-container>
+            "></ng-container>
         </div>
       </div>
     </ng-container>
@@ -105,13 +87,10 @@
     <li [style.paddingLeft]="listItem.getPaddingLeftByLevel()">
       <ng-container *ngIf="listItem.href">
         <a [href]="'#' + listItem.href">{{ listItem.label }}</a>
-        <span *ngIf="listItem.pageNumber"
-          ><a [href]="'#' + listItem.href">{{ listItem.pageNumber }}</a></span
-        >
+        <span *ngIf="listItem.pageNumber"><a [href]="'#' + listItem.href">{{ listItem.pageNumber }}</a></span>
       </ng-container>
 
-      <ng-container *ngIf="!listItem.href"
-        ><a style="font-weight: normal;">{{ listItem.label }}</a>
+      <ng-container *ngIf="!listItem.href"><a style="font-weight: normal;">{{ listItem.label }}</a>
         <span *ngIf="listItem.pageNumber">{{ listItem.pageNumber }}</span>
       </ng-container>
     </li>
@@ -127,10 +106,9 @@
       <div class="body">
         <ul class="list" [ngClass]="{ wrap: page.haveToWrapList() }">
           <ng-container *ngFor="let listItem of page.listItems">
-            <ng-container *ngIf="listItem.label !== 'Primer lapso' && listItem.label !== 'Segundo lapso' && listItem.label !== 'Tercer lapso' && listItem.label !== 'Actividades' && listItem.label !== 'Diagnósticos'">
             <ng-container
-              *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"
-              ></ng-container>
+              *ngIf="listItem.label !== 'Primer lapso' && listItem.label !== 'Segundo lapso' && listItem.label !== 'Tercer lapso' && listItem.label !== 'Actividades' && listItem.label !== 'Diagnósticos'">
+              <ng-container *ngTemplateOutlet="indexListItem; context: { listItem: listItem }"></ng-container>
             </ng-container>
           </ng-container>
         </ul>
@@ -153,10 +131,7 @@
       <div class="body">
         <div class="visual-references">
           <div class="graphic">
-            <app-graphics-block
-              [settings]="page.chart"
-              [fitContainer]="true"
-            ></app-graphics-block>
+            <app-graphics-block [settings]="page.chart" [fitContainer]="true"></app-graphics-block>
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
@@ -170,31 +145,27 @@
                       </td>
                     </ng-container>
                   </tr>
-                  
+
                   <!-- Fila de Promedio (Especial) -->
                   <tr *ngIf="tr[0] === 'AVERAGE_ROW_MARKER'">
                     <!-- Columna 1: Grado (vacía) -->
                     <td></td>
-                    
+
                     <!-- Columnas 2 y 3: Combinadas con "Promedio de la escuela" -->
                     <td colspan="2" style="text-align: center; font-weight: bold;">
                       <strong>{{ tr[1] }}</strong>
                     </td>
-                    
+
                     <!-- Columna 4: Valor del promedio -->
-                    <td style="text-align: center;"
-                    [ngClass]="{
+                    <td style="text-align: center;" [ngClass]="{
                       'green-bg': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'
-                    }"
-                    >
-                    <strong>{{ tr[2] }}</strong>
+                    }">
+                      <strong>{{ tr[2] }}</strong>
                     </td>
-                    <td *ngIf="tr[3] !== undefined" style="text-align: center;"
-                      [ngClass]="{
+                    <td *ngIf="tr[3] !== undefined" style="text-align: center;" [ngClass]="{
                         'lapse2-bg': page.lapseId === 'lapse2',
                         'lapse3-bg': page.lapseId === 'lapse3'
-                      }"
-                    >
+                      }">
                       <strong style="color: white;">{{ tr[3] }}</strong>
                     </td>
                 </ng-container>
@@ -203,17 +174,15 @@
                 <label>(*) Promedio por grado (**) Índice: % respecto a la meta</label>
               </div>
             </div>
-            
+
           </ng-container>
         </div>
 
-        <ng-container
-          *ngFor="
+        <ng-container *ngFor="
             let pText of page.description
               | excerpt: page.characterLimit
               | strBreakSplit
-          "
-        >
+          ">
           <p class="description" [ngClass]="{'mas-margen': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'}">
             <span [outerHTML]="pText"></span>
           </p>
@@ -230,10 +199,7 @@
 <ng-template #layout2Template let-page="page">
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--2">
-      <div
-        class="head"
-        [ngClass]="{ 'direction--reverse': page.isDirectionReverse }"
-      >
+      <div class="head" [ngClass]="{ 'direction--reverse': page.isDirectionReverse }">
         <div class="heading">
           <div class="content">
             <h2>{{ page.title }}</h2>
@@ -249,13 +215,11 @@
       </div>
 
       <div class="description-columns">
-        <ng-container
-          *ngFor="
+        <ng-container *ngFor="
             let pText of page.description
               | excerpt: page.characterLimit
               | strBreakSplit
-          "
-        >
+          ">
           <p class="description">
             <span [outerHTML]="pText"></span>
           </p>
@@ -284,13 +248,11 @@
           </ng-container>-->
         </div>
 
-        <ng-container
-          *ngFor="
+        <ng-container *ngFor="
             let pText of page.description
               | excerpt: page.characterLimit
               | strBreakSplit
-          "
-        >
+          ">
           <p class="description">
             <span [outerHTML]="pText"></span>
           </p>
@@ -298,11 +260,7 @@
       </div>
 
       <div class="gallery-container">
-        <app-gallery
-          [images]="page.images"
-          [limit]="3"
-          containerClasses="justify-content-between"
-        ></app-gallery>
+        <app-gallery [images]="page.images" [limit]="3" containerClasses="justify-content-between"></app-gallery>
       </div>
     </div>
     <div class="pager">
@@ -315,14 +273,9 @@
 <ng-template #galleryTemplate let-page="page">
   <section class="page {{ page.options.backgroundClass }}">
     <div class="page__content layout--gallery">
-      <app-gallery
-        [images]="page.images"
-        [withSubtitle]="page.options.withSubtitle"
-        [limit]="page.options.limit"
-        [offset]="page.options.offset"
-        itemStyle="max-height: 330px;"
-        containerClasses="align-items-center"
-      ></app-gallery>
+      <app-gallery [images]="page.images" [withSubtitle]="page.options.withSubtitle" [limit]="page.options.limit"
+        [offset]="page.options.offset" itemStyle="max-height: 330px;"
+        containerClasses="align-items-center"></app-gallery>
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>
@@ -364,16 +317,16 @@
             <h2 class="text-capitalize titulo-seccion" [innerHTML]="page.name">
             </h2>
           </ng-container>
-          
+
           <ng-container *ngIf="page.img">
             <div class="container-img img-center">
               <img [src]="page.img" />
             </div>
           </ng-container>
-          <div class="teacher teacher-seccion">
+          <div class="teacher {{ page.isGroupPhoto ? 'teacher-seccion-group' : 'teacher-seccion' }}">
             <h2 class="name">
-              Docente:<br/>
-              {{ page.teacher.fullName }}
+              Docente:<br />
+              <span [innerHTML]="page.teacher.fullName"></span>
             </h2>
           </div>
           <div class="col-md-12" style="margin-top: 30px;">
@@ -381,7 +334,8 @@
               <span style="margin-right: 5px; text-transform: capitalize;">{{ name }},</span>
             </ng-container>
             <ng-container *ngFor="let name of page.students.secondColumn; let last = last">
-              <span style="text-transform: capitalize;">{{ name }}</span><span *ngIf="!last" style="margin-right: 5px;">, </span><span *ngIf="last">.</span>
+              <span style="text-transform: capitalize;">{{ name }}</span><span *ngIf="!last"
+                style="margin-right: 5px;">, </span><span *ngIf="last">.</span>
             </ng-container>
           </div>
         </div>
@@ -421,7 +375,7 @@
           </ul>
         </div>-->
       </div>
-      
+
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>
