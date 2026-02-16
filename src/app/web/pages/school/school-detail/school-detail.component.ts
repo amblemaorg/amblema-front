@@ -180,6 +180,11 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       goldMedal: 0,
       silverMedal: 0,
       bronzeMedal: 0,
+      enrolledNational: 0,
+      classifiedNational: 0,
+      goldMedalNational: 0,
+      silverMedalNational: 0,
+      bronzeMedalNational: 0,
     },
     activities: {
       [this.ACTIVITIES.WITH_TEACHERS]: [],
@@ -207,7 +212,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     private store: Store,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
@@ -258,6 +263,11 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           goldMedal: data.olympicsSummary.medalsGold,
           silverMedal: data.olympicsSummary.medalsSilver,
           bronzeMedal: data.olympicsSummary.medalsBronze,
+          enrolledNational: data.olympicsSummary.inscribedNational,
+          classifiedNational: data.olympicsSummary.classifiedNational,
+          goldMedalNational: data.olympicsSummary.medalsGoldNational,
+          silverMedalNational: data.olympicsSummary.medalsSilverNational,
+          bronzeMedalNational: data.olympicsSummary.medalsBronzeNational,
         },
         activities: {
           [this.ACTIVITIES.WITH_TEACHERS]: [],

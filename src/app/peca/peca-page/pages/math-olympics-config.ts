@@ -237,6 +237,28 @@ export function mathOlympicsConfigMapper(
             { id: "3", name: "Bronce" },
           ],
         },
+        statusNational: {
+          label: "Estatus (Nacional)",
+          placeholder: "Estatus (Nacional)",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "Registrado" },
+            { id: "2", name: "Clasificado" },
+          ],
+        },
+        resultNational: {
+          label: "Resultado (Nacional)",
+          placeholder: "Resultado (Nacional)",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "", name: "Sin Resultado" },
+            { id: "1", name: "Oro" },
+            { id: "2", name: "Plata" },
+            { id: "3", name: "Bronce" },
+          ],
+        },
       },
       buttons: ["guardar"],
       formType: "agregarResultadoEstudiante",
@@ -250,6 +272,8 @@ export function mathOlympicsConfigMapper(
           studentId: values.id,
           result: values.result,
           status: values.status,
+          resultNational: values.resultNational,
+          statusNational: values.statusNational,
         };
         store.dispatch(new UpdateStudentMathOlympics(data));
       },
@@ -357,9 +381,69 @@ export function mathOlympicsConfigMapper(
             else return false;
           },
         },
+        statusNational: {
+          title: "Estatus (Nacional)",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            if (row) return row == "1" ? "Registrado" : "Clasificado";
+            else return "-";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Registrado" : "Clasificado";
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        resultNational: {
+          title: "Resultado (Nacional)",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            switch (row) {
+              case "1":
+                return "Oro";
+              case "2":
+                return "Plata";
+              case "3":
+                return "Bronce";
+              default:
+                return "-";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string;
+            switch (cell) {
+              case "1":
+                value = "Oro";
+                break;
+              case "2":
+                value = "Plata";
+                break;
+              case "3":
+                value = "Bronce";
+                break;
+              default:
+                value = "";
+            }
+            value = value.toUpperCase();
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
       },
       dataResultadoEstudiante: olympicStudents.map((student) => {
-        const { id, name, section, result, status } = student;
+        const {
+          id,
+          name,
+          section,
+          result,
+          status,
+          resultNational,
+          statusNational,
+        } = student;
         return {
           id,
           name,
@@ -367,6 +451,8 @@ export function mathOlympicsConfigMapper(
           grade: section.grade,
           result,
           status: status,
+          resultNational: result === "1" ? resultNational : null,
+          statusNational: result === "1" ? statusNational : null,
         };
       }),
       classes: {

@@ -192,8 +192,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -235,8 +235,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -284,8 +284,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -324,8 +324,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -373,8 +373,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -416,8 +416,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -430,7 +430,7 @@ export class PecaState {
   @Action(UpdateSchoolActivitiesRequest)
   async updateSchoolActivitiesImages(
     { patchState, getState }: StateContext<PecaStateModel>,
-    {}: UpdateSchoolActivitiesRequest
+    { }: UpdateSchoolActivitiesRequest
   ) {
     const state = getState();
     const userId = state.user.id;
@@ -464,8 +464,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -478,7 +478,7 @@ export class PecaState {
   @Action(CancelSchoolActivitiesRequest)
   async cancelSchoolActivitiesRequest(
     { patchState, getState }: StateContext<PecaStateModel>,
-    {}: CancelSchoolActivitiesRequest
+    { }: CancelSchoolActivitiesRequest
   ) {
     const { content: pecaContent } = getState();
     //@ts-ignore
@@ -506,8 +506,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -737,7 +737,7 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: UpdateStudentMathOlympics
   ) {
-    const { lapseNumber, studentId, status, result } = payload;
+    const { lapseNumber, studentId, status, result, statusNational, resultNational } = payload;
     const lapseName = `lapse${lapseNumber}`;
     const state = getState();
     const pecaId = state.content.id;
@@ -745,6 +745,8 @@ export class PecaState {
     const data = {
       status,
       result,
+      statusNational,
+      resultNational,
     };
     try {
       const updatedStudent = await this.fetcher.put(url, data).toPromise();
@@ -779,8 +781,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -871,8 +873,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -925,8 +927,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -990,8 +992,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -1038,8 +1040,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -1093,8 +1095,8 @@ export class PecaState {
 
       const errorMsg =
         message &&
-        typeof message === "string" &&
-        message.toLowerCase() === "invalid image format"
+          typeof message === "string" &&
+          message.toLowerCase() === "invalid image format"
           ? "Ocurrió un problema al procesar la(s) imágen(es)"
           : "Ha ocurrido un error";
 
@@ -1105,7 +1107,7 @@ export class PecaState {
   }
 
   @Action(ClearPecaState)
-  clearState({ setState }: StateContext<PecaStateModel>, {}: ClearPecaState) {
+  clearState({ setState }: StateContext<PecaStateModel>, { }: ClearPecaState) {
     setState({
       content: null,
       selectedProject: null,

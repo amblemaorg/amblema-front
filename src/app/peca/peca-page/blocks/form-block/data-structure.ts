@@ -13,8 +13,8 @@ export function structureData(
 
   const shouldAddPasswordToData =
     formType === "actualizarPadrino" ||
-    formType === "actualizarEscuela" ||
-    formType === "actualizarCoordinador"
+      formType === "actualizarEscuela" ||
+      formType === "actualizarCoordinador"
       ? cf.value.newPassword.length || cf.value.confirmPassword.length
         ? cf.value.newPassword === cf.value.confirmPassword
           ? true
@@ -254,6 +254,12 @@ export function structureData(
         },
         status: cf.get("status").value,
         result: cf.get("result").value,
+        statusNational: cf.get("statusNational")
+          ? cf.get("statusNational").value
+          : null,
+        resultNational: cf.get("resultNational")
+          ? cf.get("resultNational").value
+          : null,
       };
       break;
     case "agregarActividadEspecial": // for Actividad Especial view and table
