@@ -76,6 +76,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       this.diagnosticGraphicData = await this.pdfService.getSchoolByCode(
         this.pdfData.schoolCode,
       );
+      
       // this.diagnosticGraphicData = mockDiagnosticChartData;
       this.diagnosticGoalTableData = await this.pdfService.getGoalSettingsTable();
       this.printOptions = await this.pdfService.getPrintOptions(
