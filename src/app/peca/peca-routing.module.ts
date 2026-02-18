@@ -11,6 +11,7 @@ import { AnnualConventionPageComponent } from './peca-page/pages/annual-conventi
 import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component'
 import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component'
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component'
+import { ReadingOlympicsPageComponent } from './peca-page/pages/reading-olympics-page.component'
 import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component'
 import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component'
 import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component'
@@ -75,6 +76,10 @@ const routes: Routes = [
         component: MathOlympicsPageComponent,
       },
       {
+        path: 'lapso/:lapsoNumber/olimpiadas-lectura',
+        component: ReadingOlympicsPageComponent,
+      },
+      {
         path: 'testimonio-docentes',
         component: TeacherTestimonyPageComponent,
       },
@@ -110,4 +115,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PecaRoutingModule {}
+export class PecaRoutingModule { }

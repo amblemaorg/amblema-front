@@ -1,11 +1,11 @@
 import { environment } from "src/environments/environment";
 import { ArrayHelper } from "./../../../helpers/array.helper";
 import {
-  UpdateStudentMathOlympics,
-  RemoveStudentMathOlympics,
+  UpdateStudentReadingOlympics,
+  RemoveStudentReadingOlympics,
 } from "./../../../store/actions/peca/peca.actions";
 import { formResultadoEstudianteModal } from "../blocks/form-block/all-forms";
-import { RegisterStudentMathOlympics } from "src/app/store/actions/peca/peca.actions";
+import { RegisterStudentReadingOlympics } from "src/app/store/actions/peca/peca.actions";
 import {
   requiredAndOnlyLetters,
   requiredAndNormalText,
@@ -46,7 +46,7 @@ const controlProps = {
   },
 };
 
-export function mathOlympicsConfigMapper(
+export function readingOlympicsConfigMapper(
   pecaData,
   lapseNumber,
   updatedStudents,
@@ -58,8 +58,8 @@ export function mathOlympicsConfigMapper(
     permissions;
   const datePipe = new DatePipe("en-US");
   const lapseName = `lapse${lapseNumber}`;
-  const mathOlympics = pecaData[lapseName].olympics;
-  const { students: olympicStudents, date, file, description } = mathOlympics;
+  const readingOlympics = pecaData[lapseName].readingOlympics;
+  const { students: olympicStudents, date, file, description } = readingOlympics;
   const dateFormatted = datePipe.transform(Date.parse(date), "dd/MM/yyyy");
   let downloadFile = {};
   if (file && file.url) {
@@ -134,7 +134,7 @@ export function mathOlympicsConfigMapper(
           studentId: row.id,
           sectionId: row.sectionId,
         };
-        store.dispatch(new RegisterStudentMathOlympics(data));
+        store.dispatch(new RegisterStudentReadingOlympics(data));
       },
       buttonType: "agregarResultadoEstudiante",
       tableCode: "dataResultadoEstudiante",
@@ -159,6 +159,7 @@ export function mathOlympicsConfigMapper(
         lapseNumber,
         pecaId: pecaData.id,
         students: schoolStudents,
+        olympicsType: "reading",
       },
       formsContent: {
         gradesStudents: {
@@ -275,7 +276,7 @@ export function mathOlympicsConfigMapper(
           resultNational: values.resultNational,
           statusNational: values.statusNational,
         };
-        store.dispatch(new UpdateStudentMathOlympics(data));
+        store.dispatch(new UpdateStudentReadingOlympics(data));
       },
     },
   };
@@ -289,6 +290,7 @@ export function mathOlympicsConfigMapper(
         lapseNumber,
         pecaId: pecaData.id,
         students: schoolStudents,
+        olympicsType: "reading",
       },
       isMulti: true,
       total: 10,
@@ -487,7 +489,7 @@ export function mathOlympicsConfigMapper(
       classes: "justify-content-center",
       onSubmit: (values) => {
         const data = { lapseNumber, studentId: values.data.newData.id };
-        store.dispatch(new RemoveStudentMathOlympics(data));
+        store.dispatch(new RemoveStudentReadingOlympics(data));
       },
       makesNoRequest: true,
       modalCode: "dataResultadoEstudiante",
@@ -510,7 +512,7 @@ export function mathOlympicsConfigMapper(
 
   return {
     header: {
-      title: "Olimpíada de Matemática",
+      title: "Olimpíada de Lectura",
     },
     blocks: [
       {

@@ -28,11 +28,7 @@
       </div>
       <div class="school-data row">
         <div class="item" *ngIf="school.instagram">
-          <a
-            [href]="school.instagram"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a [href]="school.instagram" rel="noopener noreferrer" target="_blank">
             <fa-icon class="social-icon" [icon]="instagramIcon"></fa-icon>
           </a>
         </div>
@@ -51,13 +47,8 @@
   </div>
 
   <div class="school-images">
-    <owl-carousel
-      #schoolImageCarousel
-      [options]="schoolImagesOptions"
-      class="school-image-carousel"
-      [carouselClasses]="['']"
-      *ngIf="school.images && school.images.length"
-    >
+    <owl-carousel #schoolImageCarousel [options]="schoolImagesOptions" class="school-image-carousel"
+      [carouselClasses]="['']" *ngIf="school.images && school.images.length">
       <ng-container *ngFor="let slide of school.images; index as i">
         <div class="image-wrapper">
           <img [src]="slide.image" [alt]="school.name + ' imagen ' + i" />
@@ -67,77 +58,178 @@
     </owl-carousel>
   </div>
 </section>
-<div
-  #symbols
-  class="symbols-container slide-bottom-animation animation-init"
-></div>
+<div #symbols class="symbols-container slide-bottom-animation animation-init"></div>
 <section #charts class="charts">
   <div class="charts-switcher">
-    <charts-switcher
-      #chartSwitcher
-      [options]="chartSwitcherOptions"
-      (switch)="setActiveChart($event)"
-      *ngIf="isBrowser && school.charts.length > 0"
-    >
+    <charts-switcher #chartSwitcher [options]="chartSwitcherOptions" (switch)="setActiveChart($event)"
+      *ngIf="isBrowser && school.charts.length > 0">
     </charts-switcher>
   </div>
-  <div
-    #chartTestimonial
-    class="chart-testimonial slide-right-animation animation-init"
-    *ngIf="school.charts.length > 0"
-  >
-    <web-testimonial-card
-      [testimonial]="school.charts[activeChartIndex].testimonial"
-      *ngIf="school.charts[activeChartIndex].testimonial"
-    >
+  <div #chartTestimonial class="chart-testimonial slide-right-animation animation-init"
+    *ngIf="school.charts.length > 0">
+    <web-testimonial-card [testimonial]="school.charts[activeChartIndex].testimonial"
+      *ngIf="school.charts[activeChartIndex].testimonial">
     </web-testimonial-card>
   </div>
 </section>
 <section class="math-olympics">
-  <div class="heading">
-    <h2>Olimpíadas Recreativas de Matemática</h2>
-    <p>
-      Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para 
-      que inscriban a los estudiantes de 1er a 6to grado en las 
-      Olimpíadas Recreativas de Matemática y Lengua, que organiza la 
-      Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas, 
-      en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a 
-      los docentes en la preparación de los estudiantes para ambas competencias.
-    </p>
-  </div>
-  <div class="result-summary">
-    <div class="result enrolled">
-      <img
-        class="result-icon"
-        src="./assets/images/icon-enrolled-students.png"
-      />
-      <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
-      <span class="result-label">Estudiantes participantes</span>
+  <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
+    <div class="activities-tab" [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
+      (click)="selectedOlympics = OLYMPICS.MATH">
+      Olimpíadas de Matemáticas
     </div>
-    <div class="result classified">
-      <img
-        class="result-icon"
-        src="./assets/images/icon-classified-students.png"
-      />
-      <span class="result-count">{{ school.mathOlympics.classified }}</span>
-      <span class="result-label">Estudiantes clasificados</span>
-    </div>
-    <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
-      <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Oro)</span>
-    </div>
-    <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
-      <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Plata)</span>
-    </div>
-    <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
-      <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Bronce)</span>
+    <div class="activities-tab" [ngClass]="{ active: selectedOlympics == OLYMPICS.READING }"
+      (click)="selectedOlympics = OLYMPICS.READING">
+      Olimpíadas de Lectura
     </div>
   </div>
+
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
+    <div class="heading">
+      <h2>Olimpíadas Recreativas de Matemática</h2>
+      <p>
+        Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
+        que inscriban a los estudiantes de 1er a 6to grado en las
+        Olimpíadas Recreativas de Matemática y Lengua, que organiza la
+        Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas,
+        en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a
+        los docentes en la preparación de los estudiantes para ambas competencias.
+      </p>
+    </div>
+    <h3 class="math-olympics-subtitle">Olimpíadas Regionales</h3>
+    <div class="result-summary">
+      <div class="result enrolled">
+        <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+        <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
+        <span class="result-label">Estudiantes participantes</span>
+      </div>
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ school.mathOlympics.classified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+
+    <div *ngIf="school.mathOlympics.enrolledNational > 0">
+      <h3 class="math-olympics-subtitle">Olimpíadas Nacionales</h3>
+      <div class="result-summary">
+        <div class="result enrolled">
+          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <span class="result-count">{{ school.mathOlympics.enrolledNational }}</span>
+          <span class="result-label">Estudiantes participantes</span>
+        </div>
+        <div class="result classified">
+          <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+          <span class="result-count">{{ school.mathOlympics.classifiedNational }}</span>
+          <span class="result-label">Estudiantes clasificados</span>
+        </div>
+        <div *ngIf="school.mathOlympics.goldMedalNational" class="result gold">
+          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.goldMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Oro)</span>
+        </div>
+        <div *ngIf="school.mathOlympics.silverMedalNational" class="result silver">
+          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.silverMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Plata)</span>
+        </div>
+        <div *ngIf="school.mathOlympics.bronzeMedalNational" class="result bronze">
+          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.bronzeMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Bronce)</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.READING">
+    <div class="heading">
+      <h2>Olimpíadas Recreativas de Lectura</h2>
+      <p>
+        Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
+        que inscriban a los estudiantes de 1er a 6to grado en las
+        Olimpíadas Recreativas de Matemática y Lengua, que organiza la
+        Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas,
+        en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a
+        los docentes en la preparación de los estudiantes para ambas competencias.
+      </p>
+    </div>
+    <h3 class="math-olympics-subtitle">Olimpíadas Regionales</h3>
+    <div class="result-summary">
+      <div class="result enrolled">
+        <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+        <span class="result-count">{{ school.readingOlympics.enrolled }}</span>
+        <span class="result-label">Estudiantes participantes</span>
+      </div>
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ school.readingOlympics.classified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div *ngIf="school.readingOlympics.goldMedal" class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.goldMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div *ngIf="school.readingOlympics.silverMedal" class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.silverMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div *ngIf="school.readingOlympics.bronzeMedal" class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.bronzeMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+
+    <div *ngIf="school.readingOlympics.enrolledNational > 0">
+      <h3 class="math-olympics-subtitle">Olimpíadas Nacionales</h3>
+      <div class="result-summary">
+        <div class="result enrolled">
+          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <span class="result-count">{{ school.readingOlympics.enrolledNational }}</span>
+          <span class="result-label">Estudiantes participantes</span>
+        </div>
+        <div class="result classified">
+          <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+          <span class="result-count">{{ school.readingOlympics.classifiedNational }}</span>
+          <span class="result-label">Estudiantes clasificados</span>
+        </div>
+        <div *ngIf="school.readingOlympics.goldMedalNational" class="result gold">
+          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.goldMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Oro)</span>
+        </div>
+        <div *ngIf="school.readingOlympics.silverMedalNational" class="result silver">
+          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.silverMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Plata)</span>
+        </div>
+        <div *ngIf="school.readingOlympics.bronzeMedalNational" class="result bronze">
+          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.bronzeMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Bronce)</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </section>
 <section class="activities">
   <div class="activities-tabs-wrapper">
@@ -150,64 +242,41 @@
       Actividades con los docentes
     </div>
 -->
-    <div
-      class="activities-tab"
-      [ngClass]="{ active: selectedActivitiesType == ACTIVITIES.SPECIALS }"
-      (click)="setActivitiesType(ACTIVITIES.SPECIALS)"
-    >
+    <div class="activities-tab" [ngClass]="{ active: selectedActivitiesType == ACTIVITIES.SPECIALS }"
+      (click)="setActivitiesType(ACTIVITIES.SPECIALS)">
       Actividades especiales
     </div>
   </div>
   <div class="activities-details-wrapper">
     <div class="activities-index-carousel">
-      <owl-carousel
-        #activitiesIndexCarousel
-        [options]="activitiesIndexOptions"
-        class="activities-index-carousel"
-        [carouselClasses]="['']"
-      >
-        <div
-          class="activity-index"
-          [ngClass]="{ active: activeActivityIndex == i }"
-          *ngFor="
+      <owl-carousel #activitiesIndexCarousel [options]="activitiesIndexOptions" class="activities-index-carousel"
+        [carouselClasses]="['']">
+        <div class="activity-index" [ngClass]="{ active: activeActivityIndex == i }" *ngFor="
             let item of school.activities[selectedActivitiesType];
             index as i
-          "
-          (click)="activeActivityIndex !== i && setActiveActivity(i)"
-        >
+          " (click)="activeActivityIndex !== i && setActiveActivity(i)">
           {{ item.name }}
         </div>
       </owl-carousel>
     </div>
-    <div
-      class="activity-details"
-      *ngIf="school.activities[selectedActivitiesType].length > 0"
-    >
+    <div class="activity-details" *ngIf="school.activities[selectedActivitiesType].length > 0">
       <div class="activity-info">
         <span class="activity-name">
           {{
-            school.activities[selectedActivitiesType][activeActivityIndex].name
+          school.activities[selectedActivitiesType][activeActivityIndex].name
           }}
         </span>
         <p class="activity-description">
           {{
-            school.activities[selectedActivitiesType][activeActivityIndex]
-              .description
+          school.activities[selectedActivitiesType][activeActivityIndex]
+          .description
           }}
         </p>
       </div>
       <div class="activity-images">
-        <owl-carousel
-          #activityImageCarousel
-          [options]="activityImagesOptions"
-          class="activity-image-carousel"
-          [carouselClasses]="['']"
-          *ngIf="school.activitiesSlider.length"
-        >
-          <div
-            class="image-wrapper"
-            *ngFor="let image of school.activitiesSlider; index as i"
-          >
+        <owl-carousel #activityImageCarousel [options]="activityImagesOptions" class="activity-image-carousel"
+          [carouselClasses]="['']" *ngIf="school.activitiesSlider.length">
+          <div class="image-wrapper" *ngFor="let image of school.activitiesSlider; index as i">
             <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
           </div>
         </owl-carousel>
@@ -221,11 +290,7 @@
     <!-- <p></p> -->
   </div>
   <div class="teachers-list">
-    <owl-carousel-o
-      *ngIf="school.testimonials.length > 0"
-      [options]="teachersOptions"
-      class="teachers-carousel"
-    >
+    <owl-carousel-o *ngIf="school.testimonials.length > 0" [options]="teachersOptions" class="teachers-carousel">
       <ng-template carouselSlide *ngFor="let item of school.testimonials">
         <web-testimonial-card [testimonial]="item"></web-testimonial-card>
       </ng-template>
@@ -237,16 +302,10 @@
     <h2>Próximas actividades</h2>
   </div>
   <div class="activities-list">
-    <owl-carousel
-      #activitiesCarousel
-      [options]="activitiesOptions"
-      class="activities-carousel"
-      [carouselClasses]="['']"
-    >
+    <owl-carousel #activitiesCarousel [options]="activitiesOptions" class="activities-carousel"
+      [carouselClasses]="['']">
       <ng-container *ngFor="let item of school.nextActivities">
-        <ng-container
-          *ngTemplateOutlet="activity; context: { activity: item }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="activity; context: { activity: item }"></ng-container>
       </ng-container>
     </owl-carousel>
   </div>
@@ -257,16 +316,10 @@
     <h2>Descubre otras escuelas</h2>
   </div>
   <div class="other-schools-list">
-    <owl-carousel
-      #otherSchoolsCarousel
-      [options]="otherSchoolsOptions"
-      class="other-schools-carousel"
-      [carouselClasses]="['']"
-    >
+    <owl-carousel #otherSchoolsCarousel [options]="otherSchoolsOptions" class="other-schools-carousel"
+      [carouselClasses]="['']">
       <ng-container *ngFor="let item of school.otherSchools">
-        <ng-container
-          *ngTemplateOutlet="otherSchool; context: { school: item }"
-        ></ng-container>
+        <ng-container *ngTemplateOutlet="otherSchool; context: { school: item }"></ng-container>
       </ng-container>
     </owl-carousel>
   </div>
@@ -279,11 +332,7 @@
     <div class="image-wrapper">
       <img [src]="school.image" [alt]="school.name + ' image'" />
     </div>
-    <a
-      *ngIf="school.slug"
-      class="school-link"
-      [routerLink]="['/escuelas/' + school.slug]"
-    >
+    <a *ngIf="school.slug" class="school-link" [routerLink]="['/escuelas/' + school.slug]">
       <h3 *ngIf="school.name" class="school-name">{{ school.name }}</h3>
     </a>
   </div>
