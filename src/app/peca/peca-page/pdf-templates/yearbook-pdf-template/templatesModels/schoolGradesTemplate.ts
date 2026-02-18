@@ -13,6 +13,7 @@ export class SchoolGradeTemplate extends Template {
     public img: string,
     public teacher: any,
     students: string[],
+    public isGroupPhoto: boolean = false,
     templateOptions?: TemplateOptions,
   ) {
     super('schoolGradeTemplate', templateOptions);

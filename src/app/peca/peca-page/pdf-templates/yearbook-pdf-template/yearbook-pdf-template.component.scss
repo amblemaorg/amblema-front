@@ -608,17 +608,50 @@ $text_indent: 18px;
       h2 {
         // margin-bottom: 10px;
         text-align: center;
-
+        color: $black;
+        line-height: 20px;
         & + .list {
           padding-top: 0 !important;
         }
       }
+      .teacher-seccion, .teacher-seccion-group{
+        position: absolute;
+        top: 300px;
+        right: 15px;
+        width: 160px;
+        
+      }
+      .teacher-seccion-group{
+        top: 50px;
+      }
+      .teacher-seccion h2.name, .teacher-seccion-group h2.name{
+        font-size: $size__h2 !important;
+        line-height: 20px;
+        text-align: left;
+        font-weight: bolder;
+        
+      }
 
       .container-img {
         margin-bottom: 10px;
-        // img {
-        //   object-position: left;
-        // }
+        height: 400px;
+        margin-left: 150px; 
+        img {
+            object-position: left;
+            height: 400px;
+          }
+      }
+      .container-img.img-center{
+        margin-left: 0px;
+        img{
+          object-position: center;
+        }
+      }
+      .titulo-seccion{
+        position: absolute;
+        top: 50px;
+        left: 40px;
+        text-align: left;
       }
 
       .list {
@@ -645,6 +678,7 @@ $text_indent: 18px;
 
       .name {
         font-size: $size__p;
+        text-transform: capitalize;
 
         span {
           margin-right: 5px;
