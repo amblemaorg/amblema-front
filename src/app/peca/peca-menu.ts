@@ -43,6 +43,13 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     data: 'olympics_peca_view',
     order: 100,
   },
+  readingOlympics: {
+    title: 'Olimpíada de Lectura',
+    icon: 'medal',
+    link: 'olimpiadas-lectura',
+    data: 'olympics_peca_view',
+    order: 100,
+  },
   specialActivity: {
     title: 'Actividad Especial de Lapso',
     icon: 'actividades',

@@ -1,5 +1,5 @@
 import { RespPecaProjectsOlympics } from "src/app/resp-interfaces/resp-pecaprojects-olimpics.interface";
-import { UpdateStudentsMathOlympicsList } from "./../../../../store/actions/peca/peca.actions";
+import { UpdateStudentsMathOlympicsList, UpdateStudentsReadingOlympicsList } from "./../../../../store/actions/peca/peca.actions";
 import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
@@ -2635,14 +2635,14 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   private async deleteStudentsByLots(cf: FormGroup) {
-    const { lapseNumber, students, pecaId } = this.custom.settings.extraData;
+    const extraData = this.custom.settings.extraData;
+    const { lapseNumber, students, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
     const body = {
       students: students.map((student) => student.id),
       lapse: lapseNumber,
+      olympicsType: olympicsType
     };
-
-    // console.log("onSubmit", body);
-
     this.isLoading = true;
     try {
       const dataResp = await this.dep.fetcher
@@ -2664,11 +2664,14 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   private async addStudentsByLots(cf: FormGroup) {
-    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+    const extraData = this.custom.settings.extraData;
+    const { lapseNumber, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
 
     const body = {
       grades: cf.get("gradesStudents").value,
       lapse: lapseNumber,
+      olympicsType: olympicsType
     };
 
     // console.log("onSubmit", body);
@@ -2696,11 +2699,12 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   async updateStudentsList() {
-    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+    const { lapseNumber, pecaId, olympicsType } = this.custom.settings.extraData;
+    const type = olympicsType || 'math';
 
     try {
       const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
-        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}?type=${type}`)
         .toPromise();
 
       // console.log("RespPecaProjects respData", respData);
@@ -2708,7 +2712,11 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
         lapseNumber,
         newStudents: respData.students,
       };
-      this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+      if (type === 'reading') {
+        this.dep.store.dispatch(new UpdateStudentsReadingOlympicsList(data));
+      } else {
+        this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+      }
     } catch { }
   }
 }

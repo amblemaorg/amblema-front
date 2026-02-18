@@ -62,7 +62,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     WITH_TEACHERS: 'withTeachers',
     SPECIALS: 'specials',
   };
+  OLYMPICS = {
+    MATH: 'math',
+    READING: 'reading',
+  };
   selectedActivitiesType = this.ACTIVITIES.SPECIALS;
+  selectedOlympics = this.OLYMPICS.MATH;
   activeActivityIndex = 0;
 
   chartSwitcherOptions = {
@@ -186,6 +191,18 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       silverMedalNational: 0,
       bronzeMedalNational: 0,
     },
+    readingOlympics: {
+      enrolled: 0,
+      classified: 0,
+      goldMedal: 0,
+      silverMedal: 0,
+      bronzeMedal: 0,
+      enrolledNational: 0,
+      classifiedNational: 0,
+      goldMedalNational: 0,
+      silverMedalNational: 0,
+      bronzeMedalNational: 0,
+    },
     activities: {
       [this.ACTIVITIES.WITH_TEACHERS]: [],
       [this.ACTIVITIES.SPECIALS]: [],
@@ -268,6 +285,20 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           goldMedalNational: data.olympicsSummary.medalsGoldNational,
           silverMedalNational: data.olympicsSummary.medalsSilverNational,
           bronzeMedalNational: data.olympicsSummary.medalsBronzeNational,
+          description: data.olympicsSummary.description,
+        },
+        readingOlympics: {
+          enrolled: data.olympicsReadingSummary.inscribed,
+          classified: data.olympicsReadingSummary.classified,
+          goldMedal: data.olympicsReadingSummary.medalsGold,
+          silverMedal: data.olympicsReadingSummary.medalsSilver,
+          bronzeMedal: data.olympicsReadingSummary.medalsBronze,
+          enrolledNational: data.olympicsReadingSummary.inscribedNational,
+          classifiedNational: data.olympicsReadingSummary.classifiedNational,
+          goldMedalNational: data.olympicsReadingSummary.medalsGoldNational,
+          silverMedalNational: data.olympicsReadingSummary.medalsSilverNational,
+          bronzeMedalNational: data.olympicsReadingSummary.medalsBronzeNational,
+          description: data.olympicsReadingSummary.description,
         },
         activities: {
           [this.ACTIVITIES.WITH_TEACHERS]: [],

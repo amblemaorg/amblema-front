@@ -73,76 +73,162 @@
   </div>
 </section>
 <section class="math-olympics">
-  <div class="heading">
-    <h2>Olimpíadas Recreativas de Matemática</h2>
-    <p>
-      Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
-      que inscriban a los estudiantes de 1er a 6to grado en las
-      Olimpíadas Recreativas de Matemática y Lengua, que organiza la
-      Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas,
-      en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a
-      los docentes en la preparación de los estudiantes para ambas competencias.
-    </p>
-  </div>
-  <h3 class="math-olympics-subtitle">Olimpíadas Regionales</h3>
-  <div class="result-summary">
-    <div class="result enrolled">
-      <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
-      <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
-      <span class="result-label">Estudiantes participantes</span>
+  <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
+    <div class="activities-tab" [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
+      (click)="selectedOlympics = OLYMPICS.MATH">
+      Olimpíadas de Matemáticas
     </div>
-    <div class="result classified">
-      <img class="result-icon" src="./assets/images/icon-classified-students.png" />
-      <span class="result-count">{{ school.mathOlympics.classified }}</span>
-      <span class="result-label">Estudiantes clasificados</span>
-    </div>
-    <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
-      <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Oro)</span>
-    </div>
-    <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
-      <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Plata)</span>
-    </div>
-    <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
-      <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
-      <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
-      <span class="result-label">Medallas obtenidas (Bronce)</span>
+    <div class="activities-tab" [ngClass]="{ active: selectedOlympics == OLYMPICS.READING }"
+      (click)="selectedOlympics = OLYMPICS.READING">
+      Olimpíadas de Lectura
     </div>
   </div>
 
-  <div *ngIf="school.mathOlympics.enrolledNational > 0">
-    <h3 class="math-olympics-subtitle">Olimpíadas Nacionales</h3>
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
+    <div class="heading">
+      <h2>Olimpíadas Recreativas de Matemática</h2>
+      <p>
+        Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
+        que inscriban a los estudiantes de 1er a 6to grado en las
+        Olimpíadas Recreativas de Matemática y Lengua, que organiza la
+        Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas,
+        en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a
+        los docentes en la preparación de los estudiantes para ambas competencias.
+      </p>
+    </div>
+    <h3 class="math-olympics-subtitle">Olimpíadas Regionales</h3>
     <div class="result-summary">
       <div class="result enrolled">
         <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
-        <span class="result-count">{{ school.mathOlympics.enrolledNational }}</span>
+        <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
         <span class="result-label">Estudiantes participantes</span>
       </div>
       <div class="result classified">
         <img class="result-icon" src="./assets/images/icon-classified-students.png" />
-        <span class="result-count">{{ school.mathOlympics.classifiedNational }}</span>
+        <span class="result-count">{{ school.mathOlympics.classified }}</span>
         <span class="result-label">Estudiantes clasificados</span>
       </div>
-      <div *ngIf="school.mathOlympics.goldMedalNational" class="result gold">
+      <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
         <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
-        <span class="result-count">{{ school.mathOlympics.goldMedalNational }}</span>
+        <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
-      <div *ngIf="school.mathOlympics.silverMedalNational" class="result silver">
+      <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
         <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
-        <span class="result-count">{{ school.mathOlympics.silverMedalNational }}</span>
+        <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
-      <div *ngIf="school.mathOlympics.bronzeMedalNational" class="result bronze">
+      <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
         <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
-        <span class="result-count">{{ school.mathOlympics.bronzeMedalNational }}</span>
+        <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
     </div>
-  </div>
+
+    <div *ngIf="school.mathOlympics.enrolledNational > 0">
+      <h3 class="math-olympics-subtitle">Olimpíadas Nacionales</h3>
+      <div class="result-summary">
+        <div class="result enrolled">
+          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <span class="result-count">{{ school.mathOlympics.enrolledNational }}</span>
+          <span class="result-label">Estudiantes participantes</span>
+        </div>
+        <div class="result classified">
+          <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+          <span class="result-count">{{ school.mathOlympics.classifiedNational }}</span>
+          <span class="result-label">Estudiantes clasificados</span>
+        </div>
+        <div *ngIf="school.mathOlympics.goldMedalNational" class="result gold">
+          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.goldMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Oro)</span>
+        </div>
+        <div *ngIf="school.mathOlympics.silverMedalNational" class="result silver">
+          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.silverMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Plata)</span>
+        </div>
+        <div *ngIf="school.mathOlympics.bronzeMedalNational" class="result bronze">
+          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <span class="result-count">{{ school.mathOlympics.bronzeMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Bronce)</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.READING">
+    <div class="heading">
+      <h2>Olimpíadas Recreativas de Lectura</h2>
+      <p>
+        Desde Fundación AmbLeMa proponemos y ayudamos a todas las escuelas para
+        que inscriban a los estudiantes de 1er a 6to grado en las
+        Olimpíadas Recreativas de Matemática y Lengua, que organiza la
+        Fundación Motores por la Paz, a través del Sistema de Olimpiadas Recreativas,
+        en sus tres fases: Preliminar, Regional y Nacional. Además, brindamos apoyo a
+        los docentes en la preparación de los estudiantes para ambas competencias.
+      </p>
+    </div>
+    <h3 class="math-olympics-subtitle">Olimpíadas Regionales</h3>
+    <div class="result-summary">
+      <div class="result enrolled">
+        <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+        <span class="result-count">{{ school.readingOlympics.enrolled }}</span>
+        <span class="result-label">Estudiantes participantes</span>
+      </div>
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ school.readingOlympics.classified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div *ngIf="school.readingOlympics.goldMedal" class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.goldMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div *ngIf="school.readingOlympics.silverMedal" class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.silverMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div *ngIf="school.readingOlympics.bronzeMedal" class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ school.readingOlympics.bronzeMedal }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+
+    <div *ngIf="school.readingOlympics.enrolledNational > 0">
+      <h3 class="math-olympics-subtitle">Olimpíadas Nacionales</h3>
+      <div class="result-summary">
+        <div class="result enrolled">
+          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <span class="result-count">{{ school.readingOlympics.enrolledNational }}</span>
+          <span class="result-label">Estudiantes participantes</span>
+        </div>
+        <div class="result classified">
+          <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+          <span class="result-count">{{ school.readingOlympics.classifiedNational }}</span>
+          <span class="result-label">Estudiantes clasificados</span>
+        </div>
+        <div *ngIf="school.readingOlympics.goldMedalNational" class="result gold">
+          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.goldMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Oro)</span>
+        </div>
+        <div *ngIf="school.readingOlympics.silverMedalNational" class="result silver">
+          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.silverMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Plata)</span>
+        </div>
+        <div *ngIf="school.readingOlympics.bronzeMedalNational" class="result bronze">
+          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <span class="result-count">{{ school.readingOlympics.bronzeMedalNational }}</span>
+          <span class="result-label">Medallas obtenidas (Bronce)</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
 </section>
 <section class="activities">

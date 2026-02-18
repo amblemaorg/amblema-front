@@ -38,62 +38,61 @@ import * as ArraySort from "array-sort";
 })
 export class TableBlockComponent
   implements
-    PresentationalBlockComponent,
-    OnInit,
-    OnDestroy,
-    DoCheck,
-    AfterViewChecked
-{
+  PresentationalBlockComponent,
+  OnInit,
+  OnDestroy,
+  DoCheck,
+  AfterViewChecked {
   type: "presentational";
   name: string;
   component: string;
   settings:
     | {
-        columns: any;
-        // dataTypes: {};
-        tableCode: string; // specifies which table to work with
-        buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
-        hideImgContainer?: boolean; // if view has image adder container set this to true
-        modalCode?: string; // for views with modal inside
-        isFromImgContainer?: boolean; // indicates if data in table is from an image container
-        classes: {
-          hideView: boolean;
-          hideEdit: boolean;
-          hideDelete: boolean;
+      columns: any;
+      // dataTypes: {};
+      tableCode: string; // specifies which table to work with
+      buttonCode?: string; // to know if sending info to textsandbuttons component and specify which instance to manage
+      hideImgContainer?: boolean; // if view has image adder container set this to true
+      modalCode?: string; // for views with modal inside
+      isFromImgContainer?: boolean; // indicates if data in table is from an image container
+      classes: {
+        hideView: boolean;
+        hideEdit: boolean;
+        hideDelete: boolean;
+      };
+      total?: number;
+      updateTotal: (rows) => number;
+      getFetcher?: (
+        fetcher: string,
+        ...genProps
+      ) => { method: string; urlString: string };
+      isImageFirstCol?: boolean;
+      makesNoRequest?: boolean; // if true, this form makes no request to api
+      tableTitle?: string; // to set a title for the table
+      tableGrade?: string;
+      tableSection?: string;
+      sectionKey?: string;
+      allSections?: any[];
+      peca_id?: string;
+      section_id?: string;
+      onDelete: Function | null;
+      isMulti?: boolean; // to set table as multi selectable
+      selectMode?: string;
+      promoteData?: {
+        any: {
+          id?: string;
+          name?: string;
+          label?: string;
+          items?: any[];
+          placeholder?: string;
+          loadingLabel?: string;
+          loading?: boolean;
         };
-        total?: number;
-        updateTotal: (rows) => number;
-        getFetcher?: (
-          fetcher: string,
-          ...genProps
-        ) => { method: string; urlString: string };
-        isImageFirstCol?: boolean;
-        makesNoRequest?: boolean; // if true, this form makes no request to api
-        tableTitle?: string; // to set a title for the table
-        tableGrade?: string;
-        tableSection?: string;
-        sectionKey?: string;
-        allSections?: any[];
-        peca_id?: string;
-        section_id?: string;
-        onDelete: Function | null;
-        isMulti?: boolean; // to set table as multi selectable
-        selectMode?: string;
-        promoteData?: {
-          any: {
-            id?: string;
-            name?: string;
-            label?: string;
-            items?: any[];
-            placeholder?: string;
-            loadingLabel?: string;
-            loading?: boolean;
-          };
-        };
-        hideSubHeader?: boolean;
-        extraData;
-        data?;
-      }
+      };
+      hideSubHeader?: boolean;
+      extraData;
+      data?;
+    }
     | any;
 
   tableStates: any = {};
@@ -252,8 +251,8 @@ export class TableBlockComponent
                   this.settings["dataCopy"][index] = data.data.newData;
                 this.source
                   .update(data.data.dataToCompare, data.data.newData)
-                  .then((resp) => {})
-                  .catch((error) => {});
+                  .then((resp) => { })
+                  .catch((error) => { });
                 if (this.settings.updateTotal) {
                   const tableData = await this.source.getAll();
                   this.settings.total = this.settings.updateTotal(tableData);
@@ -346,7 +345,7 @@ export class TableBlockComponent
           if (
             this.settings.buttonCode !== "schoolDataConfigRegistroEscuela" ||
             this.globals.getTableImgsCopy(this.settings.buttonCode).length !==
-              this.settings["dataCopy"].length ||
+            this.settings["dataCopy"].length ||
             this.settings["dataCopy"]
               .reverse()
               .some((tableEl) =>
@@ -404,11 +403,11 @@ export class TableBlockComponent
       hideSubHeader: false,
       ...(settings.isMulti
         ? {
-            pager: {
-              display: true,
-              perPage: 50,
-            },
-          }
+          pager: {
+            display: true,
+            perPage: 50,
+          },
+        }
         : {}),
     };
 
@@ -487,9 +486,9 @@ export class TableBlockComponent
         this.settings["tableSection"] = data.hasTitle.tableSection;
         this.settings["tableTitle"] =
           data?.promoteData &&
-          data?.data?.length &&
-          this.settings.tableGrade &&
-          this.settings.tableSection
+            data?.data?.length &&
+            this.settings.tableGrade &&
+            this.settings.tableSection
             ? data.hasTitle.tableTitle2
             : data.hasTitle.tableTitle;
         this.settings["sectionKey"] = data.hasTitle.sectionKey;
@@ -539,8 +538,8 @@ export class TableBlockComponent
   onCustomActions(e) {
     let index = this.settings.isFromImgContainer
       ? this.settings["dataCopy"].findIndex((obj) => {
-          return obj.id === e.data.id;
-        })
+        return obj.id === e.data.id;
+      })
       : -1;
 
     let obj = {
@@ -637,12 +636,10 @@ export class TableBlockComponent
       if (isChange) this.promoteForm.reset();
       this.toastr.error(
         this.selectedRows.length > 1
-          ? `Hubo problemas al ${
-              isChange ? "cambi" : "elimin"
-            }ar los estudiantes`
-          : `Hubo problemas al ${
-              isChange ? "cambi" : "elimin"
-            }ar el estudiante`,
+          ? `Hubo problemas al ${isChange ? "cambi" : "elimin"
+          }ar los estudiantes`
+          : `Hubo problemas al ${isChange ? "cambi" : "elimin"
+          }ar el estudiante`,
         "",
         {
           positionClass: "toast-bottom-right",
@@ -681,19 +678,19 @@ export class TableBlockComponent
       this.isPromoting = true;
       const requestData = this.settings.peca_id
         ? this.settings.getFetcher(
-            "post_change_students",
-            this.settings.peca_id
-          )
+          "post_change_students",
+          this.settings.peca_id
+        )
         : null;
 
       const theStudents = this.getStudents(this.selectedRows);
 
       const body = this.settings.section_id
         ? {
-            section_previus: this.settings.section_id,
-            section_new: values.sections2P,
-            students: theStudents,
-          }
+          section_previus: this.settings.section_id,
+          section_new: values.sections2P,
+          students: theStudents,
+        }
         : null;
 
       this.fetchActions(true, requestData, body);
@@ -755,14 +752,14 @@ class tableStudentsMathOlympic {
 
   constructor(
     public defaultData: {
-      extraData: { lapseNumber; students; pecaId };
+      extraData: { lapseNumber; students; pecaId; olympicsType?};
     },
     public dep: {
       toastr: ToastrService;
       fetcher: HttpFetcherService;
       store: Store;
     }
-  ) {}
+  ) { }
 
   getData() {
     return {
@@ -858,10 +855,12 @@ class tableStudentsMathOlympic {
 
     const { extraData } = this.defaultData;
     const { lapseNumber, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
 
     const body = {
       students: selectedRows.map((student) => student.id),
       lapse: lapseNumber,
+      olympicsType: olympicsType
     };
 
     try {
@@ -892,11 +891,13 @@ class tableStudentsMathOlympic {
 
     const { extraData } = this.defaultData;
     const { lapseNumber, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
 
     const body = {
       students: selectedRows.map((student) => student.id),
       lapse: lapseNumber,
       status: status.toString(),
+      olympicsType: olympicsType
     };
 
     try {
@@ -919,11 +920,12 @@ class tableStudentsMathOlympic {
   }
 
   async updateStudentsList() {
-    const { lapseNumber, pecaId } = this.defaultData.extraData;
+    const { lapseNumber, pecaId, olympicsType } = this.defaultData.extraData;
+    const type = olympicsType || 'math';
 
     try {
       const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
-        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}?type=${type}`)
         .toPromise();
 
       const data = {
@@ -931,6 +933,6 @@ class tableStudentsMathOlympic {
         newStudents: respData.students,
       };
       this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
-    } catch {}
+    } catch { }
   }
 }

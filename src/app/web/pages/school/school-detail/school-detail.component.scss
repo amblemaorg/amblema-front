@@ -491,6 +491,51 @@ section.math-olympics {
   .math-olympics-subtitle {
     margin-bottom: 2vw;
   }
+
+  .activities-tabs-wrapper {
+    display: flex;
+    border-bottom: 3px solid $blue;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+
+    @include breakpoint(small, landscape) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    @include breakpoint(medium) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    .activities-tab {
+      color: $blue;
+      flex: 1 0 50%;
+      font-weight: bold;
+      font-size: 4.5vw;
+      line-height: 1;
+      padding: 8% 2%;
+
+      @include breakpoint(small, landscape) {
+        font-size: 2.5vw;
+        padding: 2% 10%;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 2.5vw;
+        padding: 2% 10%;
+      }
+
+      &.active {
+        color: $green;
+      }
+
+      &:hover:not(.active) {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 section.activities {
