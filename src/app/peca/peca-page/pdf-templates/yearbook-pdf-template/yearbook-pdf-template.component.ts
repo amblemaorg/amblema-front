@@ -304,7 +304,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         continue;
       }
 
-      let nameSection = gradeFormat[section.sectionGrade] + "<br/>" + "Sección " + section.sectionLetter
+      let nameSection = gradeFormat[section.sectionGrade] + " " + section.sectionLetter
       const page = new SchoolGradeTemplate(
         `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
         nameSection,

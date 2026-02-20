@@ -37,6 +37,7 @@ $text_indent: 18px;
   align-items: center;
   justify-content: center;
   row-gap: 18px;
+
   p {
     color: white;
   }
@@ -192,7 +193,7 @@ $text_indent: 18px;
       max-width: 100%;
     }
 
-    & > .pager {
+    &>.pager {
       position: absolute;
       right: 48px;
       bottom: 80px;
@@ -353,9 +354,10 @@ $text_indent: 18px;
           display: flex;
           justify-content: space-between;
 
-          & > a {
+          &>a {
             width: 85.9%;
           }
+
           a {
             pointer-events: none;
             text-decoration: none;
@@ -394,7 +396,7 @@ $text_indent: 18px;
       display: flex;
       column-gap: $columnGap;
 
-      & > * {
+      &>* {
         width: 50%;
       }
 
@@ -419,7 +421,7 @@ $text_indent: 18px;
           //   }
           // }
 
-          & > * {
+          &>* {
             line-height: 28px;
           }
         }
@@ -447,6 +449,7 @@ $text_indent: 18px;
     .container-img {
       height: 280px;
     }
+
     .body {
       height: 100%;
       column-gap: 20px;
@@ -486,7 +489,7 @@ $text_indent: 18px;
           flex-direction: column-reverse;
         }
 
-        & > * {
+        &>* {
           line-height: 28px;
           margin: 0;
         }
@@ -497,6 +500,7 @@ $text_indent: 18px;
         text-indent: $text_indent;
       }
     }
+
     .gallery-container {
       height: 230px;
       justify-content: space-between;
@@ -513,6 +517,7 @@ $text_indent: 18px;
         text-transform: initial;
       }
     }
+
     .body {
       .visual-references {
         margin-top: 10px;
@@ -553,9 +558,11 @@ $text_indent: 18px;
                   font-weight: normal;
                 }
               }
-              td.green-bg{
+
+              td.green-bg {
                 background-color: #81b03e;
-                strong{
+
+                strong {
                   color: white;
                 }
               }
@@ -567,23 +574,28 @@ $text_indent: 18px;
       .description {
         text-indent: $text_indent;
       }
-      .description.mas-margen{
+
+      .description.mas-margen {
         margin-top: 80px;
       }
-      .lapse-info{
+
+      .lapse-info {
         margin-top: -15px;
         text-align: right;
-        &:label{
+
+        &:label {
           font-size: 5px !important;
         }
       }
-      .lapse2-bg{
+
+      .lapse2-bg {
         background-color: #ffc000;
         color: white !important;
       }
-      .lapse3-bg{
+
+      .lapse3-bg {
         color: white !important;
-        background-color: #00b0f0 ;
+        background-color: #00b0f0;
       }
     }
   }
@@ -610,48 +622,66 @@ $text_indent: 18px;
         text-align: center;
         color: $black;
         line-height: 20px;
-        & + .list {
+
+        &+.list {
           padding-top: 0 !important;
         }
       }
-      .teacher-seccion, .teacher-seccion-group{
+
+      .teacher-seccion,
+      .teacher-seccion-group {
         position: absolute;
         top: 300px;
         right: 15px;
         width: 160px;
-        
+
       }
-      .teacher-seccion-group{
+
+      .teacher-seccion-group {
         top: 50px;
       }
-      .teacher-seccion h2.name, .teacher-seccion-group h2.name{
+
+      .teacher-seccion h2.name,
+      .teacher-seccion-group h2.name {
         font-size: $size__h2 !important;
         line-height: 20px;
         text-align: left;
         font-weight: bolder;
-        
+
       }
 
       .container-img {
         margin-bottom: 10px;
         height: 400px;
-        margin-left: 150px; 
+        margin-left: 150px;
+
         img {
-            object-position: left;
-            height: 400px;
-          }
+          object-position: left;
+          height: 400px;
+        }
       }
-      .container-img.img-center{
+
+      .container-img.img-center {
         margin-left: 0px;
-        img{
+
+        img {
           object-position: center;
         }
       }
-      .titulo-seccion{
+
+      .titulo-seccion {
         position: absolute;
         top: 50px;
-        left: 40px;
+        left: 30px;
         text-align: left;
+        font-size: 18px;
+      }
+
+      .students-list {
+        span {
+          font-size: 15px;
+          line-height: 20px;
+        }
       }
 
       .list {

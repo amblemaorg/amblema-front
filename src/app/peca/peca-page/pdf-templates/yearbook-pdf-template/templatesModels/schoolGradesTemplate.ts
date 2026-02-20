@@ -27,8 +27,14 @@ export class SchoolGradeTemplate extends Template {
     };
   }
 
-  // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
-  getStudents(students: string[], sectionImg = this.img) {
+  getStudents(students: string[], sectionImg = this.img, isGroupPhoto = this.isGroupPhoto) {
+    if (isGroupPhoto) {
+      return {
+        firstColumn: [],
+        secondColumn: students
+      }
+    }
+
     const maxColumnSize = 27;
     const maxSmallerColumnSize = 13;
     const restMaxLength =

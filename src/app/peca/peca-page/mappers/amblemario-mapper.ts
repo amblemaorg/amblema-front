@@ -51,8 +51,11 @@ export function amblemarioMapper(pecaData) {
           section.students && section.students.length > 0
             ? section.students.map((student) => {
               const { firstName, lastName } = student;
+              const fName = firstName ? firstName.split(' ')[0] : '';
+              const lName = lastName ? lastName.split(' ')[0] : '';
+              const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
 
-              return `${firstName} ${lastName}`;
+              return `${capitalize(fName)} ${capitalize(lName)}`.trim();
             })
             : null;
 
@@ -247,7 +250,7 @@ export function amblemarioMapper(pecaData) {
                   return 0;
                 })
                 .map((section) => {
-                  return `${grades[section.grade]} <br/>Sección ${section.name.toUpperCase()}`;
+                  return `${grades[section.grade]} "${section.name.toUpperCase()}"`;
                 })
               : [],
         }
