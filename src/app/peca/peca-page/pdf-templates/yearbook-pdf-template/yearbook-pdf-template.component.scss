@@ -716,4 +716,80 @@ $text_indent: 18px;
       }
     }
   }
+
+  .layout--smallSchoolSections {
+    width: 100%;
+    height: 100%;
+
+    .body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 30px;
+      height: 94%;
+      margin-top: 10px;
+
+      .section-column {
+        display: flex;
+        flex-direction: column;
+
+        // This acts exactly as the absolute positioning overlay seen in the user's mockup image
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          margin-bottom: 5px;
+          min-height: 40px;
+
+          .titulo-seccion {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            color: $black;
+            line-height: 20px;
+            margin: 0;
+            max-width: 50%;
+          }
+
+          .teacher-seccion-group {
+            text-align: right;
+            max-width: 50%;
+
+            h2.name {
+              font-size: $size__h2 !important;
+              line-height: 20px;
+              font-weight: bolder;
+              color: $black;
+              margin: 0;
+            }
+          }
+        }
+
+        .container-img {
+          height: 320px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+
+          img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+          }
+        }
+
+        .students-list {
+          margin-top: 5px;
+          text-align: justify;
+
+          span {
+            font-size: 15px;
+            line-height: 20px;
+            color: $black;
+          }
+        }
+      }
+    }
+  }
 }

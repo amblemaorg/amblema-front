@@ -29,9 +29,10 @@ export class SchoolGradeTemplate extends Template {
 
   getStudents(students: string[], sectionImg = this.img, isGroupPhoto = this.isGroupPhoto) {
     if (isGroupPhoto) {
+      const half = Math.ceil(students.length / 2);
       return {
-        firstColumn: [],
-        secondColumn: students
+        firstColumn: students.slice(0, half),
+        secondColumn: students.slice(half)
       }
     }
 
@@ -59,5 +60,23 @@ export class SchoolGradeTemplate extends Template {
       firstColumn: students.slice(0, maxColumnSize),
       secondColumn: students.slice(maxColumnSize, restMaxLength),
     };
+  }
+}
+
+export class SmallSchoolSectionsTemplate extends Template {
+  constructor(
+    public storeId: string,
+    public data: any[],
+    templateOptions?: TemplateOptions,
+  ) {
+    super('smallSchoolSections', templateOptions);
+
+    this.data = this.data.map(sectionData => ({
+      ...sectionData,
+      teacher: {
+        ...sectionData.teacher,
+        fullName: `${sectionData.teacher.firstName} ${sectionData.teacher.lastName}`
+      }
+    }));
   }
 }
