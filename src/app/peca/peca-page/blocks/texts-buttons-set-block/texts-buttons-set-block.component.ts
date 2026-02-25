@@ -21,8 +21,7 @@ import { Location } from '@angular/common';
   styleUrls: ["./texts-buttons-set-block.component.scss"],
 })
 export class TextsButtonsSetBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy
-{
+  implements PresentationalBlockComponent, OnInit, OnDestroy {
   type: "presentational";
   component: string;
   showModalInfo: boolean;
@@ -30,6 +29,7 @@ export class TextsButtonsSetBlockComponent
   showExportModal: boolean;
   showGroupSectionsModal: boolean;
   availableSections: any[];
+  availableGrades: { grade: string, sections: string[] }[];
   groupedSectionIds: string[];
   showGroupSaveBtn: boolean;
   onSaveGroupedSections: (groupedSections: string[]) => void;
@@ -217,7 +217,7 @@ export class TextsButtonsSetBlockComponent
     private embedService: EmbedVideoService,
     private fb: FormBuilder,
     private location: Location
-  
+
   ) {
     this.type = "presentational";
     this.component = "buttons";
@@ -293,7 +293,7 @@ export class TextsButtonsSetBlockComponent
     );
 
     this.setId();
-    if(this.settings.typeDiag == "reading" || this.settings.typeDiag == "math"){
+    if (this.settings.typeDiag == "reading" || this.settings.typeDiag == "math") {
       this.getGrades();
     }
   }
@@ -318,7 +318,7 @@ export class TextsButtonsSetBlockComponent
     this.isFormEdited = true;
     this.isImgsTableShown = null;
     this.isBeingUsedDateContr = false;
-    
+
   }
 
   setDateHandlr(e, type: string) {
@@ -583,11 +583,11 @@ export class TextsButtonsSetBlockComponent
           this.dataGenAct.date && typeof this.dataGenAct.date !== "boolean";
         const isDateNotValid = date
           ? this.globals.validateDate(
-              this.dataGenAct.date.split("T")[0],
-              "greater",
-              true,
-              true
-            )
+            this.dataGenAct.date.split("T")[0],
+            "greater",
+            true,
+            true
+          )
           : false;
         const istrue = date && !isDateNotValid;
         conditions.push(istrue);
@@ -630,17 +630,17 @@ export class TextsButtonsSetBlockComponent
 
     let obj = !usingModal
       ? {
-          code: this.settings.tableCode,
-          data: {},
-          resetData: false,
-          action: "add",
-        }
+        code: this.settings.tableCode,
+        data: {},
+        resetData: false,
+        action: "add",
+      }
       : {
-          code: this.settings.modalCode,
-          action: !isNotFromTable ? "add" : "view",
-          showBtn: !isNotFromTable ? true : false,
-          component: !isNotFromTable ? "form" : "graphics",
-        };
+        code: this.settings.modalCode,
+        action: !isNotFromTable ? "add" : "view",
+        showBtn: !isNotFromTable ? true : false,
+        component: !isNotFromTable ? "form" : "graphics",
+      };
 
     if (!usingModal) {
       switch (this.settings.buttonType) {
@@ -709,12 +709,12 @@ export class TextsButtonsSetBlockComponent
     if (!usingModal) this.globals.tableDataUpdater(obj);
     else this.globals.ModalShower(obj);
   }
-  exportDiagnostics(){
+  exportDiagnostics() {
     let workbookBin = null;
-    if(this.settings.typeDiag=="reading"){
+    if (this.settings.typeDiag == "reading") {
       this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
       workbookBin = this.makeExcel();
-    }else{
+    } else {
       this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
       workbookBin = this.makeExcelMath();
     }
@@ -757,14 +757,14 @@ export class TextsButtonsSetBlockComponent
       "Resultado",
       "Indice"
     ];
-    
+
     let matrix = [];
     let row_aux = [];
     let genero = "";
     let fecha = "";
     let fechaLog = "";
     for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
-      if(this.diagnosticsData[i]?.grade > 0){
+      if (this.diagnosticsData[i]?.grade > 0) {
         genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
         fecha = new Date(this.diagnosticsData[i]?.date)
           .toLocaleDateString("es-VE")
@@ -781,7 +781,7 @@ export class TextsButtonsSetBlockComponent
           this.diagnosticsData[i]?.result != null ? this.diagnosticsData[i]?.result : "",
           this.diagnosticsData[i]?.index != null ? this.diagnosticsData[i]?.index : "",
         ];
-        
+
         row_aux.push(data);
       }
     }
@@ -806,7 +806,7 @@ export class TextsButtonsSetBlockComponent
       Author: "Amblema",
       CreatedDate: new Date(Date.now()),
     };
-    
+
     workbook.SheetNames.push(this.settings.nameDiag);
     let columns_header = []
     columns_header = [
@@ -822,26 +822,26 @@ export class TextsButtonsSetBlockComponent
       "Resultado lógica matemática",
       "Indice lógica matemática"
     ];
-    
+
     let matrix = [];
     let row_aux = [];
     let genero = "";
     let fecha = "";
     let fechaLog = "";
     for (let count = 1, i = 0; count <= this.diagnosticsData.length; count++, i++) {
-      if(this.diagnosticsData[i]?.grade > 0){
+      if (this.diagnosticsData[i]?.grade > 0) {
         genero = parseInt(this.diagnosticsData[i]?.gender) === 1 ? "Femenino" : "Masculino";
         fecha = new Date(this.diagnosticsData[i]?.date)
           .toLocaleDateString("es-VE")
           .split("/")
           .join("-");
         let data = []
-    
+
         fechaLog = new Date(this.diagnosticsData[i]?.dateLog)
-        .toLocaleDateString("es-VE")
-        .split("/")
-        .join("-");
-      
+          .toLocaleDateString("es-VE")
+          .split("/")
+          .join("-");
+
         data = [
           this.diagnosticsData[i]?.name || "",
           this.diagnosticsData[i]?.lastName || "",
@@ -855,7 +855,7 @@ export class TextsButtonsSetBlockComponent
           this.diagnosticsData[i]?.resultLog != null ? this.diagnosticsData[i]?.resultLog : "",
           this.diagnosticsData[i]?.indexLog != null ? this.diagnosticsData[i]?.indexLog : "",
         ];
-        
+
         row_aux.push(data);
       }
     }
@@ -872,7 +872,7 @@ export class TextsButtonsSetBlockComponent
     });
     return workbookBinary;
   }
-  
+
   takeAction(type: number, e) {
     /**
      * 1 guardar or Si (on delete action),
@@ -930,8 +930,8 @@ export class TextsButtonsSetBlockComponent
                       ? `${error.error["msg"]}: ${error.error["entity"]}`
                       : error.error["msg"]
                     : error.error && error.error["message"]
-                    ? error.error["message"]
-                    : error_msg,
+                      ? error.error["message"]
+                      : error_msg,
                   "",
                   { positionClass: "toast-bottom-right" }
                 );
@@ -977,8 +977,8 @@ export class TextsButtonsSetBlockComponent
                 error.error && error.error["msg"]
                   ? error.error["msg"]
                   : error.error && error.error["message"]
-                  ? error.error["message"]
-                  : error_msg,
+                    ? error.error["message"]
+                    : error_msg,
                 "",
                 { positionClass: "toast-bottom-right" }
               );
@@ -1045,8 +1045,8 @@ export class TextsButtonsSetBlockComponent
                 : message &&
                   typeof message === "string" &&
                   message.toLowerCase() === "invalid image format"
-                ? "Ocurrió un problema al procesar la(s) imágen(es)"
-                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                  ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             if (this.settings.buttonCode)
               this.globals.setAsReadOnly(this.settings.buttonCode, false);
@@ -1055,14 +1055,14 @@ export class TextsButtonsSetBlockComponent
               error.error && error.error["name"] && error.error["name"][0]
                 ? error.error["name"][0].msg
                 : error.error && error.error["email"] && error.error["email"][0]
-                ? error.error["email"][0].msg
-                : error.error &&
-                  error.error["cardId"] &&
-                  error.error["cardId"][0]
-                ? error.error["cardId"][0].msg
-                : error.error && error.error["msg"]
-                ? error.error["msg"]
-                : error_msg,
+                  ? error.error["email"][0].msg
+                  : error.error &&
+                    error.error["cardId"] &&
+                    error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg
+                    : error.error && error.error["msg"]
+                      ? error.error["msg"]
+                      : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -1073,7 +1073,7 @@ export class TextsButtonsSetBlockComponent
       case 7:
         const num_ =
           this.setGenActBtnName() == "Guardar" ||
-          this.setGenActBtnName() == "Guardando"
+            this.setGenActBtnName() == "Guardando"
             ? 8
             : 7;
         this.activityActioned(num_);
@@ -1165,8 +1165,8 @@ export class TextsButtonsSetBlockComponent
             : message &&
               typeof message === "string" &&
               message.toLowerCase() === "invalid image format"
-            ? "Ocurrió un problema al procesar la(s) imágen(es)"
-            : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+              ? "Ocurrió un problema al procesar la(s) imágen(es)"
+              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
         this.globals.actionsSleeperUpdater(false, false);
         this.isSending = false;
@@ -1221,8 +1221,8 @@ export class TextsButtonsSetBlockComponent
           error.error && error.error["msg"]
             ? error.error["msg"]
             : error.error && error.error["message"]
-            ? error.error["message"]
-            : error_msg,
+              ? error.error["message"]
+              : error_msg,
           "",
           { positionClass: "toast-bottom-right" }
         );
@@ -1267,15 +1267,15 @@ export class TextsButtonsSetBlockComponent
         this.settings.onFileUpload(<File>e.target.files[0]);
       this.settings.upload = this.settings.upload
         ? {
-            ...this.settings.upload,
-            uploadEmpty: false,
-            name: <File>e.target.files[0].name,
-            file: <File>e.target.files[0],
-            url: "",
-          }
+          ...this.settings.upload,
+          uploadEmpty: false,
+          name: <File>e.target.files[0].name,
+          file: <File>e.target.files[0],
+          url: "",
+        }
         : {
-            uploadEmpty: true,
-          };
+          uploadEmpty: true,
+        };
 
       if (this.settings.isGenericActivity) {
         // if truty, this is for generic activity
@@ -1364,8 +1364,8 @@ export class TextsButtonsSetBlockComponent
               : message &&
                 typeof message === "string" &&
                 message.toLowerCase() === "invalid image format"
-              ? "Ocurrió un problema al procesar la(s) imágen(es)"
-              : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
           this.globals.actionsSleeperUpdater(false, false);
           this.isSending = false;
@@ -1403,8 +1403,8 @@ export class TextsButtonsSetBlockComponent
           typeof this.dataGenAct.date === "boolean" && this.dataGenAct.date
             ? false
             : this.dataGenAct.date
-            ? false
-            : true;
+              ? false
+              : true;
         conditions.push(date);
       }
       if (
@@ -1415,8 +1415,8 @@ export class TextsButtonsSetBlockComponent
           typeof this.dataGenAct.upload === "boolean" && this.dataGenAct.upload
             ? false
             : this.dataGenAct.upload
-            ? false
-            : true;
+              ? false
+              : true;
         conditions.push(upload);
       }
       if (
@@ -1453,7 +1453,7 @@ export class TextsButtonsSetBlockComponent
       ],
       month:
         this.settings.dateOrtext.fields[0][
-          `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`
+        `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Month`
         ],
       year: this.settings.dateOrtext.fields[0][
         `${this.settings.dateOrtext.fields[0]["specialDateForm"]}Year`
@@ -1470,8 +1470,7 @@ export class TextsButtonsSetBlockComponent
     const dateChecker =
       validDate &&
       new Date(
-        `${d.toISOString().split("T")[0]}T${
-          now.toISOString().split("T").reverse()[0]
+        `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]
         }`
       );
 
@@ -1516,12 +1515,12 @@ export class TextsButtonsSetBlockComponent
         isValid
           ? tMonth
           : tMonth < 12
-          ? type === "month"
-            ? tMonth
-            : tMonth + 1
-          : type === "month"
-          ? tMonth
-          : 1
+            ? type === "month"
+              ? tMonth
+              : tMonth + 1
+            : type === "month"
+              ? tMonth
+              : 1
       )}-${this.addZero(isValid ? tDay : 1)}`;
 
       this.settings.dateOrtext.fields[0].value = theWholeDate;
@@ -1541,8 +1540,8 @@ export class TextsButtonsSetBlockComponent
                 ? tMonth
                 : tMonth + 1
               : type === "month"
-              ? tMonth
-              : 1;
+                ? tMonth
+                : 1;
       }
     } else
       this.settings.dateOrtext.fields[0][
@@ -1678,8 +1677,8 @@ export class TextsButtonsSetBlockComponent
         ? "Enviando solicitud"
         : "Enviar solicitud"
       : this.isSending
-      ? "Guardando"
-      : "Guardar";
+        ? "Guardando"
+        : "Guardar";
   }
 
   getStyles(action: {
@@ -1691,11 +1690,10 @@ export class TextsButtonsSetBlockComponent
       ? ` m${action.direction}-${action.margin} m${action.direction}-md-0`
       : "";
     const removeML = action.removeMargin
-      ? ` m${action.removeMargin}-0${
-          action.removeMargin.length === 1
-            ? ` m${action.removeMargin}-md-2`
-            : ""
-        }`
+      ? ` m${action.removeMargin}-0${action.removeMargin.length === 1
+        ? ` m${action.removeMargin}-md-2`
+        : ""
+      }`
       : "";
     const style = margin + removeML;
 
@@ -1703,7 +1701,7 @@ export class TextsButtonsSetBlockComponent
   }
   openModal() {
     this.showImportModal = true;
-  
+
   }
   handleFileInput(files: FileList) {
     const reader = new FileReader();
@@ -1717,23 +1715,23 @@ export class TextsButtonsSetBlockComponent
       const elements = [];
       let num_cols = 0;
       var valid = true;
-      var column_reading = ["Nombre","Apellido","Género","Grado","Sección","Fecha de resultado","Resultado","Indice"]
-      var column_math = ["Nombre","Apellido","Género","Grado","Sección","Fecha de resultado multiplicación", "Resultado multiplicación","Indice multiplicación","Fecha de resultado lógica matemática","Resultado lógica matemática","Indice lógica matemática"]
+      var column_reading = ["Nombre", "Apellido", "Género", "Grado", "Sección", "Fecha de resultado", "Resultado", "Indice"]
+      var column_math = ["Nombre", "Apellido", "Género", "Grado", "Sección", "Fecha de resultado multiplicación", "Resultado multiplicación", "Indice multiplicación", "Fecha de resultado lógica matemática", "Resultado lógica matemática", "Indice lógica matemática"]
       const ref = sheet['!ref'];
       const range = XLSX.utils.decode_range(ref);
       var areColumnNamesValid = false;
       // Obtener los nombres de las columnas
       const columnNames = [];
       for (let C = range.s.c; C <= range.e.c; C++) {
-          const cellAddress = { r: range.s.r, c: C };
-          const cellRef = XLSX.utils.encode_cell(cellAddress);
-          if (sheet[cellRef] && sheet[cellRef].v) {
-            columnNames.push(sheet[cellRef].v);
-          }else{
-            columnNames.push("");  
-          }
+        const cellAddress = { r: range.s.r, c: C };
+        const cellRef = XLSX.utils.encode_cell(cellAddress);
+        if (sheet[cellRef] && sheet[cellRef].v) {
+          columnNames.push(sheet[cellRef].v);
+        } else {
+          columnNames.push("");
+        }
       }
-      if(this.settings.typeDiag=="reading"){
+      if (this.settings.typeDiag == "reading") {
         areColumnNamesValid = column_reading.every((name) => columnNames.includes(name));
 
         valid = Object.keys(studentsData[0]).length == 8 ? true : false;
@@ -1746,11 +1744,11 @@ export class TextsButtonsSetBlockComponent
             student["Sección"],
             student["Fecha de resultado"],
             student["Resultado"],
-            student["Indice"]          
+            student["Indice"]
           );
           num_cols = 8;
         });
-      }else{
+      } else {
         areColumnNamesValid = column_math.every((name) => columnNames.includes(name));
 
         valid = Object.keys(studentsData[0]).length == 11 ? true : false;
@@ -1763,17 +1761,17 @@ export class TextsButtonsSetBlockComponent
             student["Sección"],
             student["Fecha de resultado multiplicación"],
             student["Resultado multiplicación"],
-            student["Indice multiplicación"],          
+            student["Indice multiplicación"],
             student["Fecha de resultado lógica matemática"],
             student["Resultado lógica matemática"],
-            student["Indice lógica matemática"]          
+            student["Indice lógica matemática"]
           );
         });
         num_cols = 11;
       }
-      if(valid && areColumnNamesValid){
+      if (valid && areColumnNamesValid) {
         const el_cleaned = elements;
-        
+
         const matrix = el_cleaned.reduce(
           (rows, key, index) =>
             (index % num_cols == 0
@@ -1781,8 +1779,8 @@ export class TextsButtonsSetBlockComponent
               : rows[rows.length - 1].push(key)) && rows,
           []
         );
-            
-        if(this.settings.typeDiag=="reading"){
+
+        if (this.settings.typeDiag == "reading") {
           students = matrix.map((registry, index) => {
             const fecha_resultado = this.parseDate(registry[5]);
             const genero = registry[2] == "Femenino" ? "1" : "2"
@@ -1797,7 +1795,7 @@ export class TextsButtonsSetBlockComponent
               indice: registry[7]?.toString() || "",
             };
           });
-        }else{
+        } else {
           students = matrix.map((registry, index) => {
             const fecha_resultado_mult = this.parseDate(registry[5]);
             const fecha_resultado_log = this.parseDate(registry[8]);
@@ -1809,20 +1807,20 @@ export class TextsButtonsSetBlockComponent
               grado: registry[3]?.toString() || "",
               seccion: registry[4]?.toString() || "",
               fecha_resultado_mult: fecha_resultado_mult || "",
-              resultado_mult: registry[6] ?.toString() || "",
+              resultado_mult: registry[6]?.toString() || "",
               indice_mult: registry[7]?.toString() || "",
               fecha_resultado_log: fecha_resultado_log || "",
               resultado_log: registry[9]?.toString() || "",
               indice_log: registry[10]?.toString() || "",
-            
+
             };
           });
         }
         this.showUploadBtn = true;
 
         this.studentsToImport = students;
-      }else{
-        this.toastr.error("El formato es inválido para importar los "+this.settings.nameDiag, "", {
+      } else {
+        this.toastr.error("El formato es inválido para importar los " + this.settings.nameDiag, "", {
           positionClass: "toast-bottom-right",
         });
       }
@@ -1858,7 +1856,7 @@ export class TextsButtonsSetBlockComponent
     // console.log("BODY to import: ", body);
     try {
       const result = await this.fetcher.post(resourcePath, body).toPromise();
-      
+
       if (result.error === "false") {
         this.showImportModal = false;
         this.toastr.success(result.message, "", {
@@ -1874,10 +1872,10 @@ export class TextsButtonsSetBlockComponent
       throw err;
     } finally {
     }
-    
+
   }
 
-  getLapse(){
+  getLapse() {
     let path = this.location.path()
     let split_path = path.split("/")
     return split_path[3];
@@ -1887,9 +1885,9 @@ export class TextsButtonsSetBlockComponent
     this.showImportModal = false;
     this.showExportModal = false;
   }
-  showExportMultiple(){
+  showExportMultiple() {
     this.showExportModal = true;
-    
+
   }
 
   getGrades() {
@@ -1898,7 +1896,7 @@ export class TextsButtonsSetBlockComponent
         if (data.activePecaContent) {
           this.response = data.activePecaContent.school;
           let auxStudents = [];
-          this.grades = [...new Set(this.response.sections.map(item => item.grade))];    
+          this.grades = [...new Set(this.response.sections.map(item => item.grade))];
         }
       },
       (error) => console.error(error)
@@ -1934,71 +1932,71 @@ export class TextsButtonsSetBlockComponent
     return grado;
   }
 
-  async selectGrades(grade, toExport){
-    this.showExportBtn = false;        
+  async selectGrades(grade, toExport) {
+    this.showExportBtn = false;
     let nuevoArr = [];
-      if(toExport){
-        this.gradesToExport.push(grade);
-      }else{
-        nuevoArr = this.gradesToExport.filter(item => item !== grade);
-        this.gradesToExport = nuevoArr;
-      }
-      
-      nuevoArr = this.gradesToExport.sort((a, b) => +a - +b);
+    if (toExport) {
+      this.gradesToExport.push(grade);
+    } else {
+      nuevoArr = this.gradesToExport.filter(item => item !== grade);
       this.gradesToExport = nuevoArr;
-      /**/
-      
-    if(this.gradesToExport.length>0){
+    }
+
+    nuevoArr = this.gradesToExport.sort((a, b) => +a - +b);
+    this.gradesToExport = nuevoArr;
+    /**/
+
+    if (this.gradesToExport.length > 0) {
       this.showExportBtn = true;
     }
   }
-  exportDiagnosticsMultiple(){
+  exportDiagnosticsMultiple() {
     let lapse = this.getLapse();
     let auxStudents = [];
     this.exportingData = true;
     this.infoGradesSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
-          for(let j=0; j<this.gradesToExport.length; j++){
+          for (let j = 0; j < this.gradesToExport.length; j++) {
             for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
-              if(this.gradesToExport[j] == "all" || data.activePecaContent.school.sections[i].grade == this.gradesToExport[j]){
+              if (this.gradesToExport[j] == "all" || data.activePecaContent.school.sections[i].grade == this.gradesToExport[j]) {
                 const studentsWithGradeAndSection =
-                data.activePecaContent.school.sections[i].students.map((student) => {
-                  const student_ = {
-                    name: student.firstName,
-                    lastName: student.lastName,
-                    gender: student.gender,
-                    grade: data.activePecaContent.school.sections[i].grade,
-                    section: data.activePecaContent.school.sections[i].name,
-                  };
-                  if(this.settings.typeDiag == "reading"){
-                    student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
-                    student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
-                    student_["date"] = student[`lapse${lapse}`]["readingDate"];
-                    
-                  }else{
-                    student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
-                    student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
-                    student_["date"] = student[`lapse${lapse}`]["mathDate"];
-                    student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
-                    student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
-                    student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
-                  }
-                  return student_;
-                });
+                  data.activePecaContent.school.sections[i].students.map((student) => {
+                    const student_ = {
+                      name: student.firstName,
+                      lastName: student.lastName,
+                      gender: student.gender,
+                      grade: data.activePecaContent.school.sections[i].grade,
+                      section: data.activePecaContent.school.sections[i].name,
+                    };
+                    if (this.settings.typeDiag == "reading") {
+                      student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
+                      student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
+                      student_["date"] = student[`lapse${lapse}`]["readingDate"];
+
+                    } else {
+                      student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
+                      student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
+                      student_["date"] = student[`lapse${lapse}`]["mathDate"];
+                      student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
+                      student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
+                      student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
+                    }
+                    return student_;
+                  });
                 auxStudents = auxStudents.concat(studentsWithGradeAndSection);
               }
             }
           }
 
-          if(auxStudents){
+          if (auxStudents) {
             this.diagnosticsData = auxStudents;
             let workbookBin = null;
-    
-            if(this.settings.typeDiag=="reading"){
+
+            if (this.settings.typeDiag == "reading") {
               workbookBin = this.makeExcel();
-            }else{
-              workbookBin = this.makeExcelMath();  
+            } else {
+              workbookBin = this.makeExcelMath();
             }
 
             const octetStream = this.binary2octet(workbookBin);
@@ -2009,7 +2007,7 @@ export class TextsButtonsSetBlockComponent
             this.gradesToExport = [];
           }
           this.exportingData = false;
-    
+
         }
       }
     );
@@ -2017,24 +2015,68 @@ export class TextsButtonsSetBlockComponent
 
   showGroupSections(action) {
     this.availableSections = action.extraData && action.extraData.sections ? action.extraData.sections : [];
-    this.groupedSectionIds = action.extraData && action.extraData.groupedSections ? [...action.extraData.groupedSections] : [];
+
+    const gradesMap = {};
+    this.availableSections.forEach(section => {
+      if (!gradesMap[section.grade]) {
+        gradesMap[section.grade] = {
+          grade: section.grade,
+          sections: []
+        };
+      }
+      gradesMap[section.grade].sections.push(section.id);
+    });
+    this.availableGrades = Object.values(gradesMap);
+    // Sort availableGrades by grade initially
+    this.availableGrades.sort((a, b) => +a.grade - +b.grade);
+
+    // Solamente inicializamos groupedSectionIds si no lo hemos abierto antes o si el extraData trae algo por primera vez (esto evita pisar la selección local)
+    if (!this.groupedSectionIds || this.groupedSectionIds.length === 0) {
+      this.groupedSectionIds = action.extraData && action.extraData.groupedSections ? [...action.extraData.groupedSections] : [];
+    }
     this.onSaveGroupedSections = action.onSaveGroupedSections || null;
     this.showGroupSaveBtn = false;
     this.showGroupSectionsModal = true;
   }
 
-  toggleSectionGroup(sectionId: string, isChecked: boolean) {
+  isGradeGrouped(gradeGroup: any): boolean {
+    if (!gradeGroup.sections || gradeGroup.sections.length === 0) return false;
+    return gradeGroup.sections.every(sectionId => this.groupedSectionIds.includes(sectionId));
+  }
+
+  toggleGradeGroup(gradeGroup: any, isChecked: boolean) {
     this.showGroupSaveBtn = false;
-    let nuevoArr = [];
     if (isChecked) {
-      this.groupedSectionIds.push(sectionId);
+      gradeGroup.sections.forEach(sectionId => {
+        if (!this.groupedSectionIds.includes(sectionId)) {
+          this.groupedSectionIds.push(sectionId);
+        }
+      });
     } else {
-      nuevoArr = this.groupedSectionIds.filter(item => item !== sectionId);
-      this.groupedSectionIds = nuevoArr;
+      this.groupedSectionIds = this.groupedSectionIds.filter(id => !gradeGroup.sections.includes(id));
     }
-    if (this.groupedSectionIds.length > 0) {
-      this.showGroupSaveBtn = true;
+    this.showGroupSaveBtn = true;
+  }
+
+  isAllGradesGrouped(): boolean {
+    if (!this.availableGrades || this.availableGrades.length === 0) return false;
+    return this.availableGrades.every(gradeGroup => this.isGradeGrouped(gradeGroup));
+  }
+
+  toggleAllGradesGroup(isChecked: boolean) {
+    this.showGroupSaveBtn = false;
+    if (isChecked) {
+      this.availableGrades.forEach(gradeGroup => {
+        gradeGroup.sections.forEach(sectionId => {
+          if (!this.groupedSectionIds.includes(sectionId)) {
+            this.groupedSectionIds.push(sectionId);
+          }
+        });
+      });
+    } else {
+      this.groupedSectionIds = [];
     }
+    this.showGroupSaveBtn = true;
   }
 
   saveGroupedSections() {
@@ -2048,15 +2090,6 @@ export class TextsButtonsSetBlockComponent
 
   closeGroupSectionsModal() {
     this.showGroupSectionsModal = false;
-  }
-
-  isSectionGrouped(sectionId: string): boolean {
-    return this.groupedSectionIds && this.groupedSectionIds.includes(sectionId);
-  }
-
-  parseSectionName(section: any): string {
-    const gradeName = this.parseGrade(section.grade);
-    return `${gradeName} ${section.name}`;
   }
 
   // myConsoleLog(data) {

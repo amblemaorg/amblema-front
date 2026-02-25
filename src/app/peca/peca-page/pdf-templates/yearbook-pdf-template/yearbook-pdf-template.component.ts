@@ -179,7 +179,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         true // isGroupPhoto
       );
 
-      this.pages.push(page);
+      if (this.willPrintedSection(page.storeId)) {
+        this.pages.push(page);
+
+        page['indexName'] = 'Foto grupal';
+        const listItems = TemplateUtils.getItemsToIndex([page], this.pager, () => 'indexName');
+        this.listItems.push(...listItems);
+      }
     }
   }
 
@@ -356,6 +362,10 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         const storeId = `school-section__grade-${grade}-grouped-part${chunkIndex}`;
         const page = new SmallSchoolSectionsTemplate(storeId, mappedData);
         page['isGroupedGrade'] = true;
+
+        // Agregar property 'name' para que se liste correctamente en el índice
+        page['name'] = groupData.name;
+
         pages.push(page);
       }
     }

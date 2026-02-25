@@ -1185,7 +1185,24 @@ export async function MapperYearBookWeb(
                           },
                           yearbookPDFOptions('school-description-section'),
                           createTitleComponent('Foto grupal'),
-
+                          {
+                            component: 'textsbuttons',
+                            settings: {
+                              action: [
+                                {
+                                  type: 18,
+                                  name: 'Agrupar grados',
+                                  extraData: {
+                                    sections: yearBookData.sections,
+                                    groupedSections: groupPhotoState.groupedSections,
+                                  },
+                                  onSaveGroupedSections: (groupedSections: string[]) => {
+                                    groupPhotoState.groupedSections = groupedSections;
+                                  },
+                                },
+                              ],
+                            },
+                          },
                           {
                             component: 'form-review',
                             name: 'group-photo-form',
