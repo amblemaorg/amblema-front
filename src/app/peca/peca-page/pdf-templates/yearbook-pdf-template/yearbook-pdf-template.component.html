@@ -318,7 +318,8 @@
       <div class="row body">
         <div class="col-md-12" style="text-align:center;">
           <ng-container>
-            <h2 class="text-capitalize titulo-seccion" [innerHTML]="page.name">
+            <h2 class="text-capitalize {{ page.isGroupPhoto ?'titulo-grado' : 'titulo-seccion'}}"
+              [innerHTML]="page.name">
             </h2>
           </ng-container>
 
