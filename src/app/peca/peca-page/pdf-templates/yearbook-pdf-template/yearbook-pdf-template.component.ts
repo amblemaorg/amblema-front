@@ -120,9 +120,50 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const groupPhoto = this.pdfData.groupPhoto;
       const { schoolSections } = this.pdfData;
 
-      const groupTitle = groupPhoto.groupedSectionsContent
+      let groupTitle = groupPhoto.groupedSectionsContent
         ? groupPhoto.groupedSectionsContent.join('<br>')
         : 'Foto Grupal';
+
+      let gradeText = '';
+      if (schoolSections && groupPhoto.groupedSections?.length > 0) {
+        const groupedSections = schoolSections.filter((section) =>
+          groupPhoto.groupedSections.includes(section.sectionId),
+        );
+
+        if (groupedSections.length > 0) {
+          const uniqueGrades = [...new Set(groupedSections.map(s => s.sectionGrade))].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+
+          const shortGradeFormat = {
+            '0': 'Preescolar',
+            '1': '1er',
+            '2': '2do',
+            '3': '3er',
+            '4': '4to',
+            '5': '5to',
+            '6': '6to',
+          };
+
+          if (uniqueGrades.length === 1) {
+            const grade = uniqueGrades[0];
+            let uniqueLetters = [...new Set(groupedSections.map(s => s.sectionLetter).filter(l => l))].sort((a, b) => a.localeCompare(b));
+
+            let sectionsStr = '';
+            if (uniqueLetters.length > 1) {
+              sectionsStr = uniqueLetters.slice(0, -1).join(', ') + ' y ' + uniqueLetters[uniqueLetters.length - 1];
+            } else if (uniqueLetters.length === 1) {
+              sectionsStr = uniqueLetters[0];
+            }
+
+            gradeText = 'Grado:';
+            groupTitle = `<span>${sectionsStr ? `${shortGradeFormat[grade]} ${sectionsStr}` : shortGradeFormat[grade]}</span>`;
+          } else if (uniqueGrades.length > 1) {
+            const lowerGrade = uniqueGrades[0];
+            const upperGrade = uniqueGrades[uniqueGrades.length - 1];
+            gradeText = 'Grados:';
+            groupTitle = `<span>${shortGradeFormat[lowerGrade]} - ${shortGradeFormat[upperGrade]}</span>`;
+          }
+        }
+      }
 
       // Helper to sort sections by grade
       const sortSections = (sections) => {
@@ -176,7 +217,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         groupPhoto.image,
         teacherObj,
         students,
-        true // isGroupPhoto
+        true, // isGroupPhoto
+        gradeText
       );
 
       if (this.willPrintedSection(page.storeId)) {

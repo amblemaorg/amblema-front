@@ -630,24 +630,30 @@ $text_indent: 18px;
 
       .teacher-seccion,
       .teacher-seccion-group {
-        position: absolute;
-        top: 300px;
-        right: 15px;
-        width: 160px;
+        width: 15%;
+        padding-top: 300px;
 
       }
 
       .teacher-seccion-group {
-        top: 50px;
+        padding-top: 50px;
       }
 
       .teacher-seccion h2.name,
-      .teacher-seccion-group h2.name {
-        font-size: $size__h2 !important;
+      .teacher-seccion-group h2.name,
+      .teacher-seccion h4.name,
+      .teacher-seccion-group h4.name {
+        font-size: 16px !important;
         line-height: 20px;
         text-align: left;
         font-weight: bolder;
+      }
 
+      .teacher-seccion h4.name,
+      .teacher-seccion-group h4.name {
+        span {
+          font-weight: normal;
+        }
       }
 
       .container-img {
@@ -663,6 +669,7 @@ $text_indent: 18px;
 
       .container-img.img-center {
         margin-left: 0px;
+        width: 70%;
 
         img {
           object-position: center;
@@ -670,20 +677,32 @@ $text_indent: 18px;
       }
 
       .titulo-seccion {
-        position: absolute;
         top: 50px;
         left: 30px;
-        text-align: left;
+        text-align: right;
         font-size: 18px;
+        width: 15%;
+        padding-top: 50px;
+
       }
 
       .titulo-grado {
-        position: absolute;
-        top: 50px;
-        left: 30px;
-        text-align: left;
+        padding-top: 50px;
+        text-align: right;
         font-size: 16px;
+        font-weight: 600;
+        line-height: 18px;
+        width: 15%;
+
+        &>span {
+          font-weight: normal !important;
+          display: block;
+        }
+
       }
+
+
+
 
       .students-list {
         span {
@@ -711,9 +730,6 @@ $text_indent: 18px;
     }
 
     .teacher {
-      display: flex;
-      justify-content: end;
-
       .name {
         font-size: $size__p;
         text-transform: capitalize;

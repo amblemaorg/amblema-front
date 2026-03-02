@@ -14,6 +14,7 @@ export class SchoolGradeTemplate extends Template {
     public teacher: any,
     students: string[],
     public isGroupPhoto: boolean = false,
+    public gradeText: string = '',
     templateOptions?: TemplateOptions,
   ) {
     super('schoolGradeTemplate', templateOptions);
