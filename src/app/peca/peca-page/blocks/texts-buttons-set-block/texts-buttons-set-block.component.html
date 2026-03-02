@@ -1,7 +1,5 @@
 <div class="texts-buttons-wrapper">
-  <div
-    class="texts-wrapper"
-    *ngIf="
+  <div class="texts-wrapper" *ngIf="
       settings.dateOrtext ||
       settings.download ||
       settings.status ||
@@ -12,39 +10,28 @@
       settings.title ||
       settings.subtitles ||
       settings.genActSelectStatus
-    "
-  >
+    ">
     <!-- align-items-end -->
-    <div
-      class="date-download-status flex-gap d-flex mt-1 flex-column {{
+    <div class="date-download-status flex-gap d-flex mt-1 flex-column {{
         settings['classes'] ? settings['classes'] : 'align-items-end'
-      }}"
-    >
-      <h5
-        *ngIf="settings.title"
-        class="title font-weight-normal {{
+      }}">
+      <h5 *ngIf="settings.title" class="title font-weight-normal {{
           settings.title['classes'] ? settings.title['classes'] : ''
-        }}"
-        [class.mt-4]="
+        }}" [class.mt-4]="
           settings.dateOrtext ||
           settings.download ||
           settings.status ||
           settings.selectStatus
-        "
-        [class.text-left]="settings.title.aligning == 'left'"
-        [class.text-center]="settings.title.aligning == 'center'"
-      >
+        " [class.text-left]="settings.title.aligning == 'left'"
+        [class.text-center]="settings.title.aligning == 'center'">
         {{ settings.title.text }}
       </h5>
       <br class="line-breaker" *ngIf="settings.title" />
 
-      <div
-        class="sub-titles mb-2"
-        *ngFor="let subtitle of settings.subtitles"
+      <div class="sub-titles mb-2" *ngFor="let subtitle of settings.subtitles"
         [class.text-center]="settings.isFromCustomTableActions"
         [class.text-incremented]="settings.isFromCustomTableActions"
-        [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles"
-      >
+        [class.subtitlesMT]="settings.addMT && settings.addMT.subtitles">
         <h6 class="sub-title">{{ subtitle.title }}</h6>
         <p [class.text-justify]="settings.isGenericActivity">
           {{ subtitle.text }}
@@ -53,121 +40,70 @@
 
       <div class="left-side" [class.mr-auto]="settings.genActSelectStatus">
         <h6 class="left-sided-content">
-          <span
-            *ngIf="settings.dateOrtext && settings.dateOrtext.text"
-            class="mr-2"
-            >{{ settings.dateOrtext.text }}</span
-          >
-          <span
-            [class.display-date]="
+          <span *ngIf="settings.dateOrtext && settings.dateOrtext.text" class="mr-2">{{ settings.dateOrtext.text
+            }}</span>
+          <span [class.display-date]="
               settings.dateOrtext && settings.dateOrtext.date
-            "
-            *ngIf="
+            " *ngIf="
               settings.dateOrtext &&
               settings.dateOrtext.text &&
               settings.dateOrtext.date
-            "
-          ></span>
+            "></span>
           <span *ngIf="settings.dateOrtext && settings.dateOrtext.date">{{
             settings.dateOrtext.date
-          }}</span>
-          <span
-            *ngIf="
+            }}</span>
+          <span *ngIf="
               settings.dateOrtext &&
               settings.dateOrtext.text &&
               settings.dateOrtext.fields &&
               settings.dateOrtext.fields.length > 0
-            "
-            class="estilo-date"
-            [class.estilo-date-non-editable]="!userCanEdit"
-          >
+            " class="estilo-date" [class.estilo-date-non-editable]="!userCanEdit">
             <div class="date-part-container">
-              <ng-container
-                *ngIf="activity_uneditable || !userCanEdit; else newDateInputs"
-              >
+              <ng-container *ngIf="activity_uneditable || !userCanEdit; else newDateInputs">
                 <div class="inactive-wrapper">
-                  <input
-                    [(ngModel)]="
+                  <input [(ngModel)]="
                       settings.dateOrtext.fields[0][
                         settings.dateOrtext.fields[0].specialDateForm +
                           'InactiveInput'
                       ]
-                    "
-                    class="form-control"
-                    [placeholder]="settings.dateOrtext.fields[0].placeholder"
-                    autocomplete="off"
-                    type="text"
-                    readonly
-                  />
+                    " class="form-control" [placeholder]="settings.dateOrtext.fields[0].placeholder" autocomplete="off"
+                    type="text" readonly />
                 </div>
               </ng-container>
               <ng-template #newDateInputs>
-                <input
-                  [(ngModel)]="
+                <input [(ngModel)]="
                     settings.dateOrtext.fields[0][
                       settings.dateOrtext.fields[0].specialDateForm + 'Day'
                     ]
-                  "
-                  class="form-control day"
-                  placeholder="Día"
-                  autocomplete="off"
-                  type="number"
-                  max="31"
-                  min="1"
-                  [readonly]="activity_uneditable || !userCanEdit"
-                  (ngModelChange)="setDateHandlr($event, 'day')"
-                  (blur)="dateOnBlur($event, 'day')"
-                />
-                <input
-                  [(ngModel)]="
+                  " class="form-control day" placeholder="Día" autocomplete="off" type="number" max="31" min="1"
+                  [readonly]="activity_uneditable || !userCanEdit" (ngModelChange)="setDateHandlr($event, 'day')"
+                  (blur)="dateOnBlur($event, 'day')" />
+                <input [(ngModel)]="
                     settings.dateOrtext.fields[0][
                       settings.dateOrtext.fields[0].specialDateForm + 'Month'
                     ]
-                  "
-                  class="form-control month"
-                  placeholder="Mes"
-                  autocomplete="off"
-                  type="number"
-                  max="12"
-                  min="1"
-                  [readonly]="activity_uneditable || !userCanEdit"
-                  (ngModelChange)="setDateHandlr($event, 'month')"
-                  (blur)="dateOnBlur($event, 'month')"
-                />
-                <input
-                  [(ngModel)]="
+                  " class="form-control month" placeholder="Mes" autocomplete="off" type="number" max="12" min="1"
+                  [readonly]="activity_uneditable || !userCanEdit" (ngModelChange)="setDateHandlr($event, 'month')"
+                  (blur)="dateOnBlur($event, 'month')" />
+                <input [(ngModel)]="
                     settings.dateOrtext.fields[0][
                       settings.dateOrtext.fields[0].specialDateForm + 'Year'
                     ]
-                  "
-                  class="form-control year"
-                  placeholder="Año"
-                  autocomplete="off"
-                  type="number"
-                  min="1"
-                  [readonly]="activity_uneditable || !userCanEdit"
-                  (ngModelChange)="setDateHandlr($event, 'year')"
-                  (blur)="dateOnBlur($event, 'year')"
-                />
+                  " class="form-control year" placeholder="Año" autocomplete="off" type="number" min="1"
+                  [readonly]="activity_uneditable || !userCanEdit" (ngModelChange)="setDateHandlr($event, 'year')"
+                  (blur)="dateOnBlur($event, 'year')" />
                 <div class="calendaricon">
                   <nb-icon icon="calendar" style="font-size: 1.5rem;"></nb-icon>
                 </div>
               </ng-template>
             </div>
-            <ng-datepicker
-              #inputDate
-              [headless]="activity_uneditable || !userCanEdit"
-              position="bottom-left"
-              class="datepicker-control"
-              *ngIf="
+            <ng-datepicker #inputDate [headless]="activity_uneditable || !userCanEdit" position="bottom-left"
+              class="datepicker-control" *ngIf="
                 settings.dateOrtext &&
                 settings.dateOrtext.fields[0] &&
                 !reloadDate
-              "
-              [(ngModel)]="settings.dateOrtext.fields[0].value"
-              [options]="datePickerOptions"
-              [disabled]="activity_uneditable || !userCanEdit"
-            >
+              " [(ngModel)]="settings.dateOrtext.fields[0].value" [options]="datePickerOptions"
+              [disabled]="activity_uneditable || !userCanEdit">
             </ng-datepicker>
             <!--
             <input
@@ -198,46 +134,32 @@
       </div>
 
       <div *ngIf="settings.download || settings.status" class="right-side">
-        <h6
-          *ngIf="settings.status && settings.status.subText != 0"
-          class="status ml-2"
-        >
+        <h6 *ngIf="settings.status && settings.status.subText != 0" class="status ml-2">
           <span>{{ settings.status.text }}:&nbsp;</span>
-          <span
-            class="rounded-circle"
-            [ngClass]="{
+          <span class="rounded-circle" [ngClass]="{
               yellow: settings.status.subText === 1,
               green: settings.status.subText === 2,
               red:
                 settings.status.subText === 3 || settings.status.subText === 4
-            }"
-          ></span>
+            }"></span>
           &nbsp;
           <span class="font-weight-normal">{{
             settings.status.subText === 1
-              ? 'Pendiente'
-              : settings.status.subText === 2
-              ? 'Aprobado'
-              : settings.status.subText === 3
-              ? 'Rechazado'
-              : 'Cancelado'
-          }}</span>
+            ? 'Pendiente'
+            : settings.status.subText === 2
+            ? 'Aprobado'
+            : settings.status.subText === 3
+            ? 'Rechazado'
+            : 'Cancelado'
+            }}</span>
         </h6>
 
-        <a
-          *ngIf="settings.download && settings.download.url && userCanEdit"
-          title="Descargar"
-          [href]="settings.download.url"
-          target="_blank"
-          [download]="settings.download.name"
+        <a *ngIf="settings.download && settings.download.url && userCanEdit" title="Descargar"
+          [href]="settings.download.url" target="_blank" [download]="settings.download.name"
           class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper"
-          [class.ml-4]="!settings.isGenericActivity"
-          (click)="
+          [class.ml-4]="!settings.isGenericActivity" (click)="
             activity_uneditable || !userCanEdit ? $event.preventDefault() : null
-          "
-          [class.inactive]="activity_uneditable || !userCanEdit"
-          >Descargar</a
-        >
+          " [class.inactive]="activity_uneditable || !userCanEdit">Descargar</a>
       </div>
 
       <!-- Ver mas boton -->
@@ -250,70 +172,54 @@
 
             </ng-container> -->
             <ng-container *ngIf="!(action.type == 6 || action.type == 5)">
-              <button
-                *ngIf="action.name && !action.hidden"
-                [class.d-none]="
+              <button *ngIf="action.name && !action.hidden" [class.d-none]="
                   ((action.type === 4 || action.type === 9) &&
                     settings.fetcherUrls &&
                     settings.fetcherUrls.cancel) ||
                   (action.type === 2 &&
                     !this.settings.modalCode &&
                     isImgsTableShown)
-                "
-                [class]="
+                " [class]="
                   'btn btn-blue text-decoration-none py-1 px-4 btn-in-wrapper action-btn action-btn-fit' +
                   getStyles(action)
-                "
-                style="margin-left: 10px; margin-top: -4px;"
+                " style="margin-left: 10px; margin-top: -4px;"
                 [disabled]="disableThis(action.type) || isSending || sleepSend"
-                (click)="takeAction(action.type, $event)"
-              >
-                <span
-                  *ngIf="
+                (click)="takeAction(action.type, $event)">
+                <span *ngIf="
                     isSending &&
                     (action.type == 4 ||
                       action.type == 7 ||
                       action.type == 8 ||
                       (settings.isDeleting && action.type == 1))
-                  "
-                  class="spinner-grow spinner-grow-sm"
-                ></span>
+                  " class="spinner-grow spinner-grow-sm"></span>
                 {{
-                  action.type !== 9 &&
-                  isSending &&
-                  (action.type == 4 || action.type == 7 || action.type == 8)
-                    ? action.type == 8
-                      ? 'Guardando'
-                      : action.type == 7
-                      ? setGenActBtnName()
-                      : 'Enviando'
-                    : action.type == 7
-                    ? setGenActBtnName()
-                    : isSending
-                    ? action.name + ' ...'
-                    : action.name
+                action.type !== 9 &&
+                isSending &&
+                (action.type == 4 || action.type == 7 || action.type == 8)
+                ? action.type == 8
+                ? 'Guardando'
+                : action.type == 7
+                ? setGenActBtnName()
+                : 'Enviando'
+                : action.type == 7
+                ? setGenActBtnName()
+                : isSending
+                ? action.name + ' ...'
+                : action.name
                 }}
               </button>
 
-              <ng-container
-                *ngIf="
+              <ng-container *ngIf="
                   (action.type === 4 || action.type === 9) &&
                   !action.hidden &&
                   settings.fetcherUrls &&
                   settings.fetcherUrls.cancel
-                "
-              >
-                <button
-                  class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-                  [disabled]="isSending || sleepSend"
-                  (click)="cancelRequest()"
-                >
-                  <span
-                    *ngIf="isSending"
-                    class="spinner-grow spinner-grow-sm"
-                  ></span>
+                ">
+                <button class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+                  [disabled]="isSending || sleepSend" (click)="cancelRequest()">
+                  <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
                   {{
-                    isSending ? 'Cancelando solicitud' : 'Cancelar solicitud'
+                  isSending ? 'Cancelando solicitud' : 'Cancelar solicitud'
                   }}
                 </button>
               </ng-container>
@@ -321,139 +227,77 @@
           </ng-container>
         </div>
 
-        <p
-          *ngIf="showModalInfo"
-          class="text-decoration-none"
-          style="
+        <p *ngIf="showModalInfo" class="text-decoration-none" style="
             color: red;
             background: #fcc7c7;
             padding: 1rem 2rem;
             border-radius: 5px;
             margin-top: 10px;
             width: 100%;
-          "
-        >
+          ">
           {{ settings.status.comments }}
         </p>
       </ng-container>
 
       <!-- Adjuntar archivo -->
-      <div
-        *ngIf="
+      <div *ngIf="
           settings.selectStatus ||
           settings.btnGeneral ||
           settings.selectGeneralStatus ||
           settings.genActSelectStatus
-        "
-        class="right-side select-estatus-width"
-        [class.select-gen-act]="settings.genActSelectStatus"
-        [class.ml-auto]="!settings.download && settings.genActSelectStatus"
-      >
+        " class="right-side select-estatus-width" [class.select-gen-act]="settings.genActSelectStatus"
+        [class.ml-auto]="!settings.download && settings.genActSelectStatus">
         <h6 *ngIf="settings.selectGeneralStatus" class="h6-select">
           <span>{{ settings.selectGeneralStatus.text }}</span>
         </h6>
-        <ng-select
-          *ngIf="settings.selectGeneralStatus"
-          class="form-control select-general"
-          [items]="settings.selectGeneralStatus.lista"
-          [(ngModel)]="currentSelected"
-          bindValue="id"
-          bindLabel="name"
-          [placeholder]="settings.selectGeneralStatus.placeholder"
-          (change)="settings.onStatusChange($event)"
-        >
+        <ng-select *ngIf="settings.selectGeneralStatus" class="form-control select-general"
+          [items]="settings.selectGeneralStatus.lista" [(ngModel)]="currentSelected" bindValue="id" bindLabel="name"
+          [placeholder]="settings.selectGeneralStatus.placeholder" (change)="settings.onStatusChange($event)">
         </ng-select>
-        <ng-select
-          *ngIf="settings.selectStatus"
-          class="form-control select-estatus"
-          [items]="settings.selectStatus.lista"
-          [(ngModel)]="currentSelected"
-          bindValue="id"
-          bindLabel="name"
-          [placeholder]="settings.selectStatus.placeholder"
-        >
+        <ng-select *ngIf="settings.selectStatus" class="form-control select-estatus"
+          [items]="settings.selectStatus.lista" [(ngModel)]="currentSelected" bindValue="id" bindLabel="name"
+          [placeholder]="settings.selectStatus.placeholder">
         </ng-select>
-        <div
-          *ngIf="settings.genActSelectStatus && userCanEdit"
-          class="form-group select-gen-act-control"
-          [formGroup]="statusForm"
-        >
+        <div *ngIf="settings.genActSelectStatus && userCanEdit" class="form-group select-gen-act-control"
+          [formGroup]="statusForm">
           <label>Modificar estatus:</label>
-          <ng-select
-            class="form-control"
-            [class.readonly-activity-selector]="statusSelectorDisabler()"
-            [items]="statuses"
-            bindValue="id"
-            bindLabel="name"
-            [labelForId]="getId('status-changer')"
-            formControlName="status"
-            [virtualScroll]="true"
-            [id]="getId('status-changer')"
-            [clearable]="false"
-            [searchable]="false"
-            [loading]="selectorSendingEstatus"
-            [readonly]="statusSelectorDisabler()"
-            (change)="changeStatus($event)"
-          >
+          <ng-select class="form-control" [class.readonly-activity-selector]="statusSelectorDisabler()"
+            [items]="statuses" bindValue="id" bindLabel="name" [labelForId]="getId('status-changer')"
+            formControlName="status" [virtualScroll]="true" [id]="getId('status-changer')" [clearable]="false"
+            [searchable]="false" [loading]="selectorSendingEstatus" [readonly]="statusSelectorDisabler()"
+            (change)="changeStatus($event)">
             <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
               <small>{{ item.name }}</small>
             </ng-template>
           </ng-select>
         </div>
-        <ng-container
-          *ngIf="
+        <ng-container *ngIf="
             settings.btnGeneral && settings.btnGeneral.addToTable;
             else regularGeneral
-          "
-        >
-          <button
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-            (click)="addToTable(true)"
-            [disabled]="!userCanEdit"
-            *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
-          >
+          ">
+          <button class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4" (click)="addToTable(true)"
+            [disabled]="!userCanEdit" *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden">
             {{ settings.btnGeneral.name }}
           </button>
         </ng-container>
         <ng-template #regularGeneral>
-          <button
-            *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden"
-            title="general"
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4"
-            (click)="addToTable()"
-            [disabled]="!currentSelected || !userCanEdit"
-          >
+          <button *ngIf="settings.btnGeneral && !settings.btnGeneral.hidden" title="general"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper ml-4" (click)="addToTable()"
+            [disabled]="!currentSelected || !userCanEdit">
             {{ settings.btnGeneral.name }}
           </button>
         </ng-template>
       </div>
 
       <!--Input y boton para el anuario-->
-      <div
-        *ngIf="settings.inputAndBtns"
-        class="containerInputAndBtn buttons-wrapper"
-      >
+      <div *ngIf="settings.inputAndBtns" class="containerInputAndBtn buttons-wrapper">
         <div *ngFor="let prueba of settings.inputAndBtns" class="">
-          <h6
-            class="text-left"
-            *ngIf="prueba.titleInput"
-            [class.mb-negativo]="prueba.titleInput"
-          >
+          <h6 class="text-left" *ngIf="prueba.titleInput" [class.mb-negativo]="prueba.titleInput">
             {{ prueba.titleInput }}
           </h6>
-          <input
-            *ngIf="prueba.input"
-            class="form-control style-input"
-            type="text"
-            placeholder="{{ prueba.input }}"
-          />
-          <button
-            *ngIf="prueba.btn"
-            title="general"
-            type="button"
-            class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn"
-            (click)="addToTable()"
-          >
+          <input *ngIf="prueba.input" class="form-control style-input" type="text" placeholder="{{ prueba.input }}" />
+          <button *ngIf="prueba.btn" title="general" type="button"
+            class="btn btn-primary text-decoration-none btn-in-wrapper styleInputAndBtn" (click)="addToTable()">
             {{ prueba.btn }}
           </button>
           <!--<textarea *ngIf="prueba.textDesc"
@@ -469,76 +313,43 @@
 
   <!-- VIDEO SECTION -->
   <div *ngIf="showThisVideo" class="video-section">
-    <div
-      *ngIf="settings.video && settings.video.url"
-      class="activity-video-container"
-    >
-      <div
-        class="activity-video"
-        [innerHTML]="getVideo(settings.video.url)"
-      ></div>
+    <div *ngIf="settings.video && settings.video.url" class="activity-video-container">
+      <div class="activity-video" [innerHTML]="getVideo(settings.video.url)"></div>
     </div>
   </div>
 
-  <div
-    *ngIf="
+  <div *ngIf="
       (settings.action && settings.action.length > 0) ||
       settings.upload ||
       settings.uploaddown
-    "
-    class="d-inline-block buttons-wrapper"
-    [class.text-center]="settings.isFromCustomTableActions"
-    [class.py-3]="settings.isFromCustomTableActions"
-  >
-    <div
-      *ngIf="settings.upload && !reloadUpload"
-      class="btn-in-wrapper"
-      id="tb-upload-btn-container"
-      #tbUploadFile
-      [class.d-inline]="userCanEdit"
-      [class.d-none]="
+    " class="d-inline-block buttons-wrapper" [class.text-center]="settings.isFromCustomTableActions"
+    [class.py-3]="settings.isFromCustomTableActions">
+    <div *ngIf="settings.upload && !reloadUpload" class="btn-in-wrapper" id="tb-upload-btn-container" #tbUploadFile
+      [class.d-inline]="userCanEdit" [class.d-none]="
         !userCanEdit && settings.upload && settings.upload.uploadEmpty
-      "
-    >
-      <input
-        class="d-none tb-upload-btn-input-file"
-        id="tb-upload-btn-input-file"
-        (change)="fileMngr($event)"
+      ">
+      <input class="d-none tb-upload-btn-input-file" id="tb-upload-btn-input-file" (change)="fileMngr($event)"
         type="file"
-        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint"
-      />
-      <button
-        id="tb-upload-btn"
-        [title]="
+        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.ms-powerpoint" />
+      <button id="tb-upload-btn" [title]="
           settings.upload.uploadEmpty
             ? 'Adjuntar archivo'
             : settings.upload.name
-        "
-        (click)="clickUpload(tbUploadFile); $event.preventDefault()"
-        class="btn btn-primary text-decoration-none py-1 px-4"
-        [disabled]="activity_uneditable || !userCanEdit"
-      >
+        " (click)="clickUpload(tbUploadFile); $event.preventDefault()"
+        class="btn btn-primary text-decoration-none py-1 px-4" [disabled]="activity_uneditable || !userCanEdit">
         {{
-          settings.upload.uploadEmpty
-            ? 'Adjuntar archivo'
-            : shortenName(settings.upload.name)
+        settings.upload.uploadEmpty
+        ? 'Adjuntar archivo'
+        : shortenName(settings.upload.name)
         }}
       </button>
     </div>
 
-    <a
-      *ngIf="settings.uploaddown && settings.uploaddown.url"
-      [title]="settings.uploaddown.name"
-      [href]="settings.uploaddown.url"
-      target="_blank"
-      [download]="settings.uploaddown.name"
-      class="btn btn-primary text-decoration-none py-1 px-4"
-      (click)="
+    <a *ngIf="settings.uploaddown && settings.uploaddown.url" [title]="settings.uploaddown.name"
+      [href]="settings.uploaddown.url" target="_blank" [download]="settings.uploaddown.name"
+      class="btn btn-primary text-decoration-none py-1 px-4" (click)="
         activity_uneditable || !userCanEdit ? $event.preventDefault() : null
-      "
-      [class.inactive]="activity_uneditable || !userCanEdit"
-      >{{ settings.uploaddown.name }}</a
-    >
+      " [class.inactive]="activity_uneditable || !userCanEdit">{{ settings.uploaddown.name }}</a>
     <!--
         <a *ngIf="settings.download" title="Descargar"
         [href]="settings.download.url" target="_blank"
@@ -551,108 +362,70 @@
     <ng-container *ngIf="userCanEdit">
       <ng-container *ngFor="let action of settings.action">
         <!-- Botón cuando se encuentra dentro del modal -->
-        <ng-container
-          *ngIf="action.type == 6 || action.type == 5; else notModal"
-        >
-          <button
-            *ngIf="action.name && !action.hidden"
+        <ng-container *ngIf="action.type == 6 || action.type == 5; else notModal">
+          <button *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-            (click)="addToTable(true, action.type == 6 ? false : true)"
-          >
+            (click)="addToTable(true, action.type == 6 ? false : true)">
             {{ action.name }}
           </button>
         </ng-container>
 
-        <ng-container
-          *ngIf="action.type == 15"
-        >
-          <button
-            *ngIf="action.name && !action.hidden"
+        <ng-container *ngIf="action.type == 15">
+          <button *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-            (click)="exportDiagnostics()"
-            [disabled] = "getStudentsCount()"
-          >
+            (click)="exportDiagnostics()" [disabled]="getStudentsCount()">
             {{ action.name }}
           </button>
         </ng-container>
-        <ng-container
-          *ngIf="action.type == 16"
-        >
-          <button
-            *ngIf="action.name && !action.hidden"
+        <ng-container *ngIf="action.type == 16">
+          <button *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-            (click)="exportDiagnostics()"
-            [disabled] = "getStudentsCount()"
-          >
-            {{ action.name }} 
-          </button>
-        </ng-container>
-        <ng-container
-          *ngIf="action.type == 11"
-        >
-          <button
-            *ngIf="action.name && !action.hidden"
-            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
-            (click)="showExportMultiple()"
-            data-toggle="modal"
-            data-target="#no-peca-modal-export"
-            data-backdrop="false"
-            data-keyboard="false"
-            
-            >
+            (click)="exportDiagnostics()" [disabled]="getStudentsCount()">
             {{ action.name }}
           </button>
         </ng-container>
-        
+        <ng-container *ngIf="action.type == 11">
+          <button *ngIf="action.name && !action.hidden"
+            class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn"
+            (click)="showExportMultiple()" data-toggle="modal" data-target="#no-peca-modal-export" data-backdrop="false"
+            data-keyboard="false">
+            {{ action.name }}
+          </button>
+        </ng-container>
+
         <ng-container *ngIf="action.type == 18">
-          <button
-            *ngIf="action.name && !action.hidden"
+          <button *ngIf="action.name && !action.hidden"
             class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn btn-agrupar"
-            (click)="showGroupSections(action)"
-            data-toggle="modal"
-            data-target="#no-peca-modal-group-sections"
-            data-backdrop="false"
-            data-keyboard="false"
-          >
+            (click)="showGroupSections(action)" data-toggle="modal" data-target="#no-peca-modal-group-sections"
+            data-backdrop="false" data-keyboard="false">
             {{ action.name }}
           </button>
         </ng-container>
 
         <ng-container *ngIf="action.type == 10">
-          <button
-            #modalLauncher
-            type="button"
-            class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
-            data-toggle="modal"
-            data-target="#no-peca-modal-import"
-            data-backdrop="false"
-            data-keyboard="false"
-            (click)="openModal()"
-          >
+          <button #modalLauncher type="button" class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+            data-toggle="modal" data-target="#no-peca-modal-import" data-backdrop="false" data-keyboard="false"
+            (click)="openModal()">
             Importar
           </button>
         </ng-container>
-      
+
         <!-- Botón cuando no se encuentra dentro del modal es aqui-->
         <!-- &&
               action.extraData &&
               action.extraData.isDuplicated  ---  || !action.extraData-->
         <ng-template #notModal>
-          <button
-            *ngIf="
+          <button *ngIf="
               action.name &&
               !action.hidden &&
               action.extraData &&
               !action.extraData.isDuplicated
               && action.type != 18
-            "
-            [class]="
+            " [class]="
               'btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn' +
               getStyles(action)
-            "
-            [disabled]="disableThis(action.type) || isSending || sleepSend"
-            (click)="takeAction(action.type, $event)"
-          >
+            " [disabled]="disableThis(action.type) || isSending || sleepSend"
+            (click)="takeAction(action.type, $event)">
             <!-- <span
               *ngIf="
                 isSending &&
@@ -681,205 +454,134 @@
             {{ action.name }}
           </button>
 
-          <ng-container
-            *ngIf="
+          <ng-container *ngIf="
               (action.type === 4 || action.type === 9) &&
               !action.hidden &&
               settings.fetcherUrls &&
               settings.fetcherUrls.cancel
-            "
-          >
-            <button
-              class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
-              [disabled]="isSending || sleepSend"
-              (click)="cancelRequest()"
-            >
-              <span
-                *ngIf="isSending"
-                class="spinner-grow spinner-grow-sm"
-              ></span>
+            ">
+            <button class="btn btn-primary text-decoration-none py-1 px-4 btn-in-wrapper action-btn cancel-btn"
+              [disabled]="isSending || sleepSend" (click)="cancelRequest()">
+              <span *ngIf="isSending" class="spinner-grow spinner-grow-sm"></span>
               {{ isSending ? 'Cancelando solicitud' : 'Cancelar solicitud' }}
             </button>
           </ng-container>
 
           <!-- MODAL IMPORTAR ESTUDIANTES -->
-          <div
-          *ngIf="showImportModal; else null"
-          class="modal fade"
-          id="no-peca-modal-import"
-          style="text-align: center;"
-          >
-          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content pb-4">
-              <div class="modal-header">
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  (click)="closeModal()"
-                >
-                  &times;
-                </button>
-              </div>
-              <div class="modal-body">
-                <h4>Importar {{settings.nameDiag}}</h4>
-                <p class="py-2">
-                  Por favor, suba el archivo excel con la información de los diagnósticos
-                  a importar:
-                </p>
-                <input
-                  type="file"
-                  id="file"
-                  accept=".xls, .xlsx"
-                  (change)="handleFileInput($event.target.files)"
-                />
-                <div class="full-width d-flex">
-                  <button
-                    *ngIf="showUploadBtn"
-                    #upload
-                    (click)="importStudents()"
-                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
-                  >
-                    <span
-                      *ngIf="importingData"
-                      class="spinner-grow spinner-grow-sm"
-                    ></span>
-                    {{ !importingData ? "Importar data" : "Cargando..." }}
+          <div *ngIf="showImportModal; else null" class="modal fade" id="no-peca-modal-import"
+            style="text-align: center;">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+              <div class="modal-content pb-4">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">
+                    &times;
                   </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Importar {{settings.nameDiag}}</h4>
+                  <p class="py-2">
+                    Por favor, suba el archivo excel con la información de los diagnósticos
+                    a importar:
+                  </p>
+                  <input type="file" id="file" accept=".xls, .xlsx" (change)="handleFileInput($event.target.files)" />
+                  <div class="full-width d-flex">
+                    <button *ngIf="showUploadBtn" #upload (click)="importStudents()"
+                      class="btn btn-primary full-width submit-btn mx-auto mt-4">
+                      <span *ngIf="importingData" class="spinner-grow spinner-grow-sm"></span>
+                      {{ !importingData ? "Importar data" : "Cargando..." }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
 
-          <div
-          *ngIf="showExportModal; else null"
-          class="modal fade"
-          id="no-peca-modal-export"
-          style="text-align: center;"
-          >
-          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content pb-4">
-              <div class="modal-header">
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  (click)="closeModal()"
-                >
-                  &times;
-                </button>
-              </div>
-              <div class="modal-body">
-                <h4>Exportar múltiple {{settings.nameDiag}}</h4>
-                <p class="py-2">
-                  Por favor, selecione los grados de los diagnósticos
-                  a exportar:
-                </p>
-                <div *ngIf="grades.length > 0" style="text-align: left;">
-                  <label style="color: grey">Seleccione el grado:</label>
-                  <div *ngIf="grades.length > 1">
-                    <label>
-                      <input
-                        id="allGrades"
-                        type="checkbox"
-                        ngModel
-                        (ngModelChange)="selectGrades('all', $event)"
-                        class="mx-2"
-                      />
-                      Todos los grados
-                    </label>
-                  </div>
-                  <div *ngFor="let grade of grades">
-                    <label
-                      ><input
-                        id="{{ grade }}"
-                        type="checkbox"
-                        ngModel
-                        ngControl="grade"
-                        (ngModelChange)="selectGrades(grade, $event)"
-                        class="mx-2"
-                      />
-                      {{ parseGrade(grade)}}</label
-                    ><br />
-                  </div>
-                </div>
-                
-                <div class="full-width d-flex">
-                  <button
-                    *ngIf="showExportBtn"
-                    #upload
-                    (click)="exportDiagnosticsMultiple()"
-                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
-                  >
-                    <span
-                      *ngIf="exportingData"
-                      class="spinner-grow spinner-grow-sm"
-                    ></span>
-                    {{ !exportingData ? "Exportar data" : "Cargando..." }}
+          <div *ngIf="showExportModal; else null" class="modal fade" id="no-peca-modal-export"
+            style="text-align: center;">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+              <div class="modal-content pb-4">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">
+                    &times;
                   </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Exportar múltiple {{settings.nameDiag}}</h4>
+                  <p class="py-2">
+                    Por favor, selecione los grados de los diagnósticos
+                    a exportar:
+                  </p>
+                  <div *ngIf="grades.length > 0" style="text-align: left;">
+                    <label style="color: grey">Seleccione el grado:</label>
+                    <div *ngIf="grades.length > 1">
+                      <label>
+                        <input id="allGrades" type="checkbox" ngModel (ngModelChange)="selectGrades('all', $event)"
+                          class="mx-2" />
+                        Todos los grados
+                      </label>
+                    </div>
+                    <div *ngFor="let grade of grades">
+                      <label><input id="{{ grade }}" type="checkbox" ngModel ngControl="grade"
+                          (ngModelChange)="selectGrades(grade, $event)" class="mx-2" />
+                        {{ parseGrade(grade)}}</label><br />
+                    </div>
+                  </div>
+
+                  <div class="full-width d-flex">
+                    <button *ngIf="showExportBtn" #upload (click)="exportDiagnosticsMultiple()"
+                      class="btn btn-primary full-width submit-btn mx-auto mt-4">
+                      <span *ngIf="exportingData" class="spinner-grow spinner-grow-sm"></span>
+                      {{ !exportingData ? "Exportar data" : "Cargando..." }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
 
-          <div
-          *ngIf="showGroupSectionsModal; else null"
-          class="modal fade"
-          id="no-peca-modal-group-sections"
-          style="text-align: center;"
-          >
-          <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content pb-4">
-              <div class="modal-header">
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  (click)="closeGroupSectionsModal()"
-                >
-                  &times;
-                </button>
-              </div>
-              <div class="modal-body">
-                <h4>Agrupar secciones</h4>
-                <p class="py-2">
-                  Seleccione las secciones que desea agrupar bajo la foto grupal.
-                  Las secciones agrupadas no aparecerán individualmente en el PDF.
-                </p>
-                <div *ngIf="availableSections && availableSections.length > 0" style="text-align: left;">
-                  <label style="color: grey">Seleccione las secciones:</label>
-                  <div *ngFor="let section of availableSections">
-                    <label>
-                      <input
-                        type="checkbox"
-                        [checked]="isSectionGrouped(section.id)"
-                        (change)="toggleSectionGroup(section.id, $event.target.checked)"
-                        class="mx-2"
-                      />
-                      {{ parseSectionName(section) }}
-                    </label><br />
-                  </div>
-                </div>
-
-                <div class="full-width d-flex">
-                  <button
-                    *ngIf="showGroupSaveBtn"
-                    (click)="saveGroupedSections()"
-                    data-dismiss="modal"
-                    class="btn btn-primary full-width submit-btn mx-auto mt-4"
-                  >
-                    <span
-                      *ngIf="savingGroupedSections"
-                      class="spinner-grow spinner-grow-sm"
-                    ></span>
-                    {{ !savingGroupedSections ? "Guardar" : "Guardando..." }}
+          <div *ngIf="showGroupSectionsModal; else null" class="modal fade" id="no-peca-modal-group-sections"
+            style="text-align: center;">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+              <div class="modal-content pb-4">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" (click)="closeGroupSectionsModal()">
+                    &times;
                   </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Agrupar secciones</h4>
+                  <p class="py-2">
+                    Seleccione las secciones que desea agrupar bajo la foto grupal.
+                    Las secciones agrupadas no aparecerán individualmente en el PDF.
+                  </p>
+                  <div *ngIf="availableGrades && availableGrades.length > 0" style="text-align: left;">
+                    <label style="color: grey">Seleccione los grados:</label>
+                    <div style="margin-bottom: 10px;">
+                      <label style="font-weight: bold;">
+                        <input type="checkbox" [checked]="isAllGradesGrouped()"
+                          (change)="toggleAllGradesGroup($event.target.checked)" class="mx-2" />
+                        Seleccionar todos los grados
+                      </label>
+                    </div>
+                    <div *ngFor="let gradeGroup of availableGrades">
+                      <label>
+                        <input type="checkbox" [checked]="isGradeGrouped(gradeGroup)"
+                          (change)="toggleGradeGroup(gradeGroup, $event.target.checked)" class="mx-2" />
+                        {{ parseGrade(gradeGroup.grade) }}
+                      </label><br />
+                    </div>
+                  </div>
+
+                  <div class="full-width d-flex">
+                    <button *ngIf="showGroupSaveBtn" (click)="saveGroupedSections()" data-dismiss="modal"
+                      class="btn btn-primary full-width submit-btn mx-auto mt-4">
+                      <span *ngIf="savingGroupedSections" class="spinner-grow spinner-grow-sm"></span>
+                      {{ !savingGroupedSections ? "Guardar" : "Guardando..." }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
 
         </ng-template>

@@ -44,6 +44,10 @@
             "></ng-container>
         </div>
 
+        <div *ngSwitchCase="'smallSchoolSections'">
+          <ng-container *ngTemplateOutlet="smallSchoolSections; context: { page: page }"></ng-container>
+        </div>
+
         <!-- diagnosticTemplate -->
         <div *ngSwitchCase="'diagnosticTemplate'">
           <ng-container *ngTemplateOutlet="diagnosticTemplate; context: { page: page }"></ng-container>
@@ -312,10 +316,16 @@
   <section class="page background--generic" [id]="page.pgHref">
     <div class="page__content layout--schoolSections">
       <div class="row body">
-        <div class="col-md-12" style="text-align:center;">
+        <div class="col-md-12 row" style="text-align:center;">
           <ng-container>
-            <h2 class="text-capitalize titulo-seccion" [innerHTML]="page.name">
-            </h2>
+            <h4 *ngIf="page.isGroupPhoto" class="text-capitalize titulo-grado">
+              <ng-container *ngIf="page.gradeText">
+                {{ page.gradeText }}
+              </ng-container>
+              <ng-container *ngIf="page.gradeText"><br /></ng-container>
+              <span [innerHTML]="page.name" style="display: contents"></span>
+            </h4>
+            <h2 *ngIf="!page.isGroupPhoto" class="text-capitalize titulo-seccion" [innerHTML]="page.name"></h2>
           </ng-container>
 
           <ng-container *ngIf="page.img">
@@ -324,12 +334,16 @@
             </div>
           </ng-container>
           <div class="teacher {{ page.isGroupPhoto ? 'teacher-seccion-group' : 'teacher-seccion' }}">
-            <h2 class="name">
+            <h4 *ngIf="page.isGroupPhoto" class="name">
+              Docentes:<br />
+              <span [innerHTML]="page.teacher.fullName"></span>
+            </h4>
+            <h2 *ngIf="!page.isGroupPhoto" class="name">
               Docente:<br />
               <span [innerHTML]="page.teacher.fullName"></span>
             </h2>
           </div>
-          <div class="col-md-12" style="margin-top: 30px;">
+          <div class="col-md-12 students-list" style="margin-top: 25px; text-align: left;">
             <ng-container *ngFor="let name of page.students.firstColumn">
               <span style="margin-right: 5px; text-transform: capitalize;">{{ name }},</span>
             </ng-container>
@@ -383,38 +397,61 @@
   </section>
 </ng-template>
 
-<ng-template #smallSchoolSections let-data="data">
+<ng-template #smallSchoolSections let-page="page">
   <section class="page background--generic">
-    <div class="page__content layout--schoolSections">
-      <div class="row body">
-        <div class="col overflow--hidden">
-          <h2 class="text-capitalize">
-            {{ data[0].sectionName }}
-          </h2>
+    <div class="page__content layout--smallSchoolSections">
+      <div class="body">
 
-          <ul class="list">
-            <ng-container *ngFor="let name of data[0].sectionStudents">
-              <li>{{ name }}</li>
-            </ng-container>
-          </ul>
-        </div>
-        <div class="col overflow--hidden">
-          <h2 class="text-capitalize">
-            {{ data[1].sectionName }}
-          </h2>
-          <!-- <ng-container *ngIf="data.sectionImg">
+        <!-- Left Column: Section 0 -->
+        <div class="section-column">
+          <ng-container *ngIf="page.data[0].img">
             <div class="container-img">
-              <img [src]="data[1].sectionImg" />
+              <img [src]="page.data[0].img" />
             </div>
-          </ng-container> -->
+          </ng-container>
 
-          <ul class="list">
-            <ng-container *ngFor="let name of data[1].sectionStudents">
-              <li>{{ name }}</li>
+          <div class="section-header" style="align-items: center;">
+            <span class="text-capitalize titulo-seccion" [innerHTML]="page.data[0].name"
+              style="font-size: 16px;"></span>
+            <div class="teacher-seccion-group">
+              <h2><span>Docente </span><span [innerHTML]="page.data[0].teacher.fullName"></span></h2>
+            </div>
+          </div>
+          <div class="students-list">
+            <ng-container *ngFor="let name of page.data[0].students; let last = last">
+              <span style="text-transform: capitalize;">{{ name }}</span><span *ngIf="!last"
+                style="margin-right: 5px;">, </span><span *ngIf="last">.</span>
             </ng-container>
-          </ul>
+          </div>
         </div>
+
+        <!-- Right Column: Section 1 -->
+        <div class="section-column" *ngIf="page.data.length > 1">
+          <ng-container *ngIf="page.data[1].img">
+            <div class="container-img">
+              <img [src]="page.data[1].img" />
+            </div>
+          </ng-container>
+          <div class="section-header" style="align-items: center;">
+            <span class="text-capitalize titulo-seccion" [innerHTML]="page.data[1].name"
+              style="font-size: 16px;"></span>
+            <div class="teacher-seccion-group">
+              <h2><span>Docente </span><span [innerHTML]="page.data[1].teacher.fullName"></span></h2>
+            </div>
+          </div>
+
+          <div class="students-list">
+            <ng-container *ngFor="let name of page.data[1].students; let last = last">
+              <span style="text-transform: capitalize;">{{ name }}</span><span *ngIf="!last"
+                style="margin-right: 5px;">, </span><span *ngIf="last">.</span>
+            </ng-container>
+          </div>
+        </div>
+
       </div>
+    </div>
+    <div class="pager">
+      <span>{{ page.page }}</span>
     </div>
   </section>
 </ng-template>

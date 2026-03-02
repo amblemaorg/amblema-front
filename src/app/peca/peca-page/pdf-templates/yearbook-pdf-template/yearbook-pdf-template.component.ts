@@ -16,6 +16,7 @@ import {
   Pager,
   RecursiveArrayIndexListItem,
   SchoolGradeTemplate,
+  SmallSchoolSectionsTemplate,
   SecondLayoutTemplate,
   TemplateUtils,
 } from './templatesModels';
@@ -119,9 +120,50 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const groupPhoto = this.pdfData.groupPhoto;
       const { schoolSections } = this.pdfData;
 
-      const groupTitle = groupPhoto.groupedSectionsContent
+      let groupTitle = groupPhoto.groupedSectionsContent
         ? groupPhoto.groupedSectionsContent.join('<br>')
         : 'Foto Grupal';
+
+      let gradeText = '';
+      if (schoolSections && groupPhoto.groupedSections?.length > 0) {
+        const groupedSections = schoolSections.filter((section) =>
+          groupPhoto.groupedSections.includes(section.sectionId),
+        );
+
+        if (groupedSections.length > 0) {
+          const uniqueGrades = [...new Set(groupedSections.map(s => s.sectionGrade))].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+
+          const shortGradeFormat = {
+            '0': 'Preescolar',
+            '1': '1er',
+            '2': '2do',
+            '3': '3er',
+            '4': '4to',
+            '5': '5to',
+            '6': '6to',
+          };
+
+          if (uniqueGrades.length === 1) {
+            const grade = uniqueGrades[0];
+            let uniqueLetters = [...new Set(groupedSections.map(s => s.sectionLetter).filter(l => l))].sort((a, b) => a.localeCompare(b));
+
+            let sectionsStr = '';
+            if (uniqueLetters.length > 1) {
+              sectionsStr = uniqueLetters.slice(0, -1).join(', ') + ' y ' + uniqueLetters[uniqueLetters.length - 1];
+            } else if (uniqueLetters.length === 1) {
+              sectionsStr = uniqueLetters[0];
+            }
+
+            gradeText = 'Grado:';
+            groupTitle = `<span>${sectionsStr ? `${shortGradeFormat[grade]} ${sectionsStr}` : shortGradeFormat[grade]}</span>`;
+          } else if (uniqueGrades.length > 1) {
+            const lowerGrade = uniqueGrades[0];
+            const upperGrade = uniqueGrades[uniqueGrades.length - 1];
+            gradeText = 'Grados:';
+            groupTitle = `<span>${shortGradeFormat[lowerGrade]} - ${shortGradeFormat[upperGrade]}</span>`;
+          }
+        }
+      }
 
       // Helper to sort sections by grade
       const sortSections = (sections) => {
@@ -175,10 +217,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         groupPhoto.image,
         teacherObj,
         students,
-        true // isGroupPhoto
+        true, // isGroupPhoto
+        gradeText
       );
 
-      this.pages.push(page);
+      if (this.willPrintedSection(page.storeId)) {
+        this.pages.push(page);
+
+        page['indexName'] = 'Foto grupal';
+        const listItems = TemplateUtils.getItemsToIndex([page], this.pager, () => 'indexName');
+        this.listItems.push(...listItems);
+      }
     }
   }
 
@@ -272,6 +321,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       '6': '6to Grado',
     };
 
+    const groupedGradesToPrint = this.printOptions?.groupedGradesPrint || [];
+    const groupedSectionsByGrade = {};
+
     for (let index = 0; index < schoolSections.length; index++) {
       const section = schoolSections[index];
 
@@ -304,19 +356,86 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         continue;
       }
 
-      let nameSection = gradeFormat[section.sectionGrade] + "<br/>" + "Sección " + section.sectionLetter
-      const page = new SchoolGradeTemplate(
-        `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
-        nameSection,
-        sectionImg,
-        teacher,
-        sectionStudents,
-      );
+      if (groupedGradesToPrint.includes(sectionGrade)) {
+        if (!groupedSectionsByGrade[sectionGrade]) {
+          groupedSectionsByGrade[sectionGrade] = {
+            grade: sectionGrade,
+            name: gradeFormat[sectionGrade],
+            sections: []
+          };
+        }
+        groupedSectionsByGrade[sectionGrade].sections.push(section);
+      } else {
+        let nameSection = gradeFormat[section.sectionGrade] + " " + section.sectionLetter
+        const page = new SchoolGradeTemplate(
+          `school-section__grade-${sectionGrade}-section-${sectionLetter}`,
+          nameSection,
+          sectionImg,
+          teacher,
+          sectionStudents,
+        );
 
-      pages.push(page);
+        pages.push(page);
+      }
+    }
+
+    for (const grade in groupedSectionsByGrade) {
+      const groupData = groupedSectionsByGrade[grade];
+      const sections = groupData.sections;
+
+      // Sort sections by letter
+      sections.sort((a, b) => {
+        const letterA = a.sectionLetter ? a.sectionLetter.toUpperCase() : '';
+        const letterB = b.sectionLetter ? b.sectionLetter.toUpperCase() : '';
+        return letterA.localeCompare(letterB);
+      });
+
+      // Split into chunks of 2 sections per page
+      for (let i = 0; i < sections.length; i += 2) {
+        const chunk = sections.slice(i, i + 2);
+        const mappedData = chunk.map(s => ({
+          name: `${gradeFormat[s.sectionGrade]} ${s.sectionLetter}`,
+          img: s.sectionImg || null,
+          teacher: s.teacher,
+          students: s.sectionStudents || []
+        }));
+
+        const chunkIndex = Math.floor(i / 2);
+        const storeId = `school-section__grade-${grade}-grouped-part${chunkIndex}`;
+        const page = new SmallSchoolSectionsTemplate(storeId, mappedData);
+        page['isGroupedGrade'] = true;
+
+        // Agregar property 'name' para que se liste correctamente en el índice
+        page['name'] = groupData.name;
+
+        pages.push(page);
+      }
     }
 
     pages = pages.filter((pg) => this.willPrintedSection(pg.storeId));
+
+    pages.sort((a, b) => {
+      const getGrade = (storeId: string) => {
+        const match = storeId.match(/grade-(\d)/);
+        return match ? parseInt(match[1], 10) : 99;
+      };
+
+      const getSection = (storeId: string) => {
+        const match = storeId.match(/section-([A-Za-z])/);
+        return match ? match[1].toUpperCase() : '';
+      };
+
+      const gradeA = getGrade(a.storeId);
+      const gradeB = getGrade(b.storeId);
+
+      if (gradeA !== gradeB) {
+        return gradeA - gradeB;
+      }
+
+      const sectionA = getSection(a.storeId);
+      const sectionB = getSection(b.storeId);
+      return sectionA.localeCompare(sectionB);
+    });
 
     this.pages.push(...pages);
 

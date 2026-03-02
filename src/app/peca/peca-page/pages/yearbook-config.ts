@@ -187,6 +187,53 @@ export async function MapperYearBookWeb(
     },
   });
 
+  function yearbookPDFGroupedGradeOptions(grade: string) {
+    return {
+      component: 'store-line-options',
+      settings: {
+        store: grade,
+        type: 'boolean',
+        classes: 'justify-content-end',
+        options: [
+          {
+            label: 'Agrupar secciones',
+            key: 'groupedGradesPrint',
+            value: true,
+          },
+        ],
+        setOptInitValues: (opts = []) => {
+          const isGrouped = pdfOptionsDefaultValues.groupedGradesPrint?.includes(grade);
+          opts = opts.map((opt) => {
+            if (opt.key === 'groupedGradesPrint') {
+              opt.value = !!isGrouped;
+            }
+            return opt;
+          });
+          return opts;
+        },
+        onChange: async ({ optSelected }) => {
+          let currentGroupedGradesStr = pdfOptionsDefaultValues.groupedGradesPrint || [];
+          currentGroupedGradesStr = currentGroupedGradesStr.filter(g => typeof g === 'string');
+          if (optSelected.value) {
+            if (!currentGroupedGradesStr.includes(grade)) {
+              currentGroupedGradesStr.push(grade);
+            }
+          } else {
+            currentGroupedGradesStr = currentGroupedGradesStr.filter(g => g !== grade);
+          }
+          const optionToPatch = {
+            groupedGradesPrint: currentGroupedGradesStr,
+          };
+          pdfOptionsDefaultValues.groupedGradesPrint = currentGroupedGradesStr;
+          await pdfYearbookService.setPrintOptions(
+            yearBookData.pecaId,
+            optionToPatch,
+          );
+        },
+      },
+    };
+  }
+
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(
     yearBookData.sections,
@@ -202,8 +249,8 @@ export async function MapperYearBookWeb(
   function getRequestId() {
     const theRequest =
       yearBookData['approvalHistory'] &&
-      yearBookData['approvalHistory'] instanceof Array &&
-      yearBookData['approvalHistory'].length
+        yearBookData['approvalHistory'] instanceof Array &&
+        yearBookData['approvalHistory'].length
         ? yearBookData['approvalHistory']
         : null;
     return theRequest && theRequest[theRequest.length - 1].status === '1'
@@ -225,11 +272,26 @@ export async function MapperYearBookWeb(
   }
 
   function createSectionsBlocksConfig(schoolSections) {
+    const gradesCount = {};
+    schoolSections.forEach(section => {
+      const { grade } = section;
+      gradesCount[grade] = (gradesCount[grade] || 0) + 1;
+    });
+
+    // Store whether the group checkbox has been added for a grade
+    const addedGroupCheckbox = {};
+
     const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
       const { id, grade, name } = section;
       const gradeName = `${determineGradeString(grade)}, sección ${name}`;
-      sectionsArray[`${grade}-${name}-${id}`] = [
-        createTitleComponent(gradeName),
+
+      let blocks: any[] = [createTitleComponent(gradeName)];
+      if (gradesCount[grade] > 1 && !addedGroupCheckbox[grade]) {
+        blocks.push(yearbookPDFGroupedGradeOptions(grade));
+        addedGroupCheckbox[grade] = true;
+      }
+
+      blocks.push(
         {
           component: 'form-review',
           name: `grade${grade}-section${name}-form`,
@@ -286,8 +348,9 @@ export async function MapperYearBookWeb(
               hideDelete: false,
             },
           },
-        },
-      ];
+        }
+      );
+      sectionsArray[`${grade}-${name}-${id}`] = blocks;
       return sectionsArray;
     }, {}); // Initial sectionsArray
 
@@ -888,11 +951,11 @@ export async function MapperYearBookWeb(
       },
       action: mostrarFeedback(yearBookData.status)
         ? [
-            {
-              type: 9,
-              name: 'Ver más',
-            },
-          ]
+          {
+            type: 9,
+            name: 'Ver más',
+          },
+        ]
         : [],
     },
   };
@@ -1128,12 +1191,12 @@ export async function MapperYearBookWeb(
                               action: [
                                 {
                                   type: 18,
-                                  name: 'Agrupar secciones',
+                                  name: 'Agrupar grados',
                                   extraData: {
                                     sections: yearBookData.sections,
-                                    groupedSections: yearBookData.groupPhoto ? yearBookData.groupPhoto.groupedSections : [],
+                                    groupedSections: groupPhotoState.groupedSections,
                                   },
-                                  onSaveGroupedSections: (groupedSections) => {
+                                  onSaveGroupedSections: (groupedSections: string[]) => {
                                     groupPhotoState.groupedSections = groupedSections;
                                   },
                                 },
