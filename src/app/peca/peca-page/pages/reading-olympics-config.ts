@@ -512,7 +512,7 @@ export function readingOlympicsConfigMapper(
 
   return {
     header: {
-      title: "Olimpíada de Lectura",
+      title: "Olimpíada de Lengua",
     },
     blocks: [
       {
