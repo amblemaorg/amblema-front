@@ -120,15 +120,12 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const groupPhoto = this.pdfData.groupPhoto;
       const { schoolSections } = this.pdfData;
 
-      let groupTitle = groupPhoto.groupedSectionsContent
-        ? groupPhoto.groupedSectionsContent.join('<br>')
-        : 'Foto Grupal';
-
+      let groupTitle = 'Foto Grupal';
       let gradeText = '';
-      if (schoolSections && groupPhoto.groupedSections?.length > 0) {
-        const groupedSections = schoolSections.filter((section) =>
-          groupPhoto.groupedSections.includes(section.sectionId),
-        );
+
+      if (schoolSections && schoolSections.length > 0) {
+        // Enforce all sections in the school to be used for the group photo PDF
+        const groupedSections = [...schoolSections];
 
         if (groupedSections.length > 0) {
           const uniqueGrades = [...new Set(groupedSections.map(s => s.sectionGrade))].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
@@ -174,18 +171,26 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         });
       };
 
+      const titleCaseWord = (word: string) => {
+        if (!word) return word;
+        return word[0].toUpperCase() + word.substr(1).toLowerCase();
+      };
+
+      const titleCaseName = (name: string) => {
+        return name.split(' ').map(titleCaseWord).join(' ');
+      };
+
       // Find teachers
       const teachers = [];
       if (schoolSections) {
-        const groupedSections = schoolSections.filter((section) =>
-          groupPhoto.groupedSections.includes(section.sectionId),
-        );
-        const sortedGroupedSections = sortSections(groupedSections);
+        const sortedGroupedSections = sortSections([...schoolSections]);
 
         sortedGroupedSections.forEach((section) => {
-          teachers.push(
-            `${section.teacher.firstName} ${section.teacher.lastName}`,
-          );
+          if (section.teacher) {
+            teachers.push(
+              titleCaseName(`${section.teacher.firstName} ${section.teacher.lastName}`)
+            );
+          }
         });
       }
       const uniqueTeachers = [...new Set(teachers)];
@@ -197,10 +202,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       // Find students
       const students = [];
       if (schoolSections) {
-        const groupedSections = schoolSections.filter((section) =>
-          groupPhoto.groupedSections.includes(section.sectionId),
-        );
-        const sortedGroupedSections = sortSections(groupedSections);
+        const sortedGroupedSections = sortSections([...schoolSections]);
 
         sortedGroupedSections.forEach((section) => {
           if (

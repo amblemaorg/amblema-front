@@ -1185,6 +1185,8 @@ export async function MapperYearBookWeb(
                           },
                           yearbookPDFOptions('school-description-section'),
                           createTitleComponent('Foto grupal'),
+                          /*
+                          // The "Agrupar grados" button modal code is preserved for future use
                           {
                             component: 'textsbuttons',
                             settings: {
@@ -1203,6 +1205,7 @@ export async function MapperYearBookWeb(
                               ],
                             },
                           },
+                          */
                           {
                             component: 'form-review',
                             name: 'group-photo-form',
@@ -1213,7 +1216,7 @@ export async function MapperYearBookWeb(
                                     values.inputImg && values.inputImg.length
                                       ? values.inputImg
                                       : null,
-                                  groupedSections: groupPhotoState.groupedSections,
+                                  groupedSections: yearBookData.sections.map((s: any) => s.id),
                                 };
                                 dispatchAction('groupPhoto', data);
                               },
