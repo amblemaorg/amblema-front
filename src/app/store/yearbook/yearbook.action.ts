@@ -7,7 +7,7 @@ import { FetchPecaContent } from '../actions/peca/peca.actions';
 
 export class SetYearBook {
   static readonly type = '[YearBook] Set YearBook';
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateYearBookRequest {
@@ -21,12 +21,12 @@ export class UpdateYearBookRequest {
       data: any;
       requestId: string;
     },
-  ) {}
+  ) { }
 }
 
 export class CancelYearBookRequest {
   static readonly type = '[YearBook] Send Cancel YearBook Request';
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 // export class SetHistoricalReview {
@@ -90,13 +90,13 @@ export class CancelYearBookRequest {
 
 export class ClearYearBook {
   static readonly type = '[YearBook] Clear YearBook';
-  constructor() {}
+  constructor() { }
 }
 
 export class SetFalseMakingAction {
   static readonly type =
     '[YearBook] Set false makingAction attribute in YearBook';
-  constructor(public showToast: boolean) {}
+  constructor(public showToast: boolean) { }
 }
 
 @State<YearBook>({
@@ -152,7 +152,7 @@ export class YearBookState {
     private fetcher: HttpFetcherService,
     private store: Store,
     private toastr: ToastrService,
-  ) {}
+  ) { }
 
   // @Selector()
   // static yearbookState(state: YearBook) {
@@ -395,19 +395,20 @@ export class YearBookState {
       };
 
     if (section === 'sections') {
-      const { sectionId, sectionGrade, sectionName, image } = partial;
-      const sectionsUpdated = yearBookData.sections.map((section) => {
-        const { id, grade, name } = section;
+      const { sectionId, sectionGrade, sectionName, image, groupedWith } = partial;
+      const sectionsUpdated = yearBookData.sections.map((s) => {
+        const { id, grade, name } = s;
         if (
           id === sectionId ||
           (grade === sectionGrade && name === sectionName)
         ) {
           return {
-            ...section,
+            ...s,
             image,
+            ...(groupedWith !== undefined ? { groupedWith } : {})
           };
         }
-        return section;
+        return s;
       });
       yearBookData[section] = sectionsUpdated;
     }
@@ -487,8 +488,8 @@ export class YearBookState {
 
       const errorMsg =
         message &&
-        typeof message === 'string' &&
-        message.toLowerCase() === 'invalid image format'
+          typeof message === 'string' &&
+          message.toLowerCase() === 'invalid image format'
           ? 'Ocurrió un problema al procesar la(s) imágen(es)'
           : 'Ha ocurrido un error';
 

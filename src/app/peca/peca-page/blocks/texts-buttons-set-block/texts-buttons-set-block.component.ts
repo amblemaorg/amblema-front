@@ -34,6 +34,15 @@ export class TextsButtonsSetBlockComponent
   showGroupSaveBtn: boolean;
   onSaveGroupedSections: (groupedSections: string[]) => void;
   savingGroupedSections: boolean;
+
+  showGroupTwoSectionsModal: boolean;
+  availableTwoSections: any[];
+  currentSectionId: string;
+  selectedTwoSectionIds: string[];
+  showGroupTwoSaveBtn: boolean;
+  onSaveGroupedTwoSections: (groupedSections: string[]) => void;
+  savingGroupedTwoSections: boolean;
+
   showUploadBtn: boolean;
   showExportBtn: boolean;
   studentsToImport: any[];
@@ -141,10 +150,14 @@ export class TextsButtonsSetBlockComponent
     onDateChange: (date) => void;
     onStatusChange: (status) => void;
     onFileUpload: (file) => void;
-    onAddTable: (data) => void | null;
+    onAddTable?: (data) => void | null;
     dateForSubmit?: string;
     textForSubmit?: string;
     statusForSubmit?: string;
+    onSaveGroupedTwoSections?: (groupedSections: string[]) => void;
+    schoolSections?: any[];
+    currentSection?: string;
+    groupedWith?: string;
   };
 
   isBeingUsedDateContr: boolean = false;
@@ -2090,6 +2103,63 @@ export class TextsButtonsSetBlockComponent
 
   closeGroupSectionsModal() {
     this.showGroupSectionsModal = false;
+  }
+
+  showGroupTwoSections(action) {
+    this.availableTwoSections = this.settings.schoolSections ? this.settings.schoolSections : [];
+    this.currentSectionId = this.settings.currentSection;
+    this.selectedTwoSectionIds = [this.currentSectionId];
+    if (this.settings.groupedWith) {
+      const groupedArr = this.settings.groupedWith.split(',');
+      for (const gId of groupedArr) {
+        if (!this.selectedTwoSectionIds.includes(gId)) {
+          this.selectedTwoSectionIds.push(gId);
+        }
+      }
+    }
+
+    this.onSaveGroupedTwoSections = this.settings.onSaveGroupedTwoSections || null;
+    this.showGroupTwoSaveBtn = false;
+    this.showGroupTwoSectionsModal = true;
+  }
+
+  isTwoSectionGrouped(sectionId: string): boolean {
+    return !!(this.selectedTwoSectionIds && this.selectedTwoSectionIds.includes(sectionId));
+  }
+
+  isDisabledTwoSection(sectionId: string): boolean {
+    if (sectionId === this.currentSectionId) return true;
+    return false;
+  }
+
+  toggleTwoSectionGroup(sectionId: string, isChecked: boolean) {
+    this.showGroupTwoSaveBtn = false;
+    if (!this.selectedTwoSectionIds) {
+      this.selectedTwoSectionIds = [];
+    }
+    if (isChecked) {
+      if (!this.selectedTwoSectionIds.includes(sectionId)) {
+        this.selectedTwoSectionIds.push(sectionId);
+      }
+    } else {
+      if (sectionId !== this.currentSectionId) {
+        this.selectedTwoSectionIds = this.selectedTwoSectionIds.filter(id => id !== sectionId);
+      }
+    }
+    this.showGroupTwoSaveBtn = true;
+  }
+
+  saveGroupedTwoSections() {
+    if (this.onSaveGroupedTwoSections) {
+      this.savingGroupedTwoSections = true;
+      this.onSaveGroupedTwoSections(this.selectedTwoSectionIds);
+      this.savingGroupedTwoSections = false;
+      this.showGroupTwoSectionsModal = false;
+    }
+  }
+
+  closeGroupTwoSectionsModal() {
+    this.showGroupTwoSectionsModal = false;
   }
 
   // myConsoleLog(data) {

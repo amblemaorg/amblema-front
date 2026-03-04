@@ -67,6 +67,7 @@ export function amblemarioMapper(pecaData) {
           sectionStudents,
           sectionGrade: grade,
           teacher,
+          groupedWith: section.groupedWith,
         };
       })
       : null;

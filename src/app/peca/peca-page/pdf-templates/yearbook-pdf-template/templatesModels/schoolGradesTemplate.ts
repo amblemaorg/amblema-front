@@ -16,9 +16,10 @@ export class SchoolGradeTemplate extends Template {
     public isGroupPhoto: boolean = false,
     public gradeText: string = '',
     templateOptions?: TemplateOptions,
+    public isMultiGroup: boolean = false,
   ) {
     super('schoolGradeTemplate', templateOptions);
-    this.students = this.getStudents(students);
+    this.students = this.getStudents(students, this.img, this.isGroupPhoto, this.isMultiGroup);
 
     this.isFirstColumnEmpty = this.students.firstColumn.length > 0;
 
@@ -28,8 +29,8 @@ export class SchoolGradeTemplate extends Template {
     };
   }
 
-  getStudents(students: string[], sectionImg = this.img, isGroupPhoto = this.isGroupPhoto) {
-    if (isGroupPhoto) {
+  getStudents(students: string[], sectionImg = this.img, isGroupPhoto = this.isGroupPhoto, isMultiGroup = false) {
+    if (isGroupPhoto || isMultiGroup) {
       const half = Math.ceil(students.length / 2);
       return {
         firstColumn: students.slice(0, half),
