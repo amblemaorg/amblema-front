@@ -336,11 +336,11 @@
           <div class="teacher {{ page.isGroupPhoto ? 'teacher-seccion-group' : 'teacher-seccion' }}">
             <h4 *ngIf="page.isGroupPhoto" class="name">
               Docentes:<br />
-              <span [innerHTML]="page.teacher.fullName"></span>
+              <span [innerHTML]="page.teacher.fullName | titlecase" style="font-weight: 100;"></span>
             </h4>
             <h2 *ngIf="!page.isGroupPhoto" class="name">
               Docente:<br />
-              <span [innerHTML]="page.teacher.fullName"></span>
+              <span [innerHTML]="page.teacher.fullName | titlecase" style="font-weight: 100;"></span>
             </h2>
           </div>
           <div class="col-md-12 students-list" style="margin-top: 25px; text-align: left;">
@@ -414,7 +414,8 @@
             <span class="text-capitalize titulo-seccion" [innerHTML]="page.data[0].name"
               style="font-size: 16px;"></span>
             <div class="teacher-seccion-group">
-              <h2><span>Docente </span><span [innerHTML]="page.data[0].teacher.fullName"></span></h2>
+              <h2><span>Docente: </span><span [innerHTML]="page.data[0].teacher.fullName | titlecase"
+                  style="font-weight: 100;"></span></h2>
             </div>
           </div>
           <div class="students-list">
@@ -436,7 +437,8 @@
             <span class="text-capitalize titulo-seccion" [innerHTML]="page.data[1].name"
               style="font-size: 16px;"></span>
             <div class="teacher-seccion-group">
-              <h2><span>Docente </span><span [innerHTML]="page.data[1].teacher.fullName"></span></h2>
+              <h2><span>Docente: </span><span [innerHTML]="page.data[1].teacher.fullName | titlecase"
+                  style="font-weight: 100;"></span></h2>
             </div>
           </div>
 
