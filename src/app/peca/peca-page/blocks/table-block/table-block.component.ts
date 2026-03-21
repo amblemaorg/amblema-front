@@ -773,10 +773,14 @@ class tableStudentsMathOlympic {
           items: [
             {
               id: 1,
-              name: "Registrado",
+              name: "Inscrito",
             },
             {
               id: 2,
+              name: "Participante",
+            },
+            {
+              id: 3,
               name: "Clasificado",
             },
           ],

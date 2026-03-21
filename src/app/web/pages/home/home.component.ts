@@ -35,6 +35,12 @@ export class HomeComponent implements OnInit {
     slider: [],
   };
 
+  OLYMPICS = {
+    MATH: "math",
+    READING: "reading",
+  };
+  selectedOlympics = this.OLYMPICS.MATH;
+
   chartSwitcherOptions = {
     direction: "row",
     buttonsDescription:
@@ -91,6 +97,28 @@ export class HomeComponent implements OnInit {
       charts: [],
     },
     testimonials: [],
+    olympicsHistory: {
+      mathOlympics: {
+        regionalClassified: 0,
+        regionalGold: 0,
+        regionalSilver: 0,
+        regionalBronze: 0,
+        nationalClassified: 0,
+        nationalGold: 0,
+        nationalSilver: 0,
+        nationalBronze: 0,
+      },
+      readingOlympics: {
+        regionalClassified: 0,
+        regionalGold: 0,
+        regionalSilver: 0,
+        regionalBronze: 0,
+        nationalClassified: 0,
+        nationalGold: 0,
+        nationalSilver: 0,
+        nationalBronze: 0,
+      },
+    },
   };
   isBrowser: boolean;
   selectedPillar: any = {};
@@ -161,22 +189,39 @@ export class HomeComponent implements OnInit {
         totalTeachers: String(data.homePage.nTeachers),
         totalCoordinators: String(data.homePage.nCoordinators),
       };
-      let chartsData = HOME_CONTENT.homePage.statistics.charts;
-      chartsData.map((chart) => {
-        chart.data = data.homePage.diagnostics[chart.id].map((lapse) => {
+      let chartsData = JSON.parse(JSON.stringify(HOME_CONTENT.homePage.statistics.charts));
+      chartsData.forEach((chart) => {
+        const diagnostics = data.homePage.diagnostics[chart.id] || [];
+        chart.data = diagnostics.map((lapse) => {
           if (lapse.value == 0) lapse.value = 0.00;
           return lapse;
         });
-        chart.data.map((element)=> {
-          element.value = element.value > 0 && element.value < 1 ? parseFloat((element.value * 100).toFixed(2)) : parseFloat(element.value.toFixed(2))
-        })
-        return chart.data;
+
+        if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
+          chart.isPercentage = false;
+          chart.props = {
+            colors: ["#DB8B19", "#808080", "#B83A1C", "#DB8B19", "#808080", "#B83A1C"],
+            stroke: "smooth",
+          };
+        } else {
+          chart.isPercentage = true;
+          chart.data.forEach((element) => {
+            element.value =
+              element.value > 0 && element.value < 1
+                ? parseFloat((element.value * 100).toFixed(2))
+                : parseFloat(element.value.toFixed(2));
+          });
+        }
       });
 
       this.homePageData = data.homePage;
-      this.chartSwitcherOptions.charts = this.chartService.formatChartDataToDrawComponent(
-        chartsData
-      );
+      if (data.homePage.olympicsHistory) {
+        this.homePageData.olympicsHistory = data.homePage.olympicsHistory;
+      }
+      this.chartSwitcherOptions = {
+        ...this.chartSwitcherOptions,
+        charts: this.chartService.formatChartDataToDrawComponent(chartsData),
+      };
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }

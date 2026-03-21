@@ -180,6 +180,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     enrollment: '',
     images: [],
     mathOlympics: {
+      participant: 0,
       enrolled: 0,
       classified: 0,
       goldMedal: 0,
@@ -192,6 +193,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       bronzeMedalNational: 0,
     },
     readingOlympics: {
+      participant: 0,
       enrolled: 0,
       classified: 0,
       goldMedal: 0,
@@ -275,6 +277,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         enrollment: data.nStudents,
         images: /* data.slider */ null,
         mathOlympics: {
+          participant: data.olympicsSummary.participant,
           enrolled: data.olympicsSummary.inscribed,
           classified: data.olympicsSummary.classified,
           goldMedal: data.olympicsSummary.medalsGold,
@@ -288,6 +291,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           description: data.olympicsSummary.description,
         },
         readingOlympics: {
+          participant: data.olympicsSummary.participant,
           enrolled: data.olympicsReadingSummary.inscribed,
           classified: data.olympicsReadingSummary.classified,
           goldMedal: data.olympicsReadingSummary.medalsGold,

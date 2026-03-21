@@ -459,3 +459,165 @@ section.founders {
     }
   }
 }
+
+section.math-olympics {
+  background-color: #eee;
+  padding: 15vw 10vw;
+  position: relative;
+  z-index: 10;
+
+  @include breakpoint(small, landscape) {
+    padding: 5vw 10vw;
+  }
+
+  @include breakpoint(medium) {
+    padding: 5vw 10vw;
+  }
+
+  .result-summary {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+
+      @include breakpoint(medium, portrait, down) {
+        &.gold {
+          width: 100%;
+
+          .result-count,
+          .result-label {
+            width: min-content;
+          }
+        }
+      }
+
+      @include breakpoint(small, landscape) {
+        width: min-content;
+      }
+
+      @include breakpoint(medium) {
+        width: min-content;
+      }
+
+      .result-icon {
+        height: 25vw;
+
+        @include breakpoint(small, landscape) {
+          height: 10vw;
+        }
+
+        @include breakpoint(medium) {
+          height: 10vw;
+        }
+      }
+
+      .result-count {
+        color: $white;
+        font-size: 6vw;
+        font-weight: bold;
+        left: 0.3vw;
+        position: relative;
+        top: -12vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2.5vw;
+          left: 0.1vw;
+          top: -5vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2.5vw;
+          left: 0.1vw;
+          top: -5vw;
+        }
+      }
+
+      .result-label {
+        color: $blue;
+        font-size: 5vw;
+        line-height: 1;
+        text-align: center;
+        position: relative;
+        top: -8vw;
+
+        @include breakpoint(small, landscape) {
+          font-size: 2vw;
+          top: -2vw;
+        }
+
+        @include breakpoint(medium) {
+          font-size: 2vw;
+          top: -2vw;
+        }
+
+        @include breakpoint(large) {
+          font-size: 1.5vw;
+        }
+      }
+    }
+  }
+
+  .math-olympics-subtitle {
+    margin-bottom: 2vw;
+    color: $blue;
+    text-align: center;
+    font-size: 5vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 2vw;
+    }
+    @include breakpoint(medium) {
+      font-size: 2vw;
+    }
+  }
+
+  .activities-tabs-wrapper {
+    display: flex;
+    border-bottom: 3px solid $blue;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+
+    @include breakpoint(small, landscape) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    @include breakpoint(medium) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    .activities-tab {
+      color: $blue;
+      flex: 1 0 50%;
+      font-weight: bold;
+      font-size: 4.5vw;
+      line-height: 1;
+      padding: 8% 2%;
+
+      @include breakpoint(small, landscape) {
+        font-size: 2vw;
+        padding: 2% 5%;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 2vw;
+        padding: 2% 5%;
+      }
+
+      &.active {
+        color: $green;
+      }
+
+      &:hover:not(.active) {
+        cursor: pointer;
+      }
+    }
+  }
+}
