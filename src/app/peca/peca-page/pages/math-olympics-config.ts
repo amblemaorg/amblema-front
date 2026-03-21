@@ -221,8 +221,9 @@ export function mathOlympicsConfigMapper(
           fullwidth: false,
           ...controlProps.selectAndRequired,
           options: [
-            { id: "1", name: "Registrado" },
-            { id: "2", name: "Clasificado" },
+            { id: "1", name: "Inscrito" },
+            { id: "2", name: "Participante" },
+            { id: "3", name: "Clasificado" },
           ],
         },
         result: {
@@ -243,7 +244,7 @@ export function mathOlympicsConfigMapper(
           fullwidth: false,
           ...controlProps.select,
           options: [
-            { id: "1", name: "Registrado" },
+            { id: "1", name: "Participante" },
             { id: "2", name: "Clasificado" },
           ],
         },
@@ -333,11 +334,21 @@ export function mathOlympicsConfigMapper(
           title: "Estatus",
           with: "20%",
           valuePrepareFunction: (row: any) => {
-            if (row) return row == "1" ? "Registrado" : "Clasificado";
-            else return "";
+            if (row) {
+              return row == "1"
+                ? "Inscrito"
+                : row == "2"
+                ? "Participante"
+                : "Clasificado";
+            } else return "";
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = cell == "1" ? "Registrado" : "Clasificado";
+            let value: string =
+              cell == "1"
+                ? "Inscrito"
+                : cell == "2"
+                ? "Participante"
+                : "Clasificado";
             value = value.toUpperCase();
 
             if (value.includes(search.toUpperCase()) || search === "")
@@ -385,11 +396,11 @@ export function mathOlympicsConfigMapper(
           title: "Estatus (Nacional)",
           with: "20%",
           valuePrepareFunction: (row: any) => {
-            if (row) return row == "1" ? "Registrado" : "Clasificado";
+            if (row) return row == "1" ? "Participante" : "Clasificado";
             else return "-";
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = cell == "1" ? "Registrado" : "Clasificado";
+            let value: string = cell == "1" ? "Participante" : "Clasificado";
             value = value.toUpperCase();
 
             if (value.includes(search.toUpperCase()) || search === "")
