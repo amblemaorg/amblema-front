@@ -1,4 +1,5 @@
 import { Template, TemplateOptions } from './Template';
+import { TemplateUtils } from './templateUtils';
 
 export class SchoolGradeTemplate extends Template {
   students: {
@@ -25,7 +26,7 @@ export class SchoolGradeTemplate extends Template {
 
     this.teacher = {
       ...this.teacher,
-      fullName: `${this.teacher.firstName} ${this.teacher.lastName}`,
+      fullName: this.teacher.fullName || TemplateUtils.getShortTeacherName(this.teacher.firstName, this.teacher.lastName),
     };
   }
 
@@ -77,7 +78,7 @@ export class SmallSchoolSectionsTemplate extends Template {
       ...sectionData,
       teacher: {
         ...sectionData.teacher,
-        fullName: `${sectionData.teacher.firstName} ${sectionData.teacher.lastName}`
+        fullName: sectionData.teacher.fullName || TemplateUtils.getShortTeacherName(sectionData.teacher.firstName, sectionData.teacher.lastName)
       }
     }));
   }
