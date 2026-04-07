@@ -741,13 +741,14 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: UpdateStudentMathOlympics
   ) {
-    const { lapseNumber, studentId, status, result, statusNational, resultNational } = payload;
+    const { lapseNumber, studentId, status, statusRegional, result, statusNational, resultNational } = payload;
     const lapseName = `lapse${lapseNumber}`;
     const state = getState();
     const pecaId = state.content.id;
     const url = `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}`;
     const data = {
       status,
+      statusRegional,
       result,
       statusNational,
       resultNational,
@@ -996,35 +997,17 @@ export class PecaState {
     { patchState, getState }: StateContext<PecaStateModel>,
     { payload }: UpdateStudentReadingOlympics
   ) {
-    const { lapseNumber, studentId, status, result, statusNational, resultNational } = payload;
+    const { lapseNumber, studentId, status, statusRegional, result, statusNational, resultNational } = payload;
     const lapseName = `lapse${lapseNumber}`;
     const state = getState();
     const pecaId = state.content.id;
-    // Note: Update uses PUT. PecaGradeController PUT maps to `changeStatus`.
-    // `changeStatus` takes `jsonData`.
-    // `changeStatus` in service: `for studentId in jsonData["students"]`.
-    // It expects `students` array and `status`.
-    // The frontend `UpdateStudentMathOlympics` sends `{ status, result, ... }`.
-    // Wait. `changeStatus` (lines 169+) ONLY updates `status`.
-    // It does NOT update `result`.
-    // Where is `result` updated?
-    // Maybe `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}` maps to something else?
-    // Not `PecaGradeController` (which is `/pecaprojects/olympics/<pecaId>/<lapse>`).
-    // There might be another controller for individual student updates!
-    // `PecaOlympicsController`?
-    // I need to find where `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}` points.
-    // I'll check `app/controllers` folder or `routes`.
-    // I'll search for `PecaOlympicsController`.
-
-    // For now, I will assume the URL is correct and just add `olympicsType: 'reading'`.
-
     const url = `pecaprojects/olympics/${pecaId}/${lapseNumber}/${studentId}?type=reading`;
     const data = {
       status,
+      statusRegional,
       result,
       statusNational,
       resultNational,
-      olympicsType: "reading"
     };
     try {
       const updatedStudent = await this.fetcher.put(url, data).toPromise();

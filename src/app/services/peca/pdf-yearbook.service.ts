@@ -173,6 +173,29 @@ export class PdfYearbookService {
 
       const pdfData = pdf_data ? pdf_data : {};
 
+      if (pdfData.sponsorLogo) {
+        pdfData.sponsorLogo = await this.compressImage(pdfData.sponsorLogo, 400, true);
+      }
+      if (pdfData.historicalReviewImg) {
+        pdfData.historicalReviewImg = await this.compressImage(pdfData.historicalReviewImg, 900);
+      }
+      if (pdfData.coordinatorImg) {
+        pdfData.coordinatorImg = await this.compressImage(pdfData.coordinatorImg, 600);
+      }
+      if (pdfData.schoolImg) {
+        pdfData.schoolImg = await this.compressImage(pdfData.schoolImg, 900);
+      }
+      if (pdfData.groupPhoto?.image) {
+        pdfData.groupPhoto.image = await this.compressImage(pdfData.groupPhoto.image, 900);
+      }
+      if (pdfData.schoolSections) {
+        for (let section of pdfData.schoolSections) {
+          if (section.sectionImg) {
+            section.sectionImg = await this.compressImage(section.sectionImg, 800);
+          }
+        }
+      }
+
       //* pdf metadata----------------------------------------
       pdf.info({
         title: 'AmbLeMario',
@@ -1214,6 +1237,41 @@ export class PdfYearbookService {
     });
   }
 
+  private async compressImage(imgSrc: string, maxWidth = 900, isLogo = false): Promise<string> {
+    if (!imgSrc) return null;
+    return new Promise<string>((resolve) => {
+      let canvas = this.document.createElement('canvas');
+      const img = this.document.createElement('img');
+      const ctx = canvas.getContext('2d');
+      
+      img.crossOrigin = 'Anonymous';
+      img.src = imgSrc;
+
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataURL = isLogo ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.80);
+        canvas = null;
+        resolve(dataURL);
+      };
+
+      img.onerror = () => {
+        console.warn('Failed to compress image, falling back to original', imgSrc);
+        resolve(imgSrc); 
+      };
+    });
+  }
+
   private async getActivityImages(images: string[]): Promise<any[][]> {
     const body: any[][] = [];
     const theImgs = [];
@@ -1223,8 +1281,11 @@ export class PdfYearbookService {
 
     const imagesPr = images_for_loop.map(async (img_url) => {
       try {
+        const rawUrl = typeof img_url === 'string' ? img_url : img_url.img;
+        const compressedUrl = await this.compressImage(rawUrl, 900);
+
         const image_rendered = await new Img(
-          typeof img_url === 'string' ? img_url : img_url.img,
+          compressedUrl,
         )
           .fit([275, 200])
           .opacity(typeof img_url === 'string' ? 1 : 0)

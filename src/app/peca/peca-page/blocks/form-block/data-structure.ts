@@ -253,6 +253,9 @@ export function structureData(
           section: cf.get("section").value,
         },
         status: cf.get("status").value,
+        statusRegional: cf.get("statusRegional")
+          ? cf.get("statusRegional").value
+          : null,
         result: cf.get("result").value,
         statusNational: cf.get("statusNational")
           ? cf.get("statusNational").value

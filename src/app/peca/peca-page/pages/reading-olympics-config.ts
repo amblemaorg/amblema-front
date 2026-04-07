@@ -217,14 +217,24 @@ export function readingOlympicsConfigMapper(
           ...controlProps.normalTextAndRequired,
         },
         status: {
-          label: "Estatus",
-          placeholder: "Estatus",
-          fullwidth: false,
+          label: "Estatus Fase Preliminar",
+          placeholder: "Estatus Fase Preliminar",
+          fullwidth: true,
           ...controlProps.selectAndRequired,
           options: [
             { id: "1", name: "Inscrito" },
             { id: "2", name: "Participante" },
             { id: "3", name: "Clasificado" },
+          ],
+        },
+        statusRegional: {
+          label: "Estatus Fase Regional",
+          placeholder: "Estatus Fase Regional",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "Participante" },
+            { id: "2", name: "Clasificado" },
           ],
         },
         result: {
@@ -274,6 +284,7 @@ export function readingOlympicsConfigMapper(
           studentId: values.id,
           result: values.result,
           status: values.status,
+          statusRegional: values.statusRegional,
           resultNational: values.resultNational,
           statusNational: values.statusNational,
         };
@@ -312,7 +323,7 @@ export function readingOlympicsConfigMapper(
             if (row) {
               return `${grade ? grade.name : ""}`;
             } else {
-              return "";
+              return "-";
             }
           },
           filterFunction: (cell?: any, search?: string) => {
@@ -333,7 +344,7 @@ export function readingOlympicsConfigMapper(
           with: "20%",
         },
         status: {
-          title: "Estatus",
+          title: "Estatus Preliminar",
           with: "20%",
           valuePrepareFunction: (row: any) => {
             if (row) {
@@ -342,7 +353,7 @@ export function readingOlympicsConfigMapper(
                 : row == "2"
                 ? "Participante"
                 : "Clasificado";
-            } else return "";
+            } else return "-";
           },
           filterFunction: (cell?: any, search?: string) => {
             let value: string =
@@ -351,6 +362,23 @@ export function readingOlympicsConfigMapper(
                 : cell == "2"
                 ? "Participante"
                 : "Clasificado";
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        statusRegional: {
+          title: "Estatus Regional",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            if (row) {
+              return row == "1" ? "Participante" : "Clasificado";
+            } else return "-";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Participante" : "Clasificado";
             value = value.toUpperCase();
 
             if (value.includes(search.toUpperCase()) || search === "")
@@ -454,6 +482,7 @@ export function readingOlympicsConfigMapper(
           section,
           result,
           status,
+          statusRegional,
           resultNational,
           statusNational,
         } = student;
@@ -464,6 +493,7 @@ export function readingOlympicsConfigMapper(
           grade: section.grade,
           result,
           status: status,
+          statusRegional: statusRegional,
           resultNational: result === "1" ? resultNational : null,
           statusNational: result === "1" ? statusNational : null,
         };

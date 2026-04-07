@@ -563,12 +563,14 @@ export class FormBlockComponent
     }
 
     if (this.settings.formType === 'agregarResultadoEstudiante') {
-      if (this.settings.formsContent['result'] && this.settings.formsContent['statusNational'] && this.settings.formsContent['resultNational']) {
-        const resultControl = this.componentForm.get('result');
-        const statusNationalControl = this.componentForm.get('statusNational');
-        const resultNationalControl = this.componentForm.get('resultNational');
+      const statusControl = this.componentForm.get('status');
+      const statusRegionalControl = this.componentForm.get('statusRegional');
+      const resultControl = this.componentForm.get('result');
+      const statusNationalControl = this.componentForm.get('statusNational');
+      const resultNationalControl = this.componentForm.get('resultNational');
 
-        const updateNationalFields = (value) => {
+      const updateNationalFields = (value) => {
+        if (statusNationalControl && resultNationalControl) {
           if (value === '1') { // 1 is Oro
             statusNationalControl.enable();
             resultNationalControl.enable();
@@ -578,11 +580,52 @@ export class FormBlockComponent
             statusNationalControl.disable();
             resultNationalControl.disable();
           }
-        };
+        }
+      };
 
-        // Initial check
-        updateNationalFields(resultControl.value);
+      const updateRegionalFields = (value) => {
+        if (statusRegionalControl) {
+          if (value === '3') { // 3 is Clasificado in Preliminary
+            statusRegionalControl.enable();
+          } else {
+            statusRegionalControl.setValue(null);
+            statusRegionalControl.disable();
+          }
+        }
+      };
 
+      const updateResultFields = (value) => {
+        if (resultControl) {
+          if (value === '2') { // 2 is Clasificado in Regional
+            resultControl.enable();
+          } else {
+            resultControl.setValue(null);
+            resultControl.disable();
+          }
+        }
+      };
+
+      // Initial checks
+      if (statusControl) updateRegionalFields(statusControl.value);
+      if (statusRegionalControl) updateResultFields(statusRegionalControl.value);
+      if (resultControl) updateNationalFields(resultControl.value);
+
+      // Subscriptions
+      if (statusControl) {
+        this.subscription.add(
+          statusControl.valueChanges.subscribe((val) => {
+            updateRegionalFields(val);
+          })
+        );
+      }
+      if (statusRegionalControl) {
+        this.subscription.add(
+          statusRegionalControl.valueChanges.subscribe((val) => {
+            updateResultFields(val);
+          })
+        );
+      }
+      if (resultControl) {
         this.subscription.add(
           resultControl.valueChanges.subscribe((val) => {
             updateNationalFields(val);
