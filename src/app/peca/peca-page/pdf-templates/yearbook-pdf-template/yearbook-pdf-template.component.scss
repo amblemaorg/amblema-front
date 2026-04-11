@@ -516,13 +516,13 @@ $text_indent: 18px;
     .body {
       .visual-references {
         margin-top: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 60px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 280px;
         // column-gap: 60px;
-        column-gap: 35px;
+        column-gap: 10px;
 
         .table-container {
           .table {
@@ -536,7 +536,7 @@ $text_indent: 18px;
               &:first-child,
               &:nth-child(2) {
                 td {
-                  font-weight: bold;
+                  font-weight: normal;
                 }
               }
 
@@ -544,13 +544,19 @@ $text_indent: 18px;
                 border: 2px $gray solid;
                 font-size: 15px;
                 line-height: 18px;
-                padding: 4px 10px;
+                padding: 3px 5px;
                 text-align: center;
-                text-transform: capitalize;
+                text-transform: none;
                 vertical-align: middle;
 
                 &:first-child {
-                  font-weight: bold;
+                  font-weight: normal;
+                }
+              }
+              td.green-bg{
+                background-color: #81b03e;
+                strong{
+                  color: white;
                 }
               }
             }
@@ -560,6 +566,24 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
+      }
+      .description.mas-margen{
+        margin-top: 80px;
+      }
+      .lapse-info{
+        margin-top: -15px;
+        text-align: right;
+        &:label{
+          font-size: 5px !important;
+        }
+      }
+      .lapse2-bg{
+        background-color: #ffc000;
+        color: white !important;
+      }
+      .lapse3-bg{
+        color: white !important;
+        background-color: #00b0f0 ;
       }
     }
   }

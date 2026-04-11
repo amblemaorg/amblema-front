@@ -111,7 +111,7 @@
       </ng-container>
 
       <ng-container *ngIf="!listItem.href"
-        ><a>{{ listItem.label }}</a>
+        ><a style="font-weight: normal;">{{ listItem.label }}</a>
         <span *ngIf="listItem.pageNumber">{{ listItem.pageNumber }}</span>
       </ng-container>
     </li>
@@ -163,17 +163,47 @@
             <div class="table-container">
               <table class="table">
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
-                  <tr>
+                  <tr *ngIf="tr[0] !== 'AVERAGE_ROW_MARKER'">
                     <ng-container *ngFor="let td of tr">
                       <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
-                        <!-- {{ td }} -->
                         <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>
                   </tr>
+                  
+                  <!-- Fila de Promedio (Especial) -->
+                  <tr *ngIf="tr[0] === 'AVERAGE_ROW_MARKER'">
+                    <!-- Columna 1: Grado (vacía) -->
+                    <td></td>
+                    
+                    <!-- Columnas 2 y 3: Combinadas con "Promedio de la escuela" -->
+                    <td colspan="2" style="text-align: center; font-weight: bold;">
+                      <strong>{{ tr[1] }}</strong>
+                    </td>
+                    
+                    <!-- Columna 4: Valor del promedio -->
+                    <td style="text-align: center;"
+                    [ngClass]="{
+                      'green-bg': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'
+                    }"
+                    >
+                    <strong>{{ tr[2] }}</strong>
+                    </td>
+                    <td *ngIf="tr[3] !== undefined" style="text-align: center;"
+                      [ngClass]="{
+                        'lapse2-bg': page.lapseId === 'lapse2',
+                        'lapse3-bg': page.lapseId === 'lapse3'
+                      }"
+                    >
+                      <strong style="color: white;">{{ tr[3] }}</strong>
+                    </td>
                 </ng-container>
               </table>
+              <div *ngIf="page.lapseId && (page.lapseId=='lapse2' || page.lapseId=='lapse3')" class="lapse-info">
+                <label>(*) Promedio por grado (**) Índice: % respecto a la meta</label>
+              </div>
             </div>
+            
           </ng-container>
         </div>
 
@@ -184,7 +214,7 @@
               | strBreakSplit
           "
         >
-          <p class="description">
+          <p class="description" [ngClass]="{'mas-margen': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'}">
             <span [outerHTML]="pText"></span>
           </p>
         </ng-container>
