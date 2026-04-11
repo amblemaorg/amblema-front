@@ -13,10 +13,13 @@ export class SchoolGradeTemplate extends Template {
     public img: string,
     public teacher: any,
     students: string[],
+    public isGroupPhoto: boolean = false,
+    public gradeText: string = '',
     templateOptions?: TemplateOptions,
+    public isMultiGroup: boolean = false,
   ) {
     super('schoolGradeTemplate', templateOptions);
-    this.students = this.getStudents(students);
+    this.students = this.getStudents(students, this.img, this.isGroupPhoto, this.isMultiGroup);
 
     this.isFirstColumnEmpty = this.students.firstColumn.length > 0;
 
@@ -26,8 +29,15 @@ export class SchoolGradeTemplate extends Template {
     };
   }
 
-  // Segment students in 2 parts large with length 29 and small with length 18 or 29 from end large array
-  getStudents(students: string[], sectionImg = this.img) {
+  getStudents(students: string[], sectionImg = this.img, isGroupPhoto = this.isGroupPhoto, isMultiGroup = false) {
+    if (isGroupPhoto || isMultiGroup) {
+      const half = Math.ceil(students.length / 2);
+      return {
+        firstColumn: students.slice(0, half),
+        secondColumn: students.slice(half)
+      }
+    }
+
     const maxColumnSize = 27;
     const maxSmallerColumnSize = 13;
     const restMaxLength =
@@ -52,5 +62,23 @@ export class SchoolGradeTemplate extends Template {
       firstColumn: students.slice(0, maxColumnSize),
       secondColumn: students.slice(maxColumnSize, restMaxLength),
     };
+  }
+}
+
+export class SmallSchoolSectionsTemplate extends Template {
+  constructor(
+    public storeId: string,
+    public data: any[],
+    templateOptions?: TemplateOptions,
+  ) {
+    super('smallSchoolSections', templateOptions);
+
+    this.data = this.data.map(sectionData => ({
+      ...sectionData,
+      teacher: {
+        ...sectionData.teacher,
+        fullName: `${sectionData.teacher.firstName} ${sectionData.teacher.lastName}`
+      }
+    }));
   }
 }

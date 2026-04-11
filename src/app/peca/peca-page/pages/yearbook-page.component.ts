@@ -262,6 +262,7 @@ export class YearbookPageComponent extends PecaPageComponent
                       /* (this.ybData && this.ybData.lapse3.readingDiagnosticAnalysis && this.ybData.lapse3.readingDiagnosticAnalysis.length ? this.ybData.lapse3.readingDiagnosticAnalysis : false) ||  */ lastYearBookRequest
                         .lapse3.readingDiagnosticAnalysis,
                   },
+                  groupPhoto: lastYearBookRequest.groupPhoto || currentYearBook.groupPhoto || null,
                   sections: currentYearBook.sections.map((section) => {
                     const sectionRequested = lastYearBookRequest.sections.filter(
                       ({ id }) => section.id === id,
