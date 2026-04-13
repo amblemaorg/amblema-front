@@ -188,7 +188,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         sortedGroupedSections.forEach((section) => {
           if (section.teacher) {
             teachers.push(
-              titleCaseName(`${section.teacher.firstName} ${section.teacher.lastName}`)
+              titleCaseName(TemplateUtils.getShortTeacherName(section.teacher.firstName, section.teacher.lastName))
             );
           }
         });
@@ -196,7 +196,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       const uniqueTeachers = [...new Set(teachers)];
       const teacherObj = {
         firstName: '',
-        lastName: uniqueTeachers.join('<br>'),
+        lastName: '',
+        fullName: uniqueTeachers.join('<br>'),
       };
 
       // Find students
@@ -433,8 +434,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
           if (section.isPrincipalGroup) {
             groupSections.forEach(s => processedSectionIds.add(s.sectionId));
 
-            const teachersArr = Array.from(new Set(groupSections.map(s => `${s.teacher.firstName} ${s.teacher.lastName}`)));
-            const teacherObj = { firstName: teachersArr.join(', '), lastName: '' };
+            const teachersArr = Array.from(new Set(groupSections.map(s => TemplateUtils.getShortTeacherName(s.teacher.firstName, s.teacher.lastName))));
+            const teacherObj = { firstName: '', lastName: '', fullName: teachersArr.join('<br>') };
 
             let allStudents = [];
             groupSections.forEach(s => {

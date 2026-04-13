@@ -14,7 +14,7 @@ import {
   UpdateYearBookRequest,
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action';
-
+import { FetchPecaContent } from '../../../store/actions/peca/peca.actions';
 /**
  *
  * @function MapperYearBookWeb
@@ -253,19 +253,32 @@ export async function MapperYearBookWeb(
                 name: 'Agrupar secciones',
               },
             ],
-            onSaveGroupedTwoSections: (groupedSections: string[]) => {
+            onSaveGroupedTwoSections: async (groupedSections: string[]) => {
               let groupedWith = null;
               if (groupedSections && groupedSections.length > 1) {
                 groupedWith = groupedSections.filter(sId => sId !== id).join(',');
               }
               const data = {
-                sectionId: id,
+                id: id,
                 sectionGrade: grade,
                 sectionName: name,
                 image: section.image,
                 groupedWith: groupedWith
               };
-              dispatchAction('sections', data);
+              try {
+                await pdfYearbookService.setSectionGrouping(yearBookData.pecaId, data);
+                // The backend yearbook object hasn't changed its payload, so NGXS State distinctUntilChanged ignores the Fetch action update automatically.
+                // Ergo we dispatch and trigger a hard sync to visually update the tree.
+                store.dispatch([new FetchPecaContent(yearBookData.pecaId)]).subscribe(() => {
+                   if (typeof window !== 'undefined') {
+                     setTimeout(() => {
+                       window.location.reload();
+                     }, 1500); 
+                   }
+                });
+              } catch (e) {
+                console.error(e);
+              }
             },
             schoolSections: schoolSections,
             currentSection: id,

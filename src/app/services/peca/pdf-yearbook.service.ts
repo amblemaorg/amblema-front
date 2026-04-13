@@ -57,7 +57,11 @@ export class PdfYearbookService {
   };
 
   @Output() callGraphicBase64ImgEmitter: EventEmitter<any> = new EventEmitter();
-
+  public getShortTeacherName(firstName: string, lastName: string): string {
+    const fName = firstName ? firstName.trim().split(/\s+/)[0] : '';
+    const lName = lastName ? lastName.trim().split(/\s+/)[0] : '';
+    return `${fName} ${lName}`.trim();
+  }
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
@@ -627,13 +631,13 @@ export class PdfYearbookService {
           const sortedGroupedSections = sortSections(groupedSections);
 
           sortedGroupedSections.forEach(section => {
-            teachers.push(`${section.teacher.firstName} ${section.teacher.lastName}`);
+            teachers.push(this.getShortTeacherName(section.teacher.firstName, section.teacher.lastName));
           });
         }
         const uniqueTeachers = [...new Set(teachers)];
         if (uniqueTeachers.length > 0) {
           pdf.add(
-            new Txt(`Docentes: ${uniqueTeachers.join(', ')}`)
+            new Txt(`Docentes:\n${uniqueTeachers.join('\n')}`)
               .color(this.colors.blue)
               .bold()
               .italics()
@@ -1380,6 +1384,21 @@ export class PdfYearbookService {
       .toPromise();
   }
 
+  setSectionGrouping(
+    pecaId: string,
+    sectionData: any,
+  ): Promise<any> {
+    return this.http
+      .patch(`pecaprojects/yearbook/sectiongrouping/${pecaId}`, { sections: [sectionData] })
+      .toPromise();
+  }
+
+  getSectionGrouping(pecaId: string): Promise<any> {
+    return this.http
+      .get(`pecaprojects/yearbook/sectiongrouping/${pecaId}`)
+      .toPromise();
+  }
+  
   getPrintOptionsOb(
     pecaProjectId: number,
   ): Observable<RespYearbookPrintOptions> {

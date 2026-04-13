@@ -51,8 +51,8 @@ export function amblemarioMapper(pecaData) {
           section.students && section.students.length > 0
             ? section.students.map((student) => {
               const { firstName, lastName } = student;
-              const fName = firstName ? firstName.split(' ')[0] : '';
-              const lName = lastName ? lastName.split(' ')[0] : '';
+              const fName = firstName ? firstName.trim().split(/\s+/)[0] : '';
+              const lName = lastName ? lastName.trim().split(/\s+/)[0] : '';
               const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
 
               return `${capitalize(fName)} ${capitalize(lName)}`.trim();
