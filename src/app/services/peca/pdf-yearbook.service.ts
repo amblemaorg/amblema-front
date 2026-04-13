@@ -57,12 +57,16 @@ export class PdfYearbookService {
   };
 
   @Output() callGraphicBase64ImgEmitter: EventEmitter<any> = new EventEmitter();
-
+  public getShortTeacherName(firstName: string, lastName: string): string {
+    const fName = firstName ? firstName.trim().split(/\s+/)[0] : '';
+    const lName = lastName ? lastName.trim().split(/\s+/)[0] : '';
+    return `${fName} ${lName}`.trim();
+  }
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
     private http: HttpFetcherService,
-  ) {}
+  ) { }
 
   public setGraphics(
     lapse: string,
@@ -72,7 +76,7 @@ export class PdfYearbookService {
       values: string[];
     },
   ) {
-    
+
     this.graphics[lapse][graphic] = graphicData;
   }
 
@@ -86,7 +90,7 @@ export class PdfYearbookService {
   getGraphics() {
     this.callGraphicBase64ImgEmitter.emit();
     const graphics = this.graphics;
-    
+
     const isThereGraphics = Object.keys(graphics).every((key) => {
       const graphicValue = graphics[key];
 
@@ -140,15 +144,15 @@ export class PdfYearbookService {
         const theActImgs =
           lapse['activities'] && lapse['activities'].length
             ? lapse.activities.map(async (activity, j, arrA) => {
-                const images_act = await this.getActivityImages(
-                  activity.images || [],
-                );
-                // console.log("activity.images", activity.images);
+              const images_act = await this.getActivityImages(
+                activity.images || [],
+              );
+              // console.log("activity.images", activity.images);
 
-                images_[`lapse${i + 1}`][`${j}`] = images_act.length
-                  ? images_act
-                  : [];
-              })
+              images_[`lapse${i + 1}`][`${j}`] = images_act.length
+                ? images_act
+                : [];
+            })
             : [];
         if (lapse['activities'] && lapse['activities'].length)
           await Promise.all(theActImgs);
@@ -232,22 +236,22 @@ export class PdfYearbookService {
       //* loading images for pdf footer use-------------------------------------------------------------------------------------------------------------------
       const cover_footer = open_book
         ? await new Img('openBook', true)
-            .width(pdfPageSizes.width + 180)
-            .margin([-80, -223, 0, 0])
-            .build()
+          .width(pdfPageSizes.width + 180)
+          .margin([-80, -223, 0, 0])
+          .build()
         : null;
       const footer_amble_logo = amble_logo
         ? await new Img('ambleLogo', true)
-            .fit([42, 42])
-            .relativePosition(pdfPageSizes.width - 60, -3)
-            .build()
+          .fit([42, 42])
+          .relativePosition(pdfPageSizes.width - 60, -3)
+          .build()
         : null;
       const footer_sponsor_logo = pdfData['sponsorLogo']
         ? await new Img('sponsorLogo', true)
-            .fit([65, 30])
-            .relativePosition(-80, 7)
-            .alignment('right')
-            .build()
+          .fit([65, 30])
+          .relativePosition(-80, 7)
+          .alignment('right')
+          .build()
         : null;
       //* FOOTER . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
       /* pdf footer, when cover page opened book appears
@@ -325,10 +329,10 @@ export class PdfYearbookService {
             : null,
           pdfData['schoolName']
             ? new Canvas([
-                new Rect(0, [(185 * pdfData.schoolName.length) / 21, 1]).color(
-                  this.colors.green,
-                ).end,
-              ]).end
+              new Rect(0, [(185 * pdfData.schoolName.length) / 21, 1]).color(
+                this.colors.green,
+              ).end,
+            ]).end
             : null,
           pdfData['schoolCity']
             ? new Txt(pdfData.schoolCity).bold().margin([0, 4]).end
@@ -375,9 +379,9 @@ export class PdfYearbookService {
                 pdfData['historicalReviewImg'] ? increment_top : 0,
                 0,
                 u_name_margin +
-                  (pdfData['historicalReviewImg']
-                    ? increment_bottom + 20
-                    : -20),
+                (pdfData['historicalReviewImg']
+                  ? increment_bottom + 20
+                  : -20),
               ])
               .pageBreak('before').end,
           )
@@ -415,18 +419,18 @@ export class PdfYearbookService {
             new Columns(
               pdfData['sponsorLogo']
                 ? [
-                    new Txt(pdfData.sponsorName).style([
-                      'highlight',
-                      'userName',
-                    ]).end,
-                    null,
-                  ]
+                  new Txt(pdfData.sponsorName).style([
+                    'highlight',
+                    'userName',
+                  ]).end,
+                  null,
+                ]
                 : [
-                    new Txt(pdfData.sponsorName).style([
-                      'highlight',
-                      'userName',
-                    ]).end,
-                  ],
+                  new Txt(pdfData.sponsorName).style([
+                    'highlight',
+                    'userName',
+                  ]).end,
+                ],
             ).end,
           ])
             .margin([
@@ -434,7 +438,7 @@ export class PdfYearbookService {
               pdfData['sponsorLogo'] ? increment_top : 0,
               0,
               u_name_margin +
-                (pdfData['sponsorLogo'] ? increment_bottom : increment_bottom2),
+              (pdfData['sponsorLogo'] ? increment_bottom : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -470,18 +474,18 @@ export class PdfYearbookService {
             new Columns(
               pdfData['coordinatorImg']
                 ? [
-                    new Txt(pdfData.coordinatorName).style([
-                      'highlight',
-                      'userName',
-                    ]).end,
-                    null,
-                  ]
+                  new Txt(pdfData.coordinatorName).style([
+                    'highlight',
+                    'userName',
+                  ]).end,
+                  null,
+                ]
                 : [
-                    new Txt(pdfData.coordinatorName).style([
-                      'highlight',
-                      'userName',
-                    ]).end,
-                  ],
+                  new Txt(pdfData.coordinatorName).style([
+                    'highlight',
+                    'userName',
+                  ]).end,
+                ],
             ).end,
           ])
             .margin([
@@ -489,9 +493,9 @@ export class PdfYearbookService {
               pdfData['coordinatorImg'] ? increment_top : 0,
               0,
               u_name_margin +
-                (pdfData['coordinatorImg']
-                  ? increment_bottom
-                  : increment_bottom2),
+              (pdfData['coordinatorImg']
+                ? increment_bottom
+                : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -527,14 +531,14 @@ export class PdfYearbookService {
             new Columns(
               pdfData['schoolImg']
                 ? [
-                    new Txt(pdfData.schoolName).style(['highlight', 'userName'])
-                      .end,
-                    null,
-                  ]
+                  new Txt(pdfData.schoolName).style(['highlight', 'userName'])
+                    .end,
+                  null,
+                ]
                 : [
-                    new Txt(pdfData.schoolName).style(['highlight', 'userName'])
-                      .end,
-                  ],
+                  new Txt(pdfData.schoolName).style(['highlight', 'userName'])
+                    .end,
+                ],
             ).end,
           ])
             .margin([
@@ -542,7 +546,7 @@ export class PdfYearbookService {
               pdfData['schoolImg'] ? increment_top : 0,
               0,
               u_name_margin +
-                (pdfData['schoolImg'] ? increment_bottom : increment_bottom2),
+              (pdfData['schoolImg'] ? increment_bottom : increment_bottom2),
             ])
             .pageBreak('before').end,
         );
@@ -566,17 +570,113 @@ export class PdfYearbookService {
       //--- SECTIONS -----------------------------------------------------------------
       const symbolsCoverImg = symbols
         ? await new Img('blueSymbols', true)
-            .width(pdfPageSizes.width)
-            .absolutePosition(0, 0)
-            .build()
+          .width(pdfPageSizes.width)
+          .absolutePosition(0, 0)
+          .build()
         : null;
 
-      if (pdfData['schoolSections']) {
+      // Group Photo Logic
+      if (pdfData.groupPhoto) {
+        const groupPhoto = pdfData.groupPhoto;
         pdf.add(
-          new TocItem(new Txt('Grados y secciones').fontSize(0).opacity(0).end)
+          new TocItem(new Txt('Foto grupal').fontSize(0).opacity(0).end)
             .tocStyle({ bold: true, italics: true, fontSize: 13 })
             .tocMargin([0, 0, 0, menu_item_margin.bottom]).end,
         );
+
+        const groupTitle = groupPhoto.groupedSectionsContent ? groupPhoto.groupedSectionsContent.join('\n') : 'Foto Grupal';
+
+        pdf.add(
+          new TocItem(
+            new Txt(groupTitle)
+              .style('highlight')
+              .margin([0, groupPhoto.image ? 205 : 190, 0, 15])
+              .pageBreak('before').end,
+          )
+            .tocStyle({ bold: true, italics: true })
+            .tocMargin([
+              menu_item_margin.left,
+              0,
+              0,
+              menu_item_margin.bottom,
+            ]).end,
+        );
+
+        if (symbolsCoverImg) pdf.add(symbolsCoverImg);
+
+        if (groupPhoto.image) {
+          pdf.add(
+            await new Img(groupPhoto.image)
+              .fit([pdfPageSizes.width - 140, 190])
+              .absolutePosition(70, 60)
+              .alignment('center')
+              .build()
+          );
+        }
+
+        // Helper to sort sections by grade
+        const sortSections = (sections) => {
+          return sections.sort((a, b) => {
+            if (a.sectionGrade < b.sectionGrade) return -1;
+            if (a.sectionGrade > b.sectionGrade) return 1;
+            return 0;
+          });
+        };
+
+        // Teachers of the grouped sections
+        // Find teachers from sections in groupedSections
+        const teachers = [];
+        if (pdfData.schoolSections) {
+          const groupedSections = pdfData.schoolSections.filter(section => groupPhoto.groupedSections.includes(section.sectionId));
+          const sortedGroupedSections = sortSections(groupedSections);
+
+          sortedGroupedSections.forEach(section => {
+            teachers.push(this.getShortTeacherName(section.teacher.firstName, section.teacher.lastName));
+          });
+        }
+        const uniqueTeachers = [...new Set(teachers)];
+        if (uniqueTeachers.length > 0) {
+          pdf.add(
+            new Txt(`Docentes:\n${uniqueTeachers.join('\n')}`)
+              .color(this.colors.blue)
+              .bold()
+              .italics()
+              .margin([0, 0, 0, 10])
+              .end
+          );
+        }
+
+        // Students of the grouped sections
+        const students = [];
+        if (pdfData.schoolSections) {
+          const groupedSections = pdfData.schoolSections.filter(section => groupPhoto.groupedSections.includes(section.sectionId));
+          const sortedGroupedSections = sortSections(groupedSections);
+
+          sortedGroupedSections.forEach(section => {
+            if (section.sectionStudents) {
+              students.push(...section.sectionStudents);
+            }
+          });
+        }
+
+        if (students.length > 0) {
+          pdf.add(
+            new Txt(students.join(', '))
+              .color(this.colors.blue)
+              .bold()
+              .italics().end,
+          );
+        }
+      }
+
+      if (pdfData['schoolSections']) {
+        if (!pdfData.groupPhoto) {
+          pdf.add(
+            new TocItem(new Txt('Grados y secciones').fontSize(0).opacity(0).end)
+              .tocStyle({ bold: true, italics: true, fontSize: 13 })
+              .tocMargin([0, 0, 0, menu_item_margin.bottom]).end,
+          );
+        }
 
         const sortedSections = pdfData.schoolSections.sort((curr, next) => {
           const currentSection = curr.sectionName[
@@ -604,13 +704,19 @@ export class PdfYearbookService {
 
         const sectionsPromises = sortedSections.map(
           async (section_, theInx_) => {
+            // Check if section is in group photo
+            if (pdfData.groupPhoto && pdfData.groupPhoto.groupedSections.includes(section_.sectionId)) {
+              sortedSectionsImgs[theInx_] = null;
+              return;
+            }
+
             if (section_['sectionName'] && section_['sectionStudents']) {
               const section_img = section_['sectionImg']
                 ? await new Img(section_.sectionImg)
-                    .fit([pdfPageSizes.width - 140, 190])
-                    .absolutePosition(70, 60)
-                    .alignment('center')
-                    .build()
+                  .fit([pdfPageSizes.width - 140, 190])
+                  .absolutePosition(70, 60)
+                  .alignment('center')
+                  .build()
                 : null;
               sortedSectionsImgs[theInx_] = section_img;
             } else sortedSectionsImgs[theInx_] = null;
@@ -620,6 +726,11 @@ export class PdfYearbookService {
         await Promise.all(sectionsPromises);
 
         sortedSections.map((section, theSectionInx) => {
+          // Check if section is in group photo
+          if (pdfData.groupPhoto && pdfData.groupPhoto.groupedSections.includes(section.sectionId)) {
+            return;
+          }
+
           if (section['sectionName'] && section['sectionStudents']) {
             pdf.add(
               new TocItem(
@@ -711,8 +822,8 @@ export class PdfYearbookService {
                 index === 0
                   ? 'diagnosticReading'
                   : index === 1
-                  ? 'diagnosticMath'
-                  : 'diagnosticLogic';
+                    ? 'diagnosticMath'
+                    : 'diagnosticLogic';
 
               if (skill['diagnosticTable']) {
                 pdf.add(
@@ -755,8 +866,8 @@ export class PdfYearbookService {
                       paddingBottom: (rowIndex) => (rowIndex === 0 ? 10 : 7),
                       hLineColor: (rowIndex, node) =>
                         rowIndex === 0 ||
-                        rowIndex === 1 ||
-                        rowIndex === node.table.body.length
+                          rowIndex === 1 ||
+                          rowIndex === node.table.body.length
                           ? this.colors.blue
                           : null,
                       vLineColor: () => this.colors.blue,
@@ -864,8 +975,8 @@ export class PdfYearbookService {
                         ? 35
                         : !skill['diagnosticTable'] &&
                           !this.graphics[`lapse${indx + 1}`][skillName]
-                        ? 35
-                        : 53,
+                          ? 35
+                          : 53,
                     ]).end,
                 );
 
@@ -1152,16 +1263,16 @@ export class PdfYearbookService {
 
     return text_ && text_.length > 0
       ? text_
-          .split(/\n\r+|\r\n+|\r+|\n+|\\r+|\\n+/)
-          .reduce((finalText, line) => {
-            if (line.length > 0 && printed)
-              finalText.push(pdf.ln(), new Txt(line.trim()).end);
-            if (line.length > 0 && !printed) {
-              printed = true;
-              finalText.push(new Txt(line.trim()).end);
-            }
-            return finalText;
-          }, [])
+        .split(/\n\r+|\r\n+|\r+|\n+|\\r+|\\n+/)
+        .reduce((finalText, line) => {
+          if (line.length > 0 && printed)
+            finalText.push(pdf.ln(), new Txt(line.trim()).end);
+          if (line.length > 0 && !printed) {
+            printed = true;
+            finalText.push(new Txt(line.trim()).end);
+          }
+          return finalText;
+        }, [])
       : null;
   }
 
@@ -1273,6 +1384,21 @@ export class PdfYearbookService {
       .toPromise();
   }
 
+  setSectionGrouping(
+    pecaId: string,
+    sectionData: any,
+  ): Promise<any> {
+    return this.http
+      .patch(`pecaprojects/yearbook/sectiongrouping/${pecaId}`, { sections: [sectionData] })
+      .toPromise();
+  }
+
+  getSectionGrouping(pecaId: string): Promise<any> {
+    return this.http
+      .get(`pecaprojects/yearbook/sectiongrouping/${pecaId}`)
+      .toPromise();
+  }
+  
   getPrintOptionsOb(
     pecaProjectId: number,
   ): Observable<RespYearbookPrintOptions> {

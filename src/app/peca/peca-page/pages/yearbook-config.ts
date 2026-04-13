@@ -14,7 +14,7 @@ import {
   UpdateYearBookRequest,
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action';
-
+import { FetchPecaContent } from '../../../store/actions/peca/peca.actions';
 /**
  *
  * @function MapperYearBookWeb
@@ -187,6 +187,8 @@ export async function MapperYearBookWeb(
     },
   });
 
+
+
   const { yearbook_edit, yearbook_delete } = permissions;
   const schoolSectionsConfig = createSectionsBlocksConfig(
     yearBookData.sections,
@@ -195,11 +197,15 @@ export async function MapperYearBookWeb(
   const lapse2Config = createLapseBlocksConfig('2', yearBookData);
   const lapse3Config = createLapseBlocksConfig('3', yearBookData);
 
+  const groupPhotoState = {
+    groupedSections: yearBookData.groupPhoto ? (yearBookData.groupPhoto.groupedSections || []) : [],
+  };
+
   function getRequestId() {
     const theRequest =
       yearBookData['approvalHistory'] &&
-      yearBookData['approvalHistory'] instanceof Array &&
-      yearBookData['approvalHistory'].length
+        yearBookData['approvalHistory'] instanceof Array &&
+        yearBookData['approvalHistory'].length
         ? yearBookData['approvalHistory']
         : null;
     return theRequest && theRequest[theRequest.length - 1].status === '1'
@@ -221,11 +227,67 @@ export async function MapperYearBookWeb(
   }
 
   function createSectionsBlocksConfig(schoolSections) {
+
+
+    const dependentSectionIds = new Set<string>();
+    schoolSections.forEach(s => {
+      if (s.groupedWith) {
+        s.groupedWith.split(',').forEach(sId => dependentSectionIds.add(sId));
+      }
+    });
+
     const sectionsOrdered = schoolSections.reduce((sectionsArray, section) => {
       const { id, grade, name } = section;
       const gradeName = `${determineGradeString(grade)}, sección ${name}`;
-      sectionsArray[`${grade}-${name}-${id}`] = [
-        createTitleComponent(gradeName),
+
+      let blocks: any[] = [createTitleComponent(gradeName)];
+
+      if (!dependentSectionIds.has(id)) {
+
+        blocks.push({
+          component: 'textsbuttons',
+          settings: {
+            action: [
+              {
+                type: 19,
+                name: 'Agrupar secciones',
+              },
+            ],
+            onSaveGroupedTwoSections: async (groupedSections: string[]) => {
+              let groupedWith = null;
+              if (groupedSections && groupedSections.length > 1) {
+                groupedWith = groupedSections.filter(sId => sId !== id).join(',');
+              }
+              const data = {
+                id: id,
+                sectionGrade: grade,
+                sectionName: name,
+                image: section.image,
+                groupedWith: groupedWith
+              };
+              try {
+                await pdfYearbookService.setSectionGrouping(yearBookData.pecaId, data);
+                // The backend yearbook object hasn't changed its payload, so NGXS State distinctUntilChanged ignores the Fetch action update automatically.
+                // Ergo we dispatch and trigger a hard sync to visually update the tree.
+                store.dispatch([new FetchPecaContent(yearBookData.pecaId)]).subscribe(() => {
+                   if (typeof window !== 'undefined') {
+                     setTimeout(() => {
+                       window.location.reload();
+                     }, 1500); 
+                   }
+                });
+              } catch (e) {
+                console.error(e);
+              }
+            },
+            schoolSections: schoolSections,
+            currentSection: id,
+            groupedWith: section.groupedWith
+          },
+        });
+      }
+
+      blocks.push(
         {
           component: 'form-review',
           name: `grade${grade}-section${name}-form`,
@@ -282,8 +344,9 @@ export async function MapperYearBookWeb(
               hideDelete: false,
             },
           },
-        },
-      ];
+        }
+      );
+      sectionsArray[`${grade}-${name}-${id}`] = blocks;
       return sectionsArray;
     }, {}); // Initial sectionsArray
 
@@ -884,11 +947,11 @@ export async function MapperYearBookWeb(
       },
       action: mostrarFeedback(yearBookData.status)
         ? [
-            {
-              type: 9,
-              name: 'Ver más',
-            },
-          ]
+          {
+            type: 9,
+            name: 'Ver más',
+          },
+        ]
         : [],
     },
   };
@@ -1117,6 +1180,59 @@ export async function MapperYearBookWeb(
                             },
                           },
                           yearbookPDFOptions('school-description-section'),
+                          createTitleComponent('Foto grupal'),
+                          /*
+                          // The "Agrupar grados" button modal code is preserved for future use
+                          {
+                            component: 'textsbuttons',
+                            settings: {
+                              action: [
+                                {
+                                  type: 18,
+                                  name: 'Agrupar grados',
+                                  extraData: {
+                                    sections: yearBookData.sections,
+                                    groupedSections: groupPhotoState.groupedSections,
+                                  },
+                                  onSaveGroupedSections: (groupedSections: string[]) => {
+                                    groupPhotoState.groupedSections = groupedSections;
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          */
+                          {
+                            component: 'form-review',
+                            name: 'group-photo-form',
+                            settings: {
+                              onSubmit: (values: any) => {
+                                const data = {
+                                  image:
+                                    values.inputImg && values.inputImg.length
+                                      ? values.inputImg
+                                      : null,
+                                  groupedSections: yearBookData.sections.map((s: any) => s.id),
+                                };
+                                dispatchAction('groupPhoto', data);
+                              },
+                              fields: {
+                                inputImg: {
+                                  name: 'group-photo-image',
+                                  label: 'Carga de imagen',
+                                  value: yearBookData.groupPhoto ? yearBookData.groupPhoto.image : null,
+                                  disabled: false,
+                                  sizeLimitMb: inputFileSizeLimitMb,
+                                },
+                                button: {
+                                  text: 'Guardar cambios',
+                                  ingAction: 'Guardando...',
+                                  hidden: false,
+                                },
+                              },
+                            },
+                          },
+                          yearbookPDFOptions('group-photo-section'),
                           ...schoolSectionsConfig,
                         ],
                       },

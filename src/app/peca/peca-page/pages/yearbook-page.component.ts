@@ -76,9 +76,25 @@ export class YearbookPageComponent extends PecaPageComponent
               data.activePecaContent &&
               Object.keys(data.activePecaContent).length > 1
             ) {
+              let sectionsArray = [];
+              if (data.activePecaContent.school && data.activePecaContent.school.sections) {
+                  sectionsArray = data.activePecaContent.school.sections.map(s => ({...s}));
+                  try {
+                      const groupedRes = await this.pdfYearbookService.getSectionGrouping(data.activePecaContent.id);
+                      if (groupedRes && groupedRes.data) {
+                          const groupedData = groupedRes.data;
+                          sectionsArray.forEach(s => {
+                             const g = groupedData.find(grp => grp.sectionId === s.id);
+                             s.groupedWith = g ? g.groupedWith : null;
+                          });
+                      }
+                  } catch (e) {
+                      console.error('Error fetching grouped sections', e);
+                  }
+              }
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
-                sections: data.activePecaContent.school.sections,
+                sections: sectionsArray,
                 userId: data.user.id,
                 pecaId: data.activePecaContent.id,
               };
@@ -262,6 +278,7 @@ export class YearbookPageComponent extends PecaPageComponent
                       /* (this.ybData && this.ybData.lapse3.readingDiagnosticAnalysis && this.ybData.lapse3.readingDiagnosticAnalysis.length ? this.ybData.lapse3.readingDiagnosticAnalysis : false) ||  */ lastYearBookRequest
                         .lapse3.readingDiagnosticAnalysis,
                   },
+                  groupPhoto: lastYearBookRequest.groupPhoto || currentYearBook.groupPhoto || null,
                   sections: currentYearBook.sections.map((section) => {
                     const sectionRequested = lastYearBookRequest.sections.filter(
                       ({ id }) => section.id === id,
@@ -307,6 +324,10 @@ export class YearbookPageComponent extends PecaPageComponent
                 const { detail } = activePecaContentAmblemario;
                 const pecaData = {
                   ...data.activePecaContent,
+                  school: {
+                    ...data.activePecaContent.school,
+                    sections: sectionsArray
+                  },
                   yearbook: detail,
                 };
 
