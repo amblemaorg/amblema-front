@@ -573,10 +573,12 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
+        margin-top: 80px;
       }
 
-      .description.mas-margen {
-        margin-top: 80px;
+      .description+.description {
+        margin-top: 20px;
+        color: black;
       }
 
       .lapse-info {
