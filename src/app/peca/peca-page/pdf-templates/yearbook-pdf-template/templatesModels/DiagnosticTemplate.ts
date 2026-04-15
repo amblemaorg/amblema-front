@@ -53,24 +53,24 @@ export class DiagnosticTemplate extends Template {
 
   buildChart(chart: Chart) {
     var dataset = []
-    for(var i=0; i<chart.datasets[0].data.length; i++){
-      if(typeof chart.datasets[0].data[i] == "string"){
+    for (var i = 0; i < chart.datasets[0].data.length; i++) {
+      if (typeof chart.datasets[0].data[i] == "string") {
         dataset.push(parseFloat(chart.datasets[0].data[i].toString()))
-      }else{
+      } else {
         dataset.push(chart.datasets[0].data[i]);
       }
     }
     var max = Math.max(...dataset)
-    if(max > 100 && max <= 120){
+    if (max > 100 && max <= 120) {
       max = 120
-    }else if(max > 120 && max <= 140){
+    } else if (max > 120 && max <= 140) {
       max = 140
-    }else if(max > 140 && max <= 160){
+    } else if (max > 140 && max <= 160) {
       max = 160
     }
-    
+
     var maxValue = max > 100 ? max : 100
-    
+
     const fontColor = '#111';
     const options = {
       maintainAspectRatio: false,
@@ -113,7 +113,7 @@ export class DiagnosticTemplate extends Template {
           anchor: 'end',    // ← Posicionar en el extremo de la barra
           align: 'top',     // ← Alinear en la parte superior
           offset: 0,        // ← Sin offset adicional
-          formatter: function(value, context) {
+          formatter: function (value, context) {
             return value;   // ← Mostrar el valor tal cual
           }
         },
@@ -189,8 +189,8 @@ export class DiagnosticPageDataGroup {
       chart.datasets[0].backgroundColor = ['#81B03E', '#00b0f0', '#a5a5a5'];
     }
 
-    if(otherBgColorArray){
-      chart.datasets[0].backgroundColor = ['#81B03E', '#ffc000', '#a5a5a5'];  
+    if (otherBgColorArray) {
+      chart.datasets[0].backgroundColor = ['#81B03E', '#ffc000', '#a5a5a5'];
     }
     return chart;
   }
@@ -208,9 +208,9 @@ export class DiagnosticPageDataGroup {
     const chartId = `${lapseName}-${diagKey}-graphic`;
 
     const { diagnostics } = this.diagnosticGraphicData;
-    
+
     const lapseGraphic = graphics[lapseId];
-    
+
     // const lapseGraphic = null;
     let isSecondLapse = false;
     if (
@@ -233,16 +233,16 @@ export class DiagnosticPageDataGroup {
 
     let labels = lapseGraphic[diagKey].labels;
     let values = lapseGraphic[diagKey].values;
-    
-    
+
+
     const groupedData = this.groupByGradeAndAverage(labels, values);
     labels = groupedData.labels;
     values = groupedData.values;
-    
-    if(lapseId=="lapse2"){
+
+    if (lapseId == "lapse2") {
       let promedioAnterior = 0;
       let promedioActual = 0;
-      
+
       if (table && table.length > 0 && table[table.length - 1][0] === 'AVERAGE_ROW_MARKER') {
         const lastRow = table[table.length - 1];
         promedioAnterior = parseFloat(lastRow[2]) || 0;
@@ -262,7 +262,7 @@ export class DiagnosticPageDataGroup {
     if (isThirdLapse) {
       let promedioAnterior = 0;
       let promedioActual = 0;
-      
+
       if (table && table.length > 0 && table[table.length - 1][0] === 'AVERAGE_ROW_MARKER') {
         const lastRow = table[table.length - 1];
         promedioAnterior = parseFloat(lastRow[2]) || 0;
@@ -276,9 +276,9 @@ export class DiagnosticPageDataGroup {
 
       labels = ["Diagnóstico Inicial", "Diagnóstico final"];
       values = [promedioAnterior, promedioActual];
-      
+
     }
-    
+
     return this.chartDefault(
       chartId,
       labels,
@@ -291,39 +291,39 @@ export class DiagnosticPageDataGroup {
 
   private groupByGradeAndAverage(labels: string[], values: string[]): { labels: string[], values: number[] } {
     const gradeMap = new Map<string, { sum: number, count: number }>();
-  
+
     // Agrupar valores por grado
     for (let i = 0; i < labels.length; i++) {
       const label = labels[i];
       const value = parseFloat(values[i]) || 0;
-      
+
       // Extraer el nombre del grado (eliminar la sección A, B, C, etc.)
       const gradeName = this.extractGradeName(label);
-      
+
       if (!gradeMap.has(gradeName)) {
         gradeMap.set(gradeName, { sum: 0, count: 0 });
       }
-      
+
       const gradeData = gradeMap.get(gradeName);
       gradeData.sum += value;
       gradeData.count++;
     }
-  
+
     // Calcular promedios y preparar arrays finales
     const resultLabels: string[] = [];
     const resultValues: number[] = [];
-  
+
     gradeMap.forEach((data, gradeName) => {
       resultLabels.push(gradeName);
       resultValues.push(parseFloat((data.sum / data.count).toFixed(2)));
     });
-  
+
     return {
       labels: resultLabels,
       values: resultValues
     };
   }
-  
+
   private calculateAverage(values: number[]): number {
     if (!values || values.length === 0) return 0;
     const average = values.reduce((a, b) => a + b, 0) / values.length;
@@ -430,15 +430,15 @@ export class DiagnosticPageDataGroup {
   ) {
     // td[0] === grade column
     let filteredData = tableData.filter((td) => td[0] === grade);
-    
+
     let totalSum = 0;
     let totalCount = 0;
 
     filteredData.forEach(row => {
-        const value = parseFloat(row[columnIdxToSum]) || 0;
-        const count = parseFloat(row[4]) || 0; // Student count is in column 4
-        totalSum += value * count;
-        totalCount += count;
+      const value = parseFloat(row[columnIdxToSum]) || 0;
+      const count = parseFloat(row[4]) || 0; // Student count is in column 4
+      totalSum += value * count;
+      totalCount += count;
     });
 
     const result = totalCount > 0 ? totalSum / totalCount : 0.0;
@@ -482,7 +482,7 @@ export class DiagnosticPageDataGroup {
     const diagGoal = this.diagnosticGoalTableData[
       gradeRespKeyMappedWithGradeDiag[grade]
     ];
-    
+
     if (!diagGoal) {
       return {
         diagnosticReading: '0.0',
@@ -510,18 +510,18 @@ export class DiagnosticPageDataGroup {
     const isThirdLapse = lapseIdx === 2;
 
     const diagHeading = {
-      diagnosticReading: '(PPG: Palabras Leídas Por Minuto)',
+      diagnosticReading: '(PPM: Palabras Leídas Por Minuto)',
       diagnosticMath: '(M2M: Multiplicaciones en 2 minutos)',
       diagnosticLogic: '(60LM: Lógica-Matemática en 60 minutos)',
     };
     let typeDiagText = ""
-    if(diagKey=="diagnosticReading"){
-      typeDiagText="Lectura"
-    }else if(diagKey=="diagnosticMath"){
-      typeDiagText="Multiplicación"
-    }else if(diagKey=="diagnosticLogic"){
-      typeDiagText="Lógica - Matemática"
-    } 
+    if (diagKey == "diagnosticReading") {
+      typeDiagText = "Lectura"
+    } else if (diagKey == "diagnosticMath") {
+      typeDiagText = "Multiplicación"
+    } else if (diagKey == "diagnosticLogic") {
+      typeDiagText = "Lógica - Matemática"
+    }
 
     let header = [];
 
@@ -544,7 +544,7 @@ export class DiagnosticPageDataGroup {
     if (isThirdLapse) {
       header.push([`<strong>Diagnóstico Final de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
       header.push([
-      '<strong>Grado</strong>',
+        '<strong>Grado</strong>',
         '<strong>PPG (*)</strong>',
         '<strong>Meta</strong>',
         '<strong>Índice Inicial (**)</strong>',
@@ -575,7 +575,7 @@ export class DiagnosticPageDataGroup {
     let rawTableData = tableData.slice(1, tableData.length);
     tableData = tableData.slice(1, tableData.length);
     // reordered and format values
-    
+
     tableData = tableData.map((td) => {
       /**
        * [0]: grade
@@ -610,21 +610,21 @@ export class DiagnosticPageDataGroup {
         let indiceInicialL1: any = '0.0'; // ← VALOR POR DEFECTO
 
         if (tablesByLapses.length > 0 && tablesByLapses[0][diagIdx]) {
-          
+
           const lapso1Data = tablesByLapses[0][diagIdx];
-        
+
           // Buscar el índice inicial del mismo grado en lapso1
           // lapso1Data[2+] son las filas de datos, [0] es el grado, [3] es el índice inicial
-          const filaLapso1 = lapso1Data.find((fila, index) => 
-            index >= 2 && 
-            fila[0] && 
+          const filaLapso1 = lapso1Data.find((fila, index) =>
+            index >= 2 &&
+            fila[0] &&
             fila[0].trim() === tdFormatted[0].trim() &&
             fila.length >= 4
           );
-          
+
           if (filaLapso1) {
             indiceInicialL1 = filaLapso1[3]; // Índice Inicial del lapso1
-        }
+          }
 
           valueRevision = tablesByLapses[0][diagIdx].slice(
             2,
@@ -648,7 +648,7 @@ export class DiagnosticPageDataGroup {
 
       return tdFormatted;
     });
-    
+
     let filteredTableData = [];
     // Get just one grade and not grade by each section
     tableData = tableData.filter((td) => {
@@ -660,7 +660,7 @@ export class DiagnosticPageDataGroup {
       filteredTableData.push(td);
       return true;
     });
-    
+
     let finalTable = [...header, ...tableData];
 
     if (isFirstLapse && tableData.length > 0) {
@@ -676,13 +676,13 @@ export class DiagnosticPageDataGroup {
       });
 
       const promedioIndiceInicial = totalStudents > 0 ? totalIndexSum / totalStudents : 0;
-      
+
       const filaPromedio = [
         'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
         'Promedio de la escuela',         // Columna 2 (PPG - texto que ocupará 2 columnas)
         promedioIndiceInicial.toFixed(2)  // Columna 4 (Índice Inicial - valor del promedio)
       ];
-      
+
       // Remove the count column from display rows
       tableData = tableData.map(row => row.slice(0, 4));
 
@@ -696,13 +696,13 @@ export class DiagnosticPageDataGroup {
       rawTableData.forEach(row => {
         const indexRevision = parseFloat(row[3]) || 0; // Índice en datos crudos
         const count = parseFloat(row[4]) || 0; // Cantidad en datos crudos
-        
+
         totalIndexRevisionSum += indexRevision * count;
         totalStudents += count;
       });
 
       const promedioIndiceRevision = totalStudents > 0 ? totalIndexRevisionSum / totalStudents : 0;
-      
+
       // Para Lapsos 2 y 3, el índice inicial global exacto viene de la fila de Promedio del Lapso 1
       let promedioIndiceInicial = 0;
       if (tablesByLapses.length > 0 && tablesByLapses[0][diagIdx]) {
@@ -712,20 +712,20 @@ export class DiagnosticPageDataGroup {
           promedioIndiceInicial = parseFloat(lastRow[2]) || 0;
         }
       }
-      
+
       const filaPromedio = [
         'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
         'Promedio de la escuela',       // Columna 2 (PPG - texto que ocupará 2 columnas)
         promedioIndiceInicial.toFixed(2),  // Columna 4 (Índice Inicial - valor del promedio)
         promedioIndiceRevision.toFixed(2)  // Columna 5 (Índice Revision - valor del promedio)
       ];
-      
+
       // Remove the count column from display rows
       tableData = tableData.map(row => row.slice(0, 5));
 
       finalTable = [...header, ...tableData, filaPromedio];
     }
-  
+
     return finalTable;
   }
 
@@ -737,7 +737,7 @@ export class DiagnosticPageDataGroup {
       'diagnosticMath',
       'diagnosticLogic',
     ];
-    
+
     this.lapses.forEach((lapse, lapseIdx) => {
       const { lapseId, lapseName } = lapse;
       const isThirdLapse = lapseIdx === 2;
@@ -754,7 +754,7 @@ export class DiagnosticPageDataGroup {
         const { diagnosticText, diagnosticAnalysis, diagnosticTable } = lapse[
           diagKey
         ];
-        
+
         const table = this.getTable(
           diagnosticTable,
           lapseIdx,

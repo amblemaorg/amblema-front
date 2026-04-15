@@ -531,6 +531,25 @@ $text_indent: 18px;
 
         .table-container {
           .table {
+            /* Descomentar para forzar anchos exactos en las columnas: */
+            width: 100%;
+            /* */
+
+            /* Clases para dominar los anchos de cada columna del diagnóstico */
+            td.diag-col-0 {
+              width: 15% !important;
+            }
+
+            /* Columna 1: Grado */
+            td.diag-col-1 {
+              width: 20% !important;
+            }
+
+            /* Columna 2: D. Inicial / D. Revisión */
+            td.diag-col-2 {
+              width: 20% !important;
+            }
+
             tr {
               &:first-child {
                 td {
@@ -560,11 +579,34 @@ $text_indent: 18px;
               }
 
               td.green-bg {
-                background-color: #81b03e;
+                background-color: #81b03e !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
 
                 strong {
                   color: white;
                 }
+              }
+            }
+          }
+
+          &.lapse1 {
+            .table {
+              td.diag-col-0 {
+                width: 13% !important;
+              }
+
+              /* Columna 1 más ancha para Lapso 1 */
+              td.diag-col-1 {
+                width: 35% !important;
+              }
+
+              td.diag-col-2 {
+                width: 13% !important;
+              }
+
+              td.diag-col-3 {
+                width: 39% !important;
               }
             }
           }
@@ -591,13 +633,17 @@ $text_indent: 18px;
       }
 
       .lapse2-bg {
-        background-color: #ffc000;
+        background-color: #ffc000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
         color: white !important;
       }
 
       .lapse3-bg {
+        background-color: #00b0f0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
         color: white !important;
-        background-color: #00b0f0;
       }
     }
   }
