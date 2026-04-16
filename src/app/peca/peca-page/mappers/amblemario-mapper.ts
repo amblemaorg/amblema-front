@@ -111,23 +111,26 @@ export function amblemarioMapper(pecaData) {
                 tables.table1.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
-                  `${data.wordsPerMin}`,
-                  `${data.wordsPerMinIndex}`,
+                  `${parseFloat(data.wordsPerMin).toFixed(2)}`,
+                  `${parseFloat(data.wordsPerMinIndex).toFixed(2)}`,
+                  `${data.wordsPerMinCount}`,
                 ]);
               if (data.multiplicationsPerMin !== null)
                 tables.table2.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
-                  `${data.multiplicationsPerMin}`,
-                  `${data.multiplicationsPerMinIndex}`,
+                  `${parseFloat(data.multiplicationsPerMin).toFixed(2)}`,
+                  `${parseFloat(data.multiplicationsPerMinIndex).toFixed(2)}`,
+                  `${data.multiplicationsPerMinCount}`,
                 ]);
 
               if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
                 tables.table3.push([
                   grades[data.grade],
                   data.name.toUpperCase(),
-                  `${data.operationsPerMin}`,
-                  `${data.operationsPerMinIndex}`,
+                  `${parseFloat(data.operationsPerMin).toFixed(2)}`,
+                  `${parseFloat(data.operationsPerMinIndex).toFixed(2)}`,
+                  `${data.operationsPerMinCount}`,
                 ]);
             }
             return tables;

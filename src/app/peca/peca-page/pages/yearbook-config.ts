@@ -15,7 +15,6 @@ import {
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action';
 import { FetchPecaContent } from '../../../store/actions/peca/peca.actions';
-
 /**
  *
  * @function MapperYearBookWeb
@@ -272,11 +271,11 @@ export async function MapperYearBookWeb(
                 // The backend yearbook object hasn't changed its payload, so NGXS State distinctUntilChanged ignores the Fetch action update automatically.
                 // Ergo we dispatch and trigger a hard sync to visually update the tree.
                 store.dispatch([new FetchPecaContent(yearBookData.pecaId)]).subscribe(() => {
-                   if (typeof window !== 'undefined') {
-                     setTimeout(() => {
-                       window.location.reload();
-                     }, 1500); 
-                   }
+                  if (typeof window !== 'undefined') {
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 1500);
+                  }
                 });
               } catch (e) {
                 console.error(e);

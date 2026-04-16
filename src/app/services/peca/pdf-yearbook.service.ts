@@ -57,13 +57,11 @@ export class PdfYearbookService {
   };
 
   @Output() callGraphicBase64ImgEmitter: EventEmitter<any> = new EventEmitter();
-
   public getShortTeacherName(firstName: string, lastName: string): string {
     const fName = firstName ? firstName.trim().split(/\s+/)[0] : '';
     const lName = lastName ? lastName.trim().split(/\s+/)[0] : '';
     return `${fName} ${lName}`.trim();
   }
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private router: Router,
@@ -657,6 +655,7 @@ export class PdfYearbookService {
 
           sortedGroupedSections.forEach(section => {
             teachers.push(this.getShortTeacherName(section.teacher.firstName, section.teacher.lastName));
+            teachers.push(this.getShortTeacherName(section.teacher.firstName, section.teacher.lastName));
           });
         }
         const uniqueTeachers = [...new Set(teachers)];
@@ -1243,7 +1242,7 @@ export class PdfYearbookService {
       let canvas = this.document.createElement('canvas');
       const img = this.document.createElement('img');
       const ctx = canvas.getContext('2d');
-      
+
       img.crossOrigin = 'Anonymous';
       img.src = imgSrc;
 
@@ -1267,7 +1266,7 @@ export class PdfYearbookService {
 
       img.onerror = () => {
         console.warn('Failed to compress image, falling back to original', imgSrc);
-        resolve(imgSrc); 
+        resolve(imgSrc);
       };
     });
   }

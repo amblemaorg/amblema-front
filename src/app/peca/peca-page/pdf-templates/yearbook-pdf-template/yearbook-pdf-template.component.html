@@ -139,12 +139,12 @@
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
-            <div class="table-container">
+            <div class="table-container" [ngClass]="page.lapseId">
               <table class="table">
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
                   <tr *ngIf="tr[0] !== 'AVERAGE_ROW_MARKER'">
-                    <ng-container *ngFor="let td of tr">
-                      <td [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                    <ng-container *ngFor="let td of tr; let tdIdx = index">
+                      <td class="diag-col-{{tdIdx}}" [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
                         <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>
