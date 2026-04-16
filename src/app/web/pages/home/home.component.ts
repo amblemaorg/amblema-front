@@ -200,7 +200,7 @@ export class HomeComponent implements OnInit {
         if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
           chart.props = {
-            colors: ["#DB8B19", "#808080", "#B83A1C", "#DB8B19", "#808080", "#B83A1C"],
+            colors: ["#DB8B19", "#808080", "#B83A1C"],
             stroke: "smooth",
           };
         } else {
