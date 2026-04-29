@@ -193,7 +193,7 @@ export class HomeComponent implements OnInit {
       chartsData.forEach((chart) => {
         const diagnostics = data.homePage.diagnostics[chart.id] || [];
         chart.data = diagnostics.map((lapse) => {
-          if (lapse.value == 0) lapse.value = 0.00;
+          if (!lapse.value) lapse.value = 0.00;
           return lapse;
         });
 
