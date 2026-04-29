@@ -603,12 +603,12 @@ section.math-olympics {
 
       @include breakpoint(small, landscape) {
         font-size: 2vw;
-        padding: 2% 5%;
+        padding: 2% 2%;
       }
 
       @include breakpoint(medium) {
         font-size: 2vw;
-        padding: 2% 5%;
+        padding: 2%;
       }
 
       &.active {
