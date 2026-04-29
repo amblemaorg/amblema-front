@@ -510,9 +510,9 @@ export class DiagnosticPageDataGroup {
     const isThirdLapse = lapseIdx === 2;
 
     const diagHeading = {
-      diagnosticReading: '(PPM: Palabras Leídas Por Minuto)',
-      diagnosticMath: '(M2M: Multiplicaciones en 2 minutos)',
-      diagnosticLogic: '(60LM: Lógica-Matemática en 60 minutos)',
+      diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
+      diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
+      diagnosticLogic: '60LM: Lógica Matemática en 60 minutos',
     };
     let typeDiagText = ""
     if (diagKey == "diagnosticReading") {

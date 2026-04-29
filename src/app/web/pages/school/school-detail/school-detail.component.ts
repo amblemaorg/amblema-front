@@ -62,7 +62,12 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     WITH_TEACHERS: 'withTeachers',
     SPECIALS: 'specials',
   };
+  OLYMPICS = {
+    MATH: 'math',
+    READING: 'reading',
+  };
   selectedActivitiesType = this.ACTIVITIES.SPECIALS;
+  selectedOlympics = this.OLYMPICS.MATH;
   activeActivityIndex = 0;
 
   chartSwitcherOptions = {
@@ -175,11 +180,30 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     enrollment: '',
     images: [],
     mathOlympics: {
+      participant: 0,
       enrolled: 0,
       classified: 0,
       goldMedal: 0,
       silverMedal: 0,
       bronzeMedal: 0,
+      enrolledNational: 0,
+      classifiedNational: 0,
+      goldMedalNational: 0,
+      silverMedalNational: 0,
+      bronzeMedalNational: 0,
+    },
+    readingOlympics: {
+      participant: 0,
+      enrolled: 0,
+      classified: 0,
+      goldMedal: 0,
+      silverMedal: 0,
+      bronzeMedal: 0,
+      enrolledNational: 0,
+      classifiedNational: 0,
+      goldMedalNational: 0,
+      silverMedalNational: 0,
+      bronzeMedalNational: 0,
     },
     activities: {
       [this.ACTIVITIES.WITH_TEACHERS]: [],
@@ -207,7 +231,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     private store: Store,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isBrowser = this.globalService.isBrowser;
@@ -253,11 +277,36 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         enrollment: data.nStudents,
         images: /* data.slider */ null,
         mathOlympics: {
+          participant: data.olympicsSummary.participant,
           enrolled: data.olympicsSummary.inscribed,
           classified: data.olympicsSummary.classified,
           goldMedal: data.olympicsSummary.medalsGold,
           silverMedal: data.olympicsSummary.medalsSilver,
           bronzeMedal: data.olympicsSummary.medalsBronze,
+          participantRegional: data.olympicsSummary.participantRegional,
+          classifiedRegional: data.olympicsSummary.classifiedRegional,
+          enrolledNational: data.olympicsSummary.inscribedNational,
+          classifiedNational: data.olympicsSummary.classifiedNational,
+          goldMedalNational: data.olympicsSummary.medalsGoldNational,
+          silverMedalNational: data.olympicsSummary.medalsSilverNational,
+          bronzeMedalNational: data.olympicsSummary.medalsBronzeNational,
+          description: data.olympicsSummary.description,
+        },
+        readingOlympics: {
+          participant: data.olympicsSummary.participant,
+          enrolled: data.olympicsReadingSummary.inscribed,
+          classified: data.olympicsReadingSummary.classified,
+          goldMedal: data.olympicsReadingSummary.medalsGold,
+          silverMedal: data.olympicsReadingSummary.medalsSilver,
+          bronzeMedal: data.olympicsReadingSummary.medalsBronze,
+          participantRegional: data.olympicsReadingSummary.participantRegional,
+          classifiedRegional: data.olympicsReadingSummary.classifiedRegional,
+          enrolledNational: data.olympicsReadingSummary.inscribedNational,
+          classifiedNational: data.olympicsReadingSummary.classifiedNational,
+          goldMedalNational: data.olympicsReadingSummary.medalsGoldNational,
+          silverMedalNational: data.olympicsReadingSummary.medalsSilverNational,
+          bronzeMedalNational: data.olympicsReadingSummary.medalsBronzeNational,
+          description: data.olympicsReadingSummary.description,
         },
         activities: {
           [this.ACTIVITIES.WITH_TEACHERS]: [],

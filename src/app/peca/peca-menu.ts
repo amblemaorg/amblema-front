@@ -37,9 +37,16 @@ export const PECA_LAPSE_OPTIONS_CONFIG = {
     order: 100,
   },
   olympics: {
-    title: 'Olimpíada Recreativas de Matemática y Lengua',
+    title: 'Olimpíada Recreativas de Matemática',
     icon: 'medal',
     link: 'olimpiadas-matematicas',
+    data: 'olympics_peca_view',
+    order: 100,
+  },
+  readingOlympics: {
+    title: 'Olimpíada Recreativas de Lengua',
+    icon: 'medal',
+    link: 'olimpiadas-lectura',
     data: 'olympics_peca_view',
     order: 100,
   },

@@ -1,5 +1,5 @@
 import { RespPecaProjectsOlympics } from "src/app/resp-interfaces/resp-pecaprojects-olimpics.interface";
-import { UpdateStudentsMathOlympicsList } from "./../../../../store/actions/peca/peca.actions";
+import { UpdateStudentsMathOlympicsList, UpdateStudentsReadingOlympicsList } from "./../../../../store/actions/peca/peca.actions";
 import { Component, OnInit, Inject, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PresentationalBlockComponent } from "../page-block.component";
@@ -44,8 +44,7 @@ import {
   styleUrls: ["./form-block.component.scss"],
 })
 export class FormBlockComponent
-  implements PresentationalBlockComponent, OnInit, OnDestroy
-{
+  implements PresentationalBlockComponent, OnInit, OnDestroy {
   showImportModal: boolean;
   showExportModal: boolean;
   showUploadBtn: boolean;
@@ -389,7 +388,7 @@ export class FormBlockComponent
     let row_aux = [];
     let genero = "";
     let fecha = "";
-    
+
     const currentSectionName = this.sectionsArr.filter((section) => {
       const randomStudent = this.studentsData[0];
       if (section.id === randomStudent.section) {
@@ -439,8 +438,7 @@ export class FormBlockComponent
     const octetStream = this.binary2octet(workbookBin);
     saveAs(
       new Blob([octetStream], { type: "application/octet-stream" }),
-      `Data de estudiantes - ${grado}, seccion ${
-        this.sectionsArr[this.activeSection].name
+      `Data de estudiantes - ${grado}, seccion ${this.sectionsArr[this.activeSection].name
       }.xls`
     );
   }
@@ -562,6 +560,78 @@ export class FormBlockComponent
             if (!this.isBeingUsedDateContr) this.setDateFunc(key_, "year");
           })
       );
+    }
+
+    if (this.settings.formType === 'agregarResultadoEstudiante') {
+      const statusControl = this.componentForm.get('status');
+      const statusRegionalControl = this.componentForm.get('statusRegional');
+      const resultControl = this.componentForm.get('result');
+      const statusNationalControl = this.componentForm.get('statusNational');
+      const resultNationalControl = this.componentForm.get('resultNational');
+
+      const updateNationalFields = (value) => {
+        if (statusNationalControl && resultNationalControl) {
+          if (value === '1') { // 1 is Oro
+            statusNationalControl.enable();
+            resultNationalControl.enable();
+          } else {
+            statusNationalControl.setValue(null); // Reset value
+            resultNationalControl.setValue(null); // Reset value
+            statusNationalControl.disable();
+            resultNationalControl.disable();
+          }
+        }
+      };
+
+      const updateRegionalFields = (value) => {
+        if (statusRegionalControl) {
+          if (value === '3') { // 3 is Clasificado in Preliminary
+            statusRegionalControl.enable();
+          } else {
+            statusRegionalControl.setValue(null);
+            statusRegionalControl.disable();
+          }
+        }
+      };
+
+      const updateResultFields = (value) => {
+        if (resultControl) {
+          if (value === '2') { // 2 is Clasificado in Regional
+            resultControl.enable();
+          } else {
+            resultControl.setValue(null);
+            resultControl.disable();
+          }
+        }
+      };
+
+      // Initial checks
+      if (statusControl) updateRegionalFields(statusControl.value);
+      if (statusRegionalControl) updateResultFields(statusRegionalControl.value);
+      if (resultControl) updateNationalFields(resultControl.value);
+
+      // Subscriptions
+      if (statusControl) {
+        this.subscription.add(
+          statusControl.valueChanges.subscribe((val) => {
+            updateRegionalFields(val);
+          })
+        );
+      }
+      if (statusRegionalControl) {
+        this.subscription.add(
+          statusRegionalControl.valueChanges.subscribe((val) => {
+            updateResultFields(val);
+          })
+        );
+      }
+      if (resultControl) {
+        this.subscription.add(
+          resultControl.valueChanges.subscribe((val) => {
+            updateNationalFields(val);
+          })
+        );
+      }
     }
 
     this.subscription.add(
@@ -695,8 +765,7 @@ export class FormBlockComponent
     const dateChecker =
       validDate &&
       new Date(
-        `${d.toISOString().split("T")[0]}T${
-          now.toISOString().split("T").reverse()[0]
+        `${d.toISOString().split("T")[0]}T${now.toISOString().split("T").reverse()[0]
         }`
       );
 
@@ -746,12 +815,12 @@ export class FormBlockComponent
         isValid
           ? tMonth
           : tMonth < 12
-          ? type === "month"
-            ? tMonth
-            : tMonth + 1
-          : type === "month"
-          ? tMonth
-          : 1
+            ? type === "month"
+              ? tMonth
+              : tMonth + 1
+            : type === "month"
+              ? tMonth
+              : 1
       )}-${this.addZero(isValid ? tDay : 1)}`;
 
       this.componentForm.get(key_).setValue(theWholeDate);
@@ -770,8 +839,8 @@ export class FormBlockComponent
                   ? tMonth
                   : tMonth + 1
                 : type === "month"
-                ? tMonth
-                : 1
+                  ? tMonth
+                  : 1
             );
       }
     }
@@ -927,20 +996,20 @@ export class FormBlockComponent
 
     const isEqual =
       this.settings &&
-      this.settings.buttonCode &&
-      this.settings.buttonCode === "schoolDataConfigRegistroEscuela" &&
-      this.formInitialVals[this.settings.buttonCode] &&
-      this.componentForm &&
-      this.componentForm.value
+        this.settings.buttonCode &&
+        this.settings.buttonCode === "schoolDataConfigRegistroEscuela" &&
+        this.formInitialVals[this.settings.buttonCode] &&
+        this.componentForm &&
+        this.componentForm.value
         ? Object.keys(this.formInitialVals[this.settings.buttonCode]).every(
-            (iv_k) =>
-              !this.componentForm.value[iv_k] ||
+          (iv_k) =>
+            !this.componentForm.value[iv_k] ||
               typeof this.componentForm.value[iv_k] === "object"
-                ? true
-                : this.componentForm.value[iv_k] &&
-                  this.componentForm.value[iv_k] ===
-                    this.formInitialVals[this.settings.buttonCode][iv_k]
-          )
+              ? true
+              : this.componentForm.value[iv_k] &&
+              this.componentForm.value[iv_k] ===
+              this.formInitialVals[this.settings.buttonCode][iv_k]
+        )
         : false;
 
     const fi_v =
@@ -1164,8 +1233,8 @@ export class FormBlockComponent
             isMainContent
               ? formControlName.parent
                 ? formContent[formControlName.parent].fields[
-                    formControlName.field
-                  ]
+                formControlName.field
+                ]
                 : formContent[formControlName.field]
               : formContent[formControlName]
           ),
@@ -1218,11 +1287,11 @@ export class FormBlockComponent
         ...formControlStruct,
         ...(isSpecialDate
           ? {
-              [isSpecialDate + "Day"]: [null],
-              [isSpecialDate + "Month"]: [null],
-              [isSpecialDate + "Year"]: [null],
-              [isSpecialDate + "InactiveInput"]: [null],
-            }
+            [isSpecialDate + "Day"]: [null],
+            [isSpecialDate + "Month"]: [null],
+            [isSpecialDate + "Year"]: [null],
+            [isSpecialDate + "InactiveInput"]: [null],
+          }
           : {}),
       };
     }
@@ -1253,27 +1322,27 @@ export class FormBlockComponent
     const errors: any = !specialCase
       ? this.componentForm.get(field).errors
       : !field2
-      ? this.componentForm.controls[field].get("prependInput").errors
-      : !fromImg
-      ? this.componentForm.get(field2).errors
-      : this.componentForm.controls["imageGroup"].get(field2).errors;
+        ? this.componentForm.controls[field].get("prependInput").errors
+        : !fromImg
+          ? this.componentForm.get(field2).errors
+          : this.componentForm.controls["imageGroup"].get(field2).errors;
     if (errors) {
       return errors.required
         ? MESSAGES.REQUIRED_MESSAGE
         : errors.pattern || errors.minlength || errors.maxlength
-        ? !specialCase
-          ? this.settings.formsContent[field].messages.pattern
-          : !field2
-          ? errors.maxlength
-            ? this.settings.formsContent[field].fields["prependInput"].messages
-                .maxLength
-            : this.settings.formsContent[field].fields["prependInput"].messages
-                .pattern
-          : !fromImg
-          ? this.settings.formsContent[field].fields[field2].messages.pattern
-          : this.settings.formsContent["imageGroup"].fields[field2].messages
-              .pattern
-        : null;
+          ? !specialCase
+            ? this.settings.formsContent[field].messages.pattern
+            : !field2
+              ? errors.maxlength
+                ? this.settings.formsContent[field].fields["prependInput"].messages
+                  .maxLength
+                : this.settings.formsContent[field].fields["prependInput"].messages
+                  .pattern
+              : !fromImg
+                ? this.settings.formsContent[field].fields[field2].messages.pattern
+                : this.settings.formsContent["imageGroup"].fields[field2].messages
+                  .pattern
+          : null;
     }
 
     return null;
@@ -1294,8 +1363,8 @@ export class FormBlockComponent
     //cf: component form
     const showErrorPassword =
       this.settings.formType === "actualizarPadrino" ||
-      this.settings.formType === "actualizarEscuela" ||
-      this.settings.formType === "actualizarCoordinador"
+        this.settings.formType === "actualizarEscuela" ||
+        this.settings.formType === "actualizarCoordinador"
         ? cf.value.newPassword.length || cf.value.confirmPassword.length
           ? cf.value.newPassword === cf.value.confirmPassword
             ? false
@@ -1435,9 +1504,8 @@ export class FormBlockComponent
       // console.log("this.settings.methodUrlPlus: ", this.settings.methodUrlPlus);
       const method = this.settings.fetcherMethod || "post";
       const resourcePath = this.settings.methodUrlPlus
-        ? `${this.settings.fetcherUrls[method]}/${
-            manageData.data[this.settings.methodUrlPlus]
-          }`
+        ? `${this.settings.fetcherUrls[method]}/${manageData.data[this.settings.methodUrlPlus]
+        }`
         : this.settings.fetcherUrls[method];
 
       if (this.settings.tableCode)
@@ -1498,8 +1566,8 @@ export class FormBlockComponent
                 : message &&
                   typeof message === "string" &&
                   message.toLowerCase() === "invalid image format"
-                ? "Ocurrió un problema al procesar la(s) imágen(es)"
-                : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
+                  ? "Ocurrió un problema al procesar la(s) imágen(es)"
+                  : "Ha ocurrido un problema con el servidor, por favor intente de nuevo más tarde";
 
             this.sendingForm = false;
             if (this.settings.tableCode)
@@ -1510,14 +1578,14 @@ export class FormBlockComponent
               error.error && error.error["name"] && error.error["name"][0]
                 ? error.error["name"][0].msg
                 : error.error && error.error["email"] && error.error["email"][0]
-                ? error.error["email"][0].msg
-                : error.error &&
-                  error.error["cardId"] &&
-                  error.error["cardId"][0]
-                ? error.error["cardId"][0].msg
-                : error.error && error.error["msg"]
-                ? error.error["msg"]
-                : error_msg,
+                  ? error.error["email"][0].msg
+                  : error.error &&
+                    error.error["cardId"] &&
+                    error.error["cardId"][0]
+                    ? error.error["cardId"][0].msg
+                    : error.error && error.error["msg"]
+                      ? error.error["msg"]
+                      : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );
@@ -1552,7 +1620,7 @@ export class FormBlockComponent
       let currStateId = "default";
       currStateId =
         this.componentForm.controls["addressState"].value &&
-        this.componentForm.controls["addressState"].value.length > 0
+          this.componentForm.controls["addressState"].value.length > 0
           ? this.componentForm.controls["addressState"].value
           : "default";
 
@@ -1712,7 +1780,7 @@ export class FormBlockComponent
             .value)) ||
       (this.componentForm.controls["imageGroup"].get("imageCargo") &&
         this.componentForm.controls["imageGroup"].get("imageCargo").value ===
-          "") ||
+        "") ||
       (this.componentForm.controls["imageGroup"].get("imageDescription") &&
         this.componentForm.controls["imageGroup"].get("imageDescription")
           .value === "") ||
@@ -1741,7 +1809,7 @@ export class FormBlockComponent
       default:
         return this.componentForm.controls["imageGroup"].value["imageSelected"]
           ? this.componentForm.controls["imageGroup"].get("imageSelected").value
-              .name
+            .name
           : "image";
     }
   }
@@ -1787,42 +1855,42 @@ export class FormBlockComponent
       code: this.settings.tableCode,
       data: addImg
         ? {
-            id: `auto-${Math.random().toString(36).substring(2)}`,
-            // image: imgGrp.get("imageSelected").value.name,
-            image: imgGrp.get("imageSrc").value,
-            source: imgGrp.get("imageSrc").value,
-            imageSelected: imgGrp.get("imageSelected").value,
-            ...this.imageObjWithAvailableFields(),
-          }
+          id: `auto-${Math.random().toString(36).substring(2)}`,
+          // image: imgGrp.get("imageSelected").value.name,
+          image: imgGrp.get("imageSrc").value,
+          source: imgGrp.get("imageSrc").value,
+          imageSelected: imgGrp.get("imageSelected").value,
+          ...this.imageObjWithAvailableFields(),
+        }
         : {
-            id: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options
-              .find((d) => {
-                return d.id === imgGrp.get("imageDocente").value;
-              })
-              .id.toString(),
-            name: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options.find((d) => {
+          id: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options
+            .find((d) => {
               return d.id === imgGrp.get("imageDocente").value;
-            }).name,
-            lastName: this.settings.formsContent["imageGroup"].fields[
-              "imageDocente"
-            ].options.find((d) => {
-              return d.id === imgGrp.get("imageDocente").value;
-            }).lastName,
-            cargo: imgGrp.get("imageCargo").value,
-            description: imgGrp.get("imageDescription").value,
-            // addressState: this.settings.formsContent["imageGroup"].fields[
-            //   "imageDocente"
-            // ].options.find(d => {
-            //   return d.id === imgGrp.get("imageDocente").value;
-            // }).addressState,
-            // status: imgGrp.get("imageStatus").value,
-            source: imgGrp.get("imageSrc").value,
-            imageSelected: imgGrp.get("imageSelected").value,
-          },
+            })
+            .id.toString(),
+          name: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options.find((d) => {
+            return d.id === imgGrp.get("imageDocente").value;
+          }).name,
+          lastName: this.settings.formsContent["imageGroup"].fields[
+            "imageDocente"
+          ].options.find((d) => {
+            return d.id === imgGrp.get("imageDocente").value;
+          }).lastName,
+          cargo: imgGrp.get("imageCargo").value,
+          description: imgGrp.get("imageDescription").value,
+          // addressState: this.settings.formsContent["imageGroup"].fields[
+          //   "imageDocente"
+          // ].options.find(d => {
+          //   return d.id === imgGrp.get("imageDocente").value;
+          // }).addressState,
+          // status: imgGrp.get("imageStatus").value,
+          source: imgGrp.get("imageSrc").value,
+          imageSelected: imgGrp.get("imageSelected").value,
+        },
       action: "add",
     };
 
@@ -1894,15 +1962,15 @@ export class FormBlockComponent
               [key]: dateKey,
               ...(isSpecialDate
                 ? {
-                    [isSpecialDate + "Day"]: theDate.getDate(),
-                    [isSpecialDate + "Month"]: theDate.getMonth() + 1,
-                    [isSpecialDate + "Year"]: theDate.getFullYear(),
-                    [isSpecialDate + "InactiveInput"]: `${this.addZero(
-                      theDate.getDate()
-                    )}-${this.addZero(
-                      theDate.getMonth() + 1
-                    )}-${theDate.getFullYear()}`,
-                  }
+                  [isSpecialDate + "Day"]: theDate.getDate(),
+                  [isSpecialDate + "Month"]: theDate.getMonth() + 1,
+                  [isSpecialDate + "Year"]: theDate.getFullYear(),
+                  [isSpecialDate + "InactiveInput"]: `${this.addZero(
+                    theDate.getDate()
+                  )}-${this.addZero(
+                    theDate.getMonth() + 1
+                  )}-${theDate.getFullYear()}`,
+                }
                 : {}),
             });
             this.checkDateOk(
@@ -1967,7 +2035,7 @@ export class FormBlockComponent
       let currGrade = null;
       currGrade =
         this.componentForm.controls["grades"].value &&
-        this.componentForm.controls["grades"].value.length > 0
+          this.componentForm.controls["grades"].value.length > 0
           ? this.componentForm.controls["grades"].value
           : null;
       this.fillSections(currGrade);
@@ -1993,7 +2061,7 @@ export class FormBlockComponent
       // console.log("docenteFormBLock", this.fields);
       currGrade =
         this.componentForm.controls["grades"].value &&
-        this.componentForm.controls["grades"].value.length > 0
+          this.componentForm.controls["grades"].value.length > 0
           ? this.componentForm.controls["grades"].value
           : null;
       this.fillSections(currGrade);
@@ -2068,9 +2136,8 @@ export class FormBlockComponent
   makeExcelExport(studentsData) {
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
-      Title: `Data de estudiantes - ${
-        this.sectionsArr[this.activeSection]?.name
-      }`,
+      Title: `Data de estudiantes - ${this.sectionsArr[this.activeSection]?.name
+        }`,
       Subject: "Data",
       Author: "Amblema",
       CreatedDate: new Date(Date.now()),
@@ -2611,14 +2678,14 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   private async deleteStudentsByLots(cf: FormGroup) {
-    const { lapseNumber, students, pecaId } = this.custom.settings.extraData;
+    const extraData = this.custom.settings.extraData;
+    const { lapseNumber, students, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
     const body = {
       students: students.map((student) => student.id),
       lapse: lapseNumber,
+      olympicsType: olympicsType
     };
-
-    // console.log("onSubmit", body);
-
     this.isLoading = true;
     try {
       const dataResp = await this.dep.fetcher
@@ -2640,11 +2707,14 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   private async addStudentsByLots(cf: FormGroup) {
-    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+    const extraData = this.custom.settings.extraData;
+    const { lapseNumber, pecaId } = extraData;
+    const olympicsType = extraData.olympicsType || 'math';
 
     const body = {
       grades: cf.get("gradesStudents").value,
       lapse: lapseNumber,
+      olympicsType: olympicsType
     };
 
     // console.log("onSubmit", body);
@@ -2672,11 +2742,12 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
   }
 
   async updateStudentsList() {
-    const { lapseNumber, pecaId } = this.custom.settings.extraData;
+    const { lapseNumber, pecaId, olympicsType } = this.custom.settings.extraData;
+    const type = olympicsType || 'math';
 
     try {
       const respData: RespPecaProjectsOlympics.RootResp = await this.dep.fetcher
-        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}`)
+        .get(`pecaprojects/olympics/${pecaId}/${lapseNumber}?type=${type}`)
         .toPromise();
 
       // console.log("RespPecaProjects respData", respData);
@@ -2684,7 +2755,11 @@ class MathOlympicFormBlock extends FormBlock implements FormBlockAbstract {
         lapseNumber,
         newStudents: respData.students,
       };
-      this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
-    } catch {}
+      if (type === 'reading') {
+        this.dep.store.dispatch(new UpdateStudentsReadingOlympicsList(data));
+      } else {
+        this.dep.store.dispatch(new UpdateStudentsMathOlympicsList(data));
+      }
+    } catch { }
   }
 }

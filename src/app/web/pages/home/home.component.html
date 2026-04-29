@@ -171,6 +171,124 @@
   >
   </charts-switcher>
 </section>
+<section class="math-olympics">
+  <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
+    <div
+      class="activities-tab"
+      [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
+      (click)="selectedOlympics = OLYMPICS.MATH"
+    >
+      Olimpíadas de Matemáticas
+    </div>
+    <div
+      class="activities-tab"
+      [ngClass]="{ active: selectedOlympics == OLYMPICS.READING }"
+      (click)="selectedOlympics = OLYMPICS.READING"
+    >
+      Olimpíadas de Lengua
+    </div>
+  </div>
+
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
+    <h3 class="math-olympics-subtitle">Fase Regional</h3>
+    <div class="result-summary">
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalClassified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalGold }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalSilver }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalBronze }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+
+    <h3 class="math-olympics-subtitle">Fase Nacional</h3>
+    <div class="result-summary">
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalClassified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalGold }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalSilver }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalBronze }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectedOlympics === OLYMPICS.READING">
+    <h3 class="math-olympics-subtitle">Fase Regional</h3>
+    <div class="result-summary">
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalClassified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalGold }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalSilver }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalBronze }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+
+    <h3 class="math-olympics-subtitle">Fase Nacional</h3>
+    <div class="result-summary">
+      <div class="result classified">
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalClassified }}</span>
+        <span class="result-label">Estudiantes clasificados</span>
+      </div>
+      <div class="result gold">
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalGold }}</span>
+        <span class="result-label">Medallas obtenidas (Oro)</span>
+      </div>
+      <div class="result silver">
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalSilver }}</span>
+        <span class="result-label">Medallas obtenidas (Plata)</span>
+      </div>
+      <div class="result bronze">
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalBronze }}</span>
+        <span class="result-label">Medallas obtenidas (Bronce)</span>
+      </div>
+    </div>
+  </ng-container>
+</section>
 <section class="founders">
   <div class="heading">
     <h2>Testimonio <br>de los <br>Fundadores</h2>

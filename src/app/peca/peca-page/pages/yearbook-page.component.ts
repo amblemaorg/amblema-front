@@ -59,7 +59,7 @@ export class YearbookPageComponent extends PecaPageComponent
         distinctUntilChanged((prev, curr) =>
           prev && curr && prev.activePecaContent && curr.activePecaContent
             ? JSON.stringify(prev.activePecaContent.yearbook) ===
-              JSON.stringify(curr.activePecaContent.yearbook)
+            JSON.stringify(curr.activePecaContent.yearbook)
             : false,
         ),
       )
@@ -78,19 +78,19 @@ export class YearbookPageComponent extends PecaPageComponent
             ) {
               let sectionsArray = [];
               if (data.activePecaContent.school && data.activePecaContent.school.sections) {
-                  sectionsArray = data.activePecaContent.school.sections.map(s => ({...s}));
-                  try {
-                      const groupedRes = await this.pdfYearbookService.getSectionGrouping(data.activePecaContent.id);
-                      if (groupedRes && groupedRes.data) {
-                          const groupedData = groupedRes.data;
-                          sectionsArray.forEach(s => {
-                             const g = groupedData.find(grp => grp.sectionId === s.id);
-                             s.groupedWith = g ? g.groupedWith : null;
-                          });
-                      }
-                  } catch (e) {
-                      console.error('Error fetching grouped sections', e);
+                sectionsArray = data.activePecaContent.school.sections.map(s => ({ ...s }));
+                try {
+                  const groupedRes = await this.pdfYearbookService.getSectionGrouping(data.activePecaContent.id);
+                  if (groupedRes && groupedRes.data) {
+                    const groupedData = groupedRes.data;
+                    sectionsArray.forEach(s => {
+                      const g = groupedData.find(grp => grp.sectionId === s.id);
+                      s.groupedWith = g ? g.groupedWith : null;
+                    });
                   }
+                } catch (e) {
+                  console.error('Error fetching grouped sections', e);
+                }
               }
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
@@ -370,8 +370,8 @@ export class YearbookPageComponent extends PecaPageComponent
     // console.log('setAmblemarioData', pecaData);
 
     if (_mapper) {
-    this.pecaData = _mapper(pecaData, lastRequest);
-  } else {
+      this.pecaData = _mapper(pecaData, lastRequest);
+    } else {
       this.pecaData = pecaData;
     }
   }

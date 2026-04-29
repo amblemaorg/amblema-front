@@ -2,38 +2,38 @@ import { PecaProjectModel } from "../../states/peca/peca.model";
 
 export class SetUser {
   static readonly type = "[peca] set PecaUser";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class SetSelectedProject {
   static readonly type = "[peca] set SelectedProject";
-  constructor(public payload: PecaProjectModel) {}
+  constructor(public payload: PecaProjectModel) { }
 }
 
 export class SetUserPermissions {
   static readonly type = "[peca] set UserPermissions";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 export class FetchPecaContent {
   static readonly type = "[peca] get PecaContent";
-  constructor(public payload: string) {}
+  constructor(public payload: string) { }
 }
 
 export class FetchProject {
   static readonly type = "[peca] get Project";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class ClearPecaState {
   static readonly type = "[peca] clear PecaState";
-  constructor() {}
+  constructor() { }
 }
 
 export class SetLapsePlanningRequestData {
   static readonly type = "[peca] Set LapsePlanning Data To Send Request";
   constructor(
     public payload: { file?: string; date?: string; status?: string }
-  ) {}
+  ) { }
 }
 
 export class UpdateLapsePlanningFile {
@@ -43,7 +43,7 @@ export class UpdateLapsePlanningFile {
       file?: any;
       lapseNumber: string;
     }
-  ) {}
+  ) { }
 }
 
 export class CancelLapsePlanningFile {
@@ -52,7 +52,7 @@ export class CancelLapsePlanningFile {
     public payload: {
       lapseNumber: string;
     }
-  ) {}
+  ) { }
 }
 
 export class UpdateLapsePlanningDateAndStatus {
@@ -61,17 +61,17 @@ export class UpdateLapsePlanningDateAndStatus {
     public payload: {
       lapseNumber: string;
     }
-  ) {}
+  ) { }
 }
 
 export class UpdateInitialWorkshop {
   static readonly type = "[peca] Update Initial Workshop";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateInitialWorkshopImages {
   static readonly type = "[peca] Update Initial Workshop Images";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class CancelInitialWorkshopImages {
@@ -80,102 +80,122 @@ export class CancelInitialWorkshopImages {
     public payload: {
       lapseNumber: string;
     }
-  ) {}
+  ) { }
 }
 
 export class SetInitialWorkshopRequestData {
   static readonly type = "[peca] Set Initial Workshop Request Data";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class AddImageToInitialWorkshopRequestData {
   static readonly type = "[peca] Add Image To Initial Workshop Request Data";
   constructor(
     public payload: { id: string; description: string; image: string }
-  ) {}
+  ) { }
 }
 
 export class RemoveImageFromInitialWorkshopRequestData {
   static readonly type =
     "[peca] Remove Image From Initial Workshop Request Data";
-  constructor(public payload: { imageSource: string }) {}
+  constructor(public payload: { imageSource: string }) { }
 }
 
 export class ClearInitialWorkshopRequestData {
   static readonly type = "[peca] Clear Initial Workshop Request Data";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class AddImageToSchoolActivitiesRequestData {
   static readonly type = "[peca] Add Image To School Activities Request Data";
-  constructor(public payload: { description?: string; image: string }) {}
+  constructor(public payload: { description?: string; image: string }) { }
 }
 
 export class RemoveImageFromSchoolActivitiesRequestData {
   static readonly type =
     "[peca] Remove Image From School Activities Request Data";
-  constructor(public payload: { imageSource: string }) {}
+  constructor(public payload: { imageSource: string }) { }
 }
 
 export class ClearSchoolActivitiesRequestData {
   static readonly type = "[peca] Clear School Activities Request Data";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class CancelSchoolActivitiesRequest {
   static readonly type = "[peca] Cancel School Activities Request";
-  constructor() {}
+  constructor() { }
 }
 
 export class UpdateSchoolActivitiesRequest {
   static readonly type = "[peca] Update School Activities Request";
-  constructor() {}
+  constructor() { }
 }
 export class RegisterStudentMathOlympics {
   static readonly type = "[peca] Register Student Math Olympics";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateStudentsMathOlympicsList {
   static readonly type = "[peca] Register Student Math Olympics";
-  constructor(public payload: { lapseNumber: number; newStudents: any[] }) {}
+  constructor(public payload: { lapseNumber: number; newStudents: any[] }) { }
 }
 export class UpdateStudentMathOlympics {
   static readonly type = "[peca] Update Student Math Olympics";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class RemoveStudentMathOlympics {
   static readonly type = "[peca] Remove Student Math Olympics";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class AddTeacherInAnnualConvention {
   static readonly type = "[peca] Add Teacher In Annual Convention";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class RemoveTeacherInAnnualConvention {
   static readonly type = "[peca] Remove Teacher In Annual Convention";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class SetSpecialActivityRequestData {
   static readonly type = "[peca] Set Special Activity Request Data";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateSpecialActivity {
   static readonly type = "[peca] Update Special Activity";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateAmblecoins {
   static readonly type = "[peca] Update Amblecoins";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
 }
 
 export class UpdateAmblecoinsSections {
   static readonly type = "[peca] Update Amblecoins Sections";
-  constructor(public payload: any) {}
+  constructor(public payload: any) { }
+}
+
+export class RegisterStudentReadingOlympics {
+  static readonly type = "[peca] Register Student Reading Olympics";
+  constructor(public payload: any) { }
+}
+
+export class UpdateStudentReadingOlympics {
+  static readonly type = "[peca] Update Student Reading Olympics";
+  constructor(public payload: any) { }
+}
+
+export class RemoveStudentReadingOlympics {
+  static readonly type = "[peca] Remove Student Reading Olympics";
+  constructor(public payload: any) { }
+}
+
+export class UpdateStudentsReadingOlympicsList {
+  static readonly type = "[peca] Update Student Reading Olympics List";
+  constructor(public payload: { lapseNumber: number; newStudents: any[] }) { }
 }

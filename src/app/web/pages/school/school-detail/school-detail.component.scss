@@ -23,7 +23,7 @@ section.school-details {
     padding: 10vw 3vw 0vw 10vw;
   }
 
-  & > div {
+  &>div {
     flex: 0 0 100%;
     width: 100%;
 
@@ -110,6 +110,7 @@ section.school-details {
             flex-basis: 8%;
           }
         }
+
         .item {
           margin-right: 1vw;
 
@@ -134,6 +135,7 @@ section.school-details {
           }
         }
       }
+
       .school-data.row {
         margin-left: 0 !important;
       }
@@ -143,7 +145,9 @@ section.school-details {
   .school-images {
     display: flex;
     flex-direction: column;
-    justify-content: /* flex-end */center;
+    justify-content:
+      /* flex-end */
+      center;
 
     .image-description {
       background-color: $blue;
@@ -171,6 +175,7 @@ section.school-details {
 }
 
 @import "scss/animations";
+
 .symbols-container {
   background-image: url("../../../../../assets/images/cover-blue-simbolos.png");
   background-repeat: no-repeat;
@@ -221,6 +226,7 @@ section.school-details {
               margin: auto;
               max-width: 100%;
               width: auto;
+
               @include breakpoint(small, landscape) {
                 height: 25vw;
               }
@@ -260,9 +266,11 @@ section.school-details {
             display: flex;
             color: white;
             font-size: 4vw;
+
             @include breakpoint(small, landscape) {
               font-size: 2vw;
             }
+
             @include breakpoint(medium) {
               font-size: 2vw;
             }
@@ -271,9 +279,11 @@ section.school-details {
 
         .owl-prev {
           left: 6%;
+
           @include breakpoint(small, landscape) {
             left: 2%;
           }
+
           @include breakpoint(medium) {
             left: 2%;
           }
@@ -281,9 +291,11 @@ section.school-details {
 
         .owl-next {
           right: 6%;
+
           @include breakpoint(small, landscape) {
             right: 2%;
           }
+
           @include breakpoint(medium) {
             right: 2%;
           }
@@ -325,6 +337,7 @@ section.charts {
   }
 
   @import "scss/animations";
+
   .chart-testimonial {
     position: relative;
     margin: 5vw 0;
@@ -474,6 +487,55 @@ section.math-olympics {
       }
     }
   }
+
+  .math-olympics-subtitle {
+    margin-bottom: 2vw;
+  }
+
+  .activities-tabs-wrapper {
+    display: flex;
+    border-bottom: 3px solid $blue;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+
+    @include breakpoint(small, landscape) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    @include breakpoint(medium) {
+      border-bottom: 5px solid $blue;
+      width: 90%;
+    }
+
+    .activities-tab {
+      color: $blue;
+      flex: 1 0 50%;
+      font-weight: bold;
+      font-size: 4.5vw;
+      line-height: 1;
+      padding: 8% 2%;
+
+      @include breakpoint(small, landscape) {
+        font-size: 2.5vw;
+        padding: 2% 10%;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 2.5vw;
+        padding: 2% 10%;
+      }
+
+      &.active {
+        color: $green;
+      }
+
+      &:hover:not(.active) {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 section.activities {
@@ -493,6 +555,7 @@ section.activities {
       border-bottom: 5px solid $blue;
       width: 80%;
     }
+
     @include breakpoint(medium) {
       border-bottom: 5px solid $blue;
       width: 80%;
@@ -510,6 +573,7 @@ section.activities {
         font-size: 2.5vw;
         padding: 2% 10%;
       }
+
       @include breakpoint(medium) {
         font-size: 2.5vw;
         padding: 2% 10%;
@@ -525,6 +589,7 @@ section.activities {
       }
     }
   }
+
   .activities-details-wrapper {
     .activities-index-carousel {
       width: 100%;
@@ -543,6 +608,7 @@ section.activities {
           font-size: 1.8vw;
           padding: 1vw 2vw;
         }
+
         @include breakpoint(medium) {
           font-size: 1.8vw;
           padding: 1vw 2vw;
@@ -573,20 +639,24 @@ section.activities {
             font-size: 2.25vw;
             margin-bottom: 2vw;
           }
+
           @include breakpoint(medium) {
             font-size: 2.25vw;
             margin-bottom: 2vw;
           }
         }
+
         .activity-description {
           font-size: 4vw;
 
           @include breakpoint(small, landscape) {
             font-size: 1.5vw;
           }
+
           @include breakpoint(medium) {
             font-size: 1.5vw;
           }
+
           @include breakpoint(large) {
             font-size: 1vw;
           }
@@ -622,9 +692,11 @@ section.activities {
 
           &::before {
             display: flex;
+
             @include breakpoint(small, landscape) {
               font-size: 2vw;
             }
+
             @include breakpoint(medium) {
               font-size: 2vw;
             }
@@ -635,6 +707,7 @@ section.activities {
           @include breakpoint(small, landscape) {
             left: -2vw;
           }
+
           @include breakpoint(medium) {
             left: -2vw;
           }
@@ -644,6 +717,7 @@ section.activities {
           @include breakpoint(small, landscape) {
             right: -2vw;
           }
+
           @include breakpoint(medium) {
             right: -2vw;
           }
@@ -1060,6 +1134,7 @@ section.other-schools {
         .owl-prev {
           left: 0 !important;
         }
+
         .owl-next {
           right: -20vw !important;
 
