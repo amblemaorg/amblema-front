@@ -32,46 +32,46 @@ export class FormReviewComponent
     // -- Properties
     fields?: {
       description?:
-        | {
-            label?: string;
-            placeholder?: string;
-            value?: any;
-            disabled?: boolean;
-            maxLength?: number;
-            minLength?: number;
-          }
-        | false;
+      | {
+        label?: string;
+        placeholder?: string;
+        value?: any;
+        disabled?: boolean;
+        maxLength?: number;
+        minLength?: number;
+      }
+      | false;
       inputImg?:
-        | {
-            name?: string;
-            label?: string;
-            placeholder?: string;
-            value?: any;
-            multiple?: boolean;
-            disabled?: boolean;
-            sizeLimitMb?: number;
-          }
-        | false;
+      | {
+        name?: string;
+        label?: string;
+        placeholder?: string;
+        value?: any;
+        multiple?: boolean;
+        disabled?: boolean;
+        sizeLimitMb?: number;
+      }
+      | false;
       button?:
-        | {
-            type?: string;
-            text?: string;
-            ingAction?: string;
-            isMainBtn?: boolean;
-            hidden?: boolean;
-            disabled?: boolean;
-          }
-        | false;
+      | {
+        type?: string;
+        text?: string;
+        ingAction?: string;
+        isMainBtn?: boolean;
+        hidden?: boolean;
+        disabled?: boolean;
+      }
+      | false;
       cancelButton?:
-        | {
-            type?: string;
-            text?: string;
-            ingAction?: string;
-            isMainBtn?: boolean;
-            hidden?: boolean;
-            disabled?: boolean;
-          }
-        | false;
+      | {
+        type?: string;
+        text?: string;
+        ingAction?: string;
+        isMainBtn?: boolean;
+        hidden?: boolean;
+        disabled?: boolean;
+      }
+      | false;
     };
   };
   form: FormGroup;
@@ -85,7 +85,7 @@ export class FormReviewComponent
 
   isSaving: boolean = false;
 
-  constructor(private imageCompress: NgxImageCompressService) {}
+  constructor(private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     /**
@@ -243,7 +243,7 @@ export class FormReviewComponent
       const images = this.form.get('inputImg').value;
       const readImgs =
         this.imgResultAfterCompress &&
-        typeof this.imgResultAfterCompress === 'object'
+          typeof this.imgResultAfterCompress === 'object'
           ? Object.keys(this.imgResultAfterCompress)
           : null;
       const newImages = images.filter((image) => image !== event.data.image);
@@ -286,10 +286,10 @@ export class FormReviewComponent
     if (doTheArray) {
       const theImages =
         this.imgResultAfterCompress &&
-        typeof this.imgResultAfterCompress === 'object'
+          typeof this.imgResultAfterCompress === 'object'
           ? Object.keys(this.imgResultAfterCompress).map(
-              (img) => this.imgResultAfterCompress[img],
-            )
+            (img) => this.imgResultAfterCompress[img],
+          )
           : [];
 
       this.settings.onClickButton(
@@ -300,7 +300,7 @@ export class FormReviewComponent
     } else
       this.settings.onClickButton(
         values.inputImg &&
-          values.description &&
+          (values.description || values.description === undefined || values.description === '') &&
           this.imgResultAfterCompress &&
           typeof this.imgResultAfterCompress === 'string'
           ? { ...values, inputImg: this.imgResultAfterCompress }
@@ -334,21 +334,21 @@ export class FormReviewComponent
     if (doTheArray) {
       const theImages =
         this.imgResultAfterCompress &&
-        typeof this.imgResultAfterCompress === 'object'
+          typeof this.imgResultAfterCompress === 'object'
           ? Object.keys(this.imgResultAfterCompress).map(
-              (img) => this.imgResultAfterCompress[img],
-            )
+            (img) => this.imgResultAfterCompress[img],
+          )
           : [];
 
       this.settings.onSubmit(
-        values.inputImg && values.description
+        values.inputImg && (values.description || values.description === undefined || values.description === '')
           ? { ...values, inputImg: [...theImages] }
           : values,
       );
     } else
       this.settings.onSubmit(
         values.inputImg &&
-          values.description &&
+          (values.description || values.description === undefined || values.description === '') &&
           this.imgResultAfterCompress &&
           typeof this.imgResultAfterCompress === 'string'
           ? { ...values, inputImg: this.imgResultAfterCompress }
@@ -360,7 +360,7 @@ export class FormReviewComponent
 
   onUploadImage = (event: any) => {
     // Get file
-    for(var i=0; i<event.target.files.length; i++){
+    for (var i = 0; i < event.target.files.length; i++) {
       const file = event.dataTransfer
         ? event.dataTransfer.files[i]
         : event.target.files[i];
@@ -406,7 +406,7 @@ export class FormReviewComponent
       }
     }
     return true;
-    
+
   };
 
   convertLoad(event) {
@@ -472,41 +472,41 @@ export class FormReviewComponent
 
 interface settingsFields {
   description?:
-    | {
-        label?: string;
-        placeholder?: string;
-        value?: any;
-        disabled?: boolean;
-      }
-    | false;
+  | {
+    label?: string;
+    placeholder?: string;
+    value?: any;
+    disabled?: boolean;
+  }
+  | false;
   inputImg?:
-    | {
-        name?: string;
-        label?: string;
-        placeholder?: string;
-        value?: any;
-        multiple?: boolean;
-        disabled?: boolean;
-      }
-    | false;
+  | {
+    name?: string;
+    label?: string;
+    placeholder?: string;
+    value?: any;
+    multiple?: boolean;
+    disabled?: boolean;
+  }
+  | false;
   button?:
-    | {
-        type?: string;
-        text?: string;
-        ingAction?: string;
-        isMainBtn?: boolean;
-        hidden?: boolean;
-        disabled?: boolean;
-      }
-    | false;
+  | {
+    type?: string;
+    text?: string;
+    ingAction?: string;
+    isMainBtn?: boolean;
+    hidden?: boolean;
+    disabled?: boolean;
+  }
+  | false;
   cancelButton?:
-    | {
-        type?: string;
-        text?: string;
-        ingAction?: string;
-        isMainBtn?: boolean;
-        hidden?: boolean;
-        disabled?: boolean;
-      }
-    | false;
+  | {
+    type?: string;
+    text?: string;
+    ingAction?: string;
+    isMainBtn?: boolean;
+    hidden?: boolean;
+    disabled?: boolean;
+  }
+  | false;
 }

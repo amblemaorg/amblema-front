@@ -13,6 +13,7 @@ export abstract class ChartComponent {
   type: string = '';
   data: ChartData[] = [];
 
+  isPercentage: boolean = true;
   props: ChartProps = {
     colors: ['#FFF'],
     stroke: 'smooth',
@@ -136,7 +137,12 @@ export abstract class BarChartComponent extends ChartComponent {
     const asymtotes = this.asymptotes.filter((asymtote) => asymtote.axis == axis);
     const axisValues = [...this.data, ...asymtotes].map((element) => <number>element.value);
     let minAndMax = this.findMinMaxInArray(axisValues);
-    minAndMax[1] = minAndMax[1] > 100 ? minAndMax[1] : 100
+    
+    if (this.isPercentage) {
+        minAndMax[1] = minAndMax[1] > 100 ? minAndMax[1] : 100;
+    } else {
+        minAndMax[1] = minAndMax[1] + 5;
+    }
     
     return { min: minAndMax[0] - space, max: minAndMax[1] + space };
   }

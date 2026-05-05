@@ -2,6 +2,7 @@ export interface QueryYearbookPrintOptions {
   sectionsPrint?: SectionsPrint[];
   activitiesPrint?: ActivitiesPrint[];
   index?: boolean;
+  groupedGradesPrint?: string[];
 }
 
 interface ActivitiesPrint {
@@ -21,6 +22,7 @@ export interface RespYearbookPrintOptions {
   disablePages?: string[];
   index?: boolean;
   diagnosticPrint?: boolean;
+  groupedGradesPrint?: string[];
 }
 
 interface RespActivitiesPrint {

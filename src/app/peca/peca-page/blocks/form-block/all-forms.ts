@@ -1798,8 +1798,9 @@ export const formResultadoEstudianteModal = {
     fullwidth: false,
     ...controlProps.selectAndRequired,
     options: [
-      { id: "1", name: "Registrado" },
-      { id: "2", name: "Calificado" },
+      { id: "1", name: "Inscrito" },
+      { id: "2", name: "Participante" },
+      { id: "3", name: "Clasificado" },
     ],
   },
   result: {

@@ -58,4 +58,10 @@ export class TemplateUtils {
 
     return listItems;
   }
+
+  static getShortTeacherName(firstName: string, lastName: string): string {
+    const fName = firstName ? firstName.trim().split(/\s+/)[0] : '';
+    const lName = lastName ? lastName.trim().split(/\s+/)[0] : '';
+    return `${fName} ${lName}`.trim();
+  }
 }

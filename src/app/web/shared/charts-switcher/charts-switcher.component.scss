@@ -93,7 +93,8 @@
     .switchers-wrapper {
       @include breakpoint(small, landscape) {
         flex-direction: row;
-        justify-content: space-between;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         align-items: center;
         margin: 2% 0;
         width: 100%;
@@ -101,7 +102,8 @@
 
       @include breakpoint(medium) {
         flex-direction: row;
-        justify-content: space-between;
+        flex-wrap: wrap;
+        justify-content: flex-start;
         align-items: center;
         margin: 2% 0;
         width: 100%;
@@ -109,13 +111,13 @@
 
       .switcher-button {
         @include breakpoint(small, landscape) {
-          margin: 0;
-          width: 30%;
+          margin: 0.5% 1%;
+          width: 18%;
         }
 
         @include breakpoint(medium) {
-          margin: 0;
-          width: 30%;
+          margin: 0.5% 1%;
+          width: 18%;
         }
       }
     }

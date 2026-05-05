@@ -45,6 +45,7 @@ import { AnnualConventionPageComponent } from './peca-page/pages/annual-conventi
 import { AnnualConventionPreparationPageComponent } from './peca-page/pages/annual-convention-preparation-page.component'
 import { SpecialActivityPageComponent } from './peca-page/pages/special-activity-page.component'
 import { MathOlympicsPageComponent } from './peca-page/pages/math-olympics-page.component'
+import { ReadingOlympicsPageComponent } from './peca-page/pages/reading-olympics-page.component'
 import { TeacherTestimonyPageComponent } from './peca-page/pages/teacher-testimony-page.component'
 import { EnvironmentalProjectPageComponent } from './peca-page/pages/environmental-project-page.component'
 import { MonitoringStrategyPageComponent } from './peca-page/pages/monitoring-strategy-page.component'
@@ -91,6 +92,7 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     AnnualConventionPreparationPageComponent,
     SpecialActivityPageComponent,
     MathOlympicsPageComponent,
+    ReadingOlympicsPageComponent,
     TeacherTestimonyPageComponent,
     EnvironmentalProjectPageComponent,
     MonitoringStrategyPageComponent,
@@ -181,4 +183,4 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     NgxImageCompressService,
   ],
 })
-export class PecaModule {}
+export class PecaModule { }

@@ -216,18 +216,51 @@ export function mathOlympicsConfigMapper(
           ...controlProps.normalTextAndRequired,
         },
         status: {
-          label: "Estatus",
-          placeholder: "Estatus",
-          fullwidth: false,
+          label: "Estatus Fase Preliminar",
+          placeholder: "Estatus Fase Preliminar",
+          fullwidth: true,
           ...controlProps.selectAndRequired,
           options: [
-            { id: "1", name: "Registrado" },
+            { id: "1", name: "Inscrito" },
+            { id: "2", name: "Participante" },
+            { id: "3", name: "Clasificado" },
+          ],
+        },
+        statusRegional: {
+          label: "Estatus Fase Regional",
+          placeholder: "Estatus Fase Regional",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "Participante" },
             { id: "2", name: "Clasificado" },
           ],
         },
         result: {
           label: "Resultado",
           placeholder: "Resultado",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "", name: "Sin Resultado" },
+            { id: "1", name: "Oro" },
+            { id: "2", name: "Plata" },
+            { id: "3", name: "Bronce" },
+          ],
+        },
+        statusNational: {
+          label: "Estatus (Nacional)",
+          placeholder: "Estatus (Nacional)",
+          fullwidth: false,
+          ...controlProps.select,
+          options: [
+            { id: "1", name: "Participante" },
+            { id: "2", name: "Clasificado" },
+          ],
+        },
+        resultNational: {
+          label: "Resultado (Nacional)",
+          placeholder: "Resultado (Nacional)",
           fullwidth: false,
           ...controlProps.select,
           options: [
@@ -250,6 +283,9 @@ export function mathOlympicsConfigMapper(
           studentId: values.id,
           result: values.result,
           status: values.status,
+          statusRegional: values.statusRegional,
+          resultNational: values.resultNational,
+          statusNational: values.statusNational,
         };
         store.dispatch(new UpdateStudentMathOlympics(data));
       },
@@ -285,7 +321,7 @@ export function mathOlympicsConfigMapper(
             if (row) {
               return `${grade ? grade.name : ""}`;
             } else {
-              return "";
+              return "-";
             }
           },
           filterFunction: (cell?: any, search?: string) => {
@@ -306,14 +342,41 @@ export function mathOlympicsConfigMapper(
           with: "20%",
         },
         status: {
-          title: "Estatus",
+          title: "Estatus Preliminar",
           with: "20%",
           valuePrepareFunction: (row: any) => {
-            if (row) return row == "1" ? "Registrado" : "Clasificado";
-            else return "";
+            if (row) {
+              return row == "1"
+                ? "Inscrito"
+                : row == "2"
+                ? "Participante"
+                : "Clasificado";
+            } else return "-";
           },
           filterFunction: (cell?: any, search?: string) => {
-            let value: string = cell == "1" ? "Registrado" : "Clasificado";
+            let value: string =
+              cell == "1"
+                ? "Inscrito"
+                : cell == "2"
+                ? "Participante"
+                : "Clasificado";
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        statusRegional: {
+          title: "Estatus Regional",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            if (row) {
+              return row == "1" ? "Participante" : "Clasificado";
+            } else return "-";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Participante" : "Clasificado";
             value = value.toUpperCase();
 
             if (value.includes(search.toUpperCase()) || search === "")
@@ -357,9 +420,70 @@ export function mathOlympicsConfigMapper(
             else return false;
           },
         },
+        statusNational: {
+          title: "Estatus (Nacional)",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            if (row) return row == "1" ? "Participante" : "Clasificado";
+            else return "-";
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string = cell == "1" ? "Participante" : "Clasificado";
+            value = value.toUpperCase();
+
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
+        resultNational: {
+          title: "Resultado (Nacional)",
+          with: "20%",
+          valuePrepareFunction: (row: any) => {
+            switch (row) {
+              case "1":
+                return "Oro";
+              case "2":
+                return "Plata";
+              case "3":
+                return "Bronce";
+              default:
+                return "-";
+            }
+          },
+          filterFunction: (cell?: any, search?: string) => {
+            let value: string;
+            switch (cell) {
+              case "1":
+                value = "Oro";
+                break;
+              case "2":
+                value = "Plata";
+                break;
+              case "3":
+                value = "Bronce";
+                break;
+              default:
+                value = "";
+            }
+            value = value.toUpperCase();
+            if (value.includes(search.toUpperCase()) || search === "")
+              return true;
+            else return false;
+          },
+        },
       },
       dataResultadoEstudiante: olympicStudents.map((student) => {
-        const { id, name, section, result, status } = student;
+        const {
+          id,
+          name,
+          section,
+          result,
+          status,
+          statusRegional,
+          resultNational,
+          statusNational,
+        } = student;
         return {
           id,
           name,
@@ -367,6 +491,9 @@ export function mathOlympicsConfigMapper(
           grade: section.grade,
           result,
           status: status,
+          statusRegional: statusRegional,
+          resultNational: result === "1" ? resultNational : null,
+          statusNational: result === "1" ? statusNational : null,
         };
       }),
       classes: {

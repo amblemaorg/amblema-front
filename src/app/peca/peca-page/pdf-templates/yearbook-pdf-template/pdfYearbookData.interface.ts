@@ -18,6 +18,14 @@ export interface PdfYearbookData {
   schoolSections: SchoolSection[];
   lapses: Lapse[];
   breakForLapses: boolean;
+  groupPhoto?: GroupPhotoData;
+}
+
+export interface GroupPhotoData {
+  image: string;
+  content: string;
+  groupedSections: string[];
+  groupedSectionsContent: string[];
 }
 
 interface Lapse {
@@ -45,8 +53,11 @@ interface DiagnosticReading {
 }
 
 export interface SchoolSection {
+  sectionId: string;
   sectionLetter: string;
   sectionName: string;
+  groupedWith?: string;
+  isPrincipalGroup?: boolean;
   sectionImg?: any;
   sectionStudents: string[];
   sectionGrade: string;
