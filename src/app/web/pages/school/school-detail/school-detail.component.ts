@@ -293,7 +293,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
           description: data.olympicsSummary.description,
         },
         readingOlympics: {
-          participant: data.olympicsSummary.participant,
+          participant: data.olympicsReadingSummary.participant,
           enrolled: data.olympicsReadingSummary.inscribed,
           classified: data.olympicsReadingSummary.classified,
           goldMedal: data.olympicsReadingSummary.medalsGold,
