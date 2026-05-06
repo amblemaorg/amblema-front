@@ -474,6 +474,64 @@ section.math-olympics {
     padding: 5vw 10vw;
   }
 
+  .olimpiadas-main-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    img {
+      max-width: 40vw;
+      height: auto;
+
+      @include breakpoint(small, landscape) {
+        max-width: 15vw;
+      }
+      @include breakpoint(medium) {
+        max-width: 15vw;
+      }
+    }
+  }
+
+  .activities-tabs-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+
+    .tab-side-img {
+      position: absolute;
+      bottom: 0;
+      height: 10vw;
+      width: auto;
+      margin-bottom: 25px;
+
+      @include breakpoint(small, portrait) {
+        display: none;
+      }
+
+      &.left {
+        right: 95%; // Correct if wrapper is 90%
+        margin-right: 1vw;
+      }
+      &.right {
+        left: 95%;
+        margin-left: 1vw;
+      }
+
+      @include breakpoint(small, landscape) {
+        height: 8vw;
+        display: block;
+        &.left { right: 95%; }
+        &.right { left: 95%; }
+      }
+      @include breakpoint(medium) {
+        height: 6vw;
+        display: block;
+        &.left { right: 95%; }
+        &.right { left: 95%; }
+      }
+    }
+  }
+
   .result-summary {
     display: flex;
     justify-content: space-around;
@@ -580,17 +638,20 @@ section.math-olympics {
     display: flex;
     border-bottom: 3px solid $blue;
     text-align: center;
-    margin: auto;
     width: 90%;
+    flex: 0 1 90%;
+    margin: 0 auto;
 
     @include breakpoint(small, landscape) {
       border-bottom: 5px solid $blue;
       width: 90%;
+      flex: 0 1 90%;
     }
 
     @include breakpoint(medium) {
       border-bottom: 5px solid $blue;
       width: 90%;
+      flex: 0 1 90%;
     }
 
     .activities-tab {
