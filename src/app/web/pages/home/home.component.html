@@ -172,21 +172,28 @@
   </charts-switcher>
 </section>
 <section class="math-olympics">
-  <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
-    <div
-      class="activities-tab"
-      [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
-      (click)="selectedOlympics = OLYMPICS.MATH"
-    >
-      Olimpíadas de Matemáticas
+  <div class="olimpiadas-main-logo">
+    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas">
+  </div>
+  <div class="activities-tabs-container">
+    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM">
+    <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
+      <div
+        class="activities-tab"
+        [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
+        (click)="selectedOlympics = OLYMPICS.MATH"
+      >
+        Olimpíadas de Matemáticas
+      </div>
+      <div
+        class="activities-tab"
+        [ngClass]="{ active: selectedOlympics == OLYMPICS.READING }"
+        (click)="selectedOlympics = OLYMPICS.READING"
+      >
+        Olimpíadas de Lengua
+      </div>
     </div>
-    <div
-      class="activities-tab"
-      [ngClass]="{ active: selectedOlympics == OLYMPICS.READING }"
-      (click)="selectedOlympics = OLYMPICS.READING"
-    >
-      Olimpíadas de Lengua
-    </div>
+    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL">
   </div>
 
   <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
