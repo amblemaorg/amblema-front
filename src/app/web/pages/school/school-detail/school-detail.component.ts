@@ -99,7 +99,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activitiesIndexOptions: OwlOptions = {
     ...this.carouselOptions,
-    loop: false,
+    loop: true,
     responsive: {
       0: {
         items: 1,
@@ -422,7 +422,9 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   setActiveActivity(index: number) {
     try {
       this.activeActivityIndex = index;
-      //this.activityImageCarousel.reInit();
+      if (this.activityImageCarousel) {
+        this.activityImageCarousel.reInit();
+      }
     } catch (error) {
       console.error(error);
     }

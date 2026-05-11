@@ -311,8 +311,8 @@
       </div>
       <div class="activity-images">
         <owl-carousel #activityImageCarousel [options]="activityImagesOptions" class="activity-image-carousel"
-          [carouselClasses]="['']" *ngIf="school.activitiesSlider.length">
-          <div class="image-wrapper" *ngFor="let image of school.activitiesSlider; index as i">
+          [carouselClasses]="['']" *ngIf="school.activities[selectedActivitiesType].length > 0 && school.activities[selectedActivitiesType][activeActivityIndex].slider && school.activities[selectedActivitiesType][activeActivityIndex].slider.length">
+          <div class="image-wrapper" *ngFor="let image of school.activities[selectedActivitiesType][activeActivityIndex].slider; index as i">
             <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
           </div>
         </owl-carousel>
