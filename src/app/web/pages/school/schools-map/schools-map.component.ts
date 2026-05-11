@@ -56,7 +56,7 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     private modalService: ModalService,
     private http: HttpClient,
     private store: Store
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.mapInitializer();
@@ -96,34 +96,48 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   }
 
   loadAllMarkers(coordinates?: google.maps.LatLng) {
-    const svgMarker = {
-      path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-      fillColor: "blue",
-      fillOpacity: 1,
-      strokeWeight: 0,
-      rotation: 0,
-      scale: 2.5,
-      anchor: new google.maps.Point(15, 30),
-    };
-
     this.schoolsList.map((schoolData) => {
-      let makerOption = {
+      const position = new google.maps.LatLng(schoolData.lat, schoolData.lng);
+      const isSelected = coordinates && coordinates.equals(position);
+      const size = isSelected ? 60 : 40;
+      const r = size / 2;
+      const h = size * 1.4; // Height of the whole pin
+
+      // Pin shape: circle at the top and a triangle tip at the bottom
+      const pinPath = `M ${r} ${h} L ${r - r * 0.4} ${r + r * 0.8} A ${r} ${r} 0 1 1 ${r + r * 0.4} ${r + r * 0.8} Z`;
+
+      // 1. Background Marker (The pin shape)
+      new google.maps.Marker({
         map: this.map,
-        position: new google.maps.LatLng(schoolData.lat, schoolData.lng),
-        title: schoolData.slug,
-      };
+        position: position,
+        icon: {
+          path: pinPath,
+          fillColor: isSelected ? "#00809a" : "white",
+          fillOpacity: 1,
+          strokeColor: "#81b03e",
+          strokeWeight: 1.5,
+          scale: 1,
+          anchor: new google.maps.Point(r, h),
+        },
+        clickable: false,
+        zIndex: isSelected ? 99 : 1,
+      });
 
-      if (coordinates) {
-        if (coordinates.equals(makerOption.position)) {
-          makerOption["icon"] = svgMarker;
-          makerOption["zIndex"] = 100;
-        }
-      }
-
-      const marker: google.maps.Marker = new google.maps.Marker(makerOption);
+      // 2. Foreground Marker (The school logo icon)
+      const marker = new google.maps.Marker({
+        map: this.map,
+        position: position,
+        icon: {
+          url: "assets/images/markup.png",
+          scaledSize: new google.maps.Size(size * 0.7, size * 0.7),
+          anchor: new google.maps.Point(size * 0.35, size * 1.3), // Perfectly centered in the circle
+        },
+        title: schoolData.name, // Hover tooltip
+        zIndex: isSelected ? 100 : 2,
+      });
 
       marker.addListener("click", () => {
-        this.router.navigate(["escuelas/" + marker.getTitle()]);
+        this.router.navigate(["escuelas/" + schoolData.slug]);
       });
 
       marker.setMap(this.map);
