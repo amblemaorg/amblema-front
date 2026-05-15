@@ -188,6 +188,7 @@
             "outputPath": "dist/server",
             "main": "src/main.server.ts",
             "tsConfig": "tsconfig.server.json",
+            "bundleDependencies": "all",
             "customWebpackConfig": {
               "path": "universal-webpack.server.config.js",
               "mergeStrategies": {
@@ -214,6 +215,24 @@
                 "styles": true
               }
             }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "amblema-web:build:production",
+            "serverTarget": "amblema-web:server:production",
+            "routes": [
+              "/",
+              "/nosotros",
+              "/padrinos",
+              "/coordinadores",
+              "/escuelas",
+              "/blog"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
