@@ -1,0 +1,80 @@
+//@use "sass:map";
+
+@import '~bootstrap/scss/functions',
+        '~bootstrap/scss/variables',
+        '~bootstrap/scss/mixins';
+
+$breakpoints: (
+    "small": 320px,
+    "medium": 768px,
+    "large": 1024px
+);
+
+$directions: (
+    "down": max,
+    "up": min
+);
+
+$orientations: (
+    "landscape": landscape,
+    "portrait": portrait
+);
+
+@mixin breakpoint($size, $orientation: "", $direction: "up") {
+    $media-query: "only screen ";
+    $breakpoint: "";
+    @if map-has-key($breakpoints, $size) {
+        $breakpoint: map-get($breakpoints, $size);
+    }
+
+    @if map-has-key($directions, $direction) {
+      @if $direction == "down" {
+        $breakpoint: $breakpoint - 1px;
+      }
+      $media-query: "#{$media-query} and (#{map-get($directions, $direction)}-width: #{$breakpoint}) ";
+    }
+
+    @if map-has-key($orientations, $orientation) {
+        $media-query: "#{$media-query} and (orientation: #{$orientation})";
+    }
+
+    @media #{$media-query} {
+        @content;
+    }
+}
+
+@mixin columns($number) {
+  width: calc( (100% / 12) * #{$number});
+}
+
+
+
+//
+$breakpoints-bt: (
+    "small": sm,
+    "medium": md,
+    "large": lg,
+    "larger": xl,
+);
+
+@mixin mediabreak($size, $orientation: "",$specific: false,$break-number: "0px", $direction: "up") {
+    $media-query: "screen ";
+    $breakpoint: "";
+    @if map-has-key($breakpoints-bt, $size) {
+        $breakpoint: map-get($breakpoints-bt, $size);
+    }
+
+    @if $specific {
+        $media-query: "#{$media-query} and (#{map-get($directions, $direction)}-width: #{$break-number}) ";
+    }
+
+    @if map-has-key($orientations, $orientation) {
+        $media-query: "#{$media-query} and (orientation: #{$orientation})";
+    }
+
+    @include media-breakpoint-up($breakpoint) {
+        @media #{$media-query} {
+            @content;
+        }
+    }
+}

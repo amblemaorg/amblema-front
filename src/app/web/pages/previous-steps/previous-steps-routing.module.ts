@@ -11,17 +11,17 @@ const routes: Routes = [
       // Steps view
       {
         path: '',
-        loadChildren: () => import('./steps/steps.module').then(m => m.StepsModule),
+        loadChildren: "./steps/steps.module#StepsModule",
       },
       // modules list view
       {
         path: 'modules',
-        loadChildren: () => import('./e-learning/modules-list/modules-list.module').then(m => m.ModulesListModule),
+        loadChildren: "./e-learning/modules-list/modules-list.module#ModulesListModule",
       },
       // module detail view
       {
         path: 'module-detail/:id',
-        loadChildren: () => import('./e-learning/module-detail/module-detail.module').then(m => m.ModuleDetailModule),
+        loadChildren: "./e-learning/module-detail/module-detail.module#ModuleDetailModule",
       }
     ]
   }

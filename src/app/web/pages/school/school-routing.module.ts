@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: ':schoolSlug',
-        loadChildren: () => import('./school-detail/school-detail.module').then(m => m.SchoolDetailModule)
+        loadChildren: "./school-detail/school-detail.module#SchoolDetailModule"
       }
     ]
   }
