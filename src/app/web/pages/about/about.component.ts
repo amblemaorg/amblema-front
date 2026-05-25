@@ -166,6 +166,9 @@ export class AboutComponent implements OnInit {
         };
       });
       this.aboutUsPageData = data.aboutUsPage;
+      if (this.aboutUsPageData.awards && this.aboutUsPageData.awards.length > 0) {
+        this.aboutUsPageData.awards = this.aboutUsPageData.awards.reverse();
+      }
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
