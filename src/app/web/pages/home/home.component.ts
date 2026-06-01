@@ -199,8 +199,24 @@ export class HomeComponent implements OnInit {
 
         if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
+          
+          let olympicColors = ["#f7ba2b", "#c2b69e", "#d45f2a"];
+          if (chart.data && chart.data.length > 0) {
+            const seriesArray = chart.data.map((element: any) => element.serie || element.label || '');
+            const uniqueSeries = [...new Set(seriesArray)];
+            if (uniqueSeries.length > 0) {
+              olympicColors = uniqueSeries.map((serie: string) => {
+                const s = String(serie).toLowerCase();
+                if (s.includes('oro')) return "#f7ba2b";
+                if (s.includes('plata')) return "#c2b69e";
+                if (s.includes('bronce')) return "#d45f2a";
+                return "#f7ba2b";
+              });
+            }
+          }
+
           chart.props = {
-            colors: ["#DB8B19", "#808080", "#B83A1C"],
+            colors: olympicColors,
             stroke: "smooth",
           };
         } else {
