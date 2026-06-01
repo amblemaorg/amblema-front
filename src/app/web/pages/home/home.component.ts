@@ -200,6 +200,19 @@ export class HomeComponent implements OnInit {
         if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
           
+          if (chart.data && chart.data.length > 0) {
+            chart.data.sort((a, b) => {
+              const getOrder = (element: any) => {
+                const str = String(element.serie || element.label || '').toLowerCase();
+                if (str.includes('oro')) return 1;
+                if (str.includes('plata')) return 2;
+                if (str.includes('bronce')) return 3;
+                return 4;
+              };
+              return getOrder(a) - getOrder(b);
+            });
+          }
+
           let olympicColors = ["#f7ba2b", "#c2b69e", "#d45f2a"];
           if (chart.data && chart.data.length > 0) {
             const seriesArray = chart.data.map((element: any) => element.serie || element.label || '');
