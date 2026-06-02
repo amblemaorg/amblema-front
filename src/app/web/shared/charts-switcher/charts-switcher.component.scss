@@ -5,6 +5,7 @@
 .charts-switcher {
   color: $white;
   height: 100%;
+
   // Styles when every direction  for movil portrait
   &.d-row,
   &.d-column {
@@ -36,13 +37,13 @@
   &.d-row {
     @include breakpoint(small, landscape) {
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: flex-end;
       flex-direction: row;
     }
 
     @include breakpoint(medium) {
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: flex-end;
       flex-direction: row;
     }
 
