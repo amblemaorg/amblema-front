@@ -199,7 +199,7 @@ export class HomeComponent implements OnInit {
 
         if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
-          
+
           if (chart.data && chart.data.length > 0) {
             chart.data.sort((a, b) => {
               const getOrder = (element: any) => {
@@ -213,7 +213,7 @@ export class HomeComponent implements OnInit {
             });
           }
 
-          let olympicColors = ["#f7ba2b", "#c2b69e", "#d45f2a"];
+          let olympicColors = ["#f7ba2b", "##88F8F", "#d45f2a"];
           if (chart.data && chart.data.length > 0) {
             const seriesArray = chart.data.map((element: any) => element.serie || element.label || '');
             const uniqueSeries = [...new Set(seriesArray)];
@@ -221,7 +221,7 @@ export class HomeComponent implements OnInit {
               olympicColors = uniqueSeries.map((serie: string) => {
                 const s = String(serie).toLowerCase();
                 if (s.includes('oro')) return "#f7ba2b";
-                if (s.includes('plata')) return "#c2b69e";
+                if (s.includes('plata')) return "#8F8F8F";
                 if (s.includes('bronce')) return "#d45f2a";
                 return "#f7ba2b";
               });
