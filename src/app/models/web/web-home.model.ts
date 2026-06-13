@@ -6,7 +6,6 @@ export interface OlympicsHistoryData {
   regionalGold: number;
   regionalSilver: number;
   regionalBronze: number;
-  nationalClassified: number;
   nationalGold: number;
   nationalSilver: number;
   nationalBronze: number;
