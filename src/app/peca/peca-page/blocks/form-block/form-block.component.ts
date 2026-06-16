@@ -10,6 +10,7 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  ValidatorFn,
 } from "@angular/forms";
 import { isNullOrUndefined } from "util";
 import { MESSAGES } from "../../../../web/shared/forms/validation-messages";
@@ -111,6 +112,7 @@ export class FormBlockComponent
   private subscription: Subscription = new Subscription();
 
   componentForm: FormGroup;
+  goals: any;
   fields: string[];
   doubleFields = {};
   sendingForm: boolean;
@@ -693,6 +695,23 @@ export class FormBlockComponent
       })
     );
 
+    if (this.settings.formType === "tablaMatematica") {
+      this.subscription.add(
+        this.fetcher.get("pecasetting/goalsetting").subscribe(
+          (data) => {
+            this.goals = data;
+            if (this.componentForm) {
+              const resultMul = this.componentForm.get("resultMul");
+              const resultLog = this.componentForm.get("resultLog");
+              if (resultMul) resultMul.updateValueAndValidity();
+              if (resultLog) resultLog.updateValueAndValidity();
+            }
+          },
+          (error) => console.error(error)
+        )
+      );
+    }
+
     this.setId();
   }
   ngOnDestroy() {
@@ -1272,16 +1291,28 @@ export class FormBlockComponent
       const isSpecialDate = params && params["specialDateForm"];
       let formControlStruct = {};
       if (!isNullOrUndefined(params.value)) defaultValue = params.value;
+      let validatorsList = [];
       if (
-        isNullOrUndefined(params.validations) ||
-        (Object.keys(params.validations).length === 1 &&
+        !isNullOrUndefined(params.validations) &&
+        !(Object.keys(params.validations).length === 1 &&
           !params.validations["required"])
-      )
-        formControlStruct = { [name]: [defaultValue] };
-      else
+      ) {
+        validatorsList = this.getValidators(params.validations);
+      }
+      if (this.settings && this.settings.formType === "tablaMatematica") {
+        if (name === "resultMul") {
+          validatorsList.push(this.maxMulValidator());
+        } else if (name === "resultLog") {
+          validatorsList.push(this.maxLogValidator());
+        }
+      }
+      if (validatorsList.length > 0) {
         formControlStruct = {
-          [name]: [defaultValue, this.getValidators(params.validations)],
+          [name]: [defaultValue, validatorsList],
         };
+      } else {
+        formControlStruct = { [name]: [defaultValue] };
+      }
 
       return {
         ...formControlStruct,
@@ -1297,7 +1328,43 @@ export class FormBlockComponent
     }
   }
 
-  private getValidators(validations: object): Validators {
+  maxMulValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!control.parent) return null;
+      const grade = control.parent.get("grade") ? control.parent.get("grade").value : null;
+      const val = control.value;
+      if (this.goals && grade && val !== null && val !== undefined && val !== "") {
+        const gradeGoals = this.goals[`grade${grade}`];
+        if (gradeGoals) {
+          const maxMul = parseFloat(gradeGoals.multiplicationsPerMin);
+          if (!isNaN(maxMul) && parseFloat(val) > maxMul) {
+            return { maxMulExceeded: { max: maxMul } };
+          }
+        }
+      }
+      return null;
+    };
+  }
+
+  maxLogValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (!control.parent) return null;
+      const grade = control.parent.get("grade") ? control.parent.get("grade").value : null;
+      const val = control.value;
+      if (this.goals && grade && val !== null && val !== undefined && val !== "") {
+        const gradeGoals = this.goals[`grade${grade}`];
+        if (gradeGoals) {
+          const maxLog = parseFloat(gradeGoals.operationsPerMin);
+          if (!isNaN(maxLog) && parseFloat(val) > maxLog) {
+            return { maxLogExceeded: { max: maxLog } };
+          }
+        }
+      }
+      return null;
+    };
+  }
+
+  private getValidators(validations: object): any[] {
     const fieldValidators = Object.keys(validations).map((validator) => {
       if (validator === "required") return Validators[validator];
       if (validator === "maxLength") {
@@ -1342,7 +1409,11 @@ export class FormBlockComponent
                 ? this.settings.formsContent[field].fields[field2].messages.pattern
                 : this.settings.formsContent["imageGroup"].fields[field2].messages
                   .pattern
-          : null;
+          : errors.maxMulExceeded
+            ? `El resultado no puede ser mayor a la meta (${errors.maxMulExceeded.max})`
+            : errors.maxLogExceeded
+              ? `El resultado no puede ser mayor a la meta (${errors.maxLogExceeded.max})`
+              : null;
     }
 
     return null;
