@@ -233,7 +233,6 @@ export function mathOlympicsConfigMapper(
           ...controlProps.select,
           options: [
             { id: "1", name: "Participante" },
-            { id: "2", name: "Clasificado" },
           ],
         },
         result: {
@@ -255,7 +254,6 @@ export function mathOlympicsConfigMapper(
           ...controlProps.select,
           options: [
             { id: "1", name: "Participante" },
-            { id: "2", name: "Clasificado" },
           ],
         },
         resultNational: {

@@ -234,7 +234,6 @@ export function readingOlympicsConfigMapper(
           ...controlProps.select,
           options: [
             { id: "1", name: "Participante" },
-            { id: "2", name: "Clasificado" },
           ],
         },
         result: {
@@ -256,7 +255,6 @@ export function readingOlympicsConfigMapper(
           ...controlProps.select,
           options: [
             { id: "1", name: "Participante" },
-            { id: "2", name: "Clasificado" },
           ],
         },
         resultNational: {
