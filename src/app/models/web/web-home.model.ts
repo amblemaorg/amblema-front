@@ -25,6 +25,7 @@ export interface HomePage {
   statistics: any;
   testimonials: Testimonial[];
   olympicsHistory?: OlympicsHistory;
+  currentOlympics?: any;
 }
 
 export interface WebHome {

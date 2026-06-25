@@ -167,6 +167,7 @@
   </div>
   <charts-switcher
     [options]="chartSwitcherOptions"
+    [currentOlympics]="homePageData.currentOlympics"
     *ngIf="isBrowser && chartSwitcherOptions && chartSwitcherOptions.charts.length > 0"
   >
   </charts-switcher>

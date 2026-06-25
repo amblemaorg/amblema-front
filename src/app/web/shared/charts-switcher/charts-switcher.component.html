@@ -27,7 +27,128 @@
       <p *ngIf="charts.length > 0 && charts[activeChartIndex].description">
         {{ charts[activeChartIndex].description }}
       </p>
-      <ng-template #chartHost></ng-template>
+      
+      <ng-container *ngIf="charts[activeChartIndex].id !== 'mathOlympics' && charts[activeChartIndex].id !== 'readingOlympics'; else medalsTemplate">
+        <ng-template #chartHost></ng-template>
+      </ng-container>
+
+      <ng-template #medalsTemplate>
+        <div class="current-olympics-medals-container" *ngIf="currentOlympics">
+          <h3 class="current-olympics-title">
+            Olimpíadas - Período Escolar {{ currentOlympics.schoolYearName }}
+          </h3>
+          
+          <!-- If active chart is mathOlympics -->
+          <div class="olympics-col" *ngIf="charts[activeChartIndex].id === 'mathOlympics'">
+            <div class="olympics-phase">
+              <h5 class="phase-title">Fase Regional</h5>
+              <div class="result-summary">
+                <div class="result participant">
+                  <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.participantRegional }}</span>
+                  <span class="result-label">Participantes</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.goldMedal > 0" class="result gold">
+                  <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.goldMedal }}</span>
+                  <span class="result-label">Oro</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.silverMedal > 0" class="result silver">
+                  <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.silverMedal }}</span>
+                  <span class="result-label">Plata</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.bronzeMedal > 0" class="result bronze">
+                  <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.bronzeMedal }}</span>
+                  <span class="result-label">Bronce</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="olympics-phase" *ngIf="currentOlympics.mathOlympics.participantNational > 0">
+              <h5 class="phase-title">Fase Nacional</h5>
+              <div class="result-summary">
+                <div class="result participant">
+                  <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.participantNational }}</span>
+                  <span class="result-label">Participantes</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.goldMedalNational > 0" class="result gold">
+                  <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.goldMedalNational }}</span>
+                  <span class="result-label">Oro</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.silverMedalNational > 0" class="result silver">
+                  <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.silverMedalNational }}</span>
+                  <span class="result-label">Plata</span>
+                </div>
+                <div *ngIf="currentOlympics.mathOlympics.bronzeMedalNational > 0" class="result bronze">
+                  <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+                  <span class="result-count">{{ currentOlympics.mathOlympics.bronzeMedalNational }}</span>
+                  <span class="result-label">Bronce</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- If active chart is readingOlympics -->
+          <div class="olympics-col" *ngIf="charts[activeChartIndex].id === 'readingOlympics'">
+            <div class="olympics-phase">
+              <h5 class="phase-title">Fase Regional</h5>
+              <div class="result-summary">
+                <div class="result participant">
+                  <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.participantRegional }}</span>
+                  <span class="result-label">Participantes</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.goldMedal > 0" class="result gold">
+                  <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.goldMedal }}</span>
+                  <span class="result-label">Oro</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.silverMedal > 0" class="result silver">
+                  <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.silverMedal }}</span>
+                  <span class="result-label">Plata</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.bronzeMedal > 0" class="result bronze">
+                  <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.bronzeMedal }}</span>
+                  <span class="result-label">Bronce</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="olympics-phase" *ngIf="currentOlympics.readingOlympics.participantNational > 0">
+              <h5 class="phase-title">Fase Nacional</h5>
+              <div class="result-summary">
+                <div class="result participant">
+                  <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.participantNational }}</span>
+                  <span class="result-label">Participantes</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.goldMedalNational > 0" class="result gold">
+                  <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.goldMedalNational }}</span>
+                  <span class="result-label">Oro</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.silverMedalNational > 0" class="result silver">
+                  <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.silverMedalNational }}</span>
+                  <span class="result-label">Plata</span>
+                </div>
+                <div *ngIf="currentOlympics.readingOlympics.bronzeMedalNational > 0" class="result bronze">
+                  <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+                  <span class="result-count">{{ currentOlympics.readingOlympics.bronzeMedalNational }}</span>
+                  <span class="result-label">Bronce</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </ng-container>
 
