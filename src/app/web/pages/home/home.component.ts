@@ -117,6 +117,7 @@ export class HomeComponent implements OnInit {
         nationalBronze: 0,
       },
     },
+    currentOlympics: null,
   };
   isBrowser: boolean;
   selectedPillar: any = {};

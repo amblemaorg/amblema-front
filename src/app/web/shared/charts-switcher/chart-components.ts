@@ -8,6 +8,7 @@ export declare interface ChartsSwitcherOptions {
 }
 
 export abstract class ChartComponent {
+  id?: string;
   title: string = '';
   description: string = '';
   type: string = '';

@@ -575,11 +575,21 @@ export class FormBlockComponent
         if (statusNationalControl && resultNationalControl) {
           if (value === '1') { // 1 is Oro
             statusNationalControl.enable();
-            resultNationalControl.enable();
           } else {
             statusNationalControl.setValue(null); // Reset value
             resultNationalControl.setValue(null); // Reset value
             statusNationalControl.disable();
+            resultNationalControl.disable();
+          }
+        }
+      };
+
+      const updateNationalResultField = (value) => {
+        if (resultNationalControl) {
+          if (value === '1') { // 1 is Participante
+            resultNationalControl.enable();
+          } else {
+            resultNationalControl.setValue(null); // Reset value
             resultNationalControl.disable();
           }
         }
@@ -598,7 +608,7 @@ export class FormBlockComponent
 
       const updateResultFields = (value) => {
         if (resultControl) {
-          if (value === '2') { // 2 is Clasificado in Regional
+          if (value === '1') { // 1 is Participante in Regional (formerly 2 Clasificado)
             resultControl.enable();
           } else {
             resultControl.setValue(null);
@@ -611,6 +621,7 @@ export class FormBlockComponent
       if (statusControl) updateRegionalFields(statusControl.value);
       if (statusRegionalControl) updateResultFields(statusRegionalControl.value);
       if (resultControl) updateNationalFields(resultControl.value);
+      if (statusNationalControl) updateNationalResultField(statusNationalControl.value);
 
       // Subscriptions
       if (statusControl) {
@@ -631,6 +642,13 @@ export class FormBlockComponent
         this.subscription.add(
           resultControl.valueChanges.subscribe((val) => {
             updateNationalFields(val);
+          })
+        );
+      }
+      if (statusNationalControl) {
+        this.subscription.add(
+          statusNationalControl.valueChanges.subscribe((val) => {
+            updateNationalResultField(val);
           })
         );
       }

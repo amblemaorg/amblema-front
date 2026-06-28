@@ -18,6 +18,7 @@ import { ChartComponentFactory } from './chart-component-factory';
 export class ChartsSwitcherComponent implements OnInit {
   @Input() options: ChartsSwitcherOptions;
   @Input() flatMode = false;
+  @Input() currentOlympics: any;
   @Output() switch: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('chartHost', { read: ViewContainerRef, static: false })
   chartHostRef: ViewContainerRef;
@@ -46,7 +47,12 @@ export class ChartsSwitcherComponent implements OnInit {
       const activeChart = this.charts[this.activeChartIndex];
       // console.log('loadChartComponent', activeChart);
 
-      this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
+      if (this.chartHostRef) {
+        this.chartHostRef.clear();
+        if (activeChart.id !== 'mathOlympics' && activeChart.id !== 'readingOlympics') {
+          this.chartFactory.createChartComponent(this.chartHostRef, activeChart);
+        }
+      }
     }
   }
   switchChart(index: number) {
