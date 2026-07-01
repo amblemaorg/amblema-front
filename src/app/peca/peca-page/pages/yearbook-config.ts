@@ -983,7 +983,7 @@ export async function MapperYearBookWeb(
                     items: [
                       {
                         // -- Historical
-                        title: 'Mi escuela',
+                        title: yearBookData.school.name,
                         childBlocks: [
                           {
                             component: 'form-review',
@@ -1136,7 +1136,7 @@ export async function MapperYearBookWeb(
                       },
                       {
                         // -- School
-                        title: yearBookData.school.name,
+                        title: 'Nuestros docentes',
                         childBlocks: [
                           {
                             component: 'form-review',

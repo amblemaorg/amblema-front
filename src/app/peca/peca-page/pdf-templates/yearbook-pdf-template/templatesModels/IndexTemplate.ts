@@ -67,9 +67,7 @@ export class IndexTemplateUtils {
     notNestedItems = this.notNestedItems,
   ): IndexListItem[][] {
     const notNestedItemsPaged = [];
-    const totalIndexPage = parseFloat(
-      (notNestedItems.length / maxItemsPerPage).toFixed(1),
-    );
+    const totalIndexPage = Math.ceil(notNestedItems.length / maxItemsPerPage);
 
     for (let index = 0; index < totalIndexPage; index++) {
       const itemsToIgnore = index * maxItemsPerPage;
