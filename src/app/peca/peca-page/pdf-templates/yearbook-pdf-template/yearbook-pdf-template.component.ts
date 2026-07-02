@@ -19,6 +19,7 @@ import {
   SmallSchoolSectionsTemplate,
   SecondLayoutTemplate,
   TemplateUtils,
+  SponsorLogoTemplate,
 } from './templatesModels';
 
 type TemplatePages = Array<
@@ -28,7 +29,9 @@ type TemplatePages = Array<
   | SchoolGradeTemplate
   | DiagnosticTemplate
   | ActivityTemplate
+  | SponsorLogoTemplate
 >;
+
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -111,9 +114,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setGroupPhotoPage();
     this.setSchoolGradeTemplatePages();
     this.setLapsePages();
+    this.setSponsorLogoPage();
     this.setIndexPage();
     // console.log(this.pages);
   }
+
+  setSponsorLogoPage() {
+    const { sponsorLogo } = this.pdfData;
+    if (sponsorLogo) {
+      const sponsorPage = new SponsorLogoTemplate(sponsorLogo);
+      sponsorPage.setPagerInst(this.pager);
+      this.pages.push(sponsorPage);
+    }
+  }
+
 
   setGroupPhotoPage() {
     if (this.pdfData.groupPhoto) {
