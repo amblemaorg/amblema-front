@@ -15,3 +15,19 @@ try {
 } catch (e) {
   console.warn('Could not load domino polyfills', e);
 }
+const mockJQueryObj = {
+  on: function() { return mockJQueryObj; },
+  owlCarousel: function() { return mockJQueryObj; },
+  trigger: function() { return mockJQueryObj; },
+  removeClass: function() { return mockJQueryObj; },
+  find: function() { return mockJQueryObj; },
+  remove: function() { return mockJQueryObj; }
+};
+const mockJQuery = function() { return mockJQueryObj; } as any;
+mockJQuery.fn = { owlCarousel: function(){} };
+(global as any).$ = (global as any).jQuery = mockJQuery;
+if (typeof window !== 'undefined') {
+  (window as any).$ = (window as any).jQuery = mockJQuery;
+}
+(global as any).gtag = function() {};
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";

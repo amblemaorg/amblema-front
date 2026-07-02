@@ -52,6 +52,9 @@ global["localStorage"] = localStorage;
 global["sessionStorage"] = sessionStorage;
 
 global["getComputedStyle"] = win.getComputedStyle;
+global["$"] = global["jQuery"] = function() { return { on: function(){}, owlCarousel: function(){} }; };
+global["gtag"] = function() {};
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine(
