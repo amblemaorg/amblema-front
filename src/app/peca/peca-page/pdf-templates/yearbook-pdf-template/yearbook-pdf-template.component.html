@@ -72,6 +72,16 @@
               }
             "></ng-container>
         </div>
+
+        <!-- sponsorLogoTemplate -->
+        <div *ngSwitchCase="'sponsorLogoTemplate'">
+          <ng-container *ngTemplateOutlet="
+              sponsorLogoTemplate;
+              context: {
+                page: page
+              }
+            "></ng-container>
+        </div>
       </div>
     </ng-container>
   </main>
@@ -454,6 +464,17 @@
     </div>
     <div class="pager">
       <span>{{ page.page }}</span>
+    </div>
+  </section>
+</ng-template>
+
+<!-- ## sponsorLogoTemplate -->
+<ng-template #sponsorLogoTemplate let-page="page">
+  <section class="page background--generic" [id]="page.pgHref">
+    <div class="page__content layout--sponsorLogo">
+      <div class="logo-container">
+        <img [src]="page.img" alt="Sponsor Logo" />
+      </div>
     </div>
   </section>
 </ng-template>

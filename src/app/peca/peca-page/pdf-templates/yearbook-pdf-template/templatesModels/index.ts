@@ -7,3 +7,5 @@ export * from './SecondLayoutTemplate';
 export * from './/DiagnosticTemplate';
 export * from './IndexTemplate';
 export * from './GalleryTemplate';
+export * from './SponsorLogoTemplate';
+
