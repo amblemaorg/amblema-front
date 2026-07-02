@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit {
         regionalGold: 0,
         regionalSilver: 0,
         regionalBronze: 0,
-        nationalClassified: 0,
         nationalGold: 0,
         nationalSilver: 0,
         nationalBronze: 0,
@@ -113,12 +112,12 @@ export class HomeComponent implements OnInit {
         regionalGold: 0,
         regionalSilver: 0,
         regionalBronze: 0,
-        nationalClassified: 0,
         nationalGold: 0,
         nationalSilver: 0,
         nationalBronze: 0,
       },
     },
+    currentOlympics: null,
   };
   isBrowser: boolean;
   selectedPillar: any = {};
@@ -199,8 +198,37 @@ export class HomeComponent implements OnInit {
 
         if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
+
+          if (chart.data && chart.data.length > 0) {
+            chart.data.sort((a, b) => {
+              const getOrder = (element: any) => {
+                const str = String(element.serie || element.label || '').toLowerCase();
+                if (str.includes('oro')) return 1;
+                if (str.includes('plata')) return 2;
+                if (str.includes('bronce')) return 3;
+                return 4;
+              };
+              return getOrder(a) - getOrder(b);
+            });
+          }
+
+          let olympicColors = ["#f7ba2b", "##88F8F", "#d45f2a"];
+          if (chart.data && chart.data.length > 0) {
+            const seriesArray = chart.data.map((element: any) => element.serie || element.label || '');
+            const uniqueSeries = [...new Set(seriesArray)];
+            if (uniqueSeries.length > 0) {
+              olympicColors = uniqueSeries.map((serie: string) => {
+                const s = String(serie).toLowerCase();
+                if (s.includes('oro')) return "#f7ba2b";
+                if (s.includes('plata')) return "#8F8F8F";
+                if (s.includes('bronce')) return "#d45f2a";
+                return "#f7ba2b";
+              });
+            }
+          }
+
           chart.props = {
-            colors: ["#DB8B19", "#808080", "#B83A1C"],
+            colors: olympicColors,
             stroke: "smooth",
           };
         } else {

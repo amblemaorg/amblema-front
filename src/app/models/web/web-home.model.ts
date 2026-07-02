@@ -6,7 +6,6 @@ export interface OlympicsHistoryData {
   regionalGold: number;
   regionalSilver: number;
   regionalBronze: number;
-  nationalClassified: number;
   nationalGold: number;
   nationalSilver: number;
   nationalBronze: number;
@@ -26,6 +25,7 @@ export interface HomePage {
   statistics: any;
   testimonials: Testimonial[];
   olympicsHistory?: OlympicsHistory;
+  currentOlympics?: any;
 }
 
 export interface WebHome {

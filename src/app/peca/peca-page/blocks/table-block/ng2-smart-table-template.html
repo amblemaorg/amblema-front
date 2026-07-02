@@ -184,7 +184,7 @@ settings.extraData.purpose === 'resultadoTabla'"
       'hide-delete': settings.classes.hideDelete,
       'has-img-in-first-col': settings.isImageFirstCol,
       'is-multi table-block-component': settings.isMulti,
-      'is-empty': settings.isMulti && source.count() === 0,
+      'is-empty': settings.isMulti && (!settings[settings.tableCode] || settings[settings.tableCode].length === 0),
       'no-data': settings.hideSubHeader,
       'is-checked': allSelected
     }"
@@ -196,7 +196,7 @@ settings.extraData.purpose === 'resultadoTabla'"
   <div class="estilo-total">
     <h5>
       Total de estudiantes:
-      <span>{{ source.count() }}</span>
+      <span>{{ settings[settings.tableCode] ? settings[settings.tableCode].length : 0 }}</span>
       <!-- (Seleccionados: {{selectedRows.length}}) -->
     </h5>
   </div>

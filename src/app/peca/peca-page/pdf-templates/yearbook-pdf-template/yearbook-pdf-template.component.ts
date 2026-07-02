@@ -19,6 +19,7 @@ import {
   SmallSchoolSectionsTemplate,
   SecondLayoutTemplate,
   TemplateUtils,
+  SponsorLogoTemplate,
 } from './templatesModels';
 
 type TemplatePages = Array<
@@ -28,7 +29,9 @@ type TemplatePages = Array<
   | SchoolGradeTemplate
   | DiagnosticTemplate
   | ActivityTemplate
+  | SponsorLogoTemplate
 >;
+
 
 @Component({
   selector: 'app-yearbook-pdf-template',
@@ -111,9 +114,20 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     this.setGroupPhotoPage();
     this.setSchoolGradeTemplatePages();
     this.setLapsePages();
+    this.setSponsorLogoPage();
     this.setIndexPage();
     // console.log(this.pages);
   }
+
+  setSponsorLogoPage() {
+    const { sponsorLogo } = this.pdfData;
+    if (sponsorLogo) {
+      const sponsorPage = new SponsorLogoTemplate(sponsorLogo);
+      sponsorPage.setPagerInst(this.pager);
+      this.pages.push(sponsorPage);
+    }
+  }
+
 
   setGroupPhotoPage() {
     if (this.pdfData.groupPhoto) {
@@ -271,7 +285,9 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       'Mi escuela',
       historicalReviewImg,
       historicalReviewText,
+      schoolName,
     );
+    mySchoolPage['indexName'] = `Mi escuela: ${schoolName}`;
 
     const coordinatorPage = new SecondLayoutTemplate(
       'coordinator-section',
@@ -292,12 +308,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     const schoolPage = new SecondLayoutTemplate(
       'school-description-section',
       characterLimit,
-      schoolName,
+      'Nuestros docentes',
       schoolImg,
       schoolText,
-      null,
+      'Los protagonistas de AmbLeMa',
       false,
     );
+    schoolPage['indexName'] = 'Nuestros docentes: Los protagonistas de AmbLeMa';
 
     let pages = [mySchoolPage, coordinatorPage, godFatherPage, schoolPage];
 
@@ -305,7 +322,11 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     this.pages.push(...pages);
 
-    const listItems = TemplateUtils.getItemsToIndex(pages, this.pager);
+    const listItems = TemplateUtils.getItemsToIndex(
+      pages,
+      this.pager,
+      (page) => page.indexName ? 'indexName' : 'title',
+    );
     this.listItems.push(...listItems);
   }
 
@@ -714,11 +735,22 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
     const indexTmpUtils = new IndexTemplateUtils();
     const notNestedItems = indexTmpUtils.getNotNestedItems(this.listItems);
+    const filteredNotNestedItems = notNestedItems.filter((item) => {
+      const label = item.label;
+      return (
+        label !== 'Primer lapso' &&
+        label !== 'Segundo lapso' &&
+        label !== 'Tercer lapso' &&
+        label !== 'Actividades' &&
+        label !== 'Diagnósticos'
+      );
+    });
 
     const maxItemsPerPage = 40;
 
     const notNestedItemsPaged = indexTmpUtils.getNotNestedItemsPaged(
       maxItemsPerPage,
+      filteredNotNestedItems,
     );
 
     const pages = [];

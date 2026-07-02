@@ -5,6 +5,7 @@
 .charts-switcher {
   color: $white;
   height: 100%;
+
   // Styles when every direction  for movil portrait
   &.d-row,
   &.d-column {
@@ -36,13 +37,13 @@
   &.d-row {
     @include breakpoint(small, landscape) {
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: flex-end;
       flex-direction: row;
     }
 
     @include breakpoint(medium) {
       justify-content: flex-start;
-      align-items: flex-start;
+      align-items: flex-end;
       flex-direction: row;
     }
 
@@ -204,6 +205,125 @@
 
       &:focus {
         outline: none;
+      }
+    }
+  }
+
+  .current-olympics-medals-container {
+    margin-top: 2vw;
+    padding: 2vw;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 1.5vw;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+
+    @include breakpoint(medium, portrait, down) {
+      margin-top: 4vw;
+      border-radius: 3vw;
+      padding: 4vw;
+    }
+
+    .current-olympics-title {
+      font-size: 2vw;
+      font-weight: bold;
+      color: $white;
+      text-align: center;
+      margin-bottom: 2vw;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      @include breakpoint(medium, portrait, down) {
+        font-size: 4.5vw;
+        margin-bottom: 4vw;
+      }
+    }
+
+    .olympics-col {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 1vw;
+      padding: 1.5vw;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+
+      @include breakpoint(medium, portrait, down) {
+        border-radius: 2vw;
+        padding: 3vw;
+      }
+
+      .olympics-phase {
+        margin-bottom: 2vw;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .phase-title {
+          font-size: 1.4vw;
+          color: $white;
+          margin-bottom: 1.5vw;
+          text-align: center;
+          opacity: 0.85;
+
+          @include breakpoint(medium, portrait, down) {
+            font-size: 3.5vw;
+            margin-bottom: 3vw;
+          }
+        }
+
+        .result-summary {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+
+          .result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            min-width: 6vw;
+
+            @include breakpoint(medium, portrait, down) {
+              min-width: 12vw;
+            }
+
+            .result-icon {
+              height: 7vw;
+
+              @include breakpoint(medium, portrait, down) {
+                height: 12vw;
+              }
+            }
+
+            .result-count {
+              color: $white;
+              font-size: 1.8vw;
+              font-weight: bold;
+              left: 0.1vw;
+              position: relative;
+              top: -3.5vw;
+
+              @include breakpoint(medium, portrait, down) {
+                font-size: 3.5vw;
+                top: -6vw;
+              }
+            }
+
+            .result-label {
+              color: $white;
+              font-size: 1vw;
+              line-height: 1.2;
+              text-align: center;
+              position: relative;
+              top: -1.8vw;
+              opacity: 0.9;
+
+              @include breakpoint(medium, portrait, down) {
+                font-size: 2.2vw;
+                top: -3vw;
+              }
+            }
+          }
+        }
       }
     }
   }

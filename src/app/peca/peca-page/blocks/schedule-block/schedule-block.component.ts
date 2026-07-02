@@ -121,17 +121,17 @@ export class ScheduleBlockComponent
         if (data && data.activePecaContent) {
           // if (!isNullOrUndefined(data)) {
           // }
-          let auxSchedule = [];
-          data.activePecaContent.schedule.forEach((schedule) => {
+          const auxSchedule = data.activePecaContent.schedule.map((schedule) => {
+            const scheduleCopy = { ...schedule };
             // Change "-" for "/" in date string to instantiate valid dates in iOS and OSX
-            schedule.StartTime = new Date(
-              schedule.StartTime.replace(/-/g, "/")
+            scheduleCopy.StartTime = new Date(
+              typeof scheduleCopy.StartTime === "string" ? scheduleCopy.StartTime.replace(/-/g, "/") : scheduleCopy.StartTime
             );
-            schedule.EndTime = new Date(schedule.EndTime.replace(/-/g, "/"));
-            //schedule.StartTime = this.pipe.transform(Date.parse( schedule.StartTime), 'yyyy/MM/dd , h:mm');
-            //schedule.EndTime = this.pipe.transform(Date.parse(schedule.EndTime), 'yyyy/MM/dd , h:mm');
+            scheduleCopy.EndTime = new Date(
+              typeof scheduleCopy.EndTime === "string" ? scheduleCopy.EndTime.replace(/-/g, "/") : scheduleCopy.EndTime
+            );
+            return scheduleCopy;
           });
-          auxSchedule = auxSchedule.concat(data.activePecaContent.schedule);
           this.schedules = auxSchedule;
           this.eventSettings = {
             dataSource: this.schedules,
