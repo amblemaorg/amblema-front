@@ -4,8 +4,7 @@ import { registerLocaleData } from "@angular/common";
 import localeEs from "@angular/common/locales/es-VE";
 import { GlobalService } from "src/app/services/global.service";
 registerLocaleData(localeEs, "es");
-import "src/assets/js/clamp.min.js";
-declare let $clamp: Function;
+
 
 @Component({
   selector: "blog-post-card",
@@ -19,8 +18,10 @@ export class PostCardComponent implements OnInit {
 
   constructor(private globalService: GlobalService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.globalService.isBrowser) {
+      await import("src/assets/js/clamp.min.js");
+      const $clamp = (window as any).$clamp;
       $clamp(this.title.nativeElement, { clamp: 3 });
       $clamp(this.excerpt.nativeElement, { clamp: 6 });
     }

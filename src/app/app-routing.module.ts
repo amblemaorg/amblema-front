@@ -28,32 +28,26 @@ import { environment } from 'src/environments/environment'
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./web/web.module').then((m) => m.WebModule),
+    loadChildren: './web/web.module#WebModule',
   },
   {
     path: 'previous-steps',
     canActivateChild: [AllowAuthenticatedGuard],
-    loadChildren: () =>
-      import('./web/pages/previous-steps/previous-steps.module').then(
-        (m) => m.PreviousStepsModule,
-      ),
+    loadChildren: './web/pages/previous-steps/previous-steps.module#PreviousStepsModule',
   },
   {
     path: 'peca',
     canActivateChild: [AllowAuthenticatedGuard],
-    loadChildren: () => import('./peca/peca.module').then((m) => m.PecaModule),
+    loadChildren: './peca/peca.module#PecaModule',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: './auth/auth.module#AuthModule',
   },
   {
     path: 'seleccion-escuela',
     canActivate: [AllowAuthenticatedGuard],
-    loadChildren: () =>
-      import('./peca/school-selection/school-selection.module').then(
-        (m) => m.SchoolSelectionModule,
-      ),
+    loadChildren: './peca/school-selection/school-selection.module#SchoolSelectionModule',
   },
   {
     path: 'historical/:userId/:projectId/:token/:schoolYearId/:phase',
@@ -61,17 +55,11 @@ const routes: Routes = [
   },
   {
     path: 'pdf-template',
-    loadChildren: () =>
-      import('./peca/peca-page/pdf-templates/pdf-templates.module').then(
-        (m) => m.PdfTemplatesModule,
-      ),
+    loadChildren: './peca/peca-page/pdf-templates/pdf-templates.module#PdfTemplatesModule',
   },
   {
     path: '**',
-    loadChildren: () =>
-      import('./web/pages/error404/error404.module').then(
-        (m) => m.Error404Module,
-      ),
+    loadChildren: './web/pages/error404/error404.module#Error404Module',
   },
 ]
 

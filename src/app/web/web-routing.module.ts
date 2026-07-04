@@ -18,35 +18,27 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: () =>
-          import("./pages/home/home.module").then(m => m.HomeModule)
+        loadChildren: "./pages/home/home.module#HomeModule"
       },
       {
         path: "nosotros",
-        loadChildren: () =>
-          import("./pages/about/about.module").then(m => m.AboutModule)
+        loadChildren: "./pages/about/about.module#AboutModule"
       },
       {
         path: "padrinos",
-        loadChildren: () =>
-          import("./pages/sponsors/sponsors.module").then(m => m.SponsorsModule)
+        loadChildren: "./pages/sponsors/sponsors.module#SponsorsModule"
       },
       {
         path: "coordinadores",
-        loadChildren: () =>
-          import("./pages/coordinators/coordinators.module").then(
-            m => m.CoordinatorsModule
-          )
+        loadChildren: "./pages/coordinators/coordinators.module#CoordinatorsModule"
       },
       {
         path: "escuelas",
-        loadChildren: () =>
-          import("./pages/school/school.module").then(m => m.SchoolModule)
+        loadChildren: "./pages/school/school.module#SchoolModule"
       },
       {
         path: "blog",
-        loadChildren: () =>
-          import("./pages/blog/blog.module").then(m => m.BlogModule)
+        loadChildren: "./pages/blog/blog.module#BlogModule"
       }
     ]
   }

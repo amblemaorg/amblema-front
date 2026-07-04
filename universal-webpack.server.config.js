@@ -1,9 +1,5 @@
-const nodeExternals = require('webpack-node-externals');
-
 module.exports = {
-    externals: [
-        nodeExternals({
-            allowlist: [/^lodash-es/]
-        })
-    ]
+  // Empty configuration. By removing externals, we force Webpack to bundle 
+  // all node_modules dependencies into the server bundle. This solves 
+  // the 'Unexpected token export' issue by transpiling all ESM code.
 }
