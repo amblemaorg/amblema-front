@@ -22,6 +22,9 @@ import {
   diagnosticDataToReadingFormMapper,
   diagnosticDataToMathFormMapper,
 } from "../mappers/diagnostic-mapper";
+import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
+import { PDFReport } from "src/app/services/peca/pdf-report.service";
+import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "peca-initial-diagnostic",
   templateUrl: "../peca-page.component.html",
@@ -38,6 +41,8 @@ export class InitialDiagnosticPageComponent
   section = {};
   grade = "";
   idPeca = "";
+  schoolId = "";
+  schoolYearId = "";
   response: any;
   readingData: any;
   mathData: any;
@@ -48,7 +53,10 @@ export class InitialDiagnosticPageComponent
   constructor(
     factoryResolver: ComponentFactoryResolver,
     globals: GlobalService,
-    private router: Router
+    private router: Router,
+    private fetcher: HttpFetcherService,
+    private pdfReportService: PDFReport,
+    private toastrService: ToastrService
     ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
@@ -75,11 +83,41 @@ export class InitialDiagnosticPageComponent
     this.getInfo();
   }
 
+  downloadDiagnosticsReport() {
+    this.pdfBtnDisabled = true;
+    this.pdfBtnLoading = true;
+
+    const path = `statistics/diagnosticsreport/${this.schoolYearId}/${this.schoolId}?diagnostics=math,reading,logic&lapso=${this.UrlLapse}`;
+
+    this.fetcher.get(path).subscribe(
+      (response: any) => {
+        if (response && response.sections && response.sections.length) {
+          this.pdfReportService.onGenerate(response);
+        } else {
+          this.toastrService.info("Información", "No se encontraron registros");
+        }
+        this.pdfBtnDisabled = false;
+        this.pdfBtnLoading = false;
+      },
+      (err: any) => {
+        if (err.status === 404) {
+          this.toastrService.info("Información", "No se encontraron registros");
+        } else {
+          this.toastrService.error("Error", "No se pudo generar el reporte");
+        }
+        this.pdfBtnDisabled = false;
+        this.pdfBtnLoading = false;
+      }
+    );
+  }
+
   getInfo() {
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
           this.idPeca = data.activePecaContent.id;
+          this.schoolId = data.activePecaContent.project.school.id;
+          this.schoolYearId = data.user.activeSchoolYear.id;
           this.response = data.activePecaContent.school;
           let auxStudents = [];
           for (let i = 0; i < this.response.sections.length; i++) {

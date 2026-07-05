@@ -220,6 +220,8 @@ export class PecaPageComponent {
 
     this.pdfIndexOptionLoading = false;
   }
+
+  downloadDiagnosticsReport() {}
 }
 
 type header = {
@@ -227,4 +229,5 @@ type header = {
   download?: any;
   indexOption?: { value: boolean };
   positionTitleLeft?: boolean;
+  downloadDiagnostics?: any;
 };

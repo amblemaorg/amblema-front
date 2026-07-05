@@ -525,6 +525,10 @@ const modalMathDiagnosticTable = {
 export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
     title: "Diagnóstico",
+    downloadDiagnostics: {
+      name: "Descargar reporte"
+    },
+    positionTitleLeft: true
   },
   blocks: [
     {

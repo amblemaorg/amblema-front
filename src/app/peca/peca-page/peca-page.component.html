@@ -2,10 +2,10 @@
   <nb-card-body
     class="header-title-and-button-container"
     [class.comes-from-steps]="isFromSteps"
-    [class.has-yearbook]="header && header.download"
+    [class.has-yearbook]="header && (header.download || header.downloadDiagnostics)"
   >
     <div
-      [class.col-sm-6]="header && header.title && header.download"
+      [class.col-sm-6]="header && header.title && (header.download || header.downloadDiagnostics)"
       class="title-style"
       [ngClass]="{ 'title-style': header.positionTitleLeft }"
     >
@@ -13,7 +13,7 @@
     </div>
 
     <button
-      *ngIf="header && !header.download"
+      *ngIf="header && !header.download && !header.downloadDiagnostics"
       (click)="goToSteps()"
       class="btn btn-primary text-decoration-none py-1 px-4 btn-go-steps"
     >
@@ -48,6 +48,20 @@
       </label>
       {{ header?.download?.name ? header.download.name : '' }}
     </button>
+
+    <button
+      *ngIf="header && header.downloadDiagnostics"
+      class="btn btn-primary text-decoration-none p-1 btn-in-wrapper btn-download-yearbook"
+      (click)="downloadDiagnosticsReport()"
+      [disabled]="pdfBtnDisabled"
+    >
+      <label class="btnDownloadLoading" *ngIf="pdfBtnLoading">
+        <span class="spinner-grow spinner-grow-sm"></span>
+        &nbsp;
+      </label>
+      {{ header?.downloadDiagnostics?.name ? header.downloadDiagnostics.name : '' }}
+    </button>
+
 
     <!-- <button
       *ngIf="header && header.download"
