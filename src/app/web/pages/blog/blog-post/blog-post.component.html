@@ -2,7 +2,7 @@
   <section class="post-detail">
     <div>
       <div class="image-wrapper">
-        <img class="post-image" [src]="post.secondaryImage" />
+        <img class="post-image" [src]="post.secondaryImage" [alt]="post.title + ' imagen principal'" />
         <span class="post-date">
           {{ post.date | date: "mediumDate":"+0430":"es" }}
         </span>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
+import { Component, OnInit, OnDestroy, Inject } from "@angular/core";
+import { Location, DOCUMENT } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Post } from "src/app/models/web/blog.model";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
@@ -20,7 +20,7 @@ registerLocaleData(localeEs, "es");
   templateUrl: "./blog-post.component.html",
   styleUrls: ["./blog-post.component.scss"],
 })
-export class BlogPostComponent implements OnInit {
+export class BlogPostComponent implements OnInit, OnDestroy {
   post = {
     mainImage: "",
     secondaryImage: "",
@@ -41,7 +41,8 @@ export class BlogPostComponent implements OnInit {
     private http: HttpClient,
     private titleService: Title,
     private metaService: Meta,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -64,6 +65,7 @@ export class BlogPostComponent implements OnInit {
             this.metaService.removeTag(attributeSelector);
             this.metaService.addTag(metatag, false);
           });
+          this.injectSchema();
         },
         (err) => console.error(err),
         () => {
@@ -124,7 +126,7 @@ export class BlogPostComponent implements OnInit {
       },
       {
         property: "og:url",
-        content: window.location.href,
+        content: typeof window !== 'undefined' ? window.location.href : 'https://amblema.org/blog/post/' + post.slug,
       },
       {
         property: "og:site_name",
@@ -153,5 +155,48 @@ export class BlogPostComponent implements OnInit {
       });
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
+  }
+
+  injectSchema() {
+    if (!this.post || !this.post.title) return;
+
+    // Remove HTML tags from content excerpt for description
+    const rawContent = this.post.content || '';
+    const cleanContent = rawContent.replace(/<[^>]*>/g, '').slice(0, 150);
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": this.post.title,
+      "image": [
+        this.post.mainImage,
+        this.post.secondaryImage
+      ].filter(Boolean),
+      "datePublished": this.post.date,
+      "description": cleanContent,
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-blog-post-schema');
+    if (script) {
+      script.text = JSON.stringify(schema);
+    } else {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-blog-post-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    const script = this.document.getElementById('json-ld-blog-post-schema');
+    if (script) {
+      script.remove();
+    }
   }
 }

@@ -7,7 +7,9 @@ import {
   HostListener,
   NgZone,
   OnDestroy,
+  Inject,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { SchoolService } from 'src/app/services/web/school.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -231,6 +233,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private zone: NgZone,
     private store: Store,
     private http: HttpClient,
+    @Inject(DOCUMENT) private document: any
   ) { }
 
   ngOnInit() {
@@ -252,8 +255,10 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.scrollToPage();
-    this.subscribeScrollEvent();
+    if (this.isBrowser) {
+      this.scrollToPage();
+      this.subscribeScrollEvent();
+    }
   }
 
   ngOnDestroy() {
@@ -263,6 +268,11 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+
+    const script = this.document.getElementById('json-ld-school-detail-schema');
+    if (script) {
+      script.remove();
     }
   }
 
@@ -357,12 +367,15 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.chartSwitcher && this.chartSwitcher.switchChart(0);
       this.setActiveChart(0);
       this.store.dispatch([new SetIsLoadingPage(false)]);
+      this.injectSchema();
     });
   }
 
   scrollToPage() {
-    const schoolTopPos = this.schoolSection.nativeElement.offsetTop;
-    window.scrollTo(0, schoolTopPos);
+    if (this.isBrowser) {
+      const schoolTopPos = this.schoolSection.nativeElement.offsetTop;
+      window.scrollTo(0, schoolTopPos);
+    }
   }
 
   renavigateToTop() {
@@ -467,5 +480,35 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.activityImageCarousel) this.activityImageCarousel.refresh();
     if (this.activitiesCarousel) this.activitiesCarousel.refresh();
     if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.refresh();
+  }
+
+  injectSchema() {
+    if (!this.school || !this.school.name) return;
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "School",
+      "name": this.school.name,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": this.school.direction,
+        "addressCountry": "VE"
+      },
+      "sponsor": this.school.sponsor ? {
+        "@type": "Organization",
+        "name": this.school.sponsor
+      } : undefined
+    };
+
+    let script = this.document.getElementById('json-ld-school-detail-schema');
+    if (script) {
+      script.text = JSON.stringify(schema);
+    } else {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-school-detail-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
   }
 }

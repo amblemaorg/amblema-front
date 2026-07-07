@@ -1,6 +1,6 @@
 <div class="post-card">
   <div class="image-wrapper">
-    <img class="post-image" [src]="post.mainImage" [alt]="post.title + ' imagen'" />
+    <img class="post-image" [src]="post.mainImage" [alt]="post.title + ' imagen'" loading="lazy" />
     <span class="post-date">
       {{ post.date | date: "mediumDate":"-0400":"es" }}
     </span>

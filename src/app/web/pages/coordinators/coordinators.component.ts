@@ -1,11 +1,14 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   ViewChild,
   ElementRef,
   NgZone,
+  Inject,
 } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { DOCUMENT } from "@angular/common";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { WebContentService } from "src/app/services/web/web-content.service";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
@@ -24,7 +27,7 @@ import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
   templateUrl: "./coordinators.component.html",
   styleUrls: ["./coordinators.component.scss"],
 })
-export class CoordinatorsComponent implements OnInit {
+export class CoordinatorsComponent implements OnInit, OnDestroy {
   @ViewChild("stepsList", { static: true }) stepsList: ElementRef;
   scrollSubscription: Subscription;
 
@@ -69,7 +72,8 @@ export class CoordinatorsComponent implements OnInit {
     private http: HttpClient,
     private globalService: GlobalService,
     private zone: NgZone,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.globalService.setTitle(METADATA.coordinatorsPage.title);
     this.globalService.setMetaTags(METADATA.coordinatorsPage.metatags);
@@ -79,6 +83,7 @@ export class CoordinatorsComponent implements OnInit {
     // this.setStaticService();
     this.setApiService();
     this.getCoordinatorsData();
+    this.injectSchema();
     this.zone.runOutsideAngular(() => {
       this.scrollSubscription = fromEvent(window, "scroll").subscribe(
         (event) => {
@@ -131,6 +136,39 @@ export class CoordinatorsComponent implements OnInit {
       }
       this.stepsList.nativeElement.classList.add("animation-finish");
       this.stepsList.nativeElement.classList.remove("animation-init");
+    }
+  }
+
+  injectSchema() {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Coordinadores | AmbLeMa",
+      "description": "El coordinador AmbLeMa es una persona de la comunidad donde se encuentra la escuela y desea colaborar con el método AmbLeMa.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-coordinators-schema');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-coordinators-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
+    const script = this.document.getElementById('json-ld-coordinators-schema');
+    if (script) {
+      script.remove();
     }
   }
 }

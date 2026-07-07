@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Location } from "@angular/common";
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from "@angular/core";
+import { Location, DOCUMENT } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { WebContentService } from "src/app/services/web/web-content.service";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
@@ -20,7 +20,7 @@ import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
   templateUrl: "./blog-archive.component.html",
   styleUrls: ["./blog-archive.component.scss"],
 })
-export class BlogArchiveComponent implements OnInit {
+export class BlogArchiveComponent implements OnInit, OnDestroy {
   @ViewChild("pagination", { static: false }) pagination: JwPaginationComponent;
   postsList = [];
   postsIndex = [];
@@ -41,7 +41,8 @@ export class BlogArchiveComponent implements OnInit {
     private http: HttpClient,
     private globalService: GlobalService,
     public location: Location,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.globalService.setTitle(METADATA.blogPage.title);
     this.globalService.setMetaTags(METADATA.blogPage.metatags);
@@ -60,6 +61,7 @@ export class BlogArchiveComponent implements OnInit {
       //this.setStaticService();
       this.setApiService(this.activePage, this.pageSize, this.queryParams);
       this.getBlogPostsJSON();
+      this.injectSchema();
     });
   }
 
@@ -174,5 +176,35 @@ export class BlogArchiveComponent implements OnInit {
 
   triggerChangePage(page) {
     if (page >= 1 && page <= this.totalPages) this.pagination.setPage(page);
+  }
+
+  injectSchema() {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Blog | AmbLeMa",
+      "description": "En nuestro Blog compartimos nuestras experiencias, noticias, innovaciones, actividades y aprendizajes.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-blog-archive-schema');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-blog-archive-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    const script = this.document.getElementById('json-ld-blog-archive-schema');
+    if (script) {
+      script.remove();
+    }
   }
 }

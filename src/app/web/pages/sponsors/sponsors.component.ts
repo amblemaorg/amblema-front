@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener, ViewChild, NgZone, ElementRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, NgZone, ElementRef, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { DOCUMENT } from "@angular/common";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { WebContentService } from "src/app/services/web/web-content.service";
@@ -20,7 +21,7 @@ import { Store } from "@ngxs/store";
   templateUrl: "./sponsors.component.html",
   styleUrls: ["./sponsors.component.scss"],
 })
-export class SponsorsComponent implements OnInit {
+export class SponsorsComponent implements OnInit, OnDestroy {
   @ViewChild("sponsorsCarousel", { static: false }) sponsorsCarousel: OwlCarousel;
   @ViewChild("listSteps", { static: true }) listSteps: ElementRef;
   scrollSubscription: Subscription;
@@ -91,7 +92,8 @@ export class SponsorsComponent implements OnInit {
     private http: HttpClient,
     private globalService: GlobalService,
     private zone: NgZone,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.globalService.setTitle(METADATA.sponsorsPage.title);
     this.globalService.setMetaTags(METADATA.sponsorsPage.metatags);
@@ -101,6 +103,7 @@ export class SponsorsComponent implements OnInit {
     //this.setStaticService();
     this.setApiService();
     this.getSponsorsData();
+    this.injectSchema();
     this.zone.runOutsideAngular(() => {
       this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
         this.onScroll(event);
@@ -160,6 +163,39 @@ export class SponsorsComponent implements OnInit {
     } else {
       this.sponsorsCarousel.options.responsive[0].items = 2;
       this.sponsorsCarousel.refresh();
+    }
+  }
+
+  injectSchema() {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Padrinos | AmbLeMa",
+      "description": "El padrino es una empresa, finca o familia que patrocina AmbLeMa en una escuela pública de su comunidad.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-sponsors-schema');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-sponsors-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
+    const script = this.document.getElementById('json-ld-sponsors-schema');
+    if (script) {
+      script.remove();
     }
   }
 }

@@ -10,7 +10,7 @@ registerLocaleData(localeEs, "es");
   template: `
     <div class="recent-post-card">
       <div class="image-wrapper">
-        <img [src]="post.mainImage" [alt]="post.title + ' image'" />
+        <img [src]="post.mainImage" [alt]="post.title + ' image'" loading="lazy" />
       </div>
       <div #recentPostTitle class="recent-post-title">
         <a [routerLink]="['/blog/post', post.slug]">{{ post.title }}</a>
