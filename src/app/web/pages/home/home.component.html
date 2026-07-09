@@ -171,17 +171,18 @@
     *ngIf="isBrowser && chartSwitcherOptions && chartSwitcherOptions.charts.length > 0"
   >
   </charts-switcher>
-</section>
-<section class="math-olympics">
+</section><section class="math-olympics">
+  <h2 class="sr-only">Olimpíadas Recreativas de AmbLeMa</h2>
   <div class="olimpiadas-main-logo">
-    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas">
+    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas" loading="lazy">
   </div>
   <div class="olympics-history-text">
     <p>Histórico de la participación de las escuelas que aplican la Herramienta Educativa AmbLeMa <br> 
       en el Sistema de Olimpiadas Recreativas</p>
   </div>
+
   <div class="activities-tabs-container">
-    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM">
+    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM" loading="lazy">
     <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
       <div
         class="activities-tab"
@@ -198,29 +199,29 @@
         Olimpíadas de Lengua
       </div>
     </div>
-    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL">
+    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL" loading="lazy">
   </div>
 
   <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
     <h3 class="math-olympics-subtitle">Fase Regional</h3>
     <div class="result-summary">
       <div class="result classified">
-        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalClassified }}</span>
         <span class="result-label">Estudiantes clasificados</span>
       </div>
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalGold }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalSilver }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalBronze }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
@@ -230,17 +231,17 @@
     <div class="result-summary">
 
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalGold }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalSilver }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalBronze }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
@@ -251,22 +252,22 @@
     <h3 class="math-olympics-subtitle">Fase Regional</h3>
     <div class="result-summary">
       <div class="result classified">
-        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <img class="result-icon" src="./assets/images/icon-classified-students.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalClassified }}</span>
         <span class="result-label">Estudiantes clasificados</span>
       </div>
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalGold }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalSilver }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalBronze }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
@@ -276,17 +277,17 @@
     <div class="result-summary">
 
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalGold }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalSilver }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalBronze }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>

@@ -38,7 +38,13 @@ const fs = require("fs");
 import "localstorage-polyfill";
 import { sessionStorage } from "sessionstorage";
 
-const template = fs.readFileSync(join(DIST_FOLDER, "index.html")).toString();
+const templateHtml = fs.existsSync(join(DIST_FOLDER, "index.original.html"))
+  ? "index.original.html"
+  : "index.html";
+const templateView = fs.existsSync(join(DIST_FOLDER, "index.original.html"))
+  ? "index.original"
+  : "index";
+const template = fs.readFileSync(join(DIST_FOLDER, templateHtml)).toString();
 const win = domino.createWindow(template);
 win.Object = Object;
 win.Math = Math;
@@ -52,7 +58,19 @@ global["localStorage"] = localStorage;
 global["sessionStorage"] = sessionStorage;
 
 global["getComputedStyle"] = win.getComputedStyle;
-global["$"] = global["jQuery"] = function() { return { on: function(){}, owlCarousel: function(){} }; };
+const mockJQueryObj = {
+  on: function() { return mockJQueryObj; },
+  owlCarousel: function() { return mockJQueryObj; },
+  trigger: function() { return mockJQueryObj; },
+  removeClass: function() { return mockJQueryObj; },
+  addClass: function() { return mockJQueryObj; },
+  find: function() { return mockJQueryObj; },
+  remove: function() { return mockJQueryObj; },
+  css: function() { return mockJQueryObj; },
+  hide: function() { return mockJQueryObj; },
+  show: function() { return mockJQueryObj; }
+};
+global["$"] = global["jQuery"] = function() { return mockJQueryObj; };
 global["gtag"] = function() {};
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -80,7 +98,7 @@ app.get(
 
 // All regular routes use the Universal engine
 app.get("*", (req, res) => {
-  res.render("index", { req });
+  res.render(templateView, { req });
 });
 
 // Start up the Node server

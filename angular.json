@@ -222,14 +222,7 @@
           "options": {
             "browserTarget": "amblema-web:build:production",
             "serverTarget": "amblema-web:server:production",
-            "routes": [
-              "/",
-              "/nosotros",
-              "/padrinos",
-              "/coordinadores",
-              "/escuelas",
-              "/blog"
-            ]
+            "routesFile": "prerender-routes.txt"
           },
           "configurations": {
             "production": {}

@@ -1,5 +1,6 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef, NgZone } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { DOCUMENT } from "@angular/common";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { ChartService } from "src/app/services/web/chart.service";
@@ -22,7 +23,7 @@ import { Store } from "@ngxs/store";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild("pillarsCarousel", { static: true }) pillarsCarousel: OwlCarousel;
   @ViewChild("leaf", { static: true }) leaf: ElementRef;
   @ViewChild("pillarsList", { static: true }) pillarsList: ElementRef;
@@ -133,7 +134,8 @@ export class HomeComponent implements OnInit {
     private http: HttpClient,
     private zone: NgZone,
     private iconService: SvgIconRegistryService,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.globalService.setTitle(METADATA.homePage.title);
     this.globalService.setMetaTags(METADATA.homePage.metatags);
@@ -147,6 +149,7 @@ export class HomeComponent implements OnInit {
     //this.setStaticService();
     this.setApiService();
     this.getHomePageData();
+    this.injectSchema();
     this.zone.runOutsideAngular(() => {
       this.scrollSubscription = fromEvent(window, "scroll").subscribe((event) => {
         this.onScroll(event);
@@ -311,5 +314,43 @@ export class HomeComponent implements OnInit {
   onResize() {
     if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
       this.pillarsCarousel.refresh();
+  }
+
+  injectSchema() {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "AmbLeMa",
+      "url": "https://amblema.org",
+      "logo": "https://amblema.org/assets/images/amblema-logo.png",
+      "description": "Herramienta socio-educativa para motivar a docentes y alcanzar educación de calidad.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "VE"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Venezuela"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-schema');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
+    const script = this.document.getElementById('json-ld-schema');
+    if (script) {
+      script.remove();
+    }
   }
 }

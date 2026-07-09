@@ -5,6 +5,7 @@
         *ngIf="testimonial.image"
         [src]="testimonial.image"
         [alt]="testimonial.firstName + ' ' + testimonial.lastName + ' image'"
+        loading="lazy"
       />
     </div>
     <div class="testimonial-identity">

@@ -1,13 +1,16 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   HostListener,
   ViewChild,
   ViewChildren,
   QueryList,
   ElementRef,
+  Inject,
 } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { DOCUMENT } from "@angular/common";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { OwlOptions } from "ngx-owl-carousel-o";
 import { AboutUsPage } from "src/app/models/web/web-about-us.model";
@@ -28,7 +31,7 @@ import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
   templateUrl: "./about.component.html",
   styleUrls: ["./about.component.scss"],
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent implements OnInit, OnDestroy {
   @ViewChild("awardsCarousel", { static: false }) awardsCarousel: OwlCarousel;
   @ViewChildren("awardModal", { read: ElementRef })
   awardModal: QueryList<ElementRef>;
@@ -117,7 +120,8 @@ export class AboutComponent implements OnInit {
     private globalService: GlobalService,
     private modalService: ModalService,
     private iconService: SvgIconRegistryService,
-    private store: Store
+    private store: Store,
+    @Inject(DOCUMENT) private document: any
   ) {
     this.globalService.setTitle(METADATA.aboutUsPage.title);
     this.globalService.setMetaTags(METADATA.aboutUsPage.metatags);
@@ -143,6 +147,7 @@ export class AboutComponent implements OnInit {
     // this.setStaticService();
     this.setApiService();
     this.getAboutUsData();
+    this.injectSchema();
   }
 
   setStaticService() {
@@ -210,5 +215,39 @@ export class AboutComponent implements OnInit {
   onCloseAwardModal(index: number) {
     const awardModalEl = this.awardModal.toArray()[index];
     this.modalService.closeStaticModal(awardModalEl);
+  }
+
+  injectSchema() {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "mainEntity": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      },
+      "description": "Damos herramientas eficaces que motivan a los docentes de calidad para mejorar los indicadores clave de gestión docente.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "AmbLeMa",
+        "url": "https://amblema.org"
+      }
+    };
+
+    let script = this.document.getElementById('json-ld-about-schema');
+    if (!script) {
+      script = this.document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'json-ld-about-schema';
+      script.text = JSON.stringify(schema);
+      this.document.head.appendChild(script);
+    }
+  }
+
+  ngOnDestroy() {
+    const script = this.document.getElementById('json-ld-about-schema');
+    if (script) {
+      script.remove();
+    }
   }
 }

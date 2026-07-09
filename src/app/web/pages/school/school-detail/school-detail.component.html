@@ -3,26 +3,26 @@
     <h1 class="school-name">{{ school.name }}</h1>
     <div class="school-data-wrapper">
       <div class="school-data school-sponsor">
-        <div class="icon"><img src="./assets/images/icon-sponsor.png" /></div>
+        <div class="icon"><img src="./assets/images/icon-sponsor.png" loading="lazy" /></div>
         Apadrinada por: {{ school.sponsor }}
       </div>
       <div class="school-data school-direction">
-        <div class="icon"><img src="./assets/images/icon-school.png" /></div>
+        <div class="icon"><img src="./assets/images/icon-school.png" loading="lazy" /></div>
         {{ school.direction }}
       </div>
       <div class="school-data school-staff">
-        <div class="icon"><img src="./assets/images/icon-staff.png" /></div>
+        <div class="icon"><img src="./assets/images/icon-staff.png" loading="lazy" /></div>
         Cantidad de personal docente, administrativo y obrero: {{ school.staff }}
       </div>
       <div class="school-data school-coordinator">
         <div class="icon">
-          <img src="./assets/images/icon-coodinator.png" />
+          <img src="./assets/images/icon-coodinator.png" loading="lazy" />
         </div>
         Coordinada por: {{ school.coordinator }}
       </div>
       <div class="school-data school-enrollment">
         <div class="icon">
-          <img src="./assets/images/icon-enrollment.png" />
+          <img src="./assets/images/icon-enrollment.png" loading="lazy" />
         </div>
         Matrícula estudiantil: {{ school.enrollment }}
       </div>
@@ -51,7 +51,7 @@
       [carouselClasses]="['']" *ngIf="school.images && school.images.length">
       <ng-container *ngFor="let slide of school.images; index as i">
         <div class="image-wrapper">
-          <img [src]="slide.image" [alt]="school.name + ' imagen ' + i" />
+          <img [src]="slide.image" [alt]="school.name + ' imagen ' + i" loading="lazy" />
           <p class="image-description">{{ slide.description }}</p>
         </div>
       </ng-container>
@@ -73,11 +73,12 @@
   </div>
 </section>
 <section class="math-olympics">
+  <h2 class="sr-only">Olimpíadas Recreativas de la Escuela</h2>
   <div class="olimpiadas-main-logo">
-    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas">
+    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas" loading="lazy">
   </div>
   <div class="activities-tabs-container">
-    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM">
+    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM" loading="lazy">
     <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
       <div class="activities-tab" [ngClass]="{ active: selectedOlympics == OLYMPICS.MATH }"
         (click)="selectedOlympics = OLYMPICS.MATH">
@@ -88,7 +89,7 @@
         Olimpíadas Recreativas de Lengua
       </div>
     </div>
-    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL">
+    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL" loading="lazy">
   </div>
 
   <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
@@ -105,17 +106,17 @@
     <h3 class="math-olympics-subtitle">Fase Preliminar</h3>
     <div class="result-summary">
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-enrolled-students.png" />
         <span class="result-count">{{ school.mathOlympics.enrolled }}</span>
         <span class="result-label">Estudiantes inscritos</span>
       </div>
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-participant-students.png" />
         <span class="result-count">{{ school.mathOlympics.participant }}</span>
         <span class="result-label">Estudiantes participantes</span>
       </div>  
       <div class="result classified">
-        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-classified-students.png" />
         <span class="result-count">{{ school.mathOlympics.classified }}</span>
         <span class="result-label">Estudiantes clasificados</span>
       </div>
@@ -124,23 +125,23 @@
     <h3 class="math-olympics-subtitle">Fase Regional</h3>
     <div class="result-summary">
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-participant-students.png" />
         <span class="result-count">{{ school.mathOlympics.participantRegional }}</span>
         <span class="result-label">Estudiantes participantes</span>
       </div>  
 
       <div *ngIf="school.mathOlympics.goldMedal" class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-gold-medal.png" />
         <span class="result-count">{{ school.mathOlympics.goldMedal }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div *ngIf="school.mathOlympics.silverMedal" class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-silver-medal.png" />
         <span class="result-count">{{ school.mathOlympics.silverMedal }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div *ngIf="school.mathOlympics.bronzeMedal" class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-bronze-medal.png" />
         <span class="result-count">{{ school.mathOlympics.bronzeMedal }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
@@ -150,23 +151,23 @@
       <h3 class="math-olympics-subtitle">Fase Nacional</h3>
       <div class="result-summary">
         <div class="result enrolled">
-          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-enrolled-students.png" />
           <span class="result-count">{{ school.mathOlympics.enrolledNational }}</span>
           <span class="result-label">Estudiantes participantes</span>
         </div>
 
         <div *ngIf="school.mathOlympics.goldMedalNational" class="result gold">
-          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-gold-medal.png" />
           <span class="result-count">{{ school.mathOlympics.goldMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Oro)</span>
         </div>
         <div *ngIf="school.mathOlympics.silverMedalNational" class="result silver">
-          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-silver-medal.png" />
           <span class="result-count">{{ school.mathOlympics.silverMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Plata)</span>
         </div>
         <div *ngIf="school.mathOlympics.bronzeMedalNational" class="result bronze">
-          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-bronze-medal.png" />
           <span class="result-count">{{ school.mathOlympics.bronzeMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Bronce)</span>
         </div>
@@ -188,17 +189,17 @@
     <h3 class="math-olympics-subtitle">Fase Preliminar</h3>
     <div class="result-summary">
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-enrolled-students.png" />
         <span class="result-count">{{ school.readingOlympics.enrolled }}</span>
         <span class="result-label">Estudiantes inscritos</span>
       </div>
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-participant-students.png" />
         <span class="result-count">{{ school.readingOlympics.participant }}</span>
         <span class="result-label">Estudiantes participantes</span>
       </div>  
       <div class="result classified">
-        <img class="result-icon" src="./assets/images/icon-classified-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-classified-students.png" />
         <span class="result-count">{{ school.readingOlympics.classified }}</span>
         <span class="result-label">Estudiantes clasificados</span>
       </div>
@@ -207,23 +208,23 @@
     <h3 class="math-olympics-subtitle">Fase Regional</h3>
     <div class="result-summary">
       <div class="result enrolled">
-        <img class="result-icon" src="./assets/images/icon-participant-students.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-participant-students.png" />
         <span class="result-count">{{ school.readingOlympics.participantRegional }}</span>
         <span class="result-label">Estudiantes participantes</span>
       </div>  
 
       <div *ngIf="school.readingOlympics.goldMedal" class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-gold-medal.png" />
         <span class="result-count">{{ school.readingOlympics.goldMedal }}</span>
         <span class="result-label">Medallas obtenidas (Oro)</span>
       </div>
       <div *ngIf="school.readingOlympics.silverMedal" class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-silver-medal.png" />
         <span class="result-count">{{ school.readingOlympics.silverMedal }}</span>
         <span class="result-label">Medallas obtenidas (Plata)</span>
       </div>
       <div *ngIf="school.readingOlympics.bronzeMedal" class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+        <img class="result-icon" loading="lazy" src="./assets/images/icon-bronze-medal.png" />
         <span class="result-count">{{ school.readingOlympics.bronzeMedal }}</span>
         <span class="result-label">Medallas obtenidas (Bronce)</span>
       </div>
@@ -233,23 +234,23 @@
       <h3 class="math-olympics-subtitle">Fase Nacional</h3>
       <div class="result-summary">
         <div class="result enrolled">
-          <img class="result-icon" src="./assets/images/icon-enrolled-students.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-enrolled-students.png" />
           <span class="result-count">{{ school.readingOlympics.enrolledNational }}</span>
           <span class="result-label">Estudiantes participantes</span>
         </div>
 
         <div *ngIf="school.readingOlympics.goldMedalNational" class="result gold">
-          <img class="result-icon" src="./assets/images/icon-gold-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-gold-medal.png" />
           <span class="result-count">{{ school.readingOlympics.goldMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Oro)</span>
         </div>
         <div *ngIf="school.readingOlympics.silverMedalNational" class="result silver">
-          <img class="result-icon" src="./assets/images/icon-silver-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-silver-medal.png" />
           <span class="result-count">{{ school.readingOlympics.silverMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Plata)</span>
         </div>
         <div *ngIf="school.readingOlympics.bronzeMedalNational" class="result bronze">
-          <img class="result-icon" src="./assets/images/icon-bronze-medal.png" />
+          <img class="result-icon" loading="lazy" src="./assets/images/icon-bronze-medal.png" />
           <span class="result-count">{{ school.readingOlympics.bronzeMedalNational }}</span>
           <span class="result-label">Medallas obtenidas (Bronce)</span>
         </div>
@@ -304,7 +305,7 @@
         <owl-carousel #activityImageCarousel [options]="activityImagesOptions" class="activity-image-carousel"
           [carouselClasses]="['']" *ngIf="school.activities[selectedActivitiesType].length > 0 && school.activities[selectedActivitiesType][activeActivityIndex].slider && school.activities[selectedActivitiesType][activeActivityIndex].slider.length">
           <div class="image-wrapper" *ngFor="let image of school.activities[selectedActivitiesType][activeActivityIndex].slider; index as i">
-            <img [src]="image" [alt]="'Imagen de la actividad ' + i" />
+            <img [src]="image" [alt]="'Imagen de la actividad ' + i" loading="lazy" />
           </div>
         </owl-carousel>
       </div>
@@ -357,7 +358,7 @@
 <ng-template #otherSchool let-school="school">
   <div class="school">
     <div class="image-wrapper">
-      <img [src]="school.image" [alt]="school.name + ' image'" />
+      <img [src]="school.image" [alt]="school.name + ' image'" loading="lazy" />
     </div>
     <a *ngIf="school.slug" class="school-link" [routerLink]="['/escuelas/' + school.slug]">
       <h3 *ngIf="school.name" class="school-name">{{ school.name }}</h3>

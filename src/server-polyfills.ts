@@ -20,8 +20,12 @@ const mockJQueryObj = {
   owlCarousel: function() { return mockJQueryObj; },
   trigger: function() { return mockJQueryObj; },
   removeClass: function() { return mockJQueryObj; },
+  addClass: function() { return mockJQueryObj; },
   find: function() { return mockJQueryObj; },
-  remove: function() { return mockJQueryObj; }
+  remove: function() { return mockJQueryObj; },
+  css: function() { return mockJQueryObj; },
+  hide: function() { return mockJQueryObj; },
+  show: function() { return mockJQueryObj; }
 };
 const mockJQuery = function() { return mockJQueryObj; } as any;
 mockJQuery.fn = { owlCarousel: function(){} };
