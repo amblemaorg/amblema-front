@@ -96,6 +96,12 @@ async function run() {
     fs.writeFileSync(sitemapPath, xml);
     console.log(`Successfully generated sitemap.xml at: ${sitemapPath}`);
 
+    const distSitemapPath = path.join(__dirname, '../dist/browser/sitemap.xml');
+    if (fs.existsSync(path.dirname(distSitemapPath))) {
+      fs.writeFileSync(distSitemapPath, xml);
+      console.log(`Successfully copied sitemap.xml to: ${distSitemapPath}`);
+    }
+
     // 2. Generate prerender-routes.txt content
     const staticPages = ['/', '/nosotros', '/padrinos', '/coordinadores', '/escuelas', '/blog'];
     let routes = [...staticPages];

@@ -38,7 +38,13 @@ const fs = require("fs");
 import "localstorage-polyfill";
 import { sessionStorage } from "sessionstorage";
 
-const template = fs.readFileSync(join(DIST_FOLDER, "index.html")).toString();
+const templateHtml = fs.existsSync(join(DIST_FOLDER, "index.original.html"))
+  ? "index.original.html"
+  : "index.html";
+const templateView = fs.existsSync(join(DIST_FOLDER, "index.original.html"))
+  ? "index.original"
+  : "index";
+const template = fs.readFileSync(join(DIST_FOLDER, templateHtml)).toString();
 const win = domino.createWindow(template);
 win.Object = Object;
 win.Math = Math;
@@ -92,7 +98,7 @@ app.get(
 
 // All regular routes use the Universal engine
 app.get("*", (req, res) => {
-  res.render("index", { req });
+  res.render(templateView, { req });
 });
 
 // Start up the Node server
