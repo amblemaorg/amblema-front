@@ -6,8 +6,11 @@
     <button class="btn btn-primary" (click)="backPage()">
       Regresar
     </button>
-    <button class="btn btn-primary" (click)="print()">
-      Generar PDF
+    <button class="btn btn-primary btn-print-version" (click)="print()">
+      Versión Impresa
+    </button>
+    <button class="btn btn-primary btn-download-pdf" (click)="generatePDF()" [disabled]="creatingPdf">
+      {{ creatingPdf ? 'Descargando...' : 'Descargar PDF' }}
     </button>
     <button class="btn btn-primary" (click)="addGrayScale = !addGrayScale" [ngClass]="{ 'gray-scale': addGrayScale }">
       Activar escala de grises
@@ -22,6 +25,20 @@
         <!-- frontpageTemplate -->
         <div *ngSwitchCase="'frontpageTemplate'">
           <ng-container *ngTemplateOutlet="frontpageTemplate; context: { page: page }"></ng-container>
+
+          <!-- Hoja en blanco (sólo impresa) -->
+          <section class="page print-only-page page--blank">
+          </section>
+
+          <!-- Hoja de título intermedia (sólo impresa) -->
+          <section class="page background--generic print-only-page">
+            <div class="page__content layout--front-print-only">
+              <div class="body">
+                <h1 class="blue-title">AmbLeMario</h1>
+                <p class="blue-subtitle">{{ pdfData?.schoolYear }}</p>
+              </div>
+            </div>
+          </section>
         </div>
 
         <!-- indexTemplate -->

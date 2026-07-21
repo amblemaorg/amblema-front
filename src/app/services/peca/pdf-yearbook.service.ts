@@ -22,6 +22,7 @@ import {
 import pdfFonts from '../../peca/peca-page/pdf-fonts/custom-fonts';
 import { Router } from '@angular/router';
 import { HttpFetcherService } from './http-fetcher.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -76,8 +77,20 @@ export class PdfYearbookService {
       values: string[];
     },
   ) {
+    let mappedGraphic = graphic;
+    if (graphic === 'Diagnóstico de lectura') {
+      mappedGraphic = 'diagnosticReading';
+    } else if (graphic === 'Diagnóstico de matemática') {
+      mappedGraphic = 'diagnosticMath';
+    } else if (graphic === 'Diagnóstico de razonamiento lógico matemático') {
+      mappedGraphic = 'diagnosticLogic';
+    }
 
-    this.graphics[lapse][graphic] = graphicData;
+    if (this.graphics[lapse]) {
+      this.graphics[lapse][mappedGraphic] = graphicData;
+    } else {
+      console.warn(`setGraphics: lapse "${lapse}" is not defined in graphics store`);
+    }
   }
 
   /**
@@ -792,12 +805,28 @@ export class PdfYearbookService {
       const theGraphs = Object.keys(this.graphics).map(async (lapse) => {
         const graphsImgs = Object.keys(this.graphics[lapse]).map(
           async (diagnostic) => {
-            if (this.graphics[lapse][diagnostic]) {
-              const graphimg = await new Img(this.graphics[lapse][diagnostic])
+            const canvasId = `${lapse}-${diagnostic}-graphic`;
+            const canvas = this.document.getElementById(canvasId) as HTMLCanvasElement;
+            const imgData = canvas ? canvas.toDataURL('image/png') : null;
+
+            if (imgData) {
+              const graphimg = await new Img(imgData)
                 .fit([pdfPageSizes.width - 140, 321])
                 .alignment('center')
                 .build();
               this.graphics[lapse][diagnostic] = graphimg;
+            } else {
+              // If canvas is not found but we already built it on a previous run, keep it.
+              // Otherwise, nullify it to avoid passing raw `{ labels, values }` objects.
+              if (
+                this.graphics[lapse][diagnostic] &&
+                typeof this.graphics[lapse][diagnostic] === 'object' &&
+                !this.graphics[lapse][diagnostic].labels
+              ) {
+                // Keep the already built graphimg definition
+              } else {
+                this.graphics[lapse][diagnostic] = null;
+              }
             }
           },
         );
@@ -876,9 +905,15 @@ export class PdfYearbookService {
                   ]).end,
                 );
 
+                const tableRows = this.getTableRows(skill.diagnosticTable);
+                const colCount = tableRows.length > 0 ? tableRows[0].length : 4;
+                const widths = colCount === 5 
+                  ? [65, 65, '*', 'auto', 'auto'] 
+                  : [75, 75, '*', 'auto'];
+
                 pdf.add(
-                  new Table(this.getTableRows(skill.diagnosticTable))
-                    .widths([75, 75, '*', 'auto'])
+                  new Table(tableRows)
+                    .widths(widths)
                     .layout({
                       fillColor: (rowIndex) =>
                         rowIndex !== 0 && rowIndex % 2 === 0
@@ -1210,7 +1245,16 @@ export class PdfYearbookService {
    *
    * @param imgSrc source of the image to be transformed into base 64 format
    */
+  private getDevImageProxyUrl(url: string): string {
+    if (!url) return url;
+    if (!environment.production && url.startsWith('https://amblema.org/')) {
+      return url.replace('https://amblema.org/', '/');
+    }
+    return url;
+  }
+
   private async getBase64FromImg(imgSrc): Promise<any> {
+    imgSrc = this.getDevImageProxyUrl(imgSrc);
     return new Promise<any>((resolve, reject) => {
       let dataURL = null;
       try {
@@ -1238,6 +1282,7 @@ export class PdfYearbookService {
 
   private async compressImage(imgSrc: string, maxWidth = 900, isLogo = false): Promise<string> {
     if (!imgSrc) return null;
+    imgSrc = this.getDevImageProxyUrl(imgSrc);
     return new Promise<string>((resolve) => {
       let canvas = this.document.createElement('canvas');
       const img = this.document.createElement('img');
@@ -1395,15 +1440,56 @@ export class PdfYearbookService {
   }
 
   private getTableRows(body: string[][]): any[][] {
+    if (!body || body.length === 0) return [];
+
+    // Find the maximum number of columns among all normal rows
+    const normalRows = body.filter(r => r[0] !== 'AVERAGE_ROW_MARKER');
+    const colCount = normalRows.length > 0 ? Math.max(...normalRows.map(r => r.length)) : 4;
+
     const body_ = body.reduce((body_: any[], row) => {
+      // 1. Title row with single cell
+      if (row.length === 1) {
+        const cleanTitle = row[0] ? row[0].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+        const titleRow: any[] = [{ text: cleanTitle, colSpan: colCount, bold: true, alignment: 'center', color: this.colors.blue, fontSize: 11 }];
+        for (let i = 1; i < colCount; i++) {
+          titleRow.push({});
+        }
+        body_.push(titleRow);
+        return body_;
+      }
+
+      // 2. Average row
+      if (row[0] === 'AVERAGE_ROW_MARKER') {
+        const avgRow: any[] = [
+          { text: '' },
+          { text: 'Promedio de la escuela', colSpan: 2, bold: true, alignment: 'center', color: this.colors.blue, fontSize: 10, italics: true },
+          {}
+        ];
+        // Add the rest of the values
+        for (let i = 2; i < row.length; i++) {
+          avgRow.push({ text: row[i], bold: true, alignment: 'center', color: this.colors.blue, fontSize: 10, italics: true });
+        }
+        // Fill the rest to match colCount
+        while (avgRow.length < colCount) {
+          avgRow.push({});
+        }
+        body_.push(avgRow);
+        return body_;
+      }
+
+      // 3. Normal row (headers or data)
       const row_ = row.map((col) => {
-        return new Txt(col)
+        const cleanCol = col ? col.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() : '';
+        return new Txt(cleanCol)
           .fontSize(10)
           .bold()
           .italics()
           .color(this.colors.blue).end;
       });
-
+      // Fill the rest to match colCount in case it's shorter
+      while (row_.length < colCount) {
+        row_.push(new Txt('').end);
+      }
       body_.push(row_);
 
       return body_;
