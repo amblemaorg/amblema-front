@@ -41,7 +41,8 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/owl.carousel/dist/owl.carousel.min.js"
+              "node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "src/assets/js/html2pdf.bundle.min.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -116,7 +117,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "amblema-web:build"
+            "browserTarget": "amblema-web:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

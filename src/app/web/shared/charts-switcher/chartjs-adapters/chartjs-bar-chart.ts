@@ -34,20 +34,25 @@ export class ChartJSBarChart extends BarChartComponent {
     this.barChartType = 'bar';
     const seriesArray = this.data.map((element) => <string>element.serie);
     const seriesSet = new Set(seriesArray); // To remove duplicated values
-    const series = [...seriesSet];
+    const series = [...seriesSet].sort();
+
+    const labelsArray = this.data.map((element) => <string>element.label);
+    const labelsSet = new Set(labelsArray); // This remove duplicates labels
+    this.barChartLabels = [...labelsSet];
 
     this.barChartData = series.map((serie) => {
-      const dataSerie = this.data.filter((element) => (element.serie == serie ? true : false));
-      const data = dataSerie.map((element) => <number>element.value);
+      const data = this.barChartLabels.map((label) => {
+        const found = this.data.find(
+          (element) => element.serie === serie && element.label === label
+        );
+        return found ? <number>found.value : null;
+      });
 
       return {
         data: data,
         label: serie,
       };
     });
-    const labelsArray = this.data.map((element) => <string>element.label);
-    const labelsSet = new Set(labelsArray); // This remove duplicates labels
-    this.barChartLabels = [...labelsSet];
 
     if (!legend) {
       legend = {

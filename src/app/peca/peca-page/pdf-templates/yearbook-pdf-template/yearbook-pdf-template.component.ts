@@ -1,8 +1,12 @@
 import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config';
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
+
+declare var jsPDF: any;
+declare var html2canvas: any;
 // import { TemplateUtils } from './templatesModels/templateUtils';
 import {
   ActivityTemplate,
@@ -39,7 +43,14 @@ type TemplatePages = Array<
   styleUrls: ['./yearbook-pdf-template.component.scss'],
 })
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
-  constructor(private router: Router, private pdfService: PdfYearbookService) { }
+  creatingPdf = false;
+  pdfToasterCalledTimes = 0;
+
+  constructor(
+    private router: Router,
+    private pdfService: PdfYearbookService,
+    private toastr: ToastrService,
+  ) { }
 
   showLoading = true;
   addGrayScale = false;
@@ -60,8 +71,35 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   listItems: RecursiveArrayIndexListItem = [];
 
   ngOnInit() {
-    this.pdfData = this.pdfService.pdfData;
-    // this.pdfData = mocksPdfData;
+    if (this.pdfService.pdfData) {
+      // Deep clone to avoid mutating read-only state from store
+      this.pdfData = JSON.parse(JSON.stringify(this.pdfService.pdfData));
+      
+      // Helper to recursively find and rewrite image URLs in the pdfData object to bypass CORS
+      const rewriteUrls = (obj: any) => {
+        if (!obj) return obj;
+        if (typeof obj === 'string') {
+          if (obj.includes('https://amblema.org/resources/')) {
+            return obj.replace('https://amblema.org/', '/');
+          }
+          return obj;
+        }
+        if (Array.isArray(obj)) {
+          for (let i = 0; i < obj.length; i++) {
+            obj[i] = rewriteUrls(obj[i]);
+          }
+        } else if (typeof obj === 'object') {
+          for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+              obj[key] = rewriteUrls(obj[key]);
+            }
+          }
+        }
+        return obj;
+      };
+
+      this.pdfData = rewriteUrls(this.pdfData);
+    }
   }
 
   async ngAfterViewInit() {
@@ -102,6 +140,131 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
   print() {
     window.print();
+  }
+
+  generatePDF() {
+    this.creatingPdf = true;
+    this.toastr.info('Generando archivo PDF, por favor espere...', '', {
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000
+    });
+
+    const pages = Array.from(document.querySelectorAll('.yearbook-pdf .page:not(.print-only-page)')) as HTMLElement[];
+    if (pages.length === 0) {
+      this.toastr.error('No se pudo encontrar el contenido de la vista previa', '', {
+        positionClass: 'toast-bottom-right',
+      });
+      this.creatingPdf = false;
+      return;
+    }
+
+    // Helper to dynamically load external scripts in the browser
+    const loadScript = (src: string): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => resolve();
+        script.onerror = (err) => reject(new Error('Failed to load script: ' + src));
+        document.body.appendChild(script);
+      });
+    };
+
+    // Load libraries sequentially if not already loaded in the window
+    Promise.resolve()
+      .then(() => {
+        if ((window as any).html2canvas) return Promise.resolve();
+        return loadScript('/assets/js/html2canvas.min.js');
+      })
+      .then(() => {
+        if ((window as any).jsPDF || ((window as any).jspdf && (window as any).jspdf.jsPDF)) return Promise.resolve();
+        return loadScript('/assets/js/jspdf.min.js');
+      })
+      .then(() => {
+        const html2canvasLib = (window as any).html2canvas;
+        const jsPDFLib = (window as any).jsPDF || 
+                         ((window as any).jspdf ? (window as any).jspdf.jsPDF : null);
+
+        if (!html2canvasLib || !jsPDFLib) {
+          this.toastr.error('Error cargando las dependencias de PDF', '', {
+            positionClass: 'toast-bottom-right',
+          });
+          this.creatingPdf = false;
+          return;
+        }
+
+        // Initialize jsPDF in landscape letter format (11 x 8.5 inches)
+        const pdf = new jsPDFLib({
+          orientation: 'landscape',
+          unit: 'in',
+          format: 'letter'
+        });
+
+    // Helper to get school name cleaned for filenames (no special characters, spaces to underscores)
+    const getCleanSchoolName = (schoolName: string): string => {
+      if (!schoolName) return '';
+      return schoolName
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9\s]/g, '')
+        .trim()
+        .replace(/\s+/g, '_');
+    };
+
+    const schoolNameStr = this.pdfData && this.pdfData.schoolName ? this.pdfData.schoolName : '';
+    const cleanSchoolName = getCleanSchoolName(schoolNameStr);
+    const pdfFilename = cleanSchoolName ? `Amblemario-${cleanSchoolName}.pdf` : 'amblemario.pdf';
+
+    const processPage = (index: number) => {
+      if (index >= pages.length) {
+        // Save the compiled PDF
+        pdf.save(pdfFilename);
+        this.toastr.success('La descarga del PDF comenzará en breve', '', {
+          positionClass: 'toast-bottom-right',
+        });
+        this.creatingPdf = false;
+        return;
+      }
+
+          const pageElement = pages[index];
+
+          // Render only this page element to a canvas
+          html2canvasLib(pageElement, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            width: pageElement.offsetWidth,
+            height: pageElement.offsetHeight
+          }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+            
+            if (index > 0) {
+              pdf.addPage();
+            }
+
+            // Letter Landscape size is 11 x 8.5 inches. Add image to cover the entire page.
+            pdf.addImage(imgData, 'JPEG', 0, 0, 11, 8.5);
+
+            // Process next page
+            processPage(index + 1);
+          }).catch((err) => {
+            console.error('Error rendering page ' + index + ':', err);
+            this.toastr.error('Error procesando la página ' + (index + 1), '', {
+              positionClass: 'toast-bottom-right',
+            });
+            this.creatingPdf = false;
+          });
+        };
+
+        // Start processing the pages sequentially
+        processPage(0);
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error('No se pudieron cargar las librerías necesarias de PDF', '', {
+          positionClass: 'toast-bottom-right',
+        });
+        this.creatingPdf = false;
+      });
   }
 
   isArray(arg) {

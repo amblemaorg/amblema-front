@@ -4,7 +4,7 @@ export type RecursiveArrayIndexListItem = Array<
   RecursiveArrayIndexListItem | IndexListItem
 >;
 export class IndexTemplate extends Template {
-  maxItemsToWrap = 22;
+  maxItemsToWrap = 20
   utils = new IndexTemplateUtils();
 
   constructor(
@@ -89,7 +89,7 @@ export class IndexListItem {
     public pageNumber?: number,
     public show = true,
     public arrayLevel = 0,
-  ) {}
+  ) { }
 
   getPaddingLeftByLevel() {
     //const padding = this.arrayLevel * this.factorPaddingIncrement;
