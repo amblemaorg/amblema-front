@@ -123,6 +123,8 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
         description: this.coverData.description,
       });
       this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 

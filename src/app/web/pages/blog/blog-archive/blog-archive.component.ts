@@ -118,6 +118,8 @@ export class BlogArchiveComponent implements OnInit, OnDestroy {
       this.updatePostsIndex(data.pagination.total_records);
       this.totalPages = data.pagination.total_pages;
       this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 

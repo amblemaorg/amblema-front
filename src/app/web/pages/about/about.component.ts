@@ -175,6 +175,8 @@ export class AboutComponent implements OnInit, OnDestroy {
         this.aboutUsPageData.awards = this.aboutUsPageData.awards.reverse();
       }
       this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 

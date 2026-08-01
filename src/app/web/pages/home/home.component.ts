@@ -254,6 +254,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         charts: this.chartService.formatChartDataToDrawComponent(chartsData),
       };
       this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
+      this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }
 
