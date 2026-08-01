@@ -67,7 +67,10 @@ export class BlogPostComponent implements OnInit, OnDestroy {
           });
           this.injectSchema();
         },
-        (err) => console.error(err),
+        (err) => {
+          console.error(err);
+          this.store.dispatch([new SetIsLoadingPage(false)]);
+        },
         () => {
           this.getRecentPosts();
           this.store.dispatch([new SetIsLoadingPage(false)]);
@@ -153,6 +156,8 @@ export class BlogPostComponent implements OnInit, OnDestroy {
       this.recentPosts = data.records.map((record) => {
         return this.adaptEndpointResponseToPost(record);
       });
+      this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }

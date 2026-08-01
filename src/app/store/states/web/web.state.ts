@@ -10,7 +10,7 @@ export interface WebStateModel {
 @State<WebStateModel>({
   name: "web",
   defaults: {
-    isLoadingPage: false,
+    isLoadingPage: true,
     schoolMarkersLoading: false,
   },
 })
