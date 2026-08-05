@@ -41,6 +41,7 @@ export class WebComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.store.dispatch([new SetIsLoadingPage(true)]);
     this.displayFooter();
     this.loadingPageSubscription();
     this.routerEventsSubscription();
