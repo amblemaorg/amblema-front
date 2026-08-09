@@ -79,6 +79,7 @@ export function amblemarioMapper(pecaData) {
       readingDiagnosticAnalysis,
       mathDiagnosticAnalysis,
       logicDiagnosticAnalysis,
+      environmentalDiagnosticAnalysis,
       diagnosticSummary,
       activities,
     } = lapse;
@@ -203,6 +204,15 @@ export function amblemarioMapper(pecaData) {
             diagnosticGraphic: null,
           }
         : null,
+      diagnosticEnvironmental: {
+        diagnosticText: 'Diagnóstico ambiental',
+        diagnosticAnalysis: environmentalDiagnosticAnalysis
+          ? environmentalDiagnosticAnalysis
+          : null,
+        diagnosticGraphicText:
+          'Gráfico estadístico del diagnóstico ambiental',
+        diagnosticGraphic: null,
+      },
       activities: lapseActivities,
     };
   });

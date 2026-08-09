@@ -39,6 +39,10 @@ const routes: Routes = [
       {
         path: "blog",
         loadChildren: "./pages/blog/blog.module#BlogModule"
+      },
+      {
+        path: "evaluacion-ambiente/:token",
+        loadChildren: "./pages/environmental-evaluation/environmental-evaluation.module#EnvironmentalEvaluationModule"
       }
     ]
   }

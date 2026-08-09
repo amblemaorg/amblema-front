@@ -1,0 +1,134 @@
+<div class="env-evaluation-page">
+  <div class="container py-custom-top">
+    
+    <!-- Header Logo and Title -->
+    <div class="header-logo text-center mb-5">
+      <img src="assets/images/amblema-logo.png" alt="Amblema Logo" class="logo-img">
+      <h2 class="title mt-3">Evaluación de Diagnóstico Ambiental</h2>
+    </div>
+
+    <!-- Spinner Loading -->
+    <div *ngIf="loading" class="text-center my-5">
+      <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p class="mt-3 text-muted font-weight-bold">Cargando información de la evaluación...</p>
+    </div>
+
+    <!-- Not Found -->
+    <div *ngIf="!loading && notFound" class="blue-card mx-auto text-center p-4" style="max-width: 600px;">
+      <div class="inner-blue-box p-4">
+        <i class="fa fa-exclamation-triangle text-warning display-4 mb-3"></i>
+        <h4 class="text-white font-weight-bold mb-2">Enlace Inválido o Expirado</h4>
+        <p class="text-white-50 mb-0">El enlace de evaluación al que intenta acceder no existe o ya no está disponible.</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div *ngIf="!loading && !notFound" class="evaluation-container mx-auto" style="max-width: 820px;">
+      
+      <!-- Already Evaluated Alert Banner -->
+      <div *ngIf="hasEvaluated" class="alert alert-warning shadow-sm border-warning mb-4 rounded-lg" role="alert">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-info-circle fa-2x mr-3 text-warning"></i>
+          <div>
+            <h5 class="alert-heading mb-1 font-weight-bold">Evaluación ya registrada</h5>
+            <p class="mb-0">{{ alreadyEvaluatedMessage }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Cards (School & Evaluator Info) -->
+      <div class="blue-card mb-5">
+        <h4 class="card-main-title text-center text-white text-uppercase mb-3">
+          Información de la Evaluación
+        </h4>
+        <div class="inner-blue-box p-4">
+          <div class="row">
+            <!-- School Info -->
+            <div class="col-md-6 mb-4 mb-md-0 border-right-md">
+              <h5 class="info-section-title mb-3">
+                <i class="fa fa-university mr-2"></i>Información de la Escuela
+              </h5>
+              <p class="info-text mb-2"><strong>Nombre:</strong> {{ school?.name || 'N/A' }}</p>
+              <p class="info-text mb-2"><strong>Código:</strong> {{ school?.code || 'N/A' }}</p>
+              <p class="info-text mb-0"><strong>Dirección:</strong> {{ school?.address || 'N/A' }}</p>
+            </div>
+
+            <!-- Evaluator Info -->
+            <div class="col-md-6 pl-md-4">
+              <h5 class="info-section-title mb-3">
+                <i class="fa fa-user-circle mr-2"></i>Información del Evaluador
+              </h5>
+              <p class="info-text mb-2"><strong>Nombre y Apellido:</strong> {{ evaluator?.name }}</p>
+              <p class="info-text mb-2"><strong>Correo Electrónico:</strong> {{ evaluator?.email }}</p>
+              <p class="info-text mb-2"><strong>Teléfono:</strong> {{ evaluator?.phone }}</p>
+              <p class="info-text mb-0"><strong>Lapso:</strong> {{ evaluator?.lapse }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Criteria Card -->
+      <div class="blue-card">
+        <div class="card-header-blue text-center mb-3">
+          <h4 class="card-main-title text-white text-uppercase mb-2">
+            Criterios de Evaluación Ambiental
+          </h4>
+          <p class="card-subtitle-text mb-0">
+            Seleccione si aplica o no cada criterio. En caso afirmativo, ingrese una puntuación de 0 a 7.
+          </p>
+        </div>
+
+        <div class="inner-blue-box p-4">
+          <div *ngFor="let item of criteriaList; let i = index" class="criterion-item py-3" [class.border-bottom-blue]="i < criteriaList.length - 1">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+              
+              <div class="criterion-title mb-3 mb-md-0 pr-md-3">
+                <h6 class="font-weight-bold mb-0 text-white">{{ i + 1 }}. {{ item.label }}</h6>
+              </div>
+
+              <!-- Applies Switch / Radio Buttons -->
+              <div class="d-flex align-items-center">
+                <div class="btn-group btn-group-toggle mr-3" data-toggle="buttons">
+                  <label class="btn btn-blue-option btn-sm" [class.active-si]="item.applies" [class.disabled]="hasEvaluated">
+                    <input type="radio" [name]="'applies_' + item.key" [checked]="item.applies" (change)="toggleApplies(item, true)" [disabled]="hasEvaluated"> Sí
+                  </label>
+                  <label class="btn btn-blue-option btn-sm" [class.active-no]="!item.applies" [class.disabled]="hasEvaluated">
+                    <input type="radio" [name]="'applies_' + item.key" [checked]="!item.applies" (change)="toggleApplies(item, false)" [disabled]="hasEvaluated"> No aplica
+                  </label>
+                </div>
+
+                <!-- Input Score (0-7) -->
+                <div class="score-input-wrapper" style="width: 100px;">
+                  <input type="number" 
+                         class="form-control text-center custom-score-input" 
+                         [class.is-invalid]="item.applies && (item.value === null || item.value === undefined || item.value < 0 || item.value > 7)"
+                         [disabled]="!item.applies || hasEvaluated" 
+                         min="0" 
+                         max="7" 
+                         [(ngModel)]="item.value"
+                         (change)="validateValue(item)"
+                         placeholder="0 - 7">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div *ngIf="!hasEvaluated" class="text-center mt-4 pt-2">
+            <button class="btn btn-success-custom btn-lg px-5 font-weight-bold shadow" (click)="submit()" [disabled]="submitting">
+              <span *ngIf="submitting" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+              <i *ngIf="!submitting" class="fa fa-save mr-2"></i>
+              Guardar Resultados
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

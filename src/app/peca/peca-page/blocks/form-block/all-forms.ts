@@ -1491,6 +1491,27 @@ export const formAnalisisYResultados = {
 };
 
 //? -- MODALES -----------------------------------------------
+export const formEvaluadorAmbiente = {
+  name: {
+    label: "Nombre y Apellido",
+    placeholder: "Nombre y Apellido",
+    fullwidth: false,
+    ...controlProps.normalTextAndRequired,
+  },
+  email: {
+    label: "Correo Electrónico",
+    placeholder: "Correo Electrónico",
+    fullwidth: false,
+    ...controlProps.emailAndRequired,
+  },
+  phone: {
+    label: "Teléfono",
+    placeholder: "Teléfono",
+    fullwidth: false,
+    ...controlProps.numberAndRequired,
+  },
+};
+
 // DIAGNOSTICO INICIAL
 export const formLecturaModal = {
   name: {
