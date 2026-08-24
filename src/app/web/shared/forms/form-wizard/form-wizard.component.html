@@ -11,11 +11,12 @@
       *ngIf="i === activeStepIndex || formWizard.length === 1"
     >
       <div class="fields-container">
-        <div
-          [class]="'form-field field ' + stepsContent[i][field].type"
-          *ngFor="let field of fields[i]; trackBy: trackByFn"
-          [ngSwitch]="stepsContent[i][field].type"
-        >
+        <ng-container *ngFor="let field of fields[i]; trackBy: trackByFn">
+          <div
+            [class]="'form-field field ' + stepsContent[i][field].type"
+            *ngIf="isFieldVisible(i, field)"
+            [ngSwitch]="stepsContent[i][field].type"
+          >
           <ng-container *ngSwitchCase="'textarea'">
             <textarea
               [id]="field"
@@ -155,6 +156,7 @@
                           stepsContent[i][field].header
                         }}</strong>
                         <button 
+                          #closeMapBtn
                           type="button" 
                           class="close" 
                           data-dismiss="modal"
@@ -167,6 +169,20 @@
                         <ng-template #mapProblem>
                           <p class="map-problem">Hubo un problema al cargar el mapa, por favor recargue la página.</p>
                         </ng-template>                        
+                      </div>
+                      <div class="modal-footer" *ngIf="googleLoaded">
+                        <small class="mr-auto text-muted" *ngIf="currentMarker">
+                          Ubicación seleccionada
+                        </small>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm ml-auto"
+                          data-dismiss="modal"
+                          [disabled]="!currentMarker"
+                          (click)="saveMapLocation()"
+                        >
+                          Guardar ubicación
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -201,6 +217,7 @@
           >
           </web-form-validation>
         </div>
+        </ng-container>
       </div>
       <div class="button-container">
         <button

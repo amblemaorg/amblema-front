@@ -4,7 +4,12 @@ import {
   QueryList,
   ViewChildren,
   OnDestroy,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  NgZone,
 } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Select, Store } from "@ngxs/store";
 import { StepsService } from "../../../../services/steps/steps.service";
 import { UserState } from "../../../../store/states/e-learning/user.state";
@@ -17,6 +22,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ResidenceInfoState } from "src/app/store/states/steps/residence-info.state";
 import { GeneralStepsComponent } from "./general-steps/general-steps.component";
 import { UpdateModulesTotal } from "src/app/store/actions/e-learning/learning-modules.actions";
+import { ConvenioPdfService } from "./convenio-pdf.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-steps",
@@ -27,13 +34,16 @@ export class StepsComponent implements OnInit, OnDestroy {
   @ViewChildren("generalStep", { read: GeneralStepsComponent })
   generalStepsRef: QueryList<GeneralStepsComponent>;
 
+  @ViewChild("sigCanvas", { static: false })
+  sigCanvas: ElementRef<HTMLCanvasElement>;
+
   fillCounter: number = 0;
   isTest: boolean = false;
+  curriculumPending: boolean = false;
   activeStep = 0;
-  curriculumPending = false;
-  project_id = "";
-  user_id = "";
-  user_type = "";
+  project_id: string;
+  user_id: string;
+  user_type: string;
 
   canOrganizationConfirm: boolean = true; // approval button which confirms to create PECA
 
@@ -60,14 +70,34 @@ export class StepsComponent implements OnInit, OnDestroy {
 
   fetchingSteps: boolean;
 
+  showSignatureModal: boolean = false;
+  isDrawing: boolean = false;
+  isSavingSignature: boolean = false;
+  signerRoleName: string = "";
+  projectRecordData: any = null;
+  private ctx: CanvasRenderingContext2D = null;
+
   private subscription: Subscription = new Subscription();
 
   constructor(
     private stepsService: StepsService,
     private store: Store,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private convenioPdfService: ConvenioPdfService,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
+  ) {
+    (window as any).triggerSignatureFromPreview = () => {
+      this.ngZone.run(() => {
+        try {
+          window.focus();
+        } catch (e) {}
+        this.openSignatureModal();
+      });
+    };
+  }
 
   ngOnInit() {
     if (!this.munsLoaded)
@@ -123,7 +153,10 @@ export class StepsComponent implements OnInit, OnDestroy {
       );
       this.subscription.add(
         this.user_type$.subscribe((res) => {
-          if (res) this.user_type = res;
+          if (res) {
+            this.user_type = res;
+            this.setDefaultActiveStep();
+          }
         })
       );
 
@@ -194,10 +227,7 @@ export class StepsComponent implements OnInit, OnDestroy {
               ) {
                 this.curriculumPending = true;
               }
-              step_.goMods =
-                step_.devName == "corrdinatorCompleteTrainingModules"
-                  ? true
-                  : false;
+              step_.goMods = false;
 
               if (
                 step_.status != "3" &&
@@ -239,10 +269,16 @@ export class StepsComponent implements OnInit, OnDestroy {
             });
 
             //Setting progress bar
-            this.stepsProgress[0] = +res.general;
-            this.stepsProgress[1] = +res.sponsor;
-            this.stepsProgress[2] = +res.coordinator;
-            this.stepsProgress[3] = +res.school;
+            const calcProgress = (stepsArr: any[]) => {
+              if (!stepsArr || stepsArr.length === 0) return 0;
+              const approved = stepsArr.filter((s) => s.status === "3").length;
+              return Math.round((approved / stepsArr.length) * 100);
+            };
+
+            this.stepsProgress[0] = calcProgress(this.generalSteps);
+            this.stepsProgress[1] = calcProgress(this.sponsorSteps);
+            this.stepsProgress[2] = calcProgress(this.coordinatorSteps);
+            this.stepsProgress[3] = calcProgress(this.schoolSteps);
           }
         })
       );
@@ -298,13 +334,7 @@ export class StepsComponent implements OnInit, OnDestroy {
   }
 
   enablingModsBtn() {
-    let enable = false;
-
-    this.user_type$.subscribe((res) => {
-      enable = res == "0" || res == "1" || res == "2";
-    });
-
-    return enable;
+    return this.user_type === "0" || this.user_type === "1";
   }
 
   goToModules() {
@@ -318,5 +348,186 @@ export class StepsComponent implements OnInit, OnDestroy {
         comesFromPreviousSteps: true,
       },
     ]);
+  }
+
+  isAdmin(): boolean {
+    return this.user_type === "0" || this.user_type === "1";
+  }
+
+  setDefaultActiveStep() {
+    if (this.user_type === "2") {
+      this.activeStep = 2;
+    } else if (this.user_type === "3") {
+      this.activeStep = 1;
+    } else if (this.user_type === "4") {
+      this.activeStep = 3;
+    } else {
+      this.activeStep =
+        this.generalSteps && this.generalSteps.length > 0 ? 0 : 1;
+    }
+  }
+
+  shouldShowTab(tabNum: number): boolean {
+    const uType = this.user_type;
+    if (uType === "0" || uType === "1") {
+      if (tabNum === 0) return this.generalSteps && this.generalSteps.length > 0;
+      return true;
+    }
+    if (tabNum === 0) {
+      return this.generalSteps && this.generalSteps.length > 0;
+    }
+    if (tabNum === 1) return uType === "3"; // Padrino
+    if (tabNum === 2) return uType === "2"; // Coordinador
+    if (tabNum === 3) return uType === "4"; // Escuela
+    return false;
+  }
+
+  openTripartiteAgreementModal() {
+    if (!this.project_id) return;
+    this.http.get<any>(`${environment.baseUrl}projects/${this.project_id}`).subscribe(
+      (project) => {
+        this.projectRecordData = project;
+        this.convenioPdfService.generateTripartiteAgreementPdf(project);
+      },
+      (error) => {
+        console.error("Error fetching project data for agreement preview:", error);
+      }
+    );
+  }
+
+  openSignatureModal() {
+    if (!this.projectRecordData && this.project_id) {
+      this.http.get<any>(`${environment.baseUrl}projects/${this.project_id}`).subscribe(
+        (project) => {
+          this.projectRecordData = project;
+          this.doOpenSignatureModal();
+        },
+        () => {
+          this.doOpenSignatureModal();
+        }
+      );
+    } else {
+      this.doOpenSignatureModal();
+    }
+  }
+
+  doOpenSignatureModal() {
+    if (this.user_type === "4") {
+      this.signerRoleName = "Director(a) de la Escuela";
+    } else if (this.user_type === "3") {
+      this.signerRoleName = "Representante del Padrino";
+    } else {
+      this.signerRoleName = "Fundación AmbLeMa";
+    }
+    this.showSignatureModal = true;
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.initCanvas();
+    }, 100);
+  }
+
+  closeSignatureModal() {
+    this.showSignatureModal = false;
+    this.isDrawing = false;
+  }
+
+  initCanvas() {
+    if (!this.sigCanvas) return;
+    const canvas = this.sigCanvas.nativeElement;
+    this.ctx = canvas.getContext('2d');
+    this.ctx.lineWidth = 3;
+    this.ctx.lineCap = 'round';
+    this.ctx.strokeStyle = '#000000';
+    this.clearCanvas();
+  }
+
+  clearCanvas() {
+    if (!this.ctx || !this.sigCanvas) return;
+    const canvas = this.sigCanvas.nativeElement;
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  startDrawing(event: any) {
+    this.isDrawing = true;
+    const pos = this.getCanvasPos(event);
+    if (this.ctx) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(pos.x, pos.y);
+    }
+  }
+
+  draw(event: any) {
+    if (!this.isDrawing || !this.ctx) return;
+    event.preventDefault();
+    const pos = this.getCanvasPos(event);
+    this.ctx.lineTo(pos.x, pos.y);
+    this.ctx.stroke();
+  }
+
+  stopDrawing() {
+    this.isDrawing = false;
+  }
+
+  getCanvasPos(event: any) {
+    const canvas = this.sigCanvas.nativeElement;
+    const rect = canvas.getBoundingClientRect();
+    let clientX = event.clientX;
+    let clientY = event.clientY;
+
+    if (event.touches && event.touches.length > 0) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    }
+
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  }
+
+  saveSignature() {
+    if (!this.sigCanvas || !this.project_id) return;
+    const canvas = this.sigCanvas.nativeElement;
+    const signatureData = canvas.toDataURL('image/png');
+
+    let role = 'school';
+    let signerName = '';
+    let signerTitle = '';
+
+    if (this.user_type === '3') {
+      role = 'sponsor';
+      signerName = this.projectRecordData?.sponsor?.name || 'Representante del Padrino';
+      signerTitle = 'Representante del Padrino';
+    } else if (this.user_type === '4') {
+      role = 'school';
+      signerName = this.projectRecordData?.school?.name || 'Director(a)';
+      signerTitle = 'Director(a) del Plantel Educativo';
+    } else {
+      role = 'amblema';
+      signerName = 'Tomás Linares';
+      signerTitle = 'Vice-Presidente de la Fundación AmbLeMa';
+    }
+
+    this.isSavingSignature = true;
+
+    this.http.post<any>(`${environment.baseUrl}projects/signature/${this.project_id}`, {
+      role,
+      signerName,
+      signerTitle,
+      signatureData
+    }).subscribe(
+      (updatedProject) => {
+        this.isSavingSignature = false;
+        this.projectRecordData = updatedProject;
+        this.closeSignatureModal();
+        this.openTripartiteAgreementModal();
+      },
+      (err) => {
+        this.isSavingSignature = false;
+        console.error("Error saving signature:", err);
+        alert("Ocurrió un error al guardar la firma digital.");
+      }
+    );
   }
 }
