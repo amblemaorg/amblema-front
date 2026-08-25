@@ -27,7 +27,7 @@
 /escuelas/OD13520517PM_U-E-E--24-de-Octubre-PM
 /escuelas/OD11760513PM_U-E-E--Manuelita-Sáenz-PM
 /escuelas/OD03622211_E-B--María-Antonia-Gonzáles
-/escuelas/OD05732211_E-I-B--Graciela-de-Gamarra
+/escuelas/OD05732211_Escuela-Graciela-de-Gamarra
 /escuelas/OD13500517PM_U-E-E--Arminda-del-Carmen-Morillo---PM
 /escuelas/0D05771804_E-B--Teresa-de-la-Parra
 /escuelas/010058_U-E--Jenaro-Aguirre-Elorriaga

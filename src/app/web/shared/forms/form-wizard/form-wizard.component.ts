@@ -22,7 +22,7 @@ import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
 import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Subscription } from "rxjs";
-// import { HttpFetcherService } from '../../../../services/peca/http-fetcher.service';
+declare var $: any;
 
 @Component({
   selector: "web-form-wizard",
@@ -34,6 +34,8 @@ export class FormWizardComponent implements OnInit, OnDestroy {
   googleMap: ElementRef;
   @ViewChild("googleMapSp", { read: ElementRef, static: false })
   googleMapSp: ElementRef;
+  @ViewChild("closeMapBtn", { read: ElementRef, static: false })
+  closeMapBtn: ElementRef;
 
   @Input() formsContent: any;
   @Input() isSchoolForm: boolean = false;
@@ -278,23 +280,64 @@ export class FormWizardComponent implements OnInit, OnDestroy {
       this.currentMarker = null;
     }
 
+    const initialName = data.name || "Escuela";
+    const initialChar = initialName.substring(0, 1).toUpperCase();
+
     this.currentMarker = new google.maps.Marker({
       map: this.map,
       position: new google.maps.LatLng(
         data.coordinate.latitude,
         data.coordinate.longitude
       ),
-      label: data.name.substring(0, 1).toUpperCase(),
+      label: {
+        text: initialChar,
+        color: "#FFFFFF",
+        fontWeight: "bold"
+      },
       title:
-        data.name.toLowerCase() == "escuela"
-          ? data.name
-          : `Escuela: ${data.name}`,
+        initialName.toLowerCase() == "escuela"
+          ? initialName
+          : `Escuela: ${initialName}`,
     });
 
     this.formWizard[this.getFormMapContainerIndex()]
       .get("coordinate")
       .setValue(data.coordinate);
-    this.currentMarker.setMap(this.map);
+
+    this.currentMarker.addListener("click", () => {
+      this.formWizard[this.getFormMapContainerIndex()]
+        .get("coordinate")
+        .setValue(data.coordinate);
+      this.toastr.success("Ubicación guardada con éxito", "", {
+        positionClass: "toast-bottom-right",
+      });
+      this.closeMapModal();
+    });
+  }
+
+  saveMapLocation() {
+    if (this.currentMarker && this.currentMarker.getPosition()) {
+      const pos = this.currentMarker.getPosition();
+      const coord = {
+        latitude: pos.lat(),
+        longitude: pos.lng(),
+      };
+      this.formWizard[this.getFormMapContainerIndex()]
+        .get("coordinate")
+        .setValue(coord);
+      this.toastr.success("Ubicación guardada con éxito", "", {
+        positionClass: "toast-bottom-right",
+      });
+      this.closeMapModal();
+    }
+  }
+
+  closeMapModal() {
+    if (this.closeMapBtn && this.closeMapBtn.nativeElement) {
+      this.closeMapBtn.nativeElement.click();
+    } else if (typeof $ !== "undefined") {
+      $("#google-map-modal").modal("hide");
+    }
   }
 
   mapPositioner(state: string, county: string) {
@@ -520,14 +563,28 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     return isWriteable;
   }
 
+  public isFieldVisible(formIndex: number, field: string): boolean {
+    const fieldConfig = this.stepsContent[formIndex][field];
+    if (fieldConfig && fieldConfig.condition) {
+      return this.checkStepOrFieldCondition(fieldConfig.condition);
+    }
+    return true;
+  }
+
   private checkStepOrFieldCondition(condition: any): boolean {
+    if (!condition) {
+      return true;
+    }
+    if (Array.isArray(condition)) {
+      return condition.every((cond) => this.checkStepOrFieldCondition(cond));
+    }
     if (
       typeof condition == "object" &&
       !isNullOrUndefined(this.dataToSubmit) &&
       !isNullOrUndefined(condition.value) &&
       !isNullOrUndefined(condition.formControlName) &&
       typeof condition.formControlName == "string" &&
-      this.dataToSubmit[condition.formControlName] !== condition.value
+      this.dataToSubmit[condition.formControlName] != condition.value
     ) {
       return false;
     } else {
@@ -586,7 +643,7 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         if (
           stepContent[prop].condition &&
           stepContent[prop].condition.formControlName &&
-          stepContent[prop].condition.value
+          !isNullOrUndefined(stepContent[prop].condition.value)
         ) {
           let conditionalFormControlName =
             stepContent[prop].condition.formControlName;
@@ -594,11 +651,18 @@ export class FormWizardComponent implements OnInit, OnDestroy {
             conditionalFormControlName
           );
           let dependentFormControl = this.getFormControlInFormWizard(prop);
-          conditionalFormControl.valueChanges.subscribe((currentValue) => {
-            if (currentValue == stepContent[prop].condition.value)
-              dependentFormControl.enable();
-            else dependentFormControl.disable();
-          });
+          if (conditionalFormControl && dependentFormControl) {
+            if (conditionalFormControl.value != stepContent[prop].condition.value) {
+              dependentFormControl.disable();
+            }
+            conditionalFormControl.valueChanges.subscribe((currentValue) => {
+              if (currentValue == stepContent[prop].condition.value)
+                dependentFormControl.enable();
+              else dependentFormControl.disable();
+              this.updateDataToSubmit();
+              this.getLastStepIndex();
+            });
+          }
         }
       });
     });

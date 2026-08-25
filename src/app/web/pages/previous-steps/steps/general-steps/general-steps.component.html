@@ -39,8 +39,7 @@
         >
         </status-selector>
 
-        <p *ngIf="step.hasText && !step.isForm" class="first-p">
-          {{ step.text }}
+        <p *ngIf="step.hasText && !step.isForm" class="first-p" [innerHTML]="step.text">
         </p>
 
         <ng-container *ngIf="!step.isForm; else formOpt">
@@ -127,11 +126,19 @@
             [download]="step.file.name"
             class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
             [class.has-several]="isAdmin() && step.approvalType == '1'"
-            (click)="isSelectorReadOnly() ? $event.preventDefault() : null"
+            (click)="onFileClick(step, i)"
             [class.inactive]="isSelectorReadOnly()"
           >
             Descargar archivo
           </a>
+          <button
+            *ngIf="isConvenioStep(step)"
+            type="button"
+            class="btn btn-info text-decoration-none py-2 px-4 mt-1 ml-2"
+            (click)="downloadConvenioPdf(step)"
+          >
+            Descargar convenio llenado
+          </button>
           <div
             *ngIf="step.hasUpload"
             class="d-inline"
@@ -151,7 +158,7 @@
               (click)="clickUpload(uploadFile); $event.preventDefault()"
               class="btn btn-primary text-decoration-none py-2 px-4 mt-1 attachfile"
               [class.has-several]="
-                (isAdmin() && step.approvalType == '1') || step.hasFile
+                (isAdmin() && step.approvalType == '1') || step.hasFile || isConvenioStep(step)
               "
               [disabled]="
                 (compareMode() && !isAdmin()) ||

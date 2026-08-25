@@ -23,6 +23,14 @@ export class ContactService {
     return this.http.get(environment.baseUrl + "states");
   }
 
+  getSponsors(): Observable<any> {
+    return this.http.get(environment.baseUrl + "sponsors");
+  }
+
+  getSchools(): Observable<any> {
+    return this.http.get(environment.baseUrl + "schools");
+  }
+
   sendContactForm(form, data): Observable<any> {
     switch (form) {
       case "coordinator":

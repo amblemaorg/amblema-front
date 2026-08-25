@@ -20,7 +20,7 @@
     "build:prod:ssr": "npm run build:prod:client-and-server-bundles && npm run compile:server",
     "build:prod:client-and-server-bundles": "ng build --prod && ng run amblema-web:server:production",
     "build:prod:client-and-server-all-bundles": "ng build --prod && ng run amblema-web:server:production --bundleDependencies all",
-    "prerender": "node scripts/generate-sitemap.js && ng run amblema-web:prerender"
+    "prerender": "node scripts/generate-sitemap.js && NODE_OPTIONS=--max-old-space-size=8192 ng run amblema-web:prerender"
   },
   "private": true,
   "dependencies": {
