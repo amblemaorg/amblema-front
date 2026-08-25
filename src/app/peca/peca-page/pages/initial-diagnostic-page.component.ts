@@ -110,13 +110,18 @@ export class InitialDiagnosticPageComponent
       const evaluator = this.environmentEvaluators.find((ev) => ev.id === id);
       if (evaluator) {
         if (evaluator.hasEvaluated && evaluator.results) {
-          const res = evaluator.results;
+          const getIndicatorVal = (item: any) => {
+            if (!item) return 0;
+            if (item.average !== undefined) return item.average;
+            if (item.value !== undefined) return item.value;
+            return 0;
+          };
           const items = [
-            res.cleanlinessAndCareOfSpaces && res.cleanlinessAndCareOfSpaces.applies ? res.cleanlinessAndCareOfSpaces.value : 0,
-            res.wasteManagement && res.wasteManagement.applies ? res.wasteManagement.value : 0,
-            res.biodiversityConservation && res.biodiversityConservation.applies ? res.biodiversityConservation.value : 0,
-            res.waterUse && res.waterUse.applies ? res.waterUse.value : 0,
-            res.communityRelations && res.communityRelations.applies ? res.communityRelations.value : 0,
+            getIndicatorVal(res.cleanlinessAndCareOfSpaces),
+            getIndicatorVal(res.wasteManagement),
+            getIndicatorVal(res.biodiversityConservation),
+            getIndicatorVal(res.waterUse),
+            getIndicatorVal(res.communityRelations),
           ];
 
           this.globals.ModalShower({ code: "dataModalEstadisticasAmbiente" });
@@ -178,13 +183,18 @@ export class InitialDiagnosticPageComponent
       const id = chartBtn.getAttribute("data-id");
       const evaluator = this.environmentEvaluators.find((ev) => ev.id === id);
       if (evaluator && evaluator.results) {
-        const res = evaluator.results;
+        const getIndicatorVal = (item: any) => {
+          if (!item) return 0;
+          if (item.average !== undefined) return item.average;
+          if (item.value !== undefined) return item.value;
+          return 0;
+        };
         const items = [
-          res.cleanlinessAndCareOfSpaces && res.cleanlinessAndCareOfSpaces.applies ? res.cleanlinessAndCareOfSpaces.value : 0,
-          res.wasteManagement && res.wasteManagement.applies ? res.wasteManagement.value : 0,
-          res.biodiversityConservation && res.biodiversityConservation.applies ? res.biodiversityConservation.value : 0,
-          res.waterUse && res.waterUse.applies ? res.waterUse.value : 0,
-          res.communityRelations && res.communityRelations.applies ? res.communityRelations.value : 0,
+          getIndicatorVal(res.cleanlinessAndCareOfSpaces),
+          getIndicatorVal(res.wasteManagement),
+          getIndicatorVal(res.biodiversityConservation),
+          getIndicatorVal(res.waterUse),
+          getIndicatorVal(res.communityRelations),
         ];
 
         this.setBlockData("estadisticaAmbienteEvaluador", {

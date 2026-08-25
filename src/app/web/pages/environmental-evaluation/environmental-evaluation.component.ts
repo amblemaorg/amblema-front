@@ -6,11 +6,19 @@ import { Store } from '@ngxs/store';
 import { SetIsLoadingPage } from 'src/app/store/actions/web/web.actions';
 import { environment } from 'src/environments/environment';
 
-interface CriterionItem {
-  key: string;
+export interface Subcriterion {
+  code: string;
   label: string;
-  applies: boolean;
   value: number | null;
+  observation?: string;
+}
+
+export interface IndicatorSection {
+  key: string;
+  number: number;
+  title: string;
+  subcriteria: Subcriterion[];
+  maxSubtotal: number;
 }
 
 @Component({
@@ -29,12 +37,61 @@ export class EnvironmentalEvaluationComponent implements OnInit {
   evaluator: any = null;
   school: any = null;
 
-  criteriaList: CriterionItem[] = [
-    { key: 'cleanlinessAndCareOfSpaces', label: 'Limpieza y cuidado de los espacios', applies: true, value: 0 },
-    { key: 'wasteManagement', label: 'Gestión de aprovechamiento de los residuos', applies: true, value: 0 },
-    { key: 'biodiversityConservation', label: 'Conservación de la biodiversidad', applies: true, value: 0 },
-    { key: 'waterUse', label: 'Aprovechamiento del agua', applies: true, value: 0 },
-    { key: 'communityRelations', label: 'Relación con la comunidad', applies: true, value: 0 }
+  sections: IndicatorSection[] = [
+    {
+      key: 'cleanlinessAndCareOfSpaces',
+      number: 1,
+      title: 'Limpieza y cuidado de los espacios',
+      maxSubtotal: 21,
+      subcriteria: [
+        { code: '1.1', label: '¿Hay ausencia de papeles o basura en zonas de aulas, patios y áreas comunes?', value: 1, observation: '' },
+        { code: '1.2', label: '¿La escuela dispone de papeleras suficientes en las diferentes áreas?', value: 1, observation: '' },
+        { code: '1.3', label: '¿Los estudiantes, docentes y personal hacen uso correcto de las papeleras?', value: 1, observation: '' }
+      ]
+    },
+    {
+      key: 'wasteManagement',
+      number: 2,
+      title: 'Gestión y aprovechamiento de los residuos',
+      maxSubtotal: 21,
+      subcriteria: [
+        { code: '2.1', label: '¿Se clasifica la basura en residuos orgánicos e inorgánicos?', value: 1, observation: '' },
+        { code: '2.2', label: '¿Tienen lugares apropiados e identificados para el resguardo de los residuos clasificados?', value: 1, observation: '' },
+        { code: '2.3', label: '¿Poseen un plan o proyecto activo para el aprovechamiento/reciclaje de residuos?', value: 1, observation: '' }
+      ]
+    },
+    {
+      key: 'biodiversityConservation',
+      number: 3,
+      title: 'Conservación de la biodiversidad',
+      maxSubtotal: 21,
+      subcriteria: [
+        { code: '3.1', label: '¿La escuela tiene jardines planificados, diseñados y bien mantenidos en sus áreas verdes?', value: 1, observation: '' },
+        { code: '3.2', label: '¿Tienen un huerto escolar desarrollado y cuidado por los estudiantes y docentes?', value: 1, observation: '' },
+        { code: '3.3', label: '¿Existe algún proyecto activo para promover o conocer la biodiversidad de plantas de la zona?', value: 1, observation: '' }
+      ]
+    },
+    {
+      key: 'waterUse',
+      number: 4,
+      title: 'Aprovechamiento del agua',
+      maxSubtotal: 21,
+      subcriteria: [
+        { code: '4.1', label: '¿Se evidencia conciencia sobre el buen uso del agua, evitando el malgasto o fugas?', value: 1, observation: '' },
+        { code: '4.2', label: '¿Cuentan con recipientes o tanques adecuados para almacenar y usar el agua de riego?', value: 1, observation: '' },
+        { code: '4.3', label: '¿Poseen una estructura o plan concreto para la recolección y almacenamiento de agua de lluvia?', value: 1, observation: '' }
+      ]
+    },
+    {
+      key: 'communityRelations',
+      number: 5,
+      title: 'Relación con la comunidad',
+      maxSubtotal: 14,
+      subcriteria: [
+        { code: '5.1', label: '¿La escuela realiza acciones directas que aportan a la limpieza y ornato de la comunidad (ej. DDTAL)?', value: 1, observation: '' },
+        { code: '5.2', label: '¿Los padres, representantes y vecinos participan/apoyan los proyectos ambientales escolares?', value: 1, observation: '' }
+      ]
+    }
   ];
 
   constructor(
@@ -85,48 +142,102 @@ export class EnvironmentalEvaluationComponent implements OnInit {
   }
 
   populateResults(results: any): void {
-    this.criteriaList.forEach((item) => {
-      if (results[item.key]) {
-        item.applies = !!results[item.key].applies;
-        item.value = results[item.key].value !== undefined ? results[item.key].value : 0;
+    this.sections.forEach((sec) => {
+      const resItem = results[sec.key];
+      if (resItem) {
+        if (resItem.subcriteria) {
+          sec.subcriteria.forEach((sub) => {
+            if (resItem.subcriteria[sub.code]) {
+              sub.value = resItem.subcriteria[sub.code].value !== undefined ? resItem.subcriteria[sub.code].value : 1;
+              sub.observation = resItem.subcriteria[sub.code].observation || '';
+            }
+          });
+        } else if (resItem.value !== undefined) {
+          const val = resItem.value || 0;
+          sec.subcriteria.forEach((sub) => {
+            sub.value = val;
+          });
+        }
       }
     });
   }
 
-  toggleApplies(item: CriterionItem, applies: boolean): void {
-    if (this.hasEvaluated) return;
-    item.applies = applies;
-    if (!applies) {
-      item.value = null;
-    } else if (item.value === null) {
-      item.value = 0;
-    }
+  validateValue(sub: Subcriterion): void {
+    if (sub.value === null || sub.value === undefined) return;
+    if (sub.value < 1) sub.value = 1;
+    if (sub.value > 7) sub.value = 7;
   }
 
-  validateValue(item: CriterionItem): void {
-    if (item.value === null || item.value === undefined) return;
-    if (item.value < 0) item.value = 0;
-    if (item.value > 7) item.value = 7;
+  getSubtotal(sec: IndicatorSection): number {
+    return sec.subcriteria.reduce((sum, sub) => sum + (Number(sub.value) || 0), 0);
+  }
+
+  getAverage(sec: IndicatorSection): number {
+    if (!sec.subcriteria.length) return 0;
+    const subtotal = this.getSubtotal(sec);
+    return Math.round((subtotal / sec.subcriteria.length) * 100) / 100;
+  }
+
+  getTotalIndexScore(): number {
+    const sumAverages = this.sections.reduce((sum, sec) => sum + this.getAverage(sec), 0);
+    return Math.round(sumAverages * 100) / 100;
+  }
+
+  getInterpretation(): { level: string; description: string; badgeClass: string } {
+    const total = this.getTotalIndexScore();
+    if (total >= 31) {
+      return {
+        level: 'Excelente',
+        description: 'Cultura ambiental sólida e integrada.',
+        badgeClass: 'badge-excellent'
+      };
+    } else if (total >= 21) {
+      return {
+        level: 'Satisfactorio',
+        description: 'Prácticas constantes, consolidadas.',
+        badgeClass: 'badge-satisfactory'
+      };
+    } else if (total >= 11) {
+      return {
+        level: 'En Desarrollo',
+        description: 'Iniciativas aisladas, requiere estructuración.',
+        badgeClass: 'badge-developing'
+      };
+    } else {
+      return {
+        level: 'Inicial',
+        description: 'Requiere plan de acción inmediato.',
+        badgeClass: 'badge-initial'
+      };
+    }
   }
 
   submit(): void {
     if (this.hasEvaluated || this.submitting) return;
 
-    // Validate inputs
-    for (const item of this.criteriaList) {
-      if (item.applies) {
-        if (item.value === null || item.value === undefined || isNaN(item.value) || item.value < 0 || item.value > 7) {
-          this.toastr.error('Por favor verifique los puntajes. Cada criterio aplicado debe tener un valor entre 0 y 7.', 'Error');
+    for (const sec of this.sections) {
+      for (const sub of sec.subcriteria) {
+        if (sub.value === null || sub.value === undefined || isNaN(sub.value) || sub.value < 1 || sub.value > 7) {
+          this.toastr.error(`Por favor verifique los puntajes en ${sec.title}. Cada criterio debe tener una calificación entre 1 y 7.`, 'Error');
           return;
         }
       }
     }
 
     const payloadResults: any = {};
-    this.criteriaList.forEach((item) => {
-      payloadResults[item.key] = {
-        applies: item.applies,
-        value: item.applies ? Number(item.value) : null
+    this.sections.forEach((sec) => {
+      const subDict: any = {};
+      sec.subcriteria.forEach((sub) => {
+        subDict[sub.code] = {
+          value: Number(sub.value),
+          observation: sub.observation || ''
+        };
+      });
+
+      payloadResults[sec.key] = {
+        subtotal: this.getSubtotal(sec),
+        average: this.getAverage(sec),
+        subcriteria: subDict
       };
     });
 

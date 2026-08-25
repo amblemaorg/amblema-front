@@ -4,7 +4,8 @@
     <!-- Header Logo and Title -->
     <div class="header-logo text-center mb-5">
       <img src="assets/images/amblema-logo.png" alt="Amblema Logo" class="logo-img">
-      <h2 class="title mt-3">Evaluación de Diagnóstico Ambiental</h2>
+      <h2 class="title mt-3">ÍNDICE AMBIENTAL AMBLEMA (IAA)</h2>
+      <h4 class="subtitle text-secondary">Instrumento de Evaluación Escolar</h4>
     </div>
 
     <!-- Spinner Loading -->
@@ -25,7 +26,7 @@
     </div>
 
     <!-- Main Content -->
-    <div *ngIf="!loading && !notFound" class="evaluation-container mx-auto" style="max-width: 820px;">
+    <div *ngIf="!loading && !notFound" class="evaluation-container mx-auto" style="max-width: 920px;">
       
       <!-- Already Evaluated Alert Banner -->
       <div *ngIf="hasEvaluated" class="alert alert-warning shadow-sm border-warning mb-4 rounded-lg" role="alert">
@@ -48,7 +49,7 @@
             <!-- School Info -->
             <div class="col-md-6 mb-4 mb-md-0 border-right-md">
               <h5 class="info-section-title mb-3">
-                <i class="fa fa-university mr-2"></i>Información de la Escuela
+                <i class="fa fa-university mr-2"></i>Escuela
               </h5>
               <p class="info-text mb-2"><strong>Nombre:</strong> {{ school?.name || 'N/A' }}</p>
               <p class="info-text mb-2"><strong>Código:</strong> {{ school?.code || 'N/A' }}</p>
@@ -58,10 +59,10 @@
             <!-- Evaluator Info -->
             <div class="col-md-6 pl-md-4">
               <h5 class="info-section-title mb-3">
-                <i class="fa fa-user-circle mr-2"></i>Información del Evaluador
+                <i class="fa fa-user-circle mr-2"></i>Evaluador(es)
               </h5>
-              <p class="info-text mb-2"><strong>Nombre y Apellido:</strong> {{ evaluator?.name }}</p>
-              <p class="info-text mb-2"><strong>Correo Electrónico:</strong> {{ evaluator?.email }}</p>
+              <p class="info-text mb-2"><strong>Nombre:</strong> {{ evaluator?.name }}</p>
+              <p class="info-text mb-2"><strong>Correo:</strong> {{ evaluator?.email }}</p>
               <p class="info-text mb-2"><strong>Teléfono:</strong> {{ evaluator?.phone }}</p>
               <p class="info-text mb-0"><strong>Lapso:</strong> {{ evaluator?.lapse }}</p>
             </div>
@@ -69,66 +70,149 @@
         </div>
       </div>
 
-      <!-- Form Criteria Card -->
-      <div class="blue-card">
-        <div class="card-header-blue text-center mb-3">
-          <h4 class="card-main-title text-white text-uppercase mb-2">
-            Criterios de Evaluación Ambiental
+      <!-- Scale Instructions Banner -->
+      <div class="scale-banner p-3 mb-4 rounded text-center">
+        <h6 class="font-weight-bold mb-1">Instrucciones: Califique cada criterio de 1 a 7 según la realidad observada.</h6>
+        <p class="mb-0 small">
+          <strong>Escala:</strong> 
+          <span class="badge badge-light text-dark mx-1">1-2: Ausente / Muy Deficiente</span> |
+          <span class="badge badge-light text-dark mx-1">3-4: En Proceso / Regular</span> |
+          <span class="badge badge-light text-dark mx-1">5-6: Satisfactorio / Bueno</span> |
+          <span class="badge badge-light text-dark mx-1">7: Excelente / Consolidado</span>
+        </p>
+      </div>
+
+      <!-- 5 Indicadores Cards -->
+      <div *ngFor="let sec of sections" class="blue-card mb-5">
+        <div class="card-header-blue mb-3">
+          <h4 class="card-main-title text-white text-uppercase mb-0">
+            {{ sec.number }}. {{ sec.title }}
           </h4>
-          <p class="card-subtitle-text mb-0">
-            Seleccione si aplica o no cada criterio. En caso afirmativo, ingrese una puntuación de 0 a 7.
-          </p>
         </div>
+
+        <div class="inner-blue-box p-3 p-md-4">
+          <div class="table-responsive">
+            <table class="table table-dark-custom table-bordered align-middle mb-0">
+              <thead>
+                <tr>
+                  <th style="width: 8%;" class="text-center">N°</th>
+                  <th style="width: 52%;">Criterios a Evaluar</th>
+                  <th style="width: 18%;" class="text-center">Puntaje (1-7)</th>
+                  <th style="width: 22%;">Observaciones / Evidencias</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sub of sec.subcriteria">
+                  <td class="text-center font-weight-bold align-middle">{{ sub.code }}</td>
+                  <td class="align-middle">{{ sub.label }}</td>
+                  <td class="text-center align-middle">
+                    <input type="number"
+                           class="form-control text-center custom-score-input mx-auto"
+                           [class.is-invalid]="sub.value === null || sub.value === undefined || sub.value < 1 || sub.value > 7"
+                           [disabled]="hasEvaluated"
+                           min="1"
+                           max="7"
+                           [(ngModel)]="sub.value"
+                           (change)="validateValue(sub)"
+                           placeholder="1 - 7">
+                  </td>
+                  <td class="align-middle">
+                    <input type="text"
+                           class="form-control form-control-sm custom-obs-input"
+                           [disabled]="hasEvaluated"
+                           [(ngModel)]="sub.observation"
+                           placeholder="Observaciones">
+                  </td>
+                </tr>
+                <!-- Subtotal Row -->
+                <tr class="subtotal-row">
+                  <td colspan="2" class="text-right font-weight-bold text-uppercase align-middle">
+                    Subtotal (Suma de los {{ sec.subcriteria.length }} criterios):
+                  </td>
+                  <td class="text-center font-weight-bold align-middle highlight-val">
+                    {{ getSubtotal(sec) }} / {{ sec.maxSubtotal }}
+                  </td>
+                  <td></td>
+                </tr>
+                <!-- Promedio Row -->
+                <tr class="promedio-row">
+                  <td colspan="2" class="text-right font-weight-bold text-uppercase align-middle">
+                    Promedio Indicador {{ sec.number }} (Subtotal ÷ {{ sec.subcriteria.length }}):
+                  </td>
+                  <td class="text-center font-weight-bold align-middle highlight-avg">
+                    {{ getAverage(sec) }} / 7
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen Final y Consolidación del Índice (IAA) -->
+      <div class="blue-card mb-5">
+        <h4 class="card-main-title text-center text-white text-uppercase mb-3">
+          <i class="fa fa-bar-chart mr-2"></i>Resumen Final y Consolidación del Índice Ambiental (IAA)
+        </h4>
 
         <div class="inner-blue-box p-4">
-          <div *ngFor="let item of criteriaList; let i = index" class="criterion-item py-3" [class.border-bottom-blue]="i < criteriaList.length - 1">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
-              
-              <div class="criterion-title mb-3 mb-md-0 pr-md-3">
-                <h6 class="font-weight-bold mb-0 text-white">{{ i + 1 }}. {{ item.label }}</h6>
-              </div>
+          <div class="row align-items-center">
+            <!-- Table of Indicator Averages -->
+            <div class="col-lg-7 mb-4 mb-lg-0">
+              <table class="table table-dark-custom table-bordered mb-0">
+                <thead>
+                  <tr>
+                    <th>Indicador Evaluado</th>
+                    <th class="text-center" style="width: 30%;">Promedio (1 a 7)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let sec of sections">
+                    <td>{{ sec.number }}. {{ sec.title }}</td>
+                    <td class="text-center font-weight-bold text-warning">{{ getAverage(sec) }} / 7</td>
+                  </tr>
+                  <tr class="total-summary-row">
+                    <td class="font-weight-bold text-uppercase">
+                      Puntaje Total Índice Ambiental (Suma de promedios)
+                    </td>
+                    <td class="text-center font-weight-bold display-score">
+                      {{ getTotalIndexScore() }} / 35
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <!-- Applies Switch / Radio Buttons -->
-              <div class="d-flex align-items-center">
-                <div class="btn-group btn-group-toggle mr-3" data-toggle="buttons">
-                  <label class="btn btn-blue-option btn-sm" [class.active-si]="item.applies" [class.disabled]="hasEvaluated">
-                    <input type="radio" [name]="'applies_' + item.key" [checked]="item.applies" (change)="toggleApplies(item, true)" [disabled]="hasEvaluated"> Sí
-                  </label>
-                  <label class="btn btn-blue-option btn-sm" [class.active-no]="!item.applies" [class.disabled]="hasEvaluated">
-                    <input type="radio" [name]="'applies_' + item.key" [checked]="!item.applies" (change)="toggleApplies(item, false)" [disabled]="hasEvaluated"> No aplica
-                  </label>
+            <!-- Interpretation Box -->
+            <div class="col-lg-5">
+              <div class="interpretation-box p-4 text-center rounded">
+                <h6 class="font-weight-bold text-white mb-2 text-uppercase">Escala de Interpretación del Índice</h6>
+                <div class="badge-result mb-3" [ngClass]="getInterpretation().badgeClass">
+                  {{ getInterpretation().level }}
                 </div>
-
-                <!-- Input Score (0-7) -->
-                <div class="score-input-wrapper" style="width: 100px;">
-                  <input type="number" 
-                         class="form-control text-center custom-score-input" 
-                         [class.is-invalid]="item.applies && (item.value === null || item.value === undefined || item.value < 0 || item.value > 7)"
-                         [disabled]="!item.applies || hasEvaluated" 
-                         min="0" 
-                         max="7" 
-                         [(ngModel)]="item.value"
-                         (change)="validateValue(item)"
-                         placeholder="0 - 7">
+                <p class="text-white mb-3 font-italic">"{{ getInterpretation().description }}"</p>
+                <div class="scale-list text-left small text-white-50">
+                  <div><strong>31 – 35 pts:</strong> Excelente (Cultura sólida e integrada)</div>
+                  <div><strong>21 – 30 pts:</strong> Satisfactorio (Prácticas constantes)</div>
+                  <div><strong>11 – 20 pts:</strong> En Desarrollo (Iniciativas aisladas)</div>
+                  <div><strong>05 – 10 pts:</strong> Inicial (Requiere plan de acción)</div>
                 </div>
               </div>
-
             </div>
           </div>
-
-          <!-- Submit Button -->
-          <div *ngIf="!hasEvaluated" class="text-center mt-4 pt-2">
-            <button class="btn btn-success-custom btn-lg px-5 font-weight-bold shadow" (click)="submit()" [disabled]="submitting">
-              <span *ngIf="submitting" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-              <i *ngIf="!submitting" class="fa fa-save mr-2"></i>
-              Guardar Resultados
-            </button>
-          </div>
-
         </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div *ngIf="!hasEvaluated" class="text-center mt-4 pt-2 mb-5">
+        <button class="btn btn-success-custom btn-lg px-5 font-weight-bold shadow-lg" (click)="submit()" [disabled]="submitting">
+          <span *ngIf="submitting" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+          <i *ngIf="!submitting" class="fa fa-save mr-2"></i>
+          Guardar Evaluación del Índice Ambiental
+        </button>
       </div>
 
     </div>
   </div>
 </div>
-
