@@ -44,9 +44,9 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Limpieza y cuidado de los espacios',
       maxSubtotal: 21,
       subcriteria: [
-        { code: '1.1', label: '¿Hay ausencia de papeles o basura en zonas de aulas, patios y áreas comunes?', value: 1, observation: '' },
-        { code: '1.2', label: '¿La escuela dispone de papeleras suficientes en las diferentes áreas?', value: 1, observation: '' },
-        { code: '1.3', label: '¿Los estudiantes, docentes y personal hacen uso correcto de las papeleras?', value: 1, observation: '' }
+        { code: '1.1', label: '¿Hay ausencia de papeles o basura en zonas de aulas, patios y áreas comunes?', value: 0, observation: '' },
+        { code: '1.2', label: '¿La escuela dispone de papeleras suficientes en las diferentes áreas?', value: 0, observation: '' },
+        { code: '1.3', label: '¿Los estudiantes, docentes y personal hacen uso correcto de las papeleras?', value: 0, observation: '' }
       ]
     },
     {
@@ -55,9 +55,9 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Gestión y aprovechamiento de los residuos',
       maxSubtotal: 21,
       subcriteria: [
-        { code: '2.1', label: '¿Se clasifica la basura en residuos orgánicos e inorgánicos?', value: 1, observation: '' },
-        { code: '2.2', label: '¿Tienen lugares apropiados e identificados para el resguardo de los residuos clasificados?', value: 1, observation: '' },
-        { code: '2.3', label: '¿Poseen un plan o proyecto activo para el aprovechamiento/reciclaje de residuos?', value: 1, observation: '' }
+        { code: '2.1', label: '¿Se clasifica la basura en residuos orgánicos e inorgánicos?', value: 0, observation: '' },
+        { code: '2.2', label: '¿Tienen lugares apropiados e identificados para el resguardo de los residuos clasificados?', value: 0, observation: '' },
+        { code: '2.3', label: '¿Poseen un plan o proyecto activo para el aprovechamiento/reciclaje de residuos?', value: 0, observation: '' }
       ]
     },
     {
@@ -66,9 +66,9 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Conservación de la biodiversidad',
       maxSubtotal: 21,
       subcriteria: [
-        { code: '3.1', label: '¿La escuela tiene jardines planificados, diseñados y bien mantenidos en sus áreas verdes?', value: 1, observation: '' },
-        { code: '3.2', label: '¿Tienen un huerto escolar desarrollado y cuidado por los estudiantes y docentes?', value: 1, observation: '' },
-        { code: '3.3', label: '¿Existe algún proyecto activo para promover o conocer la biodiversidad de plantas de la zona?', value: 1, observation: '' }
+        { code: '3.1', label: '¿La escuela tiene jardines planificados, diseñados y bien mantenidos en sus áreas verdes?', value: 0, observation: '' },
+        { code: '3.2', label: '¿Tienen un huerto escolar desarrollado y cuidado por los estudiantes y docentes?', value: 0, observation: '' },
+        { code: '3.3', label: '¿Existe algún proyecto activo para promover o conocer la biodiversidad de plantas de la zona?', value: 0, observation: '' }
       ]
     },
     {
@@ -77,9 +77,9 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Aprovechamiento del agua',
       maxSubtotal: 21,
       subcriteria: [
-        { code: '4.1', label: '¿Se evidencia conciencia sobre el buen uso del agua, evitando el malgasto o fugas?', value: 1, observation: '' },
-        { code: '4.2', label: '¿Cuentan con recipientes o tanques adecuados para almacenar y usar el agua de riego?', value: 1, observation: '' },
-        { code: '4.3', label: '¿Poseen una estructura o plan concreto para la recolección y almacenamiento de agua de lluvia?', value: 1, observation: '' }
+        { code: '4.1', label: '¿Se evidencia conciencia sobre el buen uso del agua, evitando el malgasto o fugas?', value: 0, observation: '' },
+        { code: '4.2', label: '¿Cuentan con recipientes o tanques adecuados para almacenar y usar el agua de riego?', value: 0, observation: '' },
+        { code: '4.3', label: '¿Poseen una estructura o plan concreto para la recolección y almacenamiento de agua de lluvia?', value: 0, observation: '' }
       ]
     },
     {
@@ -88,8 +88,8 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Relación con la comunidad',
       maxSubtotal: 14,
       subcriteria: [
-        { code: '5.1', label: '¿La escuela realiza acciones directas que aportan a la limpieza y ornato de la comunidad (ej. DDTAL)?', value: 1, observation: '' },
-        { code: '5.2', label: '¿Los padres, representantes y vecinos participan/apoyan los proyectos ambientales escolares?', value: 1, observation: '' }
+        { code: '5.1', label: '¿La escuela realiza acciones directas que aportan a la limpieza y ornato de la comunidad (ej. DDTAL)?', value: 0, observation: '' },
+        { code: '5.2', label: '¿Los padres, representantes y vecinos participan/apoyan los proyectos ambientales escolares?', value: 0, observation: '' }
       ]
     }
   ];
@@ -100,6 +100,17 @@ export class EnvironmentalEvaluationComponent implements OnInit {
     private toastr: ToastrService,
     private store: Store
   ) {}
+
+  isUserSession: boolean = false;
+  isReadonlyMode: boolean = false;
+
+  checkIsUserSession(): boolean {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('auth_app_token') || localStorage.getItem('auth_token');
+      if (token) return true;
+    }
+    return false;
+  }
 
   ngOnInit(): void {
     this.token = this.route.snapshot.paramMap.get('token') || '';
@@ -122,12 +133,18 @@ export class EnvironmentalEvaluationComponent implements OnInit {
           this.evaluator = res.evaluator;
           this.school = res.school || {};
           this.hasEvaluated = !!this.evaluator.hasEvaluated;
+          this.isUserSession = this.checkIsUserSession();
+          const readonlyParam = this.route.snapshot.queryParamMap.get('readonly') === 'true';
+          this.isReadonlyMode = this.hasEvaluated || this.isUserSession || readonlyParam;
 
-          if (this.hasEvaluated) {
+          if (this.evaluator.results) {
+            this.populateResults(this.evaluator.results);
+          }
+
+          if (this.isUserSession) {
+            this.alreadyEvaluatedMessage = 'Modo de Solo Lectura: Sesión de usuario PECA detectada. No se permite modificar valores.';
+          } else if (this.hasEvaluated) {
             this.alreadyEvaluatedMessage = 'Los resultados para este evaluador ya han sido registrados.';
-            if (this.evaluator.results) {
-              this.populateResults(this.evaluator.results);
-            }
           }
         } else {
           this.notFound = true;
@@ -148,7 +165,7 @@ export class EnvironmentalEvaluationComponent implements OnInit {
         if (resItem.subcriteria) {
           sec.subcriteria.forEach((sub) => {
             if (resItem.subcriteria[sub.code]) {
-              sub.value = resItem.subcriteria[sub.code].value !== undefined ? resItem.subcriteria[sub.code].value : 1;
+              sub.value = resItem.subcriteria[sub.code].value !== undefined ? resItem.subcriteria[sub.code].value : 0;
               sub.observation = resItem.subcriteria[sub.code].observation || '';
             }
           });
@@ -164,7 +181,7 @@ export class EnvironmentalEvaluationComponent implements OnInit {
 
   validateValue(sub: Subcriterion): void {
     if (sub.value === null || sub.value === undefined) return;
-    if (sub.value < 1) sub.value = 1;
+    if (sub.value < 0) sub.value = 0;
     if (sub.value > 7) sub.value = 7;
   }
 
@@ -172,10 +189,15 @@ export class EnvironmentalEvaluationComponent implements OnInit {
     return sec.subcriteria.reduce((sum, sub) => sum + (Number(sub.value) || 0), 0);
   }
 
+  getAppliedCount(sec: IndicatorSection): number {
+    return sec.subcriteria.filter((sub) => Number(sub.value) > 0).length;
+  }
+
   getAverage(sec: IndicatorSection): number {
-    if (!sec.subcriteria.length) return 0;
+    const applied = this.getAppliedCount(sec);
+    if (!applied) return 0;
     const subtotal = this.getSubtotal(sec);
-    return Math.round((subtotal / sec.subcriteria.length) * 100) / 100;
+    return Math.round((subtotal / applied) * 100) / 100;
   }
 
   getTotalIndexScore(): number {
@@ -213,12 +235,12 @@ export class EnvironmentalEvaluationComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.hasEvaluated || this.submitting) return;
+    if (this.isReadonlyMode || this.submitting) return;
 
     for (const sec of this.sections) {
       for (const sub of sec.subcriteria) {
-        if (sub.value === null || sub.value === undefined || isNaN(sub.value) || sub.value < 1 || sub.value > 7) {
-          this.toastr.error(`Por favor verifique los puntajes en ${sec.title}. Cada criterio debe tener una calificación entre 1 y 7.`, 'Error');
+        if (sub.value === null || sub.value === undefined || isNaN(sub.value) || sub.value < 0 || sub.value > 7) {
+          this.toastr.error(`Por favor verifique los puntajes en ${sec.title}. Cada criterio debe tener una calificación entre 0 y 7 (0 = No aplica).`, 'Error');
           return;
         }
       }

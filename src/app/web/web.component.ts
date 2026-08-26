@@ -81,8 +81,11 @@ export class WebComponent implements OnInit {
     );
   }
 
+  hideHeaderFooter: boolean = false;
+
   displayFooter() {
-    if (this.router.url == '/escuelas') {
+    this.hideHeaderFooter = this.router.url.includes('/evaluacion-ambiente');
+    if (this.router.url == '/escuelas' || this.hideHeaderFooter) {
       this.addElementClass(this.footer.nativeElement, 'hide');
     } else {
       this.removeElementClass(this.footer.nativeElement, 'hide');

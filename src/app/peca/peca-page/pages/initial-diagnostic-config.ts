@@ -540,7 +540,7 @@ const formRegisterEvaluator = {
   name: "environmentEvaluatorForm",
   settings: {
     formsContent: formEvaluadorAmbiente,
-    buttons: ["guardar"],
+    buttons: ["verResultados", "guardar"],
     formType: "registrarEvaluador",
     fetcherMethod: "post",
   },
@@ -562,8 +562,8 @@ const environmentEvaluatorsTable = {
           title: '<i class="icon-copy" title="Copiar enlace"></i>',
         },
         {
-          name: "VIEW_RESULTS",
-          title: '<i class="icon-bar-chart" title="Ver resultados"></i>',
+          name: "VIEW_EVALUATION",
+          title: '<i class="icon-eye" title="Ver evaluación"></i>',
         },
       ],
     },
@@ -573,9 +573,9 @@ const environmentEvaluatorsTable = {
           (window as any).copyEnvLink(e.data.link);
         }
       }
-      if (e && e.action === "VIEW_RESULTS" && e.data && e.data.id) {
-        if ((window as any).viewEnvChart) {
-          (window as any).viewEnvChart(e.data.id);
+      if (e && e.action === "VIEW_EVALUATION" && e.data && e.data.link) {
+        if ((window as any).openEnvEvaluationView) {
+          (window as any).openEnvEvaluationView(e.data.link);
         }
       }
     },

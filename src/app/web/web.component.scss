@@ -45,6 +45,12 @@
 }
 
 ::ng-deep {
+  web-header.hide-header {
+    header {
+      display: none !important;
+    }
+  }
+
   owl-carousel-o {
     &.testimonials-carousel {
       display: flex;

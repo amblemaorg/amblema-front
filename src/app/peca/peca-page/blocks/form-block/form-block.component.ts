@@ -2088,6 +2088,12 @@ export class FormBlockComponent
     this.isEditing = false;
   }
 
+  onVerResultadosClick() {
+    if (typeof window !== "undefined" && (window as any).viewGeneralEnvChart) {
+      (window as any).viewGeneralEnvChart();
+    }
+  }
+
   // filling sections according to selected grade
   private async fillSections(grade = null) {
     if (grade === "all") {

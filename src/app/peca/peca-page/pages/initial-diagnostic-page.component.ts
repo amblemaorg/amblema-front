@@ -106,36 +106,48 @@ export class InitialDiagnosticPageComponent
       }
     };
 
-    (window as any).viewEnvChart = (id: string) => {
-      const evaluator = this.environmentEvaluators.find((ev) => ev.id === id);
-      if (evaluator) {
-        if (evaluator.hasEvaluated && evaluator.results) {
-          const getIndicatorVal = (item: any) => {
-            if (!item) return 0;
-            if (item.average !== undefined) return item.average;
-            if (item.value !== undefined) return item.value;
-            return 0;
-          };
-          const items = [
-            getIndicatorVal(res.cleanlinessAndCareOfSpaces),
-            getIndicatorVal(res.wasteManagement),
-            getIndicatorVal(res.biodiversityConservation),
-            getIndicatorVal(res.waterUse),
-            getIndicatorVal(res.communityRelations),
-          ];
-
-          this.globals.ModalShower({ code: "dataModalEstadisticasAmbiente" });
-
-          setTimeout(() => {
-            this.setBlockData("estadisticaAmbienteEvaluador", {
-              items: items,
-              title: `Resultados - ${evaluator.name}`
-            });
-          }, 100);
-        } else {
-          this.toastrService.info("El evaluador aún no ha registrado sus resultados.", "Atención");
-        }
+    (window as any).openEnvEvaluationView = (link: string) => {
+      if (link) {
+        window.open(link, "_blank");
       }
+    };
+
+    (window as any).viewGeneralEnvChart = () => {
+      const completed = (this.environmentEvaluators || []).filter((ev) => ev.hasEvaluated && ev.results);
+      if (!completed.length) {
+        this.toastrService.info("Aún no hay resultados de evaluaciones registradas para este lapso.", "Atención");
+        return;
+      }
+
+      const getIndicatorVal = (item: any) => {
+        if (!item) return 0;
+        if (item.average !== undefined) return item.average;
+        if (item.value !== undefined) return item.value;
+        return 0;
+      };
+
+      const keys = [
+        "cleanlinessAndCareOfSpaces",
+        "wasteManagement",
+        "biodiversityConservation",
+        "waterUse",
+        "communityRelations",
+      ];
+
+      const generalAverages = keys.map((key) => {
+        const scores = completed.map((ev) => getIndicatorVal(ev.results[key]));
+        const sum = scores.reduce((a, b) => a + b, 0);
+        return Math.round((sum / completed.length) * 100) / 100;
+      });
+
+      this.globals.ModalShower({ code: "dataModalEstadisticasAmbiente" });
+
+      setTimeout(() => {
+        this.setBlockData("estadisticaAmbienteEvaluador", {
+          items: generalAverages,
+          title: `Resultados Generales - Diagnóstico Ambiental (${completed.length} evaluador${completed.length > 1 ? "es" : ""})`,
+        });
+      }, 100);
     };
   }
 
@@ -183,6 +195,7 @@ export class InitialDiagnosticPageComponent
       const id = chartBtn.getAttribute("data-id");
       const evaluator = this.environmentEvaluators.find((ev) => ev.id === id);
       if (evaluator && evaluator.results) {
+        const res = evaluator.results;
         const getIndicatorVal = (item: any) => {
           if (!item) return 0;
           if (item.average !== undefined) return item.average;
