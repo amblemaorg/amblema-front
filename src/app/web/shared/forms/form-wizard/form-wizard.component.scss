@@ -164,6 +164,38 @@
       }
     }
 
+    &.field-school,
+    &.field-sponsor {
+      &.select {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 680px;
+        margin: 1.2rem auto;
+
+        .field-label {
+          flex: 0 0 auto;
+          font-size: 1.1rem;
+          font-weight: bold;
+          margin: 0 1rem 0 0;
+          max-width: 45%;
+          position: relative;
+          top: 0;
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .field-control,
+        ng-select {
+          flex: 1 1 auto;
+          max-width: 420px;
+          width: 100%;
+        }
+      }
+    }
+
     &.identification {
       display: flex;
       flex-wrap: wrap;
