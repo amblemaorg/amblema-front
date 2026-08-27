@@ -207,8 +207,8 @@ export class GeneralStepsComponent implements OnInit {
         devNameLower.includes("knowamblemamethod") ||
         nameLower.includes("presentación") ||
         nameLower.includes("presentacion") ||
-        devNameLower.includes("presentationschool") ||
-        devNameLower.includes("presentationsponsor") ||
+        nameLower.includes("presentaci") ||
+        devNameLower.includes("presentation") ||
         nameLower.includes("perfil") ||
         devNameLower.includes("coordinatorprofile")) &&
       step.status !== "3" &&
