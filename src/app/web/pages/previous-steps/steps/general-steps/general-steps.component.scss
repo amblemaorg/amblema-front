@@ -243,7 +243,7 @@
 
         ::ng-deep .form-group {
           @mixin selector-group {
-            width: 25rem;
+            width: 20rem;
             margin-left: auto;
             display: flex;
             align-items: center;
@@ -259,23 +259,43 @@
           }
         }
         ::ng-deep label {
+          font-size: 0.95rem !important;
+          margin-bottom: 0 !important;
+          white-space: nowrap !important;
           @media screen and (min-width: 640px) and (orientation: landscape) {
-            margin-right: 1rem;
+            margin-right: 0.75rem;
           }
           @include mediabreak(large, portrait) {
-            margin-right: 1rem;
+            margin-right: 0.75rem;
           }
           @include mediabreak(large, landscape) {
-            margin-right: 1rem;
+            margin-right: 0.75rem;
           }
         }
 
         ::ng-deep .ng-select {
           flex: 1;
+          font-size: 0.95rem !important;
           border-color: map-get($color_map, blue);
           color: map-get($color_map, blue);
 
+          .ng-select-container {
+            font-size: 0.95rem !important;
+            min-height: 36px !important;
+
+            .ng-value-container {
+              font-size: 0.95rem !important;
+              padding-left: 0.5rem !important;
+
+              .ng-value-label,
+              .ng-value {
+                font-size: 0.95rem !important;
+              }
+            }
+          }
+
           .ng-dropdown-panel {
+            font-size: 0.95rem !important;
             z-index: 3;
 
             .scroll-host {
@@ -286,7 +306,11 @@
               border-width: 0 1px 1px;
 
               .scrollable-content {
-                padding: 0 1rem;
+                padding: 0 0.5rem;
+
+                .ng-option {
+                  font-size: 0.95rem !important;
+                }
               }
             }
           }
