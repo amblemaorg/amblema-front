@@ -26,7 +26,7 @@
     </div>
 
     <!-- Main Content -->
-    <div *ngIf="!loading && !notFound" class="evaluation-container mx-auto" style="max-width: 920px;">
+    <div *ngIf="!loading && !notFound" class="evaluation-container mx-auto" style="max-width: 100%;">
       
       <!-- Already Evaluated / Read-Only Alert Banner -->
       <div *ngIf="isReadonlyMode" class="alert alert-info shadow-sm border-info mb-4 rounded-lg" role="alert">
@@ -123,11 +123,21 @@
                     </div>
                   </td>
                   <td class="align-middle">
-                    <input type="text"
-                           class="form-control form-control-sm custom-obs-input"
-                           [disabled]="isReadonlyMode"
-                           [(ngModel)]="sub.observation"
-                           placeholder="Observaciones">
+                    <ng-container *ngIf="isReadonlyMode">
+                      <div *ngIf="sub.observation && sub.observation.trim().length > 0; else noObs" class="obs-readonly-container">
+                        <i class="fa fa-comment-o mr-1 text-info"></i>
+                        <span class="obs-text">{{ sub.observation }}</span>
+                      </div>
+                      <ng-template #noObs>
+                        <span class="text-white-50 small font-italic">Sin observaciones</span>
+                      </ng-template>
+                    </ng-container>
+                    <ng-container *ngIf="!isReadonlyMode">
+                      <textarea class="form-control form-control-sm custom-obs-textarea"
+                                rows="2"
+                                [(ngModel)]="sub.observation"
+                                placeholder="Observaciones u evidencias"></textarea>
+                    </ng-container>
                   </td>
                 </tr>
                 <!-- Subtotal Row -->

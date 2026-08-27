@@ -1672,9 +1672,13 @@ export class FormBlockComponent
                     error.error["cardId"] &&
                     error.error["cardId"][0]
                     ? error.error["cardId"][0].msg
-                    : error.error && error.error["msg"]
-                      ? error.error["msg"]
-                      : error_msg,
+                    : error.error && error.error["message"]
+                      ? error.error["message"]
+                      : error.error && error.error["msg"]
+                        ? error.error["msg"]
+                        : error.error && typeof error.error === "string"
+                          ? error.error
+                          : error_msg,
               "",
               { positionClass: "toast-bottom-right" }
             );

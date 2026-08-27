@@ -165,15 +165,37 @@
     }
   }
 
-  /* Observations Input */
-  .custom-obs-input {
+  /* Observations Container & Textarea */
+  .obs-readonly-container {
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-height: 150px;
+    overflow-y: auto;
+
+    .obs-text {
+      color: #e0f7fa;
+    }
+  }
+
+  .custom-obs-textarea {
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     color: #000000;
+    font-size: 0.9rem;
+    resize: vertical;
 
     &:focus {
       background-color: #ffffff;
+      border-color: #7ee5f4;
+      box-shadow: 0 0 0 0.2rem rgba(126, 229, 244, 0.25);
     }
   }
 
