@@ -449,6 +449,9 @@ export async function MapperYearBookWeb(
           },
         },
       },
+      yearbookPDFOptions(
+        `lapse${lapseNumber}__diagnostic--diagnosticEnvironmental-section`,
+      ),
       createTitleComponent('Diagnóstico de lectura'),
       {
         component: 'table',

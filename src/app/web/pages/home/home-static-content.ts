@@ -1,4 +1,6 @@
 const diagnosticText = {
+  environment:
+    'Medimos cada lapso el Índice Ambiental Amblema (IAA) basado en 5 indicadores clave evaluados en las escuelas. La gráfica muestra el promedio del puntaje alcanzado del IAA frente a la meta esperada de 35 puntos.',
   lecture:
     'Medimos cada trimestre el número de palabras leídas por minuto (PPM). La gráfica muestra el porcentaje alcanzado de PPM frente a la meta del grado que sería el 100 %.',
   math:
@@ -36,6 +38,24 @@ export const HOME_CONTENT = {
       totalStudents: 1200,
       totalSponsors: 22,
       charts: [
+        {
+          id: 'environmentIndex',
+          title: 'Diagnóstico de Ambiente',
+          description: diagnosticText.environment,
+          type: 'bar',
+          data: [],
+          goals: [{ label: 'Valor esperado', value: 35 }],
+          maxScale: 35,
+          isPercentage: false,
+          testimonial: {
+            firstName: 'Oscar A.',
+            lastName: 'Pietri Pacheco',
+            image: './assets/images/profile-oscar.jpg',
+            function: 'Docente de Ambiente',
+            description:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tincidunt eros ac erat interdum placerat. Quisque gravida diam id tincidunt elementum.',
+          },
+        },
         {
           id: 'wordsPerMinIndex',
           title: 'Diagnóstico de Lectura',

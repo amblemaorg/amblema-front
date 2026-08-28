@@ -199,7 +199,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           return lapse;
         });
 
-        if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
+        if (chart.id === "environmentIndex") {
+          chart.isPercentage = false;
+          chart.maxScale = 35;
+          chart.data.forEach((element) => {
+            if (element.value) {
+              element.value = parseFloat(element.value.toFixed(2));
+            }
+          });
+        } else if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
 
           if (chart.data && chart.data.length > 0) {

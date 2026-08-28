@@ -30,6 +30,134 @@
       
       <ng-container *ngIf="charts[activeChartIndex].id !== 'mathOlympics' && charts[activeChartIndex].id !== 'readingOlympics'; else medalsTemplate">
         <ng-template #chartHost></ng-template>
+
+        <!-- Hint banner for Environmental Diagnostic -->
+        <div *ngIf="charts[activeChartIndex].id === 'environmentIndex'" class="env-click-hint-banner text-center mt-3 p-3 rounded shadow-sm">
+          <p class="mb-0 text-white font-weight-bold">
+            <i class="fa fa-hand-pointer-o mr-2"></i>Haga clic en cualquiera de las barras del gráfico para abrir el desglose del Índice Ambiental Amblema (IAA) de ese lapso.
+          </p>
+        </div>
+
+        <!-- IAA Environmental Diagnostic Breakdown Modal -->
+        <div class="modal fade iaa-modal-wrapper"
+             id="iaaBreakdownModal"
+             [class.show]="showEnvModal"
+             [style.display]="showEnvModal ? 'block' : 'none'"
+             tabindex="-1"
+             role="dialog"
+             aria-hidden="true"
+             (click)="onModalBackdropClick($event)">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+            <div class="modal-content iaa-modal-content border-0 shadow-lg">
+              
+              <!-- Modal Header -->
+              <div class="modal-header border-0 pb-0">
+                <div class="w-100 text-center position-relative pr-4">
+                  <div class="iaa-title-badge mb-2 d-inline-flex align-items-center">
+                    <span class="iaa-title-text font-weight-bold">ÍNDICE AMBIENTAL AMBLEMA (IAA)</span>
+                  </div>
+                  <p class="iaa-slogan font-italic mb-0 small text-muted">
+                    <i class="fa fa-quote-left mr-1"></i>Lo que se mide, mejora. Lo que se hace visible, inspira.<i class="fa fa-quote-right ml-1"></i>
+                  </p>
+                </div>
+                <button type="button" class="close text-dark modal-close-btn position-absolute" style="right: 15px; top: 15px; font-size: 2rem; cursor: pointer;" (click)="closeEnvModal()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              <!-- Modal Body -->
+              <div class="modal-body p-3 p-md-4" *ngIf="activeEnvItem">
+                
+                <!-- Selected Lapse Badge (derived from chart click) -->
+                <div class="text-center mb-4">
+                  <span class="badge badge-pill text-white px-3 py-2 font-weight-bold shadow-sm" style="font-size: 1rem; background-color: #00809a;">
+                    <i class="fa fa-calendar mr-2"></i>Período {{ activeEnvItem.label }} — {{ activeEnvItem.serie }}
+                  </span>
+                </div>
+
+                <!-- Top Consolidation Row (Score, Scale) -->
+                <div class="row align-items-stretch mb-4">
+                  <!-- Puntaje IAA Card -->
+                  <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="iaa-card score-card text-center p-3 h-100 border rounded shadow-sm" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
+                      <h6 class="card-label text-uppercase font-weight-bold mb-2" style="color: #0c4d5c; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">PUNTAJE IAA DEL LAPSO</h6>
+                      <div class="score-display font-weight-bold" style="color: #00809a; font-size: 2.1rem; line-height: 1.2;">
+                        {{ getEnvTotalScore() }}<span class="score-max" style="color: #78909c; font-size: 1.2rem; font-weight: 600;">/35</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Escala de Interpretación Card -->
+                  <div class="col-md-6">
+                    <div class="iaa-card scale-card text-center p-3 h-100 border rounded shadow-sm" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
+                      <h6 class="card-label text-uppercase font-weight-bold text-center mb-2" style="color: #0c4d5c; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">ESCALA DE INTERPRETACIÓN</h6>
+                      <div class="text-center mt-2 mb-1">
+                        <span class="badge badge-result px-4 py-2 font-weight-bold shadow-sm"
+                              [style.backgroundColor]="getEnvInterpretation(getEnvTotalScore()).bgColor"
+                              [style.color]="getEnvInterpretation(getEnvTotalScore()).textColor"
+                              style="border-radius: 20px !important; font-size: 0.95rem; font-weight: 800; display: inline-block;">
+                          {{ getEnvInterpretation(getEnvTotalScore()).level }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5 Indicators Scale Rows -->
+                <div class="iaa-indicators-container border rounded p-3 bg-white">
+                  <h5 class="section-title text-center font-weight-bold mb-4 text-dark text-uppercase">
+                    Promedio por Indicador Evaluado (Escala de 1 a 7)
+                  </h5>
+                  <div *ngFor="let ind of envIndicatorsList" class="indicator-row mb-3 p-2 p-md-3 rounded" style="background-color: #f8faf9; border: 1px solid #e0e0e0; border-radius: 10px;">
+                    <div class="row align-items-center">
+                      <!-- Number & Icon & Title -->
+                      <div class="col-lg-5 col-md-6 mb-2 mb-md-0 d-flex align-items-center">
+                        <div class="ind-number-circle mr-3"
+                             [style.backgroundColor]="ind.color"
+                             style="width: 34px; height: 34px; min-width: 34px; min-height: 34px; border-radius: 50% !important; display: inline-flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">
+                          {{ ind.number }}
+                        </div>
+                        <div class="ind-icon-box mr-3" [style.color]="ind.color" style="font-size: 1.4rem; width: 30px; text-align: center; flex-shrink: 0;">
+                          <i class="fa" [ngClass]="ind.iconClass"></i>
+                        </div>
+                        <div class="ind-title font-weight-bold" [style.color]="ind.color" style="font-size: 0.88rem; line-height: 1.2; text-transform: uppercase;">
+                          {{ ind.title }}
+                        </div>
+                      </div>
+
+                      <!-- Scale 1 to 7 Visual Bar -->
+                      <div class="col-lg-7 col-md-6">
+                        <div class="d-flex align-items-center">
+                          <div class="scale-bar-track flex-grow-1 mr-3" style="position: relative; display: flex; align-items: center;">
+                            <div class="scale-nodes d-flex justify-content-between w-100" style="position: relative; z-index: 2;">
+                              <span *ngFor="let n of [1,2,3,4,5,6,7]"
+                                    class="node-step"
+                                    [class.active-node]="n <= getEnvIndicatorValue(ind.key)"
+                                    [style.backgroundColor]="n <= getEnvIndicatorValue(ind.key) ? ind.color : '#e0e0e0'"
+                                    [style.color]="n <= getEnvIndicatorValue(ind.key) ? '#ffffff' : '#555555'"
+                                    style="width: 28px; height: 28px; min-width: 28px; min-height: 28px; border-radius: 50% !important; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+                                {{ n }}
+                              </span>
+                            </div>
+                          </div>
+                          <div class="ind-score-badge font-weight-bold px-3 py-1 rounded text-white shadow-sm"
+                               [style.backgroundColor]="ind.color"
+                               style="border-radius: 20px !important; font-size: 0.95rem; white-space: nowrap; flex-shrink: 0;">
+                            {{ getEnvIndicatorValue(ind.key) }} / 7
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary px-4 font-weight-bold" (click)="closeEnvModal()">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </ng-container>
 
       <ng-template #medalsTemplate>

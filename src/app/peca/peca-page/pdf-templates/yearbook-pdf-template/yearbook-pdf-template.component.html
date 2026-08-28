@@ -166,12 +166,12 @@
           </div>
 
           <ng-container *ngIf="page.table.length > 0">
-            <div class="table-container" [ngClass]="page.lapseId">
+            <div class="table-container" [ngClass]="[page.lapseId, page.storeId && page.storeId.includes('diagnosticEnvironmental') ? 'diagnosticEnvironmental' : '']">
               <table class="table">
                 <ng-container *ngFor="let tr of page.table; let trIdx = index">
                   <tr *ngIf="tr[0] !== 'AVERAGE_ROW_MARKER'">
                     <ng-container *ngFor="let td of tr; let tdIdx = index">
-                      <td class="diag-col-{{tdIdx}}" [attr.colspan]="trIdx === 0 ? '5' : 'auto'">
+                      <td class="diag-col-{{tdIdx}}" [attr.colspan]="trIdx === 0 ? (tr.length === 1 ? (page.table[1] ? page.table[1].length : 5) : 'auto') : 'auto'">
                         <span [innerHtml]="td"></span>
                       </td>
                     </ng-container>

@@ -111,18 +111,18 @@ export class GraphicsEnvironmentComponent
               label: this.settings && this.settings.title ? this.settings.title : 'Diagnóstico de Ambiente (Puntaje 0-7)',
               data: this.dataChart,
               backgroundColor: [
-                '#81B03E',
-                '#3498db',
-                '#2ecc71',
-                '#9b59b6',
-                '#e67e22'
+                '#00809a',
+                '#2e7d32',
+                '#689f38',
+                '#0288d1',
+                '#ef6c00'
               ],
               borderColor: [
-                '#6a9332',
-                '#2980b9',
-                '#27ae60',
-                '#8e44ad',
-                '#d35400'
+                '#006073',
+                '#1b5e20',
+                '#4b7328',
+                '#01579b',
+                '#e65100'
               ],
               borderWidth: 1
             }
