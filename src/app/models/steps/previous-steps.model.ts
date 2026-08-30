@@ -33,6 +33,8 @@ export interface Step extends Basics {
     isStandard: boolean;
     createdAt: Date;
     file: FileT;
+    file2?: FileT;
+    files?: FileT[];
     hasFile: boolean;
     text: string;
     tag: string;
