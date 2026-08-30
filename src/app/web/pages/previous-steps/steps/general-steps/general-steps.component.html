@@ -82,7 +82,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="step.hasVideo && showThisVideo" class="video-container">
+          <div *ngIf="step.hasVideo && showThisVideo && step.video && step.video.url && step.video.url.trim().length > 0" class="video-container">
             <div
               *ngIf="step.video && step.video.url"
               class="video"
@@ -119,18 +119,48 @@
 
           <!-- (click)="( (!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions)? $event.preventDefault():null"
             [class.inactive]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions" -->
-          <a
-            *ngIf="step.hasFile"
-            [href]="sanitizeFile(step.file.url)"
-            target="_blank"
-            [download]="step.file.name"
-            class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
-            [class.has-several]="isAdmin() && step.approvalType == '1'"
-            (click)="onFileClick(step, i)"
-            [class.inactive]="isSelectorReadOnly()"
-          >
-            Descargar archivo
-          </a>
+          <ng-container *ngIf="step.hasFile">
+            <ng-container *ngIf="step.files && step.files.length > 0; else singleFile">
+              <a
+                *ngFor="let f of step.files"
+                [href]="sanitizeFile(f.url)"
+                target="_blank"
+                [download]="f.name"
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 mr-2"
+                [class.has-several]="isAdmin() && step.approvalType == '1'"
+                (click)="onFileClick(step, i)"
+                [class.inactive]="isSelectorReadOnly()"
+              >
+                Descargar {{ f.name || 'archivo' }}
+              </a>
+            </ng-container>
+            <ng-template #singleFile>
+              <a
+                *ngIf="step.file"
+                [href]="sanitizeFile(step.file.url)"
+                target="_blank"
+                [download]="step.file.name"
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1 mr-2"
+                [class.has-several]="isAdmin() && step.approvalType == '1'"
+                (click)="onFileClick(step, i)"
+                [class.inactive]="isSelectorReadOnly()"
+              >
+                Descargar {{ step.file.name || 'archivo' }}
+              </a>
+              <a
+                *ngIf="step.file2"
+                [href]="sanitizeFile(step.file2.url)"
+                target="_blank"
+                [download]="step.file2.name"
+                class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+                [class.has-several]="isAdmin() && step.approvalType == '1'"
+                (click)="onFileClick(step, i)"
+                [class.inactive]="isSelectorReadOnly()"
+              >
+                Descargar {{ step.file2.name || 'archivo' }}
+              </a>
+            </ng-template>
+          </ng-container>
           <button
             *ngIf="isConvenioStep(step)"
             type="button"

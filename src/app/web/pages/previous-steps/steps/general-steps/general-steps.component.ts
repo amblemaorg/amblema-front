@@ -95,7 +95,7 @@ export class GeneralStepsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentA = 0 + "-" + this.mode;
+    this.currentA = "";
     this.glbls = this.globals;
   }
 
