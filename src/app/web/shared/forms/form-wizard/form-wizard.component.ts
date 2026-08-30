@@ -654,11 +654,15 @@ export class FormWizardComponent implements OnInit, OnDestroy {
           if (conditionalFormControl && dependentFormControl) {
             if (conditionalFormControl.value != stepContent[prop].condition.value) {
               dependentFormControl.disable();
+              this.resetDependentControlValue(stepContent[prop], dependentFormControl);
             }
             conditionalFormControl.valueChanges.subscribe((currentValue) => {
-              if (currentValue == stepContent[prop].condition.value)
+              if (currentValue == stepContent[prop].condition.value) {
                 dependentFormControl.enable();
-              else dependentFormControl.disable();
+              } else {
+                dependentFormControl.disable();
+                this.resetDependentControlValue(stepContent[prop], dependentFormControl);
+              }
               this.updateDataToSubmit();
               this.getLastStepIndex();
             });
@@ -666,6 +670,15 @@ export class FormWizardComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  private resetDependentControlValue(fieldConfig: any, control: FormControl) {
+    if (!control) return;
+    if (fieldConfig.type === "confirmation") {
+      control.setValue(false, { emitEvent: true });
+    } else {
+      control.setValue("", { emitEvent: true });
+    }
   }
 
   private subscribeDependentSelects() {

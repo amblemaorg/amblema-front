@@ -201,7 +201,9 @@ export class StepsComponent implements OnInit, OnDestroy {
 
               step_.isForm =
                 step_.devName.toLowerCase().includes("fill") &&
-                step_.devName.toLowerCase().includes("form")
+                step_.devName.toLowerCase().includes("form") &&
+                !step_.devName.toLowerCase().includes("school") &&
+                !step_.devName.toLowerCase().includes("sponsor")
                   ? true
                   : false;
 
