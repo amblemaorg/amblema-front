@@ -691,7 +691,36 @@ $text_indent: 18px;
             }
           }
 
-          &.lapse1 {
+          &.diagnosticEnvironmental {
+            .table {
+              tr:first-child td {
+                text-align: center !important;
+              }
+
+              td.diag-col-0 {
+                width: 58% !important;
+                text-align: left !important;
+                padding-left: 8px !important;
+              }
+
+              td.diag-col-1,
+              td.diag-col-3 {
+                width: 15% !important;
+                text-align: center !important;
+                padding-left: 2px !important;
+                padding-right: 2px !important;
+              }
+
+              td.diag-col-2 {
+                width: 12% !important;
+                text-align: center !important;
+                padding-left: 1px !important;
+                padding-right: 1px !important;
+              }
+            }
+          }
+
+          &.lapse1:not(.diagnosticEnvironmental) {
             .table {
               td.diag-col-0 {
                 width: 13% !important;

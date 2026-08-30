@@ -61,15 +61,22 @@ export class DiagnosticTemplate extends Template {
       }
     }
     var max = Math.max(...dataset)
-    if (max > 100 && max <= 120) {
-      max = 120
+    let maxValue = 100;
+    if (chart.chartId && chart.chartId.includes('diagnosticEnvironmental')) {
+      if (chart.labels && chart.labels.length === 5) {
+        maxValue = 7;
+      } else {
+        maxValue = 35;
+      }
+    } else if (max > 100 && max <= 120) {
+      maxValue = 120;
     } else if (max > 120 && max <= 140) {
-      max = 140
+      maxValue = 140;
     } else if (max > 140 && max <= 160) {
-      max = 160
+      maxValue = 160;
+    } else {
+      maxValue = max > 100 ? max : 100;
     }
-
-    var maxValue = max > 100 ? max : 100
 
     const fontColor = '#111';
     const options = {
@@ -203,9 +210,65 @@ export class DiagnosticPageDataGroup {
     graphics = this.graphics,
     table: string[][] = null,
   ) {
-    let chartTitle = 'Índice Promedio de la Escuela';
-
     const chartId = `${lapseName}-${diagKey}-graphic`;
+
+    if (diagKey === 'diagnosticEnvironmental') {
+      const lapseIndex = parseInt(lapseId.replace('lapse', ''), 10) - 1;
+      const isSecondLapseEnv = lapseIndex === 1;
+      const isThirdLapseEnv = lapseIndex === 2;
+
+      if (isSecondLapseEnv || isThirdLapseEnv) {
+        const lapse1Obj = this.lapses ? this.lapses[0] : null;
+        const envSummaryL1: number[] = (lapse1Obj && lapse1Obj.diagnosticEnvironmental && lapse1Obj.diagnosticEnvironmental.environmentalSummary)
+          ? lapse1Obj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        const currLapseObj = this.lapses ? this.lapses[lapseIndex] : null;
+        const envSummaryCurr: number[] = (currLapseObj && currLapseObj.diagnosticEnvironmental && currLapseObj.diagnosticEnvironmental.environmentalSummary)
+          ? currLapseObj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        const promedioAnterior = envSummaryL1.reduce((sum, val) => sum + (parseFloat(val as any) || 0), 0);
+        const promedioActual = envSummaryCurr.reduce((sum, val) => sum + (parseFloat(val as any) || 0), 0);
+
+        const labels = isSecondLapseEnv
+          ? ["Diagnóstico Inicial", "Diagnóstico de Revisión"]
+          : ["Diagnóstico Inicial", "Diagnóstico final"];
+        const values = [parseFloat(promedioAnterior.toFixed(2)), parseFloat(promedioActual.toFixed(2))];
+
+        return this.chartDefault(
+          chartId,
+          labels,
+          values,
+          'Diagnóstico de Ambiente',
+          isThirdLapseEnv,
+          isSecondLapseEnv
+        );
+      } else {
+        const labels = [
+          'Limpieza y cuidado',
+          'Gestión de residuos',
+          'Biodiversidad',
+          'Aprovechamiento de agua',
+          'Relación comunitaria'
+        ];
+        const lapseObj = this.lapses ? this.lapses[0] : null;
+        const envSummary = (lapseObj && lapseObj.diagnosticEnvironmental && lapseObj.diagnosticEnvironmental.environmentalSummary)
+          ? lapseObj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        return this.chartDefault(
+          chartId,
+          labels,
+          envSummary,
+          'Diagnóstico de Ambiente',
+          false,
+          false
+        );
+      }
+    }
+
+    let chartTitle = 'Índice Promedio de la Escuela';
 
     const { diagnostics } = this.diagnosticGraphicData;
 
@@ -513,6 +576,7 @@ export class DiagnosticPageDataGroup {
       diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
       diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
       diagnosticLogic: '60LM: Lógica Matemática en 60 minutos',
+      diagnosticEnvironmental: 'IAA: Índice Ambiental AmbLeMa',
     };
     let typeDiagText = ""
     if (diagKey == "diagnosticReading") {
@@ -521,6 +585,88 @@ export class DiagnosticPageDataGroup {
       typeDiagText = "Multiplicación"
     } else if (diagKey == "diagnosticLogic") {
       typeDiagText = "Lógica - Matemática"
+    } else if (diagKey == "diagnosticEnvironmental") {
+      typeDiagText = "Ambiente"
+    }
+
+    if (diagKey === 'diagnosticEnvironmental') {
+      const header = [];
+      const isLapse1 = isFirstLapse;
+      const isLapse2 = isSecondLapse;
+      const isLapse3 = isThirdLapse;
+
+      const diagTitle = isLapse1
+        ? 'Diagnóstico Inicial de Ambiente'
+        : isLapse2
+        ? 'Diagnóstico de Revisión de Ambiente'
+        : 'Diagnóstico Final de Ambiente';
+
+      header.push([`<strong>${diagTitle}</strong><br />(IAA: Índice Ambiental AmbLeMa)`]);
+
+      if (isLapse1) {
+        header.push(['<strong>Indicador</strong>', '<strong>I Lapso</strong>', '<strong>Meta</strong>']);
+      } else if (isLapse2) {
+        header.push(['<strong>Indicador</strong>', '<strong>Índice<br />Inicial</strong>', '<strong>Meta</strong>', '<strong>Índice<br />Revisión</strong>']);
+      } else {
+        header.push(['<strong>Indicador</strong>', '<strong>Índice<br />Inicial</strong>', '<strong>Meta</strong>', '<strong>Índice<br />Final</strong>']);
+      }
+
+      const indicatorNames = [
+        'Limpieza y cuidado',
+        'Gestión de recursos',
+        'Biodiversidad',
+        'Aprovechamiento de agua',
+        'Relación comunitaria'
+      ];
+
+      const lapse1Obj = this.lapses ? this.lapses[0] : null;
+      const envSummaryL1 = (lapse1Obj && lapse1Obj.diagnosticEnvironmental && lapse1Obj.diagnosticEnvironmental.environmentalSummary)
+        ? lapse1Obj.diagnosticEnvironmental.environmentalSummary
+        : [0, 0, 0, 0, 0];
+
+      const currLapseObj = this.lapses ? this.lapses[lapseIdx] : null;
+      const envSummaryCurr = (currLapseObj && currLapseObj.diagnosticEnvironmental && currLapseObj.diagnosticEnvironmental.environmentalSummary)
+        ? currLapseObj.diagnosticEnvironmental.environmentalSummary
+        : [0, 0, 0, 0, 0];
+
+      const formatNum = (num: number) => {
+        if (num === null || num === undefined || isNaN(num)) return '0';
+        return num % 1 === 0 ? num.toString() : parseFloat(num.toFixed(2)).toString();
+      };
+
+      let sumL1 = 0;
+      let sumCurr = 0;
+
+      const tableRows = indicatorNames.map((name, idx) => {
+        const pplL1 = parseFloat(envSummaryL1[idx]) || 0;
+        const pplCurr = parseFloat(envSummaryCurr[idx]) || 0;
+        sumL1 += pplL1;
+        sumCurr += pplCurr;
+
+        if (isLapse1) {
+          return [name, formatNum(pplL1), '7'];
+        } else {
+          return [name, formatNum(pplL1), '7', formatNum(pplCurr)];
+        }
+      });
+
+      let footerRow = [];
+      if (isLapse1) {
+        footerRow = [
+          '<strong>IAA: Índice Ambiental AmbLeMa</strong>',
+          `<strong>${formatNum(sumL1)}</strong>`,
+          '<strong>35</strong>'
+        ];
+      } else {
+        footerRow = [
+          '<strong>IAA: Índice Ambiental AmbLeMa</strong>',
+          `<strong>${formatNum(sumL1)}</strong>`,
+          '<strong>35</strong>',
+          `<strong>${formatNum(sumCurr)}</strong>`
+        ];
+      }
+
+      return [...header, ...tableRows, footerRow];
     }
 
     let header = [];
@@ -733,6 +879,7 @@ export class DiagnosticPageDataGroup {
     const pages: DiagnosticPageData[] = [];
     let tablesByLapses = [];
     const diagnosticKeys = [
+      'diagnosticEnvironmental',
       'diagnosticReading',
       'diagnosticMath',
       'diagnosticLogic',

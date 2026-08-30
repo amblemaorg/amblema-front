@@ -327,4 +327,188 @@
       }
     }
   }
+
+  .env-click-hint-banner {
+    background: rgba(0, 128, 154, 0.4);
+    border: 1px dashed rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    p {
+      font-size: 1rem !important;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .modal-backdrop,
+  .modal-backdrop.show {
+    z-index: 1040 !important;
+    background-color: #000000 !important;
+    opacity: 0.6 !important;
+  }
+
+  .iaa-modal-wrapper {
+    z-index: 1050 !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    .modal-dialog {
+      z-index: 1051 !important;
+      position: relative !important;
+      margin: 1.75rem auto !important;
+    }
+  }
+
+  .iaa-modal-content {
+    background: #f4f7f6 !important;
+    color: #1a252c !important;
+    border-radius: 16px !important;
+    border: 2px solid #00809a !important;
+
+    .iaa-title-badge {
+      background-color: #00809a !important;
+      color: #ffffff !important;
+      padding: 8px 24px !important;
+      border-radius: 30px !important;
+      font-size: 1.3rem !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .iaa-slogan {
+      color: #546e7a !important;
+      font-size: 0.95rem !important;
+    }
+
+    .iaa-card {
+      background-color: #ffffff !important;
+      border-radius: 12px !important;
+
+      .card-label {
+        color: #0c4d5c !important;
+        font-size: 0.9rem !important;
+      }
+
+      .score-display {
+        color: #00809a !important;
+        font-size: 2.4rem !important;
+        .score-max {
+          font-size: 1.3rem !important;
+          color: #78909c !important;
+        }
+      }
+    }
+
+    .badge-result {
+      font-size: 1rem !important;
+      border-radius: 20px !important;
+
+      &.badge-excellent {
+        background-color: #00809a !important;
+        color: #ffffff !important;
+      }
+      &.badge-satisfactory {
+        background-color: #689f38 !important;
+        color: #ffffff !important;
+      }
+      &.badge-developing {
+        background-color: #ffb300 !important;
+        color: #000000 !important;
+      }
+      &.badge-initial {
+        background-color: #d32f2f !important;
+        color: #ffffff !important;
+      }
+    }
+
+    .badge-dot {
+      width: 12px !important;
+      height: 12px !important;
+      border-radius: 50% !important;
+      display: inline-block !important;
+      margin-right: 6px !important;
+
+      &.dot-excellent { background-color: #00809a !important; }
+      &.dot-satisfactory { background-color: #689f38 !important; }
+      &.dot-developing { background-color: #ffb300 !important; }
+      &.dot-initial { background-color: #d32f2f !important; }
+    }
+
+    .iaa-indicators-container {
+      border-radius: 12px !important;
+      background-color: #ffffff !important;
+
+      .indicator-row {
+        background-color: #f8faf9 !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 10px !important;
+
+        .ind-number-circle {
+          width: 32px !important;
+          height: 32px !important;
+          border-radius: 50% !important;
+          color: #ffffff !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          font-weight: 800 !important;
+          font-size: 1rem !important;
+          flex-shrink: 0 !important;
+        }
+
+        .ind-icon-box {
+          font-size: 1.4rem !important;
+          flex-shrink: 0 !important;
+          width: 30px !important;
+          text-align: center !important;
+        }
+
+        .ind-title {
+          font-size: 0.88rem !important;
+          line-height: 1.2 !important;
+          text-transform: uppercase !important;
+        }
+
+        .scale-bar-track {
+          position: relative !important;
+          display: flex !important;
+          align-items: center !important;
+
+          .scale-nodes {
+            position: relative !important;
+            z-index: 2 !important;
+            width: 100% !important;
+
+            .node-step {
+              width: 26px !important;
+              height: 26px !important;
+              border-radius: 50% !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              font-size: 0.8rem !important;
+              font-weight: 700 !important;
+              color: #333 !important;
+              transition: all 0.2s ease !important;
+
+              &.active-node {
+                color: #ffffff !important;
+                transform: scale(1.1) !important;
+              }
+            }
+          }
+        }
+
+        .ind-score-badge {
+          font-size: 0.95rem !important;
+          white-space: nowrap !important;
+          border-radius: 6px !important;
+        }
+      }
+    }
+  }
 }

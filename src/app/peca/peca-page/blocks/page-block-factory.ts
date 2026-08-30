@@ -16,6 +16,7 @@ import { GraphicsBlockComponent } from './graphics-block/graphics-block.componen
 import { GenericActivityBlockComponent } from './generic-activity-block/generic-activity-block.component'
 import { GraphicsMatheBlockComponent } from './graphics-mathe-block/graphics-mathe-block.component'
 import { GraphicsLogicComponent } from './graphics-logic/graphics-logic.component'
+import { GraphicsEnvironmentComponent } from './graphics-environment/graphics-environment.component'
 import { SummaryBlockComponent } from './franklin-dev-component/summary-block/summary-block.component'
 import { FormReviewComponent } from './franklin-dev-component/form-review/form-review.component'
 import { FormTableComponent } from './form-table-previous-students/form-table.component'
@@ -91,6 +92,10 @@ export class PageBlockFactory {
       case 'graphics-logic':
         return this.componentFactoryResolver.resolveComponentFactory(
           GraphicsLogicComponent,
+        )
+      case 'graphics-environment':
+        return this.componentFactoryResolver.resolveComponentFactory(
+          GraphicsEnvironmentComponent,
         )
       case 'form-review':
         return this.componentFactoryResolver.resolveComponentFactory(

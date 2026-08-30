@@ -1,0 +1,264 @@
+@import "scss/variables";
+
+.env-evaluation-page {
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Montserrat', 'Open Sans', Roboto, sans-serif;
+
+  .py-custom-top {
+    padding-top: 40px !important;
+    padding-bottom: 40px;
+
+    @media (min-width: 768px) {
+      padding-top: 50px !important;
+      padding-bottom: 50px;
+    }
+
+    @media (min-width: 992px) {
+      padding-top: 60px !important;
+      padding-bottom: 60px;
+    }
+  }
+
+  .header-logo {
+    .logo-img {
+      max-height: 90px;
+      object-fit: contain;
+    }
+    .title {
+      color: #00809a;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+      text-transform: uppercase;
+      font-size: 1.6rem;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+  }
+
+  /* Scale Banner */
+  .scale-banner {
+    background-color: #e8f4f7;
+    border-left: 5px solid #00809a;
+    color: #0c4d5c;
+  }
+
+  /* Blue Card Styling matching Home/Olimpíadas cards */
+  .blue-card {
+    background-color: #1389a3;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 25px rgba(0, 128, 154, 0.22);
+    border: none;
+
+    .card-main-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Inner Dark Teal Container (Card-in-Card Depth) */
+    .inner-blue-box {
+      background-color: #0d6b80;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .info-section-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.15rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+    
+    i {
+      color: #7ee5f4;
+    }
+  }
+
+  .info-text {
+    color: #ffffff;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    strong {
+      color: #d4f5fc;
+      font-weight: 600;
+    }
+  }
+
+  .border-right-md {
+    @media (min-width: 768px) {
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  /* Table Custom Dark Styling */
+  .table-dark-custom {
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 0.95rem;
+
+    th {
+      background-color: rgba(0, 0, 0, 0.25);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #7ee5f4;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      border-color: rgba(255, 255, 255, 0.12);
+      vertical-align: middle;
+    }
+
+    .subtotal-row {
+      background-color: rgba(0, 0, 0, 0.15);
+      .highlight-val {
+        color: #7ee5f4;
+        font-size: 1.05rem;
+      }
+    }
+
+    .promedio-row {
+      background-color: rgba(129, 176, 62, 0.25);
+      .highlight-avg {
+        color: #ffeb3b;
+        font-size: 1.15rem;
+      }
+    }
+
+    .total-summary-row {
+      background-color: rgba(0, 128, 154, 0.4);
+      .display-score {
+        color: #ffeb3b;
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  /* Score Input */
+  .custom-score-input {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0d4653;
+    background-color: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    max-width: 90px;
+
+    &:focus {
+      border-color: #81b03e;
+      box-shadow: 0 0 0 0.2rem rgba(129, 176, 62, 0.35);
+    }
+  }
+
+  /* Observations Container & Textarea */
+  .obs-readonly-container {
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-height: 150px;
+    overflow-y: auto;
+
+    .obs-text {
+      color: #e0f7fa;
+    }
+  }
+
+  .custom-obs-textarea {
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #000000;
+    font-size: 0.9rem;
+    resize: vertical;
+
+    &:focus {
+      background-color: #ffffff;
+      border-color: #7ee5f4;
+      box-shadow: 0 0 0 0.2rem rgba(126, 229, 244, 0.25);
+    }
+  }
+
+  /* Interpretation Box */
+  .interpretation-box {
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    .badge-result {
+      display: inline-block;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+      &.badge-excellent {
+        background-color: #28a745;
+        color: #ffffff;
+      }
+      &.badge-satisfactory {
+        background-color: #17a2b8;
+        color: #ffffff;
+      }
+      &.badge-developing {
+        background-color: #ffc107;
+        color: #212529;
+      }
+      &.badge-initial {
+        background-color: #dc3545;
+        color: #ffffff;
+      }
+    }
+  }
+
+  /* Submit Button Styling */
+  .btn-success-custom {
+    background-color: #81b03e;
+    border: none;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    padding: 14px 45px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 6px 18px rgba(129, 176, 62, 0.4);
+    transition: all 0.3s ease-in-out;
+
+    &:hover:not(:disabled) {
+      background-color: #6fa030;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(129, 176, 62, 0.5);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.65;
+    }
+  }
+}

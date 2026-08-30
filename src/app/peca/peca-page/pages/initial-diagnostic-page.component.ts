@@ -9,6 +9,7 @@ import {
   ViewContainerRef,
   ViewChild,
   OnDestroy,
+  HostListener,
 } from "@angular/core";
 import { Router, Event, NavigationEnd } from "@angular/router";
 import { PecaPageComponent } from "../peca-page.component";
@@ -25,6 +26,9 @@ import {
 import { HttpFetcherService } from "src/app/services/peca/http-fetcher.service";
 import { PDFReport } from "src/app/services/peca/pdf-report.service";
 import { ToastrService } from "ngx-toastr";
+
+declare var $: any;
+
 @Component({
   selector: "peca-initial-diagnostic",
   templateUrl: "../peca-page.component.html",
@@ -46,18 +50,21 @@ export class InitialDiagnosticPageComponent
   response: any;
   readingData: any;
   mathData: any;
+  environmentData: any;
+  environmentEvaluators: any[] = [];
   isInstanciated: boolean;
   loadedData: boolean;
   allStudents: any;
   UrlLapse = "";
+
   constructor(
     factoryResolver: ComponentFactoryResolver,
-    globals: GlobalService,
+    private globals: GlobalService,
     private router: Router,
     private fetcher: HttpFetcherService,
     private pdfReportService: PDFReport,
     private toastrService: ToastrService
-    ) {
+  ) {
     super(factoryResolver);
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>
@@ -80,7 +87,163 @@ export class InitialDiagnosticPageComponent
 
   ngOnInit() {
     this.UrlLapse = this.router.url.substr(12, 1);
-    this.getInfo();
+    this.setupWindowFunctions();
+    if (!this.infoDataSubscription || this.infoDataSubscription.closed) {
+      this.getInfo();
+    }
+  }
+
+  setupWindowFunctions() {
+    (window as any).copyEnvLink = (link: string) => {
+      if (!link) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(
+          () => this.toastrService.success("Enlace copiado al portapapeles", "Éxito"),
+          () => this.fallbackCopyText(link)
+        );
+      } else {
+        this.fallbackCopyText(link);
+      }
+    };
+
+    (window as any).openEnvEvaluationView = (link: string) => {
+      if (link) {
+        window.open(link, "_blank");
+      }
+    };
+
+    (window as any).viewGeneralEnvChart = () => {
+      const completed = (this.environmentEvaluators || []).filter((ev) => ev.hasEvaluated && ev.results);
+      if (!completed.length) {
+        this.toastrService.info("Aún no hay resultados de evaluaciones registradas para este lapso.", "Atención");
+        return;
+      }
+
+      const getIndicatorVal = (item: any) => {
+        if (!item) return 0;
+        if (item.average !== undefined) return item.average;
+        if (item.value !== undefined) return item.value;
+        return 0;
+      };
+
+      const keys = [
+        "cleanlinessAndCareOfSpaces",
+        "wasteManagement",
+        "biodiversityConservation",
+        "waterUse",
+        "communityRelations",
+      ];
+
+      const generalAverages = keys.map((key) => {
+        const scores = completed.map((ev) => getIndicatorVal(ev.results[key]));
+        const sum = scores.reduce((a, b) => a + b, 0);
+        return Math.round((sum / completed.length) * 100) / 100;
+      });
+
+      this.globals.ModalShower({ code: "dataModalEstadisticasAmbiente" });
+
+      setTimeout(() => {
+        this.setBlockData("estadisticaAmbienteEvaluador", {
+          items: generalAverages,
+          title: `Resultados Generales - Diagnóstico Ambiental (${completed.length} evaluador${completed.length > 1 ? "es" : ""})`,
+        });
+      }, 100);
+    };
+  }
+
+  @HostListener("document:click", ["$event"])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    // Copy Link Button
+    const copyBtn = target.closest(".btn-copy-link");
+    if (copyBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const link = copyBtn.getAttribute("data-link");
+
+      // Also select input text for user visual feedback if present
+      const container = copyBtn.parentElement;
+      if (container) {
+        const inputEl = container.querySelector("input.env-link-input") as HTMLInputElement;
+        if (inputEl) {
+          inputEl.focus();
+          inputEl.select();
+        }
+      }
+
+      if (link) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).then(
+            () => this.toastrService.success("Enlace copiado al portapapeles", "Éxito"),
+            () => this.fallbackCopyText(link)
+          );
+        } else {
+          this.fallbackCopyText(link);
+        }
+      }
+      return;
+    }
+
+    // View Environmental Chart Button
+    const chartBtn = target.closest(".btn-view-env-chart");
+    if (chartBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const id = chartBtn.getAttribute("data-id");
+      const evaluator = this.environmentEvaluators.find((ev) => ev.id === id);
+      if (evaluator && evaluator.results) {
+        const res = evaluator.results;
+        const getIndicatorVal = (item: any) => {
+          if (!item) return 0;
+          if (item.average !== undefined) return item.average;
+          if (item.value !== undefined) return item.value;
+          return 0;
+        };
+        const items = [
+          getIndicatorVal(res.cleanlinessAndCareOfSpaces),
+          getIndicatorVal(res.wasteManagement),
+          getIndicatorVal(res.biodiversityConservation),
+          getIndicatorVal(res.waterUse),
+          getIndicatorVal(res.communityRelations),
+        ];
+
+        this.setBlockData("estadisticaAmbienteEvaluador", {
+          items: items,
+          title: `Resultados - ${evaluator.name}`
+        });
+
+        if (typeof $ !== "undefined") {
+          $("#dataModalEstadisticasAmbiente-modal").modal("show");
+        }
+      }
+    }
+  }
+
+  fallbackCopyText(text: string) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.opacity = "0";
+    textArea.style.pointerEvents = "none";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      const successful = document.execCommand("copy");
+      if (successful) {
+        this.toastrService.success("Enlace copiado al portapapeles", "Éxito");
+      } else {
+        this.toastrService.error("No se pudo copiar el enlace", "Error");
+      }
+    } catch (err) {
+      this.toastrService.error("No se pudo copiar el enlace", "Error");
+    }
+    document.body.removeChild(textArea);
   }
 
   downloadDiagnosticsReport() {
@@ -112,6 +275,9 @@ export class InitialDiagnosticPageComponent
   }
 
   getInfo() {
+    if (this.infoDataSubscription) {
+      this.infoDataSubscription.unsubscribe();
+    }
     this.infoDataSubscription = this.infoData$.subscribe(
       (data) => {
         if (data.activePecaContent) {
@@ -119,6 +285,9 @@ export class InitialDiagnosticPageComponent
           this.schoolId = data.activePecaContent.project.school.id;
           this.schoolYearId = data.user.activeSchoolYear.id;
           this.response = data.activePecaContent.school;
+
+          // fetchEnvironmentEvaluators is handled in updateMethods() below
+
           let auxStudents = [];
           for (let i = 0; i < this.response.sections.length; i++) {
             this.grade = this.response.sections[i].grade;
@@ -165,20 +334,53 @@ export class InitialDiagnosticPageComponent
     );
   }
 
+  isFetchingEvaluators: boolean = false;
+
+  fetchEnvironmentEvaluators() {
+    if (!this.idPeca || !this.UrlLapse || this.isFetchingEvaluators) return;
+    this.isFetchingEvaluators = true;
+    this.fetcher.get(`pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}`).subscribe(
+      (res: any) => {
+        this.isFetchingEvaluators = false;
+        if (res && res.evaluators) {
+          this.environmentEvaluators = res.evaluators;
+          this.environmentData = {
+            data: this.environmentEvaluators,
+            isEditable: false,
+          };
+          this.setBlockData("environmentTable", this.environmentData);
+        }
+      },
+      (err) => {
+        this.isFetchingEvaluators = false;
+        console.error("Error fetching evaluators", err);
+      }
+    );
+  }
+
   updateMethods(updateData: boolean = true) {
     this.updateDataToBlocks(updateData);
     this.updateDynamicFetchers();
+    this.fetchEnvironmentEvaluators();
   }
 
   updateDataToBlocks(updateData: boolean) {
     if (updateData) {
       this.setBlockData("readingTable", this.readingData);
       this.setBlockData("mathTable", this.mathData);
+      if (this.environmentData) {
+        this.setBlockData("environmentTable", this.environmentData);
+      }
     }
   }
 
   updateDynamicFetchers() {
-    //Update reading modal
+    // Update register evaluator form
+    this.createAndSetBlockFetcherUrls("environmentEvaluatorForm", {
+      post: () => `pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}`,
+    });
+
+    // Update reading modal
     this.createAndSetBlockFetcherUrls(
       "readingModalForm",
       {
@@ -189,17 +391,18 @@ export class InitialDiagnosticPageComponent
       "settings.data.id"
     );
 
-    //Update math modal
+    // Update math modal
     this.createAndSetBlockFetcherUrls(
       "mathModalForm",
       {
         post: (sectionId, studentId) =>
-          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
+          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${this.UrlLapse}/${sectionId}/${studentId}`,
       },
       "settings.data.sectionId",
       "settings.data.id"
     );
-    //Delete reading modal
+
+    // Delete reading modal
     this.createAndSetBlockFetcherUrls(
       "readingDeleteModal",
       {
@@ -210,7 +413,7 @@ export class InitialDiagnosticPageComponent
       "settings.dataFromRow.data.newData.id"
     );
 
-    //Delete math modal
+    // Delete math modal
     this.createAndSetBlockFetcherUrls(
       "mathDeleteModal",
       {
@@ -285,7 +488,7 @@ export class InitialDiagnosticPageComponent
   ngOnDestroy() {
     this.isInstanciated = false;
     this.loadedData = false;
-    this.infoDataSubscription.unsubscribe();
-    this.routerSubscription.unsubscribe();
+    if (this.infoDataSubscription) this.infoDataSubscription.unsubscribe();
+    if (this.routerSubscription) this.routerSubscription.unsubscribe();
   }
 }

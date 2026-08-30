@@ -16,6 +16,7 @@ import { BarChartComponent } from '../chart-components';
       [legend]="barChartLegend"
       [chartType]="barChartType"
       [plugins]="barChartPlugins"
+      (chartClick)="onChartClick($event)"
     >
     </canvas>
   `,
@@ -29,6 +30,29 @@ export class ChartJSBarChart extends BarChartComponent {
   barChartLegend = true;
   barChartType: string;
   barChartPlugins = [pluginAnnotations];
+
+  onChartClick(e: any): void {
+    if (e && e.event && e.active && e.active.length > 0) {
+      const chartInstance = e.active[0]._chart;
+      if (chartInstance) {
+        const clickedElements = chartInstance.getElementAtEvent(e.event);
+        const targetElement = (clickedElements && clickedElements.length > 0) ? clickedElements[0] : e.active[0];
+        const datasetIndex = targetElement._datasetIndex;
+        const index = targetElement._index;
+
+        if (this.barChartData && this.barChartData[datasetIndex] && this.barChartLabels) {
+          const serie = this.barChartData[datasetIndex].label;
+          const label = this.barChartLabels[index];
+          const foundItem = (this.data || []).find(
+            (element: any) => element.serie === serie && element.label === label
+          );
+          if (foundItem && typeof window !== 'undefined' && (window as any).onEnvBarClick) {
+            (window as any).onEnvBarClick(foundItem);
+          }
+        }
+      }
+    }
+  }
 
   configChart(legend?): void {
     this.barChartType = 'bar';

@@ -23,6 +23,15 @@ export function structureData(
       : false;
 
   switch (formType) {
+    case "registrarEvaluador":
+      data.isThereTable = false;
+      data.data = {
+        name: cf.get("name").value,
+        email: cf.get("email").value,
+        phone: cf.get("phone").value,
+      };
+      break;
+
     case "agregarGradoSeccion": // for Datos de la Escuela view and Grados y Secciones section
       data.data = {
         grades: cf.get("grades").value,

@@ -418,6 +418,7 @@ export class YearBookState {
         'readingDiagnosticAnalysis',
         'mathDiagnosticAnalysis',
         'logicDiagnosticAnalysis',
+        'environmentalDiagnosticAnalysis',
       ].includes(section)
     ) {
       const { lapse, analysis } = partial;

@@ -205,6 +205,8 @@ export class YearbookPageComponent extends PecaPageComponent
                     readingDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse1.readingDiagnosticAnalysis && this.ybData.lapse1.readingDiagnosticAnalysis.length ? this.ybData.lapse1.readingDiagnosticAnalysis : false) ||  */ lastYearBookRequest
                         .lapse1.readingDiagnosticAnalysis,
+                    environmentalDiagnosticAnalysis:
+                      lastYearBookRequest.lapse1.environmentalDiagnosticAnalysis || '',
                   },
                   lapse2: {
                     ...currentYearBook.lapse2,
@@ -241,6 +243,8 @@ export class YearbookPageComponent extends PecaPageComponent
                     readingDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse2.readingDiagnosticAnalysis && this.ybData.lapse2.readingDiagnosticAnalysis.length ? this.ybData.lapse2.readingDiagnosticAnalysis : false) ||  */ lastYearBookRequest
                         .lapse2.readingDiagnosticAnalysis,
+                    environmentalDiagnosticAnalysis:
+                      lastYearBookRequest.lapse2.environmentalDiagnosticAnalysis || '',
                   },
                   lapse3: {
                     ...currentYearBook.lapse3,
@@ -277,6 +281,8 @@ export class YearbookPageComponent extends PecaPageComponent
                     readingDiagnosticAnalysis:
                       /* (this.ybData && this.ybData.lapse3.readingDiagnosticAnalysis && this.ybData.lapse3.readingDiagnosticAnalysis.length ? this.ybData.lapse3.readingDiagnosticAnalysis : false) ||  */ lastYearBookRequest
                         .lapse3.readingDiagnosticAnalysis,
+                    environmentalDiagnosticAnalysis:
+                      lastYearBookRequest.lapse3.environmentalDiagnosticAnalysis || '',
                   },
                   groupPhoto: lastYearBookRequest.groupPhoto || currentYearBook.groupPhoto || null,
                   sections: currentYearBook.sections.map((section) => {

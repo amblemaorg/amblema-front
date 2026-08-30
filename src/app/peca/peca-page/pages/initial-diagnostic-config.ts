@@ -1,4 +1,5 @@
 import {
+  formEvaluadorAmbiente,
   formLecturaModal,
   formMatematicaModal,
 } from "../blocks/form-block/all-forms";
@@ -522,6 +523,106 @@ const modalMathDiagnosticTable = {
 };
 //* ------------------------------------------
 
+const formTitleRegisterEvaluator = {
+  component: "textsbuttons",
+  settings: {
+    subtitles: [
+      {
+        title: "Registro evaluador de Diagnóstico Ambiental",
+      },
+    ],
+    classes: "align-items-start",
+  },
+};
+
+const formRegisterEvaluator = {
+  component: "form",
+  name: "environmentEvaluatorForm",
+  settings: {
+    formsContent: formEvaluadorAmbiente,
+    buttons: ["verResultados", "guardar"],
+    formType: "registrarEvaluador",
+    fetcherMethod: "post",
+  },
+};
+
+const environmentEvaluatorsTable = {
+  component: "table",
+  name: "environmentTable",
+  settings: {
+    tableTitle: "Evaluadores de Diagnóstico Ambiental",
+    actions: {
+      columnTitle: "Acciones",
+      add: false,
+      edit: false,
+      delete: false,
+      custom: [
+        {
+          name: "COPY",
+          title: '<i class="icon-copy" title="Copiar enlace"></i>',
+        },
+        {
+          name: "VIEW_EVALUATION",
+          title: '<i class="icon-eye" title="Ver evaluación"></i>',
+        },
+      ],
+    },
+    onCustomAction: (e: any) => {
+      if (e && e.action === "COPY" && e.data && e.data.link) {
+        if ((window as any).copyEnvLink) {
+          (window as any).copyEnvLink(e.data.link);
+        }
+      }
+      if (e && e.action === "VIEW_EVALUATION" && e.data && e.data.link) {
+        if ((window as any).openEnvEvaluationView) {
+          (window as any).openEnvEvaluationView(e.data.link);
+        }
+      }
+    },
+    columns: {
+      name: {
+        title: "Nombre y Apellido",
+      },
+      phone: {
+        title: "Teléfono",
+      },
+      email: {
+        title: "Correo Electrónico",
+      },
+    },
+    tableCode: "environmentEvaluatorsTable",
+    data: [],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  },
+};
+
+const estadisticaAmbiente = {
+  component: "graphics-environment",
+  name: "estadisticaAmbienteEvaluador",
+  settings: {
+    chartId: "estadisticaAmbienteEvaluador",
+    items: [],
+    title: "Resultados de Evaluación Ambiental"
+  },
+};
+
+const modalEstadisticasAmbiente = {
+  component: "modal",
+  settings: {
+    modalCode: "dataModalEstadisticasAmbiente",
+    isNotTableEditing: true,
+    items: [
+      {
+        childBlocks: [{ ...estadisticaAmbiente }],
+      },
+    ],
+  },
+};
+
 export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
     title: "Diagnóstico",
@@ -535,6 +636,15 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
       component: "tabs",
       settings: {
         items: [
+          {
+            title: "Ambiente",
+            childBlocks: [
+              { ...formTitleRegisterEvaluator },
+              { ...formRegisterEvaluator },
+              { ...environmentEvaluatorsTable },
+              { ...modalEstadisticasAmbiente },
+            ],
+          },
           {
             title: "Lectura",
             childBlocks: [
