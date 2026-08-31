@@ -84,6 +84,11 @@
                       <div class="score-display font-weight-bold" style="color: #00809a; font-size: 2.1rem; line-height: 1.2;">
                         {{ getEnvTotalScore() }}<span class="score-max" style="color: #78909c; font-size: 1.2rem; font-weight: 600;">/35</span>
                       </div>
+                      <div class="text-center mt-2" *ngIf="activeEnvItem && activeEnvItem.evaluationsCount !== undefined">
+                        <small class="font-italic text-muted" style="font-size: 0.82rem; font-style: italic;">
+                          Basado en {{ activeEnvItem.evaluationsCount }} {{ activeEnvItem.evaluationsCount === 1 ? 'evaluación registrada' : 'evaluaciones registradas' }}
+                        </small>
+                      </div>
                     </div>
                   </div>
 
@@ -98,6 +103,11 @@
                               style="border-radius: 20px !important; font-size: 0.95rem; font-weight: 800; display: inline-block;">
                           {{ getEnvInterpretation(getEnvTotalScore()).level }}
                         </span>
+                      </div>
+                      <div class="text-center mt-2" *ngIf="activeEnvItem && activeEnvItem.evaluationsCount !== undefined">
+                        <small class="font-italic text-muted" style="font-size: 0.82rem; font-style: italic;">
+                          Basado en {{ activeEnvItem.evaluationsCount }} {{ activeEnvItem.evaluationsCount === 1 ? 'evaluación registrada' : 'evaluaciones registradas' }}
+                        </small>
                       </div>
                     </div>
                   </div>

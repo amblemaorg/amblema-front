@@ -135,16 +135,16 @@ export class EnvironmentalEvaluationComponent implements OnInit {
           this.hasEvaluated = !!this.evaluator.hasEvaluated;
           this.isUserSession = this.checkIsUserSession();
           const readonlyParam = this.route.snapshot.queryParamMap.get('readonly') === 'true';
-          this.isReadonlyMode = this.hasEvaluated || this.isUserSession || readonlyParam;
+          this.isReadonlyMode = this.hasEvaluated || readonlyParam;
 
           if (this.evaluator.results) {
             this.populateResults(this.evaluator.results);
           }
 
-          if (this.isUserSession) {
-            this.alreadyEvaluatedMessage = 'Modo de Solo Lectura: Sesión de usuario PECA detectada. No se permite modificar valores.';
-          } else if (this.hasEvaluated) {
+          if (this.hasEvaluated) {
             this.alreadyEvaluatedMessage = 'Los resultados para este evaluador ya han sido registrados.';
+          } else {
+            this.alreadyEvaluatedMessage = '';
           }
         } else {
           this.notFound = true;
@@ -177,6 +177,23 @@ export class EnvironmentalEvaluationComponent implements OnInit {
         }
       }
     });
+  }
+
+  onInputFocus(event: any, sub: Subcriterion): void {
+    if (event && event.target && typeof event.target.select === 'function') {
+      event.target.select();
+    }
+    if (sub.value === 0) {
+      sub.value = null;
+    }
+  }
+
+  onInputBlur(sub: Subcriterion): void {
+    if (sub.value === null || sub.value === undefined || sub.value === ('' as any)) {
+      sub.value = 0;
+    } else {
+      this.validateValue(sub);
+    }
   }
 
   validateValue(sub: Subcriterion): void {

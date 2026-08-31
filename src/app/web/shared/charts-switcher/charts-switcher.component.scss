@@ -37,27 +37,27 @@
   &.d-row {
     @include breakpoint(small, landscape) {
       justify-content: flex-start;
-      align-items: flex-end;
+      align-items: center;
       flex-direction: row;
     }
 
     @include breakpoint(medium) {
       justify-content: flex-start;
-      align-items: flex-end;
+      align-items: center;
       flex-direction: row;
     }
 
     .switchers-wrapper {
       @include breakpoint(small, landscape) {
         flex-direction: column;
-        margin: 4% 0 0;
+        margin: 0;
         padding-right: 4%;
         width: 30%;
       }
 
       @include breakpoint(medium) {
         flex-direction: column;
-        margin: 4% 0 0;
+        margin: 0;
         padding-right: 4%;
         width: 30%;
       }

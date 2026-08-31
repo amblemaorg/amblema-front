@@ -196,24 +196,31 @@ export class GeneralStepsComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
+  hasStepFile(step: Step): boolean {
+    if (!step) return false;
+    if (step.files && step.files.length > 0) return true;
+    if (step.file && step.file.url) return true;
+    if (step.file2 && step.file2.url) return true;
+    return false;
+  }
+
+  showApproveBtn(step: Step): boolean {
+    if (!step) return false;
+    if (this.hasStepFile(step)) return false;
+    if (step.hasUpload) return false;
+    if (step.isForm) return false;
+    if (step.goMods) return false;
+    if (step.hasChecklist && step.checklist && step.checklist.length > 0) return false;
+    if (step.approvalType === "4") return false;
+    if (step.status === "3") return false;
+    return true;
+  }
+
   onFileClick(step: Step, index: number) {
     if (this.isSelectorReadOnly()) {
       return;
     }
-    const nameLower = (step.name || "").toLowerCase();
-    const devNameLower = (step.devName || "").toLowerCase();
-    if (
-      (nameLower.includes("conoce el método amblema") ||
-        devNameLower.includes("knowamblemamethod") ||
-        nameLower.includes("presentación") ||
-        nameLower.includes("presentacion") ||
-        nameLower.includes("presentaci") ||
-        devNameLower.includes("presentation") ||
-        nameLower.includes("perfil") ||
-        devNameLower.includes("coordinatorprofile")) &&
-      step.status !== "3" &&
-      !step.sending
-    ) {
+    if (!step.hasUpload && step.status !== "3" && !step.sending) {
       this.approvalMethod(step, index, this.mode, "3");
     }
   }
