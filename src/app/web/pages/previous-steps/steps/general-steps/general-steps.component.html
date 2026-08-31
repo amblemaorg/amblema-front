@@ -119,7 +119,7 @@
 
           <!-- (click)="( (!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions)? $event.preventDefault():null"
             [class.inactive]="(!isAdmin() && (compareMode() || step.status=='3') ) || !enableActions" -->
-          <ng-container *ngIf="step.hasFile">
+          <ng-container *ngIf="hasStepFile(step)">
             <ng-container *ngIf="step.files && step.files.length > 0; else singleFile">
               <a
                 *ngFor="let f of step.files"
@@ -136,7 +136,7 @@
             </ng-container>
             <ng-template #singleFile>
               <a
-                *ngIf="step.file"
+                *ngIf="step.file && step.file.url"
                 [href]="sanitizeFile(step.file.url)"
                 target="_blank"
                 [download]="step.file.name"
@@ -148,7 +148,7 @@
                 Descargar {{ step.file.name || 'archivo' }}
               </a>
               <a
-                *ngIf="step.file2"
+                *ngIf="step.file2 && step.file2.url"
                 [href]="sanitizeFile(step.file2.url)"
                 target="_blank"
                 [download]="step.file2.name"
@@ -161,6 +161,24 @@
               </a>
             </ng-template>
           </ng-container>
+
+          <button
+            *ngIf="showApproveBtn(step)"
+            type="button"
+            class="btn btn-primary text-decoration-none py-2 px-4 mt-1"
+            (click)="approvalMethod(step, i, mode, '3')"
+            [disabled]="
+              (compareMode() && !isAdmin()) ||
+              step.sending ||
+              !enableActions
+            "
+          >
+            <span
+              *ngIf="step.sending"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            {{ !step.sending ? 'Aprobar' : 'Aprobando..' }}
+          </button>
           <button
             *ngIf="isConvenioStep(step)"
             type="button"

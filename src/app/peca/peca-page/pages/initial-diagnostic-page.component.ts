@@ -93,22 +93,38 @@ export class InitialDiagnosticPageComponent
     }
   }
 
+  fixLink(link: string): string {
+    if (!link) return "";
+    if (typeof window !== "undefined" && window.location && window.location.origin) {
+      if (link.includes("localhost:4200") || link.includes("localhost:4201") || link.includes("127.0.0.1")) {
+        const pathIndex = link.indexOf("/evaluacion-ambiente/");
+        if (pathIndex !== -1) {
+          const path = link.substring(pathIndex);
+          return `${window.location.origin}${path}`;
+        }
+      }
+    }
+    return link;
+  }
+
   setupWindowFunctions() {
     (window as any).copyEnvLink = (link: string) => {
-      if (!link) return;
+      const targetLink = this.fixLink(link);
+      if (!targetLink) return;
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(link).then(
+        navigator.clipboard.writeText(targetLink).then(
           () => this.toastrService.success("Enlace copiado al portapapeles", "Éxito"),
-          () => this.fallbackCopyText(link)
+          () => this.fallbackCopyText(targetLink)
         );
       } else {
-        this.fallbackCopyText(link);
+        this.fallbackCopyText(targetLink);
       }
     };
 
     (window as any).openEnvEvaluationView = (link: string) => {
-      if (link) {
-        window.open(link, "_blank");
+      const targetLink = this.fixLink(link);
+      if (targetLink) {
+        window.open(targetLink, "_blank");
       }
     };
 
@@ -343,7 +359,10 @@ export class InitialDiagnosticPageComponent
       (res: any) => {
         this.isFetchingEvaluators = false;
         if (res && res.evaluators) {
-          this.environmentEvaluators = res.evaluators;
+          this.environmentEvaluators = res.evaluators.map((ev: any) => ({
+            ...ev,
+            link: this.fixLink(ev.link)
+          }));
           this.environmentData = {
             data: this.environmentEvaluators,
             isEditable: false,
