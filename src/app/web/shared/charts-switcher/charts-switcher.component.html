@@ -75,39 +75,52 @@
                   </span>
                 </div>
 
-                <!-- Top Consolidation Row (Score, Scale) -->
+                <!-- Top Consolidation Row (Score, Scale Grid) -->
                 <div class="row align-items-stretch mb-4">
                   <!-- Puntaje IAA Card -->
                   <div class="col-md-6 mb-3 mb-md-0">
-                    <div class="iaa-card score-card text-center p-3 h-100 border rounded shadow-sm" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
-                      <h6 class="card-label text-uppercase font-weight-bold mb-2" style="color: #0c4d5c; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">PUNTAJE IAA DEL LAPSO</h6>
-                      <div class="score-display font-weight-bold" style="color: #00809a; font-size: 2.1rem; line-height: 1.2;">
-                        {{ getEnvTotalScore() }}<span class="score-max" style="color: #78909c; font-size: 1.2rem; font-weight: 600;">/35</span>
+                    <div class="iaa-card score-card text-center p-3 h-100 border rounded shadow-sm d-flex flex-column justify-content-between" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
+                      <div>
+                        <h6 class="card-label text-uppercase font-weight-bold mb-2" style="color: #0c4d5c; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">PUNTAJE IAA DEL LAPSO</h6>
+                        <div class="score-display font-weight-bold mb-2" style="color: #00809a; font-size: 2.2rem; line-height: 1.1;">
+                          {{ getEnvTotalScore() }}<span class="score-max" style="color: #78909c; font-size: 1.2rem; font-weight: 600;">/35</span>
+                        </div>
+                        <div class="mb-1">
+                          <span class="badge badge-result px-3 py-1 font-weight-bold shadow-sm"
+                                [style.backgroundColor]="getEnvInterpretation(getEnvTotalScore()).bgColor"
+                                [style.color]="getEnvInterpretation(getEnvTotalScore()).textColor"
+                                style="border-radius: 16px !important; font-size: 0.9rem; font-weight: 800; display: inline-block;">
+                            {{ getEnvInterpretation(getEnvTotalScore()).level }}
+                          </span>
+                        </div>
                       </div>
                       <div class="text-center mt-2" *ngIf="activeEnvItem && activeEnvItem.evaluationsCount !== undefined">
-                        <small class="font-italic text-muted" style="font-size: 0.82rem; font-style: italic;">
+                        <small class="font-italic text-muted" style="font-size: 0.8rem; font-style: italic;">
                           Basado en {{ activeEnvItem.evaluationsCount }} {{ activeEnvItem.evaluationsCount === 1 ? 'evaluación registrada' : 'evaluaciones registradas' }}
                         </small>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Escala de Interpretación Card -->
+                  <!-- Escala de Interpretación Legend Grid Card -->
                   <div class="col-md-6">
-                    <div class="iaa-card scale-card text-center p-3 h-100 border rounded shadow-sm" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
+                    <div class="iaa-card scale-card p-3 h-100 border rounded shadow-sm d-flex flex-column justify-content-between" style="background-color: #ffffff; border-radius: 12px !important; border: 1px solid #dce4e8 !important;">
                       <h6 class="card-label text-uppercase font-weight-bold text-center mb-2" style="color: #0c4d5c; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;">ESCALA DE INTERPRETACIÓN</h6>
-                      <div class="text-center mt-2 mb-1">
-                        <span class="badge badge-result px-4 py-2 font-weight-bold shadow-sm"
-                              [style.backgroundColor]="getEnvInterpretation(getEnvTotalScore()).bgColor"
-                              [style.color]="getEnvInterpretation(getEnvTotalScore()).textColor"
-                              style="border-radius: 20px !important; font-size: 0.95rem; font-weight: 800; display: inline-block;">
-                          {{ getEnvInterpretation(getEnvTotalScore()).level }}
-                        </span>
-                      </div>
-                      <div class="text-center mt-2" *ngIf="activeEnvItem && activeEnvItem.evaluationsCount !== undefined">
-                        <small class="font-italic text-muted" style="font-size: 0.82rem; font-style: italic;">
-                          Basado en {{ activeEnvItem.evaluationsCount }} {{ activeEnvItem.evaluationsCount === 1 ? 'evaluación registrada' : 'evaluaciones registradas' }}
-                        </small>
+                      <div class="row row-cols-2 g-2 text-center align-items-center my-auto">
+                        <div *ngFor="let item of envScaleLegendList" class="col mb-2">
+                          <div class="legend-item-card p-2 rounded d-flex flex-column align-items-center justify-content-center h-100"
+                               [style.border]="item.level === getEnvInterpretation(getEnvTotalScore()).level ? '2px solid ' + item.bgColor : '1px solid #e2e8f0'"
+                               [style.backgroundColor]="item.level === getEnvInterpretation(getEnvTotalScore()).level ? '#f0f9f8' : '#f8faf9'"
+                               style="border-radius: 8px !important; transition: all 0.2s ease-in-out;">
+                            <span class="badge px-2 py-1 font-weight-bold mb-1 shadow-xs"
+                                  [style.backgroundColor]="item.bgColor"
+                                  [style.color]="item.textColor"
+                                  style="border-radius: 12px !important; font-size: 0.78rem; font-weight: 800; display: inline-block;">
+                              {{ item.level }}
+                            </span>
+                            <small class="font-weight-bold" style="color: #455a64; font-size: 0.75rem;">{{ item.range }}</small>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

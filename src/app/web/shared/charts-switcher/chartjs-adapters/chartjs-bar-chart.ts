@@ -57,8 +57,17 @@ export class ChartJSBarChart extends BarChartComponent {
   configChart(legend?): void {
     this.barChartType = 'bar';
     const seriesArray = this.data.map((element) => <string>element.serie);
-    const seriesSet = new Set(seriesArray); // To remove duplicated values
-    const series = [...seriesSet].sort();
+    const hasLapses = seriesArray.some((s) => s && s.toLowerCase().includes('lapso'));
+
+    let series: string[];
+    if (hasLapses) {
+      const allLapses = ['Lapso 1', 'Lapso 2', 'Lapso 3'];
+      const set = new Set([...allLapses, ...seriesArray]);
+      series = [...set].sort((a, b) => a.localeCompare(b));
+    } else {
+      const seriesSet = new Set(seriesArray);
+      series = [...seriesSet].sort();
+    }
 
     const labelsArray = this.data.map((element) => <string>element.label);
     const labelsSet = new Set(labelsArray); // This remove duplicates labels
@@ -69,7 +78,7 @@ export class ChartJSBarChart extends BarChartComponent {
         const found = this.data.find(
           (element) => element.serie === serie && element.label === label
         );
-        return found ? <number>found.value : null;
+        return (found && found.value !== undefined && found.value !== null) ? <number>found.value : null;
       });
 
       return {
@@ -102,10 +111,15 @@ export class ChartJSBarChart extends BarChartComponent {
       },
       legend,
     };
-    this.barChartColors = this.props.colors.map((color) => {
+
+    const defaultColors = ['#00809a', '#2e7d32', '#ef6c00'];
+    this.barChartColors = series.map((_, idx) => {
+      const color = (this.props && this.props.colors && this.props.colors[idx])
+        ? this.props.colors[idx]
+        : defaultColors[idx % defaultColors.length];
       return {
-        backgroundColor: color || '#FFF',
-        borderColor: color || '#FFF',
+        backgroundColor: color,
+        borderColor: color,
       };
     });
   }
