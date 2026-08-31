@@ -42,6 +42,13 @@ export class ChartsSwitcherComponent implements OnInit {
     { number: 5, key: 'communityRelations', title: 'RELACIÓN CON LA COMUNIDAD', color: '#ef6c00', iconClass: 'fa-handshake-o' }
   ];
 
+  envScaleLegendList = [
+    { range: '31 – 35 pts', level: 'Excelente', bgColor: '#00809a', textColor: '#ffffff' },
+    { range: '21 – 30 pts', level: 'Satisfactorio', bgColor: '#689f38', textColor: '#ffffff' },
+    { range: '11 – 20 pts', level: 'En Desarrollo', bgColor: '#ffc107', textColor: '#000000' },
+    { range: '00 – 10 pts', level: 'Inicial', bgColor: '#d32f2f', textColor: '#ffffff' }
+  ];
+
   constructor(private resolver: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {

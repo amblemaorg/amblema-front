@@ -78,7 +78,7 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       maxSubtotal: 21,
       subcriteria: [
         { code: '4.1', label: '¿Se evidencia conciencia sobre el buen uso del agua, evitando el malgasto o fugas?', value: 0, observation: '' },
-        { code: '4.2', label: '¿Cuentan con recipientes o tanques adecuados para almacenar y usar el agua de riego?', value: 0, observation: '' },
+        { code: '4.2', label: '¿Poseen recipientes o tanques aptos para el almacenamiento y/o suministro de agua de riego?', value: 0, observation: '' },
         { code: '4.3', label: '¿Poseen una estructura o plan concreto para la recolección y almacenamiento de agua de lluvia?', value: 0, observation: '' }
       ]
     },
@@ -88,7 +88,7 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       title: 'Relación con la comunidad',
       maxSubtotal: 14,
       subcriteria: [
-        { code: '5.1', label: '¿La escuela realiza acciones directas que aportan a la limpieza y ornato de la comunidad (ej. DDTAL)?', value: 0, observation: '' },
+        { code: '5.1', label: '¿La escuela realiza acciones directas que aportan a la limpieza y ornato de la comunidad (Ej: Día de Todos a Limpiar)?', value: 0, observation: '' },
         { code: '5.2', label: '¿Los padres, representantes y vecinos participan/apoyan los proyectos ambientales escolares?', value: 0, observation: '' }
       ]
     }
@@ -99,7 +99,7 @@ export class EnvironmentalEvaluationComponent implements OnInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private store: Store
-  ) {}
+  ) { }
 
   isUserSession: boolean = false;
   isReadonlyMode: boolean = false;

@@ -1,6 +1,6 @@
 const diagnosticText = {
   environment:
-    'Medimos cada lapso el Índice Ambiental Amblema (IAA) basado en 5 indicadores clave evaluados en las escuelas. La gráfica muestra el promedio del puntaje alcanzado del IAA frente a la meta esperada de 35 puntos.',
+    'Medimos cada lapso el Índice Ambiental AmbLeMa (IAA) basado en 5 indicadores clave evaluados en las escuelas. La gráfica muestra el promedio del puntaje alcanzado del IAA frente a la meta esperada de 35 puntos.',
   lecture:
     'Medimos cada trimestre el número de palabras leídas por minuto (PPM). La gráfica muestra el porcentaje alcanzado de PPM frente a la meta del grado que sería el 100 %.',
   math:
