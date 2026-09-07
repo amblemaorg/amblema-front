@@ -206,9 +206,11 @@
         }
       }
 
-      p {
+      p,
+      ::ng-deep .description-html p {
         text-align: justify;
         color: map-get($color_map, blue);
+        margin-bottom: 0 !important;
         @include mediabreak(large, portrait) {
           padding-right: 2rem;
         }
@@ -226,14 +228,14 @@
 
     .col-sm-9 {
       @include mediabreak(larger, landscape, true, 1600px) {
-        flex: 0 0 80%;
-        max-width: 80%;
+        flex: 0 0 78%;
+        max-width: 78%;
       }
     }
     .col-sm-3 {
       @include mediabreak(larger, landscape, true, 1600px) {
-        flex: 0 0 20%;
-        max-width: 20%;
+        flex: 0 0 22%;
+        max-width: 22%;
       }
     }
 
@@ -243,34 +245,164 @@
     }
 
     .carousel {
-      owl-carousel ::ng-deep .owl-carousel .owl-item {
-        .owl-video-wrapper {
-          .owl-video-play-icon {
-            background-size: 50%;
-            background-position: center;
+      position: relative;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+
+      owl-carousel ::ng-deep .owl-carousel {
+        width: 100%;
+        background: #000;
+
+        .owl-stage-outer {
+          overflow: hidden !important;
+          width: 100% !important;
+          background: #000;
+        }
+
+        .owl-stage {
+          width: 100% !important;
+          display: flex !important;
+          background: #000;
+        }
+
+        .owl-item {
+          width: 100% !important;
+          flex: 0 0 100%;
+          max-width: 100%;
+          background: #000;
+          display: block !important;
+
+          .slide-wrapper {
+            width: 100% !important;
+            height: 560px !important;
+            max-height: 80vh !important;
+            background: #000;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+
+            @media (max-width: 1200px) {
+              height: 480px !important;
+            }
+            @media (max-width: 991px) {
+              height: 400px !important;
+            }
+            @media (max-width: 767px) {
+              height: 320px !important;
+            }
+            @media (max-width: 575px) {
+              height: 240px !important;
+            }
           }
-          .owl-video-wrapper .owl-video-play-icon {
-            display: none;
+
+          img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+            background: #000;
+            display: block;
+            margin: 0 auto;
+          }
+
+          .video-container {
+            position: relative;
+            width: 100% !important;
+            height: 100% !important;
+            background: #000;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+
+            iframe {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100% !important;
+              height: 100% !important;
+              border: none;
+              display: block;
+              background: #000;
+            }
           }
         }
-        .owl-video-wrapper,
-        img {
-          @include gallery-height;
-          object-fit: cover;
-          @include mediabreak(small, portrait) {
-            width: 67vw;
+      }
+
+      .custom-carousel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        font-size: 1.6rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 30;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+        @media (max-width: 767px) {
+          width: 36px;
+          height: 36px;
+          font-size: 1.2rem;
+        }
+
+        &:hover {
+          background: map-get($color_map, blue);
+          border-color: #fff;
+          transform: translateY(-50%) scale(1.1);
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &.custom-prev {
+          left: 15px;
+        }
+
+        &.custom-next {
+          right: 15px;
+        }
+      }
+
+      .custom-carousel-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        z-index: 25;
+
+        .custom-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.5);
+          border: 1px solid rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+          transition: all 0.25s ease;
+
+          &.active {
+            background: map-get($color_map, soft-green);
+            transform: scale(1.35);
+            border-color: #fff;
           }
-          @include mediabreak(small, landscape, true, 640px) {
-            width: 69.5vw;
-          }
-          @include mediabreak(medium, landscape, true, 800px) {
-            width: 67vw;
-          }
-          @include mediabreak(large, portrait) {
-            width: 69.5vw;
-          }
-          @include mediabreak(large, landscape) {
-            width: 100%;
+
+          &:hover {
+            background: #fff;
           }
         }
       }
@@ -288,123 +420,73 @@
     }
 
     .images {
-      @mixin images-redo {
+      .thumbnails-playlist {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-      }
-      @include mediabreak(small, landscape, true, 640px) {
-        @include images-redo;
-      }
-      @include mediabreak(large, portrait) {
-        @include images-redo;
-      }
+        gap: 10px;
 
-      owl-carousel ::ng-deep .owl-carousel .owl-stage {
-        @media screen and (orientation: landscape) and (min-width: 640px) {
-          @include gallery-height;
-        }
+        .image-item {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          border-radius: 6px;
+          overflow: hidden;
+          padding: 6px;
+          background: #f8f9fa;
+          border: 2px solid transparent;
+          transition: all 0.2s ease;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 100% !important;
-        &::after {
-          display: none;
-        }
-
-        .owl-item:first-child {
-          display: none;
-        }
-        .owl-item {
-          width: 100% !important;
-        }
-
-        .owl-video-wrapper {
-          .owl-video-play-icon {
-            background-size: 50%;
-            background-position: center;
-          }
-          .owl-video-wrapper .owl-video-play-icon {
-            display: none;
-          }
-        }
-      }
-      .image-item {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        position: relative;
-
-        @include mediabreak(small, landscape, true, 640px) {
-          margin-bottom: 0 !important;
-        }
-        @include mediabreak(large, portrait) {
-          margin-bottom: 0 !important;
-        }
-
-        img,
-        ::ng-deep .owl-video-wrapper,
-        .over-video {
-          min-width: 33vw;
-          max-width: 33vw;
-          min-height: 22vw;
-          max-height: 22vw;
-          object-fit: cover;
-
-          @mixin img-redo {
-            min-width: 22vw;
-            max-width: 22vw;
-            margin-right: 0 !important;
-            margin-left: auto;
-          }
-          @include mediabreak(small, portrait) {
-            @include img-redo;
-            min-height: 14vw;
-            max-height: 14vw;
-          }
-          @include mediabreak(small, landscape, true, 640px) {
-            @include img-redo;
-            min-height: 13vw;
-            max-height: 13vw;
-          }
-          @include mediabreak(large, landscape) {
-            min-width: unset;
-            max-width: unset;
-            width: 87%;
-            min-height: 12vw;
-            max-height: 12vw;
-          }
-          @include mediabreak(larger, landscape, true, 1366px) {
-            min-height: 10vw;
-            max-height: 10vw;
-          }
-          @include mediabreak(larger, landscape, true, 1600px) {
-            min-height: 10.3vw;
-            max-height: 10.3vw;
-          }
-        }
-        .over-video {
-          background: transparent;
-          z-index: 2;
-          position: absolute;
-          height: 100% !important;
-          top: 0;
-          left: 0;
-        }
-        p {
-          color: map-get($color_map, blue);
-          line-height: initial;
-
-          small {
-            font-size: 95%;
+          &:hover {
+            background: #eef2f5;
+            border-color: map-get($color_map, blue);
           }
 
-          @include mediabreak(small, portrait) {
-            display: none;
+          &.active-thumb {
+            border-color: map-get($color_map, soft-green);
+            background: #eef8ea;
           }
-          @include mediabreak(small, landscape, true, 640px) {
-            display: none;
+
+          .thumb-wrapper {
+            position: relative;
+            width: 100px;
+            min-width: 100px;
+            height: 65px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #000;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+
+            .over-video {
+              background: rgba(0, 0, 0, 0.45);
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              .play-icon {
+                color: #fff;
+                font-size: 1.2rem;
+                opacity: 0.95;
+              }
+            }
+          }
+
+          p {
+            color: map-get($color_map, blue);
+            margin-bottom: 0;
+            font-weight: 500;
+            line-height: 1.2;
+            word-break: break-word;
           }
         }
       }
@@ -480,9 +562,11 @@
       @extend %bold-blue;
       text-align: center;
     }
-    p {
+    p,
+    ::ng-deep .description-html p {
       color: map-get($color_map, blue);
       text-align: justify;
+      margin-bottom: 0 !important;
     }
   }
 }
@@ -664,6 +748,20 @@
       @include mediabreak(larger, landscape, true, 1900px) {
         padding: 0 3.75rem !important;
       }
+
+      .result-badge {
+        font-size: 0.9rem;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+        &.badge-success {
+          background-color: map-get($color_map, soft-green);
+          color: #fff;
+        }
+        &.badge-danger {
+          background-color: map-get($color_map, red);
+          color: #fff;
+        }
+      }
     }
 
     h3,
@@ -683,10 +781,19 @@
     a {
       color: map-get($color_map, darkest-gray);
       padding: 0.5rem 0;
+
+      &.disabled-cursor {
+        cursor: default !important;
+      }
     }
     .letter-sequence {
       border-color: map-get($color_map, dark-gray) !important;
       padding: 0.5rem 0.75rem;
+      min-width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       -webkit-transition: all 0.25s;
       transition: all 0.25s;
     }
@@ -696,10 +803,16 @@
       color: #fff;
       font-weight: bold;
     }
+    .correct-highlight .letter-sequence {
+      background: map-get($color_map, soft-green) !important;
+      border-color: map-get($color_map, soft-green) !important;
+      color: #fff !important;
+      font-weight: bold;
+    }
     .incorrect .letter-sequence {
-      background: map-get($color_map, red);
+      background: map-get($color_map, red) !important;
       border-color: map-get($color_map, red) !important;
-      color: #fff;
+      color: #fff !important;
       font-weight: bold;
     }
   }
@@ -917,7 +1030,94 @@
     }
   }
 }
-#warning-message,
+#warning-message {
+  .modal-dialog {
+    max-width: 480px;
+    margin: 1.75rem auto;
+
+    @media (max-width: 576px) {
+      margin: 1rem;
+    }
+  }
+
+  .warning-modal-content {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    width: 100%;
+
+    .modal-header {
+      border: none;
+      padding: 1.25rem 1.5rem;
+
+      &.header-primary {
+        background: map-get($color_map, blue);
+      }
+
+      &.header-danger {
+        background: #dc3545;
+      }
+
+      .modal-icon-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.1rem;
+      }
+
+      .close {
+        font-size: 1.6rem;
+        opacity: 0.9;
+        text-shadow: none;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .modal-body {
+      background: #fff;
+      padding: 1.75rem 1.5rem;
+
+      .warning-text {
+        font-size: 1.05rem;
+        color: map-get($color_map, blue);
+        line-height: 1.5;
+        font-weight: 500;
+        text-align: center;
+      }
+    }
+
+    .modal-footer {
+      background: #fff;
+
+      .btn {
+        border-radius: 24px;
+        min-width: 140px;
+        font-size: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: all 0.2s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
 #image-modal {
   .close {
     @include mediabreak(large, landscape) {

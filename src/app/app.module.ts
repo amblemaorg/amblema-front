@@ -55,7 +55,14 @@ import { YearBookState } from './store/yearbook/yearbook.action'
       },
     ),
     NgxsStoragePluginModule.forRoot({
-      key: ['user', 'modules', 'steps', 'residenceInfo', 'peca', 'yearbook'],
+      key: [
+        'coordinatorinfo',
+        'stepsinfo',
+        'moduleinfo',
+        'residenceinfo',
+        'peca',
+        'yearbook',
+      ],
     }),
     EmbedVideo.forRoot(),
     PdfTemplatesModule,
