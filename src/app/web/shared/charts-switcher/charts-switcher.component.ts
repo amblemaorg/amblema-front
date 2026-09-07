@@ -162,7 +162,8 @@ export class ChartsSwitcherComponent implements OnInit {
   getEnvIndicatorValue(key: string): number {
     const item = this.activeEnvItem;
     if (item && item.indicators && item.indicators[key] !== undefined) {
-      return Number(item.indicators[key]) || 0;
+      const val = Number(item.indicators[key]) || 0;
+      return Math.floor(val);
     }
     return 0;
   }

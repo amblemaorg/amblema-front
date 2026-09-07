@@ -1114,8 +1114,33 @@ export class FormBlockComponent
     }, {});
   }
 
+  resetForm() {
+    if (this.componentForm) {
+      this.componentForm.reset();
+      this.componentForm.markAsPristine();
+      this.componentForm.markAsUntouched();
+      if (this.componentForm.controls) {
+        Object.keys(this.componentForm.controls).forEach((key) => {
+          const control = this.componentForm.controls[key];
+          if (control) {
+            control.setValue("");
+            control.markAsPristine();
+            control.markAsUntouched();
+            control.setErrors(null);
+          }
+        });
+      }
+      this.isEdited = false;
+    }
+  }
+
   setData(data: any) {
-    if (data.setContent) {
+    if (data && data.resetForm) {
+      this.resetForm();
+      return;
+    }
+
+    if (data && data.setContent) {
       data.contentToSet.map((attr) => {
         this.isContentRefreshing = true;
         //this.settings.formsContent[attr].options = data.data[attr];

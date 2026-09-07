@@ -78,15 +78,44 @@ export class InitialDiagnosticPageComponent
     //To know if the url change
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
+        this.resetEnvironmentForm();
+        setTimeout(() => this.resetEnvironmentForm(), 50);
         this.getInfo();
       }
     });
   }
 
+  resetEnvironmentForm() {
+    this.setBlockData("environmentEvaluatorForm", { resetForm: true });
+    if (this.blockInstances && this.blockInstances.has("environmentEvaluatorForm")) {
+      const formBlock: any = this.blockInstances.get("environmentEvaluatorForm");
+      if (formBlock) {
+        if (typeof formBlock.resetForm === "function") {
+          formBlock.resetForm();
+        } else if (formBlock.componentForm) {
+          formBlock.componentForm.reset();
+          formBlock.componentForm.markAsPristine();
+          formBlock.componentForm.markAsUntouched();
+          if (formBlock.componentForm.controls) {
+            Object.keys(formBlock.componentForm.controls).forEach((key) => {
+              const control = formBlock.componentForm.controls[key];
+              if (control) {
+                control.setValue("");
+                control.markAsPristine();
+                control.markAsUntouched();
+                control.setErrors(null);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
   ngOnInit() {
     this.UrlLapse = this.router.url.substr(12, 1);
+    this.resetEnvironmentForm();
     this.setupWindowFunctions();
     if (!this.infoDataSubscription || this.infoDataSubscription.closed) {
       this.getInfo();
@@ -394,6 +423,7 @@ export class InitialDiagnosticPageComponent
   }
 
   updateDynamicFetchers() {
+    this.resetEnvironmentForm();
     // Update register evaluator form
     this.createAndSetBlockFetcherUrls("environmentEvaluatorForm", {
       post: () => `pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}`,
