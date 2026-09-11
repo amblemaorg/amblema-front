@@ -35,18 +35,18 @@ export class ChartsSwitcherComponent implements OnInit {
   showEnvModal: boolean = false;
 
   envIndicatorsList = [
-    { number: 1, key: 'cleanlinessAndCareOfSpaces', title: 'LIMPIEZA Y CUIDADO DE LOS ESPACIOS', color: '#00809a', iconClass: 'fa-paint-brush' },
-    { number: 2, key: 'wasteManagement', title: 'GESTIÓN Y APROVECHAMIENTO DE LOS RESIDUOS', color: '#2e7d32', iconClass: 'fa-recycle' },
-    { number: 3, key: 'biodiversityConservation', title: 'CONSERVACIÓN DE LA BIODIVERSIDAD', color: '#689f38', iconClass: 'fa-leaf' },
-    { number: 4, key: 'waterUse', title: 'APROVECHAMIENTO DEL AGUA', color: '#0288d1', iconClass: 'fa-tint' },
-    { number: 5, key: 'communityRelations', title: 'RELACIÓN CON LA COMUNIDAD', color: '#ef6c00', iconClass: 'fa-handshake-o' }
+    { number: 1, key: 'cleanlinessAndCareOfSpaces', title: 'LIMPIEZA Y CUIDADO DE LOS ESPACIOS', color: '#f26735', iconClass: 'fa-paint-brush' },
+    { number: 2, key: 'wasteManagement', title: 'GESTIÓN Y APROVECHAMIENTO DE LOS RESIDUOS', color: '#39b54a', iconClass: 'fa-recycle' },
+    { number: 3, key: 'biodiversityConservation', title: 'CONSERVACIÓN DE LA BIODIVERSIDAD', color: '#6a3695', iconClass: 'fa-leaf' },
+    { number: 4, key: 'waterUse', title: 'APROVECHAMIENTO DEL AGUA', color: '#3c4a9f', iconClass: 'fa-tint' },
+    { number: 5, key: 'communityRelations', title: 'RELACIÓN CON LA COMUNIDAD', color: '#0d9644', iconClass: 'fa-handshake-o' }
   ];
 
   envScaleLegendList = [
-    { range: '31 – 35 pts', level: 'Excelente', bgColor: '#00809a', textColor: '#ffffff' },
-    { range: '21 – 30 pts', level: 'Satisfactorio', bgColor: '#689f38', textColor: '#ffffff' },
-    { range: '11 – 20 pts', level: 'En Desarrollo', bgColor: '#ffc107', textColor: '#000000' },
-    { range: '00 – 10 pts', level: 'Inicial', bgColor: '#d32f2f', textColor: '#ffffff' }
+    { range: '31 – 35 pts', level: 'Excelente', bgColor: '#25aae1', textColor: '#ffffff' },
+    { range: '21 – 30 pts', level: 'Satisfactorio', bgColor: '#39b54a', textColor: '#ffffff' },
+    { range: '11 – 20 pts', level: 'En Desarrollo', bgColor: '#fcb041', textColor: '#ffffff' },
+    { range: '5 – 10 pts', level: 'Inicial', bgColor: '#ed1c24', textColor: '#ffffff' }
   ];
 
   constructor(private resolver: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {}
@@ -178,13 +178,13 @@ export class ChartsSwitcherComponent implements OnInit {
 
   getEnvInterpretation(score: number): { level: string; badgeClass: string; bgColor: string; textColor: string } {
     if (score >= 31) {
-      return { level: 'Excelente', badgeClass: 'badge-excellent', bgColor: '#00809a', textColor: '#ffffff' };
+      return { level: 'Excelente', badgeClass: 'badge-excellent', bgColor: '#25aae1', textColor: '#ffffff' };
     } else if (score >= 21) {
-      return { level: 'Satisfactorio', badgeClass: 'badge-satisfactory', bgColor: '#689f38', textColor: '#ffffff' };
+      return { level: 'Satisfactorio', badgeClass: 'badge-satisfactory', bgColor: '#39b54a', textColor: '#ffffff' };
     } else if (score >= 11) {
-      return { level: 'En Desarrollo', badgeClass: 'badge-developing', bgColor: '#ffc107', textColor: '#000000' };
+      return { level: 'En Desarrollo', badgeClass: 'badge-developing', bgColor: '#fcb041', textColor: '#ffffff' };
     } else {
-      return { level: 'Inicial', badgeClass: 'badge-initial', bgColor: '#d32f2f', textColor: '#ffffff' };
+      return { level: 'Inicial', badgeClass: 'badge-initial', bgColor: '#ed1c24', textColor: '#ffffff' };
     }
   }
 }

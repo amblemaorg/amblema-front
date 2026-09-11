@@ -295,11 +295,15 @@ export class InitialDiagnosticPageComponent
     this.pdfBtnDisabled = true;
     this.pdfBtnLoading = true;
 
-    const path = `statistics/diagnosticsreport/${this.schoolYearId}/${this.schoolId}?diagnostics=math,reading,logic&lapso=${this.UrlLapse}`;
+    const path = `statistics/diagnosticsreport/${this.schoolYearId}/${this.schoolId}?diagnostics=math,reading,logic,environmental&lapso=${this.UrlLapse}`;
 
     this.fetcher.get(path).subscribe(
       (response: any) => {
-        if (response && response.sections && response.sections.length) {
+        if (response && ((response.sections && response.sections.length) || (response.environmental && response.environmental.hasData))) {
+          if (!response.targetLapse && !response.lapso) {
+            response.targetLapse = this.UrlLapse;
+            response.lapso = this.UrlLapse;
+          }
           this.pdfReportService.onGenerate(response);
         } else {
           this.toastrService.info("Información", "No se encontraron registros");

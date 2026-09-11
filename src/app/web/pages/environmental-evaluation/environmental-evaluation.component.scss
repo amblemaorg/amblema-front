@@ -215,19 +215,19 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 
       &.badge-excellent {
-        background-color: #28a745;
+        background-color: #25aae1;
         color: #ffffff;
       }
       &.badge-satisfactory {
-        background-color: #17a2b8;
+        background-color: #39b54a;
         color: #ffffff;
       }
       &.badge-developing {
-        background-color: #ffc107;
-        color: #212529;
+        background-color: #fcb041;
+        color: #ffffff;
       }
       &.badge-initial {
-        background-color: #dc3545;
+        background-color: #ed1c24;
         color: #ffffff;
       }
     }
