@@ -153,6 +153,28 @@ $table-border-color: 1px solid $blue;
           font-size: 1.4rem !important;
         }
       }
+
+      &.evaluated-env-row {
+        .ng2-smart-actions ng2-st-tbody-custom {
+          grid-template-columns: auto auto !important;
+
+          a.ng2-smart-action-custom-custom:has(i.icon-trash),
+          a.ng2-smart-action-custom-custom:last-child {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    tbody tr.evaluated-env-row {
+      .ng2-smart-actions ng2-st-tbody-custom {
+        grid-template-columns: auto auto !important;
+
+        a.ng2-smart-action-custom-custom:has(i.icon-trash),
+        a.ng2-smart-action-custom-custom:last-child {
+          display: none !important;
+        }
+      }
     }
 
     &.hide-view,

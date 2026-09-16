@@ -301,6 +301,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://amblema.org/blog/post/6aa563624917e0fafd504fa7</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://amblema.org/blog/post/6575f250a619d6cb92a576d6</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
