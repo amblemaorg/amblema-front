@@ -6,19 +6,29 @@
   color: $blue;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   margin: 0;
-  padding: 2vw;
+  padding: 3vw;
   width: 100%;
+  min-height: 52vw;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
 
   @include breakpoint(small, landscape) {
-    padding: 1.5vw;
+    padding: 2vw;
     width: 100%;
+    min-height: 16vw;
   }
 
   @include breakpoint(medium) {
-    padding: 1.5vw;
+    padding: 2vw;
     width: 100%;
+    min-height: 16vw;
+  }
+
+  @include breakpoint(large) {
+    padding: 1.8vw 2vw;
+    min-height: 15vw;
   }
 
   p {
@@ -34,74 +44,118 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-  }
-
-  .testimonial-image {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    height: 20vw;
-    width: 30vw;
-    overflow: hidden;
+    margin-bottom: 1.5vw;
 
     @include breakpoint(small, landscape) {
-      width: 7vw;
-      height: 7vw;
+      margin-bottom: 0.8vw;
     }
 
     @include breakpoint(medium) {
-      width: 7vw;
-      height: 7vw;
+      margin-bottom: 0.8vw;
+    }
+  }
+
+  .testimonial-image {
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22vw;
+    width: 32vw;
+    max-width: 40%;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: transparent;
+
+    @include breakpoint(small, landscape) {
+      width: 8vw;
+      height: 6.5vw;
+      max-width: 40%;
+    }
+
+    @include breakpoint(medium) {
+      width: 8vw;
+      height: 6.5vw;
+      max-width: 40%;
+    }
+
+    @include breakpoint(large) {
+      width: 7.5vw;
+      height: 6vw;
     }
 
     img {
-      height: 100%;
+      max-height: 100%;
+      max-width: 100%;
       width: auto;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      display: block;
     }
   }
 
   .testimonial-identity {
-    font-size: 3.25vw;
-    margin-left: 3vw;
+    font-size: 3.5vw;
+    margin-left: 2.5vw;
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
 
     @include breakpoint(small, landscape) {
       font-size: 1.5vw;
-      margin-left: 1.5vw;
+      margin-left: 1.2vw;
     }
 
     @include breakpoint(medium) {
       font-size: 1.5vw;
-      margin-left: 1.5vw;
+      margin-left: 1.2vw;
     }
 
     @include breakpoint(large) {
-      font-size: 1vw;
+      font-size: 1.05vw;
+      margin-left: 1.2vw;
     }
 
     .testimonial-fullname {
       font-weight: bold;
-      line-height: 1;
+      line-height: 1.25;
+      margin-bottom: 0.2rem;
+    }
+
+    .testimonial-role {
+      line-height: 1.2;
+      opacity: 0.85;
+      font-size: 0.9em;
     }
   }
 
+  .testimonial-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .testimonial-description {
-    font-size: 3vw;
+    font-size: 3.2vw;
     margin: 0;
-    padding: 2vw;
+    padding: 1vw 0.5vw 0;
     text-align: center;
+    line-height: 1.45;
 
     @include breakpoint(small, landscape) {
-      font-size: 1.5vw;
-      padding: 1vw;
+      font-size: 1.4vw;
+      padding: 0.5vw 0 0;
     }
 
     @include breakpoint(medium) {
-      font-size: 1.5vw;
-      padding: 1vw;
+      font-size: 1.4vw;
+      padding: 0.5vw 0 0;
     }
 
     @include breakpoint(large) {
-      font-size: 0.9vw;
+      font-size: 0.95vw;
     }
   }
 }
