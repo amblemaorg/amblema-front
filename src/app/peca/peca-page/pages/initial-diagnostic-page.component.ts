@@ -40,6 +40,7 @@ export class InitialDiagnosticPageComponent
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
   routerSubscription: Subscription;
+  tableUpdateSubscription: Subscription;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   students = [];
   section = {};
@@ -117,6 +118,13 @@ export class InitialDiagnosticPageComponent
     this.UrlLapse = this.router.url.substr(12, 1);
     this.resetEnvironmentForm();
     this.setupWindowFunctions();
+    if (!this.tableUpdateSubscription || this.tableUpdateSubscription.closed) {
+      this.tableUpdateSubscription = this.globals.updateTableDataEmitter.subscribe((data) => {
+        if (data && (data.code === "dataModalDeleteEnvironmentEvaluator" || (data.data && data.data.newData && data.data.newData.token))) {
+          this.fetchEnvironmentEvaluators();
+        }
+      });
+    }
     if (!this.infoDataSubscription || this.infoDataSubscription.closed) {
       this.getInfo();
     }
@@ -155,6 +163,29 @@ export class InitialDiagnosticPageComponent
       if (targetLink) {
         window.open(targetLink, "_blank");
       }
+    };
+
+    (window as any).onDeleteEvaluatedWarning = () => {
+      this.toastrService.warning(
+        "No se puede eliminar un evaluador que ya ha realizado la evaluación.",
+        "Acción no permitida"
+      );
+    };
+
+    (window as any).openDeleteEnvEvaluatorModal = (evaluatorData: any) => {
+      this.globals.ModalShower({
+        componentName: "environmentTable",
+        code: "dataModalDeleteEnvironmentEvaluator",
+        data: {
+          dataCopyData: evaluatorData,
+          dataToCompare: evaluatorData,
+          oldData: { ...evaluatorData },
+          newData: { ...evaluatorData },
+        },
+        action: "delete",
+        showBtn: false,
+        component: "textsbuttons",
+      });
     };
 
     (window as any).viewGeneralEnvChart = () => {
@@ -476,6 +507,16 @@ export class InitialDiagnosticPageComponent
       "settings.dataFromRow.data.newData.sectionId",
       "settings.dataFromRow.data.newData.id"
     );
+
+    // Delete environment evaluator modal
+    this.createAndSetBlockFetcherUrls(
+      "environmentEvaluatorDeleteModal",
+      {
+        delete: (evaluatorId) =>
+          `pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}/${evaluatorId}`,
+      },
+      "settings.dataFromRow.data.newData.id"
+    );
   }
 
   setReadingTableData(
@@ -543,5 +584,6 @@ export class InitialDiagnosticPageComponent
     this.loadedData = false;
     if (this.infoDataSubscription) this.infoDataSubscription.unsubscribe();
     if (this.routerSubscription) this.routerSubscription.unsubscribe();
+    if (this.tableUpdateSubscription) this.tableUpdateSubscription.unsubscribe();
   }
 }

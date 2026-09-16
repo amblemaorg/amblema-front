@@ -132,9 +132,7 @@ export class GraphicsEnvironmentComponent
           responsive: true,
           maintainAspectRatio: false,
           title: {
-            display: true,
-            text: this.settings && this.settings.title ? this.settings.title : 'Diagnóstico de Ambiente',
-            fontColor: '#333'
+            display: false,
           },
           scales: {
             yAxes: [

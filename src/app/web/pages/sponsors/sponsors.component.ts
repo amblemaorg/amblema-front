@@ -29,14 +29,17 @@ export class SponsorsComponent implements OnInit, OnDestroy {
 
   coverCarouselOptions: OwlOptions = {
     autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    autoplaySpeed: 800,
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
     pullDrag: false,
     dots: true,
-    nav: false,
-    navSpeed: 1000,
-    autoplayTimeout: 12000,
+    nav: true,
+    navSpeed: 800,
+    navText: ["", ""],
     responsive: {
       0: {
         items: 1,
