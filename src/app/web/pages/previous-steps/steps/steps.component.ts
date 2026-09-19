@@ -15,7 +15,14 @@ import { StepsService } from "../../../../services/steps/steps.service";
 import { UserState } from "../../../../store/states/e-learning/user.state";
 import { Observable, Subscription } from "rxjs";
 import { Step } from "../../../../models/steps/previous-steps.model";
-import { UpdateStepsProgress } from "../../../../store/actions/steps/project.actions";
+import {
+  UpdateStepsProgress,
+  UpdateStepsSelectedProject,
+} from "../../../../store/actions/steps/project.actions";
+import {
+  SetCurrentUser,
+  UpdateUserInfo,
+} from "../../../../store/actions/e-learning/user.actions";
 import { StepsState } from "../../../../store/states/steps/project.state";
 import { UProject } from "../../../../models/steps/learning-modules.model";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -125,6 +132,30 @@ export class StepsComponent implements OnInit, OnDestroy {
     );
 
     if (!this.isTest) {
+      // Fallback: recover project and user from PecaState if not present in StepsState/UserState
+      const pecaState = this.store.selectSnapshot((state) => state.peca);
+      const currentSelectedProj = this.store.selectSnapshot(
+        StepsState.selected_proj_id
+      );
+      if (!currentSelectedProj && pecaState?.selectedProject?.id) {
+        this.store.dispatch(
+          new UpdateStepsSelectedProject(pecaState.selectedProject.id)
+        );
+      }
+
+      const currentUser = this.store.selectSnapshot(UserState.user_brief);
+      if (
+        (!currentUser?.userId || !currentUser?.userType) &&
+        pecaState?.user?.id
+      ) {
+        this.store.dispatch(
+          new SetCurrentUser(pecaState.user.id, +pecaState.user.userType)
+        );
+        this.store.dispatch(
+          new UpdateUserInfo(pecaState.user.id, +pecaState.user.userType)
+        );
+      }
+
       this.subscription.add(
         this.selected_project_id$.subscribe((res) => {
           if (res) {
@@ -281,6 +312,7 @@ export class StepsComponent implements OnInit, OnDestroy {
             this.stepsProgress[1] = calcProgress(this.sponsorSteps);
             this.stepsProgress[2] = calcProgress(this.coordinatorSteps);
             this.stepsProgress[3] = calcProgress(this.schoolSteps);
+            this.setDefaultActiveStep();
           }
         })
       );
