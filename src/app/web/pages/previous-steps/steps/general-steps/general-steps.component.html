@@ -97,7 +97,8 @@
               step.approvalType == '1' &&
               !showSeveralsButton(step) &&
               step.status == '1' &&
-              showConditioned(step)
+              showConditioned(step) &&
+              !showApproveBtn(step)
             "
             class="btn btn-primary text-decoration-none py-2 px-4"
             (click)="approvalMethod(step, i, mode)"
@@ -170,7 +171,9 @@
             [disabled]="
               (compareMode() && !isAdmin()) ||
               step.sending ||
-              !enableActions
+              isNotConfirmable(step) ||
+              !enableActions ||
+              step.status == '8'
             "
           >
             <span

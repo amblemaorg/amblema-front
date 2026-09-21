@@ -139,6 +139,7 @@ export class AppRoutingModule {
           }
           this.store.dispatch(new SetUser(user))
           this.store.dispatch(new SetUserPermissions(permissions))
+          this.store.dispatch(new SetCurrentUser(userId, +userType))
           this.store.dispatch(new UpdateUserInfo(userId, +userType))
           this.store.dispatch(new UpdateStepsSelectedProject(projectId))
           this.store.dispatch(new UpdateStates())

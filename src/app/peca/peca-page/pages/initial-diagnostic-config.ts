@@ -546,11 +546,58 @@ const formRegisterEvaluator = {
   },
 };
 
+const textsAndButtonsEnvironmentEvaluator = {
+  component: "textsbuttons",
+  name: "environmentEvaluatorDeleteModal",
+  settings: {
+    subtitles: [
+      {
+        text: "¿Desea eliminar este evaluador?",
+      },
+    ],
+    action: [
+      {
+        type: 1,
+        name: "Si",
+      },
+      {
+        type: 2,
+        name: "No",
+      },
+    ],
+    classes: "justify-content-center",
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    isFromCustomTableActions: true,
+    isDeleting: true,
+    fetcherMethod: "delete",
+  },
+};
+
+const modalDeleteEnvironmentEvaluator = {
+  component: "modal",
+  settings: {
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    items: [
+      {
+        childBlocks: [{ ...textsAndButtonsEnvironmentEvaluator }],
+      },
+    ],
+  },
+};
+
 const environmentEvaluatorsTable = {
   component: "table",
   name: "environmentTable",
   settings: {
     tableTitle: "Evaluadores de Diagnóstico Ambiental",
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    rowClassFunction: (row: any) => {
+      const data = row && (row.data || (typeof row.getData === "function" ? row.getData() : row));
+      if (data && data.hasEvaluated) {
+        return "evaluated-env-row";
+      }
+      return "";
+    },
     actions: {
       columnTitle: "Acciones",
       add: false,
@@ -565,6 +612,10 @@ const environmentEvaluatorsTable = {
           name: "VIEW_EVALUATION",
           title: '<i class="icon-eye" title="Ver evaluación"></i>',
         },
+        {
+          name: "DELETE",
+          title: '<i class="icon-trash" title="Eliminar evaluador"></i>',
+        },
       ],
     },
     onCustomAction: (e: any) => {
@@ -576,6 +627,17 @@ const environmentEvaluatorsTable = {
       if (e && e.action === "VIEW_EVALUATION" && e.data && e.data.link) {
         if ((window as any).openEnvEvaluationView) {
           (window as any).openEnvEvaluationView(e.data.link);
+        }
+      }
+      if (e && e.action === "DELETE" && e.data) {
+        if (e.data.hasEvaluated) {
+          if ((window as any).onDeleteEvaluatedWarning) {
+            (window as any).onDeleteEvaluatedWarning();
+          }
+        } else {
+          if ((window as any).openDeleteEnvEvaluatorModal) {
+            (window as any).openDeleteEnvEvaluatorModal(e.data);
+          }
         }
       }
     },
@@ -642,6 +704,7 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
               { ...formTitleRegisterEvaluator },
               { ...formRegisterEvaluator },
               { ...environmentEvaluatorsTable },
+              { ...modalDeleteEnvironmentEvaluator },
               { ...modalEstadisticasAmbiente },
             ],
           },

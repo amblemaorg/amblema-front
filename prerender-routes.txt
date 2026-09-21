@@ -58,6 +58,7 @@
 /escuelas/2309_U-E-E--Rómulo-Gallegos
 /escuelas/0D01370401_E-E-P--Batalla-de-Carabobo
 /escuelas/OD02982404_Unidad-Educativa-Estadal-Osma
+/blog/post/6aa563624917e0fafd504fa7
 /blog/post/6575f250a619d6cb92a576d6
 /blog/post/656384cda619d6cb92a569be
 /blog/post/65578056b03a21ae06b46e69

@@ -56,12 +56,12 @@ import { YearBookState } from './store/yearbook/yearbook.action'
     ),
     NgxsStoragePluginModule.forRoot({
       key: [
-        'coordinatorinfo',
-        'stepsinfo',
-        'moduleinfo',
-        'residenceinfo',
-        'peca',
-        'yearbook',
+        UserState,
+        ModulesState,
+        StepsState,
+        ResidenceInfoState,
+        PecaState,
+        YearBookState,
       ],
     }),
     EmbedVideo.forRoot(),

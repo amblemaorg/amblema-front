@@ -408,19 +408,19 @@
       border-radius: 20px !important;
 
       &.badge-excellent {
-        background-color: #00809a !important;
+        background-color: #25aae1 !important;
         color: #ffffff !important;
       }
       &.badge-satisfactory {
-        background-color: #689f38 !important;
+        background-color: #39b54a !important;
         color: #ffffff !important;
       }
       &.badge-developing {
-        background-color: #ffb300 !important;
-        color: #000000 !important;
+        background-color: #fcb041 !important;
+        color: #ffffff !important;
       }
       &.badge-initial {
-        background-color: #d32f2f !important;
+        background-color: #ed1c24 !important;
         color: #ffffff !important;
       }
     }
@@ -432,10 +432,10 @@
       display: inline-block !important;
       margin-right: 6px !important;
 
-      &.dot-excellent { background-color: #00809a !important; }
-      &.dot-satisfactory { background-color: #689f38 !important; }
-      &.dot-developing { background-color: #ffb300 !important; }
-      &.dot-initial { background-color: #d32f2f !important; }
+      &.dot-excellent { background-color: #25aae1 !important; }
+      &.dot-satisfactory { background-color: #39b54a !important; }
+      &.dot-developing { background-color: #fcb041 !important; }
+      &.dot-initial { background-color: #ed1c24 !important; }
     }
 
     .iaa-indicators-container {

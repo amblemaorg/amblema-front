@@ -257,7 +257,7 @@ export class DiagnosticPageDataGroup {
           ? lapseObj.diagnosticEnvironmental.environmentalSummary
           : [0, 0, 0, 0, 0];
 
-        return this.chartDefault(
+        const chart = this.chartDefault(
           chartId,
           labels,
           envSummary,
@@ -265,6 +265,14 @@ export class DiagnosticPageDataGroup {
           false,
           false
         );
+        chart.datasets[0].backgroundColor = [
+          '#f26735',
+          '#39b54a',
+          '#6a3695',
+          '#3c4a9f',
+          '#0d9644'
+        ];
+        return chart;
       }
     }
 

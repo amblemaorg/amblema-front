@@ -285,14 +285,19 @@ export class EnvironmentalEvaluationComponent implements OnInit {
       (res) => {
         this.submitting = false;
         this.hasEvaluated = true;
+        this.isReadonlyMode = true;
         this.alreadyEvaluatedMessage = 'Los resultados para este evaluador ya han sido registrados.';
         this.toastr.success('Resultados de la evaluación registrados exitosamente', 'Éxito');
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       },
       (err) => {
         this.submitting = false;
         const msg = err.error && err.error.message ? err.error.message : 'Error al registrar los resultados';
         if (err.status === 400 && err.error && err.error.hasEvaluated) {
           this.hasEvaluated = true;
+          this.isReadonlyMode = true;
           this.alreadyEvaluatedMessage = 'Los resultados para este evaluador ya han sido registrados.';
         }
         this.toastr.error(msg, 'Atención');

@@ -40,6 +40,7 @@ export class InitialDiagnosticPageComponent
   container: ViewContainerRef;
   infoDataSubscription: Subscription;
   routerSubscription: Subscription;
+  tableUpdateSubscription: Subscription;
   @Select(PecaState.getActivePecaContent) infoData$: Observable<any>;
   students = [];
   section = {};
@@ -78,16 +79,52 @@ export class InitialDiagnosticPageComponent
     //To know if the url change
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        this.UrlLapse = event.url;
         this.UrlLapse = this.router.url.substr(12, 1);
+        this.resetEnvironmentForm();
+        setTimeout(() => this.resetEnvironmentForm(), 50);
         this.getInfo();
       }
     });
   }
 
+  resetEnvironmentForm() {
+    this.setBlockData("environmentEvaluatorForm", { resetForm: true });
+    if (this.blockInstances && this.blockInstances.has("environmentEvaluatorForm")) {
+      const formBlock: any = this.blockInstances.get("environmentEvaluatorForm");
+      if (formBlock) {
+        if (typeof formBlock.resetForm === "function") {
+          formBlock.resetForm();
+        } else if (formBlock.componentForm) {
+          formBlock.componentForm.reset();
+          formBlock.componentForm.markAsPristine();
+          formBlock.componentForm.markAsUntouched();
+          if (formBlock.componentForm.controls) {
+            Object.keys(formBlock.componentForm.controls).forEach((key) => {
+              const control = formBlock.componentForm.controls[key];
+              if (control) {
+                control.setValue("");
+                control.markAsPristine();
+                control.markAsUntouched();
+                control.setErrors(null);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
   ngOnInit() {
     this.UrlLapse = this.router.url.substr(12, 1);
+    this.resetEnvironmentForm();
     this.setupWindowFunctions();
+    if (!this.tableUpdateSubscription || this.tableUpdateSubscription.closed) {
+      this.tableUpdateSubscription = this.globals.updateTableDataEmitter.subscribe((data) => {
+        if (data && (data.code === "dataModalDeleteEnvironmentEvaluator" || (data.data && data.data.newData && data.data.newData.token))) {
+          this.fetchEnvironmentEvaluators();
+        }
+      });
+    }
     if (!this.infoDataSubscription || this.infoDataSubscription.closed) {
       this.getInfo();
     }
@@ -126,6 +163,29 @@ export class InitialDiagnosticPageComponent
       if (targetLink) {
         window.open(targetLink, "_blank");
       }
+    };
+
+    (window as any).onDeleteEvaluatedWarning = () => {
+      this.toastrService.warning(
+        "No se puede eliminar un evaluador que ya ha realizado la evaluación.",
+        "Acción no permitida"
+      );
+    };
+
+    (window as any).openDeleteEnvEvaluatorModal = (evaluatorData: any) => {
+      this.globals.ModalShower({
+        componentName: "environmentTable",
+        code: "dataModalDeleteEnvironmentEvaluator",
+        data: {
+          dataCopyData: evaluatorData,
+          dataToCompare: evaluatorData,
+          oldData: { ...evaluatorData },
+          newData: { ...evaluatorData },
+        },
+        action: "delete",
+        showBtn: false,
+        component: "textsbuttons",
+      });
     };
 
     (window as any).viewGeneralEnvChart = () => {
@@ -266,11 +326,15 @@ export class InitialDiagnosticPageComponent
     this.pdfBtnDisabled = true;
     this.pdfBtnLoading = true;
 
-    const path = `statistics/diagnosticsreport/${this.schoolYearId}/${this.schoolId}?diagnostics=math,reading,logic&lapso=${this.UrlLapse}`;
+    const path = `statistics/diagnosticsreport/${this.schoolYearId}/${this.schoolId}?diagnostics=math,reading,logic,environmental&lapso=${this.UrlLapse}`;
 
     this.fetcher.get(path).subscribe(
       (response: any) => {
-        if (response && response.sections && response.sections.length) {
+        if (response && ((response.sections && response.sections.length) || (response.environmental && response.environmental.hasData))) {
+          if (!response.targetLapse && !response.lapso) {
+            response.targetLapse = this.UrlLapse;
+            response.lapso = this.UrlLapse;
+          }
           this.pdfReportService.onGenerate(response);
         } else {
           this.toastrService.info("Información", "No se encontraron registros");
@@ -394,6 +458,7 @@ export class InitialDiagnosticPageComponent
   }
 
   updateDynamicFetchers() {
+    this.resetEnvironmentForm();
     // Update register evaluator form
     this.createAndSetBlockFetcherUrls("environmentEvaluatorForm", {
       post: () => `pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}`,
@@ -440,6 +505,16 @@ export class InitialDiagnosticPageComponent
           `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
       },
       "settings.dataFromRow.data.newData.sectionId",
+      "settings.dataFromRow.data.newData.id"
+    );
+
+    // Delete environment evaluator modal
+    this.createAndSetBlockFetcherUrls(
+      "environmentEvaluatorDeleteModal",
+      {
+        delete: (evaluatorId) =>
+          `pecaprojects/environmental-diagnostics/evaluators/${this.idPeca}/${this.UrlLapse}/${evaluatorId}`,
+      },
       "settings.dataFromRow.data.newData.id"
     );
   }
@@ -509,5 +584,6 @@ export class InitialDiagnosticPageComponent
     this.loadedData = false;
     if (this.infoDataSubscription) this.infoDataSubscription.unsubscribe();
     if (this.routerSubscription) this.routerSubscription.unsubscribe();
+    if (this.tableUpdateSubscription) this.tableUpdateSubscription.unsubscribe();
   }
 }

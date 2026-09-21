@@ -217,6 +217,16 @@
   .nb-theme-default ng2-smart-table .ng2-smart-actions {
     text-align: center !important;
   }
+  .nb-theme-default ng2-smart-table table tr.evaluated-env-row {
+    .ng2-smart-actions ng2-st-tbody-custom {
+      grid-template-columns: auto auto !important;
+
+      a.ng2-smart-action-custom-custom:has(i.icon-trash),
+      a.ng2-smart-action-custom-custom:last-child {
+        display: none !important;
+      }
+    }
+  }
   @content;
 }
 
