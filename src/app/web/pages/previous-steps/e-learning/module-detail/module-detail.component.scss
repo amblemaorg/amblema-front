@@ -11,15 +11,19 @@
 
 @mixin gallery-height {
   height: 65vw;
+
   @include mediabreak(small, portrait) {
     height: 46.35vw;
   }
+
   @include mediabreak(small, landscape, true, 640px) {
     height: 46vw;
   }
+
   @include mediabreak(large, landscape) {
     height: 41.5vw;
   }
+
   @include mediabreak(larger, landscape, true, 1366px) {
     height: 35.5vw;
   }
@@ -27,9 +31,11 @@
 
 .module-detail-container {
   @extend %padding-conts;
+
   @include mediabreak(large, landscape) {
     padding: 4rem 4rem 2rem 4rem;
   }
+
   @include mediabreak(larger, landscape, true, 1366px) {
     padding: 5rem 6rem 2rem 6rem;
   }
@@ -52,6 +58,7 @@
         padding: 0.45rem 0.75rem !important;
         border: 2px solid map-get($color_map, blue);
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         padding: 0.45rem 0.85rem !important;
       }
@@ -59,6 +66,7 @@
       &:focus {
         box-shadow: none;
       }
+
       &:hover {
         background: transparent;
         color: map-get($color_map, blue);
@@ -74,12 +82,15 @@
         align-items: center;
         order: 1;
       }
+
       @include mediabreak(large, portrait) {
         order: 1;
       }
+
       @include mediabreak(large, landscape) {
         margin-bottom: 2.4rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         margin-bottom: 4rem !important;
         margin-top: 1rem;
@@ -93,22 +104,27 @@
       @include mediabreak(large, landscape) {
         font-size: 2.25rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         font-size: 3rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         font-size: 3.25rem !important;
       }
     }
+
     h3 {
       color: map-get($color_map, soft-green);
 
       @include mediabreak(large, landscape) {
         font-size: x-large !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         font-size: 1.65rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         font-size: 1.85rem !important;
       }
@@ -123,16 +139,19 @@
       @include mediabreak(small, landscape, true, 640px) {
         display: inline-block !important;
       }
+
       @include mediabreak(large, landscape) {
         height: 4rem;
         margin-left: 1.5rem !important;
         margin-right: 1.5rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         height: 5rem;
         margin-left: 2rem !important;
         margin-right: 2rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         height: 5.5rem;
       }
@@ -143,10 +162,12 @@
     h4 {
       @extend %bold-blue;
     }
+
     ul {
       @include mediabreak(large, landscape) {
         line-height: 1.6;
       }
+
       word-break: break-all;
       word-break: break-word;
 
@@ -156,9 +177,11 @@
         @include mediabreak(large, landscape) {
           font-size: 110% !important;
         }
+
         @include mediabreak(larger, landscape, true, 1600px) {
           font-size: 115% !important;
         }
+
         @include mediabreak(larger, landscape, true, 1900px) {
           font-size: 122% !important;
         }
@@ -169,6 +192,7 @@
       @include mediabreak(small, landscape, true, 640px) {
         order: 3;
       }
+
       @include mediabreak(large, portrait) {
         order: 3;
         margin-top: 2rem;
@@ -180,22 +204,28 @@
         }
       }
     }
+
     .initial-learning {
       @include mediabreak(small, portrait) {
         margin-top: 2rem !important;
       }
+
       @include mediabreak(small, landscape, true, 640px) {
         order: 2;
       }
+
       @include mediabreak(large, portrait) {
         order: 2;
       }
+
       @include mediabreak(large, landscape) {
         padding-inline-end: 4rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1366px) {
         padding-inline-end: 8rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         padding-inline-end: 12rem !important;
       }
@@ -211,6 +241,7 @@
         text-align: justify;
         color: map-get($color_map, blue);
         margin-bottom: 0 !important;
+
         @include mediabreak(large, portrait) {
           padding-right: 2rem;
         }
@@ -222,6 +253,7 @@
     @include mediabreak(small, landscape, true, 640px) {
       margin-top: 2rem;
     }
+
     @include mediabreak(larger, landscape, true, 1366px) {
       margin-top: 4rem;
     }
@@ -232,6 +264,7 @@
         max-width: 78%;
       }
     }
+
     .col-sm-3 {
       @include mediabreak(larger, landscape, true, 1600px) {
         flex: 0 0 22%;
@@ -275,8 +308,8 @@
 
           .slide-wrapper {
             width: 100% !important;
-            height: 560px !important;
-            max-height: 80vh !important;
+            height: 675px !important;
+            max-height: 90vh !important;
             background: #000;
             display: flex !important;
             align-items: center;
@@ -285,16 +318,19 @@
             overflow: hidden;
 
             @media (max-width: 1200px) {
+              height: 570px !important;
+            }
+
+            @media (max-width: 991px) {
               height: 480px !important;
             }
-            @media (max-width: 991px) {
-              height: 400px !important;
-            }
+
             @media (max-width: 767px) {
-              height: 320px !important;
+              height: 385px !important;
             }
+
             @media (max-width: 575px) {
-              height: 240px !important;
+              height: 280px !important;
             }
           }
 
@@ -413,6 +449,7 @@
         @include mediabreak(small, portrait) {
           display: none;
         }
+
         @include mediabreak(small, landscape, true, 640px) {
           display: none;
         }
@@ -492,6 +529,7 @@
       }
     }
   }
+
   .image-desc-container {
     @include mediabreak(large, landscape) {
       margin-bottom: 6rem;
@@ -510,26 +548,32 @@
         display: inline-block;
         width: 73.25%;
       }
+
       @include mediabreak(small, portrait) {
         @include image-desc-redo;
         font-size: larger;
         margin-top: -1rem;
         margin-bottom: 3rem !important;
       }
+
       @include mediabreak(small, landscape, true, 640px) {
         @include image-desc-redo;
       }
+
       @include mediabreak(large, portrait) {
         font-size: x-large;
         margin-top: 0;
       }
+
       @include mediabreak(large, landscape) {
         font-size: 1.25rem !important;
         width: 75.25%;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         width: 80%;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         font-size: 1.75rem !important;
       }
@@ -548,11 +592,13 @@
     @include mediabreak(small, landscape, true, 640px) {
       margin-top: 2rem;
     }
+
     @include mediabreak(large, landscape) {
       width: 82%;
       margin-left: auto;
       margin-right: auto;
     }
+
     @include mediabreak(larger, landscape, true, 1900px) {
       margin-top: 10rem;
       margin-bottom: 4rem;
@@ -562,6 +608,7 @@
       @extend %bold-blue;
       text-align: center;
     }
+
     p,
     ::ng-deep .description-html p {
       color: map-get($color_map, blue);
@@ -575,10 +622,12 @@
   @include mediabreak(small, landscape, true, 640px) {
     margin-top: 2rem;
   }
+
   owl-carousel ::ng-deep .owl-carousel .owl-stage {
     cursor: pointer;
     cursor: ew-resize;
   }
+
   owl-carousel ::ng-deep .owl-carousel .owl-item img {
     min-width: 70vw;
     max-width: 70vw;
@@ -594,6 +643,7 @@
       max-height: 25vw;
       margin: unset;
     }
+
     @include mediabreak(large, landscape) {
       min-width: unset;
       max-width: unset;
@@ -602,6 +652,7 @@
       max-height: 16.65vw;
     }
   }
+
   owl-carousel ::ng-deep .owl-theme .owl-nav {
     position: absolute;
     top: 50%;
@@ -618,26 +669,32 @@
       height: fit-content;
       padding: 0 1% 0 1% !important;
       color: map-get($color_map, blue);
+
       span {
         display: none;
       }
     }
+
     .owl-next {
       margin-right: 5%;
       right: 0;
     }
+
     .owl-prev {
       margin-left: 5%;
     }
+
     .owl-prev:hover,
     .owl-next:hover {
       background: transparent;
     }
+
     .owl-prev:focus,
     .owl-next:focus {
       outline: none;
     }
   }
+
   owl-carousel ::ng-deep .owl-theme .owl-nav.disabled {
     display: none;
   }
@@ -649,17 +706,21 @@
       margin-top: 4rem;
       align-items: flex-end;
     }
+
     @include mediabreak(small, portrait) {
       @include top-title-redo;
       margin-bottom: 2rem !important;
     }
+
     @include mediabreak(small, landscape, true, 640px) {
       @include top-title-redo;
     }
+
     @include mediabreak(large, landscape) {
       margin-top: 5rem;
       margin-bottom: 2rem !important;
     }
+
     @include mediabreak(larger, landscape, true, 1900px) {
       margin-top: 8rem;
       margin-bottom: 4rem !important;
@@ -675,19 +736,23 @@
         padding: 1rem 2rem;
         padding-left: 5.5rem;
       }
+
       @include mediabreak(large, landscape) {
         font-size: 2.25rem;
       }
+
       @include mediabreak(larger, landscape, true, 1366px) {
         font-size: 2.5rem;
         padding-left: 8rem;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         font-size: 3rem;
         padding: 1.5rem 2rem;
         padding-left: 10rem;
       }
     }
+
     h4 {
       text-align: center;
       width: 100%;
@@ -696,11 +761,13 @@
       @include mediabreak(small, portrait) {
         width: auto;
       }
+
       @include mediabreak(small, landscape, true, 640px) {
         width: auto;
       }
     }
   }
+
   .questions {
     text-align: center;
 
@@ -716,12 +783,15 @@
       @include mediabreak(small, landscape, true, 640px) {
         width: 80%;
       }
+
       @include mediabreak(large, landscape) {
         width: 70%;
       }
+
       @include mediabreak(larger, landscape, true, 1366px) {
         width: 62%;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         margin-bottom: 1.5rem;
       }
@@ -735,28 +805,47 @@
         text-align: left;
         padding: 0 2.75rem !important;
       }
+
       @include mediabreak(small, landscape, true, 640px) {
         margin-top: 1.5rem !important;
       }
+
       // @include mediabreak(medium,landscape,true,800px) { margin-left: -1.5rem; }
       @include mediabreak(large, landscape) {
         padding: 0 3rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1600px) {
         padding: 0 3.2rem !important;
       }
+
       @include mediabreak(larger, landscape, true, 1900px) {
         padding: 0 3.75rem !important;
       }
 
+      .question-title-wrap {
+        flex: 1;
+        text-align: left;
+      }
+
       .result-badge {
-        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        font-size: 0.85rem;
         border-radius: 20px;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
+        padding: 0.25rem 0.75rem !important;
+        margin-left: 0.65rem;
+        position: relative;
+        top: -2px;
+
         &.badge-success {
           background-color: map-get($color_map, soft-green);
           color: #fff;
         }
+
         &.badge-danger {
           background-color: map-get($color_map, red);
           color: #fff;
@@ -773,6 +862,7 @@
     .option-answer {
       padding: 0.5rem 0;
       word-break: break-word;
+
       @include mediabreak(small, landscape, true, 640px) {
         padding-left: 1.5rem !important;
       }
@@ -786,6 +876,7 @@
         cursor: default !important;
       }
     }
+
     .letter-sequence {
       border-color: map-get($color_map, dark-gray) !important;
       padding: 0.5rem 0.75rem;
@@ -797,18 +888,21 @@
       -webkit-transition: all 0.25s;
       transition: all 0.25s;
     }
+
     .selected .letter-sequence {
       background: map-get($color_map, soft-green);
       border-color: map-get($color_map, soft-green) !important;
       color: #fff;
       font-weight: bold;
     }
+
     .correct-highlight .letter-sequence {
       background: map-get($color_map, soft-green) !important;
       border-color: map-get($color_map, soft-green) !important;
       color: #fff !important;
       font-weight: bold;
     }
+
     .incorrect .letter-sequence {
       background: map-get($color_map, red) !important;
       border-color: map-get($color_map, red) !important;
@@ -827,11 +921,13 @@
         margin-bottom: 3rem !important;
         margin-top: 1rem;
       }
+
       @include mediabreak(small, landscape, true, 640px) {
         width: auto;
         padding-inline-start: 3rem;
         padding-inline-end: 3rem;
       }
+
       @include mediabreak(large, landscape) {
         @include button-pad;
         margin-top: 1.25rem;
@@ -841,14 +937,17 @@
       &:active {
         background: transparent;
       }
+
       &:hover {
         background: map-get($color_map, blue);
         color: #fff;
       }
+
       &:focus {
         box-shadow: none;
       }
     }
+
     p {
       vertical-align: super;
       top: -0.25rem;
@@ -867,9 +966,11 @@
 
       img {
         height: 2.25rem;
+
         @media screen and (orientation: portrait) and (min-width: 360px) {
           margin-bottom: 0.25rem;
         }
+
         @media screen and (orientation: landscape) and (min-width: 640px) {
           margin-bottom: 0.25rem;
         }
@@ -885,9 +986,11 @@
       margin-right: 2rem;
       max-width: 100%;
     }
+
     @include mediabreak(small, portrait) {
       @include modal-dialog-redo;
     }
+
     @include mediabreak(small, landscape, true, 640px) {
       @include modal-dialog-redo;
     }
@@ -909,9 +1012,11 @@
         @include mediabreak(large, landscape) {
           font-size: 1.25rem !important;
         }
+
         @include mediabreak(larger, landscape, true, 1400px) {
           font-size: 1.5rem !important;
         }
+
         @include mediabreak(larger, landscape, true, 1900px) {
           font-size: 1.75rem !important;
         }
@@ -921,6 +1026,7 @@
         }
       }
     }
+
     .modal-body {
       color: #fff;
       background: url("~src/assets/images/banner-movil-2.jpg") no-repeat center;
@@ -931,12 +1037,15 @@
         background: url("~src/assets/images/banner-2.jpg") no-repeat center;
         background-size: cover;
       }
+
       @media screen and (min-height: 700px) and (orientation: portrait) {
         justify-content: center !important;
       }
+
       @media screen and (min-height: 500px) and (orientation: landscape) {
         justify-content: center !important;
       }
+
       @include mediabreak(small, portrait) {
         padding-left: 4rem;
         padding-right: 4rem;
@@ -946,29 +1055,36 @@
         @include mediabreak(small, portrait) {
           font-size: 2.5rem;
         }
+
         @include mediabreak(large, portrait) {
           font-size: 3rem;
         }
+
         @include mediabreak(larger, landscape) {
           font-size: 2.5rem;
         }
+
         @include mediabreak(larger, landscape, true, 1400px) {
           font-size: 3rem;
         }
+
         @include mediabreak(larger, landscape, true, 1900px) {
           font-size: 3.5rem;
           margin-bottom: 2rem !important;
         }
       }
+
       p {
         @include mediabreak(medium, landscape, true, 960px) {
           width: 85%;
           margin-left: auto;
           margin-right: auto;
         }
+
         @include mediabreak(larger, landscape, true, 1600px) {
           width: 70%;
         }
+
         @include mediabreak(larger, landscape, true, 1900px) {
           width: 60%;
           margin-bottom: 2.5rem !important;
@@ -980,6 +1096,7 @@
           display: flex;
           justify-content: space-around;
         }
+
         @include mediabreak(medium, landscape, true, 800px) {
           display: grid;
           grid-template-columns: 32% 32%;
@@ -995,6 +1112,7 @@
           @include mediabreak(medium, landscape, true, 800px) {
             grid-template-columns: 32%;
           }
+
           @include mediabreak(large, landscape) {
             grid-template-columns: auto;
           }
@@ -1009,9 +1127,11 @@
           @include mediabreak(small, landscape, true, 640px) {
             width: 40%;
           }
+
           @include mediabreak(medium, landscape, true, 800px) {
             width: 100%;
           }
+
           @include mediabreak(large, landscape) {
             @include button-pad;
             border: 1px solid #fff;
@@ -1020,6 +1140,7 @@
           &:focus {
             box-shadow: none;
           }
+
           &:hover {
             background: map-get($color_map, blue);
             color: #fff;
@@ -1030,6 +1151,7 @@
     }
   }
 }
+
 #warning-message {
   .modal-dialog {
     max-width: 480px;
@@ -1058,6 +1180,10 @@
 
       &.header-danger {
         background: #dc3545;
+      }
+
+      &.header-warning {
+        background: #e67e22;
       }
 
       .modal-icon-circle {
@@ -1113,6 +1239,12 @@
         &:hover {
           transform: translateY(-2px);
         }
+
+        &.btn-warning {
+          background-color: #e67e22;
+          border-color: #e67e22;
+          color: #fff !important;
+        }
       }
     }
   }
@@ -1124,29 +1256,36 @@
       font-size: 1.25rem !important;
     }
   }
+
   .modal-content {
     width: auto;
   }
+
   .modal-header {
     padding: 0.75rem 1rem 0 0;
     border: none;
   }
+
   .modal-body {
     color: map-get($color_map, blue);
+
     p {
       text-align: center;
     }
   }
 }
+
 #image-modal {
   .modal-dialog {
     @include mediabreak(small, portrait) {
       max-width: 90%;
     }
+
     @include mediabreak(large, landscape) {
       max-width: 100%;
     }
   }
+
   .close {
     text-shadow: 0 0 0 !important;
     color: map-get($color_map, soft-green);
@@ -1156,24 +1295,30 @@
       outline: none;
     }
   }
+
   .modal-content {
     background: transparent;
     border: none;
+
     @include mediabreak(small, portrait) {
       width: 100%;
     }
+
     @include mediabreak(large, landscape) {
       width: 55%;
     }
   }
+
   .modal-body {
     color: map-get($color_map, soft-green);
 
     img {
       max-width: 100%;
+
       @include mediabreak(small, portrait) {
         width: 100%;
       }
+
       @include mediabreak(large, landscape) {
         width: 100%;
       }
@@ -1190,6 +1335,7 @@
 ::ng-deep .owl-refresh {
   opacity: 0 !important;
 }
+
 ::ng-deep .owl-loaded {
   opacity: 1 !important;
 }

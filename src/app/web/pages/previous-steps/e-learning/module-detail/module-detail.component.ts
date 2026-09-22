@@ -43,6 +43,7 @@ export class ModuleDetailComponent implements OnInit {
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
   completedModule = false;
+  attemptsCount = 0;
   optionsLetters = ['optionA','optionB','optionC','optionD']
   //? -----------------------------------------------------------
 
@@ -70,6 +71,8 @@ export class ModuleDetailComponent implements OnInit {
   selectedQuestions = [];
   incorrectOnes = [];
   showFillAll = 0; //todo: 0: Must answer all questions, 1: incorrect answers, 2: server error
+  customErrorTitle = '';
+  customErrorMessage = '';
 
   isBrowser;
   isPortrait = true;
@@ -264,6 +267,8 @@ export class ModuleDetailComponent implements OnInit {
       if (this.selectedQuestions[i]=='option0') {
         success = false; // there is at least an unanswered question
         this.showFillAll = 0;
+        this.customErrorTitle = '';
+        this.customErrorMessage = '';
         this.isValidating = false;
         if (this.warningBtn && this.warningBtn.nativeElement) {
           this.warningBtn.nativeElement.click(); //opening warning modal
@@ -281,6 +286,11 @@ export class ModuleDetailComponent implements OnInit {
     if(success) { // when all questions are answered
       this.moduleService.answerModule(this.module_id,coorAnswers).subscribe(res=> {
         this.isValidating = false;
+        if (res && res.totalAttempts !== undefined) {
+          this.attemptsCount = res.totalAttempts;
+        } else {
+          this.attemptsCount++;
+        }
         if (!res.approved) {
           if (wrong) { // if some of them are wrong
             this.incorrectOnes = wrongOnes; // setting the incorrect answers
@@ -288,6 +298,8 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
+            this.customErrorTitle = '';
+            this.customErrorMessage = '';
             this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
             if (this.warningBtn && this.warningBtn.nativeElement) {
               this.warningBtn.nativeElement.click(); // opening warning modal
@@ -304,6 +316,21 @@ export class ModuleDetailComponent implements OnInit {
       },(error)=>{
         this.isValidating = false;
         this.showFillAll = 2;
+        const msg = error && error.error ? (error.error.message || '') : '';
+        if (
+          msg.toLowerCase().includes('curriculum not found') ||
+          msg.toLowerCase().includes('coordinator must complete this step')
+        ) {
+          this.customErrorTitle = 'Currículo pendiente';
+          this.customErrorMessage =
+            'El coordinador debe completar y tener aprobado el paso de Síntesis Curricular antes de poder responder los módulos de formación.';
+        } else if (msg) {
+          this.customErrorTitle = 'Atención';
+          this.customErrorMessage = msg;
+        } else {
+          this.customErrorTitle = '';
+          this.customErrorMessage = '';
+        }
         if (this.warningBtn && this.warningBtn.nativeElement) {
           this.warningBtn.nativeElement.click();
         }
@@ -398,6 +425,8 @@ export class ModuleDetailComponent implements OnInit {
       this.fillModuleInfo(res);
      },(error)=>{
       this.showFillAll = 2;
+      this.customErrorTitle = '';
+      this.customErrorMessage = '';
       if (this.warningBtn && this.warningBtn.nativeElement) {
         this.warningBtn.nativeElement.click();
       }
@@ -419,6 +448,7 @@ export class ModuleDetailComponent implements OnInit {
       let thereIsModu = this.moduleService.checkApprove(this.module_id);
       this.completedModule = thereIsModu ? (thereIsModu.status=="3"? true:false) : false;
       this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4); 
+      this.attemptsCount = thereIsModu && thereIsModu.attempts ? thereIsModu.attempts.length : 0;
       if (this.completedModule && this.moduleInfo.quizzes) {
         this.selectedQuestions = this.moduleInfo.quizzes.map(q => q.correctOption);
       }

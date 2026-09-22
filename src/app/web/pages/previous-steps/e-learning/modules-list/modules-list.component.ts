@@ -95,4 +95,9 @@ export class ModulesListComponent implements OnInit, DoCheck {
     return this.moduleService.all_modules.map(function(e) { return e.id; }).indexOf(module_id) + 1;
   }
 
+  getAttempts(id): number {
+    let thereIsMod = this.moduleService.checkApprove(id);
+    return thereIsMod && thereIsMod.attempts ? thereIsMod.attempts.length : 0;
+  }
+
 }
