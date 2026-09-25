@@ -15,10 +15,28 @@
     </div>
     
     <div class="modules-list">    
-        <div class="d-flex module-item py-3 rounded-sm" *ngFor="let module of pageOfItems; index as i">
-            <div class="pr-1 mr-auto"><h2 class="text-uppercase font-weight-bold mt-2 mb-0">Módulo {{getModuleNum(module.id)}}<i *ngIf="checkApprove(module.id) && forAdminSetFalse"><fa-icon [icon]="faCheck"></fa-icon></i></h2></div>
-            <button type="button" class="btn btn-outline-primary text-decoration-none" (click)="loadMod(i,module.id)"> <!-- [disabled]="canEnable(module)" -->
-                <span *ngIf="isLoading[i]" class="spinner-grow spinner-grow-sm"></span><span class="no-icon">{{ checkApprove(module.id) ? 'Ver': (isLoading[i]?'Iniciando..':'Iniciar')}}</span><span *ngIf="!isLoading[i]" class="icon"><fa-icon *ngIf="!checkApprove(module.id)" [icon]="faPlay"></fa-icon><fa-icon *ngIf="checkApprove(module.id)" [icon]="faEye"></fa-icon></span>
+        <div class="d-flex module-item py-3 rounded-sm align-items-center" *ngFor="let module of pageOfItems; index as i">
+            <div class="pr-1 mr-auto">
+                <h2 class="text-uppercase font-weight-bold mt-2 mb-0">
+                    Módulo {{getModuleNum(module.id)}}: {{module.name || module.title}}
+                    <i *ngIf="checkApprove(module.id) && forAdminSetFalse"><fa-icon [icon]="faCheck"></fa-icon></i>
+                </h2>
+                <div class="mt-1" *ngIf="forAdminSetFalse">
+                    <span class="badge badge-info px-2 py-1 font-weight-bold" *ngIf="getAttempts(module.id) > 0">
+                        {{ getAttempts(module.id) }} {{ getAttempts(module.id) === 1 ? 'intento' : 'intentos' }}
+                    </span>
+                    <span class="badge badge-light border text-muted px-2 py-1" *ngIf="getAttempts(module.id) === 0">
+                        0 intentos
+                    </span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-primary text-decoration-none" (click)="loadMod(i,module.id)">
+                <span *ngIf="isLoading[i]" class="spinner-grow spinner-grow-sm"></span>
+                <span class="no-icon">{{ checkApprove(module.id) ? 'Ver': (isLoading[i]?'Iniciando..':'Iniciar')}}</span>
+                <span *ngIf="!isLoading[i]" class="icon">
+                    <fa-icon *ngIf="!checkApprove(module.id)" [icon]="faPlay"></fa-icon>
+                    <fa-icon *ngIf="checkApprove(module.id)" [icon]="faEye"></fa-icon>
+                </span>
             </button>            
         </div>        
     </div>
