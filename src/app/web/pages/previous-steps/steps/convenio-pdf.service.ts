@@ -66,7 +66,11 @@ export class ConvenioPdfService {
       filename = `Convenio_Escuela_Fundacion_${this.cleanName(
         project.school?.name
       )}.pdf`;
-    } else if (devName.includes("coordinatorinitialworkshop")) {
+    } else if (
+      devName.includes("coordinatorinitialworkshop") ||
+      devName.includes("coordinatoragreementfundation") ||
+      devName.includes("coordinatoragreement")
+    ) {
       htmlContent = this.getCoordinatorFoundationTemplate(project);
       filename = `Acuerdo_Coordinador_Fundacion_${this.cleanName(
         project.coordinator?.name

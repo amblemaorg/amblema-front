@@ -210,7 +210,7 @@ export class DiagnosticPageDataGroup {
     graphics = this.graphics,
     table: string[][] = null,
   ) {
-    const chartId = `${lapseName}-${diagKey}-graphic`;
+    const chartId = `${lapseId}-${diagKey}-graphic`;
 
     if (diagKey === 'diagnosticEnvironmental') {
       const lapseIndex = parseInt(lapseId.replace('lapse', ''), 10) - 1;
@@ -278,37 +278,51 @@ export class DiagnosticPageDataGroup {
 
     let chartTitle = 'Índice Promedio de la Escuela';
 
-    const { diagnostics } = this.diagnosticGraphicData;
+    const lapseGraphic = graphics ? graphics[lapseId] : null;
 
-    const lapseGraphic = graphics[lapseId];
-
-    // const lapseGraphic = null;
     let isSecondLapse = false;
-    if (
-      !lapseGraphic ||
-      !lapseGraphic[diagKey] ||
-      !lapseGraphic[diagKey].values ||
-      lapseGraphic[diagKey].values.length === 0
-    ) {
-      const labels = [];
-      const values = [];
+    let labels: string[] = [];
+    let values: (number | string)[] = [];
 
+    if (
+      lapseGraphic &&
+      lapseGraphic[diagKey] &&
+      lapseGraphic[diagKey].values &&
+      lapseGraphic[diagKey].values.length > 0
+    ) {
+      labels = lapseGraphic[diagKey].labels;
+      values = lapseGraphic[diagKey].values;
+    } else if (table && table.length > 2) {
+      // Fallback: extraer datos directamente de la tabla de diagnóstico
+      const dataRows = table.filter(
+        (r, idx) => idx >= 2 && r[0] !== 'AVERAGE_ROW_MARKER' && r[0] && r.length >= 4
+      );
+      labels = dataRows.map((r) => {
+        const gradeText = r[0].trim();
+        return gradeText.toLowerCase().includes('grado') || gradeText.toLowerCase().includes('preescolar')
+          ? gradeText
+          : `${gradeText} Grado`;
+      });
+      values = dataRows.map((r) => parseFloat(r[3]) || 0);
+    }
+
+    if (
+      (!labels || labels.length === 0) &&
+      lapseId !== 'lapse2' &&
+      !isThirdLapse
+    ) {
       return this.chartDefault(
         chartId,
-        labels,
-        values,
+        [],
+        [],
         chartTitle,
         isThirdLapse,
       );
     }
 
-    let labels = lapseGraphic[diagKey].labels;
-    let values = lapseGraphic[diagKey].values;
-
-
     const groupedData = this.groupByGradeAndAverage(labels, values);
     labels = groupedData.labels;
-    values = groupedData.values;
+    let finalValues: number[] = groupedData.values;
 
     if (lapseId == "lapse2") {
       let promedioAnterior = 0;
@@ -319,14 +333,18 @@ export class DiagnosticPageDataGroup {
         promedioAnterior = parseFloat(lastRow[2]) || 0;
         promedioActual = parseFloat(lastRow[3]) || 0;
       } else {
-        let prevs = graphics["lapse1"][diagKey]
-        const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
-        promedioAnterior = this.calculateAverage(valuesPrev.values);
-        promedioActual = this.calculateAverage(groupedData.values);
+        if (graphics && graphics["lapse1"] && graphics["lapse1"][diagKey]) {
+          let prevs = graphics["lapse1"][diagKey];
+          const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values);
+          promedioAnterior = this.calculateAverage(valuesPrev.values);
+        }
+        if (groupedData && groupedData.values) {
+          promedioActual = this.calculateAverage(groupedData.values);
+        }
       }
 
       labels = ["Diagnóstico Inicial", "Diagnóstico de Revisión"];
-      values = [promedioAnterior, promedioActual];
+      finalValues = [promedioAnterior, promedioActual];
       isSecondLapse = true;
     }
 
@@ -339,28 +357,31 @@ export class DiagnosticPageDataGroup {
         promedioAnterior = parseFloat(lastRow[2]) || 0;
         promedioActual = parseFloat(lastRow[3]) || 0;
       } else {
-        let prevs = graphics["lapse1"][diagKey]
-        const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
-        promedioAnterior = this.calculateAverage(valuesPrev.values);
-        promedioActual = this.calculateAverage(groupedData.values);
+        if (graphics && graphics["lapse1"] && graphics["lapse1"][diagKey]) {
+          let prevs = graphics["lapse1"][diagKey];
+          const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values);
+          promedioAnterior = this.calculateAverage(valuesPrev.values);
+        }
+        if (groupedData && groupedData.values) {
+          promedioActual = this.calculateAverage(groupedData.values);
+        }
       }
 
       labels = ["Diagnóstico Inicial", "Diagnóstico final"];
-      values = [promedioAnterior, promedioActual];
-
+      finalValues = [promedioAnterior, promedioActual];
     }
 
     return this.chartDefault(
       chartId,
       labels,
-      values,
+      finalValues,
       chartTitle,
       isThirdLapse,
       isSecondLapse
     );
   }
 
-  private groupByGradeAndAverage(labels: string[], values: string[]): { labels: string[], values: number[] } {
+  private groupByGradeAndAverage(labels: string[], values: any[]): { labels: string[], values: number[] } {
     const gradeMap = new Map<string, { sum: number, count: number }>();
 
     // Agrupar valores por grado
@@ -512,8 +533,17 @@ export class DiagnosticPageDataGroup {
       totalCount += count;
     });
 
-    const result = totalCount > 0 ? totalSum / totalCount : 0.0;
-    return result.toFixed(toFixedCount).toString();
+    if (totalCount > 0) {
+      return (totalSum / totalCount).toFixed(toFixedCount).toString();
+    }
+    // Fallback if student counts are 0 or not available: unweighted average of sections
+    if (filteredData.length > 0) {
+      const sum = filteredData.reduce((prev, current) => {
+        return prev + (parseFloat(current[columnIdxToSum]) || 0);
+      }, 0);
+      return (sum / filteredData.length).toFixed(toFixedCount).toString();
+    }
+    return (0.0).toFixed(toFixedCount).toString();
   }
 
   private sumColumnValuesBySection(
@@ -829,7 +859,11 @@ export class DiagnosticPageDataGroup {
         totalStudents += count;
       });
 
-      const promedioIndiceInicial = totalStudents > 0 ? totalIndexSum / totalStudents : 0;
+      const promedioIndiceInicial = totalStudents > 0
+        ? totalIndexSum / totalStudents
+        : (rawTableData.length > 0
+          ? rawTableData.reduce((s, r) => s + (parseFloat(r[3]) || 0), 0) / rawTableData.length
+          : 0);
 
       const filaPromedio = [
         'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
@@ -855,7 +889,11 @@ export class DiagnosticPageDataGroup {
         totalStudents += count;
       });
 
-      const promedioIndiceRevision = totalStudents > 0 ? totalIndexRevisionSum / totalStudents : 0;
+      const promedioIndiceRevision = totalStudents > 0
+        ? totalIndexRevisionSum / totalStudents
+        : (rawTableData.length > 0
+          ? rawTableData.reduce((s, r) => s + (parseFloat(r[3]) || 0), 0) / rawTableData.length
+          : 0);
 
       // Para Lapsos 2 y 3, el índice inicial global exacto viene de la fila de Promedio del Lapso 1
       let promedioIndiceInicial = 0;

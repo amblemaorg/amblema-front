@@ -731,11 +731,7 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   }
 
   private getDiagnosticPageDataGroup() {
-    const graphics = this.pdfService.getGraphics();
-
-    if (!graphics) {
-      return;
-    }
+    const graphics = this.pdfService.getGraphics() || {};
     const { lapses, schoolYear } = this.pdfData;
 
     return new DiagnosticPageDataGroup(
