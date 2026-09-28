@@ -102,19 +102,7 @@ export class PdfYearbookService {
    */
   getGraphics() {
     this.callGraphicBase64ImgEmitter.emit();
-    const graphics = this.graphics;
-
-    const isThereGraphics = Object.keys(graphics).every((key) => {
-      const graphicValue = graphics[key];
-
-      return Object.keys(graphicValue).every((lapseKey) => {
-        return !!graphicValue[lapseKey];
-      });
-    });
-
-    // console.log({ isThereGraphics });
-
-    return isThereGraphics ? this.graphics : false;
+    return this.graphics;
   }
 
   private clearGraphics() {
@@ -806,7 +794,11 @@ export class PdfYearbookService {
         const graphsImgs = Object.keys(this.graphics[lapse]).map(
           async (diagnostic) => {
             const canvasId = `${lapse}-${diagnostic}-graphic`;
-            const canvas = this.document.getElementById(canvasId) as HTMLCanvasElement;
+            let canvas = this.document.getElementById(canvasId) as HTMLCanvasElement;
+            if (!canvas) {
+              const lapseMap = { lapse1: 'Primer lapso', lapse2: 'Segundo lapso', lapse3: 'Tercer lapso' };
+              canvas = this.document.getElementById(`${lapseMap[lapse]}-${diagnostic}-graphic`) as HTMLCanvasElement;
+            }
             const imgData = canvas ? canvas.toDataURL('image/png') : null;
 
             if (imgData) {
