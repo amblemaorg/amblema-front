@@ -1375,11 +1375,11 @@ export class PDFReport implements OnInit {
 
       // -- Final result
       const averagesResults: any = [
-        [{ ...colorRowOne, text: "Índice promedio general" }],
+        [{ ...colorRowOne, text: "Promedio general" }],
         [{ text: "Lapso 1" }],
         [{ text: "Lapso 2" }],
         [{ text: "Lapso 3" }],
-        [{ ...colorRowTwo, text: "Porcentaje de mejora" }],
+        [{ ...colorRowTwo, text: "Porcentaje de mejora respecto al índice inicial" }],
       ];
 
       if (report.yearSummary.reading) {
@@ -1389,35 +1389,37 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.reading.lapse1IndexAverage !== undefined
-              ? report.yearSummary.reading.lapse1IndexAverage.toFixed(2)
-              : (report.yearSummary.reading.lapse1ResultAverage !== undefined
-                ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse1ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse1ResultAverage !== null
+              ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.reading.totalResultAverage !== undefined &&
+                report.yearSummary.reading.totalResultAverage !== null
+                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.reading.lapse2IndexAverage !== undefined
-              ? report.yearSummary.reading.lapse2IndexAverage.toFixed(2)
-              : (report.yearSummary.reading.lapse2ResultAverage !== undefined
-                ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
-                : ""),
+            report.yearSummary.reading.lapse2ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse2ResultAverage !== null
+              ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
+              : "",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.reading.lapse3IndexAverage !== undefined
-              ? report.yearSummary.reading.lapse3IndexAverage.toFixed(2)
-              : (report.yearSummary.reading.lapse3ResultAverage !== undefined
-                ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse3ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse3ResultAverage !== null
+              ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.reading.totalResultAverage !== undefined &&
+                report.yearSummary.reading.totalResultAverage !== null
+                ? report.yearSummary.reading.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
           ...colorRowTwo,
-          text: `${
-            report.yearSummary.reading.improvementPercentageAverage !== undefined
-              ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
-              : 0
-          }%`,
+          text: `${report.yearSummary.reading.improvementPercentageAverage !== undefined
+            ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
         });
       }
 
@@ -1428,35 +1430,37 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.math.lapse1IndexAverage !== undefined
-              ? report.yearSummary.math.lapse1IndexAverage.toFixed(2)
-              : (report.yearSummary.math.lapse1ResultAverage !== undefined
-                ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.math.lapse1ResultAverage !== undefined &&
+              report.yearSummary.math.lapse1ResultAverage !== null
+              ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.math.totalResultAverage !== undefined &&
+                report.yearSummary.math.totalResultAverage !== null
+                ? report.yearSummary.math.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.math.lapse2IndexAverage !== undefined
-              ? report.yearSummary.math.lapse2IndexAverage.toFixed(2)
-              : (report.yearSummary.math.lapse2ResultAverage !== undefined
-                ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
-                : ""),
+            report.yearSummary.math.lapse2ResultAverage !== undefined &&
+              report.yearSummary.math.lapse2ResultAverage !== null
+              ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
+              : "",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.math.lapse3IndexAverage !== undefined
-              ? report.yearSummary.math.lapse3IndexAverage.toFixed(2)
-              : (report.yearSummary.math.lapse3ResultAverage !== undefined
-                ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.math.lapse3ResultAverage !== undefined &&
+              report.yearSummary.math.lapse3ResultAverage !== null
+              ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.math.totalResultAverage !== undefined &&
+                report.yearSummary.math.totalResultAverage !== null
+                ? report.yearSummary.math.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
           ...colorRowTwo,
-          text: `${
-            report.yearSummary.math.improvementPercentageAverage !== undefined
-              ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
-              : 0
-          }%`,
+          text: `${report.yearSummary.math.improvementPercentageAverage !== undefined
+            ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
         });
       }
 
@@ -1467,36 +1471,44 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.logic.lapse1IndexAverage !== undefined
-              ? report.yearSummary.logic.lapse1IndexAverage.toFixed(2)
-              : (report.yearSummary.logic.lapse1ResultAverage !== undefined
-                ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse1ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse1ResultAverage !== null
+              ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
+              : (report.yearSummary.logic.totalResultAverage !== undefined &&
+                report.yearSummary.logic.totalResultAverage !== null
+                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.logic.lapse2IndexAverage !== undefined
-              ? report.yearSummary.logic.lapse2IndexAverage.toFixed(2)
-              : (report.yearSummary.logic.lapse2ResultAverage !== undefined
-                ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
-                : ""),
+            report.yearSummary.logic.lapse2ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse2ResultAverage !== null
+              ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
+              : "",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.logic.lapse3IndexAverage !== undefined
-              ? report.yearSummary.logic.lapse3IndexAverage.toFixed(2)
-              : (report.yearSummary.logic.lapse3ResultAverage !== undefined
-                ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse3ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse3ResultAverage !== null
+              ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
+              : (report.yearSummary.logic.totalResultAverage !== undefined &&
+                report.yearSummary.logic.totalResultAverage !== null
+                ? report.yearSummary.logic.totalResultAverage.toFixed(2)
                 : ""),
         });
         averagesResults[4].push({
           ...colorRowTwo,
-          text: `${
-            report.yearSummary.logic.improvementPercentageAverage !== undefined
-              ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)
-              : 0
-          }%`,
+          text: `${report.yearSummary.logic.improvementPercentageAverage !== undefined
+            ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
         });
+      }
+
+      if (averagesResults[0].length >= 4) {
+        for (let i = 1; i < averagesResults[4].length; i++) {
+          averagesResults[4][i].margin = [0, 4, 0, 0];
+        }
       }
 
       finalReport.content.push({
@@ -1715,43 +1727,43 @@ export class PDFReport implements OnInit {
     ['1', '2', '3']
       .filter(lKey => parseInt(lKey) <= Number(maxLapse))
       .forEach(lKey => {
-      const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
-      const summary = lapseData ? lapseData.summary : null;
-      const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
+        const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
+        const summary = lapseData ? lapseData.summary : null;
+        const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
 
-      if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
-        activeSummaries.push(summary);
-        body.push([
-          { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
-          // 1. Limpieza
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 2. Residuos
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 3. Biodiversidad
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 4. Agua
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // 5. Comunidad
-          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
-          { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
-          // Total IAA
-          { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
-        ]);
-      }
-    });
+        if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
+          activeSummaries.push(summary);
+          body.push([
+            { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
+            // 1. Limpieza
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 2. Residuos
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 3. Biodiversidad
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 4. Agua
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 5. Comunidad
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // Total IAA
+            { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
+          ]);
+        }
+      });
 
     if (activeSummaries.length === 0) {
       return elements;
