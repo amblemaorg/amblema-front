@@ -1000,7 +1000,7 @@ export const formTabsEstudiantes = {
         label: "Documento de identidad",
         placeholder: "Documento de identidad",
         fullwidth: false,
-        ...controlProps.numberMax,
+        ...controlProps.number,
       },
     },
   },

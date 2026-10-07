@@ -214,6 +214,8 @@ export class FormBlockComponent
 
   closeModal() {
     this.showImportModal = false;
+    this.importingData = false;
+    this.showUploadBtn = false;
   }
 
   getStudentsModalNgClass() {
@@ -265,69 +267,238 @@ export class FormBlockComponent
   }
 
   handleFileInput(files: FileList) {
+    if (!files || files.length === 0) {
+      return;
+    }
     const reader = new FileReader();
     reader.readAsArrayBuffer(files[0]);
     reader.onload = () => {
-      const data = new Uint8Array(reader.result as ArrayBuffer);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const studentsData = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+      try {
+        const data = new Uint8Array(reader.result as ArrayBuffer);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-      const elements = [];
+        // Get rows as 2D array: [ [header0, header1, ...], [row1_col0, ...], ... ]
+        const rows: any[][] = XLSX.utils.sheet_to_json(sheet, {
+          header: 1,
+          defval: "",
+        });
 
-      studentsData.forEach((student) => {
-        elements.push(
-          student["Nombre"],
-          student["Apellido"],
-          student["Tipo de documento"],
-          student["Documento de identidad"],
-          student["Fecha de nacimiento"],
-          student["Género"],
-          student["Grado"],
-          student["Sección"]
+        if (!rows || rows.length < 2) {
+          this.toastr.error(
+            "El archivo Excel está vacío o no contiene filas con datos",
+            "Error"
+          );
+          return;
+        }
+
+        const headerRow: string[] = rows[0].map((h) =>
+          h !== null && h !== undefined ? h.toString() : ""
         );
-      });
-      const el_cleaned = elements;
-      const num_cols = 8;
 
-      const matrix = el_cleaned.reduce(
-        (rows, key, index) =>
-          (index % num_cols == 0
-            ? rows.push([key])
-            : rows[rows.length - 1].push(key)) && rows,
-        []
-      );
+        const normalize = (str: string) =>
+          str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
 
-      const students: Array<Object> = matrix.map((registry, index) => {
-        const fecha_de_nacimiento = this.parseDate(registry[4]);
+        let colNombre = -1;
+        let colApellido = -1;
+        let colTipoDoc = -1;
+        let colDocId = -1;
+        let colFechaNac = -1;
+        let colGenero = -1;
+        let colGrado = -1;
+        let colSeccion = -1;
 
-        return {
-          nombre: registry[0] || "",
-          apellido: registry[1] || "",
-          tipo_de_documento: registry[2] || "",
-          documento_de_identidad: registry[3]?.toString() || "",
-          fecha_de_nacimiento: fecha_de_nacimiento || "",
-          genero: registry[5] || "",
-          grado: registry[6]?.toString() || "",
-          seccion: registry[7] || "",
-        };
-      });
-      this.showUploadBtn = true;
+        headerRow.forEach((col, idx) => {
+          const norm = normalize(col);
+          if (norm.includes("tipo") && norm.includes("doc")) {
+            colTipoDoc = idx;
+          } else if (
+            (norm.includes("identi") ||
+              norm.includes("cedula") ||
+              norm.includes("documento")) &&
+            !norm.includes("tipo")
+          ) {
+            colDocId = idx;
+          } else if (norm.includes("nombre") && !norm.includes("apellido")) {
+            colNombre = idx;
+          } else if (norm.includes("apellido")) {
+            colApellido = idx;
+          } else if (norm.includes("genero") || norm.includes("sexo")) {
+            colGenero = idx;
+          } else if (norm.includes("naci") || norm.includes("fecha")) {
+            colFechaNac = idx;
+          } else if (norm.includes("grado")) {
+            colGrado = idx;
+          } else if (norm.includes("secci")) {
+            colSeccion = idx;
+          }
+        });
 
-      this.studentsToImport = students;
+        // Positional fallbacks based on whether "Tipo de documento" column was present
+        const hasTipoDocCol = colTipoDoc !== -1;
+        if (colNombre === -1) colNombre = 0;
+        if (colApellido === -1) colApellido = 1;
+        if (colDocId === -1) colDocId = hasTipoDocCol ? 3 : 2;
+        if (colGenero === -1) colGenero = hasTipoDocCol ? 5 : 3;
+        if (colFechaNac === -1) colFechaNac = hasTipoDocCol ? 4 : 4;
+        if (colGrado === -1) colGrado = hasTipoDocCol ? 6 : 5;
+        if (colSeccion === -1) colSeccion = hasTipoDocCol ? 7 : 6;
+
+        const students: Array<Object> = [];
+
+        for (let r = 1; r < rows.length; r++) {
+          const row = rows[r];
+          if (
+            !row ||
+            row.every(
+              (cell) => cell === "" || cell === null || cell === undefined
+            )
+          ) {
+            continue;
+          }
+
+          const nombre =
+            colNombre >= 0 &&
+            row[colNombre] !== undefined &&
+            row[colNombre] !== null
+              ? row[colNombre].toString().trim()
+              : "";
+          const apellido =
+            colApellido >= 0 &&
+            row[colApellido] !== undefined &&
+            row[colApellido] !== null
+              ? row[colApellido].toString().trim()
+              : "";
+
+          if (!nombre && !apellido) {
+            continue;
+          }
+
+          let rawDoc =
+            colDocId >= 0 &&
+            row[colDocId] !== undefined &&
+            row[colDocId] !== null
+              ? row[colDocId].toString().trim()
+              : "";
+          let rawTipoDoc =
+            colTipoDoc >= 0 &&
+            row[colTipoDoc] !== undefined &&
+            row[colTipoDoc] !== null
+              ? row[colTipoDoc].toString().trim().toUpperCase()
+              : "";
+
+          if (rawDoc) {
+            const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
+            if (prefixMatch) {
+              if (!rawTipoDoc) {
+                rawTipoDoc = prefixMatch[1].toUpperCase();
+              }
+              rawDoc = prefixMatch[2];
+            }
+          }
+
+          const cleanDoc = rawDoc.replace(/\D/g, "");
+
+          let tipoDoc = "1";
+          if (
+            rawTipoDoc === "2" ||
+            rawTipoDoc === "E" ||
+            rawTipoDoc === "EXTRANJERO"
+          ) {
+            tipoDoc = "2";
+          } else {
+            tipoDoc = "1";
+          }
+
+          const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
+          const fecha_de_nacimiento = this.parseDate(rawFecha);
+
+          const rawGenero =
+            colGenero >= 0 &&
+            row[colGenero] !== undefined &&
+            row[colGenero] !== null
+              ? row[colGenero].toString().trim().toUpperCase()
+              : "";
+          const genero =
+            rawGenero === "1" ||
+            rawGenero === "F" ||
+            rawGenero === "FEMENINO"
+              ? "F"
+              : "M";
+
+          const grado =
+            colGrado >= 0 &&
+            row[colGrado] !== undefined &&
+            row[colGrado] !== null
+              ? row[colGrado].toString().trim()
+              : "";
+          const seccion =
+            colSeccion >= 0 &&
+            row[colSeccion] !== undefined &&
+            row[colSeccion] !== null
+              ? row[colSeccion].toString().trim()
+              : "";
+
+          students.push({
+            nombre,
+            apellido,
+            tipo_de_documento: tipoDoc,
+            documento_de_identidad: cleanDoc,
+            fecha_de_nacimiento: fecha_de_nacimiento || "",
+            genero,
+            grado,
+            seccion,
+          });
+        }
+
+        if (students.length === 0) {
+          this.toastr.warning(
+            "No se encontraron registros válidos de estudiantes para importar",
+            "Aviso"
+          );
+          this.showUploadBtn = false;
+          return;
+        }
+
+        this.showUploadBtn = true;
+        this.studentsToImport = students;
+      } catch (e) {
+        this.toastr.error("Error al procesar el archivo Excel", "Error");
+      }
     };
   }
 
   parseDate(date) {
+    if (date === null || date === undefined || date === "") {
+      return "";
+    }
     if (typeof date === "number") {
       const dateString = this.SerialDateToJSDate(date, -4);
-      const dateOutput = new Date(dateString)
-        .toLocaleDateString("es-VE")
-        .split("/")
-        .join("-");
-      return dateOutput;
+      const d = new Date(dateString);
+      const day = ("0" + d.getUTCDate()).slice(-2);
+      const month = ("0" + (d.getUTCMonth() + 1)).slice(-2);
+      const year = d.getUTCFullYear();
+      return `${day}-${month}-${year}`;
+    } else if (date instanceof Date) {
+      const day = ("0" + date.getDate()).slice(-2);
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    } else if (typeof date === "string") {
+      let str = date.trim().split("/").join("-");
+      const ymdMatch = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (ymdMatch) {
+        const day = ("0" + ymdMatch[3]).slice(-2);
+        const month = ("0" + ymdMatch[2]).slice(-2);
+        return `${day}-${month}-${ymdMatch[1]}`;
+      }
+      return str;
     } else {
-      return date;
+      return date ? date.toString() : "";
     }
   }
 
@@ -345,23 +516,54 @@ export class FormBlockComponent
       students: this.studentsToImport,
       section: this.sectionsArr[this.activeSection].id,
     };
-    // console.log("BODY to import: ", body);
     try {
-      const result = await this.fetcher.post(resourcePath, body).toPromise();
-      if (result.status_code === 201) {
+      const result: any = await this.fetcher
+        .post(resourcePath, body)
+        .toPromise();
+
+      if (result && result.status_code === 201) {
         this.showImportModal = false;
-        this.toastr.success(result.message, "", {
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.success(
+          result.message || "Estudiantes importados con éxito",
+          "",
+          {
+            positionClass: "toast-bottom-right",
+          }
+        );
         this.importingData = false;
         setTimeout(() => {
           window.location.reload();
         }, 2000);
+      } else {
+        this.importingData = false;
+        const msg =
+          (result && result.message) || "Error al importar estudiantes";
+        this.toastr.error(msg, "Error", {
+          positionClass: "toast-bottom-right",
+        });
       }
     } catch (err) {
-      // console.log("error: ", err);
-      throw err;
-    } finally {
+      this.importingData = false;
+      let msg = "Ha ocurrido un error al importar los estudiantes";
+      if (err && err.error) {
+        if (typeof err.error === "string") {
+          msg = err.error;
+        } else if (err.error.message) {
+          msg = err.error.message;
+        } else if (typeof err.error === "object") {
+          const values = Object.values(err.error);
+          if (values.length > 0) {
+            msg = Array.isArray(values[0])
+              ? values[0].join(", ")
+              : JSON.stringify(err.error);
+          }
+        }
+      } else if (err && err.message) {
+        msg = err.message;
+      }
+      this.toastr.error(msg, "Error al importar", {
+        positionClass: "toast-bottom-right",
+      });
     }
   }
 
