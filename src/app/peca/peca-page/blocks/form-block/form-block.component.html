@@ -1096,6 +1096,7 @@
             *ngIf="showUploadBtn"
             #upload
             (click)="importStudents()"
+            [disabled]="importingData"
             class="btn btn-primary full-width submit-btn mx-auto mt-4"
           >
             <span
