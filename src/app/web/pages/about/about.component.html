@@ -13,14 +13,17 @@
   </div>
 </section>
 <section class="pillars">
-  <h2 class="heading">Tenemos Tres Pilares Fundamentales</h2>
+  <h2 class="heading">Tenemos Cuatro Pilares Fundamentales</h2>
   <div class="hide-lg">
     <owl-carousel
       [options]="pillarsOptions"
       class="pillars-carousel"
       [carouselClasses]="['']"
       *ngIf="
-        aboutUsPageData.environmentText || aboutUsPageData.readingText || aboutUsPageData.mathText
+        aboutUsPageData.environmentText ||
+        aboutUsPageData.readingText ||
+        aboutUsPageData.mathText ||
+        aboutUsPageData.aulaActivaText
       "
     >
       <div class="pillar">
@@ -55,6 +58,17 @@
           ></svg-icon>
         </h3>
         <p class="pillar-text">{{ aboutUsPageData.mathText }}</p>
+      </div>
+      <div class="pillar">
+        <h3 class="pillar-title">
+          <span class="bold">Aula</span> Activa
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="aaa-icon"
+            [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
+          ></svg-icon>
+        </h3>
+        <p class="pillar-text">{{ aboutUsPageData.aulaActivaText }}</p>
       </div>
     </owl-carousel>
   </div>
@@ -101,6 +115,21 @@
         </h3>
         <p *ngIf="aboutUsPageData.mathText" class="pillar-text">
           {{ aboutUsPageData.mathText }}
+        </p>
+      </div>
+    </div>
+    <div class="pillar-wrapper aula-activa">
+      <div class="pillar">
+        <h3 class="pillar-title">
+          <span class="bold">Aula</span> Activa
+          <svg-icon
+            class="amblema-icon amblema-icon--white"
+            name="aaa-icon"
+            [svgStyle]="{ 'height.vw': 4, 'width.vw': 4 }"
+          ></svg-icon>
+        </h3>
+        <p *ngIf="aboutUsPageData.aulaActivaText" class="pillar-text">
+          {{ aboutUsPageData.aulaActivaText }}
         </p>
       </div>
     </div>

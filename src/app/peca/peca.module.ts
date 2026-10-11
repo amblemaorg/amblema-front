@@ -28,6 +28,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { OwlModule } from 'ngx-owl-carousel'
+import { QuillModule } from 'ngx-quill'
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { NgxImageCompressService } from 'ngx-image-compress'
@@ -155,6 +156,16 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     FontAwesomeModule,
     NgDatepickerModule,
     PipesModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['link'],
+          ['clean'],
+        ],
+      },
+    }),
   ],
   entryComponents: [
     TabsBlockComponent,

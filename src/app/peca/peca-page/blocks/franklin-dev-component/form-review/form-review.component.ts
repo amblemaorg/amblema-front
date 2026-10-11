@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PresentationalBlockComponent } from '../../page-block.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import smartTableImageConfig from './table-images-config.js';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NgxImageCompressService } from 'ngx-image-compress';
@@ -84,6 +84,47 @@ export class FormReviewComponent
   sizeAfterCompress: number | Object;
 
   isSaving: boolean = false;
+
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link'],
+      ['clean'],
+    ],
+  };
+
+  cleanHtml(html: string): string {
+    if (!html) return '';
+    return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+  }
+
+  cleanTextLength(html: string): number {
+    return this.cleanHtml(html).length;
+  }
+
+  descriptionValidators(minLength?: number, maxLength?: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const val = control && control.value ? control.value : '';
+      const text = this.cleanHtml(val);
+      const length = text.length;
+
+      if (length === 0) {
+        if (minLength && minLength > 0) {
+          return { minlength: true };
+        }
+        return null;
+      }
+
+      if (minLength && minLength > 0 && length < minLength) {
+        return { minlength: true };
+      }
+      if (maxLength && maxLength > 0 && length > maxLength) {
+        return { maxlength: true };
+      }
+      return null;
+    };
+  }
 
   constructor(private imageCompress: NgxImageCompressService) { }
 
@@ -232,10 +273,23 @@ export class FormReviewComponent
       }
     }
 
+    const validators = [];
+    if (fields.description) {
+      const minL = fields.description.minLength;
+      const maxL = fields.description.maxLength;
+      if (minL || maxL) {
+        validators.push(this.descriptionValidators(minL, maxL));
+      }
+    }
+
     this.form = new FormGroup({
-      description: new FormControl(descriptionValue),
+      description: new FormControl(descriptionValue, validators),
       inputImg: new FormControl(inputImgValue),
     });
+
+    if (fields.description && fields.description.disabled) {
+      this.form.get('description').disable();
+    }
   }
 
   onTableActions = (event: any) => {
@@ -265,6 +319,13 @@ export class FormReviewComponent
   async onClickButton(values: any) {
     this.isSaving = true;
     let doTheArray = false;
+
+    if (values && values.description !== undefined) {
+      values = {
+        ...values,
+        description: this.cleanHtml(values.description) === '' ? '' : values.description,
+      };
+    }
 
     if (values && values.inputImg) {
       if (values.inputImg instanceof Array) {
@@ -313,6 +374,13 @@ export class FormReviewComponent
   async onSubmitAction(values: any) {
     this.isSaving = true;
     let doTheArray = false;
+
+    if (values && values.description !== undefined) {
+      values = {
+        ...values,
+        description: this.cleanHtml(values.description) === '' ? '' : values.description,
+      };
+    }
 
     if (values && values.inputImg) {
       if (values.inputImg instanceof Array) {

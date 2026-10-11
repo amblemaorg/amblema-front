@@ -89,6 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     environmentText: "",
     readingText: "",
     mathText: "",
+    aulaActivaText: "",
     statistics: {
       totalSchools: 0,
       totalTeachers: 0,
@@ -142,6 +143,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
     this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
     this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
+    this.iconService.loadSvg("../../../assets/icons/aaa-icon.svg", "aaa-icon");
   }
 
   ngOnInit() {
@@ -338,6 +340,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         return { title: "Matemática", description: this.homePageData.mathText };
       case "reading":
         return { title: "Lectura", description: this.homePageData.readingText };
+      case "aulaActiva":
+        return {
+          title: "Aula Activa AmbLeMa",
+          description: this.homePageData.aulaActivaText,
+        };
       default:
         throw Error("Invalid pillar error");
     }

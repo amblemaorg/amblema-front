@@ -214,9 +214,9 @@
               | excerpt: page.characterLimit
               | strBreakSplit
           ">
-          <p class="description" [ngClass]="{'mas-margen': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'}">
-            <span [outerHTML]="pText"></span>
-          </p>
+          <div class="description" [ngClass]="{'mas-margen': page.lapseId === 'lapse2' || page.lapseId === 'lapse3'}">
+            <div [innerHTML]="pText"></div>
+          </div>
         </ng-container>
       </div>
     </div>
@@ -251,9 +251,9 @@
               | excerpt: page.characterLimit
               | strBreakSplit
           ">
-          <p class="description">
-            <span [outerHTML]="pText"></span>
-          </p>
+          <div class="description">
+            <div [innerHTML]="pText"></div>
+          </div>
         </ng-container>
       </div>
     </div>
@@ -284,9 +284,9 @@
               | excerpt: page.characterLimit
               | strBreakSplit
           ">
-          <p class="description">
-            <span [outerHTML]="pText"></span>
-          </p>
+          <div class="description">
+            <div [innerHTML]="pText"></div>
+          </div>
         </ng-container>
       </div>
 

@@ -523,6 +523,51 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
     }
   }
@@ -580,6 +625,51 @@ $text_indent: 18px;
       .description {
         // margin-top: 20px;
         text-indent: $text_indent;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
     }
 
@@ -746,6 +836,52 @@ $text_indent: 18px;
       .description {
         text-indent: $text_indent;
         margin-top: 80px;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+        line-height: 20px;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
 
       .description+.description {

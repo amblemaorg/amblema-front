@@ -22,6 +22,7 @@ export interface HomePage {
   environmentText: string;
   readingText: string;
   mathText: string;
+  aulaActivaText?: string;
   statistics: any;
   testimonials: Testimonial[];
   olympicsHistory?: OlympicsHistory;

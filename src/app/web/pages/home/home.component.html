@@ -24,14 +24,14 @@
     </div>
   </ng-template>
 
-  <web-bg-heading>Tenemos Tres <br />Pilares Fundamentales</web-bg-heading>
+  <web-bg-heading>Tenemos Cuatro <br />Pilares Fundamentales</web-bg-heading>
   <div #pillarsList class="pillars-wrapper fade-in-animation animation-init">
     <div class="pillars-list">
       <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
         <svg-icon
           class="amblema-icon"
           name="environment-icon"
-          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+          [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Amb</span>iente</h3>
       </div>
@@ -39,7 +39,7 @@
         <svg-icon
           class="amblema-icon"
           name="reading-icon"
-          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+          [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Le</span>ctura</h3>
       </div>
@@ -47,9 +47,17 @@
         <svg-icon
           class="amblema-icon"
           name="math-icon"
-          [svgStyle]="{ 'height.vw': 12, 'width.vw': 12 }"
+          [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
+      </div>
+      <div class="pillar aula-activa" (click)="openModal('aulaActiva', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="aaa-icon"
+          [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
+        ></svg-icon>
+        <h3><span class="bold">Aula</span> Activa</h3>
       </div>
     </div>
 
@@ -82,6 +90,14 @@
           [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
         ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
+      </div>
+      <div class="pillar aula-activa" (click)="openModal('aulaActiva', pillarModal)">
+        <svg-icon
+          class="amblema-icon"
+          name="aaa-icon"
+          [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
+        ></svg-icon>
+        <h3><span class="bold">Aula</span> Activa</h3>
       </div>
     </owl-carousel>
   </div>
