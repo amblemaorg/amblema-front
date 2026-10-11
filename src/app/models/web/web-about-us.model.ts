@@ -14,6 +14,7 @@ export interface AboutUsPage {
     environmentText: string;
     readingText: string;
     mathText: string;
+    aulaActivaText?: string;
     awards: Award[];
 }
 

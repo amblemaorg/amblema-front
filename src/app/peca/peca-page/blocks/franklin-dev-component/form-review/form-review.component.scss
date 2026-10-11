@@ -78,3 +78,32 @@
     }
   }
 }
+
+::ng-deep .quill-editor--review {
+  display: block;
+
+  .ql-toolbar.ql-snow {
+    border-radius: 0.25rem 0.25rem 0 0;
+    background-color: #f7f9fc;
+    border-color: #e4e9f2;
+    border-bottom: 1px solid #edf1f7;
+  }
+
+  .ql-container.ql-snow {
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: #ffffff;
+    border-color: #e4e9f2;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .ql-editor {
+    min-height: 160px;
+    font-size: 0.95rem;
+
+    &.ql-blank::before {
+      font-style: italic;
+      color: #8f9bb3;
+    }
+  }
+}

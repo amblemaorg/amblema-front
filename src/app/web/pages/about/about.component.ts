@@ -109,6 +109,7 @@ export class AboutComponent implements OnInit, OnDestroy {
     environmentText: "",
     readingText: "",
     mathText: "",
+    aulaActivaText: "",
     awards: [],
   };
   selectedAward = {};
@@ -136,6 +137,10 @@ export class AboutComponent implements OnInit, OnDestroy {
     this.iconService.loadSvg(
       "../../../assets/icons/math-icon.svg",
       "math-icon"
+    );
+    this.iconService.loadSvg(
+      "../../../assets/icons/aaa-icon.svg",
+      "aaa-icon"
     );
     this.modalService.defaultOptions = {
       ...this.modalService.defaultOptions,

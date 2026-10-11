@@ -126,6 +126,10 @@ section.about-us {
         svg {
           .st0 {
             fill: $white !important;
+            stroke: $white !important;
+          }
+          path {
+            fill: $white !important;
           }
         }
       }
@@ -159,7 +163,7 @@ section.pillars {
 
     .pillar-wrapper {
       @include breakpoint(large) {
-        @include columns(4);
+        @include columns(3);
         background-color: gray;
         background-repeat: no-repeat;
         background-size: cover;
@@ -178,6 +182,10 @@ section.pillars {
 
         &.math {
           background-image: url('../../../../assets/images/background-pillar-matematica.jpg');
+        }
+
+        &.aula-activa {
+          background-image: url('../../../../assets/images/background-pillar-ambiente.jpg');
         }
       }
     }
@@ -224,6 +232,10 @@ section.pillars {
 
       @include breakpoint(medium) {
         font-size: 3vw;
+      }
+
+      @include breakpoint(large) {
+        font-size: 2vw;
       }
     }
 
