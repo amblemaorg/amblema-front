@@ -94,6 +94,20 @@ export class FormReviewComponent
     ],
   };
 
+  formatInitialDescription(value: string): string {
+    if (!value) return '';
+    // Si ya viene con estructura de etiquetas de bloque (como <p> o <div>), lo dejamos o normalizamos
+    const hasBlockTags = /<(?:p|div|ul|ol|h[1-6]|blockquote)[^>]*>/i.test(value);
+    if (!hasBlockTags) {
+      // Viene como texto plano con saltos de línea (\r\n o \n)
+      const paragraphs = value.split(/\r?\n|\r/g);
+      return paragraphs
+        .map((p) => `<div>${p.trim() === '' ? '<br>' : p}</div>`)
+        .join('');
+    }
+    return value;
+  }
+
   cleanHtml(html: string): string {
     if (!html) return '';
     return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
@@ -256,7 +270,7 @@ export class FormReviewComponent
 
     if (fields.description) {
       descriptionValue = fields.description.value
-        ? fields.description.value
+        ? this.formatInitialDescription(fields.description.value)
         : '';
     }
     if (fields.inputImg) {
