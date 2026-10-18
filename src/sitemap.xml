@@ -36,11 +36,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD13520517_U-E-E--24-de-Octubre-AM</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/OD01021308_E-B--Montaña-Verde</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -127,11 +122,6 @@
   </url>
   <url>
     <loc>https://amblema.org/escuelas/OD13521517_U-E-N-B--Judith-Daló-Sandón</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://amblema.org/escuelas/OD13520517PM_U-E-E--24-de-Octubre-PM</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -241,11 +231,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD06611904_U-E-N--Mario-García</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/PD10580405_U-E--Nuestra-Señora-de-Coromoto</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -282,11 +267,6 @@
   </url>
   <url>
     <loc>https://amblema.org/escuelas/OD00861413PM_C-E---Canónigo-Uzcategui----PM</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://amblema.org/escuelas/2309_U-E-E--Rómulo-Gallegos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

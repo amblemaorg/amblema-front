@@ -92,6 +92,7 @@
         [modules]="quillModules"
         [styles]="{ 'min-height': '180px' }"
         [readOnly]="settings.fields.description.disabled"
+        (onEditorCreated)="onEditorCreated($event)"
       >
       </quill-editor>
       <p

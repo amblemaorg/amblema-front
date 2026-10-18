@@ -303,8 +303,10 @@ export class FormBlockComponent
             .replace(/[\u0300-\u036f]/g, "")
             .trim();
 
-        let colNombre = -1;
-        let colApellido = -1;
+        // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
+        // "Segundo nombre"); se concatenan en orden de aparición.
+        const colsNombre: number[] = [];
+        const colsApellido: number[] = [];
         let colTipoDoc = -1;
         let colDocId = -1;
         let colFechaNac = -1;
@@ -324,9 +326,9 @@ export class FormBlockComponent
           ) {
             colDocId = idx;
           } else if (norm.includes("nombre") && !norm.includes("apellido")) {
-            colNombre = idx;
+            colsNombre.push(idx);
           } else if (norm.includes("apellido")) {
-            colApellido = idx;
+            colsApellido.push(idx);
           } else if (norm.includes("genero") || norm.includes("sexo")) {
             colGenero = idx;
           } else if (norm.includes("naci") || norm.includes("fecha")) {
@@ -340,8 +342,8 @@ export class FormBlockComponent
 
         // Positional fallbacks based on whether "Tipo de documento" column was present
         const hasTipoDocCol = colTipoDoc !== -1;
-        if (colNombre === -1) colNombre = 0;
-        if (colApellido === -1) colApellido = 1;
+        if (colsNombre.length === 0) colsNombre.push(0);
+        if (colsApellido.length === 0) colsApellido.push(1);
         if (colDocId === -1) colDocId = hasTipoDocCol ? 3 : 2;
         if (colGenero === -1) colGenero = hasTipoDocCol ? 5 : 3;
         if (colFechaNac === -1) colFechaNac = hasTipoDocCol ? 4 : 4;
@@ -361,18 +363,18 @@ export class FormBlockComponent
             continue;
           }
 
-          const nombre =
-            colNombre >= 0 &&
-            row[colNombre] !== undefined &&
-            row[colNombre] !== null
-              ? row[colNombre].toString().trim()
-              : "";
-          const apellido =
-            colApellido >= 0 &&
-            row[colApellido] !== undefined &&
-            row[colApellido] !== null
-              ? row[colApellido].toString().trim()
-              : "";
+          const joinCells = (cols: number[]) =>
+            cols
+              .map((c) =>
+                row[c] !== undefined && row[c] !== null
+                  ? row[c].toString().replace(/\s+/g, " ").trim()
+                  : ""
+              )
+              .filter((v) => v !== "")
+              .join(" ");
+
+          const nombre = joinCells(colsNombre);
+          const apellido = joinCells(colsApellido);
 
           if (!nombre && !apellido) {
             continue;
@@ -569,6 +571,21 @@ export class FormBlockComponent
 
   makeExcel() {
     this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
+    const collator = new Intl.Collator("es", { sensitivity: "base" });
+    this.studentsData = [...(this.studentsData || [])].sort((a, b) => {
+      const lastNameA = a && a.lastName ? a.lastName.trim() : "";
+      const lastNameB = b && b.lastName ? b.lastName.trim() : "";
+      const firstNameA =
+        a && (a.name || a.firstName) ? (a.name || a.firstName).trim() : "";
+      const firstNameB =
+        b && (b.name || b.firstName) ? (b.name || b.firstName).trim() : "";
+      return (
+        collator.compare(lastNameA, lastNameB) ||
+        lastNameA.localeCompare(lastNameB) ||
+        collator.compare(firstNameA, firstNameB) ||
+        firstNameA.localeCompare(firstNameB)
+      );
+    });
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
@@ -2460,6 +2477,22 @@ export class FormBlockComponent
   }
 
   makeExcelExport(studentsData) {
+    const collator = new Intl.Collator("es", { sensitivity: "base" });
+    const sortedStudents = [...(studentsData || [])].sort((a, b) => {
+      const lastNameA = a && a.lastName ? a.lastName.trim() : "";
+      const lastNameB = b && b.lastName ? b.lastName.trim() : "";
+      const firstNameA =
+        a && (a.firstName || a.name) ? (a.firstName || a.name).trim() : "";
+      const firstNameB =
+        b && (b.firstName || b.name) ? (b.firstName || b.name).trim() : "";
+      return (
+        collator.compare(lastNameA, lastNameB) ||
+        lastNameA.localeCompare(lastNameB) ||
+        collator.compare(firstNameA, firstNameB) ||
+        firstNameA.localeCompare(firstNameB)
+      );
+    });
+
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Data de estudiantes - ${this.sectionsArr[this.activeSection]?.name
@@ -2482,22 +2515,22 @@ export class FormBlockComponent
     let row_aux = [];
     let genero = "";
     let fecha = "";
-    for (let count = 1, i = 0; count <= studentsData.length; count++, i++) {
-      genero = parseInt(studentsData[i]?.gender) === 1 ? "F" : "M";
-      fecha = new Date(studentsData[i]?.birthdate)
+    for (let count = 1, i = 0; count <= sortedStudents.length; count++, i++) {
+      genero = parseInt(sortedStudents[i]?.gender) === 1 ? "F" : "M";
+      fecha = new Date(sortedStudents[i]?.birthdate)
         .toLocaleDateString("es-VE")
         .split("/")
         .join("-");
 
-      const cardType = parseInt(studentsData[i]?.cardType);
+      const cardType = parseInt(sortedStudents[i]?.cardType);
       const data = [
-        studentsData[i]?.firstName || "",
-        studentsData[i]?.lastName || "",
-        studentsData[i]?.cardId || "",
+        sortedStudents[i]?.firstName || sortedStudents[i]?.name || "",
+        sortedStudents[i]?.lastName || "",
+        sortedStudents[i]?.cardId || "",
         genero,
         fecha,
-        studentsData[i]?.grades || "",
-        studentsData[i].section || "",
+        sortedStudents[i]?.grades || "",
+        sortedStudents[i]?.section || "",
       ];
       row_aux.push(data);
     }
