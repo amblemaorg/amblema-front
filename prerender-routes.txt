@@ -5,7 +5,6 @@
 /escuelas
 /blog
 /escuelas/OD13500517_U-E-E--Arminda-del-Carmen-Morillo---AM
-/escuelas/OD13520517_U-E-E--24-de-Octubre-AM
 /escuelas/OD01021308_E-B--Montaña-Verde
 /escuelas/OD11462105_Escuela-Ezequiel-Zamora
 /escuelas/OD01920402_E-E-P--Ramona-Figueredo
@@ -24,7 +23,6 @@
 /escuelas/OD07722211_C-E--Mercedes-Flores-de-Ramírez
 /escuelas/0D14310809_U-E-E--Sabana-de-Aguirre
 /escuelas/OD13521517_U-E-N-B--Judith-Daló-Sandón
-/escuelas/OD13520517PM_U-E-E--24-de-Octubre-PM
 /escuelas/OD11760513PM_U-E-E--Manuelita-Sáenz-PM
 /escuelas/OD03622211_E-B--María-Antonia-Gonzáles
 /escuelas/OD05732211_Escuela-Graciela-de-Gamarra
@@ -46,7 +44,6 @@
 /escuelas/0D05691804_E-B--Sabina-Rodríguez---Los-Playones
 /escuelas/OD12131804_E-B--San-José-de-la-Peña
 /escuelas/OD12551804_E-B--Gran-Mariscal-de-Ayacucho
-/escuelas/OD06611904_U-E-N--Mario-García
 /escuelas/PD10580405_U-E--Nuestra-Señora-de-Coromoto
 /escuelas/OD08841904_U-E--24-de-Julio-de-1783
 /escuelas/OD01031303_U-E-E--Nuestra-Señora-de-Coromoto---AM
@@ -55,7 +52,6 @@
 /escuelas/OD04221904_U-E-N--Luis-Daniel-Beauperthuy
 /escuelas/OD00861413_C-E---Canónigo-Uzcategui----AM
 /escuelas/OD00861413PM_C-E---Canónigo-Uzcategui----PM
-/escuelas/2309_U-E-E--Rómulo-Gallegos
 /escuelas/0D01370401_E-E-P--Batalla-de-Carabobo
 /escuelas/OD02982404_Unidad-Educativa-Estadal-Osma
 /blog/post/6aa563624917e0fafd504fa7

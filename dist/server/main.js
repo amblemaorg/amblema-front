@@ -141194,7 +141194,10 @@ function View_FormReviewComponent_11(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
 function View_FormReviewComponent_12(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" (Excedido) "]))], null, null); }
 function View_FormReviewComponent_13(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, [" (M\u00EDnimo ", ") "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.fields.description.minLength; _ck(_v, 1, 0, currVal_0); }); }
 function View_FormReviewComponent_10(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 10, "p", [], null, null, null, null, null)), i1.ɵdid(1, 278528, null, 0, i4.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { ngClass: [0, "ngClass"] }, null), i1.ɵpod(2, { "text-danger": 0 }), (_l()(), i1.ɵted(3, null, [" Cantidad de caracteres: ", ""])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_11)), i1.ɵdid(5, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [". "])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_12)), i1.ɵdid(8, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_13)), i1.ɵdid(10, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _ck(_v, 2, 0, (_co.formControlHasError("description", "maxlength") || _co.formControlHasError("description", "minlength"))); _ck(_v, 1, 0, currVal_0); var currVal_2 = _co.settings.fields.description.maxLength; _ck(_v, 5, 0, currVal_2); var currVal_3 = _co.formControlHasError("description", "maxlength"); _ck(_v, 8, 0, currVal_3); var currVal_4 = _co.formControlHasError("description", "minlength"); _ck(_v, 10, 0, currVal_4); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.cleanTextLength(_co.form.get("description").value); _ck(_v, 3, 0, currVal_1); }); }
-function View_FormReviewComponent_9(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 12, "div", [["class", "form-group"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["class", "label"]], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, [" ", " "])), (_l()(), i1.ɵeld(3, 0, null, null, 7, "quill-editor", [["class", "quill-editor--review"], ["formControlName", "description"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], null, null, i7.View_QuillEditorComponent_0, i7.RenderType_QuillEditorComponent)), i1.ɵdid(4, 4898816, null, 0, i8.QuillEditorComponent, [i1.ElementRef, i9.DomSanitizer, i4.DOCUMENT, i1.PLATFORM_ID, i1.Renderer2, i1.NgZone, i8.QuillService], { modules: [0, "modules"], readOnly: [1, "readOnly"], placeholder: [2, "placeholder"], styles: [3, "styles"] }, null), i1.ɵpod(5, { "min-height": 0 }), i1.ɵprd(1024, null, i10.NG_VALIDATORS, function (p0_0) { return [p0_0]; }, [i8.QuillEditorComponent]), i1.ɵprd(1024, null, i10.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i8.QuillEditorComponent]), i1.ɵdid(8, 671744, null, 0, i10.FormControlName, [[3, i10.ControlContainer], [6, i10.NG_VALIDATORS], [8, null], [6, i10.NG_VALUE_ACCESSOR], [2, i10.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i10.NgControl, null, [i10.FormControlName]), i1.ɵdid(10, 16384, null, 0, i10.NgControlStatus, [[4, i10.NgControl]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_10)), i1.ɵdid(12, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_8 = _co.quillModules; var currVal_9 = _co.settings.fields.description.disabled; var currVal_10 = _co.settings.fields.description.placeholder; var currVal_11 = _ck(_v, 5, 0, "180px"); _ck(_v, 4, 0, currVal_8, currVal_9, currVal_10, currVal_11); var currVal_12 = "description"; _ck(_v, 8, 0, currVal_12); var currVal_13 = (_co.settings.fields.description.maxLength || _co.settings.fields.description.minLength); _ck(_v, 12, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.fields.description.label; _ck(_v, 2, 0, currVal_0); var currVal_1 = i1.ɵnov(_v, 10).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 10).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 10).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 10).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 10).ngClassValid; var currVal_6 = i1.ɵnov(_v, 10).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 10).ngClassPending; _ck(_v, 3, 0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); }); }
+function View_FormReviewComponent_9(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 12, "div", [["class", "form-group"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["class", "label"]], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, [" ", " "])), (_l()(), i1.ɵeld(3, 0, null, null, 7, "quill-editor", [["class", "quill-editor--review"], ["formControlName", "description"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "onEditorCreated"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("onEditorCreated" === en)) {
+        var pd_0 = (_co.onEditorCreated($event) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, i7.View_QuillEditorComponent_0, i7.RenderType_QuillEditorComponent)), i1.ɵdid(4, 4898816, null, 0, i8.QuillEditorComponent, [i1.ElementRef, i9.DomSanitizer, i4.DOCUMENT, i1.PLATFORM_ID, i1.Renderer2, i1.NgZone, i8.QuillService], { modules: [0, "modules"], readOnly: [1, "readOnly"], placeholder: [2, "placeholder"], styles: [3, "styles"] }, { onEditorCreated: "onEditorCreated" }), i1.ɵpod(5, { "min-height": 0 }), i1.ɵprd(1024, null, i10.NG_VALIDATORS, function (p0_0) { return [p0_0]; }, [i8.QuillEditorComponent]), i1.ɵprd(1024, null, i10.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i8.QuillEditorComponent]), i1.ɵdid(8, 671744, null, 0, i10.FormControlName, [[3, i10.ControlContainer], [6, i10.NG_VALIDATORS], [8, null], [6, i10.NG_VALUE_ACCESSOR], [2, i10.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i10.NgControl, null, [i10.FormControlName]), i1.ɵdid(10, 16384, null, 0, i10.NgControlStatus, [[4, i10.NgControl]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_10)), i1.ɵdid(12, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_8 = _co.quillModules; var currVal_9 = _co.settings.fields.description.disabled; var currVal_10 = _co.settings.fields.description.placeholder; var currVal_11 = _ck(_v, 5, 0, "180px"); _ck(_v, 4, 0, currVal_8, currVal_9, currVal_10, currVal_11); var currVal_12 = "description"; _ck(_v, 8, 0, currVal_12); var currVal_13 = (_co.settings.fields.description.maxLength || _co.settings.fields.description.minLength); _ck(_v, 12, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.fields.description.label; _ck(_v, 2, 0, currVal_0); var currVal_1 = i1.ɵnov(_v, 10).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 10).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 10).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 10).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 10).ngClassValid; var currVal_6 = i1.ɵnov(_v, 10).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 10).ngClassPending; _ck(_v, 3, 0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); }); }
 function View_FormReviewComponent_14(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "button", [["class", "btn btn-danger col-12 col-lg-auto btn-cancel"], ["nbButton", ""], ["status", "danger"], ["type", "button"]], [[2, "d-none", null], [2, "appearance-filled", null], [2, "appearance-outline", null], [2, "appearance-ghost", null], [2, "appearance-hero", null], [2, "full-width", null], [1, "aria-disabled", 0], [2, "btn-disabled", null], [1, "tabindex", 0], [2, "size-tiny", null], [2, "size-small", null], [2, "size-medium", null], [2, "size-large", null], [2, "size-giant", null], [2, "status-primary", null], [2, "status-info", null], [2, "status-success", null], [2, "status-warning", null], [2, "status-danger", null], [2, "status-basic", null], [2, "status-control", null], [2, "shape-rectangle", null], [2, "shape-round", null], [2, "shape-semi-round", null], [2, "icon-start", null], [2, "icon-end", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (i1.ɵnov(_v, 1).onClick($event) !== false);
         ad = (pd_0 && ad);
@@ -177290,6 +177293,7 @@ class SchoolDataPageComponent extends peca_page_component_1.PecaPageComponent {
                     ? mapper.allStudents[this.currentStudentsGroup]
                     : [];
             }
+            theData = this.sortStudentsByLastName(theData);
             if (!theSection) {
                 theSection = " todas la secciones.";
             }
@@ -177358,6 +177362,15 @@ class SchoolDataPageComponent extends peca_page_component_1.PecaPageComponent {
         //   JSON.stringify(this.studentsTableData.data)
         // );
         this.studentsDataTemp = studentsData;
+    }
+    /**
+     * Ordena estudiantes por apellido y luego por nombre (collation en español:
+     * ignora mayúsculas y acentos, respeta la ñ). No muta el arreglo original.
+     */
+    sortStudentsByLastName(students) {
+        const collator = new Intl.Collator("es", { sensitivity: "base" });
+        return [...(students || [])].sort((a, b) => collator.compare((a && a.lastName) || "", (b && b.lastName) || "") ||
+            collator.compare((a && a.name) || "", (b && b.name) || ""));
     }
     managePermissions(permissionsArray) {
         return [
@@ -315871,6 +315884,7 @@ class FormReviewComponent {
         this.tableImages = table_images_config_js_1.default;
         this.source = new ng2_smart_table_1.LocalDataSource();
         this.isSaving = false;
+        this.isLimitGuardAttached = false;
         this.quillModules = {
             toolbar: [
                 ['bold', 'italic', 'underline', 'strike'],
@@ -315961,7 +315975,153 @@ class FormReviewComponent {
         return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
     }
     cleanTextLength(html) {
+        if (this.quillEditor && this.quillEditor.root) {
+            const text = this.quillEditor.getText();
+            return text ? Math.max(0, text.length - 1) : 0;
+        }
         return this.cleanHtml(html).length;
+    }
+    getMaxLength() {
+        if (this.settings &&
+            this.settings.fields &&
+            this.settings.fields.description &&
+            this.settings.fields.description.maxLength) {
+            return this.settings.fields.description.maxLength;
+        }
+        return null;
+    }
+    getEditorTextLength() {
+        if (this.quillEditor) {
+            const text = this.quillEditor.getText();
+            return text ? Math.max(0, text.length - 1) : 0;
+        }
+        const val = this.form && this.form.get('description')
+            ? this.form.get('description').value
+            : '';
+        return this.cleanHtml(val).length;
+    }
+    onEditorCreated(editor) {
+        this.quillEditor = editor;
+        this.setupCharacterLimitGuard();
+    }
+    setupCharacterLimitGuard() {
+        if (!this.quillEditor || !this.quillEditor.root) {
+            return;
+        }
+        if (this.isLimitGuardAttached) {
+            return;
+        }
+        this.isLimitGuardAttached = true;
+        const editorRoot = this.quillEditor.root;
+        // 1. Bloquear pulsaciones de teclado si ya se alcanzó el límite
+        editorRoot.addEventListener('keydown', (e) => {
+            const maxLength = this.getMaxLength();
+            if (!maxLength || maxLength <= 0) {
+                return;
+            }
+            // Permitir atajos y teclas de control (Ctrl+C, Ctrl+A, Ctrl+Z, etc.)
+            if (e.ctrlKey || e.metaKey || e.altKey) {
+                return;
+            }
+            // Teclas de navegación y borrado permitidas
+            const allowedKeys = [
+                'Backspace',
+                'Delete',
+                'ArrowLeft',
+                'ArrowRight',
+                'ArrowUp',
+                'ArrowDown',
+                'Home',
+                'End',
+                'PageUp',
+                'PageDown',
+                'Tab',
+                'Escape',
+                'Shift',
+                'Control',
+                'Alt',
+                'Meta',
+                'CapsLock',
+            ];
+            if (allowedKeys.includes(e.key)) {
+                return;
+            }
+            // Si es una tecla imprimible o Enter
+            if (e.key.length === 1 || e.key === 'Enter') {
+                const currentLength = this.getEditorTextLength();
+                const selection = this.quillEditor.getSelection();
+                const selLength = selection ? selection.length : 0;
+                // Si agregar 1 carácter sobrepasa el límite, bloquear
+                if (currentLength - selLength + 1 > maxLength) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }
+        });
+        // 2. Controlar pegado (paste) truncando si excede el límite
+        editorRoot.addEventListener('paste', (e) => {
+            const maxLength = this.getMaxLength();
+            if (!maxLength || maxLength <= 0) {
+                return;
+            }
+            const clipboardData = e.clipboardData || window.clipboardData;
+            const pastedText = clipboardData
+                ? clipboardData.getData('text/plain')
+                : '';
+            if (!pastedText) {
+                return;
+            }
+            const currentLength = this.getEditorTextLength();
+            const selection = this.quillEditor.getSelection();
+            const selLength = selection ? selection.length : 0;
+            const available = maxLength - (currentLength - selLength);
+            if (available <= 0) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            else if (pastedText.length > available) {
+                e.preventDefault();
+                e.stopPropagation();
+                const truncated = pastedText.slice(0, available);
+                if (selection) {
+                    this.quillEditor.deleteText(selection.index, selLength, 'user');
+                    this.quillEditor.insertText(selection.index, truncated, 'user');
+                    this.quillEditor.setSelection(selection.index + truncated.length, 0);
+                }
+                else {
+                    const end = Math.max(0, this.quillEditor.getLength() - 1);
+                    this.quillEditor.insertText(end, truncated, 'user');
+                    this.quillEditor.setSelection(end + truncated.length, 0);
+                }
+            }
+        });
+        // 3. Salvaguarda en text-change para drag-and-drop o autocompletado
+        this.quillEditor.on('text-change', (delta, oldDelta, source) => {
+            if (source !== 'user') {
+                return;
+            }
+            const maxLength = this.getMaxLength();
+            if (!maxLength || maxLength <= 0) {
+                return;
+            }
+            const currentLength = this.getEditorTextLength();
+            if (currentLength > maxLength) {
+                const excess = currentLength - maxLength;
+                const sel = this.quillEditor.getSelection();
+                if (sel && sel.index >= excess) {
+                    this.quillEditor.deleteText(sel.index - excess, excess, 'silent');
+                    this.quillEditor.setSelection(sel.index - excess, 0);
+                }
+                else {
+                    this.quillEditor.setContents(oldDelta, 'silent');
+                }
+                if (this.form && this.form.get('description')) {
+                    this.form
+                        .get('description')
+                        .setValue(this.quillEditor.root.innerHTML);
+                }
+            }
+        });
     }
     descriptionValidators(minLength, maxLength) {
         return (control) => {
@@ -316125,6 +316285,9 @@ class FormReviewComponent {
         });
         if (fields.description && fields.description.disabled) {
             this.form.get('description').disable();
+        }
+        if (this.quillEditor) {
+            this.setupCharacterLimitGuard();
         }
     }
     onClickButton(values) {
@@ -429707,8 +429870,10 @@ class FormBlockComponent {
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .trim();
-                let colNombre = -1;
-                let colApellido = -1;
+                // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
+                // "Segundo nombre"); se concatenan en orden de aparición.
+                const colsNombre = [];
+                const colsApellido = [];
                 let colTipoDoc = -1;
                 let colDocId = -1;
                 let colFechaNac = -1;
@@ -429727,10 +429892,10 @@ class FormBlockComponent {
                         colDocId = idx;
                     }
                     else if (norm.includes("nombre") && !norm.includes("apellido")) {
-                        colNombre = idx;
+                        colsNombre.push(idx);
                     }
                     else if (norm.includes("apellido")) {
-                        colApellido = idx;
+                        colsApellido.push(idx);
                     }
                     else if (norm.includes("genero") || norm.includes("sexo")) {
                         colGenero = idx;
@@ -429747,10 +429912,10 @@ class FormBlockComponent {
                 });
                 // Positional fallbacks based on whether "Tipo de documento" column was present
                 const hasTipoDocCol = colTipoDoc !== -1;
-                if (colNombre === -1)
-                    colNombre = 0;
-                if (colApellido === -1)
-                    colApellido = 1;
+                if (colsNombre.length === 0)
+                    colsNombre.push(0);
+                if (colsApellido.length === 0)
+                    colsApellido.push(1);
                 if (colDocId === -1)
                     colDocId = hasTipoDocCol ? 3 : 2;
                 if (colGenero === -1)
@@ -429768,16 +429933,14 @@ class FormBlockComponent {
                         row.every((cell) => cell === "" || cell === null || cell === undefined)) {
                         continue;
                     }
-                    const nombre = colNombre >= 0 &&
-                        row[colNombre] !== undefined &&
-                        row[colNombre] !== null
-                        ? row[colNombre].toString().trim()
-                        : "";
-                    const apellido = colApellido >= 0 &&
-                        row[colApellido] !== undefined &&
-                        row[colApellido] !== null
-                        ? row[colApellido].toString().trim()
-                        : "";
+                    const joinCells = (cols) => cols
+                        .map((c) => row[c] !== undefined && row[c] !== null
+                        ? row[c].toString().replace(/\s+/g, " ").trim()
+                        : "")
+                        .filter((v) => v !== "")
+                        .join(" ");
+                    const nombre = joinCells(colsNombre);
+                    const apellido = joinCells(colsApellido);
                     if (!nombre && !apellido) {
                         continue;
                     }
@@ -429955,6 +430118,17 @@ class FormBlockComponent {
     makeExcel() {
         var _a, _b, _c, _d, _e, _f, _g;
         this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
+        const collator = new Intl.Collator("es", { sensitivity: "base" });
+        this.studentsData = [...(this.studentsData || [])].sort((a, b) => {
+            const lastNameA = a && a.lastName ? a.lastName.trim() : "";
+            const lastNameB = b && b.lastName ? b.lastName.trim() : "";
+            const firstNameA = a && (a.name || a.firstName) ? (a.name || a.firstName).trim() : "";
+            const firstNameB = b && (b.name || b.firstName) ? (b.name || b.firstName).trim() : "";
+            return (collator.compare(lastNameA, lastNameB) ||
+                lastNameA.localeCompare(lastNameB) ||
+                collator.compare(firstNameA, firstNameB) ||
+                firstNameA.localeCompare(firstNameB));
+        });
         const workbook = xlsx_1.default.utils.book_new();
         workbook.Props = {
             Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
@@ -431460,7 +431634,18 @@ class FormBlockComponent {
         }
     }
     makeExcelExport(studentsData) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+        const collator = new Intl.Collator("es", { sensitivity: "base" });
+        const sortedStudents = [...(studentsData || [])].sort((a, b) => {
+            const lastNameA = a && a.lastName ? a.lastName.trim() : "";
+            const lastNameB = b && b.lastName ? b.lastName.trim() : "";
+            const firstNameA = a && (a.firstName || a.name) ? (a.firstName || a.name).trim() : "";
+            const firstNameB = b && (b.firstName || b.name) ? (b.firstName || b.name).trim() : "";
+            return (collator.compare(lastNameA, lastNameB) ||
+                lastNameA.localeCompare(lastNameB) ||
+                collator.compare(firstNameA, firstNameB) ||
+                firstNameA.localeCompare(firstNameB));
+        });
         const workbook = xlsx_1.default.utils.book_new();
         workbook.Props = {
             Title: `Data de estudiantes - ${(_a = this.sectionsArr[this.activeSection]) === null || _a === void 0 ? void 0 : _a.name}`,
@@ -431482,21 +431667,21 @@ class FormBlockComponent {
         let row_aux = [];
         let genero = "";
         let fecha = "";
-        for (let count = 1, i = 0; count <= studentsData.length; count++, i++) {
-            genero = parseInt((_b = studentsData[i]) === null || _b === void 0 ? void 0 : _b.gender) === 1 ? "F" : "M";
-            fecha = new Date((_c = studentsData[i]) === null || _c === void 0 ? void 0 : _c.birthdate)
+        for (let count = 1, i = 0; count <= sortedStudents.length; count++, i++) {
+            genero = parseInt((_b = sortedStudents[i]) === null || _b === void 0 ? void 0 : _b.gender) === 1 ? "F" : "M";
+            fecha = new Date((_c = sortedStudents[i]) === null || _c === void 0 ? void 0 : _c.birthdate)
                 .toLocaleDateString("es-VE")
                 .split("/")
                 .join("-");
-            const cardType = parseInt((_d = studentsData[i]) === null || _d === void 0 ? void 0 : _d.cardType);
+            const cardType = parseInt((_d = sortedStudents[i]) === null || _d === void 0 ? void 0 : _d.cardType);
             const data = [
-                ((_e = studentsData[i]) === null || _e === void 0 ? void 0 : _e.firstName) || "",
-                ((_f = studentsData[i]) === null || _f === void 0 ? void 0 : _f.lastName) || "",
-                ((_g = studentsData[i]) === null || _g === void 0 ? void 0 : _g.cardId) || "",
+                ((_e = sortedStudents[i]) === null || _e === void 0 ? void 0 : _e.firstName) || ((_f = sortedStudents[i]) === null || _f === void 0 ? void 0 : _f.name) || "",
+                ((_g = sortedStudents[i]) === null || _g === void 0 ? void 0 : _g.lastName) || "",
+                ((_h = sortedStudents[i]) === null || _h === void 0 ? void 0 : _h.cardId) || "",
                 genero,
                 fecha,
-                ((_h = studentsData[i]) === null || _h === void 0 ? void 0 : _h.grades) || "",
-                studentsData[i].section || "",
+                ((_j = sortedStudents[i]) === null || _j === void 0 ? void 0 : _j.grades) || "",
+                ((_k = sortedStudents[i]) === null || _k === void 0 ? void 0 : _k.section) || "",
             ];
             row_aux.push(data);
         }
