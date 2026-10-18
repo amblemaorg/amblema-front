@@ -84,6 +84,8 @@ export class FormReviewComponent
   sizeAfterCompress: number | Object;
 
   isSaving: boolean = false;
+  quillEditor: any;
+  private isLimitGuardAttached: boolean = false;
 
   quillModules = {
     toolbar: [
@@ -114,7 +116,173 @@ export class FormReviewComponent
   }
 
   cleanTextLength(html: string): number {
+    if (this.quillEditor && this.quillEditor.root) {
+      const text = this.quillEditor.getText();
+      return text ? Math.max(0, text.length - 1) : 0;
+    }
     return this.cleanHtml(html).length;
+  }
+
+  getMaxLength(): number | null {
+    if (
+      this.settings &&
+      this.settings.fields &&
+      this.settings.fields.description &&
+      this.settings.fields.description.maxLength
+    ) {
+      return this.settings.fields.description.maxLength;
+    }
+    return null;
+  }
+
+  getEditorTextLength(): number {
+    if (this.quillEditor) {
+      const text = this.quillEditor.getText();
+      return text ? Math.max(0, text.length - 1) : 0;
+    }
+    const val =
+      this.form && this.form.get('description')
+        ? this.form.get('description').value
+        : '';
+    return this.cleanHtml(val).length;
+  }
+
+  onEditorCreated(editor: any): void {
+    this.quillEditor = editor;
+    this.setupCharacterLimitGuard();
+  }
+
+  private setupCharacterLimitGuard(): void {
+    if (!this.quillEditor || !this.quillEditor.root) {
+      return;
+    }
+    if (this.isLimitGuardAttached) {
+      return;
+    }
+    this.isLimitGuardAttached = true;
+
+    const editorRoot = this.quillEditor.root as HTMLElement;
+
+    // 1. Bloquear pulsaciones de teclado si ya se alcanzó el límite
+    editorRoot.addEventListener('keydown', (e: KeyboardEvent) => {
+      const maxLength = this.getMaxLength();
+      if (!maxLength || maxLength <= 0) {
+        return;
+      }
+
+      // Permitir atajos y teclas de control (Ctrl+C, Ctrl+A, Ctrl+Z, etc.)
+      if (e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+
+      // Teclas de navegación y borrado permitidas
+      const allowedKeys = [
+        'Backspace',
+        'Delete',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End',
+        'PageUp',
+        'PageDown',
+        'Tab',
+        'Escape',
+        'Shift',
+        'Control',
+        'Alt',
+        'Meta',
+        'CapsLock',
+      ];
+      if (allowedKeys.includes(e.key)) {
+        return;
+      }
+
+      // Si es una tecla imprimible o Enter
+      if (e.key.length === 1 || e.key === 'Enter') {
+        const currentLength = this.getEditorTextLength();
+        const selection = this.quillEditor.getSelection();
+        const selLength = selection ? selection.length : 0;
+
+        // Si agregar 1 carácter sobrepasa el límite, bloquear
+        if (currentLength - selLength + 1 > maxLength) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+    });
+
+    // 2. Controlar pegado (paste) truncando si excede el límite
+    editorRoot.addEventListener('paste', (e: ClipboardEvent) => {
+      const maxLength = this.getMaxLength();
+      if (!maxLength || maxLength <= 0) {
+        return;
+      }
+
+      const clipboardData =
+        e.clipboardData || (window as any).clipboardData;
+      const pastedText = clipboardData
+        ? clipboardData.getData('text/plain')
+        : '';
+      if (!pastedText) {
+        return;
+      }
+
+      const currentLength = this.getEditorTextLength();
+      const selection = this.quillEditor.getSelection();
+      const selLength = selection ? selection.length : 0;
+      const available = maxLength - (currentLength - selLength);
+
+      if (available <= 0) {
+        e.preventDefault();
+        e.stopPropagation();
+      } else if (pastedText.length > available) {
+        e.preventDefault();
+        e.stopPropagation();
+        const truncated = pastedText.slice(0, available);
+        if (selection) {
+          this.quillEditor.deleteText(selection.index, selLength, 'user');
+          this.quillEditor.insertText(selection.index, truncated, 'user');
+          this.quillEditor.setSelection(selection.index + truncated.length, 0);
+        } else {
+          const end = Math.max(0, this.quillEditor.getLength() - 1);
+          this.quillEditor.insertText(end, truncated, 'user');
+          this.quillEditor.setSelection(end + truncated.length, 0);
+        }
+      }
+    });
+
+    // 3. Salvaguarda en text-change para drag-and-drop o autocompletado
+    this.quillEditor.on(
+      'text-change',
+      (delta: any, oldDelta: any, source: string) => {
+        if (source !== 'user') {
+          return;
+        }
+        const maxLength = this.getMaxLength();
+        if (!maxLength || maxLength <= 0) {
+          return;
+        }
+
+        const currentLength = this.getEditorTextLength();
+        if (currentLength > maxLength) {
+          const excess = currentLength - maxLength;
+          const sel = this.quillEditor.getSelection();
+          if (sel && sel.index >= excess) {
+            this.quillEditor.deleteText(sel.index - excess, excess, 'silent');
+            this.quillEditor.setSelection(sel.index - excess, 0);
+          } else {
+            this.quillEditor.setContents(oldDelta, 'silent');
+          }
+          if (this.form && this.form.get('description')) {
+            this.form
+              .get('description')
+              .setValue(this.quillEditor.root.innerHTML);
+          }
+        }
+      },
+    );
   }
 
   descriptionValidators(minLength?: number, maxLength?: number): ValidatorFn {
@@ -303,6 +471,10 @@ export class FormReviewComponent
 
     if (fields.description && fields.description.disabled) {
       this.form.get('description').disable();
+    }
+
+    if (this.quillEditor) {
+      this.setupCharacterLimitGuard();
     }
   }
 
