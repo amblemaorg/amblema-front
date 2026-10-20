@@ -178895,6 +178895,14 @@ exports.StepsComponent = StepsComponent;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Excerpt = void 0;
+const HAS_HTML_TAGS_RE = /<\/?[a-z][a-z0-9]*(?:\s[^>]*)?\/?>/i;
+// Etiqueta | entidad HTML | un carácter visible
+const HTML_TOKEN_RE = /<(\/?)([a-z][a-z0-9]*)(?:\s[^>]*)?\/?>|&(?:[a-z]+|#\d+|#x[0-9a-f]+);|[\s\S]/gi;
+// Bloques que Quill cuenta como un salto de línea en getText()
+const LINE_BLOCK_TAGS_RE = /^(?:p|div|li|h[1-6]|blockquote)$/i;
+const VOID_TAGS_RE = /^(?:br|img|hr|input|wbr)$/i;
+const TRAILING_EMPTY_BLOCKS_RE = /(?:<(p|div)(?:\s[^>]*)?>(?:\s|&nbsp;|<br\s*\/?>)*<\/\1>\s*)+$/i;
+const TRAILING_BLOCK_CLOSE_RE = /\s*(<\/(?:p|div|li|h[1-6]|blockquote)>(?:<\/(?:ul|ol)>)?)\s*$/i;
 /**
  * @description Recorta caracteres del string y concatena por defecto ...
  * @author Chistopher Dallar On GitLab: christopherdal, @Gmail: christopherdallar1234
@@ -178912,11 +178920,64 @@ class Excerpt {
         if (value) {
             if (long === 0)
                 return value;
+            if (HAS_HTML_TAGS_RE.test(value))
+                return this.truncateHtml(value, long, end);
             if (value.length <= long)
                 return value;
             return value.substr(0, long) + end;
         }
         return value;
+    }
+    /**
+     * Recorta HTML enriquecido (Quill) contando solo el texto visible, con el mismo
+     * criterio que quill.getText() en el editor, y cierra las etiquetas que queden abiertas.
+     */
+    truncateHtml(value, long, end) {
+        const tokens = [];
+        let visibleLength = 0;
+        let match;
+        HTML_TOKEN_RE.lastIndex = 0;
+        while ((match = HTML_TOKEN_RE.exec(value)) !== null) {
+            const [token, closing, tag] = match;
+            tokens.push({ token, isClosing: closing === '/', tag: tag || '' });
+            visibleLength += this.tokenLength(token, closing === '/', tag);
+        }
+        // Quill no cuenta el salto de línea final del último bloque
+        if (visibleLength - 1 <= long)
+            return value;
+        let result = '';
+        let count = 0;
+        const openTags = [];
+        for (const { token, isClosing, tag } of tokens) {
+            const length = this.tokenLength(token, isClosing, tag);
+            if (count + length > long)
+                break;
+            count += length;
+            result += token;
+            if (!tag || VOID_TAGS_RE.test(tag) || /\/>$/.test(token))
+                continue;
+            if (isClosing) {
+                const openIndex = openTags.lastIndexOf(tag.toLowerCase());
+                if (openIndex !== -1)
+                    openTags.splice(openIndex);
+            }
+            else {
+                openTags.push(tag.toLowerCase());
+            }
+        }
+        for (let i = openTags.length - 1; i >= 0; i--) {
+            result += `</${openTags[i]}>`;
+        }
+        // Sin párrafos vacíos al final y con los "..." dentro del último párrafo con texto
+        result = result.replace(TRAILING_EMPTY_BLOCKS_RE, '');
+        return TRAILING_BLOCK_CLOSE_RE.test(result)
+            ? result.replace(TRAILING_BLOCK_CLOSE_RE, `${end}$1`)
+            : result.replace(/\s+$/, '') + end;
+    }
+    tokenLength(token, isClosing, tag) {
+        if (!tag)
+            return 1;
+        return isClosing && LINE_BLOCK_TAGS_RE.test(tag) ? 1 : 0;
     }
 }
 exports.Excerpt = Excerpt;
@@ -308252,13 +308313,54 @@ module.exports = isThisMinute
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StrBreakSplit = void 0;
+// Bloques de primer nivel que genera Quill (ngx-quill) en las descripciones con formato
+const BLOCK_TAGS_RE = /<(p|div|h[1-6]|ul|ol|blockquote)(\s[^>]*)?>([\s\S]*?)<\/\1>/gi;
+const HAS_BLOCK_TAGS_RE = /<(?:p|div|h[1-6]|ul|ol|blockquote)(?:\s[^>]*)?>/i;
+const PARAGRAPH_TAGS_RE = /<\/?(?:p|div)(?:\s[^>]*)?>/gi;
+const EMPTY_PARAGRAPH_RE = /^(?:\s|&nbsp;|<br\s*\/?>)*$/i;
 class StrBreakSplit {
     transform(value) {
         if (value == undefined) {
             return [value];
         }
+        if (HAS_BLOCK_TAGS_RE.test(value)) {
+            return this.splitHtmlBlocks(value);
+        }
         const texts = value.split(/\r?\n|\r|\n/g);
         return texts.map((text) => text.trim());
+    }
+    /**
+     * Convierte cada <p>/<div> de primer nivel en un párrafo independiente, para que
+     * el HTML enriquecido se pinte igual que el texto plano separado por saltos de línea.
+     * Listas, encabezados y citas se conservan completos como un único párrafo.
+     */
+    splitHtmlBlocks(value) {
+        const paragraphs = [];
+        const pushText = (text) => {
+            const clean = text.replace(PARAGRAPH_TAGS_RE, '').trim();
+            if (clean) {
+                paragraphs.push(clean);
+            }
+        };
+        let lastIndex = 0;
+        let match;
+        BLOCK_TAGS_RE.lastIndex = 0;
+        while ((match = BLOCK_TAGS_RE.exec(value)) !== null) {
+            // Texto suelto entre bloques (o restos de un bloque recortado por el pipe excerpt)
+            pushText(value.slice(lastIndex, match.index));
+            const [fullMatch, tag, , content] = match;
+            const isParagraph = /^(p|div)$/i.test(tag);
+            if (!isParagraph) {
+                paragraphs.push(fullMatch.trim());
+            }
+            else {
+                paragraphs.push(EMPTY_PARAGRAPH_RE.test(content) ? '' : content.trim());
+            }
+            lastIndex = match.index + fullMatch.length;
+        }
+        // Cola sin cierre, p. ej. "<p>¡Felicida..." tras aplicar excerpt
+        pushText(value.slice(lastIndex));
+        return paragraphs;
     }
 }
 exports.StrBreakSplit = StrBreakSplit;
