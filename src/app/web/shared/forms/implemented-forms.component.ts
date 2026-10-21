@@ -222,6 +222,17 @@ export class ImplementedFormsComponent implements OnInit {
 
   schoolStep4 = {
     hasSponsor: { label: "¿Cuentas con un padrino?", ...this.controlProps.confirmation },
+    hasSponsorRegistered: {
+      label: "¿El padrino está registrado en AmbLeMa?",
+      ...this.controlProps.confirmation,
+      condition: { formControlName: "hasSponsor", value: true },
+    },
+    sponsor: {
+      label: "Padrino",
+      ...this.controlProps.select,
+      options: [],
+      condition: { formControlName: "hasSponsorRegistered", value: true },
+    },
   };
 
   schoolLastStep = {
@@ -311,6 +322,18 @@ export class ImplementedFormsComponent implements OnInit {
 
   sponsorStep3 = {
     hasSchool: { label: "¿Cuentas con una escuela?", ...this.controlProps.confirmation },
+    hasSchoolRegistered: {
+      label: "¿La escuela está registrada en AmbLeMa?",
+      ...this.controlProps.confirmation,
+      condition: { formControlName: "hasSchool", value: true },
+    },
+    school: {
+      label: "Escuela",
+      ...this.controlProps.select,
+      validations: { required: true },
+      options: [],
+      condition: { formControlName: "hasSchoolRegistered", value: true },
+    },
   };
 
   sponsorLastStep = {
@@ -415,12 +438,18 @@ export class ImplementedFormsComponent implements OnInit {
     {
       title: "Datos del Padrino: ",
       data: this.addPrefixToObjectProperties("sponsor", this.sponsorStep1),
-      condition: { formControlName: "hasSponsor", value: true },
+      condition: [
+        { formControlName: "hasSponsor", value: true },
+        { formControlName: "hasSponsorRegistered", value: false },
+      ],
     },
     {
       title: "Datos del Padrino: ",
       data: this.addPrefixToObjectProperties("sponsor", this.sponsorStep2),
-      condition: { formControlName: "hasSponsor", value: true },
+      condition: [
+        { formControlName: "hasSponsor", value: true },
+        { formControlName: "hasSponsorRegistered", value: false },
+      ],
     },
     {
       title: "Puedes seguir cualquiera de estos pasos:",
@@ -446,17 +475,26 @@ export class ImplementedFormsComponent implements OnInit {
     {
       title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep1),
-      condition: { formControlName: "hasSchool", value: true },
+      condition: [
+        { formControlName: "hasSchool", value: true },
+        { formControlName: "hasSchoolRegistered", value: false },
+      ],
     },
     {
       title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep2),
-      condition: { formControlName: "hasSchool", value: true },
+      condition: [
+        { formControlName: "hasSchool", value: true },
+        { formControlName: "hasSchoolRegistered", value: false },
+      ],
     },
     {
       title: "Datos de la Escuela:",
       data: this.addPrefixToObjectProperties("school", this.schoolStep3),
-      condition: { formControlName: "hasSchool", value: true },
+      condition: [
+        { formControlName: "hasSchool", value: true },
+        { formControlName: "hasSchoolRegistered", value: false },
+      ],
     },
     {
       title: "Puedes seguir cualquiera de estos pasos:",
@@ -475,6 +513,30 @@ export class ImplementedFormsComponent implements OnInit {
   ngOnInit() {
     this.getMunicipalitiesData();
     this.getStatesData();
+    this.getSponsorsData();
+    this.getSchoolsData();
+  }
+
+  getSchoolsData() {
+    this.contactService.getSchools().subscribe((data) => {
+      if (data && data.records) {
+        this.sponsorStep3.school.options = data.records.map((item) => ({
+          id: item.id,
+          name: item.name,
+        }));
+      }
+    });
+  }
+
+  getSponsorsData() {
+    this.contactService.getSponsors().subscribe((data) => {
+      if (data && data.records) {
+        this.schoolStep4.sponsor.options = data.records.map((item) => ({
+          id: item.id,
+          name: item.name,
+        }));
+      }
+    });
   }
 
   getStatesData() {

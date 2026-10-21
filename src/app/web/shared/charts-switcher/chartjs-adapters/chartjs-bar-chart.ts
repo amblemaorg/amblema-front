@@ -16,6 +16,7 @@ import { BarChartComponent } from '../chart-components';
       [legend]="barChartLegend"
       [chartType]="barChartType"
       [plugins]="barChartPlugins"
+      (chartClick)="onChartClick($event)"
     >
     </canvas>
   `,
@@ -30,24 +31,61 @@ export class ChartJSBarChart extends BarChartComponent {
   barChartType: string;
   barChartPlugins = [pluginAnnotations];
 
+  onChartClick(e: any): void {
+    if (e && e.event && e.active && e.active.length > 0) {
+      const chartInstance = e.active[0]._chart;
+      if (chartInstance) {
+        const clickedElements = chartInstance.getElementAtEvent(e.event);
+        const targetElement = (clickedElements && clickedElements.length > 0) ? clickedElements[0] : e.active[0];
+        const datasetIndex = targetElement._datasetIndex;
+        const index = targetElement._index;
+
+        if (this.barChartData && this.barChartData[datasetIndex] && this.barChartLabels) {
+          const serie = this.barChartData[datasetIndex].label;
+          const label = this.barChartLabels[index];
+          const foundItem = (this.data || []).find(
+            (element: any) => element.serie === serie && element.label === label
+          );
+          if (foundItem && typeof window !== 'undefined' && (window as any).onEnvBarClick) {
+            (window as any).onEnvBarClick(foundItem);
+          }
+        }
+      }
+    }
+  }
+
   configChart(legend?): void {
     this.barChartType = 'bar';
     const seriesArray = this.data.map((element) => <string>element.serie);
-    const seriesSet = new Set(seriesArray); // To remove duplicated values
-    const series = [...seriesSet];
+    const hasLapses = seriesArray.some((s) => s && s.toLowerCase().includes('lapso'));
+
+    let series: string[];
+    if (hasLapses) {
+      const allLapses = ['Lapso 1', 'Lapso 2', 'Lapso 3'];
+      const set = new Set([...allLapses, ...seriesArray]);
+      series = [...set].sort((a, b) => a.localeCompare(b));
+    } else {
+      const seriesSet = new Set(seriesArray);
+      series = [...seriesSet].sort();
+    }
+
+    const labelsArray = this.data.map((element) => <string>element.label);
+    const labelsSet = new Set(labelsArray); // This remove duplicates labels
+    this.barChartLabels = [...labelsSet];
 
     this.barChartData = series.map((serie) => {
-      const dataSerie = this.data.filter((element) => (element.serie == serie ? true : false));
-      const data = dataSerie.map((element) => <number>element.value);
+      const data = this.barChartLabels.map((label) => {
+        const found = this.data.find(
+          (element) => element.serie === serie && element.label === label
+        );
+        return (found && found.value !== undefined && found.value !== null) ? <number>found.value : null;
+      });
 
       return {
         data: data,
         label: serie,
       };
     });
-    const labelsArray = this.data.map((element) => <string>element.label);
-    const labelsSet = new Set(labelsArray); // This remove duplicates labels
-    this.barChartLabels = [...labelsSet];
 
     if (!legend) {
       legend = {
@@ -73,10 +111,15 @@ export class ChartJSBarChart extends BarChartComponent {
       },
       legend,
     };
-    this.barChartColors = this.props.colors.map((color) => {
+
+    const defaultColors = ['#00809a', '#2e7d32', '#ef6c00'];
+    this.barChartColors = series.map((_, idx) => {
+      const color = (this.props && this.props.colors && this.props.colors[idx])
+        ? this.props.colors[idx]
+        : defaultColors[idx % defaultColors.length];
       return {
-        backgroundColor: color || '#FFF',
-        borderColor: color || '#FFF',
+        backgroundColor: color,
+        borderColor: color,
       };
     });
   }

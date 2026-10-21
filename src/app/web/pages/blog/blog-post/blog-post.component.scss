@@ -65,6 +65,10 @@ section.blog-post {
 
     .post {
       padding: 4vw 0;
+      -webkit-hyphens: none;
+      -moz-hyphens: none;
+      -ms-hyphens: none;
+      hyphens: none;
 
       .post-title {
         color: darkslategray;
@@ -73,10 +77,12 @@ section.blog-post {
 
         word-wrap: break-word;
         overflow-wrap: break-word;
+        word-break: normal;
 
-        -webkit-hyphens: auto;
-        -moz-hyphens: auto;
-        hyphens: auto;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
 
         @include breakpoint(small, landscape) {
           font-size: 3vw;
@@ -101,10 +107,20 @@ section.blog-post {
 
         word-wrap: break-word;
         overflow-wrap: break-word;
+        word-break: normal;
 
-        -webkit-hyphens: auto;
-        -moz-hyphens: auto;
-        hyphens: auto;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+
+        ::ng-deep * {
+          -webkit-hyphens: none !important;
+          -moz-hyphens: none !important;
+          -ms-hyphens: none !important;
+          hyphens: none !important;
+          word-break: normal !important;
+        }
 
         @include breakpoint(small, landscape) {
           font-size: 1.8vw;

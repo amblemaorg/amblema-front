@@ -29,14 +29,17 @@ export class SponsorsComponent implements OnInit, OnDestroy {
 
   coverCarouselOptions: OwlOptions = {
     autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    autoplaySpeed: 800,
     loop: true,
-    mouseDrag: false,
-    touchDrag: false,
+    mouseDrag: true,
+    touchDrag: true,
     pullDrag: false,
     dots: true,
-    nav: false,
-    navSpeed: 1000,
-    autoplayTimeout: 12000,
+    nav: true,
+    navSpeed: 800,
+    navText: ["", ""],
     responsive: {
       0: {
         items: 1,
@@ -134,8 +137,36 @@ export class SponsorsComponent implements OnInit, OnDestroy {
         title: this.coverData.title,
         description: this.coverData.description,
       });
+      const bgImages = [this.sponsorsPageData.backgroundImage];
+      this.preloadImages(bgImages).then(() => {
+        this.store.dispatch([new SetIsLoadingPage(false)]);
+      });
+    }, (error) => {
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
+  }
+
+  preloadImages(images: any, timeoutMs: number = 3000): Promise<any> {
+    if (typeof window === 'undefined' || typeof Image === 'undefined') {
+      return Promise.resolve();
+    }
+    const flatList: string[] = Array.isArray(images) ? images.reduce((acc, val) => acc.concat(val), []) : [images];
+    const validImages = flatList.filter((src) => typeof src === 'string' && !!src);
+    if (validImages.length === 0) {
+      return Promise.resolve();
+    }
+    const loadPromise = Promise.all(
+      validImages.map((src: string) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(true);
+          img.src = src;
+        });
+      })
+    );
+    const timeoutPromise = new Promise((resolve) => setTimeout(resolve, timeoutMs));
+    return Promise.race([loadPromise, timeoutPromise]);
   }
 
   onSponsorClick(url) {

@@ -67,13 +67,42 @@ export class BlogPostComponent implements OnInit, OnDestroy {
           });
           this.injectSchema();
         },
-        (err) => console.error(err),
+        (err) => {
+          console.error(err);
+          this.store.dispatch([new SetIsLoadingPage(false)]);
+        },
         () => {
           this.getRecentPosts();
-          this.store.dispatch([new SetIsLoadingPage(false)]);
+          const postImages = this.post ? [this.post.mainImage, this.post.secondaryImage] : [];
+          this.preloadImages(postImages).then(() => {
+            this.store.dispatch([new SetIsLoadingPage(false)]);
+          });
         }
       );
     });
+  }
+
+  preloadImages(images: any, timeoutMs: number = 3000): Promise<any> {
+    if (typeof window === 'undefined' || typeof Image === 'undefined') {
+      return Promise.resolve();
+    }
+    const flatList: string[] = Array.isArray(images) ? images.reduce((acc, val) => acc.concat(val), []) : [images];
+    const validImages = flatList.filter((src) => typeof src === 'string' && !!src);
+    if (validImages.length === 0) {
+      return Promise.resolve();
+    }
+    const loadPromise = Promise.all(
+      validImages.map((src: string) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(true);
+          img.src = src;
+        });
+      })
+    );
+    const timeoutPromise = new Promise((resolve) => setTimeout(resolve, timeoutMs));
+    return Promise.race([loadPromise, timeoutPromise]);
   }
 
   setStaticService() {
@@ -153,6 +182,8 @@ export class BlogPostComponent implements OnInit, OnDestroy {
       this.recentPosts = data.records.map((record) => {
         return this.adaptEndpointResponseToPost(record);
       });
+      this.store.dispatch([new SetIsLoadingPage(false)]);
+    }, (error) => {
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
   }

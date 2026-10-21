@@ -786,6 +786,16 @@
             </button>
           </ng-container>
 
+          <ng-container *ngSwitchCase="'verResultados'">
+            <button
+              type="button"
+              class="btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"
+              (click)="onVerResultadosClick()"
+            >
+              <i class="icon-bar-chart mr-1"></i> Ver resultados
+            </button>
+          </ng-container>
+
           <ng-container *ngSwitchCase="'guardar'">
             <button
               [class.d-none]="settings.isEditable && !isEditing"
@@ -933,6 +943,16 @@
         </button>
       </ng-container>
 
+      <ng-container *ngSwitchCase="'verResultados'">
+        <button
+          type="button"
+          class="btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"
+          (click)="onVerResultadosClick()"
+        >
+          <i class="icon-bar-chart mr-1"></i> Ver resultados
+        </button>
+      </ng-container>
+
       <ng-container *ngSwitchCase="'guardar'">
         <button
           [class.d-none]="settings.isEditable && !isEditing"
@@ -1076,6 +1096,7 @@
             *ngIf="showUploadBtn"
             #upload
             (click)="importStudents()"
+            [disabled]="importingData"
             class="btn btn-primary full-width submit-btn mx-auto mt-4"
           >
             <span

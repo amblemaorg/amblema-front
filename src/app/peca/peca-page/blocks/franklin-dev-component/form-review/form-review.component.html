@@ -85,26 +85,16 @@
       <label class="label">
         {{ settings.fields.description.label }}
       </label>
-      <textarea
-        nbInput
-        class="form-control"
+      <quill-editor
+        class="quill-editor--review"
         formControlName="description"
         [placeholder]="settings.fields.description.placeholder"
-        rows="8"
-        [disabled]="settings.fields.description.disabled"
-        [readonly]="settings.fields.description.disabled"
-        [maxlength]="
-          settings.fields.description.maxLength
-            ? settings.fields.description.maxLength
-            : null
-        "
-        [minlength]="
-          settings.fields.description.minLength
-            ? settings.fields.description.minLength
-            : null
-        "
+        [modules]="quillModules"
+        [styles]="{ 'min-height': '180px' }"
+        [readOnly]="settings.fields.description.disabled"
+        (onEditorCreated)="onEditorCreated($event)"
       >
-      </textarea>
+      </quill-editor>
       <p
         *ngIf="
           settings.fields.description.maxLength ||
@@ -116,7 +106,7 @@
             formControlHasError('description', 'minlength')
         }"
       >
-        Cantidad de caracteres: {{ form.get('description').value.length
+        Cantidad de caracteres: {{ cleanTextLength(form.get('description').value)
         }}<span *ngIf="settings.fields.description.maxLength"
           >/{{ settings.fields.description.maxLength }}</span
         >.

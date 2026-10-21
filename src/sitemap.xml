@@ -36,11 +36,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD13520517_U-E-E--24-de-Octubre-AM</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/OD01021308_E-B--Montaña-Verde</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -131,11 +126,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD13520517PM_U-E-E--24-de-Octubre-PM</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/OD11760513PM_U-E-E--Manuelita-Sáenz-PM</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -146,7 +136,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD05732211_E-I-B--Graciela-de-Gamarra</loc>
+    <loc>https://amblema.org/escuelas/OD05732211_Escuela-Graciela-de-Gamarra</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -241,11 +231,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/OD06611904_U-E-N--Mario-García</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/PD10580405_U-E--Nuestra-Señora-de-Coromoto</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -286,17 +271,17 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://amblema.org/escuelas/2309_U-E-E--Rómulo-Gallegos</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://amblema.org/escuelas/0D01370401_E-E-P--Batalla-de-Carabobo</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://amblema.org/escuelas/OD02982404_Unidad-Educativa-Estadal-Osma</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://amblema.org/blog/post/6aa563624917e0fafd504fa7</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -536,6 +536,10 @@ export class TableBlockComponent
   }
 
   onCustomActions(e) {
+    if (this.settings.onCustomAction instanceof Function) {
+      this.settings.onCustomAction(e);
+    }
+
     let index = this.settings.isFromImgContainer
       ? this.settings["dataCopy"].findIndex((obj) => {
         return obj.id === e.data.id;

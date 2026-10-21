@@ -89,6 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     environmentText: "",
     readingText: "",
     mathText: "",
+    aulaActivaText: "",
     statistics: {
       totalSchools: 0,
       totalTeachers: 0,
@@ -142,6 +143,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
     this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
     this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
+    this.iconService.loadSvg("../../../assets/icons/aaa-icon.svg", "aaa-icon");
   }
 
   ngOnInit() {
@@ -199,7 +201,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           return lapse;
         });
 
-        if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
+        if (chart.id === "environmentIndex") {
+          chart.isPercentage = false;
+          chart.maxScale = 35;
+          chart.data.forEach((element) => {
+            if (element.value) {
+              element.value = parseFloat(element.value.toFixed(2));
+            }
+          });
+        } else if (chart.id === "mathOlympics" || chart.id === "readingOlympics") {
           chart.isPercentage = false;
 
           if (chart.data && chart.data.length > 0) {
@@ -253,8 +263,37 @@ export class HomeComponent implements OnInit, OnDestroy {
         ...this.chartSwitcherOptions,
         charts: this.chartService.formatChartDataToDrawComponent(chartsData),
       };
+
+      const bannerImages = (data.homePage.slider || []).map((slide) => slide.image);
+      this.preloadImages(bannerImages).then(() => {
+        this.store.dispatch([new SetIsLoadingPage(false)]);
+      });
+    }, (error) => {
       this.store.dispatch([new SetIsLoadingPage(false)]);
     });
+  }
+
+  preloadImages(images: any, timeoutMs: number = 3000): Promise<any> {
+    if (typeof window === 'undefined' || typeof Image === 'undefined') {
+      return Promise.resolve();
+    }
+    const flatList: string[] = Array.isArray(images) ? images.reduce((acc, val) => acc.concat(val), []) : [images];
+    const validImages = flatList.filter((src) => typeof src === 'string' && !!src);
+    if (validImages.length === 0) {
+      return Promise.resolve();
+    }
+    const loadPromise = Promise.all(
+      validImages.map((src: string) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(true);
+          img.src = src;
+        });
+      })
+    );
+    const timeoutPromise = new Promise((resolve) => setTimeout(resolve, timeoutMs));
+    return Promise.race([loadPromise, timeoutPromise]);
   }
 
   onScroll($event) {
@@ -301,6 +340,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         return { title: "Matemática", description: this.homePageData.mathText };
       case "reading":
         return { title: "Lectura", description: this.homePageData.readingText };
+      case "aulaActiva":
+        return {
+          title: "Aula Activa AmbLeMa",
+          description: this.homePageData.aulaActivaText,
+        };
       default:
         throw Error("Invalid pillar error");
     }

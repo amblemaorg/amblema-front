@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, HostListener, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Inject } from '@angular/core';
 import { DOCUMENT } from "@angular/common";
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { EmbedVideoService } from 'ngx-embed-video';
 import { OwlCarousel } from 'ngx-owl-carousel';
-import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faTimes, faCheck, faPlay, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ModulesService } from '../../../../../services/steps/modules.service';
 import { GlobalService } from '../../../../../services/global.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +26,7 @@ export class ModuleDetailComponent implements OnInit {
   @Select(UserState.user_id) coorId$: Observable<string>;
   @Select(UserState.user_type) userType$: Observable<string>;
   @Select(StepsState.selected_proj_id) selectd_proj_id$: Observable<string>;
+  @Select(StepsState.all_needed) stepsInfo$: Observable<any>;
 
   current_coor_id:string = '';
 
@@ -35,33 +38,41 @@ export class ModuleDetailComponent implements OnInit {
   isTesting = false;
   testingModule:Module;
 
-  forAdminSetFalse:boolean = false;
+  forAdminSetFalse:boolean = true;
 
   //? quizz area ------------------------------------------------
   moduleCoins = 4;
   completedModule = false;
+  attemptsCount = 0;
   optionsLetters = ['optionA','optionB','optionC','optionD']
   //? -----------------------------------------------------------
 
   faArrowLeft = faArrowLeft;
   faTimes = faTimes;
+  faCheck = faCheck;
+  faPlay = faPlay;
+  faExclamationTriangle = faExclamationTriangle;
 
   shown = 0;
 
-  imgvid:ImaVideo[];
+  imgvid:ImaVideo[] = [];
   current:Image = {image:'',description:''};  
-  img_strip:Image[];
+  img_strip:Image[] = [];
 
-  carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', video:true, lazyLoad: true};
-  carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, video:true, lazyLoad: true};
+  carouselOps = {items: 1, dots: false, mouseDrag: false, touchDrag: false, animateOut: 'fadeOut', lazyLoad: true};
+  carouselOpsImgs = {items: 4, dots: false, mouseDrag: false, touchDrag: false, lazyLoad: true};
   stackOps:any;
+
+  videosCache: { [url: string]: SafeHtml } = {};
 
   // PREGUNTAS DEL QUIZZ
   questions:any;
 
   selectedQuestions = [];
   incorrectOnes = [];
-  showFillAll = 0; //todo: 0: Must answer all questions, 1: all correct, 2: error happened
+  showFillAll = 0; //todo: 0: Must answer all questions, 1: incorrect answers, 2: server error
+  customErrorTitle = '';
+  customErrorMessage = '';
 
   isBrowser;
   isPortrait = true;
@@ -71,8 +82,15 @@ export class ModuleDetailComponent implements OnInit {
   user_type = '';
   user_id = '';
 
-  constructor(private moduleService: ModulesService, private globals: GlobalService, @Inject(DOCUMENT) private document: Document,
-              private route: ActivatedRoute, private router: Router) { 
+  constructor(
+    private moduleService: ModulesService,
+    private globals: GlobalService,
+    @Inject(DOCUMENT) private document: Document,
+    private route: ActivatedRoute,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private embedService: EmbedVideoService
+  ) { 
     this.isBrowser = globals.isBrowser;    
     this.moduleInfo = {
       id: "",
@@ -102,28 +120,114 @@ export class ModuleDetailComponent implements OnInit {
     });
 
     this.coorId$.subscribe(id_ => {
-      if (id_) this.user_id = id_;
-      this.current_coor_id = id_;
-    })
+      if (id_) {
+        this.user_id = id_;
+        if (!this.current_coor_id) this.current_coor_id = id_;
+      }
+    });
+
+    this.stepsInfo$.subscribe(steps_ => {
+      if (steps_ && steps_.coordinator_id) {
+        this.current_coor_id = steps_.coordinator_id;
+      }
+    });
 
     this.userType$.subscribe(res => {
       if (res) this.user_type = res;
-      this.forAdminSetFalse = (res=="0" || res=="1") ? false : true;
     });
     
-    this.document.getElementById('completed-message').setAttribute('style','display:block; opacity:0');
-    setTimeout(()=>{
-      this.document.getElementById('completed-message').setAttribute('style','display:none; opacity:1');
-    },1000);    
+    if (this.isBrowser) {
+      setTimeout(() => {
+        const completedMsgEl = this.document.getElementById('completed-message');
+        if (completedMsgEl) {
+          completedMsgEl.setAttribute('style','display:none; opacity:1');
+        }
+      }, 1000);
+    }
   }
 
-  goToImg(i) {
-    this.owlEl.to([i]);
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(this.shown).setAttribute('style','display:block');
-    this.document.querySelectorAll('.images .owl-carousel .owl-stage .owl-item').item(i).setAttribute('style','display:none');
-    this.shown = i;    
-    // to stop playing video
-    this.owlEl.reInit();
+  getVideo(url: string, index?: number): SafeHtml {
+    if (!url) return null;
+    if (this.videosCache[url]) {
+      return this.videosCache[url];
+    }
+    const safeHtml = this.getEmbedVideo(url);
+    if (safeHtml) {
+      this.videosCache[url] = safeHtml;
+    }
+    return safeHtml;
+  }
+
+  getEmbedVideo(url: string): SafeHtml {
+    if (!url) return null;
+    let cleanUrl = url.trim();
+    if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
+      cleanUrl = "https://" + cleanUrl;
+    }
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1]) {
+      const videoId = match[1];
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1`;
+      const iframeHtml = `<iframe src="${embedUrl}" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      return this.sanitizer.bypassSecurityTrustHtml(iframeHtml);
+    }
+    try {
+      return this.embedService.embed(cleanUrl);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getVideoThumbnail(url: string): string {
+    if (!url) return '';
+    let cleanUrl = url.trim();
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1]) {
+      return `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg`;
+    }
+    return '';
+  }
+
+  pauseAllVideos() {
+    try {
+      if (this.document) {
+        const iframes = this.document.querySelectorAll('.video-container iframe');
+        if (iframes && iframes.length > 0) {
+          iframes.forEach((iframe: any) => {
+            if (iframe && iframe.contentWindow) {
+              iframe.contentWindow.postMessage(
+                JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+                '*'
+              );
+            }
+          });
+        }
+      }
+    } catch (e) {
+      console.warn('Error pausing videos:', e);
+    }
+  }
+
+  prevSlide() {
+    if (!this.imgvid || this.imgvid.length === 0) return;
+    const newIndex = this.shown > 0 ? this.shown - 1 : this.imgvid.length - 1;
+    this.goToImg(newIndex);
+  }
+
+  nextSlide() {
+    if (!this.imgvid || this.imgvid.length === 0) return;
+    const newIndex = this.shown < this.imgvid.length - 1 ? this.shown + 1 : 0;
+    this.goToImg(newIndex);
+  }
+
+  goToImg(i: number) {
+    this.pauseAllVideos();
+    if (this.owlEl) {
+      this.owlEl.to([i]);
+    }
+    this.shown = i;
   }
 
   letterSequence(i) {
@@ -153,9 +257,9 @@ export class ModuleDetailComponent implements OnInit {
       coordinator: this.current_coor_id,
       answers: []
     };
-    let success = true; // there are not unselected questions
-    let wrong = false; // there are not wrong answers
-    this.incorrectOnes = this.moduleInfo.quizzes.map(i => {return 'option0'}); // re-initializing incorrect answers array
+    let success = true; // there are no unselected questions
+    let wrong = false; // there are no wrong answers
+    this.incorrectOnes = this.moduleInfo.quizzes.map(() => 'option0'); // re-initializing incorrect answers array
     let wrongOnes = this.incorrectOnes.slice(); // temporary incorrect array
 
     for (let i = 0; i < this.selectedQuestions.length; i++) {    
@@ -163,8 +267,12 @@ export class ModuleDetailComponent implements OnInit {
       if (this.selectedQuestions[i]=='option0') {
         success = false; // there is at least an unanswered question
         this.showFillAll = 0;
+        this.customErrorTitle = '';
+        this.customErrorMessage = '';
         this.isValidating = false;
-        this.warningBtn.nativeElement.click(); //opening warning modal
+        if (this.warningBtn && this.warningBtn.nativeElement) {
+          this.warningBtn.nativeElement.click(); //opening warning modal
+        }
         break;
       }
       else {
@@ -178,6 +286,11 @@ export class ModuleDetailComponent implements OnInit {
     if(success) { // when all questions are answered
       this.moduleService.answerModule(this.module_id,coorAnswers).subscribe(res=> {
         this.isValidating = false;
+        if (res && res.totalAttempts !== undefined) {
+          this.attemptsCount = res.totalAttempts;
+        } else {
+          this.attemptsCount++;
+        }
         if (!res.approved) {
           if (wrong) { // if some of them are wrong
             this.incorrectOnes = wrongOnes; // setting the incorrect answers
@@ -185,37 +298,66 @@ export class ModuleDetailComponent implements OnInit {
               this.moduleCoins--;
             }
             this.showFillAll = 1;
+            this.customErrorTitle = '';
+            this.customErrorMessage = '';
             this.moduleService.emitValsUpdate({type:1,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
-            this.warningBtn.nativeElement.click(); // opening warning modal
+            if (this.warningBtn && this.warningBtn.nativeElement) {
+              this.warningBtn.nativeElement.click(); // opening warning modal
+            }
           } 
         } else {
-          if (!wrong) {
-            this.completedModule = true;
-            this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
+          this.completedModule = true;
+          this.incorrectOnes = this.moduleInfo.quizzes.map(() => 'option0');
+          this.moduleService.emitValsUpdate({type:2,usu:coorAnswers.coordinator,usut:2,project:this.projectId}); //! THIS IS TEMPORARY
+          if (el) {
             el.click(); // opening success modal
           }
         }        
       },(error)=>{
         this.isValidating = false;
         this.showFillAll = 2;
-        this.warningBtn.nativeElement.click();
+        const msg = error && error.error ? (error.error.message || '') : '';
+        if (
+          msg.toLowerCase().includes('curriculum not found') ||
+          msg.toLowerCase().includes('coordinator must complete this step')
+        ) {
+          this.customErrorTitle = 'Currículo pendiente';
+          this.customErrorMessage =
+            'El coordinador debe completar y tener aprobado el paso de Síntesis Curricular antes de poder responder los módulos de formación.';
+        } else if (msg) {
+          this.customErrorTitle = 'Atención';
+          this.customErrorMessage = msg;
+        } else {
+          this.customErrorTitle = '';
+          this.customErrorMessage = '';
+        }
+        if (this.warningBtn && this.warningBtn.nativeElement) {
+          this.warningBtn.nativeElement.click();
+        }
       });      
     }
   }
 
-  selectAnswer(i,j) {
-    if (this.forAdminSetFalse) this.selectedQuestions[i] = j;    
+  selectAnswer(i, option) {
+    if (this.forAdminSetFalse && !this.completedModule) {
+      this.selectedQuestions[i] = option;
+      if (this.incorrectOnes[i] !== 'option0') {
+        this.incorrectOnes[i] = 'option0';
+      }
+    }
   }    
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {    
-    let w= event.target.innerWidth;
+    let w = event.target.innerWidth;
     let h = event.target.innerHeight;
     let lC = (w > h)? true:false;        
 
     if (this.isLandscapeCurrent != lC) {
       this.initOps();
-      this.stackEl.reInit();
+      if (this.stackEl) {
+        this.stackEl.reInit();
+      }
     }
   }
 
@@ -230,17 +372,22 @@ export class ModuleDetailComponent implements OnInit {
       }
     } 
     
-    this.stackOps = {items: 1, dots: false, loop: (this.img_strip.length < 2)? false:true, nav: true,
+    const stripLen = this.img_strip ? this.img_strip.length : 0;
+    this.stackOps = {
+      items: 1,
+      dots: false,
+      loop: (stripLen < 2)? false:true,
+      nav: true,
       responsive : {
           640 : {
             items : this.isPortrait? 1:4,
             nav: this.isPortrait? true:false,
-            loop: this.isPortrait? ( (this.img_strip.length < 2)? false:true ):true
+            loop: this.isPortrait? ( (stripLen < 2)? false:true ):true
           },
           992 : {
             items : this.isPortrait? 1:6,
             nav: this.isPortrait? true:false,
-            loop: this.isPortrait? ( (this.img_strip.length < 2)? false:true ):true
+            loop: this.isPortrait? ( (stripLen < 2)? false:true ):true
           }
       }
     };
@@ -248,6 +395,7 @@ export class ModuleDetailComponent implements OnInit {
 
   // estimate converser
   getEstimate(timing:string) {
+    if (!timing) return '0 min';
     let time_type = timing.charAt(0)=='0' && timing.charAt(1)=='0' ? 'min': timing.charAt(2)=='0' && timing.charAt(2)=='0' ? 'hr' : 'hrmin';
     switch (time_type) {
       case 'min':
@@ -277,21 +425,33 @@ export class ModuleDetailComponent implements OnInit {
       this.fillModuleInfo(res);
      },(error)=>{
       this.showFillAll = 2;
-      this.warningBtn.nativeElement.click();
+      this.customErrorTitle = '';
+      this.customErrorMessage = '';
+      if (this.warningBtn && this.warningBtn.nativeElement) {
+        this.warningBtn.nativeElement.click();
+      }
      }); 
     }    
   }
+
   fillModuleInfo(mod) {
     this.moduleInfo = mod;
-    this.imgvid = this.moduleInfo.slider;
-    this.img_strip = this.moduleInfo.images;
-    this.current = {image:this.img_strip[0].image,description:this.img_strip[0].description};
-    this.selectedQuestions = this.moduleInfo.quizzes.map(i => {return 'option0'});
+    this.imgvid = this.moduleInfo.slider || [];
+    this.img_strip = this.moduleInfo.images || [];
+    if (this.img_strip && this.img_strip.length > 0) {
+      this.current = {image:this.img_strip[0].image,description:this.img_strip[0].description};
+    }
+    this.selectedQuestions = this.moduleInfo.quizzes ? this.moduleInfo.quizzes.map(() => 'option0') : [];
     this.incorrectOnes = this.selectedQuestions.slice();      
     this.initOps();
     if (this.forAdminSetFalse) {
       let thereIsModu = this.moduleService.checkApprove(this.module_id);
+      this.completedModule = thereIsModu ? (thereIsModu.status=="3"? true:false) : false;
       this.moduleCoins = this.isTesting? 3 : (thereIsModu ? (thereIsModu.score? thereIsModu.score:4) : 4); 
+      this.attemptsCount = thereIsModu && thereIsModu.attempts ? thereIsModu.attempts.length : 0;
+      if (this.completedModule && this.moduleInfo.quizzes) {
+        this.selectedQuestions = this.moduleInfo.quizzes.map(q => q.correctOption);
+      }
     }    
   }
 

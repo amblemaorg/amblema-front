@@ -79,6 +79,7 @@ export function amblemarioMapper(pecaData) {
       readingDiagnosticAnalysis,
       mathDiagnosticAnalysis,
       logicDiagnosticAnalysis,
+      environmentalDiagnosticAnalysis,
       diagnosticSummary,
       activities,
     } = lapse;
@@ -159,8 +160,10 @@ export function amblemarioMapper(pecaData) {
       mathDiagnosticAnalysis || (tables && tables.table2.length > 1);
     const vals4L =
       logicDiagnosticAnalysis || (tables && tables.table3.length > 1);
+    const envSummary = lapse.environmentalSummary || [0, 0, 0, 0, 0];
+    const vals4E = environmentalDiagnosticAnalysis || (envSummary && envSummary.some(val => val > 0));
 
-    if ((vals4R || vals4M || vals4L || lapseActivities) && !breakForLapses)
+    if ((vals4R || vals4M || vals4L || vals4E || lapseActivities) && !breakForLapses)
       breakForLapses = true;
 
     return {
@@ -202,6 +205,18 @@ export function amblemarioMapper(pecaData) {
               'Gráfico estadístico del diagnóstico de razonamiento lógico matemático',
             diagnosticGraphic: null,
           }
+        : null,
+      diagnosticEnvironmental: vals4E
+        ? {
+          diagnosticText: 'Diagnóstico de Ambiente',
+          diagnosticAnalysis: environmentalDiagnosticAnalysis
+            ? environmentalDiagnosticAnalysis
+            : null,
+          diagnosticGraphicText:
+            'Gráfico estadístico del diagnóstico de ambiente',
+          diagnosticGraphic: null,
+          environmentalSummary: envSummary,
+        }
         : null,
       activities: lapseActivities,
     };

@@ -27,7 +27,7 @@ export class WebComponent implements OnInit {
   @ViewChild('offcanvas', { read: OffcanvasComponent, static: true })
   offcanvas: OffcanvasComponent;
   @ViewChild('pageLoader', { read: ElementRef, static: true }) pageLoader: ElementRef;
-  isloading: Boolean = false;
+  isloading: Boolean = true;
   offcanvasClass: string = 'closed';
   formSelected: string = '';
 
@@ -41,6 +41,7 @@ export class WebComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.store.dispatch([new SetIsLoadingPage(true)]);
     this.displayFooter();
     this.loadingPageSubscription();
     this.routerEventsSubscription();
@@ -57,19 +58,13 @@ export class WebComponent implements OnInit {
     });
   }
 
-  isFirstNavigation = true;
-
   routerEventsSubscription() {
     this.router.events.subscribe((event) => {
       if (
         event instanceof NavigationStart &&
         this.isNotNavigationToAuthPecaAndSchoolDetail(event)
       ) {
-        if (this.isFirstNavigation) {
-          this.isFirstNavigation = false;
-        } else {
-          this.store.dispatch([new SetIsLoadingPage(true)]);
-        }
+        this.store.dispatch([new SetIsLoadingPage(true)]);
       }
       if (event instanceof NavigationEnd) {
         this.displayFooter();
@@ -86,8 +81,11 @@ export class WebComponent implements OnInit {
     );
   }
 
+  hideHeaderFooter: boolean = false;
+
   displayFooter() {
-    if (this.router.url == '/escuelas') {
+    this.hideHeaderFooter = this.router.url.includes('/evaluacion-ambiente');
+    if (this.router.url == '/escuelas' || this.hideHeaderFooter) {
       this.addElementClass(this.footer.nativeElement, 'hide');
     } else {
       this.removeElementClass(this.footer.nativeElement, 'hide');

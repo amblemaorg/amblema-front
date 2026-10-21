@@ -402,6 +402,56 @@ export async function MapperYearBookWeb(
       'globalLapsesDiagnostic',
     );
     return [
+      createTitleComponent('Diagnóstico de Ambiente'),
+      {
+        component: 'graphics-environment',
+        settings: {
+          chartId: `${lapseName}-environmental-graphic-not-pdf`,
+          items: lapseData.environmentalSummary ? lapseData.environmentalSummary : [0, 0, 0, 0, 0],
+          title: 'Diagnóstico de Ambiente'
+        },
+      },
+      createTitleComponent('Análisis y resultado del diagnóstico de ambiente'),
+      {
+        component: 'form-review',
+        name: 'environmental-analysis-form',
+        settings: {
+          onSubmit: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+            };
+            dispatchAction('environmentalDiagnosticAnalysis', data);
+          },
+          onClickButton: (values: any) => {
+            const data = {
+              lapse: lapseNumber,
+              analysis: values.description,
+              form: true,
+            };
+            dispatchAction('environmentalDiagnosticAnalysis', data);
+          },
+          fields: {
+            description: {
+              label: 'Análisis del diagnóstico de ambiente',
+              placeholder: 'Análisis del diagnóstico de ambiente',
+              value: lapseData.environmentalDiagnosticAnalysis,
+              disabled: false,
+              maxLength,
+              minLength,
+            },
+            button: {
+              type: 'button',
+              text: 'Guardar cambios',
+              ingAction: 'Guardando...',
+              hidden: false,
+            },
+          },
+        },
+      },
+      yearbookPDFOptions(
+        `lapse${lapseNumber}__diagnostic--diagnosticEnvironmental-section`,
+      ),
       createTitleComponent('Diagnóstico de lectura'),
       {
         component: 'table',

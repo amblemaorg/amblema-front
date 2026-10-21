@@ -61,15 +61,22 @@ export class DiagnosticTemplate extends Template {
       }
     }
     var max = Math.max(...dataset)
-    if (max > 100 && max <= 120) {
-      max = 120
+    let maxValue = 100;
+    if (chart.chartId && chart.chartId.includes('diagnosticEnvironmental')) {
+      if (chart.labels && chart.labels.length === 5) {
+        maxValue = 7;
+      } else {
+        maxValue = 35;
+      }
+    } else if (max > 100 && max <= 120) {
+      maxValue = 120;
     } else if (max > 120 && max <= 140) {
-      max = 140
+      maxValue = 140;
     } else if (max > 140 && max <= 160) {
-      max = 160
+      maxValue = 160;
+    } else {
+      maxValue = max > 100 ? max : 100;
     }
-
-    var maxValue = max > 100 ? max : 100
 
     const fontColor = '#111';
     const options = {
@@ -203,41 +210,119 @@ export class DiagnosticPageDataGroup {
     graphics = this.graphics,
     table: string[][] = null,
   ) {
+    const chartId = `${lapseId}-${diagKey}-graphic`;
+
+    if (diagKey === 'diagnosticEnvironmental') {
+      const lapseIndex = parseInt(lapseId.replace('lapse', ''), 10) - 1;
+      const isSecondLapseEnv = lapseIndex === 1;
+      const isThirdLapseEnv = lapseIndex === 2;
+
+      if (isSecondLapseEnv || isThirdLapseEnv) {
+        const lapse1Obj = this.lapses ? this.lapses[0] : null;
+        const envSummaryL1: number[] = (lapse1Obj && lapse1Obj.diagnosticEnvironmental && lapse1Obj.diagnosticEnvironmental.environmentalSummary)
+          ? lapse1Obj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        const currLapseObj = this.lapses ? this.lapses[lapseIndex] : null;
+        const envSummaryCurr: number[] = (currLapseObj && currLapseObj.diagnosticEnvironmental && currLapseObj.diagnosticEnvironmental.environmentalSummary)
+          ? currLapseObj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        const promedioAnterior = envSummaryL1.reduce((sum, val) => sum + (parseFloat(val as any) || 0), 0);
+        const promedioActual = envSummaryCurr.reduce((sum, val) => sum + (parseFloat(val as any) || 0), 0);
+
+        const labels = isSecondLapseEnv
+          ? ["Diagnóstico Inicial", "Diagnóstico de Revisión"]
+          : ["Diagnóstico Inicial", "Diagnóstico final"];
+        const values = [parseFloat(promedioAnterior.toFixed(2)), parseFloat(promedioActual.toFixed(2))];
+
+        return this.chartDefault(
+          chartId,
+          labels,
+          values,
+          'Diagnóstico de Ambiente',
+          isThirdLapseEnv,
+          isSecondLapseEnv
+        );
+      } else {
+        const labels = [
+          'Limpieza y cuidado',
+          'Gestión de residuos',
+          'Biodiversidad',
+          'Aprovechamiento de agua',
+          'Relación comunitaria'
+        ];
+        const lapseObj = this.lapses ? this.lapses[0] : null;
+        const envSummary = (lapseObj && lapseObj.diagnosticEnvironmental && lapseObj.diagnosticEnvironmental.environmentalSummary)
+          ? lapseObj.diagnosticEnvironmental.environmentalSummary
+          : [0, 0, 0, 0, 0];
+
+        const chart = this.chartDefault(
+          chartId,
+          labels,
+          envSummary,
+          'Diagnóstico de Ambiente',
+          false,
+          false
+        );
+        chart.datasets[0].backgroundColor = [
+          '#f26735',
+          '#39b54a',
+          '#6a3695',
+          '#3c4a9f',
+          '#0d9644'
+        ];
+        return chart;
+      }
+    }
+
     let chartTitle = 'Índice Promedio de la Escuela';
 
-    const chartId = `${lapseName}-${diagKey}-graphic`;
+    const lapseGraphic = graphics ? graphics[lapseId] : null;
 
-    const { diagnostics } = this.diagnosticGraphicData;
-
-    const lapseGraphic = graphics[lapseId];
-
-    // const lapseGraphic = null;
     let isSecondLapse = false;
-    if (
-      !lapseGraphic ||
-      !lapseGraphic[diagKey] ||
-      !lapseGraphic[diagKey].values ||
-      lapseGraphic[diagKey].values.length === 0
-    ) {
-      const labels = [];
-      const values = [];
+    let labels: string[] = [];
+    let values: (number | string)[] = [];
 
+    if (
+      lapseGraphic &&
+      lapseGraphic[diagKey] &&
+      lapseGraphic[diagKey].values &&
+      lapseGraphic[diagKey].values.length > 0
+    ) {
+      labels = lapseGraphic[diagKey].labels;
+      values = lapseGraphic[diagKey].values;
+    } else if (table && table.length > 2) {
+      // Fallback: extraer datos directamente de la tabla de diagnóstico
+      const dataRows = table.filter(
+        (r, idx) => idx >= 2 && r[0] !== 'AVERAGE_ROW_MARKER' && r[0] && r.length >= 4
+      );
+      labels = dataRows.map((r) => {
+        const gradeText = r[0].trim();
+        return gradeText.toLowerCase().includes('grado') || gradeText.toLowerCase().includes('preescolar')
+          ? gradeText
+          : `${gradeText} Grado`;
+      });
+      values = dataRows.map((r) => parseFloat(r[3]) || 0);
+    }
+
+    if (
+      (!labels || labels.length === 0) &&
+      lapseId !== 'lapse2' &&
+      !isThirdLapse
+    ) {
       return this.chartDefault(
         chartId,
-        labels,
-        values,
+        [],
+        [],
         chartTitle,
         isThirdLapse,
       );
     }
 
-    let labels = lapseGraphic[diagKey].labels;
-    let values = lapseGraphic[diagKey].values;
-
-
     const groupedData = this.groupByGradeAndAverage(labels, values);
     labels = groupedData.labels;
-    values = groupedData.values;
+    let finalValues: number[] = groupedData.values;
 
     if (lapseId == "lapse2") {
       let promedioAnterior = 0;
@@ -248,14 +333,18 @@ export class DiagnosticPageDataGroup {
         promedioAnterior = parseFloat(lastRow[2]) || 0;
         promedioActual = parseFloat(lastRow[3]) || 0;
       } else {
-        let prevs = graphics["lapse1"][diagKey]
-        const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
-        promedioAnterior = this.calculateAverage(valuesPrev.values);
-        promedioActual = this.calculateAverage(groupedData.values);
+        if (graphics && graphics["lapse1"] && graphics["lapse1"][diagKey]) {
+          let prevs = graphics["lapse1"][diagKey];
+          const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values);
+          promedioAnterior = this.calculateAverage(valuesPrev.values);
+        }
+        if (groupedData && groupedData.values) {
+          promedioActual = this.calculateAverage(groupedData.values);
+        }
       }
 
       labels = ["Diagnóstico Inicial", "Diagnóstico de Revisión"];
-      values = [promedioAnterior, promedioActual];
+      finalValues = [promedioAnterior, promedioActual];
       isSecondLapse = true;
     }
 
@@ -268,28 +357,31 @@ export class DiagnosticPageDataGroup {
         promedioAnterior = parseFloat(lastRow[2]) || 0;
         promedioActual = parseFloat(lastRow[3]) || 0;
       } else {
-        let prevs = graphics["lapse1"][diagKey]
-        const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values)
-        promedioAnterior = this.calculateAverage(valuesPrev.values);
-        promedioActual = this.calculateAverage(groupedData.values);
+        if (graphics && graphics["lapse1"] && graphics["lapse1"][diagKey]) {
+          let prevs = graphics["lapse1"][diagKey];
+          const valuesPrev = this.groupByGradeAndAverage(prevs.labels, prevs.values);
+          promedioAnterior = this.calculateAverage(valuesPrev.values);
+        }
+        if (groupedData && groupedData.values) {
+          promedioActual = this.calculateAverage(groupedData.values);
+        }
       }
 
       labels = ["Diagnóstico Inicial", "Diagnóstico final"];
-      values = [promedioAnterior, promedioActual];
-
+      finalValues = [promedioAnterior, promedioActual];
     }
 
     return this.chartDefault(
       chartId,
       labels,
-      values,
+      finalValues,
       chartTitle,
       isThirdLapse,
       isSecondLapse
     );
   }
 
-  private groupByGradeAndAverage(labels: string[], values: string[]): { labels: string[], values: number[] } {
+  private groupByGradeAndAverage(labels: string[], values: any[]): { labels: string[], values: number[] } {
     const gradeMap = new Map<string, { sum: number, count: number }>();
 
     // Agrupar valores por grado
@@ -441,8 +533,17 @@ export class DiagnosticPageDataGroup {
       totalCount += count;
     });
 
-    const result = totalCount > 0 ? totalSum / totalCount : 0.0;
-    return result.toFixed(toFixedCount).toString();
+    if (totalCount > 0) {
+      return (totalSum / totalCount).toFixed(toFixedCount).toString();
+    }
+    // Fallback if student counts are 0 or not available: unweighted average of sections
+    if (filteredData.length > 0) {
+      const sum = filteredData.reduce((prev, current) => {
+        return prev + (parseFloat(current[columnIdxToSum]) || 0);
+      }, 0);
+      return (sum / filteredData.length).toFixed(toFixedCount).toString();
+    }
+    return (0.0).toFixed(toFixedCount).toString();
   }
 
   private sumColumnValuesBySection(
@@ -513,6 +614,7 @@ export class DiagnosticPageDataGroup {
       diagnosticReading: 'PPM: Palabras Leídas Por Minuto',
       diagnosticMath: 'M2M: Multiplicaciones en 2 minutos',
       diagnosticLogic: '60LM: Lógica Matemática en 60 minutos',
+      diagnosticEnvironmental: 'IAA: Índice Ambiental AmbLeMa',
     };
     let typeDiagText = ""
     if (diagKey == "diagnosticReading") {
@@ -521,6 +623,88 @@ export class DiagnosticPageDataGroup {
       typeDiagText = "Multiplicación"
     } else if (diagKey == "diagnosticLogic") {
       typeDiagText = "Lógica - Matemática"
+    } else if (diagKey == "diagnosticEnvironmental") {
+      typeDiagText = "Ambiente"
+    }
+
+    if (diagKey === 'diagnosticEnvironmental') {
+      const header = [];
+      const isLapse1 = isFirstLapse;
+      const isLapse2 = isSecondLapse;
+      const isLapse3 = isThirdLapse;
+
+      const diagTitle = isLapse1
+        ? 'Diagnóstico Inicial de Ambiente'
+        : isLapse2
+        ? 'Diagnóstico de Revisión de Ambiente'
+        : 'Diagnóstico Final de Ambiente';
+
+      header.push([`<strong>${diagTitle}</strong><br />(IAA: Índice Ambiental AmbLeMa)`]);
+
+      if (isLapse1) {
+        header.push(['<strong>Indicador</strong>', '<strong>I Lapso</strong>', '<strong>Meta</strong>']);
+      } else if (isLapse2) {
+        header.push(['<strong>Indicador</strong>', '<strong>Índice<br />Inicial</strong>', '<strong>Meta</strong>', '<strong>Índice<br />Revisión</strong>']);
+      } else {
+        header.push(['<strong>Indicador</strong>', '<strong>Índice<br />Inicial</strong>', '<strong>Meta</strong>', '<strong>Índice<br />Final</strong>']);
+      }
+
+      const indicatorNames = [
+        'Limpieza y cuidado',
+        'Gestión de recursos',
+        'Biodiversidad',
+        'Aprovechamiento de agua',
+        'Relación comunitaria'
+      ];
+
+      const lapse1Obj = this.lapses ? this.lapses[0] : null;
+      const envSummaryL1 = (lapse1Obj && lapse1Obj.diagnosticEnvironmental && lapse1Obj.diagnosticEnvironmental.environmentalSummary)
+        ? lapse1Obj.diagnosticEnvironmental.environmentalSummary
+        : [0, 0, 0, 0, 0];
+
+      const currLapseObj = this.lapses ? this.lapses[lapseIdx] : null;
+      const envSummaryCurr = (currLapseObj && currLapseObj.diagnosticEnvironmental && currLapseObj.diagnosticEnvironmental.environmentalSummary)
+        ? currLapseObj.diagnosticEnvironmental.environmentalSummary
+        : [0, 0, 0, 0, 0];
+
+      const formatNum = (num: number) => {
+        if (num === null || num === undefined || isNaN(num)) return '0';
+        return num % 1 === 0 ? num.toString() : parseFloat(num.toFixed(2)).toString();
+      };
+
+      let sumL1 = 0;
+      let sumCurr = 0;
+
+      const tableRows = indicatorNames.map((name, idx) => {
+        const pplL1 = parseFloat(envSummaryL1[idx]) || 0;
+        const pplCurr = parseFloat(envSummaryCurr[idx]) || 0;
+        sumL1 += pplL1;
+        sumCurr += pplCurr;
+
+        if (isLapse1) {
+          return [name, formatNum(pplL1), '7'];
+        } else {
+          return [name, formatNum(pplL1), '7', formatNum(pplCurr)];
+        }
+      });
+
+      let footerRow = [];
+      if (isLapse1) {
+        footerRow = [
+          '<strong>IAA: Índice Ambiental AmbLeMa</strong>',
+          `<strong>${formatNum(sumL1)}</strong>`,
+          '<strong>35</strong>'
+        ];
+      } else {
+        footerRow = [
+          '<strong>IAA: Índice Ambiental AmbLeMa</strong>',
+          `<strong>${formatNum(sumL1)}</strong>`,
+          '<strong>35</strong>',
+          `<strong>${formatNum(sumCurr)}</strong>`
+        ];
+      }
+
+      return [...header, ...tableRows, footerRow];
     }
 
     let header = [];
@@ -675,7 +859,11 @@ export class DiagnosticPageDataGroup {
         totalStudents += count;
       });
 
-      const promedioIndiceInicial = totalStudents > 0 ? totalIndexSum / totalStudents : 0;
+      const promedioIndiceInicial = totalStudents > 0
+        ? totalIndexSum / totalStudents
+        : (rawTableData.length > 0
+          ? rawTableData.reduce((s, r) => s + (parseFloat(r[3]) || 0), 0) / rawTableData.length
+          : 0);
 
       const filaPromedio = [
         'AVERAGE_ROW_MARKER',           // Marcador especial para identificar esta fila
@@ -701,7 +889,11 @@ export class DiagnosticPageDataGroup {
         totalStudents += count;
       });
 
-      const promedioIndiceRevision = totalStudents > 0 ? totalIndexRevisionSum / totalStudents : 0;
+      const promedioIndiceRevision = totalStudents > 0
+        ? totalIndexRevisionSum / totalStudents
+        : (rawTableData.length > 0
+          ? rawTableData.reduce((s, r) => s + (parseFloat(r[3]) || 0), 0) / rawTableData.length
+          : 0);
 
       // Para Lapsos 2 y 3, el índice inicial global exacto viene de la fila de Promedio del Lapso 1
       let promedioIndiceInicial = 0;
@@ -733,6 +925,7 @@ export class DiagnosticPageDataGroup {
     const pages: DiagnosticPageData[] = [];
     let tablesByLapses = [];
     const diagnosticKeys = [
+      'diagnosticEnvironmental',
       'diagnosticReading',
       'diagnosticMath',
       'diagnosticLogic',

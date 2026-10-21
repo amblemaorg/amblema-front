@@ -542,6 +542,7 @@ export class SchoolDataPageComponent
           ? mapper.allStudents[this.currentStudentsGroup]
           : [];
       }
+      theData = this.sortStudentsByLastName(theData);
       if (!theSection) {
         theSection = " todas la secciones.";
       }
@@ -614,6 +615,19 @@ export class SchoolDataPageComponent
     //   JSON.stringify(this.studentsTableData.data)
     // );
     this.studentsDataTemp = studentsData;
+  }
+
+  /**
+   * Ordena estudiantes por apellido y luego por nombre (collation en español:
+   * ignora mayúsculas y acentos, respeta la ñ). No muta el arreglo original.
+   */
+  private sortStudentsByLastName(students: any[]): any[] {
+    const collator = new Intl.Collator("es", { sensitivity: "base" });
+    return [...(students || [])].sort(
+      (a, b) =>
+        collator.compare((a && a.lastName) || "", (b && b.lastName) || "") ||
+        collator.compare((a && a.name) || "", (b && b.name) || "")
+    );
   }
 
   managePermissions(permissionsArray) {

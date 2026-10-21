@@ -195,10 +195,8 @@ export class PecaPageComponent {
     // console.log('routeToPdfTemplate');
     if (!this.pdfData) return;
 
-    if (this.pdfYearbookService.getGraphics()) {
-      // console.log(this.pdfYearbookService.getGraphics());
-      this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
-    }
+    this.pdfYearbookService.getGraphics();
+    this.pdfYearbookService.routeToPdfTemplate(this.pdfData);
   }
 
   async setIndexOption(e) {

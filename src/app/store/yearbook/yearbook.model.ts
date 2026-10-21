@@ -18,7 +18,8 @@ interface Lapse {
   diagnosticSummary?: any[];
   logicDiagnosticAnalysis?: string;
   mathDiagnosticAnalysis?: string;
-  readingDiagnosticAnalysis?: string; 
+  readingDiagnosticAnalysis?: string;
+  environmentalDiagnosticAnalysis?: string; 
 }
 
 interface Activity {

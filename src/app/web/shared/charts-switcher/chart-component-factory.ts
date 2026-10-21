@@ -57,6 +57,7 @@ export class ChartComponentFactory {
     chartComponentInstance.yaxis = chartOptions.yaxis;
     chartComponentInstance.grid = chartOptions.grid;
     chartComponentInstance.isPercentage = chartOptions.isPercentage;
+    chartComponentInstance.maxScale = chartOptions.maxScale;
     chartComponentInstance.configChart(chartOptions.legend);
     chartComponentInstance.configMarkers();
     chartComponentInstance.configXAxis();

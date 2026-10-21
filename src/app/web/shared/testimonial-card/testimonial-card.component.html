@@ -4,15 +4,15 @@
       <img
         *ngIf="testimonial.image"
         [src]="testimonial.image"
-        [alt]="testimonial.firstName + ' ' + testimonial.lastName + ' image'"
+        [alt]="(testimonial.firstName ? testimonial.firstName : '') + ' ' + (testimonial.lastName ? testimonial.lastName : '') + ' logo'"
         loading="lazy"
       />
     </div>
     <div class="testimonial-identity">
-      <p *ngIf="testimonial.firstName && testimonial.lastName" class="testimonial-fullname">
-        {{ testimonial.firstName + ' ' + testimonial.lastName }}
+      <p *ngIf="testimonial.firstName || testimonial.lastName" class="testimonial-fullname">
+        {{ (testimonial.firstName || '') + (testimonial.firstName && testimonial.lastName ? ' ' : '') + (testimonial.lastName || '') }}
       </p>
-      <p *ngIf="testimonial.function" class="testimonial-role">
+      <p *ngIf="testimonial.function || testimonial.position" class="testimonial-role">
         {{ testimonial.position ? testimonial.position : testimonial.function }}
       </p>
     </div>

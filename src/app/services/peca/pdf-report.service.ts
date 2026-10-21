@@ -442,7 +442,7 @@ export class PDFReport implements OnInit {
         title: "Reporte de diagnósticos",
         author: "Fundación AmbLeMa",
         subject: "Reporte de diagnósticos",
-        keywords: "Reporte, diagnósticos, lectura, lógica, matemática",
+        keywords: "Reporte, diagnósticos, lectura, lógica, matemática, ambiente",
       },
       pageSize: "A4",
       pageOrientation: "landscape",
@@ -504,6 +504,9 @@ export class PDFReport implements OnInit {
 
     const TableLogicReasoningDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -514,6 +517,9 @@ export class PDFReport implements OnInit {
 
     const TableMultiplicationDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -524,6 +530,9 @@ export class PDFReport implements OnInit {
 
     const TableReadingDiagnosis: any = {
       table: {
+        headerRows: 3,
+        keepWithHeaderRows: 2,
+        dontBreakRows: true,
         body: [],
         widths: "auto",
       },
@@ -595,72 +604,35 @@ export class PDFReport implements OnInit {
       allDataReadingResult.push(SecondHeaderReading);
       allDataReadingResult.push(ThirdHeaderReading);
 
+      const getLapseReportCells = (lapseData: any) => [
+        {
+          text:
+            lapseData && lapseData.resultAverage !== undefined && lapseData.resultAverage !== null
+              ? lapseData.resultAverage.toFixed(2)
+              : "-",
+        },
+        {
+          text:
+            lapseData && lapseData.indexAverage !== undefined && lapseData.indexAverage !== null
+              ? lapseData.indexAverage.toFixed(2)
+              : "-",
+        },
+        {
+          text:
+            lapseData && lapseData.overGoalStudents !== undefined && lapseData.overGoalStudents !== null
+              ? lapseData.overGoalStudents
+              : "-",
+        },
+      ];
+
       if (report.yearSummary.reading) {
         report.yearSummary.reading.sections.forEach((sec, key) => {
           prepareDataReadingResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataReadingResult = [
-              ...prepareDataReadingResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataReadingResult = [
-            ...prepareDataReadingResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -682,7 +654,7 @@ export class PDFReport implements OnInit {
           fillColor: "#00809a",
           color: "#FFF",
           bold: true,
-          text: "Diagnóstico de multiplicación",
+          text: "Diagnóstico de matemática",
           alignment: "center",
           colSpan: 13,
         },
@@ -744,67 +716,9 @@ export class PDFReport implements OnInit {
           prepareDataMultiplicationResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataMultiplicationResult = [
-              ...prepareDataMultiplicationResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataMultiplicationResult = [
-            ...prepareDataMultiplicationResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -888,67 +802,9 @@ export class PDFReport implements OnInit {
           prepareDataLogicReasoningResult = [
             { text: sec.grade },
             { text: sec.name },
-          ];
-
-          if (sec.lapse1 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse1.resultAverage !== undefined
-                    ? sec.lapse1.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse1.indexAverage !== undefined
-                    ? sec.lapse1.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse1.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse2 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse2.resultAverage !== undefined
-                    ? sec.lapse2.resultAverage.toFixed(2)
-                    : "",
-              },
-              {
-                text:
-                  sec.lapse2.indexAverage !== undefined
-                    ? sec.lapse2.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse2.overGoalStudents },
-            ];
-          }
-
-          if (sec.lapse3 !== undefined) {
-            prepareDataLogicReasoningResult = [
-              ...prepareDataLogicReasoningResult,
-              {
-                text:
-                  sec.lapse3.resultAverage !== undefined
-                    ? sec.lapse3.resultAverage.toFixed(2)
-                    : " ",
-              },
-              {
-                text:
-                  sec.lapse3.indexAverage !== undefined
-                    ? sec.lapse3.indexAverage.toFixed(2)
-                    : "",
-              },
-              { text: sec.lapse3.overGoalStudents },
-            ];
-          }
-
-          prepareDataLogicReasoningResult = [
-            ...prepareDataLogicReasoningResult,
+            ...getLapseReportCells(sec.lapse1),
+            ...getLapseReportCells(sec.lapse2),
+            ...getLapseReportCells(sec.lapse3),
             { text: sec.goal },
             {
               text: `${sec.improvementPercentage !== undefined
@@ -996,11 +852,11 @@ export class PDFReport implements OnInit {
     ) => {
       const studentLapse = studentData[currentLapseKey];
       if (!studentLapse) {
-        return [{ text: "" }, { text: "" }];
+        return [{ text: "-", alignment: "center" }, { text: "-", alignment: "center" }];
       }
 
-      let resultVal: any = "";
-      let indexVal: any = "";
+      let resultVal: any = "-";
+      let indexVal: any = "-";
       let rawIndex: number | null = null;
       let rawResult: number | null = null;
 
@@ -1311,6 +1167,9 @@ export class PDFReport implements OnInit {
 
       sectionTables.push({
         table: {
+          headerRows: 5,
+          keepWithHeaderRows: 2,
+          dontBreakRows: true,
           widths,
           body,
         },
@@ -1374,105 +1233,150 @@ export class PDFReport implements OnInit {
       }
 
       // -- Final result
+      const averagesResults: any = [
+        [{ ...colorRowOne, text: "Promedio general" }],
+        [{ text: "Lapso 1" }],
+        [{ text: "Lapso 2" }],
+        [{ text: "Lapso 3" }],
+        [{ ...colorRowTwo, text: "Porcentaje de mejora respecto al índice inicial" }],
+      ];
+
+      if (report.yearSummary.reading) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de lectura",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.reading.lapse1ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse1ResultAverage !== null
+              ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.reading.lapse2ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse2ResultAverage !== null
+              ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.reading.lapse3ResultAverage !== undefined &&
+              report.yearSummary.reading.lapse3ResultAverage !== null
+              ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[4].push({
+          ...colorRowTwo,
+          text: `${report.yearSummary.reading.improvementPercentageAverage !== undefined
+            ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
+        });
+      }
+
+      if (report.yearSummary.math) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de matemática",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.math.lapse1ResultAverage !== undefined &&
+              report.yearSummary.math.lapse1ResultAverage !== null
+              ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.math.lapse2ResultAverage !== undefined &&
+              report.yearSummary.math.lapse2ResultAverage !== null
+              ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.math.lapse3ResultAverage !== undefined &&
+              report.yearSummary.math.lapse3ResultAverage !== null
+              ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[4].push({
+          ...colorRowTwo,
+          text: `${report.yearSummary.math.improvementPercentageAverage !== undefined
+            ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
+        });
+      }
+
+      if (report.yearSummary.logic) {
+        averagesResults[0].push({
+          ...colorRowOne,
+          text: "Diagnóstico de logica matemática",
+        });
+        averagesResults[1].push({
+          text:
+            report.yearSummary.logic.lapse1ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse1ResultAverage !== null
+              ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[2].push({
+          text:
+            report.yearSummary.logic.lapse2ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse2ResultAverage !== null
+              ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[3].push({
+          text:
+            report.yearSummary.logic.lapse3ResultAverage !== undefined &&
+              report.yearSummary.logic.lapse3ResultAverage !== null
+              ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
+              : "-",
+        });
+        averagesResults[4].push({
+          ...colorRowTwo,
+          text: `${report.yearSummary.logic.improvementPercentageAverage !== undefined
+            ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)
+            : 0
+            }%`,
+        });
+      }
+
+      if (averagesResults[0].length >= 4) {
+        for (let i = 1; i < averagesResults[4].length; i++) {
+          averagesResults[4][i].margin = [0, 4, 0, 0];
+        }
+      }
+
       finalReport.content.push({
-        table: {
-          body: [
-            [
+        columns: [
+          { width: "*", text: "" },
+          {
+            width: 566,
+            stack: [
               {
-                ...colorRowOne,
-                text: "Promedio total en el diagnóstico de lectura:",
-              },
-              {
-                text:
-                  report.yearSummary.reading &&
-                    report.yearSummary.reading.totalResultAverage !== undefined
-                    ? report.yearSummary.reading.totalResultAverage.toFixed(2)
-                    : "",
-              },
-            ],
-            [
-              {
-                ...colorRowTwo,
-                text: "Promedio total en el diagnóstico de multiplicación:",
-              },
-              {
-                text:
-                  report.yearSummary.math &&
-                    report.yearSummary.math.totalResultAverage !== undefined
-                    ? report.yearSummary.math.totalResultAverage.toFixed(2)
-                    : "",
+                table: {
+                  dontBreakRows: true,
+                  widths: "*",
+                  body: averagesResults,
+                },
+                layout: this.borderCustom,
+                margin: [0, 0, 0, 30],
               },
             ],
-            [
-              {
-                text: "Promedio total en el diagnóstico de razonamiento lógico matemático:",
-              },
-              {
-                text:
-                  report.yearSummary.logic &&
-                    report.yearSummary.logic.totalResultAverage !== undefined
-                    ? report.yearSummary.logic.totalResultAverage.toFixed(2)
-                    : "",
-              },
-            ],
-            [
-              { ...colorRowOne, text: "Porcentaje de mejora en lectura:" },
-
-              {
-                text: `${report.yearSummary.reading &&
-                  report.yearSummary.reading.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.reading.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-            [
-              {
-                ...colorRowTwo,
-                text: "Porcentaje de mejora en el diagnóstico en multiplicación:",
-              },
-
-              {
-                text: `${report.yearSummary.math &&
-                  report.yearSummary.math.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.math.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-            [
-              {
-                text: "Porcentaje de mejora en razonamiento lógico - matemático:",
-              },
-              {
-                text: `${report.yearSummary.logic &&
-                  report.yearSummary.logic.improvementPercentageAverage !==
-                  undefined
-                  ? report.yearSummary.logic.improvementPercentageAverage.toFixed(
-                    2
-                  )
-                  : 0
-                  }%`,
-              },
-            ],
-          ],
-          widths: "*",
-        },
-
-        layout: this.borderCustom,
-        margin: [0, 0, 0, 30],
+          },
+          { width: "*", text: "" },
+        ],
       });
     }
 
     const totalsResults: any = [
       [{ ...colorRowOne, text: "Estudiantes sobre la meta" }],
-      [{ text: "Lapso 1:" }],
+      [{ text: "Lapso 1" }],
       [{ text: "Lapso 2" }],
       [{ text: "Lapso 3" }],
     ];
@@ -1482,15 +1386,21 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de lectura",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.reading.studentsMeta,
+        text: report.totales.lapse1.reading.studentsMeta !== undefined && report.totales.lapse1.reading.studentsMeta !== null
+          ? report.totales.lapse1.reading.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.reading.studentsMeta,
+        text: report.totales.lapse2.reading.studentsMeta !== undefined && report.totales.lapse2.reading.studentsMeta !== null
+          ? report.totales.lapse2.reading.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.reading.studentsMeta,
+        text: report.totales.lapse3.reading.studentsMeta !== undefined && report.totales.lapse3.reading.studentsMeta !== null
+          ? report.totales.lapse3.reading.studentsMeta
+          : "-",
       });
     }
 
@@ -1500,15 +1410,21 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de matemática",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.math.studentsMeta,
+        text: report.totales.lapse1.math.studentsMeta !== undefined && report.totales.lapse1.math.studentsMeta !== null
+          ? report.totales.lapse1.math.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.math.studentsMeta,
+        text: report.totales.lapse2.math.studentsMeta !== undefined && report.totales.lapse2.math.studentsMeta !== null
+          ? report.totales.lapse2.math.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.math.studentsMeta,
+        text: report.totales.lapse3.math.studentsMeta !== undefined && report.totales.lapse3.math.studentsMeta !== null
+          ? report.totales.lapse3.math.studentsMeta
+          : "-",
       });
     }
 
@@ -1518,29 +1434,54 @@ export class PDFReport implements OnInit {
         text: "Diagnóstico de logica matemática",
       });
       totalsResults[1].push({
-        text: report.totales.lapse1.logic.studentsMeta,
+        text: report.totales.lapse1.logic.studentsMeta !== undefined && report.totales.lapse1.logic.studentsMeta !== null
+          ? report.totales.lapse1.logic.studentsMeta
+          : "-",
       });
 
       totalsResults[2].push({
-        text: report.totales.lapse2.logic.studentsMeta,
+        text: report.totales.lapse2.logic.studentsMeta !== undefined && report.totales.lapse2.logic.studentsMeta !== null
+          ? report.totales.lapse2.logic.studentsMeta
+          : "-",
       });
 
       totalsResults[3].push({
-        text: report.totales.lapse3.logic.studentsMeta,
+        text: report.totales.lapse3.logic.studentsMeta !== undefined && report.totales.lapse3.logic.studentsMeta !== null
+          ? report.totales.lapse3.logic.studentsMeta
+          : "-",
       });
     }
 
     tableTotales.push({
-      table: {
-        widths: "*",
-        body: totalsResults,
-      },
-      layout: this.borderCustom,
-      margin: [0, 0, 0, 30],
+      columns: [
+        { width: "*", text: "" },
+        {
+          width: 566,
+          stack: [
+            {
+              table: {
+                dontBreakRows: true,
+                widths: "*",
+                body: totalsResults,
+              },
+              layout: this.borderCustom,
+              margin: [0, 0, 0, 30],
+            },
+          ],
+        },
+        { width: "*", text: "" },
+      ],
     });
 
     finalReport.content.push(tableTotales);
 
+    const envElements = this.buildEnvironmentalReportElements(report);
+    if (envElements.length > 0) {
+      if (sectionTables.length > 0) {
+        envElements.push({ text: '', pageBreak: 'after' });
+      }
+      finalReport.content.unshift(...envElements);
+    }
 
     finalReport.content.unshift(documentSubHeaderData);
     finalReport.content.unshift(titleDocument);
@@ -1554,6 +1495,276 @@ export class PDFReport implements OnInit {
     const fileName = `Reporte-diagnosticos${schoolName}${schoolYear}_${dateFormatted}.pdf`;
 
     window.download(fileName);
+  }
+
+  buildEnvironmentalReportElements(report: DiagnosticReport): any[] {
+    const elements: any[] = [];
+    if (!report.environmental || !report.environmental.hasData) {
+      return elements;
+    }
+
+    const colorRowOne: any = {
+      fillColor: "#00809a",
+      color: "#FFF",
+      bold: true,
+    };
+    const colorRowTwo: any = {
+      fillColor: "#81b03e",
+      color: "#FFF",
+      bold: true,
+    };
+
+    const formatVal = (val: any, isAverage = false): string => {
+      if (val === null || val === undefined || val === '') return '-';
+      const num = Number(val);
+      if (isNaN(num)) return '-';
+      if (isAverage) {
+        return num.toFixed(2);
+      }
+      return Number.isInteger(num) ? num.toString() : num.toFixed(2);
+    };
+
+    // Header 1: Banner Title
+    const headerRow1: any[] = [
+      {
+        text: "DIAGNÓSTICO AMBIENTAL — ÍNDICE AMBIENTAL AMBLEMA (IAA) — RESULTADOS POR LAPSO",
+        colSpan: 21,
+        ...colorRowOne,
+        alignment: "center",
+        fontSize: 7.5,
+        margin: [0, 2, 0, 2],
+      },
+      ...Array(20).fill({})
+    ];
+
+    // Header 2: Grouped Indicators
+    const headerRow2: any[] = [
+      { text: "Lapso", rowSpan: 2, ...colorRowTwo, alignment: "center", fontSize: 6.8, margin: [0, 6, 0, 0] },
+      { text: "1. Limpieza y cuidado", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "2. Gestión residuos", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "3. Biodiversidad", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "4. Aprovechamiento agua", colSpan: 4, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {}, {},
+      { text: "5. Relación comunidad", colSpan: 3, ...colorRowTwo, alignment: "center", fontSize: 6.8 }, {}, {},
+      { text: "Total IAA", rowSpan: 2, ...colorRowTwo, alignment: "center", fontSize: 6.8, margin: [0, 6, 0, 0] },
+    ];
+
+    // Header 3: Subcriteria & Averages
+    const headerRow3: any[] = [
+      {},
+      { text: "1.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "1.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "1.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "2.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "3.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "4.3", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "5.1", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "5.2", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      { text: "Prom", ...colorRowTwo, alignment: "center", fontSize: 6.5 },
+      {},
+    ];
+
+    const body: any[] = [headerRow1, headerRow2, headerRow3];
+
+    const lapseLabels: { [key: string]: string } = {
+      '1': '1er Lapso',
+      '2': '2do Lapso',
+      '3': '3er Lapso',
+    };
+
+    const activeSummaries: any[] = [];
+    const maxLapse = (report as any).targetLapse || (report as any).lapso || 3;
+
+    ['1', '2', '3']
+      .filter(lKey => parseInt(lKey) <= Number(maxLapse))
+      .forEach(lKey => {
+        const lapseData = report.environmental.lapses ? report.environmental.lapses[lKey] : null;
+        const summary = lapseData ? lapseData.summary : null;
+        const lapseName = (lapseData && lapseData.lapseName) || lapseLabels[lKey] || `Lapso ${lKey}`;
+
+        if (summary && summary.totalIndex !== null && summary.totalIndex !== undefined) {
+          activeSummaries.push(summary);
+          body.push([
+            { text: lapseName, alignment: "center", bold: true, fontSize: 6.5, fillColor: "#F5F5F5" },
+            // 1. Limpieza
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces['1.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.cleanlinessAndCareOfSpaces ? summary.cleanlinessAndCareOfSpaces.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 2. Residuos
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement['2.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.wasteManagement ? summary.wasteManagement.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 3. Biodiversidad
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation['3.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.biodiversityConservation ? summary.biodiversityConservation.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 4. Agua
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse['4.3'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.waterUse ? summary.waterUse.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // 5. Comunidad
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.1'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations['5.2'] : null, true), alignment: "center", fontSize: 6.5 },
+            { text: formatVal(summary.communityRelations ? summary.communityRelations.average : null, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#D5E8EB" },
+            // Total IAA
+            { text: formatVal(summary.totalIndex, true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#C2DFE3" },
+          ]);
+        }
+      });
+
+    if (activeSummaries.length === 0) {
+      return elements;
+    }
+
+    // Promedio General row (if 2 or more lapses have data)
+    if (activeSummaries.length > 1) {
+      const calcAvg = (getter: (s: any) => number | null) => {
+        const vals = activeSummaries
+          .map(getter)
+          .filter(v => v !== null && v !== undefined && !isNaN(Number(v)))
+          .map(v => Number(v));
+        if (!vals.length) return null;
+        return vals.reduce((a, b) => a + b, 0) / vals.length;
+      };
+
+      body.push([
+        { text: "Promedio General", alignment: "center", bold: true, fontSize: 6.0, fillColor: "#EAEAEA" },
+        // 1. Limpieza
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces['1.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.cleanlinessAndCareOfSpaces ? s.cleanlinessAndCareOfSpaces.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 2. Residuos
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement['2.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.wasteManagement ? s.wasteManagement.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 3. Biodiversidad
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation['3.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.biodiversityConservation ? s.biodiversityConservation.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 4. Agua
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse['4.3'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.waterUse ? s.waterUse.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // 5. Comunidad
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations['5.1'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations['5.2'] : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#EAEAEA" },
+        { text: formatVal(calcAvg(s => s.communityRelations ? s.communityRelations.average : null), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#BCE1E6" },
+        // Total IAA
+        { text: formatVal(calcAvg(s => s.totalIndex), true), alignment: "center", bold: true, fontSize: 6.5, fillColor: "#A4D4DC" },
+      ]);
+    }
+
+    const widths: any[] = [
+      64,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 28, 31,
+      28, 28, 31,
+      44
+    ];
+
+    const TableEnvironmentalDiagnosis: any = {
+      table: {
+        widths,
+        body,
+      },
+      layout: this.borderCustomWithLessPadding,
+      margin: [0, 0, 0, 8],
+    };
+
+    const environmentalLegendBox: any = {
+      margin: [0, 0, 0, 10],
+      table: {
+        widths: ["33%", "33%", "34%"],
+        body: [
+          [
+            {
+              fillColor: "#00809a",
+              color: "#FFF",
+              bold: true,
+              fontSize: 7.2,
+              text: "LEYENDA DE CRITERIOS AMBIENTALES (PREGUNTAS)",
+              colSpan: 3,
+              alignment: "center",
+              margin: [0, 2, 0, 2]
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "1. Limpieza y cuidado de los espacios", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "1.1: ¿Hay ausencia de papeles o basura en zonas de aulas, patios y áreas comunes?", margin: [0, 0, 0, 1] },
+                { text: "1.2: ¿La escuela dispone de papeleras suficientes en las diferentes áreas?", margin: [0, 0, 0, 1] },
+                { text: "1.3: ¿Los estudiantes, docentes y personal hacen uso correcto de las papeleras?", margin: [0, 0, 0, 3] },
+                { text: "2. Gestión y aprovechamiento de los residuos", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 1, 0, 1] },
+                { text: "2.1: ¿Se clasifica la basura en residuos orgánicos e inorgánicos?", margin: [0, 0, 0, 1] },
+                { text: "2.2: ¿Tienen lugares apropiados e identificados para el resguardo de residuos?", margin: [0, 0, 0, 1] },
+                { text: "2.3: ¿Poseen un plan o proyecto activo para aprovechamiento/reciclaje?", margin: [0, 0, 0, 1] },
+              ]
+            },
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "3. Conservación de la biodiversidad", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "3.1: ¿La escuela tiene jardines planificados y bien mantenidos?", margin: [0, 0, 0, 1] },
+                { text: "3.2: ¿Tienen un huerto escolar desarrollado y cuidado por la comunidad?", margin: [0, 0, 0, 1] },
+                { text: "3.3: ¿Existe algún proyecto activo para conocer la biodiversidad vegetal?", margin: [0, 0, 0, 3] },
+                { text: "4. Aprovechamiento del agua", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 1, 0, 1] },
+                { text: "4.1: ¿Se evidencia conciencia sobre el buen uso del agua, evitando malgasto?", margin: [0, 0, 0, 1] },
+                { text: "4.2: ¿Poseen recipientes/tanques aptos para almacenamiento y riego?", margin: [0, 0, 0, 1] },
+                { text: "4.3: ¿Poseen estructura o plan para recolección de agua de lluvia?", margin: [0, 0, 0, 1] },
+              ]
+            },
+            {
+              fillColor: "#FAFAFA",
+              fontSize: 5.8,
+              margin: [3, 3, 3, 3],
+              stack: [
+                { text: "5. Relación con la comunidad", bold: true, color: "#00809a", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "5.1: ¿La escuela realiza acciones directas que aportan a la limpieza comunitaria?", margin: [0, 0, 0, 1] },
+                { text: "5.2: ¿Padres y vecinos participan en proyectos ambientales escolares?", margin: [0, 0, 0, 4] },
+                { text: "Escala de Interpretación IAA (0 - 35 pts)", bold: true, color: "#81b03e", fontSize: 6.4, margin: [0, 0, 0, 1] },
+                { text: "• Excelente: 31 – 35 pts (Prácticas ambientales consolidadas)", margin: [0, 0, 0, 1] },
+                { text: "• Satisfactorio: 21 – 30 pts (Buen desempeño con oportunidades de mejora)", margin: [0, 0, 0, 1] },
+                { text: "• En Desarrollo: 11 – 20 pts (Iniciativas en fase inicial o parcial)", margin: [0, 0, 0, 1] },
+                { text: "• Inicial: 00 – 10 pts (Requiere plan de acción urgente)", margin: [0, 0, 0, 1] }
+              ]
+            }
+          ]
+        ]
+      },
+      layout: this.borderCustomWithLessPadding
+    };
+
+    elements.push(TableEnvironmentalDiagnosis);
+    elements.push(environmentalLegendBox);
+
+    return elements;
   }
 
   async onGenerateSummaryDiagnostic(report: DiagnosticReport) { }
@@ -1735,6 +1946,9 @@ export interface DiagnosticReport {
   sections: Section[];
   yearSummary: YearSummary;
   totales: LapseTotal;
+  environmental?: any;
+  targetLapse?: number | string;
+  lapso?: number | string;
 }
 
 export interface YearSummary {
@@ -1746,6 +1960,13 @@ export interface YearSummary {
 export interface ReadingYearSummary {
   totalResultAverage: number;
   improvementPercentageAverage: number;
+  improvementIndexPercentageAverage?: number;
+  lapse1ResultAverage?: number;
+  lapse2ResultAverage?: number;
+  lapse3ResultAverage?: number;
+  lapse1IndexAverage?: number;
+  lapse2IndexAverage?: number;
+  lapse3IndexAverage?: number;
   sections: SectionYearSummary[];
 }
 

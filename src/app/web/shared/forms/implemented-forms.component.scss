@@ -37,10 +37,36 @@
         }
 
         .fields-container {
-          margin: 4vw 0;
+          margin: 2rem 0;
 
           .form-field {
             width: 100% !important;
+
+            &.field-school.select,
+            &.field-sponsor.select {
+              max-width: 680px !important;
+              margin: 1.2rem auto !important;
+              display: flex !important;
+              flex-wrap: nowrap !important;
+              align-items: center !important;
+              justify-content: center !important;
+
+              .field-label {
+                top: 0 !important;
+                margin-right: 1rem !important;
+                align-self: center !important;
+                flex: 0 0 auto !important;
+                font-size: 1.1rem !important;
+                line-height: 1.2 !important;
+              }
+
+              .field-control,
+              ng-select {
+                flex: 1 1 auto !important;
+                max-width: 420px !important;
+                width: 100% !important;
+              }
+            }
 
             &.confirmation {
               web-form-confirmation {
@@ -48,7 +74,7 @@
               }
 
               web-form-confirmation.ng-touched {
-                & ~ web-form-validation {
+                &~web-form-validation {
                   display: block;
 
                   .error-message {
@@ -58,7 +84,7 @@
               }
 
               web-form-confirmation.ng-untouched {
-                & ~ web-form-validation {
+                &~web-form-validation {
                   display: none;
                 }
               }
@@ -101,7 +127,7 @@
         }
 
         .fields-container {
-          margin: 8vw 0;
+          margin: 2rem 0;
 
           @include breakpoint(small, landscape) {
             margin: 4vw 0;
@@ -114,13 +140,39 @@
           .form-field {
             width: 100% !important;
 
+            &.field-school.select,
+            &.field-sponsor.select {
+              max-width: 680px !important;
+              margin: 1.2rem auto !important;
+              display: flex !important;
+              flex-wrap: nowrap !important;
+              align-items: center !important;
+              justify-content: center !important;
+
+              .field-label {
+                top: 0 !important;
+                margin-right: 1rem !important;
+                align-self: center !important;
+                flex: 0 0 auto !important;
+                font-size: 1.1rem !important;
+                line-height: 1.2 !important;
+              }
+
+              .field-control,
+              ng-select {
+                flex: 1 1 auto !important;
+                max-width: 600px !important;
+                width: 100% !important;
+              }
+            }
+
             &.confirmation {
               web-form-confirmation {
                 width: 100%;
               }
 
               web-form-confirmation.ng-touched {
-                & ~ web-form-validation {
+                &~web-form-validation {
                   display: block;
 
                   .error-message {
@@ -130,7 +182,7 @@
               }
 
               web-form-confirmation.ng-untouched {
-                & ~ web-form-validation {
+                &~web-form-validation {
                   display: none;
                 }
               }

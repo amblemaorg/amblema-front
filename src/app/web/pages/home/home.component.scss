@@ -122,6 +122,10 @@ section.about-us {
         svg {
           .st0 {
             fill: $green;
+            stroke: $green;
+          }
+          path {
+            fill: $green;
           }
         }
       }
@@ -194,13 +198,13 @@ section.pillars {
 
     @include breakpoint(small, landscape) {
       background-size: 11vw;
-      width: 25vw;
+      width: 21vw;
       height: 18vw;
     }
 
     @include breakpoint(medium) {
       background-size: 11vw;
-      width: 25vw;
+      width: 21vw;
       height: 18vw;
     }
 
@@ -217,11 +221,11 @@ section.pillars {
       font-weight: normal;
 
       @include breakpoint(small, landscape) {
-        font-size: 3.2vw;
+        font-size: 2.6vw;
       }
 
       @include breakpoint(medium) {
-        font-size: 3.2vw;
+        font-size: 2.6vw;
       }
     }
   }
@@ -361,12 +365,12 @@ section.founders {
 
   @include breakpoint(small, landscape) {
     background-image: url("../../../../assets/images/background-trees.png");
-    min-height: 56vw;
+    min-height: 50vw;
   }
 
   @include breakpoint(medium) {
     background-image: url("../../../../assets/images/background-trees.png");
-    min-height: 56vw;
+    min-height: 50vw;
   }
 
   .heading {
@@ -503,6 +507,7 @@ section.math-olympics {
       text-align: center;
       font-size: 1.7rem;
       margin: 5rem 0px;
+      color: #00809a;
 
       @include breakpoint(small, landscape) {
         font-size: 1.4vw;

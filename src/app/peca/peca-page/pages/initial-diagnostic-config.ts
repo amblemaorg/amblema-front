@@ -1,4 +1,5 @@
 import {
+  formEvaluadorAmbiente,
   formLecturaModal,
   formMatematicaModal,
 } from "../blocks/form-block/all-forms";
@@ -522,6 +523,168 @@ const modalMathDiagnosticTable = {
 };
 //* ------------------------------------------
 
+const formTitleRegisterEvaluator = {
+  component: "textsbuttons",
+  settings: {
+    subtitles: [
+      {
+        title: "Registro evaluador de Diagnóstico Ambiental",
+      },
+    ],
+    classes: "align-items-start",
+  },
+};
+
+const formRegisterEvaluator = {
+  component: "form",
+  name: "environmentEvaluatorForm",
+  settings: {
+    formsContent: formEvaluadorAmbiente,
+    buttons: ["verResultados", "guardar"],
+    formType: "registrarEvaluador",
+    fetcherMethod: "post",
+  },
+};
+
+const textsAndButtonsEnvironmentEvaluator = {
+  component: "textsbuttons",
+  name: "environmentEvaluatorDeleteModal",
+  settings: {
+    subtitles: [
+      {
+        text: "¿Desea eliminar este evaluador?",
+      },
+    ],
+    action: [
+      {
+        type: 1,
+        name: "Si",
+      },
+      {
+        type: 2,
+        name: "No",
+      },
+    ],
+    classes: "justify-content-center",
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    isFromCustomTableActions: true,
+    isDeleting: true,
+    fetcherMethod: "delete",
+  },
+};
+
+const modalDeleteEnvironmentEvaluator = {
+  component: "modal",
+  settings: {
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    items: [
+      {
+        childBlocks: [{ ...textsAndButtonsEnvironmentEvaluator }],
+      },
+    ],
+  },
+};
+
+const environmentEvaluatorsTable = {
+  component: "table",
+  name: "environmentTable",
+  settings: {
+    tableTitle: "Evaluadores de Diagnóstico Ambiental",
+    modalCode: "dataModalDeleteEnvironmentEvaluator",
+    rowClassFunction: (row: any) => {
+      const data = row && (row.data || (typeof row.getData === "function" ? row.getData() : row));
+      if (data && data.hasEvaluated) {
+        return "evaluated-env-row";
+      }
+      return "";
+    },
+    actions: {
+      columnTitle: "Acciones",
+      add: false,
+      edit: false,
+      delete: false,
+      custom: [
+        {
+          name: "COPY",
+          title: '<i class="icon-copy" title="Copiar enlace"></i>',
+        },
+        {
+          name: "VIEW_EVALUATION",
+          title: '<i class="icon-eye" title="Ver evaluación"></i>',
+        },
+        {
+          name: "DELETE",
+          title: '<i class="icon-trash" title="Eliminar evaluador"></i>',
+        },
+      ],
+    },
+    onCustomAction: (e: any) => {
+      if (e && e.action === "COPY" && e.data && e.data.link) {
+        if ((window as any).copyEnvLink) {
+          (window as any).copyEnvLink(e.data.link);
+        }
+      }
+      if (e && e.action === "VIEW_EVALUATION" && e.data && e.data.link) {
+        if ((window as any).openEnvEvaluationView) {
+          (window as any).openEnvEvaluationView(e.data.link);
+        }
+      }
+      if (e && e.action === "DELETE" && e.data) {
+        if (e.data.hasEvaluated) {
+          if ((window as any).onDeleteEvaluatedWarning) {
+            (window as any).onDeleteEvaluatedWarning();
+          }
+        } else {
+          if ((window as any).openDeleteEnvEvaluatorModal) {
+            (window as any).openDeleteEnvEvaluatorModal(e.data);
+          }
+        }
+      }
+    },
+    columns: {
+      name: {
+        title: "Nombre y Apellido",
+      },
+      phone: {
+        title: "Teléfono",
+      },
+      email: {
+        title: "Correo Electrónico",
+      },
+    },
+    tableCode: "environmentEvaluatorsTable",
+    data: [],
+    classes: {
+      hideView: false,
+      hideEdit: false,
+      hideDelete: false,
+    },
+  },
+};
+
+const estadisticaAmbiente = {
+  component: "graphics-environment",
+  name: "estadisticaAmbienteEvaluador",
+  settings: {
+    chartId: "estadisticaAmbienteEvaluador",
+    items: [],
+    title: "Resultados de Evaluación Ambiental"
+  },
+};
+
+const modalEstadisticasAmbiente = {
+  component: "modal",
+  settings: {
+    modalCode: "dataModalEstadisticasAmbiente",
+    isNotTableEditing: true,
+    items: [
+      {
+        childBlocks: [{ ...estadisticaAmbiente }],
+      },
+    ],
+  },
+};
+
 export const INITIAL_DIAGNOSTIC_CONFIG = {
   header: {
     title: "Diagnóstico",
@@ -535,6 +698,16 @@ export const INITIAL_DIAGNOSTIC_CONFIG = {
       component: "tabs",
       settings: {
         items: [
+          {
+            title: "Ambiente",
+            childBlocks: [
+              { ...formTitleRegisterEvaluator },
+              { ...formRegisterEvaluator },
+              { ...environmentEvaluatorsTable },
+              { ...modalDeleteEnvironmentEvaluator },
+              { ...modalEstadisticasAmbiente },
+            ],
+          },
           {
             title: "Lectura",
             childBlocks: [

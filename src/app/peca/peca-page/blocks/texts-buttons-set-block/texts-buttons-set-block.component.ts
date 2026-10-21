@@ -9,6 +9,7 @@ import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
 import { EmbedVideoService } from "ngx-embed-video";
+import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 import { DatepickerOptions, NgDatepickerComponent } from "ng2-datepicker";
 import { saveAs } from "file-saver";
@@ -228,9 +229,9 @@ export class TextsButtonsSetBlockComponent
     private store: Store,
     private toastr: ToastrService,
     private embedService: EmbedVideoService,
+    private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private location: Location
-
   ) {
     this.type = "presentational";
     this.component = "buttons";
@@ -1255,15 +1256,37 @@ export class TextsButtonsSetBlockComponent
       this.timesVideoSourceCalled < 10 &&
       !this.activity_video
     ) {
-      this.activity_video = this.embedService.embed(url);
+      this.activity_video = this.getEmbedVideo(url);
       if (this.activity_video) this.timesVideoSourceCalled++;
       return this.activity_video;
     } else if (this.activity_video) return this.activity_video;
   }
 
+  getEmbedVideo(url: string) {
+    if (!url) return null;
+    let cleanUrl = url.trim();
+    if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
+      cleanUrl = "https://" + cleanUrl;
+    }
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1]) {
+      const videoId = match[1];
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+      const iframeHtml = `<iframe src="${embedUrl}" width="100%" height="360" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      return this.sanitizer.bypassSecurityTrustHtml(iframeHtml);
+    }
+    try {
+      return this.embedService.embed(cleanUrl);
+    } catch (e) {
+      return null;
+    }
+  }
+
   videoShower(video) {
     this.showThisVideo = false;
     this.settings.video = null;
+    this.activity_video = null;
     if (video && video.url) {
       setTimeout(() => {
         this.showThisVideo = true;

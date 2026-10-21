@@ -25,7 +25,7 @@ declare var $: any;
   template: `
     <div class="modal fade" [id]="settings.modalCode + '-modal'">
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-        <div [class.color]="settings.modalCode === 'dataModalEstadisticasLectura' ||settings.modalCode === 'dataModalEstadisticasMatematica'" class="modal-content">
+        <div [class.color]="settings.modalCode === 'dataModalEstadisticasLectura' ||settings.modalCode === 'dataModalEstadisticasMatematica' || settings.modalCode === 'dataModalEstadisticasAmbiente'" class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
@@ -242,17 +242,18 @@ export class ModalBlockComponent implements StructuralBlockComponent, OnInit, On
   }
 
   public instantiateChildBlocksGraphics() {
+    let blockInstances = new Map<string, PageBlockComponent>();
     this.settings.items.map((item, i) => {
       const container = this.modalContainer.toArray()[i];
       if (container.length > 0) container.clear();
-      item.childBlocks.map(block => {
-        // let settings = block.settings;
-        // if (block.component == "graphics") settings = { settings: block.settings, factory: this.factory };
+      item.childBlocks.map((block, j) => {
         const pageBlockComponentFactory = this.factory.createPageBlockFactory(block.component);
         const pageBlockComponent = container.createComponent(pageBlockComponentFactory);
         pageBlockComponent.instance.setSettings(block.settings);
-      })
-    })
+        blockInstances.set(block.name || `modal${i}block${j}`, pageBlockComponent.instance);
+      });
+    });
+    this.globals.createdBlockInstances(blockInstances, true);
   }
 
 }

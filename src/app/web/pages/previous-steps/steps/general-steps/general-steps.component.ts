@@ -20,6 +20,7 @@ import * as $ from "jquery";
 import { GlobalService } from "../../../../../services/global.service";
 import { DatepickerOptions } from "ng2-datepicker";
 import { StepsFormsComponent } from "../steps-forms/steps-forms.component";
+import { ConvenioPdfService } from "../convenio-pdf.service";
 declare var $: any;
 
 @Component({
@@ -76,13 +77,25 @@ export class GeneralStepsComponent implements OnInit {
     private embedService: EmbedVideoService,
     private sanitizer: DomSanitizer,
     private stepsService: StepsService,
-    private globals: GlobalService
+    private globals: GlobalService,
+    private convenioPdfService: ConvenioPdfService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
+  isConvenioStep(step: Step): boolean {
+    return this.convenioPdfService.isConvenioStep(step ? step.devName : "");
+  }
+
+  downloadConvenioPdf(step: Step): void {
+    this.convenioPdfService.generateConvenioPdf(
+      this.project_id,
+      step ? step.devName : ""
+    );
+  }
+
   ngOnInit() {
-    this.currentA = 0 + "-" + this.mode;
+    this.currentA = "";
     this.glbls = this.globals;
   }
 
@@ -151,15 +164,65 @@ export class GeneralStepsComponent implements OnInit {
 
   getVideo(url, stepId) {
     if (this.showThisVideo && this.timesVideoSourceCalled < 10) {
-      const video = this.embedService.embed(url);
+      const video = this.getEmbedVideo(url);
       if (video) this.timesVideoSourceCalled++;
       if (!this.video_[stepId]) this.video_[stepId] = video;
       return this.video_[stepId];
     } else if (this.video_[stepId]) return this.video_[stepId];
   }
 
+  getEmbedVideo(url: string) {
+    if (!url) return null;
+    let cleanUrl = url.trim();
+    if (!cleanUrl.startsWith("http://") && !cleanUrl.startsWith("https://")) {
+      cleanUrl = "https://" + cleanUrl;
+    }
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+    const match = cleanUrl.match(regExp);
+    if (match && match[1]) {
+      const videoId = match[1];
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+      const iframeHtml = `<iframe src="${embedUrl}" width="100%" height="360" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      return this.sanitizer.bypassSecurityTrustHtml(iframeHtml);
+    }
+    try {
+      return this.embedService.embed(cleanUrl);
+    } catch (e) {
+      return null;
+    }
+  }
+
   sanitizeFile(url) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  hasStepFile(step: Step): boolean {
+    if (!step) return false;
+    if (step.files && step.files.length > 0) return true;
+    if (step.file && step.file.url) return true;
+    if (step.file2 && step.file2.url) return true;
+    return false;
+  }
+
+  showApproveBtn(step: Step): boolean {
+    if (!step) return false;
+    if (this.hasStepFile(step)) return false;
+    if (step.hasUpload) return false;
+    if (step.isForm) return false;
+    if (step.goMods) return false;
+    if (step.hasChecklist && step.checklist && step.checklist.length > 0) return false;
+    if (step.approvalType === "4") return false;
+    if (step.status === "3") return false;
+    return true;
+  }
+
+  onFileClick(step: Step, index: number) {
+    if (this.isSelectorReadOnly()) {
+      return;
+    }
+    if (!step.hasUpload && step.status !== "3" && !step.sending) {
+      this.approvalMethod(step, index, this.mode, "3");
+    }
   }
 
   clickUpload(btn) {
@@ -493,6 +556,7 @@ export class GeneralStepsComponent implements OnInit {
   videoShower(step: Step) {
     this.showThisVideo = false;
     if (step.hasVideo) {
+      delete this.video_[step.id];
       setTimeout(() => {
         this.showThisVideo = true;
         this.timesVideoSourceCalled = 0;

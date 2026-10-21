@@ -13,7 +13,46 @@ $size__p: 16px;
 $text_indent: 18px;
 
 @media print {
+  @page {
+    size: letter landscape;
+    margin: 0 !important;
+  }
+
+  body {
+    margin: 0 !important;
+  }
+
   .not-print {
+    display: none !important;
+  }
+
+  .print-only-page {
+    display: block !important;
+
+    &:not(.background--generic):not(.background--front-page) {
+      background-image: none !important;
+      background-color: #ffffff !important;
+    }
+  }
+
+  .yearbook-pdf {
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .page {
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    page-break-before: always !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+@media screen {
+  .print-only-page {
     display: none !important;
   }
 }
@@ -94,6 +133,12 @@ $text_indent: 18px;
       background: $blue;
       border: 0px;
     }
+
+    .btn-print-version {
+      @media (max-width: 768px) {
+        display: none !important;
+      }
+    }
   }
 
   .gray-scale-container {
@@ -108,9 +153,8 @@ $text_indent: 18px;
   background: $blue-light;
   // padding: 45px 20px;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
+  width: 100%;
 
   * {
     color: $black;
@@ -177,7 +221,14 @@ $text_indent: 18px;
     background-color: #fff;
   }
 
+  .page--blank {
+    background-image: none !important;
+    background-color: #ffffff !important;
+  }
+
   .page {
+    display: block;
+    margin: 20px auto;
     min-width: 27.94cm;
     min-height: 21.59cm;
     width: 27.94cm;
@@ -213,13 +264,14 @@ $text_indent: 18px;
 
       .container-img {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: center;
 
         img {
-          height: 100%;
-          width: 100%;
-          object-fit: contain;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
         }
       }
 
@@ -232,6 +284,32 @@ $text_indent: 18px;
 
     .overflow--hidden {
       overflow: hidden;
+    }
+  }
+
+  .layout--front-print-only {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+
+    .blue-title {
+      color: $blue;
+      font-size: 64px;
+      font-family: 'Montserrat';
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .blue-subtitle {
+      color: $blue;
+      font-size: 20px;
+      font-weight: bold;
+      font-family: 'Montserrat';
+      text-align: center;
     }
   }
 
@@ -276,11 +354,15 @@ $text_indent: 18px;
         position: absolute;
         top: 0;
         right: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
         }
       }
     }
@@ -441,6 +523,54 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+            margin-bottom: 0.8rem;
+            text-indent: $text_indent;
+            line-height: 21px;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
     }
   }
@@ -498,6 +628,54 @@ $text_indent: 18px;
       .description {
         // margin-top: 20px;
         text-indent: $text_indent;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+            margin-bottom: 0.8rem;
+            text-indent: $text_indent;
+            line-height: 21px;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
     }
 
@@ -531,6 +709,8 @@ $text_indent: 18px;
 
         .table-container {
           .table {
+            border: 2px $gray solid !important;
+            border-collapse: collapse !important;
             /* Descomentar para forzar anchos exactos en las columnas: */
             width: 100%;
             /* */
@@ -551,9 +731,19 @@ $text_indent: 18px;
             }
 
             tr {
+
+              // First row: remove top border
               &:first-child {
                 td {
+                  border-top: none !important;
                   text-transform: initial !important;
+                }
+              }
+
+              // Last row: remove bottom border
+              &:last-child {
+                td {
+                  border-bottom: none !important;
                 }
               }
 
@@ -565,7 +755,7 @@ $text_indent: 18px;
               }
 
               td {
-                border: 2px $gray solid;
+                border: 1px $gray solid;
                 font-size: 15px;
                 line-height: 18px;
                 padding: 3px 5px;
@@ -573,8 +763,15 @@ $text_indent: 18px;
                 text-transform: none;
                 vertical-align: middle;
 
+                // First column: remove left border
                 &:first-child {
+                  border-left: none !important;
                   font-weight: normal;
+                }
+
+                // Last column: remove right border
+                &:last-child {
+                  border-right: none !important;
                 }
               }
 
@@ -590,7 +787,36 @@ $text_indent: 18px;
             }
           }
 
-          &.lapse1 {
+          &.diagnosticEnvironmental {
+            .table {
+              tr:first-child td {
+                text-align: center !important;
+              }
+
+              td.diag-col-0 {
+                width: 58% !important;
+                text-align: left !important;
+                padding-left: 8px !important;
+              }
+
+              td.diag-col-1,
+              td.diag-col-3 {
+                width: 15% !important;
+                text-align: center !important;
+                padding-left: 2px !important;
+                padding-right: 2px !important;
+              }
+
+              td.diag-col-2 {
+                width: 12% !important;
+                text-align: center !important;
+                padding-left: 1px !important;
+                padding-right: 1px !important;
+              }
+            }
+          }
+
+          &.lapse1:not(.diagnosticEnvironmental) {
             .table {
               td.diag-col-0 {
                 width: 13% !important;
@@ -616,6 +842,55 @@ $text_indent: 18px;
       .description {
         text-indent: $text_indent;
         margin-top: 80px;
+        font-family: 'Montserrat' !important;
+        font-size: 16px !important;
+        text-align: justify !important;
+        line-height: 20px;
+
+        ::ng-deep {
+
+          p,
+          span,
+          div,
+          strong,
+          em,
+          b,
+          i,
+          u,
+          s {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+          }
+
+          p {
+            color: $black !important;
+            font-family: 'Montserrat' !important;
+            font-size: 16px !important;
+            margin-bottom: 0.5rem;
+            text-align: justify !important;
+            text-indent: $text_indent;
+          }
+
+          div {
+            text-align: justify !important;
+            margin-bottom: 0.8rem;
+            text-indent: $text_indent;
+            line-height: 21px;
+          }
+
+          a {
+            font-style: italic !important;
+            text-decoration: underline !important;
+            color: inherit !important;
+            cursor: pointer;
+
+            * {
+              font-style: italic !important;
+              text-decoration: underline !important;
+            }
+          }
+        }
       }
 
       .description+.description {
@@ -866,15 +1141,16 @@ $text_indent: 18px;
   }
 
   .layout--sponsorLogo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 500px;
 
     .logo-container {
-      width: 80%;
-      height: 80%;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -882,7 +1158,8 @@ $text_indent: 18px;
       img {
         max-width: 100%;
         max-height: 100%;
-        object-fit: contain;
+        width: auto;
+        height: auto;
       }
     }
   }

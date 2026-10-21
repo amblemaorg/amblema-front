@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 const diagnosticText = {
+  environment:
+    'Evaluamos cada trimestre la gestión y cultura ambiental escolar mediante el Índice Ambiental Amblema (IAA). La gráfica muestra el puntaje promedio alcanzado de IAA sobre la meta máxima de 35 puntos.',
   lecture:
     'Medimos cada trimestre el número de palabras leídas por minuto (PPM). La gráfica muestra el porcentaje alcanzado de PPM frente a la meta del grado que sería el 100 %.',
   math:
@@ -11,6 +13,24 @@ const diagnosticText = {
 };
 
 const charts = [
+  {
+    title: 'Diagnóstico de Ambiente',
+    id: 'environmentIndex',
+    description: diagnosticText.environment,
+    type: 'bar',
+    data: [],
+    goals: [{ label: 'Valor esperado', value: 35 }],
+    maxScale: 35,
+    isPercentage: false,
+    testimonial: {
+      firstName: 'Óscar A.',
+      lastName: 'Pietri P.',
+      image: './assets/images/profile-oscar.jpg',
+      function: 'Presidente y Co-Fundador',
+      description:
+        '¿Promovemos la conservación y el cuidado del entorno escolar? Evaluamos las prácticas de limpieza, gestión de residuos, biodiversidad, agua y relación comunitaria, consolidando el Índice Ambiental Amblema (IAA) para impulsar escuelas sostenibles.',
+    },
+  },
   {
     title: 'Diagnóstico de Lectura',
     id: 'wordsPerMinIndex',

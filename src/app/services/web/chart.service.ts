@@ -33,7 +33,9 @@ export class ChartService {
       const asymptotes = goals.map((goal) => {
         return { ...asymptoteProps, value: goal.value, title: goal.label };
       });
-      return { ...chartDefaultProps, ...chart, asymptotes };
+      const isPercentage = chart.isPercentage !== undefined ? chart.isPercentage : true;
+      const maxScale = chart.maxScale !== undefined ? chart.maxScale : null;
+      return { ...chartDefaultProps, ...chart, asymptotes, isPercentage, maxScale };
     });
   }
 }
