@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Injector, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   HttpRequest,
   HttpHandler,
@@ -22,7 +24,9 @@ export class JwtInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: NbAuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   intercept(
@@ -43,12 +47,24 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 422)) {
+          // Refresh token rejected (expired or user deleted): end session
+          if (url === 'auth/refresh') {
+            this.forceLogout();
+            return throwError(error);
+          }
           return this.handle401Error(request, next);
         } else {
           return throwError(error);
         }
       })
     );
+  }
+
+  // LogoutComponent clears the Nebular token and NGXS state, then redirects to login.
+  // Router is resolved lazily to avoid a circular dependency with HttpClient.
+  private forceLogout() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.injector.get(Router).navigate(['/auth/logout']);
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
@@ -74,6 +90,10 @@ export class JwtInterceptor implements HttpInterceptor {
           localStorage.setItem('auth_app_token', JSON.stringify(auth_app_token));
           this.refreshTokenSubject.next(tokens.access_token);
           return next.handle(this.addToken(request, tokens.access_token));
+        }),
+        catchError((error) => {
+          this.isRefreshing = false;
+          return throwError(error);
         })
       );
     }
