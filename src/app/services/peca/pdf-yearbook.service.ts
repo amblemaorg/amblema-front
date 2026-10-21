@@ -1539,6 +1539,16 @@ export class PdfYearbookService {
       .toPromise();
   }
 
+  /**
+   * Orden del contenido de cada lapso en el AmbLeMario (keys de diagnósticos e ids de actividades),
+   * administrado en backoffice > Ajustes del PECA > Amblemario
+   */
+  getYearbookContentOrder(pecaId: string): Promise<YearbookContentOrder> {
+    return this.http
+      .get(`pecaprojects/yearbook/order/${pecaId}`)
+      .toPromise();
+  }
+
   getPrintOptionsOb(
     pecaProjectId: number,
   ): Observable<RespYearbookPrintOptions> {
@@ -1550,4 +1560,10 @@ export class PdfYearbookService {
       .get(`/pecaprojects/${pecaProjectId}/printoptions`)
       .toPromise();
   }
+}
+
+export interface YearbookContentOrder {
+  lapse1?: string[];
+  lapse2?: string[];
+  lapse3?: string[];
 }

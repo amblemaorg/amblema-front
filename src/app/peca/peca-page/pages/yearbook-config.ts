@@ -15,6 +15,8 @@ import {
   CancelYearBookRequest,
 } from '../../../store/yearbook/yearbook.action';
 import { FetchPecaContent } from '../../../store/actions/peca/peca.actions';
+import { YearbookContentOrder } from 'src/app/services/peca/pdf-yearbook.service';
+import { sortByContentOrder } from '../mappers/yearbook-content-order';
 /**
  *
  * @function MapperYearBookWeb
@@ -29,6 +31,7 @@ export async function MapperYearBookWeb(
   pdfYearbookService: PdfYearbookService,
   permissions,
   store: Store,
+  contentOrder: YearbookContentOrder = {},
 ) {
   const inputFileSizeLimitMb = 1;
 
@@ -401,7 +404,7 @@ export async function MapperYearBookWeb(
     const minLength = YearbookConfig.getFormDescriptionMinLimit(
       'globalLapsesDiagnostic',
     );
-    return [
+    const environmentalBlocks = [
       createTitleComponent('Diagnóstico de Ambiente'),
       {
         component: 'graphics-environment',
@@ -452,6 +455,8 @@ export async function MapperYearBookWeb(
       yearbookPDFOptions(
         `lapse${lapseNumber}__diagnostic--diagnosticEnvironmental-section`,
       ),
+    ];
+    const readingBlocks = [
       createTitleComponent('Diagnóstico de lectura'),
       {
         component: 'table',
@@ -587,6 +592,8 @@ export async function MapperYearBookWeb(
       yearbookPDFOptions(
         `lapse${lapseNumber}__diagnostic--diagnosticReading-section`,
       ),
+    ];
+    const mathBlocks = [
       createTitleComponent('Diagnóstico de Multiplicación'),
       {
         component: 'table',
@@ -734,6 +741,8 @@ export async function MapperYearBookWeb(
       yearbookPDFOptions(
         `lapse${lapseNumber}__diagnostic--diagnosticMath-section`,
       ),
+    ];
+    const logicBlocks = [
       createTitleComponent('Diagnóstico de lógica matemática'),
       {
         component: 'table',
@@ -882,8 +891,22 @@ export async function MapperYearBookWeb(
       yearbookPDFOptions(
         `lapse${lapseNumber}__diagnostic--diagnosticLogic-section`,
       ),
+    ];
+
+    // Orden por defecto: diagnósticos y luego actividades; se reordena según backoffice > Amblemario
+    const contentGroups = [
+      { key: 'diagnosticEnvironmental', blocks: environmentalBlocks },
+      { key: 'diagnosticReading', blocks: readingBlocks },
+      { key: 'diagnosticMath', blocks: mathBlocks },
+      { key: 'diagnosticLogic', blocks: logicBlocks },
       ...createActivitiesComponents(lapseData.activities, lapseNumber),
     ];
+
+    return sortByContentOrder(
+      contentGroups,
+      (group) => group.key,
+      contentOrder ? contentOrder[lapseName] : null,
+    ).reduce((blocks, group) => [...blocks, ...group.blocks], []);
   }
 
   function createTitleComponent(title) {
@@ -902,12 +925,11 @@ export async function MapperYearBookWeb(
 
   function createActivitiesComponents(activities: any[], lapseNumber) {
     const lapseName = `lapse${lapseNumber}`;
-    return activities.reduce((activitiesArray, activity, idx) => {
+    return activities.map((activity) => {
       const { id, name, images, description } = activity;
       // console.log('createActivitiesComponents', activity);
 
-      return [
-        ...activitiesArray,
+      return { key: id, blocks: [
         createTitleComponent(name),
         {
           component: 'form-review',
@@ -959,8 +981,8 @@ export async function MapperYearBookWeb(
           `${lapseName}__${name}-${id}-section`,
           lapseName,
         ),
-      ];
-    }, []);
+      ] };
+    });
   }
 
   function determineGradeString(grade) {
