@@ -290,16 +290,17 @@ const tablaGradosSecciones = {
       grades: {
         title: "Grados",
         valuePrepareFunction: (row: any) => {
-          if (row)
-            return formGradosSecciones.grades.options.find((d) => {
-              return d.id === row;
-            }).name;
-          else return "";
+          if (!row) return "";
+          const grade = formGradosSecciones.grades.options.find((d) => {
+            return d.id === row;
+          });
+          return grade ? grade.name : "";
         },
         filterFunction: (cell?: any, search?: string) => {
-          let value: string = formGradosSecciones.grades.options.find((d) => {
+          const grade = formGradosSecciones.grades.options.find((d) => {
             return d.id === cell;
-          }).name;
+          });
+          let value: string = grade ? grade.name : "";
           value = value.toUpperCase();
 
           if (value.includes(search.toUpperCase()) || search === "")
@@ -312,20 +313,20 @@ const tablaGradosSecciones = {
       },
       docente: {
         title: "Docente",
-        valuePrepareFunction: (row: any) => {
-          if (row && formGradosSecciones.docente.options.length > 0)
-            return formGradosSecciones.docente.options.find((d) => {
-              return d.id === row;
-            }).name;
-          else return "";
+        valuePrepareFunction: (row: any, rowData?: any) => {
+          if (!row) return "";
+          const teacher = formGradosSecciones.docente.options.find((d) => {
+            return d.id === row;
+          });
+          // Docente eliminado de la escuela: usar el nombre guardado en la sección
+          if (teacher) return teacher.name;
+          return rowData && rowData.docenteName ? rowData.docenteName : "";
         },
         filterFunction: (cell?: any, search?: string) => {
-          let value: string =
-            formGradosSecciones.docente.options.length > 0
-              ? formGradosSecciones.docente.options.find((d) => {
-                  return d.id === cell;
-                }).name
-              : "";
+          const teacher = formGradosSecciones.docente.options.find((d) => {
+            return d.id === cell;
+          });
+          let value: string = teacher ? teacher.name : "";
           value = value.toUpperCase();
 
           if (value.includes(search.toUpperCase()) || search === "")
