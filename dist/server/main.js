@@ -349750,34 +349750,37 @@ const formGradosYSecciones = {
     },
 };
 const ɵ8 = (row) => {
-    if (row)
-        return all_forms_1.formGradosSecciones.grades.options.find((d) => {
-            return d.id === row;
-        }).name;
-    else
+    if (!row)
         return "";
+    const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
+        return d.id === row;
+    });
+    return grade ? grade.name : "";
 }, ɵ9 = (cell, search) => {
-    let value = all_forms_1.formGradosSecciones.grades.options.find((d) => {
+    const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
         return d.id === cell;
-    }).name;
+    });
+    let value = grade ? grade.name : "";
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
     else
         return false;
-}, ɵ10 = (row) => {
-    if (row && all_forms_1.formGradosSecciones.docente.options.length > 0)
-        return all_forms_1.formGradosSecciones.docente.options.find((d) => {
-            return d.id === row;
-        }).name;
-    else
+}, ɵ10 = (row, rowData) => {
+    if (!row)
         return "";
+    const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
+        return d.id === row;
+    });
+    // Docente eliminado de la escuela: usar el nombre guardado en la sección
+    if (teacher)
+        return teacher.name;
+    return rowData && rowData.docenteName ? rowData.docenteName : "";
 }, ɵ11 = (cell, search) => {
-    let value = all_forms_1.formGradosSecciones.docente.options.length > 0
-        ? all_forms_1.formGradosSecciones.docente.options.find((d) => {
-            return d.id === cell;
-        }).name
-        : "";
+    const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
+        return d.id === cell;
+    });
+    let value = teacher ? teacher.name : "";
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
@@ -598395,7 +598398,9 @@ function gradesAndSectionsDataToSectionsFormMapper(schoolData) {
             id,
             grades: grade,
             section: name,
-            docente: teacher.id,
+            docente: teacher ? teacher.id : "",
+            // Respaldo para docentes eliminados de la escuela que siguen enlazados en PECAs anteriores
+            docenteName: teacher ? `${teacher.firstName} ${teacher.lastName}` : "",
         };
     });
     return {
