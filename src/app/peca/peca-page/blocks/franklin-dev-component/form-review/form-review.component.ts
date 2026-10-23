@@ -291,10 +291,8 @@ export class FormReviewComponent
       const text = this.cleanHtml(val);
       const length = text.length;
 
+      // Empty is valid: lets the user clear a description loaded by mistake
       if (length === 0) {
-        if (minLength && minLength > 0) {
-          return { minlength: true };
-        }
         return null;
       }
 
@@ -516,6 +514,8 @@ export class FormReviewComponent
     if (values && values.inputImg) {
       if (values.inputImg instanceof Array) {
         doTheArray = true;
+        // Reset so photos removed or saved in a previous attempt don't leak into this payload
+        this.imgResultAfterCompress = {};
         if (values.inputImg.length) {
           const compressions = values.inputImg.map(
             async (image_, i) =>
@@ -539,15 +539,10 @@ export class FormReviewComponent
           )
           : [];
 
-      this.settings.onClickButton(
-        values.inputImg && values.description
-          ? { ...values, inputImg: [...theImages] }
-          : values,
-      );
+      this.settings.onClickButton({ ...values, inputImg: [...theImages] });
     } else
       this.settings.onClickButton(
         values.inputImg &&
-          (values.description || values.description === undefined || values.description === '') &&
           this.imgResultAfterCompress &&
           typeof this.imgResultAfterCompress === 'string'
           ? { ...values, inputImg: this.imgResultAfterCompress }
@@ -571,6 +566,8 @@ export class FormReviewComponent
     if (values && values.inputImg) {
       if (values.inputImg instanceof Array) {
         doTheArray = true;
+        // Reset so photos removed or saved in a previous attempt don't leak into this payload
+        this.imgResultAfterCompress = {};
         if (values.inputImg.length) {
           const compressions = values.inputImg.map(
             async (image_, i) =>
@@ -594,15 +591,10 @@ export class FormReviewComponent
           )
           : [];
 
-      this.settings.onSubmit(
-        values.inputImg && (values.description || values.description === undefined || values.description === '')
-          ? { ...values, inputImg: [...theImages] }
-          : values,
-      );
+      this.settings.onSubmit({ ...values, inputImg: [...theImages] });
     } else
       this.settings.onSubmit(
         values.inputImg &&
-          (values.description || values.description === undefined || values.description === '') &&
           this.imgResultAfterCompress &&
           typeof this.imgResultAfterCompress === 'string'
           ? { ...values, inputImg: this.imgResultAfterCompress }
