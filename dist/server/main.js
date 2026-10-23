@@ -316296,10 +316296,8 @@ class FormReviewComponent {
             const val = control && control.value ? control.value : '';
             const text = this.cleanHtml(val);
             const length = text.length;
+            // Empty is valid: lets the user clear a description loaded by mistake
             if (length === 0) {
-                if (minLength && minLength > 0) {
-                    return { minlength: true };
-                }
                 return null;
             }
             if (minLength && minLength > 0 && length < minLength) {
@@ -316468,6 +316466,8 @@ class FormReviewComponent {
             if (values && values.inputImg) {
                 if (values.inputImg instanceof Array) {
                     doTheArray = true;
+                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
+                    this.imgResultAfterCompress = {};
                     if (values.inputImg.length) {
                         const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                             return yield this.compressFile({
@@ -316487,12 +316487,10 @@ class FormReviewComponent {
                     typeof this.imgResultAfterCompress === 'object'
                     ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
                     : [];
-                this.settings.onClickButton(values.inputImg && values.description
-                    ? Object.assign(Object.assign({}, values), { inputImg: [...theImages] }) : values);
+                this.settings.onClickButton(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
             }
             else
                 this.settings.onClickButton(values.inputImg &&
-                    (values.description || values.description === undefined || values.description === '') &&
                     this.imgResultAfterCompress &&
                     typeof this.imgResultAfterCompress === 'string'
                     ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
@@ -316509,6 +316507,8 @@ class FormReviewComponent {
             if (values && values.inputImg) {
                 if (values.inputImg instanceof Array) {
                     doTheArray = true;
+                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
+                    this.imgResultAfterCompress = {};
                     if (values.inputImg.length) {
                         const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                             return yield this.compressFile({
@@ -316528,12 +316528,10 @@ class FormReviewComponent {
                     typeof this.imgResultAfterCompress === 'object'
                     ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
                     : [];
-                this.settings.onSubmit(values.inputImg && (values.description || values.description === undefined || values.description === '')
-                    ? Object.assign(Object.assign({}, values), { inputImg: [...theImages] }) : values);
+                this.settings.onSubmit(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
             }
             else
                 this.settings.onSubmit(values.inputImg &&
-                    (values.description || values.description === undefined || values.description === '') &&
                     this.imgResultAfterCompress &&
                     typeof this.imgResultAfterCompress === 'string'
                     ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
@@ -349818,34 +349816,37 @@ const formGradosYSecciones = {
     },
 };
 const ɵ8 = (row) => {
-    if (row)
-        return all_forms_1.formGradosSecciones.grades.options.find((d) => {
-            return d.id === row;
-        }).name;
-    else
+    if (!row)
         return "";
+    const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
+        return d.id === row;
+    });
+    return grade ? grade.name : "";
 }, ɵ9 = (cell, search) => {
-    let value = all_forms_1.formGradosSecciones.grades.options.find((d) => {
+    const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
         return d.id === cell;
-    }).name;
+    });
+    let value = grade ? grade.name : "";
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
     else
         return false;
-}, ɵ10 = (row) => {
-    if (row && all_forms_1.formGradosSecciones.docente.options.length > 0)
-        return all_forms_1.formGradosSecciones.docente.options.find((d) => {
-            return d.id === row;
-        }).name;
-    else
+}, ɵ10 = (row, rowData) => {
+    if (!row)
         return "";
+    const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
+        return d.id === row;
+    });
+    // Docente eliminado de la escuela: usar el nombre guardado en la sección
+    if (teacher)
+        return teacher.name;
+    return rowData && rowData.docenteName ? rowData.docenteName : "";
 }, ɵ11 = (cell, search) => {
-    let value = all_forms_1.formGradosSecciones.docente.options.length > 0
-        ? all_forms_1.formGradosSecciones.docente.options.find((d) => {
-            return d.id === cell;
-        }).name
-        : "";
+    const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
+        return d.id === cell;
+    });
+    let value = teacher ? teacher.name : "";
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
@@ -598460,7 +598461,9 @@ function gradesAndSectionsDataToSectionsFormMapper(schoolData) {
             id,
             grades: grade,
             section: name,
-            docente: teacher.id,
+            docente: teacher ? teacher.id : "",
+            // Respaldo para docentes eliminados de la escuela que siguen enlazados en PECAs anteriores
+            docenteName: teacher ? `${teacher.firstName} ${teacher.lastName}` : "",
         };
     });
     return {

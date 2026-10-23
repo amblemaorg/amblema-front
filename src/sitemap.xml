@@ -281,6 +281,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://amblema.org/escuelas/OD10150302_C-E--Leonardo-Infante--NER-484</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://amblema.org/escuelas/OD14740503_U-E-E--Víctor-Lino-Gómez</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://amblema.org/blog/post/6aa563624917e0fafd504fa7</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

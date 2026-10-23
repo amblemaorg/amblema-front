@@ -25,7 +25,9 @@ export function gradesAndSectionsDataToSectionsFormMapper(schoolData) {
             id,
             grades: grade,
             section: name,
-            docente: teacher.id,
+            docente: teacher ? teacher.id : "",
+            // Respaldo para docentes eliminados de la escuela que siguen enlazados en PECAs anteriores
+            docenteName: teacher ? `${teacher.firstName} ${teacher.lastName}` : "",
         };
       });
 
