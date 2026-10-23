@@ -316230,10 +316230,8 @@ class FormReviewComponent {
             const val = control && control.value ? control.value : '';
             const text = this.cleanHtml(val);
             const length = text.length;
+            // Empty is valid: lets the user clear a description loaded by mistake
             if (length === 0) {
-                if (minLength && minLength > 0) {
-                    return { minlength: true };
-                }
                 return null;
             }
             if (minLength && minLength > 0 && length < minLength) {
@@ -316402,6 +316400,8 @@ class FormReviewComponent {
             if (values && values.inputImg) {
                 if (values.inputImg instanceof Array) {
                     doTheArray = true;
+                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
+                    this.imgResultAfterCompress = {};
                     if (values.inputImg.length) {
                         const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                             return yield this.compressFile({
@@ -316421,12 +316421,10 @@ class FormReviewComponent {
                     typeof this.imgResultAfterCompress === 'object'
                     ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
                     : [];
-                this.settings.onClickButton(values.inputImg && values.description
-                    ? Object.assign(Object.assign({}, values), { inputImg: [...theImages] }) : values);
+                this.settings.onClickButton(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
             }
             else
                 this.settings.onClickButton(values.inputImg &&
-                    (values.description || values.description === undefined || values.description === '') &&
                     this.imgResultAfterCompress &&
                     typeof this.imgResultAfterCompress === 'string'
                     ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
@@ -316443,6 +316441,8 @@ class FormReviewComponent {
             if (values && values.inputImg) {
                 if (values.inputImg instanceof Array) {
                     doTheArray = true;
+                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
+                    this.imgResultAfterCompress = {};
                     if (values.inputImg.length) {
                         const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                             return yield this.compressFile({
@@ -316462,12 +316462,10 @@ class FormReviewComponent {
                     typeof this.imgResultAfterCompress === 'object'
                     ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
                     : [];
-                this.settings.onSubmit(values.inputImg && (values.description || values.description === undefined || values.description === '')
-                    ? Object.assign(Object.assign({}, values), { inputImg: [...theImages] }) : values);
+                this.settings.onSubmit(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
             }
             else
                 this.settings.onSubmit(values.inputImg &&
-                    (values.description || values.description === undefined || values.description === '') &&
                     this.imgResultAfterCompress &&
                     typeof this.imgResultAfterCompress === 'string'
                     ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
