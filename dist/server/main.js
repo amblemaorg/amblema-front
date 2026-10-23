@@ -176686,6 +176686,39 @@ exports.MenuComponent = MenuComponent;
 
 /***/ }),
 
+/***/ "9yDT":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sortByContentOrder = void 0;
+/**
+ * Ordena el contenido de un lapso del AmbLeMario (diagnósticos y actividades) según el orden
+ * administrado en el backoffice. Los elementos cuya key no está en `contentOrder` van al final
+ * y conservan su orden relativo original. Sin `contentOrder` se devuelve el orden original.
+ */
+function sortByContentOrder(items, getKey, contentOrder) {
+    if (!items || !contentOrder || contentOrder.length === 0)
+        return items;
+    const positions = contentOrder.reduce((acc, key, idx) => {
+        acc[key] = idx;
+        return acc;
+    }, {});
+    return items
+        .map((item, idx) => {
+        const key = getKey(item);
+        const position = key in positions ? positions[key] : contentOrder.length;
+        return { item, idx, position };
+    })
+        .sort((a, b) => a.position - b.position || a.idx - b.idx)
+        .map(({ item }) => item);
+}
+exports.sortByContentOrder = sortByContentOrder;
+
+
+/***/ }),
+
 /***/ "A+Eo":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -298655,6 +298688,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.YearbookPdfTemplateComponent = void 0;
 const tslib_1 = __webpack_require__("zOht");
 const yearbook_config_1 = __webpack_require__("cOcI");
+const yearbook_content_order_1 = __webpack_require__("9yDT");
 // import { TemplateUtils } from './templatesModels/templateUtils';
 const templatesModels_1 = __webpack_require__("60zM");
 class YearbookPdfTemplateComponent {
@@ -299186,15 +299220,16 @@ class YearbookPdfTemplateComponent {
             if (!images) {
                 images = [];
             }
-            let activityPage = new templatesModels_1.ActivityTemplate(`${lapse.lapseId}__${name}-${id}-section`, name, description, null, images, activityCharacterLimit);
+            // orderKey: id de la actividad, para ordenar según backoffice > Amblemario
+            let activityPage = Object.assign(new templatesModels_1.ActivityTemplate(`${lapse.lapseId}__${name}-${id}-section`, name, description, null, images, activityCharacterLimit), { orderKey: id });
             activityPages.push(activityPage);
             if (expandGallery) {
                 const offset = 3;
                 if (images.length > offset) {
-                    activityPages.push(new templatesModels_1.GalleryTemplate(images, {
+                    activityPages.push(Object.assign(new templatesModels_1.GalleryTemplate(images, {
                         limit: 12,
                         offset,
-                    }));
+                    }), { orderKey: id }));
                 }
             }
         }
@@ -299215,30 +299250,25 @@ class YearbookPdfTemplateComponent {
             let diagnosticsPages = diagnosticPageDataGroup.getPagesWithDiagnosticTemplate(lapse.lapseName, diagnosticCharacterLimit);
             diagnosticsPages = diagnosticsPages.filter((diagPg) => this.willPrintedSection(diagPg.storeId));
             // console.log({ diagnosticsPages });
-            if (diagnosticsPages.length > 0) {
-                diagnosticsPages[0].subtitle = lapse.lapseName;
-            }
             const activityPages = this.getActivitiesPages(lapse, activityCharacterLimit, diagnosticsPages.length === 0);
-            pagesToAdd.push(...diagnosticsPages, ...activityPages);
-            const diagPgIndexListItems = templatesModels_1.TemplateUtils.getItemsToIndex(diagnosticsPages, this.pager, (pageTmp) => (pageTmp.title ? 'title' : 'name'), null, (pageTmp) => pageTmp.templateName !== 'galleryTemplate');
-            const actPgIndexListItems = templatesModels_1.TemplateUtils.getItemsToIndex(activityPages, this.pager, (pageTmp) => (pageTmp.title ? 'title' : 'name'), null, (pageTmp) => pageTmp.templateName !== 'galleryTemplate');
-            let indexListItemsToPush = [];
-            if (diagPgIndexListItems.length > 0 || actPgIndexListItems.length > 0) {
-                indexListItemsToPush.push(new templatesModels_1.IndexListItem(lapse.lapseName));
-            }
-            if (diagPgIndexListItems.length > 0) {
-                indexListItemsToPush.push([
-                    new templatesModels_1.IndexListItem('Diagnósticos'),
-                    [...diagPgIndexListItems],
+            // Diagnósticos y actividades intercalados según backoffice > Amblemario.
+            // Sin orden configurado se mantiene: diagnósticos y luego actividades.
+            const lapsePages = yearbook_content_order_1.sortByContentOrder([...diagnosticsPages, ...activityPages], (pageTmp) => this.getContentOrderKey(pageTmp), lapse.contentOrder);
+            // El nombre del lapso solo va en la primera página del lapso
+            lapsePages.forEach((pageTmp, idx) => {
+                if ('subtitle' in pageTmp) {
+                    pageTmp.subtitle = idx === 0 ? lapse.lapseName : null;
+                }
+            });
+            pagesToAdd.push(...lapsePages);
+            // El pager se asigna en el mismo orden en que se agregan las páginas
+            const lapsePgIndexListItems = templatesModels_1.TemplateUtils.getItemsToIndex(lapsePages, this.pager, (pageTmp) => (pageTmp.title ? 'title' : 'name'), null, (pageTmp) => pageTmp.templateName !== 'galleryTemplate');
+            if (lapsePgIndexListItems.length > 0) {
+                indexListItems.push([
+                    new templatesModels_1.IndexListItem(lapse.lapseName),
+                    [...lapsePgIndexListItems],
                 ]);
             }
-            if (actPgIndexListItems.length > 0) {
-                indexListItemsToPush.push([
-                    new templatesModels_1.IndexListItem('Actividades'),
-                    [...actPgIndexListItems],
-                ]);
-            }
-            indexListItems.push(indexListItemsToPush);
         });
         // console.log({ pagesToAdd });
         this.pages.push(...pagesToAdd);
@@ -299280,6 +299310,14 @@ class YearbookPdfTemplateComponent {
             const page = pages[index];
             page.page += countToAdd;
         }
+    }
+    getContentOrderKey(pageTmp) {
+        if (pageTmp.orderKey)
+            return pageTmp.orderKey;
+        const match = typeof pageTmp.storeId === 'string'
+            ? pageTmp.storeId.match(/__diagnostic--(\w+)-section$/)
+            : null;
+        return match ? match[1] : null;
     }
     willPrintedSection(store) {
         const disabledSection = this.printOptions.disablePages.find((disabledSection) => disabledSection === store);
@@ -312461,6 +312499,7 @@ exports.TextsButtonsSetBlockComponent = void 0;
 const tslib_1 = __webpack_require__("zOht");
 const peca_actions_1 = __webpack_require__("kSTb");
 const rxjs_1 = __webpack_require__("qCKp");
+const operators_1 = __webpack_require__("kU1M");
 const store_1 = __webpack_require__("e1JD");
 const peca_state_1 = __webpack_require__("J12s");
 const tb_body_adapter_1 = __webpack_require__("Mifr");
@@ -312940,16 +312979,39 @@ class TextsButtonsSetBlockComponent {
     }
     exportDiagnostics() {
         let workbookBin = null;
+        this.diagnosticsData = this.sortForExport(JSON.parse(localStorage.getItem("stud_data")));
         if (this.settings.typeDiag == "reading") {
-            this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
             workbookBin = this.makeExcel();
         }
         else {
-            this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
             workbookBin = this.makeExcelMath();
         }
         const octetStream = this.binary2octet(workbookBin);
         file_saver_1.saveAs(new Blob([octetStream], { type: "application/octet-stream" }), `${this.settings.nameDiag}.xls`);
+    }
+    // Orden de exportación: grado, sección, apellido, nombre
+    sortForExport(students) {
+        const collator = new Intl.Collator("es", {
+            sensitivity: "base",
+            numeric: true,
+        });
+        const text = (value) => (value != null ? `${value}`.trim() : "");
+        const gradeOf = (s) => {
+            const grade = parseInt(text(s && s.grade), 10);
+            return isNaN(grade) ? Number.MAX_SAFE_INTEGER : grade;
+        };
+        return [...(students || [])].sort((a, b) => {
+            const lastNameA = text(a && a.lastName);
+            const lastNameB = text(b && b.lastName);
+            const firstNameA = text(a && a.name);
+            const firstNameB = text(b && b.name);
+            return (gradeOf(a) - gradeOf(b) ||
+                collator.compare(text(a && a.section), text(b && b.section)) ||
+                collator.compare(lastNameA, lastNameB) ||
+                lastNameA.localeCompare(lastNameB) ||
+                collator.compare(firstNameA, firstNameB) ||
+                firstNameA.localeCompare(firstNameB));
+        });
     }
     getStudentsCount() {
         const count = JSON.parse(localStorage.getItem("stud_data")).length;
@@ -313937,40 +313999,41 @@ class TextsButtonsSetBlockComponent {
         let lapse = this.getLapse();
         let auxStudents = [];
         this.exportingData = true;
-        this.infoGradesSubscription = this.infoData$.subscribe((data) => {
+        const exportAllGrades = this.gradesToExport.includes("all");
+        // take(1): exportar una sola vez aunque el store vuelva a emitir
+        this.infoData$.pipe(operators_1.take(1)).subscribe((data) => {
             if (data.activePecaContent) {
-                for (let j = 0; j < this.gradesToExport.length; j++) {
-                    for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
-                        if (this.gradesToExport[j] == "all" || data.activePecaContent.school.sections[i].grade == this.gradesToExport[j]) {
-                            const studentsWithGradeAndSection = data.activePecaContent.school.sections[i].students.map((student) => {
-                                const student_ = {
-                                    name: student.firstName,
-                                    lastName: student.lastName,
-                                    gender: student.gender,
-                                    grade: data.activePecaContent.school.sections[i].grade,
-                                    section: data.activePecaContent.school.sections[i].name,
-                                };
-                                if (this.settings.typeDiag == "reading") {
-                                    student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
-                                    student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
-                                    student_["date"] = student[`lapse${lapse}`]["readingDate"];
-                                }
-                                else {
-                                    student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
-                                    student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
-                                    student_["date"] = student[`lapse${lapse}`]["mathDate"];
-                                    student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
-                                    student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
-                                    student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
-                                }
-                                return student_;
-                            });
-                            auxStudents = auxStudents.concat(studentsWithGradeAndSection);
-                        }
+                // Una pasada por sección evita duplicados si se marca "Todos" junto a un grado
+                for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
+                    if (exportAllGrades || this.gradesToExport.includes(data.activePecaContent.school.sections[i].grade)) {
+                        const studentsWithGradeAndSection = data.activePecaContent.school.sections[i].students.map((student) => {
+                            const student_ = {
+                                name: student.firstName,
+                                lastName: student.lastName,
+                                gender: student.gender,
+                                grade: data.activePecaContent.school.sections[i].grade,
+                                section: data.activePecaContent.school.sections[i].name,
+                            };
+                            if (this.settings.typeDiag == "reading") {
+                                student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
+                                student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
+                                student_["date"] = student[`lapse${lapse}`]["readingDate"];
+                            }
+                            else {
+                                student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
+                                student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
+                                student_["date"] = student[`lapse${lapse}`]["mathDate"];
+                                student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
+                                student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
+                                student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
+                            }
+                            return student_;
+                        });
+                        auxStudents = auxStudents.concat(studentsWithGradeAndSection);
                     }
                 }
                 if (auxStudents) {
-                    this.diagnosticsData = auxStudents;
+                    this.diagnosticsData = this.sortForExport(auxStudents);
                     let workbookBin = null;
                     if (this.settings.typeDiag == "reading") {
                         workbookBin = this.makeExcel();
@@ -313982,8 +314045,11 @@ class TextsButtonsSetBlockComponent {
                     file_saver_1.saveAs(new Blob([octetStream], { type: "application/octet-stream" }), `${this.settings.nameDiag}.xls`);
                     this.gradesToExport = [];
                 }
-                this.exportingData = false;
             }
+            this.exportingData = false;
+        }, (error) => {
+            console.error(error);
+            this.exportingData = false;
         });
     }
     showGroupSections(action) {
@@ -393411,7 +393477,7 @@ var DocumentDefinition = /** @class */ (function () {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.amblemarioMapper = void 0;
-function amblemarioMapper(pecaData) {
+function amblemarioMapper(pecaData, _lastRequest, contentOrder = {}) {
     const grades = {};
     const { schoolYearName, yearbook: { sponsor, school, coordinator, historicalReview, lapse1, lapse2, lapse3, groupPhoto, }, } = pecaData;
     const schoolData = {
@@ -393582,6 +393648,9 @@ function amblemarioMapper(pecaData) {
                 }
                 : null,
             activities: lapseActivities,
+            contentOrder: contentOrder && contentOrder['lapse' + (i + 1)]
+                ? contentOrder['lapse' + (i + 1)]
+                : null,
         };
     });
     return {
@@ -430240,17 +430309,7 @@ class FormBlockComponent {
     makeExcel() {
         var _a, _b, _c, _d, _e, _f, _g;
         this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
-        const collator = new Intl.Collator("es", { sensitivity: "base" });
-        this.studentsData = [...(this.studentsData || [])].sort((a, b) => {
-            const lastNameA = a && a.lastName ? a.lastName.trim() : "";
-            const lastNameB = b && b.lastName ? b.lastName.trim() : "";
-            const firstNameA = a && (a.name || a.firstName) ? (a.name || a.firstName).trim() : "";
-            const firstNameB = b && (b.name || b.firstName) ? (b.name || b.firstName).trim() : "";
-            return (collator.compare(lastNameA, lastNameB) ||
-                lastNameA.localeCompare(lastNameB) ||
-                collator.compare(firstNameA, firstNameB) ||
-                firstNameA.localeCompare(firstNameB));
-        });
+        this.studentsData = [...(this.studentsData || [])].sort((a, b) => this.compareStudentsForExport(a, b));
         const workbook = xlsx_1.default.utils.book_new();
         workbook.Props = {
             Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
@@ -431755,19 +431814,33 @@ class FormBlockComponent {
             this.showExportBtn = true;
         }
     }
+    // Orden de exportación: grado, sección, apellido, nombre
+    compareStudentsForExport(a, b) {
+        const collator = new Intl.Collator("es", {
+            sensitivity: "base",
+            numeric: true,
+        });
+        const text = (value) => (value != null ? `${value}`.trim() : "");
+        const gradeOf = (s) => {
+            const grade = parseInt(text(s && s.grades), 10);
+            return isNaN(grade) ? Number.MAX_SAFE_INTEGER : grade;
+        };
+        const sectionA = text(a && a.section);
+        const sectionB = text(b && b.section);
+        const lastNameA = text(a && a.lastName);
+        const lastNameB = text(b && b.lastName);
+        const firstNameA = text(a && (a.firstName || a.name));
+        const firstNameB = text(b && (b.firstName || b.name));
+        return (gradeOf(a) - gradeOf(b) ||
+            collator.compare(sectionA, sectionB) ||
+            collator.compare(lastNameA, lastNameB) ||
+            lastNameA.localeCompare(lastNameB) ||
+            collator.compare(firstNameA, firstNameB) ||
+            firstNameA.localeCompare(firstNameB));
+    }
     makeExcelExport(studentsData) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        const collator = new Intl.Collator("es", { sensitivity: "base" });
-        const sortedStudents = [...(studentsData || [])].sort((a, b) => {
-            const lastNameA = a && a.lastName ? a.lastName.trim() : "";
-            const lastNameB = b && b.lastName ? b.lastName.trim() : "";
-            const firstNameA = a && (a.firstName || a.name) ? (a.firstName || a.name).trim() : "";
-            const firstNameB = b && (b.firstName || b.name) ? (b.firstName || b.name).trim() : "";
-            return (collator.compare(lastNameA, lastNameB) ||
-                lastNameA.localeCompare(lastNameB) ||
-                collator.compare(firstNameA, firstNameB) ||
-                firstNameA.localeCompare(firstNameB));
-        });
+        const sortedStudents = [...(studentsData || [])].sort((a, b) => this.compareStudentsForExport(a, b));
         const workbook = xlsx_1.default.utils.book_new();
         workbook.Props = {
             Title: `Data de estudiantes - ${(_a = this.sectionsArr[this.activeSection]) === null || _a === void 0 ? void 0 : _a.name}`,
@@ -434834,6 +434907,15 @@ class PdfYearbookService {
     getSectionGrouping(pecaId) {
         return this.http
             .get(`pecaprojects/yearbook/sectiongrouping/${pecaId}`)
+            .toPromise();
+    }
+    /**
+     * Orden del contenido de cada lapso en el AmbLeMario (keys de diagnósticos e ids de actividades),
+     * administrado en backoffice > Ajustes del PECA > Amblemario
+     */
+    getYearbookContentOrder(pecaId) {
+        return this.http
+            .get(`pecaprojects/yearbook/order/${pecaId}`)
             .toPromise();
     }
     getPrintOptionsOb(pecaProjectId) {
@@ -607793,6 +607875,8 @@ class YearbookPageComponent extends peca_page_component_1.PecaPageComponent {
         this.store = store;
         this.subscription = new rxjs_1.Subscription();
         this.ybSubscription = new rxjs_1.Subscription();
+        this.contentOrder = null;
+        this.contentOrderPecaId = null;
     }
     ngOnInit() {
         let countRespExecuted = 0; // Forma temporal para evitar que ingresen a la vista previa del amblemario pdf con datos incorrecto, porque los datos correctos vienen la segunda vez que se realiza la petición
@@ -607826,6 +607910,7 @@ class YearbookPageComponent extends peca_page_component_1.PecaPageComponent {
                             console.error('Error fetching grouped sections', e);
                         }
                     }
+                    yield this.loadContentOrder(data.activePecaContent.id);
                     const currentYearBook = Object.assign(Object.assign({}, data.activePecaContent.yearbook), { sections: sectionsArray, userId: data.user.id, pecaId: data.activePecaContent.id });
                     let { approvalHistory, isInApproval, pecaId, userId, } = currentYearBook;
                     const yearbookHasNotApprovedRequest = !isInApproval && approvalHistory.length > 0;
@@ -607959,7 +608044,7 @@ class YearbookPageComponent extends peca_page_component_1.PecaPageComponent {
                         // console.log({ pecaDataPDF: this.pecaData });
                     }
                     const diagnosticGoalTableData = yield this.pdfYearbookService.getGoalSettingsTable();
-                    const yearBookConfig = yield yearbook_config_1.MapperYearBookWeb(newYearBook, diagnosticGoalTableData, this.pdfYearbookService, permissionsObj, this.store);
+                    const yearBookConfig = yield yearbook_config_1.MapperYearBookWeb(newYearBook, diagnosticGoalTableData, this.pdfYearbookService, permissionsObj, this.store, this.contentOrder);
                     this.setPdfBtnLoading(false);
                     // console.log('after loading false', {
                     //   pecaDataPDF: this.pecaData,
@@ -607971,10 +608056,26 @@ class YearbookPageComponent extends peca_page_component_1.PecaPageComponent {
             }
         }), (error) => console.error(error));
     }
+    /** Orden del contenido de lapsos (backoffice > Amblemario); se pide una sola vez por PECA */
+    loadContentOrder(pecaId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            if (this.contentOrder && this.contentOrderPecaId === pecaId)
+                return;
+            try {
+                this.contentOrder = (yield this.pdfYearbookService.getYearbookContentOrder(pecaId)) || {};
+            }
+            catch (e) {
+                // Sin orden configurado se mantiene el orden por defecto
+                console.error('Error fetching yearbook content order', e);
+                this.contentOrder = {};
+            }
+            this.contentOrderPecaId = pecaId;
+        });
+    }
     setAmblemarioData(pecaData, lastRequest, _mapper) {
         // console.log('setAmblemarioData', pecaData);
         if (_mapper) {
-            this.pecaData = _mapper(pecaData, lastRequest);
+            this.pecaData = _mapper(pecaData, lastRequest, this.contentOrder);
         }
         else {
             this.pecaData = pecaData;
@@ -609645,6 +609746,7 @@ const tslib_1 = __webpack_require__("zOht");
 const yearbook_config_1 = __webpack_require__("cOcI");
 const yearbook_action_1 = __webpack_require__("wg3g");
 const peca_actions_1 = __webpack_require__("kSTb");
+const yearbook_content_order_1 = __webpack_require__("9yDT");
 /**
  *
  * @function MapperYearBookWeb
@@ -609653,7 +609755,7 @@ const peca_actions_1 = __webpack_require__("kSTb");
  * and the components are recreated according
  * to the data.
  */
-function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookService, permissions, store) {
+function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookService, permissions, store, contentOrder = {}) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         const inputFileSizeLimitMb = 1;
         const pdfOptionsDefaultValues = yield pdfYearbookService.getPrintOptions(yearBookData.pecaId);
@@ -609942,7 +610044,7 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
             const lapseData = yearBookData[lapseName];
             const maxLength = yearbook_config_1.YearbookConfig.getFormDescriptionLimit('globalLapsesDiagnostic');
             const minLength = yearbook_config_1.YearbookConfig.getFormDescriptionMinLimit('globalLapsesDiagnostic');
-            return [
+            const environmentalBlocks = [
                 createTitleComponent('Diagnóstico de Ambiente'),
                 {
                     component: 'graphics-environment',
@@ -609991,6 +610093,8 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
                     },
                 },
                 yearbookPDFOptions(`lapse${lapseNumber}__diagnostic--diagnosticEnvironmental-section`),
+            ];
+            const readingBlocks = [
                 createTitleComponent('Diagnóstico de lectura'),
                 {
                     component: 'table',
@@ -610110,6 +610214,8 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
                     },
                 },
                 yearbookPDFOptions(`lapse${lapseNumber}__diagnostic--diagnosticReading-section`),
+            ];
+            const mathBlocks = [
                 createTitleComponent('Diagnóstico de Multiplicación'),
                 {
                     component: 'table',
@@ -610239,6 +610345,8 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
                     },
                 },
                 yearbookPDFOptions(`lapse${lapseNumber}__diagnostic--diagnosticMath-section`),
+            ];
+            const logicBlocks = [
                 createTitleComponent('Diagnóstico de lógica matemática'),
                 {
                     component: 'table',
@@ -610369,8 +610477,16 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
                     },
                 },
                 yearbookPDFOptions(`lapse${lapseNumber}__diagnostic--diagnosticLogic-section`),
+            ];
+            // Orden por defecto: diagnósticos y luego actividades; se reordena según backoffice > Amblemario
+            const contentGroups = [
+                { key: 'diagnosticEnvironmental', blocks: environmentalBlocks },
+                { key: 'diagnosticReading', blocks: readingBlocks },
+                { key: 'diagnosticMath', blocks: mathBlocks },
+                { key: 'diagnosticLogic', blocks: logicBlocks },
                 ...createActivitiesComponents(lapseData.activities, lapseNumber),
             ];
+            return yearbook_content_order_1.sortByContentOrder(contentGroups, (group) => group.key, contentOrder ? contentOrder[lapseName] : null).reduce((blocks, group) => [...blocks, ...group.blocks], []);
         }
         function createTitleComponent(title) {
             return {
@@ -610387,56 +610503,55 @@ function MapperYearBookWeb(yearBookData, diagnosticGoalTableData, pdfYearbookSer
         }
         function createActivitiesComponents(activities, lapseNumber) {
             const lapseName = `lapse${lapseNumber}`;
-            return activities.reduce((activitiesArray, activity, idx) => {
+            return activities.map((activity) => {
                 const { id, name, images, description } = activity;
                 // console.log('createActivitiesComponents', activity);
-                return [
-                    ...activitiesArray,
-                    createTitleComponent(name),
-                    {
-                        component: 'form-review',
-                        name: `${id}-form`,
-                        settings: {
-                            onSubmit: (values) => {
-                                const data = {
-                                    lapse: lapseNumber,
-                                    activityId: id,
-                                    description: values.description,
-                                    images: values.inputImg && values.inputImg.length
-                                        ? values.inputImg
-                                        : [],
-                                };
-                                // store.dispatch(new SetLapseActivity(data));
-                                dispatchAction('activities', data);
-                            },
-                            fields: {
-                                inputImg: {
-                                    name: `${lapseName}-${id}-images`,
-                                    label: `Cargar de imágenes de ${name}`,
-                                    disabled: /* yearBookData.isInApproval */ false,
-                                    value: images,
-                                    multiple: true,
-                                    sizeLimitMb: inputFileSizeLimitMb,
+                return { key: id, blocks: [
+                        createTitleComponent(name),
+                        {
+                            component: 'form-review',
+                            name: `${id}-form`,
+                            settings: {
+                                onSubmit: (values) => {
+                                    const data = {
+                                        lapse: lapseNumber,
+                                        activityId: id,
+                                        description: values.description,
+                                        images: values.inputImg && values.inputImg.length
+                                            ? values.inputImg
+                                            : [],
+                                    };
+                                    // store.dispatch(new SetLapseActivity(data));
+                                    dispatchAction('activities', data);
                                 },
-                                description: {
-                                    label: `Descripción de ${name}`,
-                                    placeholder: `Descripción de ${name}`,
-                                    disabled: /* yearBookData.isInApproval */ false,
-                                    value: description,
-                                    maxLength: yearbook_config_1.YearbookConfig.getFormDescriptionLimit('globalLapsesActivities'),
-                                    minLength: yearbook_config_1.YearbookConfig.getFormDescriptionMinLimit('globalLapsesActivities'),
-                                },
-                                button: {
-                                    text: 'Guardar cambios',
-                                    ingAction: 'Guardando...',
-                                    hidden: /* yearBookData.isInApproval */ false,
+                                fields: {
+                                    inputImg: {
+                                        name: `${lapseName}-${id}-images`,
+                                        label: `Cargar de imágenes de ${name}`,
+                                        disabled: /* yearBookData.isInApproval */ false,
+                                        value: images,
+                                        multiple: true,
+                                        sizeLimitMb: inputFileSizeLimitMb,
+                                    },
+                                    description: {
+                                        label: `Descripción de ${name}`,
+                                        placeholder: `Descripción de ${name}`,
+                                        disabled: /* yearBookData.isInApproval */ false,
+                                        value: description,
+                                        maxLength: yearbook_config_1.YearbookConfig.getFormDescriptionLimit('globalLapsesActivities'),
+                                        minLength: yearbook_config_1.YearbookConfig.getFormDescriptionMinLimit('globalLapsesActivities'),
+                                    },
+                                    button: {
+                                        text: 'Guardar cambios',
+                                        ingAction: 'Guardando...',
+                                        hidden: /* yearBookData.isInApproval */ false,
+                                    },
                                 },
                             },
                         },
-                    },
-                    yearbookPDFLapseOptions(`${lapseName}__${name}-${id}-section`, lapseName),
-                ];
-            }, []);
+                        yearbookPDFLapseOptions(`${lapseName}__${name}-${id}-section`, lapseName),
+                    ] };
+            });
         }
         function determineGradeString(grade) {
             switch (grade) {

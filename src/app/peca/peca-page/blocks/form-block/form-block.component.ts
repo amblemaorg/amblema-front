@@ -571,21 +571,9 @@ export class FormBlockComponent
 
   makeExcel() {
     this.studentsData = JSON.parse(localStorage.getItem("stud_data"));
-    const collator = new Intl.Collator("es", { sensitivity: "base" });
-    this.studentsData = [...(this.studentsData || [])].sort((a, b) => {
-      const lastNameA = a && a.lastName ? a.lastName.trim() : "";
-      const lastNameB = b && b.lastName ? b.lastName.trim() : "";
-      const firstNameA =
-        a && (a.name || a.firstName) ? (a.name || a.firstName).trim() : "";
-      const firstNameB =
-        b && (b.name || b.firstName) ? (b.name || b.firstName).trim() : "";
-      return (
-        collator.compare(lastNameA, lastNameB) ||
-        lastNameA.localeCompare(lastNameB) ||
-        collator.compare(firstNameA, firstNameB) ||
-        firstNameA.localeCompare(firstNameB)
-      );
-    });
+    this.studentsData = [...(this.studentsData || [])].sort((a, b) =>
+      this.compareStudentsForExport(a, b)
+    );
     const workbook = XLSX.utils.book_new();
     workbook.Props = {
       Title: `Data de estudiantes - ${this.sectionsArr[0].name}`,
@@ -2476,22 +2464,37 @@ export class FormBlockComponent
     }
   }
 
-  makeExcelExport(studentsData) {
-    const collator = new Intl.Collator("es", { sensitivity: "base" });
-    const sortedStudents = [...(studentsData || [])].sort((a, b) => {
-      const lastNameA = a && a.lastName ? a.lastName.trim() : "";
-      const lastNameB = b && b.lastName ? b.lastName.trim() : "";
-      const firstNameA =
-        a && (a.firstName || a.name) ? (a.firstName || a.name).trim() : "";
-      const firstNameB =
-        b && (b.firstName || b.name) ? (b.firstName || b.name).trim() : "";
-      return (
-        collator.compare(lastNameA, lastNameB) ||
-        lastNameA.localeCompare(lastNameB) ||
-        collator.compare(firstNameA, firstNameB) ||
-        firstNameA.localeCompare(firstNameB)
-      );
+  // Orden de exportación: grado, sección, apellido, nombre
+  private compareStudentsForExport(a, b): number {
+    const collator = new Intl.Collator("es", {
+      sensitivity: "base",
+      numeric: true,
     });
+    const text = (value) => (value != null ? `${value}`.trim() : "");
+    const gradeOf = (s) => {
+      const grade = parseInt(text(s && s.grades), 10);
+      return isNaN(grade) ? Number.MAX_SAFE_INTEGER : grade;
+    };
+    const sectionA = text(a && a.section);
+    const sectionB = text(b && b.section);
+    const lastNameA = text(a && a.lastName);
+    const lastNameB = text(b && b.lastName);
+    const firstNameA = text(a && (a.firstName || a.name));
+    const firstNameB = text(b && (b.firstName || b.name));
+    return (
+      gradeOf(a) - gradeOf(b) ||
+      collator.compare(sectionA, sectionB) ||
+      collator.compare(lastNameA, lastNameB) ||
+      lastNameA.localeCompare(lastNameB) ||
+      collator.compare(firstNameA, firstNameB) ||
+      firstNameA.localeCompare(firstNameB)
+    );
+  }
+
+  makeExcelExport(studentsData) {
+    const sortedStudents = [...(studentsData || [])].sort((a, b) =>
+      this.compareStudentsForExport(a, b)
+    );
 
     const workbook = XLSX.utils.book_new();
     workbook.Props = {

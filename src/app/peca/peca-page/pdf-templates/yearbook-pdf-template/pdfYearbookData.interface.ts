@@ -35,6 +35,7 @@ interface Lapse {
   diagnosticMath: DiagnosticReading;
   diagnosticLogic: DiagnosticReading;
   activities: Activity[];
+  contentOrder?: string[];
 }
 
 interface Activity {
