@@ -22,6 +22,7 @@ import { ToastrService } from "ngx-toastr";
 import cloneDeep from "lodash/cloneDeep";
 import { ReCaptchaV3Service } from "ng-recaptcha";
 import { Subscription } from "rxjs";
+import { GoogleMapsLoaderService } from "src/app/services/web/google-maps-loader.service";
 declare var $: any;
 
 @Component({
@@ -69,11 +70,14 @@ export class FormWizardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private recaptchaService: ReCaptchaV3Service,
-    @Inject(PLATFORM_ID) private platformId // private fetcher: HttpFetcherService,
+    @Inject(PLATFORM_ID) private platformId, // private fetcher: HttpFetcherService,
+    private mapsLoader: GoogleMapsLoaderService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
+      // Google Maps ya no viene en index.html; los reintentos de initMap esperan a que cargue
+      this.mapsLoader.load().catch(() => {});
       this.map = null;
       this.currentMarker = null;
 
