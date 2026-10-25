@@ -1844,11 +1844,18 @@ export class TextsButtonsSetBlockComponent
           []
         );
 
+        // Spreadsheet row of each record (sheet_to_json skips blank rows), to report errors
+        const rowNumber = (index: number) => {
+          const rowIndex = (studentsData[index] as any).__rowNum__;
+          return typeof rowIndex === "number" ? rowIndex + 1 : index + 2;
+        };
+
         if (this.settings.typeDiag == "reading") {
           students = matrix.map((registry, index) => {
             const fecha_resultado = this.parseDate(registry[5]);
             const genero = registry[2] == "Femenino" ? "1" : "2"
             return {
+              fila: rowNumber(index),
               nombre: registry[0] || "",
               apellido: registry[1] || "",
               genero: genero || "",
@@ -1865,6 +1872,7 @@ export class TextsButtonsSetBlockComponent
             const fecha_resultado_log = this.parseDate(registry[8]);
             const genero = registry[2] == "Femenino" ? "1" : "2"
             return {
+              fila: rowNumber(index),
               nombre: registry[0] || "",
               apellido: registry[1] || "",
               genero: genero || "",
@@ -1926,21 +1934,40 @@ export class TextsButtonsSetBlockComponent
         this.toastr.success(result.message, "", {
           positionClass: "toast-bottom-right",
         });
-        this.importingData = false;
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        this.showNotFoundRows(result.notFound);
+        // Refreshes the diagnostics tables without reloading the whole app
+        this.store.dispatch([new FetchPecaContent(this.pecaId)]);
       }
     } catch (err) {
       console.log("error: ", err);
-      this.toastr.error(JSON.stringify(err.error), "", {
-        positionClass: "toast-bottom-right",
-      });
-      this.importingData = false;
-      throw err;
+      const error = err && err.error;
+      this.toastr.error(
+        error && error.message ? error.message : "No se pudieron guardar los resultados",
+        "",
+        { positionClass: "toast-bottom-right" }
+      );
+      this.showNotFoundRows(error && error.notFound);
     } finally {
+      this.importingData = false;
     }
+  }
 
+  // Rows whose grade/section or student don't match the school records
+  private showNotFoundRows(rows: any[]) {
+    if (!rows || !rows.length) return;
+    const MAX_LISTED = 10;
+    const escape = (text: string) =>
+      String(text).replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+    const listed = rows
+      .slice(0, MAX_LISTED)
+      .map((row) => escape(`Fila ${row.fila}: ${row.nombre} ${row.apellido} (${row.motivo})`));
+    if (rows.length > MAX_LISTED) listed.push(`y ${rows.length - MAX_LISTED} más.`);
+    this.toastr.warning(listed.join("<br>"), `${rows.length} filas no se cargaron`, {
+      positionClass: "toast-bottom-right",
+      enableHtml: true,
+      disableTimeOut: true,
+      closeButton: true,
+    });
   }
 
   getLapse() {
