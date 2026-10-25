@@ -83,6 +83,7 @@ export class FormReviewComponent
 
   // Image compressions started on selection and not finished yet
   private pendingCompressions: Promise<void>[] = [];
+  readonly maxSourceImageMb = MAX_SOURCE_IMAGE_MB;
 
   isSaving: boolean = false;
   quillEditor: any;

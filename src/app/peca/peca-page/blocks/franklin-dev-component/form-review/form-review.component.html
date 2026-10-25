@@ -64,8 +64,8 @@
           </span>
         </label>
         <p *ngIf="settings.fields.inputImg.sizeLimitMb">
-          El peso de la imagen no debe exceder de
-          {{ settings.fields.inputImg['sizeLimitMb'] }} MB.
+          Las imágenes se optimizan automáticamente al cargarlas (máximo
+          {{ maxSourceImageMb }} MB por archivo).
         </p>
       </div>
       <ng2-smart-table
