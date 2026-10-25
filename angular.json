@@ -212,6 +212,7 @@
                 }
               ],
               "sourceMap": false,
+              "outputHashing": "media",
               "optimization": {
                 "scripts": false,
                 "styles": true
