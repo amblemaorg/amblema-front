@@ -1,4 +1,4 @@
-export function amblemarioMapper(pecaData) {
+export function amblemarioMapper(pecaData, _lastRequest?, contentOrder = {}) {
   const grades = {};
 
   const {
@@ -219,6 +219,9 @@ export function amblemarioMapper(pecaData) {
         }
         : null,
       activities: lapseActivities,
+      contentOrder: contentOrder && contentOrder['lapse' + (i + 1)]
+        ? contentOrder['lapse' + (i + 1)]
+        : null,
     };
   });
 

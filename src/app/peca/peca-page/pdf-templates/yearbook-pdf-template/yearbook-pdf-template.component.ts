@@ -4,6 +4,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
+import { sortByContentOrder } from '../../mappers/yearbook-content-order';
 
 declare var jsPDF: any;
 declare var html2canvas: any;
@@ -770,13 +771,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
         images = [];
       }
 
-      let activityPage = new ActivityTemplate(
-        `${lapse.lapseId}__${name}-${id}-section`,
-        name,
-        description,
-        null,
-        images,
-        activityCharacterLimit,
+      // orderKey: id de la actividad, para ordenar según backoffice > Amblemario
+      let activityPage = Object.assign(
+        new ActivityTemplate(
+          `${lapse.lapseId}__${name}-${id}-section`,
+          name,
+          description,
+          null,
+          images,
+          activityCharacterLimit,
+        ),
+        { orderKey: id },
       );
 
       activityPages.push(activityPage);
@@ -786,10 +791,13 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
         if (images.length > offset) {
           activityPages.push(
-            new GalleryTemplate(images, {
-              limit: 12,
-              offset,
-            }),
+            Object.assign(
+              new GalleryTemplate(images, {
+                limit: 12,
+                offset,
+              }),
+              { orderKey: id },
+            ),
           );
         }
       }
@@ -831,55 +839,44 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       // console.log({ diagnosticsPages });
 
-      if (diagnosticsPages.length > 0) {
-        diagnosticsPages[0].subtitle = lapse.lapseName;
-      }
-
       const activityPages = this.getActivitiesPages(
         lapse,
         activityCharacterLimit,
         diagnosticsPages.length === 0,
       );
 
-      pagesToAdd.push(...diagnosticsPages, ...activityPages);
+      // Diagnósticos y actividades intercalados según backoffice > Amblemario.
+      // Sin orden configurado se mantiene: diagnósticos y luego actividades.
+      const lapsePages = sortByContentOrder(
+        [...diagnosticsPages, ...activityPages],
+        (pageTmp) => this.getContentOrderKey(pageTmp),
+        lapse.contentOrder,
+      );
 
-      const diagPgIndexListItems = TemplateUtils.getItemsToIndex(
-        diagnosticsPages,
+      // El nombre del lapso solo va en la primera página del lapso
+      lapsePages.forEach((pageTmp, idx) => {
+        if ('subtitle' in pageTmp) {
+          pageTmp.subtitle = idx === 0 ? lapse.lapseName : null;
+        }
+      });
+
+      pagesToAdd.push(...lapsePages);
+
+      // El pager se asigna en el mismo orden en que se agregan las páginas
+      const lapsePgIndexListItems = TemplateUtils.getItemsToIndex(
+        lapsePages,
         this.pager,
         (pageTmp) => (pageTmp.title ? 'title' : 'name'),
         null,
         (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
       );
 
-      const actPgIndexListItems = TemplateUtils.getItemsToIndex(
-        activityPages,
-        this.pager,
-        (pageTmp) => (pageTmp.title ? 'title' : 'name'),
-        null,
-        (pageTmp) => pageTmp.templateName !== 'galleryTemplate',
-      );
-
-      let indexListItemsToPush = [];
-
-      if (diagPgIndexListItems.length > 0 || actPgIndexListItems.length > 0) {
-        indexListItemsToPush.push(new IndexListItem(lapse.lapseName));
-      }
-
-      if (diagPgIndexListItems.length > 0) {
-        indexListItemsToPush.push([
-          new IndexListItem('Diagnósticos'),
-          [...diagPgIndexListItems],
+      if (lapsePgIndexListItems.length > 0) {
+        indexListItems.push([
+          new IndexListItem(lapse.lapseName),
+          [...lapsePgIndexListItems],
         ]);
       }
-
-      if (actPgIndexListItems.length > 0) {
-        indexListItemsToPush.push([
-          new IndexListItem('Actividades'),
-          [...actPgIndexListItems],
-        ]);
-      }
-
-      indexListItems.push(indexListItemsToPush);
     });
 
     // console.log({ pagesToAdd });
@@ -940,6 +937,17 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
 
       page.page += countToAdd;
     }
+  }
+
+  private getContentOrderKey(pageTmp): string {
+    if (pageTmp.orderKey) return pageTmp.orderKey;
+
+    const match =
+      typeof pageTmp.storeId === 'string'
+        ? pageTmp.storeId.match(/__diagnostic--(\w+)-section$/)
+        : null;
+
+    return match ? match[1] : null;
   }
 
   private willPrintedSection(store: string) {

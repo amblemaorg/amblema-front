@@ -5,6 +5,7 @@ import { HttpFetcherService } from "../../../../services/peca/http-fetcher.servi
 import { ToastrService } from "ngx-toastr";
 import { FetchPecaContent } from "../../../../store/actions/peca/peca.actions";
 import { Subscription, Observable } from "rxjs";
+import { take } from "rxjs/operators";
 import { Select, Store } from "@ngxs/store";
 import { PecaState } from "../../../../store/states/peca/peca.state";
 import { textsAndButtonsAdaptBody } from "./tb-body-adapter";
@@ -725,11 +726,12 @@ export class TextsButtonsSetBlockComponent
   }
   exportDiagnostics() {
     let workbookBin = null;
+    this.diagnosticsData = this.sortForExport(
+      JSON.parse(localStorage.getItem("stud_data"))
+    );
     if (this.settings.typeDiag == "reading") {
-      this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
       workbookBin = this.makeExcel();
     } else {
-      this.diagnosticsData = JSON.parse(localStorage.getItem("stud_data"));
       workbookBin = this.makeExcelMath();
     }
     const octetStream = this.binary2octet(workbookBin);
@@ -737,6 +739,32 @@ export class TextsButtonsSetBlockComponent
       new Blob([octetStream], { type: "application/octet-stream" }),
       `${this.settings.nameDiag}.xls`
     );
+  }
+  // Orden de exportación: grado, sección, apellido, nombre
+  private sortForExport(students: any[]): any[] {
+    const collator = new Intl.Collator("es", {
+      sensitivity: "base",
+      numeric: true,
+    });
+    const text = (value) => (value != null ? `${value}`.trim() : "");
+    const gradeOf = (s) => {
+      const grade = parseInt(text(s && s.grade), 10);
+      return isNaN(grade) ? Number.MAX_SAFE_INTEGER : grade;
+    };
+    return [...(students || [])].sort((a, b) => {
+      const lastNameA = text(a && a.lastName);
+      const lastNameB = text(b && b.lastName);
+      const firstNameA = text(a && a.name);
+      const firstNameB = text(b && b.name);
+      return (
+        gradeOf(a) - gradeOf(b) ||
+        collator.compare(text(a && a.section), text(b && b.section)) ||
+        collator.compare(lastNameA, lastNameB) ||
+        lastNameA.localeCompare(lastNameB) ||
+        collator.compare(firstNameA, firstNameB) ||
+        firstNameA.localeCompare(firstNameB)
+      );
+    });
   }
   getStudentsCount() {
     const count = JSON.parse(localStorage.getItem("stud_data")).length;
@@ -1994,43 +2022,44 @@ export class TextsButtonsSetBlockComponent
     let lapse = this.getLapse();
     let auxStudents = [];
     this.exportingData = true;
-    this.infoGradesSubscription = this.infoData$.subscribe(
+    const exportAllGrades = this.gradesToExport.includes("all");
+    // take(1): exportar una sola vez aunque el store vuelva a emitir
+    this.infoData$.pipe(take(1)).subscribe(
       (data) => {
         if (data.activePecaContent) {
-          for (let j = 0; j < this.gradesToExport.length; j++) {
-            for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
-              if (this.gradesToExport[j] == "all" || data.activePecaContent.school.sections[i].grade == this.gradesToExport[j]) {
-                const studentsWithGradeAndSection =
-                  data.activePecaContent.school.sections[i].students.map((student) => {
-                    const student_ = {
-                      name: student.firstName,
-                      lastName: student.lastName,
-                      gender: student.gender,
-                      grade: data.activePecaContent.school.sections[i].grade,
-                      section: data.activePecaContent.school.sections[i].name,
-                    };
-                    if (this.settings.typeDiag == "reading") {
-                      student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
-                      student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
-                      student_["date"] = student[`lapse${lapse}`]["readingDate"];
+          // Una pasada por sección evita duplicados si se marca "Todos" junto a un grado
+          for (let i = 0; i < data.activePecaContent.school.sections.length; i++) {
+            if (exportAllGrades || this.gradesToExport.includes(data.activePecaContent.school.sections[i].grade)) {
+              const studentsWithGradeAndSection =
+                data.activePecaContent.school.sections[i].students.map((student) => {
+                  const student_ = {
+                    name: student.firstName,
+                    lastName: student.lastName,
+                    gender: student.gender,
+                    grade: data.activePecaContent.school.sections[i].grade,
+                    section: data.activePecaContent.school.sections[i].name,
+                  };
+                  if (this.settings.typeDiag == "reading") {
+                    student_["result"] = student[`lapse${lapse}`]["wordsPerMin"];
+                    student_["index"] = student[`lapse${lapse}`]["wordsPerMinIndex"];
+                    student_["date"] = student[`lapse${lapse}`]["readingDate"];
 
-                    } else {
-                      student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
-                      student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
-                      student_["date"] = student[`lapse${lapse}`]["mathDate"];
-                      student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
-                      student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
-                      student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
-                    }
-                    return student_;
-                  });
-                auxStudents = auxStudents.concat(studentsWithGradeAndSection);
-              }
+                  } else {
+                    student_["resultMul"] = student[`lapse${lapse}`]["multiplicationsPerMin"];
+                    student_["indexMul"] = student[`lapse${lapse}`]["multiplicationsPerMinIndex"];
+                    student_["date"] = student[`lapse${lapse}`]["mathDate"];
+                    student_["resultLog"] = student[`lapse${lapse}`]["operationsPerMin"];
+                    student_["indexLog"] = student[`lapse${lapse}`]["operationsPerMinIndex"];
+                    student_["dateLog"] = student[`lapse${lapse}`]["logicDate"];
+                  }
+                  return student_;
+                });
+              auxStudents = auxStudents.concat(studentsWithGradeAndSection);
             }
           }
 
           if (auxStudents) {
-            this.diagnosticsData = auxStudents;
+            this.diagnosticsData = this.sortForExport(auxStudents);
             let workbookBin = null;
 
             if (this.settings.typeDiag == "reading") {
@@ -2046,9 +2075,12 @@ export class TextsButtonsSetBlockComponent
             );
             this.gradesToExport = [];
           }
-          this.exportingData = false;
-
         }
+        this.exportingData = false;
+      },
+      (error) => {
+        console.error(error);
+        this.exportingData = false;
       }
     );
   }

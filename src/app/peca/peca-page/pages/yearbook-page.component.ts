@@ -13,7 +13,7 @@ import { MapperYearBookWeb } from './yearbook-config';
 import { PecaState } from '../../../store/states/peca/peca.state';
 import { Observable, Subscription } from 'rxjs';
 import { amblemarioMapper } from '../mappers/amblemario-mapper';
-import { PdfYearbookService } from 'src/app/services/peca/pdf-yearbook.service';
+import { PdfYearbookService, YearbookContentOrder } from 'src/app/services/peca/pdf-yearbook.service';
 import {
   SetYearBook,
   YearBookState,
@@ -42,6 +42,9 @@ export class YearbookPageComponent extends PecaPageComponent
   title: string;
 
   isInstantiating: boolean;
+
+  contentOrder: YearbookContentOrder = null;
+  contentOrderPecaId: string = null;
 
   constructor(
     private store: Store,
@@ -92,6 +95,8 @@ export class YearbookPageComponent extends PecaPageComponent
                   console.error('Error fetching grouped sections', e);
                 }
               }
+              await this.loadContentOrder(data.activePecaContent.id);
+
               const currentYearBook = {
                 ...data.activePecaContent.yearbook,
                 sections: sectionsArray,
@@ -354,6 +359,7 @@ export class YearbookPageComponent extends PecaPageComponent
                 this.pdfYearbookService,
                 permissionsObj,
                 this.store,
+                this.contentOrder,
               );
 
               this.setPdfBtnLoading(false);
@@ -372,11 +378,25 @@ export class YearbookPageComponent extends PecaPageComponent
       );
   }
 
+  /** Orden del contenido de lapsos (backoffice > Amblemario); se pide una sola vez por PECA */
+  async loadContentOrder(pecaId: string) {
+    if (this.contentOrder && this.contentOrderPecaId === pecaId) return;
+
+    try {
+      this.contentOrder = (await this.pdfYearbookService.getYearbookContentOrder(pecaId)) || {};
+    } catch (e) {
+      // Sin orden configurado se mantiene el orden por defecto
+      console.error('Error fetching yearbook content order', e);
+      this.contentOrder = {};
+    }
+    this.contentOrderPecaId = pecaId;
+  }
+
   setAmblemarioData(pecaData, lastRequest, _mapper?: Function) {
     // console.log('setAmblemarioData', pecaData);
 
     if (_mapper) {
-      this.pecaData = _mapper(pecaData, lastRequest);
+      this.pecaData = _mapper(pecaData, lastRequest, this.contentOrder);
     } else {
       this.pecaData = pecaData;
     }
