@@ -16,6 +16,7 @@ import { GlobalService } from "src/app/services/global.service";
 import { Select } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
 import { PecaState } from "src/app/store/states/peca/peca.state";
+import { ImgHelper } from "src/app/helpers/img.helper";
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { ClassGetter } from "@angular/compiler/src/output/output_ast";
 
@@ -56,8 +57,10 @@ export class ProfileBlockComponent
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
+      reader.onload = async (event: any) => {
+        // Profile photos are shown small: 800px is enough
+        this.url =
+          (await ImgHelper.compressDataUrl(event.target.result, 800)) || event.target.result;
         //To send data to profile component
         this.globals.formWithImage(this.url);
       };

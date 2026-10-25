@@ -147,7 +147,6 @@ export class PecaState {
     const showToast = payload_.includes("[:show-toast:]");
     if (showToast) payload_ = payload_.replace("[:show-toast:]", "");
     this.apiService.setResourcePath("pecaprojects/" + payload_);
-    await this.apiService.getWebContent().toPromise();
     const response = await this.apiService.getWebContent().toPromise();
 
     if (response) {

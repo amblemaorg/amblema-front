@@ -3,10 +3,13 @@ import { PresentationalBlockComponent } from '../../page-block.component';
 import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import smartTableImageConfig from './table-images-config.js';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NgxImageCompressService } from 'ngx-image-compress';
+import { ImgHelper } from '../../../../../helpers/img.helper';
 import { Select } from '@ngxs/store';
 import { YearBookState } from '../../../../../store/yearbook/yearbook.action';
 import { Observable } from 'rxjs';
+
+// Sanity limit for the original file; the configured sizeLimitMb applies after compression
+const MAX_SOURCE_IMAGE_MB = 25;
 
 @Component({
   selector: 'app-form-review',
@@ -78,10 +81,9 @@ export class FormReviewComponent
   tableImages: any = smartTableImageConfig;
   source: LocalDataSource = new LocalDataSource();
 
-  imgResultBeforeCompress: string | Object;
-  sizeBeforeCompress: number | Object;
-  imgResultAfterCompress: string | Object;
-  sizeAfterCompress: number | Object;
+  // Image compressions started on selection and not finished yet
+  private pendingCompressions: Promise<void>[] = [];
+  readonly maxSourceImageMb = MAX_SOURCE_IMAGE_MB;
 
   isSaving: boolean = false;
   quillEditor: any;
@@ -306,7 +308,7 @@ export class FormReviewComponent
     };
   }
 
-  constructor(private imageCompress: NgxImageCompressService) { }
+  constructor() { }
 
   ngOnInit() {
     /**
@@ -317,115 +319,6 @@ export class FormReviewComponent
         this.isSaving = false;
       }
     });
-  }
-
-  async compressFile({
-    image,
-    orientation = -2,
-    isArray = false,
-    position = 0,
-  }) {
-    const isB64 = image && image.length && image.includes(';base64,');
-    // this.imageCompress.uploadFile().then(async ({ image, orientation }) => {
-    if (isArray) {
-      if (!this.imgResultBeforeCompress) this.imgResultBeforeCompress = {};
-      if (!this.sizeBeforeCompress) this.sizeBeforeCompress = {};
-      if (!this.imgResultAfterCompress) this.imgResultAfterCompress = {};
-      if (!this.sizeAfterCompress) this.sizeAfterCompress = {};
-
-      this.imgResultBeforeCompress[`${position}`] = image;
-      this.sizeBeforeCompress[`${position}`] = isB64
-        ? this.imageCompress.byteCount(image)
-        : 0;
-    } else {
-      this.imgResultBeforeCompress = image;
-      this.sizeBeforeCompress = isB64 ? this.imageCompress.byteCount(image) : 0;
-    }
-    // console.warn("Size in bytes was:", this.sizeBeforeCompress);
-
-    const s_count = isArray
-      ? this.sizeBeforeCompress[`${position}`]
-      : this.sizeBeforeCompress;
-
-    if (s_count > 800000)
-      await this.fileCompresser({
-        image,
-        orientation,
-        sizeBCompress: s_count,
-        isArray,
-        position,
-        isBase64: isB64,
-      });
-    else {
-      if (isArray) {
-        this.imgResultAfterCompress[`${position}`] = image;
-        this.sizeAfterCompress[`${position}`] = isB64
-          ? this.imageCompress.byteCount(image)
-          : 0;
-      } else {
-        this.imgResultAfterCompress = image;
-        this.sizeAfterCompress = isB64
-          ? this.imageCompress.byteCount(image)
-          : 0;
-      }
-      // console.warn("Size in bytes is now:", this.sizeAfterCompress);
-    }
-    // });
-  }
-
-  async fileCompresser({
-    image,
-    orientation,
-    sizeBCompress,
-    isArray,
-    position,
-    isBase64,
-  }) {
-    const res = await this.imageCompress.compressFile(
-      image,
-      orientation,
-      75,
-      50,
-    );
-    if (res && typeof res === 'string') {
-      if (isArray) {
-        this.sizeAfterCompress[`${position}`] = isBase64
-          ? this.imageCompress.byteCount(res)
-          : 0;
-      } else {
-        this.sizeAfterCompress = isBase64
-          ? this.imageCompress.byteCount(res)
-          : 0;
-      }
-
-      const s_count = isArray
-        ? this.sizeAfterCompress[`${position}`]
-        : this.sizeAfterCompress;
-
-      if (s_count > 800000 && s_count !== sizeBCompress)
-        await this.fileCompresser({
-          image: res,
-          orientation,
-          sizeBCompress: s_count,
-          isArray,
-          position,
-          isBase64,
-        });
-      else {
-        if (isArray) {
-          this.imgResultAfterCompress[`${position}`] = res;
-          this.sizeAfterCompress[`${position}`] = isBase64
-            ? this.imageCompress.byteCount(res)
-            : 0;
-        } else {
-          this.imgResultAfterCompress = res;
-          this.sizeAfterCompress = isBase64
-            ? this.imageCompress.byteCount(res)
-            : 0;
-        }
-        // console.warn("Size in bytes is now:", this.sizeAfterCompress);
-      }
-    }
   }
 
   public setSettings(settings: any): void {
@@ -479,128 +372,37 @@ export class FormReviewComponent
   onTableActions = (event: any) => {
     if (event.action === 'DELETE') {
       const images = this.form.get('inputImg').value;
-      const readImgs =
-        this.imgResultAfterCompress &&
-          typeof this.imgResultAfterCompress === 'object'
-          ? Object.keys(this.imgResultAfterCompress)
-          : null;
       const newImages = images.filter((image) => image !== event.data.image);
       this.form.get('inputImg').setValue(newImages);
-      if (readImgs) {
-        const imgs_ = readImgs.reduce((theIms, currentImg) => {
-          if (this.imgResultAfterCompress[currentImg] !== event.data.image)
-            theIms.push(currentImg);
-          return theIms;
-        }, []);
-        imgs_.map((img) => {
-          delete this.imgResultAfterCompress[img];
-        });
-      }
       this.source.remove(event.data);
     }
   };
 
-  async onClickButton(values: any) {
-    this.isSaving = true;
-    let doTheArray = false;
-
+  // Images are compressed when selected; waits for the ones still in progress
+  // and takes them from the form, since `values` was read before they finished
+  private async prepareValues(values: any) {
     if (values && values.description !== undefined) {
       values = {
         ...values,
         description: this.cleanHtml(values.description) === '' ? '' : values.description,
       };
     }
-
-    if (values && values.inputImg) {
-      if (values.inputImg instanceof Array) {
-        doTheArray = true;
-        // Reset so photos removed or saved in a previous attempt don't leak into this payload
-        this.imgResultAfterCompress = {};
-        if (values.inputImg.length) {
-          const compressions = values.inputImg.map(
-            async (image_, i) =>
-              await this.compressFile({
-                image: image_,
-                isArray: true,
-                position: i,
-              }),
-          );
-          await Promise.all(compressions);
-        }
-      } else if (typeof values.inputImg === 'string')
-        await this.compressFile({ image: values.inputImg });
+    if (this.pendingCompressions.length) {
+      await Promise.all(this.pendingCompressions);
+      values = { ...values, inputImg: this.form.get('inputImg').value };
     }
-    if (doTheArray) {
-      const theImages =
-        this.imgResultAfterCompress &&
-          typeof this.imgResultAfterCompress === 'object'
-          ? Object.keys(this.imgResultAfterCompress).map(
-            (img) => this.imgResultAfterCompress[img],
-          )
-          : [];
+    return values;
+  }
 
-      this.settings.onClickButton({ ...values, inputImg: [...theImages] });
-    } else
-      this.settings.onClickButton(
-        values.inputImg &&
-          this.imgResultAfterCompress &&
-          typeof this.imgResultAfterCompress === 'string'
-          ? { ...values, inputImg: this.imgResultAfterCompress }
-          : values,
-      );
-
+  async onClickButton(values: any) {
+    this.isSaving = true;
+    this.settings.onClickButton(await this.prepareValues(values));
     // this.isSaving = false;
   }
 
   async onSubmitAction(values: any) {
     this.isSaving = true;
-    let doTheArray = false;
-
-    if (values && values.description !== undefined) {
-      values = {
-        ...values,
-        description: this.cleanHtml(values.description) === '' ? '' : values.description,
-      };
-    }
-
-    if (values && values.inputImg) {
-      if (values.inputImg instanceof Array) {
-        doTheArray = true;
-        // Reset so photos removed or saved in a previous attempt don't leak into this payload
-        this.imgResultAfterCompress = {};
-        if (values.inputImg.length) {
-          const compressions = values.inputImg.map(
-            async (image_, i) =>
-              await this.compressFile({
-                image: image_,
-                isArray: true,
-                position: i,
-              }),
-          );
-          await Promise.all(compressions);
-        }
-      } else if (typeof values.inputImg === 'string')
-        await this.compressFile({ image: values.inputImg });
-    }
-    if (doTheArray) {
-      const theImages =
-        this.imgResultAfterCompress &&
-          typeof this.imgResultAfterCompress === 'object'
-          ? Object.keys(this.imgResultAfterCompress).map(
-            (img) => this.imgResultAfterCompress[img],
-          )
-          : [];
-
-      this.settings.onSubmit({ ...values, inputImg: [...theImages] });
-    } else
-      this.settings.onSubmit(
-        values.inputImg &&
-          this.imgResultAfterCompress &&
-          typeof this.imgResultAfterCompress === 'string'
-          ? { ...values, inputImg: this.imgResultAfterCompress }
-          : values,
-      );
-
+    this.settings.onSubmit(await this.prepareValues(values));
     // this.isSaving = false;
   }
 
@@ -611,23 +413,13 @@ export class FormReviewComponent
         ? event.dataTransfer.files[i]
         : event.target.files[i];
 
-      // MegaByte
-      const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
-      const fileSize = file.size
-        ? parseFloat((file.size / 1000 / 1000).toFixed(2))
-        : 0.0;
-      let isOverloadingSize = false;
-
-      if (maxImageSizeMb > -1) {
-        isOverloadingSize = fileSize > maxImageSizeMb;
-      }
-
       // Instance reader
       const reader: FileReader = new FileReader();
 
       if (file) {
-        if (isOverloadingSize) {
-          this.msgErrorFile = `La imagen pesa ${fileSize} MB, excede el limite de ${maxImageSizeMb} MB.`;
+        const fileSizeMb = this.toMb(file.size || 0);
+        if (fileSizeMb > MAX_SOURCE_IMAGE_MB) {
+          this.msgErrorFile = `La imagen pesa ${fileSizeMb} MB, excede el limite de ${MAX_SOURCE_IMAGE_MB} MB.`;
         }
 
         if (!this.isValidImage(file)) {
@@ -635,15 +427,12 @@ export class FormReviewComponent
         }
 
         if (this.msgErrorFile) {
-          setTimeout(() => {
-            this.msgErrorFile = false;
-          }, 10000);
-
+          this.showFileError(this.msgErrorFile as string);
           return false;
         }
 
         // Convert binary file
-        reader.onload = (event) => this.convertLoad(event);
+        reader.onload = (event) => this.trackCompression(this.convertLoad(event));
         //.bind(this);
 
         // Read the binary
@@ -655,35 +444,59 @@ export class FormReviewComponent
 
   };
 
-  convertLoad(event) {
+  private trackCompression(task: Promise<void>) {
+    this.pendingCompressions.push(task);
+    task.then(() => {
+      this.pendingCompressions = this.pendingCompressions.filter((t) => t !== task);
+    });
+  }
+
+  async convertLoad(event) {
     // Get target
     const reader = <FileReader>event.target;
 
-    // Instance a object of type image
-    const img = new Image();
+    const newImg = await ImgHelper.compressDataUrl(reader.result as string);
+    if (!newImg) {
+      this.showFileError('El archivo no es una imagen válida.');
+      return;
+    }
 
-    // Save on the source
-    img.src = <string>reader.result;
+    // The size limit applies to the image that is uploaded, after compression
+    const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
+    const imgSizeMb = this.toMb(ImgHelper.dataUrlBytes(newImg));
+    if (maxImageSizeMb > -1 && imgSizeMb > maxImageSizeMb) {
+      this.showFileError(
+        `La imagen pesa ${imgSizeMb} MB después de comprimirla, excede el limite de ${maxImageSizeMb} MB.`,
+      );
+      return;
+    }
 
-    img.onload = () => {
-      //  Set base 64
-      // @ts-ignore
-      if (this.settings.fields.inputImg.multiple) {
-        let images = [...this.form.get('inputImg').value];
-        images = images instanceof Array ? images : [];
-        const newImg = reader.result as string;
-        const isRepeated = images.some((theImg) => theImg === newImg);
-        if (!isRepeated) {
-          images.push(newImg);
-          this.form.get('inputImg').setValue(images);
-          this.source.add({ image: reader.result as string });
-          this.source.refresh();
-        }
-      } else {
-        this.form.get('inputImg').setValue(reader.result as string);
+    //  Set base 64
+    // @ts-ignore
+    if (this.settings.fields.inputImg.multiple) {
+      let images = [...this.form.get('inputImg').value];
+      images = images instanceof Array ? images : [];
+      const isRepeated = images.some((theImg) => theImg === newImg);
+      if (!isRepeated) {
+        images.push(newImg);
+        this.form.get('inputImg').setValue(images);
+        this.source.add({ image: newImg });
+        this.source.refresh();
       }
-      return true;
-    };
+    } else {
+      this.form.get('inputImg').setValue(newImg);
+    }
+  }
+
+  private showFileError(msg: string) {
+    this.msgErrorFile = msg;
+    setTimeout(() => {
+      this.msgErrorFile = false;
+    }, 10000);
+  }
+
+  private toMb(bytes: number): number {
+    return parseFloat((bytes / 1000 / 1000).toFixed(2));
   }
 
   isValidImage(file): boolean {

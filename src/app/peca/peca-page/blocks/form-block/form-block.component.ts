@@ -33,6 +33,7 @@ import { StepsService } from "../../../../services/steps/steps.service";
 import XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { HttpClient } from "@angular/common/http";
+import { ImgHelper } from "../../../../helpers/img.helper";
 import {
   FormBlock,
   FormBlockAbstract,
@@ -2081,13 +2082,17 @@ export class FormBlockComponent
   }
   // adds the image file and image source to the imageGroup form control
   fileManager(e) {
+    const file = <File>e.target.files[0];
     let reader = new FileReader();
-    reader.readAsDataURL(<File>e.target.files[0]);
-    reader.onload = (_event) => {
+    reader.readAsDataURL(file);
+    reader.onload = async (_event) => {
+      // Without decoding validation before: keep the original if it can't be read
+      const imageSrc =
+        (await ImgHelper.compressDataUrl(reader.result as string)) || reader.result;
       this.sendNull = false;
       this.componentForm.get("imageGroup").patchValue({
-        imageSelected: <File>e.target.files[0],
-        imageSrc: reader.result,
+        imageSelected: file,
+        imageSrc,
       });
       setTimeout(() => {
         this.sendNull = true;
