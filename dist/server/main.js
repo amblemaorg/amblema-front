@@ -141163,7 +141163,6 @@ const i8 = tslib_1.__importStar(__webpack_require__("alHs"));
 const i9 = tslib_1.__importStar(__webpack_require__("cUpR"));
 const i10 = tslib_1.__importStar(__webpack_require__("s7LF"));
 const i11 = tslib_1.__importStar(__webpack_require__("SJA4"));
-const i12 = tslib_1.__importStar(__webpack_require__("yPVt"));
 var styles_FormReviewComponent = [i0.styles];
 var RenderType_FormReviewComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_FormReviewComponent, data: {} });
 exports.RenderType_FormReviewComponent = RenderType_FormReviewComponent;
@@ -141180,7 +141179,7 @@ function View_FormReviewComponent_3(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
     } return ad; }, i2.View_NbAlertComponent_0, i2.RenderType_NbAlertComponent)), i1.ɵdid(1, 49152, null, 0, i3.NbAlertComponent, [], { status: [0, "status"], closable: [1, "closable"] }, { close: "close" }), (_l()(), i1.ɵted(2, 0, [" ", " "]))], function (_ck, _v) { var currVal_27 = "danger"; var currVal_28 = ""; _ck(_v, 1, 0, currVal_27, currVal_28); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 1).closable; var currVal_1 = i1.ɵnov(_v, 1).tiny; var currVal_2 = i1.ɵnov(_v, 1).small; var currVal_3 = i1.ɵnov(_v, 1).medium; var currVal_4 = i1.ɵnov(_v, 1).large; var currVal_5 = i1.ɵnov(_v, 1).giant; var currVal_6 = i1.ɵnov(_v, 1).primary; var currVal_7 = i1.ɵnov(_v, 1).success; var currVal_8 = i1.ɵnov(_v, 1).info; var currVal_9 = i1.ɵnov(_v, 1).warning; var currVal_10 = i1.ɵnov(_v, 1).danger; var currVal_11 = i1.ɵnov(_v, 1).basic; var currVal_12 = i1.ɵnov(_v, 1).control; var currVal_13 = i1.ɵnov(_v, 1).primaryAccent; var currVal_14 = i1.ɵnov(_v, 1).successAccent; var currVal_15 = i1.ɵnov(_v, 1).infoAccent; var currVal_16 = i1.ɵnov(_v, 1).warningAccent; var currVal_17 = i1.ɵnov(_v, 1).dangerAccent; var currVal_18 = i1.ɵnov(_v, 1).basicAccent; var currVal_19 = i1.ɵnov(_v, 1).controlAccent; var currVal_20 = i1.ɵnov(_v, 1).primaryOutline; var currVal_21 = i1.ɵnov(_v, 1).successOutline; var currVal_22 = i1.ɵnov(_v, 1).infoOutline; var currVal_23 = i1.ɵnov(_v, 1).warningOutline; var currVal_24 = i1.ɵnov(_v, 1).dangerOutline; var currVal_25 = i1.ɵnov(_v, 1).basicOutline; var currVal_26 = i1.ɵnov(_v, 1).controlOutline; _ck(_v, 0, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18, currVal_19, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26]); var currVal_29 = _co.msgErrorFile; _ck(_v, 2, 0, currVal_29); }); }
 function View_FormReviewComponent_5(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Carga de imagen "]))], null, null); }
 function View_FormReviewComponent_6(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Archivo cargado "]))], null, null); }
-function View_FormReviewComponent_7(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "p", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, [" El peso de la imagen no debe exceder de ", " MB. "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.fields.inputImg["sizeLimitMb"]; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormReviewComponent_7(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "p", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, [" Las im\u00E1genes se optimizan autom\u00E1ticamente al cargarlas (m\u00E1ximo ", " MB por archivo). "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.maxSourceImageMb; _ck(_v, 1, 0, currVal_0); }); }
 function View_FormReviewComponent_4(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 11, "div", [["class", "form-group text-left"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "input", [["class", "input-file"], ["multiple", ""], ["type", "file"]], [[8, "name", 0], [8, "id", 0], [8, "disabled", 0], [8, "readOnly", 0]], [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (_co.onUploadImage($event) !== false);
         ad = (pd_0 && ad);
@@ -141227,7 +141226,7 @@ function View_FormReviewComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(2, 16384, null, 0, i10.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(3, 540672, null, 0, i10.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i10.ControlContainer, null, [i10.FormGroupDirective]), i1.ɵdid(5, 16384, null, 0, i10.NgControlStatusGroup, [[6, i10.ControlContainer]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_1)), i1.ɵdid(7, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_9)), i1.ɵdid(9, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(10, 0, null, null, 6, "div", [["class", "text-right"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_14)), i1.ɵdid(12, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_15)), i1.ɵdid(14, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormReviewComponent_16)), i1.ɵdid(16, 16384, null, 0, i4.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.form; _ck(_v, 3, 0, currVal_7); var currVal_8 = _co.settings.fields.inputImg; _ck(_v, 7, 0, currVal_8); var currVal_9 = _co.settings.fields.description; _ck(_v, 9, 0, currVal_9); var currVal_10 = (_co.settings.fields.cancelButton && !_co.settings.fields.cancelButton.hidden); _ck(_v, 12, 0, currVal_10); var currVal_11 = ((_co.settings.fields.button && !_co.settings.fields.button.hidden) && ((_co.settings.fields.button.type === "submit") || !_co.settings.fields.button.type)); _ck(_v, 14, 0, currVal_11); var currVal_12 = ((_co.settings.fields.button && !_co.settings.fields.button.hidden) && (_co.settings.fields.button.type === "button")); _ck(_v, 16, 0, currVal_12); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 5).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 5).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 5).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 5).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 5).ngClassValid; var currVal_5 = i1.ɵnov(_v, 5).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 5).ngClassPending; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
 exports.View_FormReviewComponent_0 = View_FormReviewComponent_0;
-function View_FormReviewComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "app-form-review", [], null, null, null, View_FormReviewComponent_0, RenderType_FormReviewComponent)), i1.ɵdid(1, 114688, null, 0, i11.FormReviewComponent, [i12.NgxImageCompressService], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+function View_FormReviewComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "app-form-review", [], null, null, null, View_FormReviewComponent_0, RenderType_FormReviewComponent)), i1.ɵdid(1, 114688, null, 0, i11.FormReviewComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_FormReviewComponent_Host_0 = View_FormReviewComponent_Host_0;
 var FormReviewComponentNgFactory = i1.ɵccf("app-form-review", i11.FormReviewComponent, View_FormReviewComponent_Host_0, {}, {}, []);
 exports.FormReviewComponentNgFactory = FormReviewComponentNgFactory;
@@ -255144,7 +255143,6 @@ let PecaState = class PecaState {
             if (showToast)
                 payload_ = payload_.replace("[:show-toast:]", "");
             this.apiService.setResourcePath("pecaprojects/" + payload_);
-            yield this.apiService.getWebContent().toPromise();
             const response = yield this.apiService.getWebContent().toPromise();
             if (response) {
                 const pecaContent = response;
@@ -313826,12 +313824,18 @@ class TextsButtonsSetBlockComponent {
                 const matrix = el_cleaned.reduce((rows, key, index) => (index % num_cols == 0
                     ? rows.push([key])
                     : rows[rows.length - 1].push(key)) && rows, []);
+                // Spreadsheet row of each record (sheet_to_json skips blank rows), to report errors
+                const rowNumber = (index) => {
+                    const rowIndex = studentsData[index].__rowNum__;
+                    return typeof rowIndex === "number" ? rowIndex + 1 : index + 2;
+                };
                 if (this.settings.typeDiag == "reading") {
                     students = matrix.map((registry, index) => {
                         var _a, _b, _c, _d;
                         const fecha_resultado = this.parseDate(registry[5]);
                         const genero = registry[2] == "Femenino" ? "1" : "2";
                         return {
+                            fila: rowNumber(index),
                             nombre: registry[0] || "",
                             apellido: registry[1] || "",
                             genero: genero || "",
@@ -313850,6 +313854,7 @@ class TextsButtonsSetBlockComponent {
                         const fecha_resultado_log = this.parseDate(registry[8]);
                         const genero = registry[2] == "Femenino" ? "1" : "2";
                         return {
+                            fila: rowNumber(index),
                             nombre: registry[0] || "",
                             apellido: registry[1] || "",
                             genero: genero || "",
@@ -313908,22 +313913,38 @@ class TextsButtonsSetBlockComponent {
                     this.toastr.success(result.message, "", {
                         positionClass: "toast-bottom-right",
                     });
-                    this.importingData = false;
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                    this.showNotFoundRows(result.notFound);
+                    // Refreshes the diagnostics tables without reloading the whole app
+                    this.store.dispatch([new peca_actions_1.FetchPecaContent(this.pecaId)]);
                 }
             }
             catch (err) {
                 console.log("error: ", err);
-                this.toastr.error(JSON.stringify(err.error), "", {
-                    positionClass: "toast-bottom-right",
-                });
-                this.importingData = false;
-                throw err;
+                const error = err && err.error;
+                this.toastr.error(error && error.message ? error.message : "No se pudieron guardar los resultados", "", { positionClass: "toast-bottom-right" });
+                this.showNotFoundRows(error && error.notFound);
             }
             finally {
+                this.importingData = false;
             }
+        });
+    }
+    // Rows whose grade/section or student don't match the school records
+    showNotFoundRows(rows) {
+        if (!rows || !rows.length)
+            return;
+        const MAX_LISTED = 10;
+        const escape = (text) => String(text).replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+        const listed = rows
+            .slice(0, MAX_LISTED)
+            .map((row) => escape(`Fila ${row.fila}: ${row.nombre} ${row.apellido} (${row.motivo})`));
+        if (rows.length > MAX_LISTED)
+            listed.push(`y ${rows.length - MAX_LISTED} más.`);
+        this.toastr.warning(listed.join("<br>"), `${rows.length} filas no se cargaron`, {
+            positionClass: "toast-bottom-right",
+            enableHtml: true,
+            disableTimeOut: true,
+            closeButton: true,
         });
     }
     getLapse() {
@@ -316041,16 +316062,21 @@ const tslib_1 = __webpack_require__("zOht");
 const forms_1 = __webpack_require__("s7LF");
 const table_images_config_js_1 = tslib_1.__importDefault(__webpack_require__("kH80"));
 const ng2_smart_table_1 = __webpack_require__("DjsD");
+const img_helper_1 = __webpack_require__("XTno");
 const store_1 = __webpack_require__("e1JD");
 const yearbook_action_1 = __webpack_require__("wg3g");
+// Sanity limit for the original file; the configured sizeLimitMb applies after compression
+const MAX_SOURCE_IMAGE_MB = 25;
 class FormReviewComponent {
-    constructor(imageCompress) {
-        this.imageCompress = imageCompress;
+    constructor() {
         // To validate the file
         this.pattern = /image*/;
         this.msgErrorFile = false;
         this.tableImages = table_images_config_js_1.default;
         this.source = new ng2_smart_table_1.LocalDataSource();
+        // Image compressions started on selection and not finished yet
+        this.pendingCompressions = [];
+        this.maxSourceImageMb = MAX_SOURCE_IMAGE_MB;
         this.isSaving = false;
         this.isLimitGuardAttached = false;
         this.quillModules = {
@@ -316064,22 +316090,8 @@ class FormReviewComponent {
         this.onTableActions = (event) => {
             if (event.action === 'DELETE') {
                 const images = this.form.get('inputImg').value;
-                const readImgs = this.imgResultAfterCompress &&
-                    typeof this.imgResultAfterCompress === 'object'
-                    ? Object.keys(this.imgResultAfterCompress)
-                    : null;
                 const newImages = images.filter((image) => image !== event.data.image);
                 this.form.get('inputImg').setValue(newImages);
-                if (readImgs) {
-                    const imgs_ = readImgs.reduce((theIms, currentImg) => {
-                        if (this.imgResultAfterCompress[currentImg] !== event.data.image)
-                            theIms.push(currentImg);
-                        return theIms;
-                    }, []);
-                    imgs_.map((img) => {
-                        delete this.imgResultAfterCompress[img];
-                    });
-                }
                 this.source.remove(event.data);
             }
         };
@@ -316089,32 +316101,22 @@ class FormReviewComponent {
                 const file = event.dataTransfer
                     ? event.dataTransfer.files[i]
                     : event.target.files[i];
-                // MegaByte
-                const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
-                const fileSize = file.size
-                    ? parseFloat((file.size / 1000 / 1000).toFixed(2))
-                    : 0.0;
-                let isOverloadingSize = false;
-                if (maxImageSizeMb > -1) {
-                    isOverloadingSize = fileSize > maxImageSizeMb;
-                }
                 // Instance reader
                 const reader = new FileReader();
                 if (file) {
-                    if (isOverloadingSize) {
-                        this.msgErrorFile = `La imagen pesa ${fileSize} MB, excede el limite de ${maxImageSizeMb} MB.`;
+                    const fileSizeMb = this.toMb(file.size || 0);
+                    if (fileSizeMb > MAX_SOURCE_IMAGE_MB) {
+                        this.msgErrorFile = `La imagen pesa ${fileSizeMb} MB, excede el limite de ${MAX_SOURCE_IMAGE_MB} MB.`;
                     }
                     if (!this.isValidImage(file)) {
                         this.msgErrorFile = 'El archivo no es una imagen.';
                     }
                     if (this.msgErrorFile) {
-                        setTimeout(() => {
-                            this.msgErrorFile = false;
-                        }, 10000);
+                        this.showFileError(this.msgErrorFile);
                         return false;
                     }
                     // Convert binary file
-                    reader.onload = (event) => this.convertLoad(event);
+                    reader.onload = (event) => this.trackCompression(this.convertLoad(event));
                     //.bind(this);
                     // Read the binary
                     reader.readAsDataURL(file);
@@ -316319,103 +316321,6 @@ class FormReviewComponent {
             }
         });
     }
-    compressFile({ image, orientation = -2, isArray = false, position = 0, }) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const isB64 = image && image.length && image.includes(';base64,');
-            // this.imageCompress.uploadFile().then(async ({ image, orientation }) => {
-            if (isArray) {
-                if (!this.imgResultBeforeCompress)
-                    this.imgResultBeforeCompress = {};
-                if (!this.sizeBeforeCompress)
-                    this.sizeBeforeCompress = {};
-                if (!this.imgResultAfterCompress)
-                    this.imgResultAfterCompress = {};
-                if (!this.sizeAfterCompress)
-                    this.sizeAfterCompress = {};
-                this.imgResultBeforeCompress[`${position}`] = image;
-                this.sizeBeforeCompress[`${position}`] = isB64
-                    ? this.imageCompress.byteCount(image)
-                    : 0;
-            }
-            else {
-                this.imgResultBeforeCompress = image;
-                this.sizeBeforeCompress = isB64 ? this.imageCompress.byteCount(image) : 0;
-            }
-            // console.warn("Size in bytes was:", this.sizeBeforeCompress);
-            const s_count = isArray
-                ? this.sizeBeforeCompress[`${position}`]
-                : this.sizeBeforeCompress;
-            if (s_count > 800000)
-                yield this.fileCompresser({
-                    image,
-                    orientation,
-                    sizeBCompress: s_count,
-                    isArray,
-                    position,
-                    isBase64: isB64,
-                });
-            else {
-                if (isArray) {
-                    this.imgResultAfterCompress[`${position}`] = image;
-                    this.sizeAfterCompress[`${position}`] = isB64
-                        ? this.imageCompress.byteCount(image)
-                        : 0;
-                }
-                else {
-                    this.imgResultAfterCompress = image;
-                    this.sizeAfterCompress = isB64
-                        ? this.imageCompress.byteCount(image)
-                        : 0;
-                }
-                // console.warn("Size in bytes is now:", this.sizeAfterCompress);
-            }
-            // });
-        });
-    }
-    fileCompresser({ image, orientation, sizeBCompress, isArray, position, isBase64, }) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const res = yield this.imageCompress.compressFile(image, orientation, 75, 50);
-            if (res && typeof res === 'string') {
-                if (isArray) {
-                    this.sizeAfterCompress[`${position}`] = isBase64
-                        ? this.imageCompress.byteCount(res)
-                        : 0;
-                }
-                else {
-                    this.sizeAfterCompress = isBase64
-                        ? this.imageCompress.byteCount(res)
-                        : 0;
-                }
-                const s_count = isArray
-                    ? this.sizeAfterCompress[`${position}`]
-                    : this.sizeAfterCompress;
-                if (s_count > 800000 && s_count !== sizeBCompress)
-                    yield this.fileCompresser({
-                        image: res,
-                        orientation,
-                        sizeBCompress: s_count,
-                        isArray,
-                        position,
-                        isBase64,
-                    });
-                else {
-                    if (isArray) {
-                        this.imgResultAfterCompress[`${position}`] = res;
-                        this.sizeAfterCompress[`${position}`] = isBase64
-                            ? this.imageCompress.byteCount(res)
-                            : 0;
-                    }
-                    else {
-                        this.imgResultAfterCompress = res;
-                        this.sizeAfterCompress = isBase64
-                            ? this.imageCompress.byteCount(res)
-                            : 0;
-                    }
-                    // console.warn("Size in bytes is now:", this.sizeAfterCompress);
-                }
-            }
-        });
-    }
     setSettings(settings) {
         this.settings = Object.assign({}, settings);
         const { fields } = settings;
@@ -316456,115 +316361,82 @@ class FormReviewComponent {
             this.setupCharacterLimitGuard();
         }
     }
-    onClickButton(values) {
+    // Images are compressed when selected; waits for the ones still in progress
+    // and takes them from the form, since `values` was read before they finished
+    prepareValues(values) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            this.isSaving = true;
-            let doTheArray = false;
             if (values && values.description !== undefined) {
                 values = Object.assign(Object.assign({}, values), { description: this.cleanHtml(values.description) === '' ? '' : values.description });
             }
-            if (values && values.inputImg) {
-                if (values.inputImg instanceof Array) {
-                    doTheArray = true;
-                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
-                    this.imgResultAfterCompress = {};
-                    if (values.inputImg.length) {
-                        const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-                            return yield this.compressFile({
-                                image: image_,
-                                isArray: true,
-                                position: i,
-                            });
-                        }));
-                        yield Promise.all(compressions);
-                    }
-                }
-                else if (typeof values.inputImg === 'string')
-                    yield this.compressFile({ image: values.inputImg });
+            if (this.pendingCompressions.length) {
+                yield Promise.all(this.pendingCompressions);
+                values = Object.assign(Object.assign({}, values), { inputImg: this.form.get('inputImg').value });
             }
-            if (doTheArray) {
-                const theImages = this.imgResultAfterCompress &&
-                    typeof this.imgResultAfterCompress === 'object'
-                    ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
-                    : [];
-                this.settings.onClickButton(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
-            }
-            else
-                this.settings.onClickButton(values.inputImg &&
-                    this.imgResultAfterCompress &&
-                    typeof this.imgResultAfterCompress === 'string'
-                    ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
+            return values;
+        });
+    }
+    onClickButton(values) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            this.isSaving = true;
+            this.settings.onClickButton(yield this.prepareValues(values));
             // this.isSaving = false;
         });
     }
     onSubmitAction(values) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             this.isSaving = true;
-            let doTheArray = false;
-            if (values && values.description !== undefined) {
-                values = Object.assign(Object.assign({}, values), { description: this.cleanHtml(values.description) === '' ? '' : values.description });
-            }
-            if (values && values.inputImg) {
-                if (values.inputImg instanceof Array) {
-                    doTheArray = true;
-                    // Reset so photos removed or saved in a previous attempt don't leak into this payload
-                    this.imgResultAfterCompress = {};
-                    if (values.inputImg.length) {
-                        const compressions = values.inputImg.map((image_, i) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-                            return yield this.compressFile({
-                                image: image_,
-                                isArray: true,
-                                position: i,
-                            });
-                        }));
-                        yield Promise.all(compressions);
-                    }
-                }
-                else if (typeof values.inputImg === 'string')
-                    yield this.compressFile({ image: values.inputImg });
-            }
-            if (doTheArray) {
-                const theImages = this.imgResultAfterCompress &&
-                    typeof this.imgResultAfterCompress === 'object'
-                    ? Object.keys(this.imgResultAfterCompress).map((img) => this.imgResultAfterCompress[img])
-                    : [];
-                this.settings.onSubmit(Object.assign(Object.assign({}, values), { inputImg: [...theImages] }));
-            }
-            else
-                this.settings.onSubmit(values.inputImg &&
-                    this.imgResultAfterCompress &&
-                    typeof this.imgResultAfterCompress === 'string'
-                    ? Object.assign(Object.assign({}, values), { inputImg: this.imgResultAfterCompress }) : values);
+            this.settings.onSubmit(yield this.prepareValues(values));
             // this.isSaving = false;
         });
     }
+    trackCompression(task) {
+        this.pendingCompressions.push(task);
+        task.then(() => {
+            this.pendingCompressions = this.pendingCompressions.filter((t) => t !== task);
+        });
+    }
     convertLoad(event) {
-        // Get target
-        const reader = event.target;
-        // Instance a object of type image
-        const img = new Image();
-        // Save on the source
-        img.src = reader.result;
-        img.onload = () => {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            // Get target
+            const reader = event.target;
+            const newImg = yield img_helper_1.ImgHelper.compressDataUrl(reader.result);
+            if (!newImg) {
+                this.showFileError('El archivo no es una imagen válida.');
+                return;
+            }
+            // The size limit applies to the image that is uploaded, after compression
+            const maxImageSizeMb = this.settings.fields.inputImg['sizeLimitMb'] || -1;
+            const imgSizeMb = this.toMb(img_helper_1.ImgHelper.dataUrlBytes(newImg));
+            if (maxImageSizeMb > -1 && imgSizeMb > maxImageSizeMb) {
+                this.showFileError(`La imagen pesa ${imgSizeMb} MB después de comprimirla, excede el limite de ${maxImageSizeMb} MB.`);
+                return;
+            }
             //  Set base 64
             // @ts-ignore
             if (this.settings.fields.inputImg.multiple) {
                 let images = [...this.form.get('inputImg').value];
                 images = images instanceof Array ? images : [];
-                const newImg = reader.result;
                 const isRepeated = images.some((theImg) => theImg === newImg);
                 if (!isRepeated) {
                     images.push(newImg);
                     this.form.get('inputImg').setValue(images);
-                    this.source.add({ image: reader.result });
+                    this.source.add({ image: newImg });
                     this.source.refresh();
                 }
             }
             else {
-                this.form.get('inputImg').setValue(reader.result);
+                this.form.get('inputImg').setValue(newImg);
             }
-            return true;
-        };
+        });
+    }
+    showFileError(msg) {
+        this.msgErrorFile = msg;
+        setTimeout(() => {
+            this.msgErrorFile = false;
+        }, 10000);
+    }
+    toMb(bytes) {
+        return parseFloat((bytes / 1000 / 1000).toFixed(2));
     }
     isValidImage(file) {
         return file.type.match(this.pattern) ? true : false;
@@ -353033,6 +352905,137 @@ exports.ModulesListModule = void 0;
 class ModulesListModule {
 }
 exports.ModulesListModule = ModulesListModule;
+
+
+/***/ }),
+
+/***/ "XTno":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImgHelper = exports.IMAGE_JPEG_QUALITY = exports.IMAGE_MAX_SIDE = void 0;
+const tslib_1 = __webpack_require__("zOht");
+exports.IMAGE_MAX_SIDE = 1920;
+exports.IMAGE_JPEG_QUALITY = 0.82;
+class ImgHelper {
+    /**
+     * Single-pass compression of an image data URL before uploading it:
+     * limits the longest side and re-encodes photos as JPEG. Images with
+     * transparency or few colors (logos) stay PNG. Returns the original when
+     * it can't be improved or isn't a raster data URL, and null when the browser
+     * can't decode it (invalid image).
+     * The yearbook PDF embeds images at 900px max, so 1920px loses nothing there.
+     */
+    static compressDataUrl(dataUrl, maxSide = exports.IMAGE_MAX_SIDE, quality = exports.IMAGE_JPEG_QUALITY) {
+        const isRaster = typeof dataUrl === 'string' &&
+            dataUrl.startsWith('data:image/') &&
+            !/^data:image\/(gif|svg)/.test(dataUrl);
+        if (!isRaster || typeof document === 'undefined') {
+            return Promise.resolve(dataUrl);
+        }
+        const sourceMime = dataUrl.substring(5, dataUrl.indexOf(';'));
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onerror = () => resolve(null);
+            img.onload = () => {
+                try {
+                    // Browsers already apply the EXIF orientation when decoding
+                    const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+                    const canvas = ImgHelper.drawScaled(img, Math.round(img.naturalWidth * scale), Math.round(img.naturalHeight * scale));
+                    const keepPng = sourceMime !== 'image/jpeg' && ImgHelper.isGraphic(canvas);
+                    const outputMime = keepPng ? 'image/png' : 'image/jpeg';
+                    const result = keepPng
+                        ? canvas.toDataURL('image/png')
+                        : canvas.toDataURL('image/jpeg', quality);
+                    const notImproved = scale === 1 && outputMime === sourceMime && result.length >= dataUrl.length;
+                    resolve(notImproved ? dataUrl : result);
+                }
+                catch (e) {
+                    console.error('error while compressing image', e);
+                    resolve(dataUrl);
+                }
+            };
+            img.src = dataUrl;
+        });
+    }
+    // Halving steps avoid the aliasing of a single big downscale on canvas
+    static drawScaled(img, width, height) {
+        let source = img;
+        let w = img instanceof HTMLImageElement ? img.naturalWidth : img.width;
+        let h = img instanceof HTMLImageElement ? img.naturalHeight : img.height;
+        do {
+            w = Math.max(width, Math.round(w / 2));
+            h = Math.max(height, Math.round(h / 2));
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(source, 0, 0, w, h);
+            source = canvas;
+        } while (w > width || h > height);
+        return source;
+    }
+    // Transparency or <= 256 colors: logos/diagrams that JPEG would blur
+    static isGraphic(canvas) {
+        const data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+        const colors = new Set();
+        let fewColors = true;
+        for (let i = 0; i < data.length; i += 4) {
+            if (data[i + 3] < 255)
+                return true;
+            if (fewColors) {
+                colors.add((data[i] << 16) | (data[i + 1] << 8) | data[i + 2]);
+                fewColors = colors.size <= 256;
+            }
+        }
+        return fewColors;
+    }
+    // Bytes of the binary file encoded in a base64 data URL
+    static dataUrlBytes(dataUrl) {
+        const base64 = dataUrl.substring(dataUrl.indexOf(',') + 1);
+        const padding = base64.endsWith('==') ? 2 : base64.endsWith('=') ? 1 : 0;
+        return Math.floor((base64.length * 3) / 4) - padding;
+    }
+}
+exports.ImgHelper = ImgHelper;
+/**
+ * transform an image file into base 64 format
+ *
+ * @param imgSrc source of the image to be transformed into base 64 format
+ */
+ImgHelper.startBase64FormattingFromImg = (imgSrc) => {
+    return new Promise((resolve, reject) => {
+        let dataURL = null;
+        try {
+            let canvas = document.createElement('canvas');
+            const img = document.createElement('img');
+            const ctx = canvas.getContext('2d');
+            img.src = imgSrc;
+            img.onload = () => {
+                canvas.height = img.height;
+                canvas.width = img.width;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                dataURL = canvas.toDataURL('image/png');
+                canvas = null;
+                resolve(dataURL);
+            };
+        }
+        catch (e) {
+            console.error('error while processing base64 conversion', e);
+            resolve(dataURL);
+        }
+    });
+};
+ImgHelper.getBase64FromImg = (imgSrc, imgDir = '') => {
+    return () => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+        const dataURL = yield ImgHelper.startBase64FormattingFromImg(`${imgDir}${imgSrc}`);
+        // console.log(dataURL)
+        return dataURL;
+    });
+};
 
 
 /***/ }),
@@ -392749,6 +392752,7 @@ exports.ProfileBlockComponent = void 0;
 const tslib_1 = __webpack_require__("zOht");
 const store_1 = __webpack_require__("e1JD");
 const peca_state_1 = __webpack_require__("J12s");
+const img_helper_1 = __webpack_require__("XTno");
 const free_solid_svg_icons_1 = __webpack_require__("YTkO");
 class ProfileBlockComponent {
     constructor(globals) {
@@ -392769,11 +392773,13 @@ class ProfileBlockComponent {
     readUrl(event) {
         if (event.target.files && event.target.files[0]) {
             var reader = new FileReader();
-            reader.onload = (event) => {
-                this.url = event.target.result;
+            reader.onload = (event) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+                // Profile photos are shown small: 800px is enough
+                this.url =
+                    (yield img_helper_1.ImgHelper.compressDataUrl(event.target.result, 800)) || event.target.result;
                 //To send data to profile component
                 this.globals.formWithImage(this.url);
-            };
+            });
             reader.readAsDataURL(event.target.files[0]);
         }
     }
@@ -429910,6 +429916,7 @@ const peca_actions_2 = __webpack_require__("kSTb");
 const peca_state_1 = __webpack_require__("J12s");
 const xlsx_1 = tslib_1.__importDefault(__webpack_require__("EUZL"));
 const file_saver_1 = __webpack_require__("Iab2");
+const img_helper_1 = __webpack_require__("XTno");
 const form_block_class_1 = __webpack_require__("Rvtl");
 class FormBlockComponent {
     constructor(store, fb, toastr, globals, fetcher, stepsService, http, sanitizer) {
@@ -431491,19 +431498,22 @@ class FormBlockComponent {
     }
     // adds the image file and image source to the imageGroup form control
     fileManager(e) {
+        const file = e.target.files[0];
         let reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = (_event) => {
+        reader.readAsDataURL(file);
+        reader.onload = (_event) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+            // Without decoding validation before: keep the original if it can't be read
+            const imageSrc = (yield img_helper_1.ImgHelper.compressDataUrl(reader.result)) || reader.result;
             this.sendNull = false;
             this.componentForm.get("imageGroup").patchValue({
-                imageSelected: e.target.files[0],
-                imageSrc: reader.result,
+                imageSelected: file,
+                imageSrc,
             });
             setTimeout(() => {
                 this.sendNull = true;
                 e.target.value = null;
             });
-        };
+        });
     }
     // to disable add image button when conditions apply
     disableAddImgBtn() {
