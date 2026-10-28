@@ -9171,7 +9171,7 @@ class InitialDiagnosticPageComponent extends peca_page_component_1.PecaPageCompo
         }, "settings.data.sectionId", "settings.data.id");
         // Update math modal
         this.createAndSetBlockFetcherUrls("mathModalForm", {
-            post: (sectionId, studentId) => `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${this.UrlLapse}/${sectionId}/${studentId}`,
+            post: (sectionId, studentId) => `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
         }, "settings.data.sectionId", "settings.data.id");
         // Delete reading modal
         this.createAndSetBlockFetcherUrls("readingDeleteModal", {
