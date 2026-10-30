@@ -480,7 +480,7 @@ export class InitialDiagnosticPageComponent
       "mathModalForm",
       {
         post: (sectionId, studentId) =>
-          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${this.UrlLapse}/${sectionId}/${studentId}`,
+          `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
       },
       "settings.data.sectionId",
       "settings.data.id"

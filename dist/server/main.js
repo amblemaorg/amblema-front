@@ -9171,7 +9171,7 @@ class InitialDiagnosticPageComponent extends peca_page_component_1.PecaPageCompo
         }, "settings.data.sectionId", "settings.data.id");
         // Update math modal
         this.createAndSetBlockFetcherUrls("mathModalForm", {
-            post: (sectionId, studentId) => `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${this.UrlLapse}/${sectionId}/${studentId}`,
+            post: (sectionId, studentId) => `pecaprojects/diagnostics/math/${this.UrlLapse}/${this.idPeca}/${sectionId}/${studentId}`,
         }, "settings.data.sectionId", "settings.data.id");
         // Delete reading modal
         this.createAndSetBlockFetcherUrls("readingDeleteModal", {
@@ -139218,31 +139218,36 @@ function View_FormBlockComponent_58(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
         var pd_0 = (_co.openModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar "]))], null, null); }
-function View_FormBlockComponent_59(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_60(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import-multiple"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar m\u00FAltiple "]))], null, null); }
+function View_FormBlockComponent_59(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_60)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.hasSchoolSections(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_61(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportStudents() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Exportar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getStudentsCount(); _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_61(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_60(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.openExportModal() !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_61)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
 function View_FormBlockComponent_63(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
 function View_FormBlockComponent_62(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openExportModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_63)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_65(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_64(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.justOpenModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_63)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_65(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_65)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_67(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.enableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Editar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && _co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_64(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_65)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_67(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_66(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_67)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_69(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.disableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Cancelar"]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_66(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_67)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_47(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 21, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_48)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_51)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_52)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_55)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_58)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_59)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_60)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_62)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_64)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_66)), i1.ɵdid(21, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregarLotes"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "editar"; _ck(_v, 19, 0, currVal_9); }, null); }
+function View_FormBlockComponent_68(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_69)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_47(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 23, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_48)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_51)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_52)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_55)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_58)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_59)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_61)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_62)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_64)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_66)), i1.ɵdid(21, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_68)), i1.ɵdid(23, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregar"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "agregarLotes"; _ck(_v, 19, 0, currVal_9); var currVal_10 = "editar"; _ck(_v, 21, 0, currVal_10); }, null); }
 function View_FormBlockComponent_46(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_47)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
 function View_FormBlockComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 10, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 9, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "ngSubmit"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onSubmit($event) !== false);
@@ -139257,63 +139262,89 @@ function View_FormBlockComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0
         var pd_3 = (_co.onSubmitForm(_co.componentForm) !== false);
         ad = (pd_3 && ad);
     } return ad; }, null, null)), i1.ɵdid(2, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(3, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(5, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(6, 0, null, null, 4, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_2)), i1.ɵdid(8, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_46)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 3, 0, currVal_7); var currVal_10 = _co.fields; var currVal_11 = _co.trackByFn; _ck(_v, 8, 0, currVal_10, currVal_11); var currVal_12 = _co.formInModalBtnConditioner(); _ck(_v, 10, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 5).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 5).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 5).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 5).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 5).ngClassValid; var currVal_5 = i1.ɵnov(_v, 5).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 5).ngClassPending; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 6, 0, currVal_8, currVal_9); }); }
-function View_FormBlockComponent_73(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_72(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1"], ["type", "button"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_73)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (!_co.componentForm.valid || _co.sendingForm); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Cargar imagenes" : "Cargando.."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_71(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_72)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_74(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "button", [["class", "btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_75(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_74(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1"], ["type", "button"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_75)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (!_co.componentForm.valid || _co.sendingForm); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Cargar imagenes" : "Cargando.."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_73(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_74)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_76(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "button", [["class", "btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.onVerResultadosClick() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "i", [["class", "icon-bar-chart mr-1"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Ver resultados "]))], null, null); }
-function View_FormBlockComponent_77(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_76(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[2, "d-none", null], [8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_77)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.sendingForm; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); var currVal_1 = _co.disableBtn(); _ck(_v, 0, 0, currVal_0, currVal_1); var currVal_3 = (!_co.sendingForm ? "Guardar" : "Guardando.."); _ck(_v, 3, 0, currVal_3); }); }
-function View_FormBlockComponent_75(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_76)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_80(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_79(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_80)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.disableBtnWithDate(); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Agregar" : "Agregando.."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_78(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_79)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_81(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, [["modalLauncher", 1]], null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_79(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_78(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[2, "d-none", null], [8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_79)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.sendingForm; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); var currVal_1 = _co.disableBtn(); _ck(_v, 0, 0, currVal_0, currVal_1); var currVal_3 = (!_co.sendingForm ? "Guardar" : "Guardando.."); _ck(_v, 3, 0, currVal_3); }); }
+function View_FormBlockComponent_77(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_78)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_82(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_81(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_82)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.disableBtnWithDate(); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Agregar" : "Agregando.."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_80(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_81)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_83(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, [["modalLauncher", 1]], null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.openModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar "]))], null, null); }
-function View_FormBlockComponent_82(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_85(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import-multiple"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar m\u00FAltiple "]))], null, null); }
+function View_FormBlockComponent_84(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_85)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.hasSchoolSections(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_86(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportStudents() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Exportar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getStudentsCount(); _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_84(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_83(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_88(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_87(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.openExportModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_84)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_86(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_85(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-blue text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_88)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_90(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_89(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-blue text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.justOpenModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_86)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_88(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_90)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_92(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.enableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Editar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && _co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_87(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_88)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_90(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_91(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_92)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.disableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Cancelar"]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_89(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_90)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_70(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 21, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_71)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_74)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_75)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_78)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_81)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_82)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_83)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_85)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_87)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_89)), i1.ɵdid(21, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregarLotes"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "editar"; _ck(_v, 19, 0, currVal_9); }, null); }
-function View_FormBlockComponent_69(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container buttons-containers"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_70)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
-function View_FormBlockComponent_68(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_69)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.formInModalBtnConditioner(); _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_93(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_92(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_93(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_94)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_72(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 23, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_73)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_76)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_77)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_80)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_83)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_84)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_86)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_87)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_89)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_91)), i1.ɵdid(21, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_93)), i1.ɵdid(23, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregar"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "agregarLotes"; _ck(_v, 19, 0, currVal_9); var currVal_10 = "editar"; _ck(_v, 21, 0, currVal_10); }, null); }
+function View_FormBlockComponent_71(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container buttons-containers"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_72)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
+function View_FormBlockComponent_70(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_71)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.formInModalBtnConditioner(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_96(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "alert alert-danger mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Corrija las siguientes filas y vuelva a adjuntar el archivo:"])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_97)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importErrors; _ck(_v, 5, 0, currVal_0); }, null); }
+function View_FormBlockComponent_99(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [["class", "alert alert-warning mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "ul", [["class", "mb-0 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_99)), i1.ɵdid(3, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importWarnings; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_100(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "mt-3"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["Estudiantes a importar: ", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importSummary; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.importStudents() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_93)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingData; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingData; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingData ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_91(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 14, "div", [["class", "modal fade"], ["id", "no-peca-modal-import"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 13, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 12, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_102)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingData; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingData; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingData ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_95(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "div", [["class", "modal fade"], ["id", "no-peca-modal-import"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 19, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 18, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 8, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, suba el archivo excel con la informaci\u00F3n de los estudiantes a importar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 14, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, suba el archivo excel con la informaci\u00F3n de los estudiantes a importar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (_co.handleFileInput($event.target.files) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵeld(12, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_92)), i1.ɵdid(14, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.showUploadBtn; _ck(_v, 14, 0, currVal_0); }, null); }
-function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "input", [["class", "form-control"], ["type", "text"]], [[8, "id", 0], [8, "placeholder", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) { var ad = true; if (("input" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_96)), i1.ɵdid(13, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_98)), i1.ɵdid(15, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_100)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_101)), i1.ɵdid(20, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.importErrors.length > 0); _ck(_v, 13, 0, currVal_0); var currVal_1 = (_co.importWarnings.length > 0); _ck(_v, 15, 0, currVal_1); var currVal_2 = _co.importSummary; _ck(_v, 17, 0, currVal_2); var currVal_3 = _co.showUploadBtn; _ck(_v, 20, 0, currVal_3); }, null); }
+function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "alert alert-danger mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Corrija las siguientes filas y vuelva a adjuntar el archivo:"])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_105)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importMultipleErrors; _ck(_v, 5, 0, currVal_0); }, null); }
+function View_FormBlockComponent_107(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, [" ", ": ", " "]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.label; var currVal_1 = _v.context.$implicit.count; _ck(_v, 1, 0, currVal_0, currVal_1); }); }
+function View_FormBlockComponent_106(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "mt-3"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["Estudiantes a importar: ", ""])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_107)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importMultipleSummary; _ck(_v, 5, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.studentsToImportMultiple.length; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_109(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.importMultipleStudents() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_109)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingMultiple; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingMultiple; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingMultiple ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_103(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 27, "div", [["class", "modal fade"], ["id", "no-peca-modal-import-multiple"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 26, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 25, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.closeImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 21, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes de varios grados y secciones"])), (_l()(), i1.ɵeld(9, 0, null, null, 10, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Suba el archivo excel con el mismo formato de columnas de "])), (_l()(), i1.ɵeld(11, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar"])), (_l()(), i1.ɵted(-1, null, [". Las columnas "])), (_l()(), i1.ɵeld(14, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Grado"])), (_l()(), i1.ɵted(-1, null, [" y "])), (_l()(), i1.ɵeld(17, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Secci\u00F3n"])), (_l()(), i1.ɵted(-1, null, [" de cada estudiante deben corresponder a grados y secciones registrados en el a\u00F1o escolar. Si un estudiante ya est\u00E1 inscrito en otra secci\u00F3n, se cambiar\u00E1 a la secci\u00F3n indicada en el archivo. "])), (_l()(), i1.ɵeld(20, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file-multiple"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+        var pd_0 = (_co.handleMultipleFileInput($event.target.files) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_104)), i1.ɵdid(22, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_106)), i1.ɵdid(24, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(25, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_108)), i1.ɵdid(27, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.importMultipleErrors.length > 0); _ck(_v, 22, 0, currVal_0); var currVal_1 = (_co.importMultipleSummary.length > 0); _ck(_v, 24, 0, currVal_1); var currVal_2 = (_co.studentsToImportMultiple.length > 0); _ck(_v, 27, 0, currVal_2); }, null); }
+function View_FormBlockComponent_113(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "input", [["class", "form-control"], ["type", "text"]], [[8, "id", 0], [8, "placeholder", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) { var ad = true; if (("input" === en)) {
         var pd_0 = (i1.ɵnov(_v, 1)._handleInput($event.target.value) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139326,8 +139357,8 @@ function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
         var pd_3 = (i1.ɵnov(_v, 1)._compositionEnd($event.target.value) !== false);
         ad = (pd_3 && ad);
     } return ad; }, null, null)), i1.ɵdid(1, 16384, null, 0, i2.DefaultValueAccessor, [i1.Renderer2, i1.ElementRef, [2, i2.COMPOSITION_BUFFER_MODE]], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.DefaultValueAccessor]), i1.ɵdid(3, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(5, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_9 = _co.fields[0]; _ck(_v, 3, 0, currVal_9); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getId(_co.fields[0]); var currVal_1 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_2 = i1.ɵnov(_v, 5).ngClassUntouched; var currVal_3 = i1.ɵnov(_v, 5).ngClassTouched; var currVal_4 = i1.ɵnov(_v, 5).ngClassPristine; var currVal_5 = i1.ɵnov(_v, 5).ngClassDirty; var currVal_6 = i1.ɵnov(_v, 5).ngClassValid; var currVal_7 = i1.ɵnov(_v, 5).ngClassInvalid; var currVal_8 = i1.ɵnov(_v, 5).ngClassPending; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8); }); }
-function View_FormBlockComponent_99(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "small", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.item.name; _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "ng-select", [["bindLabel", "name"], ["bindValue", "id"], ["class", "form-control"], ["notFoundText", "Elementos no encontrados"]], [[2, "is-in-modal", null], [8, "id", 0], [2, "ng-select", null], [2, "ng-select-single", null], [2, "ng-select-typeahead", null], [2, "ng-select-multiple", null], [2, "ng-select-taggable", null], [2, "ng-select-searchable", null], [2, "ng-select-clearable", null], [2, "ng-select-opened", null], [2, "ng-select-disabled", null], [2, "ng-select-filtered", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "click"], [null, "change"], [null, "keydown"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("keydown" === en)) {
+function View_FormBlockComponent_115(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "small", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.item.name; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_114(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "ng-select", [["bindLabel", "name"], ["bindValue", "id"], ["class", "form-control"], ["notFoundText", "Elementos no encontrados"]], [[2, "is-in-modal", null], [8, "id", 0], [2, "ng-select", null], [2, "ng-select-single", null], [2, "ng-select-typeahead", null], [2, "ng-select-multiple", null], [2, "ng-select-taggable", null], [2, "ng-select-searchable", null], [2, "ng-select-clearable", null], [2, "ng-select-opened", null], [2, "ng-select-disabled", null], [2, "ng-select-filtered", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "click"], [null, "change"], [null, "keydown"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("keydown" === en)) {
         var pd_0 = (i1.ɵnov(_v, 2).handleKeyDown($event) !== false);
         ad = (pd_0 && ad);
     } if (("click" === en)) {
@@ -139336,10 +139367,10 @@ function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
     } if (("change" === en)) {
         var pd_2 = ((_co.settings.formsContent[_co.fields[0]].isGrades ? _co.setSchoolSectionsModal($event) : (_co.settings.formsContent[_co.fields[0]].isFactoryType ? _co.requiredOtherCompany($event) : _co.updateMuns(((_co.fields[0] === "addressState") ? true : false)))) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, i3.View_NgSelectComponent_0, i3.RenderType_NgSelectComponent)), i1.ɵprd(4608, null, i4.ɵd, i4.ɵd, []), i1.ɵdid(2, 4964352, null, 12, i4.NgSelectComponent, [[8, "form-control"], [8, null], i4.NgSelectConfig, i4.SELECTION_MODEL_FACTORY, i1.ElementRef, i1.ChangeDetectorRef, i4.ɵs], { bindLabel: [0, "bindLabel"], bindValue: [1, "bindValue"], placeholder: [2, "placeholder"], notFoundText: [3, "notFoundText"], virtualScroll: [4, "virtualScroll"], labelForId: [5, "labelForId"], readonly: [6, "readonly"], items: [7, "items"] }, { changeEvent: "change" }), i1.ɵqud(603979776, 38, { optionTemplate: 0 }), i1.ɵqud(603979776, 39, { optgroupTemplate: 0 }), i1.ɵqud(603979776, 40, { labelTemplate: 0 }), i1.ɵqud(603979776, 41, { multiLabelTemplate: 0 }), i1.ɵqud(603979776, 42, { headerTemplate: 0 }), i1.ɵqud(603979776, 43, { footerTemplate: 0 }), i1.ɵqud(603979776, 44, { notFoundTemplate: 0 }), i1.ɵqud(603979776, 45, { typeToSearchTemplate: 0 }), i1.ɵqud(603979776, 46, { loadingTextTemplate: 0 }), i1.ɵqud(603979776, 47, { tagTemplate: 0 }), i1.ɵqud(603979776, 48, { loadingSpinnerTemplate: 0 }), i1.ɵqud(603979776, 49, { ngOptions: 1 }), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i4.NgSelectComponent]), i1.ɵdid(16, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(18, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵand(0, [[38, 2]], null, 1, null, View_FormBlockComponent_99)), i1.ɵdid(20, 16384, null, 0, i4.ɵf, [i1.TemplateRef], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_19 = "name"; var currVal_20 = "id"; var currVal_21 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_22 = "Elementos no encontrados"; var currVal_23 = true; var currVal_24 = _co.getId(_co.fields[0]); var currVal_25 = (_co.settings.formsContent[_co.fields[0]].readonly || _co.isReadOnly()); var currVal_26 = (_co.settings.formsContent[_co.fields[0]].emmitSectionChange ? _co.sectionsArr : ((_co.fields[0] != "addressMunicipality") ? _co.settings.formsContent[_co.fields[0]].options : _co.municipalities)); _ck(_v, 2, 0, currVal_19, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = _co.fields[0]; _ck(_v, 16, 0, currVal_27); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isFromCustomTableActions; var currVal_1 = _co.getId(_co.fields[0]); var currVal_2 = i1.ɵnov(_v, 2).useDefaultClass; var currVal_3 = !i1.ɵnov(_v, 2).multiple; var currVal_4 = i1.ɵnov(_v, 2).typeahead; var currVal_5 = i1.ɵnov(_v, 2).multiple; var currVal_6 = i1.ɵnov(_v, 2).addTag; var currVal_7 = i1.ɵnov(_v, 2).searchable; var currVal_8 = i1.ɵnov(_v, 2).clearable; var currVal_9 = i1.ɵnov(_v, 2).isOpen; var currVal_10 = i1.ɵnov(_v, 2).disabled; var currVal_11 = i1.ɵnov(_v, 2).filtered; var currVal_12 = i1.ɵnov(_v, 18).ngClassUntouched; var currVal_13 = i1.ɵnov(_v, 18).ngClassTouched; var currVal_14 = i1.ɵnov(_v, 18).ngClassPristine; var currVal_15 = i1.ɵnov(_v, 18).ngClassDirty; var currVal_16 = i1.ɵnov(_v, 18).ngClassValid; var currVal_17 = i1.ɵnov(_v, 18).ngClassInvalid; var currVal_18 = i1.ɵnov(_v, 18).ngClassPending; _ck(_v, 0, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18]); }); }
-function View_FormBlockComponent_96(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["", ""])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_97)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_98)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_1 = (((_co.fields[0] == "addressState") && !_co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && _co.isContentRefreshing)); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((((_co.fields[0] == "addressState") && _co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && !_co.isContentRefreshing)) || (_co.fields[0] != "addressState")); _ck(_v, 6, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].label; _ck(_v, 2, 0, currVal_0); }); }
-function View_FormBlockComponent_95(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [], null, null, null, null, null)), i1.ɵdid(2, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵdid(3, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_96)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].type; var currVal_1 = _co.getStudentsModalNgClass(); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = _co.settings.formsContent[_co.fields[0]].type; _ck(_v, 3, 0, currVal_2); var currVal_3 = "select"; _ck(_v, 5, 0, currVal_3); }, null); }
-function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allSections"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+    } return ad; }, i3.View_NgSelectComponent_0, i3.RenderType_NgSelectComponent)), i1.ɵprd(4608, null, i4.ɵd, i4.ɵd, []), i1.ɵdid(2, 4964352, null, 12, i4.NgSelectComponent, [[8, "form-control"], [8, null], i4.NgSelectConfig, i4.SELECTION_MODEL_FACTORY, i1.ElementRef, i1.ChangeDetectorRef, i4.ɵs], { bindLabel: [0, "bindLabel"], bindValue: [1, "bindValue"], placeholder: [2, "placeholder"], notFoundText: [3, "notFoundText"], virtualScroll: [4, "virtualScroll"], labelForId: [5, "labelForId"], readonly: [6, "readonly"], items: [7, "items"] }, { changeEvent: "change" }), i1.ɵqud(603979776, 38, { optionTemplate: 0 }), i1.ɵqud(603979776, 39, { optgroupTemplate: 0 }), i1.ɵqud(603979776, 40, { labelTemplate: 0 }), i1.ɵqud(603979776, 41, { multiLabelTemplate: 0 }), i1.ɵqud(603979776, 42, { headerTemplate: 0 }), i1.ɵqud(603979776, 43, { footerTemplate: 0 }), i1.ɵqud(603979776, 44, { notFoundTemplate: 0 }), i1.ɵqud(603979776, 45, { typeToSearchTemplate: 0 }), i1.ɵqud(603979776, 46, { loadingTextTemplate: 0 }), i1.ɵqud(603979776, 47, { tagTemplate: 0 }), i1.ɵqud(603979776, 48, { loadingSpinnerTemplate: 0 }), i1.ɵqud(603979776, 49, { ngOptions: 1 }), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i4.NgSelectComponent]), i1.ɵdid(16, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(18, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵand(0, [[38, 2]], null, 1, null, View_FormBlockComponent_115)), i1.ɵdid(20, 16384, null, 0, i4.ɵf, [i1.TemplateRef], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_19 = "name"; var currVal_20 = "id"; var currVal_21 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_22 = "Elementos no encontrados"; var currVal_23 = true; var currVal_24 = _co.getId(_co.fields[0]); var currVal_25 = (_co.settings.formsContent[_co.fields[0]].readonly || _co.isReadOnly()); var currVal_26 = (_co.settings.formsContent[_co.fields[0]].emmitSectionChange ? _co.sectionsArr : ((_co.fields[0] != "addressMunicipality") ? _co.settings.formsContent[_co.fields[0]].options : _co.municipalities)); _ck(_v, 2, 0, currVal_19, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = _co.fields[0]; _ck(_v, 16, 0, currVal_27); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isFromCustomTableActions; var currVal_1 = _co.getId(_co.fields[0]); var currVal_2 = i1.ɵnov(_v, 2).useDefaultClass; var currVal_3 = !i1.ɵnov(_v, 2).multiple; var currVal_4 = i1.ɵnov(_v, 2).typeahead; var currVal_5 = i1.ɵnov(_v, 2).multiple; var currVal_6 = i1.ɵnov(_v, 2).addTag; var currVal_7 = i1.ɵnov(_v, 2).searchable; var currVal_8 = i1.ɵnov(_v, 2).clearable; var currVal_9 = i1.ɵnov(_v, 2).isOpen; var currVal_10 = i1.ɵnov(_v, 2).disabled; var currVal_11 = i1.ɵnov(_v, 2).filtered; var currVal_12 = i1.ɵnov(_v, 18).ngClassUntouched; var currVal_13 = i1.ɵnov(_v, 18).ngClassTouched; var currVal_14 = i1.ɵnov(_v, 18).ngClassPristine; var currVal_15 = i1.ɵnov(_v, 18).ngClassDirty; var currVal_16 = i1.ɵnov(_v, 18).ngClassValid; var currVal_17 = i1.ɵnov(_v, 18).ngClassInvalid; var currVal_18 = i1.ɵnov(_v, 18).ngClassPending; _ck(_v, 0, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18]); }); }
+function View_FormBlockComponent_112(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["", ""])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_113)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_114)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_1 = (((_co.fields[0] == "addressState") && !_co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && _co.isContentRefreshing)); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((((_co.fields[0] == "addressState") && _co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && !_co.isContentRefreshing)) || (_co.fields[0] != "addressState")); _ck(_v, 6, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].label; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_111(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [], null, null, null, null, null)), i1.ɵdid(2, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵdid(3, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_112)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].type; var currVal_1 = _co.getStudentsModalNgClass(); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = _co.settings.formsContent[_co.fields[0]].type; _ck(_v, 3, 0, currVal_2); var currVal_3 = "select"; _ck(_v, 5, 0, currVal_3); }, null); }
+function View_FormBlockComponent_117(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allSections"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139349,7 +139380,7 @@ function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectSection("all", $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(-1, null, [" Todas las secciones "]))], function (_ck, _v) { var currVal_7 = ""; _ck(_v, 5, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 7).ngClassValid; var currVal_5 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "section.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_118(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "section.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139359,8 +139390,8 @@ function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectSection(_v.context.$implicit.id, $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(8, null, [" Secci\u00F3n ", ""])), (_l()(), i1.ɵeld(9, 0, null, null, 0, "br", [], null, null, null, null, null))], function (_ck, _v) { var currVal_8 = ""; _ck(_v, 5, 0, currVal_8); }, function (_ck, _v) { var currVal_0 = i1.ɵinlineInterpolate(1, "", _v.context.$implicit.id, ""); var currVal_1 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 7).ngClassValid; var currVal_6 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); var currVal_9 = _v.context.$implicit.name; _ck(_v, 8, 0, currVal_9); }); }
-function View_FormBlockComponent_100(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione la secci\u00F3n:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_101)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_102)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.sectionsArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.sectionsArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allGrades"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_116(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione la secci\u00F3n:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_117)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_118)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.sectionsArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.sectionsArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_120(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allGrades"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139370,7 +139401,7 @@ function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectGrades("all", $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(-1, null, [" Todos los grados "]))], function (_ck, _v) { var currVal_7 = ""; _ck(_v, 5, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 7).ngClassValid; var currVal_5 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "grade.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_121(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "grade.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139380,13 +139411,13 @@ function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectGrades(_v.context.$implicit.id, $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(8, null, [" ", ""])), (_l()(), i1.ɵeld(9, 0, null, null, 0, "br", [], null, null, null, null, null))], function (_ck, _v) { var currVal_8 = ""; _ck(_v, 5, 0, currVal_8); }, function (_ck, _v) { var currVal_0 = i1.ɵinlineInterpolate(1, "", _v.context.$implicit.id, ""); var currVal_1 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 7).ngClassValid; var currVal_6 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); var currVal_9 = _v.context.$implicit.name; _ck(_v, 8, 0, currVal_9); }); }
-function View_FormBlockComponent_103(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione el grado:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_104)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_105)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.gradesArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.gradesArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_107(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_106(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_119(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione el grado:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_120)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_121)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.gradesArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.gradesArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_123(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_122(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportSections() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_107)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isLoading; _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (!_co.isLoading ? "Exportar" : "Cargando..."); _ck(_v, 3, 0, currVal_1); }); }
-function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 26, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 25, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 24, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_123)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isLoading; _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (!_co.isLoading ? "Exportar" : "Cargando..."); _ck(_v, 3, 0, currVal_1); }); }
+function View_FormBlockComponent_110(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 26, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 25, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 24, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeExportModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 20, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Exportar secciones"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, seleccione el grado y las secciones de los estudiantes a exportar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 8, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "ngSubmit"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
@@ -139401,18 +139432,18 @@ function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
     } if (("ngSubmit" === en)) {
         var pd_3 = (_co.onSubmitForm(_co.componentForm) !== false);
         ad = (pd_3 && ad);
-    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(16, 0, null, null, 3, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵeld(17, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_95)), i1.ɵdid(19, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_100)), i1.ɵdid(21, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_103)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(24, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_106)), i1.ɵdid(26, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_10 = _co.isField(_co.fields[0]); _ck(_v, 19, 0, currVal_10); var currVal_11 = (_co.sectionsArr.length > 0); _ck(_v, 21, 0, currVal_11); var currVal_12 = (_co.gradesArr.length > 0); _ck(_v, 23, 0, currVal_12); var currVal_13 = _co.showExportBtn; _ck(_v, 26, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 16, 0, currVal_8, currVal_9); }); }
-function View_FormBlockComponent_110(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["id", "markAll"], ["type", "checkbox"]], [[8, "checked", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(16, 0, null, null, 3, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵeld(17, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_111)), i1.ɵdid(19, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_116)), i1.ɵdid(21, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_119)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(24, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_122)), i1.ɵdid(26, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_10 = _co.isField(_co.fields[0]); _ck(_v, 19, 0, currVal_10); var currVal_11 = (_co.sectionsArr.length > 0); _ck(_v, 21, 0, currVal_11); var currVal_12 = (_co.gradesArr.length > 0); _ck(_v, 23, 0, currVal_12); var currVal_13 = _co.showExportBtn; _ck(_v, 26, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 16, 0, currVal_8, currVal_9); }); }
+function View_FormBlockComponent_126(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["id", "markAll"], ["type", "checkbox"]], [[8, "checked", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.onCheckboxChange($event, "gradesStudents") !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Todos los grados "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isCheckboxesChecked(false); _ck(_v, 2, 0, currVal_0); }); }
-function View_FormBlockComponent_111(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["type", "checkbox"]], [[8, "value", 0]], [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_127(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["type", "checkbox"]], [[8, "value", 0]], [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (_co.onCheckboxChange($event, "gradesStudents") !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(3, null, [" ", ""])), (_l()(), i1.ɵeld(4, 0, null, null, 0, "br", [], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.grade; _ck(_v, 2, 0, currVal_0); var currVal_1 = _v.context.$implicit.name; _ck(_v, 3, 0, currVal_1); }); }
-function View_FormBlockComponent_109(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [["class", "list-checkbox"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_110)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_111)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.currentForm.getField("gradesStudents").options.length > 1); _ck(_v, 3, 0, currVal_0); var currVal_1 = _co.currentForm.getField("gradesStudents").options; var currVal_2 = _co.trackByFn; _ck(_v, 5, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_112(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 24, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 23, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 22, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_125(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [["class", "list-checkbox"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_126)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_127)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.currentForm.getField("gradesStudents").options.length > 1); _ck(_v, 3, 0, currVal_0); var currVal_1 = _co.currentForm.getField("gradesStudents").options; var currVal_2 = _co.trackByFn; _ck(_v, 5, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_128(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_124(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 24, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 23, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 22, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 18, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Agregar estudiantes en lote"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, seleccione el(los) grado(s) para registrar/actualizar estudiantes que participan en Olimpiada de Matem\u00E1tica: "])), (_l()(), i1.ɵeld(11, 0, null, null, 13, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
@@ -139424,11 +139455,11 @@ function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
     } if (("keydown.enter" === en)) {
         var pd_2 = (_co.prevDef($event) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, null), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_109)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 6, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵeld(19, 0, [["upload", 1]], null, 5, "button", [["class", "btn full-width submit-btn mx-auto mt-4 btn-blue"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, null), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_125)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 6, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵeld(19, 0, [["upload", 1]], null, 5, "button", [["class", "btn full-width submit-btn mx-auto mt-4 btn-blue"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.currentForm.onSubmit(_co.componentForm) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i1.ɵdid(20, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(21, { disabled: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_112)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(24, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_8 = (_co.currentForm.getField("gradesStudents").options.length > 0); _ck(_v, 17, 0, currVal_8); var currVal_10 = "btn full-width submit-btn mx-auto mt-4 btn-blue"; var currVal_11 = _ck(_v, 21, 0, _co.componentForm.invalid); _ck(_v, 20, 0, currVal_10, currVal_11); var currVal_12 = _co.currentForm.isLoading; _ck(_v, 23, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_9 = _co.componentForm.invalid; _ck(_v, 19, 0, currVal_9); var currVal_13 = (!_co.currentForm.isLoading ? "Agregar en lote" : "Cargando..."); _ck(_v, 24, 0, currVal_13); }); }
-function View_FormBlockComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { inputDate: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_1)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_68)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_91)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_94)), i1.ɵdid(8, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_108)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.isSettingToJustShowModal(); _ck(_v, 2, 0, currVal_0); var currVal_1 = _co.isSettingToJustShowModal(); _ck(_v, 4, 0, currVal_1); var currVal_2 = _co.showImportModal; var currVal_3 = null; _ck(_v, 6, 0, currVal_2, currVal_3); var currVal_4 = (_co.showExportModal && !_co.settings.extraData); var currVal_5 = null; _ck(_v, 8, 0, currVal_4, currVal_5); var currVal_6 = ((_co.showExportModal && _co.settings.extraData) && (_co.settings.extraData.purpose === "agregarEstudiantesLotes")); var currVal_7 = null; _ck(_v, 10, 0, currVal_6, currVal_7); }, null); }
+    } return ad; }, null, null)), i1.ɵdid(20, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(21, { disabled: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_128)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(24, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_8 = (_co.currentForm.getField("gradesStudents").options.length > 0); _ck(_v, 17, 0, currVal_8); var currVal_10 = "btn full-width submit-btn mx-auto mt-4 btn-blue"; var currVal_11 = _ck(_v, 21, 0, _co.componentForm.invalid); _ck(_v, 20, 0, currVal_10, currVal_11); var currVal_12 = _co.currentForm.isLoading; _ck(_v, 23, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_9 = _co.componentForm.invalid; _ck(_v, 19, 0, currVal_9); var currVal_13 = (!_co.currentForm.isLoading ? "Agregar en lote" : "Cargando..."); _ck(_v, 24, 0, currVal_13); }); }
+function View_FormBlockComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { inputDate: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_1)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_70)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_95)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_103)), i1.ɵdid(8, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_110)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_124)), i1.ɵdid(12, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.isSettingToJustShowModal(); _ck(_v, 2, 0, currVal_0); var currVal_1 = _co.isSettingToJustShowModal(); _ck(_v, 4, 0, currVal_1); var currVal_2 = _co.showImportModal; var currVal_3 = null; _ck(_v, 6, 0, currVal_2, currVal_3); var currVal_4 = _co.showImportMultipleModal; var currVal_5 = null; _ck(_v, 8, 0, currVal_4, currVal_5); var currVal_6 = (_co.showExportModal && !_co.settings.extraData); var currVal_7 = null; _ck(_v, 10, 0, currVal_6, currVal_7); var currVal_8 = ((_co.showExportModal && _co.settings.extraData) && (_co.settings.extraData.purpose === "agregarEstudiantesLotes")); var currVal_9 = null; _ck(_v, 12, 0, currVal_8, currVal_9); }, null); }
 exports.View_FormBlockComponent_0 = View_FormBlockComponent_0;
 function View_FormBlockComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "form-block", [], null, null, null, View_FormBlockComponent_0, RenderType_FormBlockComponent)), i1.ɵdid(1, 245760, null, 0, i11.FormBlockComponent, [i12.Store, i2.FormBuilder, i13.ToastrService, i14.GlobalService, i15.HttpFetcherService, i16.StepsService, i17.HttpClient, i8.DomSanitizer], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_FormBlockComponent_Host_0 = View_FormBlockComponent_Host_0;
@@ -244233,12 +244264,16 @@ function adaptBody(formType, body) {
                 }
             });
             break;
-        case "agregarGradoSeccion":
-            Object.keys(body).map((key) => {
-                if (key != "id")
-                    body_adapted[key === "grades" ? "grade" : key === "docente" ? "teacher" : "name"] = body[key];
+        case "agregarGradoSeccion": {
+            // Solo claves conocidas: al editar llega la fila entera (p. ej. docenteName),
+            // y cualquier clave extra mapeada a "name" sobrescribiría la sección.
+            const sectionKeys = { grades: "grade", section: "name", docente: "teacher" };
+            Object.keys(sectionKeys).forEach((key) => {
+                if (key in body)
+                    body_adapted[sectionKeys[key]] = body[key];
             });
             break;
+        }
         case "buscarEstudiante":
             Object.keys(body).map((key) => {
                 if (key != "id" &&
@@ -314989,6 +315024,7 @@ __webpack_require__.r(__webpack_exports__);
  * Token used by the ModuleMapNgFactoryLoader to load modules
  * @type {?}
  */
+
 const MODULE_MAP = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('MODULE_MAP');
 /**
  * NgModuleFactoryLoader which does not lazy load
@@ -315038,14 +315074,19 @@ class ModuleMapNgFactoryLoader {
         return this.compiler.compileModuleAsync(type);
     }
 }
-ModuleMapNgFactoryLoader.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"] }
-];
+ModuleMapNgFactoryLoader.ɵfac = function ModuleMapNgFactoryLoader_Factory(t) { return new (t || ModuleMapNgFactoryLoader)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["Compiler"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](MODULE_MAP)); };
+ModuleMapNgFactoryLoader.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: ModuleMapNgFactoryLoader, factory: ModuleMapNgFactoryLoader.ɵfac });
 /** @nocollapse */
 ModuleMapNgFactoryLoader.ctorParameters = () => [
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Compiler"] },
     { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MODULE_MAP,] }] }
 ];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ModuleMapNgFactoryLoader, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Compiler"] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [MODULE_MAP]
+            }] }]; }, null); })();
 if (false) {}
 
 /**
@@ -315086,16 +315127,24 @@ class ModuleMapLoaderModule {
         };
     }
 }
-ModuleMapLoaderModule.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+ModuleMapLoaderModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: ModuleMapLoaderModule });
+ModuleMapLoaderModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function ModuleMapLoaderModule_Factory(t) { return new (t || ModuleMapLoaderModule)(); }, providers: [
+        {
+            provide: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleFactoryLoader"],
+            useClass: ModuleMapNgFactoryLoader
+        }
+    ] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ModuleMapLoaderModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+        args: [{
                 providers: [
                     {
                         provide: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModuleFactoryLoader"],
                         useClass: ModuleMapNgFactoryLoader
                     }
                 ]
-            },] }
-];
+            }]
+    }], null, null); })();
 
 /**
  * @fileoverview added by tsickle
@@ -315117,8 +315166,8 @@ ModuleMapLoaderModule.decorators = [
  */
 
 
-//# sourceMappingURL=module-map-ngfactory-loader.js.map
 
+//# sourceMappingURL=module-map-ngfactory-loader.js.map
 
 /***/ }),
 
@@ -377010,6 +377059,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+const _c0 = [[["", "quill-editor-toolbar", ""]]];
+const _c1 = ["[quill-editor-toolbar]"];
 const defaultModules = {
     toolbar: [
         ['bold', 'italic', 'underline', 'strike'],
@@ -377069,15 +377124,20 @@ class QuillService {
         return this.$importPromise;
     }
 }
+QuillService.ɵfac = function QuillService_Factory(t) { return new (t || QuillService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](QUILL_CONFIG_TOKEN)); };
 QuillService.ɵprov = Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"])({ factory: function QuillService_Factory() { return new QuillService(Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"])(QUILL_CONFIG_TOKEN)); }, token: QuillService, providedIn: "root" });
-QuillService.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"], args: [{
-                providedIn: 'root'
-            },] }
-];
 QuillService.ctorParameters = () => [
     { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [QUILL_CONFIG_TOKEN,] }] }
 ];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"],
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [QUILL_CONFIG_TOKEN]
+            }] }]; }, null); })();
 
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 class QuillEditorBase {
@@ -377508,9 +377568,8 @@ class QuillEditorBase {
         return valid ? null : err;
     }
 }
-QuillEditorBase.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"] }
-];
+QuillEditorBase.ɵfac = function QuillEditorBase_Factory(t) { return new (t || QuillEditorBase)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](QuillService)); };
+QuillEditorBase.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({ type: QuillEditorBase, inputs: { required: "required", customToolbarPosition: "customToolbarPosition", sanitize: "sanitize", styles: "styles", strict: "strict", customOptions: "customOptions", customModules: "customModules", preserveWhitespace: "preserveWhitespace", trimOnValidation: "trimOnValidation", compareValues: "compareValues", filterNull: "filterNull", valueGetter: "valueGetter", valueSetter: "valueSetter", format: "format", theme: "theme", modules: "modules", debug: "debug", readOnly: "readOnly", placeholder: "placeholder", maxLength: "maxLength", minLength: "minLength", formats: "formats", scrollingContainer: "scrollingContainer", bounds: "bounds", trackChanges: "trackChanges", classes: "classes", linkPlaceholder: "linkPlaceholder" }, outputs: { onEditorCreated: "onEditorCreated", onEditorChanged: "onEditorChanged", onContentChanged: "onContentChanged", onSelectionChanged: "onSelectionChanged", onFocus: "onFocus", onBlur: "onBlur" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]] });
 QuillEditorBase.ctorParameters = () => [
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] },
     { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"] },
@@ -377555,13 +377614,116 @@ QuillEditorBase.propDecorators = {
     valueGetter: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
     valueSetter: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
 };
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillEditorBase, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"]
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] }, { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"]]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"]]
+            }] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }, { type: QuillService }]; }, { required: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], customToolbarPosition: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], sanitize: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], styles: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], strict: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], customOptions: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], customModules: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], preserveWhitespace: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], trimOnValidation: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], compareValues: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], filterNull: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], onEditorCreated: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], onEditorChanged: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], onContentChanged: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], onSelectionChanged: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], onFocus: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], onBlur: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], valueGetter: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], valueSetter: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], format: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], theme: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], modules: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], debug: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], readOnly: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], placeholder: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], maxLength: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], minLength: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], formats: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], scrollingContainer: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], bounds: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], trackChanges: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], classes: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], linkPlaceholder: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }] }); })();
 class QuillEditorComponent extends QuillEditorBase {
     constructor(elementRef, domSanitizer, doc, platformId, renderer, zone, service) {
         super(elementRef, domSanitizer, doc, platformId, renderer, zone, service);
     }
 }
-QuillEditorComponent.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"], args: [{
+QuillEditorComponent.ɵfac = function QuillEditorComponent_Factory(t) { return new (t || QuillEditorComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](QuillService)); };
+QuillEditorComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: QuillEditorComponent, selectors: [["quill-editor"]], features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([
+            {
+                multi: true,
+                provide: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NG_VALUE_ACCESSOR"],
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
+                useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => QuillEditorComponent)
+            },
+            {
+                multi: true,
+                provide: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NG_VALIDATORS"],
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
+                useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => QuillEditorComponent)
+            }
+        ]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵInheritDefinitionFeature"]], ngContentSelectors: _c1, decls: 1, vars: 0, template: function QuillEditorComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"](_c0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+    } }, encapsulation: 2 });
+QuillEditorComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],] }] },
+    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"],] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"],] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"],] }] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"],] }] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],] }] },
+    { type: QuillService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [QuillService,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillEditorComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
+        args: [{
                 encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
                 providers: [
                     {
@@ -377581,17 +377743,29 @@ QuillEditorComponent.decorators = [
                 template: `
   <ng-content select="[quill-editor-toolbar]"></ng-content>
 `
-            },] }
-];
-QuillEditorComponent.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"],] }] },
-    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"],] }] },
-    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"],] }] },
-    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"],] }] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"],] }] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],] }] },
-    { type: QuillService, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [QuillService,] }] }
-];
+            }]
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]]
+            }] }, { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["DOCUMENT"]]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"]]
+            }] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]]
+            }] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]]
+            }] }, { type: QuillService, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [QuillService]
+            }] }]; }, null); })();
 
 class QuillViewHTMLComponent {
     constructor(sanitizer, service) {
@@ -377615,8 +377789,27 @@ class QuillViewHTMLComponent {
         }
     }
 }
-QuillViewHTMLComponent.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"], args: [{
+QuillViewHTMLComponent.ɵfac = function QuillViewHTMLComponent_Factory(t) { return new (t || QuillViewHTMLComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](QuillService)); };
+QuillViewHTMLComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: QuillViewHTMLComponent, selectors: [["quill-view-html"]], inputs: { content: "content", theme: "theme" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]], decls: 2, vars: 2, consts: [[1, "ql-container", 3, "ngClass"], [1, "ql-editor", 3, "innerHTML"]], template: function QuillViewHTMLComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngClass", ctx.themeClass);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("innerHTML", ctx.innerHTML, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsanitizeHtml"]);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["NgClass"]], styles: ["\n.ql-container.ngx-quill-view-html {\n  border: 0;\n}\n"], encapsulation: 2 });
+QuillViewHTMLComponent.ctorParameters = () => [
+    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"],] }] },
+    { type: QuillService }
+];
+QuillViewHTMLComponent.propDecorators = {
+    content: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
+    theme: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
+};
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillViewHTMLComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
+        args: [{
                 encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
                 selector: 'quill-view-html',
                 template: `
@@ -377630,16 +377823,15 @@ QuillViewHTMLComponent.decorators = [
   border: 0;
 }
 `]
-            },] }
-];
-QuillViewHTMLComponent.ctorParameters = () => [
-    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"], args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"],] }] },
-    { type: QuillService }
-];
-QuillViewHTMLComponent.propDecorators = {
-    content: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
-    theme: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
-};
+            }]
+    }], function () { return [{ type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]]
+            }] }, { type: QuillService }]; }, { content: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], theme: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }] }); })();
 
 class QuillViewComponent {
     constructor(elementRef, renderer, zone, service, domSanitizer, platformId) {
@@ -377738,19 +377930,8 @@ class QuillViewComponent {
         });
     }
 }
-QuillViewComponent.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"], args: [{
-                encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
-                selector: 'quill-view',
-                template: `
-`,
-                styles: [`
-.ql-container.ngx-quill-view {
-  border: 0;
-}
-`]
-            },] }
-];
+QuillViewComponent.ɵfac = function QuillViewComponent_Factory(t) { return new (t || QuillViewComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](QuillService), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"])); };
+QuillViewComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: QuillViewComponent, selectors: [["quill-view"]], inputs: { sanitize: "sanitize", strict: "strict", customModules: "customModules", customOptions: "customOptions", preserveWhitespace: "preserveWhitespace", format: "format", theme: "theme", modules: "modules", debug: "debug", formats: "formats", content: "content" }, outputs: { onEditorCreated: "onEditorCreated" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]], decls: 0, vars: 0, template: function QuillViewComponent_Template(rf, ctx) { }, styles: ["\n.ql-container.ngx-quill-view {\n  border: 0;\n}\n"], encapsulation: 2 });
 QuillViewComponent.ctorParameters = () => [
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] },
@@ -377773,6 +377954,47 @@ QuillViewComponent.propDecorators = {
     preserveWhitespace: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
     onEditorCreated: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"] }]
 };
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillViewComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
+        args: [{
+                encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
+                selector: 'quill-view',
+                template: `
+`,
+                styles: [`
+.ql-container.ngx-quill-view {
+  border: 0;
+}
+`]
+            }]
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] }, { type: QuillService }, { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
+                args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["PLATFORM_ID"]]
+            }] }]; }, { sanitize: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], strict: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], customModules: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], customOptions: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], preserveWhitespace: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], onEditorCreated: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], format: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], theme: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], modules: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], debug: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], formats: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }], content: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"]
+        }] }); })();
 
 class QuillModule {
     static forRoot(config) {
@@ -377787,8 +378009,12 @@ class QuillModule {
         };
     }
 }
-QuillModule.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"], args: [{
+QuillModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: QuillModule });
+QuillModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({ factory: function QuillModule_Factory(t) { return new (t || QuillModule)(); }, providers: [QuillService], imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"]]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](QuillModule, { declarations: function () { return [QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent]; }, imports: function () { return [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"]]; }, exports: function () { return [QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent]; } }); })();
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](QuillModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
+        args: [{
                 declarations: [
                     QuillEditorComponent,
                     QuillViewComponent,
@@ -377797,8 +378023,8 @@ QuillModule.decorators = [
                 exports: [QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent],
                 imports: [_angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"]],
                 providers: [QuillService]
-            },] }
-];
+            }]
+    }], null, null); })();
 
 /*
  * Public API Surface of ngx-quill
@@ -377809,8 +378035,8 @@ QuillModule.decorators = [
  */
 
 
-//# sourceMappingURL=ngx-quill.js.map
 
+//# sourceMappingURL=ngx-quill.js.map
 
 /***/ }),
 
@@ -401509,9 +401735,149 @@ module.exports = stackGet;
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__("8Y7J"), __webpack_require__("s7LF"), __webpack_require__("NAv5"), __webpack_require__("SVse"), __webpack_require__("q7NV")) :
+	 true ? factory(__webpack_require__("8Y7J"),__webpack_require__("SVse"),__webpack_require__("s7LF"),__webpack_require__("q7NV"),exports, __webpack_require__("8Y7J"), __webpack_require__("s7LF"), __webpack_require__("NAv5"), __webpack_require__("SVse"), __webpack_require__("q7NV")) :
 	undefined;
-}(this, (function (exports,core,forms,dateFns,common,ngxSlimscroll) { 'use strict';
+}(this, (function (ɵngcc0,ɵngcc1,ɵngcc2,ɵngcc3,exports,core,forms,dateFns,common,ngxSlimscroll) { 
+function NgDatepickerComponent_input_1_Template(rf, ctx) { if (rf & 1) {
+    var _r3 = ɵngcc0.ɵɵgetCurrentView();
+    ɵngcc0.ɵɵelementStart(0, "input", 3);
+    ɵngcc0.ɵɵlistener("ngModelChange", function NgDatepickerComponent_input_1_Template_input_ngModelChange_0_listener($event) { ɵngcc0.ɵɵrestoreView(_r3); var ctx_r2 = ɵngcc0.ɵɵnextContext(); return ctx_r2.displayValue = $event; })("click", function NgDatepickerComponent_input_1_Template_input_click_0_listener() { ɵngcc0.ɵɵrestoreView(_r3); var ctx_r4 = ɵngcc0.ɵɵnextContext(); return ctx_r4.toggle(); });
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var ctx_r0 = ɵngcc0.ɵɵnextContext();
+    ɵngcc0.ɵɵproperty("ngModel", ctx_r0.displayValue)("placeholder", ctx_r0.placeholder)("ngClass", ctx_r0.addClass)("ngStyle", ctx_r0.addStyle)("id", ctx_r0.fieldId)("disabled", ctx_r0.disabled);
+} }
+function NgDatepickerComponent_div_3_div_22_span_2_Template(rf, ctx) { if (rf & 1) {
+    ɵngcc0.ɵɵelementStart(0, "span", 29);
+    ɵngcc0.ɵɵtext(1);
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var name_r9 = ctx.$implicit;
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵtextInterpolate(name_r9);
+} }
+var _c0 = function (a0, a1, a2, a3) { return { "is-prev-month": a0, "is-today": a1, "is-selected": a2, "is-disabled": a3 }; };
+function NgDatepickerComponent_div_3_div_22_span_4_Template(rf, ctx) { if (rf & 1) {
+    var _r13 = ɵngcc0.ɵɵgetCurrentView();
+    ɵngcc0.ɵɵelementStart(0, "span", 30);
+    ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_div_3_div_22_span_4_Template_span_click_0_listener() { ɵngcc0.ɵɵrestoreView(_r13); var day_r10 = ctx.$implicit; var i_r11 = ctx.index; var ctx_r12 = ɵngcc0.ɵɵnextContext(3); return day_r10.isSelectable && ctx_r12.setDate(i_r11); });
+    ɵngcc0.ɵɵtext(1);
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var day_r10 = ctx.$implicit;
+    ɵngcc0.ɵɵproperty("ngClass", ɵngcc0.ɵɵpureFunction4(2, _c0, !day_r10.inThisMonth, day_r10.isToday, day_r10.isSelected, !day_r10.isSelectable));
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵtextInterpolate1(" ", day_r10.day, " ");
+} }
+function NgDatepickerComponent_div_3_div_22_Template(rf, ctx) { if (rf & 1) {
+    ɵngcc0.ɵɵnamespaceSVG();
+    ɵngcc0.ɵɵnamespaceHTML();
+    ɵngcc0.ɵɵelementStart(0, "div", 24);
+    ɵngcc0.ɵɵelementStart(1, "div", 25);
+    ɵngcc0.ɵɵtemplate(2, NgDatepickerComponent_div_3_div_22_span_2_Template, 2, 1, "span", 26);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementStart(3, "div", 27);
+    ɵngcc0.ɵɵtemplate(4, NgDatepickerComponent_div_3_div_22_span_4_Template, 2, 7, "span", 28);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var ctx_r5 = ɵngcc0.ɵɵnextContext(2);
+    ɵngcc0.ɵɵadvance(2);
+    ɵngcc0.ɵɵproperty("ngForOf", ctx_r5.dayNames);
+    ɵngcc0.ɵɵadvance(2);
+    ɵngcc0.ɵɵproperty("ngForOf", ctx_r5.days);
+} }
+var _c1 = function (a0) { return { "is-selected": a0 }; };
+function NgDatepickerComponent_div_3_div_23_span_2_Template(rf, ctx) { if (rf & 1) {
+    var _r18 = ɵngcc0.ɵɵgetCurrentView();
+    ɵngcc0.ɵɵelementStart(0, "span", 33);
+    ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_div_3_div_23_span_2_Template_span_click_0_listener() { ɵngcc0.ɵɵrestoreView(_r18); var i_r16 = ctx.index; var ctx_r17 = ɵngcc0.ɵɵnextContext(3); return ctx_r17.setYear(i_r16); });
+    ɵngcc0.ɵɵtext(1);
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var year_r15 = ctx.$implicit;
+    ɵngcc0.ɵɵproperty("ngClass", ɵngcc0.ɵɵpureFunction1(2, _c1, year_r15.isThisYear));
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵtextInterpolate(year_r15.year);
+} }
+function NgDatepickerComponent_div_3_div_23_Template(rf, ctx) { if (rf & 1) {
+    ɵngcc0.ɵɵnamespaceSVG();
+    ɵngcc0.ɵɵnamespaceHTML();
+    ɵngcc0.ɵɵelementStart(0, "div", 24);
+    ɵngcc0.ɵɵelementStart(1, "div", 31);
+    ɵngcc0.ɵɵtemplate(2, NgDatepickerComponent_div_3_div_23_span_2_Template, 2, 4, "span", 32);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var ctx_r6 = ɵngcc0.ɵɵnextContext(2);
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵproperty("options", ctx_r6.scrollOptions);
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵproperty("ngForOf", ctx_r6.years);
+} }
+function NgDatepickerComponent_div_3_Template(rf, ctx) { if (rf & 1) {
+    var _r20 = ɵngcc0.ɵɵgetCurrentView();
+    ɵngcc0.ɵɵelementStart(0, "div");
+    ɵngcc0.ɵɵelementStart(1, "div", 4);
+    ɵngcc0.ɵɵnamespaceSVG();
+    ɵngcc0.ɵɵelementStart(2, "svg", 5);
+    ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_div_3_Template__svg_svg_click_2_listener() { ɵngcc0.ɵɵrestoreView(_r20); var ctx_r19 = ɵngcc0.ɵɵnextContext(); return ctx_r19.prevMonth(); });
+    ɵngcc0.ɵɵelementStart(3, "g", 6);
+    ɵngcc0.ɵɵelementStart(4, "g", 7);
+    ɵngcc0.ɵɵelementStart(5, "g", 8);
+    ɵngcc0.ɵɵelementStart(6, "g", 9);
+    ɵngcc0.ɵɵelementStart(7, "g", 10);
+    ɵngcc0.ɵɵelementStart(8, "g", 11);
+    ɵngcc0.ɵɵelementStart(9, "g", 12);
+    ɵngcc0.ɵɵelement(10, "polygon", 13);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵnamespaceHTML();
+    ɵngcc0.ɵɵelementStart(11, "span", 14);
+    ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_div_3_Template_span_click_11_listener() { ɵngcc0.ɵɵrestoreView(_r20); var ctx_r21 = ɵngcc0.ɵɵnextContext(); return ctx_r21.toggleView(); });
+    ɵngcc0.ɵɵtext(12);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵnamespaceSVG();
+    ɵngcc0.ɵɵelementStart(13, "svg", 15);
+    ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_div_3_Template__svg_svg_click_13_listener() { ɵngcc0.ɵɵrestoreView(_r20); var ctx_r22 = ɵngcc0.ɵɵnextContext(); return ctx_r22.nextMonth(); });
+    ɵngcc0.ɵɵelementStart(14, "g", 16);
+    ɵngcc0.ɵɵelementStart(15, "g", 17);
+    ɵngcc0.ɵɵelementStart(16, "g", 18);
+    ɵngcc0.ɵɵelementStart(17, "g", 19);
+    ɵngcc0.ɵɵelementStart(18, "g", 20);
+    ɵngcc0.ɵɵelementStart(19, "g", 21);
+    ɵngcc0.ɵɵelementStart(20, "g", 12);
+    ɵngcc0.ɵɵelement(21, "polygon", 22);
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵelementEnd();
+    ɵngcc0.ɵɵtemplate(22, NgDatepickerComponent_div_3_div_22_Template, 5, 2, "div", 23);
+    ɵngcc0.ɵɵtemplate(23, NgDatepickerComponent_div_3_div_23_Template, 3, 2, "div", 23);
+    ɵngcc0.ɵɵelementEnd();
+} if (rf & 2) {
+    var ctx_r1 = ɵngcc0.ɵɵnextContext();
+    ɵngcc0.ɵɵclassMapInterpolate1("ngx-datepicker-calendar-container ngx-datepicker-position-", ctx_r1.position, "");
+    ɵngcc0.ɵɵadvance(12);
+    ɵngcc0.ɵɵtextInterpolate(ctx_r1.barTitle);
+    ɵngcc0.ɵɵadvance(10);
+    ɵngcc0.ɵɵproperty("ngIf", ctx_r1.view === "days");
+    ɵngcc0.ɵɵadvance(1);
+    ɵngcc0.ɵɵproperty("ngIf", ctx_r1.view === "years");
+} }
+var _c2 = ["*"];
+'use strict';
 
 var counter = 0;
 var isNil = function (value) {
@@ -401740,18 +402106,48 @@ var NgDatepickerComponent = /** @class */ (function () {
             this.close();
         }
     };
-    return NgDatepickerComponent;
-}());
-NgDatepickerComponent.decorators = [
-    { type: core.Component, args: [{
+NgDatepickerComponent.ɵfac = function NgDatepickerComponent_Factory(t) { return new (t || NgDatepickerComponent)(ɵngcc0.ɵɵdirectiveInject(ɵngcc0.ElementRef)); };
+NgDatepickerComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: NgDatepickerComponent, selectors: [["ng-datepicker"]], hostBindings: function NgDatepickerComponent_HostBindings(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵlistener("click", function NgDatepickerComponent_click_HostBindingHandler($event) { return ctx.onBlur($event); }, false, ɵngcc0.ɵɵresolveDocument);
+    } }, inputs: { headless: "headless", isOpened: "isOpened", position: "position", options: "options" }, features: [ɵngcc0.ɵɵProvidersFeature([
+            { provide: forms.NG_VALUE_ACCESSOR, useExisting: core.forwardRef(function () { return NgDatepickerComponent; }), multi: true }
+        ]), ɵngcc0.ɵɵNgOnChangesFeature], ngContentSelectors: _c2, decls: 4, vars: 2, consts: [[1, "ngx-datepicker-container"], ["type", "text", "class", "ngx-datepicker-input", "readonly", "", 3, "ngModel", "placeholder", "ngClass", "ngStyle", "id", "disabled", "ngModelChange", "click", 4, "ngIf"], [3, "class", 4, "ngIf"], ["type", "text", "readonly", "", 1, "ngx-datepicker-input", 3, "ngModel", "placeholder", "ngClass", "ngStyle", "id", "disabled", "ngModelChange", "click"], [1, "topbar-container"], ["width", "7px", "height", "10px", "viewBox", "0 0 7 10", "version", "1.1", "xmlns", "http://www.w3.org/2000/svg", 0, "xmlns", "xlink", "http://www.w3.org/1999/xlink", 3, "click"], ["stroke", "none", "stroke-width", "1", "fill", "none", "fill-rule", "evenodd"], ["transform", "translate(-923.000000, -1882.000000)", "fill", "#CED0DA"], ["transform", "translate(80.000000, 1361.000000)"], ["transform", "translate(0.000000, 430.000000)"], ["transform", "translate(825.000000, 0.000000)"], ["transform", "translate(0.000000, 72.000000)"], ["transform", "translate(18.000000, 15.000000)"], ["id", "Back", "points", "6.015 4 0 9.013 6.015 14.025"], [1, "topbar-title", 3, "click"], ["width", "7px", "height", "10px", "viewBox", "0 0 6 10", "version", "1.1", "xmlns", "http://www.w3.org/2000/svg", 0, "xmlns", "xlink", "http://www.w3.org/1999/xlink", 3, "click"], ["id", "Source-Sans---UI-Elements-Kit", "stroke", "none", "stroke-width", "1", "fill", "none", "fill-rule", "evenodd"], ["id", "White-Layout", "transform", "translate(-1182.000000, -1882.000000)", "fill", "#CED0DA"], ["id", "Dropdowns-&-Selector", "transform", "translate(80.000000, 1361.000000)"], ["id", "Dropdowns", "transform", "translate(0.000000, 430.000000)"], ["id", "Calendar", "transform", "translate(825.000000, 0.000000)"], ["transform", "translate(0.000000, 72.000000)", "id", "Top-Bar-Nav"], ["id", "Forward", "transform", "translate(262.007500, 9.012500) scale(-1, 1) translate(-262.007500, -9.012500) ", "points", "265.015 4 259 9.013 265.015 14.025"], ["class", "main-calendar-container", 4, "ngIf"], [1, "main-calendar-container"], [1, "main-calendar-day-names"], ["class", "day-name-unit", 4, "ngFor", "ngForOf"], [1, "main-calendar-days"], ["class", "day-unit", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "day-name-unit"], [1, "day-unit", 3, "ngClass", "click"], ["slimScroll", "", 1, "main-calendar-years", 3, "options"], ["class", "year-unit", 3, "ngClass", "click", 4, "ngFor", "ngForOf"], [1, "year-unit", 3, "ngClass", "click"]], template: function NgDatepickerComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵprojectionDef();
+        ɵngcc0.ɵɵelementStart(0, "div", 0);
+        ɵngcc0.ɵɵtemplate(1, NgDatepickerComponent_input_1_Template, 1, 6, "input", 1);
+        ɵngcc0.ɵɵprojection(2);
+        ɵngcc0.ɵɵtemplate(3, NgDatepickerComponent_div_3_Template, 24, 6, "div", 2);
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵadvance(1);
+        ɵngcc0.ɵɵproperty("ngIf", !ctx.headless);
+        ɵngcc0.ɵɵadvance(2);
+        ɵngcc0.ɵɵproperty("ngIf", ctx.isOpened);
+    } }, directives: [ɵngcc1.NgIf, ɵngcc2.DefaultValueAccessor, ɵngcc2.NgControlStatus, ɵngcc2.NgModel, ɵngcc1.NgClass, ɵngcc1.NgStyle, ɵngcc1.NgForOf, ɵngcc3.SlimScrollDirective], styles: [".ngx-datepicker-position-bottom-left[_ngcontent-%COMP%]{top:40px;right:0}.ngx-datepicker-position-bottom-right[_ngcontent-%COMP%]{top:40px;left:0}.ngx-datepicker-position-top-left[_ngcontent-%COMP%]{bottom:40px;right:0}.ngx-datepicker-position-top-right[_ngcontent-%COMP%]{bottom:40px;left:0}.ngx-datepicker-container[_ngcontent-%COMP%]{position:relative}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-input[_ngcontent-%COMP%]{padding:5px 10px;font-size:14px;width:200px;outline:0;border:1px solid #dfe3e9}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]{position:absolute;width:300px;background:#fff;-webkit-box-shadow:0 1px 4px 0 rgba(0,0,0,.08);box-shadow:0 1px 4px 0 rgba(0,0,0,.08);border:1px solid #dfe3e9;border-radius:4px}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .topbar-container[_ngcontent-%COMP%]{width:100%;height:50px;padding:15px;border-bottom:1px solid #dfe3e9;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .topbar-container[_ngcontent-%COMP%]   svg[_ngcontent-%COMP%]{cursor:pointer}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .topbar-container[_ngcontent-%COMP%]   svg[_ngcontent-%COMP%]   g[_ngcontent-%COMP%]{fill:#ced0da}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .topbar-container[_ngcontent-%COMP%]   .topbar-title[_ngcontent-%COMP%]{color:#3d495c;font-size:14px;font-weight:600;cursor:pointer}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]{width:100%;height:100%;padding:15px 10px 0;font-size:12px;font-weight:500}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-day-names[_ngcontent-%COMP%]{color:#a4a9b1;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-day-names[_ngcontent-%COMP%]   .day-name-unit[_ngcontent-%COMP%]{width:calc(100% / 7);text-transform:uppercase;text-align:center}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]{padding:15px 0;width:100%;display:inline-block;max-height:275px;overflow:hidden}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit[_ngcontent-%COMP%]{width:calc(100% / 7);height:40px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;float:left;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border-radius:50%;color:#3d495c}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit.is-prev-month[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit.is-prev-month[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit.is-prev-month[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit.is-prev-month[_ngcontent-%COMP%]{color:#a4a9b1}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit.is-today[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit.is-today[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit.is-today[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit.is-today[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit[_ngcontent-%COMP%]:hover{background:#a4a9b1;color:#fff}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit.is-selected[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit.is-selected[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit.is-selected[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit.is-selected[_ngcontent-%COMP%]{background:#1a91eb;color:#fff}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit.is-disabled[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit.is-disabled[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit.is-disabled[_ngcontent-%COMP%], .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit.is-disabled[_ngcontent-%COMP%]{cursor:not-allowed;color:#a4a9b1}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .day-unit.is-disabled[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-days[_ngcontent-%COMP%]   .year-unit.is-disabled[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .day-unit.is-disabled[_ngcontent-%COMP%]:hover, .ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit.is-disabled[_ngcontent-%COMP%]:hover{background:0 0}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]{height:210px;display:block;padding:0}.ngx-datepicker-container[_ngcontent-%COMP%]   .ngx-datepicker-calendar-container[_ngcontent-%COMP%]   .main-calendar-container[_ngcontent-%COMP%]   .main-calendar-years[_ngcontent-%COMP%]   .year-unit[_ngcontent-%COMP%]{width:calc(100% / 3);border-radius:10px}"] });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(NgDatepickerComponent, [{
+        type: core.Component,
+        args: [{
                 selector: 'ng-datepicker',
                 template: "<div class=\"ngx-datepicker-container\">\n  <input type=\"text\" *ngIf=\"!headless\" class=\"ngx-datepicker-input\" [(ngModel)]=\"displayValue\" readonly [placeholder]=\"placeholder\"\n    [ngClass]=\"addClass\" [ngStyle]=\"addStyle\" [id]=\"fieldId\" [disabled]=\"disabled\" (click)=\"toggle()\" />\n  <ng-content></ng-content>\n  <div class=\"ngx-datepicker-calendar-container ngx-datepicker-position-{{position}}\" *ngIf=\"isOpened\">\n    <div class=\"topbar-container\">\n      <svg width=\"7px\" height=\"10px\" viewBox=\"0 0 7 10\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n        (click)=\"prevMonth()\">\n        <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <g transform=\"translate(-923.000000, -1882.000000)\" fill=\"#CED0DA\">\n            <g transform=\"translate(80.000000, 1361.000000)\">\n              <g transform=\"translate(0.000000, 430.000000)\">\n                <g transform=\"translate(825.000000, 0.000000)\">\n                  <g transform=\"translate(0.000000, 72.000000)\">\n                    <g transform=\"translate(18.000000, 15.000000)\">\n                      <polygon id=\"Back\" points=\"6.015 4 0 9.013 6.015 14.025\"></polygon>\n                    </g>\n                  </g>\n                </g>\n              </g>\n            </g>\n          </g>\n        </g>\n      </svg>\n      <span class=\"topbar-title\" (click)=\"toggleView()\">{{ barTitle }}</span>\n      <svg width=\"7px\" height=\"10px\" viewBox=\"0 0 6 10\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n        (click)=\"nextMonth()\">\n        <g id=\"Source-Sans---UI-Elements-Kit\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\n          <g id=\"White-Layout\" transform=\"translate(-1182.000000, -1882.000000)\" fill=\"#CED0DA\">\n            <g id=\"Dropdowns-&amp;-Selector\" transform=\"translate(80.000000, 1361.000000)\">\n              <g id=\"Dropdowns\" transform=\"translate(0.000000, 430.000000)\">\n                <g id=\"Calendar\" transform=\"translate(825.000000, 0.000000)\">\n                  <g transform=\"translate(0.000000, 72.000000)\" id=\"Top-Bar-Nav\">\n                    <g transform=\"translate(18.000000, 15.000000)\">\n                      <polygon id=\"Forward\" transform=\"translate(262.007500, 9.012500) scale(-1, 1) translate(-262.007500, -9.012500) \" points=\"265.015 4 259 9.013 265.015 14.025\"></polygon>\n                    </g>\n                  </g>\n                </g>\n              </g>\n            </g>\n          </g>\n        </g>\n      </svg>\n    </div>\n    <div class=\"main-calendar-container\" *ngIf=\"view === 'days'\">\n      <div class=\"main-calendar-day-names\">\n        <span class=\"day-name-unit\" *ngFor=\"let name of dayNames\">{{ name }}</span>\n      </div>\n      <div class=\"main-calendar-days\">\n        <span class=\"day-unit\" *ngFor=\"let day of days; let i = index;\" [ngClass]=\"{ 'is-prev-month': !day.inThisMonth, 'is-today': day.isToday, 'is-selected': day.isSelected, 'is-disabled': !day.isSelectable }\"\n          (click)=\"day.isSelectable && setDate(i)\">\n          {{ day.day }}\n        </span>\n      </div>\n    </div>\n    <div class=\"main-calendar-container\" *ngIf=\"view === 'years'\">\n      <div class=\"main-calendar-years\" slimScroll [options]=\"scrollOptions\">\n        <span class=\"year-unit\" *ngFor=\"let year of years; let i = index;\" [ngClass]=\"{ 'is-selected': year.isThisYear }\" (click)=\"setYear(i)\">{{ year.year }}</span>\n      </div>\n    </div>\n  </div>\n</div>\n",
                 styles: [".ngx-datepicker-position-bottom-left{top:40px;right:0}.ngx-datepicker-position-bottom-right{top:40px;left:0}.ngx-datepicker-position-top-left{bottom:40px;right:0}.ngx-datepicker-position-top-right{bottom:40px;left:0}.ngx-datepicker-container{position:relative}.ngx-datepicker-container .ngx-datepicker-input{padding:5px 10px;font-size:14px;width:200px;outline:0;border:1px solid #dfe3e9}.ngx-datepicker-container .ngx-datepicker-calendar-container{position:absolute;width:300px;background:#fff;-webkit-box-shadow:0 1px 4px 0 rgba(0,0,0,.08);box-shadow:0 1px 4px 0 rgba(0,0,0,.08);border:1px solid #dfe3e9;border-radius:4px}.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container{width:100%;height:50px;padding:15px;border-bottom:1px solid #dfe3e9;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container svg{cursor:pointer}.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container svg g{fill:#ced0da}.ngx-datepicker-container .ngx-datepicker-calendar-container .topbar-container .topbar-title{color:#3d495c;font-size:14px;font-weight:600;cursor:pointer}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container{width:100%;height:100%;padding:15px 10px 0;font-size:12px;font-weight:500}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-day-names{color:#a4a9b1;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-day-names .day-name-unit{width:calc(100% / 7);text-transform:uppercase;text-align:center}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years{padding:15px 0;width:100%;display:inline-block;max-height:275px;overflow:hidden}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit{width:calc(100% / 7);height:40px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;float:left;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;border-radius:50%;color:#3d495c}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-prev-month,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-prev-month,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-prev-month,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-prev-month{color:#a4a9b1}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-today,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-today,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-today,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-today,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit:hover{background:#a4a9b1;color:#fff}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-selected,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-selected,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-selected,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-selected{background:#1a91eb;color:#fff}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-disabled,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-disabled,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-disabled,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-disabled{cursor:not-allowed;color:#a4a9b1}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-disabled:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .year-unit.is-disabled:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .day-unit.is-disabled:hover,.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit.is-disabled:hover{background:0 0}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years{height:210px;display:block;padding:0}.ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-years .year-unit{width:calc(100% / 3);border-radius:10px}"],
                 providers: [
                     { provide: forms.NG_VALUE_ACCESSOR, useExisting: core.forwardRef(function () { return NgDatepickerComponent; }), multi: true }
                 ]
-            },] },
-];
+            }]
+    }], function () { return [{ type: ɵngcc0.ElementRef }]; }, { headless: [{
+            type: core.Input
+        }], isOpened: [{
+            type: core.Input
+        }], position: [{
+            type: core.Input
+        }], onBlur: [{
+            type: core.HostListener,
+            args: ['document:click', ['$event']]
+        }], options: [{
+            type: core.Input
+        }] }); })();
+    return NgDatepickerComponent;
+}());
 NgDatepickerComponent.ctorParameters = function () { return [
     { type: core.ElementRef, },
 ]; };
@@ -401765,15 +402161,19 @@ NgDatepickerComponent.propDecorators = {
 var NgDatepickerModule = /** @class */ (function () {
     function NgDatepickerModule() {
     }
-    return NgDatepickerModule;
-}());
-NgDatepickerModule.decorators = [
-    { type: core.NgModule, args: [{
+NgDatepickerModule.ɵmod = ɵngcc0.ɵɵdefineNgModule({ type: NgDatepickerModule });
+NgDatepickerModule.ɵinj = ɵngcc0.ɵɵdefineInjector({ factory: function NgDatepickerModule_Factory(t) { return new (t || NgDatepickerModule)(); }, imports: [[common.CommonModule, forms.FormsModule, ngxSlimscroll.NgSlimScrollModule], ɵngcc1.CommonModule, ɵngcc2.FormsModule, ɵngcc3.NgSlimScrollModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵngcc0.ɵɵsetNgModuleScope(NgDatepickerModule, { declarations: [NgDatepickerComponent], imports: [ɵngcc1.CommonModule, ɵngcc2.FormsModule, ɵngcc3.NgSlimScrollModule], exports: [NgDatepickerComponent, ɵngcc1.CommonModule, ɵngcc2.FormsModule, ɵngcc3.NgSlimScrollModule] }); })();
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(NgDatepickerModule, [{
+        type: core.NgModule,
+        args: [{
                 declarations: [NgDatepickerComponent],
                 imports: [common.CommonModule, forms.FormsModule, ngxSlimscroll.NgSlimScrollModule],
                 exports: [NgDatepickerComponent, common.CommonModule, forms.FormsModule, ngxSlimscroll.NgSlimScrollModule]
-            },] },
-];
+            }]
+    }], function () { return []; }, null); })();
+    return NgDatepickerModule;
+}());
 
 exports.NgDatepickerModule = NgDatepickerModule;
 exports.NgDatepickerComponent = NgDatepickerComponent;
@@ -401781,8 +402181,8 @@ exports.NgDatepickerComponent = NgDatepickerComponent;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=ng2-datepicker.umd.js.map
 
+//# sourceMappingURL=ng2-datepicker.umd.js.map
 
 /***/ }),
 
@@ -429856,6 +430256,14 @@ class FormBlockComponent {
         this.stepsService = stepsService;
         this.http = http;
         this.sanitizer = sanitizer;
+        this.showImportMultipleModal = false;
+        this.importingMultiple = false;
+        this.studentsToImportMultiple = [];
+        this.importMultipleErrors = [];
+        this.importMultipleSummary = [];
+        this.importErrors = [];
+        this.importWarnings = [];
+        this.importSummary = "";
         this.userCanCreate = true;
         this.userCanEdit = true;
         this.userCanDelete = true;
@@ -429901,6 +430309,14 @@ class FormBlockComponent {
             // Magic string to avoid errors and easily change formId of forms
             addDocente: "add-docente",
         };
+        // Avisos de importación: duran más (el texto puede ser largo) y se pueden cerrar
+        this.importToastOptions = {
+            positionClass: "toast-bottom-right",
+            timeOut: 10000,
+            extendedTimeOut: 5000,
+            closeButton: true,
+            progressBar: true,
+        };
         this.type = "presentational";
         this.component = "form";
         this.glbls = globals;
@@ -429930,8 +430346,295 @@ class FormBlockComponent {
     }
     closeModal() {
         this.showImportModal = false;
+        this.resetImport();
+    }
+    resetImport() {
         this.importingData = false;
         this.showUploadBtn = false;
+        this.studentsToImport = [];
+        this.importErrors = [];
+        this.importWarnings = [];
+        this.importSummary = "";
+    }
+    // Tras importar: refresca el PECA en el store (la página re-renderiza estudiantes y
+    // secciones, igual que al agregar uno) en lugar de recargar la página completa
+    refreshAfterImport(message, modalId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            let refreshed = true;
+            try {
+                yield this.store.dispatch(new peca_actions_2.FetchPecaContent(this.pecaId)).toPromise();
+            }
+            catch (e) {
+                refreshed = false;
+            }
+            this.hideBootstrapModal(modalId);
+            this.toastr.success(message, "", Object.assign(Object.assign({}, this.importToastOptions), { timeOut: 6000 }));
+            if (!refreshed) {
+                this.toastr.warning("Los estudiantes se importaron, pero no se pudo actualizar la vista. Recargue la página.", "Aviso", this.importToastOptions);
+            }
+        });
+    }
+    // Cierra el modal sin dejar el body bloqueado (clase modal-open de Bootstrap)
+    hideBootstrapModal(modalId) {
+        if (typeof $ !== "undefined")
+            $(`#${modalId}`).modal("hide");
+        document.body.classList.remove("modal-open");
+        document.body.style.paddingRight = "";
+    }
+    // IMPORTAR MÚLTIPLE: matrícula de varios grados y secciones en un solo Excel
+    hasSchoolSections() {
+        const sectionField = this.settings.formsContent["section"];
+        return !!(sectionField && sectionField.options && sectionField.options.length);
+    }
+    openImportMultipleModal() {
+        this.resetImportMultiple();
+        this.showImportMultipleModal = true;
+    }
+    closeImportMultipleModal() {
+        this.resetImportMultiple();
+        this.showImportMultipleModal = false;
+    }
+    resetImportMultiple() {
+        this.importingMultiple = false;
+        this.studentsToImportMultiple = [];
+        this.importMultipleErrors = [];
+        this.importMultipleSummary = [];
+    }
+    handleMultipleFileInput(files) {
+        this.resetImportMultiple();
+        if (!files || files.length === 0) {
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(files[0]);
+        reader.onload = () => {
+            try {
+                const data = new Uint8Array(reader.result);
+                const workbook = xlsx_1.default.read(data, { type: "array" });
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = xlsx_1.default.utils.sheet_to_json(sheet, {
+                    header: 1,
+                    defval: "",
+                });
+                if (!rows || rows.length < 2) {
+                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error", this.importToastOptions);
+                    return;
+                }
+                const parsed = this.parseStudentRows(rows);
+                if (parsed.length === 0) {
+                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso", this.importToastOptions);
+                    return;
+                }
+                this.validateMultipleImport(parsed);
+            }
+            catch (e) {
+                this.toastr.error("Error al procesar el archivo Excel", "Error", this.importToastOptions);
+            }
+        };
+    }
+    // Valida que el grado y la sección de cada fila estén registrados en el año escolar
+    validateMultipleImport(parsed) {
+        const sections = this.settings.formsContent["section"].options || [];
+        const errors = [];
+        const students = [];
+        const summary = {};
+        const sectionByCard = {};
+        parsed.forEach(({ fila, student }) => {
+            const studentName = `${student.nombre} ${student.apellido}`.trim();
+            const dataErrors = this.validateStudentData(fila, student);
+            if (dataErrors.length) {
+                errors.push(...dataErrors);
+                return;
+            }
+            const grade = this.normalizeImportGrade(student.grado);
+            const sectionName = this.normalizeImportSection(student.seccion);
+            if (!student.grado || !student.seccion) {
+                errors.push(`Fila ${fila} (${studentName}): falta el grado o la sección`);
+                return;
+            }
+            if (grade === null || !sections.some((s) => s.grade == grade)) {
+                errors.push(`Fila ${fila} (${studentName}): el grado "${student.grado}" no está registrado en el año escolar`);
+                return;
+            }
+            const section = sections.find((s) => s.grade == grade && this.normalizeImportSection(s.name) === sectionName);
+            if (!section) {
+                errors.push(`Fila ${fila} (${studentName}): la sección "${student.seccion}" no está registrada en ${this.parseGrade(grade)}`);
+                return;
+            }
+            // Una misma cédula en dos secciones inscribiría al estudiante en ambas
+            const cardId = student.documento_de_identidad;
+            if (cardId) {
+                const previous = sectionByCard[cardId];
+                if (previous && previous.sectionId !== section.id) {
+                    errors.push(`Fila ${fila} (${studentName}): la cédula ${cardId} ya está en la fila ${previous.fila} con otro grado o sección`);
+                    return;
+                }
+                sectionByCard[cardId] = { sectionId: section.id, fila };
+            }
+            students.push(Object.assign(Object.assign({}, student), { section: section.id, fila }));
+            const label = `${this.parseGrade(grade)} - Sección ${section.name}`;
+            summary[label] = (summary[label] || 0) + 1;
+        });
+        if (errors.length) {
+            this.importMultipleErrors = errors;
+            this.toastr.error(`Se encontraron ${errors.length} fila(s) con errores. Corrija el archivo y vuelva a adjuntarlo.`, "Error en el archivo", this.importToastOptions);
+            return;
+        }
+        this.studentsToImportMultiple = students;
+        this.importMultipleSummary = Object.keys(summary).map((label) => ({
+            label,
+            count: summary[label],
+        }));
+    }
+    // Datos que el backend exige: sin ellos descarta la fila en silencio o rechaza toda la carga
+    validateStudentData(fila, student) {
+        const studentName = `${student.nombre} ${student.apellido}`.trim();
+        const prefix = `Fila ${fila} (${studentName})`;
+        const errors = [];
+        if (!student.nombre)
+            errors.push(`${prefix}: falta el nombre`);
+        if (!student.apellido)
+            errors.push(`${prefix}: falta el apellido`);
+        if (!student.fecha_de_nacimiento) {
+            errors.push(`${prefix}: falta la fecha de nacimiento`);
+        }
+        else if (!this.isValidBirthdate(student.fecha_de_nacimiento)) {
+            errors.push(`${prefix}: la fecha de nacimiento "${student.fecha_de_nacimiento}" no es válida (use dd-mm-aaaa)`);
+        }
+        if (!student.genero) {
+            errors.push(`${prefix}: falta el género o no es válido (use F o M)`);
+        }
+        return errors;
+    }
+    // parseDate deja las fechas como dd-mm-aaaa; se exige una fecha real y no futura
+    isValidBirthdate(value) {
+        const match = `${value}`.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+        if (!match)
+            return false;
+        const day = +match[1];
+        const month = +match[2];
+        const year = +match[3];
+        const date = new Date(year, month - 1, day);
+        return (date.getFullYear() === year &&
+            date.getMonth() === month - 1 &&
+            date.getDate() === day &&
+            date.getTime() <= Date.now());
+    }
+    // IMPORTAR (una sección): los estudiantes van a la sección activa
+    validateSingleImport(parsed) {
+        const section = this.sectionsArr[this.activeSection];
+        const sectionLabel = `${this.parseGrade(section.grade)} - Sección ${section.name}`;
+        const errors = [];
+        const otherSectionRows = [];
+        const students = [];
+        parsed.forEach(({ fila, student }) => {
+            const dataErrors = this.validateStudentData(fila, student);
+            if (dataErrors.length) {
+                errors.push(...dataErrors);
+                return;
+            }
+            // Un Excel exportado de otra sección es válido (sirve para mover estudiantes), solo se avisa
+            const otherGrade = student.grado && this.normalizeImportGrade(student.grado) != section.grade;
+            const otherSection = student.seccion &&
+                this.normalizeImportSection(student.seccion) !==
+                    this.normalizeImportSection(section.name);
+            if (otherGrade || otherSection)
+                otherSectionRows.push(fila);
+            students.push(student);
+        });
+        if (errors.length) {
+            this.importErrors = errors;
+            this.toastr.error(`Se encontraron ${errors.length} error(es) en el archivo. Corríjalo y vuelva a adjuntarlo.`, "Error en el archivo", this.importToastOptions);
+            return;
+        }
+        if (otherSectionRows.length) {
+            this.importWarnings = [
+                `La(s) fila(s) ${otherSectionRows.join(", ")} indican otro grado o sección; se importarán en ${sectionLabel}. ` +
+                    `Para respetar el grado y la sección del archivo use "Importar múltiple".`,
+            ];
+        }
+        this.studentsToImport = students;
+        this.importSummary = `${students.length} estudiante(s) en ${sectionLabel}`;
+        this.showUploadBtn = true;
+    }
+    // Acepta "1", "1er grado", "1° grado", "Primero", "Preescolar"...; devuelve el id de grado o null
+    normalizeImportGrade(value) {
+        const text = `${value === null || value === undefined ? "" : value}`
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .trim();
+        if (!text)
+            return null;
+        if (text.includes("preescolar") || text.includes("pre-escolar"))
+            return "0";
+        const digit = text.match(/\d+/);
+        if (digit)
+            return `${parseInt(digit[0], 10)}`;
+        const words = ["primer", "segund", "tercer", "cuart", "quint", "sext"];
+        const index = words.findIndex((w) => text.startsWith(w));
+        return index >= 0 ? `${index + 1}` : null;
+    }
+    // "Sección A", "seccion a" y "A" se consideran la misma sección
+    normalizeImportSection(value) {
+        return `${value === null || value === undefined ? "" : value}`
+            .toUpperCase()
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .replace(/^SECCION\s*/, "")
+            .trim();
+    }
+    importMultipleStudents() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            if (!this.studentsToImportMultiple.length) {
+                return;
+            }
+            this.importingMultiple = true;
+            const resourcePath = `section/load/${this.pecaId}`;
+            const body = {
+                action: "import_multiple",
+                students: this.studentsToImportMultiple,
+            };
+            try {
+                const result = yield this.fetcher
+                    .post(resourcePath, body)
+                    .toPromise();
+                if (result && result.status_code === 201) {
+                    const moved = result.moved > 0
+                        ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+                        : "";
+                    yield this.refreshAfterImport((result.message || "Estudiantes importados con éxito") + moved, "no-peca-modal-import-multiple");
+                    this.closeImportMultipleModal();
+                }
+                else {
+                    this.importingMultiple = false;
+                    this.toastr.error((result && result.message) || "Error al importar estudiantes", "Error", this.importToastOptions);
+                }
+            }
+            catch (err) {
+                this.importingMultiple = false;
+                if (err && err.error && Array.isArray(err.error.errors)) {
+                    this.importMultipleErrors = err.error.errors;
+                }
+                this.toastr.error(this.getImportErrorMessage(err), "Error al importar", this.importToastOptions);
+            }
+        });
+    }
+    // Mensaje del error: `message` del backend o, en un ValidationError, { campo: [{ status, msg }] }
+    getImportErrorMessage(err) {
+        const error = err && err.error;
+        if (typeof error === "string" && error)
+            return error;
+        if (error && error.message)
+            return error.message;
+        if (error && typeof error === "object") {
+            const field = Object.keys(error).find((key) => Array.isArray(error[key]));
+            if (field) {
+                const messages = error[field].map((e) => (e && e.msg ? e.msg : e));
+                return `${field}: ${messages.join(", ")}`;
+            }
+        }
+        return ((err && err.message) || "Ha ocurrido un error al importar los estudiantes");
     }
     getStudentsModalNgClass() {
         return {
@@ -429971,6 +430674,7 @@ class FormBlockComponent {
         this.componentForm.reset();
     }
     handleFileInput(files) {
+        this.resetImport();
         if (!files || files.length === 0) {
             return;
         }
@@ -429987,163 +430691,177 @@ class FormBlockComponent {
                     defval: "",
                 });
                 if (!rows || rows.length < 2) {
-                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error");
+                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error", this.importToastOptions);
                     return;
                 }
-                const headerRow = rows[0].map((h) => h !== null && h !== undefined ? h.toString() : "");
-                const normalize = (str) => str
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .trim();
-                // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
-                // "Segundo nombre"); se concatenan en orden de aparición.
-                const colsNombre = [];
-                const colsApellido = [];
-                let colTipoDoc = -1;
-                let colDocId = -1;
-                let colFechaNac = -1;
-                let colGenero = -1;
-                let colGrado = -1;
-                let colSeccion = -1;
-                headerRow.forEach((col, idx) => {
-                    const norm = normalize(col);
-                    if (norm.includes("tipo") && norm.includes("doc")) {
-                        colTipoDoc = idx;
-                    }
-                    else if ((norm.includes("identi") ||
-                        norm.includes("cedula") ||
-                        norm.includes("documento")) &&
-                        !norm.includes("tipo")) {
-                        colDocId = idx;
-                    }
-                    else if (norm.includes("nombre") && !norm.includes("apellido")) {
-                        colsNombre.push(idx);
-                    }
-                    else if (norm.includes("apellido")) {
-                        colsApellido.push(idx);
-                    }
-                    else if (norm.includes("genero") || norm.includes("sexo")) {
-                        colGenero = idx;
-                    }
-                    else if (norm.includes("naci") || norm.includes("fecha")) {
-                        colFechaNac = idx;
-                    }
-                    else if (norm.includes("grado")) {
-                        colGrado = idx;
-                    }
-                    else if (norm.includes("secci")) {
-                        colSeccion = idx;
-                    }
-                });
-                // Positional fallbacks based on whether "Tipo de documento" column was present
-                const hasTipoDocCol = colTipoDoc !== -1;
-                if (colsNombre.length === 0)
-                    colsNombre.push(0);
-                if (colsApellido.length === 0)
-                    colsApellido.push(1);
-                if (colDocId === -1)
-                    colDocId = hasTipoDocCol ? 3 : 2;
-                if (colGenero === -1)
-                    colGenero = hasTipoDocCol ? 5 : 3;
-                if (colFechaNac === -1)
-                    colFechaNac = hasTipoDocCol ? 4 : 4;
-                if (colGrado === -1)
-                    colGrado = hasTipoDocCol ? 6 : 5;
-                if (colSeccion === -1)
-                    colSeccion = hasTipoDocCol ? 7 : 6;
-                const students = [];
-                for (let r = 1; r < rows.length; r++) {
-                    const row = rows[r];
-                    if (!row ||
-                        row.every((cell) => cell === "" || cell === null || cell === undefined)) {
-                        continue;
-                    }
-                    const joinCells = (cols) => cols
-                        .map((c) => row[c] !== undefined && row[c] !== null
-                        ? row[c].toString().replace(/\s+/g, " ").trim()
-                        : "")
-                        .filter((v) => v !== "")
-                        .join(" ");
-                    const nombre = joinCells(colsNombre);
-                    const apellido = joinCells(colsApellido);
-                    if (!nombre && !apellido) {
-                        continue;
-                    }
-                    let rawDoc = colDocId >= 0 &&
-                        row[colDocId] !== undefined &&
-                        row[colDocId] !== null
-                        ? row[colDocId].toString().trim()
-                        : "";
-                    let rawTipoDoc = colTipoDoc >= 0 &&
-                        row[colTipoDoc] !== undefined &&
-                        row[colTipoDoc] !== null
-                        ? row[colTipoDoc].toString().trim().toUpperCase()
-                        : "";
-                    if (rawDoc) {
-                        const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
-                        if (prefixMatch) {
-                            if (!rawTipoDoc) {
-                                rawTipoDoc = prefixMatch[1].toUpperCase();
-                            }
-                            rawDoc = prefixMatch[2];
-                        }
-                    }
-                    const cleanDoc = rawDoc.replace(/\D/g, "");
-                    let tipoDoc = "1";
-                    if (rawTipoDoc === "2" ||
-                        rawTipoDoc === "E" ||
-                        rawTipoDoc === "EXTRANJERO") {
-                        tipoDoc = "2";
-                    }
-                    else {
-                        tipoDoc = "1";
-                    }
-                    const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
-                    const fecha_de_nacimiento = this.parseDate(rawFecha);
-                    const rawGenero = colGenero >= 0 &&
-                        row[colGenero] !== undefined &&
-                        row[colGenero] !== null
-                        ? row[colGenero].toString().trim().toUpperCase()
-                        : "";
-                    const genero = rawGenero === "1" ||
-                        rawGenero === "F" ||
-                        rawGenero === "FEMENINO"
-                        ? "F"
-                        : "M";
-                    const grado = colGrado >= 0 &&
-                        row[colGrado] !== undefined &&
-                        row[colGrado] !== null
-                        ? row[colGrado].toString().trim()
-                        : "";
-                    const seccion = colSeccion >= 0 &&
-                        row[colSeccion] !== undefined &&
-                        row[colSeccion] !== null
-                        ? row[colSeccion].toString().trim()
-                        : "";
-                    students.push({
-                        nombre,
-                        apellido,
-                        tipo_de_documento: tipoDoc,
-                        documento_de_identidad: cleanDoc,
-                        fecha_de_nacimiento: fecha_de_nacimiento || "",
-                        genero,
-                        grado,
-                        seccion,
-                    });
-                }
-                if (students.length === 0) {
-                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso");
-                    this.showUploadBtn = false;
+                const parsed = this.parseStudentRows(rows);
+                if (parsed.length === 0) {
+                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso", this.importToastOptions);
                     return;
                 }
-                this.showUploadBtn = true;
-                this.studentsToImport = students;
+                this.validateSingleImport(parsed);
             }
             catch (e) {
-                this.toastr.error("Error al procesar el archivo Excel", "Error");
+                this.toastr.error("Error al procesar el archivo Excel", "Error", this.importToastOptions);
             }
         };
+    }
+    // Convierte las filas del Excel de matrícula en estudiantes; `fila` es el número de fila en Excel
+    parseStudentRows(rows) {
+        const headerRow = rows[0].map((h) => h !== null && h !== undefined ? h.toString() : "");
+        const normalize = (str) => str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+        // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
+        // "Segundo nombre"); se concatenan en orden de aparición.
+        const colsNombre = [];
+        const colsApellido = [];
+        let colTipoDoc = -1;
+        let colDocId = -1;
+        let colFechaNac = -1;
+        let colGenero = -1;
+        let colGrado = -1;
+        let colSeccion = -1;
+        headerRow.forEach((col, idx) => {
+            const norm = normalize(col);
+            if (norm.includes("tipo") && norm.includes("doc")) {
+                colTipoDoc = idx;
+            }
+            else if ((norm.includes("identi") ||
+                norm.includes("cedula") ||
+                norm.includes("documento")) &&
+                !norm.includes("tipo")) {
+                colDocId = idx;
+            }
+            else if (norm.includes("nombre") && !norm.includes("apellido")) {
+                colsNombre.push(idx);
+            }
+            else if (norm.includes("apellido")) {
+                colsApellido.push(idx);
+            }
+            else if (norm.includes("genero") || norm.includes("sexo")) {
+                colGenero = idx;
+            }
+            else if (norm.includes("naci") || norm.includes("fecha")) {
+                colFechaNac = idx;
+            }
+            else if (norm.includes("grado")) {
+                colGrado = idx;
+            }
+            else if (norm.includes("secci")) {
+                colSeccion = idx;
+            }
+        });
+        // Positional fallbacks based on whether "Tipo de documento" column was present
+        const hasTipoDocCol = colTipoDoc !== -1;
+        if (colsNombre.length === 0)
+            colsNombre.push(0);
+        if (colsApellido.length === 0)
+            colsApellido.push(1);
+        if (colDocId === -1)
+            colDocId = hasTipoDocCol ? 3 : 2;
+        if (colGenero === -1)
+            colGenero = hasTipoDocCol ? 5 : 3;
+        if (colFechaNac === -1)
+            colFechaNac = hasTipoDocCol ? 4 : 4;
+        if (colGrado === -1)
+            colGrado = hasTipoDocCol ? 6 : 5;
+        if (colSeccion === -1)
+            colSeccion = hasTipoDocCol ? 7 : 6;
+        const parsed = [];
+        for (let r = 1; r < rows.length; r++) {
+            const row = rows[r];
+            if (!row ||
+                row.every((cell) => cell === "" || cell === null || cell === undefined)) {
+                continue;
+            }
+            const joinCells = (cols) => cols
+                .map((c) => row[c] !== undefined && row[c] !== null
+                ? row[c].toString().replace(/\s+/g, " ").trim()
+                : "")
+                .filter((v) => v !== "")
+                .join(" ");
+            const nombre = joinCells(colsNombre);
+            const apellido = joinCells(colsApellido);
+            if (!nombre && !apellido) {
+                continue;
+            }
+            let rawDoc = colDocId >= 0 &&
+                row[colDocId] !== undefined &&
+                row[colDocId] !== null
+                ? row[colDocId].toString().trim()
+                : "";
+            let rawTipoDoc = colTipoDoc >= 0 &&
+                row[colTipoDoc] !== undefined &&
+                row[colTipoDoc] !== null
+                ? row[colTipoDoc].toString().trim().toUpperCase()
+                : "";
+            if (rawDoc) {
+                const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
+                if (prefixMatch) {
+                    if (!rawTipoDoc) {
+                        rawTipoDoc = prefixMatch[1].toUpperCase();
+                    }
+                    rawDoc = prefixMatch[2];
+                }
+            }
+            const cleanDoc = rawDoc.replace(/\D/g, "");
+            let tipoDoc = "1";
+            if (rawTipoDoc === "2" ||
+                rawTipoDoc === "E" ||
+                rawTipoDoc === "EXTRANJERO") {
+                tipoDoc = "2";
+            }
+            else {
+                tipoDoc = "1";
+            }
+            const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
+            const fecha_de_nacimiento = this.parseDate(rawFecha);
+            const rawGenero = colGenero >= 0 &&
+                row[colGenero] !== undefined &&
+                row[colGenero] !== null
+                ? normalize(row[colGenero].toString()).toUpperCase()
+                : "";
+            // Vacío o no reconocido queda "" para que la validación lo reporte (antes caía en "M")
+            let genero = "";
+            if (rawGenero === "1" || rawGenero.startsWith("F") || rawGenero.startsWith("MUJER")) {
+                genero = "F";
+            }
+            else if (rawGenero === "2" ||
+                rawGenero.startsWith("M") ||
+                rawGenero === "H" ||
+                rawGenero.startsWith("HOMBRE") ||
+                rawGenero === "V" ||
+                rawGenero.startsWith("VARON")) {
+                genero = "M";
+            }
+            const grado = colGrado >= 0 &&
+                row[colGrado] !== undefined &&
+                row[colGrado] !== null
+                ? row[colGrado].toString().trim()
+                : "";
+            const seccion = colSeccion >= 0 &&
+                row[colSeccion] !== undefined &&
+                row[colSeccion] !== null
+                ? row[colSeccion].toString().trim()
+                : "";
+            parsed.push({
+                fila: r + 1,
+                student: {
+                    nombre,
+                    apellido,
+                    tipo_de_documento: tipoDoc,
+                    documento_de_identidad: cleanDoc,
+                    fecha_de_nacimiento: fecha_de_nacimiento || "",
+                    genero,
+                    grado,
+                    seccion,
+                },
+            });
+        }
+        return parsed;
     }
     parseDate(date) {
         if (date === null || date === undefined || date === "") {
@@ -430196,48 +430914,24 @@ class FormBlockComponent {
                     .post(resourcePath, body)
                     .toPromise();
                 if (result && result.status_code === 201) {
-                    this.showImportModal = false;
-                    this.toastr.success(result.message || "Estudiantes importados con éxito", "", {
-                        positionClass: "toast-bottom-right",
-                    });
-                    this.importingData = false;
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                    const moved = result.moved > 0
+                        ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+                        : "";
+                    yield this.refreshAfterImport((result.message || "Estudiantes importados con éxito") + moved, "no-peca-modal-import");
+                    this.closeModal();
                 }
                 else {
                     this.importingData = false;
                     const msg = (result && result.message) || "Error al importar estudiantes";
-                    this.toastr.error(msg, "Error", {
-                        positionClass: "toast-bottom-right",
-                    });
+                    this.toastr.error(msg, "Error", this.importToastOptions);
                 }
             }
             catch (err) {
                 this.importingData = false;
-                let msg = "Ha ocurrido un error al importar los estudiantes";
-                if (err && err.error) {
-                    if (typeof err.error === "string") {
-                        msg = err.error;
-                    }
-                    else if (err.error.message) {
-                        msg = err.error.message;
-                    }
-                    else if (typeof err.error === "object") {
-                        const values = Object.values(err.error);
-                        if (values.length > 0) {
-                            msg = Array.isArray(values[0])
-                                ? values[0].join(", ")
-                                : JSON.stringify(err.error);
-                        }
-                    }
+                if (err && err.error && Array.isArray(err.error.errors)) {
+                    this.importErrors = err.error.errors;
                 }
-                else if (err && err.message) {
-                    msg = err.message;
-                }
-                this.toastr.error(msg, "Error al importar", {
-                    positionClass: "toast-bottom-right",
-                });
+                this.toastr.error(this.getImportErrorMessage(err), "Error al importar", this.importToastOptions);
             }
         });
     }
@@ -431878,6 +432572,10 @@ class FormBlockComponent {
                             students.push(Object.assign(Object.assign({}, student), { grades: section.grade, section: section.name }));
                         });
                     });
+                }
+                else {
+                    this.toastr.error(result.message || "No se pudo exportar a los estudiantes", "Error", { positionClass: "toast-bottom-right" });
+                    return;
                 }
                 const workbookBin = this.makeExcelExport(students);
                 const octetStream = this.binary2octet(workbookBin);
@@ -437586,9 +438284,9 @@ exports.PostCardComponent = PostCardComponent;
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
-     true ? factory(exports, __webpack_require__("8Y7J"), __webpack_require__("SVse"), __webpack_require__("qCKp"), __webpack_require__("kU1M")) :
+     true ? factory(__webpack_require__("8Y7J"),exports, __webpack_require__("8Y7J"), __webpack_require__("SVse"), __webpack_require__("qCKp"), __webpack_require__("kU1M")) :
     undefined;
-}(this, (function (exports,core,common,rxjs,operators) { 'use strict';
+}(this, (function (ɵngcc0,exports,core,common,rxjs,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -438214,13 +438912,6 @@ exports.PostCardComponent = PostCardComponent;
             function ($event) {
                 this.getBarHeight();
             };
-        SlimScrollDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[slimScroll]',
-                        // tslint:disable-line
-                        exportAs: 'slimScroll'
-                    },] },
-        ];
         /** @nocollapse */
         SlimScrollDirective.ctorParameters = function () {
             return [
@@ -438238,6 +438929,47 @@ exports.PostCardComponent = PostCardComponent;
             "barVisibilityChange": [{ type: core.Output, args: ['barVisibilityChange',] },],
             "onResize": [{ type: core.HostListener, args: ['window:resize', ['$event'],] },],
         };
+SlimScrollDirective.ɵfac = function SlimScrollDirective_Factory(t) { return new (t || SlimScrollDirective)(ɵngcc0.ɵɵdirectiveInject(core.ViewContainerRef), ɵngcc0.ɵɵdirectiveInject(core.Renderer2), ɵngcc0.ɵɵdirectiveInject(common.DOCUMENT), ɵngcc0.ɵɵdirectiveInject(SLIMSCROLL_DEFAULTS, 8)); };
+SlimScrollDirective.ɵdir = ɵngcc0.ɵɵdefineDirective({ type: SlimScrollDirective, selectors: [["", "slimScroll", ""]], hostBindings: function SlimScrollDirective_HostBindings(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵlistener("resize", function SlimScrollDirective_resize_HostBindingHandler($event) { return ctx.onResize($event); }, false, ɵngcc0.ɵɵresolveWindow);
+    } }, inputs: { enabled: "enabled", options: "options", scrollEvents: "scrollEvents" }, outputs: { scrollChanged: "scrollChanged", barVisibilityChange: "barVisibilityChange" }, exportAs: ["slimScroll"], features: [ɵngcc0.ɵɵNgOnChangesFeature] });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(SlimScrollDirective, [{
+        type: core.Directive,
+        args: [{
+                selector: '[slimScroll]',
+                // tslint:disable-line
+                exportAs: 'slimScroll'
+            }]
+    }], function () { return [{ type: ɵngcc0.ViewContainerRef, decorators: [{
+                type: core.Inject,
+                args: [core.ViewContainerRef]
+            }] }, { type: ɵngcc0.Renderer2, decorators: [{
+                type: core.Inject,
+                args: [core.Renderer2]
+            }] }, { type: undefined, decorators: [{
+                type: core.Inject,
+                args: [common.DOCUMENT]
+            }] }, { type: undefined, decorators: [{
+                type: core.Inject,
+                args: [SLIMSCROLL_DEFAULTS]
+            }, {
+                type: core.Optional
+            }] }]; }, { enabled: [{
+            type: core.Input
+        }], scrollChanged: [{
+            type: core.Output,
+            args: ['scrollChanged']
+        }], barVisibilityChange: [{
+            type: core.Output,
+            args: ['barVisibilityChange']
+        }], options: [{
+            type: core.Input
+        }], onResize: [{
+            type: core.HostListener,
+            args: ['window:resize', ['$event']]
+        }], scrollEvents: [{
+            type: core.Input
+        }] }); })();
         return SlimScrollDirective;
     }());
 
@@ -438248,16 +438980,20 @@ exports.PostCardComponent = PostCardComponent;
     var NgSlimScrollModule = (function () {
         function NgSlimScrollModule() {
         }
-        NgSlimScrollModule.decorators = [
-            { type: core.NgModule, args: [{
-                        declarations: [
-                            SlimScrollDirective
-                        ],
-                        exports: [
-                            SlimScrollDirective
-                        ]
-                    },] },
-        ];
+NgSlimScrollModule.ɵmod = ɵngcc0.ɵɵdefineNgModule({ type: NgSlimScrollModule });
+NgSlimScrollModule.ɵinj = ɵngcc0.ɵɵdefineInjector({ factory: function NgSlimScrollModule_Factory(t) { return new (t || NgSlimScrollModule)(); } });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵngcc0.ɵɵsetNgModuleScope(NgSlimScrollModule, { declarations: [SlimScrollDirective], exports: [SlimScrollDirective] }); })();
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(NgSlimScrollModule, [{
+        type: core.NgModule,
+        args: [{
+                declarations: [
+                    SlimScrollDirective
+                ],
+                exports: [
+                    SlimScrollDirective
+                ]
+            }]
+    }], function () { return []; }, null); })();
         return NgSlimScrollModule;
     }());
 
@@ -438282,7 +439018,7 @@ exports.PostCardComponent = PostCardComponent;
 
 })));
 
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmd4LXNsaW1zY3JvbGwudW1kLmpzLm1hcCIsInNvdXJjZXMiOlsibmc6Ly9uZ3gtc2xpbXNjcm9sbC9hcHAvbmd4LXNsaW1zY3JvbGwvY2xhc3Nlcy9zbGltc2Nyb2xsLWV2ZW50LmNsYXNzLnRzIiwibmc6Ly9uZ3gtc2xpbXNjcm9sbC9hcHAvbmd4LXNsaW1zY3JvbGwvY2xhc3Nlcy9zbGltc2Nyb2xsLW9wdGlvbnMuY2xhc3MudHMiLG51bGwsIm5nOi8vbmd4LXNsaW1zY3JvbGwvYXBwL25neC1zbGltc2Nyb2xsL2NsYXNzZXMvc2xpbXNjcm9sbC1zdGF0ZS5jbGFzcy50cyIsIm5nOi8vbmd4LXNsaW1zY3JvbGwvYXBwL25neC1zbGltc2Nyb2xsL2RpcmVjdGl2ZXMvc2xpbXNjcm9sbC5kaXJlY3RpdmUudHMiLCJuZzovL25neC1zbGltc2Nyb2xsL2FwcC9uZ3gtc2xpbXNjcm9sbC9tb2R1bGUvbmd4LXNsaW1zY3JvbGwubW9kdWxlLnRzIl0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBpbnRlcmZhY2UgSVNsaW1TY3JvbGxFdmVudCB7XG4gIHR5cGU6ICdzY3JvbGxUb0JvdHRvbScgfCAnc2Nyb2xsVG9Ub3AnIHwgJ3Njcm9sbFRvUGVyY2VudCcgfCAnc2Nyb2xsVG8nIHwgJ3JlY2FsY3VsYXRlJztcbiAgeT86IG51bWJlcjtcbiAgcGVyY2VudD86IG51bWJlcjtcbiAgZHVyYXRpb24/OiBudW1iZXI7XG4gIGVhc2luZz86ICdsaW5lYXInIHwgJ2luUXVhZCcgfCAnb3V0UXVhZCcgfCAnaW5PdXRRdWFkJyB8ICdpbkN1YmljJyB8XG4gICAgJ291dEN1YmljJyB8ICdpbk91dEN1YmljJyB8ICdpblF1YXJ0JyB8ICdvdXRRdWFydCcgfCAnaW5PdXRRdWFydCcgfFxuICAgICdpblF1aW50JyB8ICdvdXRRdWludCcgfCAnaW5PdXRRdWludCc7XG59XG5cbmV4cG9ydCBjbGFzcyBTbGltU2Nyb2xsRXZlbnQgaW1wbGVtZW50cyBJU2xpbVNjcm9sbEV2ZW50IHtcbiAgdHlwZTogJ3Njcm9sbFRvQm90dG9tJyB8ICdzY3JvbGxUb1RvcCcgfCAnc2Nyb2xsVG9QZXJjZW50JyB8ICdzY3JvbGxUbycgfCAncmVjYWxjdWxhdGUnO1xuICB5PzogbnVtYmVyO1xuICBwZXJjZW50PzogbnVtYmVyO1xuICBkdXJhdGlvbj86IG51bWJlcjtcbiAgZWFzaW5nOiAnbGluZWFyJyB8ICdpblF1YWQnIHwgJ291dFF1YWQnIHwgJ2luT3V0UXVhZCcgfCAnaW5DdWJpYycgfFxuICAgICdvdXRDdWJpYycgfCAnaW5PdXRDdWJpYycgfCAnaW5RdWFydCcgfCAnb3V0UXVhcnQnIHwgJ2luT3V0UXVhcnQnIHxcbiAgICAnaW5RdWludCcgfCAnb3V0UXVpbnQnIHwgJ2luT3V0UXVpbnQnO1xuXG4gIGNvbnN0cnVjdG9yKG9iaj86IElTbGltU2Nyb2xsRXZlbnQpIHtcbiAgICB0aGlzLnR5cGUgPSBvYmoudHlwZTtcbiAgICB0aGlzLnkgPSBvYmogJiYgb2JqLnkgPyBvYmoueSA6IDA7XG4gICAgdGhpcy5wZXJjZW50ID0gb2JqICYmIG9iai5wZXJjZW50ID8gb2JqLnBlcmNlbnQgOiAwO1xuICAgIHRoaXMuZHVyYXRpb24gPSBvYmogJiYgb2JqLmR1cmF0aW9uID8gb2JqLmR1cmF0aW9uIDogMDtcbiAgICB0aGlzLmVhc2luZyA9IG9iaiAmJiBvYmouZWFzaW5nID8gb2JqLmVhc2luZyA6ICdsaW5lYXInO1xuICB9XG59XG4iLCJpbXBvcnQgeyBJU2xpbVNjcm9sbE9wdGlvbnMgfSBmcm9tICcuL3NsaW1zY3JvbGwtb3B0aW9ucy5jbGFzcyc7XG5pbXBvcnQgeyBJU2xpbVNjcm9sbEV2ZW50IH0gZnJvbSAnLi9zbGltc2Nyb2xsLWV2ZW50LmNsYXNzJztcbmltcG9ydCB7IEluamVjdGlvblRva2VuIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmV4cG9ydCBpbnRlcmZhY2UgSVNsaW1TY3JvbGxPcHRpb25zIHtcbiAgcG9zaXRpb24/OiBzdHJpbmc7XG4gIGJhckJhY2tncm91bmQ/OiBzdHJpbmc7XG4gIGJhck9wYWNpdHk/OiBzdHJpbmc7XG4gIGJhcldpZHRoPzogc3RyaW5nO1xuICBiYXJCb3JkZXJSYWRpdXM/OiBzdHJpbmc7XG4gIGJhck1hcmdpbj86IHN0cmluZztcbiAgZ3JpZEJhY2tncm91bmQ/OiBzdHJpbmc7XG4gIGdyaWRPcGFjaXR5Pzogc3RyaW5nO1xuICBncmlkV2lkdGg/OiBzdHJpbmc7XG4gIGdyaWRCb3JkZXJSYWRpdXM/OiBzdHJpbmc7XG4gIGdyaWRNYXJnaW4/OiBzdHJpbmc7XG4gIGFsd2F5c1Zpc2libGU/OiBib29sZWFuO1xuICB2aXNpYmxlVGltZW91dD86IG51bWJlcjtcbn1cblxuZXhwb3J0IGNvbnN0IFNMSU1TQ1JPTExfREVGQVVMVFM6IEluamVjdGlvblRva2VuPElTbGltU2Nyb2xsT3B0aW9ucz5cbiAgICA9IG5ldyBJbmplY3Rpb25Ub2tlbignTkdYX1NMSU1TQ1JPTExfREVGQVVMVFMnKTtcblxuZXhwb3J0IGNsYXNzIFNsaW1TY3JvbGxPcHRpb25zIGltcGxlbWVudHMgSVNsaW1TY3JvbGxPcHRpb25zIHtcbiAgcG9zaXRpb24/OiBzdHJpbmc7XG4gIGJhckJhY2tncm91bmQ/OiBzdHJpbmc7XG4gIGJhck9wYWNpdHk/OiBzdHJpbmc7XG4gIGJhcldpZHRoPzogc3RyaW5nO1xuICBiYXJCb3JkZXJSYWRpdXM/OiBzdHJpbmc7XG4gIGJhck1hcmdpbj86IHN0cmluZztcbiAgZ3JpZEJhY2tncm91bmQ/OiBzdHJpbmc7XG4gIGdyaWRPcGFjaXR5Pzogc3RyaW5nO1xuICBncmlkV2lkdGg/OiBzdHJpbmc7XG4gIGdyaWRCb3JkZXJSYWRpdXM/OiBzdHJpbmc7XG4gIGdyaWRNYXJnaW4/OiBzdHJpbmc7XG4gIGFsd2F5c1Zpc2libGU/OiBib29sZWFuO1xuICB2aXNpYmxlVGltZW91dD86IG51bWJlcjtcblxuICBjb25zdHJ1Y3RvcihvYmo/OiBJU2xpbVNjcm9sbE9wdGlvbnMpIHtcbiAgICB0aGlzLnBvc2l0aW9uID0gb2JqICYmIG9iai5wb3NpdGlvbiA/IG9iai5wb3NpdGlvbiA6ICdyaWdodCc7XG4gICAgdGhpcy5iYXJCYWNrZ3JvdW5kID0gb2JqICYmIG9iai5iYXJCYWNrZ3JvdW5kID8gb2JqLmJhckJhY2tncm91bmQgOiAnIzM0M2E0MCc7XG4gICAgdGhpcy5iYXJPcGFjaXR5ID0gb2JqICYmIG9iai5iYXJPcGFjaXR5ID8gb2JqLmJhck9wYWNpdHkgOiAnMSc7XG4gICAgdGhpcy5iYXJXaWR0aCA9IG9iaiAmJiBvYmouYmFyV2lkdGggPyBvYmouYmFyV2lkdGggOiAnMTInO1xuICAgIHRoaXMuYmFyQm9yZGVyUmFkaXVzID0gb2JqICYmIG9iai5iYXJCb3JkZXJSYWRpdXMgPyBvYmouYmFyQm9yZGVyUmFkaXVzIDogJzUnO1xuICAgIHRoaXMuYmFyTWFyZ2luID0gb2JqICYmIG9iai5iYXJNYXJnaW4gPyBvYmouYmFyTWFyZ2luIDogJzFweCAwJztcbiAgICB0aGlzLmdyaWRCYWNrZ3JvdW5kID0gb2JqICYmIG9iai5ncmlkQmFja2dyb3VuZCA/IG9iai5ncmlkQmFja2dyb3VuZCA6ICcjYWRiNWJkJztcbiAgICB0aGlzLmdyaWRPcGFjaXR5ID0gb2JqICYmIG9iai5ncmlkT3BhY2l0eSA/IG9iai5ncmlkT3BhY2l0eSA6ICcxJztcbiAgICB0aGlzLmdyaWRXaWR0aCA9IG9iaiAmJiBvYmouZ3JpZFdpZHRoID8gb2JqLmdyaWRXaWR0aCA6ICc4JztcbiAgICB0aGlzLmdyaWRCb3JkZXJSYWRpdXMgPSBvYmogJiYgb2JqLmdyaWRCb3JkZXJSYWRpdXMgPyBvYmouZ3JpZEJvcmRlclJhZGl1cyA6ICcxMCc7XG4gICAgdGhpcy5ncmlkTWFyZ2luID0gb2JqICYmIG9iai5ncmlkTWFyZ2luID8gb2JqLmdyaWRNYXJnaW4gOiAnMXB4IDJweCc7XG4gICAgdGhpcy5hbHdheXNWaXNpYmxlID0gb2JqICYmIHR5cGVvZiBvYmouYWx3YXlzVmlzaWJsZSAhPT0gJ3VuZGVmaW5lZCcgPyBvYmouYWx3YXlzVmlzaWJsZSA6IHRydWU7XG4gICAgdGhpcy52aXNpYmxlVGltZW91dCA9IG9iaiAmJiBvYmoudmlzaWJsZVRpbWVvdXQgPyBvYmoudmlzaWJsZVRpbWVvdXQgOiAxMDAwO1xuICB9XG5cbiAgcHVibGljIG1lcmdlKG9iaj86IElTbGltU2Nyb2xsT3B0aW9ucyk6IFNsaW1TY3JvbGxPcHRpb25zIHtcbiAgICBjb25zdCByZXN1bHQgPSBuZXcgU2xpbVNjcm9sbE9wdGlvbnMoKTtcblxuICAgIHJlc3VsdC5wb3NpdGlvbiA9IG9iaiAmJiBvYmoucG9zaXRpb24gPyBvYmoucG9zaXRpb24gOiB0aGlzLnBvc2l0aW9uO1xuICAgIHJlc3VsdC5iYXJCYWNrZ3JvdW5kID0gb2JqICYmIG9iai5iYXJCYWNrZ3JvdW5kID8gb2JqLmJhckJhY2tncm91bmQgOiB0aGlzLmJhckJhY2tncm91bmQ7XG4gICAgcmVzdWx0LmJhck9wYWNpdHkgPSBvYmogJiYgb2JqLmJhck9wYWNpdHkgPyBvYmouYmFyT3BhY2l0eSA6IHRoaXMuYmFyT3BhY2l0eTtcbiAgICByZXN1bHQuYmFyV2lkdGggPSBvYmogJiYgb2JqLmJhcldpZHRoID8gb2JqLmJhcldpZHRoIDogdGhpcy5iYXJXaWR0aDtcbiAgICByZXN1bHQuYmFyQm9yZGVyUmFkaXVzID0gb2JqICYmIG9iai5iYXJCb3JkZXJSYWRpdXMgPyBvYmouYmFyQm9yZGVyUmFkaXVzIDogdGhpcy5iYXJCb3JkZXJSYWRpdXM7XG4gICAgcmVzdWx0LmJhck1hcmdpbiA9IG9iaiAmJiBvYmouYmFyTWFyZ2luID8gb2JqLmJhck1hcmdpbiA6IHRoaXMuYmFyTWFyZ2luO1xuICAgIHJlc3VsdC5ncmlkQmFja2dyb3VuZCA9IG9iaiAmJiBvYmouZ3JpZEJhY2tncm91bmQgPyBvYmouZ3JpZEJhY2tncm91bmQgOiB0aGlzLmdyaWRCYWNrZ3JvdW5kO1xuICAgIHJlc3VsdC5ncmlkT3BhY2l0eSA9IG9iaiAmJiBvYmouZ3JpZE9wYWNpdHkgPyBvYmouZ3JpZE9wYWNpdHkgOiB0aGlzLmdyaWRCYWNrZ3JvdW5kO1xuICAgIHJlc3VsdC5ncmlkV2lkdGggPSBvYmogJiYgb2JqLmdyaWRXaWR0aCA/IG9iai5ncmlkV2lkdGggOiB0aGlzLmdyaWRXaWR0aDtcbiAgICByZXN1bHQuZ3JpZEJvcmRlclJhZGl1cyA9IG9iaiAmJiBvYmouZ3JpZEJvcmRlclJhZGl1cyA/IG9iai5ncmlkQm9yZGVyUmFkaXVzIDogdGhpcy5ncmlkQm9yZGVyUmFkaXVzO1xuICAgIHJlc3VsdC5ncmlkTWFyZ2luID0gb2JqICYmIG9iai5ncmlkTWFyZ2luID8gb2JqLmdyaWRNYXJnaW4gOiB0aGlzLmdyaWRNYXJnaW47XG4gICAgcmVzdWx0LmFsd2F5c1Zpc2libGUgPSBvYmogJiYgdHlwZW9mIG9iai5hbHdheXNWaXNpYmxlICE9PSAndW5kZWZpbmVkJyA/IG9iai5hbHdheXNWaXNpYmxlIDogdGhpcy5hbHdheXNWaXNpYmxlO1xuICAgIHJlc3VsdC52aXNpYmxlVGltZW91dCA9IG9iaiAmJiBvYmoudmlzaWJsZVRpbWVvdXQgPyBvYmoudmlzaWJsZVRpbWVvdXQgOiB0aGlzLnZpc2libGVUaW1lb3V0O1xuXG4gICAgcmV0dXJuIHJlc3VsdDtcbiAgfVxufVxuIiwiLyohICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqXHJcbkNvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxyXG5MaWNlbnNlZCB1bmRlciB0aGUgQXBhY2hlIExpY2Vuc2UsIFZlcnNpb24gMi4wICh0aGUgXCJMaWNlbnNlXCIpOyB5b3UgbWF5IG5vdCB1c2VcclxudGhpcyBmaWxlIGV4Y2VwdCBpbiBjb21wbGlhbmNlIHdpdGggdGhlIExpY2Vuc2UuIFlvdSBtYXkgb2J0YWluIGEgY29weSBvZiB0aGVcclxuTGljZW5zZSBhdCBodHRwOi8vd3d3LmFwYWNoZS5vcmcvbGljZW5zZXMvTElDRU5TRS0yLjBcclxuXHJcblRISVMgQ09ERSBJUyBQUk9WSURFRCBPTiBBTiAqQVMgSVMqIEJBU0lTLCBXSVRIT1VUIFdBUlJBTlRJRVMgT1IgQ09ORElUSU9OUyBPRiBBTllcclxuS0lORCwgRUlUSEVSIEVYUFJFU1MgT1IgSU1QTElFRCwgSU5DTFVESU5HIFdJVEhPVVQgTElNSVRBVElPTiBBTlkgSU1QTElFRFxyXG5XQVJSQU5USUVTIE9SIENPTkRJVElPTlMgT0YgVElUTEUsIEZJVE5FU1MgRk9SIEEgUEFSVElDVUxBUiBQVVJQT1NFLFxyXG5NRVJDSEFOVEFCTElUWSBPUiBOT04tSU5GUklOR0VNRU5ULlxyXG5cclxuU2VlIHRoZSBBcGFjaGUgVmVyc2lvbiAyLjAgTGljZW5zZSBmb3Igc3BlY2lmaWMgbGFuZ3VhZ2UgZ292ZXJuaW5nIHBlcm1pc3Npb25zXHJcbmFuZCBsaW1pdGF0aW9ucyB1bmRlciB0aGUgTGljZW5zZS5cclxuKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKiogKi9cclxuLyogZ2xvYmFsIFJlZmxlY3QsIFByb21pc2UgKi9cclxuXHJcbnZhciBleHRlbmRTdGF0aWNzID0gT2JqZWN0LnNldFByb3RvdHlwZU9mIHx8XHJcbiAgICAoeyBfX3Byb3RvX186IFtdIH0gaW5zdGFuY2VvZiBBcnJheSAmJiBmdW5jdGlvbiAoZCwgYikgeyBkLl9fcHJvdG9fXyA9IGI7IH0pIHx8XHJcbiAgICBmdW5jdGlvbiAoZCwgYikgeyBmb3IgKHZhciBwIGluIGIpIGlmIChiLmhhc093blByb3BlcnR5KHApKSBkW3BdID0gYltwXTsgfTtcclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX2V4dGVuZHMoZCwgYikge1xyXG4gICAgZXh0ZW5kU3RhdGljcyhkLCBiKTtcclxuICAgIGZ1bmN0aW9uIF9fKCkgeyB0aGlzLmNvbnN0cnVjdG9yID0gZDsgfVxyXG4gICAgZC5wcm90b3R5cGUgPSBiID09PSBudWxsID8gT2JqZWN0LmNyZWF0ZShiKSA6IChfXy5wcm90b3R5cGUgPSBiLnByb3RvdHlwZSwgbmV3IF9fKCkpO1xyXG59XHJcblxyXG5leHBvcnQgdmFyIF9fYXNzaWduID0gT2JqZWN0LmFzc2lnbiB8fCBmdW5jdGlvbiBfX2Fzc2lnbih0KSB7XHJcbiAgICBmb3IgKHZhciBzLCBpID0gMSwgbiA9IGFyZ3VtZW50cy5sZW5ndGg7IGkgPCBuOyBpKyspIHtcclxuICAgICAgICBzID0gYXJndW1lbnRzW2ldO1xyXG4gICAgICAgIGZvciAodmFyIHAgaW4gcykgaWYgKE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbChzLCBwKSkgdFtwXSA9IHNbcF07XHJcbiAgICB9XHJcbiAgICByZXR1cm4gdDtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fcmVzdChzLCBlKSB7XHJcbiAgICB2YXIgdCA9IHt9O1xyXG4gICAgZm9yICh2YXIgcCBpbiBzKSBpZiAoT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsKHMsIHApICYmIGUuaW5kZXhPZihwKSA8IDApXHJcbiAgICAgICAgdFtwXSA9IHNbcF07XHJcbiAgICBpZiAocyAhPSBudWxsICYmIHR5cGVvZiBPYmplY3QuZ2V0T3duUHJvcGVydHlTeW1ib2xzID09PSBcImZ1bmN0aW9uXCIpXHJcbiAgICAgICAgZm9yICh2YXIgaSA9IDAsIHAgPSBPYmplY3QuZ2V0T3duUHJvcGVydHlTeW1ib2xzKHMpOyBpIDwgcC5sZW5ndGg7IGkrKykgaWYgKGUuaW5kZXhPZihwW2ldKSA8IDApXHJcbiAgICAgICAgICAgIHRbcFtpXV0gPSBzW3BbaV1dO1xyXG4gICAgcmV0dXJuIHQ7XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX2RlY29yYXRlKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKSB7XHJcbiAgICB2YXIgYyA9IGFyZ3VtZW50cy5sZW5ndGgsIHIgPSBjIDwgMyA/IHRhcmdldCA6IGRlc2MgPT09IG51bGwgPyBkZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcih0YXJnZXQsIGtleSkgOiBkZXNjLCBkO1xyXG4gICAgaWYgKHR5cGVvZiBSZWZsZWN0ID09PSBcIm9iamVjdFwiICYmIHR5cGVvZiBSZWZsZWN0LmRlY29yYXRlID09PSBcImZ1bmN0aW9uXCIpIHIgPSBSZWZsZWN0LmRlY29yYXRlKGRlY29yYXRvcnMsIHRhcmdldCwga2V5LCBkZXNjKTtcclxuICAgIGVsc2UgZm9yICh2YXIgaSA9IGRlY29yYXRvcnMubGVuZ3RoIC0gMTsgaSA+PSAwOyBpLS0pIGlmIChkID0gZGVjb3JhdG9yc1tpXSkgciA9IChjIDwgMyA/IGQocikgOiBjID4gMyA/IGQodGFyZ2V0LCBrZXksIHIpIDogZCh0YXJnZXQsIGtleSkpIHx8IHI7XHJcbiAgICByZXR1cm4gYyA+IDMgJiYgciAmJiBPYmplY3QuZGVmaW5lUHJvcGVydHkodGFyZ2V0LCBrZXksIHIpLCByO1xyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gX19wYXJhbShwYXJhbUluZGV4LCBkZWNvcmF0b3IpIHtcclxuICAgIHJldHVybiBmdW5jdGlvbiAodGFyZ2V0LCBrZXkpIHsgZGVjb3JhdG9yKHRhcmdldCwga2V5LCBwYXJhbUluZGV4KTsgfVxyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gX19tZXRhZGF0YShtZXRhZGF0YUtleSwgbWV0YWRhdGFWYWx1ZSkge1xyXG4gICAgaWYgKHR5cGVvZiBSZWZsZWN0ID09PSBcIm9iamVjdFwiICYmIHR5cGVvZiBSZWZsZWN0Lm1ldGFkYXRhID09PSBcImZ1bmN0aW9uXCIpIHJldHVybiBSZWZsZWN0Lm1ldGFkYXRhKG1ldGFkYXRhS2V5LCBtZXRhZGF0YVZhbHVlKTtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fYXdhaXRlcih0aGlzQXJnLCBfYXJndW1lbnRzLCBQLCBnZW5lcmF0b3IpIHtcclxuICAgIHJldHVybiBuZXcgKFAgfHwgKFAgPSBQcm9taXNlKSkoZnVuY3Rpb24gKHJlc29sdmUsIHJlamVjdCkge1xyXG4gICAgICAgIGZ1bmN0aW9uIGZ1bGZpbGxlZCh2YWx1ZSkgeyB0cnkgeyBzdGVwKGdlbmVyYXRvci5uZXh0KHZhbHVlKSk7IH0gY2F0Y2ggKGUpIHsgcmVqZWN0KGUpOyB9IH1cclxuICAgICAgICBmdW5jdGlvbiByZWplY3RlZCh2YWx1ZSkgeyB0cnkgeyBzdGVwKGdlbmVyYXRvcltcInRocm93XCJdKHZhbHVlKSk7IH0gY2F0Y2ggKGUpIHsgcmVqZWN0KGUpOyB9IH1cclxuICAgICAgICBmdW5jdGlvbiBzdGVwKHJlc3VsdCkgeyByZXN1bHQuZG9uZSA/IHJlc29sdmUocmVzdWx0LnZhbHVlKSA6IG5ldyBQKGZ1bmN0aW9uIChyZXNvbHZlKSB7IHJlc29sdmUocmVzdWx0LnZhbHVlKTsgfSkudGhlbihmdWxmaWxsZWQsIHJlamVjdGVkKTsgfVxyXG4gICAgICAgIHN0ZXAoKGdlbmVyYXRvciA9IGdlbmVyYXRvci5hcHBseSh0aGlzQXJnLCBfYXJndW1lbnRzIHx8IFtdKSkubmV4dCgpKTtcclxuICAgIH0pO1xyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gX19nZW5lcmF0b3IodGhpc0FyZywgYm9keSkge1xyXG4gICAgdmFyIF8gPSB7IGxhYmVsOiAwLCBzZW50OiBmdW5jdGlvbigpIHsgaWYgKHRbMF0gJiAxKSB0aHJvdyB0WzFdOyByZXR1cm4gdFsxXTsgfSwgdHJ5czogW10sIG9wczogW10gfSwgZiwgeSwgdCwgZztcclxuICAgIHJldHVybiBnID0geyBuZXh0OiB2ZXJiKDApLCBcInRocm93XCI6IHZlcmIoMSksIFwicmV0dXJuXCI6IHZlcmIoMikgfSwgdHlwZW9mIFN5bWJvbCA9PT0gXCJmdW5jdGlvblwiICYmIChnW1N5bWJvbC5pdGVyYXRvcl0gPSBmdW5jdGlvbigpIHsgcmV0dXJuIHRoaXM7IH0pLCBnO1xyXG4gICAgZnVuY3Rpb24gdmVyYihuKSB7IHJldHVybiBmdW5jdGlvbiAodikgeyByZXR1cm4gc3RlcChbbiwgdl0pOyB9OyB9XHJcbiAgICBmdW5jdGlvbiBzdGVwKG9wKSB7XHJcbiAgICAgICAgaWYgKGYpIHRocm93IG5ldyBUeXBlRXJyb3IoXCJHZW5lcmF0b3IgaXMgYWxyZWFkeSBleGVjdXRpbmcuXCIpO1xyXG4gICAgICAgIHdoaWxlIChfKSB0cnkge1xyXG4gICAgICAgICAgICBpZiAoZiA9IDEsIHkgJiYgKHQgPSB5W29wWzBdICYgMiA/IFwicmV0dXJuXCIgOiBvcFswXSA/IFwidGhyb3dcIiA6IFwibmV4dFwiXSkgJiYgISh0ID0gdC5jYWxsKHksIG9wWzFdKSkuZG9uZSkgcmV0dXJuIHQ7XHJcbiAgICAgICAgICAgIGlmICh5ID0gMCwgdCkgb3AgPSBbMCwgdC52YWx1ZV07XHJcbiAgICAgICAgICAgIHN3aXRjaCAob3BbMF0pIHtcclxuICAgICAgICAgICAgICAgIGNhc2UgMDogY2FzZSAxOiB0ID0gb3A7IGJyZWFrO1xyXG4gICAgICAgICAgICAgICAgY2FzZSA0OiBfLmxhYmVsKys7IHJldHVybiB7IHZhbHVlOiBvcFsxXSwgZG9uZTogZmFsc2UgfTtcclxuICAgICAgICAgICAgICAgIGNhc2UgNTogXy5sYWJlbCsrOyB5ID0gb3BbMV07IG9wID0gWzBdOyBjb250aW51ZTtcclxuICAgICAgICAgICAgICAgIGNhc2UgNzogb3AgPSBfLm9wcy5wb3AoKTsgXy50cnlzLnBvcCgpOyBjb250aW51ZTtcclxuICAgICAgICAgICAgICAgIGRlZmF1bHQ6XHJcbiAgICAgICAgICAgICAgICAgICAgaWYgKCEodCA9IF8udHJ5cywgdCA9IHQubGVuZ3RoID4gMCAmJiB0W3QubGVuZ3RoIC0gMV0pICYmIChvcFswXSA9PT0gNiB8fCBvcFswXSA9PT0gMikpIHsgXyA9IDA7IGNvbnRpbnVlOyB9XHJcbiAgICAgICAgICAgICAgICAgICAgaWYgKG9wWzBdID09PSAzICYmICghdCB8fCAob3BbMV0gPiB0WzBdICYmIG9wWzFdIDwgdFszXSkpKSB7IF8ubGFiZWwgPSBvcFsxXTsgYnJlYWs7IH1cclxuICAgICAgICAgICAgICAgICAgICBpZiAob3BbMF0gPT09IDYgJiYgXy5sYWJlbCA8IHRbMV0pIHsgXy5sYWJlbCA9IHRbMV07IHQgPSBvcDsgYnJlYWs7IH1cclxuICAgICAgICAgICAgICAgICAgICBpZiAodCAmJiBfLmxhYmVsIDwgdFsyXSkgeyBfLmxhYmVsID0gdFsyXTsgXy5vcHMucHVzaChvcCk7IGJyZWFrOyB9XHJcbiAgICAgICAgICAgICAgICAgICAgaWYgKHRbMl0pIF8ub3BzLnBvcCgpO1xyXG4gICAgICAgICAgICAgICAgICAgIF8udHJ5cy5wb3AoKTsgY29udGludWU7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgb3AgPSBib2R5LmNhbGwodGhpc0FyZywgXyk7XHJcbiAgICAgICAgfSBjYXRjaCAoZSkgeyBvcCA9IFs2LCBlXTsgeSA9IDA7IH0gZmluYWxseSB7IGYgPSB0ID0gMDsgfVxyXG4gICAgICAgIGlmIChvcFswXSAmIDUpIHRocm93IG9wWzFdOyByZXR1cm4geyB2YWx1ZTogb3BbMF0gPyBvcFsxXSA6IHZvaWQgMCwgZG9uZTogdHJ1ZSB9O1xyXG4gICAgfVxyXG59XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gX19leHBvcnRTdGFyKG0sIGV4cG9ydHMpIHtcclxuICAgIGZvciAodmFyIHAgaW4gbSkgaWYgKCFleHBvcnRzLmhhc093blByb3BlcnR5KHApKSBleHBvcnRzW3BdID0gbVtwXTtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fdmFsdWVzKG8pIHtcclxuICAgIHZhciBtID0gdHlwZW9mIFN5bWJvbCA9PT0gXCJmdW5jdGlvblwiICYmIG9bU3ltYm9sLml0ZXJhdG9yXSwgaSA9IDA7XHJcbiAgICBpZiAobSkgcmV0dXJuIG0uY2FsbChvKTtcclxuICAgIHJldHVybiB7XHJcbiAgICAgICAgbmV4dDogZnVuY3Rpb24gKCkge1xyXG4gICAgICAgICAgICBpZiAobyAmJiBpID49IG8ubGVuZ3RoKSBvID0gdm9pZCAwO1xyXG4gICAgICAgICAgICByZXR1cm4geyB2YWx1ZTogbyAmJiBvW2krK10sIGRvbmU6ICFvIH07XHJcbiAgICAgICAgfVxyXG4gICAgfTtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fcmVhZChvLCBuKSB7XHJcbiAgICB2YXIgbSA9IHR5cGVvZiBTeW1ib2wgPT09IFwiZnVuY3Rpb25cIiAmJiBvW1N5bWJvbC5pdGVyYXRvcl07XHJcbiAgICBpZiAoIW0pIHJldHVybiBvO1xyXG4gICAgdmFyIGkgPSBtLmNhbGwobyksIHIsIGFyID0gW10sIGU7XHJcbiAgICB0cnkge1xyXG4gICAgICAgIHdoaWxlICgobiA9PT0gdm9pZCAwIHx8IG4tLSA+IDApICYmICEociA9IGkubmV4dCgpKS5kb25lKSBhci5wdXNoKHIudmFsdWUpO1xyXG4gICAgfVxyXG4gICAgY2F0Y2ggKGVycm9yKSB7IGUgPSB7IGVycm9yOiBlcnJvciB9OyB9XHJcbiAgICBmaW5hbGx5IHtcclxuICAgICAgICB0cnkge1xyXG4gICAgICAgICAgICBpZiAociAmJiAhci5kb25lICYmIChtID0gaVtcInJldHVyblwiXSkpIG0uY2FsbChpKTtcclxuICAgICAgICB9XHJcbiAgICAgICAgZmluYWxseSB7IGlmIChlKSB0aHJvdyBlLmVycm9yOyB9XHJcbiAgICB9XHJcbiAgICByZXR1cm4gYXI7XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX3NwcmVhZCgpIHtcclxuICAgIGZvciAodmFyIGFyID0gW10sIGkgPSAwOyBpIDwgYXJndW1lbnRzLmxlbmd0aDsgaSsrKVxyXG4gICAgICAgIGFyID0gYXIuY29uY2F0KF9fcmVhZChhcmd1bWVudHNbaV0pKTtcclxuICAgIHJldHVybiBhcjtcclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fYXdhaXQodikge1xyXG4gICAgcmV0dXJuIHRoaXMgaW5zdGFuY2VvZiBfX2F3YWl0ID8gKHRoaXMudiA9IHYsIHRoaXMpIDogbmV3IF9fYXdhaXQodik7XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX2FzeW5jR2VuZXJhdG9yKHRoaXNBcmcsIF9hcmd1bWVudHMsIGdlbmVyYXRvcikge1xyXG4gICAgaWYgKCFTeW1ib2wuYXN5bmNJdGVyYXRvcikgdGhyb3cgbmV3IFR5cGVFcnJvcihcIlN5bWJvbC5hc3luY0l0ZXJhdG9yIGlzIG5vdCBkZWZpbmVkLlwiKTtcclxuICAgIHZhciBnID0gZ2VuZXJhdG9yLmFwcGx5KHRoaXNBcmcsIF9hcmd1bWVudHMgfHwgW10pLCBpLCBxID0gW107XHJcbiAgICByZXR1cm4gaSA9IHt9LCB2ZXJiKFwibmV4dFwiKSwgdmVyYihcInRocm93XCIpLCB2ZXJiKFwicmV0dXJuXCIpLCBpW1N5bWJvbC5hc3luY0l0ZXJhdG9yXSA9IGZ1bmN0aW9uICgpIHsgcmV0dXJuIHRoaXM7IH0sIGk7XHJcbiAgICBmdW5jdGlvbiB2ZXJiKG4pIHsgaWYgKGdbbl0pIGlbbl0gPSBmdW5jdGlvbiAodikgeyByZXR1cm4gbmV3IFByb21pc2UoZnVuY3Rpb24gKGEsIGIpIHsgcS5wdXNoKFtuLCB2LCBhLCBiXSkgPiAxIHx8IHJlc3VtZShuLCB2KTsgfSk7IH07IH1cclxuICAgIGZ1bmN0aW9uIHJlc3VtZShuLCB2KSB7IHRyeSB7IHN0ZXAoZ1tuXSh2KSk7IH0gY2F0Y2ggKGUpIHsgc2V0dGxlKHFbMF1bM10sIGUpOyB9IH1cclxuICAgIGZ1bmN0aW9uIHN0ZXAocikgeyByLnZhbHVlIGluc3RhbmNlb2YgX19hd2FpdCA/IFByb21pc2UucmVzb2x2ZShyLnZhbHVlLnYpLnRoZW4oZnVsZmlsbCwgcmVqZWN0KSA6IHNldHRsZShxWzBdWzJdLCByKTsgIH1cclxuICAgIGZ1bmN0aW9uIGZ1bGZpbGwodmFsdWUpIHsgcmVzdW1lKFwibmV4dFwiLCB2YWx1ZSk7IH1cclxuICAgIGZ1bmN0aW9uIHJlamVjdCh2YWx1ZSkgeyByZXN1bWUoXCJ0aHJvd1wiLCB2YWx1ZSk7IH1cclxuICAgIGZ1bmN0aW9uIHNldHRsZShmLCB2KSB7IGlmIChmKHYpLCBxLnNoaWZ0KCksIHEubGVuZ3RoKSByZXN1bWUocVswXVswXSwgcVswXVsxXSk7IH1cclxufVxyXG5cclxuZXhwb3J0IGZ1bmN0aW9uIF9fYXN5bmNEZWxlZ2F0b3Iobykge1xyXG4gICAgdmFyIGksIHA7XHJcbiAgICByZXR1cm4gaSA9IHt9LCB2ZXJiKFwibmV4dFwiKSwgdmVyYihcInRocm93XCIsIGZ1bmN0aW9uIChlKSB7IHRocm93IGU7IH0pLCB2ZXJiKFwicmV0dXJuXCIpLCBpW1N5bWJvbC5pdGVyYXRvcl0gPSBmdW5jdGlvbiAoKSB7IHJldHVybiB0aGlzOyB9LCBpO1xyXG4gICAgZnVuY3Rpb24gdmVyYihuLCBmKSB7IGlmIChvW25dKSBpW25dID0gZnVuY3Rpb24gKHYpIHsgcmV0dXJuIChwID0gIXApID8geyB2YWx1ZTogX19hd2FpdChvW25dKHYpKSwgZG9uZTogbiA9PT0gXCJyZXR1cm5cIiB9IDogZiA/IGYodikgOiB2OyB9OyB9XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX2FzeW5jVmFsdWVzKG8pIHtcclxuICAgIGlmICghU3ltYm9sLmFzeW5jSXRlcmF0b3IpIHRocm93IG5ldyBUeXBlRXJyb3IoXCJTeW1ib2wuYXN5bmNJdGVyYXRvciBpcyBub3QgZGVmaW5lZC5cIik7XHJcbiAgICB2YXIgbSA9IG9bU3ltYm9sLmFzeW5jSXRlcmF0b3JdO1xyXG4gICAgcmV0dXJuIG0gPyBtLmNhbGwobykgOiB0eXBlb2YgX192YWx1ZXMgPT09IFwiZnVuY3Rpb25cIiA/IF9fdmFsdWVzKG8pIDogb1tTeW1ib2wuaXRlcmF0b3JdKCk7XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX21ha2VUZW1wbGF0ZU9iamVjdChjb29rZWQsIHJhdykge1xyXG4gICAgaWYgKE9iamVjdC5kZWZpbmVQcm9wZXJ0eSkgeyBPYmplY3QuZGVmaW5lUHJvcGVydHkoY29va2VkLCBcInJhd1wiLCB7IHZhbHVlOiByYXcgfSk7IH0gZWxzZSB7IGNvb2tlZC5yYXcgPSByYXc7IH1cclxuICAgIHJldHVybiBjb29rZWQ7XHJcbn07XHJcblxyXG5leHBvcnQgZnVuY3Rpb24gX19pbXBvcnRTdGFyKG1vZCkge1xyXG4gICAgaWYgKG1vZCAmJiBtb2QuX19lc01vZHVsZSkgcmV0dXJuIG1vZDtcclxuICAgIHZhciByZXN1bHQgPSB7fTtcclxuICAgIGlmIChtb2QgIT0gbnVsbCkgZm9yICh2YXIgayBpbiBtb2QpIGlmIChPYmplY3QuaGFzT3duUHJvcGVydHkuY2FsbChtb2QsIGspKSByZXN1bHRba10gPSBtb2Rba107XHJcbiAgICByZXN1bHQuZGVmYXVsdCA9IG1vZDtcclxuICAgIHJldHVybiByZXN1bHQ7XHJcbn1cclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBfX2ltcG9ydERlZmF1bHQobW9kKSB7XHJcbiAgICByZXR1cm4gKG1vZCAmJiBtb2QuX19lc01vZHVsZSkgPyBtb2QgOiB7IGRlZmF1bHQ6IG1vZCB9O1xyXG59XHJcbiIsImV4cG9ydCBpbnRlcmZhY2UgSVNsaW1TY3JvbGxTdGF0ZSB7XG4gICAgc2Nyb2xsUG9zaXRpb246IG51bWJlcjtcbiAgICBpc1Njcm9sbEF0U3RhcnQ6IGJvb2xlYW47XG4gICAgaXNTY3JvbGxBdEVuZDogYm9vbGVhbjtcbn1cblxuZXhwb3J0IGNsYXNzIFNsaW1TY3JvbGxTdGF0ZSBpbXBsZW1lbnRzIElTbGltU2Nyb2xsU3RhdGUge1xuICAgIHNjcm9sbFBvc2l0aW9uOiBudW1iZXI7XG4gICAgaXNTY3JvbGxBdFN0YXJ0OiBib29sZWFuO1xuICAgIGlzU2Nyb2xsQXRFbmQ6IGJvb2xlYW47XG4gICAgY29uc3RydWN0b3Iob2JqPzogSVNsaW1TY3JvbGxTdGF0ZSkge1xuICAgICAgICB0aGlzLnNjcm9sbFBvc2l0aW9uID0gb2JqICYmIG9iai5zY3JvbGxQb3NpdGlvbiA/IG9iai5zY3JvbGxQb3NpdGlvbiA6IDA7XG4gICAgICAgIHRoaXMuaXNTY3JvbGxBdFN0YXJ0ID0gb2JqICYmIHR5cGVvZiBvYmouaXNTY3JvbGxBdFN0YXJ0ICE9PSAndW5kZWZpbmVkJyA/IG9iai5pc1Njcm9sbEF0U3RhcnQgOiB0cnVlO1xuICAgICAgICB0aGlzLmlzU2Nyb2xsQXRFbmQgPSBvYmogJiYgdHlwZW9mIG9iai5pc1Njcm9sbEF0RW5kICE9PSAndW5kZWZpbmVkJyA/IG9iai5pc1Njcm9sbEF0RW5kIDogZmFsc2U7XG4gICAgfVxufVxuIiwiaW1wb3J0IHtcbiAgRGlyZWN0aXZlLFxuICBWaWV3Q29udGFpbmVyUmVmLFxuICBIb3N0TGlzdGVuZXIsXG4gIE9uQ2hhbmdlcyxcbiAgT25EZXN0cm95LFxuICBPbkluaXQsXG4gIFJlbmRlcmVyMixcbiAgSW5qZWN0LFxuICBPcHRpb25hbCxcbiAgSW5wdXQsXG4gIEV2ZW50RW1pdHRlcixcbiAgT3V0cHV0LFxuICBTaW1wbGVDaGFuZ2VzXG59IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgRE9DVU1FTlQgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgU2xpbVNjcm9sbE9wdGlvbnMsIElTbGltU2Nyb2xsT3B0aW9ucywgU0xJTVNDUk9MTF9ERUZBVUxUUyB9IGZyb20gJy4uL2NsYXNzZXMvc2xpbXNjcm9sbC1vcHRpb25zLmNsYXNzJztcbmltcG9ydCB7IElTbGltU2Nyb2xsRXZlbnQsIFNsaW1TY3JvbGxFdmVudCB9IGZyb20gJy4uL2NsYXNzZXMvc2xpbXNjcm9sbC1ldmVudC5jbGFzcyc7XG5pbXBvcnQgeyBTbGltU2Nyb2xsU3RhdGUsIElTbGltU2Nyb2xsU3RhdGUgfSBmcm9tICcuLi9jbGFzc2VzL3NsaW1zY3JvbGwtc3RhdGUuY2xhc3MnO1xuaW1wb3J0IHsgT2JzZXJ2YWJsZSwgU3Vic2NyaXB0aW9uLCBmcm9tRXZlbnQsIG1lcmdlIH0gZnJvbSAncnhqcyc7XG5pbXBvcnQgeyBtZXJnZU1hcCwgbWFwLCB0YWtlVW50aWwgfSBmcm9tICdyeGpzL29wZXJhdG9ycyc7XG5cbmV4cG9ydCBjb25zdCBlYXNpbmc6IHsgW2tleTogc3RyaW5nXTogRnVuY3Rpb24gfSA9IHtcbiAgbGluZWFyOiAodDogbnVtYmVyKSA9PiB0LFxuICBpblF1YWQ6ICh0OiBudW1iZXIpID0+IHQgKiB0LFxuICBvdXRRdWFkOiAodDogbnVtYmVyKSA9PiB0ICogKDIgLSB0KSxcbiAgaW5PdXRRdWFkOiAodDogbnVtYmVyKSA9PiB0IDwgLjUgPyAyICogdCAqIHQgOiAtMSArICg0IC0gMiAqIHQpICogdCxcbiAgaW5DdWJpYzogKHQ6IG51bWJlcikgPT4gdCAqIHQgKiB0LFxuICBvdXRDdWJpYzogKHQ6IG51bWJlcikgPT4gKC0tdCkgKiB0ICogdCArIDEsXG4gIGluT3V0Q3ViaWM6ICh0OiBudW1iZXIpID0+IHQgPCAuNSA/IDQgKiB0ICogdCAqIHQgOiAodCAtIDEpICogKDIgKiB0IC0gMikgKiAoMiAqIHQgLSAyKSArIDEsXG4gIGluUXVhcnQ6ICh0OiBudW1iZXIpID0+IHQgKiB0ICogdCAqIHQsXG4gIG91dFF1YXJ0OiAodDogbnVtYmVyKSA9PiAxIC0gKC0tdCkgKiB0ICogdCAqIHQsXG4gIGluT3V0UXVhcnQ6ICh0OiBudW1iZXIpID0+IHQgPCAuNSA/IDggKiB0ICogdCAqIHQgKiB0IDogMSAtIDggKiAoLS10KSAqIHQgKiB0ICogdCxcbiAgaW5RdWludDogKHQ6IG51bWJlcikgPT4gdCAqIHQgKiB0ICogdCAqIHQsXG4gIG91dFF1aW50OiAodDogbnVtYmVyKSA9PiAxICsgKC0tdCkgKiB0ICogdCAqIHQgKiB0LFxuICBpbk91dFF1aW50OiAodDogbnVtYmVyKSA9PiB0IDwgLjUgPyAxNiAqIHQgKiB0ICogdCAqIHQgKiB0IDogMSArIDE2ICogKC0tdCkgKiB0ICogdCAqIHQgKiB0XG59O1xuXG5ARGlyZWN0aXZlKHtcbiAgc2VsZWN0b3I6ICdbc2xpbVNjcm9sbF0nLCAvLyB0c2xpbnQ6ZGlzYWJsZS1saW5lXG4gIGV4cG9ydEFzOiAnc2xpbVNjcm9sbCdcbn0pXG5leHBvcnQgY2xhc3MgU2xpbVNjcm9sbERpcmVjdGl2ZSBpbXBsZW1lbnRzIE9uSW5pdCwgT25DaGFuZ2VzLCBPbkRlc3Ryb3kge1xuICBASW5wdXQoKSBlbmFibGVkID0gdHJ1ZTtcbiAgQElucHV0KCkgb3B0aW9uczogU2xpbVNjcm9sbE9wdGlvbnM7XG4gIEBJbnB1dCgpIHNjcm9sbEV2ZW50czogRXZlbnRFbWl0dGVyPElTbGltU2Nyb2xsRXZlbnQ+O1xuICBAT3V0cHV0KCdzY3JvbGxDaGFuZ2VkJykgc2Nyb2xsQ2hhbmdlZCA9IG5ldyBFdmVudEVtaXR0ZXI8SVNsaW1TY3JvbGxTdGF0ZT4oKTtcbiAgQE91dHB1dCgnYmFyVmlzaWJpbGl0eUNoYW5nZScpIGJhclZpc2liaWxpdHlDaGFuZ2UgPSBuZXcgRXZlbnRFbWl0dGVyPGJvb2xlYW4+KCk7XG5cbiAgZWw6IEhUTUxFbGVtZW50O1xuICB3cmFwcGVyOiBIVE1MRWxlbWVudDtcbiAgZ3JpZDogSFRNTEVsZW1lbnQ7XG4gIGJhcjogSFRNTEVsZW1lbnQ7XG4gIGJvZHk6IEhUTUxFbGVtZW50O1xuICBwYWdlWTogbnVtYmVyO1xuICB0b3A6IG51bWJlcjtcbiAgZHJhZ2dpbmc6IGJvb2xlYW47XG4gIG11dGF0aW9uVGhyb3R0bGVUaW1lb3V0OiBudW1iZXI7XG4gIG11dGF0aW9uT2JzZXJ2ZXI6IE11dGF0aW9uT2JzZXJ2ZXI7XG4gIGxhc3RUb3VjaFBvc2l0aW9uWTogbnVtYmVyO1xuICB2aXNpYmxlVGltZW91dDogYW55O1xuICBpbnRlcmFjdGlvblN1YnNjcmlwdGlvbnM6IFN1YnNjcmlwdGlvbjtcbiAgY29uc3RydWN0b3IoXG4gICAgQEluamVjdChWaWV3Q29udGFpbmVyUmVmKSBwcml2YXRlIHZpZXdDb250YWluZXI6IFZpZXdDb250YWluZXJSZWYsXG4gICAgQEluamVjdChSZW5kZXJlcjIpIHByaXZhdGUgcmVuZGVyZXI6IFJlbmRlcmVyMixcbiAgICBASW5qZWN0KERPQ1VNRU5UKSBwcml2YXRlIGRvY3VtZW50OiBhbnksXG4gICAgQEluamVjdChTTElNU0NST0xMX0RFRkFVTFRTKSBAT3B0aW9uYWwoKSBwcml2YXRlIG9wdGlvbnNEZWZhdWx0czogSVNsaW1TY3JvbGxPcHRpb25zXG4gICkge1xuICAgIHRoaXMudmlld0NvbnRhaW5lciA9IHZpZXdDb250YWluZXI7XG4gICAgdGhpcy5lbCA9IHZpZXdDb250YWluZXIuZWxlbWVudC5uYXRpdmVFbGVtZW50O1xuICAgIHRoaXMuYm9keSA9IHRoaXMuZG9jdW1lbnQucXVlcnlTZWxlY3RvcignYm9keScpO1xuICAgIHRoaXMubXV0YXRpb25UaHJvdHRsZVRpbWVvdXQgPSA1MDtcbiAgfVxuXG4gIG5nT25Jbml0KCkge1xuICAgIC8vIHNldHVwIGlmIG5vIGNoYW5nZXMgZm9yIGVuYWJsZWQgZm9yIHRoZSBmaXJzdCB0aW1lXG4gICAgaWYgKCF0aGlzLmludGVyYWN0aW9uU3Vic2NyaXB0aW9ucyAmJiB0aGlzLmVuYWJsZWQpIHtcbiAgICAgIHRoaXMuc2V0dXAoKTtcbiAgICB9XG4gIH1cblxuICBuZ09uQ2hhbmdlcyhjaGFuZ2VzOiBTaW1wbGVDaGFuZ2VzKSB7XG4gICAgaWYgKGNoYW5nZXMuZW5hYmxlZCkge1xuICAgICAgaWYgKHRoaXMuZW5hYmxlZCkge1xuICAgICAgICB0aGlzLnNldHVwKCk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICB0aGlzLmRlc3Ryb3koKTtcbiAgICAgIH1cbiAgICB9XG4gIH1cblxuICBuZ09uRGVzdHJveSgpIHtcbiAgICB0aGlzLmRlc3Ryb3koKTtcbiAgfVxuXG4gIHNldHVwKCkge1xuICAgIHRoaXMuaW50ZXJhY3Rpb25TdWJzY3JpcHRpb25zID0gbmV3IFN1YnNjcmlwdGlvbigpO1xuICAgIGlmICh0aGlzLm9wdGlvbnNEZWZhdWx0cykge1xuICAgICAgdGhpcy5vcHRpb25zID0gbmV3IFNsaW1TY3JvbGxPcHRpb25zKHRoaXMub3B0aW9uc0RlZmF1bHRzKS5tZXJnZSh0aGlzLm9wdGlvbnMpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLm9wdGlvbnMgPSBuZXcgU2xpbVNjcm9sbE9wdGlvbnModGhpcy5vcHRpb25zKTtcbiAgICB9XG5cbiAgICB0aGlzLnNldFN0eWxlKCk7XG4gICAgdGhpcy53cmFwQ29udGFpbmVyKCk7XG4gICAgdGhpcy5pbml0R3JpZCgpO1xuICAgIHRoaXMuaW5pdEJhcigpO1xuICAgIHRoaXMuZ2V0QmFySGVpZ2h0KCk7XG4gICAgdGhpcy5pbml0V2hlZWwoKTtcbiAgICB0aGlzLmluaXREcmFnKCk7XG5cbiAgICBpZiAoIXRoaXMub3B0aW9ucy5hbHdheXNWaXNpYmxlKSB7XG4gICAgICB0aGlzLmhpZGVCYXJBbmRHcmlkKCk7XG4gICAgfVxuXG4gICAgaWYgKE11dGF0aW9uT2JzZXJ2ZXIpIHtcbiAgICAgIGlmICh0aGlzLm11dGF0aW9uT2JzZXJ2ZXIpIHtcbiAgICAgICAgdGhpcy5tdXRhdGlvbk9ic2VydmVyLmRpc2Nvbm5lY3QoKTtcbiAgICAgIH1cbiAgICAgIHRoaXMubXV0YXRpb25PYnNlcnZlciA9IG5ldyBNdXRhdGlvbk9ic2VydmVyKCgpID0+IHtcbiAgICAgICAgaWYgKHRoaXMubXV0YXRpb25UaHJvdHRsZVRpbWVvdXQpIHtcbiAgICAgICAgICBjbGVhclRpbWVvdXQodGhpcy5tdXRhdGlvblRocm90dGxlVGltZW91dCk7XG4gICAgICAgICAgdGhpcy5tdXRhdGlvblRocm90dGxlVGltZW91dCA9IHNldFRpbWVvdXQodGhpcy5vbk11dGF0aW9uLmJpbmQodGhpcyksIDUwKTtcbiAgICAgICAgfVxuICAgICAgfSk7XG4gICAgICB0aGlzLm11dGF0aW9uT2JzZXJ2ZXIub2JzZXJ2ZSh0aGlzLmVsLCB7IHN1YnRyZWU6IHRydWUsIGNoaWxkTGlzdDogdHJ1ZSB9KTtcbiAgICB9XG5cbiAgICBpZiAodGhpcy5zY3JvbGxFdmVudHMgJiYgdGhpcy5zY3JvbGxFdmVudHMgaW5zdGFuY2VvZiBFdmVudEVtaXR0ZXIpIHtcbiAgICAgIGNvbnN0IHNjcm9sbFN1YnNjcmlwdGlvbiA9IHRoaXMuc2Nyb2xsRXZlbnRzLnN1YnNjcmliZSgoZXZlbnQ6IFNsaW1TY3JvbGxFdmVudCkgPT4gdGhpcy5oYW5kbGVFdmVudChldmVudCkpO1xuICAgICAgdGhpcy5pbnRlcmFjdGlvblN1YnNjcmlwdGlvbnMuYWRkKHNjcm9sbFN1YnNjcmlwdGlvbik7XG4gICAgfVxuICB9XG5cbiAgaGFuZGxlRXZlbnQoZTogU2xpbVNjcm9sbEV2ZW50KTogdm9pZCB7XG4gICAgaWYgKGUudHlwZSA9PT0gJ3Njcm9sbFRvQm90dG9tJykge1xuICAgICAgY29uc3QgeSA9IHRoaXMuZWwuc2Nyb2xsSGVpZ2h0IC0gdGhpcy5lbC5jbGllbnRIZWlnaHQ7XG4gICAgICB0aGlzLnNjcm9sbFRvKHksIGUuZHVyYXRpb24sIGUuZWFzaW5nKTtcbiAgICB9IGVsc2UgaWYgKGUudHlwZSA9PT0gJ3Njcm9sbFRvVG9wJykge1xuICAgICAgY29uc3QgeSA9IDA7XG4gICAgICB0aGlzLnNjcm9sbFRvKHksIGUuZHVyYXRpb24sIGUuZWFzaW5nKTtcbiAgICB9IGVsc2UgaWYgKGUudHlwZSA9PT0gJ3Njcm9sbFRvUGVyY2VudCcgJiYgKGUucGVyY2VudCA+PSAwICYmIGUucGVyY2VudCA8PSAxMDApKSB7XG4gICAgICBjb25zdCB5ID0gTWF0aC5yb3VuZCgoKHRoaXMuZWwuc2Nyb2xsSGVpZ2h0IC0gdGhpcy5lbC5jbGllbnRIZWlnaHQpIC8gMTAwKSAqIGUucGVyY2VudCk7XG4gICAgICB0aGlzLnNjcm9sbFRvKHksIGUuZHVyYXRpb24sIGUuZWFzaW5nKTtcbiAgICB9IGVsc2UgaWYgKGUudHlwZSA9PT0gJ3Njcm9sbFRvJykge1xuICAgICAgY29uc3QgeSA9IGUueTtcbiAgICAgIGlmICh5IDw9IHRoaXMuZWwuc2Nyb2xsSGVpZ2h0IC0gdGhpcy5lbC5jbGllbnRIZWlnaHQgJiYgeSA+PSAwKSB7XG4gICAgICAgIHRoaXMuc2Nyb2xsVG8oeSwgZS5kdXJhdGlvbiwgZS5lYXNpbmcpO1xuICAgICAgfVxuICAgIH0gZWxzZSBpZiAoZS50eXBlID09PSAncmVjYWxjdWxhdGUnKSB7XG4gICAgICB0aGlzLmdldEJhckhlaWdodCgpO1xuICAgIH1cbiAgfVxuXG4gIHNldFN0eWxlKCk6IHZvaWQge1xuICAgIGNvbnN0IGVsID0gdGhpcy5lbDtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGVsLCAnb3ZlcmZsb3cnLCAnaGlkZGVuJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShlbCwgJ3Bvc2l0aW9uJywgJ3JlbGF0aXZlJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShlbCwgJ2Rpc3BsYXknLCAnYmxvY2snKTtcbiAgfVxuXG4gIG9uTXV0YXRpb24oKSB7XG4gICAgdGhpcy5nZXRCYXJIZWlnaHQoKTtcbiAgfVxuXG4gIHdyYXBDb250YWluZXIoKTogdm9pZCB7XG4gICAgdGhpcy53cmFwcGVyID0gdGhpcy5yZW5kZXJlci5jcmVhdGVFbGVtZW50KCdkaXYnKTtcbiAgICBjb25zdCB3cmFwcGVyID0gdGhpcy53cmFwcGVyO1xuICAgIGNvbnN0IGVsID0gdGhpcy5lbDtcblxuICAgIHRoaXMucmVuZGVyZXIuYWRkQ2xhc3Mod3JhcHBlciwgJ3NsaW1zY3JvbGwtd3JhcHBlcicpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUod3JhcHBlciwgJ3Bvc2l0aW9uJywgJ3JlbGF0aXZlJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh3cmFwcGVyLCAnb3ZlcmZsb3cnLCAnaGlkZGVuJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh3cmFwcGVyLCAnZGlzcGxheScsICdpbmxpbmUtYmxvY2snKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHdyYXBwZXIsICdtYXJnaW4nLCBnZXRDb21wdXRlZFN0eWxlKGVsKS5tYXJnaW4pO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUod3JhcHBlciwgJ3dpZHRoJywgJzEwMCUnKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHdyYXBwZXIsICdoZWlnaHQnLCBnZXRDb21wdXRlZFN0eWxlKGVsKS5oZWlnaHQpO1xuXG4gICAgdGhpcy5yZW5kZXJlci5pbnNlcnRCZWZvcmUoZWwucGFyZW50Tm9kZSwgd3JhcHBlciwgZWwpO1xuICAgIHRoaXMucmVuZGVyZXIuYXBwZW5kQ2hpbGQod3JhcHBlciwgZWwpO1xuICB9XG5cbiAgaW5pdEdyaWQoKTogdm9pZCB7XG4gICAgdGhpcy5ncmlkID0gdGhpcy5yZW5kZXJlci5jcmVhdGVFbGVtZW50KCdkaXYnKTtcbiAgICBjb25zdCBncmlkID0gdGhpcy5ncmlkO1xuXG4gICAgdGhpcy5yZW5kZXJlci5hZGRDbGFzcyhncmlkLCAnc2xpbXNjcm9sbC1ncmlkJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAncG9zaXRpb24nLCAnYWJzb2x1dGUnKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGdyaWQsICd0b3AnLCAnMCcpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoZ3JpZCwgJ2JvdHRvbScsICcwJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCB0aGlzLm9wdGlvbnMucG9zaXRpb24sICcwJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAnd2lkdGgnLCBgJHt0aGlzLm9wdGlvbnMuZ3JpZFdpZHRofXB4YCk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAnYmFja2dyb3VuZCcsIHRoaXMub3B0aW9ucy5ncmlkQmFja2dyb3VuZCk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAnb3BhY2l0eScsIHRoaXMub3B0aW9ucy5ncmlkT3BhY2l0eSk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAnZGlzcGxheScsICdibG9jaycpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoZ3JpZCwgJ2N1cnNvcicsICdwb2ludGVyJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShncmlkLCAnei1pbmRleCcsICc5OScpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoZ3JpZCwgJ2JvcmRlci1yYWRpdXMnLCBgJHt0aGlzLm9wdGlvbnMuZ3JpZEJvcmRlclJhZGl1c31weGApO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoZ3JpZCwgJ21hcmdpbicsIHRoaXMub3B0aW9ucy5ncmlkTWFyZ2luKTtcblxuICAgIHRoaXMucmVuZGVyZXIuYXBwZW5kQ2hpbGQodGhpcy53cmFwcGVyLCBncmlkKTtcbiAgfVxuXG4gIGluaXRCYXIoKTogdm9pZCB7XG4gICAgdGhpcy5iYXIgPSB0aGlzLnJlbmRlcmVyLmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuICAgIGNvbnN0IGJhciA9IHRoaXMuYmFyO1xuXG4gICAgdGhpcy5yZW5kZXJlci5hZGRDbGFzcyhiYXIsICdzbGltc2Nyb2xsLWJhcicpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoYmFyLCAncG9zaXRpb24nLCAnYWJzb2x1dGUnKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGJhciwgJ3RvcCcsICcwJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShiYXIsIHRoaXMub3B0aW9ucy5wb3NpdGlvbiwgJzAnKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGJhciwgJ3dpZHRoJywgYCR7dGhpcy5vcHRpb25zLmJhcldpZHRofXB4YCk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShiYXIsICdiYWNrZ3JvdW5kJywgdGhpcy5vcHRpb25zLmJhckJhY2tncm91bmQpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoYmFyLCAnb3BhY2l0eScsIHRoaXMub3B0aW9ucy5iYXJPcGFjaXR5KTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGJhciwgJ2Rpc3BsYXknLCAnYmxvY2snKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGJhciwgJ2N1cnNvcicsICdwb2ludGVyJyk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZShiYXIsICd6LWluZGV4JywgJzEwMCcpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUoYmFyLCAnYm9yZGVyLXJhZGl1cycsIGAke3RoaXMub3B0aW9ucy5iYXJCb3JkZXJSYWRpdXN9cHhgKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKGJhciwgJ21hcmdpbicsIHRoaXMub3B0aW9ucy5iYXJNYXJnaW4pO1xuXG4gICAgdGhpcy5yZW5kZXJlci5hcHBlbmRDaGlsZCh0aGlzLndyYXBwZXIsIGJhcik7XG4gICAgdGhpcy5iYXJWaXNpYmlsaXR5Q2hhbmdlLmVtaXQodHJ1ZSk7XG4gIH1cblxuICBnZXRCYXJIZWlnaHQoKTogdm9pZCB7XG4gICAgY29uc3QgZWxIZWlnaHQgPSB0aGlzLmVsLm9mZnNldEhlaWdodDtcbiAgICBjb25zdCBiYXJIZWlnaHQgPSBNYXRoLm1heCgoZWxIZWlnaHQgLyB0aGlzLmVsLnNjcm9sbEhlaWdodCkgKiBlbEhlaWdodCwgMzApICsgJ3B4JztcbiAgICBjb25zdCBkaXNwbGF5ID0gcGFyc2VJbnQoYmFySGVpZ2h0LCAxMCkgPT09IGVsSGVpZ2h0ID8gJ25vbmUnIDogJ2Jsb2NrJztcblxuICAgIGlmICh0aGlzLndyYXBwZXIub2Zmc2V0SGVpZ2h0ICE9PSBlbEhlaWdodCkge1xuICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLndyYXBwZXIsICdoZWlnaHQnLCBlbEhlaWdodCArICdweCcpO1xuICAgIH1cblxuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUodGhpcy5iYXIsICdoZWlnaHQnLCBiYXJIZWlnaHQpO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUodGhpcy5iYXIsICdkaXNwbGF5JywgZGlzcGxheSk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmdyaWQsICdkaXNwbGF5JywgZGlzcGxheSk7XG4gICAgdGhpcy5iYXJWaXNpYmlsaXR5Q2hhbmdlLmVtaXQoZGlzcGxheSAhPT0gJ25vbmUnKTtcbiAgfVxuXG4gIHNjcm9sbFRvKHk6IG51bWJlciwgZHVyYXRpb246IG51bWJlciwgZWFzaW5nRnVuYzogc3RyaW5nKTogdm9pZCB7XG4gICAgY29uc3Qgc3RhcnQgPSBEYXRlLm5vdygpO1xuICAgIGNvbnN0IGZyb20gPSB0aGlzLmVsLnNjcm9sbFRvcDtcbiAgICBjb25zdCBtYXhUb3AgPSB0aGlzLmVsLm9mZnNldEhlaWdodCAtIHRoaXMuYmFyLm9mZnNldEhlaWdodDtcbiAgICBjb25zdCBtYXhFbFNjcm9sbFRvcCA9IHRoaXMuZWwuc2Nyb2xsSGVpZ2h0IC0gdGhpcy5lbC5jbGllbnRIZWlnaHQ7XG4gICAgY29uc3QgYmFySGVpZ2h0ID0gTWF0aC5tYXgoKHRoaXMuZWwub2Zmc2V0SGVpZ2h0IC8gdGhpcy5lbC5zY3JvbGxIZWlnaHQpICogdGhpcy5lbC5vZmZzZXRIZWlnaHQsIDMwKTtcbiAgICBjb25zdCBwYWRkaW5nVG9wID0gcGFyc2VJbnQodGhpcy5lbC5zdHlsZS5wYWRkaW5nVG9wLCAxMCkgfHwgMDtcbiAgICBjb25zdCBwYWRkaW5nQm90dG9tID0gcGFyc2VJbnQodGhpcy5lbC5zdHlsZS5wYWRkaW5nQm90dG9tLCAxMCkgfHwgMDtcblxuICAgIGNvbnN0IHNjcm9sbCA9ICh0aW1lc3RhbXA6IG51bWJlcikgPT4ge1xuICAgICAgY29uc3QgY3VycmVudFRpbWUgPSBEYXRlLm5vdygpO1xuICAgICAgY29uc3QgdGltZSA9IE1hdGgubWluKDEsICgoY3VycmVudFRpbWUgLSBzdGFydCkgLyBkdXJhdGlvbikpO1xuICAgICAgY29uc3QgZWFzZWRUaW1lID0gZWFzaW5nW2Vhc2luZ0Z1bmNdKHRpbWUpO1xuXG4gICAgICBpZiAocGFkZGluZ1RvcCA+IDAgfHwgcGFkZGluZ0JvdHRvbSA+IDApIHtcbiAgICAgICAgbGV0IGZyb21ZID0gbnVsbDtcblxuICAgICAgICBpZiAocGFkZGluZ1RvcCA+IDApIHtcbiAgICAgICAgICBmcm9tWSA9IC1wYWRkaW5nVG9wO1xuICAgICAgICAgIGZyb21ZID0gLSgoZWFzZWRUaW1lICogKHkgLSBmcm9tWSkpICsgZnJvbVkpO1xuICAgICAgICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUodGhpcy5lbCwgJ3BhZGRpbmdUb3AnLCBgJHtmcm9tWX1weGApO1xuICAgICAgICB9XG5cbiAgICAgICAgaWYgKHBhZGRpbmdCb3R0b20gPiAwKSB7XG4gICAgICAgICAgZnJvbVkgPSBwYWRkaW5nQm90dG9tO1xuICAgICAgICAgIGZyb21ZID0gKChlYXNlZFRpbWUgKiAoeSAtIGZyb21ZKSkgKyBmcm9tWSk7XG4gICAgICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmVsLCAncGFkZGluZ0JvdHRvbScsIGAke2Zyb21ZfXB4YCk7XG4gICAgICAgIH1cbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIHRoaXMuZWwuc2Nyb2xsVG9wID0gKGVhc2VkVGltZSAqICh5IC0gZnJvbSkpICsgZnJvbTtcbiAgICAgIH1cblxuICAgICAgY29uc3QgcGVyY2VudFNjcm9sbCA9IHRoaXMuZWwuc2Nyb2xsVG9wIC8gbWF4RWxTY3JvbGxUb3A7XG4gICAgICBpZiAocGFkZGluZ0JvdHRvbSA9PT0gMCkge1xuICAgICAgICBjb25zdCBkZWx0YSA9IE1hdGgucm91bmQoTWF0aC5yb3VuZCh0aGlzLmVsLmNsaWVudEhlaWdodCAqIHBlcmNlbnRTY3JvbGwpIC0gYmFySGVpZ2h0KTtcbiAgICAgICAgaWYgKGRlbHRhID4gMCkge1xuICAgICAgICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUodGhpcy5iYXIsICd0b3AnLCBgJHtkZWx0YX1weGApO1xuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIGlmICh0aW1lIDwgMSkge1xuICAgICAgICByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoc2Nyb2xsKTtcbiAgICAgIH1cbiAgICB9O1xuXG4gICAgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKHNjcm9sbCk7XG4gIH1cblxuICBzY3JvbGxDb250ZW50KHk6IG51bWJlciwgaXNXaGVlbDogYm9vbGVhbiwgaXNKdW1wOiBib29sZWFuKTogbnVsbCB8IG51bWJlciB7XG4gICAgbGV0IGRlbHRhID0geTtcbiAgICBjb25zdCBtYXhUb3AgPSB0aGlzLmVsLm9mZnNldEhlaWdodCAtIHRoaXMuYmFyLm9mZnNldEhlaWdodDtcbiAgICBjb25zdCBoaWRkZW5Db250ZW50ID0gdGhpcy5lbC5zY3JvbGxIZWlnaHQgLSB0aGlzLmVsLm9mZnNldEhlaWdodDtcbiAgICBsZXQgcGVyY2VudFNjcm9sbDogbnVtYmVyO1xuICAgIGxldCBvdmVyID0gbnVsbDtcblxuICAgIGlmIChpc1doZWVsKSB7XG4gICAgICBkZWx0YSA9IHBhcnNlSW50KGdldENvbXB1dGVkU3R5bGUodGhpcy5iYXIpLnRvcCwgMTApICsgeSAqIDIwIC8gMTAwICogdGhpcy5iYXIub2Zmc2V0SGVpZ2h0O1xuXG4gICAgICBpZiAoZGVsdGEgPCAwIHx8IGRlbHRhID4gbWF4VG9wKSB7XG4gICAgICAgIG92ZXIgPSBkZWx0YSA+IG1heFRvcCA/IGRlbHRhIC0gbWF4VG9wIDogZGVsdGE7XG4gICAgICB9XG5cbiAgICAgIGRlbHRhID0gTWF0aC5taW4oTWF0aC5tYXgoZGVsdGEsIDApLCBtYXhUb3ApO1xuICAgICAgZGVsdGEgPSAoeSA+IDApID8gTWF0aC5jZWlsKGRlbHRhKSA6IE1hdGguZmxvb3IoZGVsdGEpO1xuICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmJhciwgJ3RvcCcsIGRlbHRhICsgJ3B4Jyk7XG4gICAgfVxuXG4gICAgcGVyY2VudFNjcm9sbCA9IHBhcnNlSW50KGdldENvbXB1dGVkU3R5bGUodGhpcy5iYXIpLnRvcCwgMTApIC8gKHRoaXMuZWwub2Zmc2V0SGVpZ2h0IC0gdGhpcy5iYXIub2Zmc2V0SGVpZ2h0KTtcbiAgICBkZWx0YSA9IHBlcmNlbnRTY3JvbGwgKiBoaWRkZW5Db250ZW50O1xuXG4gICAgdGhpcy5lbC5zY3JvbGxUb3AgPSBkZWx0YTtcblxuICAgIHRoaXMuc2hvd0JhckFuZEdyaWQoKTtcblxuICAgIGlmICghdGhpcy5vcHRpb25zLmFsd2F5c1Zpc2libGUpIHtcbiAgICAgIGlmICh0aGlzLnZpc2libGVUaW1lb3V0KSB7XG4gICAgICAgIGNsZWFyVGltZW91dCh0aGlzLnZpc2libGVUaW1lb3V0KTtcbiAgICAgIH1cblxuICAgICAgdGhpcy52aXNpYmxlVGltZW91dCA9IHNldFRpbWVvdXQoKCkgPT4ge1xuICAgICAgICB0aGlzLmhpZGVCYXJBbmRHcmlkKCk7XG4gICAgICB9LCB0aGlzLm9wdGlvbnMudmlzaWJsZVRpbWVvdXQpO1xuICAgIH1cbiAgICBjb25zdCBpc1Njcm9sbEF0U3RhcnQgPSBkZWx0YSA9PT0gMDtcbiAgICBjb25zdCBpc1Njcm9sbEF0RW5kID0gZGVsdGEgPT09IGhpZGRlbkNvbnRlbnQ7XG4gICAgY29uc3Qgc2Nyb2xsUG9zaXRpb24gPSBNYXRoLmNlaWwoZGVsdGEpO1xuICAgIGNvbnN0IHNjcm9sbFN0YXRlID0gbmV3IFNsaW1TY3JvbGxTdGF0ZSh7IHNjcm9sbFBvc2l0aW9uLCBpc1Njcm9sbEF0U3RhcnQsIGlzU2Nyb2xsQXRFbmQgfSk7XG4gICAgdGhpcy5zY3JvbGxDaGFuZ2VkLmVtaXQoc2Nyb2xsU3RhdGUpO1xuXG4gICAgcmV0dXJuIG92ZXI7XG4gIH1cblxuICBpbml0V2hlZWwgPSAoKSA9PiB7XG4gICAgY29uc3QgZG9tbW91c2VzY3JvbGwgPSBmcm9tRXZlbnQodGhpcy5lbCwgJ0RPTU1vdXNlU2Nyb2xsJyk7XG4gICAgY29uc3QgbW91c2V3aGVlbCA9IGZyb21FdmVudCh0aGlzLmVsLCAnbW91c2V3aGVlbCcpO1xuXG4gICAgY29uc3Qgd2hlZWxTdWJzY3JpcHRpb24gPSBtZXJnZSguLi5bZG9tbW91c2VzY3JvbGwsIG1vdXNld2hlZWxdKS5zdWJzY3JpYmUoKGU6IE1vdXNlV2hlZWxFdmVudCkgPT4ge1xuICAgICAgbGV0IGRlbHRhID0gMDtcblxuICAgICAgaWYgKGUud2hlZWxEZWx0YSkge1xuICAgICAgICBkZWx0YSA9IC1lLndoZWVsRGVsdGEgLyAxMjA7XG4gICAgICB9XG5cbiAgICAgIGlmIChlLmRldGFpbCkge1xuICAgICAgICBkZWx0YSA9IGUuZGV0YWlsIC8gMztcbiAgICAgIH1cblxuICAgICAgdGhpcy5zY3JvbGxDb250ZW50KGRlbHRhLCB0cnVlLCBmYWxzZSk7XG5cbiAgICAgIGlmIChlLnByZXZlbnREZWZhdWx0KSB7XG4gICAgICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICAgIH1cbiAgICB9KTtcblxuICAgIHRoaXMuaW50ZXJhY3Rpb25TdWJzY3JpcHRpb25zLmFkZCh3aGVlbFN1YnNjcmlwdGlvbik7XG4gIH1cblxuICBpbml0RHJhZyA9ICgpID0+IHtcbiAgICBjb25zdCBiYXIgPSB0aGlzLmJhcjtcblxuICAgIGNvbnN0IG1vdXNlbW92ZSA9IGZyb21FdmVudCh0aGlzLmRvY3VtZW50LmRvY3VtZW50RWxlbWVudCwgJ21vdXNlbW92ZScpO1xuICAgIGNvbnN0IHRvdWNobW92ZSA9IGZyb21FdmVudCh0aGlzLmRvY3VtZW50LmRvY3VtZW50RWxlbWVudCwgJ3RvdWNobW92ZScpO1xuXG4gICAgY29uc3QgbW91c2Vkb3duID0gZnJvbUV2ZW50KGJhciwgJ21vdXNlZG93bicpO1xuICAgIGNvbnN0IHRvdWNoc3RhcnQgPSBmcm9tRXZlbnQodGhpcy5lbCwgJ3RvdWNoc3RhcnQnKTtcbiAgICBjb25zdCBtb3VzZXVwID0gZnJvbUV2ZW50KHRoaXMuZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LCAnbW91c2V1cCcpO1xuICAgIGNvbnN0IHRvdWNoZW5kID0gZnJvbUV2ZW50KHRoaXMuZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LCAndG91Y2hlbmQnKTtcblxuICAgIGNvbnN0IG1vdXNlZHJhZyA9IG1vdXNlZG93blxuICAgICAgLnBpcGUoXG4gICAgICAgIG1lcmdlTWFwKChlOiBNb3VzZUV2ZW50KSA9PiB7XG4gICAgICAgICAgdGhpcy5wYWdlWSA9IGUucGFnZVk7XG4gICAgICAgICAgdGhpcy50b3AgPSBwYXJzZUZsb2F0KGdldENvbXB1dGVkU3R5bGUoYmFyKS50b3ApO1xuXG4gICAgICAgICAgcmV0dXJuIG1vdXNlbW92ZVxuICAgICAgICAgICAgLnBpcGUoXG4gICAgICAgICAgICAgIG1hcCgoZW1vdmU6IE1vdXNlRXZlbnQpID0+IHtcbiAgICAgICAgICAgICAgICBlbW92ZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgICAgICAgICAgICAgIHJldHVybiB0aGlzLnRvcCArIGVtb3ZlLnBhZ2VZIC0gdGhpcy5wYWdlWTtcbiAgICAgICAgICAgICAgfSksXG4gICAgICAgICAgICAgIHRha2VVbnRpbChtb3VzZXVwKVxuICAgICAgICAgICAgKTtcbiAgICAgICAgfSlcbiAgICAgICk7XG5cbiAgICBjb25zdCB0b3VjaGRyYWcgPSB0b3VjaHN0YXJ0XG4gICAgICAucGlwZShcbiAgICAgICAgbWVyZ2VNYXAoKGU6IFRvdWNoRXZlbnQpID0+IHtcbiAgICAgICAgICB0aGlzLnBhZ2VZID0gZS50YXJnZXRUb3VjaGVzWzBdLnBhZ2VZO1xuICAgICAgICAgIHRoaXMudG9wID0gLXBhcnNlRmxvYXQoZ2V0Q29tcHV0ZWRTdHlsZShiYXIpLnRvcCk7XG5cbiAgICAgICAgICByZXR1cm4gdG91Y2htb3ZlXG4gICAgICAgICAgICAucGlwZShcbiAgICAgICAgICAgICAgbWFwKCh0bW92ZTogVG91Y2hFdmVudCkgPT4ge1xuICAgICAgICAgICAgICAgIHJldHVybiAtKHRoaXMudG9wICsgdG1vdmUudGFyZ2V0VG91Y2hlc1swXS5wYWdlWSAtIHRoaXMucGFnZVkpO1xuICAgICAgICAgICAgICB9KSxcbiAgICAgICAgICAgICAgdGFrZVVudGlsKHRvdWNoZW5kKVxuICAgICAgICAgICAgKTtcbiAgICAgICAgfSlcbiAgICAgICk7XG5cbiAgICBjb25zdCBkcmFnU3Vic2NyaXB0aW9uID0gbWVyZ2UoLi4uW21vdXNlZHJhZywgdG91Y2hkcmFnXSkuc3Vic2NyaWJlKCh0b3A6IG51bWJlcikgPT4ge1xuICAgICAgdGhpcy5ib2R5LmFkZEV2ZW50TGlzdGVuZXIoJ3NlbGVjdHN0YXJ0JywgdGhpcy5wcmV2ZW50RGVmYXVsdEV2ZW50LCBmYWxzZSk7XG4gICAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHRoaXMuYm9keSwgJ3RvdWNoLWFjdGlvbicsICdwYW4teScpO1xuICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmJvZHksICd1c2VyLXNlbGVjdCcsICdub25lJyk7XG4gICAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHRoaXMuYmFyLCAndG9wJywgYCR7dG9wfXB4YCk7XG4gICAgICBjb25zdCBvdmVyID0gdGhpcy5zY3JvbGxDb250ZW50KDAsIHRydWUsIGZhbHNlKTtcbiAgICAgIGNvbnN0IG1heFRvcCA9IHRoaXMuZWwub2Zmc2V0SGVpZ2h0IC0gdGhpcy5iYXIub2Zmc2V0SGVpZ2h0O1xuXG4gICAgICBpZiAob3ZlciAmJiBvdmVyIDwgMCAmJiAtb3ZlciA8PSBtYXhUb3ApIHtcbiAgICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmVsLCAncGFkZGluZ1RvcCcsIC1vdmVyICsgJ3B4Jyk7XG4gICAgICB9IGVsc2UgaWYgKG92ZXIgJiYgb3ZlciA+IDAgJiYgb3ZlciA8PSBtYXhUb3ApIHtcbiAgICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmVsLCAncGFkZGluZ0JvdHRvbScsIG92ZXIgKyAncHgnKTtcbiAgICAgIH1cbiAgICB9KTtcblxuICAgIGNvbnN0IGRyYWdFbmRTdWJzY3JpcHRpb24gPSBtZXJnZSguLi5bbW91c2V1cCwgdG91Y2hlbmRdKS5zdWJzY3JpYmUoKCkgPT4ge1xuICAgICAgdGhpcy5ib2R5LnJlbW92ZUV2ZW50TGlzdGVuZXIoJ3NlbGVjdHN0YXJ0JywgdGhpcy5wcmV2ZW50RGVmYXVsdEV2ZW50LCBmYWxzZSk7XG4gICAgICBjb25zdCBwYWRkaW5nVG9wID0gcGFyc2VJbnQodGhpcy5lbC5zdHlsZS5wYWRkaW5nVG9wLCAxMCk7XG4gICAgICBjb25zdCBwYWRkaW5nQm90dG9tID0gcGFyc2VJbnQodGhpcy5lbC5zdHlsZS5wYWRkaW5nQm90dG9tLCAxMCk7XG4gICAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHRoaXMuYm9keSwgJ3RvdWNoLWFjdGlvbicsICd1bnNldCcpO1xuICAgICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmJvZHksICd1c2VyLXNlbGVjdCcsICdkZWZhdWx0Jyk7XG5cbiAgICAgIGlmIChwYWRkaW5nVG9wID4gMCkge1xuICAgICAgICB0aGlzLnNjcm9sbFRvKDAsIDMwMCwgJ2xpbmVhcicpO1xuICAgICAgfSBlbHNlIGlmIChwYWRkaW5nQm90dG9tID4gMCkge1xuICAgICAgICB0aGlzLnNjcm9sbFRvKDAsIDMwMCwgJ2xpbmVhcicpO1xuICAgICAgfVxuICAgIH0pO1xuXG4gICAgdGhpcy5pbnRlcmFjdGlvblN1YnNjcmlwdGlvbnMuYWRkKGRyYWdTdWJzY3JpcHRpb24pO1xuICAgIHRoaXMuaW50ZXJhY3Rpb25TdWJzY3JpcHRpb25zLmFkZChkcmFnRW5kU3Vic2NyaXB0aW9uKTtcbiAgfVxuXG4gIHNob3dCYXJBbmRHcmlkKCk6IHZvaWQge1xuICAgIHRoaXMucmVuZGVyZXIuc2V0U3R5bGUodGhpcy5ncmlkLCAnYmFja2dyb3VuZCcsIHRoaXMub3B0aW9ucy5ncmlkQmFja2dyb3VuZCk7XG4gICAgdGhpcy5yZW5kZXJlci5zZXRTdHlsZSh0aGlzLmJhciwgJ2JhY2tncm91bmQnLCB0aGlzLm9wdGlvbnMuYmFyQmFja2dyb3VuZCk7XG4gIH1cblxuICBoaWRlQmFyQW5kR3JpZCgpOiB2b2lkIHtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHRoaXMuZ3JpZCwgJ2JhY2tncm91bmQnLCAndHJhbnNwYXJlbnQnKTtcbiAgICB0aGlzLnJlbmRlcmVyLnNldFN0eWxlKHRoaXMuYmFyLCAnYmFja2dyb3VuZCcsICd0cmFuc3BhcmVudCcpO1xuICB9XG5cbiAgcHJldmVudERlZmF1bHRFdmVudCA9IChlOiBNb3VzZUV2ZW50KSA9PiB7XG4gICAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7XG4gIH1cblxuICBkZXN0cm95KCk6IHZvaWQge1xuICAgIGlmICh0aGlzLm11dGF0aW9uT2JzZXJ2ZXIpIHtcbiAgICAgIHRoaXMubXV0YXRpb25PYnNlcnZlci5kaXNjb25uZWN0KCk7XG4gICAgICB0aGlzLm11dGF0aW9uT2JzZXJ2ZXIgPSBudWxsO1xuICAgIH1cblxuICAgIGlmICh0aGlzLmVsLnBhcmVudEVsZW1lbnQuY2xhc3NMaXN0LmNvbnRhaW5zKCdzbGltc2Nyb2xsLXdyYXBwZXInKSkge1xuICAgICAgY29uc3Qgd3JhcHBlciA9IHRoaXMuZWwucGFyZW50RWxlbWVudDtcbiAgICAgIGNvbnN0IGJhciA9IHdyYXBwZXIucXVlcnlTZWxlY3RvcignLnNsaW1zY3JvbGwtYmFyJyk7XG4gICAgICB3cmFwcGVyLnJlbW92ZUNoaWxkKGJhcik7XG4gICAgICBjb25zdCBncmlkID0gd3JhcHBlci5xdWVyeVNlbGVjdG9yKCcuc2xpbXNjcm9sbC1ncmlkJyk7XG4gICAgICB3cmFwcGVyLnJlbW92ZUNoaWxkKGdyaWQpO1xuICAgICAgdGhpcy51bndyYXAod3JhcHBlcik7XG4gICAgfVxuXG4gICAgaWYgKHRoaXMuaW50ZXJhY3Rpb25TdWJzY3JpcHRpb25zKSB7XG4gICAgICB0aGlzLmludGVyYWN0aW9uU3Vic2NyaXB0aW9ucy51bnN1YnNjcmliZSgpO1xuICAgIH1cbiAgfVxuXG4gIHVud3JhcCh3cmFwcGVyOiBIVE1MRWxlbWVudCk6IHZvaWQge1xuICAgIGNvbnN0IGRvY0ZyYWcgPSBkb2N1bWVudC5jcmVhdGVEb2N1bWVudEZyYWdtZW50KCk7XG4gICAgd2hpbGUgKHdyYXBwZXIuZmlyc3RDaGlsZCkge1xuICAgICAgY29uc3QgY2hpbGQgPSB3cmFwcGVyLnJlbW92ZUNoaWxkKHdyYXBwZXIuZmlyc3RDaGlsZCk7XG4gICAgICBkb2NGcmFnLmFwcGVuZENoaWxkKGNoaWxkKTtcbiAgICB9XG4gICAgd3JhcHBlci5wYXJlbnROb2RlLnJlcGxhY2VDaGlsZChkb2NGcmFnLCB3cmFwcGVyKTtcbiAgfVxuXG4gIEBIb3N0TGlzdGVuZXIoJ3dpbmRvdzpyZXNpemUnLCBbJyRldmVudCddKVxuICBvblJlc2l6ZSgkZXZlbnQ6IGFueSkge1xuICAgIHRoaXMuZ2V0QmFySGVpZ2h0KCk7XG4gIH1cbn1cbiIsImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBTbGltU2Nyb2xsRGlyZWN0aXZlIH0gZnJvbSAnLi4vZGlyZWN0aXZlcy9zbGltc2Nyb2xsLmRpcmVjdGl2ZSc7XG5cbkBOZ01vZHVsZSh7XG4gIGRlY2xhcmF0aW9uczogW1xuICAgIFNsaW1TY3JvbGxEaXJlY3RpdmVcbiAgXSxcbiAgZXhwb3J0czogW1xuICAgIFNsaW1TY3JvbGxEaXJlY3RpdmVcbiAgXVxufSlcbmV4cG9ydCBjbGFzcyBOZ1NsaW1TY3JvbGxNb2R1bGUgeyB9XG4iXSwibmFtZXMiOlsiSW5qZWN0aW9uVG9rZW4iLCJFdmVudEVtaXR0ZXIiLCJmcm9tRXZlbnQiLCJtZXJnZSIsIm1lcmdlTWFwIiwibWFwIiwidGFrZVVudGlsIiwiU3Vic2NyaXB0aW9uIiwiRGlyZWN0aXZlIiwiVmlld0NvbnRhaW5lclJlZiIsIkluamVjdCIsIlJlbmRlcmVyMiIsIkRPQ1VNRU5UIiwiT3B0aW9uYWwiLCJJbnB1dCIsIk91dHB1dCIsIkhvc3RMaXN0ZW5lciIsIk5nTW9kdWxlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7O1FBVUE7UUFTRSx5QkFBWSxHQUFzQjtZQUNoQyxJQUFJLENBQUMsSUFBSSxHQUFHLEdBQUcsQ0FBQyxJQUFJLENBQUM7WUFDckIsSUFBSSxDQUFDLENBQUMsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLENBQUMsR0FBRyxHQUFHLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQztZQUNsQyxJQUFJLENBQUMsT0FBTyxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsT0FBTyxHQUFHLEdBQUcsQ0FBQyxPQUFPLEdBQUcsQ0FBQyxDQUFDO1lBQ3BELElBQUksQ0FBQyxRQUFRLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxRQUFRLEdBQUcsR0FBRyxDQUFDLFFBQVEsR0FBRyxDQUFDLENBQUM7WUFDdkQsSUFBSSxDQUFDLE1BQU0sR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLE1BQU0sR0FBRyxHQUFHLENBQUMsTUFBTSxHQUFHLFFBQVEsQ0FBQztTQUN6RDs4QkF6Qkg7UUEwQkM7Ozs7OztBQ3hCRCx5QkFrQmEsbUJBQW1CLEdBQzFCLElBQUlBLG1CQUFjLENBQUMseUJBQXlCLENBQUMsQ0FBQztBQUVwRCxRQUFBO1FBZUUsMkJBQVksR0FBd0I7WUFDbEMsSUFBSSxDQUFDLFFBQVEsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLFFBQVEsR0FBRyxHQUFHLENBQUMsUUFBUSxHQUFHLE9BQU8sQ0FBQztZQUM3RCxJQUFJLENBQUMsYUFBYSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsYUFBYSxHQUFHLEdBQUcsQ0FBQyxhQUFhLEdBQUcsU0FBUyxDQUFDO1lBQzlFLElBQUksQ0FBQyxVQUFVLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxVQUFVLEdBQUcsR0FBRyxDQUFDLFVBQVUsR0FBRyxHQUFHLENBQUM7WUFDL0QsSUFBSSxDQUFDLFFBQVEsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLFFBQVEsR0FBRyxHQUFHLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQztZQUMxRCxJQUFJLENBQUMsZUFBZSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsZUFBZSxHQUFHLEdBQUcsQ0FBQyxlQUFlLEdBQUcsR0FBRyxDQUFDO1lBQzlFLElBQUksQ0FBQyxTQUFTLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxTQUFTLEdBQUcsR0FBRyxDQUFDLFNBQVMsR0FBRyxPQUFPLENBQUM7WUFDaEUsSUFBSSxDQUFDLGNBQWMsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLGNBQWMsR0FBRyxHQUFHLENBQUMsY0FBYyxHQUFHLFNBQVMsQ0FBQztZQUNqRixJQUFJLENBQUMsV0FBVyxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsV0FBVyxHQUFHLEdBQUcsQ0FBQyxXQUFXLEdBQUcsR0FBRyxDQUFDO1lBQ2xFLElBQUksQ0FBQyxTQUFTLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxTQUFTLEdBQUcsR0FBRyxDQUFDLFNBQVMsR0FBRyxHQUFHLENBQUM7WUFDNUQsSUFBSSxDQUFDLGdCQUFnQixHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsZ0JBQWdCLEdBQUcsR0FBRyxDQUFDLGdCQUFnQixHQUFHLElBQUksQ0FBQztZQUNsRixJQUFJLENBQUMsVUFBVSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsVUFBVSxHQUFHLEdBQUcsQ0FBQyxVQUFVLEdBQUcsU0FBUyxDQUFDO1lBQ3JFLElBQUksQ0FBQyxhQUFhLEdBQUcsR0FBRyxJQUFJLE9BQU8sR0FBRyxDQUFDLGFBQWEsS0FBSyxXQUFXLEdBQUcsR0FBRyxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUM7WUFDaEcsSUFBSSxDQUFDLGNBQWMsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLGNBQWMsR0FBRyxHQUFHLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQztTQUM3RTs7Ozs7UUFFTSxpQ0FBSzs7OztzQkFBQyxHQUF3QjtnQkFDbkMscUJBQU0sTUFBTSxHQUFHLElBQUksaUJBQWlCLEVBQUUsQ0FBQztnQkFFdkMsTUFBTSxDQUFDLFFBQVEsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLFFBQVEsR0FBRyxHQUFHLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUM7Z0JBQ3JFLE1BQU0sQ0FBQyxhQUFhLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxhQUFhLEdBQUcsR0FBRyxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDO2dCQUN6RixNQUFNLENBQUMsVUFBVSxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsVUFBVSxHQUFHLEdBQUcsQ0FBQyxVQUFVLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQztnQkFDN0UsTUFBTSxDQUFDLFFBQVEsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLFFBQVEsR0FBRyxHQUFHLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUM7Z0JBQ3JFLE1BQU0sQ0FBQyxlQUFlLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxlQUFlLEdBQUcsR0FBRyxDQUFDLGVBQWUsR0FBRyxJQUFJLENBQUMsZUFBZSxDQUFDO2dCQUNqRyxNQUFNLENBQUMsU0FBUyxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsU0FBUyxHQUFHLEdBQUcsQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQztnQkFDekUsTUFBTSxDQUFDLGNBQWMsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLGNBQWMsR0FBRyxHQUFHLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxjQUFjLENBQUM7Z0JBQzdGLE1BQU0sQ0FBQyxXQUFXLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxXQUFXLEdBQUcsR0FBRyxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsY0FBYyxDQUFDO2dCQUNwRixNQUFNLENBQUMsU0FBUyxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsU0FBUyxHQUFHLEdBQUcsQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQztnQkFDekUsTUFBTSxDQUFDLGdCQUFnQixHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsZ0JBQWdCLEdBQUcsR0FBRyxDQUFDLGdCQUFnQixHQUFHLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQztnQkFDckcsTUFBTSxDQUFDLFVBQVUsR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLFVBQVUsR0FBRyxHQUFHLENBQUMsVUFBVSxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUM7Z0JBQzdFLE1BQU0sQ0FBQyxhQUFhLEdBQUcsR0FBRyxJQUFJLE9BQU8sR0FBRyxDQUFDLGFBQWEsS0FBSyxXQUFXLEdBQUcsR0FBRyxDQUFDLGFBQWEsR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDO2dCQUNoSCxNQUFNLENBQUMsY0FBYyxHQUFHLEdBQUcsSUFBSSxHQUFHLENBQUMsY0FBYyxHQUFHLEdBQUcsQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGNBQWMsQ0FBQztnQkFFN0YsT0FBTyxNQUFNLENBQUM7O2dDQXZFbEI7UUF5RUM7O0lDekVEOzs7Ozs7Ozs7Ozs7OztBQWNBLG9CQWlHdUIsQ0FBQyxFQUFFLENBQUM7UUFDdkIsSUFBSSxDQUFDLEdBQUcsT0FBTyxNQUFNLEtBQUssVUFBVSxJQUFJLENBQUMsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUM7UUFDM0QsSUFBSSxDQUFDLENBQUM7WUFBRSxPQUFPLENBQUMsQ0FBQztRQUNqQixJQUFJLENBQUMsR0FBRyxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxFQUFFLENBQUMsRUFBRSxFQUFFLEdBQUcsRUFBRSxFQUFFLENBQUMsQ0FBQztRQUNqQyxJQUFJO1lBQ0EsT0FBTyxDQUFDLENBQUMsS0FBSyxLQUFLLENBQUMsSUFBSSxDQUFDLEVBQUUsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsR0FBRyxDQUFDLENBQUMsSUFBSSxFQUFFLEVBQUUsSUFBSTtnQkFBRSxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxLQUFLLENBQUMsQ0FBQztTQUM5RTtRQUNELE9BQU8sS0FBSyxFQUFFO1lBQUUsQ0FBQyxHQUFHLEVBQUUsS0FBSyxFQUFFLEtBQUssRUFBRSxDQUFDO1NBQUU7Z0JBQy9CO1lBQ0osSUFBSTtnQkFDQSxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxJQUFJLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQyxRQUFRLENBQUMsQ0FBQztvQkFBRSxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxDQUFDO2FBQ3BEO29CQUNPO2dCQUFFLElBQUksQ0FBQztvQkFBRSxNQUFNLENBQUMsQ0FBQyxLQUFLLENBQUM7YUFBRTtTQUNwQztRQUNELE9BQU8sRUFBRSxDQUFDO0lBQ2QsQ0FBQztBQUVEO1FBQ0ksS0FBSyxJQUFJLEVBQUUsR0FBRyxFQUFFLEVBQUUsQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsU0FBUyxDQUFDLE1BQU0sRUFBRSxDQUFDLEVBQUU7WUFDOUMsRUFBRSxHQUFHLEVBQUUsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDekMsT0FBTyxFQUFFLENBQUM7SUFDZCxDQUFDOzs7Ozs7SUM5SEQsSUFBQTtRQUlJLHlCQUFZLEdBQXNCO1lBQzlCLElBQUksQ0FBQyxjQUFjLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxjQUFjLEdBQUcsR0FBRyxDQUFDLGNBQWMsR0FBRyxDQUFDLENBQUM7WUFDekUsSUFBSSxDQUFDLGVBQWUsR0FBRyxHQUFHLElBQUksT0FBTyxHQUFHLENBQUMsZUFBZSxLQUFLLFdBQVcsR0FBRyxHQUFHLENBQUMsZUFBZSxHQUFHLElBQUksQ0FBQztZQUN0RyxJQUFJLENBQUMsYUFBYSxHQUFHLEdBQUcsSUFBSSxPQUFPLEdBQUcsQ0FBQyxhQUFhLEtBQUssV0FBVyxHQUFHLEdBQUcsQ0FBQyxhQUFhLEdBQUcsS0FBSyxDQUFDO1NBQ3BHOzhCQWRMO1FBZUMsQ0FBQTs7Ozs7O3lCQ09ZLE1BQU0sR0FBZ0M7UUFDakQsTUFBTSxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxHQUFBO1FBQ3hCLE1BQU0sRUFBRSxVQUFDLENBQVMsSUFBSyxPQUFBLENBQUMsR0FBRyxDQUFDLEdBQUE7UUFDNUIsT0FBTyxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUMsR0FBQTtRQUNuQyxTQUFTLEVBQUUsVUFBQyxDQUFTLElBQUssT0FBQSxDQUFDLEdBQUcsRUFBRSxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLElBQUksQ0FBQyxHQUFBO1FBQ25FLE9BQU8sRUFBRSxVQUFDLENBQVMsSUFBSyxPQUFBLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFBO1FBQ2pDLFFBQVEsRUFBRSxVQUFDLENBQVMsSUFBSyxPQUFBLENBQUMsRUFBRSxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUE7UUFDMUMsVUFBVSxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxHQUFHLEVBQUUsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxLQUFLLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLENBQUMsR0FBRyxDQUFDLEdBQUE7UUFDM0YsT0FBTyxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFBO1FBQ3JDLFFBQVEsRUFBRSxVQUFDLENBQVMsSUFBSyxPQUFBLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFBO1FBQzlDLFVBQVUsRUFBRSxVQUFDLENBQVMsSUFBSyxPQUFBLENBQUMsR0FBRyxFQUFFLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxJQUFJLEVBQUUsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUE7UUFDakYsT0FBTyxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBQTtRQUN6QyxRQUFRLEVBQUUsVUFBQyxDQUFTLElBQUssT0FBQSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUE7UUFDbEQsVUFBVSxFQUFFLFVBQUMsQ0FBUyxJQUFLLE9BQUEsQ0FBQyxHQUFHLEVBQUUsR0FBRyxFQUFFLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsRUFBRSxJQUFJLEVBQUUsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxHQUFH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
+//# sourceMappingURL=ngx-slimscroll.umd.js.map
 
 /***/ }),
 

@@ -291,6 +291,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://amblema.org/escuelas/OD76540813_E-B--Don-Enrique-Cardoza-Espinoza</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://amblema.org/blog/post/6aa563624917e0fafd504fa7</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

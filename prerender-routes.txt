@@ -56,6 +56,7 @@
 /escuelas/OD02982404_Unidad-Educativa-Estadal-Osma
 /escuelas/OD10150302_C-E--Leonardo-Infante--NER-484
 /escuelas/OD14740503_U-E-E--Víctor-Lino-Gómez
+/escuelas/OD76540813_E-B--Don-Enrique-Cardoza-Espinoza
 /blog/post/6aa563624917e0fafd504fa7
 /blog/post/6575f250a619d6cb92a576d6
 /blog/post/656384cda619d6cb92a569be

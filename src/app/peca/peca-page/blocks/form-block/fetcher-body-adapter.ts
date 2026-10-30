@@ -21,14 +21,15 @@ export function adaptBody(formType: string, body: any) {
       });
       break;
 
-    case "agregarGradoSeccion":
-      Object.keys(body).map((key) => {
-        if (key != "id")
-          body_adapted[
-            key === "grades" ? "grade" : key === "docente" ? "teacher" : "name"
-          ] = body[key];
+    case "agregarGradoSeccion": {
+      // Solo claves conocidas: al editar llega la fila entera (p. ej. docenteName),
+      // y cualquier clave extra mapeada a "name" sobrescribiría la sección.
+      const sectionKeys = { grades: "grade", section: "name", docente: "teacher" };
+      Object.keys(sectionKeys).forEach((key) => {
+        if (key in body) body_adapted[sectionKeys[key]] = body[key];
       });
       break;
+    }
 
     case "buscarEstudiante":
       Object.keys(body).map((key) => {
