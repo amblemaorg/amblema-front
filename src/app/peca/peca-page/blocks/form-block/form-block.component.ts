@@ -563,16 +563,32 @@ export class FormBlockComponent
       }
     } catch (err) {
       this.importingMultiple = false;
-      const error = err && err.error;
-      if (error && Array.isArray(error.errors)) {
-        this.importMultipleErrors = error.errors;
+      if (err && err.error && Array.isArray(err.error.errors)) {
+        this.importMultipleErrors = err.error.errors;
       }
-      const msg =
-        (error && (typeof error === "string" ? error : error.message)) ||
-        (err && err.message) ||
-        "Ha ocurrido un error al importar los estudiantes";
-      this.toastr.error(msg, "Error al importar", this.importToastOptions);
+      this.toastr.error(
+        this.getImportErrorMessage(err),
+        "Error al importar",
+        this.importToastOptions
+      );
     }
+  }
+
+  // Mensaje del error: `message` del backend o, en un ValidationError, { campo: [{ status, msg }] }
+  private getImportErrorMessage(err: any): string {
+    const error = err && err.error;
+    if (typeof error === "string" && error) return error;
+    if (error && error.message) return error.message;
+    if (error && typeof error === "object") {
+      const field = Object.keys(error).find((key) => Array.isArray(error[key]));
+      if (field) {
+        const messages = error[field].map((e) => (e && e.msg ? e.msg : e));
+        return `${field}: ${messages.join(", ")}`;
+      }
+    }
+    return (
+      (err && err.message) || "Ha ocurrido un error al importar los estudiantes"
+    );
   }
 
   getStudentsModalNgClass() {
@@ -920,27 +936,14 @@ export class FormBlockComponent
       }
     } catch (err) {
       this.importingData = false;
-      let msg = "Ha ocurrido un error al importar los estudiantes";
       if (err && err.error && Array.isArray(err.error.errors)) {
         this.importErrors = err.error.errors;
       }
-      if (err && err.error) {
-        if (typeof err.error === "string") {
-          msg = err.error;
-        } else if (err.error.message) {
-          msg = err.error.message;
-        } else if (typeof err.error === "object") {
-          const values = Object.values(err.error);
-          if (values.length > 0) {
-            msg = Array.isArray(values[0])
-              ? values[0].join(", ")
-              : JSON.stringify(err.error);
-          }
-        }
-      } else if (err && err.message) {
-        msg = err.message;
-      }
-      this.toastr.error(msg, "Error al importar", this.importToastOptions);
+      this.toastr.error(
+        this.getImportErrorMessage(err),
+        "Error al importar",
+        this.importToastOptions
+      );
     }
   }
 
@@ -2983,6 +2986,13 @@ export class FormBlockComponent
             });
           });
         });
+      } else {
+        this.toastr.error(
+          result.message || "No se pudo exportar a los estudiantes",
+          "Error",
+          { positionClass: "toast-bottom-right" }
+        );
+        return;
       }
       const workbookBin = this.makeExcelExport(students);
       const octetStream = this.binary2octet(workbookBin);
