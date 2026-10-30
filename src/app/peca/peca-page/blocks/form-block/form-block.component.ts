@@ -40,6 +40,9 @@ import {
   FormBlockFieldOption,
   FormBlockOptions,
 } from "./form-model/form-block.class";
+
+declare var $: any; // jQuery global (Bootstrap modals)
+
 @Component({
   selector: "form-block",
   templateUrl: "./form-block.component.html",
@@ -58,6 +61,14 @@ export class FormBlockComponent
   isLoading: boolean;
   studentsData: any;
   importingData: boolean;
+  showImportMultipleModal: boolean = false;
+  importingMultiple: boolean = false;
+  studentsToImportMultiple: any[] = [];
+  importMultipleErrors: string[] = [];
+  importMultipleSummary: Array<{ label: string; count: number }> = [];
+  importErrors: string[] = [];
+  importWarnings: string[] = [];
+  importSummary: string = "";
   activeSection: number;
   gradesArr: any[];
 
@@ -215,8 +226,353 @@ export class FormBlockComponent
 
   closeModal() {
     this.showImportModal = false;
+    this.resetImport();
+  }
+
+  private resetImport() {
     this.importingData = false;
     this.showUploadBtn = false;
+    this.studentsToImport = [];
+    this.importErrors = [];
+    this.importWarnings = [];
+    this.importSummary = "";
+  }
+
+  // Avisos de importación: duran más (el texto puede ser largo) y se pueden cerrar
+  private readonly importToastOptions = {
+    positionClass: "toast-bottom-right",
+    timeOut: 10000,
+    extendedTimeOut: 5000,
+    closeButton: true,
+    progressBar: true,
+  };
+
+  // Tras importar: refresca el PECA en el store (la página re-renderiza estudiantes y
+  // secciones, igual que al agregar uno) en lugar de recargar la página completa
+  private async refreshAfterImport(message: string, modalId: string) {
+    let refreshed = true;
+    try {
+      await this.store.dispatch(new FetchPecaContent(this.pecaId)).toPromise();
+    } catch (e) {
+      refreshed = false;
+    }
+    this.hideBootstrapModal(modalId);
+    this.toastr.success(message, "", { ...this.importToastOptions, timeOut: 6000 });
+    if (!refreshed) {
+      this.toastr.warning(
+        "Los estudiantes se importaron, pero no se pudo actualizar la vista. Recargue la página.",
+        "Aviso",
+        this.importToastOptions
+      );
+    }
+  }
+
+  // Cierra el modal sin dejar el body bloqueado (clase modal-open de Bootstrap)
+  private hideBootstrapModal(modalId: string) {
+    if (typeof $ !== "undefined") $(`#${modalId}`).modal("hide");
+    document.body.classList.remove("modal-open");
+    document.body.style.paddingRight = "";
+  }
+
+  // IMPORTAR MÚLTIPLE: matrícula de varios grados y secciones en un solo Excel
+  hasSchoolSections(): boolean {
+    const sectionField = this.settings.formsContent["section"];
+    return !!(sectionField && sectionField.options && sectionField.options.length);
+  }
+
+  openImportMultipleModal() {
+    this.resetImportMultiple();
+    this.showImportMultipleModal = true;
+  }
+
+  closeImportMultipleModal() {
+    this.resetImportMultiple();
+    this.showImportMultipleModal = false;
+  }
+
+  private resetImportMultiple() {
+    this.importingMultiple = false;
+    this.studentsToImportMultiple = [];
+    this.importMultipleErrors = [];
+    this.importMultipleSummary = [];
+  }
+
+  handleMultipleFileInput(files: FileList) {
+    this.resetImportMultiple();
+    if (!files || files.length === 0) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = () => {
+      try {
+        const data = new Uint8Array(reader.result as ArrayBuffer);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const rows: any[][] = XLSX.utils.sheet_to_json(sheet, {
+          header: 1,
+          defval: "",
+        });
+
+        if (!rows || rows.length < 2) {
+          this.toastr.error(
+            "El archivo Excel está vacío o no contiene filas con datos",
+            "Error",
+            this.importToastOptions
+          );
+          return;
+        }
+
+        const parsed = this.parseStudentRows(rows);
+        if (parsed.length === 0) {
+          this.toastr.warning(
+            "No se encontraron registros válidos de estudiantes para importar",
+            "Aviso",
+            this.importToastOptions
+          );
+          return;
+        }
+
+        this.validateMultipleImport(parsed);
+      } catch (e) {
+        this.toastr.error(
+          "Error al procesar el archivo Excel",
+          "Error",
+          this.importToastOptions
+        );
+      }
+    };
+  }
+
+  // Valida que el grado y la sección de cada fila estén registrados en el año escolar
+  private validateMultipleImport(parsed: Array<{ fila: number; student: any }>) {
+    const sections: any[] = this.settings.formsContent["section"].options || [];
+    const errors: string[] = [];
+    const students: any[] = [];
+    const summary = {};
+    const sectionByCard = {};
+
+    parsed.forEach(({ fila, student }) => {
+      const studentName = `${student.nombre} ${student.apellido}`.trim();
+      const dataErrors = this.validateStudentData(fila, student);
+      if (dataErrors.length) {
+        errors.push(...dataErrors);
+        return;
+      }
+      const grade = this.normalizeImportGrade(student.grado);
+      const sectionName = this.normalizeImportSection(student.seccion);
+
+      if (!student.grado || !student.seccion) {
+        errors.push(`Fila ${fila} (${studentName}): falta el grado o la sección`);
+        return;
+      }
+      if (grade === null || !sections.some((s) => s.grade == grade)) {
+        errors.push(
+          `Fila ${fila} (${studentName}): el grado "${student.grado}" no está registrado en el año escolar`
+        );
+        return;
+      }
+      const section = sections.find(
+        (s) =>
+          s.grade == grade && this.normalizeImportSection(s.name) === sectionName
+      );
+      if (!section) {
+        errors.push(
+          `Fila ${fila} (${studentName}): la sección "${student.seccion}" no está registrada en ${this.parseGrade(
+            grade
+          )}`
+        );
+        return;
+      }
+
+      // Una misma cédula en dos secciones inscribiría al estudiante en ambas
+      const cardId = student.documento_de_identidad;
+      if (cardId) {
+        const previous = sectionByCard[cardId];
+        if (previous && previous.sectionId !== section.id) {
+          errors.push(
+            `Fila ${fila} (${studentName}): la cédula ${cardId} ya está en la fila ${previous.fila} con otro grado o sección`
+          );
+          return;
+        }
+        sectionByCard[cardId] = { sectionId: section.id, fila };
+      }
+
+      students.push({ ...student, section: section.id, fila });
+      const label = `${this.parseGrade(grade)} - Sección ${section.name}`;
+      summary[label] = (summary[label] || 0) + 1;
+    });
+
+    if (errors.length) {
+      this.importMultipleErrors = errors;
+      this.toastr.error(
+        `Se encontraron ${errors.length} fila(s) con errores. Corrija el archivo y vuelva a adjuntarlo.`,
+        "Error en el archivo",
+        this.importToastOptions
+      );
+      return;
+    }
+
+    this.studentsToImportMultiple = students;
+    this.importMultipleSummary = Object.keys(summary).map((label) => ({
+      label,
+      count: summary[label],
+    }));
+  }
+
+  // Datos que el backend exige: sin ellos descarta la fila en silencio o rechaza toda la carga
+  private validateStudentData(fila: number, student: any): string[] {
+    const studentName = `${student.nombre} ${student.apellido}`.trim();
+    const prefix = `Fila ${fila} (${studentName})`;
+    const errors: string[] = [];
+    if (!student.nombre) errors.push(`${prefix}: falta el nombre`);
+    if (!student.apellido) errors.push(`${prefix}: falta el apellido`);
+    if (!student.fecha_de_nacimiento) {
+      errors.push(`${prefix}: falta la fecha de nacimiento`);
+    } else if (!this.isValidBirthdate(student.fecha_de_nacimiento)) {
+      errors.push(
+        `${prefix}: la fecha de nacimiento "${student.fecha_de_nacimiento}" no es válida (use dd-mm-aaaa)`
+      );
+    }
+    if (!student.genero) {
+      errors.push(`${prefix}: falta el género o no es válido (use F o M)`);
+    }
+    return errors;
+  }
+
+  // parseDate deja las fechas como dd-mm-aaaa; se exige una fecha real y no futura
+  private isValidBirthdate(value: string): boolean {
+    const match = `${value}`.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+    if (!match) return false;
+    const day = +match[1];
+    const month = +match[2];
+    const year = +match[3];
+    const date = new Date(year, month - 1, day);
+    return (
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day &&
+      date.getTime() <= Date.now()
+    );
+  }
+
+  // IMPORTAR (una sección): los estudiantes van a la sección activa
+  private validateSingleImport(parsed: Array<{ fila: number; student: any }>) {
+    const section = this.sectionsArr[this.activeSection];
+    const sectionLabel = `${this.parseGrade(section.grade)} - Sección ${section.name}`;
+    const errors: string[] = [];
+    const otherSectionRows: number[] = [];
+    const students: any[] = [];
+
+    parsed.forEach(({ fila, student }) => {
+      const dataErrors = this.validateStudentData(fila, student);
+      if (dataErrors.length) {
+        errors.push(...dataErrors);
+        return;
+      }
+      // Un Excel exportado de otra sección es válido (sirve para mover estudiantes), solo se avisa
+      const otherGrade =
+        student.grado && this.normalizeImportGrade(student.grado) != section.grade;
+      const otherSection =
+        student.seccion &&
+        this.normalizeImportSection(student.seccion) !==
+          this.normalizeImportSection(section.name);
+      if (otherGrade || otherSection) otherSectionRows.push(fila);
+      students.push(student);
+    });
+
+    if (errors.length) {
+      this.importErrors = errors;
+      this.toastr.error(
+        `Se encontraron ${errors.length} error(es) en el archivo. Corríjalo y vuelva a adjuntarlo.`,
+        "Error en el archivo",
+        this.importToastOptions
+      );
+      return;
+    }
+
+    if (otherSectionRows.length) {
+      this.importWarnings = [
+        `La(s) fila(s) ${otherSectionRows.join(", ")} indican otro grado o sección; se importarán en ${sectionLabel}. ` +
+          `Para respetar el grado y la sección del archivo use "Importar múltiple".`,
+      ];
+    }
+    this.studentsToImport = students;
+    this.importSummary = `${students.length} estudiante(s) en ${sectionLabel}`;
+    this.showUploadBtn = true;
+  }
+
+  // Acepta "1", "1er grado", "1° grado", "Primero", "Preescolar"...; devuelve el id de grado o null
+  private normalizeImportGrade(value: any): string | null {
+    const text = `${value === null || value === undefined ? "" : value}`
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .trim();
+    if (!text) return null;
+    if (text.includes("preescolar") || text.includes("pre-escolar")) return "0";
+    const digit = text.match(/\d+/);
+    if (digit) return `${parseInt(digit[0], 10)}`;
+    const words = ["primer", "segund", "tercer", "cuart", "quint", "sext"];
+    const index = words.findIndex((w) => text.startsWith(w));
+    return index >= 0 ? `${index + 1}` : null;
+  }
+
+  // "Sección A", "seccion a" y "A" se consideran la misma sección
+  private normalizeImportSection(value: any): string {
+    return `${value === null || value === undefined ? "" : value}`
+      .toUpperCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/^SECCION\s*/, "")
+      .trim();
+  }
+
+  async importMultipleStudents() {
+    if (!this.studentsToImportMultiple.length) {
+      return;
+    }
+    this.importingMultiple = true;
+    const resourcePath = `section/load/${this.pecaId}`;
+    const body = {
+      action: "import_multiple",
+      students: this.studentsToImportMultiple,
+    };
+    try {
+      const result: any = await this.fetcher
+        .post(resourcePath, body)
+        .toPromise();
+
+      if (result && result.status_code === 201) {
+        const moved =
+          result.moved > 0
+            ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+            : "";
+        await this.refreshAfterImport(
+          (result.message || "Estudiantes importados con éxito") + moved,
+          "no-peca-modal-import-multiple"
+        );
+        this.closeImportMultipleModal();
+      } else {
+        this.importingMultiple = false;
+        this.toastr.error(
+          (result && result.message) || "Error al importar estudiantes",
+          "Error",
+          this.importToastOptions
+        );
+      }
+    } catch (err) {
+      this.importingMultiple = false;
+      const error = err && err.error;
+      if (error && Array.isArray(error.errors)) {
+        this.importMultipleErrors = error.errors;
+      }
+      const msg =
+        (error && (typeof error === "string" ? error : error.message)) ||
+        (err && err.message) ||
+        "Ha ocurrido un error al importar los estudiantes";
+      this.toastr.error(msg, "Error al importar", this.importToastOptions);
+    }
   }
 
   getStudentsModalNgClass() {
@@ -268,6 +624,7 @@ export class FormBlockComponent
   }
 
   handleFileInput(files: FileList) {
+    this.resetImport();
     if (!files || files.length === 0) {
       return;
     }
@@ -288,191 +645,212 @@ export class FormBlockComponent
         if (!rows || rows.length < 2) {
           this.toastr.error(
             "El archivo Excel está vacío o no contiene filas con datos",
-            "Error"
+            "Error",
+            this.importToastOptions
           );
           return;
         }
 
-        const headerRow: string[] = rows[0].map((h) =>
-          h !== null && h !== undefined ? h.toString() : ""
-        );
-
-        const normalize = (str: string) =>
-          str
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .trim();
-
-        // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
-        // "Segundo nombre"); se concatenan en orden de aparición.
-        const colsNombre: number[] = [];
-        const colsApellido: number[] = [];
-        let colTipoDoc = -1;
-        let colDocId = -1;
-        let colFechaNac = -1;
-        let colGenero = -1;
-        let colGrado = -1;
-        let colSeccion = -1;
-
-        headerRow.forEach((col, idx) => {
-          const norm = normalize(col);
-          if (norm.includes("tipo") && norm.includes("doc")) {
-            colTipoDoc = idx;
-          } else if (
-            (norm.includes("identi") ||
-              norm.includes("cedula") ||
-              norm.includes("documento")) &&
-            !norm.includes("tipo")
-          ) {
-            colDocId = idx;
-          } else if (norm.includes("nombre") && !norm.includes("apellido")) {
-            colsNombre.push(idx);
-          } else if (norm.includes("apellido")) {
-            colsApellido.push(idx);
-          } else if (norm.includes("genero") || norm.includes("sexo")) {
-            colGenero = idx;
-          } else if (norm.includes("naci") || norm.includes("fecha")) {
-            colFechaNac = idx;
-          } else if (norm.includes("grado")) {
-            colGrado = idx;
-          } else if (norm.includes("secci")) {
-            colSeccion = idx;
-          }
-        });
-
-        // Positional fallbacks based on whether "Tipo de documento" column was present
-        const hasTipoDocCol = colTipoDoc !== -1;
-        if (colsNombre.length === 0) colsNombre.push(0);
-        if (colsApellido.length === 0) colsApellido.push(1);
-        if (colDocId === -1) colDocId = hasTipoDocCol ? 3 : 2;
-        if (colGenero === -1) colGenero = hasTipoDocCol ? 5 : 3;
-        if (colFechaNac === -1) colFechaNac = hasTipoDocCol ? 4 : 4;
-        if (colGrado === -1) colGrado = hasTipoDocCol ? 6 : 5;
-        if (colSeccion === -1) colSeccion = hasTipoDocCol ? 7 : 6;
-
-        const students: Array<Object> = [];
-
-        for (let r = 1; r < rows.length; r++) {
-          const row = rows[r];
-          if (
-            !row ||
-            row.every(
-              (cell) => cell === "" || cell === null || cell === undefined
-            )
-          ) {
-            continue;
-          }
-
-          const joinCells = (cols: number[]) =>
-            cols
-              .map((c) =>
-                row[c] !== undefined && row[c] !== null
-                  ? row[c].toString().replace(/\s+/g, " ").trim()
-                  : ""
-              )
-              .filter((v) => v !== "")
-              .join(" ");
-
-          const nombre = joinCells(colsNombre);
-          const apellido = joinCells(colsApellido);
-
-          if (!nombre && !apellido) {
-            continue;
-          }
-
-          let rawDoc =
-            colDocId >= 0 &&
-            row[colDocId] !== undefined &&
-            row[colDocId] !== null
-              ? row[colDocId].toString().trim()
-              : "";
-          let rawTipoDoc =
-            colTipoDoc >= 0 &&
-            row[colTipoDoc] !== undefined &&
-            row[colTipoDoc] !== null
-              ? row[colTipoDoc].toString().trim().toUpperCase()
-              : "";
-
-          if (rawDoc) {
-            const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
-            if (prefixMatch) {
-              if (!rawTipoDoc) {
-                rawTipoDoc = prefixMatch[1].toUpperCase();
-              }
-              rawDoc = prefixMatch[2];
-            }
-          }
-
-          const cleanDoc = rawDoc.replace(/\D/g, "");
-
-          let tipoDoc = "1";
-          if (
-            rawTipoDoc === "2" ||
-            rawTipoDoc === "E" ||
-            rawTipoDoc === "EXTRANJERO"
-          ) {
-            tipoDoc = "2";
-          } else {
-            tipoDoc = "1";
-          }
-
-          const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
-          const fecha_de_nacimiento = this.parseDate(rawFecha);
-
-          const rawGenero =
-            colGenero >= 0 &&
-            row[colGenero] !== undefined &&
-            row[colGenero] !== null
-              ? row[colGenero].toString().trim().toUpperCase()
-              : "";
-          const genero =
-            rawGenero === "1" ||
-            rawGenero === "F" ||
-            rawGenero === "FEMENINO"
-              ? "F"
-              : "M";
-
-          const grado =
-            colGrado >= 0 &&
-            row[colGrado] !== undefined &&
-            row[colGrado] !== null
-              ? row[colGrado].toString().trim()
-              : "";
-          const seccion =
-            colSeccion >= 0 &&
-            row[colSeccion] !== undefined &&
-            row[colSeccion] !== null
-              ? row[colSeccion].toString().trim()
-              : "";
-
-          students.push({
-            nombre,
-            apellido,
-            tipo_de_documento: tipoDoc,
-            documento_de_identidad: cleanDoc,
-            fecha_de_nacimiento: fecha_de_nacimiento || "",
-            genero,
-            grado,
-            seccion,
-          });
-        }
-
-        if (students.length === 0) {
+        const parsed = this.parseStudentRows(rows);
+        if (parsed.length === 0) {
           this.toastr.warning(
             "No se encontraron registros válidos de estudiantes para importar",
-            "Aviso"
+            "Aviso",
+            this.importToastOptions
           );
-          this.showUploadBtn = false;
           return;
         }
 
-        this.showUploadBtn = true;
-        this.studentsToImport = students;
+        this.validateSingleImport(parsed);
       } catch (e) {
-        this.toastr.error("Error al procesar el archivo Excel", "Error");
+        this.toastr.error(
+          "Error al procesar el archivo Excel",
+          "Error",
+          this.importToastOptions
+        );
       }
     };
+  }
+
+  // Convierte las filas del Excel de matrícula en estudiantes; `fila` es el número de fila en Excel
+  private parseStudentRows(rows: any[][]): Array<{ fila: number; student: any }> {
+    const headerRow: string[] = rows[0].map((h) =>
+      h !== null && h !== undefined ? h.toString() : ""
+    );
+
+    const normalize = (str: string) =>
+      str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+
+    // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
+    // "Segundo nombre"); se concatenan en orden de aparición.
+    const colsNombre: number[] = [];
+    const colsApellido: number[] = [];
+    let colTipoDoc = -1;
+    let colDocId = -1;
+    let colFechaNac = -1;
+    let colGenero = -1;
+    let colGrado = -1;
+    let colSeccion = -1;
+
+    headerRow.forEach((col, idx) => {
+      const norm = normalize(col);
+      if (norm.includes("tipo") && norm.includes("doc")) {
+        colTipoDoc = idx;
+      } else if (
+        (norm.includes("identi") ||
+          norm.includes("cedula") ||
+          norm.includes("documento")) &&
+        !norm.includes("tipo")
+      ) {
+        colDocId = idx;
+      } else if (norm.includes("nombre") && !norm.includes("apellido")) {
+        colsNombre.push(idx);
+      } else if (norm.includes("apellido")) {
+        colsApellido.push(idx);
+      } else if (norm.includes("genero") || norm.includes("sexo")) {
+        colGenero = idx;
+      } else if (norm.includes("naci") || norm.includes("fecha")) {
+        colFechaNac = idx;
+      } else if (norm.includes("grado")) {
+        colGrado = idx;
+      } else if (norm.includes("secci")) {
+        colSeccion = idx;
+      }
+    });
+
+    // Positional fallbacks based on whether "Tipo de documento" column was present
+    const hasTipoDocCol = colTipoDoc !== -1;
+    if (colsNombre.length === 0) colsNombre.push(0);
+    if (colsApellido.length === 0) colsApellido.push(1);
+    if (colDocId === -1) colDocId = hasTipoDocCol ? 3 : 2;
+    if (colGenero === -1) colGenero = hasTipoDocCol ? 5 : 3;
+    if (colFechaNac === -1) colFechaNac = hasTipoDocCol ? 4 : 4;
+    if (colGrado === -1) colGrado = hasTipoDocCol ? 6 : 5;
+    if (colSeccion === -1) colSeccion = hasTipoDocCol ? 7 : 6;
+
+    const parsed: Array<{ fila: number; student: any }> = [];
+
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r];
+      if (
+        !row ||
+        row.every(
+          (cell) => cell === "" || cell === null || cell === undefined
+        )
+      ) {
+        continue;
+      }
+
+      const joinCells = (cols: number[]) =>
+        cols
+          .map((c) =>
+            row[c] !== undefined && row[c] !== null
+              ? row[c].toString().replace(/\s+/g, " ").trim()
+              : ""
+          )
+          .filter((v) => v !== "")
+          .join(" ");
+
+      const nombre = joinCells(colsNombre);
+      const apellido = joinCells(colsApellido);
+
+      if (!nombre && !apellido) {
+        continue;
+      }
+
+      let rawDoc =
+        colDocId >= 0 &&
+        row[colDocId] !== undefined &&
+        row[colDocId] !== null
+          ? row[colDocId].toString().trim()
+          : "";
+      let rawTipoDoc =
+        colTipoDoc >= 0 &&
+        row[colTipoDoc] !== undefined &&
+        row[colTipoDoc] !== null
+          ? row[colTipoDoc].toString().trim().toUpperCase()
+          : "";
+
+      if (rawDoc) {
+        const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
+        if (prefixMatch) {
+          if (!rawTipoDoc) {
+            rawTipoDoc = prefixMatch[1].toUpperCase();
+          }
+          rawDoc = prefixMatch[2];
+        }
+      }
+
+      const cleanDoc = rawDoc.replace(/\D/g, "");
+
+      let tipoDoc = "1";
+      if (
+        rawTipoDoc === "2" ||
+        rawTipoDoc === "E" ||
+        rawTipoDoc === "EXTRANJERO"
+      ) {
+        tipoDoc = "2";
+      } else {
+        tipoDoc = "1";
+      }
+
+      const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
+      const fecha_de_nacimiento = this.parseDate(rawFecha);
+
+      const rawGenero =
+        colGenero >= 0 &&
+        row[colGenero] !== undefined &&
+        row[colGenero] !== null
+          ? normalize(row[colGenero].toString()).toUpperCase()
+          : "";
+      // Vacío o no reconocido queda "" para que la validación lo reporte (antes caía en "M")
+      let genero = "";
+      if (rawGenero === "1" || rawGenero.startsWith("F") || rawGenero.startsWith("MUJER")) {
+        genero = "F";
+      } else if (
+        rawGenero === "2" ||
+        rawGenero.startsWith("M") ||
+        rawGenero === "H" ||
+        rawGenero.startsWith("HOMBRE") ||
+        rawGenero === "V" ||
+        rawGenero.startsWith("VARON")
+      ) {
+        genero = "M";
+      }
+
+      const grado =
+        colGrado >= 0 &&
+        row[colGrado] !== undefined &&
+        row[colGrado] !== null
+          ? row[colGrado].toString().trim()
+          : "";
+      const seccion =
+        colSeccion >= 0 &&
+        row[colSeccion] !== undefined &&
+        row[colSeccion] !== null
+          ? row[colSeccion].toString().trim()
+          : "";
+
+      parsed.push({
+        fila: r + 1,
+        student: {
+          nombre,
+          apellido,
+          tipo_de_documento: tipoDoc,
+          documento_de_identidad: cleanDoc,
+          fecha_de_nacimiento: fecha_de_nacimiento || "",
+          genero,
+          grado,
+          seccion,
+        },
+      });
+    }
+
+    return parsed;
   }
 
   parseDate(date) {
@@ -525,29 +903,27 @@ export class FormBlockComponent
         .toPromise();
 
       if (result && result.status_code === 201) {
-        this.showImportModal = false;
-        this.toastr.success(
-          result.message || "Estudiantes importados con éxito",
-          "",
-          {
-            positionClass: "toast-bottom-right",
-          }
+        const moved =
+          result.moved > 0
+            ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+            : "";
+        await this.refreshAfterImport(
+          (result.message || "Estudiantes importados con éxito") + moved,
+          "no-peca-modal-import"
         );
-        this.importingData = false;
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        this.closeModal();
       } else {
         this.importingData = false;
         const msg =
           (result && result.message) || "Error al importar estudiantes";
-        this.toastr.error(msg, "Error", {
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.error(msg, "Error", this.importToastOptions);
       }
     } catch (err) {
       this.importingData = false;
       let msg = "Ha ocurrido un error al importar los estudiantes";
+      if (err && err.error && Array.isArray(err.error.errors)) {
+        this.importErrors = err.error.errors;
+      }
       if (err && err.error) {
         if (typeof err.error === "string") {
           msg = err.error;
@@ -564,9 +940,7 @@ export class FormBlockComponent
       } else if (err && err.message) {
         msg = err.message;
       }
-      this.toastr.error(msg, "Error al importar", {
-        positionClass: "toast-bottom-right",
-      });
+      this.toastr.error(msg, "Error al importar", this.importToastOptions);
     }
   }
 
