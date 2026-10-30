@@ -844,6 +844,21 @@
 
           <ng-container *ngSwitchCase="'agregar'">
             <button
+              *ngIf="hasSchoolSections()"
+              type="button"
+              class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+              data-toggle="modal"
+              data-target="#no-peca-modal-import-multiple"
+              data-backdrop="false"
+              data-keyboard="false"
+              (click)="openImportMultipleModal()"
+            >
+              Importar múltiple
+            </button>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'agregar'">
+            <button
               type="button"
               class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
               (click)="exportStudents()"
@@ -995,6 +1010,21 @@
 
       <ng-container *ngSwitchCase="'agregar'">
         <button
+          *ngIf="hasSchoolSections()"
+          type="button"
+          class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
+          data-toggle="modal"
+          data-target="#no-peca-modal-import-multiple"
+          data-backdrop="false"
+          data-keyboard="false"
+          (click)="openImportMultipleModal()"
+        >
+          Importar múltiple
+        </button>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'agregar'">
+        <button
           type="button"
           class="btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"
           (click)="exportStudents()"
@@ -1091,6 +1121,24 @@
           accept=".xls, .xlsx"
           (change)="handleFileInput($event.target.files)"
         />
+
+        <div *ngIf="importErrors.length > 0" class="alert alert-danger mt-3 mb-0">
+          <b>Corrija las siguientes filas y vuelva a adjuntar el archivo:</b>
+          <ul class="mb-0 mt-2 pl-3">
+            <li *ngFor="let error of importErrors">{{ error }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="importWarnings.length > 0" class="alert alert-warning mt-3 mb-0">
+          <ul class="mb-0 pl-3">
+            <li *ngFor="let warning of importWarnings">{{ warning }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="importSummary" class="mt-3">
+          <b>Estudiantes a importar: {{ importSummary }}</b>
+        </div>
+
         <div class="full-width d-flex">
           <button
             *ngIf="showUploadBtn"
@@ -1104,6 +1152,75 @@
               class="spinner-grow spinner-grow-sm"
             ></span>
             {{ !importingData ? "Importar data" : "Cargando..." }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IMPORTAR MÚLTIPLE (varios grados y secciones) -->
+<div
+  *ngIf="showImportMultipleModal; else null"
+  class="modal fade"
+  id="no-peca-modal-import-multiple"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-content pb-4">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          (click)="closeImportMultipleModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>Importar estudiantes de varios grados y secciones</h4>
+        <p class="py-2">
+          Suba el archivo excel con el mismo formato de columnas de
+          <b>Importar</b>. Las columnas <b>Grado</b> y <b>Sección</b> de cada
+          estudiante deben corresponder a grados y secciones registrados en el
+          año escolar. Si un estudiante ya está inscrito en otra sección, se
+          cambiará a la sección indicada en el archivo.
+        </p>
+        <input
+          type="file"
+          id="file-multiple"
+          accept=".xls, .xlsx"
+          (change)="handleMultipleFileInput($event.target.files)"
+        />
+
+        <div *ngIf="importMultipleErrors.length > 0" class="alert alert-danger mt-3 mb-0">
+          <b>Corrija las siguientes filas y vuelva a adjuntar el archivo:</b>
+          <ul class="mb-0 mt-2 pl-3">
+            <li *ngFor="let error of importMultipleErrors">{{ error }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="importMultipleSummary.length > 0" class="mt-3">
+          <b>Estudiantes a importar: {{ studentsToImportMultiple.length }}</b>
+          <ul class="mb-0 mt-2 pl-3">
+            <li *ngFor="let item of importMultipleSummary">
+              {{ item.label }}: {{ item.count }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="full-width d-flex">
+          <button
+            *ngIf="studentsToImportMultiple.length > 0"
+            (click)="importMultipleStudents()"
+            [disabled]="importingMultiple"
+            class="btn btn-primary full-width submit-btn mx-auto mt-4"
+          >
+            <span
+              *ngIf="importingMultiple"
+              class="spinner-grow spinner-grow-sm"
+            ></span>
+            {{ !importingMultiple ? "Importar data" : "Cargando..." }}
           </button>
         </div>
       </div>

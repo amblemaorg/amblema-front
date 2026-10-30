@@ -139216,31 +139216,36 @@ function View_FormBlockComponent_58(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
         var pd_0 = (_co.openModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar "]))], null, null); }
-function View_FormBlockComponent_59(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_60(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import-multiple"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar m\u00FAltiple "]))], null, null); }
+function View_FormBlockComponent_59(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_60)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.hasSchoolSections(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_61(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportStudents() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Exportar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getStudentsCount(); _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_61(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_60(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.openExportModal() !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_61)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
 function View_FormBlockComponent_63(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
 function View_FormBlockComponent_62(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openExportModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_63)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_65(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_64(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.justOpenModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_63)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_65(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_65)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_67(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.enableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Editar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && _co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_64(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_65)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_67(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_66(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_67)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_69(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.disableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Cancelar"]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_66(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_67)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_47(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 21, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_48)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_51)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_52)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_55)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_58)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_59)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_60)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_62)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_64)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_66)), i1.ɵdid(21, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregarLotes"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "editar"; _ck(_v, 19, 0, currVal_9); }, null); }
+function View_FormBlockComponent_68(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_69)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_47(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 23, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_48)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_51)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_52)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_55)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_58)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_59)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_61)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_62)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_64)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_66)), i1.ɵdid(21, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_68)), i1.ɵdid(23, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregar"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "agregarLotes"; _ck(_v, 19, 0, currVal_9); var currVal_10 = "editar"; _ck(_v, 21, 0, currVal_10); }, null); }
 function View_FormBlockComponent_46(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_47)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
 function View_FormBlockComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 10, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 9, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "ngSubmit"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onSubmit($event) !== false);
@@ -139255,63 +139260,89 @@ function View_FormBlockComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0
         var pd_3 = (_co.onSubmitForm(_co.componentForm) !== false);
         ad = (pd_3 && ad);
     } return ad; }, null, null)), i1.ɵdid(2, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(3, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(5, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(6, 0, null, null, 4, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_2)), i1.ɵdid(8, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_46)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 3, 0, currVal_7); var currVal_10 = _co.fields; var currVal_11 = _co.trackByFn; _ck(_v, 8, 0, currVal_10, currVal_11); var currVal_12 = _co.formInModalBtnConditioner(); _ck(_v, 10, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 5).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 5).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 5).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 5).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 5).ngClassValid; var currVal_5 = i1.ɵnov(_v, 5).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 5).ngClassPending; _ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 6, 0, currVal_8, currVal_9); }); }
-function View_FormBlockComponent_73(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_72(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1"], ["type", "button"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_73)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (!_co.componentForm.valid || _co.sendingForm); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Cargar imagenes" : "Cargando.."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_71(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_72)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_74(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "button", [["class", "btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_75(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_74(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1"], ["type", "button"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_75)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (!_co.componentForm.valid || _co.sendingForm); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Cargar imagenes" : "Cargando.."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_73(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_74)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_76(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "button", [["class", "btn btn-info text-decoration-none py-1 px-4 mt-1 mr-2"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.onVerResultadosClick() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "i", [["class", "icon-bar-chart mr-1"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Ver resultados "]))], null, null); }
-function View_FormBlockComponent_77(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_76(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[2, "d-none", null], [8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_77)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.sendingForm; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); var currVal_1 = _co.disableBtn(); _ck(_v, 0, 0, currVal_0, currVal_1); var currVal_3 = (!_co.sendingForm ? "Guardar" : "Guardando.."); _ck(_v, 3, 0, currVal_3); }); }
-function View_FormBlockComponent_75(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_76)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_80(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_79(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_80)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.disableBtnWithDate(); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Agregar" : "Agregando.."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_78(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_79)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_81(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, [["modalLauncher", 1]], null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_79(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_78(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[2, "d-none", null], [8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_79)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.sendingForm; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); var currVal_1 = _co.disableBtn(); _ck(_v, 0, 0, currVal_0, currVal_1); var currVal_3 = (!_co.sendingForm ? "Guardar" : "Guardando.."); _ck(_v, 3, 0, currVal_3); }); }
+function View_FormBlockComponent_77(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_78)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_82(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_81(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "submit"]], [[8, "disabled", 0]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_82)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.sendingForm; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.disableBtnWithDate(); _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.sendingForm ? "Agregar" : "Agregando.."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_80(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_81)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_83(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, [["modalLauncher", 1]], null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.openModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar "]))], null, null); }
-function View_FormBlockComponent_82(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_85(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-import-multiple"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Importar m\u00FAltiple "]))], null, null); }
+function View_FormBlockComponent_84(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_85)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.hasSchoolSections(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_86(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["type", "button"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportStudents() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Exportar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getStudentsCount(); _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_84(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_83(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_88(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_87(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.openExportModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_84)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_86(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_85(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-blue text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_88)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Exportar m\u00FAltiple "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_90(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_89(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "button", [["class", "btn btn-blue text-decoration-none py-1 px-4 mt-1 ml-2"], ["data-backdrop", "false"], ["data-keyboard", "false"], ["data-target", "#no-peca-modal-export"], ["data-toggle", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.justOpenModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_86)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
-function View_FormBlockComponent_88(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_90)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(-1, null, [" Agregar en lote "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.sendingForm; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_92(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 mr-2 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.enableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Editar "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && _co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_87(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_88)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_90(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_91(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_92)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "button", [["class", "btn btn-primary text-decoration-none py-1 px-4 mt-1 submit-btn"], ["type", "button"]], [[2, "d-none", null]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.disableSaveAndCancelButtons() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Cancelar"]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.settings.isEditable && !_co.isEditing); _ck(_v, 0, 0, currVal_0); }); }
-function View_FormBlockComponent_89(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_90)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_70(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 21, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_71)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_74)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_75)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_78)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_81)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_82)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_83)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_85)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_87)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_89)), i1.ɵdid(21, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregarLotes"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "editar"; _ck(_v, 19, 0, currVal_9); }, null); }
-function View_FormBlockComponent_69(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container buttons-containers"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_70)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
-function View_FormBlockComponent_68(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_69)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.formInModalBtnConditioner(); _ck(_v, 2, 0, currVal_0); }, null); }
-function View_FormBlockComponent_93(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_92(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_93(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_94)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.settings.hiddenButton; _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_72(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 23, null, null, null, null, null, null, null)), i1.ɵdid(1, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_73)), i1.ɵdid(3, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_76)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_77)), i1.ɵdid(7, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_80)), i1.ɵdid(9, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_83)), i1.ɵdid(11, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_84)), i1.ɵdid(13, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_86)), i1.ɵdid(15, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_87)), i1.ɵdid(17, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_89)), i1.ɵdid(19, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_91)), i1.ɵdid(21, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_93)), i1.ɵdid(23, 16384, null, 0, i5.NgSwitchDefault, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], null, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); var currVal_1 = "cargarImagenes"; _ck(_v, 3, 0, currVal_1); var currVal_2 = "verResultados"; _ck(_v, 5, 0, currVal_2); var currVal_3 = "guardar"; _ck(_v, 7, 0, currVal_3); var currVal_4 = "agregar"; _ck(_v, 9, 0, currVal_4); var currVal_5 = (_co.sectionsArr.length > 0); _ck(_v, 11, 0, currVal_5); var currVal_6 = "agregar"; _ck(_v, 13, 0, currVal_6); var currVal_7 = "agregar"; _ck(_v, 15, 0, currVal_7); var currVal_8 = "agregar"; _ck(_v, 17, 0, currVal_8); var currVal_9 = "agregarLotes"; _ck(_v, 19, 0, currVal_9); var currVal_10 = "editar"; _ck(_v, 21, 0, currVal_10); }, null); }
+function View_FormBlockComponent_71(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "btn-container buttons-containers"]], [[2, "one-row-form-btn-container", null], [2, "on-this-line-btn", null]], null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_72)), i1.ɵdid(2, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.settings.buttons; _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isOneRow; var currVal_1 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 0, 0, currVal_0, currVal_1); }); }
+function View_FormBlockComponent_70(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_71)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.formInModalBtnConditioner(); _ck(_v, 2, 0, currVal_0); }, null); }
+function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_96(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "alert alert-danger mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Corrija las siguientes filas y vuelva a adjuntar el archivo:"])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_97)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importErrors; _ck(_v, 5, 0, currVal_0); }, null); }
+function View_FormBlockComponent_99(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [["class", "alert alert-warning mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "ul", [["class", "mb-0 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_99)), i1.ɵdid(3, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importWarnings; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_FormBlockComponent_100(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 2, "div", [["class", "mt-3"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["Estudiantes a importar: ", ""]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importSummary; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.importStudents() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_93)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingData; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingData; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingData ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
-function View_FormBlockComponent_91(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 14, "div", [["class", "modal fade"], ["id", "no-peca-modal-import"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 13, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 12, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_102)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingData; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingData; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingData ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_95(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "div", [["class", "modal fade"], ["id", "no-peca-modal-import"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 19, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 18, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeModal() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 8, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, suba el archivo excel con la informaci\u00F3n de los estudiantes a importar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 14, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, suba el archivo excel con la informaci\u00F3n de los estudiantes a importar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (_co.handleFileInput($event.target.files) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵeld(12, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_92)), i1.ɵdid(14, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.showUploadBtn; _ck(_v, 14, 0, currVal_0); }, null); }
-function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "input", [["class", "form-control"], ["type", "text"]], [[8, "id", 0], [8, "placeholder", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) { var ad = true; if (("input" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_96)), i1.ɵdid(13, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_98)), i1.ɵdid(15, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_100)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_101)), i1.ɵdid(20, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.importErrors.length > 0); _ck(_v, 13, 0, currVal_0); var currVal_1 = (_co.importWarnings.length > 0); _ck(_v, 15, 0, currVal_1); var currVal_2 = _co.importSummary; _ck(_v, 17, 0, currVal_2); var currVal_3 = _co.showUploadBtn; _ck(_v, 20, 0, currVal_3); }, null); }
+function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "alert alert-danger mt-3 mb-0"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Corrija las siguientes filas y vuelva a adjuntar el archivo:"])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_105)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importMultipleErrors; _ck(_v, 5, 0, currVal_0); }, null); }
+function View_FormBlockComponent_107(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "li", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, [" ", ": ", " "]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.label; var currVal_1 = _v.context.$implicit.count; _ck(_v, 1, 0, currVal_0, currVal_1); }); }
+function View_FormBlockComponent_106(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [["class", "mt-3"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["Estudiantes a importar: ", ""])), (_l()(), i1.ɵeld(3, 0, null, null, 2, "ul", [["class", "mb-0 mt-2 pl-3"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_107)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importMultipleSummary; _ck(_v, 5, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.studentsToImportMultiple.length; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_109(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.importMultipleStudents() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_109)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.importingMultiple; _ck(_v, 2, 0, currVal_1); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.importingMultiple; _ck(_v, 0, 0, currVal_0); var currVal_2 = (!_co.importingMultiple ? "Importar data" : "Cargando..."); _ck(_v, 3, 0, currVal_2); }); }
+function View_FormBlockComponent_103(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 27, "div", [["class", "modal fade"], ["id", "no-peca-modal-import-multiple"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 26, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 25, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.closeImportMultipleModal() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 21, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar estudiantes de varios grados y secciones"])), (_l()(), i1.ɵeld(9, 0, null, null, 10, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Suba el archivo excel con el mismo formato de columnas de "])), (_l()(), i1.ɵeld(11, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Importar"])), (_l()(), i1.ɵted(-1, null, [". Las columnas "])), (_l()(), i1.ɵeld(14, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Grado"])), (_l()(), i1.ɵted(-1, null, [" y "])), (_l()(), i1.ɵeld(17, 0, null, null, 1, "b", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Secci\u00F3n"])), (_l()(), i1.ɵted(-1, null, [" de cada estudiante deben corresponder a grados y secciones registrados en el a\u00F1o escolar. Si un estudiante ya est\u00E1 inscrito en otra secci\u00F3n, se cambiar\u00E1 a la secci\u00F3n indicada en el archivo. "])), (_l()(), i1.ɵeld(20, 0, null, null, 0, "input", [["accept", ".xls, .xlsx"], ["id", "file-multiple"], ["type", "file"]], null, [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+        var pd_0 = (_co.handleMultipleFileInput($event.target.files) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_104)), i1.ɵdid(22, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_106)), i1.ɵdid(24, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(25, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_108)), i1.ɵdid(27, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.importMultipleErrors.length > 0); _ck(_v, 22, 0, currVal_0); var currVal_1 = (_co.importMultipleSummary.length > 0); _ck(_v, 24, 0, currVal_1); var currVal_2 = (_co.studentsToImportMultiple.length > 0); _ck(_v, 27, 0, currVal_2); }, null); }
+function View_FormBlockComponent_113(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "input", [["class", "form-control"], ["type", "text"]], [[8, "id", 0], [8, "placeholder", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "input"], [null, "blur"], [null, "compositionstart"], [null, "compositionend"]], function (_v, en, $event) { var ad = true; if (("input" === en)) {
         var pd_0 = (i1.ɵnov(_v, 1)._handleInput($event.target.value) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139324,8 +139355,8 @@ function View_FormBlockComponent_97(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
         var pd_3 = (i1.ɵnov(_v, 1)._compositionEnd($event.target.value) !== false);
         ad = (pd_3 && ad);
     } return ad; }, null, null)), i1.ɵdid(1, 16384, null, 0, i2.DefaultValueAccessor, [i1.Renderer2, i1.ElementRef, [2, i2.COMPOSITION_BUFFER_MODE]], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.DefaultValueAccessor]), i1.ɵdid(3, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(5, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_9 = _co.fields[0]; _ck(_v, 3, 0, currVal_9); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.getId(_co.fields[0]); var currVal_1 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_2 = i1.ɵnov(_v, 5).ngClassUntouched; var currVal_3 = i1.ɵnov(_v, 5).ngClassTouched; var currVal_4 = i1.ɵnov(_v, 5).ngClassPristine; var currVal_5 = i1.ɵnov(_v, 5).ngClassDirty; var currVal_6 = i1.ɵnov(_v, 5).ngClassValid; var currVal_7 = i1.ɵnov(_v, 5).ngClassInvalid; var currVal_8 = i1.ɵnov(_v, 5).ngClassPending; _ck(_v, 0, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8); }); }
-function View_FormBlockComponent_99(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "small", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.item.name; _ck(_v, 1, 0, currVal_0); }); }
-function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "ng-select", [["bindLabel", "name"], ["bindValue", "id"], ["class", "form-control"], ["notFoundText", "Elementos no encontrados"]], [[2, "is-in-modal", null], [8, "id", 0], [2, "ng-select", null], [2, "ng-select-single", null], [2, "ng-select-typeahead", null], [2, "ng-select-multiple", null], [2, "ng-select-taggable", null], [2, "ng-select-searchable", null], [2, "ng-select-clearable", null], [2, "ng-select-opened", null], [2, "ng-select-disabled", null], [2, "ng-select-filtered", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "click"], [null, "change"], [null, "keydown"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("keydown" === en)) {
+function View_FormBlockComponent_115(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "small", [], null, null, null, null, null)), (_l()(), i1.ɵted(1, null, ["", ""]))], null, function (_ck, _v) { var currVal_0 = _v.context.item.name; _ck(_v, 1, 0, currVal_0); }); }
+function View_FormBlockComponent_114(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 20, "ng-select", [["bindLabel", "name"], ["bindValue", "id"], ["class", "form-control"], ["notFoundText", "Elementos no encontrados"]], [[2, "is-in-modal", null], [8, "id", 0], [2, "ng-select", null], [2, "ng-select-single", null], [2, "ng-select-typeahead", null], [2, "ng-select-multiple", null], [2, "ng-select-taggable", null], [2, "ng-select-searchable", null], [2, "ng-select-clearable", null], [2, "ng-select-opened", null], [2, "ng-select-disabled", null], [2, "ng-select-filtered", null], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "click"], [null, "change"], [null, "keydown"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("keydown" === en)) {
         var pd_0 = (i1.ɵnov(_v, 2).handleKeyDown($event) !== false);
         ad = (pd_0 && ad);
     } if (("click" === en)) {
@@ -139334,10 +139365,10 @@ function View_FormBlockComponent_98(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
     } if (("change" === en)) {
         var pd_2 = ((_co.settings.formsContent[_co.fields[0]].isGrades ? _co.setSchoolSectionsModal($event) : (_co.settings.formsContent[_co.fields[0]].isFactoryType ? _co.requiredOtherCompany($event) : _co.updateMuns(((_co.fields[0] === "addressState") ? true : false)))) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, i3.View_NgSelectComponent_0, i3.RenderType_NgSelectComponent)), i1.ɵprd(4608, null, i4.ɵd, i4.ɵd, []), i1.ɵdid(2, 4964352, null, 12, i4.NgSelectComponent, [[8, "form-control"], [8, null], i4.NgSelectConfig, i4.SELECTION_MODEL_FACTORY, i1.ElementRef, i1.ChangeDetectorRef, i4.ɵs], { bindLabel: [0, "bindLabel"], bindValue: [1, "bindValue"], placeholder: [2, "placeholder"], notFoundText: [3, "notFoundText"], virtualScroll: [4, "virtualScroll"], labelForId: [5, "labelForId"], readonly: [6, "readonly"], items: [7, "items"] }, { changeEvent: "change" }), i1.ɵqud(603979776, 38, { optionTemplate: 0 }), i1.ɵqud(603979776, 39, { optgroupTemplate: 0 }), i1.ɵqud(603979776, 40, { labelTemplate: 0 }), i1.ɵqud(603979776, 41, { multiLabelTemplate: 0 }), i1.ɵqud(603979776, 42, { headerTemplate: 0 }), i1.ɵqud(603979776, 43, { footerTemplate: 0 }), i1.ɵqud(603979776, 44, { notFoundTemplate: 0 }), i1.ɵqud(603979776, 45, { typeToSearchTemplate: 0 }), i1.ɵqud(603979776, 46, { loadingTextTemplate: 0 }), i1.ɵqud(603979776, 47, { tagTemplate: 0 }), i1.ɵqud(603979776, 48, { loadingSpinnerTemplate: 0 }), i1.ɵqud(603979776, 49, { ngOptions: 1 }), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i4.NgSelectComponent]), i1.ɵdid(16, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(18, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵand(0, [[38, 2]], null, 1, null, View_FormBlockComponent_99)), i1.ɵdid(20, 16384, null, 0, i4.ɵf, [i1.TemplateRef], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_19 = "name"; var currVal_20 = "id"; var currVal_21 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_22 = "Elementos no encontrados"; var currVal_23 = true; var currVal_24 = _co.getId(_co.fields[0]); var currVal_25 = (_co.settings.formsContent[_co.fields[0]].readonly || _co.isReadOnly()); var currVal_26 = (_co.settings.formsContent[_co.fields[0]].emmitSectionChange ? _co.sectionsArr : ((_co.fields[0] != "addressMunicipality") ? _co.settings.formsContent[_co.fields[0]].options : _co.municipalities)); _ck(_v, 2, 0, currVal_19, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = _co.fields[0]; _ck(_v, 16, 0, currVal_27); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isFromCustomTableActions; var currVal_1 = _co.getId(_co.fields[0]); var currVal_2 = i1.ɵnov(_v, 2).useDefaultClass; var currVal_3 = !i1.ɵnov(_v, 2).multiple; var currVal_4 = i1.ɵnov(_v, 2).typeahead; var currVal_5 = i1.ɵnov(_v, 2).multiple; var currVal_6 = i1.ɵnov(_v, 2).addTag; var currVal_7 = i1.ɵnov(_v, 2).searchable; var currVal_8 = i1.ɵnov(_v, 2).clearable; var currVal_9 = i1.ɵnov(_v, 2).isOpen; var currVal_10 = i1.ɵnov(_v, 2).disabled; var currVal_11 = i1.ɵnov(_v, 2).filtered; var currVal_12 = i1.ɵnov(_v, 18).ngClassUntouched; var currVal_13 = i1.ɵnov(_v, 18).ngClassTouched; var currVal_14 = i1.ɵnov(_v, 18).ngClassPristine; var currVal_15 = i1.ɵnov(_v, 18).ngClassDirty; var currVal_16 = i1.ɵnov(_v, 18).ngClassValid; var currVal_17 = i1.ɵnov(_v, 18).ngClassInvalid; var currVal_18 = i1.ɵnov(_v, 18).ngClassPending; _ck(_v, 0, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18]); }); }
-function View_FormBlockComponent_96(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["", ""])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_97)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_98)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_1 = (((_co.fields[0] == "addressState") && !_co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && _co.isContentRefreshing)); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((((_co.fields[0] == "addressState") && _co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && !_co.isContentRefreshing)) || (_co.fields[0] != "addressState")); _ck(_v, 6, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].label; _ck(_v, 2, 0, currVal_0); }); }
-function View_FormBlockComponent_95(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [], null, null, null, null, null)), i1.ɵdid(2, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵdid(3, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_96)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].type; var currVal_1 = _co.getStudentsModalNgClass(); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = _co.settings.formsContent[_co.fields[0]].type; _ck(_v, 3, 0, currVal_2); var currVal_3 = "select"; _ck(_v, 5, 0, currVal_3); }, null); }
-function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allSections"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+    } return ad; }, i3.View_NgSelectComponent_0, i3.RenderType_NgSelectComponent)), i1.ɵprd(4608, null, i4.ɵd, i4.ɵd, []), i1.ɵdid(2, 4964352, null, 12, i4.NgSelectComponent, [[8, "form-control"], [8, null], i4.NgSelectConfig, i4.SELECTION_MODEL_FACTORY, i1.ElementRef, i1.ChangeDetectorRef, i4.ɵs], { bindLabel: [0, "bindLabel"], bindValue: [1, "bindValue"], placeholder: [2, "placeholder"], notFoundText: [3, "notFoundText"], virtualScroll: [4, "virtualScroll"], labelForId: [5, "labelForId"], readonly: [6, "readonly"], items: [7, "items"] }, { changeEvent: "change" }), i1.ɵqud(603979776, 38, { optionTemplate: 0 }), i1.ɵqud(603979776, 39, { optgroupTemplate: 0 }), i1.ɵqud(603979776, 40, { labelTemplate: 0 }), i1.ɵqud(603979776, 41, { multiLabelTemplate: 0 }), i1.ɵqud(603979776, 42, { headerTemplate: 0 }), i1.ɵqud(603979776, 43, { footerTemplate: 0 }), i1.ɵqud(603979776, 44, { notFoundTemplate: 0 }), i1.ɵqud(603979776, 45, { typeToSearchTemplate: 0 }), i1.ɵqud(603979776, 46, { loadingTextTemplate: 0 }), i1.ɵqud(603979776, 47, { tagTemplate: 0 }), i1.ɵqud(603979776, 48, { loadingSpinnerTemplate: 0 }), i1.ɵqud(603979776, 49, { ngOptions: 1 }), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i4.NgSelectComponent]), i1.ɵdid(16, 671744, null, 0, i2.FormControlName, [[3, i2.ControlContainer], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR], [2, i2.ɵangular_packages_forms_forms_p]], { name: [0, "name"] }, null), i1.ɵprd(2048, null, i2.NgControl, null, [i2.FormControlName]), i1.ɵdid(18, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵand(0, [[38, 2]], null, 1, null, View_FormBlockComponent_115)), i1.ɵdid(20, 16384, null, 0, i4.ɵf, [i1.TemplateRef], null, null)], function (_ck, _v) { var _co = _v.component; var currVal_19 = "name"; var currVal_20 = "id"; var currVal_21 = _co.settings.formsContent[_co.fields[0]].placeholder; var currVal_22 = "Elementos no encontrados"; var currVal_23 = true; var currVal_24 = _co.getId(_co.fields[0]); var currVal_25 = (_co.settings.formsContent[_co.fields[0]].readonly || _co.isReadOnly()); var currVal_26 = (_co.settings.formsContent[_co.fields[0]].emmitSectionChange ? _co.sectionsArr : ((_co.fields[0] != "addressMunicipality") ? _co.settings.formsContent[_co.fields[0]].options : _co.municipalities)); _ck(_v, 2, 0, currVal_19, currVal_20, currVal_21, currVal_22, currVal_23, currVal_24, currVal_25, currVal_26); var currVal_27 = _co.fields[0]; _ck(_v, 16, 0, currVal_27); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.isFromCustomTableActions; var currVal_1 = _co.getId(_co.fields[0]); var currVal_2 = i1.ɵnov(_v, 2).useDefaultClass; var currVal_3 = !i1.ɵnov(_v, 2).multiple; var currVal_4 = i1.ɵnov(_v, 2).typeahead; var currVal_5 = i1.ɵnov(_v, 2).multiple; var currVal_6 = i1.ɵnov(_v, 2).addTag; var currVal_7 = i1.ɵnov(_v, 2).searchable; var currVal_8 = i1.ɵnov(_v, 2).clearable; var currVal_9 = i1.ɵnov(_v, 2).isOpen; var currVal_10 = i1.ɵnov(_v, 2).disabled; var currVal_11 = i1.ɵnov(_v, 2).filtered; var currVal_12 = i1.ɵnov(_v, 18).ngClassUntouched; var currVal_13 = i1.ɵnov(_v, 18).ngClassTouched; var currVal_14 = i1.ɵnov(_v, 18).ngClassPristine; var currVal_15 = i1.ɵnov(_v, 18).ngClassDirty; var currVal_16 = i1.ɵnov(_v, 18).ngClassValid; var currVal_17 = i1.ɵnov(_v, 18).ngClassInvalid; var currVal_18 = i1.ɵnov(_v, 18).ngClassPending; _ck(_v, 0, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18]); }); }
+function View_FormBlockComponent_112(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [], null, null, null, null, null)), (_l()(), i1.ɵted(2, null, ["", ""])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_113)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_114)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(0, null, null, 0))], function (_ck, _v) { var _co = _v.component; var currVal_1 = (((_co.fields[0] == "addressState") && !_co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && _co.isContentRefreshing)); _ck(_v, 4, 0, currVal_1); var currVal_2 = ((((_co.fields[0] == "addressState") && _co.showSelectState) || (_co.settings.formsContent[_co.fields[0]].shouldContentRefresh && !_co.isContentRefreshing)) || (_co.fields[0] != "addressState")); _ck(_v, 6, 0, currVal_2); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].label; _ck(_v, 2, 0, currVal_0); }); }
+function View_FormBlockComponent_111(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, null, null, null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [], null, null, null, null, null)), i1.ɵdid(2, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵdid(3, 16384, null, 0, i5.NgSwitch, [], { ngSwitch: [0, "ngSwitch"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_112)), i1.ɵdid(5, 278528, null, 0, i5.NgSwitchCase, [i1.ViewContainerRef, i1.TemplateRef, i5.NgSwitch], { ngSwitchCase: [0, "ngSwitchCase"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.settings.formsContent[_co.fields[0]].type; var currVal_1 = _co.getStudentsModalNgClass(); _ck(_v, 2, 0, currVal_0, currVal_1); var currVal_2 = _co.settings.formsContent[_co.fields[0]].type; _ck(_v, 3, 0, currVal_2); var currVal_3 = "select"; _ck(_v, 5, 0, currVal_3); }, null); }
+function View_FormBlockComponent_117(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allSections"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139347,7 +139378,7 @@ function View_FormBlockComponent_101(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectSection("all", $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(-1, null, [" Todas las secciones "]))], function (_ck, _v) { var currVal_7 = ""; _ck(_v, 5, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 7).ngClassValid; var currVal_5 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "section.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_118(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "section.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139357,8 +139388,8 @@ function View_FormBlockComponent_102(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectSection(_v.context.$implicit.id, $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(8, null, [" Secci\u00F3n ", ""])), (_l()(), i1.ɵeld(9, 0, null, null, 0, "br", [], null, null, null, null, null))], function (_ck, _v) { var currVal_8 = ""; _ck(_v, 5, 0, currVal_8); }, function (_ck, _v) { var currVal_0 = i1.ɵinlineInterpolate(1, "", _v.context.$implicit.id, ""); var currVal_1 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 7).ngClassValid; var currVal_6 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); var currVal_9 = _v.context.$implicit.name; _ck(_v, 8, 0, currVal_9); }); }
-function View_FormBlockComponent_100(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione la secci\u00F3n:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_101)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_102)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.sectionsArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.sectionsArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allGrades"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_116(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione la secci\u00F3n:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_117)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_118)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.sectionsArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.sectionsArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_120(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["id", "allGrades"], ["ngModel", ""], ["type", "checkbox"]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139368,7 +139399,7 @@ function View_FormBlockComponent_104(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectGrades("all", $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(-1, null, [" Todos los grados "]))], function (_ck, _v) { var currVal_7 = ""; _ck(_v, 5, 0, currVal_7); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 7).ngClassValid; var currVal_5 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); }); }
-function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "grade.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_121(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 9, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 5, "input", [["class", "mx-2"], ["ngControl", "grade.id"], ["ngModel", ""], ["type", "checkbox"]], [[8, "id", 0], [2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "ngModelChange"], [null, "change"], [null, "blur"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (i1.ɵnov(_v, 3).onChange($event.target.checked) !== false);
         ad = (pd_0 && ad);
     } if (("blur" === en)) {
@@ -139378,13 +139409,13 @@ function View_FormBlockComponent_105(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
         var pd_2 = (_co.selectGrades(_v.context.$implicit.id, $event) !== false);
         ad = (pd_2 && ad);
     } return ad; }, null, null)), i1.ɵdid(3, 16384, null, 0, i2.CheckboxControlValueAccessor, [i1.Renderer2, i1.ElementRef], null, null), i1.ɵprd(1024, null, i2.NG_VALUE_ACCESSOR, function (p0_0) { return [p0_0]; }, [i2.CheckboxControlValueAccessor]), i1.ɵdid(5, 671744, null, 0, i2.NgModel, [[8, null], [8, null], [8, null], [6, i2.NG_VALUE_ACCESSOR]], { model: [0, "model"] }, { update: "ngModelChange" }), i1.ɵprd(2048, null, i2.NgControl, null, [i2.NgModel]), i1.ɵdid(7, 16384, null, 0, i2.NgControlStatus, [[4, i2.NgControl]], null, null), (_l()(), i1.ɵted(8, null, [" ", ""])), (_l()(), i1.ɵeld(9, 0, null, null, 0, "br", [], null, null, null, null, null))], function (_ck, _v) { var currVal_8 = ""; _ck(_v, 5, 0, currVal_8); }, function (_ck, _v) { var currVal_0 = i1.ɵinlineInterpolate(1, "", _v.context.$implicit.id, ""); var currVal_1 = i1.ɵnov(_v, 7).ngClassUntouched; var currVal_2 = i1.ɵnov(_v, 7).ngClassTouched; var currVal_3 = i1.ɵnov(_v, 7).ngClassPristine; var currVal_4 = i1.ɵnov(_v, 7).ngClassDirty; var currVal_5 = i1.ɵnov(_v, 7).ngClassValid; var currVal_6 = i1.ɵnov(_v, 7).ngClassInvalid; var currVal_7 = i1.ɵnov(_v, 7).ngClassPending; _ck(_v, 2, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7); var currVal_9 = _v.context.$implicit.name; _ck(_v, 8, 0, currVal_9); }); }
-function View_FormBlockComponent_103(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione el grado:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_104)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_105)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.gradesArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.gradesArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_107(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_106(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_119(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 6, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 1, "label", [["style", "color: grey"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Seleccione el grado:"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_120)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_121)), i1.ɵdid(6, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.gradesArr.length > 1); _ck(_v, 4, 0, currVal_0); var currVal_1 = _co.gradesArr; var currVal_2 = _co.trackByFn; _ck(_v, 6, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_123(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_122(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, [["upload", 1]], null, 3, "button", [["class", "btn btn-primary full-width submit-btn mx-auto mt-4"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.exportSections() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_107)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isLoading; _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (!_co.isLoading ? "Exportar" : "Cargando..."); _ck(_v, 3, 0, currVal_1); }); }
-function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 26, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 25, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 24, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_123)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(3, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isLoading; _ck(_v, 2, 0, currVal_0); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = (!_co.isLoading ? "Exportar" : "Cargando..."); _ck(_v, 3, 0, currVal_1); }); }
+function View_FormBlockComponent_110(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 26, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 25, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 24, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeExportModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 20, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Exportar secciones"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, seleccione el grado y las secciones de los estudiantes a exportar: "])), (_l()(), i1.ɵeld(11, 0, null, null, 8, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "ngSubmit"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
@@ -139399,18 +139430,18 @@ function View_FormBlockComponent_94(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(
     } if (("ngSubmit" === en)) {
         var pd_3 = (_co.onSubmitForm(_co.componentForm) !== false);
         ad = (pd_3 && ad);
-    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(16, 0, null, null, 3, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵeld(17, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_95)), i1.ɵdid(19, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_100)), i1.ɵdid(21, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_103)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(24, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_106)), i1.ɵdid(26, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_10 = _co.isField(_co.fields[0]); _ck(_v, 19, 0, currVal_10); var currVal_11 = (_co.sectionsArr.length > 0); _ck(_v, 21, 0, currVal_11); var currVal_12 = (_co.gradesArr.length > 0); _ck(_v, 23, 0, currVal_12); var currVal_13 = _co.showExportBtn; _ck(_v, 26, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 16, 0, currVal_8, currVal_9); }); }
-function View_FormBlockComponent_110(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["id", "markAll"], ["type", "checkbox"]], [[8, "checked", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, { ngSubmit: "ngSubmit" }), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵeld(16, 0, null, null, 3, "div", [["class", "fields-container"]], [[2, "one-row-form", null], [2, "one-line", null]], null, null, null, null)), (_l()(), i1.ɵeld(17, 0, null, null, 2, null, null, null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_111)), i1.ɵdid(19, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_116)), i1.ɵdid(21, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_119)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(24, 0, null, null, 2, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_122)), i1.ɵdid(26, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_10 = _co.isField(_co.fields[0]); _ck(_v, 19, 0, currVal_10); var currVal_11 = (_co.sectionsArr.length > 0); _ck(_v, 21, 0, currVal_11); var currVal_12 = (_co.gradesArr.length > 0); _ck(_v, 23, 0, currVal_12); var currVal_13 = _co.showExportBtn; _ck(_v, 26, 0, currVal_13); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_8 = _co.settings.isOneRow; var currVal_9 = ((_co.settings.formsContent["imageGroup"] && _co.settings.isFromCustomTableActions) && (_co.imageFieldsArr(_co.settings.formsContent["imageGroup"].fields).length == 0)); _ck(_v, 16, 0, currVal_8, currVal_9); }); }
+function View_FormBlockComponent_126(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["id", "markAll"], ["type", "checkbox"]], [[8, "checked", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.onCheckboxChange($event, "gradesStudents") !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" Todos los grados "]))], null, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isCheckboxesChecked(false); _ck(_v, 2, 0, currVal_0); }); }
-function View_FormBlockComponent_111(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["type", "checkbox"]], [[8, "value", 0]], [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
+function View_FormBlockComponent_127(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "label", [], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "input", [["class", "mx-2"], ["type", "checkbox"]], [[8, "value", 0]], [[null, "change"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("change" === en)) {
         var pd_0 = (_co.onCheckboxChange($event, "gradesStudents") !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(3, null, [" ", ""])), (_l()(), i1.ɵeld(4, 0, null, null, 0, "br", [], null, null, null, null, null))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.grade; _ck(_v, 2, 0, currVal_0); var currVal_1 = _v.context.$implicit.name; _ck(_v, 3, 0, currVal_1); }); }
-function View_FormBlockComponent_109(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [["class", "list-checkbox"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_110)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_111)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.currentForm.getField("gradesStudents").options.length > 1); _ck(_v, 3, 0, currVal_0); var currVal_1 = _co.currentForm.getField("gradesStudents").options; var currVal_2 = _co.trackByFn; _ck(_v, 5, 0, currVal_1, currVal_2); }, null); }
-function View_FormBlockComponent_112(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
-function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 24, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 23, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 22, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_FormBlockComponent_125(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 5, "div", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 4, "div", [["class", "list-checkbox"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_126)), i1.ɵdid(3, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_127)), i1.ɵdid(5, 278528, null, 0, i5.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"], ngForTrackBy: [1, "ngForTrackBy"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.currentForm.getField("gradesStudents").options.length > 1); _ck(_v, 3, 0, currVal_0); var currVal_1 = _co.currentForm.getField("gradesStudents").options; var currVal_2 = _co.trackByFn; _ck(_v, 5, 0, currVal_1, currVal_2); }, null); }
+function View_FormBlockComponent_128(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 0, "span", [["class", "spinner-grow spinner-grow-sm"]], null, null, null, null, null))], null, null); }
+function View_FormBlockComponent_124(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 24, "div", [["class", "modal fade"], ["id", "no-peca-modal-export"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 23, "div", [["class", "modal-dialog modal-dialog-scrollable modal-dialog-centered"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 22, "div", [["class", "modal-content pb-4"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 2, "div", [["class", "modal-header"]], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 1, "button", [["class", "close"], ["data-dismiss", "modal"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.closeModal() !== false);
         ad = (pd_0 && ad);
     } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(6, 0, null, null, 18, "div", [["class", "modal-body"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Agregar estudiantes en lote"])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "p", [["class", "py-2"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Por favor, seleccione el(los) grado(s) para registrar/actualizar estudiantes que participan en Olimpiada de Matem\u00E1tica: "])), (_l()(), i1.ɵeld(11, 0, null, null, 13, "form", [["novalidate", ""]], [[2, "ng-untouched", null], [2, "ng-touched", null], [2, "ng-pristine", null], [2, "ng-dirty", null], [2, "ng-valid", null], [2, "ng-invalid", null], [2, "ng-pending", null]], [[null, "keydown.enter"], [null, "submit"], [null, "reset"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("submit" === en)) {
@@ -139422,11 +139453,11 @@ function View_FormBlockComponent_108(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld
     } if (("keydown.enter" === en)) {
         var pd_2 = (_co.prevDef($event) !== false);
         ad = (pd_2 && ad);
-    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, null), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_109)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 6, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵeld(19, 0, [["upload", 1]], null, 5, "button", [["class", "btn full-width submit-btn mx-auto mt-4 btn-blue"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+    } return ad; }, null, null)), i1.ɵdid(12, 16384, null, 0, i2.ɵangular_packages_forms_forms_y, [], null, null), i1.ɵdid(13, 540672, null, 0, i2.FormGroupDirective, [[8, null], [8, null]], { form: [0, "form"] }, null), i1.ɵprd(2048, null, i2.ControlContainer, null, [i2.FormGroupDirective]), i1.ɵdid(15, 16384, null, 0, i2.NgControlStatusGroup, [[6, i2.ControlContainer]], null, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_125)), i1.ɵdid(17, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵeld(18, 0, null, null, 6, "div", [["class", "full-width d-flex"]], null, null, null, null, null)), (_l()(), i1.ɵeld(19, 0, [["upload", 1]], null, 5, "button", [["class", "btn full-width submit-btn mx-auto mt-4 btn-blue"]], [[8, "disabled", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (_co.currentForm.onSubmit(_co.componentForm) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i1.ɵdid(20, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(21, { disabled: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_112)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(24, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_8 = (_co.currentForm.getField("gradesStudents").options.length > 0); _ck(_v, 17, 0, currVal_8); var currVal_10 = "btn full-width submit-btn mx-auto mt-4 btn-blue"; var currVal_11 = _ck(_v, 21, 0, _co.componentForm.invalid); _ck(_v, 20, 0, currVal_10, currVal_11); var currVal_12 = _co.currentForm.isLoading; _ck(_v, 23, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_9 = _co.componentForm.invalid; _ck(_v, 19, 0, currVal_9); var currVal_13 = (!_co.currentForm.isLoading ? "Agregar en lote" : "Cargando..."); _ck(_v, 24, 0, currVal_13); }); }
-function View_FormBlockComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { inputDate: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_1)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_68)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_91)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_94)), i1.ɵdid(8, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_108)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.isSettingToJustShowModal(); _ck(_v, 2, 0, currVal_0); var currVal_1 = _co.isSettingToJustShowModal(); _ck(_v, 4, 0, currVal_1); var currVal_2 = _co.showImportModal; var currVal_3 = null; _ck(_v, 6, 0, currVal_2, currVal_3); var currVal_4 = (_co.showExportModal && !_co.settings.extraData); var currVal_5 = null; _ck(_v, 8, 0, currVal_4, currVal_5); var currVal_6 = ((_co.showExportModal && _co.settings.extraData) && (_co.settings.extraData.purpose === "agregarEstudiantesLotes")); var currVal_7 = null; _ck(_v, 10, 0, currVal_6, currVal_7); }, null); }
+    } return ad; }, null, null)), i1.ɵdid(20, 278528, null, 0, i5.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(21, { disabled: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_128)), i1.ɵdid(23, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵted(24, null, [" ", " "]))], function (_ck, _v) { var _co = _v.component; var currVal_7 = _co.componentForm; _ck(_v, 13, 0, currVal_7); var currVal_8 = (_co.currentForm.getField("gradesStudents").options.length > 0); _ck(_v, 17, 0, currVal_8); var currVal_10 = "btn full-width submit-btn mx-auto mt-4 btn-blue"; var currVal_11 = _ck(_v, 21, 0, _co.componentForm.invalid); _ck(_v, 20, 0, currVal_10, currVal_11); var currVal_12 = _co.currentForm.isLoading; _ck(_v, 23, 0, currVal_12); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 15).ngClassUntouched; var currVal_1 = i1.ɵnov(_v, 15).ngClassTouched; var currVal_2 = i1.ɵnov(_v, 15).ngClassPristine; var currVal_3 = i1.ɵnov(_v, 15).ngClassDirty; var currVal_4 = i1.ɵnov(_v, 15).ngClassValid; var currVal_5 = i1.ɵnov(_v, 15).ngClassInvalid; var currVal_6 = i1.ɵnov(_v, 15).ngClassPending; _ck(_v, 11, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6); var currVal_9 = _co.componentForm.invalid; _ck(_v, 19, 0, currVal_9); var currVal_13 = (!_co.currentForm.isLoading ? "Agregar en lote" : "Cargando..."); _ck(_v, 24, 0, currVal_13); }); }
+function View_FormBlockComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { inputDate: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_1)), i1.ɵdid(2, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_70)), i1.ɵdid(4, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_95)), i1.ɵdid(6, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_103)), i1.ɵdid(8, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_110)), i1.ɵdid(10, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FormBlockComponent_124)), i1.ɵdid(12, 16384, null, 0, i5.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"], ngIfElse: [1, "ngIfElse"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = !_co.isSettingToJustShowModal(); _ck(_v, 2, 0, currVal_0); var currVal_1 = _co.isSettingToJustShowModal(); _ck(_v, 4, 0, currVal_1); var currVal_2 = _co.showImportModal; var currVal_3 = null; _ck(_v, 6, 0, currVal_2, currVal_3); var currVal_4 = _co.showImportMultipleModal; var currVal_5 = null; _ck(_v, 8, 0, currVal_4, currVal_5); var currVal_6 = (_co.showExportModal && !_co.settings.extraData); var currVal_7 = null; _ck(_v, 10, 0, currVal_6, currVal_7); var currVal_8 = ((_co.showExportModal && _co.settings.extraData) && (_co.settings.extraData.purpose === "agregarEstudiantesLotes")); var currVal_9 = null; _ck(_v, 12, 0, currVal_8, currVal_9); }, null); }
 exports.View_FormBlockComponent_0 = View_FormBlockComponent_0;
 function View_FormBlockComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "form-block", [], null, null, null, View_FormBlockComponent_0, RenderType_FormBlockComponent)), i1.ɵdid(1, 245760, null, 0, i11.FormBlockComponent, [i12.Store, i2.FormBuilder, i13.ToastrService, i14.GlobalService, i15.HttpFetcherService, i16.StepsService, i17.HttpClient, i8.DomSanitizer], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_FormBlockComponent_Host_0 = View_FormBlockComponent_Host_0;
@@ -430297,6 +430328,14 @@ class FormBlockComponent {
         this.stepsService = stepsService;
         this.http = http;
         this.sanitizer = sanitizer;
+        this.showImportMultipleModal = false;
+        this.importingMultiple = false;
+        this.studentsToImportMultiple = [];
+        this.importMultipleErrors = [];
+        this.importMultipleSummary = [];
+        this.importErrors = [];
+        this.importWarnings = [];
+        this.importSummary = "";
         this.userCanCreate = true;
         this.userCanEdit = true;
         this.userCanDelete = true;
@@ -430342,6 +430381,14 @@ class FormBlockComponent {
             // Magic string to avoid errors and easily change formId of forms
             addDocente: "add-docente",
         };
+        // Avisos de importación: duran más (el texto puede ser largo) y se pueden cerrar
+        this.importToastOptions = {
+            positionClass: "toast-bottom-right",
+            timeOut: 10000,
+            extendedTimeOut: 5000,
+            closeButton: true,
+            progressBar: true,
+        };
         this.type = "presentational";
         this.component = "form";
         this.glbls = globals;
@@ -430371,8 +430418,283 @@ class FormBlockComponent {
     }
     closeModal() {
         this.showImportModal = false;
+        this.resetImport();
+    }
+    resetImport() {
         this.importingData = false;
         this.showUploadBtn = false;
+        this.studentsToImport = [];
+        this.importErrors = [];
+        this.importWarnings = [];
+        this.importSummary = "";
+    }
+    // Tras importar: refresca el PECA en el store (la página re-renderiza estudiantes y
+    // secciones, igual que al agregar uno) en lugar de recargar la página completa
+    refreshAfterImport(message, modalId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            let refreshed = true;
+            try {
+                yield this.store.dispatch(new peca_actions_2.FetchPecaContent(this.pecaId)).toPromise();
+            }
+            catch (e) {
+                refreshed = false;
+            }
+            this.hideBootstrapModal(modalId);
+            this.toastr.success(message, "", Object.assign(Object.assign({}, this.importToastOptions), { timeOut: 6000 }));
+            if (!refreshed) {
+                this.toastr.warning("Los estudiantes se importaron, pero no se pudo actualizar la vista. Recargue la página.", "Aviso", this.importToastOptions);
+            }
+        });
+    }
+    // Cierra el modal sin dejar el body bloqueado (clase modal-open de Bootstrap)
+    hideBootstrapModal(modalId) {
+        if (typeof $ !== "undefined")
+            $(`#${modalId}`).modal("hide");
+        document.body.classList.remove("modal-open");
+        document.body.style.paddingRight = "";
+    }
+    // IMPORTAR MÚLTIPLE: matrícula de varios grados y secciones en un solo Excel
+    hasSchoolSections() {
+        const sectionField = this.settings.formsContent["section"];
+        return !!(sectionField && sectionField.options && sectionField.options.length);
+    }
+    openImportMultipleModal() {
+        this.resetImportMultiple();
+        this.showImportMultipleModal = true;
+    }
+    closeImportMultipleModal() {
+        this.resetImportMultiple();
+        this.showImportMultipleModal = false;
+    }
+    resetImportMultiple() {
+        this.importingMultiple = false;
+        this.studentsToImportMultiple = [];
+        this.importMultipleErrors = [];
+        this.importMultipleSummary = [];
+    }
+    handleMultipleFileInput(files) {
+        this.resetImportMultiple();
+        if (!files || files.length === 0) {
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(files[0]);
+        reader.onload = () => {
+            try {
+                const data = new Uint8Array(reader.result);
+                const workbook = xlsx_1.default.read(data, { type: "array" });
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = xlsx_1.default.utils.sheet_to_json(sheet, {
+                    header: 1,
+                    defval: "",
+                });
+                if (!rows || rows.length < 2) {
+                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error", this.importToastOptions);
+                    return;
+                }
+                const parsed = this.parseStudentRows(rows);
+                if (parsed.length === 0) {
+                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso", this.importToastOptions);
+                    return;
+                }
+                this.validateMultipleImport(parsed);
+            }
+            catch (e) {
+                this.toastr.error("Error al procesar el archivo Excel", "Error", this.importToastOptions);
+            }
+        };
+    }
+    // Valida que el grado y la sección de cada fila estén registrados en el año escolar
+    validateMultipleImport(parsed) {
+        const sections = this.settings.formsContent["section"].options || [];
+        const errors = [];
+        const students = [];
+        const summary = {};
+        const sectionByCard = {};
+        parsed.forEach(({ fila, student }) => {
+            const studentName = `${student.nombre} ${student.apellido}`.trim();
+            const dataErrors = this.validateStudentData(fila, student);
+            if (dataErrors.length) {
+                errors.push(...dataErrors);
+                return;
+            }
+            const grade = this.normalizeImportGrade(student.grado);
+            const sectionName = this.normalizeImportSection(student.seccion);
+            if (!student.grado || !student.seccion) {
+                errors.push(`Fila ${fila} (${studentName}): falta el grado o la sección`);
+                return;
+            }
+            if (grade === null || !sections.some((s) => s.grade == grade)) {
+                errors.push(`Fila ${fila} (${studentName}): el grado "${student.grado}" no está registrado en el año escolar`);
+                return;
+            }
+            const section = sections.find((s) => s.grade == grade && this.normalizeImportSection(s.name) === sectionName);
+            if (!section) {
+                errors.push(`Fila ${fila} (${studentName}): la sección "${student.seccion}" no está registrada en ${this.parseGrade(grade)}`);
+                return;
+            }
+            // Una misma cédula en dos secciones inscribiría al estudiante en ambas
+            const cardId = student.documento_de_identidad;
+            if (cardId) {
+                const previous = sectionByCard[cardId];
+                if (previous && previous.sectionId !== section.id) {
+                    errors.push(`Fila ${fila} (${studentName}): la cédula ${cardId} ya está en la fila ${previous.fila} con otro grado o sección`);
+                    return;
+                }
+                sectionByCard[cardId] = { sectionId: section.id, fila };
+            }
+            students.push(Object.assign(Object.assign({}, student), { section: section.id, fila }));
+            const label = `${this.parseGrade(grade)} - Sección ${section.name}`;
+            summary[label] = (summary[label] || 0) + 1;
+        });
+        if (errors.length) {
+            this.importMultipleErrors = errors;
+            this.toastr.error(`Se encontraron ${errors.length} fila(s) con errores. Corrija el archivo y vuelva a adjuntarlo.`, "Error en el archivo", this.importToastOptions);
+            return;
+        }
+        this.studentsToImportMultiple = students;
+        this.importMultipleSummary = Object.keys(summary).map((label) => ({
+            label,
+            count: summary[label],
+        }));
+    }
+    // Datos que el backend exige: sin ellos descarta la fila en silencio o rechaza toda la carga
+    validateStudentData(fila, student) {
+        const studentName = `${student.nombre} ${student.apellido}`.trim();
+        const prefix = `Fila ${fila} (${studentName})`;
+        const errors = [];
+        if (!student.nombre)
+            errors.push(`${prefix}: falta el nombre`);
+        if (!student.apellido)
+            errors.push(`${prefix}: falta el apellido`);
+        if (!student.fecha_de_nacimiento) {
+            errors.push(`${prefix}: falta la fecha de nacimiento`);
+        }
+        else if (!this.isValidBirthdate(student.fecha_de_nacimiento)) {
+            errors.push(`${prefix}: la fecha de nacimiento "${student.fecha_de_nacimiento}" no es válida (use dd-mm-aaaa)`);
+        }
+        if (!student.genero) {
+            errors.push(`${prefix}: falta el género o no es válido (use F o M)`);
+        }
+        return errors;
+    }
+    // parseDate deja las fechas como dd-mm-aaaa; se exige una fecha real y no futura
+    isValidBirthdate(value) {
+        const match = `${value}`.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+        if (!match)
+            return false;
+        const day = +match[1];
+        const month = +match[2];
+        const year = +match[3];
+        const date = new Date(year, month - 1, day);
+        return (date.getFullYear() === year &&
+            date.getMonth() === month - 1 &&
+            date.getDate() === day &&
+            date.getTime() <= Date.now());
+    }
+    // IMPORTAR (una sección): los estudiantes van a la sección activa
+    validateSingleImport(parsed) {
+        const section = this.sectionsArr[this.activeSection];
+        const sectionLabel = `${this.parseGrade(section.grade)} - Sección ${section.name}`;
+        const errors = [];
+        const otherSectionRows = [];
+        const students = [];
+        parsed.forEach(({ fila, student }) => {
+            const dataErrors = this.validateStudentData(fila, student);
+            if (dataErrors.length) {
+                errors.push(...dataErrors);
+                return;
+            }
+            // Un Excel exportado de otra sección es válido (sirve para mover estudiantes), solo se avisa
+            const otherGrade = student.grado && this.normalizeImportGrade(student.grado) != section.grade;
+            const otherSection = student.seccion &&
+                this.normalizeImportSection(student.seccion) !==
+                    this.normalizeImportSection(section.name);
+            if (otherGrade || otherSection)
+                otherSectionRows.push(fila);
+            students.push(student);
+        });
+        if (errors.length) {
+            this.importErrors = errors;
+            this.toastr.error(`Se encontraron ${errors.length} error(es) en el archivo. Corríjalo y vuelva a adjuntarlo.`, "Error en el archivo", this.importToastOptions);
+            return;
+        }
+        if (otherSectionRows.length) {
+            this.importWarnings = [
+                `La(s) fila(s) ${otherSectionRows.join(", ")} indican otro grado o sección; se importarán en ${sectionLabel}. ` +
+                    `Para respetar el grado y la sección del archivo use "Importar múltiple".`,
+            ];
+        }
+        this.studentsToImport = students;
+        this.importSummary = `${students.length} estudiante(s) en ${sectionLabel}`;
+        this.showUploadBtn = true;
+    }
+    // Acepta "1", "1er grado", "1° grado", "Primero", "Preescolar"...; devuelve el id de grado o null
+    normalizeImportGrade(value) {
+        const text = `${value === null || value === undefined ? "" : value}`
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .trim();
+        if (!text)
+            return null;
+        if (text.includes("preescolar") || text.includes("pre-escolar"))
+            return "0";
+        const digit = text.match(/\d+/);
+        if (digit)
+            return `${parseInt(digit[0], 10)}`;
+        const words = ["primer", "segund", "tercer", "cuart", "quint", "sext"];
+        const index = words.findIndex((w) => text.startsWith(w));
+        return index >= 0 ? `${index + 1}` : null;
+    }
+    // "Sección A", "seccion a" y "A" se consideran la misma sección
+    normalizeImportSection(value) {
+        return `${value === null || value === undefined ? "" : value}`
+            .toUpperCase()
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .replace(/^SECCION\s*/, "")
+            .trim();
+    }
+    importMultipleStudents() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            if (!this.studentsToImportMultiple.length) {
+                return;
+            }
+            this.importingMultiple = true;
+            const resourcePath = `section/load/${this.pecaId}`;
+            const body = {
+                action: "import_multiple",
+                students: this.studentsToImportMultiple,
+            };
+            try {
+                const result = yield this.fetcher
+                    .post(resourcePath, body)
+                    .toPromise();
+                if (result && result.status_code === 201) {
+                    const moved = result.moved > 0
+                        ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+                        : "";
+                    yield this.refreshAfterImport((result.message || "Estudiantes importados con éxito") + moved, "no-peca-modal-import-multiple");
+                    this.closeImportMultipleModal();
+                }
+                else {
+                    this.importingMultiple = false;
+                    this.toastr.error((result && result.message) || "Error al importar estudiantes", "Error", this.importToastOptions);
+                }
+            }
+            catch (err) {
+                this.importingMultiple = false;
+                const error = err && err.error;
+                if (error && Array.isArray(error.errors)) {
+                    this.importMultipleErrors = error.errors;
+                }
+                const msg = (error && (typeof error === "string" ? error : error.message)) ||
+                    (err && err.message) ||
+                    "Ha ocurrido un error al importar los estudiantes";
+                this.toastr.error(msg, "Error al importar", this.importToastOptions);
+            }
+        });
     }
     getStudentsModalNgClass() {
         return {
@@ -430412,6 +430734,7 @@ class FormBlockComponent {
         this.componentForm.reset();
     }
     handleFileInput(files) {
+        this.resetImport();
         if (!files || files.length === 0) {
             return;
         }
@@ -430428,163 +430751,177 @@ class FormBlockComponent {
                     defval: "",
                 });
                 if (!rows || rows.length < 2) {
-                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error");
+                    this.toastr.error("El archivo Excel está vacío o no contiene filas con datos", "Error", this.importToastOptions);
                     return;
                 }
-                const headerRow = rows[0].map((h) => h !== null && h !== undefined ? h.toString() : "");
-                const normalize = (str) => str
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .trim();
-                // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
-                // "Segundo nombre"); se concatenan en orden de aparición.
-                const colsNombre = [];
-                const colsApellido = [];
-                let colTipoDoc = -1;
-                let colDocId = -1;
-                let colFechaNac = -1;
-                let colGenero = -1;
-                let colGrado = -1;
-                let colSeccion = -1;
-                headerRow.forEach((col, idx) => {
-                    const norm = normalize(col);
-                    if (norm.includes("tipo") && norm.includes("doc")) {
-                        colTipoDoc = idx;
-                    }
-                    else if ((norm.includes("identi") ||
-                        norm.includes("cedula") ||
-                        norm.includes("documento")) &&
-                        !norm.includes("tipo")) {
-                        colDocId = idx;
-                    }
-                    else if (norm.includes("nombre") && !norm.includes("apellido")) {
-                        colsNombre.push(idx);
-                    }
-                    else if (norm.includes("apellido")) {
-                        colsApellido.push(idx);
-                    }
-                    else if (norm.includes("genero") || norm.includes("sexo")) {
-                        colGenero = idx;
-                    }
-                    else if (norm.includes("naci") || norm.includes("fecha")) {
-                        colFechaNac = idx;
-                    }
-                    else if (norm.includes("grado")) {
-                        colGrado = idx;
-                    }
-                    else if (norm.includes("secci")) {
-                        colSeccion = idx;
-                    }
-                });
-                // Positional fallbacks based on whether "Tipo de documento" column was present
-                const hasTipoDocCol = colTipoDoc !== -1;
-                if (colsNombre.length === 0)
-                    colsNombre.push(0);
-                if (colsApellido.length === 0)
-                    colsApellido.push(1);
-                if (colDocId === -1)
-                    colDocId = hasTipoDocCol ? 3 : 2;
-                if (colGenero === -1)
-                    colGenero = hasTipoDocCol ? 5 : 3;
-                if (colFechaNac === -1)
-                    colFechaNac = hasTipoDocCol ? 4 : 4;
-                if (colGrado === -1)
-                    colGrado = hasTipoDocCol ? 6 : 5;
-                if (colSeccion === -1)
-                    colSeccion = hasTipoDocCol ? 7 : 6;
-                const students = [];
-                for (let r = 1; r < rows.length; r++) {
-                    const row = rows[r];
-                    if (!row ||
-                        row.every((cell) => cell === "" || cell === null || cell === undefined)) {
-                        continue;
-                    }
-                    const joinCells = (cols) => cols
-                        .map((c) => row[c] !== undefined && row[c] !== null
-                        ? row[c].toString().replace(/\s+/g, " ").trim()
-                        : "")
-                        .filter((v) => v !== "")
-                        .join(" ");
-                    const nombre = joinCells(colsNombre);
-                    const apellido = joinCells(colsApellido);
-                    if (!nombre && !apellido) {
-                        continue;
-                    }
-                    let rawDoc = colDocId >= 0 &&
-                        row[colDocId] !== undefined &&
-                        row[colDocId] !== null
-                        ? row[colDocId].toString().trim()
-                        : "";
-                    let rawTipoDoc = colTipoDoc >= 0 &&
-                        row[colTipoDoc] !== undefined &&
-                        row[colTipoDoc] !== null
-                        ? row[colTipoDoc].toString().trim().toUpperCase()
-                        : "";
-                    if (rawDoc) {
-                        const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
-                        if (prefixMatch) {
-                            if (!rawTipoDoc) {
-                                rawTipoDoc = prefixMatch[1].toUpperCase();
-                            }
-                            rawDoc = prefixMatch[2];
-                        }
-                    }
-                    const cleanDoc = rawDoc.replace(/\D/g, "");
-                    let tipoDoc = "1";
-                    if (rawTipoDoc === "2" ||
-                        rawTipoDoc === "E" ||
-                        rawTipoDoc === "EXTRANJERO") {
-                        tipoDoc = "2";
-                    }
-                    else {
-                        tipoDoc = "1";
-                    }
-                    const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
-                    const fecha_de_nacimiento = this.parseDate(rawFecha);
-                    const rawGenero = colGenero >= 0 &&
-                        row[colGenero] !== undefined &&
-                        row[colGenero] !== null
-                        ? row[colGenero].toString().trim().toUpperCase()
-                        : "";
-                    const genero = rawGenero === "1" ||
-                        rawGenero === "F" ||
-                        rawGenero === "FEMENINO"
-                        ? "F"
-                        : "M";
-                    const grado = colGrado >= 0 &&
-                        row[colGrado] !== undefined &&
-                        row[colGrado] !== null
-                        ? row[colGrado].toString().trim()
-                        : "";
-                    const seccion = colSeccion >= 0 &&
-                        row[colSeccion] !== undefined &&
-                        row[colSeccion] !== null
-                        ? row[colSeccion].toString().trim()
-                        : "";
-                    students.push({
-                        nombre,
-                        apellido,
-                        tipo_de_documento: tipoDoc,
-                        documento_de_identidad: cleanDoc,
-                        fecha_de_nacimiento: fecha_de_nacimiento || "",
-                        genero,
-                        grado,
-                        seccion,
-                    });
-                }
-                if (students.length === 0) {
-                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso");
-                    this.showUploadBtn = false;
+                const parsed = this.parseStudentRows(rows);
+                if (parsed.length === 0) {
+                    this.toastr.warning("No se encontraron registros válidos de estudiantes para importar", "Aviso", this.importToastOptions);
                     return;
                 }
-                this.showUploadBtn = true;
-                this.studentsToImport = students;
+                this.validateSingleImport(parsed);
             }
             catch (e) {
-                this.toastr.error("Error al procesar el archivo Excel", "Error");
+                this.toastr.error("Error al procesar el archivo Excel", "Error", this.importToastOptions);
             }
         };
+    }
+    // Convierte las filas del Excel de matrícula en estudiantes; `fila` es el número de fila en Excel
+    parseStudentRows(rows) {
+        const headerRow = rows[0].map((h) => h !== null && h !== undefined ? h.toString() : "");
+        const normalize = (str) => str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+        // Puede haber varias columnas de nombre/apellido (ej. "Primer nombre",
+        // "Segundo nombre"); se concatenan en orden de aparición.
+        const colsNombre = [];
+        const colsApellido = [];
+        let colTipoDoc = -1;
+        let colDocId = -1;
+        let colFechaNac = -1;
+        let colGenero = -1;
+        let colGrado = -1;
+        let colSeccion = -1;
+        headerRow.forEach((col, idx) => {
+            const norm = normalize(col);
+            if (norm.includes("tipo") && norm.includes("doc")) {
+                colTipoDoc = idx;
+            }
+            else if ((norm.includes("identi") ||
+                norm.includes("cedula") ||
+                norm.includes("documento")) &&
+                !norm.includes("tipo")) {
+                colDocId = idx;
+            }
+            else if (norm.includes("nombre") && !norm.includes("apellido")) {
+                colsNombre.push(idx);
+            }
+            else if (norm.includes("apellido")) {
+                colsApellido.push(idx);
+            }
+            else if (norm.includes("genero") || norm.includes("sexo")) {
+                colGenero = idx;
+            }
+            else if (norm.includes("naci") || norm.includes("fecha")) {
+                colFechaNac = idx;
+            }
+            else if (norm.includes("grado")) {
+                colGrado = idx;
+            }
+            else if (norm.includes("secci")) {
+                colSeccion = idx;
+            }
+        });
+        // Positional fallbacks based on whether "Tipo de documento" column was present
+        const hasTipoDocCol = colTipoDoc !== -1;
+        if (colsNombre.length === 0)
+            colsNombre.push(0);
+        if (colsApellido.length === 0)
+            colsApellido.push(1);
+        if (colDocId === -1)
+            colDocId = hasTipoDocCol ? 3 : 2;
+        if (colGenero === -1)
+            colGenero = hasTipoDocCol ? 5 : 3;
+        if (colFechaNac === -1)
+            colFechaNac = hasTipoDocCol ? 4 : 4;
+        if (colGrado === -1)
+            colGrado = hasTipoDocCol ? 6 : 5;
+        if (colSeccion === -1)
+            colSeccion = hasTipoDocCol ? 7 : 6;
+        const parsed = [];
+        for (let r = 1; r < rows.length; r++) {
+            const row = rows[r];
+            if (!row ||
+                row.every((cell) => cell === "" || cell === null || cell === undefined)) {
+                continue;
+            }
+            const joinCells = (cols) => cols
+                .map((c) => row[c] !== undefined && row[c] !== null
+                ? row[c].toString().replace(/\s+/g, " ").trim()
+                : "")
+                .filter((v) => v !== "")
+                .join(" ");
+            const nombre = joinCells(colsNombre);
+            const apellido = joinCells(colsApellido);
+            if (!nombre && !apellido) {
+                continue;
+            }
+            let rawDoc = colDocId >= 0 &&
+                row[colDocId] !== undefined &&
+                row[colDocId] !== null
+                ? row[colDocId].toString().trim()
+                : "";
+            let rawTipoDoc = colTipoDoc >= 0 &&
+                row[colTipoDoc] !== undefined &&
+                row[colTipoDoc] !== null
+                ? row[colTipoDoc].toString().trim().toUpperCase()
+                : "";
+            if (rawDoc) {
+                const prefixMatch = rawDoc.match(/^([VEve])[-–—\s]?(.*)$/);
+                if (prefixMatch) {
+                    if (!rawTipoDoc) {
+                        rawTipoDoc = prefixMatch[1].toUpperCase();
+                    }
+                    rawDoc = prefixMatch[2];
+                }
+            }
+            const cleanDoc = rawDoc.replace(/\D/g, "");
+            let tipoDoc = "1";
+            if (rawTipoDoc === "2" ||
+                rawTipoDoc === "E" ||
+                rawTipoDoc === "EXTRANJERO") {
+                tipoDoc = "2";
+            }
+            else {
+                tipoDoc = "1";
+            }
+            const rawFecha = colFechaNac >= 0 ? row[colFechaNac] : "";
+            const fecha_de_nacimiento = this.parseDate(rawFecha);
+            const rawGenero = colGenero >= 0 &&
+                row[colGenero] !== undefined &&
+                row[colGenero] !== null
+                ? normalize(row[colGenero].toString()).toUpperCase()
+                : "";
+            // Vacío o no reconocido queda "" para que la validación lo reporte (antes caía en "M")
+            let genero = "";
+            if (rawGenero === "1" || rawGenero.startsWith("F") || rawGenero.startsWith("MUJER")) {
+                genero = "F";
+            }
+            else if (rawGenero === "2" ||
+                rawGenero.startsWith("M") ||
+                rawGenero === "H" ||
+                rawGenero.startsWith("HOMBRE") ||
+                rawGenero === "V" ||
+                rawGenero.startsWith("VARON")) {
+                genero = "M";
+            }
+            const grado = colGrado >= 0 &&
+                row[colGrado] !== undefined &&
+                row[colGrado] !== null
+                ? row[colGrado].toString().trim()
+                : "";
+            const seccion = colSeccion >= 0 &&
+                row[colSeccion] !== undefined &&
+                row[colSeccion] !== null
+                ? row[colSeccion].toString().trim()
+                : "";
+            parsed.push({
+                fila: r + 1,
+                student: {
+                    nombre,
+                    apellido,
+                    tipo_de_documento: tipoDoc,
+                    documento_de_identidad: cleanDoc,
+                    fecha_de_nacimiento: fecha_de_nacimiento || "",
+                    genero,
+                    grado,
+                    seccion,
+                },
+            });
+        }
+        return parsed;
     }
     parseDate(date) {
         if (date === null || date === undefined || date === "") {
@@ -430637,26 +430974,24 @@ class FormBlockComponent {
                     .post(resourcePath, body)
                     .toPromise();
                 if (result && result.status_code === 201) {
-                    this.showImportModal = false;
-                    this.toastr.success(result.message || "Estudiantes importados con éxito", "", {
-                        positionClass: "toast-bottom-right",
-                    });
-                    this.importingData = false;
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                    const moved = result.moved > 0
+                        ? `. ${result.moved} estudiante(s) cambiado(s) de sección`
+                        : "";
+                    yield this.refreshAfterImport((result.message || "Estudiantes importados con éxito") + moved, "no-peca-modal-import");
+                    this.closeModal();
                 }
                 else {
                     this.importingData = false;
                     const msg = (result && result.message) || "Error al importar estudiantes";
-                    this.toastr.error(msg, "Error", {
-                        positionClass: "toast-bottom-right",
-                    });
+                    this.toastr.error(msg, "Error", this.importToastOptions);
                 }
             }
             catch (err) {
                 this.importingData = false;
                 let msg = "Ha ocurrido un error al importar los estudiantes";
+                if (err && err.error && Array.isArray(err.error.errors)) {
+                    this.importErrors = err.error.errors;
+                }
                 if (err && err.error) {
                     if (typeof err.error === "string") {
                         msg = err.error;
@@ -430676,9 +431011,7 @@ class FormBlockComponent {
                 else if (err && err.message) {
                     msg = err.message;
                 }
-                this.toastr.error(msg, "Error al importar", {
-                    positionClass: "toast-bottom-right",
-                });
+                this.toastr.error(msg, "Error al importar", this.importToastOptions);
             }
         });
     }
