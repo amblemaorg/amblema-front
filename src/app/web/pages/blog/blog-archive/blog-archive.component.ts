@@ -7,7 +7,7 @@ import { StaticWebContentService } from "src/app/services/web/static-web-content
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { Post } from "src/app/models/web/blog.model";
 import { environment } from "src/environments/environment";
-import { BLOG_CONTENT } from "../blog-static-content";
+import { BLOG_CONTENT, BLOG_COVER_IMAGE } from "../blog-static-content";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { JwPaginationComponent } from "src/app/web/shared/jw-angular-pagination/lib/jw-pagination.component";
 import { BLOG_CATEGORIES } from "../categories";
@@ -117,8 +117,7 @@ export class BlogArchiveComponent implements OnInit, OnDestroy {
       this.postsList = this.adaptEndpointResponseToPost(data.records);
       this.updatePostsIndex(data.pagination.total_records);
       this.totalPages = data.pagination.total_pages;
-      const postImages = (data.records || []).map((r) => r.image);
-      this.preloadImages(postImages).then(() => {
+      this.preloadImages(BLOG_COVER_IMAGE).then(() => {
         this.store.dispatch([new SetIsLoadingPage(false)]);
       });
     }, (error) => {

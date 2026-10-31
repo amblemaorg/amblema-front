@@ -264,8 +264,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         charts: this.chartService.formatChartDataToDrawComponent(chartsData),
       };
 
-      const bannerImages = (data.homePage.slider || []).map((slide) => slide.image);
-      this.preloadImages(bannerImages).then(() => {
+      // Solo la primera diapositiva es visible al cargar; las demás las pide el carrusel después
+      const firstBannerImage = (data.homePage.slider || []).map((slide) => slide.image).slice(0, 1);
+      this.preloadImages(firstBannerImage).then(() => {
         this.store.dispatch([new SetIsLoadingPage(false)]);
       });
     }, (error) => {

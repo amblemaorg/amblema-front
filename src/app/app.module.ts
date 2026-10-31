@@ -1,4 +1,3 @@
-import { PdfTemplatesModule } from './peca/peca-page/pdf-templates/pdf-templates.module'
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
@@ -65,7 +64,6 @@ import { YearBookState } from './store/yearbook/yearbook.action'
       ],
     }),
     EmbedVideo.forRoot(),
-    PdfTemplatesModule,
   ],
   providers: [
     AllowAuthenticatedGuard,

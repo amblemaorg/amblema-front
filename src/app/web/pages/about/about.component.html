@@ -178,7 +178,7 @@
               #awardImagesCarousel
               [options]="awardImagesCarouselOptions"
               class="award-images-carousel"
-              *ngIf="award.image || award.image2 || award.image3"
+              *ngIf="openedAwards[i] && (award.image || award.image2 || award.image3)"
             >
               <ng-template carouselSlide>
                 <div class="image-wrapper">
@@ -187,7 +187,6 @@
                     *ngIf="award.image"
                     [src]="award.image"
                     [alt]="award.title + ' image 1'"
-                    loading="lazy"
                   />
                 </div>
               </ng-template>
@@ -198,7 +197,6 @@
                     *ngIf="award.image2"
                     [src]="award.image2"
                     [alt]="award.title + ' image 2'"
-                    loading="lazy"
                   />
                 </div>
               </ng-template>
@@ -209,7 +207,6 @@
                     *ngIf="award.image3"
                     [src]="award.image3"
                     [alt]="award.title + ' image 3'"
-                    loading="lazy"
                   />
                 </div>
               </ng-template>

@@ -1,3 +1,5 @@
+export const BLOG_COVER_IMAGE = "./assets/images/background-blog2.jpg";
+
 export const BLOG_CONTENT = {
   pagination: {
     total_records: 8,

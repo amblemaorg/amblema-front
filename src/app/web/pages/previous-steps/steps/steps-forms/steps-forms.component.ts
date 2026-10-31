@@ -17,6 +17,7 @@ import { GlobalService } from "../../../../../services/global.service";
 import { StepsService } from "../../../../../services/steps/steps.service";
 import { isNullOrUndefined } from "util";
 import { Subscription } from "rxjs";
+import { GoogleMapsLoaderService } from "src/app/services/web/google-maps-loader.service";
 import { DatepickerOptions } from "ng2-datepicker";
 
 export const EMAIL_PTTRN = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
@@ -255,9 +256,12 @@ export class StepsFormsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private stepsService: StepsService,
-    private globals: GlobalService
+    private globals: GlobalService,
+    private mapsLoader: GoogleMapsLoaderService
   ) {
     if (globals.isBrowser) {
+      // Google Maps ya no viene en index.html; los reintentos de initMap esperan a que cargue
+      this.mapsLoader.load().catch(() => {});
       this.map = null;
       this.currentMarker = null;
 

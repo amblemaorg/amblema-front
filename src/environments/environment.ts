@@ -7,6 +7,8 @@ export const environment = {
   recaptchaKey: '6LdGCLYrAAAAAH9-r2S9OXr6iXEXczuAJ5wZ5o45', // from cuentas.soporte@binaural.com.ve
   recaptchaNonce: '0D3VrhyLft',
   baseUrl: 'http://localhost:10505/',
+  // Clave pública (restringida por dominio en Google Cloud); el script se carga con GoogleMapsLoaderService
+  googleMapsKey: 'AIzaSyDTvLC-NQx9mMn4rpC0yQOjjLUmm3_uowI',
 };
 
 /*

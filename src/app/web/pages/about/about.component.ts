@@ -113,6 +113,8 @@ export class AboutComponent implements OnInit, OnDestroy {
     awards: [],
   };
   selectedAward = {};
+  // Modales abiertos al menos una vez: sus imágenes solo se cargan a partir de ahí
+  openedAwards: { [index: number]: boolean } = {};
   aboutUsService: WebContentService;
   ABOUT_US_PATH = "webcontent?page=aboutUsPage";
 
@@ -179,8 +181,8 @@ export class AboutComponent implements OnInit, OnDestroy {
       if (this.aboutUsPageData.awards && this.aboutUsPageData.awards.length > 0) {
         this.aboutUsPageData.awards = this.aboutUsPageData.awards.reverse();
       }
-      const coverImages = (data.aboutUsPage.slider || []).map((slide) => slide.image);
-      this.preloadImages(coverImages).then(() => {
+      const firstBannerImage = (data.aboutUsPage.slider || []).map((slide) => slide.image).slice(0, 1);
+      this.preloadImages(firstBannerImage).then(() => {
         this.store.dispatch([new SetIsLoadingPage(false)]);
       });
     }, (error) => {
@@ -241,6 +243,7 @@ export class AboutComponent implements OnInit, OnDestroy {
   }
 
   onAwardClick(index: number) {
+    this.openedAwards[index] = true;
     const awardModalEl = this.awardModal.toArray()[index];
     this.modalService.openStaticModal(awardModalEl);
   }

@@ -18,6 +18,7 @@ import { HttpClient } from "@angular/common/http";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { WebState } from "../../../../store/states/web/web.state";
 import { Observable } from "rxjs";
+import { GoogleMapsLoaderService } from "src/app/services/web/google-maps-loader.service";
 const DISMISS = "0";
 const ACCEPT = "1";
 
@@ -37,12 +38,10 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   map: google.maps.Map;
   lat = 8.14893; // Venezuela's middle latitude
   lng = -66.831185; // Venezuela's middle longitude
-  coordinates = new google.maps.LatLng(this.lat, this.lng);
-
-  mapOptions: google.maps.MapOptions = {
-    center: this.coordinates,
-    zoom: 7,
-  };
+  // google.maps se carga bajo demanda: coordenadas y opciones se crean al resolver mapsReady
+  coordinates: google.maps.LatLng;
+  mapOptions: google.maps.MapOptions;
+  private mapsReady: Promise<void>;
 
   schoolsList;
   SCHOOLS_PATH = "schoolspage";
@@ -55,11 +54,17 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
     private globalService: GlobalService,
     private modalService: ModalService,
     private http: HttpClient,
-    private store: Store
-  ) { }
+    private store: Store,
+    private mapsLoader: GoogleMapsLoaderService
+  ) {
+    this.mapsReady = this.mapsLoader.load().then(() => {
+      this.coordinates = new google.maps.LatLng(this.lat, this.lng);
+      this.mapOptions = { center: this.coordinates, zoom: 7 };
+    });
+  }
 
   ngAfterViewInit() {
-    this.mapInitializer();
+    this.mapsReady.then(() => this.mapInitializer());
     if (this.hadNotAcceptedModal()) {
       this.open(this.modal);
     }
@@ -163,12 +168,16 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
           state: school.addressState.name,
         };
       });
-      this.loadAllMarkers();
+      // Se encola después de mapInitializer (registrado antes en ngAfterViewInit)
+      this.mapsReady.then(() => this.loadAllMarkers());
       this.store.dispatch([new SetIsLoadingPage("false")]);
     });
   }
 
   zoomTo(lat: number, lng: number) {
+    if (!this.map) {
+      return;
+    }
     const coordinates = new google.maps.LatLng(lat, lng);
     const mapOptions: google.maps.MapOptions = {
       center: coordinates,
@@ -180,6 +189,9 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
   }
 
   isZoomIt(school) {
+    if (!this.map) {
+      return false;
+    }
     const { lat, lng } = school;
     const coordinates = new google.maps.LatLng(lat, lng);
 
