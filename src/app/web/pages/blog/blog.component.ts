@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewChecked } from "@angular/core";
 import { Router } from "@angular/router";
+import { BLOG_COVER_IMAGE } from "./blog-static-content";
 
 @Component({
   selector: "app-blog",
@@ -11,7 +12,7 @@ export class BlogComponent implements OnInit {
   coverData = {
     slides: [
       {
-        image: "./assets/images/background-blog2.png",
+        image: BLOG_COVER_IMAGE,
       },
     ],
   };

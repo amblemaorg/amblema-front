@@ -74,10 +74,9 @@
     <div class="image-wrapper">
       <img
         *ngIf="sponsor.image"
-        class="image"
-        [src]="sponsor.image"
+        class="image owl-lazy"
+        [attr.data-src]="sponsor.image"
         [alt]="sponsor.name + ' logo'"
-        loading="lazy"
       />
     </div>
     <p *ngIf="sponsor.name" class="title">{{ sponsor.name }}</p>

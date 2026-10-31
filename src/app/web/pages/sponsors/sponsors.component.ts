@@ -50,6 +50,7 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   sponsorsOptions: OwlOptions = {
     autoplay: false,
     loop: false,
+    lazyLoad: true,
     mouseDrag: false,
     touchDrag: false,
     pullDrag: false,
