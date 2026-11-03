@@ -369,6 +369,18 @@ export class FormReviewComponent
     }
   }
 
+  /**
+   * Solo aplica a carga de una imagen: en modo múltiple el botón siempre
+   * invita a agregar más, aunque la lista ya tenga imágenes.
+   */
+  get hasUploadedImage(): boolean {
+    const inputImg = this.settings?.fields?.inputImg;
+    if (inputImg && inputImg.multiple) {
+      return false;
+    }
+    return !!this.form?.get('inputImg')?.value;
+  }
+
   onTableActions = (event: any) => {
     if (event.action === 'DELETE') {
       const images = this.form.get('inputImg').value;

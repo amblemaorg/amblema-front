@@ -39,6 +39,7 @@
         <input
           (change)="onUploadImage($event)"
           type="file"
+          accept="image/*"
           [name]="settings.fields.inputImg.name"
           [id]="settings.fields.inputImg.name"
           class="input-file"
@@ -59,8 +60,8 @@
           class="btn btn-tertiary js-labelFile"
         >
           <span class="js-fileName">
-            <span *ngIf="!form.get('inputImg').value"> Carga de imagen </span>
-            <span *ngIf="form.get('inputImg').value"> Archivo cargado </span>
+            <span *ngIf="!hasUploadedImage"> Cargar archivo </span>
+            <span *ngIf="hasUploadedImage"> Archivo cargado </span>
           </span>
         </label>
         <p *ngIf="settings.fields.inputImg.sizeLimitMb">
