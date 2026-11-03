@@ -834,8 +834,8 @@ export const formTabsDocente = {
         ],
       },
       prependInput: {
-        label: "Documento de identidad",
-        placeholder: "Documento de identidad",
+        label: "Cédula",
+        placeholder: "Cédula",
         fullwidth: false,
         ...controlProps.numberMaxAndRequired,
       },
@@ -997,8 +997,8 @@ export const formTabsEstudiantes = {
         ],
       },
       prependInput: {
-        label: "Documento de identidad",
-        placeholder: "Documento de identidad",
+        label: "Cédula",
+        placeholder: "Cédula",
         fullwidth: false,
         ...controlProps.number,
       },

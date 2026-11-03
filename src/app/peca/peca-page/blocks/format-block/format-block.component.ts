@@ -58,8 +58,8 @@ export class FormatDownloadBlock
       [
         "Nombre",
         "Apellido",
-        "Tipo de documento",
-        "Documento de identidad",
+        "Nacionalidad",
+        "Cédula",
         "Fecha de nacimiento",
         "Género",
         "Grado",

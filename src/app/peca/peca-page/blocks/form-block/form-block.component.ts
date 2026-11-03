@@ -712,16 +712,24 @@ export class FormBlockComponent
     let colGrado = -1;
     let colSeccion = -1;
 
+    // Encabezados vigentes: "Nacionalidad" y "Cédula".
+    // TODO(retrocompatibilidad): quitar los encabezados legacy ("Tipo de documento",
+    // "Documento de identidad"/"Número de documento") cuando los docentes
+    // hayan actualizado sus formatos locales.
+    const isNationalityHeader = (norm: string) =>
+      norm.includes("nacionalidad") ||
+      (norm.includes("tipo") && norm.includes("doc")); // legacy
+    const isCardIdHeader = (norm: string) =>
+      norm.includes("cedula") ||
+      ((norm.includes("documento") || norm.includes("identi")) &&
+        !norm.includes("tipo")); // legacy
+
     headerRow.forEach((col, idx) => {
       const norm = normalize(col);
-      if (norm.includes("tipo") && norm.includes("doc")) {
+      // La nacionalidad se evalúa antes que "naci" (fecha de nacimiento).
+      if (isNationalityHeader(norm)) {
         colTipoDoc = idx;
-      } else if (
-        (norm.includes("identi") ||
-          norm.includes("cedula") ||
-          norm.includes("documento")) &&
-        !norm.includes("tipo")
-      ) {
+      } else if (isCardIdHeader(norm)) {
         colDocId = idx;
       } else if (norm.includes("nombre") && !norm.includes("apellido")) {
         colsNombre.push(idx);
@@ -738,7 +746,7 @@ export class FormBlockComponent
       }
     });
 
-    // Positional fallbacks based on whether "Tipo de documento" column was present
+    // Positional fallbacks based on whether "Nacionalidad" column was present
     const hasTipoDocCol = colTipoDoc !== -1;
     if (colsNombre.length === 0) colsNombre.push(0);
     if (colsApellido.length === 0) colsApellido.push(1);
@@ -807,7 +815,7 @@ export class FormBlockComponent
       if (
         rawTipoDoc === "2" ||
         rawTipoDoc === "E" ||
-        rawTipoDoc === "EXTRANJERO"
+        rawTipoDoc.startsWith("EXTRANJER")
       ) {
         tipoDoc = "2";
       } else {
@@ -867,6 +875,14 @@ export class FormBlockComponent
     }
 
     return parsed;
+  }
+
+  /** cardType "1"/1 → "V", "2"/2 → "E" (mismas opciones que el formulario). */
+  private nationalityLabel(cardType: string | number): string {
+    const type = String(cardType ?? "");
+    if (type === "1") return "V";
+    if (type === "2") return "E";
+    return "";
   }
 
   parseDate(date) {
@@ -964,8 +980,8 @@ export class FormBlockComponent
     const columns_header = [
       "Nombre",
       "Apellido",
-      //"Tipo de documento",
-      "Documento de identidad",
+      "Nacionalidad",
+      "Cédula",
       "Género",
       "Fecha de nacimiento",
       "Grado",
@@ -996,7 +1012,7 @@ export class FormBlockComponent
       const data = [
         this.studentsData[i]?.name || "",
         this.studentsData[i]?.lastName || "",
-        //"V" || "", // TODO: check this
+        this.nationalityLabel(this.studentsData[i]?.documentGroup?.prependSelect),
         this.studentsData[i]?.documentGroup?.prependInput || "",
         genero,
         fecha,
@@ -2890,7 +2906,8 @@ export class FormBlockComponent
     const columns_header = [
       "Nombre",
       "Apellido",
-      "Documento de identidad",
+      "Nacionalidad",
+      "Cédula",
       "Género",
       "Fecha de nacimiento",
       "Grado",
@@ -2907,10 +2924,10 @@ export class FormBlockComponent
         .split("/")
         .join("-");
 
-      const cardType = parseInt(sortedStudents[i]?.cardType);
       const data = [
         sortedStudents[i]?.firstName || sortedStudents[i]?.name || "",
         sortedStudents[i]?.lastName || "",
+        this.nationalityLabel(sortedStudents[i]?.cardType),
         sortedStudents[i]?.cardId || "",
         genero,
         fecha,
