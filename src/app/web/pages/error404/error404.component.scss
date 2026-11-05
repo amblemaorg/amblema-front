@@ -2,8 +2,8 @@
 @import "scss/variables";
 @import "scss/elements/headings";
 
-$img-big: url("../../../../assets/images/error404/background-404-con-hoja.jpg");
-$img-small: url("../../../../assets/images/error404/background-404.jpg");
+$img-big: url("../../../../assets/images/error404/background-404-con-hoja.webp");
+$img-small: url("../../../../assets/images/error404/background-404.webp");
 
 .background {
   background-image: $img-small;

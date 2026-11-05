@@ -140,10 +140,6 @@ export class AboutComponent implements OnInit, OnDestroy {
       "../../../assets/icons/math-icon.svg",
       "math-icon"
     );
-    this.iconService.loadSvg(
-      "../../../assets/icons/aaa-icon.svg",
-      "aaa-icon"
-    );
     this.modalService.defaultOptions = {
       ...this.modalService.defaultOptions,
       size: "lg",

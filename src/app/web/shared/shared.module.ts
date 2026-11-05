@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 // Components
 import { BgHeadingComponent } from './bg-heading/bg-heading.component';
 import { CoverComponent } from './cover/cover.component';
@@ -15,6 +16,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { FormWizardComponent } from './forms/form-wizard/form-wizard.component';
 import { ImplementedFormsComponent } from './forms/implemented-forms.component';
 import { JwPaginationComponent } from './jw-angular-pagination/lib/jw-pagination.component';
+import { AulaActivaComponent } from './aula-activa/aula-activa.component';
 
 const sharedComponents = [
   BgHeadingComponent,
@@ -26,11 +28,12 @@ const sharedComponents = [
   FormWizardComponent,
   ImplementedFormsComponent,
   JwPaginationComponent,
+  AulaActivaComponent,
 ];
 
 @NgModule({
   declarations: sharedComponents,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, FormsModule, OwlModule, CarouselModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, FormsModule, OwlModule, CarouselModule, AngularSvgIconModule],
   exports: sharedComponents,
 })
 export class SharedModule {}

@@ -1,0 +1,136 @@
+@import "scss/variables";
+@import "scss/responsive";
+
+:host {
+  display: block;
+}
+
+.aula-activa {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  gap: 8vw;
+  overflow: hidden;
+  padding: 8vw 8vw;
+
+  @include breakpoint(small, landscape) {
+    align-items: center;
+    flex-direction: row;
+    gap: 6vw;
+    padding: 3vw 9vw;
+  }
+
+  @include breakpoint(medium) {
+    align-items: center;
+    flex-direction: row;
+    gap: 6vw;
+    padding: 3vw 9vw;
+  }
+
+  &--green {
+    background-color: $green;
+  }
+
+  &--blue {
+    background-color: $blue;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  &__text {
+    flex: 1.4;
+  }
+
+  &__title {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.75);
+    display: inline-block;
+    font-size: 9vw;
+    font-weight: normal;
+    line-height: 1.1;
+    margin: 0 0 6vw;
+    padding-bottom: 3vw;
+
+    @include breakpoint(small, landscape) {
+      font-size: 3.4vw;
+      margin: 0 0 2vw;
+      padding-bottom: 1vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 3.4vw;
+      margin: 0 0 2vw;
+      padding-bottom: 1vw;
+    }
+  }
+
+  &__description {
+    font-size: 4vw;
+    line-height: 1.6;
+    margin: 0;
+
+    @include breakpoint(small, landscape) {
+      font-size: 1.8vw;
+    }
+
+    @include breakpoint(medium) {
+      font-size: 1.8vw;
+    }
+
+    @include breakpoint(large) {
+      font-size: 1.2vw;
+      line-height: 1.7;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  // El SVG trae fill azul (#008096); se fuerza a blanco.
+  ::ng-deep .aula-activa__svg svg {
+    height: 40vw;
+    width: 40vw;
+
+    @include breakpoint(small, landscape) {
+      height: 16vw;
+      width: 16vw;
+    }
+
+    @include breakpoint(medium) {
+      height: 16vw;
+      width: 16vw;
+    }
+
+    path {
+      fill: $white;
+      stroke: none;
+    }
+  }
+
+  // Entrada escalonada de izquierda a derecha: título y luego descripción.
+  // Las clases las añade el componente solo en navegador.
+  &.slide-init {
+    .aula-activa__title,
+    .aula-activa__description {
+      opacity: 0;
+      transform: translateX(-80px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .aula-activa__description {
+      transition-delay: 0.35s;
+    }
+  }
+
+  &.slide-init.slide-in {
+    .aula-activa__title,
+    .aula-activa__description {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

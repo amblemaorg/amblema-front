@@ -133,7 +133,7 @@ export class SchoolsMapComponent implements AfterViewInit, OnInit {
         map: this.map,
         position: position,
         icon: {
-          url: "assets/images/markup.png",
+          url: "assets/images/markup.webp",
           scaledSize: new google.maps.Size(size * 0.7, size * 0.7),
           anchor: new google.maps.Point(size * 0.35, size * 1.3), // Perfectly centered in the circle
         },

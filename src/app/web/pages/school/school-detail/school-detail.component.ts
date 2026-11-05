@@ -39,7 +39,8 @@ import {
 export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('schoolDetails', { static: false }) schoolSection: ElementRef;
   @ViewChild('symbols', { static: true }) symbols: ElementRef;
-  @ViewChild('activitiesIndexCarousel', { static: true })
+  // static: false porque la sección de actividades solo se renderiza si hay actividades.
+  @ViewChild('activitiesIndexCarousel', { static: false })
   activitiesIndexCarousel: OwlCarousel;
   @ViewChild('activityImageCarousel', { static: false })
   activityImageCarousel: OwlCarousel;
@@ -128,17 +129,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   };
 
-  teachersOptions: OwlOptions = {
-    ...this.carouselOptions,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      [768 * 1.3]: {
-        items: 3,
-      },
-    },
-  };
+  teachersOptions: OwlOptions = this.buildTeachersOptions(0);
 
   activitiesOptions: OwlOptions = {
     ...this.carouselOptions,
@@ -350,6 +341,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         twitter: data.twitter,
         instagram: data.instagram,
       };
+      this.teachersOptions = this.buildTeachersOptions(this.school.testimonials.length);
 
       // console.log('school', data);
 
@@ -372,6 +364,30 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.injectSchema();
     });
+  }
+
+  /**
+   * Opciones del carrusel de testimonios de docentes.
+   * - skip_validateItems: con menos testimonios que `items`, ngx-owl-carousel-o
+   *   reduce `items` al número de slides y la card se estira a todo el ancho.
+   * - loop solo si hay más testimonios que los visibles; si no, owl clona la
+   *   misma card para rellenar huecos.
+   */
+  private buildTeachersOptions(testimonialsCount: number): OwlOptions {
+    const MAX_VISIBLE = 3;
+    return {
+      ...this.carouselOptions,
+      loop: testimonialsCount > MAX_VISIBLE,
+      skip_validateItems: true,
+      responsive: {
+        0: {
+          items: 2,
+        },
+        [768 * 1.3]: {
+          items: MAX_VISIBLE,
+        },
+      },
+    };
   }
 
   preloadImages(images: any, timeoutMs: number = 3000): Promise<any> {
@@ -454,7 +470,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.selectedActivitiesType !== type) {
       this.selectedActivitiesType = type;
       this.setActiveActivity(0);
-      this.activitiesIndexCarousel.reInit();
+      if (this.activitiesIndexCarousel) this.activitiesIndexCarousel.reInit();
     }
   }
 

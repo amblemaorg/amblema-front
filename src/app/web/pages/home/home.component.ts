@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone, Inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, NgZone, Inject, TemplateRef } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { DOCUMENT } from "@angular/common";
 import { OwlOptions } from "ngx-owl-carousel-o";
+import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { OwlCarousel } from "ngx-owl-carousel";
 import { ChartService } from "src/app/services/web/chart.service";
 import { GlobalService } from "src/app/services/global.service";
@@ -126,6 +127,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   finalStatistics: any = {};
   homeService: WebContentService;
 
+  // Escritorio: el modal del pilar se abre tras un hover breve sobre el icono.
+  private readonly PILLAR_HOVER_DELAY_MS = 300;
+  private pillarHoverTimer: ReturnType<typeof setTimeout> | null = null;
+  private pillarModalRef: NgbModalRef | null = null;
+  // Escritorio: el modal abierto por hover se cierra si el ratón sale de él.
+  private readonly PILLAR_LEAVE_DELAY_MS = 250;
+  private pillarLeaveTimer: ReturnType<typeof setTimeout> | null = null;
+  private pillarHoverIcon: HTMLElement | null = null;
+  private removePillarPointerTracking: (() => void) | null = null;
+
   HOME_PATH = "webcontent?page=homePage";
 
   constructor(
@@ -143,7 +154,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
     this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
     this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
-    this.iconService.loadSvg("../../../assets/icons/aaa-icon.svg", "aaa-icon");
   }
 
   ngOnInit() {
@@ -325,9 +335,112 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModal(pillar, content) {
+  openModal(pillar: string, content: TemplateRef<any>): NgbModalRef | null {
+    if (this.pillarModalRef) {
+      return null;
+    }
     this.selectedPillar = this.getPillar(pillar);
-    this.modalService.openModal(content);
+    this.pillarModalRef = this.modalService.openModal(content);
+    const release = () => {
+      this.pillarModalRef = null;
+      this.stopPillarPointerTracking();
+    };
+    this.pillarModalRef.result.then(release, release);
+    return this.pillarModalRef;
+  }
+
+  onPillarIconEnter(pillar: string, content: TemplateRef<any>, icon: EventTarget | null) {
+    if (!this.supportsHover()) {
+      return;
+    }
+    this.cancelPillarHover();
+    this.pillarHoverTimer = setTimeout(() => {
+      this.pillarHoverTimer = null;
+      if (this.openModal(pillar, content)) {
+        this.pillarHoverIcon = icon instanceof HTMLElement ? icon : null;
+        this.startPillarPointerTracking();
+      }
+    }, this.PILLAR_HOVER_DELAY_MS);
+  }
+
+  /**
+   * Sigue el puntero mientras el modal abierto por hover está visible. Si el
+   * puntero permanece fuera del recuadro del modal y fuera del icono de origen
+   * durante PILLAR_LEAVE_DELAY_MS, el modal se cierra.
+   */
+  private startPillarPointerTracking() {
+    this.stopPillarPointerTracking();
+    const onMove = (event: MouseEvent) => {
+      const inside =
+        this.isPointInside(this.getPillarModalContent(), event) ||
+        this.isPointInside(this.pillarHoverIcon, event);
+      if (inside) {
+        this.cancelPillarLeave();
+      } else if (!this.pillarLeaveTimer) {
+        this.pillarLeaveTimer = setTimeout(() => {
+          this.pillarLeaveTimer = null;
+          this.zone.run(() => this.pillarModalRef && this.pillarModalRef.dismiss("pointer-leave"));
+        }, this.PILLAR_LEAVE_DELAY_MS);
+      }
+    };
+    this.zone.runOutsideAngular(() => this.document.addEventListener("mousemove", onMove));
+    this.removePillarPointerTracking = () => this.document.removeEventListener("mousemove", onMove);
+  }
+
+  private stopPillarPointerTracking() {
+    this.cancelPillarLeave();
+    if (this.removePillarPointerTracking) {
+      this.removePillarPointerTracking();
+      this.removePillarPointerTracking = null;
+    }
+    this.pillarHoverIcon = null;
+  }
+
+  private cancelPillarLeave() {
+    if (this.pillarLeaveTimer) {
+      clearTimeout(this.pillarLeaveTimer);
+      this.pillarLeaveTimer = null;
+    }
+  }
+
+  private getPillarModalContent(): HTMLElement | null {
+    return this.document.querySelector("ngb-modal-window .modal-content");
+  }
+
+  private isPointInside(element: HTMLElement | null, event: MouseEvent): boolean {
+    if (!element) {
+      return false;
+    }
+    const rect = element.getBoundingClientRect();
+    return (
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom
+    );
+  }
+
+  cancelPillarHover() {
+    if (this.pillarHoverTimer) {
+      clearTimeout(this.pillarHoverTimer);
+      this.pillarHoverTimer = null;
+    }
+  }
+
+  // En dispositivos sin hover (táctiles) se mantiene la apertura al tocar.
+  onPillarClick(pillar: string, content: TemplateRef<any>) {
+    if (this.supportsHover()) {
+      return;
+    }
+    this.openModal(pillar, content);
+  }
+
+  private supportsHover(): boolean {
+    return (
+      this.isBrowser &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(hover: hover)").matches
+    );
   }
 
   getPillar(pillarName: string): any {
@@ -341,11 +454,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         return { title: "Matemática", description: this.homePageData.mathText };
       case "reading":
         return { title: "Lectura", description: this.homePageData.readingText };
-      case "aulaActiva":
-        return {
-          title: "Aula Activa AmbLeMa",
-          description: this.homePageData.aulaActivaText,
-        };
       default:
         throw Error("Invalid pillar error");
     }
@@ -390,6 +498,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.cancelPillarHover();
+    this.stopPillarPointerTracking();
     if (this.scrollSubscription) {
       this.scrollSubscription.unsubscribe();
     }
