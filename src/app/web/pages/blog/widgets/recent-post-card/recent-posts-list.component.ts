@@ -24,28 +24,28 @@ export class RecentPostsListComponent implements OnInit {
       title:
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam",
       slug: "",
-      image: "./assets/images/background-pillar-matematica.jpg",
+      image: "./assets/images/background-pillar-matematica.webp",
       date: new Date(),
     },
     {
       title:
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam",
       slug: "",
-      image: "./assets/images/background-pillar-matematica.jpg",
+      image: "./assets/images/background-pillar-matematica.webp",
       date: new Date(),
     },
     {
       title:
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam",
       slug: "",
-      image: "./assets/images/background-pillar-matematica.jpg",
+      image: "./assets/images/background-pillar-matematica.webp",
       date: new Date(),
     },
     {
       title:
         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam",
       slug: "",
-      image: "./assets/images/background-pillar-matematica.jpg",
+      image: "./assets/images/background-pillar-matematica.webp",
       date: new Date(),
     },
   ];

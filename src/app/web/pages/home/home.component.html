@@ -24,40 +24,38 @@
     </div>
   </ng-template>
 
-  <web-bg-heading>Tenemos Cuatro <br />Pilares Fundamentales</web-bg-heading>
+  <web-bg-heading>Tenemos Tres <br />Pilares Fundamentales</web-bg-heading>
   <div #pillarsList class="pillars-wrapper fade-in-animation animation-init">
     <div class="pillars-list">
-      <div class="pillar ambiente" (click)="openModal('environment', pillarModal)">
+      <div class="pillar ambiente" (click)="onPillarClick('environment', pillarModal)">
         <svg-icon
           class="amblema-icon"
           name="environment-icon"
+          (mouseenter)="onPillarIconEnter('environment', pillarModal, $event.currentTarget)"
+          (mouseleave)="cancelPillarHover()"
           [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Amb</span>iente</h3>
       </div>
-      <div class="pillar lectura" (click)="openModal('reading', pillarModal)">
+      <div class="pillar lectura" (click)="onPillarClick('reading', pillarModal)">
         <svg-icon
           class="amblema-icon"
           name="reading-icon"
+          (mouseenter)="onPillarIconEnter('reading', pillarModal, $event.currentTarget)"
+          (mouseleave)="cancelPillarHover()"
           [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Le</span>ctura</h3>
       </div>
-      <div class="pillar matematica" (click)="openModal('math', pillarModal)">
+      <div class="pillar matematica" (click)="onPillarClick('math', pillarModal)">
         <svg-icon
           class="amblema-icon"
           name="math-icon"
+          (mouseenter)="onPillarIconEnter('math', pillarModal, $event.currentTarget)"
+          (mouseleave)="cancelPillarHover()"
           [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
         ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
-      </div>
-      <div class="pillar aula-activa" (click)="openModal('aulaActiva', pillarModal)">
-        <svg-icon
-          class="amblema-icon"
-          name="aaa-icon"
-          [svgStyle]="{ 'height.vw': 10, 'width.vw': 10 }"
-        ></svg-icon>
-        <h3><span class="bold">Aula</span> Activa</h3>
       </div>
     </div>
 
@@ -91,17 +89,14 @@
         ></svg-icon>
         <h3><span class="bold">Ma</span>temática</h3>
       </div>
-      <div class="pillar aula-activa" (click)="openModal('aulaActiva', pillarModal)">
-        <svg-icon
-          class="amblema-icon"
-          name="aaa-icon"
-          [svgStyle]="{ 'height.vw': 50, 'width.vw': 50 }"
-        ></svg-icon>
-        <h3><span class="bold">Aula</span> Activa</h3>
-      </div>
     </owl-carousel>
   </div>
 </section>
+<web-aula-activa
+  *ngIf="homePageData.aulaActivaText"
+  theme="green"
+  [text]="homePageData.aulaActivaText"
+></web-aula-activa>
 <section class="social-impact">
   <div class="heading-wrapper">
     <h2 class="heading">Indicadores Clave</h2>
@@ -190,7 +185,7 @@
 </section><section class="math-olympics">
   <h2 class="sr-only">Olimpíadas Recreativas de AmbLeMa</h2>
   <div class="olimpiadas-main-logo">
-    <img src="./assets/images/olimpiadas.png" alt="Olimpíadas" loading="lazy">
+    <img src="./assets/images/olimpiadas.webp" alt="Olimpíadas" loading="lazy">
   </div>
   <div class="olympics-history-text">
     <p>Histórico de la participación de las escuelas que aplican la Herramienta Educativa AmbLeMa <br> 
@@ -198,7 +193,7 @@
   </div>
 
   <div class="activities-tabs-container">
-    <img src="./assets/images/orm.png" class="tab-side-img left" alt="ORM" loading="lazy">
+    <img src="./assets/images/orm.webp" class="tab-side-img left" alt="ORM" loading="lazy">
     <div class="activities-tabs-wrapper" style="margin-bottom: 30px;">
       <div
         class="activities-tab"
@@ -215,7 +210,7 @@
         Olimpíadas de Lengua
       </div>
     </div>
-    <img src="./assets/images/orl.png" class="tab-side-img right" alt="ORL" loading="lazy">
+    <img src="./assets/images/orl.webp" class="tab-side-img right" alt="ORL" loading="lazy">
   </div>
 
   <ng-container *ngIf="selectedOlympics === OLYMPICS.MATH">
@@ -227,19 +222,19 @@
         <span class="result-label">Estudiantes clasificados</span>
       </div>
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalGold }}</span>
-        <span class="result-label">Medallas obtenidas (Oro)</span>
+        <span class="result-label">Medallas de Oro obtenidas</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalSilver }}</span>
-        <span class="result-label">Medallas obtenidas (Plata)</span>
+        <span class="result-label">Medallas de Plata obtenidas</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.regionalBronze }}</span>
-        <span class="result-label">Medallas obtenidas (Bronce)</span>
+        <span class="result-label">Medallas de Bronce obtenidas</span>
       </div>
     </div>
 
@@ -247,19 +242,19 @@
     <div class="result-summary">
 
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalGold }}</span>
-        <span class="result-label">Medallas obtenidas (Oro)</span>
+        <span class="result-label">Medallas de Oro obtenidas</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalSilver }}</span>
-        <span class="result-label">Medallas obtenidas (Plata)</span>
+        <span class="result-label">Medallas de Plata obtenidas</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.mathOlympics.nationalBronze }}</span>
-        <span class="result-label">Medallas obtenidas (Bronce)</span>
+        <span class="result-label">Medallas de Bronce obtenidas</span>
       </div>
     </div>
   </ng-container>
@@ -273,19 +268,19 @@
         <span class="result-label">Estudiantes clasificados</span>
       </div>
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalGold }}</span>
-        <span class="result-label">Medallas obtenidas (Oro)</span>
+        <span class="result-label">Medallas de Oro obtenidas</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalSilver }}</span>
-        <span class="result-label">Medallas obtenidas (Plata)</span>
+        <span class="result-label">Medallas de Plata obtenidas</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.regionalBronze }}</span>
-        <span class="result-label">Medallas obtenidas (Bronce)</span>
+        <span class="result-label">Medallas de Bronce obtenidas</span>
       </div>
     </div>
 
@@ -293,19 +288,19 @@
     <div class="result-summary">
 
       <div class="result gold">
-        <img class="result-icon" src="./assets/images/icon-gold-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-gold-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalGold }}</span>
-        <span class="result-label">Medallas obtenidas (Oro)</span>
+        <span class="result-label">Medallas de Oro obtenidas</span>
       </div>
       <div class="result silver">
-        <img class="result-icon" src="./assets/images/icon-silver-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-silver-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalSilver }}</span>
-        <span class="result-label">Medallas obtenidas (Plata)</span>
+        <span class="result-label">Medallas de Plata obtenidas</span>
       </div>
       <div class="result bronze">
-        <img class="result-icon" src="./assets/images/icon-bronze-medal.png" loading="lazy" />
+        <img class="result-icon" src="./assets/images/icon-bronze-medal.webp" loading="lazy" />
         <span class="result-count">{{ homePageData.olympicsHistory.readingOlympics.nationalBronze }}</span>
-        <span class="result-label">Medallas obtenidas (Bronce)</span>
+        <span class="result-label">Medallas de Bronce obtenidas</span>
       </div>
     </div>
   </ng-container>

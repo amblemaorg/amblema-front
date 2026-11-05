@@ -1,6 +1,7 @@
 @import "scss/responsive";
 @import "scss/variables";
 @import "scss/elements/headings";
+@import "scss/elements/olympics-tooltip";
 
 section.about-us {
   background-color: $blue;
@@ -168,12 +169,12 @@ section.pillars {
 
     @include breakpoint(small, landscape) {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
     }
 
     @include breakpoint(medium) {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
     }
   }
 
@@ -470,18 +471,20 @@ section.founders {
 }
 
 section.math-olympics {
-  background-color: #eee;
-  padding: 15vw 10vw;
+  background-color: $white;
+  padding: 12vw 10vw;
   position: relative;
   z-index: 10;
 
   @include breakpoint(small, landscape) {
-    padding: 5vw 10vw;
+    padding: 4vw 10vw;
   }
 
   @include breakpoint(medium) {
-    padding: 5vw 10vw;
+    padding: 4vw 10vw;
   }
+
+  @include olympics-phase-spacing;
 
   .olimpiadas-main-logo {
     display: flex;
@@ -661,6 +664,8 @@ section.math-olympics {
           font-size: 1.5vw;
         }
       }
+
+      @include olympics-result-tooltip;
     }
   }
 

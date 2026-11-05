@@ -163,7 +163,7 @@ section.pillars {
 
     .pillar-wrapper {
       @include breakpoint(large) {
-        @include columns(3);
+        @include columns(4);
         background-color: gray;
         background-repeat: no-repeat;
         background-size: cover;
@@ -181,12 +181,9 @@ section.pillars {
         }
 
         &.math {
-          background-image: url('../../../../assets/images/background-pillar-matematica.jpg');
+          background-image: url('../../../../assets/images/background-pillar-matematica.webp');
         }
 
-        &.aula-activa {
-          background-image: url('../../../../assets/images/background-pillar-ambiente.jpg');
-        }
       }
     }
   }

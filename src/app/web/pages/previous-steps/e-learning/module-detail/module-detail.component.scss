@@ -1029,12 +1029,12 @@
 
     .modal-body {
       color: #fff;
-      background: url("~src/assets/images/banner-movil-2.jpg") no-repeat center;
+      background: url("~src/assets/images/banner-movil-2.webp") no-repeat center;
       background-size: cover;
       justify-content: flex-start !important;
 
       @media screen and (orientation: landscape) {
-        background: url("~src/assets/images/banner-2.jpg") no-repeat center;
+        background: url("~src/assets/images/banner-2.webp") no-repeat center;
         background-size: cover;
       }
 
