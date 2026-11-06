@@ -1,11 +1,67 @@
-<nav class="web-menu">
+<nav *ngIf="variant === 'desktop'" class="web-menu">
   <ul>
     <li *ngFor="let item of menuItems">
-      <a (click)="triggerNavigate()"
-        [routerLink]="[item.path]"
-      >
+      <a (click)="triggerNavigate()" [routerLink]="[item.path]">
         {{ item.name }}
       </a>
     </li>
   </ul>
 </nav>
+
+<div
+  *ngIf="variant === 'mobile'"
+  id="mobile-menu"
+  class="mobile-overlay"
+  [class.open]="isOpen"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menú principal"
+>
+  <div class="mobile-overlay__top">
+    <img class="mobile-overlay__logo" src="./assets/images/amblema-logo.png" alt="AmbLeMa" />
+    <button
+      #closeButton
+      type="button"
+      class="mobile-overlay__close"
+      aria-label="Cerrar menú"
+      (click)="closeMenu.emit()"
+    >
+      &times;
+    </button>
+  </div>
+
+  <nav class="mobile-overlay__nav">
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <a
+          [routerLink]="[item.path]"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          (click)="triggerNavigate()"
+        >
+          {{ item.name }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <a
+    class="mobile-overlay__peca"
+    [routerLink]="['/auth/login']"
+    (click)="triggerNavigate()"
+  >
+    Sistema PECA &rarr;
+  </a>
+
+  <div class="mobile-overlay__join">
+    <p class="mobile-overlay__join-title">Súmate a AmbLeMa</p>
+    <button
+      *ngFor="let item of invitations"
+      type="button"
+      class="mobile-overlay__join-btn"
+      (click)="openForm.emit(item.form)"
+    >
+      {{ item.prefix }}<strong>{{ item.highlight }}</strong>{{ item.suffix }} &rarr;
+    </button>
+  </div>
+</div>

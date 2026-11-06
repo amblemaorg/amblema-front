@@ -8,7 +8,7 @@
 >
   <img class="page-loader__image" src="assets/images/amblema-loader.webp" />
 </div>
-<web-header #header [class.hide-header]="hideHeaderFooter">
+<web-header #header [class.hide-header]="hideHeaderFooter" (openForm)="openOffcanvas($event)">
   <router-outlet></router-outlet>
   <web-footer #footer (openModal)="openOffcanvas($event)"></web-footer>
 </web-header>
