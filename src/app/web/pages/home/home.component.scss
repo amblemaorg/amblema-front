@@ -358,26 +358,27 @@ section.founders {
   background-color: $blue;
   background-image: url("../../../../assets/images/background-trees-movil.png");
   background-size: cover;
+  background-position: top center; // al reducir la altura, el recorte ocurre arriba y la base de los árboles queda intacta
   background-repeat: no-repeat;
   color: $white;
-  min-height: 152vw;
+  min-height: 140vw;
   overflow-x: hidden;
   position: relative;
 
   @include breakpoint(small, landscape) {
     background-image: url("../../../../assets/images/background-trees.png");
-    min-height: 50vw;
+    min-height: 42vw;
   }
 
   @include breakpoint(medium) {
     background-image: url("../../../../assets/images/background-trees.png");
-    min-height: 50vw;
+    min-height: 42vw;
   }
 
   .heading {
     color: $white;
     position: absolute;
-    top: 40vw;
+    top: 28vw;
     width: 60%;
     left: 15vw;
 
@@ -397,7 +398,7 @@ section.founders {
 
     h2 {
       font-size: 8vw;
-
+      color: $white;
       @include breakpoint(small, landscape) {
         font-size: 3.3vw;
       }

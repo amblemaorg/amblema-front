@@ -3,6 +3,7 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { faInstagram as instagramIcon } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope as emailIcon } from "@fortawesome/free-solid-svg-icons";
 import { faPhoneAlt as phoneIcon } from "@fortawesome/free-solid-svg-icons";
+import { JOIN_INVITATIONS, JoinFormId } from "../join-invitations";
 
 // Logo de X (antes Twitter). Trazado oficial de Font Awesome Free "x-twitter"
 // (CC BY 4.0). Se define aquí porque @fortawesome/free-brands-svg-icons@6.4.0
@@ -26,7 +27,8 @@ const xTwitterIcon: IconDefinition = {
   styleUrls: ["./footer.component.scss"],
 })
 export class FooterComponent implements OnInit {
-  @Output() openModal = new EventEmitter<string>();
+  @Output() openModal = new EventEmitter<JoinFormId>();
+  readonly invitations = JOIN_INVITATIONS;
   email = "amblemaoficial@gmail.com";
   emailIcon = emailIcon;
   phone = "0414 1000456";
@@ -39,16 +41,4 @@ export class FooterComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  triggerSchoolForm() {
-    this.openModal.emit("schoolForm");
-  }
-
-  triggerSponsorForm() {
-    this.openModal.emit("sponsorForm");
-  }
-
-  triggerCoordinatorForm() {
-    this.openModal.emit("coordinatorForm");
-  }
 }

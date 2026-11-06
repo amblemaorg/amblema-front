@@ -1,7 +1,22 @@
-<web-menu class="mobile-menu" (navigate)="onMenuClick()"></web-menu>
+<web-menu
+  #mobileMenu
+  class="mobile-menu"
+  variant="mobile"
+  [isOpen]="isMenuOpen"
+  (closeMenu)="closeMenu()"
+  (openForm)="onOpenForm($event)"
+></web-menu>
 <main id="web-main">
   <header>
-    <button class="menu-toggle" (click)="onMenuClick()">
+    <button
+      #menuToggle
+      type="button"
+      class="menu-toggle"
+      aria-label="Abrir menú"
+      aria-controls="mobile-menu"
+      [attr.aria-expanded]="isMenuOpen"
+      (click)="toggleMenu()"
+    >
       <svg-icon
         name="menu-icon"
         [svgStyle]="{ fill: '#00809A', 'height.vw': 9, 'width.vw': 9 }"

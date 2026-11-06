@@ -89,7 +89,6 @@
     "quill": "^1.3.7",
     "rxjs": "^6.6.7",
     "sessionstorage": "^0.1.0",
-    "slideout": "^1.0.1",
     "tslib": "^2.4.0",
     "webpack-node-externals": "^3.0.0",
     "xlsx": "^0.17.5",

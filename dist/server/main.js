@@ -130,6 +130,7 @@ const core_1 = __webpack_require__("8Y7J");
 const free_brands_svg_icons_1 = __webpack_require__("h7Ti");
 const free_solid_svg_icons_1 = __webpack_require__("YTkO");
 const free_solid_svg_icons_2 = __webpack_require__("YTkO");
+const join_invitations_1 = __webpack_require__("77sx");
 // Logo de X (antes Twitter). Trazado oficial de Font Awesome Free "x-twitter"
 // (CC BY 4.0). Se define aquí porque @fortawesome/free-brands-svg-icons@6.4.0
 // no lo incluye (faXTwitter llega en 6.4.2); al actualizar el paquete, sustituir
@@ -148,6 +149,7 @@ const xTwitterIcon = {
 class FooterComponent {
     constructor() {
         this.openModal = new core_1.EventEmitter();
+        this.invitations = join_invitations_1.JOIN_INVITATIONS;
         this.email = "amblemaoficial@gmail.com";
         this.emailIcon = free_solid_svg_icons_1.faEnvelope;
         this.phone = "0414 1000456";
@@ -158,15 +160,6 @@ class FooterComponent {
         this.twitterIcon = xTwitterIcon;
     }
     ngOnInit() { }
-    triggerSchoolForm() {
-        this.openModal.emit("schoolForm");
-    }
-    triggerSponsorForm() {
-        this.openModal.emit("sponsorForm");
-    }
-    triggerCoordinatorForm() {
-        this.openModal.emit("coordinatorForm");
-    }
 }
 exports.FooterComponent = FooterComponent;
 
@@ -15373,7 +15366,7 @@ exports.styles = void 0;
  * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes,extraRequire}
  * tslint:disable
  */
-var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}.mobile-menu[_nghost-%COMP%]{background-color:#fff}@media only screen and (min-width:320px){.mobile-menu[_nghost-%COMP%]{display:block}}@media only screen and (min-width:320px) and (orientation:landscape){.mobile-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:768px){.mobile-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:320px){.desktop-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:320px) and (orientation:landscape){.desktop-menu[_nghost-%COMP%]{display:block}}@media only screen and (min-width:768px){.desktop-menu[_nghost-%COMP%]{display:block}}.web-menu[_ngcontent-%COMP%]{padding:10vw 0}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]{padding:.8vw;border-right:.25vw solid #00809a}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]{padding:.8vw;border-right:.25vw solid #00809a}}.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{display:flex;flex-direction:column;justify-content:space-around;list-style:none;margin:0}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{flex-direction:row}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{flex-direction:row}}.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:6vw;margin:2vw 0}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.8vw;margin:0}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.8vw;margin:0}}@media only screen and (min-width:1024px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.2vw}}.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{color:#00809a;text-decoration:none}"];
+var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}@media only screen and (min-width:320px){.mobile-menu[_nghost-%COMP%]{display:block}}@media only screen and (min-width:320px) and (orientation:landscape){.mobile-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:768px){.mobile-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:320px){.desktop-menu[_nghost-%COMP%]{display:none}}@media only screen and (min-width:320px) and (orientation:landscape){.desktop-menu[_nghost-%COMP%]{display:block}}@media only screen and (min-width:768px){.desktop-menu[_nghost-%COMP%]{display:block}}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]{padding:.8vw;border-right:.25vw solid #00809a}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]{padding:.8vw;border-right:.25vw solid #00809a}}.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{display:flex;flex-direction:column;justify-content:space-around;list-style:none;margin:0}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{flex-direction:row}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{flex-direction:row}}@media only screen and (min-width:320px) and (orientation:landscape){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.8vw;margin:0}}@media only screen and (min-width:768px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.8vw;margin:0}}@media only screen and (min-width:1024px){.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{font-size:1.2vw}}.web-menu[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{color:#00809a;text-decoration:none}.mobile-overlay[_ngcontent-%COMP%]{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1000;display:flex;flex-direction:column;padding:4vw 6vw 6vw;background-color:#00809a;color:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}.mobile-overlay.open[_ngcontent-%COMP%]{opacity:1;visibility:visible;transition:opacity .25s ease,visibility 0s linear 0s}.mobile-overlay__top[_ngcontent-%COMP%]{display:flex;align-items:center;justify-content:space-between}.mobile-overlay__logo[_ngcontent-%COMP%]{width:40%;height:auto;filter:brightness(0) invert(1)}.mobile-overlay__close[_ngcontent-%COMP%]{background:transparent;border:none;color:#fff;font-size:11vw;line-height:1;padding:0 1vw;cursor:pointer}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]{list-style:none;margin:4vw 0 0;padding:0;text-align:center}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{opacity:0;transform:translateY(3vw);transition:opacity .25s ease,transform .25s ease}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:first-child{transition-delay:0s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:nth-child(2){transition-delay:.03s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:nth-child(3){transition-delay:.06s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:nth-child(4){transition-delay:.09s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:nth-child(5){transition-delay:.12s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]:nth-child(6){transition-delay:.15s}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{display:block;padding:1.6vw 0;font-size:6.4vw;font-weight:600;color:#fff;text-decoration:none}.mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   a.active[_ngcontent-%COMP%]{color:#bdd994}.mobile-overlay.open[_ngcontent-%COMP%]   .mobile-overlay__nav[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{opacity:1;transform:none}.mobile-overlay__peca[_ngcontent-%COMP%]{align-self:center;margin-top:4vw;padding:2.4vw 7vw;border-radius:10vw;background-color:#fff;color:#00809a;font-size:4.5vw;font-weight:700;text-decoration:none}.mobile-overlay__join[_ngcontent-%COMP%]{margin-top:auto;padding-top:4vw}.mobile-overlay__join-title[_ngcontent-%COMP%]{margin:0 0 1vw;padding-top:4vw;border-top:1px solid hsla(0,0%,100%,.35);font-size:3.2vw;letter-spacing:.1em;text-align:center;text-transform:uppercase;opacity:.85}.mobile-overlay__join-btn[_ngcontent-%COMP%]{display:block;width:100%;margin-top:2vw;padding:2.4vw 3vw;border:1.5px solid hsla(0,0%,100%,.7);border-radius:2.5vw;background:transparent;color:#fff;font-size:3.6vw;text-align:left;cursor:pointer}.mobile-overlay__join-btn[_ngcontent-%COMP%]   strong[_ngcontent-%COMP%]{color:#bdd994}@media (prefers-reduced-motion:reduce){.mobile-overlay[_ngcontent-%COMP%], .mobile-overlay.open[_ngcontent-%COMP%], .mobile-overlay__nav[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%]   li[_ngcontent-%COMP%]{transition:none}}"];
 exports.styles = styles;
 
 
@@ -46747,10 +46740,16 @@ const i17 = tslib_1.__importStar(__webpack_require__("4WDQ"));
 var styles_WebComponent = [i0.styles];
 var RenderType_WebComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_WebComponent, data: {} });
 exports.RenderType_WebComponent = RenderType_WebComponent;
-function View_WebComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(402653184, 1, { footer: 0 }), i1.ɵqud(402653184, 2, { offcanvas: 0 }), i1.ɵqud(402653184, 3, { pageLoader: 0 }), (_l()(), i1.ɵeld(3, 0, [[3, 0], ["pageLoader", 1]], null, 3, "div", [["class", "page-loader page-loader--l-center"]], null, null, null, null, null)), i1.ɵdid(4, 278528, null, 0, i2.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(5, { "page-loader--visible": 0, "page-loader--hidden": 1 }), (_l()(), i1.ɵeld(6, 0, null, null, 0, "img", [["class", "page-loader__image"], ["src", "assets/images/amblema-loader.webp"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 5, "web-header", [], [[2, "hide-header", null]], [["window", "resize"]], function (_v, en, $event) { var ad = true; if (("window:resize" === en)) {
-        var pd_0 = (i1.ɵnov(_v, 8).onResize() !== false);
+function View_WebComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(402653184, 1, { footer: 0 }), i1.ɵqud(402653184, 2, { offcanvas: 0 }), i1.ɵqud(402653184, 3, { pageLoader: 0 }), (_l()(), i1.ɵeld(3, 0, [[3, 0], ["pageLoader", 1]], null, 3, "div", [["class", "page-loader page-loader--l-center"]], null, null, null, null, null)), i1.ɵdid(4, 278528, null, 0, i2.NgClass, [i1.IterableDiffers, i1.KeyValueDiffers, i1.ElementRef, i1.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i1.ɵpod(5, { "page-loader--visible": 0, "page-loader--hidden": 1 }), (_l()(), i1.ɵeld(6, 0, null, null, 0, "img", [["class", "page-loader__image"], ["src", "assets/images/amblema-loader.webp"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 5, "web-header", [], [[2, "hide-header", null]], [[null, "openForm"], ["document", "keydown.escape"], ["window", "resize"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("document:keydown.escape" === en)) {
+        var pd_0 = (i1.ɵnov(_v, 8).onEscape() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i3.View_HeaderComponent_0, i3.RenderType_HeaderComponent)), i1.ɵdid(8, 114688, [["header", 4]], 0, i4.HeaderComponent, [i5.SvgIconRegistryService, i1.PLATFORM_ID], null, null), (_l()(), i1.ɵeld(9, 16777216, null, 0, 1, "router-outlet", [], null, null, null, null, null)), i1.ɵdid(10, 212992, null, 0, i6.RouterOutlet, [i6.ChildrenOutletContexts, i1.ViewContainerRef, i1.ComponentFactoryResolver, [8, null], i1.ChangeDetectorRef], null, null), (_l()(), i1.ɵeld(11, 0, [[1, 0]], 0, 1, "web-footer", [], null, [[null, "openModal"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("openModal" === en)) {
+    } if (("window:resize" === en)) {
+        var pd_1 = (i1.ɵnov(_v, 8).onResize() !== false);
+        ad = (pd_1 && ad);
+    } if (("openForm" === en)) {
+        var pd_2 = (_co.openOffcanvas($event) !== false);
+        ad = (pd_2 && ad);
+    } return ad; }, i3.View_HeaderComponent_0, i3.RenderType_HeaderComponent)), i1.ɵdid(8, 180224, [["header", 4]], 0, i4.HeaderComponent, [i5.SvgIconRegistryService, i6.Router, i1.PLATFORM_ID, i2.DOCUMENT], null, { openForm: "openForm" }), (_l()(), i1.ɵeld(9, 16777216, null, 0, 1, "router-outlet", [], null, null, null, null, null)), i1.ɵdid(10, 212992, null, 0, i6.RouterOutlet, [i6.ChildrenOutletContexts, i1.ViewContainerRef, i1.ComponentFactoryResolver, [8, null], i1.ChangeDetectorRef], null, null), (_l()(), i1.ɵeld(11, 0, [[1, 0]], 0, 1, "web-footer", [], null, [[null, "openModal"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("openModal" === en)) {
         var pd_0 = (_co.openOffcanvas($event) !== false);
         ad = (pd_0 && ad);
     } return ad; }, i7.View_FooterComponent_0, i7.RenderType_FooterComponent)), i1.ɵdid(12, 114688, [["footer", 4]], 0, i8.FooterComponent, [], null, { openModal: "openModal" }), (_l()(), i1.ɵeld(13, 0, null, null, 3, "web-offcanvas", [], null, [[null, "close"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("close" === en)) {
@@ -46759,7 +46758,7 @@ function View_WebComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(402653184, 1, { 
     } return ad; }, i9.View_OffcanvasComponent_0, i9.RenderType_OffcanvasComponent)), i1.ɵdid(14, 114688, [[2, 4], ["offcanvas", 4]], 0, i10.OffcanvasComponent, [], null, { close: "close" }), (_l()(), i1.ɵeld(15, 0, null, 0, 1, "web-implemented-forms", [], null, [[null, "success"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("success" === en)) {
         var pd_0 = (_co.closeOffcanvas() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i11.View_ImplementedFormsComponent_0, i11.RenderType_ImplementedFormsComponent)), i1.ɵdid(16, 114688, null, 0, i12.ImplementedFormsComponent, [i13.ContactService, i14.ToastrService], { form: [0, "form"] }, { success: "success" })], function (_ck, _v) { var _co = _v.component; var currVal_0 = "page-loader page-loader--l-center"; var currVal_1 = _ck(_v, 5, 0, _co.isloading, !_co.isloading); _ck(_v, 4, 0, currVal_0, currVal_1); _ck(_v, 8, 0); _ck(_v, 10, 0); _ck(_v, 12, 0); _ck(_v, 14, 0); var currVal_3 = _co.formSelected; _ck(_v, 16, 0, currVal_3); }, function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.hideHeaderFooter; _ck(_v, 7, 0, currVal_2); }); }
+    } return ad; }, i11.View_ImplementedFormsComponent_0, i11.RenderType_ImplementedFormsComponent)), i1.ɵdid(16, 114688, null, 0, i12.ImplementedFormsComponent, [i13.ContactService, i14.ToastrService], { form: [0, "form"] }, { success: "success" })], function (_ck, _v) { var _co = _v.component; var currVal_0 = "page-loader page-loader--l-center"; var currVal_1 = _ck(_v, 5, 0, _co.isloading, !_co.isloading); _ck(_v, 4, 0, currVal_0, currVal_1); _ck(_v, 10, 0); _ck(_v, 12, 0); _ck(_v, 14, 0); var currVal_3 = _co.formSelected; _ck(_v, 16, 0, currVal_3); }, function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.hideHeaderFooter; _ck(_v, 7, 0, currVal_2); }); }
 exports.View_WebComponent_0 = View_WebComponent_0;
 function View_WebComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "app-web", [], null, null, null, View_WebComponent_0, RenderType_WebComponent)), i1.ɵdid(1, 114688, null, 0, i15.WebComponent, [i6.Router, i16.Store, i2.DOCUMENT, i17.GlobalService], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_WebComponent_Host_0 = View_WebComponent_Host_0;
@@ -47074,7 +47073,7 @@ exports.styles = void 0;
  * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes,extraRequire}
  * tslint:disable
  */
-var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}h1[_ngcontent-%COMP%], h2[_ngcontent-%COMP%], h3[_ngcontent-%COMP%], h4[_ngcontent-%COMP%], h5[_ngcontent-%COMP%], h6[_ngcontent-%COMP%]{color:#00809a;line-height:1;margin:0;font-weight:700}h1[_ngcontent-%COMP%]{font-size:9.5vw}@media only screen and (min-width:320px) and (orientation:landscape){h1[_ngcontent-%COMP%]{font-size:4.5vw}}@media only screen and (min-width:768px){h1[_ngcontent-%COMP%]{font-size:4.5vw}}h2[_ngcontent-%COMP%]{font-size:8vw}@media only screen and (min-width:320px) and (orientation:landscape){h2[_ngcontent-%COMP%]{font-size:3.3vw}}@media only screen and (min-width:768px){h2[_ngcontent-%COMP%]{font-size:3.3vw}}h3[_ngcontent-%COMP%]{font-size:7vw}@media only screen and (min-width:320px) and (orientation:landscape){h3[_ngcontent-%COMP%]{font-size:2vw}}@media only screen and (min-width:768px){h3[_ngcontent-%COMP%]{font-size:2vw}}section.about-us[_ngcontent-%COMP%]{background-color:#00809a;display:flex;flex-direction:column;align-items:center;padding:20vw 15vw;position:relative}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]{flex-direction:row;padding:6vw 0}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]{flex-direction:row;padding:3vw 0}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .growth-animation[_ngcontent-%COMP%]{transition:height 2s ease!important}section.about-us[_ngcontent-%COMP%]   .growth-animation.animation-init[_ngcontent-%COMP%]{height:0!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-bottom-animation[_ngcontent-%COMP%]{transition:bottom 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-bottom-animation.animation-init[_ngcontent-%COMP%]{bottom:-100vh!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-right-animation[_ngcontent-%COMP%]{position:relative!important;transition:right 2s ease,left 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-right-animation.animation-init[_ngcontent-%COMP%]{right:-100vw!important;left:100vw!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-left-animation[_ngcontent-%COMP%]{position:relative;transition:left 2s ease,right 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-left-animation.animation-init[_ngcontent-%COMP%]{left:-100vw!important;right:100vw!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .fade-in-animation[_ngcontent-%COMP%]{transition:opacity 2s ease!important}section.about-us[_ngcontent-%COMP%]   .fade-in-animation.animation-init[_ngcontent-%COMP%]{opacity:0!important}section.about-us[_ngcontent-%COMP%]   .fade-in-animation.animation-finish[_ngcontent-%COMP%]{opacity:1!important}}section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{display:none;position:absolute;z-index:10}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{background-image:url(leaf.029efd124abb94112046.png);background-repeat:no-repeat;background-size:24vw 29vw;bottom:0;display:block;height:29vw;left:25vw;width:24vw}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{background-image:url(leaf.029efd124abb94112046.png);background-repeat:no-repeat;background-size:24vw 29vw;bottom:0;display:block;height:29vw;left:25vw;width:24vw}}section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:#fff;font-size:9vw;text-align:center;line-height:1.2;margin-bottom:10vw}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{font-size:4vw;margin-bottom:0;padding:0 18% 0 9%;text-align:left;width:50%}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{font-size:4vw;margin-bottom:0;padding:0 18% 0 9%;text-align:left;width:50%}}section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{color:#fff;font-size:4vw;text-align:center}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.8vw;padding:0 8% 0 0;text-align:left;width:40%}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.8vw;padding:0 8% 0 0;text-align:left;width:40%}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.2vw}}section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0}  owl-carousel.pillars-carousel-home .owl-next{right:-90vw!important}  .pillar:hover .amblema-icon svg .st0{fill:#81b03e;stroke:#81b03e}  .pillar:hover .amblema-icon svg path{fill:#81b03e}section.pillars[_ngcontent-%COMP%]{background-color:#fff;padding:8vw 5vw 25vw}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]{padding:3vw 5vw 8vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]{padding:3vw 5vw 8vw}}section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{display:block;margin:0 auto 20vw;width:100%}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{margin:0 auto 5vw;width:70%}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{margin:0 auto 5vw;width:70%}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .growth-animation[_ngcontent-%COMP%]{transition:height 2s ease!important}section.pillars[_ngcontent-%COMP%]   .growth-animation.animation-init[_ngcontent-%COMP%]{height:0!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-bottom-animation[_ngcontent-%COMP%]{transition:bottom 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-bottom-animation.animation-init[_ngcontent-%COMP%]{bottom:-100vh!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-right-animation[_ngcontent-%COMP%]{position:relative!important;transition:right 2s ease,left 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-right-animation.animation-init[_ngcontent-%COMP%]{right:-100vw!important;left:100vw!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-left-animation[_ngcontent-%COMP%]{position:relative;transition:left 2s ease,right 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-left-animation.animation-init[_ngcontent-%COMP%]{left:-100vw!important;right:100vw!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .fade-in-animation[_ngcontent-%COMP%]{transition:opacity 2s ease!important}section.pillars[_ngcontent-%COMP%]   .fade-in-animation.animation-init[_ngcontent-%COMP%]{opacity:0!important}section.pillars[_ngcontent-%COMP%]   .fade-in-animation.animation-finish[_ngcontent-%COMP%]{opacity:1!important}}section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:none}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:flex;justify-content:space-around}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:flex;justify-content:space-around}}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillars-carousel-home[_ngcontent-%COMP%]{display:none}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillars-carousel-home[_ngcontent-%COMP%]{display:none}}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{display:flex;flex-direction:column;justify-content:space-between;text-align:center;position:relative;width:100%;height:70vw}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{background-size:11vw;width:21vw;height:18vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{background-size:11vw;width:21vw;height:18vw}}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]:hover{cursor:pointer}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]:hover   h3[_ngcontent-%COMP%]{color:#81b03e}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:10vw;font-weight:400}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:2.6vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:2.6vw}}section.social-impact[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;padding:18vw 9vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]{padding:6vw 9vw 2vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]{padding:6vw 9vw 2vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{color:#fff;display:flex;flex-direction:column;justify-content:center}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{flex-direction:row;justify-content:flex-start;align-items:center;margin-bottom:2vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{flex-direction:row;justify-content:flex-start;align-items:center;margin-bottom:2vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:inherit;text-align:center;width:100%}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{text-align:left;width:30%}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{text-align:left;width:30%}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{display:flex;justify-content:space-between;width:100%;margin:5vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{margin:0;width:70%}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{margin:0;width:70%}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]{display:flex;flex-direction:column;text-align:center}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:-1rem}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:0}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:0}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:not(:last-child){margin-right:1rem}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:6.5vw;font-weight:700;line-height:1}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:4vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:4vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:2.8vw}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:1.25vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:1.25vw}}section.founders[_ngcontent-%COMP%]{background-color:#00809a;background-image:url(background-trees-movil.c9119bf73f2b2d0606b4.png);background-size:cover;background-repeat:no-repeat;color:#fff;min-height:152vw;overflow-x:hidden;position:relative}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]{background-image:url(background-trees.3f2b41aeed13969a1cf0.png);min-height:50vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]{background-image:url(background-trees.3f2b41aeed13969a1cf0.png);min-height:50vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:#fff;position:absolute;top:40vw;width:60%;left:15vw}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{bottom:20vw;left:6vw;top:unset;width:25vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{bottom:20vw;left:6vw;top:unset;width:25vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:8vw}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:3.3vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:3.3vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:4.5vw;margin:1.5vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.8vw;margin:1vw 0}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.8vw;margin:1vw 0}}  owl-carousel-o.founders-carousel{position:absolute;bottom:20vw;display:block;left:12vw;width:180%}@media only screen and (min-width:320px) and (orientation:landscape){  owl-carousel-o.founders-carousel{bottom:10vw;left:35vw;width:65%}}@media only screen and (min-width:768px){  owl-carousel-o.founders-carousel{bottom:10vw;left:35vw;width:65%}}  owl-carousel-o.founders-carousel .owl-nav.disabled{display:inline-block!important}  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:85%}@media only screen and (min-width:320px) and (orientation:landscape){  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:90%}}@media only screen and (min-width:768px){  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:90%}}section.math-olympics[_ngcontent-%COMP%]{background-color:#fff;padding:12vw 10vw;position:relative;z-index:10}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]{padding:4vw 10vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]{padding:4vw 10vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:10vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:3vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:3vw}}section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]{display:flex;justify-content:center;margin-bottom:20px}section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:40vw;height:auto}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:15vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:15vw}}section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{text-align:center;font-size:1.7rem;margin:5rem 0;color:#00809a}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.4vw;margin:3vw 0}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.4vw;margin:3vw 0}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]{display:flex;justify-content:center;width:100%;position:relative}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{position:absolute;bottom:0;height:10vw;width:auto;margin-bottom:25px}@media only screen and (min-width:320px) and (orientation:portrait){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{display:none}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%;margin-right:1vw}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%;margin-left:1vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{height:8vw;display:block}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{height:6vw;display:block}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]{display:flex;justify-content:space-around;flex-wrap:wrap}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{display:flex;flex-direction:column;align-items:center;width:50%;position:relative}@media only screen and (max-width:767px) and (orientation:portrait){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]{width:100%}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:25vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:10vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:10vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{color:#fff;font-size:6vw;font-weight:700;left:.3vw;position:relative;top:-12vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{font-size:2.5vw;left:.1vw;top:-5vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{font-size:2.5vw;left:.1vw;top:-5vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{color:#00809a;font-size:5vw;line-height:1;position:relative;top:-8vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:2vw;top:-2vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:2vw;top:-2vw}}@media only screen and (min-width:1024px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:1.5vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{cursor:pointer}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .3vw);line-height:1;position:absolute;top:13.6vw;transform:translateX(-50%)}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .1vw);top:5.25vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .1vw);top:5.25vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{background-color:#00809a;border-radius:4px;bottom:calc(100% + 10px);box-shadow:0 2px 8px rgba(0,0,0,.2);color:#fff;font-size:14px;left:50%;line-height:1.3;opacity:0;padding:6px 10px;pointer-events:none;position:absolute;top:auto;transform:translate(-50%,4px);transition:opacity .2s ease,transform .2s ease,visibility .2s;visibility:hidden;max-width:45vw;text-align:center;white-space:normal;width:-moz-max-content;width:max-content;z-index:5}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]:after{border:6px solid transparent;border-top-color:#00809a;content:\"\";left:50%;position:absolute;top:100%;transform:translateX(-50%)}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{width:-moz-max-content;width:max-content}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]:hover ~ .result-label[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]:hover ~ .result-label[_ngcontent-%COMP%]{opacity:1;transform:translate(-50%);visibility:visible}section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{margin-bottom:2vw;color:#00809a;text-align:center;font-size:5vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{font-size:2vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{font-size:2vw}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{display:flex;border-bottom:3px solid #00809a;text-align:center;width:90%;flex:0 1 90%;margin:0 auto}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{border-bottom:5px solid #00809a;width:90%;flex:0 1 90%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{border-bottom:5px solid #00809a;width:90%;flex:0 1 90%}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{color:#00809a;flex:1 0 50%;font-weight:700;font-size:4.5vw;line-height:1;padding:8% 2%}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{font-size:2vw;padding:2%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{font-size:2vw;padding:2%}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab.active[_ngcontent-%COMP%]{color:#81b03e}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]:hover:not(.active){cursor:pointer}"];
+var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}h1[_ngcontent-%COMP%], h2[_ngcontent-%COMP%], h3[_ngcontent-%COMP%], h4[_ngcontent-%COMP%], h5[_ngcontent-%COMP%], h6[_ngcontent-%COMP%]{color:#00809a;line-height:1;margin:0;font-weight:700}h1[_ngcontent-%COMP%]{font-size:9.5vw}@media only screen and (min-width:320px) and (orientation:landscape){h1[_ngcontent-%COMP%]{font-size:4.5vw}}@media only screen and (min-width:768px){h1[_ngcontent-%COMP%]{font-size:4.5vw}}h2[_ngcontent-%COMP%]{font-size:8vw}@media only screen and (min-width:320px) and (orientation:landscape){h2[_ngcontent-%COMP%]{font-size:3.3vw}}@media only screen and (min-width:768px){h2[_ngcontent-%COMP%]{font-size:3.3vw}}h3[_ngcontent-%COMP%]{font-size:7vw}@media only screen and (min-width:320px) and (orientation:landscape){h3[_ngcontent-%COMP%]{font-size:2vw}}@media only screen and (min-width:768px){h3[_ngcontent-%COMP%]{font-size:2vw}}section.about-us[_ngcontent-%COMP%]{background-color:#00809a;display:flex;flex-direction:column;align-items:center;padding:20vw 15vw;position:relative}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]{flex-direction:row;padding:6vw 0}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]{flex-direction:row;padding:3vw 0}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .growth-animation[_ngcontent-%COMP%]{transition:height 2s ease!important}section.about-us[_ngcontent-%COMP%]   .growth-animation.animation-init[_ngcontent-%COMP%]{height:0!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-bottom-animation[_ngcontent-%COMP%]{transition:bottom 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-bottom-animation.animation-init[_ngcontent-%COMP%]{bottom:-100vh!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-right-animation[_ngcontent-%COMP%]{position:relative!important;transition:right 2s ease,left 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-right-animation.animation-init[_ngcontent-%COMP%]{right:-100vw!important;left:100vw!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .slide-left-animation[_ngcontent-%COMP%]{position:relative;transition:left 2s ease,right 2s ease!important}section.about-us[_ngcontent-%COMP%]   .slide-left-animation.animation-init[_ngcontent-%COMP%]{left:-100vw!important;right:100vw!important}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .fade-in-animation[_ngcontent-%COMP%]{transition:opacity 2s ease!important}section.about-us[_ngcontent-%COMP%]   .fade-in-animation.animation-init[_ngcontent-%COMP%]{opacity:0!important}section.about-us[_ngcontent-%COMP%]   .fade-in-animation.animation-finish[_ngcontent-%COMP%]{opacity:1!important}}section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{display:none;position:absolute;z-index:10}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{background-image:url(leaf.029efd124abb94112046.png);background-repeat:no-repeat;background-size:24vw 29vw;bottom:0;display:block;height:29vw;left:25vw;width:24vw}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .background-leaf[_ngcontent-%COMP%]{background-image:url(leaf.029efd124abb94112046.png);background-repeat:no-repeat;background-size:24vw 29vw;bottom:0;display:block;height:29vw;left:25vw;width:24vw}}section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:#fff;font-size:9vw;text-align:center;line-height:1.2;margin-bottom:10vw}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{font-size:4vw;margin-bottom:0;padding:0 18% 0 9%;text-align:left;width:50%}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{font-size:4vw;margin-bottom:0;padding:0 18% 0 9%;text-align:left;width:50%}}section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{color:#fff;font-size:4vw;text-align:center}@media only screen and (min-width:320px) and (orientation:landscape){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.8vw;padding:0 8% 0 0;text-align:left;width:40%}}@media only screen and (min-width:768px){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.8vw;padding:0 8% 0 0;text-align:left;width:40%}}@media only screen and (min-width:1024px){section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]{font-size:1.2vw}}section.about-us[_ngcontent-%COMP%]   .text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin:0}  owl-carousel.pillars-carousel-home .owl-next{right:-90vw!important}  .pillar:hover .amblema-icon svg .st0{fill:#81b03e;stroke:#81b03e}  .pillar:hover .amblema-icon svg path{fill:#81b03e}section.pillars[_ngcontent-%COMP%]{background-color:#fff;padding:8vw 5vw 25vw}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]{padding:3vw 5vw 8vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]{padding:3vw 5vw 8vw}}section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{display:block;margin:0 auto 20vw;width:100%}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{margin:0 auto 5vw;width:70%}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   web-bg-heading[_ngcontent-%COMP%]{margin:0 auto 5vw;width:70%}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .growth-animation[_ngcontent-%COMP%]{transition:height 2s ease!important}section.pillars[_ngcontent-%COMP%]   .growth-animation.animation-init[_ngcontent-%COMP%]{height:0!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-bottom-animation[_ngcontent-%COMP%]{transition:bottom 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-bottom-animation.animation-init[_ngcontent-%COMP%]{bottom:-100vh!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-right-animation[_ngcontent-%COMP%]{position:relative!important;transition:right 2s ease,left 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-right-animation.animation-init[_ngcontent-%COMP%]{right:-100vw!important;left:100vw!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .slide-left-animation[_ngcontent-%COMP%]{position:relative;transition:left 2s ease,right 2s ease!important}section.pillars[_ngcontent-%COMP%]   .slide-left-animation.animation-init[_ngcontent-%COMP%]{left:-100vw!important;right:100vw!important}}@media only screen and (min-width:1024px){section.pillars[_ngcontent-%COMP%]   .fade-in-animation[_ngcontent-%COMP%]{transition:opacity 2s ease!important}section.pillars[_ngcontent-%COMP%]   .fade-in-animation.animation-init[_ngcontent-%COMP%]{opacity:0!important}section.pillars[_ngcontent-%COMP%]   .fade-in-animation.animation-finish[_ngcontent-%COMP%]{opacity:1!important}}section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:none}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:flex;justify-content:space-around}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillars-list[_ngcontent-%COMP%]{display:flex;justify-content:space-around}}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillars-carousel-home[_ngcontent-%COMP%]{display:none}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillars-carousel-home[_ngcontent-%COMP%]{display:none}}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{display:flex;flex-direction:column;justify-content:space-between;text-align:center;position:relative;width:100%;height:70vw}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{background-size:11vw;width:21vw;height:18vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]{background-size:11vw;width:21vw;height:18vw}}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]:hover{cursor:pointer}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]:hover   h3[_ngcontent-%COMP%]{color:#81b03e}section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:10vw;font-weight:400}@media only screen and (min-width:320px) and (orientation:landscape){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:2.6vw}}@media only screen and (min-width:768px){section.pillars[_ngcontent-%COMP%]   .pillar[_ngcontent-%COMP%]   h3[_ngcontent-%COMP%]{font-size:2.6vw}}section.social-impact[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;padding:18vw 9vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]{padding:6vw 9vw 2vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]{padding:6vw 9vw 2vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{color:#fff;display:flex;flex-direction:column;justify-content:center}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{flex-direction:row;justify-content:flex-start;align-items:center;margin-bottom:2vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]{flex-direction:row;justify-content:flex-start;align-items:center;margin-bottom:2vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:inherit;text-align:center;width:100%}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{text-align:left;width:30%}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{text-align:left;width:30%}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{display:flex;justify-content:space-between;width:100%;margin:5vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{margin:0;width:70%}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]{margin:0;width:70%}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]{display:flex;flex-direction:column;text-align:center}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:-1rem}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:0}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:first-child{margin-left:0}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]:not(:last-child){margin-right:1rem}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:6.5vw;font-weight:700;line-height:1}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:4vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-count[_ngcontent-%COMP%]{font-size:4vw}}section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:2.8vw}@media only screen and (min-width:320px) and (orientation:landscape){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:1.25vw}}@media only screen and (min-width:768px){section.social-impact[_ngcontent-%COMP%]   .heading-wrapper[_ngcontent-%COMP%]   .statistics[_ngcontent-%COMP%]   .statistic[_ngcontent-%COMP%]   .statistic-label[_ngcontent-%COMP%]{font-size:1.25vw}}section.founders[_ngcontent-%COMP%]{background-color:#00809a;background-image:url(background-trees-movil.c9119bf73f2b2d0606b4.png);background-size:cover;background-position:top;background-repeat:no-repeat;color:#fff;min-height:140vw;overflow-x:hidden;position:relative}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]{background-image:url(background-trees.3f2b41aeed13969a1cf0.png);min-height:42vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]{background-image:url(background-trees.3f2b41aeed13969a1cf0.png);min-height:42vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{color:#fff;position:absolute;top:28vw;width:60%;left:15vw}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{bottom:20vw;left:6vw;top:unset;width:25vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]{bottom:20vw;left:6vw;top:unset;width:25vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:8vw;color:#fff}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:3.3vw}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   h2[_ngcontent-%COMP%]{font-size:3.3vw}}section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:4.5vw;margin:1.5vw 0}@media only screen and (min-width:320px) and (orientation:landscape){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.8vw;margin:1vw 0}}@media only screen and (min-width:768px){section.founders[_ngcontent-%COMP%]   .heading[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.8vw;margin:1vw 0}}  owl-carousel-o.founders-carousel{position:absolute;bottom:20vw;display:block;left:12vw;width:180%}@media only screen and (min-width:320px) and (orientation:landscape){  owl-carousel-o.founders-carousel{bottom:10vw;left:35vw;width:65%}}@media only screen and (min-width:768px){  owl-carousel-o.founders-carousel{bottom:10vw;left:35vw;width:65%}}  owl-carousel-o.founders-carousel .owl-nav.disabled{display:inline-block!important}  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:85%}@media only screen and (min-width:320px) and (orientation:landscape){  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:90%}}@media only screen and (min-width:768px){  owl-carousel-o.founders-carousel web-testimonial-card .testimonial-card{width:90%}}section.math-olympics[_ngcontent-%COMP%]{background-color:#fff;padding:12vw 10vw;position:relative;z-index:10}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]{padding:4vw 10vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]{padding:4vw 10vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:10vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:3vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + *[_ngcontent-%COMP%] > .math-olympics-subtitle[_ngcontent-%COMP%]:first-child, section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%] + .math-olympics-subtitle[_ngcontent-%COMP%]{margin-top:3vw}}section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]{display:flex;justify-content:center;margin-bottom:20px}section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:40vw;height:auto}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:15vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .olimpiadas-main-logo[_ngcontent-%COMP%]   img[_ngcontent-%COMP%]{max-width:15vw}}section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{text-align:center;font-size:1.7rem;margin:5rem 0;color:#00809a}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.4vw;margin:3vw 0}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .olympics-history-text[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{font-size:1.4vw;margin:3vw 0}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]{display:flex;justify-content:center;width:100%;position:relative}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{position:absolute;bottom:0;height:10vw;width:auto;margin-bottom:25px}@media only screen and (min-width:320px) and (orientation:portrait){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{display:none}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%;margin-right:1vw}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%;margin-left:1vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{height:8vw;display:block}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img[_ngcontent-%COMP%]{height:6vw;display:block}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.left[_ngcontent-%COMP%]{right:95%}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-container[_ngcontent-%COMP%]   .tab-side-img.right[_ngcontent-%COMP%]{left:95%}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]{display:flex;justify-content:space-around;flex-wrap:wrap}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{display:flex;flex-direction:column;align-items:center;width:50%;position:relative}@media only screen and (max-width:767px) and (orientation:portrait){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]{width:100%}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]{width:-moz-min-content;width:min-content}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:25vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:10vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{height:10vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{color:#fff;font-size:6vw;font-weight:700;left:.3vw;position:relative;top:-12vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{font-size:2.5vw;left:.1vw;top:-5vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{font-size:2.5vw;left:.1vw;top:-5vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{color:#00809a;font-size:5vw;line-height:1;position:relative;top:-8vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:2vw;top:-2vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:2vw;top:-2vw}}@media only screen and (min-width:1024px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{font-size:1.5vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]{cursor:pointer}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .3vw);line-height:1;position:absolute;top:13.6vw;transform:translateX(-50%)}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .1vw);top:5.25vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]{left:calc(50% + .1vw);top:5.25vw}}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{background-color:#00809a;border-radius:4px;bottom:calc(100% + 10px);box-shadow:0 2px 8px rgba(0,0,0,.2);color:#fff;font-size:14px;left:50%;line-height:1.3;opacity:0;padding:6px 10px;pointer-events:none;position:absolute;top:auto;transform:translate(-50%,4px);transition:opacity .2s ease,transform .2s ease,visibility .2s;visibility:hidden;max-width:45vw;text-align:center;white-space:normal;width:-moz-max-content;width:max-content;z-index:5}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]:after{border:6px solid transparent;border-top-color:#00809a;content:\"\";left:50%;position:absolute;top:100%;transform:translateX(-50%)}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result.gold[_ngcontent-%COMP%]   .result-label[_ngcontent-%COMP%]{width:-moz-max-content;width:max-content}section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-count[_ngcontent-%COMP%]:hover ~ .result-label[_ngcontent-%COMP%], section.math-olympics[_ngcontent-%COMP%]   .result-summary[_ngcontent-%COMP%]   .result[_ngcontent-%COMP%]   .result-icon[_ngcontent-%COMP%]:hover ~ .result-label[_ngcontent-%COMP%]{opacity:1;transform:translate(-50%);visibility:visible}section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{margin-bottom:2vw;color:#00809a;text-align:center;font-size:5vw}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{font-size:2vw}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .math-olympics-subtitle[_ngcontent-%COMP%]{font-size:2vw}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{display:flex;border-bottom:3px solid #00809a;text-align:center;width:90%;flex:0 1 90%;margin:0 auto}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{border-bottom:5px solid #00809a;width:90%;flex:0 1 90%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]{border-bottom:5px solid #00809a;width:90%;flex:0 1 90%}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{color:#00809a;flex:1 0 50%;font-weight:700;font-size:4.5vw;line-height:1;padding:8% 2%}@media only screen and (min-width:320px) and (orientation:landscape){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{font-size:2vw;padding:2%}}@media only screen and (min-width:768px){section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]{font-size:2vw;padding:2%}}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab.active[_ngcontent-%COMP%]{color:#81b03e}section.math-olympics[_ngcontent-%COMP%]   .activities-tabs-wrapper[_ngcontent-%COMP%]   .activities-tab[_ngcontent-%COMP%]:hover:not(.active){cursor:pointer}"];
 exports.styles = styles;
 
 
@@ -48658,360 +48657,6 @@ function View_SponsorsComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵe
 exports.View_SponsorsComponent_Host_0 = View_SponsorsComponent_Host_0;
 var SponsorsComponentNgFactory = i1.ɵccf("app-sponsors", i14.SponsorsComponent, View_SponsorsComponent_Host_0, {}, {}, []);
 exports.SponsorsComponentNgFactory = SponsorsComponentNgFactory;
-
-
-/***/ }),
-
-/***/ "2qlU":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Module dependencies
- */
-var decouple = __webpack_require__("ncDI");
-var Emitter = __webpack_require__("kHMt");
-
-/**
- * Privates
- */
-var scrollTimeout;
-var scrolling = false;
-var doc = window.document;
-var html = doc.documentElement;
-var msPointerSupported = window.navigator.msPointerEnabled;
-var touch = {
-  'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
-  'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
-  'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
-};
-var prefix = (function prefix() {
-  var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;
-  var styleDeclaration = doc.getElementsByTagName('script')[0].style;
-  for (var prop in styleDeclaration) {
-    if (regex.test(prop)) {
-      return '-' + prop.match(regex)[0].toLowerCase() + '-';
-    }
-  }
-  // Nothing found so far? Webkit does not enumerate over the CSS properties of the style object.
-  // However (prop in style) returns the correct value, so we'll have to test for
-  // the precence of a specific property
-  if ('WebkitOpacity' in styleDeclaration) { return '-webkit-'; }
-  if ('KhtmlOpacity' in styleDeclaration) { return '-khtml-'; }
-  return '';
-}());
-function extend(destination, from) {
-  for (var prop in from) {
-    if (from[prop]) {
-      destination[prop] = from[prop];
-    }
-  }
-  return destination;
-}
-function inherits(child, uber) {
-  child.prototype = extend(child.prototype || {}, uber.prototype);
-}
-function hasIgnoredElements(el) {
-  while (el.parentNode) {
-    if (el.getAttribute('data-slideout-ignore') !== null) {
-      return el;
-    }
-    el = el.parentNode;
-  }
-  return null;
-}
-
-/**
- * Slideout constructor
- */
-function Slideout(options) {
-  options = options || {};
-
-  // Sets default values
-  this._startOffsetX = 0;
-  this._currentOffsetX = 0;
-  this._opening = false;
-  this._moved = false;
-  this._opened = false;
-  this._preventOpen = false;
-  this._touch = options.touch === undefined ? true : options.touch && true;
-  this._side = options.side || 'left';
-
-  // Sets panel
-  this.panel = options.panel;
-  this.menu = options.menu;
-
-  // Sets  classnames
-  if (!this.panel.classList.contains('slideout-panel')) {
-    this.panel.classList.add('slideout-panel');
-  }
-  if (!this.panel.classList.contains('slideout-panel-' + this._side)) {
-    this.panel.classList.add('slideout-panel-' + this._side);
-  }
-  if (!this.menu.classList.contains('slideout-menu')) {
-    this.menu.classList.add('slideout-menu');
-  }
-  if (!this.menu.classList.contains('slideout-menu-' + this._side)) {
-    this.menu.classList.add('slideout-menu-' + this._side);
-  }
-
-  // Sets options
-  this._fx = options.fx || 'ease';
-  this._duration = parseInt(options.duration, 10) || 300;
-  this._tolerance = parseInt(options.tolerance, 10) || 70;
-  this._padding = this._translateTo = parseInt(options.padding, 10) || 256;
-  this._orientation = this._side === 'right' ? -1 : 1;
-  this._translateTo *= this._orientation;
-
-  // Init touch events
-  if (this._touch) {
-    this._initTouchEvents();
-  }
-}
-
-/**
- * Inherits from Emitter
- */
-inherits(Slideout, Emitter);
-
-/**
- * Opens the slideout menu.
- */
-Slideout.prototype.open = function() {
-  var self = this;
-  this.emit('beforeopen');
-  if (!html.classList.contains('slideout-open')) {
-    html.classList.add('slideout-open');
-  }
-  this._setTransition();
-  this._translateXTo(this._translateTo);
-  this._opened = true;
-  setTimeout(function() {
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = '';
-    self.emit('open');
-  }, this._duration + 50);
-  return this;
-};
-
-/**
- * Closes slideout menu.
- */
-Slideout.prototype.close = function() {
-  var self = this;
-  if (!this.isOpen() && !this._opening) {
-    return this;
-  }
-  this.emit('beforeclose');
-  this._setTransition();
-  this._translateXTo(0);
-  this._opened = false;
-  setTimeout(function() {
-    html.classList.remove('slideout-open');
-    self.panel.style.transition = self.panel.style['-webkit-transition'] = self.panel.style[prefix + 'transform'] = self.panel.style.transform = '';
-    self.emit('close');
-  }, this._duration + 50);
-  return this;
-};
-
-/**
- * Toggles (open/close) slideout menu.
- */
-Slideout.prototype.toggle = function() {
-  return this.isOpen() ? this.close() : this.open();
-};
-
-/**
- * Returns true if the slideout is currently open, and false if it is closed.
- */
-Slideout.prototype.isOpen = function() {
-  return this._opened;
-};
-
-/**
- * Translates panel and updates currentOffset with a given X point
- */
-Slideout.prototype._translateXTo = function(translateX) {
-  this._currentOffsetX = translateX;
-  this.panel.style[prefix + 'transform'] = this.panel.style.transform = 'translateX(' + translateX + 'px)';
-  return this;
-};
-
-/**
- * Set transition properties
- */
-Slideout.prototype._setTransition = function() {
-  this.panel.style[prefix + 'transition'] = this.panel.style.transition = prefix + 'transform ' + this._duration + 'ms ' + this._fx;
-  return this;
-};
-
-/**
- * Initializes touch event
- */
-Slideout.prototype._initTouchEvents = function() {
-  var self = this;
-
-  /**
-   * Decouple scroll event
-   */
-  this._onScrollFn = decouple(doc, 'scroll', function() {
-    if (!self._moved) {
-      clearTimeout(scrollTimeout);
-      scrolling = true;
-      scrollTimeout = setTimeout(function() {
-        scrolling = false;
-      }, 250);
-    }
-  });
-
-  /**
-   * Prevents touchmove event if slideout is moving
-   */
-  this._preventMove = function(eve) {
-    if (self._moved) {
-      eve.preventDefault();
-    }
-  };
-
-  doc.addEventListener(touch.move, this._preventMove);
-
-  /**
-   * Resets values on touchstart
-   */
-  this._resetTouchFn = function(eve) {
-    if (typeof eve.touches === 'undefined') {
-      return;
-    }
-
-    self._moved = false;
-    self._opening = false;
-    self._startOffsetX = eve.touches[0].pageX;
-    self._preventOpen = (!self._touch || (!self.isOpen() && self.menu.clientWidth !== 0));
-  };
-
-  this.panel.addEventListener(touch.start, this._resetTouchFn);
-
-  /**
-   * Resets values on touchcancel
-   */
-  this._onTouchCancelFn = function() {
-    self._moved = false;
-    self._opening = false;
-  };
-
-  this.panel.addEventListener('touchcancel', this._onTouchCancelFn);
-
-  /**
-   * Toggles slideout on touchend
-   */
-  this._onTouchEndFn = function() {
-    if (self._moved) {
-      self.emit('translateend');
-      (self._opening && Math.abs(self._currentOffsetX) > self._tolerance) ? self.open() : self.close();
-    }
-    self._moved = false;
-  };
-
-  this.panel.addEventListener(touch.end, this._onTouchEndFn);
-
-  /**
-   * Translates panel on touchmove
-   */
-  this._onTouchMoveFn = function(eve) {
-    if (
-      scrolling ||
-      self._preventOpen ||
-      typeof eve.touches === 'undefined' ||
-      hasIgnoredElements(eve.target)
-    ) {
-      return;
-    }
-
-    var dif_x = eve.touches[0].clientX - self._startOffsetX;
-    var translateX = self._currentOffsetX = dif_x;
-
-    if (Math.abs(translateX) > self._padding) {
-      return;
-    }
-
-    if (Math.abs(dif_x) > 20) {
-
-      self._opening = true;
-
-      var oriented_dif_x = dif_x * self._orientation;
-
-      if (self._opened && oriented_dif_x > 0 || !self._opened && oriented_dif_x < 0) {
-        return;
-      }
-
-      if (!self._moved) {
-        self.emit('translatestart');
-      }
-
-      if (oriented_dif_x <= 0) {
-        translateX = dif_x + self._padding * self._orientation;
-        self._opening = false;
-      }
-
-      if (!(self._moved && html.classList.contains('slideout-open'))) {
-        html.classList.add('slideout-open');
-      }
-
-      self.panel.style[prefix + 'transform'] = self.panel.style.transform = 'translateX(' + translateX + 'px)';
-      self.emit('translate', translateX);
-      self._moved = true;
-    }
-
-  };
-
-  this.panel.addEventListener(touch.move, this._onTouchMoveFn);
-
-  return this;
-};
-
-/**
- * Enable opening the slideout via touch events.
- */
-Slideout.prototype.enableTouch = function() {
-  this._touch = true;
-  return this;
-};
-
-/**
- * Disable opening the slideout via touch events.
- */
-Slideout.prototype.disableTouch = function() {
-  this._touch = false;
-  return this;
-};
-
-/**
- * Destroy an instance of slideout.
- */
-Slideout.prototype.destroy = function() {
-  // Close before clean
-  this.close();
-
-  // Remove event listeners
-  doc.removeEventListener(touch.move, this._preventMove);
-  this.panel.removeEventListener(touch.start, this._resetTouchFn);
-  this.panel.removeEventListener('touchcancel', this._onTouchCancelFn);
-  this.panel.removeEventListener(touch.end, this._onTouchEndFn);
-  this.panel.removeEventListener(touch.move, this._onTouchMoveFn);
-  doc.removeEventListener('scroll', this._onScrollFn);
-
-  // Remove methods
-  this.open = this.close = function() {};
-
-  // Return the instance so it can be easily dereferenced
-  return this;
-};
-
-/**
- * Expose Slideout
- */
-module.exports = Slideout;
 
 
 /***/ }),
@@ -136863,6 +136508,23 @@ module.exports = stackClear;
 
 /***/ }),
 
+/***/ "77sx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JOIN_INVITATIONS = void 0;
+/** Invitaciones "Súmate a AmbLeMa", compartidas por el footer y el menú móvil. */
+exports.JOIN_INVITATIONS = [
+    { form: 'schoolForm', prefix: '¿Te gustaría que ', highlight: 'AmbLeMa', suffix: ' esté en tu escuela?' },
+    { form: 'sponsorForm', prefix: '¿Te gustaría ser ', highlight: 'Padrino', suffix: ' de una escuela?' },
+    { form: 'coordinatorForm', prefix: '¿Te gustaría ser ', highlight: 'Coordinador', suffix: ' de una escuela?' },
+];
+
+
+/***/ }),
+
 /***/ "7AFn":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -176058,47 +175720,76 @@ module.exports = WindowTimers;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeaderComponent = void 0;
-const tslib_1 = __webpack_require__("zOht");
+const core_1 = __webpack_require__("8Y7J");
 const common_1 = __webpack_require__("SVse");
+const router_1 = __webpack_require__("iInd");
+const body_scroll_lock_1 = __webpack_require__("x0D+");
+const operators_1 = __webpack_require__("kU1M");
+/** Mismo corte que `breakpoint(medium)` en assets/scss/_responsive.scss. */
+const MOBILE_MAX_WIDTH = 768;
 class HeaderComponent {
-    constructor(iconReg, platformId) {
+    constructor(iconReg, router, platformId, document) {
         this.iconReg = iconReg;
-        this.platformId = platformId;
+        this.router = router;
+        this.document = document;
+        this.openForm = new core_1.EventEmitter();
+        this.isMenuOpen = false;
         this.isBrowser = common_1.isPlatformBrowser(platformId);
         this.iconReg.loadSvg('./assets/icons/menu.svg', 'menu-icon');
         this.iconReg.loadSvg('./assets/icons/user.svg', 'user-icon');
+        this.routerSub = this.router.events
+            .pipe(operators_1.filter((event) => event instanceof router_1.NavigationStart))
+            .subscribe(() => this.closeMenu(false));
     }
-    ngOnInit() {
-        if (this.isBrowser) {
-            if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
-                this.createMobileMenu();
-        }
+    ngOnDestroy() {
+        this.routerSub.unsubscribe();
+        this.setScrollLock(false);
+    }
+    toggleMenu() {
+        this.isMenuOpen ? this.closeMenu() : this.openMenu();
+    }
+    openMenu() {
+        if (this.isMenuOpen)
+            return;
+        this.isMenuOpen = true;
+        this.setScrollLock(true);
+        // Esperar a que la capa sea visible para poder enfocarla.
+        if (this.isBrowser)
+            setTimeout(() => this.mobileMenu && this.mobileMenu.focusCloseButton());
+    }
+    closeMenu(restoreFocus = true) {
+        if (!this.isMenuOpen)
+            return;
+        this.isMenuOpen = false;
+        this.setScrollLock(false);
+        if (restoreFocus && this.menuToggle)
+            this.menuToggle.nativeElement.focus();
+    }
+    onOpenForm(form) {
+        this.closeMenu(false);
+        this.openForm.emit(form);
+    }
+    onEscape() {
+        this.closeMenu();
     }
     onResize() {
-        if (this.isBrowser) {
-            this.destroyMobileMenu();
-            if (window.innerWidth < 768 && window.innerWidth < window.innerHeight)
-                this.createMobileMenu();
-        }
+        if (!this.isBrowser || !this.isMenuOpen)
+            return;
+        const { innerWidth, innerHeight } = window;
+        if (innerWidth >= MOBILE_MAX_WIDTH || innerWidth > innerHeight)
+            this.closeMenu(false);
     }
-    createMobileMenu() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            if (!this.isBrowser)
-                return;
-            const Slideout = (yield Promise.resolve().then(() => tslib_1.__importStar(__webpack_require__("2qlU")))).default;
-            this.slideoutMenu = new Slideout({
-                panel: document.getElementById('web-main'),
-                menu: document.querySelector('web-menu.mobile-menu'),
-                padding: 256,
-                tolerance: 70,
-            });
-        });
-    }
-    destroyMobileMenu() {
-        this.slideoutMenu && this.slideoutMenu.destroy();
-    }
-    onMenuClick() {
-        this.slideoutMenu && this.slideoutMenu.toggle();
+    setScrollLock(locked) {
+        if (!this.isBrowser)
+            return;
+        const overlay = this.document.getElementById('mobile-menu');
+        // `body` tiene `overflow-y: visible !important` (styles.scss), así que el overflow inline de
+        // body-scroll-lock no basta: se bloquea el scroll del viewport con una clase en <html>.
+        // body-scroll-lock se mantiene por iOS (bloqueo de touchmove fuera de la capa).
+        this.document.documentElement.classList.toggle('mobile-menu-open', locked);
+        if (!overlay)
+            return;
+        locked ? body_scroll_lock_1.disableBodyScroll(overlay) : body_scroll_lock_1.enableBodyScroll(overlay);
     }
 }
 exports.HeaderComponent = HeaderComponent;
@@ -176694,39 +176385,30 @@ const ObjectUnsubscribedError = ObjectUnsubscribedErrorImpl;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuComponent = void 0;
 const core_1 = __webpack_require__("8Y7J");
+const join_invitations_1 = __webpack_require__("77sx");
 class MenuComponent {
     constructor() {
+        /** `desktop`: barra horizontal. `mobile`: capa a pantalla completa controlada por el header. */
+        this.variant = 'desktop';
+        this.isOpen = false;
         this.navigate = new core_1.EventEmitter();
+        this.closeMenu = new core_1.EventEmitter();
+        this.openForm = new core_1.EventEmitter();
+        this.invitations = join_invitations_1.JOIN_INVITATIONS;
         this.menuItems = [
-            {
-                path: "/",
-                name: "Inicio"
-            },
-            {
-                path: "/nosotros",
-                name: "Nosotros"
-            },
-            {
-                path: "/padrinos",
-                name: "Padrinos"
-            },
-            {
-                path: "/coordinadores",
-                name: "Coordinadores"
-            },
-            {
-                path: "/escuelas",
-                name: "Escuelas"
-            },
-            {
-                path: "/blog",
-                name: "Blog"
-            }
+            { path: '/', name: 'Inicio' },
+            { path: '/nosotros', name: 'Nosotros' },
+            { path: '/padrinos', name: 'Padrinos' },
+            { path: '/coordinadores', name: 'Coordinadores' },
+            { path: '/escuelas', name: 'Escuelas' },
+            { path: '/blog', name: 'Blog' },
         ];
     }
-    ngOnInit() { }
     triggerNavigate() {
         this.navigate.emit('complete');
+    }
+    focusCloseButton() {
+        this.closeButton && this.closeButton.nativeElement.focus();
     }
 }
 exports.MenuComponent = MenuComponent;
@@ -176986,23 +176668,29 @@ const i8 = tslib_1.__importStar(__webpack_require__("9VtD"));
 var styles_HeaderComponent = [i0.styles];
 var RenderType_HeaderComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_HeaderComponent, data: {} });
 exports.RenderType_HeaderComponent = RenderType_HeaderComponent;
-function View_HeaderComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-menu", [["class", "mobile-menu"]], null, [[null, "navigate"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("navigate" === en)) {
-        var pd_0 = (_co.onMenuClick() !== false);
+function View_HeaderComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { menuToggle: 0 }), i1.ɵqud(671088640, 2, { mobileMenu: 0 }), (_l()(), i1.ɵeld(2, 0, null, null, 1, "web-menu", [["class", "mobile-menu"], ["variant", "mobile"]], null, [[null, "closeMenu"], [null, "openForm"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("closeMenu" === en)) {
+        var pd_0 = (_co.closeMenu() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, i2.View_MenuComponent_0, i2.RenderType_MenuComponent)), i1.ɵdid(1, 114688, null, 0, i3.MenuComponent, [], null, { navigate: "navigate" }), (_l()(), i1.ɵeld(2, 0, null, null, 18, "main", [["id", "web-main"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, null, null, 16, "header", [], null, null, null, null, null)), (_l()(), i1.ɵeld(4, 0, null, null, 3, "button", [["class", "menu-toggle"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.onMenuClick() !== false);
+    } if (("openForm" === en)) {
+        var pd_1 = (_co.onOpenForm($event) !== false);
+        ad = (pd_1 && ad);
+    } return ad; }, i2.View_MenuComponent_0, i2.RenderType_MenuComponent)), i1.ɵdid(3, 49152, [[2, 4], ["mobileMenu", 4]], 0, i3.MenuComponent, [], { variant: [0, "variant"], isOpen: [1, "isOpen"] }, { closeMenu: "closeMenu", openForm: "openForm" }), (_l()(), i1.ɵeld(4, 0, null, null, 18, "main", [["id", "web-main"]], null, null, null, null, null)), (_l()(), i1.ɵeld(5, 0, null, null, 16, "header", [], null, null, null, null, null)), (_l()(), i1.ɵeld(6, 0, [[1, 0], ["menuToggle", 1]], null, 3, "button", [["aria-controls", "mobile-menu"], ["aria-label", "Abrir men\u00FA"], ["class", "menu-toggle"], ["type", "button"]], [[1, "aria-expanded", 0]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.toggleMenu() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵeld(5, 0, null, null, 2, "svg-icon", [["name", "menu-icon"]], null, null, null, i4.View_SvgIconComponent_0, i4.RenderType_SvgIconComponent)), i1.ɵdid(6, 1032192, null, 0, i5.SvgIconComponent, [i1.ElementRef, i1.KeyValueDiffers, i1.Renderer2, i5.SvgIconRegistryService, i1.ChangeDetectorRef], { name: [0, "name"], svgStyle: [1, "svgStyle"] }, null), i1.ɵpod(7, { fill: 0, "height.vw": 1, "width.vw": 2 }), (_l()(), i1.ɵeld(8, 0, null, null, 0, "img", [["alt", "amblema logo"], ["class", "logo"], ["src", "../../../../assets/images/amblema-logo.png"]], null, null, null, null, null)), (_l()(), i1.ɵeld(9, 0, null, null, 1, "web-menu", [["class", "desktop-menu"]], null, null, null, i2.View_MenuComponent_0, i2.RenderType_MenuComponent)), i1.ɵdid(10, 114688, null, 0, i3.MenuComponent, [], null, null), (_l()(), i1.ɵeld(11, 0, null, null, 8, "div", [["class", "user-access"]], null, null, null, null, null)), (_l()(), i1.ɵeld(12, 0, null, null, 7, "a", [], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
-        var pd_0 = (i1.ɵnov(_v, 13).onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey) !== false);
+    } return ad; }, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 2, "svg-icon", [["name", "menu-icon"]], null, null, null, i4.View_SvgIconComponent_0, i4.RenderType_SvgIconComponent)), i1.ɵdid(8, 1032192, null, 0, i5.SvgIconComponent, [i1.ElementRef, i1.KeyValueDiffers, i1.Renderer2, i5.SvgIconRegistryService, i1.ChangeDetectorRef], { name: [0, "name"], svgStyle: [1, "svgStyle"] }, null), i1.ɵpod(9, { fill: 0, "height.vw": 1, "width.vw": 2 }), (_l()(), i1.ɵeld(10, 0, null, null, 0, "img", [["alt", "amblema logo"], ["class", "logo"], ["src", "../../../../assets/images/amblema-logo.png"]], null, null, null, null, null)), (_l()(), i1.ɵeld(11, 0, null, null, 1, "web-menu", [["class", "desktop-menu"]], null, null, null, i2.View_MenuComponent_0, i2.RenderType_MenuComponent)), i1.ɵdid(12, 49152, null, 0, i3.MenuComponent, [], null, null), (_l()(), i1.ɵeld(13, 0, null, null, 8, "div", [["class", "user-access"]], null, null, null, null, null)), (_l()(), i1.ɵeld(14, 0, null, null, 7, "a", [], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; if (("click" === en)) {
+        var pd_0 = (i1.ɵnov(_v, 15).onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), i1.ɵdid(13, 671744, null, 0, i6.RouterLinkWithHref, [i6.Router, i6.ActivatedRoute, i7.LocationStrategy], { routerLink: [0, "routerLink"] }, null), i1.ɵpad(14, 1), (_l()(), i1.ɵeld(15, 0, null, null, 2, "svg-icon", [["name", "user-icon"]], null, null, null, i4.View_SvgIconComponent_0, i4.RenderType_SvgIconComponent)), i1.ɵdid(16, 1032192, null, 0, i5.SvgIconComponent, [i1.ElementRef, i1.KeyValueDiffers, i1.Renderer2, i5.SvgIconRegistryService, i1.ChangeDetectorRef], { name: [0, "name"], svgStyle: [1, "svgStyle"] }, null), i1.ɵpod(17, { fill: 0, "height.em": 1, "width.em": 2 }), (_l()(), i1.ɵeld(18, 0, null, null, 1, "span", [["class", "text-login-item"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Sistema PECA"])), i1.ɵncd(null, 0)], function (_ck, _v) { _ck(_v, 1, 0); var currVal_0 = "menu-icon"; var currVal_1 = _ck(_v, 7, 0, "#00809A", 9, 9); _ck(_v, 6, 0, currVal_0, currVal_1); _ck(_v, 10, 0); var currVal_4 = _ck(_v, 14, 0, "/auth/login"); _ck(_v, 13, 0, currVal_4); var currVal_5 = "user-icon"; var currVal_6 = _ck(_v, 17, 0, "#00809A", 1.5, 1.5); _ck(_v, 16, 0, currVal_5, currVal_6); }, function (_ck, _v) { var currVal_2 = i1.ɵnov(_v, 13).target; var currVal_3 = i1.ɵnov(_v, 13).href; _ck(_v, 12, 0, currVal_2, currVal_3); }); }
+    } return ad; }, null, null)), i1.ɵdid(15, 671744, null, 0, i6.RouterLinkWithHref, [i6.Router, i6.ActivatedRoute, i7.LocationStrategy], { routerLink: [0, "routerLink"] }, null), i1.ɵpad(16, 1), (_l()(), i1.ɵeld(17, 0, null, null, 2, "svg-icon", [["name", "user-icon"]], null, null, null, i4.View_SvgIconComponent_0, i4.RenderType_SvgIconComponent)), i1.ɵdid(18, 1032192, null, 0, i5.SvgIconComponent, [i1.ElementRef, i1.KeyValueDiffers, i1.Renderer2, i5.SvgIconRegistryService, i1.ChangeDetectorRef], { name: [0, "name"], svgStyle: [1, "svgStyle"] }, null), i1.ɵpod(19, { fill: 0, "height.em": 1, "width.em": 2 }), (_l()(), i1.ɵeld(20, 0, null, null, 1, "span", [["class", "text-login-item"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Sistema PECA"])), i1.ɵncd(null, 0)], function (_ck, _v) { var _co = _v.component; var currVal_0 = "mobile"; var currVal_1 = _co.isMenuOpen; _ck(_v, 3, 0, currVal_0, currVal_1); var currVal_3 = "menu-icon"; var currVal_4 = _ck(_v, 9, 0, "#00809A", 9, 9); _ck(_v, 8, 0, currVal_3, currVal_4); var currVal_7 = _ck(_v, 16, 0, "/auth/login"); _ck(_v, 15, 0, currVal_7); var currVal_8 = "user-icon"; var currVal_9 = _ck(_v, 19, 0, "#00809A", 1.5, 1.5); _ck(_v, 18, 0, currVal_8, currVal_9); }, function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.isMenuOpen; _ck(_v, 6, 0, currVal_2); var currVal_5 = i1.ɵnov(_v, 15).target; var currVal_6 = i1.ɵnov(_v, 15).href; _ck(_v, 14, 0, currVal_5, currVal_6); }); }
 exports.View_HeaderComponent_0 = View_HeaderComponent_0;
-function View_HeaderComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-header", [], null, [["window", "resize"]], function (_v, en, $event) { var ad = true; if (("window:resize" === en)) {
-        var pd_0 = (i1.ɵnov(_v, 1).onResize() !== false);
+function View_HeaderComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-header", [], null, [["document", "keydown.escape"], ["window", "resize"]], function (_v, en, $event) { var ad = true; if (("document:keydown.escape" === en)) {
+        var pd_0 = (i1.ɵnov(_v, 1).onEscape() !== false);
         ad = (pd_0 && ad);
-    } return ad; }, View_HeaderComponent_0, RenderType_HeaderComponent)), i1.ɵdid(1, 114688, null, 0, i8.HeaderComponent, [i5.SvgIconRegistryService, i1.PLATFORM_ID], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+    } if (("window:resize" === en)) {
+        var pd_1 = (i1.ɵnov(_v, 1).onResize() !== false);
+        ad = (pd_1 && ad);
+    } return ad; }, View_HeaderComponent_0, RenderType_HeaderComponent)), i1.ɵdid(1, 180224, null, 0, i8.HeaderComponent, [i5.SvgIconRegistryService, i6.Router, i1.PLATFORM_ID, i7.DOCUMENT], null, null)], null, null); }
 exports.View_HeaderComponent_Host_0 = View_HeaderComponent_Host_0;
-var HeaderComponentNgFactory = i1.ɵccf("web-header", i8.HeaderComponent, View_HeaderComponent_Host_0, {}, {}, ["*"]);
+var HeaderComponentNgFactory = i1.ɵccf("web-header", i8.HeaderComponent, View_HeaderComponent_Host_0, {}, { openForm: "openForm" }, ["*"]);
 exports.HeaderComponentNgFactory = HeaderComponentNgFactory;
 
 
@@ -258324,18 +258012,40 @@ const i4 = tslib_1.__importStar(__webpack_require__("9soG"));
 var styles_MenuComponent = [i0.styles];
 var RenderType_MenuComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_MenuComponent, data: {} });
 exports.RenderType_MenuComponent = RenderType_MenuComponent;
-function View_MenuComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "li", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "a", [], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+function View_MenuComponent_2(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "li", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "a", [], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
         var pd_0 = (i1.ɵnov(_v, 2).onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey) !== false);
         ad = (pd_0 && ad);
     } if (("click" === en)) {
         var pd_1 = (_co.triggerNavigate() !== false);
         ad = (pd_1 && ad);
     } return ad; }, null, null)), i1.ɵdid(2, 671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, "routerLink"] }, null), i1.ɵpad(3, 1), (_l()(), i1.ɵted(4, null, [" ", " "]))], function (_ck, _v) { var currVal_2 = _ck(_v, 3, 0, _v.context.$implicit.path); _ck(_v, 2, 0, currVal_2); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 2).target; var currVal_1 = i1.ɵnov(_v, 2).href; _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_3 = _v.context.$implicit.name; _ck(_v, 4, 0, currVal_3); }); }
-function View_MenuComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "nav", [["class", "web-menu"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_1)), i1.ɵdid(3, 278528, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.menuItems; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_MenuComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 3, "nav", [["class", "web-menu"]], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_2)), i1.ɵdid(3, 278528, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.menuItems; _ck(_v, 3, 0, currVal_0); }, null); }
+function View_MenuComponent_4(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 8, "li", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 7, "a", [["routerLinkActive", "active"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i1.ɵnov(_v, 2).onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey) !== false);
+        ad = (pd_0 && ad);
+    } if (("click" === en)) {
+        var pd_1 = (_co.triggerNavigate() !== false);
+        ad = (pd_1 && ad);
+    } return ad; }, null, null)), i1.ɵdid(2, 671744, [[3, 4]], 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, "routerLink"] }, null), i1.ɵpad(3, 1), i1.ɵdid(4, 1720320, null, 2, i2.RouterLinkActive, [i2.Router, i1.ElementRef, i1.Renderer2, i1.ChangeDetectorRef, [2, i2.RouterLink], [2, i2.RouterLinkWithHref]], { routerLinkActiveOptions: [0, "routerLinkActiveOptions"], routerLinkActive: [1, "routerLinkActive"] }, null), i1.ɵqud(603979776, 2, { links: 1 }), i1.ɵqud(603979776, 3, { linksWithHrefs: 1 }), i1.ɵpod(7, { exact: 0 }), (_l()(), i1.ɵted(8, null, [" ", " "]))], function (_ck, _v) { var currVal_2 = _ck(_v, 3, 0, _v.context.$implicit.path); _ck(_v, 2, 0, currVal_2); var currVal_3 = _ck(_v, 7, 0, (_v.context.$implicit.path === "/")); var currVal_4 = "active"; _ck(_v, 4, 0, currVal_3, currVal_4); }, function (_ck, _v) { var currVal_0 = i1.ɵnov(_v, 2).target; var currVal_1 = i1.ɵnov(_v, 2).href; _ck(_v, 1, 0, currVal_0, currVal_1); var currVal_5 = _v.context.$implicit.name; _ck(_v, 8, 0, currVal_5); }); }
+function View_MenuComponent_5(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "button", [["class", "mobile-overlay__join-btn"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openForm.emit(_v.context.$implicit.form) !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(1, null, [" ", ""])), (_l()(), i1.ɵeld(2, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(3, null, ["", ""])), (_l()(), i1.ɵted(4, null, ["", " \u2192 "]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.prefix; _ck(_v, 1, 0, currVal_0); var currVal_1 = _v.context.$implicit.highlight; _ck(_v, 3, 0, currVal_1); var currVal_2 = _v.context.$implicit.suffix; _ck(_v, 4, 0, currVal_2); }); }
+function View_MenuComponent_3(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 17, "div", [["aria-label", "Men\u00FA principal"], ["aria-modal", "true"], ["class", "mobile-overlay"], ["id", "mobile-menu"], ["role", "dialog"]], [[2, "open", null]], null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 3, "div", [["class", "mobile-overlay__top"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 0, "img", [["alt", "AmbLeMa"], ["class", "mobile-overlay__logo"], ["src", "./assets/images/amblema-logo.png"]], null, null, null, null, null)), (_l()(), i1.ɵeld(3, 0, [[1, 0], ["closeButton", 1]], null, 1, "button", [["aria-label", "Cerrar men\u00FA"], ["class", "mobile-overlay__close"], ["type", "button"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.closeMenu.emit() !== false);
+        ad = (pd_0 && ad);
+    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00D7 "])), (_l()(), i1.ɵeld(5, 0, null, null, 3, "nav", [["class", "mobile-overlay__nav"]], null, null, null, null, null)), (_l()(), i1.ɵeld(6, 0, null, null, 2, "ul", [], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_4)), i1.ɵdid(8, 278528, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i1.ɵeld(9, 0, null, null, 3, "a", [["class", "mobile-overlay__peca"]], [[1, "target", 0], [8, "href", 4]], [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (i1.ɵnov(_v, 10).onClick($event.button, $event.ctrlKey, $event.shiftKey, $event.altKey, $event.metaKey) !== false);
+        ad = (pd_0 && ad);
+    } if (("click" === en)) {
+        var pd_1 = (_co.triggerNavigate() !== false);
+        ad = (pd_1 && ad);
+    } return ad; }, null, null)), i1.ɵdid(10, 671744, null, 0, i2.RouterLinkWithHref, [i2.Router, i2.ActivatedRoute, i3.LocationStrategy], { routerLink: [0, "routerLink"] }, null), i1.ɵpad(11, 1), (_l()(), i1.ɵted(-1, null, [" Sistema PECA \u2192 "])), (_l()(), i1.ɵeld(13, 0, null, null, 4, "div", [["class", "mobile-overlay__join"]], null, null, null, null, null)), (_l()(), i1.ɵeld(14, 0, null, null, 1, "p", [["class", "mobile-overlay__join-title"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["S\u00FAmate a AmbLeMa"])), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_5)), i1.ɵdid(17, 278528, null, 0, i3.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_1 = _co.menuItems; _ck(_v, 8, 0, currVal_1); var currVal_4 = _ck(_v, 11, 0, "/auth/login"); _ck(_v, 10, 0, currVal_4); var currVal_5 = _co.invitations; _ck(_v, 17, 0, currVal_5); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.isOpen; _ck(_v, 0, 0, currVal_0); var currVal_2 = i1.ɵnov(_v, 10).target; var currVal_3 = i1.ɵnov(_v, 10).href; _ck(_v, 9, 0, currVal_2, currVal_3); }); }
+function View_MenuComponent_0(_l) { return i1.ɵvid(0, [i1.ɵqud(671088640, 1, { closeButton: 0 }), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_1)), i1.ɵdid(2, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_MenuComponent_3)), i1.ɵdid(4, 16384, null, 0, i3.NgIf, [i1.ViewContainerRef, i1.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) { var _co = _v.component; var currVal_0 = (_co.variant === "desktop"); _ck(_v, 2, 0, currVal_0); var currVal_1 = (_co.variant === "mobile"); _ck(_v, 4, 0, currVal_1); }, null); }
 exports.View_MenuComponent_0 = View_MenuComponent_0;
-function View_MenuComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-menu", [], null, null, null, View_MenuComponent_0, RenderType_MenuComponent)), i1.ɵdid(1, 114688, null, 0, i4.MenuComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+function View_MenuComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-menu", [], null, null, null, View_MenuComponent_0, RenderType_MenuComponent)), i1.ɵdid(1, 49152, null, 0, i4.MenuComponent, [], null, null)], null, null); }
 exports.View_MenuComponent_Host_0 = View_MenuComponent_Host_0;
-var MenuComponentNgFactory = i1.ɵccf("web-menu", i4.MenuComponent, View_MenuComponent_Host_0, {}, { navigate: "navigate" }, []);
+var MenuComponentNgFactory = i1.ɵccf("web-menu", i4.MenuComponent, View_MenuComponent_Host_0, { variant: "variant", isOpen: "isOpen" }, { navigate: "navigate", closeMenu: "closeMenu", openForm: "openForm" }, []);
 exports.MenuComponentNgFactory = MenuComponentNgFactory;
 
 
@@ -424187,166 +423897,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "kHMt":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-exports.__esModule = true;
-/**
- * Creates a new instance of Emitter.
- * @class
- * @returns {Object} Returns a new instance of Emitter.
- * @example
- * // Creates a new instance of Emitter.
- * var Emitter = require('emitter');
- *
- * var emitter = new Emitter();
- */
-
-var Emitter = (function () {
-  function Emitter() {
-    _classCallCheck(this, Emitter);
-  }
-
-  /**
-   * Adds a listener to the collection for the specified event.
-   * @memberof! Emitter.prototype
-   * @function
-   * @param {String} event - The event name.
-   * @param {Function} listener - A listener function to add.
-   * @returns {Object} Returns an instance of Emitter.
-   * @example
-   * // Add an event listener to "foo" event.
-   * emitter.on('foo', listener);
-   */
-
-  Emitter.prototype.on = function on(event, listener) {
-    // Use the current collection or create it.
-    this._eventCollection = this._eventCollection || {};
-
-    // Use the current collection of an event or create it.
-    this._eventCollection[event] = this._eventCollection[event] || [];
-
-    // Appends the listener into the collection of the given event
-    this._eventCollection[event].push(listener);
-
-    return this;
-  };
-
-  /**
-   * Adds a listener to the collection for the specified event that will be called only once.
-   * @memberof! Emitter.prototype
-   * @function
-   * @param {String} event - The event name.
-   * @param {Function} listener - A listener function to add.
-   * @returns {Object} Returns an instance of Emitter.
-   * @example
-   * // Will add an event handler to "foo" event once.
-   * emitter.once('foo', listener);
-   */
-
-  Emitter.prototype.once = function once(event, listener) {
-    var self = this;
-
-    function fn() {
-      self.off(event, fn);
-      listener.apply(this, arguments);
-    }
-
-    fn.listener = listener;
-
-    this.on(event, fn);
-
-    return this;
-  };
-
-  /**
-   * Removes a listener from the collection for the specified event.
-   * @memberof! Emitter.prototype
-   * @function
-   * @param {String} event - The event name.
-   * @param {Function} listener - A listener function to remove.
-   * @returns {Object} Returns an instance of Emitter.
-   * @example
-   * // Remove a given listener.
-   * emitter.off('foo', listener);
-   */
-
-  Emitter.prototype.off = function off(event, listener) {
-
-    var listeners = undefined;
-
-    // Defines listeners value.
-    if (!this._eventCollection || !(listeners = this._eventCollection[event])) {
-      return this;
-    }
-
-    listeners.forEach(function (fn, i) {
-      if (fn === listener || fn.listener === listener) {
-        // Removes the given listener.
-        listeners.splice(i, 1);
-      }
-    });
-
-    // Removes an empty event collection.
-    if (listeners.length === 0) {
-      delete this._eventCollection[event];
-    }
-
-    return this;
-  };
-
-  /**
-   * Execute each item in the listener collection in order with the specified data.
-   * @memberof! Emitter.prototype
-   * @function
-   * @param {String} event - The name of the event you want to emit.
-   * @param {...Object} data - Data to pass to the listeners.
-   * @returns {Object} Returns an instance of Emitter.
-   * @example
-   * // Emits the "foo" event with 'param1' and 'param2' as arguments.
-   * emitter.emit('foo', 'param1', 'param2');
-   */
-
-  Emitter.prototype.emit = function emit(event) {
-    var _this = this;
-
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var listeners = undefined;
-
-    // Defines listeners value.
-    if (!this._eventCollection || !(listeners = this._eventCollection[event])) {
-      return this;
-    }
-
-    // Clone listeners
-    listeners = listeners.slice(0);
-
-    listeners.forEach(function (fn) {
-      return fn.apply(_this, args);
-    });
-
-    return this;
-  };
-
-  return Emitter;
-})();
-
-/**
- * Exports Emitter
- */
-exports["default"] = Emitter;
-module.exports = exports["default"];
-
-/***/ }),
-
 /***/ "kJWO":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -434081,54 +433631,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "ncDI":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var requestAnimFrame = (function() {
-  return window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    function (callback) {
-      window.setTimeout(callback, 1000 / 60);
-    };
-}());
-
-function decouple(node, event, fn) {
-  var eve,
-      tracking = false;
-
-  function captureEvent(e) {
-    eve = e;
-    track();
-  }
-
-  function track() {
-    if (!tracking) {
-      requestAnimFrame(update);
-      tracking = true;
-    }
-  }
-
-  function update() {
-    fn.call(node, eve);
-    tracking = false;
-  }
-
-  node.addEventListener(event, captureEvent, false);
-
-  return captureEvent;
-}
-
-/**
- * Expose decouple
- */
-module.exports = decouple;
-
-
-/***/ }),
-
 /***/ "ngJS":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -437109,27 +436611,23 @@ const tslib_1 = __webpack_require__("zOht");
  */
 const i0 = tslib_1.__importStar(__webpack_require__("eoxX"));
 const i1 = tslib_1.__importStar(__webpack_require__("8Y7J"));
-const i2 = tslib_1.__importStar(__webpack_require__("fNgX"));
-const i3 = tslib_1.__importStar(__webpack_require__("Nv++"));
-const i4 = tslib_1.__importStar(__webpack_require__("cUpR"));
-const i5 = tslib_1.__importStar(__webpack_require__("+51x"));
+const i2 = tslib_1.__importStar(__webpack_require__("SVse"));
+const i3 = tslib_1.__importStar(__webpack_require__("fNgX"));
+const i4 = tslib_1.__importStar(__webpack_require__("Nv++"));
+const i5 = tslib_1.__importStar(__webpack_require__("cUpR"));
+const i6 = tslib_1.__importStar(__webpack_require__("+51x"));
 var styles_FooterComponent = [i0.styles];
 var RenderType_FooterComponent = i1.ɵcrt({ encapsulation: 0, styles: styles_FooterComponent, data: {} });
 exports.RenderType_FooterComponent = RenderType_FooterComponent;
-function View_FooterComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 43, "footer", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 15, "div", [["class", "footer-links"]], null, null, null, null, null)), (_l()(), i1.ɵeld(2, 0, null, null, 4, "button", [["class", "footer-btn lg"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.triggerSchoolForm() !== false);
+function View_FooterComponent_1(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 4, "button", [["class", "footer-btn lg"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
+        var pd_0 = (_co.openModal.emit(_v.context.$implicit.form) !== false);
         ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00BFTe gustar\u00EDa que "])), (_l()(), i1.ɵeld(4, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["AmbLeMa"])), (_l()(), i1.ɵted(-1, null, [" est\u00E9 en tu escuela? "])), (_l()(), i1.ɵeld(7, 0, null, null, 4, "button", [["class", "footer-btn lg"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.triggerSponsorForm() !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00BFTe gustar\u00EDa ser "])), (_l()(), i1.ɵeld(9, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Padrino"])), (_l()(), i1.ɵted(-1, null, [" de una escuela? "])), (_l()(), i1.ɵeld(12, 0, null, null, 4, "button", [["class", "footer-btn lg"]], null, [[null, "click"]], function (_v, en, $event) { var ad = true; var _co = _v.component; if (("click" === en)) {
-        var pd_0 = (_co.triggerCoordinatorForm() !== false);
-        ad = (pd_0 && ad);
-    } return ad; }, null, null)), (_l()(), i1.ɵted(-1, null, [" \u00BFTe gustar\u00EDa ser "])), (_l()(), i1.ɵeld(14, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Coordinador"])), (_l()(), i1.ɵted(-1, null, [" de una escuela? "])), (_l()(), i1.ɵeld(17, 0, null, null, 0, "div", [["class", "footer-bg"]], null, null, null, null, null)), (_l()(), i1.ɵeld(18, 0, null, null, 25, "div", [["class", "footer-contact-info"]], null, null, null, null, null)), (_l()(), i1.ɵeld(19, 0, null, null, 20, "div", [["class", "contact-info"]], null, null, null, null, null)), (_l()(), i1.ɵeld(20, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(21, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i2.View_FaIconComponent_0, i2.RenderType_FaIconComponent)), i1.ɵdid(22, 573440, null, 0, i3.FaIconComponent, [i4.DomSanitizer, i3.FaConfig, i3.FaIconLibrary, [2, i3.FaStackItemSizeDirective], [2, i3.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(23, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(24, null, ["", ""])), (_l()(), i1.ɵeld(25, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(26, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i2.View_FaIconComponent_0, i2.RenderType_FaIconComponent)), i1.ɵdid(27, 573440, null, 0, i3.FaIconComponent, [i4.DomSanitizer, i3.FaConfig, i3.FaIconLibrary, [2, i3.FaStackItemSizeDirective], [2, i3.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(28, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(29, null, ["", ""])), (_l()(), i1.ɵeld(30, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(31, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i2.View_FaIconComponent_0, i2.RenderType_FaIconComponent)), i1.ɵdid(32, 573440, null, 0, i3.FaIconComponent, [i4.DomSanitizer, i3.FaConfig, i3.FaIconLibrary, [2, i3.FaStackItemSizeDirective], [2, i3.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(33, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(34, null, ["", ""])), (_l()(), i1.ɵeld(35, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(36, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i2.View_FaIconComponent_0, i2.RenderType_FaIconComponent)), i1.ɵdid(37, 573440, null, 0, i3.FaIconComponent, [i4.DomSanitizer, i3.FaConfig, i3.FaIconLibrary, [2, i3.FaStackItemSizeDirective], [2, i3.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(38, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(39, null, ["", ""])), (_l()(), i1.ɵeld(40, 0, null, null, 3, "div", [["class", "copyright"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Todos los derechos reservados | Dise\u00F1ado y desarrollado por "])), (_l()(), i1.ɵeld(42, 0, null, null, 1, "a", [["class", "amblema-link"], ["href", "https://www.amblema.org"], ["rel", "noopener noreferrer"], ["target", "_blank"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Fundaci\u00F3n AmbLeMa"]))], function (_ck, _v) { var _co = _v.component; var currVal_2 = _co.emailIcon; _ck(_v, 22, 0, currVal_2); var currVal_6 = _co.phoneIcon; _ck(_v, 27, 0, currVal_6); var currVal_10 = _co.instagramIcon; _ck(_v, 32, 0, currVal_10); var currVal_14 = _co.twitterIcon; _ck(_v, 37, 0, currVal_14); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i1.ɵnov(_v, 22).title; var currVal_1 = i1.ɵnov(_v, 22).renderedIconHTML; _ck(_v, 21, 0, currVal_0, currVal_1); var currVal_3 = _co.email; _ck(_v, 24, 0, currVal_3); var currVal_4 = i1.ɵnov(_v, 27).title; var currVal_5 = i1.ɵnov(_v, 27).renderedIconHTML; _ck(_v, 26, 0, currVal_4, currVal_5); var currVal_7 = _co.phone; _ck(_v, 29, 0, currVal_7); var currVal_8 = i1.ɵnov(_v, 32).title; var currVal_9 = i1.ɵnov(_v, 32).renderedIconHTML; _ck(_v, 31, 0, currVal_8, currVal_9); var currVal_11 = _co.instagram; _ck(_v, 34, 0, currVal_11); var currVal_12 = i1.ɵnov(_v, 37).title; var currVal_13 = i1.ɵnov(_v, 37).renderedIconHTML; _ck(_v, 36, 0, currVal_12, currVal_13); var currVal_15 = _co.twitter; _ck(_v, 39, 0, currVal_15); }); }
+    } return ad; }, null, null)), (_l()(), i1.ɵted(1, null, [" ", ""])), (_l()(), i1.ɵeld(2, 0, null, null, 1, "strong", [], null, null, null, null, null)), (_l()(), i1.ɵted(3, null, ["", ""])), (_l()(), i1.ɵted(4, null, ["", " "]))], null, function (_ck, _v) { var currVal_0 = _v.context.$implicit.prefix; _ck(_v, 1, 0, currVal_0); var currVal_1 = _v.context.$implicit.highlight; _ck(_v, 3, 0, currVal_1); var currVal_2 = _v.context.$implicit.suffix; _ck(_v, 4, 0, currVal_2); }); }
+function View_FooterComponent_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 30, "footer", [], null, null, null, null, null)), (_l()(), i1.ɵeld(1, 0, null, null, 2, "div", [["class", "footer-links"]], null, null, null, null, null)), (_l()(), i1.ɵand(16777216, null, null, 1, null, View_FooterComponent_1)), i1.ɵdid(3, 278528, null, 0, i2.NgForOf, [i1.ViewContainerRef, i1.TemplateRef, i1.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i1.ɵeld(4, 0, null, null, 0, "div", [["class", "footer-bg"]], null, null, null, null, null)), (_l()(), i1.ɵeld(5, 0, null, null, 25, "div", [["class", "footer-contact-info"]], null, null, null, null, null)), (_l()(), i1.ɵeld(6, 0, null, null, 20, "div", [["class", "contact-info"]], null, null, null, null, null)), (_l()(), i1.ɵeld(7, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(8, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i3.View_FaIconComponent_0, i3.RenderType_FaIconComponent)), i1.ɵdid(9, 573440, null, 0, i4.FaIconComponent, [i5.DomSanitizer, i4.FaConfig, i4.FaIconLibrary, [2, i4.FaStackItemSizeDirective], [2, i4.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(10, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(11, null, ["", ""])), (_l()(), i1.ɵeld(12, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(13, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i3.View_FaIconComponent_0, i3.RenderType_FaIconComponent)), i1.ɵdid(14, 573440, null, 0, i4.FaIconComponent, [i5.DomSanitizer, i4.FaConfig, i4.FaIconLibrary, [2, i4.FaStackItemSizeDirective], [2, i4.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(15, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(16, null, ["", ""])), (_l()(), i1.ɵeld(17, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(18, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i3.View_FaIconComponent_0, i3.RenderType_FaIconComponent)), i1.ɵdid(19, 573440, null, 0, i4.FaIconComponent, [i5.DomSanitizer, i4.FaConfig, i4.FaIconLibrary, [2, i4.FaStackItemSizeDirective], [2, i4.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(20, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(21, null, ["", ""])), (_l()(), i1.ɵeld(22, 0, null, null, 4, "div", [["class", "item"]], null, null, null, null, null)), (_l()(), i1.ɵeld(23, 0, null, null, 1, "fa-icon", [["class", "icon ng-fa-icon"]], [[1, "title", 0], [8, "innerHTML", 1]], null, null, i3.View_FaIconComponent_0, i3.RenderType_FaIconComponent)), i1.ɵdid(24, 573440, null, 0, i4.FaIconComponent, [i5.DomSanitizer, i4.FaConfig, i4.FaIconLibrary, [2, i4.FaStackItemSizeDirective], [2, i4.FaStackComponent]], { icon: [0, "icon"] }, null), (_l()(), i1.ɵeld(25, 0, null, null, 1, "span", [["class", "text"]], null, null, null, null, null)), (_l()(), i1.ɵted(26, null, ["", ""])), (_l()(), i1.ɵeld(27, 0, null, null, 3, "div", [["class", "copyright"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, [" Todos los derechos reservados | Dise\u00F1ado y desarrollado por "])), (_l()(), i1.ɵeld(29, 0, null, null, 1, "a", [["class", "amblema-link"], ["href", "https://www.amblema.org"], ["rel", "noopener noreferrer"], ["target", "_blank"]], null, null, null, null, null)), (_l()(), i1.ɵted(-1, null, ["Fundaci\u00F3n AmbLeMa"]))], function (_ck, _v) { var _co = _v.component; var currVal_0 = _co.invitations; _ck(_v, 3, 0, currVal_0); var currVal_3 = _co.emailIcon; _ck(_v, 9, 0, currVal_3); var currVal_7 = _co.phoneIcon; _ck(_v, 14, 0, currVal_7); var currVal_11 = _co.instagramIcon; _ck(_v, 19, 0, currVal_11); var currVal_15 = _co.twitterIcon; _ck(_v, 24, 0, currVal_15); }, function (_ck, _v) { var _co = _v.component; var currVal_1 = i1.ɵnov(_v, 9).title; var currVal_2 = i1.ɵnov(_v, 9).renderedIconHTML; _ck(_v, 8, 0, currVal_1, currVal_2); var currVal_4 = _co.email; _ck(_v, 11, 0, currVal_4); var currVal_5 = i1.ɵnov(_v, 14).title; var currVal_6 = i1.ɵnov(_v, 14).renderedIconHTML; _ck(_v, 13, 0, currVal_5, currVal_6); var currVal_8 = _co.phone; _ck(_v, 16, 0, currVal_8); var currVal_9 = i1.ɵnov(_v, 19).title; var currVal_10 = i1.ɵnov(_v, 19).renderedIconHTML; _ck(_v, 18, 0, currVal_9, currVal_10); var currVal_12 = _co.instagram; _ck(_v, 21, 0, currVal_12); var currVal_13 = i1.ɵnov(_v, 24).title; var currVal_14 = i1.ɵnov(_v, 24).renderedIconHTML; _ck(_v, 23, 0, currVal_13, currVal_14); var currVal_16 = _co.twitter; _ck(_v, 26, 0, currVal_16); }); }
 exports.View_FooterComponent_0 = View_FooterComponent_0;
-function View_FooterComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-footer", [], null, null, null, View_FooterComponent_0, RenderType_FooterComponent)), i1.ɵdid(1, 114688, null, 0, i5.FooterComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+function View_FooterComponent_Host_0(_l) { return i1.ɵvid(0, [(_l()(), i1.ɵeld(0, 0, null, null, 1, "web-footer", [], null, null, null, View_FooterComponent_0, RenderType_FooterComponent)), i1.ɵdid(1, 114688, null, 0, i6.FooterComponent, [], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_FooterComponent_Host_0 = View_FooterComponent_Host_0;
-var FooterComponentNgFactory = i1.ɵccf("web-footer", i5.FooterComponent, View_FooterComponent_Host_0, {}, { openModal: "openModal" }, []);
+var FooterComponentNgFactory = i1.ɵccf("web-footer", i6.FooterComponent, View_FooterComponent_Host_0, {}, { openModal: "openModal" }, []);
 exports.FooterComponentNgFactory = FooterComponentNgFactory;
 
 
