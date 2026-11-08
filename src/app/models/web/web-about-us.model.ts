@@ -8,6 +8,11 @@ export interface Award {
     description2: string;
 }
 
+export interface AulaActivaImage {
+    image: string;
+    description?: string | null;
+}
+
 export interface AboutUsPage {
     slider: Slider[];
     aboutUsText: string;
@@ -15,6 +20,7 @@ export interface AboutUsPage {
     readingText: string;
     mathText: string;
     aulaActivaText?: string;
+    aulaActivaGallery?: AulaActivaImage[];
     awards: Award[];
 }
 

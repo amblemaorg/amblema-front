@@ -90,6 +90,79 @@
     justify-content: center;
   }
 
+  // Galería: una foto por vez, con la misma estética que la del detalle de escuela.
+  &__gallery {
+    flex: 1;
+    min-width: 0; // evita que owl desborde el flex
+
+    .image-wrapper {
+      // .owl-item es flex (styles.scss): sin esto el wrapper toma el ancho de la foto
+      flex: 0 0 100%;
+      width: 100%;
+
+      img {
+        // Recuadro de alto fijo; la foto se ve completa y centrada si no lo llena
+        display: block;
+        height: 60vw;
+        object-fit: contain;
+        object-position: center;
+        width: 100%;
+
+        @include breakpoint(small, landscape) {
+          height: 24vw;
+        }
+
+        @include breakpoint(medium) {
+          height: 24vw;
+        }
+      }
+    }
+
+    .image-description {
+      background-color: rgba(0, 0, 0, 0.25);
+      font-size: 3vw;
+      margin: 0;
+      padding: 2% 10%;
+      text-align: center;
+
+      @include breakpoint(small, landscape) {
+        font-size: 1.1vw;
+      }
+
+      @include breakpoint(medium) {
+        font-size: 1.1vw;
+      }
+    }
+
+    // Flechas blancas sobre la foto (sobrescribe el estilo global de owl)
+    ::ng-deep .aula-activa-carousel .owl-carousel .owl-nav {
+      height: 0;
+      left: 0;
+      right: 0;
+      top: 50%;
+      width: 100%;
+
+      button.owl-prev,
+      button.owl-next {
+        top: 0;
+        transform: translateY(-50%) scaleY(1.5);
+
+        &::before {
+          color: $white;
+          text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      button.owl-prev {
+        left: 4%;
+      }
+
+      button.owl-next {
+        right: 4%;
+      }
+    }
+  }
+
   // El SVG trae fill azul (#008096); se fuerza a blanco.
   ::ng-deep .aula-activa__svg svg {
     height: 40vw;
