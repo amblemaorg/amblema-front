@@ -22,7 +22,8 @@ import { ABOUT_US_CONTENT } from "./about-us-static-content";
 import { ModalService } from "src/app/services/modal.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
 import { GlobalService } from "src/app/services/global.service";
-import { METADATA } from "../../web-pages-metadata";
+import { METADATA, toSeoPage } from "../../web-pages-metadata";
+import { SeoService } from "src/app/services/seo.service";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 
@@ -121,13 +122,13 @@ export class AboutComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private globalService: GlobalService,
+    private seo: SeoService,
     private modalService: ModalService,
     private iconService: SvgIconRegistryService,
     private store: Store,
     @Inject(DOCUMENT) private document: any
   ) {
-    this.globalService.setTitle(METADATA.aboutUsPage.title);
-    this.globalService.setMetaTags(METADATA.aboutUsPage.metatags);
+    this.seo.setPage(toSeoPage(METADATA.aboutUsPage));
     this.iconService.loadSvg(
       "../../../assets/icons/environment-icon.svg",
       "environment-icon"

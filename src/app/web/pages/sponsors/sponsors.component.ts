@@ -11,7 +11,8 @@ import { environment } from "src/environments/environment";
 import { SPONSOR_CONTENT } from "./sponsor-static-content";
 import { Subscription, fromEvent } from "rxjs";
 import { GlobalService } from "src/app/services/global.service";
-import { METADATA } from "../../web-pages-metadata";
+import { METADATA, toSeoPage } from "../../web-pages-metadata";
+import { SeoService } from "src/app/services/seo.service";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { Store } from "@ngxs/store";
 
@@ -95,12 +96,12 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private globalService: GlobalService,
+    private seo: SeoService,
     private zone: NgZone,
     private store: Store,
     @Inject(DOCUMENT) private document: any
   ) {
-    this.globalService.setTitle(METADATA.sponsorsPage.title);
-    this.globalService.setMetaTags(METADATA.sponsorsPage.metatags);
+    this.seo.setPage(toSeoPage(METADATA.sponsorsPage));
   }
 
   ngOnInit() {

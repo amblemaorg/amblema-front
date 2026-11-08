@@ -1,6 +1,7 @@
 export const METADATA = {
   homePage: {
-    title: "Inicio | AmbLeMa",
+    path: "/",
+    title: "AmbLeMa | Ambiente, Lectura y Matemática en escuelas de Venezuela",
     metatags: [
       {
         name: "description",
@@ -10,6 +11,7 @@ export const METADATA = {
     ],
   },
   aboutUsPage: {
+    path: "/nosotros",
     title: "Nosotros | AmbLeMa",
     metatags: [
       {
@@ -20,6 +22,7 @@ export const METADATA = {
     ],
   },
   sponsorsPage: {
+    path: "/padrinos",
     title: "Padrinos | AmbLeMa",
     metatags: [
       {
@@ -30,6 +33,7 @@ export const METADATA = {
     ],
   },
   coordinatorsPage: {
+    path: "/coordinadores",
     title: "Coordinadores | AmbLeMa",
     metatags: [
       {
@@ -40,16 +44,18 @@ export const METADATA = {
     ],
   },
   schoolsPage: {
+    path: "/escuelas",
     title: "Escuelas | AmbLeMa",
     metatags: [
       {
         name: "description",
         content:
-          "Para formar parte de la red AmbLeMa de escuelas, la fundación AmbLeMa te ayuda y orienta para identificar un posible padrino en tu comunidad, hacer el primer contacto y presentación, para comenzar a aplicar la herramienta al inicio  del año escolar.",
+          "Para formar parte de la red AmbLeMa de escuelas, la fundación AmbLeMa te ayuda y orienta para identificar un posible padrino en tu comunidad, hacer el primer contacto y presentación, para comenzar a aplicar la herramienta al inicio del año escolar.",
       },
     ],
   },
   blogPage: {
+    path: "/blog",
     title: "Blog | AmbLeMa",
     metatags: [
       {
@@ -60,3 +66,19 @@ export const METADATA = {
     ],
   },
 };
+
+export interface PageMetadata {
+  path: string;
+  title: string;
+  metatags: { name?: string; property?: string; content: string }[];
+}
+
+/** Convierte una entrada de METADATA en los datos que espera SeoService.setPage */
+export function toSeoPage(page: PageMetadata) {
+  const description = page.metatags.find((tag) => tag.name === "description");
+  return {
+    title: page.title,
+    description: description ? description.content : "",
+    path: page.path,
+  };
+}

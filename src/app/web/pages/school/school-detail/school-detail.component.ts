@@ -16,6 +16,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { OwlCarousel } from 'ngx-owl-carousel';
 import { ChartService } from 'src/app/services/web/chart.service';
 import { GlobalService } from 'src/app/services/global.service';
+import { SeoService } from "src/app/services/seo.service";
+import { METADATA, toSeoPage } from "src/app/web/web-pages-metadata";
 import { ApiWebContentService } from 'src/app/services/web/api-web-content.service';
 import { WebContentService } from 'src/app/services/web/web-content.service';
 import { environment } from 'src/environments/environment';
@@ -219,6 +221,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private globalService: GlobalService,
+    private seo: SeoService,
     private staticSchoolService: SchoolService,
     private chartService: ChartService,
     private zone: NgZone,
@@ -265,6 +268,9 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if (script) {
       script.remove();
     }
+
+    // El componente padre (/escuelas) no se vuelve a construir al salir de la ficha
+    this.seo.setPage(toSeoPage(METADATA.schoolsPage));
   }
 
   getSchoolDetail() {
@@ -362,6 +368,7 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
       this.preloadImages(schoolImages).then(() => {
         this.store.dispatch([new SetIsLoadingPage(false)]);
       });
+      this.setSeo(data);
       this.injectSchema();
     });
   }
@@ -522,6 +529,28 @@ export class SchoolDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.activityImageCarousel) this.activityImageCarousel.refresh();
     if (this.activitiesCarousel) this.activitiesCarousel.refresh();
     if (this.otherSchoolsCarousel) this.otherSchoolsCarousel.refresh();
+  }
+
+  setSeo(data: any) {
+    if (!data || !data.name) {
+      return;
+    }
+    const parts = [`${data.name}: escuela de la red AmbLeMa`];
+    if (data.address) {
+      parts[0] += ` en ${data.address}`;
+    }
+    if (data.nStudents) {
+      parts.push(`${data.nStudents} estudiantes`);
+    }
+    parts.push('Proyectos de Ambiente, Lectura y Matemática, diagnósticos y olimpíadas.');
+    const firstImage = (data.slider || []).map((slide) => slide.image).find((image) => !!image);
+    this.seo.setPage({
+      title: `${data.name} | Escuelas AmbLeMa`,
+      description: parts.join('. '),
+      path: `/escuelas/${this.slug}`,
+      image: firstImage,
+      imageAlt: data.name,
+    });
   }
 
   injectSchema() {

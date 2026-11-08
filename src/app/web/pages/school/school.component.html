@@ -1,2 +1,4 @@
+<!-- Solo en el listado: la ficha de cada escuela tiene su propio h1 -->
+<h1 class="sr-only" *ngIf="!isDetail">Escuelas de la red AmbLeMa en Venezuela</h1>
 <web-schools-map *ngIf="this.globalService.isBrowser"></web-schools-map>
 <router-outlet></router-outlet>
