@@ -11,7 +11,8 @@ import { BLOG_CONTENT, BLOG_COVER_IMAGE } from "../blog-static-content";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { JwPaginationComponent } from "src/app/web/shared/jw-angular-pagination/lib/jw-pagination.component";
 import { BLOG_CATEGORIES } from "../categories";
-import { METADATA } from "src/app/web/web-pages-metadata";
+import { METADATA, toSeoPage } from "src/app/web/web-pages-metadata";
+import { SeoService } from "src/app/services/seo.service";
 import { GlobalService } from "src/app/services/global.service";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
@@ -40,12 +41,12 @@ export class BlogArchiveComponent implements OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient,
     private globalService: GlobalService,
+    private seo: SeoService,
     public location: Location,
     private store: Store,
     @Inject(DOCUMENT) private document: any
   ) {
-    this.globalService.setTitle(METADATA.blogPage.title);
-    this.globalService.setMetaTags(METADATA.blogPage.metatags);
+    this.seo.setPage(toSeoPage(METADATA.blogPage));
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { GlobalService } from "src/app/services/global.service";
+import { SeoService } from "src/app/services/seo.service";
 import { Store } from "@ngxs/store";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
@@ -25,8 +26,16 @@ export class Error404Component implements OnInit {
     private globalService: GlobalService,
     private store: Store,
     private router: Router,
-    private location: Location
-  ) {}
+    private location: Location,
+    private seo: SeoService
+  ) {
+    // Ruta inexistente: no indexar (nginx aún responde 200 a cualquier URL)
+    this.seo.setPage({
+      title: "Página no encontrada | AmbLeMa",
+      description: "La página que buscas no existe o fue movida.",
+      noindex: true,
+    });
+  }
 
   ngOnInit() {
     this.stopLoading();

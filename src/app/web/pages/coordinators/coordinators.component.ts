@@ -17,7 +17,8 @@ import { CoordinatorPage } from "../../../models/web/web-coordinator.model";
 import { COORDINATOR_CONTENT } from "./coordinators-static-content";
 import { environment } from "src/environments/environment";
 import { Subscription, fromEvent } from "rxjs";
-import { METADATA } from "../../web-pages-metadata";
+import { METADATA, toSeoPage } from "../../web-pages-metadata";
+import { SeoService } from "src/app/services/seo.service";
 import { GlobalService } from "src/app/services/global.service";
 import { Store } from "@ngxs/store";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
@@ -71,12 +72,12 @@ export class CoordinatorsComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private globalService: GlobalService,
+    private seo: SeoService,
     private zone: NgZone,
     private store: Store,
     @Inject(DOCUMENT) private document: any
   ) {
-    this.globalService.setTitle(METADATA.coordinatorsPage.title);
-    this.globalService.setMetaTags(METADATA.coordinatorsPage.metatags);
+    this.seo.setPage(toSeoPage(METADATA.coordinatorsPage));
   }
 
   ngOnInit() {

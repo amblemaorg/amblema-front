@@ -15,7 +15,8 @@ import { environment } from "src/environments/environment";
 import { ApiWebContentService } from "src/app/services/web/api-web-content.service";
 import { Subscription, fromEvent } from "rxjs";
 import { SvgIconRegistryService } from "angular-svg-icon";
-import { METADATA } from "../../web-pages-metadata";
+import { METADATA, toSeoPage } from "../../web-pages-metadata";
+import { SeoService } from "src/app/services/seo.service";
 import { SetIsLoadingPage } from "src/app/store/actions/web/web.actions";
 import { Store } from "@ngxs/store";
 
@@ -141,6 +142,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private globalService: GlobalService,
+    private seo: SeoService,
     private chartService: ChartService,
     private modalService: ModalService,
     private http: HttpClient,
@@ -149,8 +151,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private store: Store,
     @Inject(DOCUMENT) private document: any
   ) {
-    this.globalService.setTitle(METADATA.homePage.title);
-    this.globalService.setMetaTags(METADATA.homePage.metatags);
+    this.seo.setPage(toSeoPage(METADATA.homePage));
     this.iconService.loadSvg("../../../assets/icons/environment-icon.svg", "environment-icon");
     this.iconService.loadSvg("../../../assets/icons/reading-icon.svg", "reading-icon");
     this.iconService.loadSvg("../../../assets/icons/math-icon.svg", "math-icon");
