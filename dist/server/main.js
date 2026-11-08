@@ -345360,7 +345360,9 @@ class WebComponent {
     }
     loadingPageSubscription() {
         this.isloadingPage$.subscribe((isloadingPage) => {
-            this.isloading = isloadingPage;
+            // En SSR/prerender el loader se emite siempre visible: el navegador lo pinta
+            // de inmediato y Angular lo oculta al terminar de cargar en cliente.
+            this.isloading = isloadingPage || !this.globalService.isBrowser;
             if (isloadingPage) {
                 body_scroll_lock_1.disableBodyScroll(this.pageLoader.nativeElement);
             }
