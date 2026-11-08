@@ -19,6 +19,18 @@
     
       gtag('config', 'G-2V3026X7L8');
     </script>
+    <!-- Sin JS, el loader prerenderizado nunca se ocultaría -->
+    <noscript><style>.page-loader { display: none !important; }</style></noscript>
+    <script>
+      // Respaldo: si Angular no arrancó en 10 s (p. ej. falla un bundle JS), se oculta el loader
+      // prerenderizado. Angular borra los style[ng-transition] del servidor al arrancar; si siguen
+      // ahí, el loader visible es el del HTML estático y no el del cliente.
+      setTimeout(function () {
+        if (!document.querySelector('style[ng-transition]')) { return; }
+        var loader = document.querySelector('.page-loader--visible');
+        if (loader) { loader.style.display = 'none'; }
+      }, 10000);
+    </script>
   </head>
   <body>
     <app-root>
