@@ -141,6 +141,7 @@ export interface teacherPermissionsI {
     teacher_create: boolean;
     teacher_edit: boolean;
     teacher_delete: boolean;
+    teacher_coevaluation?: boolean;
 }
 export const teacherPermissions = {
     name: "Teacher",
@@ -148,7 +149,8 @@ export const teacherPermissions = {
         "teacher_view",
         "teacher_create",
         "teacher_edit",
-        "teacher_delete"
+        "teacher_delete",
+        "teacher_coevaluation"
     ]
 }
 

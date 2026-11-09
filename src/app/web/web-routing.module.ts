@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: "evaluacion-ambiente/:token",
         loadChildren: "./pages/environmental-evaluation/environmental-evaluation.module#EnvironmentalEvaluationModule"
+      },
+      {
+        path: "coevaluacion/:token",
+        loadChildren: "./pages/teacher-coevaluation/teacher-coevaluation.module#TeacherCoevaluationModule"
       }
     ]
   }

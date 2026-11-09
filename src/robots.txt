@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /coevaluacion/
 
 Sitemap: https://amblema.org/sitemap.xml

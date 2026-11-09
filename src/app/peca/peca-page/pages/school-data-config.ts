@@ -1,3 +1,4 @@
+import { CoevaluationCellComponent } from "../blocks/teacher-coevaluation/coevaluation-cell.component";
 import {
   formDatosEscuela,
   formTabsDocente,
@@ -202,6 +203,15 @@ const tablaDocente = {
       // specialty: { // Para mostrar columna de especialidad
       //   title: "Especialidad",
       // },
+      // Coevaluación Docente HQS. La página la oculta (hiddenColumns) si el
+      // usuario no tiene el permiso teacher_coevaluation.
+      coevaluation: {
+        title: "Coevaluación",
+        type: "custom",
+        renderComponent: CoevaluationCellComponent,
+        filter: false,
+        sort: false,
+      },
     },
     modalCode: "schoolDataConfigTablaDocente",
     tableCode: "schoolDataConfigTablaDocente",

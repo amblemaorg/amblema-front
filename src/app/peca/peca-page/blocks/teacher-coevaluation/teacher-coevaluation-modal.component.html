@@ -1,0 +1,199 @@
+<div class="modal fade" [id]="modalId" tabindex="-1" role="dialog" aria-labelledby="teacher-coevaluation-title">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content coevaluation-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="teacher-coevaluation-title">Coevaluación Docente AmbLeMa HQS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngIf="loading" class="text-center my-5">
+          <div class="spinner-border text-info" role="status"><span class="sr-only">Cargando...</span></div>
+        </div>
+
+        <div *ngIf="!loading && loadError" class="text-center my-4">
+          <p class="text-muted">No se pudo cargar la coevaluación.</p>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="load()">Reintentar</button>
+        </div>
+
+        <ng-container *ngIf="!loading && detail">
+          <!-- Datos de identificación -->
+          <div class="info-grid">
+            <div class="info-box">
+              <h6>Docente</h6>
+              <p class="mb-1"><strong>{{ teacherFullName() }}</strong></p>
+              <p class="mb-1" *ngIf="cardLabel()">Cédula: {{ cardLabel() }}</p>
+              <p class="mb-1">Correo: {{ detail.teacher.email || 'Sin correo' }}</p>
+              <p class="mb-0">Grado / Sección: {{ detail.sections || 'Sin sección asignada' }}</p>
+            </div>
+            <div class="info-box">
+              <h6>Coordinador AmbLeMa</h6>
+              <p class="mb-1"><strong>{{ detail.coordinator.name || '—' }}</strong></p>
+              <p class="mb-1">Escuela: {{ detail.school.name }} ({{ detail.school.code }})</p>
+              <p class="mb-0">Año escolar: {{ detail.schoolYear.name }}</p>
+            </div>
+            <div class="info-box">
+              <h6>Estatus</h6>
+              <p class="mb-1">
+                <span class="status-badge" [ngClass]="'is-' + detail.status">{{ detail.statusLabel }}</span>
+              </p>
+              <p class="mb-1 small">
+                Coordinador:
+                {{ coordinatorSubmitted ? (detail.coordinatorSubmittedAt | date: 'dd/MM/yyyy') : 'Pendiente' }}
+              </p>
+              <p class="mb-0 small">
+                Docente:
+                {{ teacherSubmitted ? (detail.teacherSubmittedAt | date: 'dd/MM/yyyy') : 'Pendiente' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Enlace al docente -->
+          <div class="link-box">
+            <div class="link-info">
+              <ng-container *ngIf="teacherSubmitted">
+                El docente ya envió su coevaluación.
+              </ng-container>
+              <ng-container *ngIf="!teacherSubmitted && detail.emailSentAt">
+                Enlace enviado a <strong>{{ detail.emailSentTo }}</strong> el
+                {{ detail.emailSentAt | date: 'dd/MM/yyyy h:mm a' }}
+                ({{ detail.emailSentCount }} envío(s)).
+              </ng-container>
+              <ng-container *ngIf="!teacherSubmitted && !detail.emailSentAt">
+                El docente recibirá por correo un enlace personal de un solo uso para registrar su puntuación.
+              </ng-container>
+              <span *ngIf="!teacherSubmitted && !detail.canSendLink" class="d-block text-danger small mt-1">
+                {{ detail.teacher.status !== '1' || detail.teacher.isDeleted ? 'El docente no está activo.' : 'El docente no tiene correo registrado.' }}
+              </span>
+            </div>
+            <div class="link-actions" *ngIf="!teacherSubmitted && detail.canSendLink">
+              <ng-container *ngIf="!confirmResend">
+                <button type="button" class="btn btn-send" [disabled]="sending" (click)="askSend()">
+                  {{ sending ? 'Enviando...' : (detail.emailSentAt ? 'Reenviar enlace' : 'Enviar enlace al docente') }}
+                </button>
+              </ng-container>
+              <ng-container *ngIf="confirmResend">
+                <span class="small mr-2">El enlace anterior dejará de funcionar. ¿Reenviar?</span>
+                <button type="button" class="btn btn-sm btn-send mr-1" [disabled]="sending" (click)="send()">
+                  {{ sending ? 'Enviando...' : 'Sí, reenviar' }}
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" [disabled]="sending" (click)="confirmResend = false">
+                  Cancelar
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- Escala -->
+          <button type="button" class="btn btn-link btn-sm px-0" (click)="showScale = !showScale">
+            {{ showScale ? 'Ocultar' : 'Ver' }} escala de puntuación (0 a 5)
+          </button>
+          <ul class="scale-list" *ngIf="showScale">
+            <li *ngFor="let s of detail.instrument.scale">
+              <strong>{{ s.score }} – {{ s.label }}:</strong> {{ s.description }}
+            </li>
+          </ul>
+
+          <!-- Matriz -->
+          <div class="table-responsive">
+            <table class="table table-sm coevaluation-table">
+              <thead>
+                <tr>
+                  <th class="col-num">#</th>
+                  <th>Pregunta / Indicador</th>
+                  <th class="col-score text-center">Docente</th>
+                  <th class="col-coord text-center">Coordinador</th>
+                  <th class="col-score text-center">Promedio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let group of groups">
+                  <tr class="dimension-row">
+                    <td colspan="5">{{ group.code }}. {{ group.name }}</td>
+                  </tr>
+                  <tr *ngFor="let item of group.items">
+                    <td class="col-num">{{ item.number }}</td>
+                    <td>
+                      <strong>{{ item.title }}:</strong>
+                      <span class="question"> {{ item.question }}</span>
+                    </td>
+                    <td class="text-center">
+                      <span *ngIf="item.teacher !== null" class="score">{{ item.teacher }}</span>
+                      <span *ngIf="item.teacher === null" class="pending">Pendiente</span>
+                    </td>
+                    <td class="text-center">
+                      <div
+                        *ngIf="detail.canEvaluate; else coordinatorValue"
+                        class="score-picker"
+                        role="radiogroup"
+                        [attr.aria-label]="'Puntaje del coordinador, ítem ' + item.number"
+                      >
+                        <button
+                          type="button"
+                          *ngFor="let option of scoreOptions"
+                          [class.active]="coordinatorDraft[item.number - 1] === option"
+                          [attr.aria-checked]="coordinatorDraft[item.number - 1] === option"
+                          role="radio"
+                          [disabled]="saving"
+                          (click)="setScore(item.number, option)"
+                        >
+                          {{ option }}
+                        </button>
+                      </div>
+                      <ng-template #coordinatorValue>
+                        <span *ngIf="item.coordinator !== null" class="score">{{ item.coordinator }}</span>
+                        <span *ngIf="item.coordinator === null" class="pending">Pendiente</span>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <strong>{{ formatNumber(item.average) }}</strong>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Cómputo final -->
+          <div class="result-box" *ngIf="isCompleted">
+            <div>
+              <span class="label">Puntaje acordado</span>
+              <span class="value">{{ formatNumber(detail.totalScore) }} / {{ detail.instrument.maxTotal }}</span>
+            </div>
+            <div>
+              <span class="label">Nivel alcanzado</span>
+              <span class="value">{{ formatNumber(detail.percentage) }} %</span>
+            </div>
+            <div>
+              <span class="level-badge" [ngClass]="'level-' + detail.level">{{ detail.levelLabel }}</span>
+            </div>
+          </div>
+          <p class="small text-muted mt-2" *ngIf="!isCompleted">
+            El promedio, el puntaje acordado y el nivel se calculan cuando el docente y el coordinador
+            registran su puntuación.
+          </p>
+        </ng-container>
+      </div>
+
+      <div class="modal-footer" *ngIf="!loading && detail && detail.canEvaluate">
+        <span class="small text-muted mr-auto">
+          {{ pendingItems > 0 ? 'Faltan ' + pendingItems + ' ítem(s) por puntuar.' : 'Total coordinador: ' + draftTotal + ' / ' + detail.instrument.maxTotal }}
+        </span>
+        <ng-container *ngIf="!confirmSave">
+          <button type="button" class="btn btn-save" [disabled]="saving" (click)="askSave()">
+            Guardar coevaluación del coordinador
+          </button>
+        </ng-container>
+        <ng-container *ngIf="confirmSave">
+          <span class="small mr-2">Solo se puede guardar una vez. ¿Confirma?</span>
+          <button type="button" class="btn btn-save mr-1" [disabled]="saving" (click)="save()">
+            {{ saving ? 'Guardando...' : 'Sí, guardar' }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary" [disabled]="saving" (click)="confirmSave = false">
+            Cancelar
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
