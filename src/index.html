@@ -17,7 +17,12 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
     
-      gtag('config', 'G-2V3026X7L8');
+      // El token del enlace de coevaluación es una credencial: GA4 recibe la ruta enmascarada
+      var gaConfig = {};
+      if (/^\/coevaluacion\/[^/]+/.test(location.pathname)) {
+        gaConfig.page_location = location.origin + '/coevaluacion/:token';
+      }
+      gtag('config', 'G-2V3026X7L8', gaConfig);
     </script>
     <!-- Sin JS, el loader prerenderizado nunca se ocultaría -->
     <noscript><style>.page-loader { display: none !important; }</style></noscript>
