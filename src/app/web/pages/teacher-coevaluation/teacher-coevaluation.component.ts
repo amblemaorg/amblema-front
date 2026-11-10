@@ -96,8 +96,31 @@ export class TeacherCoevaluationComponent implements OnInit {
       : '';
   }
 
+  get firstName(): string {
+    return this.data ? (this.data.teacher.firstName || '').trim().split(' ')[0] : '';
+  }
+
   get pendingItems(): number {
     return this.scores.filter((score) => score === null).length;
+  }
+
+  get answeredItems(): number {
+    return this.scores.length - this.pendingItems;
+  }
+
+  get progressPercent(): number {
+    return this.scores.length ? Math.round((this.answeredItems / this.scores.length) * 100) : 0;
+  }
+
+  groupAnswered(group: { items: ItemRow[] }): number {
+    return group.items.filter((item) => this.scores[item.number - 1] !== null).length;
+  }
+
+  scaleFor(score: number | null): { score: number; label: string; description: string } | null {
+    if (score === null || !this.data) {
+      return null;
+    }
+    return this.data.instrument.scale.find((s) => s.score === score) || null;
   }
 
   get total(): number {

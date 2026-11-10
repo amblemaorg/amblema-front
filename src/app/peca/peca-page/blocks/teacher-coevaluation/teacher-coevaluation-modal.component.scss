@@ -1,125 +1,682 @@
-$green: #81b03e;
+// Paleta del spec 2026-11-09 (colores planos, sin degradados ni rojo).
 $blue: #00809a;
-$title: #2e8aaa;
+$dark: #00353a;
+$dark-2: #01474e;
+$green: #81b03e;
+$green-dark: #00722e;
+$amber: #a87600;
+$slate: #6b7c85;
+$bg: #f4f7f6;
+$border: #d7e2e4;
+$muted: #5f7076;
+$shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
 
 .coevaluation-modal {
-  .modal-title {
-    color: $blue;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  font-family: 'Montserrat', 'Open Sans', Roboto, sans-serif;
+  color: $dark-2;
+
+  // ------------------------------------------------------------ encabezado
+  .coev-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: $blue;
+    border-bottom: 4px solid $green;
+    color: #fff;
+    padding: 18px 24px;
+  }
+
+  .coev-header-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 2px;
   }
 
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
+  .teacher-name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
   }
 
-  .info-box {
-    background: #f4f7f6;
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 0.9rem;
+  .chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
 
-    h6 {
-      color: $blue;
-      font-weight: 700;
-      margin-bottom: 6px;
+    li {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      word-break: break-word;
     }
   }
 
-  .link-box {
+  .close-btn {
+    border: none;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    flex: 0 0 34px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+  }
+
+  // styles.scss fuerza `.nb-theme-default li { color: #00809a !important; ... }`:
+  // se neutraliza en las listas del modal y el encabezado se fuerza en blanco.
+  li {
+    color: inherit !important;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .coev-header {
+    .eyebrow,
+    .teacher-name,
+    .chips li {
+      color: #fff !important;
+    }
+
+    .chips li {
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+  }
+
+  // peca.component.scss deja `.modal-dialog-scrollable .modal-body { overflow-y: visible }`
+  // (para los datepickers); este modal no usa datepicker y necesita su propio scroll
+  // para que el encabezado y el pie queden fijos.
+  .modal-body {
+    background: $bg;
+    padding: 20px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .coev-spinner {
+    color: $blue;
+  }
+
+  // ------------------------------------------------------------ línea de estatus
+  .status-line {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    border: 1px solid #d7e7c2;
-    background: #f6faf0;
-    border-radius: 10px;
-    padding: 10px 14px;
+    gap: 14px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: $shadow;
+    padding: 14px 18px;
     margin-bottom: 8px;
-    font-size: 0.9rem;
   }
 
-  .btn-send,
-  .btn-save {
-    background: $green;
-    color: #fff;
-    border-radius: 16px;
-    font-weight: 600;
+  .steps {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1 1 460px;
+  }
 
-    &:hover:not(:disabled) {
-      background: darken($green, 8%);
-      color: #fff;
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    position: relative;
+
+    // Conector entre pasos
+    &:not(:last-child)::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: $border;
+      margin: 0 10px;
+      min-width: 16px;
     }
-  }
 
-  .scale-list {
-    font-size: 0.85rem;
-    padding-left: 18px;
-    margin-bottom: 12px;
-  }
+    &:last-child {
+      flex: 0 0 auto;
+    }
 
-  .coevaluation-table {
-    font-size: 0.88rem;
-
-    thead th {
+    &.is-done:not(:last-child)::after {
       background: $green;
+    }
+  }
+
+  .step-dot {
+    flex: 0 0 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border: 2px solid $border;
+    color: $muted;
+    background: #fff;
+  }
+
+  .step-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    white-space: nowrap;
+
+    strong {
+      font-size: 0.84rem;
+      color: $dark;
+    }
+
+    small {
+      font-size: 0.74rem;
+      color: $muted;
+    }
+  }
+
+  .step.is-done {
+    .step-dot {
+      background: $green-dark;
+      border-color: $green-dark;
       color: #fff;
-      border: none;
-      vertical-align: middle;
     }
-
-    .col-num {
-      width: 32px;
+    small {
+      color: $green-dark;
     }
+  }
 
-    .col-score {
-      width: 90px;
+  .step.is-active {
+    .step-dot {
+      background: $blue;
+      border-color: $blue;
+      color: #fff;
     }
-
-    .col-coord {
-      width: 210px;
-    }
-
-    .dimension-row td {
-      background: #e8f4f7;
+    small {
       color: $blue;
       font-weight: 700;
     }
+  }
 
-    .question {
-      color: #555;
+  .link-note,
+  .link-alert {
+    font-size: 0.8rem;
+    margin: 0 4px 14px;
+    color: $muted;
+  }
+
+  .link-alert {
+    color: $amber;
+    font-weight: 700;
+  }
+
+  .confirm-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+
+    span {
+      font-size: 0.84rem;
+      color: $amber;
+      font-weight: 600;
+    }
+  }
+
+  // ------------------------------------------------------------ botones
+  .btn-green {
+    background: $green;
+    border: 2px solid $green;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 999px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    &:hover:not(:disabled) {
+      background: darken($green, 8%);
+      border-color: darken($green, 8%);
+      color: #fff;
     }
 
-    .score {
-      font-weight: 700;
-      font-size: 1rem;
+    &:disabled {
+      background: #c9d6cf;
+      border-color: #c9d6cf;
+      color: #fff;
+      opacity: 1;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-outline-blue {
+    background: #fff;
+    border: 2px solid $blue;
+    color: $blue;
+    font-weight: 700;
+    border-radius: 999px;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    &:hover:not(:disabled) {
+      background: $blue;
+      color: #fff;
+    }
+  }
+
+  .btn-ghost {
+    background: #fff;
+    border: 2px solid $border;
+    color: $dark-2;
+    font-weight: 600;
+    border-radius: 999px;
+
+    &:hover:not(:disabled) {
+      border-color: $blue;
+      color: $blue;
+    }
+  }
+
+  .btn-link-blue {
+    border: none;
+    background: none;
+    padding: 0;
+    color: $blue;
+    font-weight: 700;
+    font-size: 0.84rem;
+    text-decoration: underline;
+  }
+
+  // ------------------------------------------------------------ resultado
+  .result-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px 28px;
+    background: #fff;
+    border-radius: 12px;
+    border-left: 4px solid $green-dark;
+    box-shadow: $shadow;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+
+  .ring {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    flex: 0 0 96px;
+
+    svg {
+      transform: rotate(-90deg);
     }
 
-    .pending {
-      color: #8f9bb3;
-      font-size: 0.8rem;
+    .ring-track,
+    .ring-value {
+      fill: none;
+      stroke-width: 8;
+    }
+
+    .ring-track {
+      stroke: #e6eeee;
+    }
+
+    // El anillo siempre en azul PECA; el color del nivel queda en la insignia.
+    .ring-value {
+      stroke: $blue;
+      stroke-linecap: round;
+    }
+
+    .ring-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.1;
+
+      strong {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: $dark;
+      }
+
+      small {
+        font-size: 0.72rem;
+        color: $muted;
+      }
+    }
+  }
+
+  .result-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+
+    .result-percent {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: $dark;
+      line-height: 1;
+    }
+
+    .result-dates {
+      font-size: 0.74rem;
+      color: $muted;
+    }
+  }
+
+  .level-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    background: $slate;
+
+    &.level-excellence {
+      background: $green-dark;
+    }
+    &.level-commitment {
+      background: $green;
+    }
+    &.level-progress {
+      background: $amber;
+    }
+    &.level-beginning {
+      background: $slate;
+    }
+  }
+
+  .subtotals {
+    flex: 1 1 280px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 0.82rem;
+
+      & + li {
+        border-top: 1px solid #eef2f3;
+      }
+    }
+
+    .subtotal-name {
+      flex: 1;
+    }
+
+    strong {
+      color: $dark;
+      white-space: nowrap;
+    }
+  }
+
+  // ------------------------------------------------------------ escala
+  .scale-toggle {
+    margin-bottom: 10px;
+  }
+
+  .scale-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+
+    li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      background: #fff;
+      border: 1px solid $border;
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    .scale-score {
+      flex: 0 0 26px;
+      height: 26px;
+      border-radius: 7px;
+      border: 2px solid $green;
+      color: $green-dark;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scale-text {
+      font-size: 0.78rem;
+      line-height: 1.3;
+
+      strong {
+        color: $dark;
+        display: block;
+      }
+
+      small {
+        color: $muted;
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ ítems
+  $grid-columns: minmax(0, 1fr) 96px 236px 84px;
+
+  .items-head {
+    display: grid;
+    grid-template-columns: $grid-columns;
+    gap: 12px;
+    padding: 0 16px 6px 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $muted;
+
+    span:not(:first-child) {
+      text-align: center;
+    }
+  }
+
+  .dimension {
+    margin-bottom: 18px;
+  }
+
+  .dimension-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .dimension-badge {
+    flex: 0 0 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: $blue;
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.small {
+      flex-basis: 22px;
+      height: 22px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+    }
+  }
+
+  .dimension-name {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $dark;
+    margin: 0;
+  }
+
+  .dimension-count {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: $muted;
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 999px;
+    padding: 2px 10px;
+    white-space: nowrap;
+
+    &.is-done {
+      color: $green-dark;
+      border-color: $green;
+    }
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: $grid-columns;
+    gap: 12px;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    border-left: 4px solid $border;
+    box-shadow: $shadow;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+
+    &.is-scored {
+      border-left-color: $green;
+    }
+  }
+
+  .item-text {
+    display: flex;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .item-number {
+    flex: 0 0 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e6f2f4;
+    color: $blue;
+    font-weight: 800;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-title {
+    display: block;
+    font-size: 0.86rem;
+    color: $dark;
+  }
+
+  .item-question {
+    font-size: 0.83rem;
+    color: $dark-2;
+    margin: 0;
+  }
+
+  .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cell-label {
+    display: none;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #eef6e3;
+    color: $green-dark;
+    font-weight: 800;
+
+    &.is-pending {
+      background: #eef2f3;
+      color: $muted;
+      font-weight: 600;
+      font-size: 0.74rem;
+    }
+  }
+
+  .average {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: $green-dark;
+
+    &.is-empty {
+      color: $muted;
+      font-weight: 600;
     }
   }
 
   .score-picker {
-    display: inline-flex;
-    border: 1px solid #c5d3a8;
-    border-radius: 6px;
-    overflow: hidden;
+    display: flex;
+    gap: 4px;
 
     button {
-      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 2px solid $green;
       background: #fff;
-      width: 30px;
-      height: 30px;
-      font-weight: 600;
-      color: #555;
+      color: $green-dark;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0;
+      transition: background 0.15s ease, color 0.15s ease;
 
-      & + button {
-        border-left: 1px solid #c5d3a8;
+      &:hover:not(:disabled):not(.active) {
+        background: #f1f7e8;
       }
 
       &.active {
@@ -128,68 +685,126 @@ $title: #2e8aaa;
       }
 
       &:focus {
-        outline: 2px solid $blue;
-        outline-offset: -2px;
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: 3px solid $blue;
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        opacity: 0.6;
       }
     }
   }
 
-  .status-badge {
-    font-weight: 600;
-
-    &.is-completed {
-      color: #00722e;
-    }
-    &.is-pending_teacher,
-    &.is-pending_coordinator {
-      color: #c48a00;
-    }
-    &.is-not_started {
-      color: #6c757d;
-    }
+  .calc-note {
+    font-size: 0.8rem;
+    color: $muted;
+    margin: 4px 0 0;
   }
 
-  .result-box {
+  // ------------------------------------------------------------ pie
+  .coev-footer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 24px;
-    background: #f4f7f6;
-    border-radius: 10px;
-    padding: 12px 16px;
+    gap: 12px 20px;
+    background: #fff;
+    border-top: 1px solid $border;
+    padding: 12px 24px;
+  }
 
-    .label {
-      display: block;
-      font-size: 0.8rem;
-      color: #6c757d;
+  .footer-progress {
+    flex: 1 1 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .footer-count {
+      font-size: 0.82rem;
+      color: $muted;
+
+      strong {
+        color: $dark;
+      }
     }
 
-    .value {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: $title;
+    .bar {
+      height: 8px;
+      max-width: 360px;
+      background: #e6eeee;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: $green;
+      border-radius: 999px;
+      transition: width 0.25s ease;
     }
   }
 
-  .level-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 12px;
-    color: #fff;
-    font-weight: 700;
-    background: #8f9bb3;
+  // ------------------------------------------------------------ responsive
+  @media (max-width: 991px) {
+    .scale-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 
-    &.level-excellence {
-      background: #00722e;
+  @media (max-width: 767px) {
+    .coev-header,
+    .modal-body,
+    .coev-footer {
+      padding-left: 16px;
+      padding-right: 16px;
     }
-    &.level-commitment {
-      background: $title;
+
+    .steps {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
     }
-    &.level-progress {
-      background: #c48a00;
+
+    .step:not(:last-child)::after {
+      display: none;
     }
-    &.level-beginning {
-      background: #b23b3b;
+
+    .items-head {
+      display: none;
+    }
+
+    .item {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .item-text {
+      grid-column: 1 / -1;
+    }
+
+    .cell {
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-start;
+    }
+
+    .cell-coord {
+      grid-column: 1 / -1;
+    }
+
+    .cell-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: $muted;
+    }
+
+    .scale-grid {
+      grid-template-columns: 1fr;
     }
   }
 }

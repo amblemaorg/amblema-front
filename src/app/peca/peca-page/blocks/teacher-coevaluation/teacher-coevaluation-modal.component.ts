@@ -141,6 +141,48 @@ export class TeacherCoevaluationModalComponent implements OnInit, OnDestroy {
     return this.coordinatorDraft.reduce((sum, score) => sum + (score || 0), 0);
   }
 
+  get answeredItems(): number {
+    return this.coordinatorDraft.length - this.pendingItems;
+  }
+
+  get progressPercent(): number {
+    const count = this.coordinatorDraft.length;
+    return count ? Math.round((this.answeredItems / count) * 100) : 0;
+  }
+
+  /** Paso del coordinador en la línea de estatus. */
+  get coordinatorStep(): 'done' | 'active' | 'pending' {
+    if (this.coordinatorSubmitted) {
+      return 'done';
+    }
+    return this.detail && this.detail.canEvaluate ? 'active' : 'pending';
+  }
+
+  /** Puntajes del coordinador ya registrados o en borrador (para el contador por dimensión). */
+  groupAnswered(group: { items: ItemRow[] }): number {
+    return group.items.filter((item) => {
+      const score = this.coordinatorSubmitted ? item.coordinator : this.coordinatorDraft[item.number - 1];
+      return score !== null && score !== undefined;
+    }).length;
+  }
+
+  /** Subtotal acordado por dimensión: suma de los promedios de sus ítems (solo con la coevaluación completa). */
+  groupSubtotal(group: { items: ItemRow[] }): number {
+    return group.items.reduce((sum, item) => sum + (item.average || 0), 0);
+  }
+
+  groupMax(group: { items: ItemRow[] }): number {
+    return group.items.length * (this.detail ? this.detail.instrument.maxScore : 5);
+  }
+
+  // Anillo SVG del resultado (r = 34).
+  readonly ringCircumference = 2 * Math.PI * 34;
+
+  get ringOffset(): number {
+    const percentage = this.detail && this.detail.percentage ? this.detail.percentage : 0;
+    return this.ringCircumference * (1 - Math.min(percentage, 100) / 100);
+  }
+
   teacherFullName(): string {
     if (!this.detail) {
       return '';
@@ -160,6 +202,22 @@ export class TeacherCoevaluationModalComponent implements OnInit, OnDestroy {
       return '—';
     }
     return Number.isInteger(value) ? `${value}` : value.toFixed(2).replace(/\.?0+$/, '');
+  }
+
+  /**
+   * Promedio a mostrar por ítem: el del backend si ya existe; mientras el coordinador
+   * puntúa, se anticipa solo si el docente ya puntuó (misma regla del backend:
+   * parte entera de (docente + coordinador) / 2). En otro caso, null ("—").
+   */
+  itemAverage(item: ItemRow): number | null {
+    if (item.average !== null && item.average !== undefined) {
+      return item.average;
+    }
+    const draft = this.coordinatorDraft[item.number - 1];
+    if (item.teacher === null || item.teacher === undefined || draft === null || draft === undefined) {
+      return null;
+    }
+    return Math.floor((item.teacher + draft) / 2);
   }
 
   // ---------------------------------------------------- coordinador
