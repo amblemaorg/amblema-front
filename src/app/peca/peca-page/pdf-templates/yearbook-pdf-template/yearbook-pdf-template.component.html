@@ -201,7 +201,8 @@
                     </td>
                 </ng-container>
               </table>
-              <div *ngIf="page.lapseId && (page.lapseId=='lapse2' || page.lapseId=='lapse3')" class="lapse-info">
+              <!-- Lapso 1: solo diagnósticos con PPG/índice (la tabla ambiental no los tiene) -->
+              <div *ngIf="page.lapseId && (page.lapseId=='lapse2' || page.lapseId=='lapse3' || (page.lapseId=='lapse1' && !(page.storeId && page.storeId.includes('diagnosticEnvironmental'))))" class="lapse-info">
                 <label>(*) Promedio por grado (**) Índice: % respecto a la meta</label>
               </div>
             </div>

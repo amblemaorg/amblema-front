@@ -1096,6 +1096,7 @@
   *ngIf="showImportModal; else null"
   class="modal fade"
   id="no-peca-modal-import"
+  (click)="onImportBackdropClick($event)"
 >
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
     <div class="modal-content pb-4">
@@ -1126,12 +1127,6 @@
           <b>Corrija las siguientes filas y vuelva a adjuntar el archivo:</b>
           <ul class="mb-0 mt-2 pl-3">
             <li *ngFor="let error of importErrors">{{ error }}</li>
-          </ul>
-        </div>
-
-        <div *ngIf="importWarnings.length > 0" class="alert alert-warning mt-3 mb-0">
-          <ul class="mb-0 pl-3">
-            <li *ngFor="let warning of importWarnings">{{ warning }}</li>
           </ul>
         </div>
 
