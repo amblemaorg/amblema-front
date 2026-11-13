@@ -173,7 +173,7 @@ export function amblemarioMapper(pecaData, _lastRequest?, contentOrder = {}) {
       diagnosticReading: vals4R
         ? {
           diagnosticText: 'Diagnóstico de lectura',
-          diagnosticTable: tables.table1.length > 1 ? tables.table1 : null,
+          diagnosticTable: tables && tables.table1.length > 1 ? tables.table1 : null,
           diagnosticAnalysis: readingDiagnosticAnalysis
             ? readingDiagnosticAnalysis
             : null,
@@ -185,7 +185,7 @@ export function amblemarioMapper(pecaData, _lastRequest?, contentOrder = {}) {
       diagnosticMath: vals4M
         ? {
           diagnosticText: 'Diagnóstico de multiplicación',
-          diagnosticTable: tables.table2.length > 1 ? tables.table2 : null,
+          diagnosticTable: tables && tables.table2.length > 1 ? tables.table2 : null,
           diagnosticAnalysis: mathDiagnosticAnalysis
             ? mathDiagnosticAnalysis
             : null,
@@ -197,7 +197,7 @@ export function amblemarioMapper(pecaData, _lastRequest?, contentOrder = {}) {
       diagnosticLogic: vals4L
         ? {
             diagnosticText: 'Diagnóstico de razonamiento lógico matemático',
-            diagnosticTable: tables.table3.length > 1 ? tables.table3 : null,
+            diagnosticTable: tables && tables.table3.length > 1 ? tables.table3 : null,
             diagnosticAnalysis: logicDiagnosticAnalysis
               ? logicDiagnosticAnalysis
               : null,

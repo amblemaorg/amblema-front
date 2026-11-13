@@ -711,7 +711,12 @@ export class DiagnosticPageDataGroup {
 
     if (isFirstLapse) {
       header.push([`<strong>Diagnóstico Inicial de ${typeDiagText}</strong><br />${diagHeading[diagKey]}`])
-      header.push(['<strong>Grado</strong>', '<strong>PPG</strong><br/>(Promedio por grado)', '<strong>Meta</strong>', '<strong>Índice Inicial</strong><br/>(% respecto a la meta)']);
+      header.push([
+        '<strong>Grado</strong>',
+        '<strong>PPG (*)</strong>',
+        '<strong>Meta</strong>',
+        '<strong>Índice Inicial (**)</strong>',
+      ]);
     }
 
     if (isSecondLapse) {
