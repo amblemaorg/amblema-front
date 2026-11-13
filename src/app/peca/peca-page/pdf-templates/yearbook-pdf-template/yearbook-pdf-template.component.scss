@@ -699,7 +699,7 @@ $text_indent: 18px;
     .body {
       .visual-references {
         margin-top: 10px;
-        margin-bottom: 60px;
+        margin-bottom: 40px;
 
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -841,7 +841,7 @@ $text_indent: 18px;
 
       .description {
         text-indent: $text_indent;
-        margin-top: 80px;
+        margin-top: 40px;
         font-family: 'Montserrat' !important;
         font-size: 16px !important;
         text-align: justify !important;

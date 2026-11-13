@@ -67,7 +67,6 @@ export class FormBlockComponent
   importMultipleErrors: string[] = [];
   importMultipleSummary: Array<{ label: string; count: number }> = [];
   importErrors: string[] = [];
-  importWarnings: string[] = [];
   importSummary: string = "";
   activeSection: number;
   gradesArr: any[];
@@ -224,6 +223,13 @@ export class FormBlockComponent
     this.settings.formsContent[this.fields[0]].options = [];
   }
 
+  // Clic fuera del cuadro del modal (en el fondo): cierra y limpia errores para reintentar
+  onImportBackdropClick(event: MouseEvent) {
+    if (event.target === event.currentTarget && !this.importingData) {
+      this.closeModal();
+    }
+  }
+
   closeModal() {
     this.showImportModal = false;
     this.resetImport();
@@ -234,7 +240,6 @@ export class FormBlockComponent
     this.showUploadBtn = false;
     this.studentsToImport = [];
     this.importErrors = [];
-    this.importWarnings = [];
     this.importSummary = "";
   }
 
@@ -456,47 +461,50 @@ export class FormBlockComponent
     );
   }
 
-  // IMPORTAR (una sección): los estudiantes van a la sección activa
+  // IMPORTAR (una sección): cada fila debe indicar el grado y la sección activos.
+  // Para cargar o mover estudiantes de otras secciones está "Importar múltiple".
   private validateSingleImport(parsed: Array<{ fila: number; student: any }>) {
     const section = this.sectionsArr[this.activeSection];
     const sectionLabel = `${this.parseGrade(section.grade)} - Sección ${section.name}`;
     const errors: string[] = [];
-    const otherSectionRows: number[] = [];
     const students: any[] = [];
 
     parsed.forEach(({ fila, student }) => {
+      const studentName = `${student.nombre} ${student.apellido}`.trim();
       const dataErrors = this.validateStudentData(fila, student);
       if (dataErrors.length) {
         errors.push(...dataErrors);
         return;
       }
-      // Un Excel exportado de otra sección es válido (sirve para mover estudiantes), solo se avisa
-      const otherGrade =
-        student.grado && this.normalizeImportGrade(student.grado) != section.grade;
-      const otherSection =
-        student.seccion &&
-        this.normalizeImportSection(student.seccion) !==
-          this.normalizeImportSection(section.name);
-      if (otherGrade || otherSection) otherSectionRows.push(fila);
-      students.push(student);
+      if (!student.grado || !student.seccion) {
+        errors.push(`Fila ${fila} (${studentName}): falta el grado o la sección`);
+        return;
+      }
+      const sameGrade = this.normalizeImportGrade(student.grado) == section.grade;
+      const sameSection =
+        this.normalizeImportSection(student.seccion) ===
+        this.normalizeImportSection(section.name);
+      if (!sameGrade || !sameSection) {
+        errors.push(
+          `Fila ${fila} (${studentName}): indica "${student.grado}" sección "${student.seccion}", ` +
+            `pero la sección seleccionada es ${sectionLabel}`
+        );
+        return;
+      }
+      students.push({ ...student, fila });
     });
 
     if (errors.length) {
       this.importErrors = errors;
       this.toastr.error(
-        `Se encontraron ${errors.length} error(es) en el archivo. Corríjalo y vuelva a adjuntarlo.`,
+        `Se encontraron ${errors.length} error(es) en el archivo. Corríjalo y vuelva a adjuntarlo. ` +
+          `Para cargar estudiantes de varios grados o secciones use "Importar múltiple".`,
         "Error en el archivo",
         this.importToastOptions
       );
       return;
     }
 
-    if (otherSectionRows.length) {
-      this.importWarnings = [
-        `La(s) fila(s) ${otherSectionRows.join(", ")} indican otro grado o sección; se importarán en ${sectionLabel}. ` +
-          `Para respetar el grado y la sección del archivo use "Importar múltiple".`,
-      ];
-    }
     this.studentsToImport = students;
     this.importSummary = `${students.length} estudiante(s) en ${sectionLabel}`;
     this.showUploadBtn = true;
