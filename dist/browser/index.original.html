@@ -17,7 +17,12 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
     
-      gtag('config', 'G-2V3026X7L8');
+      // El token del enlace de coevaluación es una credencial: GA4 recibe la ruta enmascarada
+      var gaConfig = {};
+      if (/^\/coevaluacion\/[^/]+/.test(location.pathname)) {
+        gaConfig.page_location = location.origin + '/coevaluacion/:token';
+      }
+      gtag('config', 'G-2V3026X7L8', gaConfig);
     </script>
     <!-- Sin JS, el loader prerenderizado nunca se ocultaría -->
     <noscript><style>.page-loader { display: none !important; }</style></noscript>
@@ -38,5 +43,5 @@
         <img src="assets/images/amblema-loader.webp" style="width: 20em;" alt="Cargando..."/>
       </div>
     </app-root>
-  <script src="runtime-es2015.9821e9a5de0ea469c451.js" type="module"></script><script src="runtime-es5.9821e9a5de0ea469c451.js" nomodule defer></script><script src="polyfills-es5.3bfbdec674a3d4f1dcee.js" nomodule defer></script><script src="polyfills-es2015.3737d4c96bb536c0367e.js" type="module"></script><script src="scripts.bc203e58b714f5137e8e.js" defer></script><script src="main-es2015.d17bbd09bf5ddd35f888.js" type="module"></script><script src="main-es5.d17bbd09bf5ddd35f888.js" nomodule defer></script></body>
+  <script src="runtime-es2015.c996342a12116ba40db2.js" type="module"></script><script src="runtime-es5.c996342a12116ba40db2.js" nomodule defer></script><script src="polyfills-es5.3bfbdec674a3d4f1dcee.js" nomodule defer></script><script src="polyfills-es2015.3737d4c96bb536c0367e.js" type="module"></script><script src="scripts.bc203e58b714f5137e8e.js" defer></script><script src="main-es2015.f30694a4c00057b986b5.js" type="module"></script><script src="main-es5.f30694a4c00057b986b5.js" nomodule defer></script></body>
 </html>
