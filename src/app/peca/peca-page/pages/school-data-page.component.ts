@@ -33,6 +33,11 @@ import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { UserState } from "../../../store/states/e-learning/user.state";
 import { gradesAndSectionsDataToSectionsFormMapper } from "../mappers/teachers-in-sections-form-mappers";
+import {
+  TeacherCoevaluationService,
+  CoevaluationStatusRecord,
+} from "../../../services/peca/teacher-coevaluation.service";
+import { CoevaluationCellValue } from "../blocks/teacher-coevaluation/coevaluation-cell.component";
 import { sectionsAndStudentsDataToSectionsFormMapper } from "../mappers/sections-and-students-form-mappers";
 
 @Component({
@@ -66,6 +71,12 @@ export class SchoolDataPageComponent
   peca_id: string;
 
   currentUserId: string; // current user id on session
+
+  // Coevaluación docente HQS: estatus por docente del PECA activo
+  coevaluationStatuses: { [teacherId: string]: CoevaluationStatusRecord } = {};
+  coevaluationPecaId: string;
+  lastTeachersData: any[] = [];
+  coevaluationSubscription: Subscription = new Subscription();
   requestIdToCancel: string; // if school data is in approval this holds last request id
   permissions: any = {};
 
@@ -100,9 +111,17 @@ export class SchoolDataPageComponent
     factoryResolver: ComponentFactoryResolver,
     private globals: GlobalService,
     route: ActivatedRoute,
-    location: Location
+    location: Location,
+    private coevaluationService: TeacherCoevaluationService
   ) {
     super(factoryResolver, location, route);
+
+    // El modal guardó o envió: refrescar el estatus en la tabla
+    this.coevaluationSubscription.add(
+      this.coevaluationService.changed$.subscribe(() =>
+        this.loadCoevaluationStatuses()
+      )
+    );
 
     globals.blockIntancesEmitter.subscribe((data) => {
       data.blocks.forEach((block, name) =>
@@ -172,11 +191,15 @@ export class SchoolDataPageComponent
             this.permissions
           );
 
+          const pecaChanged = this.coevaluationPecaId !== data.school.pecaId;
+          if (pecaChanged) this.coevaluationStatuses = {};
+          this.coevaluationPecaId = data.school.pecaId;
           this.setTeachersTableData(
             data.school.teachers,
             teachersDataToTeachersTableMapper,
             this.permissions
           );
+          if (pecaChanged) this.loadCoevaluationStatuses();
 
           this.setSchoolPicturesTableData(
             data.school.isInApproval
@@ -403,12 +426,19 @@ export class SchoolDataPageComponent
     permissions?: teacherPermissionsI
   ) {
     if (_mapper) {
+      this.lastTeachersData = teachersData || [];
+      const canCoevaluate = !!permissions.teacher_coevaluation;
       this.teachersFormData = {
         hiddenButton: !permissions.teacher_create,
       };
       this.teachersTableData = {
-        data: _mapper(teachersData),
+        data: _mapper(teachersData).map((row) =>
+          canCoevaluate
+            ? { ...row, coevaluation: this.coevaluationCell(row) }
+            : row
+        ),
         isEditable: true,
+        hiddenColumns: canCoevaluate ? [] : ["coevaluation"],
         classes: {
           hideView: !permissions.teacher_view,
           hideEdit: !permissions.teacher_edit,
@@ -420,6 +450,48 @@ export class SchoolDataPageComponent
     } else {
       this.teachersTableData = teachersData;
     }
+  }
+
+  /** Valor de la celda "Coevaluación" de un docente. */
+  coevaluationCell(row: any): CoevaluationCellValue {
+    const record = this.coevaluationStatuses[row.id];
+    return {
+      pecaId: this.coevaluationPecaId,
+      teacherId: row.id,
+      // Inactivos: sin botón, salvo para consultar una coevaluación ya iniciada
+      canOpen: row.status === "1" || !!record,
+      status: record ? record.status : "not_started",
+      statusLabel: record ? record.statusLabel : "Sin iniciar",
+      levelLabel: record ? record.levelLabel : null,
+    };
+  }
+
+  loadCoevaluationStatuses() {
+    if (!this.coevaluationPecaId || !this.permissions.teacher_coevaluation)
+      return;
+    const pecaId = this.coevaluationPecaId;
+    this.coevaluationSubscription.add(
+      this.coevaluationService.getStatuses(pecaId).subscribe(
+        (response) => {
+          if (pecaId !== this.coevaluationPecaId) return;
+          this.coevaluationStatuses = (response.records || []).reduce(
+            (acc, record) => {
+              acc[record.teacherId] = record;
+              return acc;
+            },
+            {}
+          );
+          this.setTeachersTableData(
+            this.lastTeachersData,
+            teachersDataToTeachersTableMapper,
+            this.permissions
+          );
+          this.setBlockData("teachersTable", this.teachersTableData);
+        },
+        // Sin acceso o error: la columna queda en "Sin iniciar"
+        () => {}
+      )
+    );
   }
 
   setSchoolPicturesTableData(sliderData, _mapper?: Function) {
@@ -655,5 +727,6 @@ export class SchoolDataPageComponent
     this.isInstanciated = false;
     this.loadedData = false;
     this.schoolDataSubscription.unsubscribe();
+    this.coevaluationSubscription.unsubscribe();
   }
 }

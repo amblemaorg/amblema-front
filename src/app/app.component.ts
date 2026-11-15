@@ -14,7 +14,8 @@ export class AppComponent {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         gtag('config', 'UA-159331906-1', {
-          page_path: event.urlAfterRedirects,
+          // El token del enlace de coevaluación es una credencial: no enviarlo a Analytics
+          page_path: event.urlAfterRedirects.replace(/^\/coevaluacion\/[^/?#]+/, '/coevaluacion/:token'),
         });
       }
     });

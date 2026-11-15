@@ -1,7 +1,9 @@
 import { YearbookConfig } from './../../../../classes/yearbook/yearbook-config';
 import { Router } from '@angular/router';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { ToastrService } from 'ngx-toastr';
+import { PecaState } from '../../../../store/states/peca/peca.state';
 import { PdfYearbookService } from './../../../../services/peca/pdf-yearbook.service';
 import { PdfYearbookData } from './pdfYearbookData.interface';
 import { sortByContentOrder } from '../../mappers/yearbook-content-order';
@@ -46,11 +48,13 @@ type TemplatePages = Array<
 export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
   creatingPdf = false;
   pdfToasterCalledTimes = 0;
+  canDownload = false;
 
   constructor(
     private router: Router,
     private pdfService: PdfYearbookService,
     private toastr: ToastrService,
+    private store: Store,
   ) { }
 
   showLoading = true;
@@ -100,6 +104,8 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
       };
 
       this.pdfData = rewriteUrls(this.pdfData);
+
+      this.resolveCanDownload();
     }
   }
 
@@ -112,6 +118,29 @@ export class YearbookPdfTemplateComponent implements OnInit, AfterViewInit {
     }
 
     this.setInitialData();
+  }
+
+  private async resolveCanDownload(): Promise<void> {
+    // NGXS (suppressErrors) no lanza si falta state.user: devuelve undefined.
+    // Sin usuario/tipo se cierra el acceso (fail closed).
+    const resume = this.store.selectSnapshot(PecaState.getUserResume);
+    if (!resume || resume.type == null) {
+      this.canDownload = false;
+      return;
+    }
+
+    const type = String(resume.type);
+    if (type !== '2') {
+      this.canDownload = true;
+      return;
+    }
+
+    try {
+      const status = await this.pdfService.getYearbookDownloadStatus(String(this.pdfData.pecaId));
+      this.canDownload = !status.schoolYearActive || status.yearbookDownloadEnabled;
+    } catch {
+      this.canDownload = false;
+    }
   }
 
   async setInitialData() {

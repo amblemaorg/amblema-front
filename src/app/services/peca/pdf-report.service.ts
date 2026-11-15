@@ -578,7 +578,7 @@ export class PDFReport implements OnInit {
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMeta\n", rowSpan: 2 },
-        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nPorcentaje de mejora\n", rowSpan: 2 },
+        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMejora \n(Puntos Porcentuales: pp)\n", rowSpan: 2, alignment: "center" },
       ];
 
       const ThirdHeaderReading: any = [
@@ -638,7 +638,7 @@ export class PDFReport implements OnInit {
               text: `${sec.improvementPercentage !== undefined
                 ? sec.improvementPercentage.toFixed(2)
                 : 0
-                }%`,
+                }`,
             },
           ];
 
@@ -685,7 +685,7 @@ export class PDFReport implements OnInit {
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMeta", rowSpan: 2 },
-        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nPorcentaje de mejora", rowSpan: 2 },
+        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMejora \n(Puntos Porcentuales: pp)", rowSpan: 2, alignment: "center" },
       ];
 
       const ThirdHeaderMultiplication: any = [
@@ -724,7 +724,7 @@ export class PDFReport implements OnInit {
               text: `${sec.improvementPercentage !== undefined
                 ? sec.improvementPercentage.toFixed(2)
                 : 0
-                }%`,
+                }`,
             },
           ];
 
@@ -771,7 +771,7 @@ export class PDFReport implements OnInit {
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", text: "" },
         { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMeta", rowSpan: 2 },
-        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nPorcentaje de mejora", rowSpan: 2 },
+        { fillColor: "#81b03e", color: "#FFF", bold: true, text: "\nMejora \n(Puntos Porcentuales: pp)", rowSpan: 2, alignment: "center" },
       ];
 
       const ThirdHeaderLogicReasoning: any = [
@@ -810,7 +810,7 @@ export class PDFReport implements OnInit {
               text: `${sec.improvementPercentage !== undefined
                 ? sec.improvementPercentage.toFixed(2)
                 : 0
-                }%`,
+                }`,
             },
           ];
 
@@ -1234,11 +1234,11 @@ export class PDFReport implements OnInit {
 
       // -- Final result
       const averagesResults: any = [
-        [{ ...colorRowOne, text: "Promedio general" }],
+        [{ ...colorRowOne, text: "" }],
         [{ text: "Lapso 1" }],
         [{ text: "Lapso 2" }],
         [{ text: "Lapso 3" }],
-        [{ ...colorRowTwo, text: "Porcentaje de mejora respecto al índice inicial" }],
+        [{ ...colorRowTwo, text: "Mejora en relación al Lapso I\n(Puntos Porcentuales: pp)" }],
       ];
 
       if (report.yearSummary.reading) {
@@ -1248,23 +1248,23 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.reading.lapse1ResultAverage !== undefined &&
-              report.yearSummary.reading.lapse1ResultAverage !== null
-              ? report.yearSummary.reading.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse1IndexAverage !== undefined &&
+              report.yearSummary.reading.lapse1IndexAverage !== null
+              ? report.yearSummary.reading.lapse1IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.reading.lapse2ResultAverage !== undefined &&
-              report.yearSummary.reading.lapse2ResultAverage !== null
-              ? report.yearSummary.reading.lapse2ResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse2IndexAverage !== undefined &&
+              report.yearSummary.reading.lapse2IndexAverage !== null
+              ? report.yearSummary.reading.lapse2IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.reading.lapse3ResultAverage !== undefined &&
-              report.yearSummary.reading.lapse3ResultAverage !== null
-              ? report.yearSummary.reading.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.reading.lapse3IndexAverage !== undefined &&
+              report.yearSummary.reading.lapse3IndexAverage !== null
+              ? report.yearSummary.reading.lapse3IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[4].push({
@@ -1272,7 +1272,7 @@ export class PDFReport implements OnInit {
           text: `${report.yearSummary.reading.improvementPercentageAverage !== undefined
             ? report.yearSummary.reading.improvementPercentageAverage.toFixed(2)
             : 0
-            }%`,
+            }`,
         });
       }
 
@@ -1283,23 +1283,23 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.math.lapse1ResultAverage !== undefined &&
-              report.yearSummary.math.lapse1ResultAverage !== null
-              ? report.yearSummary.math.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.math.lapse1IndexAverage !== undefined &&
+              report.yearSummary.math.lapse1IndexAverage !== null
+              ? report.yearSummary.math.lapse1IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.math.lapse2ResultAverage !== undefined &&
-              report.yearSummary.math.lapse2ResultAverage !== null
-              ? report.yearSummary.math.lapse2ResultAverage.toFixed(2)
+            report.yearSummary.math.lapse2IndexAverage !== undefined &&
+              report.yearSummary.math.lapse2IndexAverage !== null
+              ? report.yearSummary.math.lapse2IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.math.lapse3ResultAverage !== undefined &&
-              report.yearSummary.math.lapse3ResultAverage !== null
-              ? report.yearSummary.math.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.math.lapse3IndexAverage !== undefined &&
+              report.yearSummary.math.lapse3IndexAverage !== null
+              ? report.yearSummary.math.lapse3IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[4].push({
@@ -1307,7 +1307,7 @@ export class PDFReport implements OnInit {
           text: `${report.yearSummary.math.improvementPercentageAverage !== undefined
             ? report.yearSummary.math.improvementPercentageAverage.toFixed(2)
             : 0
-            }%`,
+            }`,
         });
       }
 
@@ -1318,23 +1318,23 @@ export class PDFReport implements OnInit {
         });
         averagesResults[1].push({
           text:
-            report.yearSummary.logic.lapse1ResultAverage !== undefined &&
-              report.yearSummary.logic.lapse1ResultAverage !== null
-              ? report.yearSummary.logic.lapse1ResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse1IndexAverage !== undefined &&
+              report.yearSummary.logic.lapse1IndexAverage !== null
+              ? report.yearSummary.logic.lapse1IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[2].push({
           text:
-            report.yearSummary.logic.lapse2ResultAverage !== undefined &&
-              report.yearSummary.logic.lapse2ResultAverage !== null
-              ? report.yearSummary.logic.lapse2ResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse2IndexAverage !== undefined &&
+              report.yearSummary.logic.lapse2IndexAverage !== null
+              ? report.yearSummary.logic.lapse2IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[3].push({
           text:
-            report.yearSummary.logic.lapse3ResultAverage !== undefined &&
-              report.yearSummary.logic.lapse3ResultAverage !== null
-              ? report.yearSummary.logic.lapse3ResultAverage.toFixed(2)
+            report.yearSummary.logic.lapse3IndexAverage !== undefined &&
+              report.yearSummary.logic.lapse3IndexAverage !== null
+              ? report.yearSummary.logic.lapse3IndexAverage.toFixed(2)
               : "-",
         });
         averagesResults[4].push({
@@ -1342,7 +1342,7 @@ export class PDFReport implements OnInit {
           text: `${report.yearSummary.logic.improvementPercentageAverage !== undefined
             ? report.yearSummary.logic.improvementPercentageAverage.toFixed(2)
             : 0
-            }%`,
+            }`,
         });
       }
 
@@ -1351,6 +1351,18 @@ export class PDFReport implements OnInit {
           averagesResults[4][i].margin = [0, 4, 0, 0];
         }
       }
+
+      // Fila de cabecera que abarca todas las columnas del cuadro
+      const averagesColumns = averagesResults[0].length;
+      averagesResults.unshift([
+        {
+          ...colorRowOne,
+          text: "Promedio general de Índices por lapsos",
+          colSpan: averagesColumns,
+          alignment: "center",
+        },
+        ...Array(averagesColumns - 1).fill({}),
+      ]);
 
       finalReport.content.push({
         columns: [
@@ -1837,7 +1849,7 @@ export class PDFReport implements OnInit {
       {},
       { text: "PPM", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" },
       { text: "M2M", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" },
-      { text: "L60M", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" }
+      { text: "60LM", fillColor: "#00809a", color: "#FFF", bold: true, alignment: "center" }
     ];
 
     const tableBody: any[][] = [tableHeadersRow1, tableHeadersRow2];

@@ -111,6 +111,10 @@ export class TableBlockComponent
   isContentRefreshing: boolean = false;
   selectedRows: any[] = [];
 
+  // Columnas originales de la configuración, para poder ocultar algunas según
+  // permisos (data.hiddenColumns) sin mutar el objeto de configuración compartido.
+  private baseColumns: { [key: string]: any } | null = null;
+
   promoteForm: FormGroup;
   promoteFields: string[] = [];
   showSelectGrades0: boolean = true;
@@ -440,6 +444,29 @@ export class TableBlockComponent
     this.source = new LocalDataSource(this.settings[this.settings.tableCode]);
   }
 
+  /**
+   * Oculta columnas por nombre. Reasigna settings (nuevo objeto) para que
+   * ng2-smart-table reconstruya la grilla; si no cambia nada, no hace nada.
+   */
+  applyHiddenColumns(hiddenColumns: string[]) {
+    if (!this.settings || !this.settings.columns) return;
+    if (!this.baseColumns) this.baseColumns = this.settings.columns;
+    const visible = Object.keys(this.baseColumns).filter(
+      (column) => !hiddenColumns.includes(column)
+    );
+    const current = Object.keys(this.settings.columns);
+    if (
+      visible.length === current.length &&
+      visible.every((column, i) => column === current[i])
+    )
+      return;
+    const columns = visible.reduce((acc, column) => {
+      acc[column] = this.baseColumns[column];
+      return acc;
+    }, {});
+    this.settings = { ...this.settings, columns };
+  }
+
   setFormG(data) {
     if (data) {
       this.promoteFields = Object.keys(data.promoteData);
@@ -458,6 +485,9 @@ export class TableBlockComponent
   setData(data: any) {
     if (data["classes"]) {
       this.settings.classes = data["classes"];
+    }
+    if (Array.isArray(data["hiddenColumns"])) {
+      this.applyHiddenColumns(data["hiddenColumns"]);
     }
     if (!this.isEdited) {
       if (this.settings.isFromImgContainer) {

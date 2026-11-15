@@ -58,6 +58,8 @@ import { FormatoRegistroComponent } from './peca-page/pages/formato-registro-est
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component'
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component'
+import { CoevaluationCellComponent } from './peca-page/blocks/teacher-coevaluation/coevaluation-cell.component'
+import { TeacherCoevaluationModalComponent } from './peca-page/blocks/teacher-coevaluation/teacher-coevaluation-modal.component'
 import { AccordionBlockComponent } from './peca-page/blocks/accordion-block/accordion-block.component'
 import { TextsButtonsSetBlockComponent } from './peca-page/blocks/texts-buttons-set-block/texts-buttons-set-block.component'
 import { ProfileBlockComponent } from './peca-page/blocks/profile-block/profile-block.component'
@@ -126,6 +128,8 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     FormatoRegistroComponent,
     FormatDownloadBlock,
     StoreLineOptionsBlockComponent,
+    CoevaluationCellComponent,
+    TeacherCoevaluationModalComponent,
   ],
   imports: [
     CommonModule,
@@ -190,6 +194,7 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     FormatoRegistroComponent,
     FormatDownloadBlock,
     StoreLineOptionsBlockComponent,
+    CoevaluationCellComponent,
   ],
   exports: [GraphicsBlockComponent],
   providers: [

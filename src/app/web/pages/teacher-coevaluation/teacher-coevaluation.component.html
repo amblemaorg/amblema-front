@@ -1,0 +1,161 @@
+<div class="coevaluation-page">
+  <!-- Encabezado (misma estética que el modal del PECA).
+       No usar <header>: web.component oculta todo `web-header.hide-header header` en esta ruta. -->
+  <div class="page-header" role="banner">
+    <div class="container page-container header-inner">
+      <div class="header-text">
+        <p class="eyebrow">Coevaluación Docente AmbLeMa HQS</p>
+        <ng-container *ngIf="!loading && !notFound && !submitted && data; else plainTitle">
+          <h1 class="teacher-name">{{ teacherName }}</h1>
+          <ul class="chips" aria-label="Datos de identificación">
+            <li>{{ data.sections || 'Sin sección asignada' }}</li>
+            <li>{{ data.school.name }}<ng-container *ngIf="data.school.code"> ({{ data.school.code }})</ng-container></li>
+            <li>{{ data.schoolYear.name }}</li>
+            <li *ngIf="data.coordinator.name">Coordinador/a: {{ data.coordinator.name }}</li>
+          </ul>
+        </ng-container>
+        <ng-template #plainTitle>
+          <h1 class="teacher-name">Instrumento de coevaluación</h1>
+        </ng-template>
+      </div>
+      <div class="brand">
+        <img src="assets/images/amblema-logo.png" alt="Logo de AmbLeMa" class="logo-img" />
+      </div>
+    </div>
+  </div>
+
+  <div class="container page-container page-body">
+    <div *ngIf="loading" class="state-card">
+      <div class="spinner-border" role="status"><span class="sr-only">Cargando...</span></div>
+      <p class="mt-3 mb-0">Cargando la coevaluación...</p>
+    </div>
+
+    <!-- Enlace inválido o ya utilizado -->
+    <div *ngIf="!loading && notFound && !submitted" class="state-card is-warning" role="alert">
+      <span class="state-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M12 2 1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2V9h2v4z"/></svg>
+      </span>
+      <h2>Enlace no disponible</h2>
+      <p class="mb-0">
+        El enlace no es válido o la coevaluación ya fue enviada. Si recibió un correo más reciente, use
+        ese enlace. Ante cualquier duda, comuníquese con su coordinador/a AmbLeMa.
+      </p>
+    </div>
+
+    <!-- Enviado -->
+    <div *ngIf="submitted" class="state-card is-success" role="status">
+      <span class="state-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+      </span>
+      <h2>¡Coevaluación enviada!</h2>
+      <p class="mb-0">
+        Gracias, {{ teacherName }}. Su puntuación quedó registrada. Su coordinador/a AmbLeMa conversará con
+        usted sobre los resultados.
+      </p>
+    </div>
+
+    <ng-container *ngIf="!loading && !notFound && !submitted && data">
+      <!-- Progreso (fijo al desplazarse) -->
+      <div class="progress-card" role="status" aria-live="polite">
+        <div class="progress-text">
+          <strong>{{ answeredItems }} de {{ scores.length }}</strong>
+          <span>{{ pendingItems > 0 ? 'preguntas puntuadas' : '¡Todo listo para enviar!' }}</span>
+        </div>
+        <div class="bar" aria-hidden="true">
+          <div class="bar-fill" [style.width.%]="progressPercent"></div>
+        </div>
+      </div>
+
+      <!-- Escala -->
+      <section class="scale-card" aria-labelledby="coevaluation-scale-title">
+        <h2 id="coevaluation-scale-title" class="block-title">¿Cómo puntuar?</h2>
+        <p class="scale-intro">
+          Hola, {{ firstName || teacherName }}. Valore de 0 a 5 cuánto cumple cada práctica. Responda con
+          sinceridad: su coordinador/a AmbLeMa hará lo mismo y luego conversarán sobre los resultados.
+        </p>
+        <ol class="scale-grid">
+          <li *ngFor="let s of data.instrument.scale">
+            <span class="scale-score">{{ s.score }}</span>
+            <span class="scale-text">
+              <strong>{{ s.label }}</strong>
+              <small>{{ s.description }}</small>
+            </span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Preguntas por dimensión -->
+      <section class="dimension" *ngFor="let group of groups" [attr.aria-labelledby]="'dimension-' + group.code">
+        <div class="dimension-head">
+          <span class="dimension-badge" aria-hidden="true">{{ group.code }}</span>
+          <h2 class="dimension-name" [id]="'dimension-' + group.code">{{ group.name }}</h2>
+          <span class="dimension-count" [class.is-done]="groupAnswered(group) === group.items.length">
+            {{ groupAnswered(group) }} de {{ group.items.length }}
+          </span>
+        </div>
+
+        <article class="item" *ngFor="let item of group.items" [class.is-scored]="scores[item.number - 1] !== null">
+          <div class="item-text">
+            <span class="item-number">{{ item.number }}</span>
+            <div>
+              <h3 class="item-title">{{ item.title }}</h3>
+              <p class="item-question">{{ item.question }}</p>
+            </div>
+          </div>
+          <div class="score-picker" role="radiogroup" [attr.aria-label]="'Puntaje de la pregunta ' + item.number">
+            <button
+              type="button"
+              *ngFor="let option of scoreOptions"
+              role="radio"
+              [attr.aria-checked]="scores[item.number - 1] === option"
+              [attr.aria-label]="option + ' – ' + (scaleFor(option)?.label || '')"
+              [class.active]="scores[item.number - 1] === option"
+              [disabled]="submitting"
+              (click)="setScore(item.number, option)"
+            >
+              {{ option }}
+            </button>
+          </div>
+          <p class="item-feedback" *ngIf="scaleFor(scores[item.number - 1]) as chosen">
+            <span aria-hidden="true">✓</span>
+            <strong>{{ chosen.label }}:</strong> {{ chosen.description }}
+          </p>
+        </article>
+      </section>
+
+      <!-- Envío -->
+      <div class="submit-bar">
+        <div class="submit-info">
+          <ng-container *ngIf="pendingItems > 0">
+            Faltan <strong>{{ pendingItems }}</strong> pregunta(s) por puntuar.
+          </ng-container>
+          <ng-container *ngIf="pendingItems === 0">
+            Su puntaje total: <strong>{{ total }} / {{ data.instrument.maxTotal }}</strong>
+          </ng-container>
+        </div>
+        <div class="submit-actions" *ngIf="!confirming">
+          <button
+            type="button"
+            class="btn btn-submit"
+            [disabled]="submitting || pendingItems > 0"
+            [attr.title]="pendingItems > 0 ? 'Puntúe todas las preguntas para poder enviar' : null"
+            (click)="askSubmit()"
+          >
+            Enviar coevaluación
+          </button>
+        </div>
+        <div class="submit-actions is-confirming" *ngIf="confirming">
+          <span class="confirm-text">Solo puede enviarse una vez y no se podrá modificar. ¿Confirma?</span>
+          <div class="confirm-buttons">
+            <button type="button" class="btn btn-ghost" [disabled]="submitting" (click)="confirming = false">
+              Revisar
+            </button>
+            <button type="button" class="btn btn-submit" [disabled]="submitting" (click)="submit()">
+              {{ submitting ? 'Enviando...' : 'Sí, enviar' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
