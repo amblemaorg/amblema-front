@@ -1560,6 +1560,14 @@ export class PdfYearbookService {
       .get(`/pecaprojects/${pecaProjectId}/printoptions`)
       .toPromise();
   }
+
+  getYearbookDownloadStatus(
+    pecaProjectId: string,
+  ): Promise<{ pecaId: string; schoolYearActive: boolean; yearbookDownloadEnabled: boolean }> {
+    return this.http
+      .get(`/pecaprojects/${pecaProjectId}/yearbook-download`)
+      .toPromise();
+  }
 }
 
 export interface YearbookContentOrder {
