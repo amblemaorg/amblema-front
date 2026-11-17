@@ -441,31 +441,44 @@ export class DiagnosticPageDataGroup {
     const lapseGraphic = graphics[lapseId];
     const diagnostic = lapseGraphic[diagKey];
 
-    const labels = [];
-    const values = [];
+    const gradeFormat = {
+      '1': '1ero',
+      '2': '2do',
+      '3': '3er',
+      '4': '4to',
+      '5': '5to',
+      '6': '6to',
+    };
+
+    // Agrupa las secciones por grado (promedio) para no repetir el grado
+    const byGrade = new Map<string, { sum: number; count: number }>();
 
     for (let idx = 0; idx < diagnostic.labels.length; idx++) {
       const label = diagnostic.labels[idx];
-      const value = diagnostic.values[idx];
+      const value = parseFloat(diagnostic.values[idx]) || 0;
 
-      let grade: string = label.match(/[1-6]/);
+      const grade = (label.match(/[1-6]/) || [null])[0];
 
       // validations
       if (!grade) continue; // if grade doesn't have expected format
       if (value == 0) continue;
 
-      const gradeFormat = {
-        '1': '1ero',
-        '2': '2do',
-        '3': '3er',
-        '4': '4to',
-        '5': '5to',
-        '6': '6to',
-      };
-
-      labels.push(gradeFormat[grade]);
-      values.push(value);
+      const entry = byGrade.get(grade) || { sum: 0, count: 0 };
+      entry.sum += value;
+      entry.count++;
+      byGrade.set(grade, entry);
     }
+
+    const labels = [];
+    const values = [];
+
+    Array.from(byGrade.keys())
+      .sort()
+      .forEach((grade) => {
+        const { sum, count } = byGrade.get(grade);
+        labels.push(gradeFormat[grade]);
+        values.push(parseFloat((sum / count).toFixed(2)));
+      });
 
     return {
       labels,

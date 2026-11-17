@@ -351424,28 +351424,39 @@ class DiagnosticPageDataGroup {
     getDiagIndexFromGraphicsForProvDataTb(lapseId, diagKey, graphics) {
         const lapseGraphic = graphics[lapseId];
         const diagnostic = lapseGraphic[diagKey];
-        const labels = [];
-        const values = [];
+        const gradeFormat = {
+            '1': '1ero',
+            '2': '2do',
+            '3': '3er',
+            '4': '4to',
+            '5': '5to',
+            '6': '6to',
+        };
+        // Agrupa las secciones por grado (promedio) para no repetir el grado
+        const byGrade = new Map();
         for (let idx = 0; idx < diagnostic.labels.length; idx++) {
             const label = diagnostic.labels[idx];
-            const value = diagnostic.values[idx];
-            let grade = label.match(/[1-6]/);
+            const value = parseFloat(diagnostic.values[idx]) || 0;
+            const grade = (label.match(/[1-6]/) || [null])[0];
             // validations
             if (!grade)
                 continue; // if grade doesn't have expected format
             if (value == 0)
                 continue;
-            const gradeFormat = {
-                '1': '1ero',
-                '2': '2do',
-                '3': '3er',
-                '4': '4to',
-                '5': '5to',
-                '6': '6to',
-            };
-            labels.push(gradeFormat[grade]);
-            values.push(value);
+            const entry = byGrade.get(grade) || { sum: 0, count: 0 };
+            entry.sum += value;
+            entry.count++;
+            byGrade.set(grade, entry);
         }
+        const labels = [];
+        const values = [];
+        Array.from(byGrade.keys())
+            .sort()
+            .forEach((grade) => {
+            const { sum, count } = byGrade.get(grade);
+            labels.push(gradeFormat[grade]);
+            values.push(parseFloat((sum / count).toFixed(2)));
+        });
         return {
             labels,
             values,
@@ -393753,30 +393764,37 @@ function amblemarioMapper(pecaData, _lastRequest, contentOrder = {}) {
                     ]);
                 }
                 if (data.grade != "0") {
-                    if (data.wordsPerMin !== null)
-                        tables.table1.push([
-                            grades[data.grade],
-                            data.name.toUpperCase(),
-                            `${parseFloat(data.wordsPerMin).toFixed(2)}`,
-                            `${parseFloat(data.wordsPerMinIndex).toFixed(2)}`,
-                            `${data.wordsPerMinCount}`,
-                        ]);
-                    if (data.multiplicationsPerMin !== null)
-                        tables.table2.push([
-                            grades[data.grade],
-                            data.name.toUpperCase(),
-                            `${parseFloat(data.multiplicationsPerMin).toFixed(2)}`,
-                            `${parseFloat(data.multiplicationsPerMinIndex).toFixed(2)}`,
-                            `${data.multiplicationsPerMinCount}`,
-                        ]);
-                    if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
-                        tables.table3.push([
-                            grades[data.grade],
-                            data.name.toUpperCase(),
-                            `${parseFloat(data.operationsPerMin).toFixed(2)}`,
-                            `${parseFloat(data.operationsPerMinIndex).toFixed(2)}`,
-                            `${data.operationsPerMinCount}`,
-                        ]);
+                    // Todas las secciones entran en las tres tablas; sin valor => 0.00
+                    // (el backend guarda null cuando la sección no tiene diagnóstico)
+                    const toFixed2 = (value) => {
+                        const num = parseFloat(value);
+                        return isNaN(num) ? '0.00' : num.toFixed(2);
+                    };
+                    const toCount = (value) => {
+                        const num = parseInt(value, 10);
+                        return `${isNaN(num) ? 0 : num}`;
+                    };
+                    tables.table1.push([
+                        grades[data.grade],
+                        data.name.toUpperCase(),
+                        toFixed2(data.wordsPerMin),
+                        toFixed2(data.wordsPerMinIndex),
+                        toCount(data.wordsPerMinCount),
+                    ]);
+                    tables.table2.push([
+                        grades[data.grade],
+                        data.name.toUpperCase(),
+                        toFixed2(data.multiplicationsPerMin),
+                        toFixed2(data.multiplicationsPerMinIndex),
+                        toCount(data.multiplicationsPerMinCount),
+                    ]);
+                    tables.table3.push([
+                        grades[data.grade],
+                        data.name.toUpperCase(),
+                        toFixed2(data.operationsPerMin),
+                        toFixed2(data.operationsPerMinIndex),
+                        toCount(data.operationsPerMinCount),
+                    ]);
                 }
                 return tables;
             }, { table1: [], table2: [], table3: [] })
