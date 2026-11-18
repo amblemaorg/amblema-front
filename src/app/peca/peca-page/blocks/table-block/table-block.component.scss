@@ -177,6 +177,27 @@ $table-border-color: 1px solid $blue;
       }
     }
 
+    tbody tr.teacher-row {
+      .ng2-smart-actions ng2-st-tbody-custom {
+        display: inline-flex !important;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      &.no-coevaluation-link .ng2-smart-actions ng2-st-tbody-custom {
+        a.ng2-smart-action:nth-child(3) {
+          display: none !important;
+        }
+      }
+    }
+
+    &.hide-delete tbody tr.teacher-row.has-coevaluation-link {
+      .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(3) {
+        border-right: none;
+      }
+    }
+
     &.hide-view,
     &.hide-edit,
     &.hide-delete {

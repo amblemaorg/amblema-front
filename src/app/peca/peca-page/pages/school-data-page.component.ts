@@ -39,6 +39,7 @@ import {
 } from "../../../services/peca/teacher-coevaluation.service";
 import { CoevaluationCellValue } from "../blocks/teacher-coevaluation/coevaluation-cell.component";
 import { sectionsAndStudentsDataToSectionsFormMapper } from "../mappers/sections-and-students-form-mappers";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "peca-school-data",
@@ -112,7 +113,8 @@ export class SchoolDataPageComponent
     private globals: GlobalService,
     route: ActivatedRoute,
     location: Location,
-    private coevaluationService: TeacherCoevaluationService
+    private coevaluationService: TeacherCoevaluationService,
+    private toastrService: ToastrService
   ) {
     super(factoryResolver, location, route);
 
@@ -432,11 +434,18 @@ export class SchoolDataPageComponent
         hiddenButton: !permissions.teacher_create,
       };
       this.teachersTableData = {
-        data: _mapper(teachersData).map((row) =>
-          canCoevaluate
-            ? { ...row, coevaluation: this.coevaluationCell(row) }
-            : row
-        ),
+        data: _mapper(teachersData).map((row) => {
+          if (!canCoevaluate) return row;
+          const coevaluationLink = this.coevaluationLink(row);
+          return {
+            ...row,
+            coevaluation: this.coevaluationCell(row),
+            coevaluationLink,
+            onCopyCoevaluationLink: coevaluationLink
+              ? () => this.copyCoevaluationLink(coevaluationLink)
+              : null,
+          };
+        }),
         isEditable: true,
         hiddenColumns: canCoevaluate ? [] : ["coevaluation"],
         classes: {
@@ -450,6 +459,57 @@ export class SchoolDataPageComponent
     } else {
       this.teachersTableData = teachersData;
     }
+  }
+
+  /** Enlace enviado al docente para su coevaluación, o null si aún no se ha enviado. */
+  coevaluationLink(row: any): string | null {
+    const record = this.coevaluationStatuses[row.id];
+    if (!record || !record.emailSentAt || !record.token) return null;
+    const origin =
+      this.globals.isBrowser &&
+      typeof window !== "undefined" &&
+      window.location &&
+      window.location.origin
+        ? window.location.origin
+        : "";
+    return `${origin}/coevaluacion/${record.token}`;
+  }
+
+  copyCoevaluationLink(link: string) {
+    if (!link || !this.globals.isBrowser) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(
+        () =>
+          this.toastrService.success("Enlace copiado al portapapeles", "Éxito"),
+        () => this.fallbackCopyText(link)
+      );
+    } else {
+      this.fallbackCopyText(link);
+    }
+  }
+
+  private fallbackCopyText(text: string) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.opacity = "0";
+    textArea.style.pointerEvents = "none";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      const successful = document.execCommand("copy");
+      if (successful) {
+        this.toastrService.success("Enlace copiado al portapapeles", "Éxito");
+      } else {
+        this.toastrService.error("No se pudo copiar el enlace", "Error");
+      }
+    } catch (err) {
+      this.toastrService.error("No se pudo copiar el enlace", "Error");
+    }
+    document.body.removeChild(textArea);
   }
 
   /** Valor de la celda "Coevaluación" de un docente. */

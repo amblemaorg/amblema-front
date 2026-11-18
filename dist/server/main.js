@@ -733,6 +733,7 @@ const i4 = tslib_1.__importStar(__webpack_require__("AB16"));
 const i5 = tslib_1.__importStar(__webpack_require__("4WDQ"));
 const i6 = tslib_1.__importStar(__webpack_require__("iInd"));
 const i7 = tslib_1.__importStar(__webpack_require__("MFOH"));
+const i8 = tslib_1.__importStar(__webpack_require__("EApP"));
 var styles_SchoolDataPageComponent = [];
 var RenderType_SchoolDataPageComponent = i0.ɵcrt({ encapsulation: 2, styles: styles_SchoolDataPageComponent, data: {} });
 exports.RenderType_SchoolDataPageComponent = RenderType_SchoolDataPageComponent;
@@ -759,7 +760,7 @@ function View_SchoolDataPageComponent_7(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵ
 function View_SchoolDataPageComponent_9(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵand(0, null, null, 0))], null, null); }
 function View_SchoolDataPageComponent_0(_l) { return i0.ɵvid(0, [i0.ɵqud(671088640, 1, { container: 0 }), (_l()(), i0.ɵeld(1, 0, null, null, 16, "nb-card", [], [[2, "size-tiny", null], [2, "size-small", null], [2, "size-medium", null], [2, "size-large", null], [2, "size-giant", null], [2, "status-primary", null], [2, "status-info", null], [2, "status-success", null], [2, "status-warning", null], [2, "status-danger", null], [2, "status-basic", null], [2, "status-control", null], [2, "accent", null], [2, "accent-primary", null], [2, "accent-info", null], [2, "accent-success", null], [2, "accent-warning", null], [2, "accent-danger", null], [2, "accent-basic", null], [2, "accent-control", null]], null, null, i2.View_NbCardComponent_0, i2.RenderType_NbCardComponent)), i0.ɵdid(2, 49152, null, 0, i3.NbCardComponent, [], null, null), (_l()(), i0.ɵeld(3, 0, null, 1, 14, "nb-card-body", [["class", "header-title-and-button-container"]], [[2, "comes-from-steps", null], [2, "has-yearbook", null]], null, null, i2.View_NbCardBodyComponent_0, i2.RenderType_NbCardBodyComponent)), i0.ɵdid(4, 49152, null, 0, i3.NbCardBodyComponent, [], null, null), (_l()(), i0.ɵeld(5, 0, null, 0, 4, "div", [["class", "title-style"]], [[2, "col-sm-6", null]], null, null, null, null)), i0.ɵdid(6, 278528, null, 0, i1.NgClass, [i0.IterableDiffers, i0.KeyValueDiffers, i0.ElementRef, i0.Renderer2], { klass: [0, "klass"], ngClass: [1, "ngClass"] }, null), i0.ɵpod(7, { "title-style": 0 }), (_l()(), i0.ɵeld(8, 0, null, null, 1, "h1", [], null, null, null, null, null)), (_l()(), i0.ɵted(9, null, ["", ""])), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_SchoolDataPageComponent_1)), i0.ɵdid(11, 16384, null, 0, i1.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_SchoolDataPageComponent_2)), i0.ɵdid(13, 16384, null, 0, i1.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_SchoolDataPageComponent_5)), i0.ɵdid(15, 16384, null, 0, i1.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, 0, 1, null, View_SchoolDataPageComponent_7)), i0.ɵdid(17, 16384, null, 0, i1.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(18, 0, null, null, 4, "nb-card", [], [[2, "size-tiny", null], [2, "size-small", null], [2, "size-medium", null], [2, "size-large", null], [2, "size-giant", null], [2, "status-primary", null], [2, "status-info", null], [2, "status-success", null], [2, "status-warning", null], [2, "status-danger", null], [2, "status-basic", null], [2, "status-control", null], [2, "accent", null], [2, "accent-primary", null], [2, "accent-info", null], [2, "accent-success", null], [2, "accent-warning", null], [2, "accent-danger", null], [2, "accent-basic", null], [2, "accent-control", null]], null, null, i2.View_NbCardComponent_0, i2.RenderType_NbCardComponent)), i0.ɵdid(19, 49152, null, 0, i3.NbCardComponent, [], null, null), (_l()(), i0.ɵeld(20, 0, null, 1, 2, "nb-card-body", [], null, null, null, i2.View_NbCardBodyComponent_0, i2.RenderType_NbCardBodyComponent)), i0.ɵdid(21, 49152, null, 0, i3.NbCardBodyComponent, [], null, null), (_l()(), i0.ɵand(16777216, [[1, 3], ["blocksContainer", 2]], 0, 0, null, View_SchoolDataPageComponent_9))], function (_ck, _v) { var _co = _v.component; var currVal_23 = "title-style"; var currVal_24 = _ck(_v, 7, 0, _co.header.positionTitleLeft); _ck(_v, 6, 0, currVal_23, currVal_24); var currVal_26 = ((_co.header && !_co.header.download) && !_co.header.downloadDiagnostics); _ck(_v, 11, 0, currVal_26); var currVal_27 = (_co.header && _co.header.indexOption); _ck(_v, 13, 0, currVal_27); var currVal_28 = (_co.header && _co.header.download); _ck(_v, 15, 0, currVal_28); var currVal_29 = (_co.header && _co.header.downloadDiagnostics); _ck(_v, 17, 0, currVal_29); }, function (_ck, _v) { var _co = _v.component; var currVal_0 = i0.ɵnov(_v, 2).tiny; var currVal_1 = i0.ɵnov(_v, 2).small; var currVal_2 = i0.ɵnov(_v, 2).medium; var currVal_3 = i0.ɵnov(_v, 2).large; var currVal_4 = i0.ɵnov(_v, 2).giant; var currVal_5 = i0.ɵnov(_v, 2).primary; var currVal_6 = i0.ɵnov(_v, 2).info; var currVal_7 = i0.ɵnov(_v, 2).success; var currVal_8 = i0.ɵnov(_v, 2).warning; var currVal_9 = i0.ɵnov(_v, 2).danger; var currVal_10 = i0.ɵnov(_v, 2).basic; var currVal_11 = i0.ɵnov(_v, 2).control; var currVal_12 = i0.ɵnov(_v, 2).hasAccent; var currVal_13 = i0.ɵnov(_v, 2).primaryAccent; var currVal_14 = i0.ɵnov(_v, 2).infoAccent; var currVal_15 = i0.ɵnov(_v, 2).successAccent; var currVal_16 = i0.ɵnov(_v, 2).warningAccent; var currVal_17 = i0.ɵnov(_v, 2).dangerAccent; var currVal_18 = i0.ɵnov(_v, 2).basicAccent; var currVal_19 = i0.ɵnov(_v, 2).controlAccent; _ck(_v, 1, 1, [currVal_0, currVal_1, currVal_2, currVal_3, currVal_4, currVal_5, currVal_6, currVal_7, currVal_8, currVal_9, currVal_10, currVal_11, currVal_12, currVal_13, currVal_14, currVal_15, currVal_16, currVal_17, currVal_18, currVal_19]); var currVal_20 = _co.isFromSteps; var currVal_21 = (_co.header && (_co.header.download || _co.header.downloadDiagnostics)); _ck(_v, 3, 0, currVal_20, currVal_21); var currVal_22 = ((_co.header && _co.header.title) && (_co.header.download || _co.header.downloadDiagnostics)); _ck(_v, 5, 0, currVal_22); var currVal_25 = ((_co.header == null) ? null : _co.header.title); _ck(_v, 9, 0, currVal_25); var currVal_30 = i0.ɵnov(_v, 19).tiny; var currVal_31 = i0.ɵnov(_v, 19).small; var currVal_32 = i0.ɵnov(_v, 19).medium; var currVal_33 = i0.ɵnov(_v, 19).large; var currVal_34 = i0.ɵnov(_v, 19).giant; var currVal_35 = i0.ɵnov(_v, 19).primary; var currVal_36 = i0.ɵnov(_v, 19).info; var currVal_37 = i0.ɵnov(_v, 19).success; var currVal_38 = i0.ɵnov(_v, 19).warning; var currVal_39 = i0.ɵnov(_v, 19).danger; var currVal_40 = i0.ɵnov(_v, 19).basic; var currVal_41 = i0.ɵnov(_v, 19).control; var currVal_42 = i0.ɵnov(_v, 19).hasAccent; var currVal_43 = i0.ɵnov(_v, 19).primaryAccent; var currVal_44 = i0.ɵnov(_v, 19).infoAccent; var currVal_45 = i0.ɵnov(_v, 19).successAccent; var currVal_46 = i0.ɵnov(_v, 19).warningAccent; var currVal_47 = i0.ɵnov(_v, 19).dangerAccent; var currVal_48 = i0.ɵnov(_v, 19).basicAccent; var currVal_49 = i0.ɵnov(_v, 19).controlAccent; _ck(_v, 18, 1, [currVal_30, currVal_31, currVal_32, currVal_33, currVal_34, currVal_35, currVal_36, currVal_37, currVal_38, currVal_39, currVal_40, currVal_41, currVal_42, currVal_43, currVal_44, currVal_45, currVal_46, currVal_47, currVal_48, currVal_49]); }); }
 exports.View_SchoolDataPageComponent_0 = View_SchoolDataPageComponent_0;
-function View_SchoolDataPageComponent_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "peca-school-data", [], null, null, null, View_SchoolDataPageComponent_0, RenderType_SchoolDataPageComponent)), i0.ɵdid(1, 4440064, null, 0, i4.SchoolDataPageComponent, [i0.ComponentFactoryResolver, i5.GlobalService, i6.ActivatedRoute, i1.Location, i7.TeacherCoevaluationService], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
+function View_SchoolDataPageComponent_Host_0(_l) { return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "peca-school-data", [], null, null, null, View_SchoolDataPageComponent_0, RenderType_SchoolDataPageComponent)), i0.ɵdid(1, 4440064, null, 0, i4.SchoolDataPageComponent, [i0.ComponentFactoryResolver, i5.GlobalService, i6.ActivatedRoute, i1.Location, i7.TeacherCoevaluationService, i8.ToastrService], null, null)], function (_ck, _v) { _ck(_v, 1, 0); }, null); }
 exports.View_SchoolDataPageComponent_Host_0 = View_SchoolDataPageComponent_Host_0;
 var SchoolDataPageComponentNgFactory = i0.ɵccf("peca-school-data", i4.SchoolDataPageComponent, View_SchoolDataPageComponent_Host_0, {}, {}, []);
 exports.SchoolDataPageComponentNgFactory = SchoolDataPageComponentNgFactory;
@@ -177082,10 +177083,11 @@ const user_state_1 = __webpack_require__("HQy9");
 const teachers_in_sections_form_mappers_1 = __webpack_require__("wvsx");
 const sections_and_students_form_mappers_1 = __webpack_require__("O+bh");
 class SchoolDataPageComponent extends peca_page_component_1.PecaPageComponent {
-    constructor(factoryResolver, globals, route, location, coevaluationService) {
+    constructor(factoryResolver, globals, route, location, coevaluationService, toastrService) {
         super(factoryResolver, location, route);
         this.globals = globals;
         this.coevaluationService = coevaluationService;
+        this.toastrService = toastrService;
         // Coevaluación docente HQS: estatus por docente del PECA activo
         this.coevaluationStatuses = {};
         this.lastTeachersData = [];
@@ -177289,8 +177291,14 @@ class SchoolDataPageComponent extends peca_page_component_1.PecaPageComponent {
                 hiddenButton: !permissions.teacher_create,
             };
             this.teachersTableData = {
-                data: _mapper(teachersData).map((row) => canCoevaluate
-                    ? Object.assign(Object.assign({}, row), { coevaluation: this.coevaluationCell(row) }) : row),
+                data: _mapper(teachersData).map((row) => {
+                    if (!canCoevaluate)
+                        return row;
+                    const coevaluationLink = this.coevaluationLink(row);
+                    return Object.assign(Object.assign({}, row), { coevaluation: this.coevaluationCell(row), coevaluationLink, onCopyCoevaluationLink: coevaluationLink
+                            ? () => this.copyCoevaluationLink(coevaluationLink)
+                            : null });
+                }),
                 isEditable: true,
                 hiddenColumns: canCoevaluate ? [] : ["coevaluation"],
                 classes: {
@@ -177304,6 +177312,54 @@ class SchoolDataPageComponent extends peca_page_component_1.PecaPageComponent {
         else {
             this.teachersTableData = teachersData;
         }
+    }
+    /** Enlace enviado al docente para su coevaluación, o null si aún no se ha enviado. */
+    coevaluationLink(row) {
+        const record = this.coevaluationStatuses[row.id];
+        if (!record || !record.emailSentAt || !record.token)
+            return null;
+        const origin = this.globals.isBrowser &&
+            typeof window !== "undefined" &&
+            window.location &&
+            window.location.origin
+            ? window.location.origin
+            : "";
+        return `${origin}/coevaluacion/${record.token}`;
+    }
+    copyCoevaluationLink(link) {
+        if (!link || !this.globals.isBrowser)
+            return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(() => this.toastrService.success("Enlace copiado al portapapeles", "Éxito"), () => this.fallbackCopyText(link));
+        }
+        else {
+            this.fallbackCopyText(link);
+        }
+    }
+    fallbackCopyText(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.opacity = "0";
+        textArea.style.pointerEvents = "none";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            const successful = document.execCommand("copy");
+            if (successful) {
+                this.toastrService.success("Enlace copiado al portapapeles", "Éxito");
+            }
+            else {
+                this.toastrService.error("No se pudo copiar el enlace", "Error");
+            }
+        }
+        catch (err) {
+            this.toastrService.error("No se pudo copiar el enlace", "Error");
+        }
+        document.body.removeChild(textArea);
     }
     /** Valor de la celda "Coevaluación" de un docente. */
     coevaluationCell(row) {
@@ -250360,7 +250416,7 @@ exports.styles = void 0;
  * @suppress {suspiciousCode,uselessCode,missingProperties,missingOverride,checkTypes,extraRequire}
  * tslint:disable
  */
-var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}  .table-container #students-current-count-top{height:1px;background:#fff;top:-4.75rem;position:relative;z-index:-1;visibility:hidden}  .table-container #students-current-count{top:4.75rem!important;z-index:1!important;background:#fff}  .table-container #students-current-count.shadow-on{box-shadow:0 9px 8px -3px rgba(0,0,0,.05)}  .table-container #students-current-count p{color:#00809a}  .table-container .table-element{overflow-x:auto}  .table-container .table-title{width:100%;color:#00809a;position:relative;bottom:-.85rem}  .table-container .promote-wrapper{margin-top:2rem;border:1px solid #00809a;border-radius:10px;padding:1rem}  .table-container .promote-wrapper.disabled{opacity:.65}  .table-container .promote-wrapper .modal.show{background:rgba(0,0,0,.5)}  .table-container .promote-wrapper .modal .modal-content .modal-header{padding:1rem 1rem 0;border-bottom:none}  .table-container .promote-wrapper .modal .modal-content .modal-header .close:focus{outline:none}  .table-container .promote-wrapper .modal .modal-content .modal-body{padding:1rem 1.75rem}@media screen and (orientation:portrait){  .table-container .promote-wrapper .modal .modal-content .modal-body .sub-titles-students p{font-size:1rem}}  .table-container .promote-wrapper .modal .modal-content .modal-body .sub-titles-students.text-incremented p{font-size:large!important}  .table-container .promote-wrapper h6{color:#00809a;font-size:small}  .table-container .promote-wrapper hr{border-top:1px solid #00809a}  .table-container .promote-wrapper h6.actions{color:#00809a;font-size:medium;position:relative;top:-1.75rem;background:#fff;width:-moz-fit-content;width:fit-content;padding-inline:.5rem;margin-bottom:-1rem}  .table-container .promote-wrapper button.btn{margin-left:auto;min-width:8rem;font-size:1rem;line-height:1.5}@media screen and (orientation:portrait) and (max-width:767px){  .table-container .promote-wrapper button.btn{width:100%}}  .table-container .promote-wrapper button.btn,   .table-container .promote-wrapper button.btn[disabled]{background-color:#00809a;color:#fff;border-color:#00809a}  .table-container .promote-wrapper button.btn:active{background-color:#00809a!important;color:#fff!important;border-color:#00809a!important}  .table-container .promote-wrapper button.btn.cancel-btn{border-color:#9fa9bd;background-color:#9fa9bd;color:#fff}  .table-container .promote-wrapper button.btn:focus,   .table-container .promote-wrapper button.btn:not(:disabled):not(.disabled):active:focus{box-shadow:none}  .table-container .promote-wrapper button.btn:focus,   .table-container .promote-wrapper button.btn:hover{background-color:#fff;color:#00809a;border-color:#00809a}  .table-container .promote-wrapper button.btn:hover.inactive,   .table-container .promote-wrapper button.btn:hover[disabled]{background-color:#00809a;color:#fff;cursor:default}  .table-container .promote-wrapper button.btn:hover.cancel-btn{background-color:#fff;color:#9fa9bd}  .table-container .promote-wrapper button.btn:hover.cancel-btn.inactive,   .table-container .promote-wrapper button.btn:hover.cancel-btn[disabled]{background-color:#9fa9bd;color:#fff}@media (max-width:768px){  .table-container .promote-wrapper button.btn{margin:10px 0;margin-left:0!important;font-size:.7rem}}  .estilo-total{text-align:right;margin:0 2.5rem 2rem 0}@media (max-width:768px){  .estilo-total{text-align:left}}  .estilo-total h5{font-size:1rem}  .nb-theme-default nb-tabset nb-tab{padding:1rem 2rem!important}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table thead tr:first-child th:first-child input{opacity:0}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table thead tr:first-child th:first-child:before{content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.25rem)}  .nb-theme-default ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:before,   .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:before{background:#00809a!important}  .nb-theme-default ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1px) rotate(-50deg)}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child input{opacity:0}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child input:focus{box-shadow:none}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child:not([colspan=\"10\"]):before{content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.75rem);margin-inline:auto}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1rem) rotate(-50deg)}  .nb-theme-default ng2-smart-table.is-empty table tbody tr td:before,   .nb-theme-default ng2-smart-table.is-empty table thead tr th:nth-child(2){display:none}  .nb-theme-default ng2-smart-table.is-multi:not(.is-empty) table tbody tr td:first-child,   .nb-theme-default ng2-smart-table.is-multi:not(.is-empty) table thead tr th:first-child{min-width:4.9rem;width:4.9rem}  .nb-theme-default ng2-smart-table table tr td,   .nb-theme-default ng2-smart-table table tr th,   .nb-theme-default ng2-smart-table table tr th a{font-family:Montserrat;font-weight:300;font-style:normal;font-size:.8rem}  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.asc,   .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.desc{font-weight:300}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th{padding:.375rem 1rem}  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th{padding:.875rem 2rem 0;text-align:left}  .nb-theme-default ng2-smart-table.no-data table tr.ng2-smart-titles th{padding:.875rem 2rem;text-align:left}  .nb-theme-default ng2-smart-table .ng2-smart-actions{text-align:center!important}  .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table.has-img-in-first-col tbody tr td:nth-child(2){text-align:center}  .nb-theme-default ng2-smart-table thead{border:1px solid #00809a}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid{border:1px solid #00809a!important}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid::-moz-placeholder,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input::-moz-placeholder{color:transparent!important}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid::placeholder,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input::placeholder{color:transparent!important}  .nb-theme-default ng2-smart-table thead tr th{text-align:center;border:none!important;border-right:1px solid #00809a!important}  .nb-theme-default ng2-smart-table thead tr th,   .nb-theme-default ng2-smart-table thead tr th a{color:#00809a!important}  .nb-theme-default ng2-smart-table tbody{border:1px solid #00809a}  .nb-theme-default ng2-smart-table tbody tr:nth-child(2n){background-color:#ebeff5}  .nb-theme-default ng2-smart-table tbody tr:hover{background-color:#e6e7e8!important}  .nb-theme-default ng2-smart-table tbody tr td{color:#00809a!important;border:none!important;border-right:1px solid #00809a!important;max-width:20rem;word-break:break-word}  .nb-theme-default ng2-smart-table tbody tr td img{width:3.5rem;height:3.5rem;-o-object-fit:contain;object-fit:contain}  .nb-theme-default ng2-smart-table tbody tr td:first-child{padding-left:1rem;padding-right:1rem}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions ng2-st-tbody-edit-delete{display:none!important}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions ng2-st-tbody-custom{display:grid;grid-template-columns:auto auto auto;grid-column-gap:.5rem}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions a.ng2-smart-action{color:#00809a!important;font-size:1.4rem!important}  .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto}  .nb-theme-default ng2-smart-table.hide-delete.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-edit.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-view.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto}  .nb-theme-default ng2-smart-table.hide-delete.hide-edit:not(.hide-view) tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:first-child,   .nb-theme-default ng2-smart-table.hide-delete.hide-view:not(.hide-edit) tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2),   .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2){border-right:none}  .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:last-child,   .nb-theme-default ng2-smart-table.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:nth-child(2),   .nb-theme-default ng2-smart-table.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:first-child{display:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination{border:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item{cursor:pointer;border:1px solid #00809a!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:not(:nth-last-child(2)){border-right:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:first-child,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:last-child{display:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-child(2) span,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-last-child(2) span{transform:scaleY(1.5);display:inline-block}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled .page-link,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{background:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{color:#00809a;font-size:small;padding:.9rem 1.2rem}@media screen and (min-width:576px) and (orientation:portrait){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{font-size:medium}}@media screen and (min-width:992px) and (orientation:landscape){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{padding:.8rem 1.1rem;font-size:.75rem}}@media screen and (min-width:1200px) and (min-width:1900px) and (orientation:landscape){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{padding:.95rem 1.4rem;font-size:1rem}}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled{border-color:#909090!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled:nth-child(2){border-right:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled:nth-last-child(2){border-left:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled .page-link{color:#909090}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.active .page-link{color:#fff;background:#00809a}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-child(2){border-bottom-left-radius:.35rem;border-top-left-radius:.35rem}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-last-child(2){border-bottom-right-radius:.35rem;border-top-right-radius:.35rem}  peca-yearbook ng2-st-tbody-custom{display:initial!important}@media screen and (orientation:landscape) and (min-width:640px){  form .fields-container{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline}}@media screen and (orientation:landscape) and (min-width:640px) and (min-width:992px) and (orientation:landscape){  form .fields-container{justify-content:space-between}}@media screen and (orientation:portrait) and (min-width:768px){  form .fields-container{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline}}@media screen and (orientation:portrait) and (min-width:768px) and (min-width:992px) and (orientation:landscape){  form .fields-container{justify-content:space-between}}  form .fields-container label{width:100%;color:#00809a;margin-bottom:.2rem;font-size:.8rem;color:grey}  form .fields-container .floating-loading{font-size:.8rem;position:absolute;font-size:smaller;right:0}  form .fields-container .form-group .error-message{color:#f35f5f;font-size:13px}@media only screen and (min-width:768px){  form .fields-container .form-group .error-message{font-size:13px}}@media only screen and (min-width:1024px){  form .fields-container .form-group .error-message{font-size:13px}}  form .fields-container button{margin-left:auto;min-width:8rem;font-size:1rem;line-height:1.5}@media screen and (orientation:portrait) and (max-width:767px){  form .fields-container button{width:100%}}  form .fields-container button,   form .fields-container button[disabled]{background-color:#00809a;color:#fff;border-color:#00809a}  form .fields-container button:active{background-color:#00809a!important;color:#fff!important;border-color:#00809a!important}  form .fields-container button.cancel-btn{border-color:#9fa9bd;background-color:#9fa9bd;color:#fff}  form .fields-container button:focus,   form .fields-container button:not(:disabled):not(.disabled):active:focus{box-shadow:none}  form .fields-container button:focus,   form .fields-container button:hover{background-color:#fff;color:#00809a;border-color:#00809a}  form .fields-container button:hover.inactive,   form .fields-container button:hover[disabled]{background-color:#00809a;color:#fff;cursor:default}  form .fields-container button:hover.cancel-btn{background-color:#fff;color:#9fa9bd}  form .fields-container button:hover.cancel-btn.inactive,   form .fields-container button:hover.cancel-btn[disabled]{background-color:#9fa9bd;color:#fff}@media (max-width:768px){  form .fields-container button{margin:10px 0;margin-left:0!important;font-size:.7rem}}  form .fields-container .form-group{position:relative}@media screen and (orientation:landscape) and (min-width:640px){  form .fields-container .form-group{max-width:100%;flex:0 0 100%}}@media screen and (orientation:portrait) and (min-width:768px){  form .fields-container .form-group{max-width:100%;flex:0 0 100%}}@media screen and (min-width:992px) and (orientation:landscape){  form .fields-container .form-group{max-width:46.5%;flex:0 0 46.5%}}@media screen and (min-width:1200px) and (orientation:landscape){  form .fields-container .form-group{max-width:47.25%;flex:0 0 47.25%}}@media screen and (min-width:1200px) and (min-width:1680px) and (orientation:landscape){  form .fields-container .form-group{max-width:47.75%;flex:0 0 47.75%}}  form .fields-container .form-control{color:#615a5a;font-size:.8rem}  form .fields-container .form-control[readonly]{background-color:#fff}  form .fields-container .form-control:focus{box-shadow:none}  form .fields-container .form-control.ng-touched.ng-invalid{border:2px solid #f35f5f}  form .fields-container .form-control.ng-touched.ng-valid.ng-select-focused.ng-dirty,   form .fields-container .form-control.ng-touched.ng-valid:focus.ng-dirty{border:2px solid #81b03e}  form .fields-container .form-control.ng-touched[readonly]{border:1px solid #ced4da!important}  form .fields-container .form-control.ng-touched~.error-message{display:block}  form .fields-container .form-control.ng-touched[readonly]~.error-message{display:none!important}  form .fields-container .form-control[readonly]{cursor:default}  form .fields-container .form-control[readonly]:focus{border:1px solid #ced4da!important}  form .fields-container .form-control.ng-untouched~.error-message{display:none}  form .fields-container .ng-select .ng-dropdown-panel{z-index:3}  form .fields-container .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked a,   form .fields-container .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked small{font-weight:700}  form .fields-container .ng-select .ng-dropdown-panel .scroll-host{left:-.75rem;top:.35rem;background:#fff;border:1px solid #ced4da;border-top:0 solid #ced4da}  form .fields-container .ng-select .ng-dropdown-panel .scroll-host .scrollable-content{padding:0 1rem}  form .fields-container .ng-select.ng-select-opened .ng-select-container{z-index:3}  form .fields-container .ng-select .ng-select-container .ng-placeholder{color:#6c757d}  form .fields-container .ng-select .ng-select-container.ng-has-value .ng-placeholder{display:none}  form .fields-container .ng-select.ng-untouched.image-status .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-untouched.ng-invalid .ng-select-container .ng-placeholder{display:block}  form .fields-container .ng-select.ng-untouched.ng-valid .ng-select-container .ng-placeholder{display:none}  form .fields-container .ng-select.ng-touched.ng-invalid .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-touched.ng-pristine .ng-select-container .ng-placeholder{display:block}  form .fields-container .ng-select.ng-touched.ng-invalid .ng-select-container .ng-placeholder{display:block!important}  form .fields-container .ng-select.ng-dirty.is-in-modal .ng-select-container.ng-has-value .ng-placeholder,   form .fields-container .ng-select.ng-touched.ng-pristine .ng-select-container.ng-has-value .ng-placeholder{display:none}  form .fields-container .ng-select.ng-select-filtered .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder{display:none!important}  form .fields-container .ng-select .ng-clear-wrapper .ng-clear{color:#ced4da}  form .fields-container .ng-select .ng-arrow-wrapper{width:1rem}  form .fields-container .ng-select .ng-arrow-wrapper .ng-arrow{height:.5rem;width:.5rem;border-color:#ced4da;border-style:solid;border-width:0 2px 2px 0;transform:rotate(45deg);top:-.15rem}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:after{left:16px!important}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1px) rotate(-50deg)}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:before{background:#00809a!important;content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.25rem)}"];
+var styles = [".btn-blue[_ngcontent-%COMP%]{background-color:#00809a;color:#fff;border:1px solid #00809a}.btn-blue[_ngcontent-%COMP%]:hover{background-color:#fff;color:#00809a}.primary-color[_ngcontent-%COMP%]{color:#00809a}  .table-container #students-current-count-top{height:1px;background:#fff;top:-4.75rem;position:relative;z-index:-1;visibility:hidden}  .table-container #students-current-count{top:4.75rem!important;z-index:1!important;background:#fff}  .table-container #students-current-count.shadow-on{box-shadow:0 9px 8px -3px rgba(0,0,0,.05)}  .table-container #students-current-count p{color:#00809a}  .table-container .table-element{overflow-x:auto}  .table-container .table-title{width:100%;color:#00809a;position:relative;bottom:-.85rem}  .table-container .promote-wrapper{margin-top:2rem;border:1px solid #00809a;border-radius:10px;padding:1rem}  .table-container .promote-wrapper.disabled{opacity:.65}  .table-container .promote-wrapper .modal.show{background:rgba(0,0,0,.5)}  .table-container .promote-wrapper .modal .modal-content .modal-header{padding:1rem 1rem 0;border-bottom:none}  .table-container .promote-wrapper .modal .modal-content .modal-header .close:focus{outline:none}  .table-container .promote-wrapper .modal .modal-content .modal-body{padding:1rem 1.75rem}@media screen and (orientation:portrait){  .table-container .promote-wrapper .modal .modal-content .modal-body .sub-titles-students p{font-size:1rem}}  .table-container .promote-wrapper .modal .modal-content .modal-body .sub-titles-students.text-incremented p{font-size:large!important}  .table-container .promote-wrapper h6{color:#00809a;font-size:small}  .table-container .promote-wrapper hr{border-top:1px solid #00809a}  .table-container .promote-wrapper h6.actions{color:#00809a;font-size:medium;position:relative;top:-1.75rem;background:#fff;width:-moz-fit-content;width:fit-content;padding-inline:.5rem;margin-bottom:-1rem}  .table-container .promote-wrapper button.btn{margin-left:auto;min-width:8rem;font-size:1rem;line-height:1.5}@media screen and (orientation:portrait) and (max-width:767px){  .table-container .promote-wrapper button.btn{width:100%}}  .table-container .promote-wrapper button.btn,   .table-container .promote-wrapper button.btn[disabled]{background-color:#00809a;color:#fff;border-color:#00809a}  .table-container .promote-wrapper button.btn:active{background-color:#00809a!important;color:#fff!important;border-color:#00809a!important}  .table-container .promote-wrapper button.btn.cancel-btn{border-color:#9fa9bd;background-color:#9fa9bd;color:#fff}  .table-container .promote-wrapper button.btn:focus,   .table-container .promote-wrapper button.btn:not(:disabled):not(.disabled):active:focus{box-shadow:none}  .table-container .promote-wrapper button.btn:focus,   .table-container .promote-wrapper button.btn:hover{background-color:#fff;color:#00809a;border-color:#00809a}  .table-container .promote-wrapper button.btn:hover.inactive,   .table-container .promote-wrapper button.btn:hover[disabled]{background-color:#00809a;color:#fff;cursor:default}  .table-container .promote-wrapper button.btn:hover.cancel-btn{background-color:#fff;color:#9fa9bd}  .table-container .promote-wrapper button.btn:hover.cancel-btn.inactive,   .table-container .promote-wrapper button.btn:hover.cancel-btn[disabled]{background-color:#9fa9bd;color:#fff}@media (max-width:768px){  .table-container .promote-wrapper button.btn{margin:10px 0;margin-left:0!important;font-size:.7rem}}  .estilo-total{text-align:right;margin:0 2.5rem 2rem 0}@media (max-width:768px){  .estilo-total{text-align:left}}  .estilo-total h5{font-size:1rem}  .nb-theme-default nb-tabset nb-tab{padding:1rem 2rem!important}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table thead tr:first-child th:first-child input{opacity:0}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table thead tr:first-child th:first-child:before{content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.25rem)}  .nb-theme-default ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:before,   .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:before{background:#00809a!important}  .nb-theme-default ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1px) rotate(-50deg)}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child input{opacity:0}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child input:focus{box-shadow:none}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr td:first-child:not([colspan=\"10\"]):before{content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.75rem);margin-inline:auto}  .nb-theme-default ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1rem) rotate(-50deg)}  .nb-theme-default ng2-smart-table.is-empty table tbody tr td:before,   .nb-theme-default ng2-smart-table.is-empty table thead tr th:nth-child(2){display:none}  .nb-theme-default ng2-smart-table.is-multi:not(.is-empty) table tbody tr td:first-child,   .nb-theme-default ng2-smart-table.is-multi:not(.is-empty) table thead tr th:first-child{min-width:4.9rem;width:4.9rem}  .nb-theme-default ng2-smart-table table tr td,   .nb-theme-default ng2-smart-table table tr th,   .nb-theme-default ng2-smart-table table tr th a{font-family:Montserrat;font-weight:300;font-style:normal;font-size:.8rem}  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.asc,   .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th a.sort.desc{font-weight:300}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th{padding:.375rem 1rem}  .nb-theme-default ng2-smart-table table tr.ng2-smart-titles th{padding:.875rem 2rem 0;text-align:left}  .nb-theme-default ng2-smart-table.no-data table tr.ng2-smart-titles th{padding:.875rem 2rem;text-align:left}  .nb-theme-default ng2-smart-table .ng2-smart-actions{text-align:center!important}  .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table table tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table.has-img-in-first-col tbody tr td:nth-child(2){text-align:center}  .nb-theme-default ng2-smart-table thead{border:1px solid #00809a}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid{border:1px solid #00809a!important}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid::-moz-placeholder,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input::-moz-placeholder{color:transparent!important}  .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input.ng-valid::placeholder,   .nb-theme-default ng2-smart-table thead tr.ng2-smart-filters th.ng2-smart-th ng2-smart-table-filter div.ng2-smart-filter default-table-filter input-filter input::placeholder{color:transparent!important}  .nb-theme-default ng2-smart-table thead tr th{text-align:center;border:none!important;border-right:1px solid #00809a!important}  .nb-theme-default ng2-smart-table thead tr th,   .nb-theme-default ng2-smart-table thead tr th a{color:#00809a!important}  .nb-theme-default ng2-smart-table tbody{border:1px solid #00809a}  .nb-theme-default ng2-smart-table tbody tr:nth-child(2n){background-color:#ebeff5}  .nb-theme-default ng2-smart-table tbody tr:hover{background-color:#e6e7e8!important}  .nb-theme-default ng2-smart-table tbody tr td{color:#00809a!important;border:none!important;border-right:1px solid #00809a!important;max-width:20rem;word-break:break-word}  .nb-theme-default ng2-smart-table tbody tr td img{width:3.5rem;height:3.5rem;-o-object-fit:contain;object-fit:contain}  .nb-theme-default ng2-smart-table tbody tr td:first-child{padding-left:1rem;padding-right:1rem}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions ng2-st-tbody-edit-delete{display:none!important}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions ng2-st-tbody-custom{display:grid;grid-template-columns:auto auto auto;grid-column-gap:.5rem}  .nb-theme-default ng2-smart-table tbody tr td.ng2-smart-actions a.ng2-smart-action{color:#00809a!important;font-size:1.4rem!important}  .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table tbody tr td.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto!important}  .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:has(i.icon-trash),   .nb-theme-default ng2-smart-table tbody tr.evaluated-env-row .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action-custom-custom:last-child{display:none!important}  .nb-theme-default ng2-smart-table tbody tr.teacher-row .ng2-smart-actions ng2-st-tbody-custom{display:inline-flex!important;justify-content:center;align-items:center;gap:.5rem}  .nb-theme-default ng2-smart-table tbody tr.teacher-row.no-coevaluation-link .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(3){display:none!important}  .nb-theme-default ng2-smart-table.hide-delete tbody tr.teacher-row.has-coevaluation-link .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(3){border-right:none}  .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto auto}  .nb-theme-default ng2-smart-table.hide-delete.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-edit.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom,   .nb-theme-default ng2-smart-table.hide-view.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom{grid-template-columns:auto}  .nb-theme-default ng2-smart-table.hide-delete.hide-edit:not(.hide-view) tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:first-child,   .nb-theme-default ng2-smart-table.hide-delete.hide-view:not(.hide-edit) tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2),   .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom a.ng2-smart-action:nth-child(2){border-right:none}  .nb-theme-default ng2-smart-table.hide-delete tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:last-child,   .nb-theme-default ng2-smart-table.hide-edit tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:nth-child(2),   .nb-theme-default ng2-smart-table.hide-view tbody .ng2-smart-actions ng2-st-tbody-custom .ng2-smart-action:first-child{display:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination{border:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item{cursor:pointer;border:1px solid #00809a!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:not(:nth-last-child(2)){border-right:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:first-child,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:last-child{display:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-child(2) span,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-last-child(2) span{transform:scaleY(1.5);display:inline-block}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled .page-link,   .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{background:none}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{color:#00809a;font-size:small;padding:.9rem 1.2rem}@media screen and (min-width:576px) and (orientation:portrait){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{font-size:medium}}@media screen and (min-width:992px) and (orientation:landscape){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{padding:.8rem 1.1rem;font-size:.75rem}}@media screen and (min-width:1200px) and (min-width:1900px) and (orientation:landscape){  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item .page-link{padding:.95rem 1.4rem;font-size:1rem}}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled{border-color:#909090!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled:nth-child(2){border-right:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled:nth-last-child(2){border-left:none!important}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.disabled .page-link{color:#909090}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item.active .page-link{color:#fff;background:#00809a}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-child(2){border-bottom-left-radius:.35rem;border-top-left-radius:.35rem}  .nb-theme-default ng2-smart-table nav.ng2-smart-pagination-nav ul.pagination li.page-item:nth-last-child(2){border-bottom-right-radius:.35rem;border-top-right-radius:.35rem}  peca-yearbook ng2-st-tbody-custom{display:initial!important}@media screen and (orientation:landscape) and (min-width:640px){  form .fields-container{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline}}@media screen and (orientation:landscape) and (min-width:640px) and (min-width:992px) and (orientation:landscape){  form .fields-container{justify-content:space-between}}@media screen and (orientation:portrait) and (min-width:768px){  form .fields-container{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline}}@media screen and (orientation:portrait) and (min-width:768px) and (min-width:992px) and (orientation:landscape){  form .fields-container{justify-content:space-between}}  form .fields-container label{width:100%;color:#00809a;margin-bottom:.2rem;font-size:.8rem;color:grey}  form .fields-container .floating-loading{font-size:.8rem;position:absolute;font-size:smaller;right:0}  form .fields-container .form-group .error-message{color:#f35f5f;font-size:13px}@media only screen and (min-width:768px){  form .fields-container .form-group .error-message{font-size:13px}}@media only screen and (min-width:1024px){  form .fields-container .form-group .error-message{font-size:13px}}  form .fields-container button{margin-left:auto;min-width:8rem;font-size:1rem;line-height:1.5}@media screen and (orientation:portrait) and (max-width:767px){  form .fields-container button{width:100%}}  form .fields-container button,   form .fields-container button[disabled]{background-color:#00809a;color:#fff;border-color:#00809a}  form .fields-container button:active{background-color:#00809a!important;color:#fff!important;border-color:#00809a!important}  form .fields-container button.cancel-btn{border-color:#9fa9bd;background-color:#9fa9bd;color:#fff}  form .fields-container button:focus,   form .fields-container button:not(:disabled):not(.disabled):active:focus{box-shadow:none}  form .fields-container button:focus,   form .fields-container button:hover{background-color:#fff;color:#00809a;border-color:#00809a}  form .fields-container button:hover.inactive,   form .fields-container button:hover[disabled]{background-color:#00809a;color:#fff;cursor:default}  form .fields-container button:hover.cancel-btn{background-color:#fff;color:#9fa9bd}  form .fields-container button:hover.cancel-btn.inactive,   form .fields-container button:hover.cancel-btn[disabled]{background-color:#9fa9bd;color:#fff}@media (max-width:768px){  form .fields-container button{margin:10px 0;margin-left:0!important;font-size:.7rem}}  form .fields-container .form-group{position:relative}@media screen and (orientation:landscape) and (min-width:640px){  form .fields-container .form-group{max-width:100%;flex:0 0 100%}}@media screen and (orientation:portrait) and (min-width:768px){  form .fields-container .form-group{max-width:100%;flex:0 0 100%}}@media screen and (min-width:992px) and (orientation:landscape){  form .fields-container .form-group{max-width:46.5%;flex:0 0 46.5%}}@media screen and (min-width:1200px) and (orientation:landscape){  form .fields-container .form-group{max-width:47.25%;flex:0 0 47.25%}}@media screen and (min-width:1200px) and (min-width:1680px) and (orientation:landscape){  form .fields-container .form-group{max-width:47.75%;flex:0 0 47.75%}}  form .fields-container .form-control{color:#615a5a;font-size:.8rem}  form .fields-container .form-control[readonly]{background-color:#fff}  form .fields-container .form-control:focus{box-shadow:none}  form .fields-container .form-control.ng-touched.ng-invalid{border:2px solid #f35f5f}  form .fields-container .form-control.ng-touched.ng-valid.ng-select-focused.ng-dirty,   form .fields-container .form-control.ng-touched.ng-valid:focus.ng-dirty{border:2px solid #81b03e}  form .fields-container .form-control.ng-touched[readonly]{border:1px solid #ced4da!important}  form .fields-container .form-control.ng-touched~.error-message{display:block}  form .fields-container .form-control.ng-touched[readonly]~.error-message{display:none!important}  form .fields-container .form-control[readonly]{cursor:default}  form .fields-container .form-control[readonly]:focus{border:1px solid #ced4da!important}  form .fields-container .form-control.ng-untouched~.error-message{display:none}  form .fields-container .ng-select .ng-dropdown-panel{z-index:3}  form .fields-container .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked a,   form .fields-container .ng-select .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked small{font-weight:700}  form .fields-container .ng-select .ng-dropdown-panel .scroll-host{left:-.75rem;top:.35rem;background:#fff;border:1px solid #ced4da;border-top:0 solid #ced4da}  form .fields-container .ng-select .ng-dropdown-panel .scroll-host .scrollable-content{padding:0 1rem}  form .fields-container .ng-select.ng-select-opened .ng-select-container{z-index:3}  form .fields-container .ng-select .ng-select-container .ng-placeholder{color:#6c757d}  form .fields-container .ng-select .ng-select-container.ng-has-value .ng-placeholder{display:none}  form .fields-container .ng-select.ng-untouched.image-status .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-untouched.ng-invalid .ng-select-container .ng-placeholder{display:block}  form .fields-container .ng-select.ng-untouched.ng-valid .ng-select-container .ng-placeholder{display:none}  form .fields-container .ng-select.ng-touched.ng-invalid .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-touched.ng-pristine .ng-select-container .ng-placeholder{display:block}  form .fields-container .ng-select.ng-touched.ng-invalid .ng-select-container .ng-placeholder{display:block!important}  form .fields-container .ng-select.ng-dirty.is-in-modal .ng-select-container.ng-has-value .ng-placeholder,   form .fields-container .ng-select.ng-touched.ng-pristine .ng-select-container.ng-has-value .ng-placeholder{display:none}  form .fields-container .ng-select.ng-select-filtered .ng-select-container .ng-placeholder,   form .fields-container .ng-select.ng-select-filtered.ng-select-opened .ng-select-container .ng-placeholder{display:none!important}  form .fields-container .ng-select .ng-clear-wrapper .ng-clear{color:#ced4da}  form .fields-container .ng-select .ng-arrow-wrapper{width:1rem}  form .fields-container .ng-select .ng-arrow-wrapper .ng-arrow{height:.5rem;width:.5rem;border-color:#ced4da;border-style:solid;border-width:0 2px 2px 0;transform:rotate(45deg);top:-.15rem}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component table tbody tr.selected td:first-child:after{left:16px!important}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:after{content:\"\";width:.8rem;height:.5rem;background:transparent;display:block;position:absolute;top:1.25rem;border-color:#fff;border-style:solid;border-width:0 0 4px 4px;transform:translateX(1px) rotate(-50deg)}  .custom-table-olympic-container ng2-smart-table.is-multi.table-block-component.is-checked table thead tr:first-child th:first-child:before{background:#00809a!important;content:\"\";width:1.4rem;height:1.4rem;background:transparent;position:absolute;border:1px solid #00809a;border-radius:3px;top:.9rem;transform:translateX(-.25rem)}"];
 exports.styles = styles;
 
 
@@ -350134,7 +350190,7 @@ Notification.undefinedValueNotification = new Notification('N', undefined);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ɵ18 = exports.ɵ17 = exports.ɵ16 = exports.ɵ15 = exports.ɵ14 = exports.ɵ13 = exports.ɵ12 = exports.ɵ11 = exports.ɵ10 = exports.ɵ9 = exports.ɵ8 = exports.ɵ7 = exports.ɵ6 = exports.ɵ5 = exports.ɵ4 = exports.ɵ3 = exports.ɵ2 = exports.ɵ1 = exports.ɵ0 = exports.SCHOOL_DATA_CONFIG = void 0;
+exports.ɵ20 = exports.ɵ19 = exports.ɵ18 = exports.ɵ17 = exports.ɵ16 = exports.ɵ15 = exports.ɵ14 = exports.ɵ13 = exports.ɵ12 = exports.ɵ11 = exports.ɵ10 = exports.ɵ9 = exports.ɵ8 = exports.ɵ7 = exports.ɵ6 = exports.ɵ5 = exports.ɵ4 = exports.ɵ3 = exports.ɵ2 = exports.ɵ1 = exports.ɵ0 = exports.SCHOOL_DATA_CONFIG = void 0;
 const coevaluation_cell_component_1 = __webpack_require__("fOi9");
 const all_forms_1 = __webpack_require__("ZZJ6");
 const mostrarFeedback = (statusCode) => {
@@ -350311,11 +350367,27 @@ const ɵ3 = (row) => {
         return true;
     else
         return false;
+}, ɵ7 = (row) => {
+    const data = row &&
+        (row.data ||
+            (typeof row.getData === "function" ? row.getData() : row));
+    return data && data.coevaluationLink
+        ? "teacher-row has-coevaluation-link"
+        : "teacher-row no-coevaluation-link";
+}, ɵ8 = (e) => {
+    if (e &&
+        e.action === "COPY_COEVALUATION" &&
+        e.data &&
+        typeof e.data.onCopyCoevaluationLink === "function") {
+        e.data.onCopyCoevaluationLink();
+    }
 };
 exports.ɵ3 = ɵ3;
 exports.ɵ4 = ɵ4;
 exports.ɵ5 = ɵ5;
 exports.ɵ6 = ɵ6;
+exports.ɵ7 = ɵ7;
+exports.ɵ8 = ɵ8;
 const tablaDocente = {
     component: "table",
     name: "teachersTable",
@@ -350356,6 +350428,23 @@ const tablaDocente = {
         modalCode: "schoolDataConfigTablaDocente",
         tableCode: "schoolDataConfigTablaDocente",
         schoolDataConfigTablaDocente: [],
+        rowClassFunction: ɵ7,
+        actions: {
+            columnTitle: "Acciones",
+            add: false,
+            edit: false,
+            delete: true,
+            custom: [
+                { name: "VIEW", title: '<i class="icon-eye"></i>' },
+                { name: "EDIT", title: '<i class="icon-pencil"></i>' },
+                {
+                    name: "COPY_COEVALUATION",
+                    title: '<i class="icon-copy" title="Copiar enlace de coevaluación"></i>',
+                },
+                { name: "DELETE", title: '<i class="icon-trash"></i>' },
+            ],
+        },
+        onCustomAction: ɵ8,
         classes: {
             hideView: true,
             hideEdit: false,
@@ -350418,8 +350507,8 @@ const modalTablaDocente = {
         ],
     },
 };
-const ɵ7 = {};
-exports.ɵ7 = ɵ7;
+const ɵ9 = {};
+exports.ɵ9 = ɵ9;
 //* ------------------------------------------
 const formGradosYSecciones = {
     component: "form",
@@ -350429,18 +350518,18 @@ const formGradosYSecciones = {
         buttons: ["guardar"],
         tableCode: "schoolDataConfigTablaGradosSecciones",
         formType: "agregarGradoSeccion",
-        data: ɵ7,
+        data: ɵ9,
         fetcherMethod: "post",
     },
 };
-const ɵ8 = (row) => {
+const ɵ10 = (row) => {
     if (!row)
         return "";
     const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
         return d.id === row;
     });
     return grade ? grade.name : "";
-}, ɵ9 = (cell, search) => {
+}, ɵ11 = (cell, search) => {
     const grade = all_forms_1.formGradosSecciones.grades.options.find((d) => {
         return d.id === cell;
     });
@@ -350450,7 +350539,7 @@ const ɵ8 = (row) => {
         return true;
     else
         return false;
-}, ɵ10 = (row, rowData) => {
+}, ɵ12 = (row, rowData) => {
     if (!row)
         return "";
     const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
@@ -350460,7 +350549,7 @@ const ɵ8 = (row) => {
     if (teacher)
         return teacher.name;
     return rowData && rowData.docenteName ? rowData.docenteName : "";
-}, ɵ11 = (cell, search) => {
+}, ɵ13 = (cell, search) => {
     const teacher = all_forms_1.formGradosSecciones.docente.options.find((d) => {
         return d.id === cell;
     });
@@ -350471,10 +350560,10 @@ const ɵ8 = (row) => {
     else
         return false;
 };
-exports.ɵ8 = ɵ8;
-exports.ɵ9 = ɵ9;
 exports.ɵ10 = ɵ10;
 exports.ɵ11 = ɵ11;
+exports.ɵ12 = ɵ12;
+exports.ɵ13 = ɵ13;
 const tablaGradosSecciones = {
     component: "table",
     name: "gradosYSeccionesTable",
@@ -350482,16 +350571,16 @@ const tablaGradosSecciones = {
         columns: {
             grades: {
                 title: "Grados",
-                valuePrepareFunction: ɵ8,
-                filterFunction: ɵ9,
+                valuePrepareFunction: ɵ10,
+                filterFunction: ɵ11,
             },
             section: {
                 title: "Secciones",
             },
             docente: {
                 title: "Docente",
-                valuePrepareFunction: ɵ10,
-                filterFunction: ɵ11,
+                valuePrepareFunction: ɵ12,
+                filterFunction: ɵ13,
             },
         },
         modalCode: "schoolDataConfigTablaGradosSecciones",
@@ -350559,8 +350648,8 @@ const modalTablaGradosSecciones = {
         ],
     },
 };
-const ɵ12 = {};
-exports.ɵ12 = ɵ12;
+const ɵ14 = {};
+exports.ɵ14 = ɵ14;
 //* ------------------------------------------
 const formEstudiantes = {
     component: "form",
@@ -350571,44 +350660,44 @@ const formEstudiantes = {
         tableCode: "schoolDataConfigTablaEstudiante",
         formType: "buscarEstudiante",
         // isOneRow: true,
-        data: ɵ12,
+        data: ɵ14,
         fetcherMethod: "post",
         methodUrlPlus: "section",
         tableRefreshName: "estudiantesTable",
     },
 };
-const ɵ13 = (row) => {
+const ɵ15 = (row) => {
     if (row)
         return row.prependInput;
     else
         return "";
-}, ɵ14 = (cell, search) => {
+}, ɵ16 = (cell, search) => {
     let value = cell.prependInput;
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
     else
         return false;
-}, ɵ15 = (row) => {
+}, ɵ17 = (row) => {
     if (row)
         return row == "1" ? "Femenino" : "Masculino";
     else
         return "";
-}, ɵ16 = (cell, search) => {
+}, ɵ18 = (cell, search) => {
     let value = cell == "1" ? "Femenino" : "Masculino";
     value = value.toUpperCase();
     if (value.includes(search.toUpperCase()) || search === "")
         return true;
     else
         return false;
-}, ɵ17 = (row) => {
+}, ɵ19 = (row) => {
     let getAge = (birthDate) => Math.floor((new Date().getTime() - new Date(birthDate).getTime()) /
         3.15576e10);
     if (row)
         return getAge(row).toString();
     else
         return "";
-}, ɵ18 = (cell, search) => {
+}, ɵ20 = (cell, search) => {
     let getAge = (birthDate) => Math.floor((new Date().getTime() - new Date(birthDate).getTime()) /
         3.15576e10);
     let value = getAge(cell).toString();
@@ -350618,12 +350707,12 @@ const ɵ13 = (row) => {
     else
         return false;
 };
-exports.ɵ13 = ɵ13;
-exports.ɵ14 = ɵ14;
 exports.ɵ15 = ɵ15;
 exports.ɵ16 = ɵ16;
 exports.ɵ17 = ɵ17;
 exports.ɵ18 = ɵ18;
+exports.ɵ19 = ɵ19;
+exports.ɵ20 = ɵ20;
 const tablaEstudiante = {
     component: "table",
     name: "estudiantesTable",
@@ -350638,18 +350727,18 @@ const tablaEstudiante = {
             },
             documentGroup: {
                 title: "Cédula",
-                valuePrepareFunction: ɵ13,
-                filterFunction: ɵ14,
-            },
-            gender: {
-                title: "Género",
                 valuePrepareFunction: ɵ15,
                 filterFunction: ɵ16,
             },
-            age: {
-                title: "Edad",
+            gender: {
+                title: "Género",
                 valuePrepareFunction: ɵ17,
                 filterFunction: ɵ18,
+            },
+            age: {
+                title: "Edad",
+                valuePrepareFunction: ɵ19,
+                filterFunction: ɵ20,
             },
         },
         modalCode: "schoolDataConfigTablaEstudiante",

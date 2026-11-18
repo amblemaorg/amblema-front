@@ -216,6 +216,40 @@ const tablaDocente = {
     modalCode: "schoolDataConfigTablaDocente",
     tableCode: "schoolDataConfigTablaDocente",
     schoolDataConfigTablaDocente: [],
+    rowClassFunction: (row: any) => {
+      const data =
+        row &&
+        (row.data ||
+          (typeof row.getData === "function" ? row.getData() : row));
+      return data && data.coevaluationLink
+        ? "teacher-row has-coevaluation-link"
+        : "teacher-row no-coevaluation-link";
+    },
+    actions: {
+      columnTitle: "Acciones",
+      add: false,
+      edit: false,
+      delete: true,
+      custom: [
+        { name: "VIEW", title: '<i class="icon-eye"></i>' },
+        { name: "EDIT", title: '<i class="icon-pencil"></i>' },
+        {
+          name: "COPY_COEVALUATION",
+          title: '<i class="icon-copy" title="Copiar enlace de coevaluación"></i>',
+        },
+        { name: "DELETE", title: '<i class="icon-trash"></i>' },
+      ],
+    },
+    onCustomAction: (e: any) => {
+      if (
+        e &&
+        e.action === "COPY_COEVALUATION" &&
+        e.data &&
+        typeof e.data.onCopyCoevaluationLink === "function"
+      ) {
+        e.data.onCopyCoevaluationLink();
+      }
+    },
     classes: {
       hideView: true,
       hideEdit: false,

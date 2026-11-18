@@ -35,6 +35,8 @@ export interface CoevaluationResults {
 
 export interface CoevaluationStatusRecord extends CoevaluationResults {
   teacherId: string;
+  emailSentAt?: string | null;
+  token?: string | null;
 }
 
 export interface CoevaluationItemResult {
@@ -68,6 +70,7 @@ export interface CoevaluationDetail extends CoevaluationResults {
   emailSentAt: string | null;
   emailSentTo: string | null;
   emailSentCount: number;
+  token?: string | null;
   canEvaluate: boolean;
   canSendLink: boolean;
 }
