@@ -1,7 +1,12 @@
 <nav *ngIf="variant === 'desktop'" class="web-menu">
   <ul>
     <li *ngFor="let item of menuItems">
-      <a (click)="triggerNavigate()" [routerLink]="[item.path]">
+      <a
+        (click)="triggerNavigate()"
+        [routerLink]="[item.path]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+      >
         {{ item.name }}
       </a>
     </li>
@@ -18,7 +23,9 @@
   aria-label="Menú principal"
 >
   <div class="mobile-overlay__top">
-    <img class="mobile-overlay__logo" src="./assets/images/amblema-logo.png" alt="AmbLeMa" />
+    <a class="mobile-overlay__logo-link" [routerLink]="['/']" (click)="triggerNavigate()">
+      <img class="mobile-overlay__logo" src="./assets/images/amblema-logo.png" alt="AmbLeMa" />
+    </a>
     <button
       #closeButton
       type="button"
