@@ -47,3 +47,6 @@ testem.log
 .DS_Store
 Thumbs.db
 .vscode/settings.json
+
+# Informes de diagnóstico de Node (se generan cuando un proceso falla)
+report.[0-9]*.json

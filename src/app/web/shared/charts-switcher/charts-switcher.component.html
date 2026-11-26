@@ -27,10 +27,12 @@
       <p *ngIf="charts.length > 0 && charts[activeChartIndex].description">
         {{ charts[activeChartIndex].description }}
       </p>
-      
-      <ng-container *ngIf="charts[activeChartIndex].id !== 'mathOlympics' && charts[activeChartIndex].id !== 'readingOlympics'; else medalsTemplate">
-        <ng-template #chartHost></ng-template>
 
+      <!-- El host vive fuera del *ngIf: al cambiar a olimpiadas no se destruye y
+           switchChart() puede crear la gráfica en el mismo clic. -->
+      <ng-template #chartHost></ng-template>
+
+      <ng-container *ngIf="charts[activeChartIndex].id !== 'mathOlympics' && charts[activeChartIndex].id !== 'readingOlympics'; else medalsTemplate">
         <!-- Hint banner for Environmental Diagnostic -->
         <div *ngIf="charts[activeChartIndex].id === 'environmentIndex'" class="env-click-hint-banner text-center mt-3 p-3 rounded shadow-sm">
           <p class="mb-0 text-white font-weight-bold">
