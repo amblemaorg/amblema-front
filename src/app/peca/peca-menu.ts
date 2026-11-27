@@ -157,4 +157,10 @@ export const PECA_MENU_DEFAULT_CONFIG: NbMenuItem[] = [
     link: 'imagenes-escuela',
     data: 'activities_slider_view',
   },
+  {
+    title: 'Valoración del coordinador',
+    icon: 'icn-docentes',
+    link: 'valoracion-coordinador',
+    data: 'teacher_coevaluation',
+  },
 ];

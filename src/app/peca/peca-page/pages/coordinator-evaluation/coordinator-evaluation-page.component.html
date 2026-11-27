@@ -1,0 +1,214 @@
+<nb-card>
+  <nb-card-body>
+    <h1>Valoración del Coordinador</h1>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-body>
+    <div class="coord-eval-page">
+      <!-- Sin permiso teacher_coevaluation -->
+      <div *ngIf="permissionsChecked && !canAccess" class="coord-eval-denied" role="alert">
+        <span class="coord-eval-eyebrow">Acceso restringido</span>
+        <h5 class="coord-eval-denied-title">No tienes permiso para acceder a esta sección</h5>
+        <p class="coord-eval-denied-text">
+          La Valoración del Coordinador (AmbLeMa HQS) solo está disponible para usuarios con permiso de coevaluación docente.
+        </p>
+      </div>
+
+      <!-- Contenido autorizado -->
+      <section
+        class="coord-eval-card"
+        *ngIf="!permissionsChecked || canAccess"
+        aria-label="Valoración del Coordinador AmbLeMa HQS"
+      >
+        <div class="coord-eval-header">
+          <div class="coord-eval-title-wrap">
+            <div class="coord-eval-title-row">
+              <span class="coord-eval-eyebrow">AmbLeMa HQS</span>
+              <span
+                class="coord-eval-badge"
+                [class.is-completed]="isCompleted"
+                [class.is-loading]="!pecaId || (loading && !detail)"
+              >
+                {{ headerStatusText }}
+              </span>
+            </div>
+            <h5 class="coord-eval-title">Instrumento de Valoración del Coordinador</h5>
+            <p class="coord-eval-subtitle" *ngIf="detail">
+              <span *ngIf="detail.coordinator && detail.coordinator.name">
+                Coordinador: <strong>{{ detail.coordinator.name }}</strong>
+              </span>
+              <span *ngIf="detail.coordinator && detail.coordinator.name && detail.schoolYear?.name"> · </span>
+              <span *ngIf="detail.schoolYear?.name">{{ detail.schoolYear.name }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="coord-eval-body">
+          <div *ngIf="!pecaId || loading" class="coord-eval-state">
+            <div class="spinner-border coord-eval-spinner" role="status">
+              <span class="sr-only">Cargando...</span>
+            </div>
+            <p>Cargando valoración del coordinador...</p>
+          </div>
+
+          <div *ngIf="pecaId && !loading && loadError" class="coord-eval-state">
+            <p>No se pudo cargar la valoración del coordinador.</p>
+            <button type="button" class="btn-ghost" (click)="load()">Reintentar</button>
+          </div>
+
+          <ng-container *ngIf="pecaId && !loading && !loadError && detail">
+            <!-- Aviso solo lectura cuando entra un administrador y la evaluación está pendiente -->
+            <div class="readonly-notice" *ngIf="isReadOnlyPending" role="status">
+              Solo el coordinador asignado al proyecto puede responder esta valoración. En vista de administrador las opciones se muestran deshabilitadas.
+            </div>
+
+            <!-- Resumen cuando ya fue completada -->
+            <div class="completed-summary" *ngIf="isCompleted">
+              <div class="completed-score" *ngIf="showScores">
+                <span class="completed-score-label">Puntaje total</span>
+                <div class="completed-score-value">
+                  <strong>{{ formatNumber(detail.totalScore) }}</strong>
+                  <span>/ {{ formatNumber(detail.instrument.maxTotal) }}</span>
+                </div>
+              </div>
+              <div class="completed-meta">
+                <div class="completed-meta-item" *ngIf="detail.submittedAt">
+                  <span class="meta-label">Registrada el</span>
+                  <strong>{{ detail.submittedAt | date: 'dd/MM/yyyy h:mm a' }}</strong>
+                </div>
+                <div class="completed-meta-item" *ngIf="detail.coordinator && detail.coordinator.name">
+                  <span class="meta-label">Coordinador</span>
+                  <strong>{{ detail.coordinator.name }}</strong>
+                </div>
+                <div class="completed-meta-note">
+                  Evaluación registrada en modo solo lectura.
+                </div>
+              </div>
+            </div>
+
+            <!-- Escala de referencia compacta (sin <ul><li> por estilos globales) -->
+            <div class="scale-box">
+              <div class="scale-box-title">Escala de valoración de referencia</div>
+              <div class="scale-grid">
+                <div class="scale-item" *ngFor="let opt of detail.instrument.options">
+                  <div class="scale-item-head">
+                    <span class="scale-label">{{ opt.label }}</span>
+                    <span class="scale-pts" *ngIf="showScores && opt.score !== null && opt.score !== undefined">
+                      {{ formatNumber(opt.score) }} pts
+                    </span>
+                  </div>
+                  <p class="scale-desc">{{ opt.description }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preguntas -->
+            <div class="questions-list">
+              <div
+                class="question-card"
+                *ngFor="let q of detail.instrument.questions"
+                [class.is-answered]="!isCompleted ? !!draftAnswers[q.number] : !!answerFor(q.number)?.option"
+              >
+                <div class="question-head">
+                  <span class="question-number">{{ q.number }}</span>
+                  <div class="question-text-wrap">
+                    <span class="question-dimension">{{ q.dimension }}</span>
+                    <p class="question-text">{{ q.question }}</p>
+                  </div>
+                </div>
+
+                <!-- Modo formulario (habilitado para coordinador, deshabilitado para admin) -->
+                <div
+                  *ngIf="!isCompleted; else readOnlyAnswer"
+                  class="options-grid"
+                  role="radiogroup"
+                  [attr.aria-label]="'Pregunta ' + q.number + ': ' + q.dimension"
+                >
+                  <button
+                    type="button"
+                    class="option-btn"
+                    *ngFor="let opt of detail.instrument.options"
+                    role="radio"
+                    [class.active]="draftAnswers[q.number] === opt.code"
+                    [attr.aria-checked]="draftAnswers[q.number] === opt.code"
+                    [disabled]="saving || !detail.canEvaluate"
+                    (click)="selectOption(q.number, opt.code)"
+                  >
+                    <span class="option-label">{{ opt.label }}</span>
+                    <span class="option-score" *ngIf="showScores && opt.score !== null && opt.score !== undefined">
+                      {{ formatNumber(opt.score) }} pts
+                    </span>
+                  </button>
+                </div>
+
+                <!-- Modo solo lectura (ya completada) -->
+                <ng-template #readOnlyAnswer>
+                  <div class="readonly-answer" *ngIf="answerFor(q.number) as ans; else noAnswer">
+                    <span class="readonly-pill" *ngIf="ans.optionLabel; else noAnswer">
+                      {{ ans.optionLabel }}
+                    </span>
+                    <span class="readonly-score" *ngIf="showScores && ans.score !== null && ans.score !== undefined">
+                      {{ formatNumber(ans.score) }} / {{ formatNumber(detail.instrument.maxQuestionScore) }} pts
+                    </span>
+                  </div>
+                  <ng-template #noAnswer>
+                    <div class="readonly-answer">
+                      <span class="readonly-pill is-empty">Sin respuesta</span>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Pie de guardado (solo cuando el coordinador puede evaluar) -->
+            <div class="coord-eval-footer" *ngIf="detail.canEvaluate">
+              <div class="footer-progress">
+                <span>
+                  <strong>{{ answeredCount }} de {{ totalQuestions }}</strong> preguntas respondidas
+                </span>
+              </div>
+
+              <ng-container *ngIf="!confirmSave">
+                <button
+                  type="button"
+                  class="btn-green"
+                  [disabled]="saving || !allAnswered"
+                  [attr.title]="!allAnswered ? 'Responda las 4 preguntas para guardar la valoración' : null"
+                  (click)="askSave()"
+                >
+                  Guardar valoración
+                </button>
+              </ng-container>
+
+              <div class="confirm-inline" *ngIf="confirmSave">
+                <span class="confirm-warning">
+                  Esta valoración se registra una sola vez y no podrá modificarse. ¿Confirma?
+                </span>
+                <div class="confirm-actions">
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    [disabled]="saving"
+                    (click)="confirmSave = false"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-green"
+                    [disabled]="saving"
+                    (click)="save()"
+                  >
+                    {{ saving ? 'Guardando...' : 'Sí, guardar' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -21,6 +21,7 @@ import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component
 import { GenericActivityPageComponent } from './peca-page/pages/generic-activity-page.component'
 import { PreviousScholarYearEnrollmentPageComponent } from './peca-page/pages/previous-scholar-year-enrollment-page.component'
 import { FormatoRegistroComponent } from './peca-page/pages/formato-registro-estudiantes-page.component'
+import { CoordinatorEvaluationPageComponent } from './peca-page/pages/coordinator-evaluation/coordinator-evaluation-page.component'
 
 const routes: Routes = [
   {
@@ -102,6 +103,10 @@ const routes: Routes = [
       {
         path: 'imagenes-escuela',
         component: SchoolPicturesPageComponent,
+      },
+      {
+        path: 'valoracion-coordinador',
+        component: CoordinatorEvaluationPageComponent,
       },
       {
         path: 'anuario-page',

@@ -421,7 +421,11 @@ export class PecaComponent implements OnInit, OnDestroy {
 
     const menu_items_to_hide = Object.keys(this.menu_permissions).reduce(
       (removable_items, permission) => {
-        if (permission.includes('_view') && !this.menu_permissions[permission])
+        if (
+          (permission.includes('_view') ||
+            permission === 'teacher_coevaluation') &&
+          !this.menu_permissions[permission]
+        )
           removable_items.push(permission)
         return removable_items
       },

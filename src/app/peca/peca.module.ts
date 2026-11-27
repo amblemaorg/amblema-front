@@ -55,6 +55,7 @@ import { SchoolPicturesPageComponent } from './peca-page/pages/school-pictures-p
 import { YearbookPageComponent } from './peca-page/pages/yearbook-page.component'
 import { GenericActivityPageComponent } from './peca-page/pages/generic-activity-page.component'
 import { FormatoRegistroComponent } from './peca-page/pages/formato-registro-estudiantes-page.component'
+import { CoordinatorEvaluationPageComponent } from './peca-page/pages/coordinator-evaluation/coordinator-evaluation-page.component'
 // Block Components
 import { TabsBlockComponent } from './peca-page/blocks/tabs-block/tabs-block.component'
 import { TableBlockComponent } from './peca-page/blocks/table-block/table-block.component'
@@ -105,6 +106,7 @@ import { StoreLineOptionsBlockComponent } from './peca-page/blocks/store-line-op
     YearbookPageComponent,
     GenericActivityPageComponent,
     PreviousScholarYearEnrollmentPageComponent,
+    CoordinatorEvaluationPageComponent,
     // Block Components
     TabsBlockComponent,
     TableBlockComponent,
