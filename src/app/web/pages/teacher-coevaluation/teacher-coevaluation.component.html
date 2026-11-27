@@ -70,8 +70,9 @@
       <section class="scale-card" aria-labelledby="coevaluation-scale-title">
         <h2 id="coevaluation-scale-title" class="block-title">¿Cómo puntuar?</h2>
         <p class="scale-intro">
-          Hola, {{ firstName || teacherName }}. Valore de 0 a 5 cuánto cumple cada práctica. Responda con
-          sinceridad: su coordinador/a AmbLeMa hará lo mismo y luego conversarán sobre los resultados.
+          Hola, {{ firstName || teacherName }}. Valore de {{ data.instrument.minScore }} a
+          {{ data.instrument.maxScore }} cuánto cumple cada práctica. Responda con sinceridad: su
+          coordinador/a AmbLeMa hará lo mismo y luego conversarán sobre los resultados.
         </p>
         <ol class="scale-grid">
           <li *ngFor="let s of data.instrument.scale">

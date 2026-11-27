@@ -38,7 +38,7 @@ export class TeacherCoevaluationModalComponent implements OnInit, OnDestroy {
   confirmResend = false;
   showScale = false;
 
-  scoreOptions: number[] = [0, 1, 2, 3, 4, 5];
+  scoreOptions: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
   // Puntajes que el coordinador va marcando (índice 0 = ítem 1)
   coordinatorDraft: (number | null)[] = [];
   groups: { code: string; name: string; items: ItemRow[] }[] = [];
@@ -100,6 +100,7 @@ export class TeacherCoevaluationModalComponent implements OnInit, OnDestroy {
 
   private setDetail(detail: CoevaluationDetail): void {
     this.detail = detail;
+    this.scoreOptions = detail.instrument.scale.map((s) => s.score);
     this.coordinatorDraft = detail.items.map((item) => item.coordinator);
     const byNumber: { [n: number]: CoevaluationItemResult } = {};
     detail.items.forEach((item) => (byNumber[item.number] = item));
@@ -172,7 +173,8 @@ export class TeacherCoevaluationModalComponent implements OnInit, OnDestroy {
   }
 
   groupMax(group: { items: ItemRow[] }): number {
-    return group.items.length * (this.detail ? this.detail.instrument.maxScore : 5);
+    const fallbackMax = this.scoreOptions.length ? this.scoreOptions[this.scoreOptions.length - 1] : 7;
+    return group.items.length * (this.detail ? this.detail.instrument.maxScore : fallbackMax);
   }
 
   // Anillo SVG del resultado (r = 34).

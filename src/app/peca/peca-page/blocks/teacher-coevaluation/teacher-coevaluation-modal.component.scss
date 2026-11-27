@@ -453,7 +453,7 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
 
   .scale-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     list-style: none;
     padding: 0;
@@ -498,7 +498,7 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
   }
 
   // ------------------------------------------------------------ ítems
-  $grid-columns: minmax(0, 1fr) 96px 236px 84px;
+  $grid-columns: minmax(0, 1fr) 88px 288px 76px;
 
   .items-head {
     display: grid;
@@ -664,8 +664,8 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
     gap: 4px;
 
     button {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
       border: 2px solid $green;
       background: #fff;
@@ -748,30 +748,13 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
   }
 
   // ------------------------------------------------------------ responsive
-  @media (max-width: 991px) {
+  @media (max-width: 1199px) {
     .scale-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 767px) {
-    .coev-header,
-    .modal-body,
-    .coev-footer {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-
-    .steps {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .step:not(:last-child)::after {
-      display: none;
-    }
-
+  @media (max-width: 991px) {
     .items-head {
       display: none;
     }
@@ -793,6 +776,17 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
 
     .cell-coord {
       grid-column: 1 / -1;
+
+      .score-picker {
+        width: 100%;
+
+        button {
+          flex: 1 1 0;
+          min-width: 0;
+          max-width: 38px;
+          height: 34px;
+        }
+      }
     }
 
     .cell-label {
@@ -801,6 +795,25 @@ $shadow: 0 1px 6px rgba(0, 53, 58, 0.08);
       font-weight: 700;
       text-transform: uppercase;
       color: $muted;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .coev-header,
+    .modal-body,
+    .coev-footer {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .steps {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .step:not(:last-child)::after {
+      display: none;
     }
 
     .scale-grid {

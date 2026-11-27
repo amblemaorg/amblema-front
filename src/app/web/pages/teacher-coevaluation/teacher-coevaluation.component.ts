@@ -36,7 +36,7 @@ export class TeacherCoevaluationComponent implements OnInit {
   data: CoevaluationPublic | null = null;
   groups: { code: string; name: string; items: ItemRow[] }[] = [];
   scores: (number | null)[] = [];
-  scoreOptions: number[] = [0, 1, 2, 3, 4, 5];
+  scoreOptions: number[] = [0, 1, 2, 3, 4, 5, 6, 7];
 
   private isBrowser: boolean;
 
@@ -70,6 +70,7 @@ export class TeacherCoevaluationComponent implements OnInit {
     this.coevaluationService.getPublic(this.token).subscribe(
       (data) => {
         this.data = data;
+        this.scoreOptions = data.instrument.scale.map((s) => s.score);
         this.scores = data.instrument.items.map(() => null);
         this.groups = data.instrument.dimensions.map((dimension) => ({
           code: dimension.code,

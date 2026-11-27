@@ -128,7 +128,7 @@
           <!-- Escala -->
           <div class="scale-toggle">
             <button type="button" class="btn-link-blue" [attr.aria-expanded]="showScale" (click)="showScale = !showScale">
-              {{ showScale ? 'Ocultar escala' : 'Ver escala' }} de puntuación (0 a 5)
+              {{ showScale ? 'Ocultar escala' : 'Ver escala' }} de puntuación ({{ detail.instrument.minScore }} a {{ detail.instrument.maxScore }})
             </button>
           </div>
           <ol class="scale-grid" *ngIf="showScale">
