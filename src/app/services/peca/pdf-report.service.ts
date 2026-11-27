@@ -1371,6 +1371,14 @@ export class PDFReport implements OnInit {
             width: 566,
             stack: [
               {
+                text: "Promedio de resultados segun PPG",
+                color: "#2e8aaa",
+                alignment: "center",
+                fontSize: 13,
+                bold: true,
+                margin: [0, 0, 0, 8],
+              },
+              {
                 table: {
                   dontBreakRows: true,
                   widths: "*",

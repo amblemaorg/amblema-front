@@ -108,31 +108,38 @@ export function amblemarioMapper(pecaData, _lastRequest?, contentOrder = {}) {
               ]);
             }
             if (data.grade != "0") {
-              if (data.wordsPerMin !== null)
-                tables.table1.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${parseFloat(data.wordsPerMin).toFixed(2)}`,
-                  `${parseFloat(data.wordsPerMinIndex).toFixed(2)}`,
-                  `${data.wordsPerMinCount}`,
-                ]);
-              if (data.multiplicationsPerMin !== null)
-                tables.table2.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${parseFloat(data.multiplicationsPerMin).toFixed(2)}`,
-                  `${parseFloat(data.multiplicationsPerMinIndex).toFixed(2)}`,
-                  `${data.multiplicationsPerMinCount}`,
-                ]);
+              // Todas las secciones entran en las tres tablas; sin valor => 0.00
+              // (el backend guarda null cuando la sección no tiene diagnóstico)
+              const toFixed2 = (value) => {
+                const num = parseFloat(value);
+                return isNaN(num) ? '0.00' : num.toFixed(2);
+              };
+              const toCount = (value) => {
+                const num = parseInt(value, 10);
+                return `${isNaN(num) ? 0 : num}`;
+              };
 
-              if (data.operationsPerMin != null || data.operationsPerMinIndex != 0)
-                tables.table3.push([
-                  grades[data.grade],
-                  data.name.toUpperCase(),
-                  `${parseFloat(data.operationsPerMin).toFixed(2)}`,
-                  `${parseFloat(data.operationsPerMinIndex).toFixed(2)}`,
-                  `${data.operationsPerMinCount}`,
-                ]);
+              tables.table1.push([
+                grades[data.grade],
+                data.name.toUpperCase(),
+                toFixed2(data.wordsPerMin),
+                toFixed2(data.wordsPerMinIndex),
+                toCount(data.wordsPerMinCount),
+              ]);
+              tables.table2.push([
+                grades[data.grade],
+                data.name.toUpperCase(),
+                toFixed2(data.multiplicationsPerMin),
+                toFixed2(data.multiplicationsPerMinIndex),
+                toCount(data.multiplicationsPerMinCount),
+              ]);
+              tables.table3.push([
+                grades[data.grade],
+                data.name.toUpperCase(),
+                toFixed2(data.operationsPerMin),
+                toFixed2(data.operationsPerMinIndex),
+                toCount(data.operationsPerMinCount),
+              ]);
             }
             return tables;
           },
